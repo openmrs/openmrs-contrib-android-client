@@ -3,3 +3,12 @@ pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.next
 release.properties
+
+#android project
+build/*
+*.iml
+.gradle/
+.idea/
+local.properties
+gradle.properties
+

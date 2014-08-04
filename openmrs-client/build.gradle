@@ -1,4 +1,6 @@
 apply plugin: 'android'
+apply plugin: 'pmd'
+apply plugin: 'checkstyle'
 
 android {
     compileSdkVersion 20
@@ -16,6 +18,38 @@ android {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+}
+
+check.dependsOn 'pmd'
+check.dependsOn 'checkstyle'
+
+task pmd(type: Pmd) {
+    ruleSetFiles = files("$projectDir/misc/pmd.xml")
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reportsDir = file("$project.buildDir/reports/pmd")
+    reports {
+        xml.enabled = true
+        html.enabled = false
+    }
+}
+
+task checkstyle(type: Checkstyle) {
+    configFile file("$projectDir/misc/checkstyle.xml")
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    classpath = files()
+
+    reportsDir = file("$project.buildDir/reports/checkstyle")
+    reports {
+        xml.enabled = true
     }
 }
 

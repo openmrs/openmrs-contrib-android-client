@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<ruleset name="Custom ruleset"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+    <description>OpenMRS-AC PMD ruleset</description>
+
+    <rule ref="rulesets/sunsecure.xml/MethodReturnsInternalArray">
+        <priority>2</priority>
+    </rule>
+    <rule ref="rulesets/sunsecure.xml/ArrayIsStoredDirectly">
+        <priority>2</priority>
+    </rule>
+
+    <rule ref="rulesets/codesize.xml/NcssMethodCount">
+        <properties>
+            <property name="minimum" value="50"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/design.xml/ConstructorCallsOverridableMethod"/>
+    <rule ref="rulesets/design.xml/PreserveStackTrace"/>
+    <rule ref="rulesets/design.xml/SimplifyConditional"/>
+    <rule ref="rulesets/design.xml/UnnecessaryLocalBeforeReturn"/>
+
+    <rule ref="rulesets/logging-java.xml/AvoidPrintStackTrace"/>
+
+    <rule ref="rulesets/migrating.xml/IntegerInstantiation"/>
+
+    <rule ref="rulesets/strictexception.xml/AvoidCatchingThrowable"/>
+    <rule ref="rulesets/strictexception.xml/AvoidThrowingRawExceptionTypes"/>
+    <rule ref="rulesets/strictexception.xml/SignatureDeclareThrowsException"/>
+
+    <rule ref="rulesets/strings.xml/AvoidDuplicateLiterals"/>
+    <rule ref="rulesets/strings.xml/UseIndexOfChar"/>
+
+    <rule ref="rulesets/unusedcode.xml/UnusedFormalParameter"/>
+    <rule ref="rulesets/unusedcode.xml/UnusedLocalVariable"/>
+    <rule ref="rulesets/unusedcode.xml/UnusedPrivateField"/>
+    <rule ref="rulesets/unusedcode.xml/UnusedPrivateMethod"/>
+</ruleset>

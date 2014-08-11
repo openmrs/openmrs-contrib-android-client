@@ -11,6 +11,7 @@ import org.openmrs.client.models.ModuleInfo;
 import java.util.List;
 
 public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+    private static final String TAG = ScreenSlidePagerAdapter.class.getCanonicalName();
 
     private static List<ModuleInfo> mModules;
     public static final int ITEMS_PER_PAGE = 4;
@@ -24,7 +25,7 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     public static List<ModuleInfo>  getPage(int position) {
         int from = position * ITEMS_PER_PAGE;
         int to = Math.min((position + 1) * ITEMS_PER_PAGE, mModules.size());
-        Log.d( ScreenSlidePagerAdapter.class.getCanonicalName() ,"getting page from: " + Integer.toString(from) + "to: " + Integer.toString(to) + "page number: " + Integer.toString(position));
+        Log.d(TAG,"getting page from: " + Integer.toString(from) + "to: " + Integer.toString(to) + "page number: " + Integer.toString(position));
         if (!(from < to)) {
             return null;
         }
@@ -37,8 +38,7 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        ModulesFragment fragment = ModulesFragment.newInstance(position);
-        return fragment;
+        return ModulesFragment.newInstance(position);
     }
 
     @Override

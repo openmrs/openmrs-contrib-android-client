@@ -6,8 +6,7 @@ import java.util.List;
 
 public class ModuleInfo {
     public static List<ModuleInfo> getActiveModules() {
-        List<ModuleInfo> moduleList = new LinkedList<ModuleInfo>();
-        return moduleList;
+        return new LinkedList<ModuleInfo>();
     }
 
     public ModuleInfo(String name) {

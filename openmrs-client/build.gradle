@@ -4,7 +4,7 @@ apply plugin: 'checkstyle'
 
 android {
     compileSdkVersion 20
-    buildToolsVersion "20.0.0"
+    buildToolsVersion '20.0.0'
 
     defaultConfig {
         applicationId "org.openmrs.client"
@@ -19,11 +19,26 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        quiet true
+        checkReleaseBuilds false
+    }
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name.equals("lint")) {
+        task.enabled = false
+    }
+}
+
+sourceSets {
+    androidTest {
+        java.srcDir file('src/androidTest/java')
+        resources.srcDir file('src/androidTest/res')
+    }
 }
 
 check.dependsOn 'pmd'
-check.dependsOn 'checkstyle'
-
 task pmd(type: Pmd) {
     ruleSetFiles = files("$projectDir/misc/pmd.xml")
 
@@ -38,6 +53,7 @@ task pmd(type: Pmd) {
     }
 }
 
+check.dependsOn 'checkstyle'
 task checkstyle(type: Checkstyle) {
     configFile file("$projectDir/misc/checkstyle.xml")
 
@@ -52,8 +68,51 @@ task checkstyle(type: Checkstyle) {
         xml.enabled = true
     }
 }
-
 dependencies {
+    androidTestCompile 'junit:junit:4.12-beta-1'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:20.+'
 }
+
+repositories {
+    mavenCentral()
+}
+
+//Android Studio test hack
+task addTest {
+    def src = ['src/tests/java']
+    def file = file("openmrs-client.iml")
+
+    doLast {
+    try {
+        def parsedXml = (new XmlParser()).parse(file)
+        def node = parsedXml.component[1].content[0]
+            src.each {
+                def path = 'file://$MODULE_DIR$/' + "${it}"
+                def set = node.find { it.@url == path }
+                    if (set == null) {
+                            new Node(node, 'sourceFolder', ['url': 'file://$MODULE_DIR$/' + "${it}", 'isTestSource': "true"])
+                            def writer = new StringWriter()
+                            new XmlNodePrinter(new PrintWriter(writer)).print(parsedXml)
+                                    file.text = writer.toString()
+                            }
+                    }
+        } catch (FileNotFoundException e) {
+                    // nop, iml not found
+        }
+    }
+}
+
+check.dependsOn 'androidTest'
+task androidTest(type:Test, dependsOn: assemble) {
+    description = "run unit tests"
+    testClassesDir = project.sourceSets.androidTest.output.classesDir
+    classpath = project.sourceSets.androidTest.runtimeClasspath
+}
+
+// always do the addtest on prebuild
+gradle.projectsEvaluated {
+    preBuild.dependsOn(addTest)
+}
+
+

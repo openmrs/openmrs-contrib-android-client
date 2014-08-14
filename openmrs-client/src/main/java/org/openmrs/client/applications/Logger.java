@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Logger extends Application {
 
@@ -27,6 +30,7 @@ public class Logger extends Application {
     private static int mErrorCountSaveToFile = 2;
     private static boolean mIsRotating;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -39,6 +43,8 @@ public class Logger extends Application {
                 if (!mLogFile.createNewFile()) {
                     rotateLogFile();
                 }
+
+                mLogFile.createNewFile();
             }
             Logger.d("Start logging to file");
         } catch (IOException e) {

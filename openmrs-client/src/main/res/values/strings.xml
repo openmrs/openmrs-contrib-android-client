@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">OpenMRS Android Client</string>
     <string name="action_settings">Settings</string>
+    <!-- Login view -->
+    <string name="login_button">Login</string>
+    <string name="login_username_hint">username</string>
+    <string name="login_password_hint">password</string>
+    <!-- Url dialog -->
+    <string name="login_dialog_title">Enter URL address</string>
+    <string name="login_dialog_button_done">Done</string>
+    <string name="login_dialog_button_cancel">Cancel</string>
+    <string name="login_dialog_server_url_empty_error">Server URL can not be empty.</string>
+    <string name="login_dialog_login_or_password_empty">Login and password can not be empty.</string>
+    <string name="login_dialog_auth_failed">Login failed.</string>
 
 </resources>

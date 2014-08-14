@@ -1,4 +1,4 @@
-package org.openmrs.client.fragments;
+package org.openmrs.client.activities.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

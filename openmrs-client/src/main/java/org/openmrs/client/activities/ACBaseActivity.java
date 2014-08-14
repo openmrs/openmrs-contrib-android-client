@@ -1,11 +1,30 @@
 package org.openmrs.client.activities;
 
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import org.openmrs.client.R;
+import org.openmrs.client.activities.fragments.CustomFragmentDialog;
+import org.openmrs.client.bundle.CustomDialogBundle;
 
 public abstract class ACBaseActivity extends ActionBarActivity {
+
+    protected FragmentManager mFragmentManager;
+    private CustomFragmentDialog mCurrentDialog;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mFragmentManager = getSupportFragmentManager();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mCurrentDialog = null;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -24,5 +43,15 @@ public abstract class ACBaseActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void createAndShowDialog(CustomDialogBundle bundle, String tag) {
+        CustomFragmentDialog instance = CustomFragmentDialog.newInstance(bundle);
+        instance.show(mFragmentManager, tag);
+        mCurrentDialog = instance;
+    }
+
+    public synchronized CustomFragmentDialog getCurrentDialog() {
+        return mCurrentDialog;
     }
 }

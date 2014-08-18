@@ -81,7 +81,7 @@ repositories {
 
 //Android Studio test hack
 task addTest {
-    def src = ['src/tests/java']
+    def src = ['src/androidTest/java']
     def file = file("openmrs-client.iml")
 
     doLast {

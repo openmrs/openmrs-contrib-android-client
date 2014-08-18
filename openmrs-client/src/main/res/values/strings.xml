@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">OpenMRS Android Client</string>
     <string name="action_settings">Settings</string>
-
+    <!-- Login view -->
+    <string name="login_button">Login</string>
+    <string name="login_username_hint">username</string>
+    <string name="login_password_hint">password</string>
+    <!-- Url dialog -->
+    <string name="login_dialog_title">Enter URL address</string>
+    <string name="login_dialog_server_url_empty_error">Server URL can not be empty.</string>
+    <string name="login_dialog_login_or_password_empty">Login and password can not be empty.</string>
+    <!-- Connection Timeout dialog -->
+    <string name="conn_timeout_dialog_title">Connection Failed</string>
+    <string name="conn_timeout_dialog_message">A network error has occurred - Connection Timeout.\nPlease try again in a few seconds.</string>
+    <!-- Authentication Failed dialog -->
+    <string name="auth_failed_dialog_title">Authentication Failed</string>
+    <string name="auth_failed_dialog_message">Your user name or password may be incorrect. Please try again.</string>
+    <!-- No internet dialog -->
+    <string name="no_internet_conn_dialog_title">No internet connection</string>
+    <string name="no_internet_conn_dialog_message">Your have no internet connection.\nPlease check phone or Wi-Fi connection and signal strength and try again.</string>
+    <!-- Buttons -->
+    <string name="dialog_button_done">Done</string>
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_retry">Retry</string>
+    <string name="dialog_button_ok">Ok</string>
 </resources>

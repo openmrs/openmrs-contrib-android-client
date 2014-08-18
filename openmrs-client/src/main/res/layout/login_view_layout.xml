@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/loginUsernameField"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:focusable="true"
+                android:hint="@string/login_username_hint"
+                android:inputType="text"
+                android:singleLine="true" >
+                <requestFocus />
+            </EditText>
+
+            <EditText
+                android:id="@+id/loginPasswordField"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:focusable="true"
+                android:hint="@string/login_password_hint"
+                android:inputType="textPassword|text"
+                android:password="true"
+                android:singleLine="true" />
+
+            <Button
+                android:id="@+id/loginButton"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal|center"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/login_button" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

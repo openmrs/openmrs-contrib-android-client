@@ -10,7 +10,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import org.openmrs.client.R;
-import org.openmrs.client.applications.Logger;
+import org.openmrs.client.application.OpenMRS;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class SettingsActivity extends ACBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        Logger.d("Started onCreate SettingsActivity");
+        OpenMRS.logger.d("Started onCreate SettingsActivity");
 
         mSettingsListView = (ListView) findViewById(R.id.settingsListView);
         mRowFields = new String[]{"title", "desc1", "desc2"};
@@ -61,9 +61,9 @@ public class SettingsActivity extends ACBaseActivity {
             File file = new File(filename);
             size = file.length();
             size = size / 1024;
-            Logger.i("File Path : " + file.getPath() + ", File size: " + size + " KB");
+            OpenMRS.logger.i("File Path : " + file.getPath() + ", File size: " + size + " KB");
         } catch (Exception e) {
-            Logger.w("File not found");
+            OpenMRS.logger.w("File not found");
         }
 
         HashMap<String, String> temp = new HashMap<String, String>();

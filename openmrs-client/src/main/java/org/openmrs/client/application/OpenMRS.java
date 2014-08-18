@@ -7,11 +7,13 @@ import org.openmrs.client.utilities.ApplicationConstants;
 public class OpenMRS extends Application {
 
     private static OpenMRS instance;
+    public static OpenMRSLogger logger;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        logger = new OpenMRSLogger();
     }
 
     public static OpenMRS getInstance() {

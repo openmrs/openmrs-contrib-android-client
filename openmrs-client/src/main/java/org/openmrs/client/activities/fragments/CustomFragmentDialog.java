@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.openmrs.client.R;
@@ -31,7 +32,7 @@ public class CustomFragmentDialog extends DialogFragment {
     private static final int TYPED_DIMENSION_VALUE = 10;
 
     public enum OnClickAction {
-        LOGIN, DISMISS;
+        LOGIN, DISMISS, RETRY;
     }
 
     protected LayoutInflater mInflater;
@@ -63,8 +64,12 @@ public class CustomFragmentDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.DialogTheme);
         mCustomDialogBundle = (CustomDialogBundle) getArguments().getSerializable(ApplicationConstants.BundleKeys.CUSTOM_DIALOG_BUNDLE);
+        if (mCustomDialogBundle.hasLoadingBar()) {
+            this.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.LoadingDialogTheme_DialogTheme);
+        } else {
+            this.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.DialogTheme);
+        }
         this.setRetainInstance(true);
     }
 
@@ -137,6 +142,10 @@ public class CustomFragmentDialog extends DialogFragment {
             setRightButton(mCustomDialogBundle.getRightButtonText());
             mRightButton.setOnClickListener(onClickActionSolver(mCustomDialogBundle.getRightButtonAction()));
         }
+        if (mCustomDialogBundle.hasLoadingBar()) {
+            addProgressBar();
+            this.setCancelable(false);
+        }
     }
 
     public EditText addEditTextField(String defaultMessage) {
@@ -193,6 +202,11 @@ public class CustomFragmentDialog extends DialogFragment {
         this.mLeftButton = (Button) dialogLayout.findViewById(R.id.dialogFormButtonsCancelButton);
     }
 
+    public void addProgressBar() {
+        RelativeLayout progressBaLayout = (RelativeLayout) mInflater.inflate(R.layout.dialog_progress, null);
+        mFieldsLayout.addView(progressBaLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+    }
+
     private boolean isDialogAvailable() {
         return null != this && null != this.getDialog();
     }
@@ -210,6 +224,9 @@ public class CustomFragmentDialog extends DialogFragment {
                     case DISMISS:
                         dismiss();
                         break;
+                    case RETRY:
+                        ((LoginActivity) getActivity()).login();
+                        dismiss();
                     default:
                         break;
                 }

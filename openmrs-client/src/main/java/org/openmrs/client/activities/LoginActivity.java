@@ -66,7 +66,7 @@ public class LoginActivity extends ACBaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mAuthFailedReceiver);
-        unregisterReceiver(mNoInternetConnectionReceiver);
+        unregisterReceiver(mConnectionTimeoutReceiver);
         unregisterReceiver(mNoInternetConnectionReceiver);
     }
 

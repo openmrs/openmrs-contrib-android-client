@@ -27,6 +27,7 @@ public class OpenMRSLogger {
     private static boolean mSaveToFileEnable = true;
     private static int mErrorCountSaveToFile = 2;
     private static boolean mIsRotating;
+    private static OpenMRS mOpenMRS = OpenMRS.getInstance();
 
     public OpenMRSLogger() {
         mFolder = new File(OPENMRS_DIR);
@@ -39,9 +40,9 @@ public class OpenMRSLogger {
 
                 mLogFile.createNewFile();
             }
-            OpenMRS.logger.d("Start logging to file");
+            mOpenMRS.logger.d("Start logging to file");
         } catch (IOException e) {
-            OpenMRS.logger.e("Error during create file", e);
+            mOpenMRS.logger.e("Error during create file", e);
         }
     }
 
@@ -61,7 +62,7 @@ public class OpenMRSLogger {
         mErrorCountSaveToFile--;
         if (mErrorCountSaveToFile <= 0) {
             mSaveToFileEnable = false;
-            OpenMRS.logger.e("logging to file disabled because of to much error during save");
+            mOpenMRS.logger.e("logging to file disabled because of to much error during save");
         }
     }
 
@@ -89,12 +90,12 @@ public class OpenMRSLogger {
             } catch (IOException e) {
                 setErrorCount();
                 if (isSaveToFileEnable()) {
-                    OpenMRS.logger.e("Error during save log to file", e);
+                    mOpenMRS.logger.e("Error during save log to file", e);
                 }
             } catch (InterruptedException e) {
                 setErrorCount();
                 if (isSaveToFileEnable()) {
-                    OpenMRS.logger.e("Error during waitng for \"logcat -c\" process", e);
+                    mOpenMRS.logger.e("Error during waitng for \"logcat -c\" process", e);
                 }
             }
             rotateLogFile();
@@ -167,7 +168,7 @@ public class OpenMRSLogger {
     private static void rotateLogFile() {
         if (mLogFile.length() > MAX_SIZE && !mIsRotating) {
             mIsRotating = true;
-            OpenMRS.logger.i("Log file size is too big. Start rotating log file");
+            mOpenMRS.logger.i("Log file size is too big. Start rotating log file");
             new Thread() {
                 @Override
                 public void run() {
@@ -198,12 +199,12 @@ public class OpenMRSLogger {
                             r.close();
 
                             if (newFile.renameTo(mLogFile)) {
-                                OpenMRS.logger.i("Log file rotated");
+                                mOpenMRS.logger.i("Log file rotated");
                             }
                             mIsRotating = false;
                         }
                     } catch (IOException e) {
-                        OpenMRS.logger.e("Error rotating log file. Rotating disable. ", e);
+                        mOpenMRS.logger.e("Error rotating log file. Rotating disable. ", e);
                     }
                 }
             } .start();

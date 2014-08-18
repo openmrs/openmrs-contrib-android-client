@@ -3,4 +3,7 @@
     <style name="DialogTheme" parent="android:Theme.Dialog">
         <item name="android:background">#ffffff</item>
     </style>
+    <style name="LoadingDialogTheme.DialogTheme" parent="android:Theme.Dialog">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
 </resources>

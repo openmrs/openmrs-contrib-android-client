@@ -1,12 +1,12 @@
 package org.openmrs.client.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 
-import org.openmrs.client.adapters.ScreenSlidePagerAdapter;
 import org.openmrs.client.R;
+import org.openmrs.client.adapters.ScreenSlidePagerAdapter;
 import org.openmrs.client.net.AuthorizationManager;
 
 public class DashboardActivity extends ACBaseActivity {

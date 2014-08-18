@@ -15,6 +15,23 @@ public class CustomDialogBundle implements Serializable {
     private String editTextViewMessage;
     private String leftButtonText;
     private String rightButtonText;
+    private boolean loadingBar;
+
+    public CustomDialogBundle() {
+
+    }
+
+    public CustomDialogBundle(Context context) {
+        this.context = context;
+    }
+
+    public boolean hasLoadingBar() {
+        return loadingBar;
+    }
+
+    public void setLoadingBar(boolean loadingBar) {
+        this.loadingBar = loadingBar;
+    }
 
     public CustomFragmentDialog.OnClickAction getLeftButtonAction() {
         return leftButtonAction;
@@ -30,14 +47,6 @@ public class CustomDialogBundle implements Serializable {
 
     public void setRightButtonAction(CustomFragmentDialog.OnClickAction rightButtonAction) {
         this.rightButtonAction = rightButtonAction;
-    }
-
-    public CustomDialogBundle() {
-
-    }
-
-    public CustomDialogBundle(Context context) {
-        this.context = context;
     }
 
     public Context getContext() {

@@ -1,6 +1,7 @@
 package org.openmrs.client.net;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
@@ -15,7 +16,6 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.openmrs.client.R;
 import org.openmrs.client.activities.LoginActivity;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.utilities.ApplicationConstants;
@@ -54,9 +54,10 @@ public class AuthorizationManager {
 
                     if (isAuthenticated) {
                         mOpenMRS.setSessionToken(sessionToken);
+                        ((LoginActivity) mContext).getCurrentDialog().dismiss();
                         ((LoginActivity) mContext).finish();
                     } else {
-                        Toast.makeText(mContext, mContext.getString(R.string.login_dialog_auth_failed), Toast.LENGTH_SHORT).show();
+                        mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST));
                     }
                 } catch (JSONException e) {
                     //TODO update with new logger
@@ -67,10 +68,14 @@ public class AuthorizationManager {
                 , new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String sError = error.toString();
-                Log.d(TAG, "request error: " + sError);
-                sError = sError.substring(sError.lastIndexOf(':') + 1);
-                Toast.makeText(mContext, sError.toString(), Toast.LENGTH_SHORT);
+                if (error.toString().contains(ApplicationConstants.VolleyErrors.CONNECTION_TIMEOUT)) {
+                    mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_CONN_TIMEOUT_BROADCAST));
+                } else if (error.toString().contains(ApplicationConstants.VolleyErrors.NO_CONNECTION)) {
+                    mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_NO_INTERNET_CONNECTION_BROADCAST));
+                } else {
+                    ((LoginActivity) mContext).getCurrentDialog().dismiss();
+                    Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT);
+                }
             }
         }) {
             @Override

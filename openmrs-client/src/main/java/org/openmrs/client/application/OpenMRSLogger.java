@@ -1,6 +1,5 @@
 package org.openmrs.client.application;
 
-import android.os.Environment;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -11,15 +10,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.PrintWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class OpenMRSLogger {
 
     private static String mTAG = "OpenMRS";
     private static final boolean IS_DEBUGGING_ON = true;
-    private static final String OPENMRS_DIR = Environment.getExternalStorageDirectory() + "/OpenMRS";
+    private static final String LOG_FILENAME = "OpenMRS.log";
     private static final int MAX_SIZE = 32 * 1024; // 32kB;
     private static Process mLoggerProcess;
     private static File mLogFile;
@@ -28,21 +24,22 @@ public class OpenMRSLogger {
     private static int mErrorCountSaveToFile = 2;
     private static boolean mIsRotating;
     private static OpenMRS mOpenMRS = OpenMRS.getInstance();
+    private static OpenMRSLogger logger = mOpenMRS.getOpenMRSLogger();
 
     public OpenMRSLogger() {
-        mFolder = new File(OPENMRS_DIR);
+        mFolder = new File(mOpenMRS.getOpenMRSDir());
         try {
             if (isFolderExist()) {
-                mLogFile = new File(OPENMRS_DIR + "/OpenMRS.log");
+                mLogFile = new File(mOpenMRS.getOpenMRSDir() + LOG_FILENAME);
                 if (!mLogFile.createNewFile()) {
                     rotateLogFile();
                 }
 
                 mLogFile.createNewFile();
             }
-            mOpenMRS.logger.d("Start logging to file");
+            logger.d("Start logging to file");
         } catch (IOException e) {
-            mOpenMRS.logger.e("Error during create file", e);
+            logger.e("Error during create file", e);
         }
     }
 
@@ -62,7 +59,7 @@ public class OpenMRSLogger {
         mErrorCountSaveToFile--;
         if (mErrorCountSaveToFile <= 0) {
             mSaveToFileEnable = false;
-            mOpenMRS.logger.e("logging to file disabled because of to much error during save");
+            logger.e("logging to file disabled because of to much error during save");
         }
     }
 
@@ -90,12 +87,12 @@ public class OpenMRSLogger {
             } catch (IOException e) {
                 setErrorCount();
                 if (isSaveToFileEnable()) {
-                    mOpenMRS.logger.e("Error during save log to file", e);
+                    logger.e("Error during save log to file", e);
                 }
             } catch (InterruptedException e) {
                 setErrorCount();
                 if (isSaveToFileEnable()) {
-                    mOpenMRS.logger.e("Error during waitng for \"logcat -c\" process", e);
+                    logger.e("Error during waitng for \"logcat -c\" process", e);
                 }
             }
             rotateLogFile();
@@ -165,10 +162,14 @@ public class OpenMRSLogger {
         return "#" + lineNumber + " " + className + "." + methodName + "() : " + msg;
     }
 
+    public String getLogFilename() {
+        return LOG_FILENAME;
+    }
+
     private static void rotateLogFile() {
         if (mLogFile.length() > MAX_SIZE && !mIsRotating) {
             mIsRotating = true;
-            mOpenMRS.logger.i("Log file size is too big. Start rotating log file");
+            logger.i("Log file size is too big. Start rotating log file");
             new Thread() {
                 @Override
                 public void run() {
@@ -199,12 +200,12 @@ public class OpenMRSLogger {
                             r.close();
 
                             if (newFile.renameTo(mLogFile)) {
-                                mOpenMRS.logger.i("Log file rotated");
+                                logger.i("Log file rotated");
                             }
                             mIsRotating = false;
                         }
                     } catch (IOException e) {
-                        mOpenMRS.logger.e("Error rotating log file. Rotating disable. ", e);
+                        logger.e("Error rotating log file. Rotating disable. ", e);
                     }
                 }
             } .start();

@@ -1,88 +1,63 @@
 package org.openmrs.client.activities;
 
 import android.os.Bundle;
-import android.os.Environment;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.view.Menu;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import org.openmrs.client.R;
+import org.openmrs.client.adapters.SettingsArrayAdapter;
 import org.openmrs.client.application.OpenMRS;
+import org.openmrs.client.application.OpenMRSLogger;
+import org.openmrs.client.models.SettingsListItemDTO;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 public class SettingsActivity extends ACBaseActivity {
 
     private ListView mSettingsListView;
-    private ArrayList<HashMap<String, String>> mList;
-    private String[] mRowFields;
+    private List<SettingsListItemDTO> mListItem = new ArrayList<SettingsListItemDTO>();
     private OpenMRS mOpenMRS = OpenMRS.getInstance();
+    private OpenMRSLogger logger = mOpenMRS.getOpenMRSLogger();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        mOpenMRS.logger.d("Started onCreate SettingsActivity");
-
+        logger.d("Started onCreate SettingsActivity");
+        fillList();
         mSettingsListView = (ListView) findViewById(R.id.settingsListView);
-        mRowFields = new String[]{"title", "desc1", "desc2"};
-        mList = new ArrayList<HashMap<String, String>>();
-
-        SimpleAdapter mAdapter = new SimpleAdapter(
-                this,
-                mList,
-                R.layout.activity_settings_row,
-                mRowFields,
-                new int[] {R.id.settings_title, R.id.settings_desc1, R.id.settings_desc2}
-
-        );
-        fillSettingsList();
-
-        mSettingsListView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO remove after implements actions
-                Toast.makeText(view.getContext(), "You have chosen the " + position
-                        + " position on the list", Toast.LENGTH_SHORT).show();
-            }
-        });
+        SettingsArrayAdapter mAdapter = new SettingsArrayAdapter(this, mListItem);
         mSettingsListView.setAdapter(mAdapter);
     }
 
-    private void fillSettingsList() {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
+    }
+
+    private void fillList() {
         long size = 0;
-        String filename = Environment.getExternalStorageDirectory() + "/OpenMRS/OpenMRS.log";
+        String filename = mOpenMRS.getOpenMRSDir() + logger.getLogFilename();
         try {
             File file = new File(filename);
             size = file.length();
             size = size / 1024;
-            mOpenMRS.logger.i("File Path : " + file.getPath() + ", File size: " + size + " KB");
+            logger.i("File Path : " + file.getPath() + ", File size: " + size + " KB");
         } catch (Exception e) {
-            mOpenMRS.logger.w("File not found");
+            logger.w("File not found");
         }
 
-        HashMap<String, String> temp = new HashMap<String, String>();
-        temp.put(mRowFields[0], "Logs");
-        temp.put(mRowFields[1], filename);
-        if (size != 0) {
-            temp.put(mRowFields[2], "Size: " + size + "kB");
-        }
-        mList.add(temp);
+        mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_logs),
+                                              filename,
+                                              "Size: " + size + "kB"));
 
-        temp = new HashMap<String, String>();
-        temp.put(mRowFields[0], "About");
-        temp.put(mRowFields[1], getResources().getString(R.string.app_name));
-        temp.put(mRowFields[2], "Version: 0.1");  //TODO get version from manifest
-        mList.add(temp);
+        mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_about),
+                                              getResources().getString(R.string.app_name),
+                                              "version 1.0")); //TODO get version from manifest
 
-        temp = new HashMap<String, String>();
-        temp.put(mRowFields[0], "Logout");
-        mList.add(temp);
+        mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_logout)));
     }
 }

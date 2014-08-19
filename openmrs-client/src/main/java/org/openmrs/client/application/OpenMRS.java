@@ -2,16 +2,20 @@ package org.openmrs.client.application;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.os.Environment;
+
 import org.openmrs.client.utilities.ApplicationConstants;
 
 public class OpenMRS extends Application {
 
     private static OpenMRS instance;
+    private static OpenMRSLogger mLogger;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        mLogger = new OpenMRSLogger();
     }
 
     public static OpenMRS getInstance() {
@@ -55,5 +59,13 @@ public class OpenMRS extends Application {
         SharedPreferences sp = getSharedPreferences(ApplicationConstants.OpenMRSSharedPreferenceNames.SHARED_PREFERENCES_NAME,
                 MODE_PRIVATE);
         return sp.getString(ApplicationConstants.SESSION_TOKEN, ApplicationConstants.EMPTY_STRING);
+    }
+
+    public OpenMRSLogger getOpenMRSLogger() {
+        return mLogger;
+    }
+
+    public String getOpenMRSDir() {
+        return Environment.getExternalStorageDirectory() + "/OpenMRS/";
     }
 }

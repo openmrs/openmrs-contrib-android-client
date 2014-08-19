@@ -3,7 +3,6 @@ package org.openmrs.client.net;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Base64;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -18,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.client.activities.LoginActivity;
 import org.openmrs.client.application.OpenMRS;
+import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.utilities.ApplicationConstants;
 
 import java.io.UnsupportedEncodingException;
@@ -27,13 +27,13 @@ import java.util.Map;
 import static org.openmrs.client.utilities.ApplicationConstants.API;
 
 public class AuthorizationManager {
-    private static final String TAG = AuthorizationManager.class.getSimpleName();
 
     private static final String SESSION_ID_KEY = "sessionId";
     private static final String AUTHENTICATION_KEY = "authenticated";
 
     private Context mContext;
     private OpenMRS mOpenMRS = OpenMRS.getInstance();
+    private OpenMRSLogger logger = mOpenMRS.getOpenMRSLogger();
 
     public AuthorizationManager(Context context) {
         this.mContext = context;
@@ -47,7 +47,7 @@ public class AuthorizationManager {
                 loginURL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, response.toString());
+                logger.d(response.toString());
                 try {
                     String sessionToken = response.getString(SESSION_ID_KEY);
                     Boolean isAuthenticated = Boolean.parseBoolean(response.getString(AUTHENTICATION_KEY));
@@ -60,8 +60,7 @@ public class AuthorizationManager {
                         mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST));
                     }
                 } catch (JSONException e) {
-                    //TODO update with new logger
-                    Log.d(TAG, e.toString());
+                    logger.d(e.toString());
                 }
             }
         }
@@ -85,8 +84,7 @@ public class AuthorizationManager {
                 try {
                     auth = "Basic " + Base64.encodeToString(String.format("%s:%s", username, password).getBytes("UTF-8"), Base64.NO_WRAP);
                 } catch (UnsupportedEncodingException e) {
-                   //TODO add missing logs
-                    Log.d(TAG, e.toString());
+                    logger.d(e.toString());
                 }
                 params.put("Authorization", auth);
                 return params;

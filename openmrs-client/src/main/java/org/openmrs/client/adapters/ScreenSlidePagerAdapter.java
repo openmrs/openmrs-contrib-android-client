@@ -3,15 +3,15 @@ package org.openmrs.client.adapters;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
 
 import org.openmrs.client.activities.fragments.ModulesFragment;
+import org.openmrs.client.application.OpenMRS;
+import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.models.ModuleInfo;
 
 import java.util.List;
 
 public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-    private static final String TAG = ScreenSlidePagerAdapter.class.getCanonicalName();
 
     private static List<ModuleInfo> mModules;
     public static final int ITEMS_PER_PAGE = 4;
@@ -25,7 +25,6 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     public static List<ModuleInfo>  getPage(int position) {
         int from = position * ITEMS_PER_PAGE;
         int to = Math.min((position + 1) * ITEMS_PER_PAGE, mModules.size());
-        Log.d(TAG, "getting page from: " + Integer.toString(from) + "to: " + Integer.toString(to) + "page number: " + Integer.toString(position));
         if (!(from < to)) {
             return null;
         }

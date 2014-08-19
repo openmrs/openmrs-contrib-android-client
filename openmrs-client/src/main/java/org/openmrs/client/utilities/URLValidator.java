@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class URLValidator {
-    private static final String URL_PATTERN = "^(https?:\\/\\/){1}([\\da-z\\.-]*)\\.([a-z\\.]*)([\\w \\.-]*)*(:([0-9]{2,5}))?((\\/(\\w*))*?)\\/*$";
+    private static final String URL_PATTERN = "^(https?:\\/\\/){1}([\\da-z\\.-]*)\\.([a-z\\.]*)([\\w \\.-]*)*(:([0-9]{2,5}))?(((\\/(\\w*(\\-\\w+)?)))*?)\\/*$";
     private static final String SLASH = "/";
 
     private URLValidator() {

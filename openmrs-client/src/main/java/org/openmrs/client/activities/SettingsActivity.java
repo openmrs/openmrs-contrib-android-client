@@ -21,13 +21,14 @@ public class SettingsActivity extends ACBaseActivity {
     private ListView mSettingsListView;
     private ArrayList<HashMap<String, String>> mList;
     private String[] mRowFields;
+    private OpenMRS mOpenMRS = OpenMRS.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        OpenMRS.logger.d("Started onCreate SettingsActivity");
+        mOpenMRS.logger.d("Started onCreate SettingsActivity");
 
         mSettingsListView = (ListView) findViewById(R.id.settingsListView);
         mRowFields = new String[]{"title", "desc1", "desc2"};
@@ -61,9 +62,9 @@ public class SettingsActivity extends ACBaseActivity {
             File file = new File(filename);
             size = file.length();
             size = size / 1024;
-            OpenMRS.logger.i("File Path : " + file.getPath() + ", File size: " + size + " KB");
+            mOpenMRS.logger.i("File Path : " + file.getPath() + ", File size: " + size + " KB");
         } catch (Exception e) {
-            OpenMRS.logger.w("File not found");
+            mOpenMRS.logger.w("File not found");
         }
 
         HashMap<String, String> temp = new HashMap<String, String>();

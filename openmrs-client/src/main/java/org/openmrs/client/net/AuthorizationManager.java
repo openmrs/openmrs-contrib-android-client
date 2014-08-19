@@ -67,9 +67,11 @@ public class AuthorizationManager {
                 , new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (error.toString().contains(ApplicationConstants.VolleyErrors.CONNECTION_TIMEOUT)) {
+                if (isConnectionTimeout(error.toString())) {
                     mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_CONN_TIMEOUT_BROADCAST));
-                } else if (error.toString().contains(ApplicationConstants.VolleyErrors.NO_CONNECTION)) {
+                } else if (isServerUnavailable(error.toString())) {
+                    mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SERVER_UNAVAILABLE_BROADCAST));
+                } else if (isNoInternetConnection(error.toString())) {
                     mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_NO_INTERNET_CONNECTION_BROADCAST));
                 } else {
                     ((LoginActivity) mContext).getCurrentDialog().dismiss();
@@ -95,5 +97,19 @@ public class AuthorizationManager {
 
     public boolean isUserLoggedIn() {
         return !ApplicationConstants.EMPTY_STRING.equals(mOpenMRS.getSessionToken());
+    }
+
+    private boolean isConnectionTimeout(String errorMessage) {
+        return errorMessage.contains(ApplicationConstants.VolleyErrors.CONNECTION_TIMEOUT);
+    }
+
+    private boolean isNoInternetConnection(String errorMessage) {
+        return (errorMessage.contains(ApplicationConstants.VolleyErrors.NO_CONNECTION)
+                && errorMessage.contains(ApplicationConstants.VolleyErrors.UNKNOWN_HOST));
+    }
+
+    private boolean isServerUnavailable(String errorMessage) {
+        return (errorMessage.contains(ApplicationConstants.VolleyErrors.NO_CONNECTION)
+                && errorMessage.contains(ApplicationConstants.VolleyErrors.CONNECT_EXCEPTION));
     }
 }

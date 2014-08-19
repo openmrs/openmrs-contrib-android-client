@@ -6,8 +6,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +23,6 @@ import org.openmrs.client.activities.LoginActivity;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.bundle.CustomDialogBundle;
 import org.openmrs.client.utilities.ApplicationConstants;
-import org.openmrs.client.utilities.URLUtils;
 
 /**
  * General class for creating dialog fragment instances
@@ -32,7 +31,7 @@ public class CustomFragmentDialog extends DialogFragment {
     private static final int TYPED_DIMENSION_VALUE = 10;
 
     public enum OnClickAction {
-        LOGIN, DISMISS, RETRY;
+        LOGIN, DISMISS, RETRY
     }
 
     protected LayoutInflater mInflater;
@@ -115,8 +114,8 @@ public class CustomFragmentDialog extends DialogFragment {
         int marginWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, TYPED_DIMENSION_VALUE,
                 OpenMRS.getInstance().getResources().getDisplayMetrics());
 
-        Display mDisplay = getDialog().getWindow().getWindowManager().getDefaultDisplay();
-        int width = mDisplay.getWidth();
+        DisplayMetrics display = this.getResources().getDisplayMetrics();
+        int width = display.widthPixels;
 
         WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
         params.width = width - 2 * marginWidth;
@@ -163,7 +162,7 @@ public class CustomFragmentDialog extends DialogFragment {
         TextView textView = (TextView) field.findViewById(R.id.openmrsTextView);
         textView.setText(message);
         textView.setSingleLine(false);
-        mFieldsLayout.addView(field, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        mFieldsLayout.addView(field, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         return textView;
     }
 
@@ -172,7 +171,7 @@ public class CustomFragmentDialog extends DialogFragment {
         TextView textView = (TextView) field.findViewById(R.id.openmrsTitleView);
         textView.setText(title);
         textView.setSingleLine(true);
-        mFieldsLayout.addView(field, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+        mFieldsLayout.addView(field, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return textView;
     }
 
@@ -204,7 +203,11 @@ public class CustomFragmentDialog extends DialogFragment {
 
     public void addProgressBar() {
         RelativeLayout progressBaLayout = (RelativeLayout) mInflater.inflate(R.layout.dialog_progress, null);
-        mFieldsLayout.addView(progressBaLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
+        mFieldsLayout.addView(progressBaLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+    }
+
+    public String getEditTextValue() {
+        return mEditText.getText().toString();
     }
 
     private boolean isDialogAvailable() {
@@ -217,15 +220,17 @@ public class CustomFragmentDialog extends DialogFragment {
             public void onClick(View v) {
                 switch (action) {
                     case LOGIN:
-                        OpenMRS.getInstance().setServerUrl(URLUtils.trimLastSlash(CustomFragmentDialog.this.mEditText.getText().toString()));
-                        ((LoginActivity) getActivity()).login();
+                        // validate URL
+                        OpenMRS.getInstance().setServerUrl(CustomFragmentDialog.this.mEditText.getText().toString());
+                        ((LoginActivity) getActivity()).login(true);
                         dismiss();
                         break;
                     case DISMISS:
                         dismiss();
                         break;
                     case RETRY:
-                        ((LoginActivity) getActivity()).login();
+                        // URL was already validated
+                        ((LoginActivity) getActivity()).login(false);
                         dismiss();
                     default:
                         break;

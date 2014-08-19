@@ -24,4 +24,8 @@
     <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_button_retry">Retry</string>
     <string name="dialog_button_ok">Ok</string>
+
+    <string name="settings_logs">Logs</string>
+    <string name="settings_about">About</string>
+    <string name="settings_logout">Logout</string>
 </resources>

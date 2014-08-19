@@ -1,25 +1,23 @@
 package org.openmrs.client.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.openmrs.client.R;
+import org.openmrs.client.adapters.SettingsArrayAdapter;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.application.OpenMRSLogger;
+import org.openmrs.client.models.SettingsListItemDTO;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SettingsActivity extends ACBaseActivity {
 
     private ListView mSettingsListView;
-    private String[] mList;
+    private List<SettingsListItemDTO> mListItem = new ArrayList<SettingsListItemDTO>();
     private OpenMRS mOpenMRS = OpenMRS.getInstance();
     private OpenMRSLogger logger = mOpenMRS.getOpenMRSLogger();
 
@@ -29,9 +27,9 @@ public class SettingsActivity extends ACBaseActivity {
         setContentView(R.layout.activity_settings);
 
         logger.d("Started onCreate SettingsActivity");
-        mList = new String[] {"Logs", "About", "Logout"};
+        fillList();
         mSettingsListView = (ListView) findViewById(R.id.settingsListView);
-        SettingsArrayAdapter mAdapter = new SettingsArrayAdapter(this, mList);
+        SettingsArrayAdapter mAdapter = new SettingsArrayAdapter(this, mListItem);
         mSettingsListView.setAdapter(mAdapter);
     }
 
@@ -40,68 +38,29 @@ public class SettingsActivity extends ACBaseActivity {
         return true;
     }
 
-    private class SettingsArrayAdapter extends ArrayAdapter<String> {
-        private Activity context;
-        private String[] names;
+    private void fillList() {
 
-        class ViewHolder {
-            private TextView title;
-            private TextView desc1;
-            private TextView desc2;
+        long size = 0;
+        String filename = mOpenMRS.getOpenMRSDir() + logger.getLogFilename();
+        try {
+            File file = new File(filename);
+            size = file.length();
+            size = size / 1024;
+            logger.i("File Path : " + file.getPath() + ", File size: " + size + " KB");
+        } catch (Exception e) {
+            logger.w("File not found");
         }
 
-        public SettingsArrayAdapter(Activity context, String[] values) {
-            super(context, R.layout.activity_settings_row, values);
-            this.context = context;
-            this.names = values.clone();
-        }
+        mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_logs),
+                                              filename,
+                                              String.valueOf(size)));
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View rowView = convertView;
-            // reuse views
-            if (rowView == null) {
-                LayoutInflater inflater = context.getLayoutInflater();
-                rowView = inflater.inflate(R.layout.activity_settings_row, null);
-                // configure view holder
-                ViewHolder viewHolder = new ViewHolder();
-                viewHolder.title = (TextView) rowView.findViewById(R.id.settings_title);
-                viewHolder.desc1 = (TextView) rowView.findViewById(R.id.settings_desc1);
-                viewHolder.desc2 = (TextView) rowView.findViewById(R.id.settings_desc2);
-                rowView.setTag(viewHolder);
-            }
+        mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_about),
+                                              getResources().getString(R.string.app_name),
+                                              "version 0.1")); //TODO get version from manifest
 
-            // fill data
-            ViewHolder holder = (ViewHolder) rowView.getTag();
-
-            String s = names[position];
-            holder.title.setText(s);
-
-            if (s.startsWith("Logs")) {
-                long size = 0;
-                String filename = mOpenMRS.getOpenMRSDir() + logger.getLogFilename();
-                try {
-                    File file = new File(filename);
-                    size = file.length();
-                    size = size / 1024;
-                    logger.i("File Path : " + file.getPath() + ", File size: " + size + " KB");
-                } catch (Exception e) {
-                    logger.w("File not found");
-                }
-
-                holder.desc1.setText(filename);
-
-                if (size != 0) {
-                    holder.desc2.setText("Size: " + size + "kB");
-                }
-
-            } else if (s.startsWith("About")) {
-                holder.desc1.setText(getResources().getString(R.string.app_name));
-                holder.desc2.setText("Version: 0.1");  //TODO get version from manifest
-
-            }
-
-            return rowView;
-        }
+        mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_logout),
+                                              "",
+                                              ""));
     }
 }

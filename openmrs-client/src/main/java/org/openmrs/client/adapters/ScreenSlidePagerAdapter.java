@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import org.openmrs.client.activities.fragments.ModulesFragment;
 import org.openmrs.client.application.OpenMRS;
+import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.models.ModuleInfo;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     public static final int ITEMS_PER_PAGE = 4;
     public static final int ITEMS_IN_ROW = 2;
     private static OpenMRS mOpenMRS = OpenMRS.getInstance();
+    private static OpenMRSLogger logger = mOpenMRS.getOpenMRSLogger();
 
     public ScreenSlidePagerAdapter(FragmentManager fm) {
         super(fm);
@@ -25,7 +27,7 @@ public class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     public static List<ModuleInfo>  getPage(int position) {
         int from = position * ITEMS_PER_PAGE;
         int to = Math.min((position + 1) * ITEMS_PER_PAGE, mModules.size());
-        mOpenMRS.logger.d("getting page from: " + Integer.toString(from) + "to: " + Integer.toString(to) + "page number: " + Integer.toString(position));
+        logger.d("getting page from: " + Integer.toString(from) + "to: " + Integer.toString(to) + "page number: " + Integer.toString(position));
         if (!(from < to)) {
             return null;
         }

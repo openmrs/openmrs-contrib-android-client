@@ -11,6 +11,10 @@ public class SettingsListItemDTO {
         this.desc2 = desc2;
     }
 
+    public SettingsListItemDTO(String title) {
+        this.title = title;
+    }
+
     public String getTitle() {
         return title;
     }

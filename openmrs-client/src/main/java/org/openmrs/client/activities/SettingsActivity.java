@@ -53,14 +53,13 @@ public class SettingsActivity extends ACBaseActivity {
 
         mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_logs),
                                               filename,
-                                              String.valueOf(size)));
+                                              "Size: " + size + "kB"));
+
 
         mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_about),
                                               getResources().getString(R.string.app_name),
-                                              "version 0.1")); //TODO get version from manifest
+                                              "version 1.0")); //TODO get version from manifest
 
-        mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_logout),
-                                              "",
-                                              ""));
+        mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_logout)));
     }
 }

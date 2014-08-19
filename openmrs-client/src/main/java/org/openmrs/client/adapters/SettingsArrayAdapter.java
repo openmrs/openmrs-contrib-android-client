@@ -8,28 +8,24 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import org.openmrs.client.R;
-import org.openmrs.client.application.OpenMRS;
-import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.models.SettingsListItemDTO;
 
 import java.util.List;
 
 public class SettingsArrayAdapter extends ArrayAdapter<SettingsListItemDTO> {
-    private Activity context;
-    private List<SettingsListItemDTO> items;
-    private OpenMRS mOpenMRS = OpenMRS.getInstance();
-    private OpenMRSLogger logger = mOpenMRS.getOpenMRSLogger();
+    private Activity mContext;
+    private List<SettingsListItemDTO> mItems;
 
     class ViewHolder {
-        private TextView title;
-        private TextView desc1;
-        private TextView desc2;
+        private TextView mTitle;
+        private TextView mDesc1;
+        private TextView mDesc2;
     }
 
     public SettingsArrayAdapter(Activity context, List<SettingsListItemDTO> items) {
         super(context, R.layout.activity_settings_row, items);
-        this.context = context;
-        this.items = items;
+        this.mContext = context;
+        this.mItems = items;
     }
 
     @Override
@@ -37,31 +33,27 @@ public class SettingsArrayAdapter extends ArrayAdapter<SettingsListItemDTO> {
         View rowView = convertView;
         // reuse views
         if (rowView == null) {
-            LayoutInflater inflater = context.getLayoutInflater();
+            LayoutInflater inflater = mContext.getLayoutInflater();
             rowView = inflater.inflate(R.layout.activity_settings_row, null);
             // configure view holder
             ViewHolder viewHolder = new ViewHolder();
-            viewHolder.title = (TextView) rowView.findViewById(R.id.settings_title);
-            viewHolder.desc1 = (TextView) rowView.findViewById(R.id.settings_desc1);
-            viewHolder.desc2 = (TextView) rowView.findViewById(R.id.settings_desc2);
+            viewHolder.mTitle = (TextView) rowView.findViewById(R.id.settings_title);
+            viewHolder.mDesc1 = (TextView) rowView.findViewById(R.id.settings_desc1);
+            viewHolder.mDesc2 = (TextView) rowView.findViewById(R.id.settings_desc2);
             rowView.setTag(viewHolder);
         }
 
         // fill data
         ViewHolder holder = (ViewHolder) rowView.getTag();
 
-        SettingsListItemDTO s = items.get(position);
+        holder.mTitle.setText(mItems.get(position).getTitle());
 
-        holder.title.setText(s.getTitle());
+        if (mItems.get(position).getDesc1() != null) {
+            holder.mDesc1.setText(mItems.get(position).getDesc1());
+        }
 
-        if (s.getTitle().startsWith(context.getResources().getString(R.string.settings_logs))) {
-            holder.desc1.setText(s.getDesc1());
-            if (Long.valueOf(s.getDesc2()) != 0) {
-                holder.desc2.setText("Size: " + s.getDesc2() + "kB");
-            }
-        } else if (s.getTitle().startsWith(context.getResources().getString(R.string.settings_about))) {
-            holder.desc1.setText(s.getDesc1());
-            holder.desc2.setText(s.getDesc2());
+        if (mItems.get(position).getDesc2() != null) {
+            holder.mDesc2.setText(mItems.get(position).getDesc2());
         }
 
         return rowView;

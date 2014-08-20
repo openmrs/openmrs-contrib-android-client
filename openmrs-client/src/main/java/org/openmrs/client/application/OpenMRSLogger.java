@@ -24,9 +24,10 @@ public class OpenMRSLogger {
     private static int mErrorCountSaveToFile = 2;
     private static boolean mIsRotating;
     private static OpenMRS mOpenMRS = OpenMRS.getInstance();
-    private static OpenMRSLogger logger = mOpenMRS.getOpenMRSLogger();
+    private static OpenMRSLogger logger;
 
     public OpenMRSLogger() {
+        logger = this;
         mFolder = new File(mOpenMRS.getOpenMRSDir());
         try {
             if (isFolderExist()) {

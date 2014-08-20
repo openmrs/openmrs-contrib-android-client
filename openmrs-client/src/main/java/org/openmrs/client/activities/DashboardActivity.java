@@ -32,7 +32,7 @@ public class DashboardActivity extends ACBaseActivity {
     protected void onResume() {
         super.onResume();
         if (!mAuthorizationManager.isUserLoggedIn()) {
-            moveToLoginActivity();
+            mAuthorizationManager.moveToLoginActivity();
         }
     }
 
@@ -41,12 +41,6 @@ public class DashboardActivity extends ACBaseActivity {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
-    }
-
-    private void moveToLoginActivity() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 

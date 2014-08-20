@@ -7,24 +7,29 @@ import android.view.Menu;
 import android.view.MenuItem;
 import org.openmrs.client.R;
 import org.openmrs.client.activities.fragments.CustomFragmentDialog;
+import org.openmrs.client.application.OpenMRS;
+import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.bundle.CustomDialogBundle;
 import android.content.Intent;
 
 public abstract class ACBaseActivity extends ActionBarActivity {
 
     protected FragmentManager mFragmentManager;
+    protected final OpenMRSLogger mOpenMRSLogger = OpenMRS.getInstance().getOpenMRSLogger();
     private CustomFragmentDialog mCurrentDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFragmentManager = getSupportFragmentManager();
+        mOpenMRSLogger.d("onCreate");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mCurrentDialog = null;
+        mOpenMRSLogger.d("onDestroy");
     }
 
     @Override

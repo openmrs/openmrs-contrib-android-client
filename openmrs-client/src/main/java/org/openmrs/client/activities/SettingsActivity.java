@@ -7,7 +7,6 @@ import android.widget.ListView;
 import org.openmrs.client.R;
 import org.openmrs.client.adapters.SettingsArrayAdapter;
 import org.openmrs.client.application.OpenMRS;
-import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.models.SettingsListItemDTO;
 
 import java.io.File;
@@ -15,18 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SettingsActivity extends ACBaseActivity {
+    private static final int ONE_KB = 1024;
 
     private ListView mSettingsListView;
     private List<SettingsListItemDTO> mListItem = new ArrayList<SettingsListItemDTO>();
-    private OpenMRS mOpenMRS = OpenMRS.getInstance();
-    private OpenMRSLogger logger = mOpenMRS.getOpenMRSLogger();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        logger.d("Started onCreate SettingsActivity");
+        mOpenMRSLogger.d("onCreate");
         fillList();
         mSettingsListView = (ListView) findViewById(R.id.settingsListView);
         SettingsArrayAdapter mAdapter = new SettingsArrayAdapter(this, mListItem);
@@ -40,14 +38,14 @@ public class SettingsActivity extends ACBaseActivity {
 
     private void fillList() {
         long size = 0;
-        String filename = mOpenMRS.getOpenMRSDir() + logger.getLogFilename();
+        String filename = OpenMRS.getInstance().getOpenMRSDir() + mOpenMRSLogger.getLogFilename();
         try {
             File file = new File(filename);
             size = file.length();
-            size = size / 1024;
-            logger.i("File Path : " + file.getPath() + ", File size: " + size + " KB");
+            size = size / ONE_KB;
+            mOpenMRSLogger.i("File Path : " + file.getPath() + ", File size: " + size + " KB");
         } catch (Exception e) {
-            logger.w("File not found");
+            mOpenMRSLogger.w("File not found");
         }
 
         mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_logs),

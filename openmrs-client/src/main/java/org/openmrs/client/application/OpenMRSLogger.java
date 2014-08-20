@@ -99,56 +99,56 @@ public class OpenMRSLogger {
         }
     }
 
-    public static void v(final String msg) {
+    public void v(final String msg) {
         Log.v(mTAG, getMessage(msg));
         saveToFile();
     }
 
-    public static void v(final String msg, Throwable tr) {
+    public void v(final String msg, Throwable tr) {
         Log.v(mTAG, getMessage(msg), tr);
         saveToFile();
     }
 
-    public static void d(final String msg) {
+    public void d(final String msg) {
         if (IS_DEBUGGING_ON) {
             Log.d(mTAG, getMessage(msg));
             saveToFile();
         }
     }
 
-    public static void d(final String msg, Throwable tr) {
+    public void d(final String msg, Throwable tr) {
         if (IS_DEBUGGING_ON) {
             Log.d(mTAG, getMessage(msg), tr);
             saveToFile();
         }
     }
 
-    public static void i(final String msg) {
+    public void i(final String msg) {
         Log.i(mTAG, getMessage(msg));
         saveToFile();
     }
 
-    public static void i(final String msg, Throwable tr) {
+    public void i(final String msg, Throwable tr) {
         Log.i(mTAG, getMessage(msg), tr);
         saveToFile();
     }
 
-    public static void w(final String msg) {
+    public void w(final String msg) {
         Log.w(mTAG, getMessage(msg));
         saveToFile();
     }
 
-    public static void w(final String msg, Throwable tr) {
+    public void w(final String msg, Throwable tr) {
         Log.w(mTAG, getMessage(msg), tr);
         saveToFile();
     }
 
-    public static void e(final String msg) {
+    public void e(final String msg) {
         Log.e(mTAG, getMessage(msg));
         saveToFile();
     }
 
-    public static void e(final String msg, Throwable tr) {
+    public void e(final String msg, Throwable tr) {
         Log.e(mTAG, getMessage(msg), tr);
         saveToFile();
     }

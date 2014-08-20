@@ -5,8 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import org.openmrs.client.activities.fragments.ModulesFragment;
-import org.openmrs.client.application.OpenMRS;
-import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.models.ModuleInfo;
 
 import java.util.List;

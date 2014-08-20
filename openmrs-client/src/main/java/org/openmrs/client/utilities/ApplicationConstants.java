@@ -24,6 +24,7 @@ public abstract class ApplicationConstants {
         public static final String NO_INTERNET_CONN_DIALOG_TAG = "noInternetConnectionDialog";
         public static final String SERVER_UNAVAILABLE_DIALOG_TAG = "ServerUnavailableDialog";
         public static final String INVALID_URL_DIALOG_TAG = "invalidURLDialog";
+        public static final String LOGOUT_DIALOG_TAG = "logoutDialog";
     }
 
     public abstract static class BundleKeys {

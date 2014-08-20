@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import org.openmrs.client.R;
 import org.openmrs.client.activities.LoginActivity;
+import org.openmrs.client.activities.SettingsActivity;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.bundle.CustomDialogBundle;
 import org.openmrs.client.utilities.ApplicationConstants;
@@ -31,7 +32,7 @@ public class CustomFragmentDialog extends DialogFragment {
     private static final int TYPED_DIMENSION_VALUE = 10;
 
     public enum OnClickAction {
-        LOGIN, DISMISS, RETRY
+        LOGIN, DISMISS, RETRY, LOGOUT
     }
 
     protected LayoutInflater mInflater;
@@ -232,6 +233,11 @@ public class CustomFragmentDialog extends DialogFragment {
                         // URL was already validated
                         ((LoginActivity) getActivity()).login(false);
                         dismiss();
+                        break;
+                    case LOGOUT:
+                        ((SettingsActivity) getActivity()).logout();
+                        dismiss();
+                        break;
                     default:
                         break;
                 }

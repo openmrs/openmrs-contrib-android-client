@@ -54,6 +54,7 @@ public class AuthorizationManager {
 
                     if (isAuthenticated) {
                         mOpenMRS.setSessionToken(sessionToken);
+                        mOpenMRS.setUsername(username);
                         ((LoginActivity) mContext).getCurrentDialog().dismiss();
                         ((LoginActivity) mContext).finish();
                     } else {
@@ -75,7 +76,7 @@ public class AuthorizationManager {
                     mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_NO_INTERNET_CONNECTION_BROADCAST));
                 } else {
                     ((LoginActivity) mContext).getCurrentDialog().dismiss();
-                    Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT);
+                    Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
         }) {
@@ -111,5 +112,11 @@ public class AuthorizationManager {
     private boolean isServerUnavailable(String errorMessage) {
         return (errorMessage.contains(ApplicationConstants.VolleyErrors.NO_CONNECTION)
                 && errorMessage.contains(ApplicationConstants.VolleyErrors.CONNECT_EXCEPTION));
+    }
+
+    public void moveToLoginActivity() {
+        Intent intent = new Intent(mContext, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mContext.startActivity(intent);
     }
 }

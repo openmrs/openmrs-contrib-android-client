@@ -160,11 +160,11 @@
         <module name="ModifiedControlVariable">
             <property name="severity" value="warning"/>
         </module>
-        <module name="MagicNumber">
+<!--        <module name="MagicNumber">
             <property name="severity" value="info"/>
             <property name="tokens" value="NUM_DOUBLE,NUM_FLOAT,NUM_INT,NUM_LONG"/>
-            <property name="ignoreNumbers" value="-1,0,1,2,60,24,7,31,32"/> <!-- 60,24 & 7 are used when calculating dates.  31 in hash. 32 is Magic Johnson's number so it gets a free pass -->
-        </module>
+            <property name="ignoreNumbers" value="-1,0,1,2,60,24,7,31,32"/> &lt;!&ndash; 60,24 & 7 are used when calculating dates.  31 in hash. 32 is Magic Johnson's number so it gets a free pass &ndash;&gt;
+        </module>-->
         <module name="IllegalInstantiation">
             <property name="severity" value="warning"/>
         </module>

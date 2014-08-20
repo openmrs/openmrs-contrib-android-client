@@ -19,6 +19,12 @@
     <!-- No internet dialog -->
     <string name="no_internet_conn_dialog_title">No internet connection</string>
     <string name="no_internet_conn_dialog_message">Your have no internet connection.\nPlease check phone or Wi-Fi connection and signal strength and try again.</string>
+    <!-- Invalid URL dialog -->
+    <string name="invalid_url_dialog_title">Cannot find server</string>
+    <string name="invalid_url_dialog_message">Cannot find server. Please check the URL and try again.</string>
+    <!-- Server unavailable dialog -->
+    <string name="server_unavailable_dialog_title">Server Unavailable</string>
+    <string name="server_unavailable_dialog_message">Cannot connect with server.\nPlease check the URL or internet connection and try again.</string>
     <!-- Buttons -->
     <string name="dialog_button_done">Done</string>
     <string name="dialog_button_cancel">Cancel</string>

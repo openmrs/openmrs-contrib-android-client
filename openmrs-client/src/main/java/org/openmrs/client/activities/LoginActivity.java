@@ -16,9 +16,11 @@ import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.bundle.CustomDialogBundle;
 import org.openmrs.client.net.AuthorizationManager;
 import org.openmrs.client.utilities.ApplicationConstants;
+import org.openmrs.client.utilities.URLValidator;
 
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST;
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_CONN_TIMEOUT_BROADCAST;
+import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_SERVER_UNAVAILABLE_BROADCAST;
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_NO_INTERNET_CONNECTION_BROADCAST;
 
 public class LoginActivity extends ACBaseActivity {
@@ -28,8 +30,6 @@ public class LoginActivity extends ACBaseActivity {
     private EditText mUsername;
     private EditText mPassword;
     private Button mLoginButton;
-
-    private String mURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,7 @@ public class LoginActivity extends ACBaseActivity {
 
         registerReceiver(mAuthFailedReceiver, new IntentFilter(ACTION_AUTH_FAILED_BROADCAST));
         registerReceiver(mConnectionTimeoutReceiver, new IntentFilter(ACTION_CONN_TIMEOUT_BROADCAST));
+        registerReceiver(mServerUnavailableReceiver, new IntentFilter(ACTION_SERVER_UNAVAILABLE_BROADCAST));
         registerReceiver(mNoInternetConnectionReceiver, new IntentFilter(ACTION_NO_INTERNET_CONNECTION_BROADCAST));
     }
 
@@ -68,6 +69,7 @@ public class LoginActivity extends ACBaseActivity {
         unregisterReceiver(mAuthFailedReceiver);
         unregisterReceiver(mConnectionTimeoutReceiver);
         unregisterReceiver(mNoInternetConnectionReceiver);
+        unregisterReceiver(mServerUnavailableReceiver);
     }
 
     @Override
@@ -85,10 +87,9 @@ public class LoginActivity extends ACBaseActivity {
     }
 
     private void showURLDialog() {
-        mURL = OpenMRS.getInstance().getServerUrl();
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.login_dialog_title));
-        bundle.setEditTextViewMessage(mURL);
+        bundle.setEditTextViewMessage(OpenMRS.getInstance().getServerUrl());
         bundle.setLeftButtonText(getString(R.string.dialog_button_done));
         bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.LOGIN);
         bundle.setRightButtonText(getString(R.string.dialog_button_cancel));
@@ -127,15 +128,47 @@ public class LoginActivity extends ACBaseActivity {
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.NO_INTERNET_CONN_DIALOG_TAG);
     }
 
+    private void showServerUnavailableDialog() {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.server_unavailable_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.server_unavailable_dialog_message));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        bundle.setRightButtonText(getString(R.string.dialog_button_ok));
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.SERVER_UNAVAILABLE_DIALOG_TAG);
+    }
+
     private void showLoadingDialog() {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setLoadingBar(true);
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.LOADING_DIALOG_TAG);
     }
 
-    public void login() {
+    private void showInvalidURLDialog() {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.invalid_url_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.invalid_url_dialog_message));
+        bundle.setLeftButtonText(getString(R.string.dialog_button_ok));
+        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.INVALID_URL_DIALOG_TAG);
+    }
+
+    private void login() {
         mAuthorizationManager.login(mUsername.getText().toString(), mPassword.getText().toString());
         showLoadingDialog();
+    }
+
+    public void login(boolean validateURL) {
+        if (!validateURL) {
+            login();
+        } else {
+            URLValidator.ValidationResult result = URLValidator.validate(OpenMRS.getInstance().getServerUrl());
+            if (result.isURLValid()) {
+                OpenMRS.getInstance().setServerUrl(result.getUrl());
+                login();
+            } else {
+                showInvalidURLDialog();
+            }
+        }
     }
 
     private BroadcastReceiver mAuthFailedReceiver = new BroadcastReceiver() {
@@ -164,6 +197,16 @@ public class LoginActivity extends ACBaseActivity {
             dismissLoadingDialog();
             if (ACTION_NO_INTERNET_CONNECTION_BROADCAST.equals(intent.getAction())) {
                 showNoInternetConnectionDialog();
+            }
+        }
+    };
+
+    private BroadcastReceiver mServerUnavailableReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            dismissLoadingDialog();
+            if (ACTION_SERVER_UNAVAILABLE_BROADCAST.equals(intent.getAction())) {
+                showServerUnavailableDialog();
             }
         }
     };

@@ -10,6 +10,7 @@ public abstract class ApplicationConstants {
     public static final String USER_NAME = "username";
     public static final String SERVER_URL = "server_url";
     public static final String SESSION_TOKEN = "session_id";
+    public static final String AUTHORISATION = "authorisation";
 
     public abstract static class API {
         public static final String COMMON_PART = "/ws/rest/v1/";
@@ -43,5 +44,6 @@ public abstract class ApplicationConstants {
         public static final String NO_CONNECTION = "com.android.volley.NoConnectionError";
         public static final String CONNECT_EXCEPTION = "java.net.ConnectException";
         public static final String UNKNOWN_HOST = "java.net.UnknownHostException";
+        public static final String AUTHORISATION_FAILURE = "com.android.volley.AuthFailureError";
     }
 }

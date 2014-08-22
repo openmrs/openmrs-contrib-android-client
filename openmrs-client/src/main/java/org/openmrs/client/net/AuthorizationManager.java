@@ -26,7 +26,7 @@ import java.util.Map;
 
 import static org.openmrs.client.utilities.ApplicationConstants.API;
 
-public class AuthorizationManager {
+public class AuthorizationManager extends BaseManager {
 
     private static final String SESSION_ID_KEY = "sessionId";
     private static final String AUTHENTICATION_KEY = "authenticated";
@@ -89,6 +89,7 @@ public class AuthorizationManager {
                 } catch (UnsupportedEncodingException e) {
                     logger.d(e.toString());
                 }
+                mOpenMRS.setAuthorisation(auth);
                 params.put("Authorization", auth);
                 return params;
             }
@@ -98,20 +99,6 @@ public class AuthorizationManager {
 
     public boolean isUserLoggedIn() {
         return !ApplicationConstants.EMPTY_STRING.equals(mOpenMRS.getSessionToken());
-    }
-
-    private boolean isConnectionTimeout(String errorMessage) {
-        return errorMessage.contains(ApplicationConstants.VolleyErrors.CONNECTION_TIMEOUT);
-    }
-
-    private boolean isNoInternetConnection(String errorMessage) {
-        return (errorMessage.contains(ApplicationConstants.VolleyErrors.NO_CONNECTION)
-                && errorMessage.contains(ApplicationConstants.VolleyErrors.UNKNOWN_HOST));
-    }
-
-    private boolean isServerUnavailable(String errorMessage) {
-        return (errorMessage.contains(ApplicationConstants.VolleyErrors.NO_CONNECTION)
-                && errorMessage.contains(ApplicationConstants.VolleyErrors.CONNECT_EXCEPTION));
     }
 
     public void moveToLoginActivity() {

@@ -38,4 +38,8 @@
     <string name="settings_logs">Logs</string>
     <string name="settings_about">About</string>
     <string name="settings_logout">Logout</string>
+
+    <string name="title_activity_find_patients">FindPatientsActivity</string>
+    <string name="action_find_patients">Find Patients</string>
+    <string name="search_patient_hint">Patient name</string>
 </resources>

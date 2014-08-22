@@ -45,6 +45,12 @@ public class OpenMRS extends Application {
         editor.commit();
     }
 
+    public void setAuthorisation(String authorisation) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.AUTHORISATION, authorisation);
+        editor.commit();
+    }
+
     public String getUsername() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.USER_NAME, ApplicationConstants.EMPTY_STRING);
@@ -60,6 +66,11 @@ public class OpenMRS extends Application {
         return prefs.getString(ApplicationConstants.SESSION_TOKEN, ApplicationConstants.EMPTY_STRING);
     }
 
+    public String getAuthorisation() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        return prefs.getString(ApplicationConstants.AUTHORISATION, ApplicationConstants.EMPTY_STRING);
+    }
+
     public OpenMRSLogger getOpenMRSLogger() {
         return mLogger;
     }
@@ -67,4 +78,5 @@ public class OpenMRS extends Application {
     public String getOpenMRSDir() {
         return Environment.getExternalStorageDirectory() + "/OpenMRS/";
     }
+
 }

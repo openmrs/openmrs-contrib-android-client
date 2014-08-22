@@ -15,37 +15,32 @@ import android.widget.TextView;
 
 import org.openmrs.client.R;
 import org.openmrs.client.adapters.FindPatientArrayAdapter;
-import org.openmrs.client.database.PatientDataSource;
 import org.openmrs.client.models.Patient;
+import org.openmrs.client.net.FindPatientsManager;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class FindPatientsActivity extends ACBaseActivity {
+public class FindPatientsSearchActivity extends ACBaseActivity {
 
     private String mQuery;
     private MenuItem mFindPatientMenuItem;
+    private ArrayList<Patient> mPatientsList;
     private FindPatientArrayAdapter mAdapter;
     private ListView mPatientsListView;
-    private PatientDataSource mDatasource;
+    private TextView mEmptyList;
+    private static final String EMPTY_LIST_SEARCH = "Searching...";
+    private static final String EMPTY_LIST_NOT_FOUND = "No results found for query";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_patients);
 
-        mDatasource = PatientDataSource.getDataSource(this);
-        mDatasource.open("openMRS");
-
-        List<Patient> values = mDatasource.getAllPatients();
-
         mPatientsListView = (ListView) findViewById(R.id.patient_list_view);
-        TextView emptyList = (TextView) findViewById(R.id.empty_patient_list_view);
-        emptyList.setText("No patients in database");
-        mPatientsListView.setEmptyView(emptyList);
+        mEmptyList = (TextView) findViewById(R.id.empty_patient_list_view);
+        mPatientsListView.setEmptyView(mEmptyList);
 
-        mAdapter = new FindPatientArrayAdapter(this, values);
-        mPatientsListView.setAdapter(mAdapter);
-
+        getIntent().setAction(Intent.ACTION_SEARCH);
         handleIntent(getIntent());
     }
 
@@ -57,12 +52,13 @@ public class FindPatientsActivity extends ACBaseActivity {
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            mEmptyList.setText(EMPTY_LIST_SEARCH);
+            mAdapter = new FindPatientArrayAdapter(this, new ArrayList<Patient>());
+            mPatientsListView.setAdapter(mAdapter);
             mQuery = intent.getStringExtra(SearchManager.QUERY);
-            Intent searchIntent = new Intent(this, FindPatientsSearchActivity.class);
-            searchIntent.putExtra(SearchManager.QUERY, mQuery);
-            startActivityForResult(searchIntent, 1);
+            FindPatientsManager fpm = new FindPatientsManager(this);
+            fpm.findPatient(mQuery);
         }
-
     }
 
     @Override
@@ -76,7 +72,7 @@ public class FindPatientsActivity extends ACBaseActivity {
         SearchView findPatientView;
 
         mFindPatientMenuItem = menu.findItem(R.id.action_search);
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             findPatientView = (SearchView) mFindPatientMenuItem.getActionView();
         } else {
             findPatientView = (SearchView) MenuItemCompat.getActionView(mFindPatientMenuItem);
@@ -86,5 +82,19 @@ public class FindPatientsActivity extends ACBaseActivity {
         findPatientView.setSearchableInfo(info);
 
         return true;
+    }
+
+    public void setPatientsList(ArrayList<Patient> patientsList) {
+        mPatientsList = patientsList;
+        if (patientsList.size() == 0) {
+            mEmptyList.setText(EMPTY_LIST_NOT_FOUND + " \"" + mQuery + "\"");
+        }
+        mAdapter = new FindPatientArrayAdapter(this, mPatientsList);
+        mPatientsListView.setAdapter(mAdapter);
+    }
+
+    public void updatePatientsData() {
+        mAdapter = new FindPatientArrayAdapter(this, mPatientsList);
+        mPatientsListView.setAdapter(mAdapter);
     }
 }

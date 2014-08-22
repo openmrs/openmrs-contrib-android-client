@@ -17,7 +17,8 @@ public final class PatientDataSource {
 
     private SQLiteDatabase mDatabase;
     private OpenmrsSQLiteHelper mDbHelper;
-    private String[] mAllColumns = {OpenmrsSQLiteHelper.COLUMN_ID,
+    private String[] mAllColumns = {
+            OpenmrsSQLiteHelper.COLUMN_ID, OpenmrsSQLiteHelper.COLUMN_DISPLAY,
             OpenmrsSQLiteHelper.COLUMN_UUID, OpenmrsSQLiteHelper.COLUMN_IDENTIFIER,
             OpenmrsSQLiteHelper.COLUMN_GIVEN_NAME, OpenmrsSQLiteHelper.COLUMN_MIDDLE_NAME,
             OpenmrsSQLiteHelper.COLUMN_FAMILY_NAME, OpenmrsSQLiteHelper.COLUMN_GENDER,
@@ -25,8 +26,7 @@ public final class PatientDataSource {
             OpenmrsSQLiteHelper.COLUMN_CAUSE_OF_DEATH};
     private static PatientDataSource instance;
 
-    public static synchronized PatientDataSource getDataSource(Context context)
-    {
+    public static synchronized PatientDataSource getDataSource(Context context) {
         if (instance == null) {
             instance = new PatientDataSource(context);
         }
@@ -39,8 +39,13 @@ public final class PatientDataSource {
         mDbHelper = new OpenmrsSQLiteHelper(context);
     }
 
-    public void open(String password) throws SQLException {
-        mDatabase = mDbHelper.getWritableDatabase(password);
+    public PatientDataSource open(String password) throws SQLException {
+        try {
+            mDatabase = mDbHelper.getWritableDatabase(password);
+        } catch (SQLException e) {
+            mDatabase = mDbHelper.getReadableDatabase(password);
+        }
+        return this;
     }
 
     public void close() {
@@ -50,6 +55,7 @@ public final class PatientDataSource {
     public Patient addPatient(String uuid, String identifier, String givenName,
                               String familyName, String gender, String birthDate) {
         ContentValues values = new ContentValues();
+        values.put(OpenmrsSQLiteHelper.COLUMN_DISPLAY, identifier + " - " + givenName + " " + familyName);
         values.put(OpenmrsSQLiteHelper.COLUMN_UUID, uuid);
         values.put(OpenmrsSQLiteHelper.COLUMN_IDENTIFIER, identifier);
         values.put(OpenmrsSQLiteHelper.COLUMN_GIVEN_NAME, givenName);
@@ -58,6 +64,7 @@ public final class PatientDataSource {
         values.put(OpenmrsSQLiteHelper.COLUMN_BIRTH_DATE, birthDate);
         long insertId = mDatabase.insert(OpenmrsSQLiteHelper.TABLE_PATIENTS, null,
                 values);
+
         Cursor cursor = mDatabase.query(OpenmrsSQLiteHelper.TABLE_PATIENTS,
                 mAllColumns, OpenmrsSQLiteHelper.COLUMN_ID + " = " + insertId, null,
                 null, null, null);
@@ -69,7 +76,7 @@ public final class PatientDataSource {
 
     public void deletePatient(Patient patient) {
         long id = patient.getId();
-        Log.w(this.getClass().getCanonicalName(), "Comment deleted with id: " + id);
+        Log.w(this.getClass().getCanonicalName(), "Patient deleted with id: " + id);
         mDatabase.delete(OpenmrsSQLiteHelper.TABLE_PATIENTS, OpenmrsSQLiteHelper.COLUMN_ID
                 + " = " + id, null);
     }
@@ -94,15 +101,16 @@ public final class PatientDataSource {
     private Patient cursorToPatient(Cursor cursor) {
         Patient patient = new Patient();
         patient.setId(cursor.getLong(0));
-        patient.setUuid(cursor.getString(1));
-        patient.setIdentifier(cursor.getString(2));
-        patient.setGivenName(cursor.getString(3));
-        patient.setMiddleName(cursor.getString(4));
-        patient.setFamilyName(cursor.getString(5));
-        patient.setGender(cursor.getString(6));
-        patient.setBirthDate(cursor.getString(7));
-        patient.setDeathDate(cursor.getString(8));
-        patient.setCauseOfDeath(cursor.getString(9));
+        patient.setDisplay(cursor.getString(1));
+        patient.setUuid(cursor.getString(2));
+        patient.setIdentifier(cursor.getString(3));
+        patient.setGivenName(cursor.getString(4));
+        patient.setMiddleName(cursor.getString(5));
+        patient.setFamilyName(cursor.getString(6));
+        patient.setGender(cursor.getString(7));
+        patient.setBirthDate(cursor.getString(8));
+        patient.setDeathDate(cursor.getString(9));
+        patient.setCauseOfDeath(cursor.getString(10));
         return patient;
     }
 }

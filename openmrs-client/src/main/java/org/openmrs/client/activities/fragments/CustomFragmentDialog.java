@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.openmrs.client.R;
+import org.openmrs.client.activities.ACBaseActivity;
 import org.openmrs.client.activities.LoginActivity;
 import org.openmrs.client.activities.SettingsActivity;
 import org.openmrs.client.application.OpenMRS;
@@ -32,7 +34,7 @@ public class CustomFragmentDialog extends DialogFragment {
     private static final int TYPED_DIMENSION_VALUE = 10;
 
     public enum OnClickAction {
-        LOGIN, DISMISS, RETRY, LOGOUT
+        LOGIN, DISMISS, RETRY, LOGOUT, UNAUTHORIZED
     }
 
     protected LayoutInflater mInflater;
@@ -98,6 +100,13 @@ public class CustomFragmentDialog extends DialogFragment {
         super.onActivityCreated(savedInstanceState);
         if (isDialogAvailable()) {
             this.setBorderless();
+        }
+    }
+
+    @Override
+    public void show(FragmentManager manager, String tag) {
+        if (null == manager.findFragmentByTag(tag)) {
+            manager.beginTransaction().add(this, tag).commitAllowingStateLoss();
         }
     }
 
@@ -236,6 +245,10 @@ public class CustomFragmentDialog extends DialogFragment {
                         break;
                     case LOGOUT:
                         ((SettingsActivity) getActivity()).logout();
+                        dismiss();
+                        break;
+                    case UNAUTHORIZED:
+                        ((ACBaseActivity) getActivity()).moveUnauthorizedUserToLoginScreen();
                         dismiss();
                         break;
                     default:

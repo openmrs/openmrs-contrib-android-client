@@ -19,7 +19,7 @@ public class BaseManager {
         return errorMessage.contains(ApplicationConstants.VolleyErrors.CONNECTION_TIMEOUT);
     }
 
-    protected boolean isAuthorizationFailure(String errorMessage) {
+    protected boolean isUserUnauthorized(String errorMessage) {
         return errorMessage.contains(ApplicationConstants.VolleyErrors.AUTHORISATION_FAILURE);
     }
 
@@ -43,7 +43,7 @@ public class BaseManager {
         OpenMRS.getInstance().setAuthorizationToken(auth);
     }
 
-    protected class GeneralErrorListener implements Response.ErrorListener {
+    private abstract class GeneralErrorListener implements Response.ErrorListener {
         private Context mContext;
 
         protected GeneralErrorListener(Context context) {
@@ -54,8 +54,8 @@ public class BaseManager {
         public void onErrorResponse(VolleyError error) {
             if (isConnectionTimeout(error.toString())) {
                 mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_CONN_TIMEOUT_BROADCAST));
-            } else if (isAuthorizationFailure(error.toString())) {
-                mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST));
+            } else if (isUserUnauthorized(error.toString())) {
+                mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_UNAUTHORIZED_BROADCAST));
             } else if (isServerUnavailable(error.toString())) {
                 mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SERVER_UNAVAILABLE_BROADCAST));
             } else if (isNoInternetConnection(error.toString())) {
@@ -63,6 +63,13 @@ public class BaseManager {
             } else {
                 Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    public class GeneralErrorListenerImpl extends GeneralErrorListener {
+
+        public GeneralErrorListenerImpl(Context context) {
+            super(context);
         }
     }
 }

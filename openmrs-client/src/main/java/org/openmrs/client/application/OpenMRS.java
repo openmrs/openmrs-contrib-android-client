@@ -81,9 +81,13 @@ public class OpenMRS extends Application {
     }
 
     private void generateKey() {
-        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
-        editor.putString(ApplicationConstants.SECRET_KEY, SecretKeyGenerator.generateKey());
-        editor.commit();
+        // create database key only if not exist
+        if (ApplicationConstants.EMPTY_STRING.equals(getSecretKey())) {
+            SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+            String key = SecretKeyGenerator.generateKey();
+            editor.putString(ApplicationConstants.SECRET_KEY, key);
+            editor.commit();
+        }
     }
 
     public String getSecretKey() {
@@ -105,5 +109,22 @@ public class OpenMRS extends Application {
 
     private void initializeSQLCipher() {
         SQLiteDatabase.loadLibs(this);
+    }
+
+    public void clearUserPreferencesDataWhenLogout() {
+        SharedPreferences prefs = OpenMRS.getInstance().getOpenMRSSharedPreferences();
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(ApplicationConstants.SESSION_TOKEN);
+        editor.remove(ApplicationConstants.AUTHORIZATION_TOKEN);
+        editor.remove(ApplicationConstants.USER_NAME);
+        editor.commit();
+    }
+
+    public void clearUserPreferencesDataWhenUnauthorized() {
+        SharedPreferences prefs = OpenMRS.getInstance().getOpenMRSSharedPreferences();
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.remove(ApplicationConstants.SESSION_TOKEN);
+        editor.remove(ApplicationConstants.AUTHORIZATION_TOKEN);
+        editor.commit();
     }
 }

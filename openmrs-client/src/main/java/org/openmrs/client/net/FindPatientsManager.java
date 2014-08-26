@@ -68,7 +68,7 @@ public class FindPatientsManager extends BaseManager {
                 }
             }
         }
-                , new GeneralErrorListener(mContext));
+                , new GeneralErrorListenerImpl(mContext));
         queue.add(jsObjRequest);
     }
 
@@ -87,7 +87,7 @@ public class FindPatientsManager extends BaseManager {
                 ((FindPatientsSearchActivity) mContext).updatePatientsData();
             }
         }
-                , new GeneralErrorListener(mContext));
+                , new GeneralErrorListenerImpl(mContext));
         queue.add(jsObjRequest);
     }
 }

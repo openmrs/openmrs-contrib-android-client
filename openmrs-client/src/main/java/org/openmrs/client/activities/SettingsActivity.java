@@ -1,6 +1,5 @@
 package org.openmrs.client.activities;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -76,19 +75,12 @@ public class SettingsActivity extends ACBaseActivity {
     }
 
     public void logout() {
-        clearUserPreferencesData();
+        OpenMRS.getInstance().clearUserPreferencesDataWhenLogout();
         this.finish();
         mAuthorizationManager.moveToLoginActivity();
         OpenMRSDBOpenHelper.getInstance().closeDatabases();
     }
 
-    private void clearUserPreferencesData() {
-        SharedPreferences prefs = OpenMRS.getInstance().getOpenMRSSharedPreferences();
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.remove(ApplicationConstants.SESSION_TOKEN);
-        editor.remove(ApplicationConstants.USER_NAME);
-        editor.commit();
-    }
 
     private void fillList() {
         long size = 0;

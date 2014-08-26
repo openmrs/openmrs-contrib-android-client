@@ -63,7 +63,6 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.find_patients_menu, menu);
 
         SearchManager searchManager =

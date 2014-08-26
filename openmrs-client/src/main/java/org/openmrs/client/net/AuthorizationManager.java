@@ -2,12 +2,10 @@ package org.openmrs.client.net;
 
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
@@ -51,7 +49,6 @@ public class AuthorizationManager extends BaseManager {
                     if (isAuthenticated) {
                         mOpenMRS.setSessionToken(sessionToken);
                         mOpenMRS.setUsername(username);
-                        ((LoginActivity) mContext).getCurrentDialog().dismiss();
                         ((LoginActivity) mContext).finish();
                     } else {
                         mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST));
@@ -61,21 +58,7 @@ public class AuthorizationManager extends BaseManager {
                 }
             }
         }
-                , new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (isConnectionTimeout(error.toString())) {
-                    mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_CONN_TIMEOUT_BROADCAST));
-                } else if (isServerUnavailable(error.toString())) {
-                    mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SERVER_UNAVAILABLE_BROADCAST));
-                } else if (isNoInternetConnection(error.toString())) {
-                    mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_NO_INTERNET_CONNECTION_BROADCAST));
-                } else {
-                    ((LoginActivity) mContext).getCurrentDialog().dismiss();
-                    Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+                , new GeneralErrorListenerImpl(mContext));
         queue.add(jsObjRequest);
     }
 

@@ -28,14 +28,14 @@ public class PatientDAO {
 
     public void deletePatient(long id) {
         OpenMRS.getInstance().getOpenMRSLogger().w("Patient deleted with id: " + id);
-        mPatientSQLiteHelper.getWritableDatabase().delete(PatientSQLiteHelper.TABLE_NAME, PatientSQLiteHelper.COLUMN_ID
+        mPatientSQLiteHelper.getReadableDatabase().delete(PatientSQLiteHelper.TABLE_NAME, PatientSQLiteHelper.COLUMN_ID
                 + " = " + id, null);
     }
 
     public List<Patient> getAllPatients() {
         List<Patient> patients = new ArrayList<Patient>();
 
-        Cursor cursor = mPatientSQLiteHelper.getWritableDatabase().query(PatientSQLiteHelper.TABLE_NAME,
+        Cursor cursor = mPatientSQLiteHelper.getReadableDatabase().query(PatientSQLiteHelper.TABLE_NAME,
                 mPatientColumns, null, null, null, null, null);
 
         cursor.moveToFirst();

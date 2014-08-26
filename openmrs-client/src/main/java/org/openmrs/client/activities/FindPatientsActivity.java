@@ -44,7 +44,6 @@ public class FindPatientsActivity extends ACBaseActivity {
 
         mAdapter = new FindPatientArrayAdapter(this, values);
         mPatientsListView.setAdapter(mAdapter);
-
         handleIntent(getIntent());
     }
 
@@ -67,7 +66,6 @@ public class FindPatientsActivity extends ACBaseActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.find_patients_menu, menu);
 
         SearchManager searchManager =

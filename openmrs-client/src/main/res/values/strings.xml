@@ -25,15 +25,18 @@
     <!-- Server unavailable dialog -->
     <string name="server_unavailable_dialog_title">Server Unavailable</string>
     <string name="server_unavailable_dialog_message">Cannot connect with server.\nPlease check the URL or internet connection and try again.</string>
-    <!-- Logout Dialog -->
+    <!-- Logout dialog -->
     <string name="logout_dialog_title">Logging out</string>
     <string name="logout_dialog_message">Are you sure you want to logout from OpenMRS client ?</string>
     <string name="logout_dialog_button">Logout</string>
+    <!-- Unauthorized dialog -->
+    <string name="unauthorized_dialog_title">Unauthorized</string>
+    <string name="unauthorized_dialog_message">Session expired. Please log in again.</string>
     <!-- Buttons -->
     <string name="dialog_button_done">Done</string>
     <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_button_retry">Retry</string>
-    <string name="dialog_button_ok">Ok</string>
+    <string name="dialog_button_ok">OK</string>
     <!-- Settings activity -->
     <string name="settings_logs">Logs</string>
     <string name="settings_about">About</string>

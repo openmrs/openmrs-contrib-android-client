@@ -1,5 +1,6 @@
 package org.openmrs.client.activities;
 
+import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Context;
@@ -15,7 +16,8 @@ import android.widget.TextView;
 
 import org.openmrs.client.R;
 import org.openmrs.client.adapters.FindPatientArrayAdapter;
-import org.openmrs.client.database.PatientDataSource;
+import org.openmrs.client.application.OpenMRS;
+import org.openmrs.client.dao.PatientDAO;
 import org.openmrs.client.models.Patient;
 
 import java.util.List;
@@ -26,21 +28,18 @@ public class FindPatientsActivity extends ACBaseActivity {
     private MenuItem mFindPatientMenuItem;
     private FindPatientArrayAdapter mAdapter;
     private ListView mPatientsListView;
-    private PatientDataSource mDatasource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_patients);
 
-        mDatasource = PatientDataSource.getDataSource(this);
-        mDatasource.open("openMRS");
-
-        List<Patient> values = mDatasource.getAllPatients();
+        PatientDAO patientDAO = new PatientDAO();
+        List<Patient> values = patientDAO.getAllPatients();
 
         mPatientsListView = (ListView) findViewById(R.id.patient_list_view);
         TextView emptyList = (TextView) findViewById(R.id.empty_patient_list_view);
-        emptyList.setText("No patients in database");
+        emptyList.setText(getString(R.string.search_patient_no_results));
         mPatientsListView.setEmptyView(emptyList);
 
         mAdapter = new FindPatientArrayAdapter(this, values);
@@ -65,6 +64,7 @@ public class FindPatientsActivity extends ACBaseActivity {
 
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
@@ -76,7 +76,7 @@ public class FindPatientsActivity extends ACBaseActivity {
         SearchView findPatientView;
 
         mFindPatientMenuItem = menu.findItem(R.id.action_search);
-        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+        if (OpenMRS.getInstance().isRunningHoneycombVersionOrHigher()) {
             findPatientView = (SearchView) mFindPatientMenuItem.getActionView();
         } else {
             findPatientView = (SearchView) MenuItemCompat.getActionView(mFindPatientMenuItem);

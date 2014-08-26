@@ -1,19 +1,17 @@
-package org.openmrs.client.database;
+package org.openmrs.client.databases;
 
 import android.content.Context;
+
 import net.sqlcipher.database.SQLiteDatabase;
-import net.sqlcipher.database.SQLiteOpenHelper;
 
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.application.OpenMRSLogger;
 
-public class OpenmrsSQLiteHelper extends SQLiteOpenHelper {
+public class PatientSQLiteHelper extends OpenMRSSQLiteOpenHelper {
     protected final OpenMRSLogger mOpenMRSLogger = OpenMRS.getInstance().getOpenMRSLogger();
 
-    private static final String DATABASE_NAME = "openmrs.db";
     private static final int DATABASE_VERSION = 1;
-
-    public static final String TABLE_PATIENTS = "patients";
+    public static final String TABLE_NAME = "patients";
 
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_DISPLAY = "display";
@@ -27,29 +25,29 @@ public class OpenmrsSQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_DEATH_DATE = "deathDate";
     public static final String COLUMN_CAUSE_OF_DEATH = "causeOfDeath";
 
-    public static final String COLUMN_TEXT_TYPE_NOT_NULL = " text not null,";
+    public static final String TEXT_TYPE_NOT_NULL = " text not null,";
 
     // Database creation sql statement
     private static final String DATABASE_CREATE_PATIENTS_TABLE = "create table "
-            + TABLE_PATIENTS + "("
+            + TABLE_NAME + "("
             + COLUMN_ID + " integer primary key autoincrement,"
             + COLUMN_DISPLAY + " text,"
-            + COLUMN_UUID + COLUMN_TEXT_TYPE_NOT_NULL
-            + COLUMN_IDENTIFIER + COLUMN_TEXT_TYPE_NOT_NULL
-            + COLUMN_GIVEN_NAME + COLUMN_TEXT_TYPE_NOT_NULL
+            + COLUMN_UUID + TEXT_TYPE_NOT_NULL
+            + COLUMN_IDENTIFIER + TEXT_TYPE_NOT_NULL
+            + COLUMN_GIVEN_NAME + TEXT_TYPE_NOT_NULL
             + COLUMN_MIDDLE_NAME + " text,"
-            + COLUMN_FAMILY_NAME + COLUMN_TEXT_TYPE_NOT_NULL
-            + COLUMN_GENDER + COLUMN_TEXT_TYPE_NOT_NULL
+            + COLUMN_FAMILY_NAME + TEXT_TYPE_NOT_NULL
+            + COLUMN_GENDER + TEXT_TYPE_NOT_NULL
             + COLUMN_BIRTH_DATE + " data not null,"
             + COLUMN_DEATH_DATE + " data,"
             + COLUMN_CAUSE_OF_DEATH + " text"
             + ");";
 
     private static final String DROP_PATIENTS_TABLE =
-            "DROP TABLE IF EXISTS " + TABLE_PATIENTS;
+            "DROP TABLE IF EXISTS " + TABLE_NAME;
 
-    public OpenmrsSQLiteHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    public PatientSQLiteHelper(Context context) {
+        super(context, null, DATABASE_VERSION);
     }
 
     @Override
@@ -60,16 +58,11 @@ public class OpenmrsSQLiteHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
-        mOpenMRSLogger.w("Upgrading database from version " + i + " to "
-                        + i2 + ", which will destroy all old data");
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int currentVersion, int newVersion) {
+        mOpenMRSLogger.w("Upgrading database from version " + currentVersion + " to "
+                + newVersion + ", which will destroy all old data");
         sqLiteDatabase.execSQL(DROP_PATIENTS_TABLE);
         onCreate(sqLiteDatabase);
     }
 
-    public void dropDatabase(SQLiteDatabase sqLiteDatabase) {
-        mOpenMRSLogger.w("Drop database");
-
-        sqLiteDatabase.execSQL(DROP_PATIENTS_TABLE);
-    }
 }

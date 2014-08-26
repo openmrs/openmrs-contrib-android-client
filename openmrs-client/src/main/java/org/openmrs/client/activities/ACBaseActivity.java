@@ -1,5 +1,6 @@
 package org.openmrs.client.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
@@ -11,7 +12,6 @@ import org.openmrs.client.activities.fragments.CustomFragmentDialog;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.bundle.CustomDialogBundle;
-import android.content.Intent;
 
 public abstract class ACBaseActivity extends ActionBarActivity {
 

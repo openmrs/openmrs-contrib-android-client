@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import org.openmrs.client.R;
 import org.openmrs.client.adapters.ScreenSlidePagerAdapter;
 import org.openmrs.client.models.ModuleInfo;
-import org.openmrs.client.R;
 
 public class ModulesFragment extends Fragment {
 

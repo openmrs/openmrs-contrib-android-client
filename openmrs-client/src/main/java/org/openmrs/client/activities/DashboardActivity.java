@@ -7,8 +7,6 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 
-import net.sqlcipher.database.SQLiteDatabase;
-
 import org.openmrs.client.R;
 import org.openmrs.client.adapters.ScreenSlidePagerAdapter;
 import org.openmrs.client.net.AuthorizationManager;
@@ -30,7 +28,6 @@ public class DashboardActivity extends ACBaseActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-        initializeSQLCipher();
 
         Button findPatientButton = (Button) this.findViewById(R.id.button_find_patient);
         findPatientButton.setOnClickListener(new View.OnClickListener() {
@@ -46,9 +43,6 @@ public class DashboardActivity extends ACBaseActivity {
         startActivity(i);
     }
 
-    private void initializeSQLCipher() {
-        SQLiteDatabase.loadLibs(this);
-    }
 
     @Override
     protected void onResume() {

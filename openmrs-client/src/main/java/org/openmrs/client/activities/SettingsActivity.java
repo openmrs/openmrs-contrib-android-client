@@ -12,6 +12,7 @@ import org.openmrs.client.activities.fragments.CustomFragmentDialog;
 import org.openmrs.client.adapters.SettingsArrayAdapter;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.bundle.CustomDialogBundle;
+import org.openmrs.client.databases.OpenMRSDBOpenHelper;
 import org.openmrs.client.models.SettingsListItemDTO;
 import org.openmrs.client.net.AuthorizationManager;
 import org.openmrs.client.utilities.ApplicationConstants;
@@ -78,6 +79,7 @@ public class SettingsActivity extends ACBaseActivity {
         clearUserPreferencesData();
         this.finish();
         mAuthorizationManager.moveToLoginActivity();
+        OpenMRSDBOpenHelper.getInstance().closeDatabases();
     }
 
     private void clearUserPreferencesData() {

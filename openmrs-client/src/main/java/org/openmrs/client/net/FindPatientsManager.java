@@ -1,15 +1,10 @@
 package org.openmrs.client.net;
 
 import android.content.Context;
-import android.content.Intent;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -19,19 +14,18 @@ import org.openmrs.client.activities.FindPatientsSearchActivity;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.models.Patient;
-import org.openmrs.client.utilities.ApplicationConstants;
+import org.openmrs.client.models.Person;
+import org.openmrs.client.models.mappers.PatientMapper;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.openmrs.client.utilities.ApplicationConstants.API;
 
 public class FindPatientsManager extends BaseManager {
-
     private static final String RESULTS_KEY = "results";
     private static final String UUID_KEY = "uuid";
     private static final String DISPLAY_KEY = "display";
+    private static final String PATIENT_QUERY = "patient?q=";
 
     private Context mContext;
     private OpenMRS mOpenMRS = OpenMRS.getInstance();
@@ -44,9 +38,10 @@ public class FindPatientsManager extends BaseManager {
 
     public void findPatient(final String query) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String patientsURL = mOpenMRS.getServerUrl() + API.COMMON_PART + "patient?q=" + query;
-        logger.d("Trying connect witch: " + patientsURL);
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET,
+        String patientsURL = mOpenMRS.getServerUrl() + API.COMMON_PART + PATIENT_QUERY + query;
+        logger.d("Sending request to : " + patientsURL);
+
+        JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
                 patientsURL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -59,12 +54,10 @@ public class FindPatientsManager extends BaseManager {
 
                     for (int i = 0; i < patientsJSONList.length(); i++) {
                         JSONObject patientJSON = patientsJSONList.getJSONObject(i);
-
-                        PatientManager patientManager = new PatientManager(mContext);
                         Patient patient = new Patient();
                         patient.setUuid(patientJSON.getString(UUID_KEY));
                         patient.setDisplay(patientJSON.getString(DISPLAY_KEY));
-                        patientManager.getPatientData(patient);
+                        FindPatientsManager.this.getFullPatientData(patientJSON.getString(UUID_KEY));
                         patientsList.add(patient);
                     }
 
@@ -73,32 +66,28 @@ public class FindPatientsManager extends BaseManager {
                 } catch (JSONException e) {
                     logger.d(e.toString());
                 }
-
             }
         }
-                , new Response.ErrorListener() {
+                , new GeneralErrorListener(mContext));
+        queue.add(jsObjRequest);
+    }
+
+    public void getFullPatientData(final String patientUUID) {
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        String patientURL = mOpenMRS.getServerUrl() + API.COMMON_PART + API.PATIENT_DETAILS
+                + patientUUID + API.FULL_VERSION;
+        logger.d("Sending request to : " + patientURL);
+
+        JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
+                patientURL, null, new Response.Listener<JSONObject>() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                if (isConnectionTimeout(error.toString())) {
-                    mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_CONN_TIMEOUT_BROADCAST));
-                } else if (isAuthorizationFailure(error.toString())) {
-                    mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST));
-                } else if (isServerUnavailable(error.toString())) {
-                    mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SERVER_UNAVAILABLE_BROADCAST));
-                } else if (isNoInternetConnection(error.toString())) {
-                    mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_NO_INTERNET_CONNECTION_BROADCAST));
-                } else {
-                    Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT).show();
-                }
+            public void onResponse(JSONObject response) {
+                logger.d(response.toString());
+                Person person = PatientMapper.map(response);
+                ((FindPatientsSearchActivity) mContext).updatePatientsData();
             }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", mOpenMRS.getAuthorisation());
-                return params;
-            }
-        };
+        }
+                , new GeneralErrorListener(mContext));
         queue.add(jsObjRequest);
     }
 }

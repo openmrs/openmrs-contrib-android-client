@@ -41,4 +41,7 @@
     <!-- FindPatients activity -->
     <string name="action_find_patients">Find Patients</string>
     <string name="search_patient_hint">Patient name</string>
+    <string name="search_patient_no_results">No patients in database</string>
+    <string name="search_patient_search">Searching…</string>
+    <string name="search_patient_no_result_for_query">No results found for query \"%1$s\"</string>
 </resources>

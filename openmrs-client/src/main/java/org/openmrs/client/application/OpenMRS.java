@@ -2,8 +2,13 @@ package org.openmrs.client.application;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Environment;
 
+import net.sqlcipher.database.SQLiteDatabase;
+
+import org.openmrs.client.databases.OpenMRSDBOpenHelper;
+import org.openmrs.client.security.SecretKeyGenerator;
 import org.openmrs.client.utilities.ApplicationConstants;
 
 public class OpenMRS extends Application {
@@ -13,9 +18,13 @@ public class OpenMRS extends Application {
 
     @Override
     public void onCreate() {
+        initializeSQLCipher();
         super.onCreate();
         instance = this;
         mLogger = new OpenMRSLogger();
+        generateKey();
+        OpenMRSDBOpenHelper.init();
+
     }
 
     public static OpenMRS getInstance() {
@@ -45,9 +54,9 @@ public class OpenMRS extends Application {
         editor.commit();
     }
 
-    public void setAuthorisation(String authorisation) {
+    public void setAuthorizationToken(String authorization) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
-        editor.putString(ApplicationConstants.AUTHORISATION, authorisation);
+        editor.putString(ApplicationConstants.AUTHORIZATION_TOKEN, authorization);
         editor.commit();
     }
 
@@ -66,9 +75,20 @@ public class OpenMRS extends Application {
         return prefs.getString(ApplicationConstants.SESSION_TOKEN, ApplicationConstants.EMPTY_STRING);
     }
 
-    public String getAuthorisation() {
+    public String getAuthorizationToken() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
-        return prefs.getString(ApplicationConstants.AUTHORISATION, ApplicationConstants.EMPTY_STRING);
+        return prefs.getString(ApplicationConstants.AUTHORIZATION_TOKEN, ApplicationConstants.EMPTY_STRING);
+    }
+
+    private void generateKey() {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.SECRET_KEY, SecretKeyGenerator.generateKey());
+        editor.commit();
+    }
+
+    public String getSecretKey() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        return prefs.getString(ApplicationConstants.SECRET_KEY, ApplicationConstants.EMPTY_STRING);
     }
 
     public OpenMRSLogger getOpenMRSLogger() {
@@ -79,4 +99,11 @@ public class OpenMRS extends Application {
         return Environment.getExternalStorageDirectory() + "/OpenMRS/";
     }
 
+    public boolean isRunningHoneycombVersionOrHigher() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    }
+
+    private void initializeSQLCipher() {
+        SQLiteDatabase.loadLibs(this);
+    }
 }

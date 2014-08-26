@@ -2,15 +2,12 @@ package org.openmrs.client.net;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Base64;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
@@ -19,10 +16,6 @@ import org.openmrs.client.activities.LoginActivity;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.utilities.ApplicationConstants;
-
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.openmrs.client.utilities.ApplicationConstants.API;
 
@@ -41,9 +34,12 @@ public class AuthorizationManager extends BaseManager {
 
     public void login(final String username, final String password) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
+        encodeAuthorizationToken(username, password);
         String loginURL = mOpenMRS.getServerUrl() + API.COMMON_PART + API.AUTHORISATION_END_POINT;
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET,
+        logger.i("Sending request to : " + loginURL);
+
+        JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
                 loginURL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -79,21 +75,7 @@ public class AuthorizationManager extends BaseManager {
                     Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> params = new HashMap<String, String>();
-                String auth = null;
-                try {
-                    auth = "Basic " + Base64.encodeToString(String.format("%s:%s", username, password).getBytes("UTF-8"), Base64.NO_WRAP);
-                } catch (UnsupportedEncodingException e) {
-                    logger.d(e.toString());
-                }
-                mOpenMRS.setAuthorisation(auth);
-                params.put("Authorization", auth);
-                return params;
-            }
-        };
+        });
         queue.add(jsObjRequest);
     }
 

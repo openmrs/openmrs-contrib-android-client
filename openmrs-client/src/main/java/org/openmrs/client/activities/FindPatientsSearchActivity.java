@@ -34,6 +34,7 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_patients);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mPatientsListView = (ListView) findViewById(R.id.patient_list_view);
         mEmptyList = (TextView) findViewById(R.id.empty_patient_list_view);
@@ -79,7 +80,7 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
 
         SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
         findPatientView.setSearchableInfo(info);
-
+        findPatientView.setIconifiedByDefault(false);
         return true;
     }
 

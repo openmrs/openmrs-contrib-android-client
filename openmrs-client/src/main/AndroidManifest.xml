@@ -23,7 +23,11 @@
         <activity
             android:name=".activities.FindPatientsActivity"
             android:label="@string/action_find_patients"
-            android:launchMode="singleTop" >
+            android:launchMode="singleTop">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.DashboardActivity" />
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
             <intent-filter>
@@ -34,6 +38,10 @@
             android:name=".activities.FindPatientsSearchActivity"
             android:label="@string/action_find_patients"
             android:launchMode="singleTop" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.FindPatientsActivity" />
             <meta-data android:name="android.app.searchable"
                        android:resource="@xml/searchable" />
             <intent-filter>

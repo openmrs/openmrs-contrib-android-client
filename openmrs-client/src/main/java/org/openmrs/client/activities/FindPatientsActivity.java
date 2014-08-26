@@ -33,6 +33,7 @@ public class FindPatientsActivity extends ACBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_patients);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         PatientDAO patientDAO = new PatientDAO();
         List<Patient> values = patientDAO.getAllPatients();
@@ -63,6 +64,11 @@ public class FindPatientsActivity extends ACBaseActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,7 +88,6 @@ public class FindPatientsActivity extends ACBaseActivity {
 
         SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
         findPatientView.setSearchableInfo(info);
-
         return true;
     }
 }

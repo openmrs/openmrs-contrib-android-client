@@ -7,6 +7,7 @@ release.properties
 #android project
 build/*
 *.iml
+tests/*.iml
 .gradle/
 .idea/
 local.properties

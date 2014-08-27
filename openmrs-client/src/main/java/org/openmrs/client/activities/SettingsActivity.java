@@ -1,6 +1,5 @@
 package org.openmrs.client.activities;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -12,6 +11,7 @@ import org.openmrs.client.activities.fragments.CustomFragmentDialog;
 import org.openmrs.client.adapters.SettingsArrayAdapter;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.bundle.CustomDialogBundle;
+import org.openmrs.client.databases.OpenMRSDBOpenHelper;
 import org.openmrs.client.models.SettingsListItemDTO;
 import org.openmrs.client.net.AuthorizationManager;
 import org.openmrs.client.utilities.ApplicationConstants;
@@ -75,18 +75,12 @@ public class SettingsActivity extends ACBaseActivity {
     }
 
     public void logout() {
-        clearUserPreferencesData();
+        OpenMRS.getInstance().clearUserPreferencesDataWhenLogout();
         this.finish();
         mAuthorizationManager.moveToLoginActivity();
+        OpenMRSDBOpenHelper.getInstance().closeDatabases();
     }
 
-    private void clearUserPreferencesData() {
-        SharedPreferences prefs = OpenMRS.getInstance().getOpenMRSSharedPreferences();
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.remove(ApplicationConstants.SESSION_TOKEN);
-        editor.remove(ApplicationConstants.USER_NAME);
-        editor.commit();
-    }
 
     private void fillList() {
         long size = 0;

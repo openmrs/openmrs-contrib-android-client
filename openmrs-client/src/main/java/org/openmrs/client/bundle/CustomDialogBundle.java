@@ -1,6 +1,7 @@
 package org.openmrs.client.bundle;
 
 import android.content.Context;
+
 import org.openmrs.client.activities.fragments.CustomFragmentDialog;
 
 import java.io.Serializable;

@@ -2,15 +2,10 @@ package org.openmrs.client.net;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Base64;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
@@ -20,13 +15,9 @@ import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.utilities.ApplicationConstants;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.openmrs.client.utilities.ApplicationConstants.API;
 
-public class AuthorizationManager {
+public class AuthorizationManager extends BaseManager {
 
     private static final String SESSION_ID_KEY = "sessionId";
     private static final String AUTHENTICATION_KEY = "authenticated";
@@ -41,9 +32,12 @@ public class AuthorizationManager {
 
     public void login(final String username, final String password) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
+        encodeAuthorizationToken(username, password);
         String loginURL = mOpenMRS.getServerUrl() + API.COMMON_PART + API.AUTHORISATION_END_POINT;
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest(Request.Method.GET,
+        logger.i("Sending request to : " + loginURL);
+
+        JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
                 loginURL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -55,7 +49,6 @@ public class AuthorizationManager {
                     if (isAuthenticated) {
                         mOpenMRS.setSessionToken(sessionToken);
                         mOpenMRS.setUsername(username);
-                        ((LoginActivity) mContext).getCurrentDialog().dismiss();
                         ((LoginActivity) mContext).finish();
                     } else {
                         mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST));
@@ -65,53 +58,12 @@ public class AuthorizationManager {
                 }
             }
         }
-                , new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (isConnectionTimeout(error.toString())) {
-                    mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_CONN_TIMEOUT_BROADCAST));
-                } else if (isServerUnavailable(error.toString())) {
-                    mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SERVER_UNAVAILABLE_BROADCAST));
-                } else if (isNoInternetConnection(error.toString())) {
-                    mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_NO_INTERNET_CONNECTION_BROADCAST));
-                } else {
-                    ((LoginActivity) mContext).getCurrentDialog().dismiss();
-                    Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> params = new HashMap<String, String>();
-                String auth = null;
-                try {
-                    auth = "Basic " + Base64.encodeToString(String.format("%s:%s", username, password).getBytes("UTF-8"), Base64.NO_WRAP);
-                } catch (UnsupportedEncodingException e) {
-                    logger.d(e.toString());
-                }
-                params.put("Authorization", auth);
-                return params;
-            }
-        };
+                , new GeneralErrorListenerImpl(mContext));
         queue.add(jsObjRequest);
     }
 
     public boolean isUserLoggedIn() {
         return !ApplicationConstants.EMPTY_STRING.equals(mOpenMRS.getSessionToken());
-    }
-
-    private boolean isConnectionTimeout(String errorMessage) {
-        return errorMessage.contains(ApplicationConstants.VolleyErrors.CONNECTION_TIMEOUT);
-    }
-
-    private boolean isNoInternetConnection(String errorMessage) {
-        return (errorMessage.contains(ApplicationConstants.VolleyErrors.NO_CONNECTION)
-                && errorMessage.contains(ApplicationConstants.VolleyErrors.UNKNOWN_HOST));
-    }
-
-    private boolean isServerUnavailable(String errorMessage) {
-        return (errorMessage.contains(ApplicationConstants.VolleyErrors.NO_CONNECTION)
-                && errorMessage.contains(ApplicationConstants.VolleyErrors.CONNECT_EXCEPTION));
     }
 
     public void moveToLoginActivity() {

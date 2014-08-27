@@ -7,8 +7,14 @@ release.properties
 #android project
 build/*
 *.iml
+tests/*.iml
 .gradle/
 .idea/
 local.properties
 gradle.properties
-
+tests/bin/*
+bin/*
+tests/gen/*
+gen/*
+tests/out/*
+out/*

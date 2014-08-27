@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.openmrs.client.test"
+    android:versionCode="1"
+    android:versionName="1.0">
+    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="19"/>
+    <!-- We add an application tag here just so that we can indicate that
+         this package needs to link against the android.test library,
+         which is needed when building test cases. -->
+    <instrumentation
+        android:targetPackage="org.openmrs.client"
+        android:name="android.test.InstrumentationTestRunner" />
+    <application>
+        <uses-library android:name="android.test.runner"/>
+    </application>
+
+</manifest>

@@ -83,8 +83,6 @@ public abstract class ACBaseActivity extends ActionBarActivity {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.conn_timeout_dialog_title));
         bundle.setTextViewMessage(getString(R.string.conn_timeout_dialog_message));
-        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.RETRY);
-        bundle.setLeftButtonText(getString(R.string.dialog_button_retry));
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         bundle.setRightButtonText(getString(R.string.dialog_button_cancel));
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.CONN_TIMEOUT_DIALOG_TAG);
@@ -103,8 +101,6 @@ public abstract class ACBaseActivity extends ActionBarActivity {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.no_internet_conn_dialog_title));
         bundle.setTextViewMessage(getString(R.string.no_internet_conn_dialog_message));
-        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.RETRY);
-        bundle.setLeftButtonText(getString(R.string.dialog_button_retry));
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         bundle.setRightButtonText(getString(R.string.dialog_button_cancel));
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.NO_INTERNET_CONN_DIALOG_TAG);

@@ -35,7 +35,6 @@
     <!-- Buttons -->
     <string name="dialog_button_done">Done</string>
     <string name="dialog_button_cancel">Cancel</string>
-    <string name="dialog_button_retry">Retry</string>
     <string name="dialog_button_ok">OK</string>
     <!-- Settings activity -->
     <string name="settings_logs">Logs</string>

@@ -34,7 +34,7 @@ public class CustomFragmentDialog extends DialogFragment {
     private static final int TYPED_DIMENSION_VALUE = 10;
 
     public enum OnClickAction {
-        LOGIN, DISMISS, RETRY, LOGOUT, UNAUTHORIZED
+        LOGIN, DISMISS, LOGOUT, UNAUTHORIZED
     }
 
     protected LayoutInflater mInflater;
@@ -236,11 +236,6 @@ public class CustomFragmentDialog extends DialogFragment {
                         dismiss();
                         break;
                     case DISMISS:
-                        dismiss();
-                        break;
-                    case RETRY:
-                        // URL was already validated
-                        ((LoginActivity) getActivity()).login(false);
                         dismiss();
                         break;
                     case LOGOUT:

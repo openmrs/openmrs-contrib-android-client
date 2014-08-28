@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OpenMRS Android Client</string>
+    <string name="app_name">OpenMRS Client</string>
     <string name="action_settings">Settings</string>
     <!-- Login view -->
     <string name="login_button">Login</string>
@@ -49,4 +49,5 @@
     <!-- Dashboard Activity -->
     <string name="dashboard_search_icon_label">Find Patients</string>
     <string name="dashboard_registry_icon_label">Registry Patient</string>
+    <string name="dashboard_logged_as">logged as %1$s</string>
 </resources>

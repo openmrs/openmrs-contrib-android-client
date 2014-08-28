@@ -46,4 +46,7 @@
     <string name="search_patient_hint">Patient name</string>
     <string name="search_patient_no_results">No patients in database</string>
     <string name="search_patient_no_result_for_query">No results found for query \"%1$s\"</string>
+    <!-- Dashboard Activity -->
+    <string name="dashboard_search_icon_label">Find Patients</string>
+    <string name="dashboard_registry_icon_label">Registry Patient</string>
 </resources>

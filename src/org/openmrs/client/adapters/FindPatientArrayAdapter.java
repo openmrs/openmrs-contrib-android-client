@@ -10,8 +10,6 @@ import android.widget.TextView;
 import org.openmrs.client.R;
 import org.openmrs.client.models.Patient;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
@@ -19,8 +17,11 @@ public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
     private List<Patient> mItems;
 
     class ViewHolder {
-        private TextView mPatientName;
-        private TextView mPatientData;
+        private TextView mIdentifier;
+        private TextView mDisplayName;
+        private TextView mGender;
+        private TextView mAge;
+        private TextView mBirthDate;
     }
 
     public FindPatientArrayAdapter(Activity context, List<Patient> items) {
@@ -38,22 +39,32 @@ public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
             rowView = inflater.inflate(R.layout.activity_find_patients_row, null);
             // configure view holder
             ViewHolder viewHolder = new ViewHolder();
-            viewHolder.mPatientName = (TextView) rowView.findViewById(R.id.find_patient_name);
-            viewHolder.mPatientData = (TextView) rowView.findViewById(R.id.find_patient_data);
+            viewHolder.mIdentifier = (TextView) rowView.findViewById(R.id.patientIdentifier);
+            viewHolder.mDisplayName = (TextView) rowView.findViewById(R.id.patientDisplayName);
+            viewHolder.mGender = (TextView) rowView.findViewById(R.id.patientGender);
+            viewHolder.mAge = (TextView) rowView.findViewById(R.id.patientAge);
+            viewHolder.mBirthDate = (TextView) rowView.findViewById(R.id.patientBirthDate);
             rowView.setTag(viewHolder);
         }
 
         // fill data
         ViewHolder holder = (ViewHolder) rowView.getTag();
         Patient patient = mItems.get(position);
-        holder.mPatientName.setText("#" + patient.getDisplay());
-        if (patient.getGender() != null) {
-            holder.mPatientData.setText(" | " + patient.getGender());
+        if (null != patient.getIdentifier()) {
+            holder.mIdentifier.setText("#" + patient.getIdentifier());
         }
-        if (patient.getBirthDate() != null) {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            holder.mPatientData.setText(holder.mPatientData.getText()
-                    + " | " + df.format(patient.getBirthDate()));
+        if (null != patient.getDisplay()) {
+            holder.mDisplayName.setText(patient.getDisplay());
+        }
+        if (null != patient.getGender()) {
+            holder.mGender.setText(patient.getGender());
+        }
+        if (null != patient.getAge()) {
+            holder.mAge.setText(patient.getAge());
+        }
+        String birthDate = patient.getBirthDate();
+        if (null != birthDate) {
+            holder.mBirthDate.setText(birthDate.substring(0, birthDate.indexOf('T')));
         }
         return rowView;
     }

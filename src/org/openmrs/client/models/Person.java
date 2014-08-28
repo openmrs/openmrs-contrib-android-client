@@ -11,6 +11,7 @@ public class Person implements Serializable {
     private String givenName;
     private String middleName;
     private String familyName;
+    private String age;
 
     public String getMiddleName() {
         return middleName;
@@ -74,6 +75,14 @@ public class Person implements Serializable {
 
     public void setFamilyName(String familyName) {
         this.familyName = familyName;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 
     @Override

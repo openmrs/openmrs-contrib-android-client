@@ -21,13 +21,14 @@ import org.openmrs.client.adapters.FindPatientArrayAdapter;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.models.Patient;
 import org.openmrs.client.net.FindPatientsManager;
+import org.openmrs.client.utilities.PatientCacheHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FindPatientsSearchActivity extends ACBaseActivity {
     private String mQuery;
-    private MenuItem mFindPatientMenuItem;
-    private ArrayList<Patient> mPatientsList;
+    private MenuItem mFindPatientItem;
     private FindPatientArrayAdapter mAdapter;
     private ListView mPatientsListView;
     private TextView mEmptyList;
@@ -88,11 +89,11 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
 
         SearchView findPatientView;
 
-        mFindPatientMenuItem = menu.findItem(R.id.action_search);
+        mFindPatientItem = menu.findItem(R.id.action_search);
         if (OpenMRS.getInstance().isRunningHoneycombVersionOrHigher()) {
-            findPatientView = (SearchView) mFindPatientMenuItem.getActionView();
+            findPatientView = (SearchView) mFindPatientItem.getActionView();
         } else {
-            findPatientView = (SearchView) MenuItemCompat.getActionView(mFindPatientMenuItem);
+            findPatientView = (SearchView) MenuItemCompat.getActionView(mFindPatientItem);
         }
 
         SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
@@ -101,19 +102,14 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         return true;
     }
 
-    public void setPatientsList(ArrayList<Patient> patientsList) {
-        mPatientsList = patientsList;
+    public void updatePatientsData() {
+        List<Patient> patientsList = PatientCacheHelper.getCachedPatients();
         if (patientsList.size() == 0) {
             mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mQuery));
             mSpinner.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mEmptyList);
         }
-        mAdapter = new FindPatientArrayAdapter(this, mPatientsList);
-        mPatientsListView.setAdapter(mAdapter);
-    }
-
-    public void updatePatientsData() {
-        mAdapter = new FindPatientArrayAdapter(this, mPatientsList);
+        mAdapter = new FindPatientArrayAdapter(this, patientsList);
         mPatientsListView.setAdapter(mAdapter);
     }
 }

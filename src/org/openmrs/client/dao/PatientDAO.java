@@ -12,8 +12,6 @@ import java.util.List;
 
 public class PatientDAO {
 
-    private final PatientSQLiteHelper mPatientSQLiteHelper;
-
     private String[] mPatientColumns = {
             PatientSQLiteHelper.COLUMN_ID, PatientSQLiteHelper.COLUMN_DISPLAY,
             PatientSQLiteHelper.COLUMN_UUID, PatientSQLiteHelper.COLUMN_IDENTIFIER,
@@ -22,20 +20,17 @@ public class PatientDAO {
             PatientSQLiteHelper.COLUMN_BIRTH_DATE, PatientSQLiteHelper.COLUMN_DEATH_DATE,
             PatientSQLiteHelper.COLUMN_CAUSE_OF_DEATH};
 
-    public PatientDAO() {
-        mPatientSQLiteHelper = new OpenMRSDBOpenHelper().getPatientSQLiteHelper();
-    }
-
     public void deletePatient(long id) {
         OpenMRS.getInstance().getOpenMRSLogger().w("Patient deleted with id: " + id);
-        mPatientSQLiteHelper.getReadableDatabase().delete(PatientSQLiteHelper.TABLE_NAME, PatientSQLiteHelper.COLUMN_ID
+        PatientSQLiteHelper patientSQLiteHelper = OpenMRSDBOpenHelper.getInstance().getPatientSQLiteHelper();
+        patientSQLiteHelper.getReadableDatabase().delete(PatientSQLiteHelper.TABLE_NAME, PatientSQLiteHelper.COLUMN_ID
                 + " = " + id, null);
     }
 
     public List<Patient> getAllPatients() {
         List<Patient> patients = new ArrayList<Patient>();
-
-        Cursor cursor = mPatientSQLiteHelper.getReadableDatabase().query(PatientSQLiteHelper.TABLE_NAME,
+        PatientSQLiteHelper patientSQLiteHelper = OpenMRSDBOpenHelper.getInstance().getPatientSQLiteHelper();
+        Cursor cursor = patientSQLiteHelper.getReadableDatabase().query(PatientSQLiteHelper.TABLE_NAME,
                 mPatientColumns, null, null, null, null, null);
 
         cursor.moveToFirst();

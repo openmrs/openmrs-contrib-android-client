@@ -1,6 +1,8 @@
 package org.openmrs.client.dao;
 
+
 import net.sqlcipher.Cursor;
+import net.sqlcipher.database.SQLiteDatabase;
 
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.databases.OpenMRSDBOpenHelper;
@@ -18,7 +20,13 @@ public class PatientDAO {
             PatientSQLiteHelper.COLUMN_GIVEN_NAME, PatientSQLiteHelper.COLUMN_MIDDLE_NAME,
             PatientSQLiteHelper.COLUMN_FAMILY_NAME, PatientSQLiteHelper.COLUMN_GENDER,
             PatientSQLiteHelper.COLUMN_BIRTH_DATE, PatientSQLiteHelper.COLUMN_DEATH_DATE,
-            PatientSQLiteHelper.COLUMN_CAUSE_OF_DEATH};
+            PatientSQLiteHelper.COLUMN_CAUSE_OF_DEATH, PatientSQLiteHelper.COLUMN_AGE};
+
+    public void savePatient(Patient patient) {
+        PatientSQLiteHelper helper = OpenMRSDBOpenHelper.getInstance().getPatientSQLiteHelper();
+        SQLiteDatabase db = helper.getWritableDatabase();
+        helper.insert(db, patient);
+    }
 
     public void deletePatient(long id) {
         OpenMRS.getInstance().getOpenMRSLogger().w("Patient deleted with id: " + id);
@@ -57,7 +65,31 @@ public class PatientDAO {
         patient.setBirthDate(cursor.getString(cursor.getColumnIndex(mPatientColumns[8])));
         patient.setDeathDate(cursor.getString(cursor.getColumnIndex(mPatientColumns[9])));
         patient.setCauseOfDeath(cursor.getString(cursor.getColumnIndex(mPatientColumns[10])));
+        patient.setAge(cursor.getString(cursor.getColumnIndex(mPatientColumns[11])));
         return patient;
     }
 
+    public boolean isUserAlreadySaved(String uuid) {
+        String where = String.format("%s = ?", PatientSQLiteHelper.COLUMN_UUID);
+        String[] whereArgs = new String[]{uuid};
+
+        PatientSQLiteHelper helper = OpenMRSDBOpenHelper.getInstance().getPatientSQLiteHelper();
+        final Cursor cursor = helper.getReadableDatabase().query(PatientSQLiteHelper.TABLE_NAME, null, where, whereArgs, null, null, null);
+        String patientUUID = "";
+        if (null != cursor) {
+            try {
+                if (cursor.moveToFirst()) {
+                    int uuidColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_UUID);
+                    patientUUID = cursor.getString(uuidColumnIndex);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return uuid.equalsIgnoreCase(patientUUID);
+    }
+
+    public boolean userDoesNotExist(String uuid){
+        return !isUserAlreadySaved(uuid);
+    }
 }

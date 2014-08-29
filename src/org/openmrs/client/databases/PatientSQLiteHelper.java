@@ -3,14 +3,17 @@ package org.openmrs.client.databases;
 import android.content.Context;
 
 import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteStatement;
 
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.application.OpenMRSLogger;
+import org.openmrs.client.models.Patient;
 
 public class PatientSQLiteHelper extends OpenMRSSQLiteOpenHelper {
     protected final OpenMRSLogger mOpenMRSLogger = OpenMRS.getInstance().getOpenMRSLogger();
+    private static final String COMMA = ",";
 
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     public static final String TABLE_NAME = "patients";
 
     public static final String COLUMN_ID = "_id";
@@ -24,6 +27,7 @@ public class PatientSQLiteHelper extends OpenMRSSQLiteOpenHelper {
     public static final String COLUMN_BIRTH_DATE = "birthDate";
     public static final String COLUMN_DEATH_DATE = "deathDate";
     public static final String COLUMN_CAUSE_OF_DEATH = "causeOfDeath";
+    public static final String COLUMN_AGE = "age";
 
     public static final String TEXT_TYPE_NOT_NULL = " text not null,";
 
@@ -40,11 +44,23 @@ public class PatientSQLiteHelper extends OpenMRSSQLiteOpenHelper {
             + COLUMN_GENDER + TEXT_TYPE_NOT_NULL
             + COLUMN_BIRTH_DATE + " data not null,"
             + COLUMN_DEATH_DATE + " data,"
-            + COLUMN_CAUSE_OF_DEATH + " text"
+            + COLUMN_CAUSE_OF_DEATH + " text,"
+            + COLUMN_AGE + " text"
             + ");";
 
     private static final String DROP_PATIENTS_TABLE =
             "DROP TABLE IF EXISTS " + TABLE_NAME;
+
+    private static final String INSERT_PATIENT_QUERY = "INSERT INTO " + TABLE_NAME + "("
+            + COLUMN_DISPLAY + COMMA + COLUMN_UUID + COMMA
+            + COLUMN_IDENTIFIER + COMMA + COLUMN_GIVEN_NAME + COMMA
+            + COLUMN_MIDDLE_NAME + COMMA + COLUMN_FAMILY_NAME + COMMA
+            + COLUMN_GENDER + COMMA + COLUMN_BIRTH_DATE + COMMA
+            + COLUMN_DEATH_DATE + COMMA + COLUMN_CAUSE_OF_DEATH + COMMA
+            + COLUMN_AGE + ")"
+            + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+
+    private SQLiteStatement mPatientSQLStatement;
 
     public PatientSQLiteHelper(Context context) {
         super(context, null, DATABASE_VERSION);
@@ -63,6 +79,31 @@ public class PatientSQLiteHelper extends OpenMRSSQLiteOpenHelper {
                 + newVersion + ", which will destroy all old data");
         sqLiteDatabase.execSQL(DROP_PATIENTS_TABLE);
         onCreate(sqLiteDatabase);
+    }
+
+    public void insert(SQLiteDatabase db, Patient patient) {
+        if (null == mPatientSQLStatement) {
+            mPatientSQLStatement = db.compileStatement(INSERT_PATIENT_QUERY);
+        }
+        try {
+            db.beginTransaction();
+            mPatientSQLStatement.bindString(1, patient.getDisplay());
+            mPatientSQLStatement.bindString(2, patient.getUuid());
+            mPatientSQLStatement.bindString(3, patient.getIdentifier());
+            mPatientSQLStatement.bindString(4, patient.getGivenName());
+            mPatientSQLStatement.bindString(5, patient.getMiddleName());
+            mPatientSQLStatement.bindString(6, patient.getFamilyName());
+            mPatientSQLStatement.bindString(7, patient.getGender());
+            mPatientSQLStatement.bindString(8, patient.getBirthDate());
+            mPatientSQLStatement.bindString(9, patient.getDeathDate());
+            mPatientSQLStatement.bindString(10, patient.getCauseOfDeath());
+            mPatientSQLStatement.bindString(11, patient.getAge());
+            mPatientSQLStatement.execute();
+            mPatientSQLStatement.clearBindings();
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
     }
 
 }

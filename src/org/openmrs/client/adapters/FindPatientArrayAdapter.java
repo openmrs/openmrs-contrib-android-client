@@ -5,9 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.openmrs.client.R;
+import org.openmrs.client.dao.PatientDAO;
 import org.openmrs.client.models.Patient;
 
 import java.util.List;
@@ -15,6 +18,7 @@ import java.util.List;
 public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
     private Activity mContext;
     private List<Patient> mItems;
+    private int mResourceID;
 
     class ViewHolder {
         private TextView mIdentifier;
@@ -22,12 +26,14 @@ public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
         private TextView mGender;
         private TextView mAge;
         private TextView mBirthDate;
+        private CheckBox mAvailableOfflineCheckbox;
     }
 
-    public FindPatientArrayAdapter(Activity context, List<Patient> items) {
-        super(context, R.layout.activity_find_patients_row, items);
+    public FindPatientArrayAdapter(Activity context, int resourceID, List<Patient> items) {
+        super(context, resourceID, items);
         this.mContext = context;
         this.mItems = items;
+        this.mResourceID = resourceID;
     }
 
     @Override
@@ -36,7 +42,7 @@ public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
         // reuse views
         if (rowView == null) {
             LayoutInflater inflater = mContext.getLayoutInflater();
-            rowView = inflater.inflate(R.layout.activity_find_patients_row, null);
+            rowView = inflater.inflate(mResourceID, null);
             // configure view holder
             ViewHolder viewHolder = new ViewHolder();
             viewHolder.mIdentifier = (TextView) rowView.findViewById(R.id.patientIdentifier);
@@ -44,12 +50,13 @@ public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
             viewHolder.mGender = (TextView) rowView.findViewById(R.id.patientGender);
             viewHolder.mAge = (TextView) rowView.findViewById(R.id.patientAge);
             viewHolder.mBirthDate = (TextView) rowView.findViewById(R.id.patientBirthDate);
+            viewHolder.mAvailableOfflineCheckbox = (CheckBox) rowView.findViewById(R.id.offlineCheckbox);
             rowView.setTag(viewHolder);
         }
 
         // fill data
-        ViewHolder holder = (ViewHolder) rowView.getTag();
-        Patient patient = mItems.get(position);
+        final ViewHolder holder = (ViewHolder) rowView.getTag();
+        final Patient patient = mItems.get(position);
         if (null != patient.getIdentifier()) {
             holder.mIdentifier.setText("#" + patient.getIdentifier());
         }
@@ -66,6 +73,29 @@ public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
         if (null != birthDate) {
             holder.mBirthDate.setText(birthDate.substring(0, birthDate.indexOf('T')));
         }
+        if (null != holder.mAvailableOfflineCheckbox) {
+            if (new PatientDAO().userDoesNotExist(patient.getUuid())) {
+                holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_download_label));
+                holder.mAvailableOfflineCheckbox.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (((CheckBox) v).isChecked()) {
+                            new PatientDAO().savePatient(patient);
+                            Toast.makeText(mContext, R.string.action_settings, Toast.LENGTH_SHORT).show();
+                            disableCheckBox(holder);
+                        }
+                    }
+                });
+            } else {
+                disableCheckBox(holder);
+            }
+        }
         return rowView;
+    }
+
+    public void disableCheckBox(ViewHolder holder) {
+        holder.mAvailableOfflineCheckbox.setChecked(true);
+        holder.mAvailableOfflineCheckbox.setClickable(false);
+        holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_available_offline_label));
     }
 }

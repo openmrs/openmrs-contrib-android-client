@@ -19,4 +19,8 @@ public final class PatientCacheHelper {
     public static void addPatient(Patient patient) {
         sCachedPatients.add(patient);
     }
+
+    public static void clearCache() {
+        sCachedPatients.clear();
+    }
 }

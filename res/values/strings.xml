@@ -49,4 +49,8 @@
     <string name="dashboard_search_icon_label">Find Patients</string>
     <string name="dashboard_registry_icon_label">Registry Patient</string>
     <string name="dashboard_logged_as">logged as %1$s</string>
+    <!-- find_patients_row layout-->
+    <string name="find_patients_row_checkbox_download_label">Download</string>
+    <string name="find_patients_row_checkbox_available_offline_label">Available offline</string>
+    <string name="find_patients_row_toast_patient_saved">Patient is now available in locally</string>
 </resources>

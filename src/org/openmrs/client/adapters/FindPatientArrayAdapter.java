@@ -1,17 +1,21 @@
 package org.openmrs.client.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.openmrs.client.R;
+import org.openmrs.client.activities.PatientDashboardActivity;
 import org.openmrs.client.dao.PatientDAO;
 import org.openmrs.client.models.Patient;
+import org.openmrs.client.utilities.ApplicationConstants;
 
 import java.util.List;
 
@@ -21,6 +25,7 @@ public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
     private int mResourceID;
 
     class ViewHolder {
+        private LinearLayout mRowLayout;
         private TextView mIdentifier;
         private TextView mDisplayName;
         private TextView mGender;
@@ -45,6 +50,7 @@ public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
             rowView = inflater.inflate(mResourceID, null);
             // configure view holder
             ViewHolder viewHolder = new ViewHolder();
+            viewHolder.mRowLayout = (LinearLayout) rowView;
             viewHolder.mIdentifier = (TextView) rowView.findViewById(R.id.patientIdentifier);
             viewHolder.mDisplayName = (TextView) rowView.findViewById(R.id.patientDisplayName);
             viewHolder.mGender = (TextView) rowView.findViewById(R.id.patientGender);
@@ -74,23 +80,37 @@ public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
             holder.mBirthDate.setText(birthDate.substring(0, birthDate.indexOf('T')));
         }
         if (null != holder.mAvailableOfflineCheckbox) {
-            if (new PatientDAO().userDoesNotExist(patient.getUuid())) {
-                holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_download_label));
-                holder.mAvailableOfflineCheckbox.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (((CheckBox) v).isChecked()) {
-                            new PatientDAO().savePatient(patient);
-                            Toast.makeText(mContext, R.string.action_settings, Toast.LENGTH_SHORT).show();
-                            disableCheckBox(holder);
-                        }
-                    }
-                });
-            } else {
-                disableCheckBox(holder);
-            }
+            setUpCheckBoxLogic(holder, patient);
+        }
+        if (new PatientDAO().isUserAlreadySaved(patient.getUuid())) {
+            holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, PatientDashboardActivity.class);
+                    intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getUuid());
+                    mContext.startActivity(intent);
+                }
+            });
         }
         return rowView;
+    }
+
+    public void setUpCheckBoxLogic(final ViewHolder holder, final Patient patient) {
+        if (new PatientDAO().userDoesNotExist(patient.getUuid())) {
+            holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_download_label));
+            holder.mAvailableOfflineCheckbox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (((CheckBox) v).isChecked()) {
+                        new PatientDAO().savePatient(patient);
+                        Toast.makeText(mContext, R.string.find_patients_row_toast_patient_saved, Toast.LENGTH_SHORT).show();
+                        disableCheckBox(holder);
+                    }
+                }
+            });
+        } else {
+            disableCheckBox(holder);
+        }
     }
 
     public void disableCheckBox(ViewHolder holder) {

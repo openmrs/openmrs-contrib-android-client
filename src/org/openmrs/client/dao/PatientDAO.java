@@ -89,7 +89,39 @@ public class PatientDAO {
         return uuid.equalsIgnoreCase(patientUUID);
     }
 
-    public boolean userDoesNotExist(String uuid){
+    public boolean userDoesNotExist(String uuid) {
         return !isUserAlreadySaved(uuid);
+    }
+
+    public Patient findPatientByUUID(String uuid) {
+        Patient patient = new Patient();
+        String where = String.format("%s = ?", PatientSQLiteHelper.COLUMN_UUID);
+        String[] whereArgs = new String[]{uuid};
+
+        PatientSQLiteHelper helper = OpenMRSDBOpenHelper.getInstance().getPatientSQLiteHelper();
+        final Cursor cursor = helper.getReadableDatabase().query(PatientSQLiteHelper.TABLE_NAME, null, where, whereArgs, null, null, null);
+        if (null != cursor) {
+            try {
+                if (cursor.moveToFirst()) {
+                    int displayColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_DISPLAY);
+                    int identifierColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_IDENTIFIER);
+                    int givenNameColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_GIVEN_NAME);
+                    int familyNameColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_FAMILY_NAME);
+                    int genderColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_GENDER);
+                    int ageColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_AGE);
+                    int birthDateColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_BIRTH_DATE);
+                    patient.setDisplay(cursor.getString(displayColumnIndex));
+                    patient.setIdentifier(cursor.getString(identifierColumnIndex));
+                    patient.setGivenName(cursor.getString(givenNameColumnIndex));
+                    patient.setFamilyName(cursor.getString(familyNameColumnIndex));
+                    patient.setGender(cursor.getString(genderColumnIndex));
+                    patient.setAge(cursor.getString(ageColumnIndex));
+                    patient.setBirthDate(cursor.getString(birthDateColumnIndex));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return patient;
     }
 }

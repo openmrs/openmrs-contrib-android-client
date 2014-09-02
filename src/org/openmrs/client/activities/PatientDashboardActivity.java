@@ -14,6 +14,7 @@ import org.openmrs.client.activities.fragments.PatientDetailsFragment;
 import org.openmrs.client.activities.fragments.PatientDiagnosisFragment;
 import org.openmrs.client.activities.fragments.PatientVisitsFragment;
 import org.openmrs.client.activities.fragments.PatientVitalsFragment;
+import org.openmrs.client.bundle.PatientDashboardBundle;
 import org.openmrs.client.dao.PatientDAO;
 import org.openmrs.client.models.Patient;
 import org.openmrs.client.utilities.ApplicationConstants;
@@ -93,7 +94,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
     }
 
-    public static class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
+    public class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
         private List<TabHost> mTabHosts;
 
         public PatientDashboardPagerAdapter(FragmentManager fm, List<TabHost> tabHosts) {
@@ -109,7 +110,9 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
         public Fragment getItem(int i) {
             switch (i) {
                 case TabHost.DETAILS_TAB_POS:
-                    return new PatientDetailsFragment();
+                    PatientDashboardBundle bundle = new PatientDashboardBundle();
+                    bundle.setPatient(mPatient);
+                    return PatientDetailsFragment.newInstance(bundle);
                 case TabHost.DIAGNOSIS_TAB_POS:
                     return new PatientDiagnosisFragment();
                 case TabHost.VISITS_TAB_POS:

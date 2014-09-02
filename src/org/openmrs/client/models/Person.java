@@ -12,6 +12,24 @@ public class Person implements Serializable {
     private String middleName;
     private String familyName;
     private String age;
+    private Address address;
+    private String phoneNumber;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public String getMiddleName() {
         return middleName;

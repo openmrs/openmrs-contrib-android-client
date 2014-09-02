@@ -7,6 +7,7 @@ import net.sqlcipher.database.SQLiteDatabase;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.databases.OpenMRSDBOpenHelper;
 import org.openmrs.client.databases.PatientSQLiteHelper;
+import org.openmrs.client.models.Address;
 import org.openmrs.client.models.Patient;
 
 import java.util.ArrayList;
@@ -110,6 +111,7 @@ public class PatientDAO {
                     int genderColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_GENDER);
                     int ageColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_AGE);
                     int birthDateColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_BIRTH_DATE);
+                    int phoneColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_PHONE);
                     patient.setDisplay(cursor.getString(displayColumnIndex));
                     patient.setIdentifier(cursor.getString(identifierColumnIndex));
                     patient.setGivenName(cursor.getString(givenNameColumnIndex));
@@ -117,11 +119,25 @@ public class PatientDAO {
                     patient.setGender(cursor.getString(genderColumnIndex));
                     patient.setAge(cursor.getString(ageColumnIndex));
                     patient.setBirthDate(cursor.getString(birthDateColumnIndex));
+                    patient.setAddress(cursorToAddress(cursor));
+                    patient.setPhoneNumber(cursor.getString(phoneColumnIndex));
                 }
             } finally {
                 cursor.close();
             }
         }
         return patient;
+    }
+
+    private Address cursorToAddress(Cursor cursor) {
+        int address1ColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_ADDRESS_1);
+        int address2ColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_ADDRESS_2);
+        int postalColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_POSTAL_CODE);
+        int countryColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_COUNTRY);
+        int stateColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_STATE);
+        int cityColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_CITY);
+        return new Address(cursor.getString(address1ColumnIndex), cursor.getString(address2ColumnIndex),
+                cursor.getString(postalColumnIndex), cursor.getString(cityColumnIndex),
+                cursor.getString(countryColumnIndex), cursor.getString(stateColumnIndex));
     }
 }

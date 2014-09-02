@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">OpenMRS Android Client</string>
+    <string name="app_name">OpenMRS Client</string>
     <string name="action_settings">Settings</string>
     <!-- Login view -->
     <string name="login_button">Login</string>
@@ -35,7 +35,6 @@
     <!-- Buttons -->
     <string name="dialog_button_done">Done</string>
     <string name="dialog_button_cancel">Cancel</string>
-    <string name="dialog_button_retry">Retry</string>
     <string name="dialog_button_ok">OK</string>
     <!-- Settings activity -->
     <string name="settings_logs">Logs</string>
@@ -46,4 +45,23 @@
     <string name="search_patient_hint">Patient name</string>
     <string name="search_patient_no_results">No patients in database</string>
     <string name="search_patient_no_result_for_query">No results found for query \"%1$s\"</string>
+    <!-- Dashboard Activity -->
+    <string name="dashboard_search_icon_label">Find Patients</string>
+    <string name="dashboard_registry_icon_label">Registry Patient</string>
+    <string name="dashboard_logged_as">logged as %1$s</string>
+    <!-- find_patients_row layout-->
+    <string name="find_patients_row_checkbox_download_label">Download</string>
+    <string name="find_patients_row_checkbox_available_offline_label">Available offline</string>
+    <string name="find_patients_row_toast_patient_saved">Patient is now available in locally</string>
+    <!-- Patient Dashboard Activity -->
+    <string name="patient_scroll_tab_details_label">Details</string>
+    <string name="patient_scroll_tab_diagnosis_label">Diagnosis</string>
+    <string name="patient_scroll_tab_visits_label">Visits</string>
+    <string name="patient_scroll_tab_vitals_label">Vitals</string>
+    <!-- fragment_patient_details layout -->
+    <string name="patient_details_gender_label">Gender</string>
+    <string name="patient_details_birth_date_label">Birth date</string>
+    <string name="patient_details_phone_label">Phone number</string>
+    <string name="patient_address_info_label">Contact information</string>
+    <string name="patient_address_label">Address :</string>
 </resources>

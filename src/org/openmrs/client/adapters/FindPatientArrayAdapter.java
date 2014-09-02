@@ -1,32 +1,45 @@
 package org.openmrs.client.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.openmrs.client.R;
+import org.openmrs.client.activities.PatientDashboardActivity;
+import org.openmrs.client.dao.PatientDAO;
 import org.openmrs.client.models.Patient;
+import org.openmrs.client.utilities.ApplicationConstants;
+import org.openmrs.client.utilities.DateUtils;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
     private Activity mContext;
     private List<Patient> mItems;
+    private int mResourceID;
 
     class ViewHolder {
-        private TextView mPatientName;
-        private TextView mPatientData;
+        private LinearLayout mRowLayout;
+        private TextView mIdentifier;
+        private TextView mDisplayName;
+        private TextView mGender;
+        private TextView mAge;
+        private TextView mBirthDate;
+        private CheckBox mAvailableOfflineCheckbox;
     }
 
-    public FindPatientArrayAdapter(Activity context, List<Patient> items) {
-        super(context, R.layout.activity_find_patients_row, items);
+    public FindPatientArrayAdapter(Activity context, int resourceID, List<Patient> items) {
+        super(context, resourceID, items);
         this.mContext = context;
         this.mItems = items;
+        this.mResourceID = resourceID;
     }
 
     @Override
@@ -35,26 +48,72 @@ public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
         // reuse views
         if (rowView == null) {
             LayoutInflater inflater = mContext.getLayoutInflater();
-            rowView = inflater.inflate(R.layout.activity_find_patients_row, null);
+            rowView = inflater.inflate(mResourceID, null);
             // configure view holder
             ViewHolder viewHolder = new ViewHolder();
-            viewHolder.mPatientName = (TextView) rowView.findViewById(R.id.find_patient_name);
-            viewHolder.mPatientData = (TextView) rowView.findViewById(R.id.find_patient_data);
+            viewHolder.mRowLayout = (LinearLayout) rowView;
+            viewHolder.mIdentifier = (TextView) rowView.findViewById(R.id.patientIdentifier);
+            viewHolder.mDisplayName = (TextView) rowView.findViewById(R.id.patientDisplayName);
+            viewHolder.mGender = (TextView) rowView.findViewById(R.id.patientGender);
+            viewHolder.mAge = (TextView) rowView.findViewById(R.id.patientAge);
+            viewHolder.mBirthDate = (TextView) rowView.findViewById(R.id.patientBirthDate);
+            viewHolder.mAvailableOfflineCheckbox = (CheckBox) rowView.findViewById(R.id.offlineCheckbox);
             rowView.setTag(viewHolder);
         }
 
         // fill data
-        ViewHolder holder = (ViewHolder) rowView.getTag();
-        Patient patient = mItems.get(position);
-        holder.mPatientName.setText("#" + patient.getDisplay());
-        if (patient.getGender() != null) {
-            holder.mPatientData.setText(" | " + patient.getGender());
+        final ViewHolder holder = (ViewHolder) rowView.getTag();
+        final Patient patient = mItems.get(position);
+        if (null != patient.getIdentifier()) {
+            holder.mIdentifier.setText("#" + patient.getIdentifier());
         }
-        if (patient.getBirthDate() != null) {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            holder.mPatientData.setText(holder.mPatientData.getText()
-                    + " | " + df.format(patient.getBirthDate()));
+        if (null != patient.getDisplay()) {
+            holder.mDisplayName.setText(patient.getDisplay());
+        }
+        if (null != patient.getGender()) {
+            holder.mGender.setText(patient.getGender());
+        }
+        if (null != patient.getAge()) {
+            holder.mAge.setText(patient.getAge());
+        }
+        holder.mBirthDate.setText(DateUtils.convertTime(patient.getBirthDate()));
+        if (null != holder.mAvailableOfflineCheckbox) {
+            setUpCheckBoxLogic(holder, patient);
+        }
+        if (new PatientDAO().isUserAlreadySaved(patient.getUuid())) {
+            holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, PatientDashboardActivity.class);
+                    intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getUuid());
+                    mContext.startActivity(intent);
+                }
+            });
         }
         return rowView;
+    }
+
+    public void setUpCheckBoxLogic(final ViewHolder holder, final Patient patient) {
+        if (new PatientDAO().userDoesNotExist(patient.getUuid())) {
+            holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_download_label));
+            holder.mAvailableOfflineCheckbox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (((CheckBox) v).isChecked()) {
+                        new PatientDAO().savePatient(patient);
+                        Toast.makeText(mContext, R.string.find_patients_row_toast_patient_saved, Toast.LENGTH_SHORT).show();
+                        disableCheckBox(holder);
+                    }
+                }
+            });
+        } else {
+            disableCheckBox(holder);
+        }
+    }
+
+    public void disableCheckBox(ViewHolder holder) {
+        holder.mAvailableOfflineCheckbox.setChecked(true);
+        holder.mAvailableOfflineCheckbox.setClickable(false);
+        holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_available_offline_label));
     }
 }

@@ -39,8 +39,7 @@
         </activity>
         <activity
             android:name=".activities.FindPatientsSearchActivity"
-            android:label="@string/action_find_patients"
-            android:launchMode="singleTop" >
+            android:label="@string/action_find_patients">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -62,6 +61,12 @@
             android:name=".activities.SettingsActivity"
             android:label="@string/action_settings"
             android:noHistory="true">
+        </activity>
+        <activity android:name=".activities.PatientDashboardActivity">
+        <!-- Parent activity meta-data to support 4.0 and lower -->
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".activities.FindPatientsSearchActivity" />
         </activity>
     </application>
 </manifest>

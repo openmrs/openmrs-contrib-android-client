@@ -13,24 +13,19 @@ import org.json.JSONObject;
 import org.openmrs.client.activities.FindPatientsSearchActivity;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.application.OpenMRSLogger;
-import org.openmrs.client.models.Patient;
-import org.openmrs.client.models.Person;
 import org.openmrs.client.models.mappers.PatientMapper;
-
-import java.util.ArrayList;
+import org.openmrs.client.utilities.PatientCacheHelper;
 
 import static org.openmrs.client.utilities.ApplicationConstants.API;
 
 public class FindPatientsManager extends BaseManager {
     private static final String RESULTS_KEY = "results";
     private static final String UUID_KEY = "uuid";
-    private static final String DISPLAY_KEY = "display";
     private static final String PATIENT_QUERY = "patient?q=";
 
     private Context mContext;
     private OpenMRS mOpenMRS = OpenMRS.getInstance();
     private OpenMRSLogger logger = mOpenMRS.getOpenMRSLogger();
-    private ArrayList<Patient> patientsList;
 
     public FindPatientsManager(Context context) {
         this.mContext = context;
@@ -50,18 +45,9 @@ public class FindPatientsManager extends BaseManager {
                 try {
                     JSONArray patientsJSONList = response.getJSONArray(RESULTS_KEY);
 
-                    patientsList = new ArrayList<Patient>();
-
                     for (int i = 0; i < patientsJSONList.length(); i++) {
-                        JSONObject patientJSON = patientsJSONList.getJSONObject(i);
-                        Patient patient = new Patient();
-                        patient.setUuid(patientJSON.getString(UUID_KEY));
-                        patient.setDisplay(patientJSON.getString(DISPLAY_KEY));
-                        FindPatientsManager.this.getFullPatientData(patientJSON.getString(UUID_KEY));
-                        patientsList.add(patient);
+                        getFullPatientData(patientsJSONList.getJSONObject(i).getString(UUID_KEY));
                     }
-
-                    ((FindPatientsSearchActivity) mContext).setPatientsList(patientsList);
 
                 } catch (JSONException e) {
                     logger.d(e.toString());
@@ -83,11 +69,12 @@ public class FindPatientsManager extends BaseManager {
             @Override
             public void onResponse(JSONObject response) {
                 logger.d(response.toString());
-                Person person = PatientMapper.map(response);
+                PatientCacheHelper.addPatient(PatientMapper.map(response));
                 ((FindPatientsSearchActivity) mContext).updatePatientsData();
             }
         }
                 , new GeneralErrorListenerImpl(mContext));
         queue.add(jsObjRequest);
+        queue.start();
     }
 }

@@ -1,16 +1,36 @@
 package org.openmrs.client.models;
 
+
 import java.io.Serializable;
 
 public class Person implements Serializable {
     private String gender;
     private String uuid;
-    private String birthDate;
-    private String deathDate;
+    private long birthDate;
+    private long deathDate;
     private String causeOfDeath;
     private String givenName;
     private String middleName;
     private String familyName;
+    private String age;
+    private Address address;
+    private String phoneNumber;
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public String getMiddleName() {
         return middleName;
@@ -36,19 +56,19 @@ public class Person implements Serializable {
         this.uuid = uuid;
     }
 
-    public String getBirthDate() {
+    public long getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(long birthDate) {
         this.birthDate = birthDate;
     }
 
-    public String getDeathDate() {
+    public long getDeathDate() {
         return deathDate;
     }
 
-    public void setDeathDate(String deathDate) {
+    public void setDeathDate(long deathDate) {
         this.deathDate = deathDate;
     }
 
@@ -74,6 +94,14 @@ public class Person implements Serializable {
 
     public void setFamilyName(String familyName) {
         this.familyName = familyName;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 
     @Override

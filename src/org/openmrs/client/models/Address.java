@@ -85,7 +85,4 @@ public class Address implements Serializable {
         return stringBuilder.toString();
     }
 
-    public boolean notNull(String address) {
-        return null != address && !"null".equals(address);
-    }
 }

@@ -16,6 +16,7 @@ import org.openmrs.client.activities.PatientDashboardActivity;
 import org.openmrs.client.dao.PatientDAO;
 import org.openmrs.client.models.Patient;
 import org.openmrs.client.utilities.ApplicationConstants;
+import org.openmrs.client.utilities.DateUtils;
 
 import java.util.List;
 
@@ -75,10 +76,7 @@ public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
         if (null != patient.getAge()) {
             holder.mAge.setText(patient.getAge());
         }
-        String birthDate = patient.getBirthDate();
-        if (null != birthDate) {
-            holder.mBirthDate.setText(birthDate.substring(0, birthDate.indexOf('T')));
-        }
+        holder.mBirthDate.setText(DateUtils.convertTime(patient.getBirthDate()));
         if (null != holder.mAvailableOfflineCheckbox) {
             setUpCheckBoxLogic(holder, patient);
         }

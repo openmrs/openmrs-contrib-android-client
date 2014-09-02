@@ -108,8 +108,8 @@ public class PatientSQLiteHelper extends OpenMRSSQLiteOpenHelper {
             mPatientSQLStatement.bindString(5, patient.getMiddleName());
             mPatientSQLStatement.bindString(6, patient.getFamilyName());
             mPatientSQLStatement.bindString(7, patient.getGender());
-            mPatientSQLStatement.bindString(8, patient.getBirthDate());
-            mPatientSQLStatement.bindString(9, patient.getDeathDate());
+            mPatientSQLStatement.bindLong(8, patient.getBirthDate());
+            mPatientSQLStatement.bindLong(9, patient.getDeathDate());
             mPatientSQLStatement.bindString(10, patient.getCauseOfDeath());
             mPatientSQLStatement.bindString(11, patient.getAge());
             mPatientSQLStatement.bindString(12, patient.getAddress().getAddress1());

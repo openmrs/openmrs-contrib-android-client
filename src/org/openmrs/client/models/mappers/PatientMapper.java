@@ -5,6 +5,8 @@ import org.json.JSONObject;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.models.Address;
 import org.openmrs.client.models.Patient;
+import org.openmrs.client.utilities.DateUtils;
+import org.openmrs.client.utilities.StringUtils;
 
 public final class PatientMapper {
 
@@ -18,8 +20,10 @@ public final class PatientMapper {
             patient.setIdentifier(json.getJSONArray("identifiers").getJSONObject(0).getString("identifier"));
             patient.setUuid(personJSON.getString("uuid"));
             patient.setGender(personJSON.getString("gender"));
-            patient.setBirthDate(personJSON.getString("birthdate"));
-            patient.setDeathDate(personJSON.getString("deathDate"));
+            patient.setBirthDate(DateUtils.convertTime(personJSON.getString("birthdate")));
+            if (StringUtils.notNull(personJSON.getString("deathDate"))) {
+                patient.setDeathDate(DateUtils.convertTime(personJSON.getString("deathDate")));
+            }
             patient.setCauseOfDeath(personJSON.getString("causeOfDeath"));
             patient.setAge(personJSON.getString("age"));
             JSONObject namesJSON = personJSON.getJSONArray("names").getJSONObject(0);

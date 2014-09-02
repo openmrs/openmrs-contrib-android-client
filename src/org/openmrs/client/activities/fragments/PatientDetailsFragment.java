@@ -11,6 +11,7 @@ import android.widget.TextView;
 import org.openmrs.client.R;
 import org.openmrs.client.bundle.PatientDashboardBundle;
 import org.openmrs.client.utilities.ApplicationConstants;
+import org.openmrs.client.utilities.DateUtils;
 
 public class PatientDetailsFragment extends Fragment {
 
@@ -39,14 +40,13 @@ public class PatientDetailsFragment extends Fragment {
         ((TextView) fragmentLayout.findViewById(R.id.patientDetailsDisplayName)).setText(mPatientBundle.getPatient().getDisplay());
         ((TextView) fragmentLayout.findViewById(R.id.patientDetailsIdentifier)).setText(mPatientBundle.getPatient().getIdentifier());
         ((TextView) fragmentLayout.findViewById(R.id.patientDetailsGender)).setText(mPatientBundle.getPatient().getGender());
-        ((TextView) fragmentLayout.findViewById(R.id.patientDetailsBirthDate)).setText(mPatientBundle.getPatient().getBirthDate());
+        ((TextView) fragmentLayout.findViewById(R.id.patientDetailsBirthDate)).setText(DateUtils.convertTime(mPatientBundle.getPatient().getBirthDate()));
         ((TextView) fragmentLayout.findViewById(R.id.addressDetailsStreet)).setText(mPatientBundle.getPatient().getAddress().toString());
         ((TextView) fragmentLayout.findViewById(R.id.addressDetailsPostalCode)).setText(mPatientBundle.getPatient().getAddress().getPostalCode());
         ((TextView) fragmentLayout.findViewById(R.id.addressDetailsCity)).setText(mPatientBundle.getPatient().getAddress().getCityVillage());
         ((TextView) fragmentLayout.findViewById(R.id.addressDetailsState)).setText(mPatientBundle.getPatient().getAddress().getState());
         ((TextView) fragmentLayout.findViewById(R.id.addressDetailsCountry)).setText(mPatientBundle.getPatient().getAddress().getCountry());
         ((TextView) fragmentLayout.findViewById(R.id.patientDetailsPhone)).setText(mPatientBundle.getPatient().getPhoneNumber());
-
         return fragmentLayout;
     }
 }

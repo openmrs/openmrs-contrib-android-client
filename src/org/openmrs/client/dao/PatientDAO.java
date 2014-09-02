@@ -63,8 +63,8 @@ public class PatientDAO {
         patient.setMiddleName(cursor.getString(cursor.getColumnIndex(mPatientColumns[5])));
         patient.setFamilyName(cursor.getString(cursor.getColumnIndex(mPatientColumns[6])));
         patient.setGender(cursor.getString(cursor.getColumnIndex(mPatientColumns[7])));
-        patient.setBirthDate(cursor.getString(cursor.getColumnIndex(mPatientColumns[8])));
-        patient.setDeathDate(cursor.getString(cursor.getColumnIndex(mPatientColumns[9])));
+        patient.setBirthDate(cursor.getLong(cursor.getColumnIndex(mPatientColumns[8])));
+        patient.setDeathDate(cursor.getLong(cursor.getColumnIndex(mPatientColumns[9])));
         patient.setCauseOfDeath(cursor.getString(cursor.getColumnIndex(mPatientColumns[10])));
         patient.setAge(cursor.getString(cursor.getColumnIndex(mPatientColumns[11])));
         return patient;
@@ -118,7 +118,7 @@ public class PatientDAO {
                     patient.setFamilyName(cursor.getString(familyNameColumnIndex));
                     patient.setGender(cursor.getString(genderColumnIndex));
                     patient.setAge(cursor.getString(ageColumnIndex));
-                    patient.setBirthDate(cursor.getString(birthDateColumnIndex));
+                    patient.setBirthDate(cursor.getLong(birthDateColumnIndex));
                     patient.setAddress(cursorToAddress(cursor));
                     patient.setPhoneNumber(cursor.getString(phoneColumnIndex));
                 }

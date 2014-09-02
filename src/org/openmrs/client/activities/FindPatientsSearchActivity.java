@@ -11,7 +11,9 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.openmrs.client.R;
@@ -29,6 +31,7 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
     private FindPatientArrayAdapter mAdapter;
     private ListView mPatientsListView;
     private TextView mEmptyList;
+    private ProgressBar mSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         setContentView(R.layout.activity_find_patients);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mSpinner = (ProgressBar) findViewById(R.id.patient_list_view_loading);
         mPatientsListView = (ListView) findViewById(R.id.patient_list_view);
         mEmptyList = (TextView) findViewById(R.id.empty_patient_list_view);
         mPatientsListView.setEmptyView(mEmptyList);
@@ -50,14 +54,27 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         handleIntent(intent);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mFindPatientMenuItem != null) {
+            MenuItemCompat.collapseActionView(mFindPatientMenuItem);
+        }
+        super.onBackPressed();
+    }
+
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            mEmptyList.setText(getString(R.string.search_patient_search));
+            mEmptyList.setVisibility(View.GONE);
+            mPatientsListView.setEmptyView(mSpinner);
             mAdapter = new FindPatientArrayAdapter(this, new ArrayList<Patient>());
             mPatientsListView.setAdapter(mAdapter);
             mQuery = intent.getStringExtra(SearchManager.QUERY);
             FindPatientsManager fpm = new FindPatientsManager(this);
             fpm.findPatient(mQuery);
+
+            if (mFindPatientMenuItem != null) {
+                MenuItemCompat.collapseActionView(mFindPatientMenuItem);
+            }
         }
     }
 
@@ -88,6 +105,8 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         mPatientsList = patientsList;
         if (patientsList.size() == 0) {
             mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mQuery));
+            mSpinner.setVisibility(View.GONE);
+            mPatientsListView.setEmptyView(mEmptyList);
         }
         mAdapter = new FindPatientArrayAdapter(this, mPatientsList);
         mPatientsListView.setAdapter(mAdapter);

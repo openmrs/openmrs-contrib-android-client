@@ -54,12 +54,24 @@ public class FindPatientsActivity extends ACBaseActivity {
         handleIntent(intent);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (mFindPatientMenuItem != null) {
+            MenuItemCompat.collapseActionView(mFindPatientMenuItem);
+        }
+        super.onBackPressed();
+    }
+
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             mQuery = intent.getStringExtra(SearchManager.QUERY);
             Intent searchIntent = new Intent(this, FindPatientsSearchActivity.class);
             searchIntent.putExtra(SearchManager.QUERY, mQuery);
             startActivityForResult(searchIntent, 1);
+            intent.setAction(null);
+            if (mFindPatientMenuItem != null) {
+                MenuItemCompat.collapseActionView(mFindPatientMenuItem);
+            }
         }
 
     }

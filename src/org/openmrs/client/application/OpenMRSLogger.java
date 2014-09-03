@@ -25,9 +25,20 @@ public class OpenMRSLogger {
     private static boolean mIsRotating;
     private static OpenMRS mOpenMRS = OpenMRS.getInstance();
     private static OpenMRSLogger logger;
+    private Thread.UncaughtExceptionHandler androidDefaultUEH;
+
+    private Thread.UncaughtExceptionHandler handler = new Thread.UncaughtExceptionHandler() {
+        public void uncaughtException(Thread thread, Throwable ex) {
+            logger.e("Uncaught exception is: ", ex);
+            androidDefaultUEH.uncaughtException(thread, ex);
+        }
+    };
 
     public OpenMRSLogger() {
         logger = this;
+        androidDefaultUEH = Thread.getDefaultUncaughtExceptionHandler();
+        Thread.setDefaultUncaughtExceptionHandler(handler);
+
         mFolder = new File(mOpenMRS.getOpenMRSDir());
         try {
             if (isFolderExist()) {

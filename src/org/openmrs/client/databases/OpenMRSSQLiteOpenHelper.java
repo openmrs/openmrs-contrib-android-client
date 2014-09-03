@@ -6,9 +6,11 @@ import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteDatabaseHook;
 import net.sqlcipher.database.SQLiteException;
 import net.sqlcipher.database.SQLiteOpenHelper;
+import net.sqlcipher.database.SQLiteStatement;
 
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.application.OpenMRSLogger;
+import org.openmrs.client.utilities.StringUtils;
 
 public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
     private OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
@@ -78,5 +80,53 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
 
         }
 
+    }
+
+    /**
+     * Null safe wrapper method for
+     * @see net.sqlcipher.database.SQLiteStatement#bindString(int, String)
+     *
+     * @param statement
+     * @param columnIndex
+     * @param columnValue
+     */
+    public void bindString(SQLiteStatement statement, int columnIndex, String columnValue) {
+        if (StringUtils.notNull(columnValue)) {
+            statement.bindString(columnIndex, columnValue);
+        } else {
+            statement.bindNull(columnIndex);
+        }
+    }
+
+    /**
+     * Null safe wrapper method for
+     * @see net.sqlcipher.database.SQLiteStatement#bindLong(int, long)
+     *
+     * @param statement
+     * @param columnIndex
+     * @param columnValue
+     */
+    public void bindLong(SQLiteStatement statement, int columnIndex, Long columnValue) {
+        if (null != columnValue) {
+            statement.bindLong(columnIndex, columnValue);
+        } else {
+            statement.bindNull(columnIndex);
+        }
+    }
+
+    /**
+     * Null safe wrapper method for
+     * @see net.sqlcipher.database.SQLiteStatement#bindDouble(int, double)
+     *
+     * @param statement
+     * @param columnIndex
+     * @param columnValue
+     */
+    public void bindDouble(SQLiteStatement statement, int columnIndex, Double columnValue) {
+        if (null != columnValue) {
+            statement.bindDouble(columnIndex, columnValue);
+        } else {
+            statement.bindNull(columnIndex);
+        }
     }
 }

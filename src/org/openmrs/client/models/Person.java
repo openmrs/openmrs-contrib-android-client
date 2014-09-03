@@ -6,8 +6,8 @@ import java.io.Serializable;
 public class Person implements Serializable {
     private String gender;
     private String uuid;
-    private long birthDate;
-    private long deathDate;
+    private Long birthDate;
+    private Long deathDate;
     private String causeOfDeath;
     private String givenName;
     private String middleName;
@@ -56,19 +56,19 @@ public class Person implements Serializable {
         this.uuid = uuid;
     }
 
-    public long getBirthDate() {
+    public Long getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(long birthDate) {
+    public void setBirthDate(Long birthDate) {
         this.birthDate = birthDate;
     }
 
-    public long getDeathDate() {
+    public Long getDeathDate() {
         return deathDate;
     }
 
-    public void setDeathDate(long deathDate) {
+    public void setDeathDate(Long deathDate) {
         this.deathDate = deathDate;
     }
 

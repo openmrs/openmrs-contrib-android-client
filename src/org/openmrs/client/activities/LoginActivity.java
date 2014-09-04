@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import org.openmrs.client.R;
@@ -22,6 +24,8 @@ public class LoginActivity extends ACBaseActivity {
     private EditText mUsername;
     private EditText mPassword;
     private Button mLoginButton;
+    private ProgressBar mSpinner;
+    private ScrollView mLoadingScrollView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,8 @@ public class LoginActivity extends ACBaseActivity {
                 }
             }
         });
+        mSpinner = (ProgressBar) findViewById(R.id.loginLoading);
+        mLoadingScrollView = (ScrollView) findViewById(R.id.loginScrollView);
     }
 
     @Override
@@ -57,7 +63,6 @@ public class LoginActivity extends ACBaseActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
-
 
     private boolean validateLoginFields() {
         return !(ApplicationConstants.EMPTY_STRING.equals(mUsername.getText().toString())
@@ -85,8 +90,9 @@ public class LoginActivity extends ACBaseActivity {
     }
 
     private void login() {
+        mLoadingScrollView.setVisibility(View.GONE);
+        mSpinner.setVisibility(View.VISIBLE);
         mAuthorizationManager.login(mUsername.getText().toString(), mPassword.getText().toString());
-        //TODO : instead of risky & tricky loading dialog we need to add loading spinner to Login Activity view
     }
 
     public void login(boolean validateURL) {

@@ -30,7 +30,6 @@ public class DashboardActivity extends ACBaseActivity {
         startActivity(i);
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();

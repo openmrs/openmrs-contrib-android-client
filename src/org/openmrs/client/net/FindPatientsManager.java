@@ -5,6 +5,7 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -45,8 +46,12 @@ public class FindPatientsManager extends BaseManager {
                 try {
                     JSONArray patientsJSONList = response.getJSONArray(RESULTS_KEY);
 
-                    for (int i = 0; i < patientsJSONList.length(); i++) {
-                        getFullPatientData(patientsJSONList.getJSONObject(i).getString(UUID_KEY));
+                    if (patientsJSONList.length() > 0) {
+                        for (int i = 0; i < patientsJSONList.length(); i++) {
+                            getFullPatientData(patientsJSONList.getJSONObject(i).getString(UUID_KEY));
+                        }
+                    } else {
+                        ((FindPatientsSearchActivity) mContext).updatePatientsData();
                     }
 
                 } catch (JSONException e) {
@@ -54,7 +59,14 @@ public class FindPatientsManager extends BaseManager {
                 }
             }
         }
-                , new GeneralErrorListenerImpl(mContext));
+                , new GeneralErrorListenerImpl(mContext) {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        super.onErrorResponse(error);
+                        ((FindPatientsSearchActivity) mContext).stopLoader();
+                    }
+                }
+        );
         queue.add(jsObjRequest);
     }
 
@@ -73,7 +85,14 @@ public class FindPatientsManager extends BaseManager {
                 ((FindPatientsSearchActivity) mContext).updatePatientsData();
             }
         }
-                , new GeneralErrorListenerImpl(mContext));
+                , new GeneralErrorListenerImpl(mContext) {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        super.onErrorResponse(error);
+                        ((FindPatientsSearchActivity) mContext).stopLoader();
+                    }
+                }
+        );
         queue.add(jsObjRequest);
         queue.start();
     }

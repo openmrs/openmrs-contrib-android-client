@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <ScrollView
+        android:id="@+id/loginScrollView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true" >
@@ -51,5 +52,12 @@
                 android:text="@string/login_button" />
         </LinearLayout>
     </ScrollView>
+
+    <ProgressBar android:id="@+id/loginLoading"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_centerInParent="true"
+                 android:layout_gravity="center"
+                 android:visibility="gone" />
 
 </RelativeLayout>

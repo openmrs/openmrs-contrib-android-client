@@ -113,4 +113,10 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         mAdapter = new FindPatientArrayAdapter(this, R.layout.find_patients_row, patientsList);
         mPatientsListView.setAdapter(mAdapter);
     }
+
+    public void stopLoader() {
+        mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mQuery));
+        mSpinner.setVisibility(View.GONE);
+        mPatientsListView.setEmptyView(mEmptyList);
+    }
 }

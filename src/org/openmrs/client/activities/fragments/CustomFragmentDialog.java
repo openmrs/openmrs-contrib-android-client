@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import org.openmrs.client.R;
 import org.openmrs.client.activities.ACBaseActivity;
+import org.openmrs.client.activities.DialogActivity;
 import org.openmrs.client.activities.LoginActivity;
 import org.openmrs.client.activities.SettingsActivity;
 import org.openmrs.client.application.OpenMRS;
@@ -115,7 +116,11 @@ public class CustomFragmentDialog extends DialogFragment {
         if (getDialog() != null && getRetainInstance()) {
             getDialog().setDismissMessage(null);
         }
+        if (getActivity().getClass().equals(DialogActivity.class)) {
+            getActivity().finish();
+        }
         super.onDestroyView();
+
     }
 
     public final void setBorderless() {

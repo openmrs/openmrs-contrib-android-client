@@ -1,9 +1,6 @@
 package org.openmrs.client.activities;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
@@ -18,12 +15,6 @@ import org.openmrs.client.bundle.CustomDialogBundle;
 import org.openmrs.client.databases.OpenMRSDBOpenHelper;
 import org.openmrs.client.utilities.ApplicationConstants;
 
-import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST;
-import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_CONN_TIMEOUT_BROADCAST;
-import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_NO_INTERNET_CONNECTION_BROADCAST;
-import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_SERVER_UNAVAILABLE_BROADCAST;
-import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_UNAUTHORIZED_BROADCAST;
-
 public abstract class ACBaseActivity extends ActionBarActivity {
 
     protected FragmentManager mFragmentManager;
@@ -34,22 +25,11 @@ public abstract class ACBaseActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFragmentManager = getSupportFragmentManager();
-
-        registerReceiver(mAuthFailedReceiver, new IntentFilter(ACTION_AUTH_FAILED_BROADCAST));
-        registerReceiver(mConnectionTimeoutReceiver, new IntentFilter(ACTION_CONN_TIMEOUT_BROADCAST));
-        registerReceiver(mServerUnavailableReceiver, new IntentFilter(ACTION_SERVER_UNAVAILABLE_BROADCAST));
-        registerReceiver(mNoInternetConnectionReceiver, new IntentFilter(ACTION_NO_INTERNET_CONNECTION_BROADCAST));
-        registerReceiver(mUnauthorizedReceiver, new IntentFilter(ACTION_UNAUTHORIZED_BROADCAST));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mAuthFailedReceiver);
-        unregisterReceiver(mConnectionTimeoutReceiver);
-        unregisterReceiver(mNoInternetConnectionReceiver);
-        unregisterReceiver(mServerUnavailableReceiver);
-        unregisterReceiver(mUnauthorizedReceiver);
         mCurrentDialog = null;
     }
 
@@ -133,51 +113,6 @@ public abstract class ACBaseActivity extends ActionBarActivity {
     public synchronized CustomFragmentDialog getCurrentDialog() {
         return mCurrentDialog;
     }
-
-    private BroadcastReceiver mAuthFailedReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (ACTION_AUTH_FAILED_BROADCAST.equals(intent.getAction())) {
-                showAuthenticationFailedDialog();
-            }
-        }
-    };
-
-    private BroadcastReceiver mConnectionTimeoutReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (ACTION_CONN_TIMEOUT_BROADCAST.equals(intent.getAction())) {
-                showConnectionTimeoutDialog();
-            }
-        }
-    };
-
-    private BroadcastReceiver mNoInternetConnectionReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (ACTION_NO_INTERNET_CONNECTION_BROADCAST.equals(intent.getAction())) {
-                showNoInternetConnectionDialog();
-            }
-        }
-    };
-
-    private BroadcastReceiver mServerUnavailableReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (ACTION_SERVER_UNAVAILABLE_BROADCAST.equals(intent.getAction())) {
-                showServerUnavailableDialog();
-            }
-        }
-    };
-
-    private BroadcastReceiver mUnauthorizedReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (ACTION_UNAUTHORIZED_BROADCAST.equals(intent.getAction())) {
-                showUnauthorizedDialog();
-            }
-        }
-    };
 
     public void moveUnauthorizedUserToLoginScreen() {
         OpenMRSDBOpenHelper.getInstance().closeDatabases();

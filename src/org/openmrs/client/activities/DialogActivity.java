@@ -4,9 +4,6 @@ package org.openmrs.client.activities;
 import android.content.Intent;
 import android.os.Bundle;
 
-import org.openmrs.client.activities.fragments.CustomFragmentDialog;
-import org.openmrs.client.bundle.CustomDialogBundle;
-
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST;
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_CONN_TIMEOUT_BROADCAST;
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_NO_INTERNET_CONNECTION_BROADCAST;
@@ -35,12 +32,5 @@ public class DialogActivity extends ACBaseActivity {
         if (ACTION_UNAUTHORIZED_BROADCAST.equals(intent.getAction())) {
             showUnauthorizedDialog();
         }
-    }
-
-    @Override
-    public void createAndShowDialog(CustomDialogBundle bundle, String tag) {
-        CustomFragmentDialog instance = CustomFragmentDialog.newInstance(bundle);
-        instance.show(mFragmentManager, tag);
-        mCurrentDialog = instance;
     }
 }

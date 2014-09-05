@@ -33,6 +33,23 @@
         </pmd>
     </target>
 
+    <target name="-pre-build" depends="-get-git-commit,-set-build-version" />
+
+    <target name="-get-git-commit">
+        <exec executable="sh" outputproperty="git.commits">
+            <arg value="-c" />
+            <arg value="git log --pretty=format:'' | wc -l" />
+        </exec>
+        <echo>git.commits: ${git.commits}</echo>
+    </target>
+
+    <target name="-set-build-version">
+        <replaceregexp
+            file="AndroidManifest.xml"
+            match='android:name="buildVersion" android:value="(\d+)"'
+            replace='android:name="buildVersion" android:value="${git.commits}"' />
+    </target>
+
     <target name="-pre-compile" depends="checkstyle, pmd"/>
 
     <target name="get-junit-reports">
@@ -52,5 +69,4 @@
         </exec>
         <antcall target="get-junit-reports" />
     </target>
-
 </project>

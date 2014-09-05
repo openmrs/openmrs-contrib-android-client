@@ -5,8 +5,9 @@ import net.sqlcipher.Cursor;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import org.openmrs.client.application.OpenMRS;
+import org.openmrs.client.databases.DBOpenHelper;
 import org.openmrs.client.databases.OpenMRSDBOpenHelper;
-import org.openmrs.client.databases.PatientSQLiteHelper;
+import org.openmrs.client.databases.OpenMRSSQLiteOpenHelper;
 import org.openmrs.client.models.Address;
 import org.openmrs.client.models.Patient;
 
@@ -16,30 +17,30 @@ import java.util.List;
 public class PatientDAO {
 
     private String[] mPatientColumns = {
-            PatientSQLiteHelper.COLUMN_ID, PatientSQLiteHelper.COLUMN_DISPLAY,
-            PatientSQLiteHelper.COLUMN_UUID, PatientSQLiteHelper.COLUMN_IDENTIFIER,
-            PatientSQLiteHelper.COLUMN_GIVEN_NAME, PatientSQLiteHelper.COLUMN_MIDDLE_NAME,
-            PatientSQLiteHelper.COLUMN_FAMILY_NAME, PatientSQLiteHelper.COLUMN_GENDER,
-            PatientSQLiteHelper.COLUMN_BIRTH_DATE, PatientSQLiteHelper.COLUMN_DEATH_DATE,
-            PatientSQLiteHelper.COLUMN_CAUSE_OF_DEATH, PatientSQLiteHelper.COLUMN_AGE};
+            OpenMRSSQLiteOpenHelper.COLUMN_ID, OpenMRSSQLiteOpenHelper.COLUMN_DISPLAY,
+            OpenMRSSQLiteOpenHelper.COLUMN_UUID, DBOpenHelper.COLUMN_IDENTIFIER,
+            DBOpenHelper.COLUMN_GIVEN_NAME, DBOpenHelper.COLUMN_MIDDLE_NAME,
+            DBOpenHelper.COLUMN_FAMILY_NAME, DBOpenHelper.COLUMN_GENDER,
+            DBOpenHelper.COLUMN_BIRTH_DATE, DBOpenHelper.COLUMN_DEATH_DATE,
+            DBOpenHelper.COLUMN_CAUSE_OF_DEATH, DBOpenHelper.COLUMN_AGE};
 
     public void savePatient(Patient patient) {
-        PatientSQLiteHelper helper = OpenMRSDBOpenHelper.getInstance().getPatientSQLiteHelper();
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
         SQLiteDatabase db = helper.getWritableDatabase();
-        helper.insert(db, patient);
+        helper.insertPatient(db, patient);
     }
 
     public void deletePatient(long id) {
         OpenMRS.getInstance().getOpenMRSLogger().w("Patient deleted with id: " + id);
-        PatientSQLiteHelper patientSQLiteHelper = OpenMRSDBOpenHelper.getInstance().getPatientSQLiteHelper();
-        patientSQLiteHelper.getReadableDatabase().delete(PatientSQLiteHelper.TABLE_NAME, PatientSQLiteHelper.COLUMN_ID
+        DBOpenHelper DBOpenHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        DBOpenHelper.getReadableDatabase().delete(DBOpenHelper.PATIENTS_TABLE_NAME, OpenMRSSQLiteOpenHelper.COLUMN_ID
                 + " = " + id, null);
     }
 
     public List<Patient> getAllPatients() {
         List<Patient> patients = new ArrayList<Patient>();
-        PatientSQLiteHelper patientSQLiteHelper = OpenMRSDBOpenHelper.getInstance().getPatientSQLiteHelper();
-        Cursor cursor = patientSQLiteHelper.getReadableDatabase().query(PatientSQLiteHelper.TABLE_NAME,
+        DBOpenHelper DBOpenHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        Cursor cursor = DBOpenHelper.getReadableDatabase().query(DBOpenHelper.PATIENTS_TABLE_NAME,
                 mPatientColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
@@ -71,16 +72,16 @@ public class PatientDAO {
     }
 
     public boolean isUserAlreadySaved(String uuid) {
-        String where = String.format("%s = ?", PatientSQLiteHelper.COLUMN_UUID);
+        String where = String.format("%s = ?", OpenMRSSQLiteOpenHelper.COLUMN_UUID);
         String[] whereArgs = new String[]{uuid};
 
-        PatientSQLiteHelper helper = OpenMRSDBOpenHelper.getInstance().getPatientSQLiteHelper();
-        final Cursor cursor = helper.getReadableDatabase().query(PatientSQLiteHelper.TABLE_NAME, null, where, whereArgs, null, null, null);
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        final Cursor cursor = helper.getReadableDatabase().query(DBOpenHelper.PATIENTS_TABLE_NAME, null, where, whereArgs, null, null, null);
         String patientUUID = "";
         if (null != cursor) {
             try {
                 if (cursor.moveToFirst()) {
-                    int uuidColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_UUID);
+                    int uuidColumnIndex = cursor.getColumnIndex(OpenMRSSQLiteOpenHelper.COLUMN_UUID);
                     patientUUID = cursor.getString(uuidColumnIndex);
                 }
             } finally {
@@ -96,22 +97,22 @@ public class PatientDAO {
 
     public Patient findPatientByUUID(String uuid) {
         Patient patient = new Patient();
-        String where = String.format("%s = ?", PatientSQLiteHelper.COLUMN_UUID);
+        String where = String.format("%s = ?", OpenMRSSQLiteOpenHelper.COLUMN_UUID);
         String[] whereArgs = new String[]{uuid};
 
-        PatientSQLiteHelper helper = OpenMRSDBOpenHelper.getInstance().getPatientSQLiteHelper();
-        final Cursor cursor = helper.getReadableDatabase().query(PatientSQLiteHelper.TABLE_NAME, null, where, whereArgs, null, null, null);
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        final Cursor cursor = helper.getReadableDatabase().query(DBOpenHelper.PATIENTS_TABLE_NAME, null, where, whereArgs, null, null, null);
         if (null != cursor) {
             try {
                 if (cursor.moveToFirst()) {
-                    int displayColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_DISPLAY);
-                    int identifierColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_IDENTIFIER);
-                    int givenNameColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_GIVEN_NAME);
-                    int familyNameColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_FAMILY_NAME);
-                    int genderColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_GENDER);
-                    int ageColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_AGE);
-                    int birthDateColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_BIRTH_DATE);
-                    int phoneColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_PHONE);
+                    int displayColumnIndex = cursor.getColumnIndex(OpenMRSSQLiteOpenHelper.COLUMN_DISPLAY);
+                    int identifierColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_IDENTIFIER);
+                    int givenNameColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_GIVEN_NAME);
+                    int familyNameColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_FAMILY_NAME);
+                    int genderColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_GENDER);
+                    int ageColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_AGE);
+                    int birthDateColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_BIRTH_DATE);
+                    int phoneColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_PHONE);
                     patient.setDisplay(cursor.getString(displayColumnIndex));
                     patient.setIdentifier(cursor.getString(identifierColumnIndex));
                     patient.setGivenName(cursor.getString(givenNameColumnIndex));
@@ -130,12 +131,12 @@ public class PatientDAO {
     }
 
     private Address cursorToAddress(Cursor cursor) {
-        int address1ColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_ADDRESS_1);
-        int address2ColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_ADDRESS_2);
-        int postalColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_POSTAL_CODE);
-        int countryColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_COUNTRY);
-        int stateColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_STATE);
-        int cityColumnIndex = cursor.getColumnIndex(PatientSQLiteHelper.COLUMN_CITY);
+        int address1ColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_ADDRESS_1);
+        int address2ColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_ADDRESS_2);
+        int postalColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_POSTAL_CODE);
+        int countryColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_COUNTRY);
+        int stateColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_STATE);
+        int cityColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_CITY);
         return new Address(cursor.getString(address1ColumnIndex), cursor.getString(address2ColumnIndex),
                 cursor.getString(postalColumnIndex), cursor.getString(cityColumnIndex),
                 cursor.getString(countryColumnIndex), cursor.getString(stateColumnIndex));

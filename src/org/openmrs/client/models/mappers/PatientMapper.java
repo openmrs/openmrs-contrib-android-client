@@ -21,9 +21,7 @@ public final class PatientMapper {
             patient.setUuid(personJSON.getString("uuid"));
             patient.setGender(personJSON.getString("gender"));
             patient.setBirthDate(DateUtils.convertTime(personJSON.getString("birthdate")));
-            if (StringUtils.notNull(personJSON.getString("deathDate"))) {
-                patient.setDeathDate(DateUtils.convertTime(personJSON.getString("deathDate")));
-            }
+            patient.setDeathDate(DateUtils.convertTime(personJSON.getString("deathDate")));
             patient.setCauseOfDeath(personJSON.getString("causeOfDeath"));
             patient.setAge(personJSON.getString("age"));
             JSONObject namesJSON = personJSON.getJSONArray("names").getJSONObject(0);

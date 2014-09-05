@@ -49,10 +49,11 @@
     <string name="dashboard_search_icon_label">Find Patients</string>
     <string name="dashboard_registry_icon_label">Registry Patient</string>
     <string name="dashboard_logged_as">logged as %1$s</string>
+    <string name="dashboard_visits_icon_label">Active Visits</string>
     <!-- find_patients_row layout-->
     <string name="find_patients_row_checkbox_download_label">Download</string>
     <string name="find_patients_row_checkbox_available_offline_label">Available offline</string>
-    <string name="find_patients_row_toast_patient_saved">Patient is now available in locally</string>
+    <string name="find_patients_row_toast_patient_saved">Patient is now available locally</string>
     <!-- Patient Dashboard Activity -->
     <string name="patient_scroll_tab_details_label">Details</string>
     <string name="patient_scroll_tab_diagnosis_label">Diagnosis</string>
@@ -68,4 +69,7 @@
     <string name="patient_postal_label">Postal Code</string>
     <string name="patient_state_label">State</string>
     <string name="patient_country_label">Country</string>
+    <!-- Find Active visit activity -->
+    <string name="action_active_visits">Active Visits</string>
+    <string name="search_visits_no_results">No visits in database</string>
 </resources>

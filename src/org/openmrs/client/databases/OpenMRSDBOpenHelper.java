@@ -5,10 +5,10 @@ import org.openmrs.client.application.OpenMRS;
 public class OpenMRSDBOpenHelper {
     private static OpenMRSDBOpenHelper sInstance;
 
-    private final PatientSQLiteHelper mPatientSQLiteHelper;
+    private final DBOpenHelper mDBOpenHelper;
 
     public OpenMRSDBOpenHelper() {
-        mPatientSQLiteHelper = new PatientSQLiteHelper(OpenMRS.getInstance());
+        mDBOpenHelper = new DBOpenHelper(OpenMRS.getInstance());
     }
 
     public static void init() {
@@ -25,11 +25,11 @@ public class OpenMRSDBOpenHelper {
     }
 
     public void closeDatabases() {
-        mPatientSQLiteHelper.close();
+        mDBOpenHelper.close();
     }
 
-    public PatientSQLiteHelper getPatientSQLiteHelper() {
-        return mPatientSQLiteHelper;
+    public DBOpenHelper getDBOpenHelper() {
+        return mDBOpenHelper;
     }
 
 }

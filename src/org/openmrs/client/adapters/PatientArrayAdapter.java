@@ -15,12 +15,13 @@ import org.openmrs.client.R;
 import org.openmrs.client.activities.PatientDashboardActivity;
 import org.openmrs.client.dao.PatientDAO;
 import org.openmrs.client.models.Patient;
+import org.openmrs.client.net.FindVisitsManager;
 import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.DateUtils;
 
 import java.util.List;
 
-public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
+public class PatientArrayAdapter extends ArrayAdapter<Patient> {
     private Activity mContext;
     private List<Patient> mItems;
     private int mResourceID;
@@ -35,7 +36,7 @@ public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
         private CheckBox mAvailableOfflineCheckbox;
     }
 
-    public FindPatientArrayAdapter(Activity context, int resourceID, List<Patient> items) {
+    public PatientArrayAdapter(Activity context, int resourceID, List<Patient> items) {
         super(context, resourceID, items);
         this.mContext = context;
         this.mItems = items;
@@ -101,6 +102,7 @@ public class FindPatientArrayAdapter extends ArrayAdapter<Patient> {
                 public void onClick(View v) {
                     if (((CheckBox) v).isChecked()) {
                         new PatientDAO().savePatient(patient);
+                        new FindVisitsManager(mContext).findActiveVisitsForPatientByUUID(patient);
                         Toast.makeText(mContext, R.string.find_patients_row_toast_patient_saved, Toast.LENGTH_SHORT).show();
                         disableCheckBox(holder);
                     }

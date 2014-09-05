@@ -9,11 +9,22 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
 import org.openmrs.client.application.OpenMRS;
+import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.utilities.ApplicationConstants;
 
 import java.io.UnsupportedEncodingException;
 
 public class BaseManager {
+    protected static final String RESULTS_KEY = "results";
+    protected static final String UUID_KEY = "uuid";
+
+    protected Context mContext;
+    protected OpenMRS mOpenMRS = OpenMRS.getInstance();
+    protected OpenMRSLogger logger = mOpenMRS.getOpenMRSLogger();
+
+    public BaseManager(Context context) {
+        this.mContext = context;
+    }
 
     protected boolean isConnectionTimeout(String errorMessage) {
         return errorMessage.contains(ApplicationConstants.VolleyErrors.CONNECTION_TIMEOUT);

@@ -1,5 +1,7 @@
 package org.openmrs.client.activities;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -98,9 +100,23 @@ public class SettingsActivity extends ACBaseActivity {
                                               filename,
                                               "Size: " + size + "kB"));
 
+        String versionName = "";
+        int buildVersion = 0;
+
+        try {
+            versionName = this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
+
+            ApplicationInfo ai = getPackageManager().getApplicationInfo(this.getPackageName(), PackageManager.GET_META_DATA);
+            buildVersion = ai.metaData.getInt("buildVersion");
+        } catch (PackageManager.NameNotFoundException e) {
+            mOpenMRSLogger.e("Failed to load meta-data, NameNotFound: " + e.getMessage());
+        } catch (NullPointerException e) {
+            mOpenMRSLogger.e("Failed to load meta-data, NullPointer: " + e.getMessage());
+        }
+
         mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_about),
                                               getResources().getString(R.string.app_name),
-                                              "version 1.0")); //TODO get version from manifest
+                                              versionName + " Build: " + buildVersion));
 
         mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_logout)));
     }

@@ -14,6 +14,8 @@ public abstract class ApplicationConstants {
     public static final String SECRET_KEY = "secretKey";
 
     public static final String AUTHORIZATION_PARAM = "Authorization";
+    public static final String JSESSIONID_PARAM = "JSESSIONID";
+    public static final String COOKIE_PARAM = "Cookie";
 
     public abstract static class API {
         public static final String COMMON_PART = "/ws/rest/v1/";

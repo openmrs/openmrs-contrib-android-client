@@ -3,6 +3,7 @@ package org.openmrs.client.net;
 import android.content.Context;
 import android.content.Intent;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -14,6 +15,9 @@ import org.openmrs.client.activities.LoginActivity;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.utilities.ApplicationConstants;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.openmrs.client.utilities.ApplicationConstants.API;
 
@@ -58,7 +62,15 @@ public class AuthorizationManager extends BaseManager {
                 }
             }
         }
-                , new GeneralErrorListenerImpl(mContext));
+                , new GeneralErrorListenerImpl(mContext)) {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put(ApplicationConstants.AUTHORIZATION_PARAM, OpenMRS.getInstance().getAuthorizationToken());
+                return params;
+            }
+        };
         queue.add(jsObjRequest);
     }
 

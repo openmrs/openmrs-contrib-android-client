@@ -28,7 +28,13 @@ public class JsonObjectRequestWrapper extends JsonObjectRequest {
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put(ApplicationConstants.AUTHORIZATION_PARAM, OpenMRS.getInstance().getAuthorizationToken());
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(ApplicationConstants.JSESSIONID_PARAM);
+        builder.append("=");
+        builder.append(OpenMRS.getInstance().getSessionToken());
+        params.put(ApplicationConstants.COOKIE_PARAM, builder.toString());
+
         return params;
     }
 }

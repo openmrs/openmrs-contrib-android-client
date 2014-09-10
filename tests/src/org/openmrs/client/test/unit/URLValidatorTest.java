@@ -11,6 +11,12 @@ public class URLValidatorTest extends InstrumentationTestCase {
     private static final String VALID_URL_1_TRIMMED;
     private static final String VALID_URL_2;
 
+    @Override
+    public void setUp() throws Exception {
+        super.setUp();
+        getInstrumentation().waitForIdleSync();
+    }
+
     static {
         INVALID_URL_1 = "http://";
         INVALID_URL_2 = "http://demo.openmrs.org/openmrsl.na15.force.com";

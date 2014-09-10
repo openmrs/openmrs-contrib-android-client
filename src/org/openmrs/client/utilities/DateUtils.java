@@ -39,7 +39,9 @@ public final class DateUtils {
                 formattedDate = format.parse(dateAsString);
                 time = formattedDate.getTime();
             } catch (ParseException e) {
-                OpenMRS.getInstance().getOpenMRSLogger().w("Failed to parse date :" + dateAsString);
+                OpenMRS.getInstance().getOpenMRSLogger().w("Failed to parse date :" + dateAsString + " caused by " + e.toString());
+            } catch (NullPointerException e) {
+                OpenMRS.getInstance().getOpenMRSLogger().w("Failed to parse date :" + dateAsString + " caused by " + e.toString());
             }
         }
         return time;

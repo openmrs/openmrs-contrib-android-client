@@ -59,7 +59,6 @@
                             android:onClick="onFindPatientCallback"
                             android:paddingTop="10dp"
                             android:text="@string/dashboard_search_icon_label"
-                            android:textColor="@android:color/black"
                             android:textSize="22sp"/>
                 </RelativeLayout>
                 </FrameLayout>
@@ -131,7 +130,6 @@
                             android:clickable="true"
                             android:paddingTop="10dp"
                             android:text="@string/dashboard_registry_icon_label"
-                            android:textColor="@android:color/black"
                             android:visibility="invisible"
                             android:textSize="22sp"/>
                     </RelativeLayout>

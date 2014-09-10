@@ -10,6 +10,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="15dp"
         android:textSize="22sp"
+        android:textColor="@color/openMRS_Dark_Grey"
         />
 
 </LinearLayout>

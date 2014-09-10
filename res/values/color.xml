@@ -2,4 +2,16 @@
 <resources>
     <color name="white">#FFF</color>
     <color name="black">#000</color>
+    <color name="openMRS_Light_Teal">#009384</color>
+    <color name="openMRS_Dark_Teal">#00463f</color>
+    <color name="openMRS_Orange">#F26522</color>
+    <color name="openMRS_Purple">#5B57A6</color>
+    <color name="openMRS_Dark_Purple">#363463</color>
+    <color name="openMRS_Yellow">#EEA616</color>
+    <color name="openMRS_Grey">#dddddd</color>
+    <color name="openMRS_Dark_Grey">#231F20</color>
+    <color name="openMRS_Light_Green">#a1d030</color>
+    <color name="openMRS_Green">#88af28</color>
+    <color name="openMRS_Light_Red">#ff6666</color>
+    <color name="openMRS_Red">#ff3d3d</color>
 </resources>

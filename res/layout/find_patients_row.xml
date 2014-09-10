@@ -2,7 +2,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="5dp" >
+                android:padding="5dp"
+                android:background="@drawable/list_item_selector">
     <RelativeLayout
         android:id="@+id/topRow"
         android:layout_width="fill_parent"
@@ -23,7 +24,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textSize="22sp"
-                  android:textStyle="bold"
+
                   android:layout_toRightOf="@+id/patientIdentifier"
                   android:layout_alignParentRight="true"
                   android:layout_alignParentEnd="true"
@@ -40,14 +41,12 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textSize="16sp"
-                  android:textStyle="bold"
             />
 
         <TextView android:id="@+id/patientAge"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textSize="16sp"
-                  android:textStyle="bold"
                   android:layout_marginLeft="15dp"
                   android:layout_toRightOf="@id/patientGender"
             />
@@ -56,7 +55,6 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textSize="16sp"
-                  android:textStyle="bold"
                   android:layout_marginLeft="15dp"
                   android:layout_toRightOf="@id/patientAge"
             />
@@ -65,10 +63,9 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="50dp"
-                  android:textColor="@color/black"
                   android:singleLine="true"
                   android:layout_alignParentRight="true"
                   android:layout_alignParentEnd="true"
-            />
+                  android:layout_marginTop="12dp"/>
     </RelativeLayout>
 </LinearLayout>

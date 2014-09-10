@@ -3,9 +3,12 @@ package org.openmrs.client.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
@@ -15,6 +18,7 @@ import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.bundle.CustomDialogBundle;
 import org.openmrs.client.net.AuthorizationManager;
 import org.openmrs.client.utilities.ApplicationConstants;
+import org.openmrs.client.utilities.OpenFontsUtil;
 import org.openmrs.client.utilities.URLValidator;
 
 public class LoginActivity extends ACBaseActivity {
@@ -48,6 +52,7 @@ public class LoginActivity extends ACBaseActivity {
         });
         mSpinner = (ProgressBar) findViewById(R.id.loginLoading);
         mLoadingScrollView = (ScrollView) findViewById(R.id.loginScrollView);
+        OpenFontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
     }
 
     @Override
@@ -73,10 +78,10 @@ public class LoginActivity extends ACBaseActivity {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.login_dialog_title));
         bundle.setEditTextViewMessage(OpenMRS.getInstance().getServerUrl());
-        bundle.setLeftButtonText(getString(R.string.dialog_button_done));
-        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.LOGIN);
-        bundle.setRightButtonText(getString(R.string.dialog_button_cancel));
-        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        bundle.setRightButtonText(getString(R.string.dialog_button_done));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.LOGIN);
+        bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
+        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.URL_DIALOG_TAG);
     }
 
@@ -91,6 +96,12 @@ public class LoginActivity extends ACBaseActivity {
 
     private void login() {
         mLoadingScrollView.setVisibility(View.GONE);
+
+        ImageView imageLogo = (ImageView) findViewById(R.id.openmrsLogo);
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) imageLogo.getLayoutParams();
+        params.addRule(RelativeLayout.ABOVE, mSpinner.getId());
+        imageLogo.setLayoutParams(params);
+
         mSpinner.setVisibility(View.VISIBLE);
         mAuthorizationManager.login(mUsername.getText().toString(), mPassword.getText().toString());
     }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import org.openmrs.client.R;
 import org.openmrs.client.models.SettingsListItemDTO;
+import org.openmrs.client.utilities.OpenFontsUtil;
 
 import java.util.List;
 
@@ -56,6 +57,7 @@ public class SettingsArrayAdapter extends ArrayAdapter<SettingsListItemDTO> {
             holder.mDesc2.setText(mItems.get(position).getDesc2());
         }
 
+        OpenFontsUtil.setFont((ViewGroup) rowView);
         return rowView;
     }
 }

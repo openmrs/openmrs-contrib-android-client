@@ -18,6 +18,7 @@ import org.openmrs.client.models.Patient;
 import org.openmrs.client.net.FindVisitsManager;
 import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.DateUtils;
+import org.openmrs.client.utilities.OpenFontsUtil;
 
 import java.util.List;
 
@@ -91,6 +92,7 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
                 }
             });
         }
+        OpenFontsUtil.setFont((ViewGroup) rowView);
         return rowView;
     }
 

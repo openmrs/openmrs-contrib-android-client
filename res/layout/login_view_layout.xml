@@ -45,11 +45,13 @@
             <Button
                 android:id="@+id/loginButton"
                 android:layout_width="130dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="center_vertical|center_horizontal|center"
                 android:layout_marginTop="10dp"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="@string/login_button" />
+                android:text="@string/login_button"
+                android:background="@drawable/button_simple"
+                android:textColor="@color/openMRS_Dark_Purple"/>
         </LinearLayout>
     </ScrollView>
 
@@ -59,5 +61,13 @@
                  android:layout_centerInParent="true"
                  android:layout_gravity="center"
                  android:visibility="gone" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/openmrsLogo"
+        android:layout_above="@+id/loginScrollView"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/openmrs_logo"/>
 
 </RelativeLayout>

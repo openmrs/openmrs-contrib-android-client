@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="6dp" >
+    android:padding="6dp"
+    android:background="@drawable/list_item_selector">
 
     <TextView android:id="@+id/settings_title"
         android:textSize="16sp"

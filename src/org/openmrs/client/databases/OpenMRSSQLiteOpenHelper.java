@@ -13,11 +13,6 @@ import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.utilities.StringUtils;
 
 public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
-    public static final String CREATE_TABLE = "CREATE TABLE ";
-    public static final String PRIMARY_KEY = " integer primary key autoincrement,";
-    public static final String DROP_TABLE_IF_EXISTS = "DROP TABLE IF EXISTS ";
-    public static final String INSERT_INTO = "INSERT INTO ";
-
     protected OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
 
     protected static final String COMMA = ",";
@@ -28,10 +23,6 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
     protected static final String DATE_TYPE = " date";
     protected static final String DATE_TYPE_WITH_COMMA = DATE_TYPE + COMMA;
     protected static final String DATE_TYPE_NOT_NULL = " data not null,";
-
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_UUID = "uuid";
-    public static final String COLUMN_DISPLAY = "display";
 
     public static final String DATABASE_NAME = "openmrs.db";
 

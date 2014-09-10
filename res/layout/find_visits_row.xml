@@ -19,7 +19,6 @@
                   android:textSize="22sp"
                   android:textStyle="bold"
             />
-
         <TextView android:id="@+id/visitPatientID"
                   android:layout_below="@id/visitPatientName"
                   android:layout_width="wrap_content"
@@ -28,30 +27,34 @@
                   android:textSize="22sp"
                   android:textStyle="bold"
             />
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_centerHorizontal="true"
-            >
-            <TextView android:id="@+id/visitPlace"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:textSize="22sp"
-                      android:textStyle="bold"
-                      android:layout_centerHorizontal="true"
-                />
-            <TextView android:id="@+id/visitStartDate"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="7dp"
-                      android:layout_below="@id/visitPlace"
-                      android:layout_centerHorizontal="true"
-                      android:textSize="22sp"
-                      android:textStyle="bold"
-                />
-            </RelativeLayout>
-
+        <TextView android:id="@+id/patientVisitStartDate"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerHorizontal="true"
+                  android:layout_alignParentRight="true"
+                  android:layout_alignParentEnd="true"
+                  android:textSize="22sp"
+                  android:textStyle="bold"
+            />
+        <TextView android:id="@+id/visitType"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="22sp"
+                  android:textStyle="bold"
+                  android:singleLine="false"
+                  android:layout_below="@id/visitPatientID"
+                  android:layout_alignParentRight="true"
+                  android:layout_alignParentEnd="true"
+            />
+        <TextView android:id="@+id/patientVisitPlace"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="22sp"
+                  android:textStyle="bold"
+                  android:singleLine="false"
+                  android:layout_below="@id/visitType"
+                  android:layout_alignParentRight="true"
+                  android:layout_alignParentEnd="true"
+            />
     </RelativeLayout>
 </LinearLayout>

@@ -13,6 +13,14 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
 
     public static final String PATIENTS_TABLE_NAME = "patients";
     public static final String VISITS_TABLE_NAME = "visits";
+    public static final String CREATE_TABLE = "CREATE TABLE ";
+    public static final String PRIMARY_KEY = " integer primary key autoincrement,";
+    public static final String DROP_TABLE_IF_EXISTS = "DROP TABLE IF EXISTS ";
+    public static final String INSERT_INTO = "INSERT INTO ";
+
+    public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_UUID = "uuid";
+    public static final String COLUMN_DISPLAY = "display";
 
     public static final String COLUMN_IDENTIFIER = "identifier";
     public static final String COLUMN_GIVEN_NAME = "givenName";
@@ -32,6 +40,8 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     public static final String COLUMN_PHONE = "phone";
 
     public static final String COLUMN_PATIENT_KEY_ID = "patient_id";
+    public static final String COLUMN_VISIT_TYPE = "visit_type";
+    public static final String COLUMN_VISIT_PLACE = "visit_place";
     public static final String COLUMN_START_DATE = "start_date";
     public static final String COLUMN_STOP_DATE = "stop_date";
 
@@ -75,7 +85,8 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             + COLUMN_ID + PRIMARY_KEY
             + COLUMN_UUID + TEXT_TYPE_WITH_COMMA
             + COLUMN_PATIENT_KEY_ID + TEXT_TYPE_NOT_NULL
-            + COLUMN_DISPLAY + TEXT_TYPE_WITH_COMMA
+            + COLUMN_VISIT_TYPE + TEXT_TYPE_WITH_COMMA
+            + COLUMN_VISIT_PLACE + TEXT_TYPE_WITH_COMMA
             + COLUMN_START_DATE + DATE_TYPE_NOT_NULL
             + COLUMN_STOP_DATE + DATE_TYPE
             + ");";
@@ -85,9 +96,9 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
 
     private static final String INSERT_VISIT_QUERY = INSERT_INTO + VISITS_TABLE_NAME + "("
             + COLUMN_UUID + COMMA + COLUMN_PATIENT_KEY_ID + COMMA
-            + COLUMN_DISPLAY + COMMA + COLUMN_START_DATE + COMMA
-            + COLUMN_STOP_DATE + ")"
-            + "VALUES(?, ?, ?, ?, ?);";
+            + COLUMN_VISIT_TYPE + COMMA + COLUMN_VISIT_PLACE + COMMA
+            + COLUMN_START_DATE + COMMA + COLUMN_STOP_DATE + ")"
+            + "VALUES(?, ?, ?, ?, ?, ?);";
 
     private SQLiteStatement mStatement;
 
@@ -113,7 +124,8 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void insertPatient(SQLiteDatabase db, Patient patient) {
+    public long insertPatient(SQLiteDatabase db, Patient patient) {
+        long patientId;
         if (null == mStatement) {
             mStatement = db.compileStatement(INSERT_PATIENT_QUERY);
         }
@@ -137,13 +149,15 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(mStatement, 16, patient.getAddress().getState());
             bindString(mStatement, 17, patient.getAddress().getCityVillage());
             bindString(mStatement, 18, patient.getPhoneNumber());
-            mStatement.execute();
+            patientId = mStatement.executeInsert();
             mStatement.clearBindings();
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
             mStatement = null;
         }
+
+        return patientId;
     }
 
     public void insertVisit(SQLiteDatabase db, Visit visit) {
@@ -154,9 +168,10 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             db.beginTransaction();
             bindString(mStatement, 1, visit.getUuid());
             bindLong(mStatement, 2, visit.getPatientID());
-            bindString(mStatement, 3, visit.getDisplay());
-            bindLong(mStatement, 4, visit.getStartDate());
-            bindLong(mStatement, 5, visit.getStopDate());
+            bindString(mStatement, 3, visit.getVisitType());
+            bindString(mStatement, 4, visit.getVisitPlace());
+            bindLong(mStatement, 5, visit.getStartDate());
+            bindLong(mStatement, 6, visit.getStopDate());
             mStatement.execute();
             mStatement.clearBindings();
             db.setTransactionSuccessful();

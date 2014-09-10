@@ -101,8 +101,8 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
                 @Override
                 public void onClick(View v) {
                     if (((CheckBox) v).isChecked()) {
-                        new PatientDAO().savePatient(patient);
-                        new FindVisitsManager(mContext).findActiveVisitsForPatientByUUID(patient);
+                        long patientId = new PatientDAO().savePatient(patient);
+                        new FindVisitsManager(mContext).findActiveVisitsForPatientByUUID(patient.getUuid(), patientId);
                         Toast.makeText(mContext, R.string.find_patients_row_toast_patient_saved, Toast.LENGTH_SHORT).show();
                         disableCheckBox(holder);
                     }

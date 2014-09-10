@@ -77,10 +77,10 @@ public class Address implements Serializable {
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         if (StringUtils.notNull(address1)) {
-            stringBuilder.append(address1).append(StringUtils.SPACE_CHAR);
+            stringBuilder.append(address1).append(StringUtils.NEW_LINE);
         }
         if (StringUtils.notNull(address2)) {
-            stringBuilder.append(address2).append(StringUtils.NEW_LINE);
+            stringBuilder.append(address2);
         }
         return stringBuilder.toString();
     }

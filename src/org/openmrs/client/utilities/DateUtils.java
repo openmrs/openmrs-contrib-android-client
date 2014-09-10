@@ -14,6 +14,8 @@ public final class DateUtils {
 
     private static final String OPEN_MRS_RESPONSE_FORMAT = "yyyy-MM-dd'T'HH:mm";
 
+    public static final Long ZERO = 0L;
+
     private DateUtils() {
 
     }

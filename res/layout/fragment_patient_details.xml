@@ -36,7 +36,7 @@
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:text="@string/patient_details_gender_label"
-                      android:layout_marginTop="5dp"
+                      android:layout_marginTop="15dp"
                       android:textSize="16sp"
                       android:textStyle="bold"
                 />
@@ -63,7 +63,7 @@
             <TextView android:id="@+id/patientDetailsBirthDateLabel"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
-                      android:layout_marginTop="5dp"
+                      android:layout_marginTop="15dp"
                       android:text="@string/patient_details_birth_date_label"
                       android:textSize="16sp"
                       android:textStyle="bold"

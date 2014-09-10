@@ -2,23 +2,16 @@ package org.openmrs.client.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import org.openmrs.client.R;
-import org.openmrs.client.activities.ACBaseActivity;
 import org.openmrs.client.adapters.ActiveVisitsArrayAdapter;
 import org.openmrs.client.application.OpenMRS;
-import org.openmrs.client.models.Visit;
-
-import java.util.ArrayList;
+import org.openmrs.client.dao.VisitDAO;
 
 public class FindActiveVisitsActivity extends ACBaseActivity {
-    private String mQuery;
-    private MenuItem mFindVisitsMenuItem;
     private ActiveVisitsArrayAdapter mAdapter;
     private ListView mVisitListView;
 
@@ -33,7 +26,6 @@ public class FindActiveVisitsActivity extends ACBaseActivity {
         emptyList.setText(getString(R.string.search_visits_no_results));
         mVisitListView.setEmptyView(emptyList);
 
-        handleIntent(getIntent());
     }
 
     @Override
@@ -45,26 +37,13 @@ public class FindActiveVisitsActivity extends ACBaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
-        handleIntent(intent);
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (mFindVisitsMenuItem != null) {
-            MenuItemCompat.collapseActionView(mFindVisitsMenuItem);
-        }
-        super.onBackPressed();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        mAdapter = new ActiveVisitsArrayAdapter(this, R.layout.find_visits_row, new ArrayList<Visit>());
+        mAdapter = new ActiveVisitsArrayAdapter(this, R.layout.find_visits_row, new VisitDAO().getAllActiveVisits());
         mVisitListView.setAdapter(mAdapter);
     }
 
-    private void handleIntent(Intent intent) {
-
-    }
 }

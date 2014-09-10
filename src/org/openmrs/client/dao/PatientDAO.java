@@ -7,7 +7,6 @@ import net.sqlcipher.database.SQLiteDatabase;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.databases.DBOpenHelper;
 import org.openmrs.client.databases.OpenMRSDBOpenHelper;
-import org.openmrs.client.databases.OpenMRSSQLiteOpenHelper;
 import org.openmrs.client.models.Address;
 import org.openmrs.client.models.Patient;
 
@@ -17,31 +16,31 @@ import java.util.List;
 public class PatientDAO {
 
     private String[] mPatientColumns = {
-            OpenMRSSQLiteOpenHelper.COLUMN_ID, OpenMRSSQLiteOpenHelper.COLUMN_DISPLAY,
-            OpenMRSSQLiteOpenHelper.COLUMN_UUID, DBOpenHelper.COLUMN_IDENTIFIER,
+            DBOpenHelper.COLUMN_ID, DBOpenHelper.COLUMN_DISPLAY,
+            DBOpenHelper.COLUMN_UUID, DBOpenHelper.COLUMN_IDENTIFIER,
             DBOpenHelper.COLUMN_GIVEN_NAME, DBOpenHelper.COLUMN_MIDDLE_NAME,
             DBOpenHelper.COLUMN_FAMILY_NAME, DBOpenHelper.COLUMN_GENDER,
             DBOpenHelper.COLUMN_BIRTH_DATE, DBOpenHelper.COLUMN_DEATH_DATE,
             DBOpenHelper.COLUMN_CAUSE_OF_DEATH, DBOpenHelper.COLUMN_AGE};
 
-    public void savePatient(Patient patient) {
+    public long savePatient(Patient patient) {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
         SQLiteDatabase db = helper.getWritableDatabase();
-        helper.insertPatient(db, patient);
+        return helper.insertPatient(db, patient);
     }
 
     public void deletePatient(long id) {
         OpenMRS.getInstance().getOpenMRSLogger().w("Patient deleted with id: " + id);
-        DBOpenHelper DBOpenHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        DBOpenHelper.getReadableDatabase().delete(DBOpenHelper.PATIENTS_TABLE_NAME, OpenMRSSQLiteOpenHelper.COLUMN_ID
+        DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        openHelper.getReadableDatabase().delete(DBOpenHelper.PATIENTS_TABLE_NAME, DBOpenHelper.COLUMN_ID
                 + " = " + id, null);
     }
 
     public List<Patient> getAllPatients() {
         List<Patient> patients = new ArrayList<Patient>();
-        DBOpenHelper DBOpenHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        Cursor cursor = DBOpenHelper.getReadableDatabase().query(DBOpenHelper.PATIENTS_TABLE_NAME,
-                mPatientColumns, null, null, null, null, null);
+        DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        Cursor cursor = openHelper.getReadableDatabase().query(DBOpenHelper.PATIENTS_TABLE_NAME,
+                null, null, null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -72,7 +71,7 @@ public class PatientDAO {
     }
 
     public boolean isUserAlreadySaved(String uuid) {
-        String where = String.format("%s = ?", OpenMRSSQLiteOpenHelper.COLUMN_UUID);
+        String where = String.format("%s = ?", DBOpenHelper.COLUMN_UUID);
         String[] whereArgs = new String[]{uuid};
 
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
@@ -81,7 +80,7 @@ public class PatientDAO {
         if (null != cursor) {
             try {
                 if (cursor.moveToFirst()) {
-                    int uuidColumnIndex = cursor.getColumnIndex(OpenMRSSQLiteOpenHelper.COLUMN_UUID);
+                    int uuidColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_UUID);
                     patientUUID = cursor.getString(uuidColumnIndex);
                 }
             } finally {
@@ -97,7 +96,7 @@ public class PatientDAO {
 
     public Patient findPatientByUUID(String uuid) {
         Patient patient = new Patient();
-        String where = String.format("%s = ?", OpenMRSSQLiteOpenHelper.COLUMN_UUID);
+        String where = String.format("%s = ?", DBOpenHelper.COLUMN_UUID);
         String[] whereArgs = new String[]{uuid};
 
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
@@ -105,7 +104,8 @@ public class PatientDAO {
         if (null != cursor) {
             try {
                 if (cursor.moveToFirst()) {
-                    int displayColumnIndex = cursor.getColumnIndex(OpenMRSSQLiteOpenHelper.COLUMN_DISPLAY);
+                    int patientIdColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_ID);
+                    int displayColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_DISPLAY);
                     int identifierColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_IDENTIFIER);
                     int givenNameColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_GIVEN_NAME);
                     int familyNameColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_FAMILY_NAME);
@@ -113,6 +113,7 @@ public class PatientDAO {
                     int ageColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_AGE);
                     int birthDateColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_BIRTH_DATE);
                     int phoneColumnIndex = cursor.getColumnIndex(DBOpenHelper.COLUMN_PHONE);
+                    patient.setId(cursor.getLong(patientIdColumnIndex));
                     patient.setDisplay(cursor.getString(displayColumnIndex));
                     patient.setIdentifier(cursor.getString(identifierColumnIndex));
                     patient.setGivenName(cursor.getString(givenNameColumnIndex));

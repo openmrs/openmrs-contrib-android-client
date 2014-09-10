@@ -1,18 +1,25 @@
 package org.openmrs.client.models;
 
-public class Visit {
+import java.io.Serializable;
+
+public class Visit implements Serializable {
+    private Long id;
     private String uuid;
-    private String display;
     private Long patientID;
+    private String visitType;
+    private String visitPlace;
     private Long startDate;
     private Long stopDate;
 
     public Visit() {
     }
 
-    public Visit(String uuid, String display) {
-        this.uuid = uuid;
-        this.display = display;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUuid() {
@@ -23,12 +30,12 @@ public class Visit {
         this.uuid = uuid;
     }
 
-    public String getDisplay() {
-        return display;
+    public String getVisitType() {
+        return visitType;
     }
 
-    public void setDisplay(String display) {
-        this.display = display;
+    public void setVisitType(String visitType) {
+        this.visitType = visitType;
     }
 
     public long getStartDate() {
@@ -53,5 +60,17 @@ public class Visit {
 
     public void setPatientID(Long patientID) {
         this.patientID = patientID;
+    }
+
+    public String getVisitPlace() {
+        return visitPlace;
+    }
+
+    public void setVisitPlace(String visitPlace) {
+        this.visitPlace = visitPlace;
+    }
+
+    public void setStartDate(Long startDate) {
+        this.startDate = startDate;
     }
 }

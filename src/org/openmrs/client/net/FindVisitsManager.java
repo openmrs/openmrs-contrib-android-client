@@ -11,7 +11,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.client.dao.VisitDAO;
-import org.openmrs.client.models.Patient;
 import org.openmrs.client.models.mappers.VisitMapper;
 
 import static org.openmrs.client.utilities.ApplicationConstants.API;
@@ -23,9 +22,9 @@ public class FindVisitsManager extends BaseManager {
         super(context);
     }
 
-    public void findActiveVisitsForPatientByUUID(final Patient patient) {
+    public void findActiveVisitsForPatientByUUID(final String patientUUID, final long patientID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String visitURL = mOpenMRS.getServerUrl() + API.COMMON_PART + VISIT_QUERY + patient.getUuid();
+        String visitURL = mOpenMRS.getServerUrl() + API.COMMON_PART + VISIT_QUERY + patientUUID;
         logger.d("Sending request to : " + visitURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
@@ -38,7 +37,7 @@ public class FindVisitsManager extends BaseManager {
                     JSONArray visitResultJSON = response.getJSONArray(RESULTS_KEY);
                     if (visitResultJSON.length() > 0) {
                         for (int i = 0; i < visitResultJSON.length(); i++) {
-                            findVisitByUUID(visitResultJSON.getJSONObject(i).getString(UUID_KEY), patient.getId());
+                            findVisitByUUID(visitResultJSON.getJSONObject(i).getString(UUID_KEY), patientID);
                         }
                     }
                 } catch (JSONException e) {
@@ -50,7 +49,7 @@ public class FindVisitsManager extends BaseManager {
         queue.add(jsObjRequest);
     }
 
-    public void findVisitByUUID(String visitUUID, final long patientID) {
+    public void findVisitByUUID(final String visitUUID, final long patientID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String visitURL = mOpenMRS.getServerUrl() + API.COMMON_PART + API.VISIT_DETAILS + visitUUID
                 + API.FULL_VERSION;

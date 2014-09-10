@@ -6,7 +6,6 @@ import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.models.Address;
 import org.openmrs.client.models.Patient;
 import org.openmrs.client.utilities.DateUtils;
-import org.openmrs.client.utilities.StringUtils;
 
 public final class PatientMapper {
 

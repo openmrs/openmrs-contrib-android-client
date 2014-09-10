@@ -54,7 +54,7 @@ public class PatientDetailsFragment extends Fragment {
     }
 
     private void showAddressDetailsViewElement(View detailsLayout, int detailsViewId, String detailsText) {
-        if (StringUtils.notNull(detailsText)) {
+        if (StringUtils.notNull(detailsText) && StringUtils.notEmpty(detailsText)) {
             ((TextView) detailsLayout.findViewById(detailsViewId)).setText(detailsText);
         } else {
             detailsLayout.setVisibility(View.GONE);

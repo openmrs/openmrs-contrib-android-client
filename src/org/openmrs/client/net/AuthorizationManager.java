@@ -12,8 +12,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.client.activities.LoginActivity;
-import org.openmrs.client.application.OpenMRS;
-import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.utilities.ApplicationConstants;
 
 import java.util.HashMap;
@@ -26,12 +24,8 @@ public class AuthorizationManager extends BaseManager {
     private static final String SESSION_ID_KEY = "sessionId";
     private static final String AUTHENTICATION_KEY = "authenticated";
 
-    private Context mContext;
-    private OpenMRS mOpenMRS = OpenMRS.getInstance();
-    private OpenMRSLogger logger = mOpenMRS.getOpenMRSLogger();
-
     public AuthorizationManager(Context context) {
-        this.mContext = context;
+        super(context);
     }
 
     public void login(final String username, final String password) {
@@ -67,7 +61,7 @@ public class AuthorizationManager extends BaseManager {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<String, String>();
-                params.put(ApplicationConstants.AUTHORIZATION_PARAM, OpenMRS.getInstance().getAuthorizationToken());
+                params.put(ApplicationConstants.AUTHORIZATION_PARAM, mOpenMRS.getAuthorizationToken());
                 return params;
             }
         };

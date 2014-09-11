@@ -11,4 +11,8 @@ public final class StringUtils {
     public static boolean notNull(String string) {
         return null != string && !NULL_AS_STRING.equals(string);
     }
+
+    public static boolean notEmpty(String string) {
+        return !string.isEmpty();
+    }
 }

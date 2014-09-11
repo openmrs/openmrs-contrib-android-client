@@ -12,24 +12,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.client.activities.FindPatientsSearchActivity;
-import org.openmrs.client.application.OpenMRS;
-import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.models.mappers.PatientMapper;
 import org.openmrs.client.utilities.PatientCacheHelper;
 
 import static org.openmrs.client.utilities.ApplicationConstants.API;
 
 public class FindPatientsManager extends BaseManager {
-    private static final String RESULTS_KEY = "results";
-    private static final String UUID_KEY = "uuid";
     private static final String PATIENT_QUERY = "patient?q=";
 
-    private Context mContext;
-    private OpenMRS mOpenMRS = OpenMRS.getInstance();
-    private OpenMRSLogger logger = mOpenMRS.getOpenMRSLogger();
-
     public FindPatientsManager(Context context) {
-        this.mContext = context;
+        super(context);
     }
 
     public void findPatient(final String query) {

@@ -15,7 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.openmrs.client.R;
-import org.openmrs.client.adapters.FindPatientArrayAdapter;
+import org.openmrs.client.adapters.PatientArrayAdapter;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.dao.PatientDAO;
 import org.openmrs.client.models.Patient;
@@ -26,7 +26,7 @@ public class FindPatientsActivity extends ACBaseActivity {
 
     private String mQuery;
     private MenuItem mFindPatientMenuItem;
-    private FindPatientArrayAdapter mAdapter;
+    private PatientArrayAdapter mAdapter;
     private ListView mPatientsListView;
 
     @Override
@@ -35,16 +35,11 @@ public class FindPatientsActivity extends ACBaseActivity {
         setContentView(R.layout.activity_find_patients);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        PatientDAO patientDAO = new PatientDAO();
-        List<Patient> values = patientDAO.getAllPatients();
-
         mPatientsListView = (ListView) findViewById(R.id.patient_list_view);
         TextView emptyList = (TextView) findViewById(R.id.empty_patient_list_view);
         emptyList.setText(getString(R.string.search_patient_no_results));
         mPatientsListView.setEmptyView(emptyList);
 
-        mAdapter = new FindPatientArrayAdapter(this, R.layout.find_local_patients_row, values);
-        mPatientsListView.setAdapter(mAdapter);
         handleIntent(getIntent());
     }
 
@@ -62,12 +57,21 @@ public class FindPatientsActivity extends ACBaseActivity {
         super.onBackPressed();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        PatientDAO patientDAO = new PatientDAO();
+        List<Patient> values = patientDAO.getAllPatients();
+        mAdapter = new PatientArrayAdapter(this, R.layout.find_local_patients_row, values);
+        mPatientsListView.setAdapter(mAdapter);
+    }
+
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             mQuery = intent.getStringExtra(SearchManager.QUERY);
             Intent searchIntent = new Intent(this, FindPatientsSearchActivity.class);
             searchIntent.putExtra(SearchManager.QUERY, mQuery);
-            startActivityForResult(searchIntent, 1);
+            startActivity(searchIntent);
             intent.setAction(null);
             if (mFindPatientMenuItem != null) {
                 MenuItemCompat.collapseActionView(mFindPatientMenuItem);

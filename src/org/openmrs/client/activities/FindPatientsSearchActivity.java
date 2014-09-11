@@ -17,7 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.openmrs.client.R;
-import org.openmrs.client.adapters.FindPatientArrayAdapter;
+import org.openmrs.client.adapters.PatientArrayAdapter;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.models.Patient;
 import org.openmrs.client.net.FindPatientsManager;
@@ -29,7 +29,7 @@ import java.util.List;
 public class FindPatientsSearchActivity extends ACBaseActivity {
     private String mQuery;
     private MenuItem mFindPatientMenuItem;
-    private FindPatientArrayAdapter mAdapter;
+    private PatientArrayAdapter mAdapter;
     private ListView mPatientsListView;
     private TextView mEmptyList;
     private ProgressBar mSpinner;
@@ -67,7 +67,7 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             mEmptyList.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mSpinner);
-            mAdapter = new FindPatientArrayAdapter(this, R.layout.find_patients_row, new ArrayList<Patient>());
+            mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row, new ArrayList<Patient>());
             mPatientsListView.setAdapter(mAdapter);
             mQuery = intent.getStringExtra(SearchManager.QUERY);
             PatientCacheHelper.clearCache();
@@ -110,7 +110,7 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
             mSpinner.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mEmptyList);
         }
-        mAdapter = new FindPatientArrayAdapter(this, R.layout.find_patients_row, patientsList);
+        mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row, patientsList);
         mPatientsListView.setAdapter(mAdapter);
     }
 

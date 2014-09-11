@@ -30,6 +30,11 @@ public class DashboardActivity extends ACBaseActivity {
         startActivity(i);
     }
 
+    public void onActiveVisitsCallback(View v) {
+        Intent intent = new Intent(this, FindActiveVisitsActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -57,10 +62,13 @@ public class DashboardActivity extends ACBaseActivity {
         mBitmapCache = new SparseArray<Bitmap>();
         ImageView findPatientImageButton = (ImageView) findViewById(R.id.findPatientButton);
         ImageView registryPatientImageButton = (ImageView) findViewById(R.id.registryPatientButton);
+        ImageView activeVisitsImageButton = (ImageView) findViewById(R.id.activeVisitsButton);
         createImageBitmap(R.drawable.ico_search, findPatientImageButton.getLayoutParams());
         createImageBitmap(R.drawable.ico_registry, registryPatientImageButton.getLayoutParams());
+        createImageBitmap(R.drawable.ico_visits, activeVisitsImageButton.getLayoutParams());
         findPatientImageButton.setImageBitmap(mBitmapCache.get(R.drawable.ico_search));
         registryPatientImageButton.setImageBitmap(mBitmapCache.get(R.drawable.ico_registry));
+        activeVisitsImageButton.setImageBitmap(mBitmapCache.get(R.drawable.ico_visits));
     }
 
     private void createImageBitmap(Integer key, ViewGroup.LayoutParams layoutParams) {

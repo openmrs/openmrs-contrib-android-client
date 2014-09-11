@@ -14,7 +14,7 @@ public class DateUtilsTest extends InstrumentationTestCase {
     private static final String EXPECTED_LONG_3;
 
     @Override
-    public void setUp() throws Exception {
+    public void setUp() throws java.lang.Exception {
         super.setUp();
         getInstrumentation().waitForIdleSync();
     }

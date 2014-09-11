@@ -12,7 +12,7 @@ public class URLValidatorTest extends InstrumentationTestCase {
     private static final String VALID_URL_2;
 
     @Override
-    public void setUp() throws Exception {
+    public void setUp() throws java.lang.Exception {
         super.setUp();
         getInstrumentation().waitForIdleSync();
     }

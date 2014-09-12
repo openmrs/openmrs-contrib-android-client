@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Encounter implements Serializable {
     private Long id;
+    private Long visitID;
     private String uuid;
     private String display;
     private Long encounterDatetime;
@@ -13,6 +14,14 @@ public class Encounter implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public Long getVisitID() {
+        return visitID;
+    }
+
+    public void setVisitID(Long visitID) {
+        this.visitID = visitID;
     }
 
     public void setId(Long id) {

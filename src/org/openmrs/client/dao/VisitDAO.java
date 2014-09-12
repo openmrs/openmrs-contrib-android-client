@@ -3,10 +3,12 @@ package org.openmrs.client.dao;
 import android.database.CursorJoiner;
 
 import net.sqlcipher.Cursor;
-import net.sqlcipher.database.SQLiteDatabase;
 
 import org.openmrs.client.databases.DBOpenHelper;
 import org.openmrs.client.databases.OpenMRSDBOpenHelper;
+import org.openmrs.client.databases.tables.PatientTable;
+import org.openmrs.client.databases.tables.Table;
+import org.openmrs.client.databases.tables.VisitTable;
 import org.openmrs.client.models.Visit;
 import org.openmrs.client.models.VisitItemDTO;
 
@@ -16,10 +18,8 @@ import java.util.List;
 public class VisitDAO {
 
     public void saveVisit(Visit visit, long patientID) {
-        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        SQLiteDatabase db = helper.getWritableDatabase();
         visit.setPatientID(patientID);
-        helper.insertVisit(db, visit);
+        new VisitTable().insert(visit);
     }
 
     public List<VisitItemDTO> getAllActiveVisits() {
@@ -27,29 +27,29 @@ public class VisitDAO {
 
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
 
-        String sort = DBOpenHelper.COLUMN_PATIENT_KEY_ID + " ASC";
-        final Cursor visitCursor = helper.getReadableDatabase().query(DBOpenHelper.VISITS_TABLE_NAME, null, null, null, null, null, sort);
+        String sort = VisitTable.Column.PATIENT_KEY_ID + " ASC";
+        final Cursor visitCursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, null, null, null, null, sort);
 
         String[] patientCols = {
-                DBOpenHelper.COLUMN_ID, DBOpenHelper.COLUMN_IDENTIFIER, DBOpenHelper.COLUMN_DISPLAY
+                Table.MasterColumn.ID, PatientTable.Column.IDENTIFIER, Table.MasterColumn.DISPLAY
         };
-        sort = DBOpenHelper.COLUMN_ID + " ASC";
-        final Cursor patientCursor = helper.getReadableDatabase().query(DBOpenHelper.PATIENTS_TABLE_NAME, patientCols, null, null, null, null, sort);
+        sort = Table.MasterColumn.ID + " ASC";
+        final Cursor patientCursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, patientCols, null, null, null, null, sort);
 
         if (null != visitCursor && null != patientCursor) {
             try {
                 final CursorJoiner joiner = new CursorJoiner(visitCursor,
-                        new String[]{DBOpenHelper.COLUMN_PATIENT_KEY_ID}, patientCursor,
-                        new String[]{DBOpenHelper.COLUMN_ID});
+                        new String[]{VisitTable.Column.PATIENT_KEY_ID}, patientCursor,
+                        new String[]{Table.MasterColumn.ID});
                 for (CursorJoiner.Result result : joiner) {
                     switch (result) {
                         case BOTH:
-                            int visitId_CI = visitCursor.getColumnIndex(DBOpenHelper.COLUMN_ID);
-                            int visitPlace_CI = visitCursor.getColumnIndex(DBOpenHelper.COLUMN_VISIT_PLACE);
-                            int visitType_CI = visitCursor.getColumnIndex(DBOpenHelper.COLUMN_VISIT_TYPE);
-                            int visitStart_CI = visitCursor.getColumnIndex(DBOpenHelper.COLUMN_START_DATE);
-                            int patientName_CI = patientCursor.getColumnIndex(DBOpenHelper.COLUMN_DISPLAY);
-                            int patientIdentifier_CI = patientCursor.getColumnIndex(DBOpenHelper.COLUMN_IDENTIFIER);
+                            int visitId_CI = visitCursor.getColumnIndex(VisitTable.Column.ID);
+                            int visitPlace_CI = visitCursor.getColumnIndex(VisitTable.Column.VISIT_PLACE);
+                            int visitType_CI = visitCursor.getColumnIndex(VisitTable.Column.VISIT_TYPE);
+                            int visitStart_CI = visitCursor.getColumnIndex(VisitTable.Column.START_DATE);
+                            int patientName_CI = patientCursor.getColumnIndex(Table.MasterColumn.DISPLAY);
+                            int patientIdentifier_CI = patientCursor.getColumnIndex(PatientTable.Column.IDENTIFIER);
 
                             long visitId = visitCursor.getLong(visitId_CI);
                             String visitPlace = visitCursor.getString(visitPlace_CI);
@@ -78,17 +78,17 @@ public class VisitDAO {
         List<Visit> visits = new ArrayList<Visit>();
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
 
-        String where = String.format("%s = ?", DBOpenHelper.COLUMN_PATIENT_KEY_ID);
+        String where = String.format("%s = ?", VisitTable.Column.PATIENT_KEY_ID);
         String[] whereArgs = new String[]{patientID.toString()};
-        final Cursor cursor = helper.getReadableDatabase().query(DBOpenHelper.VISITS_TABLE_NAME, null, where, whereArgs, null, null, null);
+        final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null, null, null);
             if (null != cursor) {
                 try {
                     while (cursor.moveToNext()) {
-                        int visitID_CI = cursor.getColumnIndex(DBOpenHelper.COLUMN_ID);
-                        int visitType_CI = cursor.getColumnIndex(DBOpenHelper.COLUMN_VISIT_TYPE);
-                        int visitPlace_CI = cursor.getColumnIndex(DBOpenHelper.COLUMN_VISIT_PLACE);
-                        int visitStart_CI = cursor.getColumnIndex(DBOpenHelper.COLUMN_START_DATE);
-                        int visitStop_CI = cursor.getColumnIndex(DBOpenHelper.COLUMN_STOP_DATE);
+                        int visitID_CI = cursor.getColumnIndex(VisitTable.Column.ID);
+                        int visitType_CI = cursor.getColumnIndex(VisitTable.Column.VISIT_TYPE);
+                        int visitPlace_CI = cursor.getColumnIndex(VisitTable.Column.VISIT_PLACE);
+                        int visitStart_CI = cursor.getColumnIndex(VisitTable.Column.START_DATE);
+                        int visitStop_CI = cursor.getColumnIndex(VisitTable.Column.STOP_DATE);
                         Visit visit = new Visit();
                         visit.setId(cursor.getLong(visitID_CI));
                         visit.setVisitType(cursor.getString(visitType_CI));

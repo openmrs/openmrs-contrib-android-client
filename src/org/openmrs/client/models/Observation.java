@@ -4,12 +4,21 @@ import java.io.Serializable;
 
 public class Observation implements Serializable {
     private Long id;
+    private Long encounterID;
     private String uuid;
     private String display;
     private String displayValue;
 
     public Long getId() {
         return id;
+    }
+
+    public Long getEncounterID() {
+        return encounterID;
+    }
+
+    public void setEncounterID(Long encounterID) {
+        this.encounterID = encounterID;
     }
 
     public void setId(Long id) {

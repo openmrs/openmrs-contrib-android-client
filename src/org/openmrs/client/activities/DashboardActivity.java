@@ -10,6 +10,7 @@ import android.widget.ImageView;
 
 import org.openmrs.client.R;
 import org.openmrs.client.net.AuthorizationManager;
+import org.openmrs.client.utilities.FontsUtil;
 import org.openmrs.client.utilities.ImageUtils;
 
 public class DashboardActivity extends ACBaseActivity {
@@ -21,7 +22,7 @@ public class DashboardActivity extends ACBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
+        FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
         mAuthorizationManager = new AuthorizationManager(getApplicationContext());
     }
 

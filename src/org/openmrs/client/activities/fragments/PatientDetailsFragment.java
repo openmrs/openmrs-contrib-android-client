@@ -13,6 +13,7 @@ import org.openmrs.client.bundle.PatientDashboardBundle;
 import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.DateUtils;
 import org.openmrs.client.utilities.StringUtils;
+import org.openmrs.client.utilities.FontsUtil;
 
 public class PatientDetailsFragment extends Fragment {
 
@@ -50,6 +51,8 @@ public class PatientDetailsFragment extends Fragment {
             showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.cityLayout), R.id.addressDetailsCity, mPatientBundle.getPatient().getAddress().getCityVillage());
         }
         showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.phoneNumberLayout), R.id.patientDetailsPhone, mPatientBundle.getPatient().getPhoneNumber());
+
+        FontsUtil.setFont((ViewGroup) fragmentLayout);
         return fragmentLayout;
     }
 

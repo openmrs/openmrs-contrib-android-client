@@ -38,7 +38,6 @@ public abstract class ACBaseActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.basic_menu, menu);
         this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, OpenMRS.getInstance().getUsername()));
-
         return true;
     }
 

@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.openmrs.client.R;
 import org.openmrs.client.activities.PatientDashboardActivity;
@@ -18,6 +17,8 @@ import org.openmrs.client.models.Patient;
 import org.openmrs.client.net.FindVisitsManager;
 import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.DateUtils;
+import org.openmrs.client.utilities.FontsUtil;
+import org.openmrs.client.utilities.ToastUtil;
 
 import java.util.List;
 
@@ -91,6 +92,7 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
                 }
             });
         }
+        FontsUtil.setFont((ViewGroup) rowView);
         return rowView;
     }
 
@@ -103,7 +105,9 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
                     if (((CheckBox) v).isChecked()) {
                         long patientId = new PatientDAO().savePatient(patient);
                         new FindVisitsManager(mContext).findActiveVisitsForPatientByUUID(patient.getUuid(), patientId);
-                        Toast.makeText(mContext, R.string.find_patients_row_toast_patient_saved, Toast.LENGTH_SHORT).show();
+                        ToastUtil.showShortToast(mContext,
+                                            ToastUtil.ToastType.SUCCESS,
+                                            R.string.find_patients_row_toast_patient_saved);
                         disableCheckBox(holder);
                     }
                 }

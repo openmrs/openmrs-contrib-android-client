@@ -11,6 +11,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import org.openmrs.client.adapters.PatientArrayAdapter;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.dao.PatientDAO;
 import org.openmrs.client.models.Patient;
+import org.openmrs.client.utilities.FontsUtil;
 
 import java.util.List;
 
@@ -40,6 +42,7 @@ public class FindPatientsActivity extends ACBaseActivity {
         emptyList.setText(getString(R.string.search_patient_no_results));
         mPatientsListView.setEmptyView(emptyList);
 
+        FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
         handleIntent(getIntent());
     }
 

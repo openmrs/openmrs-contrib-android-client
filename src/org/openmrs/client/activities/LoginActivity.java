@@ -1,16 +1,16 @@
 package org.openmrs.client.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.Toast;
 
 import org.openmrs.client.R;
 import org.openmrs.client.activities.fragments.CustomFragmentDialog;
@@ -18,7 +18,9 @@ import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.bundle.CustomDialogBundle;
 import org.openmrs.client.net.AuthorizationManager;
 import org.openmrs.client.utilities.ApplicationConstants;
-import org.openmrs.client.utilities.OpenFontsUtil;
+import org.openmrs.client.utilities.FontsUtil;
+import org.openmrs.client.utilities.ImageUtils;
+import org.openmrs.client.utilities.ToastUtil;
 import org.openmrs.client.utilities.URLValidator;
 
 public class LoginActivity extends ACBaseActivity {
@@ -29,7 +31,8 @@ public class LoginActivity extends ACBaseActivity {
     private EditText mPassword;
     private Button mLoginButton;
     private ProgressBar mSpinner;
-    private ScrollView mLoadingScrollView;
+    private LinearLayout mLoginFormView;
+    private Bitmap mBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,18 +49,21 @@ public class LoginActivity extends ACBaseActivity {
                 if (validateLoginFields()) {
                     showURLDialog();
                 } else {
-                    Toast.makeText(getApplicationContext(), R.string.login_dialog_login_or_password_empty, Toast.LENGTH_SHORT).show();
+                    ToastUtil.showShortToast(getApplicationContext(),
+                            ToastUtil.ToastType.ERROR,
+                            R.string.login_dialog_login_or_password_empty);
                 }
             }
         });
         mSpinner = (ProgressBar) findViewById(R.id.loginLoading);
-        mLoadingScrollView = (ScrollView) findViewById(R.id.loginScrollView);
-        OpenFontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
+        mLoginFormView = (LinearLayout) findViewById(R.id.loginFormView);
+        FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        bindDrawableResources();
         mAuthorizationManager = new AuthorizationManager(this);
     }
 
@@ -67,6 +73,17 @@ public class LoginActivity extends ACBaseActivity {
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindDrawableResources();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
     }
 
     private boolean validateLoginFields() {
@@ -95,13 +112,7 @@ public class LoginActivity extends ACBaseActivity {
     }
 
     private void login() {
-        mLoadingScrollView.setVisibility(View.GONE);
-
-        ImageView imageLogo = (ImageView) findViewById(R.id.openmrsLogo);
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) imageLogo.getLayoutParams();
-        params.addRule(RelativeLayout.ABOVE, mSpinner.getId());
-        imageLogo.setLayoutParams(params);
-
+        mLoginFormView.setVisibility(View.GONE);
         mSpinner.setVisibility(View.VISIBLE);
         mAuthorizationManager.login(mUsername.getText().toString(), mPassword.getText().toString());
     }
@@ -117,6 +128,24 @@ public class LoginActivity extends ACBaseActivity {
             } else {
                 showInvalidURLDialog();
             }
+        }
+    }
+
+    private void bindDrawableResources() {
+        ImageView openMrsLogoImage = (ImageView) findViewById(R.id.openmrsLogo);
+        if (mBitmap == null) {
+            mBitmap = ImageUtils.decodeBitmapFromResource(
+                    getResources(),
+                    R.drawable.openmrs_logo,
+                    openMrsLogoImage.getLayoutParams().width,
+                    openMrsLogoImage.getLayoutParams().height);
+        }
+        openMrsLogoImage.setImageBitmap(mBitmap);
+    }
+
+    private void unbindDrawableResources() {
+        if (null != mBitmap) {
+            mBitmap.recycle();
         }
     }
 }

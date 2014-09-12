@@ -1,73 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:orientation="vertical"
+     android:focusable="true"
+     android:focusableInTouchMode="true">
     <ScrollView
-        android:id="@+id/loginScrollView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true" >
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp">
 
-            <EditText
-                android:id="@+id/loginUsernameField"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/openmrsLogo"
+                android:src="@drawable/openmrs_logo"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                />
+
+            <LinearLayout
+                android:id="@+id/loginFormView"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:focusable="true"
-                android:hint="@string/login_username_hint"
-                android:inputType="text"
-                android:singleLine="true" >
-                <requestFocus />
-            </EditText>
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/loginPasswordField"
-                android:layout_width="fill_parent"
+                <EditText
+                    android:id="@+id/loginUsernameField"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:focusable="true"
+                    android:hint="@string/login_username_hint"
+                    android:inputType="text"
+                    android:singleLine="true" >
+                </EditText>
+
+                <EditText
+                    android:id="@+id/loginPasswordField"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:focusable="true"
+                    android:hint="@string/login_password_hint"
+                    android:inputType="textPassword|text"
+                    android:password="true"
+                    android:singleLine="true" />
+
+                <Button
+                    android:id="@+id/loginButton"
+                    android:layout_width="130dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical|center_horizontal|center"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/login_button"
+                    android:background="@drawable/button_apply"
+                    android:textColor="@color/dark_purple"/>
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/loginLoading"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                android:focusable="true"
-                android:hint="@string/login_password_hint"
-                android:inputType="textPassword|text"
-                android:password="true"
-                android:singleLine="true" />
-
-            <Button
-                android:id="@+id/loginButton"
-                android:layout_width="130dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical|center_horizontal|center"
-                android:layout_marginTop="10dp"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="@string/login_button"
-                android:background="@drawable/button_simple"
-                android:textColor="@color/openMRS_Dark_Purple"/>
+                android:layout_gravity="center"
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
-
-    <ProgressBar android:id="@+id/loginLoading"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_centerInParent="true"
-                 android:layout_gravity="center"
-                 android:visibility="gone" />
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/openmrsLogo"
-        android:layout_above="@+id/loginScrollView"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/openmrs_logo"/>
-
 </RelativeLayout>

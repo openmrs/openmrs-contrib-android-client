@@ -6,7 +6,7 @@
               android:layout_width="fill_parent"
               android:layout_height="50dp"
               android:orientation="horizontal"
-              android:background="@color/openMRS_Dark_Teal">
+              android:background="@color/dark_teal">
 
     <TextView
         android:id="@+id/openmrsTitleView"
@@ -18,6 +18,6 @@
         android:layout_marginTop="14dp"
         android:layout_marginLeft="10dp"
         android:textSize="22sp"
-        android:background="@color/openMRS_Dark_Teal"/>
+        android:background="@color/dark_teal"/>
 
 </LinearLayout>

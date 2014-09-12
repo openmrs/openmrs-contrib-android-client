@@ -11,23 +11,35 @@ import org.openmrs.client.application.OpenMRS;
 
 import java.util.HashMap;
 
-public final class OpenFontsUtil {
+public final class FontsUtil {
 
     private static final String OPEN_FONTS_PATH = "fonts/OpenSans/";
     private static HashMap<OpenFonts, Typeface> typefacesForFonts;
 
-    private OpenFontsUtil() {
+    public enum OpenFonts {
+        OPEN_SANS_BOLD("OpenSans-Bold.ttf"),
+        OPEN_SANS_BOLD_ITALIC("OpenSans-BoldItalic.ttf"),
+        OPEN_SANS_EXTRA_BOLD("OpenSans-ExtraBold.ttf"),
+        OPEN_SANS_EXTRA_BOLD_ITALIC("OpenSans-ExtraBoldItalic.ttf"),
+        OPEN_SANS_ITALIC("OpenSans-Italic.ttf"),
+        OPEN_SANS_LIGHT("OpenSans-Light.ttf"),
+        OPEN_SANS_LIGHT_ITALIC("OpenSans-LightItalic.ttf"),
+        OPEN_SANS_REGULAR("OpenSans-Regular.ttf"),
+        OPEN_SANS_SEMIBOLD("OpenSans-Semibold.ttf"),
+        OPEN_SANS_SEMIBOLD_ITALIC("OpenSans-SemiboldItalic.ttf");
+
+        private final String font;
+
+        private OpenFonts(String font) {
+            this.font = font;
+        }
+
+        public String getFontName() {
+            return font;
+        }
     }
 
-    public static Typeface getOpenTypeface(OpenFonts openFont) {
-        Typeface openTypeFace = typefacesForFonts.get(openFont);
-
-        if (openTypeFace == null) {
-            openTypeFace = Typeface.createFromAsset(OpenMRS.getInstance().getAssets(),
-                    OPEN_FONTS_PATH + openFont.getFontName());
-            typefacesForFonts.put(openFont, openTypeFace);
-        }
-        return openTypeFace;
+    private FontsUtil() {
     }
 
     public static void setOpenFont(View view, OpenFonts openFont) {
@@ -46,6 +58,17 @@ public final class OpenFontsUtil {
                 setFont((ViewGroup) v);
             }
         }
+    }
+
+    private static Typeface getOpenTypeface(OpenFonts openFont) {
+        Typeface openTypeFace = typefacesForFonts.get(openFont);
+
+        if (openTypeFace == null) {
+            openTypeFace = Typeface.createFromAsset(OpenMRS.getInstance().getAssets(),
+                    OPEN_FONTS_PATH + openFont.getFontName());
+            typefacesForFonts.put(openFont, openTypeFace);
+        }
+        return openTypeFace;
     }
 
     private static void setFont(View view, Typeface openTypeFace) {
@@ -75,28 +98,5 @@ public final class OpenFontsUtil {
 
     static {
         typefacesForFonts = new HashMap<OpenFonts, Typeface>(OpenFonts.values().length);
-    }
-
-    public enum OpenFonts {
-        OPEN_SANS_BOLD("OpenSans-Bold.ttf"),
-        OPEN_SANS_BOLD_ITALIC("OpenSans-BoldItalic.ttf"),
-        OPEN_SANS_EXTRA_BOLD("OpenSans-ExtraBold.ttf"),
-        OPEN_SANS_EXTRA_BOLD_ITALIC("OpenSans-ExtraBoldItalic.ttf"),
-        OPEN_SANS_ITALIC("OpenSans-Italic.ttf"),
-        OPEN_SANS_LIGHT("OpenSans-Light.ttf"),
-        OPEN_SANS_LIGHT_ITALIC("OpenSans-LightItalic.ttf"),
-        OPEN_SANS_REGULAR("OpenSans-Regular.ttf"),
-        OPEN_SANS_SEMIBOLD("OpenSans-Semibold.ttf"),
-        OPEN_SANS_SEMIBOLD_ITALIC("OpenSans-SemiboldItalic.ttf");
-
-        private final String font;
-
-        private OpenFonts(String font) {
-            this.font = font;
-        }
-
-        public String getFontName() {
-            return font;
-        }
     }
 }

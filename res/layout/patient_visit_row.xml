@@ -7,6 +7,7 @@
                 android:paddingTop="5dp"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
+                android:background="@drawable/list_item_selector"
     >
     <TextView android:id="@+id/patientVisitStartDate"
               android:layout_width="wrap_content"
@@ -47,8 +48,8 @@
         <TextView android:id="@+id/visitStatusLabel"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:layout_marginLeft="8dp"
-                  android:textSize="22sp"
+                  android:layout_marginLeft="2dp"
+                  android:textSize="20sp"
                   android:textStyle="bold"
             />
     </LinearLayout>

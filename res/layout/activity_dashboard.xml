@@ -92,7 +92,6 @@
                             android:clickable="true"
                             android:paddingTop="10dp"
                             android:text="@string/dashboard_visits_icon_label"
-                            android:textColor="@android:color/black"
                             android:onClick="onActiveVisitsCallback"
                             android:textSize="22sp"/>
                     </RelativeLayout>

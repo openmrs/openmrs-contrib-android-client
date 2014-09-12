@@ -22,7 +22,7 @@ import org.openmrs.client.adapters.PatientArrayAdapter;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.models.Patient;
 import org.openmrs.client.net.FindPatientsManager;
-import org.openmrs.client.utilities.OpenFontsUtil;
+import org.openmrs.client.utilities.FontsUtil;
 import org.openmrs.client.utilities.PatientCacheHelper;
 
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         mEmptyList = (TextView) findViewById(R.id.empty_patient_list_view);
         mPatientsListView.setEmptyView(mEmptyList);
 
-        OpenFontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
+        FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
         getIntent().setAction(Intent.ACTION_SEARCH);
         handleIntent(getIntent());
     }

@@ -27,7 +27,7 @@ import org.openmrs.client.activities.SettingsActivity;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.bundle.CustomDialogBundle;
 import org.openmrs.client.utilities.ApplicationConstants;
-import org.openmrs.client.utilities.OpenFontsUtil;
+import org.openmrs.client.utilities.FontsUtil;
 
 /**
  * General class for creating dialog fragment instances
@@ -86,7 +86,7 @@ public class CustomFragmentDialog extends DialogFragment {
         this.setLeftButton(dialogLayout);
 
         buildDialog();
-        OpenFontsUtil.setFont((ViewGroup) dialogLayout);
+        FontsUtil.setFont((ViewGroup) dialogLayout);
         return dialogLayout;
     }
 
@@ -179,7 +179,7 @@ public class CustomFragmentDialog extends DialogFragment {
         TextView textView = (TextView) field.findViewById(R.id.openmrsTextView);
         textView.setText(message);
         textView.setSingleLine(false);
-        OpenFontsUtil.setOpenFont(textView, OpenFontsUtil.OpenFonts.OPEN_SANS_ITALIC);
+        FontsUtil.setOpenFont(textView, FontsUtil.OpenFonts.OPEN_SANS_ITALIC);
         mFieldsLayout.addView(field, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         return textView;
     }

@@ -66,6 +66,8 @@
                   android:singleLine="true"
                   android:layout_alignParentRight="true"
                   android:layout_alignParentEnd="true"
-                  android:layout_marginTop="12dp"/>
+                  android:layout_marginTop="15dp"
+                  android:button="@drawable/checkbox"
+                  android:textColor="@color/dark_purple"/>
     </RelativeLayout>
 </LinearLayout>

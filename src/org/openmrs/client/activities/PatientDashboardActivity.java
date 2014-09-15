@@ -47,7 +47,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
         Bundle patientBundle = getIntent().getExtras();
         mPatient = new PatientDAO().findPatientByUUID(patientBundle.getString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE));
-        mPatientVisits = new VisitDAO().getActiveVisitForSelectedPatient(mPatient.getId());
+        mPatientVisits = new VisitDAO().getVisitsByPatientUUID(mPatient.getId());
 
         mPatientDashboardPagerAdapter = new PatientDashboardPagerAdapter(getSupportFragmentManager(), tabHosts);
         initViewPager();

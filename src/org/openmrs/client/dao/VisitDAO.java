@@ -4,11 +4,15 @@ import android.database.CursorJoiner;
 
 import net.sqlcipher.Cursor;
 
+import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.databases.DBOpenHelper;
 import org.openmrs.client.databases.OpenMRSDBOpenHelper;
 import org.openmrs.client.databases.tables.PatientTable;
 import org.openmrs.client.databases.tables.Table;
 import org.openmrs.client.databases.tables.VisitTable;
+import org.openmrs.client.models.Encounter;
+import org.openmrs.client.models.Observation;
+import org.openmrs.client.models.Patient;
 import org.openmrs.client.models.Visit;
 import org.openmrs.client.models.VisitItemDTO;
 
@@ -18,11 +22,29 @@ import java.util.List;
 public class VisitDAO {
 
     public void saveVisit(Visit visit, long patientID) {
+        EncounterDAO encounterDAO = new EncounterDAO();
+        ObservationDAO observationDAO = new ObservationDAO();
         visit.setPatientID(patientID);
-        new VisitTable().insert(visit);
+        long visitID = new VisitTable().insert(visit);
+        for (Encounter encounter : visit.getEncounters()) {
+            long encounterID = encounterDAO.saveEncounter(encounter, visitID);
+            for (Observation obs : encounter.getObservations()) {
+                observationDAO.saveObservation(obs, encounterID);
+            }
+        }
+    }
+
+    public List<VisitItemDTO> findActiveVisitsByPatientNameLike(final String patientName) {
+        String where = String.format("%s LIKE  ?", PatientTable.Column.DISPLAY);
+        String[] whereArgs = new String[]{"%" + patientName + "%"};
+        return getAllActiveVisits(where, whereArgs);
     }
 
     public List<VisitItemDTO> getAllActiveVisits() {
+        return getAllActiveVisits(null, null);
+    }
+
+    public List<VisitItemDTO> getAllActiveVisits(final String where, final String[] whereArgs) {
         List<VisitItemDTO> visitItems = new ArrayList<VisitItemDTO>();
 
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
@@ -30,17 +52,14 @@ public class VisitDAO {
         String sort = VisitTable.Column.PATIENT_KEY_ID + " ASC";
         final Cursor visitCursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, null, null, null, null, sort);
 
-        String[] patientCols = {
-                Table.MasterColumn.ID, PatientTable.Column.IDENTIFIER, Table.MasterColumn.DISPLAY
-        };
         sort = Table.MasterColumn.ID + " ASC";
-        final Cursor patientCursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, patientCols, null, null, null, null, sort);
+        final Cursor patientCursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null, where, whereArgs, null, null, sort);
 
         if (null != visitCursor && null != patientCursor) {
             try {
-                final CursorJoiner joiner = new CursorJoiner(visitCursor,
-                        new String[]{VisitTable.Column.PATIENT_KEY_ID}, patientCursor,
-                        new String[]{Table.MasterColumn.ID});
+                final CursorJoiner joiner = new CursorJoiner(patientCursor,
+                        new String[]{PatientTable.Column.ID}, visitCursor,
+                        new String[]{VisitTable.Column.PATIENT_KEY_ID});
                 for (CursorJoiner.Result result : joiner) {
                     switch (result) {
                         case BOTH:
@@ -48,7 +67,7 @@ public class VisitDAO {
                             int visitPlace_CI = visitCursor.getColumnIndex(VisitTable.Column.VISIT_PLACE);
                             int visitType_CI = visitCursor.getColumnIndex(VisitTable.Column.VISIT_TYPE);
                             int visitStart_CI = visitCursor.getColumnIndex(VisitTable.Column.START_DATE);
-                            int patientName_CI = patientCursor.getColumnIndex(Table.MasterColumn.DISPLAY);
+                            int patientName_CI = patientCursor.getColumnIndex(PatientTable.Column.DISPLAY);
                             int patientIdentifier_CI = patientCursor.getColumnIndex(PatientTable.Column.IDENTIFIER);
 
                             long visitId = visitCursor.getLong(visitId_CI);
@@ -74,7 +93,7 @@ public class VisitDAO {
         return visitItems;
     }
 
-    public List<Visit> getActiveVisitForSelectedPatient(final Long patientID) {
+    public List<Visit> getVisitsByPatientUUID(final Long patientID) {
         List<Visit> visits = new ArrayList<Visit>();
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
 

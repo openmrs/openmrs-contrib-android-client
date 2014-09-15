@@ -11,38 +11,40 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.openmrs.client.R;
-import org.openmrs.client.adapters.PatientArrayAdapter;
+import org.openmrs.client.adapters.ActiveVisitsArrayAdapter;
 import org.openmrs.client.application.OpenMRS;
-import org.openmrs.client.dao.PatientDAO;
-import org.openmrs.client.models.Patient;
+import org.openmrs.client.dao.VisitDAO;
 import org.openmrs.client.utilities.FontsUtil;
 
-import java.util.List;
-
-public class FindPatientsActivity extends ACBaseActivity {
-
+public class FindActiveVisitsSearchActivity extends ACBaseActivity {
     private String mQuery;
-    private MenuItem mFindPatientMenuItem;
-    private PatientArrayAdapter mAdapter;
-    private ListView mPatientsListView;
+    private MenuItem mFindActiveVisitItem;
+    private ActiveVisitsArrayAdapter mAdapter;
+    private ListView mVisitsListView;
+    private TextView mEmptyList;
+    private ProgressBar mSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_patients);
+        setContentView(R.layout.activity_find_visits);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mPatientsListView = (ListView) findViewById(R.id.patient_list_view);
-        TextView emptyList = (TextView) findViewById(R.id.empty_patient_list_view);
-        emptyList.setText(getString(R.string.search_patient_no_results));
-        mPatientsListView.setEmptyView(emptyList);
+        mSpinner = (ProgressBar) findViewById(R.id.visits_list_view_loading);
+        mVisitsListView = (ListView) findViewById(R.id.visits_list_view);
+        mEmptyList = (TextView) findViewById(R.id.empty_visits_list_view);
+        mEmptyList.setText(getString(R.string.search_visits_no_results));
+        mVisitsListView.setEmptyView(mEmptyList);
 
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
+        getIntent().setAction(Intent.ACTION_SEARCH);
         handleIntent(getIntent());
     }
 
@@ -54,30 +56,22 @@ public class FindPatientsActivity extends ACBaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (mFindPatientMenuItem != null) {
-            MenuItemCompat.collapseActionView(mFindPatientMenuItem);
+        if (mFindActiveVisitItem != null) {
+            MenuItemCompat.collapseActionView(mFindActiveVisitItem);
         }
         super.onBackPressed();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        PatientDAO patientDAO = new PatientDAO();
-        List<Patient> values = patientDAO.getAllPatients();
-        mAdapter = new PatientArrayAdapter(this, R.layout.find_local_patients_row, values);
-        mPatientsListView.setAdapter(mAdapter);
     }
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             mQuery = intent.getStringExtra(SearchManager.QUERY);
-            Intent searchIntent = new Intent(this, FindPatientsSearchActivity.class);
-            searchIntent.putExtra(SearchManager.QUERY, mQuery);
-            startActivity(searchIntent);
-            intent.setAction(null);
-            if (mFindPatientMenuItem != null) {
-                MenuItemCompat.collapseActionView(mFindPatientMenuItem);
+            mEmptyList.setVisibility(View.GONE);
+            mVisitsListView.setEmptyView(mSpinner);
+            mAdapter = new ActiveVisitsArrayAdapter(this, R.layout.find_visits_row, new VisitDAO().findActiveVisitsByPatientNameLike(mQuery));
+            mVisitsListView.setAdapter(mAdapter);
+            stopLoader();
+            if (mFindActiveVisitItem != null) {
+                MenuItemCompat.collapseActionView(mFindActiveVisitItem);
             }
         }
     }
@@ -92,15 +86,22 @@ public class FindPatientsActivity extends ACBaseActivity {
 
         SearchView findPatientView;
 
-        mFindPatientMenuItem = menu.findItem(R.id.action_search);
+        mFindActiveVisitItem = menu.findItem(R.id.action_search);
         if (OpenMRS.getInstance().isRunningHoneycombVersionOrHigher()) {
-            findPatientView = (SearchView) mFindPatientMenuItem.getActionView();
+            findPatientView = (SearchView) mFindActiveVisitItem.getActionView();
         } else {
-            findPatientView = (SearchView) MenuItemCompat.getActionView(mFindPatientMenuItem);
+            findPatientView = (SearchView) MenuItemCompat.getActionView(mFindActiveVisitItem);
         }
 
         SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
         findPatientView.setSearchableInfo(info);
+        findPatientView.setIconifiedByDefault(false);
         return true;
+    }
+
+    public void stopLoader() {
+        mEmptyList.setText(getString(R.string.search_visits_no_results, mQuery));
+        mSpinner.setVisibility(View.GONE);
+        mVisitsListView.setEmptyView(mEmptyList);
     }
 }

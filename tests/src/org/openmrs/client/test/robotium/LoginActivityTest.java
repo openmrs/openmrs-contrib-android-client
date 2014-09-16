@@ -57,29 +57,7 @@ public class LoginActivityTest extends
     }
 
     public void testLogin() throws Exception {
-        //Write login
-        EditText loginUsernameField = (EditText) solo.getView(R.id.loginUsernameField);
-        solo.clearEditText(loginUsernameField);
-        solo.enterText(loginUsernameField, LOGIN);
-
-        //Write password
-        EditText loginPasswordField = (EditText) solo.getView(R.id.loginPasswordField);
-        solo.clearEditText(loginPasswordField);
-        solo.enterText(loginPasswordField, PASSWORD);
-
-        //Click on Login button
-        solo.clickOnButton(solo.getString(R.string.login_button));
-
-        //Write url
-        EditText urlField = (EditText) solo.getView(R.id.openmrsEditText);
-        solo.clearEditText(urlField);
-        solo.enterText(urlField, SERVER_URL);
-
-        //Click on Login button
-        solo.clickOnButton(solo.getString(R.string.dialog_button_done));
-
-        boolean result = solo.waitForText(solo.getString(R.string.login_successful));
-        assertTrue(result);
+        LoginHelper.login(solo);
     }
 
     public void testLoginFailed() throws Exception {

@@ -9,13 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import org.openmrs.client.R;
-import org.openmrs.client.net.AuthorizationManager;
 import org.openmrs.client.utilities.FontsUtil;
 import org.openmrs.client.utilities.ImageUtils;
 
 public class DashboardActivity extends ACBaseActivity {
 
-    private AuthorizationManager mAuthorizationManager;
     private SparseArray<Bitmap> mBitmapCache;
 
     @Override
@@ -23,7 +21,6 @@ public class DashboardActivity extends ACBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
-        mAuthorizationManager = new AuthorizationManager(getApplicationContext());
     }
 
     public void onFindPatientCallback(View v) {
@@ -40,9 +37,6 @@ public class DashboardActivity extends ACBaseActivity {
     protected void onResume() {
         super.onResume();
         bindDrawableResources();
-        if (!mAuthorizationManager.isUserLoggedIn()) {
-            mAuthorizationManager.moveToLoginActivity();
-        }
     }
 
     @Override

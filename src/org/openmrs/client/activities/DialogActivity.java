@@ -33,4 +33,12 @@ public class DialogActivity extends ACBaseActivity {
             showUnauthorizedDialog();
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (ACTION_UNAUTHORIZED_BROADCAST.equals(getIntent().getAction())) {
+            moveUnauthorizedUserToLoginScreen();
+        }
+    }
 }

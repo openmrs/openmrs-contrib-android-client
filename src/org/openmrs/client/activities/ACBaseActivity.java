@@ -13,6 +13,7 @@ import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.bundle.CustomDialogBundle;
 import org.openmrs.client.databases.OpenMRSDBOpenHelper;
+import org.openmrs.client.net.AuthorizationManager;
 import org.openmrs.client.utilities.ApplicationConstants;
 
 public abstract class ACBaseActivity extends ActionBarActivity {
@@ -20,17 +21,29 @@ public abstract class ACBaseActivity extends ActionBarActivity {
     protected FragmentManager mFragmentManager;
     protected final OpenMRSLogger mOpenMRSLogger = OpenMRS.getInstance().getOpenMRSLogger();
     private CustomFragmentDialog mCurrentDialog;
+    protected AuthorizationManager mAuthorizationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFragmentManager = getSupportFragmentManager();
+        mAuthorizationManager = new AuthorizationManager(this);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mCurrentDialog = null;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!(this instanceof LoginActivity || this instanceof DialogActivity)) {
+            if (!mAuthorizationManager.isUserLoggedIn()) {
+                mAuthorizationManager.moveToLoginActivity();
+            }
+        }
     }
 
     @Override

@@ -103,6 +103,15 @@ public abstract class ACBaseActivity extends ActionBarActivity {
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.UNAUTHORIZED_DIALOG_TAG);
     }
 
+    protected void showServerErrorDialog() {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.server_error_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.server_error_dialog_message));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        bundle.setRightButtonText(getString(R.string.dialog_button_ok));
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.SERVER_ERROR_DIALOG_TAG);
+    }
+
     public void createAndShowDialog(CustomDialogBundle bundle, String tag) {
         CustomFragmentDialog instance = CustomFragmentDialog.newInstance(bundle);
         instance.show(mFragmentManager, tag);

@@ -1,12 +1,12 @@
 package org.openmrs.client.activities;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST;
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_CONN_TIMEOUT_BROADCAST;
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_NO_INTERNET_CONNECTION_BROADCAST;
+import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_SERVER_ERROR_BROADCAST;
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_SERVER_UNAVAILABLE_BROADCAST;
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_UNAUTHORIZED_BROADCAST;
 
@@ -31,6 +31,9 @@ public class DialogActivity extends ACBaseActivity {
         }
         if (ACTION_UNAUTHORIZED_BROADCAST.equals(intent.getAction())) {
             showUnauthorizedDialog();
+        }
+        if (ACTION_SERVER_ERROR_BROADCAST.equals(intent.getAction())) {
+            showServerErrorDialog();
         }
     }
 }

@@ -5,9 +5,7 @@ import net.sqlcipher.Cursor;
 import org.openmrs.client.databases.DBOpenHelper;
 import org.openmrs.client.databases.OpenMRSDBOpenHelper;
 import org.openmrs.client.databases.tables.ObservationTable;
-import org.openmrs.client.databases.tables.VisitTable;
 import org.openmrs.client.models.Observation;
-import org.openmrs.client.models.Visit;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import org.openmrs.client.R;
 import org.openmrs.client.models.VisitItemDTO;
 import org.openmrs.client.utilities.DateUtils;
+import org.openmrs.client.utilities.FontsUtil;
 
 import java.util.List;
 
@@ -58,6 +59,7 @@ public class ActiveVisitsArrayAdapter extends ArrayAdapter<VisitItemDTO> {
         holder.mVisitPlace.setText("@ " + visit.getVisitPlace());
         holder.mPatientName.setText(visit.getPatientName());
         holder.mVisitStart.setText(DateUtils.convertTime(visit.getVisitStart()));
+        FontsUtil.setFont((ViewGroup) rowView);
         return rowView;
     }
 }

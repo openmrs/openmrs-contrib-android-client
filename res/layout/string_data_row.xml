@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_height="fill_parent"
+              android:layout_width="fill_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:weightSum="100"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="40"
+            >
+
+            <TextView
+                android:id="@+id/labelText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:singleLine="false"
+                android:gravity="center_vertical|right"
+                android:layout_marginRight="10dp"
+                 />
+
+        </RelativeLayout>
+        <View
+            android:id="@+id/dataRowBorder"
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="?android:attr/listDivider" />
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="60"
+            >
+
+            <TextView
+                android:id="@+id/dataText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|top"
+                android:layout_marginLeft="10dp"
+                android:singleLine="false"
+               />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View style="@style/Divider"/>
+
+</LinearLayout>

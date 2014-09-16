@@ -1,8 +1,76 @@
 package org.openmrs.client.activities.fragments;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.openmrs.client.R;
+import org.openmrs.client.dao.EncounterDAO;
+import org.openmrs.client.models.Encounter;
+import org.openmrs.client.models.Observation;
+import org.openmrs.client.utilities.ApplicationConstants;
+import org.openmrs.client.utilities.DateUtils;
+import org.openmrs.client.utilities.FontsUtil;
 
 public class PatientVitalsFragment extends Fragment {
+
+    private Encounter mVitalsEncounter;
+
     public PatientVitalsFragment() {
+    }
+
+    public static PatientVitalsFragment newInstance(Long patientID) {
+        PatientVitalsFragment patientVitalsFragment = new PatientVitalsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ApplicationConstants.BundleKeys.PATIENT_BUNDLE, patientID);
+        patientVitalsFragment.setArguments(bundle);
+        return patientVitalsFragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        mVitalsEncounter = new EncounterDAO().getLastVitalsEncounterForVisit(getArguments().getLong(ApplicationConstants.BundleKeys.PATIENT_BUNDLE));
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View fragmentLayout = inflater.inflate(R.layout.fragment_patient_vitals, null, false);
+        LinearLayout content = (LinearLayout) fragmentLayout.findViewById(R.id.vitalsDetailsContent);
+        TextView lastVitalsLabel = (TextView) fragmentLayout.findViewById(R.id.lastVitalsLabel);
+        if (null == mVitalsEncounter) {
+            lastVitalsLabel.setVisibility(View.GONE);
+            content.setVisibility(View.GONE);
+            TextView noneVitals = (TextView) fragmentLayout.findViewById(R.id.lastVitalsNoneLabel);
+            noneVitals.setVisibility(View.VISIBLE);
+            noneVitals.setText(getString(R.string.last_vitals_none_label));
+            FontsUtil.setFont(noneVitals, FontsUtil.OpenFonts.OPEN_SANS_EXTRA_BOLD);
+        } else {
+            TextView lastVitalsDate = (TextView) fragmentLayout.findViewById(R.id.lastVitalsDate);
+            lastVitalsDate.setText(DateUtils.convertTime(mVitalsEncounter.getEncounterDatetime(), DateUtils.DATE_WITH_TIME_FORMAT));
+            FontsUtil.setFont(lastVitalsLabel, FontsUtil.OpenFonts.OPEN_SANS_EXTRA_BOLD);
+            FontsUtil.setFont(lastVitalsDate, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);
+            for (Observation obs : mVitalsEncounter.getObservations()) {
+                addStringView(inflater, content, obs.getDisplay(), obs.getDisplayValue());
+            }
+        }
+        return fragmentLayout;
+    }
+
+    public void addStringView(LayoutInflater inflater, ViewGroup parentLayout, String label, String data) {
+        View view = inflater.inflate(R.layout.string_data_row, null, false);
+        TextView labelText = (TextView) view.findViewById(R.id.labelText);
+        labelText.setText(label);
+        FontsUtil.setFont(labelText, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);
+
+        TextView dataText = (TextView) view.findViewById(R.id.dataText);
+        dataText.setText(data);
+        FontsUtil.setFont(dataText, FontsUtil.OpenFonts.OPEN_SANS_REGULAR);
+        parentLayout.addView(view);
     }
 }

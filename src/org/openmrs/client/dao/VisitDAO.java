@@ -4,7 +4,6 @@ import android.database.CursorJoiner;
 
 import net.sqlcipher.Cursor;
 
-import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.databases.DBOpenHelper;
 import org.openmrs.client.databases.OpenMRSDBOpenHelper;
 import org.openmrs.client.databases.tables.PatientTable;
@@ -12,7 +11,6 @@ import org.openmrs.client.databases.tables.Table;
 import org.openmrs.client.databases.tables.VisitTable;
 import org.openmrs.client.models.Encounter;
 import org.openmrs.client.models.Observation;
-import org.openmrs.client.models.Patient;
 import org.openmrs.client.models.Visit;
 import org.openmrs.client.models.VisitItemDTO;
 
@@ -114,6 +112,7 @@ public class VisitDAO {
                         visit.setVisitPlace(cursor.getString(visitPlace_CI));
                         visit.setStartDate(cursor.getLong(visitStart_CI));
                         visit.setStopDate(cursor.getLong(visitStop_CI));
+                        visit.setEncounters(new EncounterDAO().findEncountersByVisitID(visit.getId()));
                         visits.add(visit);
                     }
                 } finally {

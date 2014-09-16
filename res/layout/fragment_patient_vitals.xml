@@ -1,0 +1,46 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical"
+        >
+        <TextView android:id="@+id/lastVitalsNoneLabel"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                  android:text="@string/last_vitals_none_label"
+                  android:visibility="gone"
+                  android:gravity="center_vertical|center_horizontal"
+                  android:layout_gravity="center"/>
+
+        <LinearLayout android:id="@+id/lastVitalsLayout"
+                      android:layout_width="fill_parent"
+                      android:layout_height="50dp"
+                      android:orientation="horizontal"
+                      android:gravity="center_horizontal"
+            >
+            <TextView android:id="@+id/lastVitalsLabel"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="@string/last_vitals_label"
+                      android:layout_gravity="center_vertical"
+                />
+
+            <TextView android:id="@+id/lastVitalsDate"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/vitalsDetailsContent"
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent"
+                      android:orientation="vertical"
+            >
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

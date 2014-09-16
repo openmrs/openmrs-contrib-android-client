@@ -16,7 +16,6 @@ import org.openmrs.client.R;
 import org.openmrs.client.activities.fragments.CustomFragmentDialog;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.bundle.CustomDialogBundle;
-import org.openmrs.client.net.AuthorizationManager;
 import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.FontsUtil;
 import org.openmrs.client.utilities.ImageUtils;
@@ -24,8 +23,6 @@ import org.openmrs.client.utilities.ToastUtil;
 import org.openmrs.client.utilities.URLValidator;
 
 public class LoginActivity extends ACBaseActivity {
-
-    private AuthorizationManager mAuthorizationManager;
 
     private EditText mUsername;
     private EditText mPassword;
@@ -64,7 +61,6 @@ public class LoginActivity extends ACBaseActivity {
     protected void onResume() {
         super.onResume();
         bindDrawableResources();
-        mAuthorizationManager = new AuthorizationManager(this);
     }
 
     @Override

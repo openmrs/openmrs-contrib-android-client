@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="55dp"
+              android:orientation="horizontal"
+              android:background="@drawable/top_and_bottom_border"
+              android:longClickable="false"
+              android:paddingLeft="7dp"
+              android:paddingRight="0dp"
+              android:weightSum="2"
+              >
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <ImageView android:id="@+id/listVisitGroupEncounterIcon"
+                   android:layout_gravity="center_vertical"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+            />
+
+        <TextView android:id="@+id/listVisitGroupEncounterName"
+                  android:layout_width="wrap_content"
+                  android:layout_height="55dp"
+                  android:textSize="26sp"
+                  android:paddingRight="15dp"
+                  android:paddingLeft="5dp"
+                  android:gravity="center"
+            />
+    </LinearLayout>
+    <View style="@style/Divider.Horizontal.DarkGray" />
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <TextView  android:id="@+id/listVisitGroupDetailsSelector"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textSize="22sp"
+                   android:paddingLeft="15dp"
+                   android:paddingRight="15dp"
+            />
+
+        <ImageView android:id="@+id/listVisitGroupDetailsIcon"
+                   android:layout_gravity="center_vertical"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+</LinearLayout>

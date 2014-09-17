@@ -80,7 +80,7 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <View style="@style/Divider"/>
+    <View style="@style/Divider.Vertical"/>
 
     <ScrollView
         android:id="@+id/patientAddressDetailsLayout"
@@ -104,7 +104,7 @@
                       android:text="@string/patient_address_info_label"
                 />
 
-            <View android:layout_width="match_parent" style="@style/Divider.NoStickyEdges"/>
+            <View android:layout_width="match_parent" style="@style/Divider.Vertical.NoStickyEdges"/>
 
             <RelativeLayout android:id="@+id/wrapperLayout"
                             android:layout_width="match_parent"
@@ -233,7 +233,7 @@
                 </LinearLayout>
             </RelativeLayout>
 
-            <View android:layout_width="match_parent" style="@style/Divider.NoStickyEdges"/>
+            <View android:layout_width="match_parent" style="@style/Divider.Vertical.NoStickyEdges"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

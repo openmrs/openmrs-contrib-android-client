@@ -1,14 +1,18 @@
 package org.openmrs.client.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.openmrs.client.R;
+import org.openmrs.client.activities.VisitDashboardActivity;
 import org.openmrs.client.models.VisitItemDTO;
+import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.DateUtils;
 import org.openmrs.client.utilities.FontsUtil;
 
@@ -28,6 +32,7 @@ public class ActiveVisitsArrayAdapter extends ArrayAdapter<VisitItemDTO> {
     }
 
     class ViewHolder {
+        private RelativeLayout mRelativeLayout;
         private TextView mPatientID;
         private TextView mPatientName;
         private TextView mVisitPlace;
@@ -36,13 +41,14 @@ public class ActiveVisitsArrayAdapter extends ArrayAdapter<VisitItemDTO> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View rowView = convertView;
         if (rowView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(mResourceID, null);
             // configure view holder
             ViewHolder viewHolder = new ViewHolder();
+            viewHolder.mRelativeLayout = (RelativeLayout) rowView.findViewById(R.id.visitRow);
             viewHolder.mPatientID = (TextView) rowView.findViewById(R.id.visitPatientID);
             viewHolder.mPatientName = (TextView) rowView.findViewById(R.id.visitPatientName);
             viewHolder.mVisitPlace = (TextView) rowView.findViewById(R.id.patientVisitPlace);
@@ -60,6 +66,17 @@ public class ActiveVisitsArrayAdapter extends ArrayAdapter<VisitItemDTO> {
         holder.mPatientName.setText(visit.getPatientName());
         holder.mVisitStart.setText(DateUtils.convertTime(visit.getVisitStart()));
         FontsUtil.setFont((ViewGroup) rowView);
+
+        holder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, VisitDashboardActivity.class);
+                intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ITEM, mVisitList.get(position));
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+            }
+        });
+
         return rowView;
     }
 }

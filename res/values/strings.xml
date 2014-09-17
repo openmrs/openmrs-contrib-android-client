@@ -84,4 +84,10 @@
     <string name="last_vitals_none_label">None</string>
     <!-- fragment_patient_diagnosis layout -->
     <string name="diagnosis_none_label">Diagnoses are not available yet</string>
+    <!-- Visit dashboard activity -->
+    <string name="visit_dashboard_label">Visit for</string>
+    <string name="list_visit_selector_show">show details</string>
+    <string name="list_visit_selector_hide">hide details</string>
+    <string name="list_item_encounter_no_notes">No notes for this encounter.</string>
+    <string name="visit_exp_list_empty">Visit has no encounters yet.</string>
 </resources>

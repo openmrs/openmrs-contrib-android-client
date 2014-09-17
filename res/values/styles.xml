@@ -23,12 +23,27 @@
     </style>
 
     <style name="Divider">
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+
+    <style name="Divider.Vertical">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">3dp</item>
         <item name="android:background">?android:attr/listDivider</item>
     </style>
 
-    <style name="Divider.NoStickyEdges">
+    <style name="Divider.Horizontal">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+
+    <style name="Divider.Horizontal.DarkGray">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">55dp</item>
+        <item name="android:background">@color/dark_grey</item>
+    </style>
+
+    <style name="Divider.Vertical.NoStickyEdges">
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
     </style>

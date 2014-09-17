@@ -69,7 +69,7 @@ public class Encounter implements Serializable {
     }
 
     public enum EncounterType {
-        VITALS("Vitals"), VISIT_NOTE("Visit Note");
+        VITALS("Vitals"), VISIT_NOTE("Visit Note"), DISCHARGE("Discharge"), ADMISSION("Admission");
 
         EncounterType(String type) {
             this.type = type;
@@ -84,6 +84,10 @@ public class Encounter implements Serializable {
         public static EncounterType getType(String type) {
             if (type.equals(VISIT_NOTE.getType())) {
                 return VISIT_NOTE;
+            } else if (type.equals(DISCHARGE.getType())) {
+                return DISCHARGE;
+            } else if (type.equals(ADMISSION.getType())) {
+                return ADMISSION;
             } else {
                 return VITALS;
             }

@@ -42,6 +42,7 @@ public abstract class ApplicationConstants {
         public static final String CUSTOM_DIALOG_BUNDLE = "customDialogBundle";
         public static final String PATIENT_ID_BUNDLE = "patientID";
         public static final String PATIENT_BUNDLE = "patientBundle";
+        public static final String VISIT_ITEM = "visitItem";
     }
 
     public abstract static class CustomIntentActions {

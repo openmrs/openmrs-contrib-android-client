@@ -122,4 +122,34 @@ public class VisitDAO {
         return visits;
     }
 
+    public Visit getVisitsByID(final Long visitID) {
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        Visit visit = null;
+
+        String where = String.format("%s = ?", VisitTable.Column.ID);
+        String[] whereArgs = new String[]{visitID.toString()};
+        final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        if (null != cursor) {
+            try {
+                if (cursor.moveToFirst()) {
+                    int visitID_CI = cursor.getColumnIndex(VisitTable.Column.ID);
+                    int visitType_CI = cursor.getColumnIndex(VisitTable.Column.VISIT_TYPE);
+                    int visitPlace_CI = cursor.getColumnIndex(VisitTable.Column.VISIT_PLACE);
+                    int visitStart_CI = cursor.getColumnIndex(VisitTable.Column.START_DATE);
+                    int visitStop_CI = cursor.getColumnIndex(VisitTable.Column.STOP_DATE);
+                    visit = new Visit();
+                    visit.setId(cursor.getLong(visitID_CI));
+                    visit.setVisitType(cursor.getString(visitType_CI));
+                    visit.setVisitPlace(cursor.getString(visitPlace_CI));
+                    visit.setStartDate(cursor.getLong(visitStart_CI));
+                    visit.setStopDate(cursor.getLong(visitStop_CI));
+                    visit.setEncounters(new EncounterDAO().findEncountersByVisitID(visitID));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return visit;
+    }
+
 }

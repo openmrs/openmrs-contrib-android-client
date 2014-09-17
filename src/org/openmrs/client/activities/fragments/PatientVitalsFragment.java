@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.openmrs.client.R;
+import org.openmrs.client.application.OpenMRSInflater;
 import org.openmrs.client.dao.EncounterDAO;
 import org.openmrs.client.models.Encounter;
 import org.openmrs.client.models.Observation;
@@ -55,22 +56,12 @@ public class PatientVitalsFragment extends Fragment {
             lastVitalsDate.setText(DateUtils.convertTime(mVitalsEncounter.getEncounterDatetime(), DateUtils.DATE_WITH_TIME_FORMAT));
             FontsUtil.setFont(lastVitalsLabel, FontsUtil.OpenFonts.OPEN_SANS_EXTRA_BOLD);
             FontsUtil.setFont(lastVitalsDate, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);
+            OpenMRSInflater openMRSInflater = new OpenMRSInflater(inflater);
             for (Observation obs : mVitalsEncounter.getObservations()) {
-                addStringView(inflater, content, obs.getDisplay(), obs.getDisplayValue());
+                openMRSInflater.addKeyValueStringView(content, obs.getDisplay(), obs.getDisplayValue());
             }
         }
         return fragmentLayout;
     }
 
-    public void addStringView(LayoutInflater inflater, ViewGroup parentLayout, String label, String data) {
-        View view = inflater.inflate(R.layout.string_data_row, null, false);
-        TextView labelText = (TextView) view.findViewById(R.id.labelText);
-        labelText.setText(label);
-        FontsUtil.setFont(labelText, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);
-
-        TextView dataText = (TextView) view.findViewById(R.id.dataText);
-        dataText.setText(data);
-        FontsUtil.setFont(dataText, FontsUtil.OpenFonts.OPEN_SANS_REGULAR);
-        parentLayout.addView(view);
-    }
 }

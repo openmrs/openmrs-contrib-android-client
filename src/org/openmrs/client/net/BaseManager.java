@@ -3,7 +3,6 @@ package org.openmrs.client.net;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Base64;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -11,6 +10,7 @@ import com.android.volley.VolleyError;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.application.OpenMRSLogger;
 import org.openmrs.client.utilities.ApplicationConstants;
+import org.openmrs.client.utilities.ToastUtil;
 
 import java.io.UnsupportedEncodingException;
 
@@ -44,6 +44,10 @@ public class BaseManager {
                 && errorMessage.contains(ApplicationConstants.VolleyErrors.CONNECT_EXCEPTION));
     }
 
+    protected boolean isServerError(String errorMessage) {
+        return errorMessage.contains(ApplicationConstants.VolleyErrors.SERVER_ERROR);
+    }
+
     protected static void encodeAuthorizationToken(String username, String password) {
         String auth = null;
         try {
@@ -71,8 +75,11 @@ public class BaseManager {
                 mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SERVER_UNAVAILABLE_BROADCAST));
             } else if (isNoInternetConnection(error.toString())) {
                 mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_NO_INTERNET_CONNECTION_BROADCAST));
+            } else if (isServerError(error.toString())) {
+                mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SERVER_ERROR_BROADCAST));
             } else {
-                Toast.makeText(mContext, error.toString(), Toast.LENGTH_SHORT).show();
+                ToastUtil.showShortToast(mContext, ToastUtil.ToastType.ERROR, error.toString());
+                logger.e(error.toString());
             }
         }
     }

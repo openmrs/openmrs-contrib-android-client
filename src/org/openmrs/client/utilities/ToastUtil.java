@@ -28,22 +28,30 @@ public final class ToastUtil {
     }
 
     public static void showShortToast(Context context, ToastType type, int textId) {
-        showToast(context, type, textId, Toast.LENGTH_SHORT);
+        showToast(context, type, (String) context.getResources().getText(textId), Toast.LENGTH_SHORT);
     }
 
     public static void showLongToast(Context context, ToastType type, int textId) {
-        showToast(context, type, textId, Toast.LENGTH_LONG);
+        showToast(context, type, (String) context.getResources().getText(textId), Toast.LENGTH_LONG);
+    }
+
+    public static void showShortToast(Context context, ToastType type, String text) {
+        showToast(context, type, text, Toast.LENGTH_SHORT);
+    }
+
+    public static void showLongToast(Context context, ToastType type, String text) {
+        showToast(context, type, text, Toast.LENGTH_LONG);
     }
 
     private static void showToast(Context context, ToastType type,
-                                 int textId, final int duration) {
+                                 String text, final int duration) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View toastRoot = inflater.inflate(R.layout.toast, null);
 
         Bitmap bitmap;
         ImageView toastImage = (ImageView) toastRoot.findViewById(R.id.toastImage);
         TextView toastText = (TextView) toastRoot.findViewById(R.id.toastText);
-        toastText.setText(context.getResources().getText(textId));
+        toastText.setText(text);
 
         bitmap = ImageUtils.decodeBitmapFromResource(
                 context.getResources(),

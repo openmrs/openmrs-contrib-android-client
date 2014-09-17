@@ -42,6 +42,8 @@ public abstract class ACBaseActivity extends ActionBarActivity {
         if (!(this instanceof LoginActivity || this instanceof DialogActivity)) {
             if (!mAuthorizationManager.isUserLoggedIn()) {
                 mAuthorizationManager.moveToLoginActivity();
+            } else if (this instanceof DashboardActivity || this instanceof SettingsActivity) {
+                this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, OpenMRS.getInstance().getUsername()));
             }
         }
     }
@@ -50,7 +52,6 @@ public abstract class ACBaseActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.basic_menu, menu);
-        this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, OpenMRS.getInstance().getUsername()));
         return true;
     }
 

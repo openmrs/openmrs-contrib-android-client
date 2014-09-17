@@ -80,7 +80,6 @@ public class FindPatientsActivity extends ACBaseActivity {
                 MenuItemCompat.collapseActionView(mFindPatientMenuItem);
             }
         }
-
     }
 
     @Override

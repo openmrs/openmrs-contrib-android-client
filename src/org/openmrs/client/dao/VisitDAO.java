@@ -48,7 +48,8 @@ public class VisitDAO {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
 
         String sort = VisitTable.Column.PATIENT_KEY_ID + " ASC";
-        final Cursor visitCursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, null, null, null, null, sort);
+        String visitWhere = String.format("%s IS NULL OR %s = ''", VisitTable.Column.STOP_DATE, VisitTable.Column.STOP_DATE);
+        final Cursor visitCursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, visitWhere, null, null, null, sort);
 
         sort = Table.MasterColumn.ID + " ASC";
         final Cursor patientCursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null, where, whereArgs, null, null, sort);

@@ -9,14 +9,15 @@
         android:paddingLeft="20dp"
         android:paddingTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         >
 
         <TextView style="@style/TextLabel.Bold"
                   android:id="@+id/patientDetailsDisplayName"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-            />
+                  android:singleLine="false"
+                  />
 
         <TextView style="@style/TextLabel.Bold"
                   android:id="@+id/patientDetailsIdentifier"
@@ -28,9 +29,9 @@
 
         <RelativeLayout
             android:id="@+id/patientDetailsGenderLayout"
+            android:layout_below="@id/patientDetailsDisplayName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             >
             <TextView android:id="@+id/patientDetailsGenderLabel"
                       android:layout_width="wrap_content"
@@ -53,11 +54,11 @@
 
         <RelativeLayout
             android:id="@+id/patientDetailsBirthDateLayout"
+            android:layout_below="@id/patientDetailsDisplayName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/patientDetailsGenderLayout"
             android:layout_toEndOf="@id/patientDetailsGenderLayout"
-            android:layout_marginTop="15dp"
             android:layout_marginLeft="50dp"
             >
             <TextView android:id="@+id/patientDetailsBirthDateLabel"

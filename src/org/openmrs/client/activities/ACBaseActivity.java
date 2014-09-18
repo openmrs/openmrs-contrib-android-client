@@ -42,7 +42,8 @@ public abstract class ACBaseActivity extends ActionBarActivity {
         if (!(this instanceof LoginActivity || this instanceof DialogActivity)) {
             if (!mAuthorizationManager.isUserLoggedIn()) {
                 mAuthorizationManager.moveToLoginActivity();
-            } else if (this instanceof DashboardActivity || this instanceof SettingsActivity) {
+            } else if (this instanceof DashboardActivity || this instanceof SettingsActivity
+                    || this instanceof FindPatientsActivity || this instanceof FindActiveVisitsActivity) {
                 this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, OpenMRS.getInstance().getUsername()));
             }
         }

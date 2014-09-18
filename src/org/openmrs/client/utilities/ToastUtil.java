@@ -28,11 +28,11 @@ public final class ToastUtil {
     }
 
     public static void showShortToast(Context context, ToastType type, int textId) {
-        showToast(context, type, (String) context.getResources().getText(textId), Toast.LENGTH_SHORT);
+        showToast(context, type, context.getResources().getString(textId), Toast.LENGTH_SHORT);
     }
 
     public static void showLongToast(Context context, ToastType type, int textId) {
-        showToast(context, type, (String) context.getResources().getText(textId), Toast.LENGTH_LONG);
+        showToast(context, type, context.getResources().getString(textId), Toast.LENGTH_LONG);
     }
 
     public static void showShortToast(Context context, ToastType type, String text) {

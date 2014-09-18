@@ -116,7 +116,6 @@ public class OpenMRS extends Application {
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove(ApplicationConstants.SESSION_TOKEN);
         editor.remove(ApplicationConstants.AUTHORIZATION_TOKEN);
-        editor.remove(ApplicationConstants.USER_NAME);
         editor.commit();
     }
 

@@ -24,7 +24,7 @@ public class FindPatientsManager extends BaseManager {
         super(context);
     }
 
-    public void findPatient(final String query) {
+    public void findPatient(final String query, final int searchId) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String patientsURL = mOpenMRS.getServerUrl() + API.COMMON_PART + PATIENT_QUERY + query;
         logger.d("Sending request to : " + patientsURL);
@@ -40,10 +40,10 @@ public class FindPatientsManager extends BaseManager {
 
                     if (patientsJSONList.length() > 0) {
                         for (int i = 0; i < patientsJSONList.length(); i++) {
-                            getFullPatientData(patientsJSONList.getJSONObject(i).getString(UUID_KEY));
+                            getFullPatientData(patientsJSONList.getJSONObject(i).getString(UUID_KEY), searchId);
                         }
                     } else {
-                        ((FindPatientsSearchActivity) mContext).updatePatientsData();
+                        ((FindPatientsSearchActivity) mContext).updatePatientsData(searchId);
                     }
 
                 } catch (JSONException e) {
@@ -55,14 +55,14 @@ public class FindPatientsManager extends BaseManager {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         super.onErrorResponse(error);
-                        ((FindPatientsSearchActivity) mContext).stopLoader();
+                        ((FindPatientsSearchActivity) mContext).stopLoader(searchId);
                     }
                 }
         );
         queue.add(jsObjRequest);
     }
 
-    public void getFullPatientData(final String patientUUID) {
+    public void getFullPatientData(final String patientUUID, final int searchId) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String patientURL = mOpenMRS.getServerUrl() + API.COMMON_PART + API.PATIENT_DETAILS
                 + patientUUID + API.FULL_VERSION;
@@ -73,15 +73,17 @@ public class FindPatientsManager extends BaseManager {
             @Override
             public void onResponse(JSONObject response) {
                 logger.d(response.toString());
-                PatientCacheHelper.addPatient(PatientMapper.map(response));
-                ((FindPatientsSearchActivity) mContext).updatePatientsData();
+                if (PatientCacheHelper.getId() == searchId) {
+                    PatientCacheHelper.addPatient(PatientMapper.map(response));
+                }
+                ((FindPatientsSearchActivity) mContext).updatePatientsData(searchId);
             }
         }
                 , new GeneralErrorListenerImpl(mContext) {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         super.onErrorResponse(error);
-                        ((FindPatientsSearchActivity) mContext).stopLoader();
+                        ((FindPatientsSearchActivity) mContext).stopLoader(searchId);
                     }
                 }
         );

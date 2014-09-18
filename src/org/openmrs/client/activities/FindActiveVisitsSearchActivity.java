@@ -26,7 +26,7 @@ import org.openmrs.client.utilities.FontsUtil;
 public class FindActiveVisitsSearchActivity extends ACBaseActivity {
     private String mQuery;
     private MenuItem mFindActiveVisitItem;
-    private ActiveVisitsArrayAdapter mAdapter;
+    private static ActiveVisitsArrayAdapter mAdapter;
     private ListView mVisitsListView;
     private TextView mEmptyList;
     private ProgressBar mSpinner;
@@ -44,8 +44,12 @@ public class FindActiveVisitsSearchActivity extends ACBaseActivity {
         mVisitsListView.setEmptyView(mEmptyList);
 
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
-        getIntent().setAction(Intent.ACTION_SEARCH);
-        handleIntent(getIntent());
+        if (getIntent().getAction() == null) {
+            getIntent().setAction(Intent.ACTION_SEARCH);
+            handleIntent(getIntent());
+        } else if (mAdapter != null) {
+            mVisitsListView.setAdapter(mAdapter);
+        }
     }
 
     @Override
@@ -100,7 +104,7 @@ public class FindActiveVisitsSearchActivity extends ACBaseActivity {
     }
 
     public void stopLoader() {
-        mEmptyList.setText(getString(R.string.search_visits_no_results, mQuery));
+        mEmptyList.setText(getString(R.string.search_visits_no_results));
         mSpinner.setVisibility(View.GONE);
         mVisitsListView.setEmptyView(mEmptyList);
     }

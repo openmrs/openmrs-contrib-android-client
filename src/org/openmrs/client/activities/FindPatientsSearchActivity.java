@@ -29,12 +29,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FindPatientsSearchActivity extends ACBaseActivity {
-    private String mQuery;
+    private static String mLastQuery;
     private MenuItem mFindPatientMenuItem;
-    private PatientArrayAdapter mAdapter;
+    private static PatientArrayAdapter mAdapter;
     private ListView mPatientsListView;
     private TextView mEmptyList;
     private ProgressBar mSpinner;
+    private static boolean searching;
+    private static int lastSearchId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +47,18 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         mSpinner = (ProgressBar) findViewById(R.id.patient_list_view_loading);
         mPatientsListView = (ListView) findViewById(R.id.patient_list_view);
         mEmptyList = (TextView) findViewById(R.id.empty_patient_list_view);
-        mPatientsListView.setEmptyView(mEmptyList);
 
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
-        getIntent().setAction(Intent.ACTION_SEARCH);
-        handleIntent(getIntent());
+        if (getIntent().getAction() == null || searching) {
+            getIntent().setAction(Intent.ACTION_SEARCH);
+            handleIntent(getIntent());
+        } else if (mAdapter != null) {
+            mPatientsListView.setAdapter(mAdapter);
+            if (mAdapter.getCount() == 0) {
+                mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
+                mPatientsListView.setEmptyView(mEmptyList);
+            }
+        }
     }
 
     @Override
@@ -68,14 +77,17 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            searching = true;
+            lastSearchId++;
             mEmptyList.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mSpinner);
             mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row, new ArrayList<Patient>());
             mPatientsListView.setAdapter(mAdapter);
-            mQuery = intent.getStringExtra(SearchManager.QUERY);
+            mLastQuery = intent.getStringExtra(SearchManager.QUERY);
             PatientCacheHelper.clearCache();
+            PatientCacheHelper.setId(lastSearchId);
             FindPatientsManager fpm = new FindPatientsManager(this);
-            fpm.findPatient(mQuery);
+            fpm.findPatient(mLastQuery, lastSearchId);
 
             if (mFindPatientMenuItem != null) {
                 MenuItemCompat.collapseActionView(mFindPatientMenuItem);
@@ -106,20 +118,26 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         return true;
     }
 
-    public void updatePatientsData() {
-        List<Patient> patientsList = PatientCacheHelper.getCachedPatients();
-        if (patientsList.size() == 0) {
-            mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mQuery));
+    public void updatePatientsData(int searchId) {
+        if (lastSearchId == searchId) {
+            List<Patient> patientsList = PatientCacheHelper.getCachedPatients();
+            if (patientsList.size() == 0) {
+                mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
+                mSpinner.setVisibility(View.GONE);
+                mPatientsListView.setEmptyView(mEmptyList);
+            }
+            mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row, patientsList);
+            mPatientsListView.setAdapter(mAdapter);
+            searching = false;
+        }
+    }
+
+    public void stopLoader(int searchId) {
+        if (lastSearchId == searchId) {
+            searching = false;
+            mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
             mSpinner.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mEmptyList);
         }
-        mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row, patientsList);
-        mPatientsListView.setAdapter(mAdapter);
-    }
-
-    public void stopLoader() {
-        mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mQuery));
-        mSpinner.setVisibility(View.GONE);
-        mPatientsListView.setEmptyView(mEmptyList);
     }
 }

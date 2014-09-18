@@ -1,6 +1,7 @@
 package org.openmrs.client.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Visit implements Serializable {
     private Long id;
@@ -10,6 +11,7 @@ public class Visit implements Serializable {
     private String visitPlace;
     private Long startDate;
     private Long stopDate;
+    private List<Encounter> encounters;
 
     public Visit() {
     }
@@ -72,5 +74,13 @@ public class Visit implements Serializable {
 
     public void setStartDate(Long startDate) {
         this.startDate = startDate;
+    }
+
+    public List<Encounter> getEncounters() {
+        return encounters;
+    }
+
+    public void setEncounters(List<Encounter> encounters) {
+        this.encounters = encounters;
     }
 }

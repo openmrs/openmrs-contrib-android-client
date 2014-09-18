@@ -75,8 +75,19 @@
     <!-- Find Active visit activity -->
     <string name="action_active_visits">Active Visits</string>
     <string name="search_visits_no_results">No visits in database</string>
-
+    <!-- fragment_patient_visits layout -->
     <string name="active_visit_label">Active visit</string>
     <string name="past_visit_label">Past visit</string>
     <string name="visit_in">in %1$s</string>
+    <!-- fragment_patient_vitals layout -->
+    <string name="last_vitals_label">Last Vitals: </string>
+    <string name="last_vitals_none_label">None</string>
+    <!-- fragment_patient_diagnosis layout -->
+    <string name="diagnosis_none_label">Diagnoses are not available yet</string>
+    <!-- Visit dashboard activity -->
+    <string name="visit_dashboard_label">Encounters</string>
+    <string name="list_visit_selector_show">show details</string>
+    <string name="list_visit_selector_hide">hide details</string>
+    <string name="list_item_encounter_no_notes">No notes for this encounter.</string>
+    <string name="visit_exp_list_empty">Visit has no encounters yet.</string>
 </resources>

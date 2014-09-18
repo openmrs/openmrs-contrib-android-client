@@ -42,7 +42,7 @@ public final class FontsUtil {
     private FontsUtil() {
     }
 
-    public static void setOpenFont(View view, OpenFonts openFont) {
+    public static void setFont(View view, OpenFonts openFont) {
         Typeface openTypeFace = getOpenTypeface(openFont);
         setFont(view, openTypeFace);
     }

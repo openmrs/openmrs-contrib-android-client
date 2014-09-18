@@ -28,6 +28,8 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private String mSecretKey;
 
+    protected SQLiteStatement mStatement;
+
     public OpenMRSSQLiteOpenHelper(Context context, SQLiteDatabase.CursorFactory factory, int version, SQLiteDatabaseHook hook) {
         super(context, DATABASE_NAME, factory, version, hook);
     }
@@ -95,15 +97,14 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
      * Null safe wrapper method for
      * @see net.sqlcipher.database.SQLiteStatement#bindString(int, String)
      *
-     * @param statement
      * @param columnIndex
      * @param columnValue
      */
-    public void bindString(SQLiteStatement statement, int columnIndex, String columnValue) {
+    public void bindString(int columnIndex, String columnValue) {
         if (StringUtils.notNull(columnValue)) {
-            statement.bindString(columnIndex, columnValue);
+            mStatement.bindString(columnIndex, columnValue);
         } else {
-            statement.bindNull(columnIndex);
+            mStatement.bindNull(columnIndex);
         }
     }
 
@@ -111,15 +112,14 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
      * Null safe wrapper method for
      * @see net.sqlcipher.database.SQLiteStatement#bindLong(int, long)
      *
-     * @param statement
      * @param columnIndex
      * @param columnValue
      */
-    public void bindLong(SQLiteStatement statement, int columnIndex, Long columnValue) {
+    public void bindLong(int columnIndex, Long columnValue) {
         if (null != columnValue) {
-            statement.bindLong(columnIndex, columnValue);
+            mStatement.bindLong(columnIndex, columnValue);
         } else {
-            statement.bindNull(columnIndex);
+            mStatement.bindNull(columnIndex);
         }
     }
 
@@ -127,15 +127,14 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
      * Null safe wrapper method for
      * @see net.sqlcipher.database.SQLiteStatement#bindDouble(int, double)
      *
-     * @param statement
      * @param columnIndex
      * @param columnValue
      */
-    public void bindDouble(SQLiteStatement statement, int columnIndex, Double columnValue) {
+    public void bindDouble(int columnIndex, Double columnValue) {
         if (null != columnValue) {
-            statement.bindDouble(columnIndex, columnValue);
+            mStatement.bindDouble(columnIndex, columnValue);
         } else {
-            statement.bindNull(columnIndex);
+            mStatement.bindNull(columnIndex);
         }
     }
 }

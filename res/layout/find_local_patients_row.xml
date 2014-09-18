@@ -21,11 +21,11 @@
                   android:layout_alignParentStart="true"/>
 
         <TextView android:id="@+id/patientDisplayName"
-                  android:layout_width="wrap_content"
+                  android:layout_width="200dp"
                   android:layout_height="wrap_content"
                   android:textSize="22sp"
                   android:textStyle="bold"
-                  android:layout_toRightOf="@+id/patientIdentifier"
+                  android:singleLine="false"
                   android:layout_alignParentRight="true"
                   android:layout_alignParentEnd="true"
                   android:gravity="right"/>

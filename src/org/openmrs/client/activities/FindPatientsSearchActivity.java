@@ -31,7 +31,7 @@ import java.util.List;
 public class FindPatientsSearchActivity extends ACBaseActivity {
     private String mQuery;
     private MenuItem mFindPatientMenuItem;
-    private PatientArrayAdapter mAdapter;
+    private static PatientArrayAdapter mAdapter;
     private ListView mPatientsListView;
     private TextView mEmptyList;
     private ProgressBar mSpinner;
@@ -48,8 +48,13 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         mPatientsListView.setEmptyView(mEmptyList);
 
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
-        getIntent().setAction(Intent.ACTION_SEARCH);
-        handleIntent(getIntent());
+
+        if (getIntent().getAction() == null) {
+            getIntent().setAction(Intent.ACTION_SEARCH);
+            handleIntent(getIntent());
+        } else if (mAdapter != null) {
+            mPatientsListView.setAdapter(mAdapter);
+        }
     }
 
     @Override

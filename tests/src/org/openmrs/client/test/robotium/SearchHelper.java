@@ -4,15 +4,9 @@ import android.app.Instrumentation;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
 
-import com.jayway.android.robotium.solo.Solo;
+public final class SearchHelper {
 
-public class SearchHelper {
-
-    private Solo solo;
-    private Instrumentation instrumentation;
-
-
-    private SearchHelper(Solo solo, Instrumentation instrumentation) {
+    private SearchHelper() {
     }
 
     public static void doSearch(Instrumentation instrumentation, String query) {

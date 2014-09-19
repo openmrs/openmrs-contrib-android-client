@@ -12,11 +12,9 @@ public class LoginActivityTest extends
         ActivityInstrumentationTestCase2<LoginActivity> {
 
     private Solo solo;
-    private static final String LOGIN = "admin";
-    private static final String PASSWORD = "Admin123";
-    private static final String SERVER_URL = "http://192.168.1.115:8081/openmrs-standalone";
-    private static final String WRONG_SERVER_URL = "http://192.168.1.115:8080/openmrs-standalone";
-    private static final long TIMEOUT = 3000;
+    private static final String WRONG_SERVER_URL = "http://openmrs-ac-ci.soldevelo.com:8080/openmrs-standalone";
+    private static final String WRONG_PASSWORD = "Testuser";
+    private static final long TIMEOUT = 10000;
 
     public LoginActivityTest() {
         super(LoginActivity.class);
@@ -27,7 +25,7 @@ public class LoginActivityTest extends
         solo = new Solo(getInstrumentation(), getActivity());
     }
 
-    public void testEmptyFields() throws Exception {
+    public void testEmptyBothFields() throws Exception {
         boolean result;
         EditText loginUsernameField = (EditText) solo.getView(R.id.loginUsernameField);
         EditText loginPasswordField = (EditText) solo.getView(R.id.loginPasswordField);
@@ -36,40 +34,49 @@ public class LoginActivityTest extends
 
         //Empty both fields
         solo.clickOnButton(solo.getString(R.string.login_button));
-        result = solo.waitForText(solo.getString(R.string.login_dialog_login_or_password_empty));
+        result = solo.waitForText(solo.getString(R.string.login_dialog_login_or_password_empty), 1, TIMEOUT);
         assertTrue(result);
+    }
 
-        //Write only login
+    public void testEmptyPassField() throws Exception {
+        boolean result;
+        EditText loginUsernameField = (EditText) solo.getView(R.id.loginUsernameField);
+        EditText loginPasswordField = (EditText) solo.getView(R.id.loginPasswordField);
         solo.clearEditText(loginUsernameField);
         solo.clearEditText(loginPasswordField);
-        solo.enterText(loginUsernameField, LOGIN);
+        solo.enterText(loginUsernameField, LoginHelper.LOGIN);
         solo.clickOnButton(solo.getString(R.string.login_button));
-        result = solo.waitForText(solo.getString(R.string.login_dialog_login_or_password_empty));
+        result = solo.waitForText(solo.getString(R.string.login_dialog_login_or_password_empty), 1, TIMEOUT);
         assertTrue(result);
+    }
 
-        //Write only password
+    public void testEmptyLoginField() throws Exception {
+        boolean result;
+        EditText loginUsernameField = (EditText) solo.getView(R.id.loginUsernameField);
+        EditText loginPasswordField = (EditText) solo.getView(R.id.loginPasswordField);
         solo.clearEditText(loginUsernameField);
         solo.clearEditText(loginPasswordField);
-        solo.enterText(loginPasswordField, PASSWORD);
+        solo.enterText(loginPasswordField, LoginHelper.PASSWORD);
         solo.clickOnButton(solo.getString(R.string.login_button));
         result = solo.waitForText(solo.getString(R.string.login_dialog_login_or_password_empty), 1, TIMEOUT);
         assertTrue(result);
     }
 
     public void testLogin() throws Exception {
-        LoginHelper.login(solo);
+        boolean result = LoginHelper.login(solo);
+        assertTrue(result);
     }
 
     public void testLoginFailed() throws Exception {
         //Write login
         EditText loginUsernameField = (EditText) solo.getView(R.id.loginUsernameField);
         solo.clearEditText(loginUsernameField);
-        solo.enterText(loginUsernameField, LOGIN);
+        solo.enterText(loginUsernameField, LoginHelper.LOGIN);
 
         //Write password
         EditText loginPasswordField = (EditText) solo.getView(R.id.loginPasswordField);
         solo.clearEditText(loginPasswordField);
-        solo.enterText(loginPasswordField, "wrongPass");
+        solo.enterText(loginPasswordField, WRONG_PASSWORD);
 
         //Click on Login button
         solo.clickOnButton(solo.getString(R.string.login_button));
@@ -77,7 +84,7 @@ public class LoginActivityTest extends
         //Write url
         EditText urlField = (EditText) solo.getView(R.id.openmrsEditText);
         solo.clearEditText(urlField);
-        solo.enterText(urlField, SERVER_URL);
+        solo.enterText(urlField, LoginHelper.SERVER_URL);
 
         //Click on Login button
         solo.clickOnButton(solo.getString(R.string.dialog_button_done));
@@ -90,12 +97,12 @@ public class LoginActivityTest extends
         //Write login
         EditText loginUsernameField = (EditText) solo.getView(R.id.loginUsernameField);
         solo.clearEditText(loginUsernameField);
-        solo.enterText(loginUsernameField, LOGIN);
+        solo.enterText(loginUsernameField, LoginHelper.LOGIN);
 
         //Write password
         EditText loginPasswordField = (EditText) solo.getView(R.id.loginPasswordField);
         solo.clearEditText(loginPasswordField);
-        solo.enterText(loginPasswordField, PASSWORD);
+        solo.enterText(loginPasswordField, LoginHelper.PASSWORD);
 
         //Click on Login button
         solo.clickOnButton(solo.getString(R.string.login_button));
@@ -108,7 +115,7 @@ public class LoginActivityTest extends
         //Click on Login button
         solo.clickOnButton(solo.getString(R.string.dialog_button_done));
 
-        boolean result = solo.waitForText(solo.getString(R.string.server_unavailable_dialog_message), 1, TIMEOUT);
+        boolean result = solo.waitForText(solo.getString(R.string.dialog_button_cancel), 1, TIMEOUT * 2);
         assertTrue(result);
     }
 

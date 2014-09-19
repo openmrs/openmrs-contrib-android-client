@@ -1,24 +1,20 @@
 package org.openmrs.client.test.robotium;
 
-import android.app.Activity;
-import android.content.Context;
 import android.widget.EditText;
 
 import com.jayway.android.robotium.solo.Solo;
 
-import junit.framework.Assert;
+public final class LoginHelper {
 
-import org.openmrs.client.activities.ACBaseActivity;
-import org.openmrs.client.activities.FindPatientsActivity;
-
-public class LoginHelper {
-
-    private static final String LOGIN = "admin";
-    private static final String PASSWORD = "Admin12";
-    private static final String SERVER_URL = "http://192.168.1.115:8081/openmrs-standalone";
+    public static final String LOGIN = "test1";
+    public static final String PASSWORD = "Testuser1";
+    public static final String SERVER_URL = "http://openmrs-ac-ci.soldevelo.com:8081/openmrs-standalone";
     private static final long TIMEOUT = 5000;
 
-    public static void login(Solo solo) {
+    private LoginHelper() {
+    }
+
+    public static boolean login(Solo solo) {
         //Write login
         EditText loginUsernameField = (EditText) solo.getView(org.openmrs.client.R.id.loginUsernameField);
         solo.clearEditText(loginUsernameField);
@@ -40,7 +36,6 @@ public class LoginHelper {
         //Click on Login button
         solo.clickOnButton(solo.getString(org.openmrs.client.R.string.dialog_button_done));
 
-        boolean result = solo.waitForText(solo.getString(org.openmrs.client.R.string.login_successful), 1, TIMEOUT);
-        Assert.assertTrue(result);
+        return solo.waitForText(solo.getString(org.openmrs.client.R.string.login_successful), 1, TIMEOUT);
     }
 }

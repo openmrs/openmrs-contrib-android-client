@@ -67,7 +67,7 @@ public class OpenMRS extends Application {
 
     public String getServerUrl() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
-        return prefs.getString(ApplicationConstants.SERVER_URL, ApplicationConstants.EMPTY_STRING);
+        return prefs.getString(ApplicationConstants.SERVER_URL, ApplicationConstants.DEFAULT_OPEN_MRS_URL);
     }
 
     public String getSessionToken() {

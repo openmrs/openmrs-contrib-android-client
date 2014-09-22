@@ -63,4 +63,5 @@ public abstract class ApplicationConstants {
         public static final String SERVER_ERROR = "com.android.volley.ServerError";
     }
 
+    public static final String DEFAULT_OPEN_MRS_URL = EMPTY_STRING;
 }

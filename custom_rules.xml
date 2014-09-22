@@ -69,4 +69,9 @@
         </exec>
         <antcall target="get-junit-reports" />
     </target>
+
+    <target name="demoVersion">
+        <replaceregexp file="${src.dir}/org/openmrs/client/utilities/ApplicationConstants.java" match='DEFAULT_OPEN_MRS_URL = EMPTY_STRING'
+                       replace='API_COMMON_PART = "http://demo.openmrs.org/openmrs/"' />
+    </target>
 </project>

@@ -15,6 +15,7 @@ public class LoginActivityTest extends
     private static final String WRONG_SERVER_URL = "http://openmrs-ac-ci.soldevelo.com:8080/openmrs-standalone";
     private static final String WRONG_PASSWORD = "Testuser";
     private static final long TIMEOUT = 10000;
+    private static final String EMPTY_FIELD = "Login and password can not be empty.";
 
     public LoginActivityTest() {
         super(LoginActivity.class);
@@ -33,8 +34,8 @@ public class LoginActivityTest extends
         solo.clearEditText(loginPasswordField);
 
         //Empty both fields
-        solo.clickOnButton(solo.getString(R.string.login_button));
-        result = solo.waitForText(solo.getString(R.string.login_dialog_login_or_password_empty), 1, TIMEOUT);
+        solo.clickOnButton(LoginHelper.LOGIN_BUTTON);
+        result = solo.waitForText(EMPTY_FIELD, 1, TIMEOUT);
         assertTrue(result);
     }
 
@@ -45,8 +46,8 @@ public class LoginActivityTest extends
         solo.clearEditText(loginUsernameField);
         solo.clearEditText(loginPasswordField);
         solo.enterText(loginUsernameField, LoginHelper.LOGIN);
-        solo.clickOnButton(solo.getString(R.string.login_button));
-        result = solo.waitForText(solo.getString(R.string.login_dialog_login_or_password_empty), 1, TIMEOUT);
+        solo.clickOnButton(LoginHelper.LOGIN_BUTTON);
+        result = solo.waitForText(EMPTY_FIELD, 1, TIMEOUT);
         assertTrue(result);
     }
 
@@ -57,8 +58,8 @@ public class LoginActivityTest extends
         solo.clearEditText(loginUsernameField);
         solo.clearEditText(loginPasswordField);
         solo.enterText(loginPasswordField, LoginHelper.PASSWORD);
-        solo.clickOnButton(solo.getString(R.string.login_button));
-        result = solo.waitForText(solo.getString(R.string.login_dialog_login_or_password_empty), 1, TIMEOUT);
+        solo.clickOnButton(LoginHelper.LOGIN_BUTTON);
+        result = solo.waitForText(EMPTY_FIELD, 1, TIMEOUT);
         assertTrue(result);
     }
 
@@ -79,7 +80,7 @@ public class LoginActivityTest extends
         solo.enterText(loginPasswordField, WRONG_PASSWORD);
 
         //Click on Login button
-        solo.clickOnButton(solo.getString(R.string.login_button));
+        solo.clickOnButton(LoginHelper.LOGIN_BUTTON);
 
         //Write url
         EditText urlField = (EditText) solo.getView(R.id.openmrsEditText);
@@ -87,9 +88,9 @@ public class LoginActivityTest extends
         solo.enterText(urlField, LoginHelper.SERVER_URL);
 
         //Click on Login button
-        solo.clickOnButton(solo.getString(R.string.dialog_button_done));
+        solo.clickOnButton(LoginHelper.DONE_BUTTON);
 
-        boolean result = solo.waitForText(solo.getString(R.string.auth_failed_dialog_message), 1, TIMEOUT);
+        boolean result = solo.waitForText("Your user name or password may be incorrect. Please try again.", 1, TIMEOUT);
         assertTrue(result);
     }
 
@@ -105,7 +106,7 @@ public class LoginActivityTest extends
         solo.enterText(loginPasswordField, LoginHelper.PASSWORD);
 
         //Click on Login button
-        solo.clickOnButton(solo.getString(R.string.login_button));
+        solo.clickOnButton(LoginHelper.LOGIN_BUTTON);
 
         //Write wrong url
         EditText urlField = (EditText) solo.getView(R.id.openmrsEditText);
@@ -113,9 +114,9 @@ public class LoginActivityTest extends
         solo.enterText(urlField, WRONG_SERVER_URL);
 
         //Click on Login button
-        solo.clickOnButton(solo.getString(R.string.dialog_button_done));
+        solo.clickOnButton(LoginHelper.DONE_BUTTON);
 
-        boolean result = solo.waitForText(solo.getString(R.string.dialog_button_cancel), 1, TIMEOUT * 2);
+        boolean result = solo.waitForText("Cancel", 1, TIMEOUT * 2);
         assertTrue(result);
     }
 

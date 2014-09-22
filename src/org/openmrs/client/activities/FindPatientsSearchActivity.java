@@ -55,7 +55,7 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         } else if (mAdapter != null) {
             mPatientsListView.setAdapter(mAdapter);
             if (mAdapter.getCount() == 0) {
-                mEmptyList.setText(getString(R.string.search_patient_no_result_for_query) + mLastQuery + "\"");
+                mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
                 mPatientsListView.setEmptyView(mEmptyList);
             }
         }
@@ -122,7 +122,7 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         if (lastSearchId == searchId) {
             List<Patient> patientsList = PatientCacheHelper.getCachedPatients();
             if (patientsList.size() == 0) {
-                mEmptyList.setText(getString(R.string.search_patient_no_result_for_query) + mLastQuery + "\"");
+                mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
                 mSpinner.setVisibility(View.GONE);
                 mPatientsListView.setEmptyView(mEmptyList);
             }
@@ -135,7 +135,7 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
     public void stopLoader(int searchId) {
         if (lastSearchId == searchId) {
             searching = false;
-            mEmptyList.setText(getString(R.string.search_patient_no_result_for_query) + mLastQuery + "\"");
+            mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
             mSpinner.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mEmptyList);
         }

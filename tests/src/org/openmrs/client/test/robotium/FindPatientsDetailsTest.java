@@ -36,7 +36,7 @@ public class FindPatientsDetailsTest extends
 
     public void testPatientNotExist() throws Exception {
         SearchHelper.doSearch(getInstrumentation(), PATIENT_NO_EXIST);
-        boolean result = solo.waitForText(solo.getString(R.string.search_patient_no_result_for_query) +  PATIENT_NO_EXIST + "\"", 1, TIMEOUT * 2);
+        boolean result = solo.waitForText("No results found for query \"" +  PATIENT_NO_EXIST + "\"", 1, TIMEOUT * 2);
         assertTrue(result);
     }
 
@@ -56,7 +56,7 @@ public class FindPatientsDetailsTest extends
 
         solo.clickOnCheckBox(0);
 
-        result = solo.waitForText(solo.getString(R.string.find_patients_row_checkbox_available_offline_label), 1, TIMEOUT);
+        result = solo.waitForText("Available offline", 1, TIMEOUT);
         assertTrue(result);
 
         getInstrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_BACK);

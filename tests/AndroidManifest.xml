@@ -7,11 +7,10 @@
     <!-- We add an application tag here just so that we can indicate that
          this package needs to link against the android.test library,
          which is needed when building test cases. -->
-    <instrumentation
-        android:targetPackage="org.openmrs.client"
-        android:name="android.test.InstrumentationTestRunner" />
     <application>
         <uses-library android:name="android.test.runner"/>
     </application>
+    <instrumentation android:name="org.openmrs.client.test.OpenMRSInstrumentationTestRunner"
+                     android:targetPackage="org.openmrs.client"/>
 
 </manifest>

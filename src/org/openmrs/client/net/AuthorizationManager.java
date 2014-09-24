@@ -11,9 +11,11 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.openmrs.client.R;
 import org.openmrs.client.activities.LoginActivity;
 import org.openmrs.client.databases.OpenMRSSQLiteOpenHelper;
 import org.openmrs.client.utilities.ApplicationConstants;
+import org.openmrs.client.utilities.ToastUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,6 +53,7 @@ public class AuthorizationManager extends BaseManager {
                         }
                         mOpenMRS.setSessionToken(sessionToken);
                         mOpenMRS.setUsername(username);
+                        ToastUtil.showShortToast(mContext, ToastUtil.ToastType.SUCCESS, R.string.login_successful);
                         ((LoginActivity) mContext).finish();
                     } else {
                         mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST));

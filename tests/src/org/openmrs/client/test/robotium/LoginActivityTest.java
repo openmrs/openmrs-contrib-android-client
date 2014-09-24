@@ -24,6 +24,7 @@ public class LoginActivityTest extends
     @Override
     public void setUp() {
         solo = new Solo(getInstrumentation(), getActivity());
+        getInstrumentation().waitForIdleSync();
     }
 
     public void testEmptyBothFields() throws Exception {

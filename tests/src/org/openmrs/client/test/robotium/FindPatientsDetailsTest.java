@@ -26,6 +26,7 @@ public class FindPatientsDetailsTest extends
     @Override
     public void setUp() {
         solo = new Solo(getInstrumentation(), getActivity());
+        getInstrumentation().waitForIdleSync();
         if (!isAuthenticated) {
             getInstrumentation().getTargetContext().deleteDatabase(OpenMRSSQLiteOpenHelper.DATABASE_NAME);
             ((FindPatientsActivity) solo.getCurrentActivity()).moveUnauthorizedUserToLoginScreen();

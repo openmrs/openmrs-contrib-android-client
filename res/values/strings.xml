@@ -16,8 +16,6 @@
     <!-- Authentication Failed dialog -->
     <string name="auth_failed_dialog_title">Authentication Failed</string>
     <string name="auth_failed_dialog_message">Your user name or password may be incorrect. Please try again.</string>
-    <!--Login successful -->
-    <string name="login_successful">Login successful</string>
     <!-- No internet dialog -->
     <string name="no_internet_conn_dialog_title">No internet connection</string>
     <string name="no_internet_conn_dialog_message">Your have no internet connection.\nPlease check phone or Wi-Fi connection and signal strength and try again.</string>

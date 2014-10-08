@@ -68,9 +68,28 @@ public abstract class ACBaseActivity extends ActionBarActivity {
                 startActivity(i);
             case R.id.action_search:
                 return true;
+            case R.id.action_logout:
+                this.showLogoutDialog();
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void logout() {
+        OpenMRS.getInstance().clearUserPreferencesDataWhenLogout();
+        mAuthorizationManager.moveToLoginActivity();
+        OpenMRSDBOpenHelper.getInstance().closeDatabases();
+    }
+
+    private void showLogoutDialog() {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.logout_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.logout_dialog_message));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.LOGOUT);
+        bundle.setRightButtonText(getString(R.string.logout_dialog_button));
+        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.LOGOUT_DIALOG_TAG);
     }
 
     protected void showConnectionTimeoutDialog() {

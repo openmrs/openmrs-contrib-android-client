@@ -23,7 +23,6 @@ import org.openmrs.client.R;
 import org.openmrs.client.activities.ACBaseActivity;
 import org.openmrs.client.activities.DialogActivity;
 import org.openmrs.client.activities.LoginActivity;
-import org.openmrs.client.activities.SettingsActivity;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.bundle.CustomDialogBundle;
 import org.openmrs.client.utilities.ApplicationConstants;
@@ -247,7 +246,7 @@ public class CustomFragmentDialog extends DialogFragment {
                         dismiss();
                         break;
                     case LOGOUT:
-                        ((SettingsActivity) getActivity()).logout();
+                        ((ACBaseActivity) getActivity()).logout();
                         dismiss();
                         break;
                     case UNAUTHORIZED:

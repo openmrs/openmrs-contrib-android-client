@@ -2,6 +2,7 @@ package org.openmrs.client.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.openmrs.client.R;
+import org.openmrs.client.activities.FindPatientsActivity;
 import org.openmrs.client.activities.PatientDashboardActivity;
+import org.openmrs.client.activities.fragments.FindPatientInDatabaseFragment;
 import org.openmrs.client.dao.PatientDAO;
 import org.openmrs.client.models.Patient;
 import org.openmrs.client.net.FindVisitsManager;
@@ -109,6 +112,14 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
                                             ToastUtil.ToastType.SUCCESS,
                                             R.string.find_patients_row_toast_patient_saved);
                         disableCheckBox(holder);
+
+                        if (mContext instanceof FindPatientsActivity) {
+                            FragmentManager fm = ((FindPatientsActivity) mContext).getSupportFragmentManager();
+                            FindPatientInDatabaseFragment fragment = (FindPatientInDatabaseFragment) fm
+                                    .getFragments().get(FindPatientsActivity.TabHost.IN_DATABASE_TAB_POS);
+
+                            fragment.updatePatientsInDatabaseList();
+                        }
                     }
                 }
             });
@@ -121,5 +132,6 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
         holder.mAvailableOfflineCheckbox.setChecked(true);
         holder.mAvailableOfflineCheckbox.setClickable(false);
         holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_available_offline_label));
+        holder.mAvailableOfflineCheckbox.setVisibility(View.GONE);
     }
 }

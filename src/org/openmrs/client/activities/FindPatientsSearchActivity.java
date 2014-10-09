@@ -41,7 +41,7 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_patients);
+        setContentView(R.layout.fragment_find_patients);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mSpinner = (ProgressBar) findViewById(R.id.patient_list_view_loading);

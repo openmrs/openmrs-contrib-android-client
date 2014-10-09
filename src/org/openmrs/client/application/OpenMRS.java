@@ -1,17 +1,17 @@
 package org.openmrs.client.application;
 
-import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Environment;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
+import org.odk.collect.android.application.Collect;
 import org.openmrs.client.databases.OpenMRSDBOpenHelper;
 import org.openmrs.client.security.SecretKeyGenerator;
 import org.openmrs.client.utilities.ApplicationConstants;
 
-public class OpenMRS extends Application {
+public class OpenMRS extends Collect {
 
     private static OpenMRS instance;
     private OpenMRSLogger mLogger;

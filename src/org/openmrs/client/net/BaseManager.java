@@ -48,6 +48,10 @@ public class BaseManager {
         return errorMessage.contains(ApplicationConstants.VolleyErrors.SERVER_ERROR);
     }
 
+    protected boolean isSocketException(String errorMessage) {
+        return errorMessage.contains(ApplicationConstants.VolleyErrors.SOCKET_EXCEPTION);
+    }
+
     protected static void encodeAuthorizationToken(String username, String password) {
         String auth = null;
         try {
@@ -77,6 +81,9 @@ public class BaseManager {
                 mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_NO_INTERNET_CONNECTION_BROADCAST));
             } else if (isServerError(error.toString())) {
                 mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SERVER_ERROR_BROADCAST));
+            } else if (isSocketException(error.toString())) {
+                mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SOCKET_EXCEPTION_BROADCAST));
+
             } else {
                 ToastUtil.showShortToast(mContext, ToastUtil.ToastType.ERROR, error.toString());
                 logger.e(error.toString());

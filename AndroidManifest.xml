@@ -25,6 +25,7 @@
                 <action android:name="org.openmrs.client.intent.action.NO_INTERNET_CONNECTION_BROADCAST"/>
                 <action android:name="org.openmrs.client.intent.action.SERVER_UNAVAILABLE_BROADCAST"/>
                 <action android:name="org.openmrs.client.intent.action.SERVER_ERROR_BROADCAST"/>
+                <action android:name="org.openmrs.client.intent.action.SOCKET_EXCEPTION_BROADCAST"/>
             </intent-filter>
         </receiver>
         <activity

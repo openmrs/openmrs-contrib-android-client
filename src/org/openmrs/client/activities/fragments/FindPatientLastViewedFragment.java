@@ -1,8 +1,5 @@
 package org.openmrs.client.activities.fragments;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,6 +15,7 @@ import org.openmrs.client.adapters.PatientArrayAdapter;
 import org.openmrs.client.models.Patient;
 import org.openmrs.client.net.FindPatientsManager;
 import org.openmrs.client.utilities.FontsUtil;
+import org.openmrs.client.utilities.NetworkUtils;
 import org.openmrs.client.utilities.PatientCacheHelper;
 
 import java.util.List;
@@ -72,15 +70,8 @@ public class FindPatientLastViewedFragment extends Fragment {
         }
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
-    }
-
     public void updateLastViewedList() {
-        if (isNetworkAvailable()) {
+        if (NetworkUtils.isNetworkAvailable(getActivity())) {
             mEmptyList.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mSpinner);
             if (mAdapter != null) {

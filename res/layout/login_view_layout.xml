@@ -35,7 +35,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/loginUsernameField"
@@ -62,6 +63,14 @@
                     android:password="true"
                     android:singleLine="true" />
 
+                <Spinner
+                    android:id="@+id/locationSpinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"/>
+
                 <Button
                     android:id="@+id/loginButton"
                     android:layout_width="130dp"
@@ -78,8 +87,7 @@
                 android:id="@+id/loginLoading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone" />
+                android:layout_gravity="center"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

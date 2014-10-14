@@ -33,9 +33,9 @@ public class FindPatientInDatabaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentLayout = inflater.inflate(R.layout.fragment_find_patients, null, false);
-        visitList = (ListView) fragmentLayout.findViewById(R.id.patient_list_view);
+        visitList = (ListView) fragmentLayout.findViewById(R.id.patientListView);
 
-        TextView emptyList = (TextView) fragmentLayout.findViewById(R.id.empty_patient_list_view);
+        TextView emptyList = (TextView) fragmentLayout.findViewById(R.id.emptyPatientListView);
         emptyList.setText(getString(R.string.search_patient_no_results));
         visitList.setEmptyView(emptyList);
 

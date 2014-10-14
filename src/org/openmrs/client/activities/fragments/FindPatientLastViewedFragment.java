@@ -40,9 +40,9 @@ public class FindPatientLastViewedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentLayout = inflater.inflate(R.layout.fragment_find_patients, null, false);
-        mEmptyList = (TextView) fragmentLayout.findViewById(R.id.empty_patient_list_view);
-        mPatientsListView = (ListView) fragmentLayout.findViewById(R.id.patient_list_view);
-        mSpinner = (ProgressBar) fragmentLayout.findViewById(R.id.patient_list_view_loading);
+        mEmptyList = (TextView) fragmentLayout.findViewById(R.id.emptyPatientListView);
+        mPatientsListView = (ListView) fragmentLayout.findViewById(R.id.patientListView);
+        mSpinner = (ProgressBar) fragmentLayout.findViewById(R.id.patientListViewLoading);
 
         updateLastViewedList();
         FontsUtil.setFont((ViewGroup) fragmentLayout);

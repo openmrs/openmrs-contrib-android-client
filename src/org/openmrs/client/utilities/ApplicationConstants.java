@@ -12,6 +12,7 @@ public abstract class ApplicationConstants {
     public static final String SESSION_TOKEN = "session_id";
     public static final String AUTHORIZATION_TOKEN = "authorisation";
     public static final String SECRET_KEY = "secretKey";
+    public static final String LOCATION = "location";
 
     public static final String AUTHORIZATION_PARAM = "Authorization";
     public static final String JSESSIONID_PARAM = "JSESSIONID";

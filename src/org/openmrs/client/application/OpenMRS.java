@@ -60,6 +60,12 @@ public class OpenMRS extends Application {
         editor.commit();
     }
 
+    public void setLocation(String location) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.LOCATION, location);
+        editor.commit();
+    }
+
     public String getUsername() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.USER_NAME, ApplicationConstants.EMPTY_STRING);
@@ -78,6 +84,11 @@ public class OpenMRS extends Application {
     public String getAuthorizationToken() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.AUTHORIZATION_TOKEN, ApplicationConstants.EMPTY_STRING);
+    }
+
+    public String getLocation() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        return prefs.getString(ApplicationConstants.LOCATION, ApplicationConstants.EMPTY_STRING);
     }
 
     private void generateKey() {

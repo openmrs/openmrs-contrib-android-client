@@ -5,10 +5,12 @@ import android.content.Context;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import org.openmrs.client.databases.tables.EncounterTable;
+import org.openmrs.client.databases.tables.LocationTable;
 import org.openmrs.client.databases.tables.ObservationTable;
 import org.openmrs.client.databases.tables.PatientTable;
 import org.openmrs.client.databases.tables.VisitTable;
 import org.openmrs.client.models.Encounter;
+import org.openmrs.client.models.Location;
 import org.openmrs.client.models.Observation;
 import org.openmrs.client.models.Patient;
 import org.openmrs.client.models.Visit;
@@ -20,6 +22,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     private VisitTable mVisitTable;
     private EncounterTable mEncounterTable;
     private ObservationTable mObservationTable;
+    private LocationTable mLocationTable;
 
     public DBOpenHelper(Context context) {
         super(context, null, DATABASE_VERSION);
@@ -27,6 +30,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         this.mVisitTable = new VisitTable();
         this.mEncounterTable = new EncounterTable();
         this.mObservationTable = new ObservationTable();
+        this.mLocationTable = new LocationTable();
     }
 
     @Override
@@ -40,6 +44,8 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         logOnCreate(mEncounterTable.toString());
         sqLiteDatabase.execSQL(mObservationTable.crateTableDefinition());
         logOnCreate(mObservationTable.toString());
+        sqLiteDatabase.execSQL(mLocationTable.crateTableDefinition());
+        logOnCreate(mLocationTable.toString());
     }
 
     @Override
@@ -50,6 +56,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         sqLiteDatabase.execSQL(mVisitTable.dropTableDefinition());
         sqLiteDatabase.execSQL(mEncounterTable.dropTableDefinition());
         sqLiteDatabase.execSQL(mObservationTable.dropTableDefinition());
+        sqLiteDatabase.execSQL(mLocationTable.dropTableDefinition());
         onCreate(sqLiteDatabase);
     }
 
@@ -159,4 +166,31 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         return obsID;
     }
 
+    public Long insertLocation(SQLiteDatabase db, Location loc) {
+        long locID;
+        if (null == mStatement) {
+            mStatement = db.compileStatement(mLocationTable.insertIntoTableDefinition());
+        }
+        try {
+            db.beginTransaction();
+            bindString(1, loc.getUuid());
+            bindString(2, loc.getDisplay());
+            bindString(3, loc.getName());
+            bindString(4, loc.getDescription());
+            bindString(5, loc.getAddress().getAddress1());
+            bindString(6, loc.getAddress().getAddress2());
+            bindString(7, loc.getAddress().getCityVillage());
+            bindString(8, loc.getAddress().getState());
+            bindString(9, loc.getAddress().getCountry());
+            bindString(10, loc.getAddress().getPostalCode());
+            locID = mStatement.executeInsert();
+            mStatement.clearBindings();
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+            db.close();
+            mStatement = null;
+        }
+        return locID;
+    }
 }

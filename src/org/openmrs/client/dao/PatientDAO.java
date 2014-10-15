@@ -32,14 +32,16 @@ public class PatientDAO {
         Cursor cursor = openHelper.getReadableDatabase().query(PatientTable.TABLE_NAME,
                 null, null, null, null, null, null);
 
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            Patient patient = cursorToPatient(cursor);
-            patients.add(patient);
-            cursor.moveToNext();
+        if (null != cursor) {
+            try {
+                while (cursor.moveToNext()) {
+                    Patient patient = cursorToPatient(cursor);
+                    patients.add(patient);
+                }
+            } finally {
+                cursor.close();
+            }
         }
-
-        cursor.close();
         return patients;
     }
 

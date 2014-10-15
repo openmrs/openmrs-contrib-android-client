@@ -37,6 +37,7 @@ public abstract class ApplicationConstants {
         public static final String LOGOUT_DIALOG_TAG = "logoutDialog";
         public static final String UNAUTHORIZED_DIALOG_TAG = "unauthorizedDialog";
         public static final String SERVER_ERROR_DIALOG_TAG = "serverErrorDialog";
+        public static final String SOCKET_EXCEPTION_DIALOG_TAG = "socketExceptionDialog";
     }
 
     public abstract static class BundleKeys {
@@ -53,6 +54,7 @@ public abstract class ApplicationConstants {
         public static final String ACTION_NO_INTERNET_CONNECTION_BROADCAST = "org.openmrs.client.intent.action.NO_INTERNET_CONNECTION_BROADCAST";
         public static final String ACTION_SERVER_UNAVAILABLE_BROADCAST = "org.openmrs.client.intent.action.SERVER_UNAVAILABLE_BROADCAST";
         public static final String ACTION_SERVER_ERROR_BROADCAST = "org.openmrs.client.intent.action.SERVER_ERROR_BROADCAST";
+        public static final String ACTION_SOCKET_EXCEPTION_BROADCAST = "org.openmrs.client.intent.action.SOCKET_EXCEPTION_BROADCAST";
     }
 
     public abstract static class VolleyErrors {
@@ -62,6 +64,7 @@ public abstract class ApplicationConstants {
         public static final String UNKNOWN_HOST = "java.net.UnknownHostException";
         public static final String AUTHORISATION_FAILURE = "com.android.volley.AuthFailureError";
         public static final String SERVER_ERROR = "com.android.volley.ServerError";
+        public static final String SOCKET_EXCEPTION = "java.net.SocketException";
     }
 
     public static final String DEFAULT_OPEN_MRS_URL = EMPTY_STRING;

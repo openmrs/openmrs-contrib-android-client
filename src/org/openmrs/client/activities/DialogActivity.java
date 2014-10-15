@@ -8,6 +8,7 @@ import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActi
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_NO_INTERNET_CONNECTION_BROADCAST;
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_SERVER_ERROR_BROADCAST;
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_SERVER_UNAVAILABLE_BROADCAST;
+import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_SOCKET_EXCEPTION_BROADCAST;
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_UNAUTHORIZED_BROADCAST;
 
 public class DialogActivity extends ACBaseActivity {
@@ -34,6 +35,9 @@ public class DialogActivity extends ACBaseActivity {
         }
         if (ACTION_SERVER_ERROR_BROADCAST.equals(intent.getAction())) {
             showServerErrorDialog();
+        }
+        if (ACTION_SOCKET_EXCEPTION_BROADCAST.equals(intent.getAction())) {
+            showSocketExceptionErrorDialog();
         }
     }
 

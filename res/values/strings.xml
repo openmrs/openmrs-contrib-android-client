@@ -7,6 +7,7 @@
     <string name="login_button">Login</string>
     <string name="login_username_hint">username</string>
     <string name="login_password_hint">password</string>
+    <string name="login_location_select">Choose location for this session</string>
     <!-- Url dialog -->
     <string name="login_dialog_title">Enter URL address</string>
     <string name="login_dialog_server_url_empty_error">Server URL can not be empty.</string>

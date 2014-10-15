@@ -188,6 +188,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
+            db.close();
             mStatement = null;
         }
         return locID;

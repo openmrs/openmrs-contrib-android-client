@@ -30,14 +30,17 @@ public class LocationDAO {
         Cursor cursor = openHelper.getReadableDatabase().query(LocationTable.TABLE_NAME,
                 null, null, null, null, null, null);
 
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            Location location = cursorToLocation(cursor);
-            locations.add(location);
-            cursor.moveToNext();
+        if (null != cursor) {
+            try {
+                while (cursor.moveToNext()) {
+                    Location location = cursorToLocation(cursor);
+                    locations.add(location);
+                }
+            } finally {
+                cursor.close();
+            }
         }
 
-        cursor.close();
         return locations;
     }
 

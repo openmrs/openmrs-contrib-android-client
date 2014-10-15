@@ -18,6 +18,7 @@ import org.openmrs.client.R;
 import org.openmrs.client.activities.fragments.CustomFragmentDialog;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.bundle.CustomDialogBundle;
+import org.openmrs.client.dao.LocationDAO;
 import org.openmrs.client.models.Location;
 import org.openmrs.client.net.LocationManager;
 import org.openmrs.client.utilities.ApplicationConstants;
@@ -38,6 +39,7 @@ public class LoginActivity extends ACBaseActivity {
     private Spinner dropdownLocation;
     private LinearLayout mLoginFormView;
     private Bitmap mBitmap;
+    private List<Location> mLocationsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class LoginActivity extends ACBaseActivity {
         });
         mSpinner = (ProgressBar) findViewById(R.id.loginLoading);
         mLoginFormView = (LinearLayout) findViewById(R.id.loginFormView);
-        dropdownLocation = (Spinner)findViewById(R.id.locationSpinner);
+        dropdownLocation = (Spinner) findViewById(R.id.locationSpinner);
         LocationManager lm = new LocationManager(this);
         lm.getAvailableLocation();
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
@@ -156,11 +158,13 @@ public class LoginActivity extends ACBaseActivity {
         }
     }
 
-    public void setLocationList(List<Location> locationList) {
-        List<String> items = getLocationStringList(locationList);
+    public void setLocationList(List<Location> locationsList) {
+        mLocationsList = locationsList;
+        List<String> items = getLocationStringList(locationsList);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dropdownLocation.setAdapter(adapter);
+        dropdownLocation.setSelection(adapter.getPosition(OpenMRS.getInstance().getLocation()));
         mSpinner.setVisibility(View.GONE);
         mLoginFormView.setVisibility(View.VISIBLE);
     }
@@ -171,5 +175,13 @@ public class LoginActivity extends ACBaseActivity {
             list.add(locationList.get(i).getDisplay());
         }
         return list;
+    }
+
+    public void saveLocationsToDatabase() {
+        OpenMRS.getInstance().setLocation(dropdownLocation.getSelectedItem().toString());
+        new LocationDAO().deleteAllLocations();
+        for (int i = 0; i < mLocationsList.size(); i++) {
+            new LocationDAO().saveLocation(mLocationsList.get(i));
+        }
     }
 }

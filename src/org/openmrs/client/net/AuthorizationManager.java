@@ -51,6 +51,7 @@ public class AuthorizationManager extends BaseManager {
                         }
                         mOpenMRS.setSessionToken(sessionToken);
                         mOpenMRS.setUsername(username);
+                        ((LoginActivity) mContext).saveLocationsToDatabase();
                         ((LoginActivity) mContext).finish();
                     } else {
                         mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST));

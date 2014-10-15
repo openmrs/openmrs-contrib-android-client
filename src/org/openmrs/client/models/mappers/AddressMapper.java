@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.client.models.Address;
 
-public class AddressMapper {
+public final class AddressMapper {
 
     private AddressMapper() {
     }

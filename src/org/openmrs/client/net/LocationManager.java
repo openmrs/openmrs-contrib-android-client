@@ -31,6 +31,9 @@ public class LocationManager extends BaseManager {
 
     public void getAvailableLocation() {
         RequestQueue queue = Volley.newRequestQueue(mContext);
+
+        mOpenMRS.setServerUrl("http://devtest01.openmrs.org/openmrs"); //ToDO: Remove when url dialog show before loginActivity
+
         String locationURL = mOpenMRS.getServerUrl() + API.COMMON_PART + LOCATION_QUERY;
         logger.d("Sending request to : " + locationURL);
 

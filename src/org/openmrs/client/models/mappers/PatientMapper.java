@@ -3,7 +3,6 @@ package org.openmrs.client.models.mappers;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.client.application.OpenMRS;
-import org.openmrs.client.models.Address;
 import org.openmrs.client.models.Patient;
 import org.openmrs.client.utilities.DateUtils;
 

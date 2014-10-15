@@ -41,12 +41,12 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_patients);
+        setContentView(R.layout.fragment_find_patients);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mSpinner = (ProgressBar) findViewById(R.id.patient_list_view_loading);
-        mPatientsListView = (ListView) findViewById(R.id.patient_list_view);
-        mEmptyList = (TextView) findViewById(R.id.empty_patient_list_view);
+        mSpinner = (ProgressBar) findViewById(R.id.patientListViewLoading);
+        mPatientsListView = (ListView) findViewById(R.id.patientListView);
+        mEmptyList = (TextView) findViewById(R.id.emptyPatientListView);
 
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
         if (getIntent().getAction() == null || searching) {

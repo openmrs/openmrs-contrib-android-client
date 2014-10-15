@@ -49,6 +49,10 @@
     <string name="search_patient_hint">Patient name</string>
     <string name="search_patient_no_results">No patients in database</string>
     <string name="search_patient_no_result_for_query">No results found for query \"%1$s\"</string>
+    <string name="find_patient_no_last_viewed">No last viewed patients</string>
+    <string name="find_patient_no_connection">No internet connection available</string>
+    <string name="find_patient_tab_in_database_label">Database</string>
+    <string name="find_patient_tab_last_viewed_label">Last viewed</string>
     <!-- Dashboard Activity -->
     <string name="dashboard_search_icon_label">Find Patients</string>
     <string name="dashboard_registry_icon_label">Registry Patient</string>

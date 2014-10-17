@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.openmrs.client.R;
 import org.openmrs.client.activities.fragments.CustomFragmentDialog;
@@ -37,10 +38,11 @@ public class LoginActivity extends ACBaseActivity {
     private EditText mPassword;
     private Button mLoginButton;
     private ProgressBar mSpinner;
-    private Spinner dropdownLocation;
+    private Spinner mDropdownLocation;
     private LinearLayout mLoginFormView;
     private Bitmap mBitmap;
     private List<Location> mLocationsList;
+    private TextView urlTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class LoginActivity extends ACBaseActivity {
             @Override
             public void onClick(View v) {
                 if (validateLoginFields()) {
-                    showURLDialog();
+                    login();
                 } else {
                     ToastUtil.showShortToast(getApplicationContext(),
                             ToastUtil.ToastType.ERROR,
@@ -65,9 +67,15 @@ public class LoginActivity extends ACBaseActivity {
         });
         mSpinner = (ProgressBar) findViewById(R.id.loginLoading);
         mLoginFormView = (LinearLayout) findViewById(R.id.loginFormView);
-        dropdownLocation = (Spinner) findViewById(R.id.locationSpinner);
-        LocationManager lm = new LocationManager(this);
-        lm.getAvailableLocation();
+        mDropdownLocation = (Spinner) findViewById(R.id.locationSpinner);
+        urlTextView = (TextView) findViewById(R.id.urlText);
+        if (OpenMRS.getInstance().getServerUrl().equals(ApplicationConstants.EMPTY_STRING)) {
+            showURLDialog();
+        } else {
+            LocationManager lm = new LocationManager(this);
+            lm.getAvailableLocation();
+            urlTextView.setText(OpenMRS.getInstance().getServerUrl());
+        }
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
     }
 
@@ -106,7 +114,7 @@ public class LoginActivity extends ACBaseActivity {
         bundle.setTitleViewMessage(getString(R.string.login_dialog_title));
         bundle.setEditTextViewMessage(OpenMRS.getInstance().getServerUrl());
         bundle.setRightButtonText(getString(R.string.dialog_button_done));
-        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.LOGIN);
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.SET_URL);
         bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
         bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.URL_DIALOG_TAG);
@@ -125,20 +133,6 @@ public class LoginActivity extends ACBaseActivity {
         mLoginFormView.setVisibility(View.GONE);
         mSpinner.setVisibility(View.VISIBLE);
         mAuthorizationManager.login(mUsername.getText().toString(), mPassword.getText().toString());
-    }
-
-    public void login(boolean validateURL) {
-        if (!validateURL) {
-            login();
-        } else {
-            URLValidator.ValidationResult result = URLValidator.validate(OpenMRS.getInstance().getServerUrl());
-            if (result.isURLValid()) {
-                OpenMRS.getInstance().setServerUrl(result.getUrl());
-                login();
-            } else {
-                showInvalidURLDialog();
-            }
-        }
     }
 
     private void bindDrawableResources() {
@@ -163,9 +157,9 @@ public class LoginActivity extends ACBaseActivity {
         mLocationsList = locationsList;
         List<String> items = getLocationStringList(locationsList);
         final LocationArrayAdapter adapter = new LocationArrayAdapter(this, items);
-        dropdownLocation.setAdapter(adapter);
+        mDropdownLocation.setAdapter(adapter);
 
-        dropdownLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mDropdownLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             private boolean mInitialized;
 
             @Override
@@ -195,10 +189,24 @@ public class LoginActivity extends ACBaseActivity {
     }
 
     public void saveLocationsToDatabase() {
-        OpenMRS.getInstance().setLocation(dropdownLocation.getSelectedItem().toString());
+        OpenMRS.getInstance().setLocation(mDropdownLocation.getSelectedItem().toString());
         new LocationDAO().deleteAllLocations();
         for (int i = 0; i < mLocationsList.size(); i++) {
             new LocationDAO().saveLocation(mLocationsList.get(i));
         }
     }
+
+    public void setUrl() {
+        URLValidator.ValidationResult result = URLValidator.validate(OpenMRS.getInstance().getServerUrl());
+        if (result.isURLValid()) {
+            OpenMRS.getInstance().setServerUrl(result.getUrl());
+            LocationManager lm = new LocationManager(this);
+            lm.getAvailableLocation();
+            urlTextView.setText(OpenMRS.getInstance().getServerUrl());
+        } else {
+            showInvalidURLDialog();
+        }
+    }
+
+
 }

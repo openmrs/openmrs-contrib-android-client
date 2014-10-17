@@ -35,7 +35,7 @@ public class CustomFragmentDialog extends DialogFragment {
     private static final int TYPED_DIMENSION_VALUE = 10;
 
     public enum OnClickAction {
-        LOGIN, DISMISS, LOGOUT, UNAUTHORIZED
+        SET_URL, DISMISS, LOGOUT, UNAUTHORIZED
     }
 
     protected LayoutInflater mInflater;
@@ -236,10 +236,10 @@ public class CustomFragmentDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 switch (action) {
-                    case LOGIN:
+                    case SET_URL:
                         // validate URL
                         OpenMRS.getInstance().setServerUrl(CustomFragmentDialog.this.mEditText.getText().toString());
-                        ((LoginActivity) getActivity()).login(true);
+                        ((LoginActivity) getActivity()).setUrl();
                         dismiss();
                         break;
                     case DISMISS:

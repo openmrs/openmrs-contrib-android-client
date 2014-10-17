@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-     android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     android:orientation="vertical"
-     android:focusable="true"
-     android:focusableInTouchMode="true">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/urlField"
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -16,7 +19,6 @@
             android:layout_gravity="center"
             android:orientation="vertical"
             android:gravity="center"
-            android:layout_marginBottom="20dp"
             android:layout_marginTop="20dp">
 
             <ImageView
@@ -37,30 +39,6 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="gone">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_horizontal">
-
-                    <TextView
-                        android:id="@+id/urlText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/urlEdit"
-                        android:layout_marginRight="20dp"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/urlEdit"
-                        android:layout_marginLeft="20dp"
-                        android:layout_centerVertical="true"
-                        android:onClick="onEditUrlCallback"/>
-
-                </RelativeLayout>
 
                 <EditText
                     android:id="@+id/loginUsernameField"
@@ -101,11 +79,13 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical|center_horizontal|center"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="@string/login_button"
                     android:background="@drawable/button_apply"
                     android:textColor="@color/dark_purple"
                     android:enabled="false"/>
+
             </LinearLayout>
 
             <ProgressBar
@@ -115,4 +95,39 @@
                 android:layout_gravity="center"/>
         </LinearLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light_teal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/urlField">
+
+        <TextView
+            android:id="@+id/urlText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/urlEdit"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:clickable="true"
+            android:onClick="onEditUrlCallback"
+            android:textColor="@color/white"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/urlEdit"
+            android:layout_marginLeft="20dp"
+            android:layout_centerVertical="true"
+            android:onClick="onEditUrlCallback"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
 </RelativeLayout>

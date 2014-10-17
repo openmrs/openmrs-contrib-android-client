@@ -12,7 +12,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.openmrs.client.activities.FindPatientsSearchActivity;
 import org.openmrs.client.activities.LoginActivity;
 import org.openmrs.client.models.Location;
 import org.openmrs.client.models.mappers.LocationMapper;
@@ -51,7 +50,7 @@ public class LocationManager extends BaseManager {
                             locationList.add(LocationMapper.map(locationResultJSON.getJSONObject(i)));
                         }
                     }
-                    ((LoginActivity) mContext).setLocationList(locationList, serverUrl);
+                    ((LoginActivity) mContext).initLoginForm(locationList, serverUrl);
                 } catch (JSONException e) {
                     logger.d(e.toString());
                 }

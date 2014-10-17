@@ -6,11 +6,13 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.openmrs.client.activities.FindPatientsSearchActivity;
 import org.openmrs.client.activities.LoginActivity;
 import org.openmrs.client.models.Location;
 import org.openmrs.client.models.mappers.LocationMapper;
@@ -29,10 +31,10 @@ public class LocationManager extends BaseManager {
         super(context);
     }
 
-    public void getAvailableLocation() {
+    public void getAvailableLocation(final String serverUrl) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
 
-        String locationURL = mOpenMRS.getServerUrl() + API.COMMON_PART + LOCATION_QUERY;
+        String locationURL = serverUrl + API.COMMON_PART + LOCATION_QUERY;
         logger.d("Sending request to : " + locationURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
@@ -49,13 +51,20 @@ public class LocationManager extends BaseManager {
                             locationList.add(LocationMapper.map(locationResultJSON.getJSONObject(i)));
                         }
                     }
-                    ((LoginActivity) mContext).setLocationList(locationList);
+                    ((LoginActivity) mContext).setLocationList(locationList, serverUrl);
                 } catch (JSONException e) {
                     logger.d(e.toString());
                 }
             }
         }
-                , new GeneralErrorListenerImpl(mContext)) {
+                , new GeneralErrorListenerImpl(mContext) {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        super.onErrorResponse(error);
+                        ((LoginActivity) mContext).setErrorOccurred(true);
+                    }
+                }
+        ) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> params = new HashMap<String, String>();

@@ -3,6 +3,7 @@ package org.openmrs.client.activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,8 +41,10 @@ public class LoginActivity extends ACBaseActivity {
     private ProgressBar mSpinner;
     private Spinner mDropdownLocation;
     private LinearLayout mLoginFormView;
-    private Bitmap mBitmap;
-    private List<Location> mLocationsList;
+    private SparseArray<Bitmap> mBitmapCache;
+    private static boolean mErrorOccurred;
+    private static String mLastURL = "";
+    private static List<Location> mLocationsList;
     private TextView urlTextView;
 
     @Override
@@ -69,12 +72,15 @@ public class LoginActivity extends ACBaseActivity {
         mLoginFormView = (LinearLayout) findViewById(R.id.loginFormView);
         mDropdownLocation = (Spinner) findViewById(R.id.locationSpinner);
         urlTextView = (TextView) findViewById(R.id.urlText);
-        if (OpenMRS.getInstance().getServerUrl().equals(ApplicationConstants.EMPTY_STRING)) {
-            showURLDialog();
+        if (mErrorOccurred || OpenMRS.getInstance().getServerUrl().equals(ApplicationConstants.EMPTY_STRING)) {
+            showURLDialog(!OpenMRS.getInstance().getServerUrl().equals(ApplicationConstants.EMPTY_STRING));
         } else {
-            LocationManager lm = new LocationManager(this);
-            lm.getAvailableLocation();
-            urlTextView.setText(OpenMRS.getInstance().getServerUrl());
+            if (mLocationsList == null) {
+                LocationManager lm = new LocationManager(this);
+                lm.getAvailableLocation(OpenMRS.getInstance().getServerUrl());
+            } else{
+                setLocationList(mLocationsList, OpenMRS.getInstance().getServerUrl());
+            }
         }
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
     }
@@ -109,14 +115,24 @@ public class LoginActivity extends ACBaseActivity {
                 || ApplicationConstants.EMPTY_STRING.equals(mPassword.getText().toString()));
     }
 
-    private void showURLDialog() {
+    public void onEditUrlCallback(View v) {
+        showURLDialog(true);
+    }
+
+    public void showURLDialog(boolean isCancelEnable) {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.login_dialog_title));
-        bundle.setEditTextViewMessage(OpenMRS.getInstance().getServerUrl());
+        if (mLastURL.equals(ApplicationConstants.EMPTY_STRING)) {
+            bundle.setEditTextViewMessage(OpenMRS.getInstance().getServerUrl());
+        } else {
+            bundle.setEditTextViewMessage(mLastURL);
+        }
         bundle.setRightButtonText(getString(R.string.dialog_button_done));
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.SET_URL);
-        bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
-        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        if (isCancelEnable) {
+            bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
+            bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS_URL_DIALOG);
+        }
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.URL_DIALOG_TAG);
     }
 
@@ -124,8 +140,8 @@ public class LoginActivity extends ACBaseActivity {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.invalid_url_dialog_title));
         bundle.setTextViewMessage(getString(R.string.invalid_url_dialog_message));
-        bundle.setLeftButtonText(getString(R.string.dialog_button_ok));
-        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        bundle.setRightButtonText(getString(R.string.dialog_button_ok));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.SHOW_URL_DIALOG);
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.INVALID_URL_DIALOG_TAG);
     }
 
@@ -136,24 +152,35 @@ public class LoginActivity extends ACBaseActivity {
     }
 
     private void bindDrawableResources() {
+        mBitmapCache = new SparseArray<Bitmap>();
         ImageView openMrsLogoImage = (ImageView) findViewById(R.id.openmrsLogo);
-        if (mBitmap == null) {
-            mBitmap = ImageUtils.decodeBitmapFromResource(
-                    getResources(),
-                    R.drawable.openmrs_logo,
-                    openMrsLogoImage.getLayoutParams().width,
-                    openMrsLogoImage.getLayoutParams().height);
+        ImageView urlEdit = (ImageView) findViewById(R.id.urlEdit);
+        createImageBitmap(R.drawable.openmrs_logo, openMrsLogoImage.getLayoutParams());
+        createImageBitmap(R.drawable.ico_edit, urlEdit.getLayoutParams());
+        openMrsLogoImage.setImageBitmap(mBitmapCache.get(R.drawable.openmrs_logo));
+        urlEdit.setImageBitmap(mBitmapCache.get(R.drawable.ico_edit));
+    }
+
+    private void createImageBitmap(Integer key, ViewGroup.LayoutParams layoutParams) {
+        if (mBitmapCache.get(key) == null) {
+            mBitmapCache.put(key, ImageUtils.decodeBitmapFromResource(getResources(), key,
+                    layoutParams.width, layoutParams.height));
         }
-        openMrsLogoImage.setImageBitmap(mBitmap);
     }
 
     private void unbindDrawableResources() {
-        if (null != mBitmap) {
-            mBitmap.recycle();
+        if (null != mBitmapCache) {
+            for (int i = 0; i < mBitmapCache.size(); i++) {
+                Bitmap bitmap = mBitmapCache.valueAt(i);
+                bitmap.recycle();
+            }
         }
     }
 
-    public void setLocationList(List<Location> locationsList) {
+    public void setLocationList(List<Location> locationsList, String serverURL) {
+        mErrorOccurred = false;
+        OpenMRS.getInstance().setServerUrl(serverURL);
+        urlTextView.setText(OpenMRS.getInstance().getServerUrl());
         mLocationsList = locationsList;
         List<String> items = getLocationStringList(locationsList);
         final LocationArrayAdapter adapter = new LocationArrayAdapter(this, items);
@@ -196,17 +223,22 @@ public class LoginActivity extends ACBaseActivity {
         }
     }
 
-    public void setUrl() {
-        URLValidator.ValidationResult result = URLValidator.validate(OpenMRS.getInstance().getServerUrl());
+    public void setUrl(String url) {
+        mLastURL = url;
+        URLValidator.ValidationResult result = URLValidator.validate(url);
         if (result.isURLValid()) {
-            OpenMRS.getInstance().setServerUrl(result.getUrl());
             LocationManager lm = new LocationManager(this);
-            lm.getAvailableLocation();
-            urlTextView.setText(OpenMRS.getInstance().getServerUrl());
+            lm.getAvailableLocation(url);
         } else {
             showInvalidURLDialog();
         }
     }
 
+    public void setErrorOccurred(boolean errorOccurred) {
+        this.mErrorOccurred = errorOccurred;
+    }
 
+    public void cancelURLDialog() {
+        setLocationList(mLocationsList, OpenMRS.getInstance().getServerUrl());
+    }
 }

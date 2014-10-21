@@ -1,5 +1,6 @@
 package org.openmrs.client.activities.fragments;
 
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -9,6 +10,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +37,7 @@ public class CustomFragmentDialog extends DialogFragment {
     private static final int TYPED_DIMENSION_VALUE = 10;
 
     public enum OnClickAction {
-        LOGIN, DISMISS, LOGOUT, UNAUTHORIZED
+        SET_URL, SHOW_URL_DIALOG, DISMISS_URL_DIALOG, DISMISS, LOGOUT, UNAUTHORIZED
     }
 
     protected LayoutInflater mInflater;
@@ -94,6 +96,7 @@ public class CustomFragmentDialog extends DialogFragment {
         super.onConfigurationChanged(newConfig);
         if (isDialogAvailable()) {
             this.setBorderless();
+            this.setOnBackListener();
         }
     }
 
@@ -102,6 +105,7 @@ public class CustomFragmentDialog extends DialogFragment {
         super.onActivityCreated(savedInstanceState);
         if (isDialogAvailable()) {
             this.setBorderless();
+            this.setOnBackListener();
         }
     }
 
@@ -122,6 +126,27 @@ public class CustomFragmentDialog extends DialogFragment {
         }
         super.onDestroyView();
 
+    }
+
+    public final void setOnBackListener() {
+        getDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    if (getActivity().getClass().equals(LoginActivity.class)) {
+                        if (OpenMRS.getInstance().getServerUrl().equals(ApplicationConstants.EMPTY_STRING)) {
+                            OpenMRS.getInstance().getOpenMRSLogger().d("Exit application");
+                            getActivity().onBackPressed();
+                            dismiss();
+                        } else {
+                            ((LoginActivity) getActivity()).hideURLDialog();
+                            dismiss();
+                        }
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     public final void setBorderless() {
@@ -236,10 +261,12 @@ public class CustomFragmentDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 switch (action) {
-                    case LOGIN:
-                        // validate URL
-                        OpenMRS.getInstance().setServerUrl(CustomFragmentDialog.this.mEditText.getText().toString());
-                        ((LoginActivity) getActivity()).login(true);
+                    case SET_URL:
+                        ((LoginActivity) getActivity()).setUrl(CustomFragmentDialog.this.mEditText.getText().toString());
+                        dismiss();
+                        break;
+                    case DISMISS_URL_DIALOG:
+                        ((LoginActivity) getActivity()).hideURLDialog();
                         dismiss();
                         break;
                     case DISMISS:

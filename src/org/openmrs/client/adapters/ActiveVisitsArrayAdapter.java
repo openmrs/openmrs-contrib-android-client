@@ -46,7 +46,6 @@ public class ActiveVisitsArrayAdapter extends ArrayAdapter<VisitItemDTO> {
         if (rowView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(mResourceID, null);
-            // configure view holder
             ViewHolder viewHolder = new ViewHolder();
             viewHolder.mRelativeLayout = (RelativeLayout) rowView.findViewById(R.id.visitRow);
             viewHolder.mPatientID = (TextView) rowView.findViewById(R.id.visitPatientID);
@@ -71,8 +70,8 @@ public class ActiveVisitsArrayAdapter extends ArrayAdapter<VisitItemDTO> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, VisitDashboardActivity.class);
-                intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ITEM, mVisitList.get(position));
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, mVisitList.get(position).getVisitID());
+                intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_NAME, mVisitList.get(position).getPatientName());
                 mContext.startActivity(intent);
             }
         });

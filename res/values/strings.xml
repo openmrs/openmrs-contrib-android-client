@@ -67,6 +67,9 @@
     <string name="find_patients_row_checkbox_available_offline_label">Available offline</string>
     <string name="find_patients_row_toast_patient_saved">Patient is now available locally</string>
     <!-- Patient Dashboard Activity -->
+    <string name="action_synchronize_patients">Update Patient</string>
+    <string name="synchronize_patient_successful">Update patient data successful</string>
+    <string name="synchronize_patient_error">Update patient data unsuccessful</string>
     <string name="patient_scroll_tab_details_label">Details</string>
     <string name="patient_scroll_tab_diagnosis_label">Diagnosis</string>
     <string name="patient_scroll_tab_visits_label">Visits</string>

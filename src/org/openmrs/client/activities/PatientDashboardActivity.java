@@ -1,5 +1,7 @@
 package org.openmrs.client.activities;
 
+import android.content.Context;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,16 +9,25 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.util.AttributeSet;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import org.openmrs.client.R;
+import org.openmrs.client.activities.fragments.FindPatientLastViewedFragment;
 import org.openmrs.client.activities.fragments.PatientDetailsFragment;
 import org.openmrs.client.activities.fragments.PatientDiagnosisFragment;
 import org.openmrs.client.activities.fragments.PatientVisitsFragment;
 import org.openmrs.client.activities.fragments.PatientVitalsFragment;
+import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.dao.PatientDAO;
 import org.openmrs.client.models.Patient;
+import org.openmrs.client.net.FindVisitsManager;
+import org.openmrs.client.net.SynchronizePatientManager;
 import org.openmrs.client.utilities.ApplicationConstants;
+import org.openmrs.client.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,8 +85,26 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.patients_menu, menu);
         getSupportActionBar().setTitle(mPatient.getDisplay());
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_synchronize:
+                synchronizePatient();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void synchronizePatient() {
+        OpenMRS.getInstance().getOpenMRSLogger().d("SYNCHRONIZE STARTED!");
+        SynchronizePatientManager spm = new SynchronizePatientManager(this);
+        spm.getFullPatientData(mPatient.getUuid());
     }
 
     @Override
@@ -91,6 +120,31 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
 
+    }
+
+    public void updatePatientsData(Patient patient) {
+        if (new PatientDAO().updatePatient(mPatient.getId(), patient)) {
+
+            ToastUtil.showShortToast(this,
+                    ToastUtil.ToastType.SUCCESS,
+                    R.string.synchronize_patient_successful);
+
+            mPatient = new PatientDAO().findPatientByUUID(mPatient.getUuid());
+            PatientDetailsFragment fragment = (PatientDetailsFragment) getSupportFragmentManager().getFragments().get(PatientDashboardActivity.TabHost.DETAILS_TAB_POS);
+            fragment.reloadPatientData(patient);
+            FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
+            fragTransaction.detach(fragment);
+            fragTransaction.attach(fragment);
+            fragTransaction.commit();
+        } else {
+            stopLoader();
+        }
+    }
+
+    public void stopLoader() {
+        ToastUtil.showShortToast(this,
+                ToastUtil.ToastType.ERROR,
+                R.string.synchronize_patient_error);
     }
 
     public class PatientDashboardPagerAdapter extends FragmentPagerAdapter {

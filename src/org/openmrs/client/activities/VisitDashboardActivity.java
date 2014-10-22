@@ -1,7 +1,9 @@
 package org.openmrs.client.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
@@ -11,7 +13,6 @@ import org.openmrs.client.adapters.VisitExpandableListAdapter;
 import org.openmrs.client.dao.VisitDAO;
 import org.openmrs.client.models.Encounter;
 import org.openmrs.client.models.Visit;
-import org.openmrs.client.models.VisitItemDTO;
 import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.FontsUtil;
 
@@ -22,19 +23,19 @@ public class VisitDashboardActivity extends ACBaseActivity {
     private ExpandableListView mExpandableListView;
     private VisitExpandableListAdapter mExpandableListAdapter;
     private List<Encounter> mVisitEncounters;
-    private VisitItemDTO mVisitItemDTO;
     private TextView mEmptyListView;
+    private Visit mvisit;
+    private String mPatientName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visit_dashboard);
 
-        Bundle bundle = getIntent().getExtras();
-        mVisitItemDTO = (VisitItemDTO) bundle.getSerializable(ApplicationConstants.BundleKeys.VISIT_ITEM);
-
-        Visit visit = new VisitDAO().getVisitsByID(mVisitItemDTO.getVisitID());
-        mVisitEncounters = visit.getEncounters();
+        Intent intent = getIntent();
+        mvisit = new VisitDAO().getVisitsByID(intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0));
+        mPatientName = intent.getStringExtra(ApplicationConstants.BundleKeys.PATIENT_NAME);
+        mVisitEncounters = mvisit.getEncounters();
 
         mEmptyListView = (TextView) findViewById(R.id.visitDashboardEmpty);
         FontsUtil.setFont(mEmptyListView, FontsUtil.OpenFonts.OPEN_SANS_BOLD);
@@ -55,7 +56,20 @@ public class VisitDashboardActivity extends ACBaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getSupportActionBar().setSubtitle(mVisitItemDTO.getPatientName());
+        getSupportActionBar().setSubtitle(mPatientName);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
         return true;
     }
 }

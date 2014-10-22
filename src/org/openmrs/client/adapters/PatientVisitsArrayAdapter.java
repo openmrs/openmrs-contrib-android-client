@@ -1,15 +1,20 @@
 package org.openmrs.client.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.openmrs.client.R;
+import org.openmrs.client.activities.PatientDashboardActivity;
+import org.openmrs.client.activities.VisitDashboardActivity;
 import org.openmrs.client.models.Visit;
+import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.DateUtils;
 import org.openmrs.client.utilities.ImageUtils;
 
@@ -30,16 +35,18 @@ public class PatientVisitsArrayAdapter extends ArrayAdapter<Visit> {
         private TextView mVisitStart;
         private TextView mVisitEnd;
         private TextView mVisitStatus;
+        private RelativeLayout mRelativeLayout;
         private ImageView mVisitStatusIcon;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View rowView = convertView;
         if (rowView == null) {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(R.layout.patient_visit_row, null);
             ViewHolder viewHolder = new ViewHolder();
+            viewHolder.mRelativeLayout = (RelativeLayout) rowView.findViewById(R.id.visitRow);
             viewHolder.mVisitStart = (TextView) rowView.findViewById(R.id.patientVisitStartDate);
             viewHolder.mVisitEnd = (TextView) rowView.findViewById(R.id.patientVisitEndDate);
             viewHolder.mVisitPlace = (TextView) rowView.findViewById(R.id.patientVisitPlace);
@@ -56,16 +63,27 @@ public class PatientVisitsArrayAdapter extends ArrayAdapter<Visit> {
             holder.mVisitEnd.setText(DateUtils.convertTime(visit.getStopDate(), DateUtils.DATE_WITH_TIME_FORMAT));
 
             holder.mVisitStatusIcon.setImageBitmap(
-            ImageUtils.decodeBitmapFromResource(mContext.getResources(), R.drawable.past_visit_dot,
-                    holder.mVisitStatusIcon.getLayoutParams().width, holder.mVisitStatusIcon.getLayoutParams().height));
+                    ImageUtils.decodeBitmapFromResource(mContext.getResources(), R.drawable.past_visit_dot,
+                            holder.mVisitStatusIcon.getLayoutParams().width, holder.mVisitStatusIcon.getLayoutParams().height));
             holder.mVisitStatus.setText(mContext.getString(R.string.past_visit_label));
         } else {
             holder.mVisitStatusIcon.setImageBitmap(
                     ImageUtils.decodeBitmapFromResource(mContext.getResources(), R.drawable.active_visit_dot,
-                    holder.mVisitStatusIcon.getLayoutParams().width, holder.mVisitStatusIcon.getLayoutParams().height));
+                            holder.mVisitStatusIcon.getLayoutParams().width, holder.mVisitStatusIcon.getLayoutParams().height));
             holder.mVisitStatus.setText(mContext.getString(R.string.active_visit_label));
         }
         holder.mVisitPlace.setText(mContext.getString(R.string.visit_in, visit.getVisitPlace()));
+
+        holder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), VisitDashboardActivity.class);
+                intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, mVisits.get(position).getId());
+                intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_NAME, ((PatientDashboardActivity) getContext()).getSupportActionBar().getTitle().toString());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+            }
+        });
         return rowView;
     }
 }

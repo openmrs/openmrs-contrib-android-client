@@ -51,7 +51,8 @@ public class SettingsActivity extends ACBaseActivity {
 
     private void fillList() {
         long size = 0;
-        String filename = OpenMRS.getInstance().getOpenMRSDir() + mOpenMRSLogger.getLogFilename();
+        String filename = OpenMRS.getInstance().getOpenMRSDir()
+                + File.separator + mOpenMRSLogger.getLogFilename();
         try {
             File file = new File(filename);
             size = file.length();

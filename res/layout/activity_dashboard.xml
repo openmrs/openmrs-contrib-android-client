@@ -115,8 +115,8 @@
                             android:layout_width="110dp"
                             android:layout_height="110dp"
                             android:layout_alignParentTop="true"
-                            android:onClick="onRegistryPatientCallback"
                             android:contentDescription="@string/dashboard_registry_icon_label"
+                            android:visibility="invisible"
                             android:clickable="true"/>
 
                         <TextView
@@ -127,9 +127,9 @@
                             android:layout_centerHorizontal="true"
                             android:layout_gravity="center"
                             android:clickable="true"
-                            android:onClick="onRegistryPatientCallback"
                             android:paddingTop="10dp"
                             android:text="@string/dashboard_registry_icon_label"
+                            android:visibility="invisible"
                             android:textSize="22sp"/>
                     </RelativeLayout>
                 </FrameLayout>

@@ -19,8 +19,9 @@ Before creating pull request run code review tools, *PMD & Checkstyle*, and test
 1. Add libs for openmrs-client module
     * openmrs-client module **libs folder**
     * android-support-v4.jar and android-support-v7-appcompat.jar from **/support/appcompat/libs/**
-2. Add modules from support directory
-    * appcompat
-    * gridlayout
+2. Add modules from directory
+    * modules/odk
+    * modules/support/appcompat
+    * modules/support/gridlayout
 3. Add libs for tests module
     * tests module **libs folder**

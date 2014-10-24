@@ -31,7 +31,7 @@ import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.exception.TaskCancelledException;
 import org.odk.collect.android.listeners.FormDownloaderListener;
 import org.odk.collect.android.logic.FormDetails;
-import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
+import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI.FormsColumns;
 import org.odk.collect.android.utilities.DocumentFetchResult;
 import org.odk.collect.android.utilities.FileUtils;
 import org.odk.collect.android.utilities.WebUtils;

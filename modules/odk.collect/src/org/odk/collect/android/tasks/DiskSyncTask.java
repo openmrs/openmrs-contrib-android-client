@@ -24,7 +24,7 @@ import java.util.List;
 import org.odk.collect.android.R;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.listeners.DiskSyncListener;
-import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
+import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI.FormsColumns;
 import org.odk.collect.android.utilities.FileUtils;
 
 import android.content.ContentValues;

@@ -16,7 +16,7 @@ package org.odk.collect.android.tasks;
 
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.listeners.DeleteFormsListener;
-import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
+import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI.FormsColumns;
 
 import android.content.ContentResolver;
 import android.net.Uri;

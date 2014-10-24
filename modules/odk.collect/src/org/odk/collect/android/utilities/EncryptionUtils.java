@@ -44,8 +44,8 @@ import org.kxml2.kdom.Node;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.exception.EncryptionException;
 import org.odk.collect.android.logic.FormController.InstanceMetadata;
-import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI.FormsColumns;
+import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI.InstanceColumns;
 
 import android.content.ContentResolver;
 import android.database.Cursor;

@@ -24,7 +24,8 @@ import org.odk.collect.android.R;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.database.ItemsetDbAdapter;
 import org.odk.collect.android.database.ODKSQLiteOpenHelper;
-import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
+import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI;
+import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI.FormsColumns;
 import org.odk.collect.android.utilities.FileUtils;
 import org.odk.collect.android.utilities.MediaUtils;
 
@@ -686,8 +687,8 @@ public class FormsProvider extends ContentProvider {
 
 	static {
 		sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		sUriMatcher.addURI(FormsProviderAPI.AUTHORITY, "forms", FORMS);
-		sUriMatcher.addURI(FormsProviderAPI.AUTHORITY, "forms/#", FORM_ID);
+		sUriMatcher.addURI(OpenMRSFormsProviderAPI.AUTHORITY, "forms", FORMS);
+		sUriMatcher.addURI(OpenMRSFormsProviderAPI.AUTHORITY, "forms/#", FORM_ID);
 
 		sFormsProjectionMap = new HashMap<String, String>();
 		sFormsProjectionMap.put(FormsColumns._ID, FormsColumns._ID);

@@ -14,48 +14,11 @@
 
 package org.odk.collect.android.activities;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.LinkedHashMap;
-import java.util.Locale;
-
-import org.javarosa.core.model.FormIndex;
-import org.javarosa.core.model.data.IAnswerData;
-import org.javarosa.form.api.FormEntryCaption;
-import org.javarosa.form.api.FormEntryController;
-import org.javarosa.form.api.FormEntryPrompt;
-import org.javarosa.model.xform.XFormsModule;
-import org.odk.collect.android.R;
-import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.exception.JavaRosaException;
-import org.odk.collect.android.listeners.AdvanceToNextListener;
-import org.odk.collect.android.listeners.FormLoaderListener;
-import org.odk.collect.android.listeners.FormSavedListener;
-import org.odk.collect.android.listeners.SavePointListener;
-import org.odk.collect.android.logic.FormController;
-import org.odk.collect.android.logic.FormController.FailedConstraint;
-import org.odk.collect.android.logic.PropertyManager;
-import org.odk.collect.android.preferences.AdminPreferencesActivity;
-import org.odk.collect.android.preferences.PreferencesActivity;
-import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
-import org.odk.collect.android.provider.InstanceProviderAPI;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
-import org.odk.collect.android.tasks.FormLoaderTask;
-import org.odk.collect.android.tasks.SavePointTask;
-import org.odk.collect.android.tasks.SaveResult;
-import org.odk.collect.android.tasks.SaveToDiskTask;
-import org.odk.collect.android.utilities.CompatibilityUtils;
-import org.odk.collect.android.utilities.FileUtils;
-import org.odk.collect.android.utilities.MediaUtils;
-import org.odk.collect.android.views.ODKView;
-import org.odk.collect.android.widgets.QuestionWidget;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -100,6 +63,44 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.javarosa.core.model.FormIndex;
+import org.javarosa.core.model.data.IAnswerData;
+import org.javarosa.form.api.FormEntryCaption;
+import org.javarosa.form.api.FormEntryController;
+import org.javarosa.form.api.FormEntryPrompt;
+import org.javarosa.model.xform.XFormsModule;
+import org.odk.collect.android.R;
+import org.odk.collect.android.application.Collect;
+import org.odk.collect.android.exception.JavaRosaException;
+import org.odk.collect.android.listeners.AdvanceToNextListener;
+import org.odk.collect.android.listeners.FormLoaderListener;
+import org.odk.collect.android.listeners.FormSavedListener;
+import org.odk.collect.android.listeners.SavePointListener;
+import org.odk.collect.android.logic.FormController;
+import org.odk.collect.android.logic.FormController.FailedConstraint;
+import org.odk.collect.android.logic.PropertyManager;
+import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI.FormsColumns;
+import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI;
+import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI.InstanceColumns;
+import org.odk.collect.android.preferences.AdminPreferencesActivity;
+import org.odk.collect.android.preferences.PreferencesActivity;
+import org.odk.collect.android.tasks.FormLoaderTask;
+import org.odk.collect.android.tasks.SavePointTask;
+import org.odk.collect.android.tasks.SaveResult;
+import org.odk.collect.android.tasks.SaveToDiskTask;
+import org.odk.collect.android.utilities.CompatibilityUtils;
+import org.odk.collect.android.utilities.FileUtils;
+import org.odk.collect.android.utilities.MediaUtils;
+import org.odk.collect.android.views.ODKView;
+import org.odk.collect.android.widgets.QuestionWidget;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.LinkedHashMap;
+import java.util.Locale;
 
 /**
  * FormEntryActivity is responsible for displaying questions, animating
@@ -743,7 +744,7 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		Collect.getInstance().getActivityLogger()
+		/*Collect.getInstance().getActivityLogger()
 				.logInstanceAction(this, "onCreateOptionsMenu", "show");
 		super.onCreateOptionsMenu(menu);
 
@@ -766,12 +767,13 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 				menu.add(0, MENU_PREFERENCES, 0, R.string.general_preferences)
 						.setIcon(R.drawable.ic_menu_preferences),
 				MenuItem.SHOW_AS_ACTION_NEVER);
-		return true;
+		return true;*/
+        return false;
 	}
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		super.onPrepareOptionsMenu(menu);
+		/*super.onPrepareOptionsMenu(menu);
 
 		FormController formController = Collect.getInstance()
 				.getFormController();
@@ -801,13 +803,13 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 				AdminPreferencesActivity.KEY_ACCESS_SETTINGS, true);
 
 		menu.findItem(MENU_PREFERENCES).setVisible(useability)
-				.setEnabled(useability);
-		return true;
+				.setEnabled(useability);*/
+		return false;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		FormController formController = Collect.getInstance()
+		/*FormController formController = Collect.getInstance()
 				.getFormController();
 		switch (item.getItemId()) {
 		case MENU_LANGUAGES:
@@ -844,8 +846,8 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 			Intent pref = new Intent(this, PreferencesActivity.class);
 			startActivity(pref);
 			return true;
-		}
-		return super.onOptionsItemSelected(item);
+		}*/
+		return false;
 	}
 
 	/**
@@ -2564,7 +2566,7 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 				c.moveToFirst();
 				String status = c.getString(c
 						.getColumnIndex(InstanceColumns.STATUS));
-				if (InstanceProviderAPI.STATUS_COMPLETE.compareTo(status) == 0) {
+				if (OpenMRSInstanceProviderAPI.STATUS_COMPLETE.compareTo(status) == 0) {
 					complete = true;
 				}
 			}

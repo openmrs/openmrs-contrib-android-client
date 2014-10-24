@@ -27,13 +27,14 @@ import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.exception.EncryptionException;
 import org.odk.collect.android.listeners.FormSavedListener;
 import org.odk.collect.android.logic.FormController;
-import org.odk.collect.android.provider.FormsProviderAPI.FormsColumns;
-import org.odk.collect.android.provider.InstanceProviderAPI;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI.FormsColumns;
+import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI;
+import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI.InstanceColumns;
 import org.odk.collect.android.utilities.EncryptionUtils;
 import org.odk.collect.android.utilities.EncryptionUtils.EncryptedFormInformation;
 import org.odk.collect.android.utilities.FileUtils;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
@@ -151,15 +152,18 @@ public class SaveToDiskTask extends AsyncTask<Void, String, SaveResult> {
             values.put(InstanceColumns.DISPLAY_NAME, mInstanceName);
         }
         if (incomplete || !mMarkCompleted) {
-            values.put(InstanceColumns.STATUS, InstanceProviderAPI.STATUS_INCOMPLETE);
+            values.put(InstanceColumns.STATUS, OpenMRSInstanceProviderAPI.STATUS_INCOMPLETE);
         } else {
-            values.put(InstanceColumns.STATUS, InstanceProviderAPI.STATUS_COMPLETE);
+            values.put(InstanceColumns.STATUS, OpenMRSInstanceProviderAPI.STATUS_COMPLETE);
         }
         // update this whether or not the status is complete...
         values.put(InstanceColumns.CAN_EDIT_WHEN_COMPLETE, Boolean.toString(canEditAfterCompleted));
 
         // If FormEntryActivity was started with an Instance, just update that instance
-        if (Collect.getInstance().getContentResolver().getType(mUri).equals(InstanceColumns.CONTENT_ITEM_TYPE)) {
+        Collect instance = Collect.getInstance();
+        ContentResolver contentResolver = instance.getContentResolver();
+        String type = contentResolver.getType(mUri);
+        if (null != type && type.equals(InstanceColumns.CONTENT_ITEM_TYPE)) {
             int updated = Collect.getInstance().getContentResolver().update(mUri, values, null, null);
             if (updated > 1) {
                 Log.w(t, "Updated more than one entry, that's not good: " + mUri.toString());
@@ -168,7 +172,7 @@ public class SaveToDiskTask extends AsyncTask<Void, String, SaveResult> {
             } else {
                 Log.e(t, "Instance doesn't exist but we have its Uri!! " + mUri.toString());
             }
-        } else if (Collect.getInstance().getContentResolver().getType(mUri).equals(FormsColumns.CONTENT_ITEM_TYPE)) {
+        } else if (null != type && type.equals(FormsColumns.CONTENT_ITEM_TYPE)) {
             // If FormEntryActivity was started with a form, then it's likely the first time we're
             // saving.
             // However, it could be a not-first time saving if the user has been using the manual

@@ -16,8 +16,8 @@ package org.odk.collect.android.activities;
 
 import org.odk.collect.android.R;
 import org.odk.collect.android.application.Collect;
-import org.odk.collect.android.provider.InstanceProviderAPI;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI;
+import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI.InstanceColumns;
 
 import android.app.AlertDialog;
 import android.app.ListActivity;
@@ -62,7 +62,7 @@ public class InstanceChooserList extends ListActivity {
         tv.setVisibility(View.GONE);
 
         String selection = InstanceColumns.STATUS + " != ?";
-        String[] selectionArgs = {InstanceProviderAPI.STATUS_SUBMITTED};
+        String[] selectionArgs = {OpenMRSInstanceProviderAPI.STATUS_SUBMITTED};
         String sortOrder = InstanceColumns.STATUS + " DESC, " + InstanceColumns.DISPLAY_NAME + " ASC";
         Cursor c = managedQuery(InstanceColumns.CONTENT_URI, null, selection, selectionArgs, sortOrder);
 
@@ -111,7 +111,7 @@ public class InstanceChooserList extends ListActivity {
             String strCanEditWhenComplete =
                 c.getString(c.getColumnIndex(InstanceColumns.CAN_EDIT_WHEN_COMPLETE));
 
-            boolean canEdit = status.equals(InstanceProviderAPI.STATUS_INCOMPLETE)
+            boolean canEdit = status.equals(OpenMRSInstanceProviderAPI.STATUS_INCOMPLETE)
                 	           || Boolean.parseBoolean(strCanEditWhenComplete);
             if (!canEdit) {
             	createErrorDialog(getString(R.string.cannot_edit_completed_form),

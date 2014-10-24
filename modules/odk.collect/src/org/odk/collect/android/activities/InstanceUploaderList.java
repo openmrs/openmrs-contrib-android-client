@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import org.odk.collect.android.R;
 import org.odk.collect.android.application.Collect;
 import org.odk.collect.android.preferences.PreferencesActivity;
-import org.odk.collect.android.provider.InstanceProviderAPI;
-import org.odk.collect.android.provider.InstanceProviderAPI.InstanceColumns;
+import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI;
+import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI.InstanceColumns;
 import org.odk.collect.android.receivers.NetworkReceiver;
 import org.odk.collect.android.utilities.CompatibilityUtils;
 
@@ -74,8 +74,8 @@ public class InstanceUploaderList extends ListActivity implements
 		// get all complete or failed submission instances
 		String selection = InstanceColumns.STATUS + "=? or "
 				+ InstanceColumns.STATUS + "=?";
-		String selectionArgs[] = { InstanceProviderAPI.STATUS_COMPLETE,
-				InstanceProviderAPI.STATUS_SUBMISSION_FAILED };
+		String selectionArgs[] = { OpenMRSInstanceProviderAPI.STATUS_COMPLETE,
+				OpenMRSInstanceProviderAPI.STATUS_SUBMISSION_FAILED };
 		String sortOrder = InstanceColumns.DISPLAY_NAME + " ASC";
 		Cursor c = managedQuery(InstanceColumns.CONTENT_URI, null, selection,
 				selectionArgs, sortOrder);
@@ -87,9 +87,9 @@ public class InstanceUploaderList extends ListActivity implements
 		String selection = InstanceColumns.STATUS + "=? or "
 				+ InstanceColumns.STATUS + "=? or " + InstanceColumns.STATUS
 				+ "=?";
-		String selectionArgs[] = { InstanceProviderAPI.STATUS_COMPLETE,
-				InstanceProviderAPI.STATUS_SUBMISSION_FAILED,
-				InstanceProviderAPI.STATUS_SUBMITTED };
+		String selectionArgs[] = { OpenMRSInstanceProviderAPI.STATUS_COMPLETE,
+				OpenMRSInstanceProviderAPI.STATUS_SUBMISSION_FAILED,
+				OpenMRSInstanceProviderAPI.STATUS_SUBMITTED };
 		String sortOrder = InstanceColumns.DISPLAY_NAME + " ASC";
 		Cursor c = managedQuery(InstanceColumns.CONTENT_URI, null, selection,
 				selectionArgs, sortOrder);

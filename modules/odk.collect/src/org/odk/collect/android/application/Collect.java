@@ -49,8 +49,8 @@ public class Collect extends Application {
             + File.separator + "odk";
     public static String FORMS_PATH = ODK_ROOT + File.separator + "forms";
     public static String INSTANCES_PATH = ODK_ROOT + File.separator + "instances";
-    public static final String CACHE_PATH = ODK_ROOT + File.separator + ".cache";
-    public static final String METADATA_PATH = ODK_ROOT + File.separator + "metadata";
+    public static String CACHE_PATH = ODK_ROOT + File.separator + ".cache";
+    public static String METADATA_PATH = ODK_ROOT + File.separator + "metadata";
     public static final String TMPFILE_PATH = CACHE_PATH + File.separator + "tmp.jpg";
     public static final String TMPDRAWFILE_PATH = CACHE_PATH + File.separator + "tmpDraw.jpg";
     public static final String TMPXML_PATH = CACHE_PATH + File.separator + "tmp.xml";

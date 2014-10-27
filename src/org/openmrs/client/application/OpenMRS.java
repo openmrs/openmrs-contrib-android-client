@@ -19,6 +19,8 @@ public class OpenMRS extends Collect {
     private static final String ODK_DIR_PATH = File.separator + "odk";
     private static final String FORMS_DIR_PATH = File.separator + "forms";
     private static final String INSTANCES_DIR_PATH = File.separator + "instances";
+    private static final String METADATA_DIR_PATH = File.separator + "metadata";
+    private static final String CACHE_DIR_PATH = File.separator + ".cache";
 
     private static OpenMRS instance;
     private OpenMRSLogger mLogger;
@@ -152,11 +154,14 @@ public class OpenMRS extends Collect {
      * Overriding ODK directories path for :
      * - forms
      * - instances
+     * - metadata
      */
     public void overrideODKDirs() {
-        ODK_ROOT = getOpenMRSDir() + ODK_DIR_PATH;
+        ODK_ROOT =  mExternalDirectoryPath + OPENMRS_DIR_PATH + ODK_DIR_PATH;
         FORMS_PATH = ODK_ROOT + FORMS_DIR_PATH;
         INSTANCES_PATH = ODK_ROOT + INSTANCES_DIR_PATH;
+        METADATA_PATH = ODK_ROOT + METADATA_DIR_PATH;
+        CACHE_PATH = ODK_ROOT + CACHE_DIR_PATH;
     }
 
 }

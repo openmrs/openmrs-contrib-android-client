@@ -17,6 +17,11 @@ public class EncounterDAO {
         return new EncounterTable().insert(encounter);
     }
 
+    public boolean updateEncounter(long encounterID, Encounter encounter, long visitID) {
+        encounter.setVisitID(visitID);
+        return new EncounterTable().update(encounterID, encounter) > 0;
+    }
+
     public List<Encounter> findEncountersByVisitID(Long visitID) {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
         List<Encounter> encounters = new ArrayList<Encounter>();
@@ -89,6 +94,26 @@ public class EncounterDAO {
             }
         }
         return encounter;
+    }
+
+    public long getEncounterByUUID(final String encounterUUID) {
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+
+        String where = String.format("%s = ?", EncounterTable.Column.UUID);
+        String[] whereArgs = new String[]{encounterUUID};
+        long encounterID = 0;
+        final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        if (null != cursor) {
+            try {
+                if (cursor.moveToFirst()) {
+                    int encounterID_CI = cursor.getColumnIndex(EncounterTable.Column.ID);
+                    encounterID = cursor.getLong(encounterID_CI);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return encounterID;
     }
 
 

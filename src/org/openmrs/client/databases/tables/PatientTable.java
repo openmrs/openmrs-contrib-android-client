@@ -77,7 +77,8 @@ public class PatientTable extends Table<Patient> {
 
     @Override
     public int update(long tableObjectID, Patient tableObject) {
-        return 0;
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        return helper.updatePatient(helper.getWritableDatabase(), tableObjectID, tableObject);
     }
 
     @Override

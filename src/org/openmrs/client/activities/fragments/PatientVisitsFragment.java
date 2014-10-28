@@ -33,12 +33,13 @@ public class PatientVisitsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        mPatientVisits = new VisitDAO().getVisitsByPatientUUID(getArguments().getLong(ApplicationConstants.BundleKeys.PATIENT_BUNDLE));
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mPatientVisits = new VisitDAO().getVisitsByPatientID(getArguments().getLong(ApplicationConstants.BundleKeys.PATIENT_BUNDLE));
+
         View fragmentLayout = inflater.inflate(R.layout.fragment_patient_visit, null, false);
         ListView visitList = (ListView) fragmentLayout.findViewById(R.id.patientVisitList);
         visitList.setAdapter(new PatientVisitsArrayAdapter(getActivity(), mPatientVisits));

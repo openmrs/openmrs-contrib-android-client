@@ -105,7 +105,7 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
 
         SearchView findPatientView;
 
-        mFindPatientMenuItem = menu.findItem(R.id.action_search);
+        mFindPatientMenuItem = menu.findItem(R.id.actionSearch);
         if (OpenMRS.getInstance().isRunningHoneycombVersionOrHigher()) {
             findPatientView = (SearchView) mFindPatientMenuItem.getActionView();
         } else {

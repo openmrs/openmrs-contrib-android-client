@@ -19,6 +19,10 @@ public class PatientDAO {
         return new PatientTable().insert(patient);
     }
 
+    public boolean updatePatient(long patientID, Patient patient) {
+        return new PatientTable().update(patientID, patient) > 0;
+    }
+
     public void deletePatient(long id) {
         OpenMRS.getInstance().getOpenMRSLogger().w("Patient deleted with id: " + id);
         DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
@@ -97,6 +101,7 @@ public class PatientDAO {
             try {
                 if (cursor.moveToFirst()) {
                     int patientIdColumnIndex = cursor.getColumnIndex(PatientTable.Column.ID);
+                    int uuidColumnIndex = cursor.getColumnIndex(PatientTable.Column.UUID);
                     int displayColumnIndex = cursor.getColumnIndex(PatientTable.Column.DISPLAY);
                     int identifierColumnIndex = cursor.getColumnIndex(PatientTable.Column.IDENTIFIER);
                     int givenNameColumnIndex = cursor.getColumnIndex(PatientTable.Column.GIVEN_NAME);
@@ -106,6 +111,7 @@ public class PatientDAO {
                     int birthDateColumnIndex = cursor.getColumnIndex(PatientTable.Column.BIRTH_DATE);
                     int phoneColumnIndex = cursor.getColumnIndex(PatientTable.Column.PHONE);
                     patient.setId(cursor.getLong(patientIdColumnIndex));
+                    patient.setUuid(cursor.getString(uuidColumnIndex));
                     patient.setDisplay(cursor.getString(displayColumnIndex));
                     patient.setIdentifier(cursor.getString(identifierColumnIndex));
                     patient.setGivenName(cursor.getString(givenNameColumnIndex));

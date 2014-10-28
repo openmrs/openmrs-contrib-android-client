@@ -63,12 +63,12 @@ public abstract class ACBaseActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_settings:
+            case R.id.actionSettings:
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivity(i);
-            case R.id.action_search:
+            case R.id.actionSearch:
                 return true;
-            case R.id.action_logout:
+            case R.id.actionLogout:
                 this.showLogoutDialog();
             default:
                 return super.onOptionsItemSelected(item);

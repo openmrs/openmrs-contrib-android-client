@@ -63,4 +63,8 @@ public class PatientDetailsFragment extends Fragment {
             detailsLayout.setVisibility(View.GONE);
         }
     }
+
+    public void reloadPatientData(Patient patient) {
+        mPatient = patient;
+    }
 }

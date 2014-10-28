@@ -5,18 +5,24 @@ import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.openmrs.client.activities.PatientDashboardActivity;
 import org.openmrs.client.dao.VisitDAO;
+import org.openmrs.client.models.Visit;
 import org.openmrs.client.models.mappers.VisitMapper;
 
 import static org.openmrs.client.utilities.ApplicationConstants.API;
 
 public class FindVisitsManager extends BaseManager {
     private static final String VISIT_QUERY = "visit?patient=";
+
+    private int mExpectedResponses;
+    private boolean mErrorOccurred;
 
     public FindVisitsManager(Context context) {
         super(context);
@@ -35,6 +41,9 @@ public class FindVisitsManager extends BaseManager {
 
                 try {
                     JSONArray visitResultJSON = response.getJSONArray(RESULTS_KEY);
+                    if (mContext instanceof PatientDashboardActivity) {
+                        mExpectedResponses = visitResultJSON.length();
+                    }
                     if (visitResultJSON.length() > 0) {
                         for (int i = 0; i < visitResultJSON.length(); i++) {
                             findVisitByUUID(visitResultJSON.getJSONObject(i).getString(UUID_KEY), patientID);
@@ -45,7 +54,15 @@ public class FindVisitsManager extends BaseManager {
                 }
             }
         }
-                , new GeneralErrorListenerImpl(mContext));
+                , new GeneralErrorListenerImpl(mContext) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                super.onErrorResponse(error);
+                if (mContext instanceof PatientDashboardActivity) {
+                    ((PatientDashboardActivity) mContext).stopLoader(true);
+                }
+            }
+        });
         queue.add(jsObjRequest);
     }
 
@@ -58,18 +75,57 @@ public class FindVisitsManager extends BaseManager {
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
                 visitURL, null, new Response.Listener<JSONObject>() {
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(final JSONObject response) {
                 logger.d(response.toString());
 
                 try {
-                    new VisitDAO().saveVisit(VisitMapper.map(response), patientID);
+                    if (mContext instanceof PatientDashboardActivity) {
+                        Thread thread = new Thread()
+                        {
+                            @Override
+                            public void run() {
+                                try {
+                                    Visit visit = VisitMapper.map(response);
+                                    long visitId = new VisitDAO().getVisitsIDByUUID(visit.getUuid());
+
+                                    if (visitId > 0) {
+                                        new VisitDAO().updateVisit(visit, visitId, patientID);
+                                    } else {
+                                        new VisitDAO().saveVisit(visit, patientID);
+                                    }
+                                } catch (JSONException e) {
+                                    logger.d(e.toString());
+                                }
+                            }
+                        };
+                        thread.start();
+                        subtractExpectedResponses(false);
+                    } else {
+                        new VisitDAO().saveVisit(VisitMapper.map(response), patientID);
+                    }
                 } catch (JSONException e) {
                     logger.d(e.toString());
                 }
             }
         }
-                , new GeneralErrorListenerImpl(mContext));
+                , new GeneralErrorListenerImpl(mContext) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                super.onErrorResponse(error);
+                subtractExpectedResponses(true);
+            }
+        }
+        );
         queue.add(jsObjRequest);
     }
 
+    public void subtractExpectedResponses(boolean errorOccurred) {
+        mExpectedResponses--;
+        if (errorOccurred) {
+            mErrorOccurred = errorOccurred;
+        }
+        if (mExpectedResponses == 0) {
+            ((PatientDashboardActivity) mContext).updatePatientVisitsData(mErrorOccurred);
+        }
+    }
 }

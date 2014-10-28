@@ -53,6 +53,7 @@
         <activity
             android:name=".activities.FindPatientsActivity"
             android:label="@string/action_find_patients"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -90,7 +91,9 @@
             android:label="@string/action_settings"
             android:noHistory="true">
         </activity>
-        <activity android:name=".activities.PatientDashboardActivity">
+        <activity
+            android:name=".activities.PatientDashboardActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

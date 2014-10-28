@@ -51,7 +51,8 @@ public class EncounterTable extends Table<Encounter> {
 
     @Override
     public int update(long tableObjectID, Encounter tableObject) {
-        return 0;
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        return helper.updateEncounter(helper.getWritableDatabase(), tableObjectID, tableObject);
     }
 
     @Override

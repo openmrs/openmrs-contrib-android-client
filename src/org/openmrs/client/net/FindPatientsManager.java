@@ -115,10 +115,11 @@ public class FindPatientsManager extends BaseManager {
     }
 
     public void getFullPatientData(final String patientUUID) {
-       getFullPatientData(patientUUID, 0);
+        //method called by PatientDashboardActivity. searchId is never used
+       getFullPatientData(patientUUID, null);
     }
 
-    public void getFullPatientData(final String patientUUID, final int searchId) {
+    public void getFullPatientData(final String patientUUID, final Integer searchId) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String patientURL = mOpenMRS.getServerUrl() + API.COMMON_PART + API.PATIENT_DETAILS
                 + patientUUID + API.FULL_VERSION;

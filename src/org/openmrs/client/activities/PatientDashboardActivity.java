@@ -88,7 +88,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_synchronize:
+            case R.id.actionSynchronize:
                 synchronizePatient();
             default:
                 return super.onOptionsItemSelected(item);

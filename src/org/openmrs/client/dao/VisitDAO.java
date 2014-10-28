@@ -179,7 +179,7 @@ public class VisitDAO {
         return visit;
     }
 
-    public long getVisitsByUUID(final String visitUUID) {
+    public long getVisitsIDByUUID(final String visitUUID) {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
 
         String where = String.format("%s = ?", VisitTable.Column.UUID);

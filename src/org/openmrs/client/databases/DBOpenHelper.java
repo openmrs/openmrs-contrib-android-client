@@ -70,35 +70,35 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
 
     public long insertPatient(SQLiteDatabase db, Patient patient) {
         long patientId;
-        if (null == mStatement) {
-            mStatement = db.compileStatement(mPatientTable.insertIntoTableDefinition());
-        }
+
+        SQLiteStatement patientStatement = db.compileStatement(mPatientTable.insertIntoTableDefinition());
+
         try {
             db.beginTransaction();
-            bindString(1, patient.getDisplay());
-            bindString(2, patient.getUuid());
-            bindString(3, patient.getIdentifier());
-            bindString(4, patient.getGivenName());
-            bindString(5, patient.getMiddleName());
-            bindString(6, patient.getFamilyName());
-            bindString(7, patient.getGender());
-            bindLong(8, patient.getBirthDate());
-            bindLong(9, patient.getDeathDate());
-            bindString(10, patient.getCauseOfDeath());
-            bindString(11, patient.getAge());
-            bindString(12, patient.getAddress().getAddress1());
-            bindString(13, patient.getAddress().getAddress2());
-            bindString(14, patient.getAddress().getPostalCode());
-            bindString(15, patient.getAddress().getCountry());
-            bindString(16, patient.getAddress().getState());
-            bindString(17, patient.getAddress().getCityVillage());
-            bindString(18, patient.getPhoneNumber());
-            patientId = mStatement.executeInsert();
-            mStatement.clearBindings();
+            bindString(1, patient.getDisplay(), patientStatement);
+            bindString(2, patient.getUuid(), patientStatement);
+            bindString(3, patient.getIdentifier(), patientStatement);
+            bindString(4, patient.getGivenName(), patientStatement);
+            bindString(5, patient.getMiddleName(), patientStatement);
+            bindString(6, patient.getFamilyName(), patientStatement);
+            bindString(7, patient.getGender(), patientStatement);
+            bindLong(8, patient.getBirthDate(), patientStatement);
+            bindLong(9, patient.getDeathDate(), patientStatement);
+            bindString(10, patient.getCauseOfDeath(), patientStatement);
+            bindString(11, patient.getAge(), patientStatement);
+            bindString(12, patient.getAddress().getAddress1(), patientStatement);
+            bindString(13, patient.getAddress().getAddress2(), patientStatement);
+            bindString(14, patient.getAddress().getPostalCode(), patientStatement);
+            bindString(15, patient.getAddress().getCountry(), patientStatement);
+            bindString(16, patient.getAddress().getState(), patientStatement);
+            bindString(17, patient.getAddress().getCityVillage(), patientStatement);
+            bindString(18, patient.getPhoneNumber(), patientStatement);
+            patientId = patientStatement.executeInsert();
+            patientStatement.clearBindings();
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
-            mStatement = null;
+            patientStatement.close();
         }
 
         return patientId;
@@ -132,23 +132,23 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
 
     public long insertVisit(SQLiteDatabase db, Visit visit) {
         long visitId;
-        if (null == mStatement) {
-            mStatement = db.compileStatement(mVisitTable.insertIntoTableDefinition());
-        }
+
+        SQLiteStatement visitStatement = db.compileStatement(mVisitTable.insertIntoTableDefinition());
+
         try {
             db.beginTransaction();
-            bindString(1, visit.getUuid());
-            bindLong(2, visit.getPatientID());
-            bindString(3, visit.getVisitType());
-            bindString(4, visit.getVisitPlace());
-            bindLong(5, visit.getStartDate());
-            bindLong(6, visit.getStopDate());
-            visitId = mStatement.executeInsert();
-            mStatement.clearBindings();
+            bindString(1, visit.getUuid(), visitStatement);
+            bindLong(2, visit.getPatientID(), visitStatement);
+            bindString(3, visit.getVisitType(), visitStatement);
+            bindString(4, visit.getVisitPlace(), visitStatement);
+            bindLong(5, visit.getStartDate(), visitStatement);
+            bindLong(6, visit.getStopDate(), visitStatement);
+            visitId = visitStatement.executeInsert();
+            visitStatement.clearBindings();
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
-            mStatement = null;
+            visitStatement.close();
         }
         return visitId;
     }
@@ -169,22 +169,22 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
 
     public long insertEncounter(SQLiteDatabase db, Encounter encounter) {
         long encounterId;
-        if (null == mStatement) {
-            mStatement = db.compileStatement(mEncounterTable.insertIntoTableDefinition());
-        }
+
+        SQLiteStatement encounterStatement = db.compileStatement(mEncounterTable.insertIntoTableDefinition());
+
         try {
             db.beginTransaction();
-            bindLong(1, encounter.getVisitID());
-            bindString(2, encounter.getUuid());
-            bindString(3, encounter.getDisplay());
-            bindLong(4, encounter.getEncounterDatetime());
-            bindString(5, encounter.getEncounterType().getType());
-            encounterId = mStatement.executeInsert();
-            mStatement.clearBindings();
+            bindLong(1, encounter.getVisitID(), encounterStatement);
+            bindString(2, encounter.getUuid(), encounterStatement);
+            bindString(3, encounter.getDisplay(), encounterStatement);
+            bindLong(4, encounter.getEncounterDatetime(), encounterStatement);
+            bindString(5, encounter.getEncounterType().getType(), encounterStatement);
+            encounterId = encounterStatement.executeInsert();
+            encounterStatement.clearBindings();
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
-            mStatement = null;
+            encounterStatement.close();
         }
         return encounterId;
     }
@@ -236,27 +236,27 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
 
     public Long insertLocation(SQLiteDatabase db, Location loc) {
         long locID;
-        if (null == mStatement) {
-            mStatement = db.compileStatement(mLocationTable.insertIntoTableDefinition());
-        }
+
+        SQLiteStatement locationStatement = db.compileStatement(mLocationTable.insertIntoTableDefinition());
+
         try {
             db.beginTransaction();
-            bindString(1, loc.getUuid());
-            bindString(2, loc.getDisplay());
-            bindString(3, loc.getName());
-            bindString(4, loc.getDescription());
-            bindString(5, loc.getAddress().getAddress1());
-            bindString(6, loc.getAddress().getAddress2());
-            bindString(7, loc.getAddress().getCityVillage());
-            bindString(8, loc.getAddress().getState());
-            bindString(9, loc.getAddress().getCountry());
-            bindString(10, loc.getAddress().getPostalCode());
-            locID = mStatement.executeInsert();
-            mStatement.clearBindings();
+            bindString(1, loc.getUuid(), locationStatement);
+            bindString(2, loc.getDisplay(), locationStatement);
+            bindString(3, loc.getName(), locationStatement);
+            bindString(4, loc.getDescription(), locationStatement);
+            bindString(5, loc.getAddress().getAddress1(), locationStatement);
+            bindString(6, loc.getAddress().getAddress2(), locationStatement);
+            bindString(7, loc.getAddress().getCityVillage(), locationStatement);
+            bindString(8, loc.getAddress().getState(), locationStatement);
+            bindString(9, loc.getAddress().getCountry(), locationStatement);
+            bindString(10, loc.getAddress().getPostalCode(), locationStatement);
+            locID = locationStatement.executeInsert();
+            locationStatement.clearBindings();
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
-            mStatement = null;
+            locationStatement.close();
         }
         return locID;
     }

@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="org.openmrs.client.activities.PatientDashboardActivity" >
-    <item android:id="@+id/action_synchronize"
+    <item android:id="@+id/actionSynchronize"
         android:title="@string/action_synchronize_patients"
         android:icon="@drawable/ic_menu_refresh"
         app:showAsAction="ifRoom|collapseActionView"/>

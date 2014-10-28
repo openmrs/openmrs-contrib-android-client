@@ -19,8 +19,6 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private String mSecretKey;
 
-    protected SQLiteStatement mStatement;
-
     public OpenMRSSQLiteOpenHelper(Context context, SQLiteDatabase.CursorFactory factory, int version, SQLiteDatabaseHook hook) {
         super(context, DATABASE_NAME, factory, version, hook);
     }
@@ -90,21 +88,7 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
      *
      * @param columnIndex
      * @param columnValue
-     */
-    public void bindString(int columnIndex, String columnValue) {
-        if (StringUtils.notNull(columnValue)) {
-            mStatement.bindString(columnIndex, columnValue);
-        } else {
-            mStatement.bindNull(columnIndex);
-        }
-    }
-
-    /**
-     * Null safe wrapper method for
-     * @see net.sqlcipher.database.SQLiteStatement#bindString(int, String)
-     *
-     * @param columnIndex
-     * @param columnValue
+     * @param statement
      */
     public void bindString(int columnIndex, String columnValue, SQLiteStatement statement) {
         if (StringUtils.notNull(columnValue)) {
@@ -120,21 +104,7 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
      *
      * @param columnIndex
      * @param columnValue
-     */
-    public void bindLong(int columnIndex, Long columnValue) {
-        if (null != columnValue) {
-            mStatement.bindLong(columnIndex, columnValue);
-        } else {
-            mStatement.bindNull(columnIndex);
-        }
-    }
-
-    /**
-     * Null safe wrapper method for
-     * @see net.sqlcipher.database.SQLiteStatement#bindLong(int, long)
-     *
-     * @param columnIndex
-     * @param columnValue
+     * @param statement
      */
     public void bindLong(int columnIndex, Long columnValue, SQLiteStatement statement) {
         if (null != columnValue) {
@@ -149,12 +119,13 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
      *
      * @param columnIndex
      * @param columnValue
+     * @param statement
      */
-    public void bindDouble(int columnIndex, Double columnValue) {
+    public void bindDouble(int columnIndex, Double columnValue, SQLiteStatement statement) {
         if (null != columnValue) {
-            mStatement.bindDouble(columnIndex, columnValue);
+            statement.bindDouble(columnIndex, columnValue);
         } else {
-            mStatement.bindNull(columnIndex);
+            statement.bindNull(columnIndex);
         }
     }
 }

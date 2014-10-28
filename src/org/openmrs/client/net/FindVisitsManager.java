@@ -86,7 +86,7 @@ public class FindVisitsManager extends BaseManager {
                             public void run() {
                                 try {
                                     Visit visit = VisitMapper.map(response);
-                                    long visitId = new VisitDAO().getVisitsByUUID(visit.getUuid());
+                                    long visitId = new VisitDAO().getVisitsIDByUUID(visit.getUuid());
 
                                     if (visitId > 0) {
                                         new VisitDAO().updateVisit(visit, visitId, patientID);

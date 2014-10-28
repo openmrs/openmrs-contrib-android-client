@@ -49,13 +49,17 @@ public class ObservationTable extends Table<Observation> {
 
     @Override
     public int update(long tableObjectID, Observation tableObject) {
-        return 0;
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        return helper.updateObservation(helper.getWritableDatabase(), tableObjectID, tableObject);
     }
 
     @Override
     public void delete(long tableObjectID) {
         DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        openHelper.getWritableDatabase().delete(TABLE_NAME, MasterColumn.ID + MasterColumn.EQUALS + tableObjectID, null);
+        String where = String.format("%s = ?", ObservationTable.Column.ID);
+        String[] whereArgs = new String[]{String.valueOf(tableObjectID)};
+
+        openHelper.getWritableDatabase().delete(TABLE_NAME, where, whereArgs);
     }
 
     public class Column extends MasterColumn {

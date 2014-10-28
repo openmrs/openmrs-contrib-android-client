@@ -4,11 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 
 import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteStatement;
 
 import org.openmrs.client.databases.tables.EncounterTable;
 import org.openmrs.client.databases.tables.LocationTable;
 import org.openmrs.client.databases.tables.ObservationTable;
 import org.openmrs.client.databases.tables.PatientTable;
+import org.openmrs.client.databases.tables.Table;
 import org.openmrs.client.databases.tables.VisitTable;
 import org.openmrs.client.models.Encounter;
 import org.openmrs.client.models.Location;
@@ -18,6 +20,7 @@ import org.openmrs.client.models.Visit;
 
 public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
+    private static final String WHERE_ID_CLAUSE = String.format("%s = ?", Table.MasterColumn.ID);
 
     private PatientTable mPatientTable;
     private VisitTable mVisitTable;
@@ -101,7 +104,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         return patientId;
     }
 
-    public int updatePatient(SQLiteDatabase db, long tableObjectID, Patient patient) {
+    public int updatePatient(SQLiteDatabase db, long patientID, Patient patient) {
         ContentValues newValues = new ContentValues();
         newValues.put(PatientTable.Column.UUID, patient.getUuid());
         newValues.put(PatientTable.Column.DISPLAY, patient.getDisplay());
@@ -122,10 +125,9 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         newValues.put(PatientTable.Column.CITY, patient.getAddress().getCityVillage());
         newValues.put(PatientTable.Column.PHONE, patient.getPhoneNumber());
 
-        String where = String.format("%s = ?", PatientTable.Column.ID);
-        String[] whereArgs = new String[]{String.valueOf(tableObjectID)};
+        String[] whereArgs = new String[]{String.valueOf(patientID)};
 
-        return db.update(PatientTable.TABLE_NAME, newValues, where, whereArgs);
+        return db.update(PatientTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);
     }
 
     public long insertVisit(SQLiteDatabase db, Visit visit) {
@@ -151,6 +153,20 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         return visitId;
     }
 
+    public int updateVisit(SQLiteDatabase db, long visitID, Visit visit) {
+        ContentValues newValues = new ContentValues();
+        newValues.put(VisitTable.Column.UUID, visit.getUuid());
+        newValues.put(VisitTable.Column.PATIENT_KEY_ID, visit.getPatientID());
+        newValues.put(VisitTable.Column.VISIT_TYPE, visit.getVisitType());
+        newValues.put(VisitTable.Column.VISIT_PLACE, visit.getVisitPlace());
+        newValues.put(VisitTable.Column.START_DATE, visit.getStartDate());
+        newValues.put(VisitTable.Column.STOP_DATE, visit.getStopDate());
+
+        String[] whereArgs = new String[]{String.valueOf(visitID)};
+
+        return db.update(VisitTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);
+    }
+
     public long insertEncounter(SQLiteDatabase db, Encounter encounter) {
         long encounterId;
         if (null == mStatement) {
@@ -173,25 +189,49 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         return encounterId;
     }
 
+    public int updateEncounter(SQLiteDatabase db, long encounterID, Encounter encounter) {
+        ContentValues newValues = new ContentValues();
+        newValues.put(EncounterTable.Column.UUID, encounter.getUuid());
+        newValues.put(EncounterTable.Column.VISIT_KEY_ID, encounter.getVisitID());
+        newValues.put(EncounterTable.Column.DISPLAY, encounter.getDisplay());
+        newValues.put(EncounterTable.Column.ENCOUNTER_DATETIME, encounter.getEncounterDatetime());
+        newValues.put(EncounterTable.Column.ENCOUNTER_TYPE, encounter.getEncounterType().getType());
+
+        String[] whereArgs = new String[]{String.valueOf(encounterID)};
+
+        return db.update(EncounterTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);
+    }
+
     public long insertObservation(SQLiteDatabase db, Observation obs) {
         long obsID;
-        if (null == mStatement) {
-            mStatement = db.compileStatement(mObservationTable.insertIntoTableDefinition());
-        }
+        SQLiteStatement observationStatement = db.compileStatement(mObservationTable.insertIntoTableDefinition());
+
         try {
             db.beginTransaction();
-            bindLong(1, obs.getEncounterID());
-            bindString(2, obs.getUuid());
-            bindString(3, obs.getDisplay());
-            bindString(4, obs.getDisplayValue());
-            obsID = mStatement.executeInsert();
-            mStatement.clearBindings();
+            bindLong(1, obs.getEncounterID(), observationStatement);
+            bindString(2, obs.getUuid(), observationStatement);
+            bindString(3, obs.getDisplay(), observationStatement);
+            bindString(4, obs.getDisplayValue(), observationStatement);
+            obsID = observationStatement.executeInsert();
+            observationStatement.clearBindings();
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
-            mStatement = null;
+            observationStatement.close();
         }
         return obsID;
+    }
+
+    public int updateObservation(SQLiteDatabase db, long observationID, Observation observation) {
+        ContentValues newValues = new ContentValues();
+        newValues.put(ObservationTable.Column.UUID, observation.getUuid());
+        newValues.put(ObservationTable.Column.ENCOUNTER_KEY_ID, observation.getEncounterID());
+        newValues.put(ObservationTable.Column.DISPLAY, observation.getDisplay());
+        newValues.put(ObservationTable.Column.DISPLAY_VALUE, observation.getDisplayValue());
+
+        String[] whereArgs = new String[]{String.valueOf(observationID)};
+
+        return db.update(ObservationTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);
     }
 
     public Long insertLocation(SQLiteDatabase db, Location loc) {
@@ -216,7 +256,6 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             db.setTransactionSuccessful();
         } finally {
             db.endTransaction();
-            db.close();
             mStatement = null;
         }
         return locID;

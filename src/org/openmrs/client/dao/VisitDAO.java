@@ -32,6 +32,32 @@ public class VisitDAO {
         }
     }
 
+    public boolean updateVisit(Visit visit, long visitID, long patientID) {
+        EncounterDAO encounterDAO = new EncounterDAO();
+        ObservationDAO observationDAO = new ObservationDAO();
+        visit.setPatientID(patientID);
+        for (Encounter encounter : visit.getEncounters()) {
+            long encounterID = encounterDAO.getEncounterByUUID(encounter.getUuid());
+
+            if (encounterID > 0) {
+                encounterDAO.updateEncounter(encounterID, encounter, visitID);
+            } else {
+                encounterID = encounterDAO.saveEncounter(encounter, visitID);
+            }
+
+            List<Observation> oldObs = observationDAO.findObservationByEncounterID(encounterID);
+            for (Observation obs : oldObs) {
+                observationDAO.deleteObservation(obs.getId());
+            }
+
+            for (Observation obs : encounter.getObservations()) {
+                observationDAO.saveObservation(obs, encounterID);
+            }
+        }
+
+        return new VisitTable().update(visitID, visit) > 0;
+    }
+
     public List<VisitItemDTO> findActiveVisitsByPatientNameLike(final String patientName) {
         String where = String.format("%s LIKE  ?", PatientTable.Column.DISPLAY);
         String[] whereArgs = new String[]{"%" + patientName + "%"};
@@ -92,7 +118,7 @@ public class VisitDAO {
         return visitItems;
     }
 
-    public List<Visit> getVisitsByPatientUUID(final Long patientID) {
+    public List<Visit> getVisitsByPatientID(final Long patientID) {
         List<Visit> visits = new ArrayList<Visit>();
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
 
@@ -153,4 +179,23 @@ public class VisitDAO {
         return visit;
     }
 
+    public long getVisitsByUUID(final String visitUUID) {
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+
+        String where = String.format("%s = ?", VisitTable.Column.UUID);
+        String[] whereArgs = new String[]{visitUUID};
+        long visitID = 0;
+        final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        if (null != cursor) {
+            try {
+                if (cursor.moveToFirst()) {
+                    int visitID_CI = cursor.getColumnIndex(VisitTable.Column.ID);
+                    visitID = cursor.getLong(visitID_CI);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return visitID;
+    }
 }

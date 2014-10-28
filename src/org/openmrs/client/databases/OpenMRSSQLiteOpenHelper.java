@@ -101,6 +101,21 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Null safe wrapper method for
+     * @see net.sqlcipher.database.SQLiteStatement#bindString(int, String)
+     *
+     * @param columnIndex
+     * @param columnValue
+     */
+    public void bindString(int columnIndex, String columnValue, SQLiteStatement statement) {
+        if (StringUtils.notNull(columnValue)) {
+            statement.bindString(columnIndex, columnValue);
+        } else {
+            statement.bindNull(columnIndex);
+        }
+    }
+
+    /**
+     * Null safe wrapper method for
      * @see net.sqlcipher.database.SQLiteStatement#bindLong(int, long)
      *
      * @param columnIndex
@@ -114,6 +129,20 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Null safe wrapper method for
+     * @see net.sqlcipher.database.SQLiteStatement#bindLong(int, long)
+     *
+     * @param columnIndex
+     * @param columnValue
+     */
+    public void bindLong(int columnIndex, Long columnValue, SQLiteStatement statement) {
+        if (null != columnValue) {
+            statement.bindLong(columnIndex, columnValue);
+        } else {
+            statement.bindNull(columnIndex);
+        }
+    }
     /**
      * Null safe wrapper method for
      * @see net.sqlcipher.database.SQLiteStatement#bindDouble(int, double)

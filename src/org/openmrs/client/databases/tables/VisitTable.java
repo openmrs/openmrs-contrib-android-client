@@ -53,7 +53,8 @@ public class VisitTable extends Table<Visit> {
 
     @Override
     public int update(long tableObjectID, Visit tableObject) {
-        return 0;
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        return helper.updateVisit(helper.getWritableDatabase(), tableObjectID, tableObject);
     }
 
     @Override

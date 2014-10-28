@@ -1,7 +1,6 @@
 package org.openmrs.client.activities;
 
-import android.content.Context;
-import android.graphics.Canvas;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,23 +8,18 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import org.openmrs.client.R;
-import org.openmrs.client.activities.fragments.FindPatientLastViewedFragment;
 import org.openmrs.client.activities.fragments.PatientDetailsFragment;
 import org.openmrs.client.activities.fragments.PatientDiagnosisFragment;
 import org.openmrs.client.activities.fragments.PatientVisitsFragment;
 import org.openmrs.client.activities.fragments.PatientVitalsFragment;
-import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.dao.PatientDAO;
 import org.openmrs.client.models.Patient;
+import org.openmrs.client.net.FindPatientsManager;
 import org.openmrs.client.net.FindVisitsManager;
-import org.openmrs.client.net.SynchronizePatientManager;
 import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.ToastUtil;
 
@@ -36,9 +30,9 @@ import java.util.List;
 public class PatientDashboardActivity extends ACBaseActivity implements ActionBar.TabListener {
 
     private Patient mPatient;
-
     private ViewPager mViewPager;
     private PatientDashboardPagerAdapter mPatientDashboardPagerAdapter;
+    private ProgressDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,12 +95,6 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
         }
     }
 
-    private void synchronizePatient() {
-        OpenMRS.getInstance().getOpenMRSLogger().d("SYNCHRONIZE STARTED!");
-        SynchronizePatientManager spm = new SynchronizePatientManager(this);
-        spm.getFullPatientData(mPatient.getUuid());
-    }
-
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         mViewPager.setCurrentItem(tab.getPosition());
@@ -122,29 +110,63 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
     }
 
-    public void updatePatientsData(Patient patient) {
+    private void synchronizePatient() {
+        mDialog = new ProgressDialog(this);
+        mDialog.setMessage(getString(R.string.action_synchronize_patients));
+        mDialog.setIndeterminate(false);
+        mDialog.setCancelable(false);
+        mDialog.show();
+        new FindPatientsManager(this).getFullPatientData(mPatient.getUuid());
+    }
+
+    public void updatePatientDetailsData(final Patient patient) {
         if (new PatientDAO().updatePatient(mPatient.getId(), patient)) {
+            final FindVisitsManager fvm = new FindVisitsManager(this);
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    mPatient = new PatientDAO().findPatientByUUID(mPatient.getUuid());
 
-            ToastUtil.showShortToast(this,
-                    ToastUtil.ToastType.SUCCESS,
-                    R.string.synchronize_patient_successful);
+                    PatientDetailsFragment fragment = (PatientDetailsFragment) getSupportFragmentManager().getFragments().get(PatientDashboardActivity.TabHost.DETAILS_TAB_POS);
+                    fragment.reloadPatientData(mPatient);
 
-            mPatient = new PatientDAO().findPatientByUUID(mPatient.getUuid());
-            PatientDetailsFragment fragment = (PatientDetailsFragment) getSupportFragmentManager().getFragments().get(PatientDashboardActivity.TabHost.DETAILS_TAB_POS);
-            fragment.reloadPatientData(patient);
-            FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
-            fragTransaction.detach(fragment);
-            fragTransaction.attach(fragment);
-            fragTransaction.commit();
+                    fvm.findActiveVisitsForPatientByUUID(patient.getUuid(), mPatient.getId());
+                }
+            };
+            thread.start();
+
         } else {
-            stopLoader();
+            stopLoader(true);
         }
     }
 
-    public void stopLoader() {
-        ToastUtil.showShortToast(this,
-                ToastUtil.ToastType.ERROR,
-                R.string.synchronize_patient_error);
+    public void updatePatientVisitsData(boolean errorOccurred) {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        for (int i = 0; i < fragments.size(); i++) {
+            recreateFragmentView(fragments.get(i));
+        }
+        stopLoader(errorOccurred);
+    }
+
+    public void stopLoader(boolean errorOccurred) {
+        mDialog.dismiss();
+        mViewPager.setCurrentItem(TabHost.DETAILS_TAB_POS);
+        if (!errorOccurred) {
+            ToastUtil.showShortToast(this,
+                    ToastUtil.ToastType.SUCCESS,
+                    R.string.synchronize_patient_successful);
+        } else {
+            ToastUtil.showShortToast(this,
+                    ToastUtil.ToastType.ERROR,
+                    R.string.synchronize_patient_error);
+        }
+    }
+
+    private void recreateFragmentView(final Fragment fragment) {
+        FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
+        fragTransaction.detach(fragment);
+        fragTransaction.attach(fragment);
+        fragTransaction.commit();
     }
 
     public class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
@@ -204,5 +226,4 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
             return mTabLabel;
         }
     }
-
 }

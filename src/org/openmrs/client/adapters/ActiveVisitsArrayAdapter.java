@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import org.openmrs.client.R;
@@ -32,7 +32,7 @@ public class ActiveVisitsArrayAdapter extends ArrayAdapter<VisitItemDTO> {
     }
 
     class ViewHolder {
-        private RelativeLayout mRelativeLayout;
+        private TableLayout mTableLayout;
         private TextView mPatientID;
         private TextView mPatientName;
         private TextView mVisitPlace;
@@ -47,7 +47,7 @@ public class ActiveVisitsArrayAdapter extends ArrayAdapter<VisitItemDTO> {
             LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(mResourceID, null);
             ViewHolder viewHolder = new ViewHolder();
-            viewHolder.mRelativeLayout = (RelativeLayout) rowView.findViewById(R.id.visitRow);
+            viewHolder.mTableLayout = (TableLayout) rowView.findViewById(R.id.visitRow);
             viewHolder.mPatientID = (TextView) rowView.findViewById(R.id.visitPatientID);
             viewHolder.mPatientName = (TextView) rowView.findViewById(R.id.visitPatientName);
             viewHolder.mVisitPlace = (TextView) rowView.findViewById(R.id.patientVisitPlace);
@@ -66,7 +66,7 @@ public class ActiveVisitsArrayAdapter extends ArrayAdapter<VisitItemDTO> {
         holder.mVisitStart.setText(DateUtils.convertTime(visit.getVisitStart()));
         FontsUtil.setFont((ViewGroup) rowView);
 
-        holder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
+        holder.mTableLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, VisitDashboardActivity.class);

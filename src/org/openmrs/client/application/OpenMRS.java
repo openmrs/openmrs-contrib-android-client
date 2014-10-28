@@ -1,30 +1,42 @@
 package org.openmrs.client.application;
 
-import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.os.Environment;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
+import org.odk.collect.android.application.Collect;
 import org.openmrs.client.databases.OpenMRSDBOpenHelper;
 import org.openmrs.client.security.SecretKeyGenerator;
 import org.openmrs.client.utilities.ApplicationConstants;
 
-public class OpenMRS extends Application {
+import java.io.File;
+
+public class OpenMRS extends Collect {
+
+    public static final String OPENMRS_DIR_NAME = "OpenMRS";
+    public static final String OPENMRS_DIR_PATH = File.separator + OPENMRS_DIR_NAME;
+    private static final String ODK_DIR_PATH = File.separator + "odk";
+    private static final String FORMS_DIR_PATH = File.separator + "forms";
+    private static final String INSTANCES_DIR_PATH = File.separator + "instances";
+    private static final String METADATA_DIR_PATH = File.separator + "metadata";
+    private static final String CACHE_DIR_PATH = File.separator + ".cache";
 
     private static OpenMRS instance;
     private OpenMRSLogger mLogger;
+    private String mExternalDirectoryPath;
 
     @Override
     public void onCreate() {
         initializeSQLCipher();
         super.onCreate();
         instance = this;
+        mExternalDirectoryPath = this.getExternalFilesDir(null).toString();
+        overrideODKDirs();
+        OpenMRS.createODKDirs();
         mLogger = new OpenMRSLogger();
         generateKey();
         OpenMRSDBOpenHelper.init();
-
     }
 
     public static OpenMRS getInstance() {
@@ -111,7 +123,7 @@ public class OpenMRS extends Application {
     }
 
     public String getOpenMRSDir() {
-        return Environment.getExternalStorageDirectory() + "/OpenMRS/";
+        return mExternalDirectoryPath + OPENMRS_DIR_PATH;
     }
 
     public boolean isRunningHoneycombVersionOrHigher() {
@@ -137,4 +149,19 @@ public class OpenMRS extends Application {
         editor.remove(ApplicationConstants.AUTHORIZATION_TOKEN);
         editor.commit();
     }
+
+    /**
+     * Overriding ODK directories path for :
+     * - forms
+     * - instances
+     * - metadata
+     */
+    public void overrideODKDirs() {
+        ODK_ROOT =  mExternalDirectoryPath + OPENMRS_DIR_PATH + ODK_DIR_PATH;
+        FORMS_PATH = ODK_ROOT + FORMS_DIR_PATH;
+        INSTANCES_PATH = ODK_ROOT + INSTANCES_DIR_PATH;
+        METADATA_PATH = ODK_ROOT + METADATA_DIR_PATH;
+        CACHE_PATH = ODK_ROOT + CACHE_DIR_PATH;
+    }
+
 }

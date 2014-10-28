@@ -15,15 +15,6 @@ import org.openmrs.client.utilities.StringUtils;
 public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
     protected OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
 
-    protected static final String COMMA = ",";
-
-    protected static final String TEXT_TYPE = " text";
-    protected static final String TEXT_TYPE_WITH_COMMA = TEXT_TYPE + COMMA;
-    protected static final String TEXT_TYPE_NOT_NULL = " text not null,";
-    protected static final String DATE_TYPE = " date";
-    protected static final String DATE_TYPE_WITH_COMMA = DATE_TYPE + COMMA;
-    protected static final String DATE_TYPE_NOT_NULL = " data not null,";
-
     public static final String DATABASE_NAME = "openmrs.db";
 
     private String mSecretKey;

@@ -42,7 +42,7 @@ public class OpenMRSLogger {
         mFolder = new File(mOpenMRS.getOpenMRSDir());
         try {
             if (isFolderExist()) {
-                mLogFile = new File(mOpenMRS.getOpenMRSDir() + LOG_FILENAME);
+                mLogFile = new File(mOpenMRS.getOpenMRSDir() + File.separator + LOG_FILENAME);
                 if (!mLogFile.createNewFile()) {
                     rotateLogFile();
                 }

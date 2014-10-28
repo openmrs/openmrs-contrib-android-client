@@ -18,12 +18,15 @@ tests/gen/*
 gen/*
 tests/out/*
 out/*
-support/appcompat/gen/*
-support/appcompat/bin/*
-support/appcompat/out/*
-support/gridlayout/gen/*
-support/gridlayout/bin/*
-support/gridlayout/out/*
+modules/support/appcompat/gen/*
+modules/support/appcompat/bin/*
+modules/support/appcompat/out/*
+modules/support/gridlayout/gen/*
+modules/support/gridlayout/bin/*
+modules/support/gridlayout/out/*
+modules/odk.collect/gen/*
+modules/odk.collect/bin/*
+modules/odk.collect/android/*
 
 #git patches
 *.patch

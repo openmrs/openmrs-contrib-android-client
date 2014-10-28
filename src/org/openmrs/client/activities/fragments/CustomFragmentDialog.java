@@ -85,7 +85,7 @@ public class CustomFragmentDialog extends DialogFragment {
         this.mFieldsLayout = (LinearLayout) dialogLayout.findViewById(R.id.dialogForm);
         this.setRightButton(dialogLayout);
         this.setLeftButton(dialogLayout);
-
+        getDialog().setCanceledOnTouchOutside(false);
         buildDialog();
         FontsUtil.setFont((ViewGroup) dialogLayout);
         return dialogLayout;

@@ -36,7 +36,6 @@ public class ActiveVisitsArrayAdapter extends ArrayAdapter<VisitItemDTO> {
         private TextView mPatientID;
         private TextView mPatientName;
         private TextView mVisitPlace;
-        private TextView mVisitType;
         private TextView mVisitStart;
     }
 
@@ -51,7 +50,6 @@ public class ActiveVisitsArrayAdapter extends ArrayAdapter<VisitItemDTO> {
             viewHolder.mPatientID = (TextView) rowView.findViewById(R.id.visitPatientID);
             viewHolder.mPatientName = (TextView) rowView.findViewById(R.id.visitPatientName);
             viewHolder.mVisitPlace = (TextView) rowView.findViewById(R.id.patientVisitPlace);
-            viewHolder.mVisitType = (TextView) rowView.findViewById(R.id.visitType);
             viewHolder.mVisitStart = (TextView) rowView.findViewById(R.id.patientVisitStartDate);
             rowView.setTag(viewHolder);
         }
@@ -60,7 +58,6 @@ public class ActiveVisitsArrayAdapter extends ArrayAdapter<VisitItemDTO> {
         final VisitItemDTO visit = mVisitList.get(position);
         holder.mPatientName.setText(visit.getPatientName());
         holder.mPatientID.setText("#" + String.valueOf(visit.getPatientIdentifier()));
-        holder.mVisitType.setText(visit.getVisitType());
         holder.mVisitPlace.setText("@ " + visit.getVisitPlace());
         holder.mPatientName.setText(visit.getPatientName());
         holder.mVisitStart.setText(DateUtils.convertTime(visit.getVisitStart()));

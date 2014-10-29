@@ -75,6 +75,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getSupportActionBar().setTitle(mPatient.getDisplay());
+        getSupportActionBar().setSubtitle("#" + mPatient.getIdentifier());
         return true;
     }
 

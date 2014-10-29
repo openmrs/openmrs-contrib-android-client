@@ -19,6 +19,7 @@ import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -29,6 +30,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -38,7 +40,11 @@ import org.openmrs.client.activities.fragments.FindPatientInDatabaseFragment;
 import org.openmrs.client.activities.fragments.FindPatientLastViewedFragment;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.utilities.FontsUtil;
+import org.openmrs.client.utilities.TabUtil;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,7 +62,6 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_patients);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         List<TabHost> tabHosts = new ArrayList<TabHost>(Arrays.asList(
                 new TabHost(TabHost.IN_DATABASE_TAB_POS, getString(R.string.find_patient_tab_in_database_label)),
                 new TabHost(TabHost.LAST_VIEWED_TAB_POS, getString(R.string.find_patient_tab_last_viewed_label))
@@ -72,6 +77,7 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
     private void initViewPager() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mFindPatientPagerAdapter);
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
@@ -85,6 +91,13 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
                     .setText(tabHost.getTabLabel())
                     .setTabListener(this));
         }
+        TabUtil.setHasEmbeddedTabs(actionBar, getWindowManager(), TabUtil.MIN_SCREEN_WIDTH_FOR_FINDPATIENTSACTIVITY);
+    }
+
+    @Override
+    public void onConfigurationChanged(final Configuration config) {
+        super.onConfigurationChanged(config);
+        TabUtil.setHasEmbeddedTabs(getSupportActionBar(), getWindowManager(), TabUtil.MIN_SCREEN_WIDTH_FOR_FINDPATIENTSACTIVITY);
     }
 
     @Override

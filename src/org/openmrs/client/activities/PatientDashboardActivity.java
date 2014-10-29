@@ -15,6 +15,7 @@
 package org.openmrs.client.activities;
 
 import android.app.ProgressDialog;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -35,6 +36,7 @@ import org.openmrs.client.models.Patient;
 import org.openmrs.client.net.FindPatientsManager;
 import org.openmrs.client.net.FindVisitsManager;
 import org.openmrs.client.utilities.ApplicationConstants;
+import org.openmrs.client.utilities.TabUtil;
 import org.openmrs.client.utilities.ToastUtil;
 
 import java.util.ArrayList;
@@ -83,6 +85,13 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
                     .setText(tabHost.getTabLabel())
                     .setTabListener(this));
         }
+        TabUtil.setHasEmbeddedTabs(actionBar, getWindowManager(), TabUtil.MIN_SCREEN_WIDTH_FOR_PATIENTDASHBOARDACTIVITY);
+    }
+
+    @Override
+    public void onConfigurationChanged(final Configuration config) {
+        super.onConfigurationChanged(config);
+        TabUtil.setHasEmbeddedTabs(getSupportActionBar(), getWindowManager(), TabUtil.MIN_SCREEN_WIDTH_FOR_PATIENTDASHBOARDACTIVITY);
     }
 
     @Override

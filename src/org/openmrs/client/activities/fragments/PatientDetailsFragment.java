@@ -39,9 +39,12 @@ public class PatientDetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragmentLayout = inflater.inflate(R.layout.fragment_patient_details, null, false);
-        ((TextView) fragmentLayout.findViewById(R.id.patientDetailsDisplayName)).setText(mPatient.getDisplay());
-        ((TextView) fragmentLayout.findViewById(R.id.patientDetailsIdentifier)).setText("#" + mPatient.getIdentifier());
-        ((TextView) fragmentLayout.findViewById(R.id.patientDetailsGender)).setText(mPatient.getGender());
+
+        if (("M").equals(mPatient.getGender())) {
+            ((TextView) fragmentLayout.findViewById(R.id.patientDetailsGender)).setText("Male");
+        } else {
+            ((TextView) fragmentLayout.findViewById(R.id.patientDetailsGender)).setText("Female");
+        }
         ((TextView) fragmentLayout.findViewById(R.id.patientDetailsBirthDate)).setText(DateUtils.convertTime(mPatient.getBirthDate()));
         if (null != mPatient.getAddress()) {
             showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.addressLayout), R.id.addressDetailsStreet, mPatient.getAddress().toString());

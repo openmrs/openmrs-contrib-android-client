@@ -1,240 +1,248 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-    >
-    <RelativeLayout
-        android:id="@+id/patientDetailsLayout"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-        <TextView style="@style/TextLabel.Bold"
-                  android:id="@+id/patientDetailsDisplayName"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:singleLine="false"
-                  />
-
-        <TextView style="@style/TextLabel.Bold"
-                  android:id="@+id/patientDetailsIdentifier"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:gravity="right"
-                  android:layout_alignParentRight="true"
-            />
-
-        <RelativeLayout
-            android:id="@+id/patientDetailsGenderLayout"
-            android:layout_below="@id/patientDetailsDisplayName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-            <TextView android:id="@+id/patientDetailsGenderLabel"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/patient_details_gender_label"
-                      android:layout_marginTop="15dp"
-                      android:textSize="16sp"
-                      android:textStyle="bold"
-                />
-
-            <TextView android:id="@+id/patientDetailsGender"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:textSize="16sp"
-                      android:textStyle="bold"
-                      android:layout_centerInParent="true"
-                      android:layout_below="@id/patientDetailsGenderLabel"
-                />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/patientDetailsBirthDateLayout"
-            android:layout_below="@id/patientDetailsDisplayName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/patientDetailsGenderLayout"
-            android:layout_toEndOf="@id/patientDetailsGenderLayout"
-            android:layout_marginLeft="50dp"
-            >
-            <TextView android:id="@+id/patientDetailsBirthDateLabel"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_marginTop="15dp"
-                      android:text="@string/patient_details_birth_date_label"
-                      android:textSize="16sp"
-                      android:textStyle="bold"
-                />
-
-            <TextView android:id="@+id/patientDetailsBirthDate"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_below="@+id/patientDetailsBirthDateLabel"
-                      android:textSize="16sp"
-                      android:textStyle="bold"
-                />
-
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <View style="@style/Divider.Vertical"/>
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <ScrollView
         android:id="@+id/patientAddressDetailsLayout"
-        android:paddingRight="20dp"
-        android:paddingLeft="20dp"
-        android:paddingTop="20dp"
-        android:layout_marginBottom="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:layout_marginBottom="5dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-            <TextView style="@style/TextLabel.Bold"
-                      android:id="@+id/patientDetailsAddressLayoutLabel"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/patient_address_info_label"
-                />
+            android:orientation="vertical">
 
-            <View android:layout_width="match_parent" style="@style/Divider.Vertical.NoStickyEdges"/>
+            <TextView
+                android:id="@+id/patientDetailInformationLabel"
+                style="@style/TextLabel.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/patient_information_label" />
 
-            <RelativeLayout android:id="@+id/wrapperLayout"
-                            android:layout_width="match_parent"
+            <View
+                style="@style/Divider.Vertical.NoStickyEdges"
+                android:layout_width="match_parent" />
+
+            <RelativeLayout
+
+                android:id="@+id/wrapperInformationLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/patientDetailInformationLabel"
+                android:layout_marginLeft="7dp"
+                android:paddingBottom="7dp"
+                android:paddingTop="7dp">
+
+
+                <LinearLayout
+                    android:id="@+id/informationWrapperLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/patientDetailsGenderLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:id="@+id/patientDetailsGenderLabel"
+                            style="@style/AddressFieldsLabel"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/patientDetailsAddressLayoutLabel"
-                            android:paddingTop="7dp"
-                            android:paddingBottom="7dp"
-                            android:layout_marginLeft="7dp"
-                >
+                            android:text="@string/patient_details_gender_label" />
 
-                <LinearLayout android:id="@+id/addressWrapperLayout"
-                              android:layout_width="match_parent"
-                              android:layout_height="wrap_content"
-                              android:orientation="vertical"
-                    >
+                        <TextView
+                            android:id="@+id/patientDetailsGender"
+                            style="@style/AddressFields"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="7dp" />
 
-                    <LinearLayout android:id="@+id/addressLayout"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:orientation="vertical"
-                        >
-                        <TextView style="@style/AddressFieldsLabel"
-                                  android:id="@+id/patientDetailsAddressLabel"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:text="@string/patient_address_label"
-                            />
-                        <TextView style="@style/AddressFields"
-                                  android:id="@+id/addressDetailsStreet"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                            />
                     </LinearLayout>
 
-                    <LinearLayout android:id="@+id/cityLayout"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:orientation="vertical"
-                        >
-                        <TextView style="@style/AddressFieldsLabel"
-                                  android:id="@+id/addressDetailsCityLabel"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:text="@string/patient_city_label"
-                            />
-                        <TextView style="@style/AddressFields"
-                                  android:id="@+id/addressDetailsCity"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                            />
-                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/patientDetailsBirthDateLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
-                    <LinearLayout android:id="@+id/postalCodeLayout"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:orientation="vertical"
-                        >
-                        <TextView style="@style/AddressFieldsLabel"
-                                  android:id="@+id/addressDetailsPostalCodeLabel"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:text="@string/patient_postal_label"
-                            />
-                        <TextView style="@style/AddressFields"
-                                  android:id="@+id/addressDetailsPostalCode"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                            />
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/patientDetailsBirthDateLabel"
+                            style="@style/AddressFieldsLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/patient_details_birth_date_label" />
 
-                    <LinearLayout android:id="@+id/stateLayout"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:orientation="vertical"
-                        >
-                        <TextView style="@style/AddressFieldsLabel"
-                                  android:id="@+id/addressDetailsStateLabel"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:text="@string/patient_state_label"
-                            />
-                        <TextView style="@style/AddressFields"
-                                  android:id="@+id/addressDetailsState"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                            />
-                    </LinearLayout>
+                        <TextView
+                            android:id="@+id/patientDetailsBirthDate"
+                            style="@style/AddressFields"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/patientDetailsBirthDateLabel"
+                            android:layout_marginLeft="7dp" />
 
-                    <LinearLayout android:id="@+id/countryLayout"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:orientation="vertical"
-                        >
-                        <TextView style="@style/AddressFieldsLabel"
-                                  android:id="@+id/addressDetailsCountryLabel"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                                  android:text="@string/patient_country_label"
-                            />
-                        <TextView style="@style/AddressFields"
-                                  android:id="@+id/addressDetailsCountry"
-                                  android:layout_width="wrap_content"
-                                  android:layout_height="wrap_content"
-                            />
                     </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout android:id="@+id/phoneNumberLayout"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:orientation="vertical"
-                              android:layout_below="@id/addressWrapperLayout"
-                    >
-                    <TextView style="@style/AddressFieldsLabel"
-                              android:id="@+id/patientDetailsPhoneLabel"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:text="@string/patient_details_phone_label"
-                        />
-                    <TextView style="@style/AddressFields"
-                              android:id="@+id/patientDetailsPhone"
-                              android:layout_width="wrap_content"
-                              android:layout_height="wrap_content"
-                              android:layout_marginLeft="7dp"
-                        />
                 </LinearLayout>
             </RelativeLayout>
 
-            <View android:layout_width="match_parent" style="@style/Divider.Vertical.NoStickyEdges"/>
+            <TextView
+                android:id="@+id/patientDetailsAddressLayoutLabel"
+                style="@style/TextLabel.Bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/patient_address_info_label" />
+
+            <View
+                style="@style/Divider.Vertical.NoStickyEdges"
+                android:layout_width="match_parent" />
+
+            <RelativeLayout
+                android:id="@+id/wrapperLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/patientDetailsAddressLayoutLabel"
+                android:layout_marginLeft="7dp"
+                android:paddingBottom="7dp"
+                android:paddingTop="7dp">
+
+                <LinearLayout
+                    android:id="@+id/addressWrapperLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/addressLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/patientDetailsAddressLabel"
+                            style="@style/AddressFieldsLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/patient_address_label" />
+
+                        <TextView
+                            android:id="@+id/addressDetailsStreet"
+                            style="@style/AddressFields"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/cityLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/addressDetailsCityLabel"
+                            style="@style/AddressFieldsLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/patient_city_label" />
+
+                        <TextView
+                            android:id="@+id/addressDetailsCity"
+                            style="@style/AddressFields"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/postalCodeLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/addressDetailsPostalCodeLabel"
+                            style="@style/AddressFieldsLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/patient_postal_label" />
+
+                        <TextView
+                            android:id="@+id/addressDetailsPostalCode"
+                            style="@style/AddressFields"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/stateLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/addressDetailsStateLabel"
+                            style="@style/AddressFieldsLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/patient_state_label" />
+
+                        <TextView
+                            android:id="@+id/addressDetailsState"
+                            style="@style/AddressFields"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/countryLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/addressDetailsCountryLabel"
+                            style="@style/AddressFieldsLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/patient_country_label" />
+
+                        <TextView
+                            android:id="@+id/addressDetailsCountry"
+                            style="@style/AddressFields"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/phoneNumberLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/patientDetailsPhoneLabel"
+                            style="@style/AddressFieldsLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/patient_details_phone_label" />
+
+                        <TextView
+                            android:id="@+id/patientDetailsPhone"
+                            style="@style/AddressFields"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="7dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

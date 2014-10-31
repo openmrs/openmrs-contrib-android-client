@@ -81,6 +81,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.patients_menu, menu);
         getSupportActionBar().setTitle(mPatient.getDisplay());
+        getSupportActionBar().setSubtitle("#" + mPatient.getIdentifier());
         return true;
     }
 

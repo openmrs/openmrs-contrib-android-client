@@ -1,5 +1,18 @@
-package org.openmrs.client.utilities;
+/*
+ * The contents of this file are subject to the OpenMRS Public License
+ * Version 1.0 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://license.openmrs.org
+ *
+ * Software distributed under the License is distributed on an "AS IS"
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+ * License for the specific language governing rights and limitations
+ * under the License.
+ *
+ * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+ */
 
+package org.openmrs.client.utilities;
 
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
@@ -30,13 +43,12 @@ public final class TabUtil {
         Class<?> actionBarClass = inActionBar.getClass();
 
         // if it is a Jelly Bean implementation (ActionBarImplJB), get the super class (ActionBarImplICS)
-        if ("android.support.v7.app.ActionBarImplJB".equals(actionBarClass.getName())) {
-            actionBarClass = actionBarClass.getSuperclass();
-        }
-
-        // if Android 4.3 >
-        if ("android.support.v7.app.ActionBarImplJBMR2".equals(actionBarClass.getName())) {
-            actionBarClass = actionBarClass.getSuperclass().getSuperclass();
+        if (OpenMRS.getInstance().isRunningJellyBeanVersionOrHigher()) {
+            if (OpenMRS.getInstance().isRunningKitKatVersionOrHigher()) {
+                actionBarClass = actionBarClass.getSuperclass().getSuperclass();
+            } else {
+                actionBarClass = actionBarClass.getSuperclass();
+            }
         }
 
         Object inActionBar2 = null;

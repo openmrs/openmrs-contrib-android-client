@@ -81,6 +81,7 @@ public class PatientVisitsArrayAdapter extends ArrayAdapter<Visit> {
                             holder.mVisitStatusIcon.getLayoutParams().width, holder.mVisitStatusIcon.getLayoutParams().height));
             holder.mVisitStatus.setText(mContext.getString(R.string.past_visit_label));
         } else {
+            holder.mVisitEnd.setVisibility(View.GONE);
             holder.mVisitStatusIcon.setImageBitmap(
                     ImageUtils.decodeBitmapFromResource(mContext.getResources(), R.drawable.active_visit_dot,
                             holder.mVisitStatusIcon.getLayoutParams().width, holder.mVisitStatusIcon.getLayoutParams().height));

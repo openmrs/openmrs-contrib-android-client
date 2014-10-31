@@ -144,6 +144,14 @@ public class OpenMRS extends Collect {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
     }
 
+    public boolean isRunningJellyBeanVersionOrHigher() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
+    }
+
+    public boolean isRunningKitKatVersionOrHigher() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+    }
+
     private void initializeSQLCipher() {
         SQLiteDatabase.loadLibs(this);
     }

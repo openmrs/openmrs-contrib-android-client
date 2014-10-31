@@ -47,7 +47,7 @@ public class FindPatientInDatabaseFragment extends Fragment {
 
     public void updatePatientsInDatabaseList() {
         List<Patient> mPatientList = new PatientDAO().getAllPatients();
-        visitList.setAdapter(new PatientArrayAdapter(getActivity(), R.layout.find_local_patients_row, mPatientList));
+        visitList.setAdapter(new PatientArrayAdapter(getActivity(), R.layout.find_patients_row, mPatientList));
     }
 }
 

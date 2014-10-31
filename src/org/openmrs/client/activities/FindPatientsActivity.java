@@ -30,7 +30,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -42,9 +41,6 @@ import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.utilities.FontsUtil;
 import org.openmrs.client.utilities.TabUtil;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

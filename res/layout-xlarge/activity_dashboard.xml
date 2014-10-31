@@ -1,17 +1,3 @@
-<!--
-  ~ The contents of this file are subject to the OpenMRS Public License
-  ~ Version 1.0 (the "License"); you may not use this file except in
-  ~ compliance with the License. You may obtain a copy of the License at
-  ~ http://license.openmrs.org
-  ~
-  ~ Software distributed under the License is distributed on an "AS IS"
-  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
-  ~ License for the specific language governing rights and limitations
-  ~ under the License.
-  ~
-  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
-  -->
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,7 +6,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="org.openmrs.client.activities.DashboardActivity">
+    tools:context="org.openmrs.client.activities.DashboardActivity"
+    android:gravity="center_vertical">
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -37,7 +24,9 @@
         <TableLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:stretchColumns="1">
+            android:stretchColumns="1"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
 
             <TableRow>
 
@@ -55,8 +44,8 @@
                         <ImageView
                             android:id="@+id/findPatientButton"
                             android:layout_centerInParent="true"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
+                            android:layout_width="330dp"
+                            android:layout_height="330dp"
                             android:layout_alignParentTop="true"
                             android:clickable="true"
                             android:contentDescription="@string/dashboard_search_icon_label"
@@ -73,7 +62,7 @@
                             android:onClick="onFindPatientCallback"
                             android:paddingTop="10dp"
                             android:text="@string/dashboard_search_icon_label"
-                            android:textSize="22sp"/>
+                            android:textSize="46sp"/>
                 </RelativeLayout>
                 </FrameLayout>
                 <FrameLayout
@@ -89,8 +78,8 @@
                         <ImageView
                             android:id="@+id/activeVisitsButton"
                             android:layout_centerInParent="true"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
+                            android:layout_width="330dp"
+                            android:layout_height="330dp"
                             android:layout_alignParentTop="true"
                             android:contentDescription="@string/dashboard_visits_icon_label"
                             android:onClick="onActiveVisitsCallback"
@@ -107,7 +96,7 @@
                             android:paddingTop="10dp"
                             android:text="@string/dashboard_visits_icon_label"
                             android:onClick="onActiveVisitsCallback"
-                            android:textSize="22sp"/>
+                            android:textSize="46sp"/>
                     </RelativeLayout>
                 </FrameLayout>
             </TableRow>
@@ -116,7 +105,8 @@
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:layout_marginTop="20dp">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -126,8 +116,8 @@
                         <ImageView
                             android:id="@+id/registryPatientButton"
                             android:layout_centerInParent="true"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
+                            android:layout_width="330dp"
+                            android:layout_height="330dp"
                             android:layout_alignParentTop="true"
                             android:contentDescription="@string/dashboard_registry_icon_label"
                             android:visibility="invisible"
@@ -144,7 +134,7 @@
                             android:paddingTop="10dp"
                             android:text="@string/dashboard_registry_icon_label"
                             android:visibility="invisible"
-                            android:textSize="22sp"/>
+                            android:textSize="46sp"/>
                     </RelativeLayout>
                 </FrameLayout>
             </TableRow>

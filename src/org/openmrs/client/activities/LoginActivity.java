@@ -21,12 +21,14 @@ import android.util.SparseArray;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -61,12 +63,14 @@ public class LoginActivity extends ACBaseActivity {
     private static List<Location> mLocationsList;
     private TextView urlTextView;
     private ImageView urlEdit;
+    private RelativeLayout mUrlField;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_view_layout);
-
+        mUrlField = (RelativeLayout) findViewById(R.id.urlField);
         mUsername = (EditText) findViewById(R.id.loginUsernameField);
         mUsername.setText(OpenMRS.getInstance().getUsername());
         mPassword = (EditText) findViewById(R.id.loginPasswordField);
@@ -96,6 +100,8 @@ public class LoginActivity extends ACBaseActivity {
             hideURLDialog();
         }
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
+
+
     }
 
     @Override
@@ -133,6 +139,8 @@ public class LoginActivity extends ACBaseActivity {
     }
 
     public void showURLDialog() {
+        urlEdit.setVisibility(View.INVISIBLE);
+        mUrlField.setVisibility(View.INVISIBLE);
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.login_dialog_title));
         if (mLastURL.equals(ApplicationConstants.EMPTY_STRING)) {
@@ -194,6 +202,7 @@ public class LoginActivity extends ACBaseActivity {
         mLastURL = ApplicationConstants.EMPTY_STRING;
         OpenMRS.getInstance().setServerUrl(serverURL);
         urlTextView.setText(OpenMRS.getInstance().getServerUrl());
+        mUrlField.setVisibility(View.VISIBLE);
         urlEdit.setVisibility(View.VISIBLE);
         mLocationsList = locationsList;
         List<String> items = getLocationStringList(locationsList);
@@ -219,6 +228,20 @@ public class LoginActivity extends ACBaseActivity {
         mLoginButton.setEnabled(false);
         mSpinner.setVisibility(View.GONE);
         mLoginFormView.setVisibility(View.VISIBLE);
+        final View activityRootView = findViewById(android.R.id.content);
+        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
+                if (heightDiff > 100) {
+                    View urlView = findViewById(R.id.urlField);
+                    urlView.setVisibility(View.GONE);
+                } else {
+                    View urlView = findViewById(R.id.urlField);
+                    urlView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
 
     private List<String> getLocationStringList(List<Location> locationList) {

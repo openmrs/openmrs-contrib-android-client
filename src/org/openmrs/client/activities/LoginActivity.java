@@ -21,7 +21,6 @@ import android.util.SparseArray;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -228,20 +227,6 @@ public class LoginActivity extends ACBaseActivity {
         mLoginButton.setEnabled(false);
         mSpinner.setVisibility(View.GONE);
         mLoginFormView.setVisibility(View.VISIBLE);
-        final View activityRootView = findViewById(android.R.id.content);
-        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
-                if (heightDiff > 100) {
-                    View urlView = findViewById(R.id.urlField);
-                    urlView.setVisibility(View.GONE);
-                } else {
-                    View urlView = findViewById(R.id.urlField);
-                    urlView.setVisibility(View.VISIBLE);
-                }
-            }
-        });
     }
 
     private List<String> getLocationStringList(List<Location> locationList) {

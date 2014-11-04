@@ -249,7 +249,7 @@ public class LoginActivity extends ACBaseActivity {
             mSpinner.setVisibility(View.VISIBLE);
             mLoginFormView.setVisibility(View.GONE);
             LocationManager lm = new LocationManager(this);
-            lm.getAvailableLocation(url);
+            lm.getAvailableLocation(result.getUrl());
         } else {
             showInvalidURLDialog();
         }

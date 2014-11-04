@@ -59,8 +59,9 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
         setContentView(R.layout.activity_find_patients);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         List<TabHost> tabHosts = new ArrayList<TabHost>(Arrays.asList(
-                new TabHost(TabHost.IN_DATABASE_TAB_POS, getString(R.string.find_patient_tab_in_database_label)),
-                new TabHost(TabHost.LAST_VIEWED_TAB_POS, getString(R.string.find_patient_tab_last_viewed_label))
+                new TabHost(TabHost.LAST_VIEWED_TAB_POS, getString(R.string.find_patient_tab_last_viewed_label)),
+                new TabHost(TabHost.DOWNLOADED_TAB_POS, getString(R.string.find_patient_tab_downloaded_label))
+
         ));
 
 
@@ -133,7 +134,7 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
 
         FindPatientInDatabaseFragment databaseFragment =
                 (FindPatientInDatabaseFragment) this.getSupportFragmentManager().
-                        getFragments().get(TabHost.IN_DATABASE_TAB_POS);
+                        getFragments().get(TabHost.DOWNLOADED_TAB_POS);
 
         databaseFragment.updatePatientsInDatabaseList();
     }
@@ -190,7 +191,7 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
         @Override
         public Fragment getItem(int i) {
             switch (i) {
-                case TabHost.IN_DATABASE_TAB_POS:
+                case TabHost.DOWNLOADED_TAB_POS:
                     return new FindPatientInDatabaseFragment();
                 case TabHost.LAST_VIEWED_TAB_POS:
                     return new FindPatientLastViewedFragment();
@@ -207,8 +208,8 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
     }
 
     public final class TabHost {
-        public static final int IN_DATABASE_TAB_POS = 0;
-        public static final int LAST_VIEWED_TAB_POS = 1;
+        public static final int LAST_VIEWED_TAB_POS = 0;
+        public static final int DOWNLOADED_TAB_POS = 1;
 
         private Integer mTabPosition;
         private String mTabLabel;

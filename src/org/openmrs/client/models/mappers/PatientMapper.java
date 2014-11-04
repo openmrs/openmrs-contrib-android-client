@@ -41,11 +41,29 @@ public final class PatientMapper {
             patient.setDisplay(namesJSON.getString("display"));
             patient.setMiddleName(namesJSON.getString("middleName"));
             patient.setFamilyName(namesJSON.getString("familyName"));
-            patient.setAddress(AddressMapper.parseAddress(personJSON.getJSONObject("preferredAddress")));
-            patient.setPhoneNumber(personJSON.getJSONArray("attributes").getJSONObject(0).getString("value"));
+            validateAddress(patient, personJSON);
+            validatePhoneNumber(patient, personJSON);
         } catch (JSONException e) {
             OpenMRS.getInstance().getOpenMRSLogger().d("Failed to parse Patient json : " + e.toString());
         }
         return patient;
     }
+
+    private static void validateAddress(Patient patient, JSONObject personJSON) {
+        try {
+            patient.setAddress(AddressMapper.parseAddress(personJSON.getJSONObject("preferredAddress")));
+        } catch (JSONException e) {
+            patient.setAddress(null);
+        }
+    }
+
+    private static void validatePhoneNumber(Patient patient, JSONObject personJSON) {
+        try {
+            patient.setPhoneNumber(personJSON.getJSONArray("attributes").getJSONObject(0).getString("value"));
+        } catch (JSONException e) {
+            patient.setPhoneNumber(null);
+        }
+    }
+
+
 }

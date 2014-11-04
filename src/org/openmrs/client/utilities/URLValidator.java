@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 public final class URLValidator {
     private static final String URL_PATTERN = "^(https?:\\/\\/){1}([\\da-z\\.-]*)\\.([a-z\\.]*)([\\w \\.-]*)*(:([0-9]{2,5}))?(((\\/(\\w*(\\-\\w+)?)))*?)\\/*$";
     private static final String SLASH = "/";
+    private static final String SPACE = " ";
 
     private URLValidator() {
     }
@@ -27,8 +28,8 @@ public final class URLValidator {
     public static ValidationResult validate(String url) {
         ValidationResult result;
         Pattern urlPattern = Pattern.compile(URL_PATTERN);
-        Matcher matcher = urlPattern.matcher(url);
-        String validURL = url;
+        Matcher matcher = urlPattern.matcher(trimLastSpace(url));
+        String validURL = trimLastSpace(url);
         if (matcher.matches()) {
             validURL = trimLastSlash(validURL);
             result = new ValidationResult(true, validURL);
@@ -36,6 +37,14 @@ public final class URLValidator {
             result = new ValidationResult(false, validURL);
         }
         return result;
+    }
+
+    public static String trimLastSpace(String url) {
+        String trimmedUrl = url;
+        while (trimmedUrl.endsWith(SPACE)) {
+            trimmedUrl = trimmedUrl.substring(0, trimmedUrl.lastIndexOf(SPACE));
+        }
+        return trimmedUrl;
     }
 
     public static String trimLastSlash(String url) {

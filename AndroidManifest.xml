@@ -15,8 +15,8 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="org.openmrs.client"
-          android:versionCode="1"
-          android:versionName="Beta 2.0.0-SNAPSHOT">
+          android:versionCode="2"
+          android:versionName="Beta 2.1.0-SNAPSHOT">
     <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="19"/>
 
     <uses-permission android:name="android.permission.INTERNET" />

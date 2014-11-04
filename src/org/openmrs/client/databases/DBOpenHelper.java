@@ -100,12 +100,14 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindLong(9, patient.getDeathDate(), patientStatement);
             bindString(10, patient.getCauseOfDeath(), patientStatement);
             bindString(11, patient.getAge(), patientStatement);
-            bindString(12, patient.getAddress().getAddress1(), patientStatement);
-            bindString(13, patient.getAddress().getAddress2(), patientStatement);
-            bindString(14, patient.getAddress().getPostalCode(), patientStatement);
-            bindString(15, patient.getAddress().getCountry(), patientStatement);
-            bindString(16, patient.getAddress().getState(), patientStatement);
-            bindString(17, patient.getAddress().getCityVillage(), patientStatement);
+            if (null != patient.getAddress()) {
+                bindString(12, patient.getAddress().getAddress1(), patientStatement);
+                bindString(13, patient.getAddress().getAddress2(), patientStatement);
+                bindString(14, patient.getAddress().getPostalCode(), patientStatement);
+                bindString(15, patient.getAddress().getCountry(), patientStatement);
+                bindString(16, patient.getAddress().getState(), patientStatement);
+                bindString(17, patient.getAddress().getCityVillage(), patientStatement);
+            }
             bindString(18, patient.getPhoneNumber(), patientStatement);
             patientId = patientStatement.executeInsert();
             patientStatement.clearBindings();

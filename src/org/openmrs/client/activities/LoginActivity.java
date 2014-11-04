@@ -60,10 +60,8 @@ public class LoginActivity extends ACBaseActivity {
     private static boolean mErrorOccurred;
     private static String mLastURL = "";
     private static List<Location> mLocationsList;
-    private TextView urlTextView;
-    private ImageView urlEdit;
+    private TextView mUrlTextView;
     private RelativeLayout mUrlField;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,13 +87,12 @@ public class LoginActivity extends ACBaseActivity {
         mSpinner = (ProgressBar) findViewById(R.id.loginLoading);
         mLoginFormView = (LinearLayout) findViewById(R.id.loginFormView);
         mDropdownLocation = (Spinner) findViewById(R.id.locationSpinner);
-        urlTextView = (TextView) findViewById(R.id.urlText);
-        urlEdit = (ImageView) findViewById(R.id.urlEdit);
+        mUrlTextView = (TextView) findViewById(R.id.urlText);
         if (mErrorOccurred || OpenMRS.getInstance().getServerUrl().equals(ApplicationConstants.EMPTY_STRING)) {
             showURLDialog();
         } else {
-            urlTextView.setText(OpenMRS.getInstance().getServerUrl());
-            urlEdit.setVisibility(View.VISIBLE);
+            mUrlTextView.setText(OpenMRS.getInstance().getServerUrl());
+            mUrlField.setVisibility(View.VISIBLE);
             hideURLDialog();
         }
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
@@ -138,7 +135,6 @@ public class LoginActivity extends ACBaseActivity {
     }
 
     public void showURLDialog() {
-        urlEdit.setVisibility(View.INVISIBLE);
         mUrlField.setVisibility(View.INVISIBLE);
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.login_dialog_title));
@@ -175,6 +171,7 @@ public class LoginActivity extends ACBaseActivity {
         mBitmapCache = new SparseArray<Bitmap>();
         ImageView openMrsLogoImage = (ImageView) findViewById(R.id.openmrsLogo);
         createImageBitmap(R.drawable.openmrs_logo, openMrsLogoImage.getLayoutParams());
+        ImageView urlEdit = (ImageView) findViewById(R.id.urlEdit);
         createImageBitmap(R.drawable.ico_edit, urlEdit.getLayoutParams());
         openMrsLogoImage.setImageBitmap(mBitmapCache.get(R.drawable.openmrs_logo));
         urlEdit.setImageBitmap(mBitmapCache.get(R.drawable.ico_edit));
@@ -200,9 +197,8 @@ public class LoginActivity extends ACBaseActivity {
         mErrorOccurred = false;
         mLastURL = ApplicationConstants.EMPTY_STRING;
         OpenMRS.getInstance().setServerUrl(serverURL);
-        urlTextView.setText(OpenMRS.getInstance().getServerUrl());
+        mUrlTextView.setText(OpenMRS.getInstance().getServerUrl());
         mUrlField.setVisibility(View.VISIBLE);
-        urlEdit.setVisibility(View.VISIBLE);
         mLocationsList = locationsList;
         List<String> items = getLocationStringList(locationsList);
         final LocationArrayAdapter adapter = new LocationArrayAdapter(this, items);

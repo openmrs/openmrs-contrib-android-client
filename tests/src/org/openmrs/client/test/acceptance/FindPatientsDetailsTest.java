@@ -52,21 +52,14 @@ public class FindPatientsDetailsTest extends ActivityInstrumentationTestCase2<Da
         solo.clickOnText("Find Patients");
         assertTrue(WaitHelper.waitForActivity(solo, FindPatientsActivity.class));
 
-        WaitHelper.waitForViewVisibilityChange(solo, solo.getView(R.id.patientListViewLoading), View.VISIBLE);
+        WaitHelper.waitForViewVisibilityChange(solo, solo.getView(R.id.patientListViewLoading),
+                View.VISIBLE, WaitHelper.TIMEOUT_SIXTY_SECOND);
     }
 
     public void testPatientNotExist() throws Exception {
         SearchHelper.doSearch(solo, PATIENT_NO_EXIST, "Patient name");
         assertTrue(WaitHelper.waitForActivity(solo, FindPatientsSearchActivity.class));
         assertTrue(WaitHelper.waitForText(solo, "No results found for query \"" +  PATIENT_NO_EXIST + "\""));
-
-        solo.goBackToActivity("FindPatientsActivity");
-        assertTrue(WaitHelper.waitForActivity(solo, FindPatientsActivity.class));
-
-        WaitHelper.waitForViewVisibilityChange(solo, solo.getView(R.id.patientListViewLoading), View.VISIBLE);
-
-        solo.goBackToActivity("DashboardActivity");
-        assertTrue(WaitHelper.waitForActivity(solo, DashboardActivity.class));
     }
 
     public void testSearchPatient() throws Exception {
@@ -75,14 +68,6 @@ public class FindPatientsDetailsTest extends ActivityInstrumentationTestCase2<Da
         assertTrue(WaitHelper.waitForActivity(solo, FindPatientsSearchActivity.class));
 
         assertTrue(WaitHelper.waitForText(solo, PATIENT_EXIST));
-
-        solo.goBackToActivity("FindPatientsActivity");
-        assertTrue(WaitHelper.waitForActivity(solo, FindPatientsActivity.class));
-
-        WaitHelper.waitForViewVisibilityChange(solo, solo.getView(R.id.patientListViewLoading), View.VISIBLE);
-
-        solo.goBackToActivity("DashboardActivity");
-        assertTrue(WaitHelper.waitForActivity(solo, DashboardActivity.class));
     }
 
     public void testSearchPatientAndSave() throws Exception {
@@ -103,7 +88,8 @@ public class FindPatientsDetailsTest extends ActivityInstrumentationTestCase2<Da
         solo.goBackToActivity("FindPatientsActivity");
         assertTrue(WaitHelper.waitForActivity(solo, FindPatientsActivity.class));
 
-        WaitHelper.waitForViewVisibilityChange(solo, solo.getView(R.id.patientListViewLoading), View.VISIBLE);
+        WaitHelper.waitForViewVisibilityChange(solo, solo.getView(R.id.patientListViewLoading),
+                View.VISIBLE, WaitHelper.TIMEOUT_SIXTY_SECOND);
 
         assertTrue(WaitHelper.waitForText(solo, "Downloaded"));
         solo.clickOnText("Downloaded");

@@ -9,6 +9,7 @@ public final class WaitHelper {
     public static final int TIMEOUT_ONE_SECOND = 1000;
     public static final int TIMEOUT_TWO_SECOND = 2 * TIMEOUT_ONE_SECOND;
     public static final long TIMEOUT_TWENTY_SECOND = 20 * TIMEOUT_ONE_SECOND;
+    public static final long TIMEOUT_SIXTY_SECOND = 60 * TIMEOUT_ONE_SECOND;
 
     public static final String TAG = "OpenMRSTest";
     private static final String TIME = "Time: ";

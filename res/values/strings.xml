@@ -54,6 +54,10 @@
     <!-- Unauthorized dialog -->
     <string name="unauthorized_dialog_title">Unauthorized</string>
     <string name="unauthorized_dialog_message">Session expired. Please log in again.</string>
+    <!-- End Visit dialog -->
+    <string name="end_visit_dialog_title">End Visit</string>
+    <string name="end_visit_dialog_message">Are you sure you want to end this visit?</string>
+    <string name="end_visit_dialog_button">OK</string>
     <!-- Buttons -->
     <string name="dialog_button_done">Done</string>
     <string name="dialog_button_cancel">Cancel</string>
@@ -112,6 +116,7 @@
     <!-- fragment_patient_diagnosis layout -->
     <string name="diagnosis_none_label">Diagnoses are not available yet</string>
     <!-- Visit dashboard activity -->
+    <string name="action_end_visit">End Visit</string>
     <string name="visit_dashboard_label">Encounters</string>
     <string name="list_visit_selector_show">show details</string>
     <string name="list_visit_selector_hide">hide details</string>

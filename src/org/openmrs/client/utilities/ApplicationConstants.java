@@ -49,6 +49,7 @@ public abstract class ApplicationConstants {
         public static final String SERVER_UNAVAILABLE_DIALOG_TAG = "serverUnavailableDialog";
         public static final String INVALID_URL_DIALOG_TAG = "invalidURLDialog";
         public static final String LOGOUT_DIALOG_TAG = "logoutDialog";
+        public static final String END_VISIT_DIALOG_TAG = "endVisitDialogTag";
         public static final String UNAUTHORIZED_DIALOG_TAG = "unauthorizedDialog";
         public static final String SERVER_ERROR_DIALOG_TAG = "serverErrorDialog";
         public static final String SOCKET_EXCEPTION_DIALOG_TAG = "socketExceptionDialog";

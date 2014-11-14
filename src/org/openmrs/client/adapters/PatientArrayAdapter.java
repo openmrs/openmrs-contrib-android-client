@@ -31,7 +31,7 @@ import org.openmrs.client.activities.PatientDashboardActivity;
 import org.openmrs.client.activities.fragments.FindPatientInDatabaseFragment;
 import org.openmrs.client.dao.PatientDAO;
 import org.openmrs.client.models.Patient;
-import org.openmrs.client.net.FindVisitsManager;
+import org.openmrs.client.net.VisitsManager;
 import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.DateUtils;
 import org.openmrs.client.utilities.FontsUtil;
@@ -121,7 +121,7 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
                 public void onClick(View v) {
                     if (((CheckBox) v).isChecked()) {
                         long patientId = new PatientDAO().savePatient(patient);
-                        new FindVisitsManager(mContext).findActiveVisitsForPatientByUUID(patient.getUuid(), patientId);
+                        new VisitsManager(mContext).findActiveVisitsForPatientByUUID(patient.getUuid(), patientId);
                         ToastUtil.showShortToast(mContext,
                                             ToastUtil.ToastType.SUCCESS,
                                             R.string.find_patients_row_toast_patient_saved);

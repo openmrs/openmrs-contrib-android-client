@@ -34,7 +34,7 @@ import org.openmrs.client.activities.fragments.PatientVitalsFragment;
 import org.openmrs.client.dao.PatientDAO;
 import org.openmrs.client.models.Patient;
 import org.openmrs.client.net.FindPatientsManager;
-import org.openmrs.client.net.FindVisitsManager;
+import org.openmrs.client.net.VisitsManager;
 import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.TabUtil;
 import org.openmrs.client.utilities.ToastUtil;
@@ -145,7 +145,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
     public void updatePatientDetailsData(final Patient patient) {
         if (new PatientDAO().updatePatient(mPatient.getId(), patient)) {
-            final FindVisitsManager fvm = new FindVisitsManager(this);
+            final VisitsManager fvm = new VisitsManager(this);
             Thread thread = new Thread() {
                 @Override
                 public void run() {

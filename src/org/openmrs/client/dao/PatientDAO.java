@@ -77,6 +77,8 @@ public class PatientDAO {
         patient.setDeathDate(cursor.getLong(cursor.getColumnIndex(PatientTable.Column.DEATH_DATE)));
         patient.setCauseOfDeath(cursor.getString(cursor.getColumnIndex(PatientTable.Column.CAUSE_OF_DEATH)));
         patient.setAge(cursor.getString(cursor.getColumnIndex(PatientTable.Column.AGE)));
+        patient.setPhoneNumber(cursor.getString(cursor.getColumnIndex(PatientTable.Column.PHONE)));
+        patient.setAddress(cursorToAddress(cursor));
         return patient;
     }
 
@@ -114,27 +116,26 @@ public class PatientDAO {
         if (null != cursor) {
             try {
                 if (cursor.moveToFirst()) {
-                    int patientIdColumnIndex = cursor.getColumnIndex(PatientTable.Column.ID);
-                    int uuidColumnIndex = cursor.getColumnIndex(PatientTable.Column.UUID);
-                    int displayColumnIndex = cursor.getColumnIndex(PatientTable.Column.DISPLAY);
-                    int identifierColumnIndex = cursor.getColumnIndex(PatientTable.Column.IDENTIFIER);
-                    int givenNameColumnIndex = cursor.getColumnIndex(PatientTable.Column.GIVEN_NAME);
-                    int familyNameColumnIndex = cursor.getColumnIndex(PatientTable.Column.FAMILY_NAME);
-                    int genderColumnIndex = cursor.getColumnIndex(PatientTable.Column.GENDER);
-                    int ageColumnIndex = cursor.getColumnIndex(PatientTable.Column.AGE);
-                    int birthDateColumnIndex = cursor.getColumnIndex(PatientTable.Column.BIRTH_DATE);
-                    int phoneColumnIndex = cursor.getColumnIndex(PatientTable.Column.PHONE);
-                    patient.setId(cursor.getLong(patientIdColumnIndex));
-                    patient.setUuid(cursor.getString(uuidColumnIndex));
-                    patient.setDisplay(cursor.getString(displayColumnIndex));
-                    patient.setIdentifier(cursor.getString(identifierColumnIndex));
-                    patient.setGivenName(cursor.getString(givenNameColumnIndex));
-                    patient.setFamilyName(cursor.getString(familyNameColumnIndex));
-                    patient.setGender(cursor.getString(genderColumnIndex));
-                    patient.setAge(cursor.getString(ageColumnIndex));
-                    patient.setBirthDate(cursor.getLong(birthDateColumnIndex));
-                    patient.setAddress(cursorToAddress(cursor));
-                    patient.setPhoneNumber(cursor.getString(phoneColumnIndex));
+                    patient = cursorToPatient(cursor);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return patient;
+    }
+
+    public Patient findPatientByID(String id) {
+        Patient patient = new Patient();
+        String where = String.format("%s = ?", PatientTable.Column.ID);
+        String[] whereArgs = new String[]{id};
+
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        final Cursor cursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        if (null != cursor) {
+            try {
+                if (cursor.moveToFirst()) {
+                    patient = cursorToPatient(cursor);
                 }
             } finally {
                 cursor.close();

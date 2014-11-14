@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
   ~ compliance with the License. You may obtain a copy of the License at
@@ -120,4 +119,6 @@
     <string name="list_visit_selector_hide">hide details</string>
     <string name="list_item_encounter_no_notes">No notes for this encounter.</string>
     <string name="visit_exp_list_empty">Visit has no encounters yet.</string>
+    <!-- VisitManager -->
+    <string name="sending_request">Sending request to : </string>
 </resources>

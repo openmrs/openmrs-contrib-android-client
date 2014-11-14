@@ -23,10 +23,15 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import org.openmrs.client.R;
+import org.openmrs.client.activities.fragments.CustomFragmentDialog;
 import org.openmrs.client.adapters.VisitExpandableListAdapter;
+import org.openmrs.client.bundle.CustomDialogBundle;
+import org.openmrs.client.dao.PatientDAO;
 import org.openmrs.client.dao.VisitDAO;
 import org.openmrs.client.models.Encounter;
+import org.openmrs.client.models.Patient;
 import org.openmrs.client.models.Visit;
+import org.openmrs.client.net.VisitsManager;
 import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.FontsUtil;
 
@@ -38,18 +43,23 @@ public class VisitDashboardActivity extends ACBaseActivity {
     private VisitExpandableListAdapter mExpandableListAdapter;
     private List<Encounter> mVisitEncounters;
     private TextView mEmptyListView;
-    private Visit mvisit;
+    private Visit mVisit;
     private String mPatientName;
+    private Patient mPatient;
+    private VisitsManager mVisitsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visit_dashboard);
-
+        mVisitsManager = new VisitsManager(this);
         Intent intent = getIntent();
-        mvisit = new VisitDAO().getVisitsByID(intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0));
+
+        mVisit = new VisitDAO().getVisitsByID(intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0));
+        mPatient = new PatientDAO().findPatientByID(String.valueOf(mVisit.getPatientID()));
+
         mPatientName = intent.getStringExtra(ApplicationConstants.BundleKeys.PATIENT_NAME);
-        mVisitEncounters = mvisit.getEncounters();
+        mVisitEncounters = mVisit.getEncounters();
 
         mEmptyListView = (TextView) findViewById(R.id.visitDashboardEmpty);
         FontsUtil.setFont(mEmptyListView, FontsUtil.OpenFonts.OPEN_SANS_BOLD);
@@ -70,6 +80,8 @@ public class VisitDashboardActivity extends ACBaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.find_patients_menu, menu);
+        getMenuInflater().inflate(R.menu.active_visit_menu, menu);
         getSupportActionBar().setSubtitle(mPatientName);
         return true;
     }
@@ -81,9 +93,28 @@ public class VisitDashboardActivity extends ACBaseActivity {
             case android.R.id.home:
                 this.finish();
                 break;
+            case R.id.actionEndVisit:
+                this.showEndVisitDialog();
             default:
                 return super.onOptionsItemSelected(item);
         }
         return true;
     }
+
+    public void endVisit() {
+        mVisitsManager.inactivateVisitByUUID(mVisit.getUuid(), mPatient.getId());
+        mVisitsManager.moveToPatientDashboard(mPatient.getUuid());
+    }
+
+    private void showEndVisitDialog() {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.end_visit_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.end_visit_dialog_message));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.END_VISIT);
+        bundle.setRightButtonText(getString(R.string.end_visit_dialog_button));
+        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.END_VISIT_DIALOG_TAG);
+    }
+
 }

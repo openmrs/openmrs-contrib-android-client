@@ -54,6 +54,9 @@
     <!-- Unauthorized dialog -->
     <string name="unauthorized_dialog_title">Unauthorized</string>
     <string name="unauthorized_dialog_message">Session expired. Please log in again.</string>
+    <!-- Server not supported dialog -->
+    <string name="server_not_supported_dialog_title">Server Not Supported</string>
+    <string name="server_not_supported_dialog_message">Server could not be supported. Change URL address.</string>
     <!-- Buttons -->
     <string name="dialog_button_done">Done</string>
     <string name="dialog_button_cancel">Cancel</string>

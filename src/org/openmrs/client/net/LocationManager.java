@@ -15,6 +15,7 @@
 package org.openmrs.client.net;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -29,6 +30,7 @@ import org.json.JSONObject;
 import org.openmrs.client.activities.LoginActivity;
 import org.openmrs.client.models.Location;
 import org.openmrs.client.models.mappers.LocationMapper;
+import org.openmrs.client.utilities.ApplicationConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -73,7 +75,11 @@ public class LocationManager extends BaseManager {
                 , new GeneralErrorListenerImpl(mContext) {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        super.onErrorResponse(error);
+                        if (isUserUnauthorized(error.toString())) {
+                            mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SERVER_NOT_SUPPORTED_BROADCAST));
+                        } else {
+                            super.onErrorResponse(error);
+                        }
                         ((LoginActivity) mContext).setErrorOccurred(true);
                     }
                 }

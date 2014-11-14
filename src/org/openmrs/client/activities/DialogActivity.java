@@ -26,6 +26,7 @@ import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActi
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_CONN_TIMEOUT_BROADCAST;
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_NO_INTERNET_CONNECTION_BROADCAST;
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_SERVER_ERROR_BROADCAST;
+import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_SERVER_NOT_SUPPORTED_BROADCAST;
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_SERVER_UNAVAILABLE_BROADCAST;
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_SOCKET_EXCEPTION_BROADCAST;
 import static org.openmrs.client.utilities.ApplicationConstants.CustomIntentActions.ACTION_UNAUTHORIZED_BROADCAST;
@@ -58,6 +59,9 @@ public class DialogActivity extends ACBaseActivity {
         if (ACTION_SOCKET_EXCEPTION_BROADCAST.equals(intent.getAction())) {
             showSocketExceptionErrorDialog();
         }
+        if (ACTION_SERVER_NOT_SUPPORTED_BROADCAST.equals(intent.getAction())) {
+            showServerNotSupportedErrorDialog();
+        }
         if (ApplicationConstants.DialogTAG.INVALID_URL_DIALOG_TAG.equals(intent.getAction())) {
             showInvalidURLDialog();
         }
@@ -78,5 +82,14 @@ public class DialogActivity extends ACBaseActivity {
         bundle.setRightButtonText(getString(R.string.dialog_button_ok));
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.INVALID_URL_DIALOG_TAG);
+    }
+
+    private void showServerNotSupportedErrorDialog() {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.server_not_supported_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.server_not_supported_dialog_message));
+        bundle.setRightButtonText(getString(R.string.dialog_button_ok));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.SERVER_NOT_SUPPORTED_DIALOG_TAG);
     }
 }

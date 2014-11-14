@@ -50,6 +50,7 @@
                 <action android:name="org.openmrs.client.intent.action.SERVER_UNAVAILABLE_BROADCAST"/>
                 <action android:name="org.openmrs.client.intent.action.SERVER_ERROR_BROADCAST"/>
                 <action android:name="org.openmrs.client.intent.action.SOCKET_EXCEPTION_BROADCAST"/>
+                <action android:name="org.openmrs.client.intent.action.SERVER_NOT_SUPPORTED_BROADCAST"/>
             </intent-filter>
         </receiver>
         <activity

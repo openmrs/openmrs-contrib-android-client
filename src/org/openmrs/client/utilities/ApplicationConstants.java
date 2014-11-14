@@ -52,6 +52,7 @@ public abstract class ApplicationConstants {
         public static final String UNAUTHORIZED_DIALOG_TAG = "unauthorizedDialog";
         public static final String SERVER_ERROR_DIALOG_TAG = "serverErrorDialog";
         public static final String SOCKET_EXCEPTION_DIALOG_TAG = "socketExceptionDialog";
+        public static final String SERVER_NOT_SUPPORTED_DIALOG_TAG = "serverNotSupportedDialog";
     }
 
     public abstract static class BundleKeys {
@@ -70,6 +71,7 @@ public abstract class ApplicationConstants {
         public static final String ACTION_SERVER_UNAVAILABLE_BROADCAST = "org.openmrs.client.intent.action.SERVER_UNAVAILABLE_BROADCAST";
         public static final String ACTION_SERVER_ERROR_BROADCAST = "org.openmrs.client.intent.action.SERVER_ERROR_BROADCAST";
         public static final String ACTION_SOCKET_EXCEPTION_BROADCAST = "org.openmrs.client.intent.action.SOCKET_EXCEPTION_BROADCAST";
+        public static final String ACTION_SERVER_NOT_SUPPORTED_BROADCAST = "org.openmrs.client.intent.action.SERVER_NOT_SUPPORTED_BROADCAST";
     }
 
     public abstract static class VolleyErrors {

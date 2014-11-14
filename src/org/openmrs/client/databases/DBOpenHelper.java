@@ -133,12 +133,14 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         newValues.put(PatientTable.Column.DEATH_DATE, patient.getDeathDate());
         newValues.put(PatientTable.Column.CAUSE_OF_DEATH, patient.getCauseOfDeath());
         newValues.put(PatientTable.Column.AGE, patient.getAge());
-        newValues.put(PatientTable.Column.ADDRESS_1, patient.getAddress().getAddress1());
-        newValues.put(PatientTable.Column.ADDRESS_2, patient.getAddress().getAddress2());
-        newValues.put(PatientTable.Column.POSTAL_CODE, patient.getAddress().getPostalCode());
-        newValues.put(PatientTable.Column.COUNTRY, patient.getAddress().getCountry());
-        newValues.put(PatientTable.Column.STATE, patient.getAddress().getState());
-        newValues.put(PatientTable.Column.CITY, patient.getAddress().getCityVillage());
+        if (null != patient.getAddress()) {
+            newValues.put(PatientTable.Column.ADDRESS_1, patient.getAddress().getAddress1());
+            newValues.put(PatientTable.Column.ADDRESS_2, patient.getAddress().getAddress2());
+            newValues.put(PatientTable.Column.POSTAL_CODE, patient.getAddress().getPostalCode());
+            newValues.put(PatientTable.Column.COUNTRY, patient.getAddress().getCountry());
+            newValues.put(PatientTable.Column.STATE, patient.getAddress().getState());
+            newValues.put(PatientTable.Column.CITY, patient.getAddress().getCityVillage());
+        }
         newValues.put(PatientTable.Column.PHONE, patient.getPhoneNumber());
 
         String[] whereArgs = new String[]{String.valueOf(patientID)};

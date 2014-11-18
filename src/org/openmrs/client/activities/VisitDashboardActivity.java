@@ -33,6 +33,7 @@ import org.openmrs.client.models.Patient;
 import org.openmrs.client.models.Visit;
 import org.openmrs.client.net.VisitsManager;
 import org.openmrs.client.utilities.ApplicationConstants;
+import org.openmrs.client.utilities.DateUtils;
 import org.openmrs.client.utilities.FontsUtil;
 
 import java.util.List;
@@ -80,12 +81,12 @@ public class VisitDashboardActivity extends ACBaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.find_patients_menu, menu);
-        getMenuInflater().inflate(R.menu.active_visit_menu, menu);
+        if (DateUtils.ZERO.equals(mVisit.getStopDate())) {
+            getMenuInflater().inflate(R.menu.active_visit_menu, menu);
+        }
         getSupportActionBar().setSubtitle(mPatientName);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -103,7 +104,6 @@ public class VisitDashboardActivity extends ACBaseActivity {
 
     public void endVisit() {
         mVisitsManager.inactivateVisitByUUID(mVisit.getUuid(), mPatient.getId());
-        mVisitsManager.moveToPatientDashboard(mPatient.getUuid());
     }
 
     private void showEndVisitDialog() {
@@ -117,4 +117,9 @@ public class VisitDashboardActivity extends ACBaseActivity {
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.END_VISIT_DIALOG_TAG);
     }
 
+    public void moveToPatientDashboard() {
+        Intent intent = new Intent(this, PatientDashboardActivity.class);
+        intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPatient.getUuid());
+        this.startActivity(intent);
+    }
 }

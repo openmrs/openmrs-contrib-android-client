@@ -83,6 +83,7 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
         // fill data
         final ViewHolder holder = (ViewHolder) rowView.getTag();
         final Patient patient = mItems.get(position);
+
         if (null != patient.getIdentifier()) {
             holder.mIdentifier.setText("#" + patient.getIdentifier());
         }
@@ -99,16 +100,18 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
         if (null != holder.mAvailableOfflineCheckbox) {
             setUpCheckBoxLogic(holder, patient);
         }
-        if (new PatientDAO().isUserAlreadySaved(patient.getUuid())) {
-            holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (new PatientDAO().isUserAlreadySaved(patient.getUuid())) {
                     Intent intent = new Intent(mContext, PatientDashboardActivity.class);
                     intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getUuid());
                     mContext.startActivity(intent);
                 }
-            });
-        }
+            }
+        });
+
+
         FontsUtil.setFont((ViewGroup) rowView);
         return rowView;
     }
@@ -123,8 +126,8 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
                         long patientId = new PatientDAO().savePatient(patient);
                         new VisitsManager(mContext).findActiveVisitsForPatientByUUID(patient.getUuid(), patientId);
                         ToastUtil.showShortToast(mContext,
-                                            ToastUtil.ToastType.SUCCESS,
-                                            R.string.find_patients_row_toast_patient_saved);
+                                ToastUtil.ToastType.SUCCESS,
+                                R.string.find_patients_row_toast_patient_saved);
                         disableCheckBox(holder);
 
                         if (mContext instanceof FindPatientsActivity) {

@@ -118,8 +118,6 @@ public class VisitDashboardActivity extends ACBaseActivity {
     }
 
     public void moveToPatientDashboard() {
-        Intent intent = new Intent(this, PatientDashboardActivity.class);
-        intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPatient.getUuid());
-        this.startActivity(intent);
+        finish();
     }
 }

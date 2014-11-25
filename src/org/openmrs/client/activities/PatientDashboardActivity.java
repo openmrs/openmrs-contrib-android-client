@@ -15,6 +15,7 @@
 package org.openmrs.client.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -62,9 +63,13 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
                 new TabHost(TabHost.VITALS_TAB_POS, getString(R.string.patient_scroll_tab_vitals_label))
         ));
 
-        Bundle patientBundle = getIntent().getExtras();
+        Bundle patientBundle = savedInstanceState;
+        if (null != patientBundle) {
+            patientBundle.getString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE);
+        } else {
+            patientBundle = getIntent().getExtras();
+        }
         mPatient = new PatientDAO().findPatientByUUID(patientBundle.getString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE));
-
         mPatientDashboardPagerAdapter = new PatientDashboardPagerAdapter(getSupportFragmentManager(), tabHosts);
         initViewPager();
     }
@@ -87,6 +92,13 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
         }
         TabUtil.setHasEmbeddedTabs(actionBar, getWindowManager(), TabUtil.MIN_SCREEN_WIDTH_FOR_PATIENTDASHBOARDACTIVITY);
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPatient.getUuid());
+    }
+
 
     @Override
     public void onConfigurationChanged(final Configuration config) {

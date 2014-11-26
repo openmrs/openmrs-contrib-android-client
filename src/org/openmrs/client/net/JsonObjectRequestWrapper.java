@@ -15,7 +15,9 @@
 package org.openmrs.client.net;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
@@ -26,17 +28,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- @see com.android.volley.toolbox.JsonObjectRequest
- Wrapper class for JsonObjectRequest
- getHeaders method conatins Authorization Token
- **/
+ * @see com.android.volley.toolbox.JsonObjectRequest
+ * Wrapper class for JsonObjectRequest
+ * getHeaders method conatins Authorization Token
+ */
 public class JsonObjectRequestWrapper extends JsonObjectRequest {
     public JsonObjectRequestWrapper(int method, String url, JSONObject jsonRequest, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         super(method, url, jsonRequest, listener, errorListener);
+        this.setSocketTimeout();
     }
 
     public JsonObjectRequestWrapper(String url, JSONObject jsonRequest, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         super(url, jsonRequest, listener, errorListener);
+        this.setSocketTimeout();
     }
 
     @Override
@@ -50,5 +54,11 @@ public class JsonObjectRequestWrapper extends JsonObjectRequest {
         params.put(ApplicationConstants.COOKIE_PARAM, builder.toString());
 
         return params;
+    }
+
+    private void setSocketTimeout() {
+        int socketTimeout = ApplicationConstants.API.REQUEST_TIMEOUT;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        this.setRetryPolicy(policy);
     }
 }

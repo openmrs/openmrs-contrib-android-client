@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
@@ -14,17 +15,18 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:gravity="center_vertical|center_horizontal"
               android:orientation="vertical"
-    >
-    <TextView android:id="@+id/diagnosisNoneLabel"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:textSize="22sp"
-              android:text="@string/diagnosis_none_label"
-              android:gravity="center_vertical|center_horizontal"
-              android:layout_gravity="center"
-        />
-    </LinearLayout>
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ListView android:id="@+id/patientDiagnosisList"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"/>
+
+    <TextView android:id="@+id/emptyDiagnosisListView"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center"
+              android:visibility="gone"
+              android:text="@string/empty_diagnoses_list"/>
+</LinearLayout>

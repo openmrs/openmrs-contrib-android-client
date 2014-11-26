@@ -40,7 +40,9 @@ public class PatientVitalsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mVitalsEncounter = new EncounterDAO().getLastVitalsEncounterForVisit(getArguments().getLong(ApplicationConstants.BundleKeys.PATIENT_BUNDLE));
+        mVitalsEncounter = new EncounterDAO().getLastEncounterForVisitByType(
+                getArguments().getLong(ApplicationConstants.BundleKeys.PATIENT_BUNDLE),
+                Encounter.EncounterType.VITALS);
         View fragmentLayout = inflater.inflate(R.layout.fragment_patient_vitals, null, false);
         LinearLayout content = (LinearLayout) fragmentLayout.findViewById(R.id.vitalsDetailsContent);
         TextView lastVitalsLabel = (TextView) fragmentLayout.findViewById(R.id.lastVitalsLabel);

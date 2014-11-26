@@ -37,6 +37,7 @@ public abstract class ApplicationConstants {
         public static final String AUTHORISATION_END_POINT = "session";
         public static final String PATIENT_DETAILS = "patient/";
         public static final String VISIT_DETAILS = "visit/";
+        public static final String OBS_DETAILS = "obs/";
 
         public static final String FULL_VERSION = "?v=full";
         public static final int REQUEST_TIMEOUT = 20000;

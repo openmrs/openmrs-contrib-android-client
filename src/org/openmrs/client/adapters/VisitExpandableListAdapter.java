@@ -29,6 +29,7 @@ import org.openmrs.client.R;
 import org.openmrs.client.application.OpenMRSInflater;
 import org.openmrs.client.models.Encounter;
 import org.openmrs.client.models.Observation;
+import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.ImageUtils;
 
 import java.util.ArrayList;
@@ -64,7 +65,14 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
                     layouts.add(convertView);
                     break;
                 case VISIT_NOTE:
-                    convertView = openMRSInflater.addSingleStringView(contentLayout, mContext.getString(R.string.diagnosis_none_label));
+                    for (Observation obs : encounter.getObservations()) {
+                        if (obs.getDiagnosisNote() != null && !obs.getDiagnosisNote().equals(ApplicationConstants.EMPTY_STRING)) {
+                            convertView = openMRSInflater.addKeyValueStringView(contentLayout, mContext.getString(R.string.diagnosis_note_label), obs.getDiagnosisNote());
+                        } else {
+                            convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDiagnosisOrder().getOrder(),
+                                    "(" + obs.getDiagnosisCertainty().getShortCertainty() + ") " + obs.getDiagnosisList());
+                        }
+                    }
                     layouts.add(convertView);
                     break;
                 case DISCHARGE:

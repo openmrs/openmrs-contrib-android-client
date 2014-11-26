@@ -27,7 +27,7 @@ public class ObservationTable extends Table<Observation> {
      *
      * @see org.openmrs.client.databases.tables.Table#values(int)
      */
-    private static final int INSERT_COLUMNS_COUNT = 4;
+    private static final int INSERT_COLUMNS_COUNT = 8;
 
     @Override
     public String crateTableDefinition() {
@@ -36,7 +36,11 @@ public class ObservationTable extends Table<Observation> {
                 + Column.ENCOUNTER_KEY_ID  + Column.Type.INT_TYPE_NOT_NULL
                 + Column.UUID + Column.Type.TEXT_TYPE_NOT_NULL
                 + Column.DISPLAY + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.DISPLAY_VALUE + Column.Type.TEXT_TYPE
+                + Column.DISPLAY_VALUE + Column.Type.TEXT_TYPE_WITH_COMMA
+                + Column.DIAGNOSIS_ORDER + Column.Type.TEXT_TYPE_WITH_COMMA
+                + Column.DIAGNOSIS_LIST + Column.Type.TEXT_TYPE_WITH_COMMA
+                + Column.DIAGNOSIS_CERTAINTY + Column.Type.TEXT_TYPE_WITH_COMMA
+                + Column.DIAGNOSIS_NOTE + Column.Type.TEXT_TYPE
                 + ");";
     }
 
@@ -46,7 +50,11 @@ public class ObservationTable extends Table<Observation> {
                 + Column.ENCOUNTER_KEY_ID + Column.COMMA
                 + Column.UUID + Column.COMMA
                 + Column.DISPLAY + Column.COMMA
-                + Column.DISPLAY_VALUE + ")"
+                + Column.DISPLAY_VALUE + Column.COMMA
+                + Column.DIAGNOSIS_ORDER + Column.COMMA
+                + Column.DIAGNOSIS_LIST + Column.COMMA
+                + Column.DIAGNOSIS_NOTE + Column.COMMA
+                + Column.DIAGNOSIS_CERTAINTY + ")"
                 + values(INSERT_COLUMNS_COUNT);
     }
 
@@ -79,6 +87,11 @@ public class ObservationTable extends Table<Observation> {
     public class Column extends MasterColumn {
         public static final String ENCOUNTER_KEY_ID = "encounter_id";
         public static final String DISPLAY_VALUE = "displayValue";
+        public static final String DIAGNOSIS_ORDER = "diagnosisOrder";
+        public static final String DIAGNOSIS_LIST = "diagnosisList";
+        public static final String DIAGNOSIS_CERTAINTY = "diagnosisCertainty";
+        public static final String DIAGNOSIS_NOTE = "diagnosisNote";
+
     }
 
     @Override

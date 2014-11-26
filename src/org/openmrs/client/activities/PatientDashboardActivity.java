@@ -165,7 +165,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
                     PatientDetailsFragment fragment = (PatientDetailsFragment) getSupportFragmentManager().getFragments().get(PatientDashboardActivity.TabHost.DETAILS_TAB_POS);
                     fragment.reloadPatientData(mPatient);
 
-                    fvm.findActiveVisitsForPatientByUUID(patient.getUuid(), mPatient.getId());
+                    fvm.findVisitsByPatientUUID(patient.getUuid(), mPatient.getId());
                 }
             };
             thread.start();

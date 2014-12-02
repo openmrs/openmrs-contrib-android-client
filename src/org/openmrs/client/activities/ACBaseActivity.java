@@ -45,6 +45,7 @@ public abstract class ACBaseActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         mFragmentManager = getSupportFragmentManager();
         mAuthorizationManager = new AuthorizationManager(this);
+
     }
 
     @Override

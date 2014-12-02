@@ -157,5 +157,14 @@
             android:label="@string/action_active_visits"
             android:launchMode="singleTop">
         </activity>
+        <activity
+            android:label="@string/action_capture_vitals"
+            android:name=".activities.CaptureVitalsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.DashboardActivity" />
+        </activity>
     </application>
 </manifest>

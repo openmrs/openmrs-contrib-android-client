@@ -43,6 +43,7 @@ import org.openmrs.client.models.Patient;
 import org.openmrs.client.models.Visit;
 import org.openmrs.client.models.mappers.ObservationMapper;
 import org.openmrs.client.models.mappers.VisitMapper;
+import org.openmrs.client.net.volley.wrappers.JsonObjectRequestWrapper;
 import org.openmrs.client.utilities.DateUtils;
 
 import java.util.HashMap;
@@ -62,7 +63,7 @@ public class VisitsManager extends BaseManager {
 
     public void findVisitsByPatientUUID(final String patientUUID, final long patientID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String visitURL = mOpenMRS.getServerUrl() + API.COMMON_PART + VISIT_QUERY + patientUUID;
+        String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + VISIT_QUERY + patientUUID;
         logger.d(SENDING_REQUEST + visitURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
@@ -97,7 +98,7 @@ public class VisitsManager extends BaseManager {
 
     public void findVisitByUUID(final String visitUUID, final long patientID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String visitURL = mOpenMRS.getServerUrl() + API.COMMON_PART + API.VISIT_DETAILS + visitUUID
+        String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS + visitUUID
                 + API.FULL_VERSION;
         logger.d(SENDING_REQUEST + visitURL);
 
@@ -156,7 +157,7 @@ public class VisitsManager extends BaseManager {
 
     public void getVisitDiagnosesByUUID(final String diagnosesUUID, final long patientID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String diagnoseURL = mOpenMRS.getServerUrl() + API.COMMON_PART + API.OBS_DETAILS + diagnosesUUID;
+        String diagnoseURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.OBS_DETAILS + diagnosesUUID;
         logger.d(SENDING_REQUEST + diagnoseURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
@@ -190,7 +191,7 @@ public class VisitsManager extends BaseManager {
 
     public void inactivateVisitByUUID(final String visitUUID, final long patientID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String visitURL = mOpenMRS.getServerUrl() + API.COMMON_PART + API.VISIT_DETAILS + visitUUID;
+        String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS + visitUUID;
         logger.d(SENDING_REQUEST + visitURL);
 
         final String currentDate = DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT);

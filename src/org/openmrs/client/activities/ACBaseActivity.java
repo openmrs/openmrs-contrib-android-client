@@ -14,6 +14,7 @@
 
 package org.openmrs.client.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -29,6 +30,7 @@ import org.openmrs.client.bundle.CustomDialogBundle;
 import org.openmrs.client.databases.OpenMRSDBOpenHelper;
 import org.openmrs.client.net.AuthorizationManager;
 import org.openmrs.client.utilities.ApplicationConstants;
+import org.openmrs.client.utilities.ToastUtil;
 
 public abstract class ACBaseActivity extends ActionBarActivity {
 
@@ -36,6 +38,7 @@ public abstract class ACBaseActivity extends ActionBarActivity {
     protected final OpenMRSLogger mOpenMRSLogger = OpenMRS.getInstance().getOpenMRSLogger();
     private CustomFragmentDialog mCurrentDialog;
     protected AuthorizationManager mAuthorizationManager;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -186,5 +189,29 @@ public abstract class ACBaseActivity extends ActionBarActivity {
         this.startActivity(intent);
     }
 
+    public void showProgressDialog(int dialogMessageId) {
+        showProgressDialog(getString(dialogMessageId));
+    }
 
+    protected void showProgressDialog(String dialogMessage) {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage(dialogMessage);
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
+
+    public void dismissProgressDialog(boolean errorOccurred, Integer successMessageId, Integer errorMessageId) {
+        mProgressDialog.dismiss();
+
+        if (!errorOccurred && successMessageId != null) {
+            ToastUtil.showShortToast(this,
+                    ToastUtil.ToastType.SUCCESS,
+                    successMessageId);
+        } else if (errorMessageId != null) {
+            ToastUtil.showShortToast(this,
+                    ToastUtil.ToastType.ERROR,
+                    errorMessageId);
+        }
+    }
 }

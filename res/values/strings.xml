@@ -78,6 +78,7 @@
     <string name="find_patient_no_connection">No internet connection available</string>
     <string name="find_patient_tab_downloaded_label">Downloaded</string>
     <string name="find_patient_tab_last_viewed_label">Last viewed</string>
+    <string name="save_patient_data_dialog">Saving patient data...</string>
     <!-- Dashboard Activity -->
     <string name="dashboard_search_icon_label">Find Patients</string>
     <string name="dashboard_registry_icon_label">Registry Patient</string>
@@ -87,6 +88,7 @@
     <string name="find_patients_row_checkbox_download_label">Download</string>
     <string name="find_patients_row_checkbox_available_offline_label">Available offline</string>
     <string name="find_patients_row_toast_patient_saved">Patient is now available locally</string>
+    <string name="find_patients_row_toast_patient_save_error">Some error occurred. Try synchronize patient data</string>
     <!-- Patient Dashboard Activity -->
     <string name="action_synchronize_patients">Synchronize Patient</string>
     <string name="synchronize_patient_successful">Synchronize patient data successful</string>

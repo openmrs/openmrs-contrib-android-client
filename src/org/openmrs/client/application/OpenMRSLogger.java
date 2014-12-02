@@ -30,7 +30,7 @@ public class OpenMRSLogger {
     private static String mTAG = "OpenMRS";
     private static final boolean IS_DEBUGGING_ON = true;
     private static final String LOG_FILENAME = "OpenMRS.log";
-    private static final int MAX_SIZE = 32 * 1024; // 32kB;
+    private static final int MAX_SIZE = 64 * 1024; // 64kB;
     private static Process mLoggerProcess;
     private static File mLogFile;
     private static File mFolder;

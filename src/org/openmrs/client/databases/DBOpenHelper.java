@@ -230,6 +230,14 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(2, obs.getUuid(), observationStatement);
             bindString(3, obs.getDisplay(), observationStatement);
             bindString(4, obs.getDisplayValue(), observationStatement);
+            if (obs.getDiagnosisOrder() != null) {
+                bindString(5, obs.getDiagnosisOrder().getOrder(), observationStatement);
+            }
+            bindString(6, obs.getDiagnosisList(), observationStatement);
+            if (obs.getDiagnosisCertainty() != null) {
+                bindString(7, obs.getDiagnosisCertainty().getCertainty(), observationStatement);
+            }
+            bindString(8, obs.getDiagnosisNote(), observationStatement);
             obsID = observationStatement.executeInsert();
             observationStatement.clearBindings();
             db.setTransactionSuccessful();
@@ -246,6 +254,14 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         newValues.put(ObservationTable.Column.ENCOUNTER_KEY_ID, observation.getEncounterID());
         newValues.put(ObservationTable.Column.DISPLAY, observation.getDisplay());
         newValues.put(ObservationTable.Column.DISPLAY_VALUE, observation.getDisplayValue());
+        if (observation.getDiagnosisOrder() != null) {
+            newValues.put(ObservationTable.Column.DIAGNOSIS_ORDER, observation.getDiagnosisOrder().getOrder());
+        }
+        newValues.put(ObservationTable.Column.DIAGNOSIS_LIST, observation.getDiagnosisList());
+        if (observation.getDiagnosisCertainty() != null) {
+            newValues.put(ObservationTable.Column.DIAGNOSIS_CERTAINTY, observation.getDiagnosisCertainty().getCertainty());
+        }
+        newValues.put(ObservationTable.Column.DIAGNOSIS_NOTE, observation.getDiagnosisNote());
 
         String[] whereArgs = new String[]{String.valueOf(observationID)};
 

@@ -6,12 +6,23 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import org.openmrs.client.R;
+import org.openmrs.client.dao.EncounterDAO;
+import org.openmrs.client.models.Encounter;
+import org.openmrs.client.models.Observation;
 import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.FontsUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PatientDiagnosisFragment extends Fragment {
+
+    private List<Encounter> mVisitNoteEncounters;
 
     public PatientDiagnosisFragment() {
     }
@@ -31,8 +42,36 @@ public class PatientDiagnosisFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mVisitNoteEncounters = new EncounterDAO().getAllEncountersByType(
+                getArguments().getLong(ApplicationConstants.BundleKeys.PATIENT_BUNDLE),
+                Encounter.EncounterType.VISIT_NOTE);
         View fragmentLayout = inflater.inflate(R.layout.fragment_patient_diagnosis, null, false);
+        ListView visitList = (ListView) fragmentLayout.findViewById(R.id.patientDiagnosisList);
+
+        TextView emptyList = (TextView) fragmentLayout.findViewById(R.id.emptyDiagnosisListView);
+        visitList.setEmptyView(emptyList);
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, getAllDiagnosis(mVisitNoteEncounters));
+        visitList.setAdapter(adapter);
+
         FontsUtil.setFont(fragmentLayout, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);
         return fragmentLayout;
+    }
+
+    private List<String> getAllDiagnosis(List<Encounter> encounters) {
+        List<String> diagnosis = new ArrayList<String>();
+
+        for (Encounter encounter : encounters) {
+            for (Observation obs : encounter.getObservations()) {
+                if (obs.getDiagnosisList() != null
+                        && !obs.getDiagnosisList().equals(ApplicationConstants.EMPTY_STRING)
+                        && !diagnosis.contains(obs.getDiagnosisList())) {
+                    diagnosis.add(obs.getDiagnosisList());
+                }
+            }
+        }
+
+        return diagnosis;
     }
 }

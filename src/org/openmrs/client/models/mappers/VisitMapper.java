@@ -51,14 +51,13 @@ public final class VisitMapper {
             encounter.setEncounterDatetime(DateUtils.convertTime(encounterJSONObject.getString("encounterDatetime")));
             JSONArray obsJSONArray = encounterJSONObject.getJSONArray("obs");
             for (int j = 0; j < obsJSONArray.length(); j++) {
-                Observation observation = new Observation();
+                Observation observation;
                 JSONObject observationJSONObject = obsJSONArray.getJSONObject(j);
-                observation.setUuid(observationJSONObject.getString("uuid"));
                 if (Encounter.EncounterType.VITALS.equals(encounter.getEncounterType())) {
-                    String[] labelAndValue = observationJSONObject.getString(DISPLAY_KEY).split(":");
-                    observation.setDisplay(labelAndValue[0]);
-                    observation.setDisplayValue(labelAndValue[1]);
+                    observation = ObservationMapper.vitalsMap(observationJSONObject);
                 } else {
+                    observation = new Observation();
+                    observation.setUuid(observationJSONObject.getString("uuid"));
                     observation.setDisplay(observationJSONObject.getString(DISPLAY_KEY));
                 }
                 observationList.add(observation);

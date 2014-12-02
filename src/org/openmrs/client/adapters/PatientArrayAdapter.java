@@ -124,7 +124,7 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
                 public void onClick(View v) {
                     if (((CheckBox) v).isChecked()) {
                         long patientId = new PatientDAO().savePatient(patient);
-                        new VisitsManager(mContext).findActiveVisitsForPatientByUUID(patient.getUuid(), patientId);
+                        new VisitsManager(mContext).findVisitsByPatientUUID(patient.getUuid(), patientId);
                         ToastUtil.showShortToast(mContext,
                                 ToastUtil.ToastType.SUCCESS,
                                 R.string.find_patients_row_toast_patient_saved);

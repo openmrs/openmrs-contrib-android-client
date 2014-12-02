@@ -22,6 +22,10 @@ public class Observation implements Serializable {
     private String uuid;
     private String display;
     private String displayValue;
+    private DiagnosisOrder diagnosisOrder;
+    private String diagnosisList;
+    private DiagnosisCertainty diagnosisCertainty;
+    private String diagnosisNote;
 
     public Long getId() {
         return id;
@@ -61,5 +65,89 @@ public class Observation implements Serializable {
 
     public void setDisplayValue(String displayValue) {
         this.displayValue = displayValue;
+    }
+
+    public DiagnosisOrder getDiagnosisOrder() {
+        return diagnosisOrder;
+    }
+
+    public void setDiagnosisOrder(DiagnosisOrder diagnosisOrder) {
+        this.diagnosisOrder = diagnosisOrder;
+    }
+
+    public String getDiagnosisList() {
+        return diagnosisList;
+    }
+
+    public void setDiagnosisList(String diagnosisList) {
+        this.diagnosisList = diagnosisList;
+    }
+
+    public DiagnosisCertainty getDiagnosisCertainty() {
+        return diagnosisCertainty;
+    }
+
+    public void setDiagnosisCertainty(DiagnosisCertainty diagnosisCertainty) {
+        this.diagnosisCertainty = diagnosisCertainty;
+    }
+
+    public String getDiagnosisNote() {
+        return diagnosisNote;
+    }
+
+    public void setDiagnosisNote(String diagnosisNote) {
+        this.diagnosisNote = diagnosisNote;
+    }
+
+    public enum DiagnosisCertainty {
+        PRESUMED("Presumed diagnosis"), CONFIRMED("Confirmed diagnosis");
+
+        DiagnosisCertainty(String certainty) {
+            this.certainty = certainty;
+        }
+
+        private String certainty;
+
+        public String getCertainty() {
+            return certainty;
+        }
+
+        public String getShortCertainty() {
+            return certainty.split(" ")[0];
+        }
+
+        public static DiagnosisCertainty getCertainty(String certainty) {
+            if (certainty.equals(CONFIRMED.getCertainty())) {
+                return CONFIRMED;
+            } else if (certainty.equals(PRESUMED.getCertainty())) {
+                return PRESUMED;
+            } else {
+                return null;
+            }
+        }
+    }
+
+    public enum DiagnosisOrder {
+        PRIMARY("Primary"), SECONDARY("Secondary");
+
+        DiagnosisOrder(String order) {
+            this.order = order;
+        }
+
+        private String order;
+
+        public String getOrder() {
+            return order;
+        }
+
+        public static DiagnosisOrder getOrder(String order) {
+            if (order.equals(PRIMARY.getOrder())) {
+                return PRIMARY;
+            } else if  (order.equals(SECONDARY.getOrder())) {
+                return SECONDARY;
+            } else {
+                return null;
+            }
+        }
     }
 }

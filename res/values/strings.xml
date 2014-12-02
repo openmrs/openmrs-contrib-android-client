@@ -117,7 +117,9 @@
     <string name="last_vitals_label">Last Vitals: </string>
     <string name="last_vitals_none_label">None</string>
     <!-- fragment_patient_diagnosis layout -->
+    <string name="empty_diagnoses_list">Patient has no diagnoses yet.</string>
     <string name="diagnosis_none_label">Diagnoses are not available yet</string>
+    <string name="diagnosis_note_label">Text of encounter note</string>
     <!-- Visit dashboard activity -->
     <string name="action_end_visit">End Visit</string>
     <string name="visit_dashboard_label">Encounters</string>

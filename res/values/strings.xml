@@ -92,6 +92,7 @@
     <string name="dashboard_registry_icon_label">Registry Patient</string>
     <string name="dashboard_logged_as">logged as %1$s</string>
     <string name="dashboard_visits_icon_label">Active Visits</string>
+    <string name="dashboard_vitals_icon_label">Capture Vitals</string>
     <!-- find_patients_row layout-->
     <string name="find_patients_row_checkbox_download_label">Download</string>
     <string name="find_patients_row_checkbox_available_offline_label">Available offline</string>
@@ -140,4 +141,6 @@
     <string name="list_visit_selector_hide">hide details</string>
     <string name="list_item_encounter_no_notes">No notes for this encounter.</string>
     <string name="visit_exp_list_empty">Visit has no encounters yet.</string>
+    <!-- Capture Vitals activity -->
+    <string name="action_capture_vitals">Capture Vitals</string>
 </resources>

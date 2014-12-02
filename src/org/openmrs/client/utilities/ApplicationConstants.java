@@ -34,12 +34,16 @@ public abstract class ApplicationConstants {
     public static final String COOKIE_PARAM = "Cookie";
 
     public abstract static class API {
-        public static final String COMMON_PART = "/ws/rest/v1/";
+        public static final String REST_ENDPOINT = "/ws/rest/v1/";
+        public static final String XFORM_ENDPOINT = "/moduleServlet/xforms/";
+
         public static final String AUTHORISATION_END_POINT = "session";
         public static final String PATIENT_DETAILS = "patient/";
         public static final String VISIT_DETAILS = "visit/";
         public static final String OBS_DETAILS = "obs/";
         public static final String VISIT_TYPE = "visittype/";
+
+        public static final String FORM_LIST = "xformDownload?target=xformslist&format=withurl";
 
         public static final String FULL_VERSION = "?v=full";
         public static final int REQUEST_TIMEOUT = 20000;
@@ -69,6 +73,7 @@ public abstract class ApplicationConstants {
         public static final String PATIENT_BUNDLE = "patientBundle";
         public static final String VISIT_ID = "visitID";
         public static final String PATIENT_NAME = "patientName";
+        public static final String PATINET_LIST = "patientList";
     }
 
     public abstract static class CustomIntentActions {

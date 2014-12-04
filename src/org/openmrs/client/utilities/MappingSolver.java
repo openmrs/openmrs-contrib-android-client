@@ -24,17 +24,19 @@ public final class MappingSolver {
 
     private static final String LOCATION_ID_QUESTION_TAG = "location_id";
     private static final String PROVIDER_ID_QUESTION_TAG = "provider_id";
+    private static final String PATIENT_ID_QUESTION_TAG = "patient_id";
 
     private MappingSolver() {
 
     }
 
-    public static List<Mapping> getFormMapping(String formName) {
+    public static List<Mapping> getFormMapping(String formName, String patientUUID) {
         List<Mapping> mapping = new ArrayList<Mapping>();
 
         if (FormsLoaderUtil.CAPTURE_VITALS_FORM_NAME.equals(formName)) {
             mapping.add(0, new Mapping(LOCATION_ID_QUESTION_TAG, OpenMRS.getInstance().getLocation()));
             mapping.add(1, new Mapping(PROVIDER_ID_QUESTION_TAG, OpenMRS.getInstance().getCurrentLoggedInUserInfo().get(ApplicationConstants.UserKeys.USER_PERSON_NAME)));
+            mapping.add(2, new Mapping(PATIENT_ID_QUESTION_TAG, patientUUID));
         }
 
         return mapping;

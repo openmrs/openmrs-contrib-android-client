@@ -27,7 +27,9 @@ import org.kxml2.kdom.Document;
 import org.kxml2.kdom.Element;
 import org.odk.collect.android.logic.FormDetails;
 import org.openmrs.client.application.OpenMRS;
+import org.openmrs.client.net.volley.wrappers.MultiPartRequest;
 import org.openmrs.client.net.volley.wrappers.StringRequestDecorator;
+import org.openmrs.client.utilities.FileUtils;
 import org.openmrs.client.utilities.FormsLoaderUtil;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -45,6 +47,9 @@ import static org.openmrs.client.utilities.ApplicationConstants.API;
 public class FormsManger extends BaseManager {
     public static final String FORM_KEY = "form";
     public static final String URL_KEY = "url";
+
+    public static final String VITALS_FORM_NAME = "Vitals XForm";
+
     private StringRequestDecorator mRequestDecorator;
 
     public FormsManger(Context context) {
@@ -64,7 +69,9 @@ public class FormsManger extends BaseManager {
                         List<FormDetails> formList = getFormDetails(xFormsDoc);
                         if (!formList.isEmpty()) {
                             for (FormDetails fd: formList) {
-                                downloadForm(fd.formName, fd.downloadUrl);
+                                if (VITALS_FORM_NAME.equals(fd.formName)) {
+                                    downloadForm(fd.formName, fd.downloadUrl);
+                                }
                             }
                         }
                     }
@@ -95,9 +102,9 @@ public class FormsManger extends BaseManager {
         queue.add(mRequestDecorator);
     }
 
-    public void uploadXForm(final String form) {
+    public void uploadXForm(final String instancePath) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String xFormsListURL = mOpenMRS.getServerUrl() + API.XFORM_UPLOAD;
+        String xFormsListURL = mOpenMRS.getServerUrl() + API.XFORM_ENDPOINT + API.XFORM_UPLOAD;
         mRequestDecorator = new StringRequestDecorator(Request.Method.POST, xFormsListURL,
                 new Response.Listener<String>()
                 {
@@ -110,11 +117,28 @@ public class FormsManger extends BaseManager {
         ) {
             @Override
             public byte[] getBody() throws AuthFailureError {
-                return form.getBytes();
+                return FileUtils.fileToByteArray(instancePath);
             }
         };
 
         queue.add(mRequestDecorator);
+    }
+
+    public void uploadXFormWIthMultiPartRequest(final String instancePath) {
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        String xFormsListURL = mOpenMRS.getServerUrl() + API.XFORM_ENDPOINT + API.XFORM_UPLOAD;
+        MultiPartRequest multipartRequest = new MultiPartRequest(xFormsListURL,
+                new GeneralErrorListenerImpl(mContext),
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        mOpenMRS.getOpenMRSLogger().d(response.toString());
+                    }
+                }, new File(instancePath)) {
+        };
+
+        queue.add(multipartRequest);
     }
 
     private List<FormDetails> getFormDetails(Document xFormsDoc) {
@@ -196,6 +220,7 @@ public class FormsManger extends BaseManager {
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(response);
             bw.close();
+            fw.close();
         } catch (IOException e) {
             mOpenMRS.getOpenMRSLogger().d(e.toString());
         }

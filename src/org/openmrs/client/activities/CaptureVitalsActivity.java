@@ -14,17 +14,26 @@
 
 package org.openmrs.client.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import org.openmrs.client.R;
 import org.openmrs.client.activities.fragments.PatientsVitalsListFragment;
+import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.bundle.PatientListBundle;
+import org.openmrs.client.dao.FormsDAO;
 import org.openmrs.client.dao.PatientDAO;
 import org.openmrs.client.models.Patient;
+import org.openmrs.client.net.FormsManger;
+import org.openmrs.client.utilities.ApplicationConstants;
+import org.openmrs.client.utilities.ToastUtil;
 
 import java.util.List;
 
 public class CaptureVitalsActivity extends ACBaseActivity {
+
+    public static final int CAPTURE_VITALS_REQUEST_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,4 +45,31 @@ public class CaptureVitalsActivity extends ACBaseActivity {
                 .add(R.id.patientVitalsList, PatientsVitalsListFragment.newInstance(new PatientListBundle(patientList))).commit();
     }
 
+    public void startFormEntryForResult(String patientUUID) {
+        try {
+            Intent intent = new Intent(this, FormEntryActivity.class);
+            Uri formURI = new FormsDAO(this.getContentResolver()).getFormURI("8");
+            intent.setData(formURI);
+            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE, patientUUID);
+            this.startActivityForResult(intent, CAPTURE_VITALS_REQUEST_CODE);
+        } catch (Exception e) {
+            ToastUtil.showLongToast(this, ToastUtil.ToastType.ERROR, R.string.failed_to_open_vitals_form);
+            OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case RESULT_OK:
+                String path = data.getData().toString();
+                String instanceID = path.substring(path.lastIndexOf('/') + 1);
+                new FormsManger(this).uploadXFormWIthMultiPartRequest(new FormsDAO(getContentResolver()).getSurveysSubmissionDataFromFormInstanceId(instanceID).getFormInstanceFilePath());
+                break;
+            case RESULT_CANCELED:
+            default:
+                break;
+        }
+    }
 }

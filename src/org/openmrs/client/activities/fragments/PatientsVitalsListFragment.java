@@ -15,6 +15,7 @@
 package org.openmrs.client.activities.fragments;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -94,5 +95,11 @@ public class PatientsVitalsListFragment extends Fragment {
 
         FontsUtil.setFont((ViewGroup) fragmentLayout);
         return fragmentLayout;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 }

@@ -14,25 +14,152 @@
 
 package org.openmrs.client.activities;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.javarosa.core.model.FormIndex;
 import org.javarosa.core.model.instance.TreeReference;
+import org.javarosa.form.api.FormEntryController;
 import org.javarosa.form.api.FormEntryPrompt;
+import org.odk.collect.android.application.Collect;
+import org.odk.collect.android.logic.FormController;
+import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI;
 import org.odk.collect.android.widgets.QuestionWidget;
 import org.odk.collect.android.widgets.SelectOneWidget;
 import org.odk.collect.android.widgets.StringWidget;
+import org.openmrs.client.R;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.models.Mapping;
+import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.MappingSolver;
 
 public class FormEntryActivity extends org.odk.collect.android.activities.FormEntryActivity {
 
+    private String mPatientUUID;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (null != savedInstanceState) {
+            mPatientUUID = savedInstanceState.getString(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE);
+        } else {
+            mPatientUUID = getIntent().getExtras().getString(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE, mPatientUUID);
+        super.onSaveInstanceState(outState);
+    }
+
     @Override
     protected View createView(int event, boolean advancingPage) {
-        View view = super.createView(event, advancingPage);
-        applyFormMapping((ViewGroup) view);
+        View view;
+        if (FormEntryController.EVENT_END_OF_FORM == event) {
+            FormController formController = Collect.getInstance().getFormController();
+            View endView = View.inflate(this, R.layout.form_entry_end, null);
+            ((TextView) endView.findViewById(org.odk.collect.android.R.id.description))
+                    .setText(getString(org.odk.collect.android.R.string.save_enter_data_description,
+                            formController.getFormTitle()));
+
+            isInstanceComplete(true);
+
+            // edittext to change the displayed name of the instance
+            final EditText saveAs = (EditText) endView
+                    .findViewById(org.odk.collect.android.R.id.save_name);
+
+            // disallow carriage returns in the name
+            InputFilter returnFilter = new InputFilter() {
+                public CharSequence filter(CharSequence source, int start,
+                                           int end, Spanned dest, int dstart, int dend) {
+                    for (int i = start; i < end; i++) {
+                        if (Character.getType((source.charAt(i))) == Character.CONTROL) {
+                            return "";
+                        }
+                    }
+                    return null;
+                }
+            };
+            saveAs.setFilters(new InputFilter[]{returnFilter});
+
+            String saveName = formController.getSubmissionMetadata().instanceName;
+            if (saveName == null) {
+                // no meta/instanceName field in the form -- see if we have a
+                // name for this instance from a previous save attempt...
+                if (getContentResolver().getType(getIntent().getData()) == OpenMRSInstanceProviderAPI.InstanceColumns.CONTENT_ITEM_TYPE) {
+                    Uri instanceUri = getIntent().getData();
+                    Cursor instance = null;
+                    try {
+                        instance = getContentResolver().query(instanceUri,
+                                null, null, null, null);
+                        if (instance.getCount() == 1) {
+                            instance.moveToFirst();
+                            saveName = instance
+                                    .getString(instance
+                                            .getColumnIndex(OpenMRSInstanceProviderAPI.InstanceColumns.DISPLAY_NAME));
+                        }
+                    } finally {
+                        if (instance != null) {
+                            instance.close();
+                        }
+                    }
+                }
+                if (saveName == null) {
+                    // last resort, default to the form title
+                    saveName = formController.getFormTitle();
+                }
+                // present the prompt to allow user to name the form
+                TextView sa = (TextView) endView
+                        .findViewById(org.odk.collect.android.R.id.save_form_as);
+                sa.setVisibility(View.VISIBLE);
+                saveAs.setText(saveName);
+                saveAs.setEnabled(true);
+                saveAs.setVisibility(View.VISIBLE);
+            } else {
+                // if instanceName is defined in form, this is the name -- no
+                // revisions
+                // display only the name, not the prompt, and disable edits
+                TextView sa = (TextView) endView
+                        .findViewById(R.id.save_form_as);
+                sa.setVisibility(View.GONE);
+                saveAs.setText(saveName);
+                saveAs.setEnabled(false);
+                saveAs.setBackgroundColor(Color.WHITE);
+                saveAs.setVisibility(View.VISIBLE);
+            }
+
+            // Create 'save' button
+            ((Button) endView.findViewById(R.id.save_upload_button))
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Form is marked as 'saved' here.
+                            if (saveAs.getText().length() < 1) {
+                                Toast.makeText(FormEntryActivity.this,
+                                        R.string.save_as_error,
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                saveDataToDisk(EXIT, true, saveAs.getText().toString());
+                            }
+                        }
+                    });
+            return endView;
+        } else {
+            view = super.createView(event, advancingPage);
+            applyFormMapping((ViewGroup) view);
+        }
         return view;
     }
 
@@ -51,7 +178,7 @@ public class FormEntryActivity extends org.odk.collect.android.activities.FormEn
 
     private void setMapping(QuestionWidget qWidget) {
         String questionName = getQuestionName(qWidget.getPrompt());
-        for (Mapping mapping : MappingSolver.getFormMapping(mFormName)) {
+        for (Mapping mapping : MappingSolver.getFormMapping(mFormName, mPatientUUID)) {
             if (questionName.contains(mapping.getQuestion())) {
                 try {
                     if (qWidget instanceof StringWidget) {
@@ -76,5 +203,14 @@ public class FormEntryActivity extends org.odk.collect.android.activities.FormEn
         int refLvl = reference.getRefLevel();
         int size = reference.size();
         return reference.getName(size + refLvl);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (RESULT_OK == resultCode) {
+            setResult(resultCode, intent);
+        } else {
+            super.onActivityResult(requestCode, resultCode, intent);
+        }
     }
 }

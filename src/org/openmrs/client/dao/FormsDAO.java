@@ -20,7 +20,9 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI;
+import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI;
 import org.openmrs.client.application.OpenMRS;
+import org.openmrs.client.models.FormSubmission;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -59,4 +61,29 @@ public class FormsDAO {
         return ContentUris.withAppendedId(OpenMRSFormsProviderAPI.FormsColumns.CONTENT_URI, id);
     }
 
+    public FormSubmission getSurveysSubmissionDataFromFormInstanceId(String instanceId) {
+        String where = String.format("%s = ?", OpenMRSInstanceProviderAPI.InstanceColumns._ID);
+        String[] whereArgs = new String[]{instanceId};
+        FormSubmission formSubmission = null;
+
+        Cursor cursor = mContentResolver.query(OpenMRSInstanceProviderAPI.InstanceColumns.CONTENT_URI, null, where, whereArgs, null);
+        if (cursor != null) {
+            try {
+                while (cursor.moveToNext()) {
+                    int formInstanceIdColumnIndex = cursor.getColumnIndex(OpenMRSInstanceProviderAPI.InstanceColumns._ID);
+                    int instanceFilePathColumnIndex = cursor.getColumnIndex(OpenMRSInstanceProviderAPI.InstanceColumns.INSTANCE_FILE_PATH);
+
+                    Long formInstanceId = cursor.getLong(formInstanceIdColumnIndex);
+                    String instanceFilePath = cursor.getString(instanceFilePathColumnIndex);
+
+                    Uri toUpdate = Uri.withAppendedPath(OpenMRSInstanceProviderAPI.InstanceColumns.CONTENT_URI, formInstanceId.toString());
+
+                    formSubmission = new FormSubmission(formInstanceId, instanceFilePath, toUpdate);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return formSubmission;
+    }
 }

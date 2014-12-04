@@ -121,7 +121,7 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 	private static final int SAVEPOINT_INTERVAL = 1;
 
 	// Defines for FormEntryActivity
-	private static final boolean EXIT = true;
+	protected static final boolean EXIT = true;
 	private static final boolean DO_NOT_EXIT = false;
 	private static final boolean EVALUATE_CONSTRAINTS = true;
 	private static final boolean DO_NOT_EVALUATE_CONSTRAINTS = false;
@@ -1713,7 +1713,7 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 	 * isntancs as complete. If updatedSaveName is non-null, the instances
 	 * content provider is updated with the new name
 	 */
-	private boolean saveDataToDisk(boolean exit, boolean complete,
+	protected boolean saveDataToDisk(boolean exit, boolean complete,
 			String updatedSaveName) {
 		// save current answer
 		if (!saveAnswersForCurrentScreen(complete)) {
@@ -2543,7 +2543,7 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 	 *
 	 * @return true if form has been marked completed, false otherwise.
 	 */
-	private boolean isInstanceComplete(boolean end) {
+	protected boolean isInstanceComplete(boolean end) {
 		FormController formController = Collect.getInstance()
 				.getFormController();
 		// default to false if we're mid form
@@ -2596,10 +2596,6 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 	private void finishReturnInstance() {
 		FormController formController = Collect.getInstance()
 				.getFormController();
-		String action = getIntent().getAction();
-		if (Intent.ACTION_PICK.equals(action)
-				|| Intent.ACTION_EDIT.equals(action)) {
-			// caller is waiting on a picked form
 			String selection = InstanceColumns.INSTANCE_FILE_PATH + "=?";
 			String[] selectionArgs = { formController.getInstancePath()
 					.getAbsolutePath() };
@@ -2621,7 +2617,6 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 					c.close();
 				}
 			}
-		}
 		finish();
 	}
 

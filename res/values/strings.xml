@@ -143,4 +143,7 @@
     <string name="visit_exp_list_empty">Visit has no encounters yet.</string>
     <!-- Capture Vitals activity -->
     <string name="action_capture_vitals">Capture Vitals</string>
+    <string name="failed_to_open_vitals_form">An error occurred. Invalid or corrupted form file.</string>
+    <!-- Form Entry Activity -->
+    <string name="save_upload_button">Save and Send Vitals</string>
 </resources>

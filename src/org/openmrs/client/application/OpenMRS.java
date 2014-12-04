@@ -23,7 +23,6 @@ import org.odk.collect.android.application.Collect;
 import org.openmrs.client.databases.OpenMRSDBOpenHelper;
 import org.openmrs.client.security.SecretKeyGenerator;
 import org.openmrs.client.utilities.ApplicationConstants;
-import org.openmrs.client.utilities.FormsLoaderUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +44,6 @@ public class OpenMRS extends Collect {
         mLogger = new OpenMRSLogger();
         generateKey();
         OpenMRSDBOpenHelper.init();
-        FormsLoaderUtil.loadDefaultForms(getAssets());
     }
 
     public static OpenMRS getInstance() {

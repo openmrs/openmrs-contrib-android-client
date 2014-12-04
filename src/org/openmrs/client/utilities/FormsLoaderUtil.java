@@ -39,7 +39,7 @@ import java.util.List;
 public final class FormsLoaderUtil {
     public static final String XML_SUFFIX = ".xml";
     public static final String ASSET_DIR = "openmrs-forms" + File.separator;
-    public static final String CAPTURE_VITALS_FORM_NAME = "Default Vitals XForm";
+    public static final String CAPTURE_VITALS_FORM_NAME = "Vitals XForm";
 
     public static final List<String> DEFAULT_FORMS = new ArrayList<String>(
             Arrays.asList(CAPTURE_VITALS_FORM_NAME)

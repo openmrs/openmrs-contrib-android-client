@@ -35,7 +35,7 @@ public abstract class ApplicationConstants {
     public abstract static class API {
         public static final String REST_ENDPOINT = "/ws/rest/v1/";
         public static final String XFORM_ENDPOINT = "/moduleServlet/xforms/";
-        public static final String XFORM_UPLOAD = "/module/xforms/xformDataUpload.form";
+        public static final String XFORM_UPLOAD = "xformDataUpload";
 
         public static final String AUTHORISATION_END_POINT = "session";
         public static final String PATIENT_DETAILS = "patient/";
@@ -80,6 +80,7 @@ public abstract class ApplicationConstants {
     public abstract static class BundleKeys {
         public static final String CUSTOM_DIALOG_BUNDLE = "customDialogBundle";
         public static final String PATIENT_ID_BUNDLE = "patientID";
+        public static final String PATIENT_UUID_BUNDLE = "patientUUID";
         public static final String PATIENT_BUNDLE = "patientBundle";
         public static final String VISIT_ID = "visitID";
         public static final String PATIENT_NAME = "patientName";

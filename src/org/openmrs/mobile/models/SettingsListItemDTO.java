@@ -18,6 +18,7 @@ public class SettingsListItemDTO {
     private String title;
     private String desc1;
     private String desc2;
+    private boolean visibleSwitch;
 
     public SettingsListItemDTO(String title, String desc1, String desc2) {
         this.title = title;
@@ -27,6 +28,11 @@ public class SettingsListItemDTO {
 
     public SettingsListItemDTO(String title) {
         this.title = title;
+    }
+
+    public SettingsListItemDTO(String title, boolean visibleSwitch) {
+        this.title = title;
+        this.visibleSwitch = visibleSwitch;
     }
 
     public String getTitle() {
@@ -39,5 +45,9 @@ public class SettingsListItemDTO {
 
     public String getDesc2() {
         return desc2;
+    }
+
+    public Boolean isVisibleSwitch() {
+        return visibleSwitch;
     }
 }

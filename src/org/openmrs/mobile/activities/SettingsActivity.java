@@ -64,6 +64,8 @@ public class SettingsActivity extends ACBaseActivity {
     }
 
     private void fillList() {
+        mListItem.add(new SettingsListItemDTO("Online Mode", true));
+
         long size = 0;
         String filename = OpenMRS.getInstance().getOpenMRSDir()
                 + File.separator + mOpenMRSLogger.getLogFilename();

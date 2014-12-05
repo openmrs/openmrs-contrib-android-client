@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
@@ -35,6 +36,7 @@ public class SettingsArrayAdapter extends ArrayAdapter<SettingsListItemDTO> {
         private TextView mTitle;
         private TextView mDesc1;
         private TextView mDesc2;
+        private View switchButton;
     }
 
     public SettingsArrayAdapter(Activity context, List<SettingsListItemDTO> items) {
@@ -52,9 +54,10 @@ public class SettingsArrayAdapter extends ArrayAdapter<SettingsListItemDTO> {
             rowView = inflater.inflate(R.layout.activity_settings_row, null);
             // configure view holder
             ViewHolder viewHolder = new ViewHolder();
-            viewHolder.mTitle = (TextView) rowView.findViewById(R.id.settings_title);
-            viewHolder.mDesc1 = (TextView) rowView.findViewById(R.id.settings_desc1);
-            viewHolder.mDesc2 = (TextView) rowView.findViewById(R.id.settings_desc2);
+            viewHolder.mTitle = (TextView) rowView.findViewById(R.id.settingsTitle);
+            viewHolder.mDesc1 = (TextView) rowView.findViewById(R.id.settingsDesc1);
+            viewHolder.mDesc2 = (TextView) rowView.findViewById(R.id.settingsDesc2);
+            viewHolder.switchButton = rowView.findViewById(R.id.settingsOnlineMode);
             rowView.setTag(viewHolder);
         }
 
@@ -62,6 +65,14 @@ public class SettingsArrayAdapter extends ArrayAdapter<SettingsListItemDTO> {
         ViewHolder holder = (ViewHolder) rowView.getTag();
 
         holder.mTitle.setText(mItems.get(position).getTitle());
+
+        if (mItems.get(position).isVisibleSwitch()) {
+            RelativeLayout.LayoutParams layoutParams =
+                    (RelativeLayout.LayoutParams)holder.mTitle.getLayoutParams();
+            layoutParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+            holder.mTitle.setLayoutParams(layoutParams);
+            holder.switchButton.setVisibility(View.VISIBLE);
+        }
 
         if (mItems.get(position).getDesc1() != null) {
             holder.mDesc1.setText(mItems.get(position).getDesc1());

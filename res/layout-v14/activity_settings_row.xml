@@ -38,14 +38,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <ToggleButton
+    <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/settingsOnlineMode"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:width="100dp"
         android:visibility="gone"/>
 
 </RelativeLayout>

@@ -14,7 +14,6 @@
 
 package org.openmrs.client.activities;
 
-import android.app.ProgressDialog;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -37,7 +36,6 @@ import org.openmrs.client.net.FindPatientsManager;
 import org.openmrs.client.net.VisitsManager;
 import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.TabUtil;
-import org.openmrs.client.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,7 +46,6 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     private Patient mPatient;
     private ViewPager mViewPager;
     private PatientDashboardPagerAdapter mPatientDashboardPagerAdapter;
-    private ProgressDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,11 +143,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     }
 
     private void synchronizePatient() {
-        mDialog = new ProgressDialog(this);
-        mDialog.setMessage(getString(R.string.action_synchronize_patients));
-        mDialog.setIndeterminate(false);
-        mDialog.setCancelable(false);
-        mDialog.show();
+        showProgressDialog(R.string.action_synchronize_patients);
         new FindPatientsManager(this).getFullPatientData(mPatient.getUuid());
     }
 
@@ -184,17 +177,10 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     }
 
     public void stopLoader(boolean errorOccurred) {
-        mDialog.dismiss();
+        dismissProgressDialog(errorOccurred,
+                R.string.synchronize_patient_successful,
+                R.string.synchronize_patient_error);
         mViewPager.setCurrentItem(TabHost.DETAILS_TAB_POS);
-        if (!errorOccurred) {
-            ToastUtil.showShortToast(this,
-                    ToastUtil.ToastType.SUCCESS,
-                    R.string.synchronize_patient_successful);
-        } else {
-            ToastUtil.showShortToast(this,
-                    ToastUtil.ToastType.ERROR,
-                    R.string.synchronize_patient_error);
-        }
     }
 
     private void recreateFragmentView(final Fragment fragment) {

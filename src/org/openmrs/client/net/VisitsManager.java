@@ -25,6 +25,10 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.openmrs.client.R;
+import org.openmrs.client.activities.ACBaseActivity;
+import org.openmrs.client.activities.FindPatientsActivity;
+import org.openmrs.client.activities.FindPatientsSearchActivity;
 import org.openmrs.client.activities.PatientDashboardActivity;
 import org.openmrs.client.activities.VisitDashboardActivity;
 import org.openmrs.client.dao.ObservationDAO;
@@ -64,15 +68,14 @@ public class VisitsManager extends BaseManager {
 
                 try {
                     JSONArray visitResultJSON = response.getJSONArray(RESULTS_KEY);
-                    if (mContext instanceof PatientDashboardActivity) {
-                        mExpectedResponses = visitResultJSON.length();
-                    }
+                    mExpectedResponses = visitResultJSON.length();
                     if (visitResultJSON.length() > 0) {
                         for (int i = 0; i < visitResultJSON.length(); i++) {
                             findVisitByUUID(visitResultJSON.getJSONObject(i).getString(UUID_KEY), patientID);
                         }
                     }
                 } catch (JSONException e) {
+                    subtractExpectedResponses(true);
                     logger.d(e.toString());
                 }
             }
@@ -80,10 +83,8 @@ public class VisitsManager extends BaseManager {
                 , new GeneralErrorListenerImpl(mContext) {
             @Override
             public void onErrorResponse(VolleyError error) {
+                subtractExpectedResponses(true);
                 super.onErrorResponse(error);
-                if (mContext instanceof PatientDashboardActivity) {
-                    ((PatientDashboardActivity) mContext).stopLoader(true);
-                }
             }
         });
         queue.add(jsObjRequest);
@@ -118,10 +119,10 @@ public class VisitsManager extends BaseManager {
                             }
                         };
                         thread.start();
-                        subtractExpectedResponses(false);
                     } else {
                         new VisitDAO().saveVisit(visit, patientID);
                     }
+                    subtractExpectedResponses(false);
 
                     for (Encounter encounter : visit.getEncounters()) {
                         if (Encounter.EncounterType.VISIT_NOTE.equals(encounter.getEncounterType())) {
@@ -132,9 +133,7 @@ public class VisitsManager extends BaseManager {
                         }
                     }
                 } catch (JSONException e) {
-                    if (mContext instanceof PatientDashboardActivity) {
-                        subtractExpectedResponses(true);
-                    }
+                    subtractExpectedResponses(true);
                     logger.d(e.toString());
                 }
             }
@@ -143,9 +142,7 @@ public class VisitsManager extends BaseManager {
             @Override
             public void onErrorResponse(VolleyError error) {
                 super.onErrorResponse(error);
-                if (mContext instanceof PatientDashboardActivity) {
-                    subtractExpectedResponses(true);
-                }
+                subtractExpectedResponses(true);
             }
         }
         );
@@ -168,14 +165,10 @@ public class VisitsManager extends BaseManager {
                     Observation obsInDB = new ObservationDAO().getObservationByUUID(observation.getUuid());
                     new ObservationDAO().updateObservation(obsInDB.getId(), observation, obsInDB.getEncounterID());
 
-                    if (mContext instanceof PatientDashboardActivity) {
-                        subtractExpectedResponses(false);
-                    }
+                    subtractExpectedResponses(false);
                 } catch (JSONException e) {
                     logger.d(e.toString());
-                    if (mContext instanceof PatientDashboardActivity) {
-                        subtractExpectedResponses(true);
-                    }
+                    subtractExpectedResponses(true);
                 }
             }
         }
@@ -183,9 +176,7 @@ public class VisitsManager extends BaseManager {
             @Override
             public void onErrorResponse(VolleyError error) {
                 super.onErrorResponse(error);
-                if (mContext instanceof PatientDashboardActivity) {
-                    subtractExpectedResponses(true);
-                }
+                subtractExpectedResponses(true);
             }
         }
         );
@@ -241,7 +232,14 @@ public class VisitsManager extends BaseManager {
             mErrorOccurred = errorOccurred;
         }
         if (mExpectedResponses == 0) {
-            ((PatientDashboardActivity) mContext).updatePatientVisitsData(mErrorOccurred);
+            if (mContext instanceof PatientDashboardActivity) {
+                ((PatientDashboardActivity) mContext).updatePatientVisitsData(mErrorOccurred);
+            } else if (mContext instanceof FindPatientsSearchActivity
+                    || mContext instanceof FindPatientsActivity) {
+                ((ACBaseActivity) mContext).dismissProgressDialog(errorOccurred,
+                        R.string.find_patients_row_toast_patient_saved,
+                        R.string.find_patients_row_toast_patient_save_error);
+            }
         }
     }
 }

@@ -105,7 +105,9 @@ public class FindPatientsManager extends BaseManager {
                         FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) fm
                                 .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
 
-                        fragment.updatePatientsData(searchId);
+                        if (fragment != null) {
+                            fragment.updatePatientsData(searchId);
+                        }
                     }
 
                 } catch (JSONException e) {
@@ -121,7 +123,9 @@ public class FindPatientsManager extends BaseManager {
                 FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) fm
                         .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
 
-                fragment.stopLoader(searchId);
+                if (fragment != null) {
+                    fragment.stopLoader(searchId);
+                }
             }
         }
         );
@@ -189,7 +193,9 @@ public class FindPatientsManager extends BaseManager {
                 FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) fm
                         .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
 
-                fragment.updatePatientsData(searchId);
+                if (fragment != null) {
+                    fragment.updatePatientsData(searchId);
+                }
             }
         }
                 , new GeneralErrorListenerImpl(mContext) {
@@ -200,7 +206,9 @@ public class FindPatientsManager extends BaseManager {
                 FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) fm
                         .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
 
-                fragment.stopLoader(searchId);
+                if (fragment != null) {
+                    fragment.stopLoader(searchId);
+                }
             }
         }
         );

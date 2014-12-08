@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.openmrs.client.R;
+import org.openmrs.client.activities.ACBaseActivity;
 import org.openmrs.client.activities.FindPatientsActivity;
 import org.openmrs.client.activities.PatientDashboardActivity;
 import org.openmrs.client.activities.fragments.FindPatientInDatabaseFragment;
@@ -35,7 +36,6 @@ import org.openmrs.client.net.VisitsManager;
 import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.DateUtils;
 import org.openmrs.client.utilities.FontsUtil;
-import org.openmrs.client.utilities.ToastUtil;
 
 import java.util.List;
 
@@ -124,10 +124,8 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
                 public void onClick(View v) {
                     if (((CheckBox) v).isChecked()) {
                         long patientId = new PatientDAO().savePatient(patient);
+                        ((ACBaseActivity) mContext).showProgressDialog(R.string.save_patient_data_dialog);
                         new VisitsManager(mContext).findVisitsByPatientUUID(patient.getUuid(), patientId);
-                        ToastUtil.showShortToast(mContext,
-                                ToastUtil.ToastType.SUCCESS,
-                                R.string.find_patients_row_toast_patient_saved);
                         disableCheckBox(holder);
 
                         if (mContext instanceof FindPatientsActivity) {

@@ -90,6 +90,11 @@
     <string name="settings_forms_downloading">Downloading forms...</string>
     <string name="settings_forms_downloaded_succesfull">Forms downloaded successful.</string>
     <string name="settings_forms_downloaded_error">Some error occurred during downloaded forms.</string>
+    <string name="settings_online_mode_on">Online Mode is currently ON</string>
+    <string name="settings_online_mode_off">Online Mode is currently OFF</string>
+    <string name="settings_online_mode_not_available">Network is not available</string>
+    <string name="settings_toggle_on">Online</string>
+    <string name="settings_toggle_off">Offline</string>
     <!-- FindPatients activity -->
     <string name="action_find_patients">Find Patients</string>
     <string name="search_patient_hint">Patient name</string>

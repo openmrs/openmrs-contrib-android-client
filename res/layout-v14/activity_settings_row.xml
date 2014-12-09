@@ -45,6 +45,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:onClick="onStateChanged"
         android:visibility="gone"/>
 
 </RelativeLayout>

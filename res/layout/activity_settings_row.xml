@@ -46,6 +46,9 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:width="100dp"
+        android:textOn="@string/settings_toggle_on"
+        android:textOff="@string/settings_toggle_off"
+        android:onClick="onStateChanged"
         android:visibility="gone"/>
 
 </RelativeLayout>

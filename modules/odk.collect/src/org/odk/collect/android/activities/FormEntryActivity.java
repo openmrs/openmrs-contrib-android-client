@@ -212,6 +212,8 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 
 	private SharedPreferences mAdminPreferences;
 
+    protected String mFormName;
+
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -369,6 +371,7 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 								jrVersion = instanceCursor.isNull(idxJrVersion) ? null
 										: instanceCursor
 												.getString(idxJrVersion);
+                                mFormName = instanceCursor.getString(instanceCursor.getColumnIndex(InstanceColumns.DISPLAY_NAME));
 							}
 						} finally {
 							if (instanceCursor != null) {
@@ -456,6 +459,7 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 									mFormPath.lastIndexOf('/') + 1,
 									mFormPath.lastIndexOf('.'))
 									+ "_";
+                            mFormName = filePrefix.substring(0, filePrefix.length() - 1);
 							final String fileSuffix = ".xml.save";
 							File cacheDir = new File(Collect.CACHE_PATH);
 							File[] files = cacheDir.listFiles(new FileFilter() {
@@ -965,7 +969,7 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 	 *            -- true if this results from advancing through the form
 	 * @return newly created View
 	 */
-	private View createView(int event, boolean advancingPage) {
+	protected View createView(int event, boolean advancingPage) {
 		FormController formController = Collect.getInstance()
 				.getFormController();
 		setTitle(getString(R.string.app_name) + " > "

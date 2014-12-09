@@ -14,11 +14,9 @@
 
 package org.openmrs.client.net;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,26 +26,25 @@ import org.kxml2.io.KXmlParser;
 import org.kxml2.kdom.Document;
 import org.kxml2.kdom.Element;
 import org.odk.collect.android.logic.FormDetails;
-import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI;
-import org.odk.collect.android.utilities.FileUtils;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.net.volley.wrappers.StringRequestDecorator;
+import org.openmrs.client.utilities.FormsLoaderUtil;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static org.openmrs.client.utilities.ApplicationConstants.API;
 
 public class FormsManger extends BaseManager {
-    private static final String TEMP_DOWNLOAD_EXTENSION = ".tempDownload";
-
+    public static final String FORM_KEY = "form";
+    public static final String URL_KEY = "url";
     private StringRequestDecorator mRequestDecorator;
 
     public FormsManger(Context context) {
@@ -98,6 +95,28 @@ public class FormsManger extends BaseManager {
         queue.add(mRequestDecorator);
     }
 
+    public void uploadXForm(final String form) {
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        String xFormsListURL = mOpenMRS.getServerUrl() + API.XFORM_UPLOAD;
+        mRequestDecorator = new StringRequestDecorator(Request.Method.POST, xFormsListURL,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        mOpenMRS.getOpenMRSLogger().d(response.toString());
+                    }
+                },
+                new GeneralErrorListenerImpl(mContext)
+        ) {
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                return form.getBytes();
+            }
+        };
+
+        queue.add(mRequestDecorator);
+    }
+
     private List<FormDetails> getFormDetails(Document xFormsDoc) {
         List<FormDetails> formList = new ArrayList<FormDetails>();
         int nElements = xFormsDoc.getChildCount();
@@ -118,14 +137,14 @@ public class FormsManger extends BaseManager {
                     continue;
                 }
                 Element child = xFormElement.getElement(j);
-                if (child.getName().equals("form")) {
+                if (FORM_KEY.equals(child.getName())) {
                     formName = child.getText(0);
                     if (formName != null && formName.length() == 0) {
                         formName = null;
                     }
                 }
                 // zero value cause url is the only attribute
-                if (child.getAttributeName(0).equals("url")) {
+                if (URL_KEY.equals(child.getAttributeName(0))) {
                     formUrl = child.getAttributeValue(0);
                     formUrl = formUrl.substring(formUrl.lastIndexOf('/') + 1);
                     if (formUrl.length() == 0) {
@@ -172,73 +191,15 @@ public class FormsManger extends BaseManager {
             i++;
         }
 
-        File tempFile =  File.createTempFile(formName, TEMP_DOWNLOAD_EXTENSION, new File(OpenMRS.CACHE_PATH));
-        FileOutputStream outputStream;
-
         try {
-            outputStream = mContext.openFileOutput(formName, Context.MODE_PRIVATE);
-            outputStream.write(response.getBytes());
-            outputStream.close();
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(response);
+            bw.close();
         } catch (IOException e) {
             mOpenMRS.getOpenMRSLogger().d(e.toString());
         }
-
-        FileUtils.deleteAndReport(file);
-
-        String errorMessage = FileUtils.copyFile(tempFile, file);
-
-        if (file.exists()) {
-            FileUtils.deleteAndReport(tempFile);
-        } else {
-            throw new RuntimeException(errorMessage);
-        }
-
-        saveOrUpdateForm(file);
+        FormsLoaderUtil.saveOrUpdateForm(file);
     }
 
-    private void saveOrUpdateForm(File formFile) {
-        Cursor cursor = null;
-        boolean isNew;
-
-        String formFilePath = formFile.getAbsolutePath();
-
-        try {
-            String[] selectionArgs = {
-                    formFile.getAbsolutePath()
-            };
-            String selection = OpenMRSFormsProviderAPI.FormsColumns.FORM_FILE_PATH + "=?";
-            cursor = OpenMRS.getInstance()
-                    .getContentResolver()
-                    .query(OpenMRSFormsProviderAPI.FormsColumns.CONTENT_URI, null, selection, selectionArgs,
-                            null);
-
-            isNew = cursor.getCount() <= 0;
-
-            if (isNew) {
-                // doesn't exist, so insert it
-                ContentValues v = new ContentValues();
-
-                v.put(OpenMRSFormsProviderAPI.FormsColumns.FORM_FILE_PATH, formFilePath);
-
-                HashMap<String, String> formInfo = FileUtils.parseXML(formFile);
-
-                v.put(OpenMRSFormsProviderAPI.FormsColumns.DISPLAY_NAME, formInfo.get(FileUtils.TITLE));
-                v.put(OpenMRSFormsProviderAPI.FormsColumns.JR_VERSION, formInfo.get(FileUtils.VERSION));
-                v.put(OpenMRSFormsProviderAPI.FormsColumns.JR_FORM_ID, formInfo.get(FileUtils.FORMID));
-                v.put(OpenMRSFormsProviderAPI.FormsColumns.SUBMISSION_URI, formInfo.get(FileUtils.SUBMISSIONURI));
-                v.put(OpenMRSFormsProviderAPI.FormsColumns.BASE64_RSA_PUBLIC_KEY, formInfo.get(FileUtils.BASE64_RSA_PUBLIC_KEY));
-                OpenMRS.getInstance().getContentResolver()
-                        .insert(OpenMRSFormsProviderAPI.FormsColumns.CONTENT_URI, v);
-
-            } else {
-                cursor.moveToFirst();
-                Uri.withAppendedPath(OpenMRSFormsProviderAPI.FormsColumns.CONTENT_URI,
-                        cursor.getString(cursor.getColumnIndex(OpenMRSFormsProviderAPI.FormsColumns._ID)));
-            }
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
-        }
-    }
 }

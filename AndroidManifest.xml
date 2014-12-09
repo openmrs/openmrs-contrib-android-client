@@ -153,7 +153,7 @@
                 android:value=".activities.FindActiveVisitsActivity" />
         </activity>
         <activity
-            android:name="org.odk.collect.android.activities.FormEntryActivity"
+            android:name=".activities.FormEntryActivity"
             android:label="@string/action_active_visits"
             android:launchMode="singleTop">
         </activity>

@@ -21,7 +21,6 @@ public abstract class ApplicationConstants {
         public static final String SHARED_PREFERENCES_NAME = "shared_preferences";
     }
 
-    public static final String USER_NAME = "username";
     public static final String SERVER_URL = "server_url";
     public static final String SESSION_TOKEN = "session_id";
     public static final String AUTHORIZATION_TOKEN = "authorisation";
@@ -36,17 +35,28 @@ public abstract class ApplicationConstants {
     public abstract static class API {
         public static final String REST_ENDPOINT = "/ws/rest/v1/";
         public static final String XFORM_ENDPOINT = "/moduleServlet/xforms/";
+        public static final String XFORM_UPLOAD = "/module/xforms/xformDataUpload.form";
 
         public static final String AUTHORISATION_END_POINT = "session";
         public static final String PATIENT_DETAILS = "patient/";
         public static final String VISIT_DETAILS = "visit/";
         public static final String OBS_DETAILS = "obs/";
         public static final String VISIT_TYPE = "visittype/";
+        public static final String USER_DETAILS = "user/";
+
+        public static final String PATIENT_QUERY = "patient?q=";
+        public static final String USER_QUERY = "user?q=";
 
         public static final String FORM_LIST = "xformDownload?target=xformslist&format=withurl";
 
         public static final String FULL_VERSION = "?v=full";
         public static final int REQUEST_TIMEOUT = 20000;
+    }
+
+    public abstract static class UserKeys {
+        public static final String USER_NAME = "username";
+        public static final String USER_PERSON_NAME = "userDisplay";
+        public static final String USER_UUID = "userUUID";
     }
 
     public abstract static class DialogTAG {
@@ -73,7 +83,7 @@ public abstract class ApplicationConstants {
         public static final String PATIENT_BUNDLE = "patientBundle";
         public static final String VISIT_ID = "visitID";
         public static final String PATIENT_NAME = "patientName";
-        public static final String PATINET_LIST = "patientList";
+        public static final String PATIENT_LIST = "patientList";
     }
 
     public abstract static class CustomIntentActions {

@@ -46,7 +46,7 @@ public class PatientsVitalsListFragment extends Fragment {
 
     public static PatientsVitalsListFragment newInstance(PatientListBundle patientListBundle) {
         Bundle bundle = new Bundle(1);
-        bundle.putSerializable(ApplicationConstants.BundleKeys.PATINET_LIST, patientListBundle);
+        bundle.putSerializable(ApplicationConstants.BundleKeys.PATIENT_LIST, patientListBundle);
         PatientsVitalsListFragment fragment = new PatientsVitalsListFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -61,7 +61,7 @@ public class PatientsVitalsListFragment extends Fragment {
         if (savedInstanceStateToReadFrom == null) {
             savedInstanceStateToReadFrom = getArguments();
         }
-        mPatientList = ((PatientListBundle)savedInstanceStateToReadFrom.getSerializable(ApplicationConstants.BundleKeys.PATINET_LIST)).getPatients();
+        mPatientList = ((PatientListBundle) savedInstanceStateToReadFrom.getSerializable(ApplicationConstants.BundleKeys.PATIENT_LIST)).getPatients();
     }
 
     @Override

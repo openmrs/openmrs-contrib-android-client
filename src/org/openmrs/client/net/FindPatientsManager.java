@@ -37,7 +37,7 @@ import org.openmrs.client.utilities.PatientCacheHelper;
 import static org.openmrs.client.utilities.ApplicationConstants.API;
 
 public class FindPatientsManager extends BaseManager {
-    private static final String PATIENT_QUERY = "patient?q=";
+
     private static final String PATIENT_LAST_VIEWED_QUERY = "patient?lastviewed";
     private static final String SENDING_REQUEST = "Sending request to : ";
 
@@ -47,7 +47,7 @@ public class FindPatientsManager extends BaseManager {
 
     public void findPatient(final String query, final int searchId) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String patientsURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + PATIENT_QUERY + query;
+        String patientsURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.PATIENT_QUERY + query;
         logger.d(SENDING_REQUEST + patientsURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,

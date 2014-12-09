@@ -94,7 +94,7 @@ public abstract class ACBaseActivity extends ActionBarActivity {
     }
 
     public void logout() {
-        OpenMRS.getInstance().clearUserPreferencesDataWhenLogout();
+        OpenMRS.getInstance().clearUserPreferencesData();
         mAuthorizationManager.moveToLoginActivity();
         OpenMRSDBOpenHelper.getInstance().closeDatabases();
     }
@@ -184,7 +184,7 @@ public abstract class ACBaseActivity extends ActionBarActivity {
 
     public void moveUnauthorizedUserToLoginScreen() {
         OpenMRSDBOpenHelper.getInstance().closeDatabases();
-        OpenMRS.getInstance().clearUserPreferencesDataWhenUnauthorized();
+        OpenMRS.getInstance().clearUserPreferencesData();
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);

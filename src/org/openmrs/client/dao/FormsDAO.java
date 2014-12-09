@@ -21,12 +21,9 @@ import android.net.Uri;
 
 import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI;
 import org.openmrs.client.application.OpenMRS;
-import org.openmrs.client.models.Form;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FormsDAO {
     private final ContentResolver mContentResolver;
@@ -62,23 +59,4 @@ public class FormsDAO {
         return ContentUris.withAppendedId(OpenMRSFormsProviderAPI.FormsColumns.CONTENT_URI, id);
     }
 
-    public List<Form> loadAllForms() {
-        List<Form> forms = new ArrayList<Form>();
-        final Cursor cursor = mContentResolver.query(OpenMRSFormsProviderAPI.FormsColumns.CONTENT_URI, null, null, null, null);
-        if (cursor != null) {
-            try {
-                while (cursor.moveToNext()) {
-                    int idIndex = cursor.getColumnIndex(OpenMRSFormsProviderAPI.FormsColumns.JR_FORM_ID);
-                    int nameIndex = cursor.getColumnIndex(OpenMRSFormsProviderAPI.FormsColumns.DISPLAY_NAME);
-                    int formPathIndex = cursor.getColumnIndex(OpenMRSFormsProviderAPI.FormsColumns.FORM_FILE_PATH);
-                    int submissionUriIndex = cursor.getColumnIndex(OpenMRSFormsProviderAPI.FormsColumns.SUBMISSION_URI);
-                forms.add(new Form(cursor.getString(nameIndex), cursor.getString(idIndex), cursor.getString(formPathIndex),
-                        cursor.getString(submissionUriIndex)));
-                }
-            } finally {
-                cursor.close();
-            }
-        }
-        return forms;
-    }
 }

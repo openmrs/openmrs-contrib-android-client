@@ -15,6 +15,8 @@
 package org.openmrs.client.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +25,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.openmrs.client.R;
+import org.openmrs.client.activities.FormEntryActivity;
+import org.openmrs.client.application.OpenMRS;
+import org.openmrs.client.dao.FormsDAO;
 import org.openmrs.client.models.Patient;
-import org.openmrs.client.net.FormsManger;
 import org.openmrs.client.utilities.DateUtils;
 import org.openmrs.client.utilities.FontsUtil;
+import org.openmrs.client.utilities.FormsLoaderUtil;
 
 import java.util.List;
 
@@ -88,13 +93,12 @@ public class PatientHierarchyAdapter extends ArrayAdapter<Patient> {
             @Override
             public void onClick(View v) {
                 try {
-                    new FormsManger(mContext).getAvailableFormsList();
-//                    Intent intent = new Intent(mContext, FormEntryActivity.class);
-//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                    Uri formURI = new FormsDAO(mContext.getContentResolver()).getFormURI(
-//                            OpenMRS.getInstance().getDefaultFormLoadID(FormsLoaderUtil.CAPTURE_VITALS_FORM_NAME));
-//                    intent.setData(formURI);
-//                    mContext.startActivity(intent);
+                    Intent intent = new Intent(mContext, FormEntryActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Uri formURI = new FormsDAO(mContext.getContentResolver()).getFormURI(
+                            OpenMRS.getInstance().getDefaultFormLoadID(FormsLoaderUtil.CAPTURE_VITALS_FORM_NAME));
+                    intent.setData(formURI);
+                    mContext.startActivity(intent);
                 } catch (Exception e) {
                     
                 }

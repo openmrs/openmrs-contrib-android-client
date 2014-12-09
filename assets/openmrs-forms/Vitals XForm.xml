@@ -330,7 +330,7 @@
 
 
             <xf:bind id="patient.patient_id" nodeset="/form/patient/patient.patient_id"
-                     required="true()" type="xsd:int" visible="false()" jr:preload="patient"
+                     required="true()" type="xsd:string" visible="false()" jr:preload="patient"
                      jr:preloadParams="patientId"/>
 
 

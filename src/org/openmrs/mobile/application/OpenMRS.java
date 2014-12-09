@@ -90,6 +90,11 @@ public class OpenMRS extends Collect {
     public void setVisitTypeUUID(String visitTypeUUID) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(ApplicationConstants.VISIT_TYPE_UUID, visitTypeUUID);
+    }
+
+    public void setOnlineMode(boolean onlineMode) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putBoolean(ApplicationConstants.ONLINE_MODE, onlineMode);
         editor.commit();
     }
 
@@ -121,6 +126,11 @@ public class OpenMRS extends Collect {
     public String getVisitTypeUUID() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.VISIT_TYPE_UUID, ApplicationConstants.EMPTY_STRING);
+    }
+
+    public boolean getOnlineMode() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        return prefs.getBoolean(ApplicationConstants.ONLINE_MODE, ApplicationConstants.DEFAULT_ONLINE_MODE);
     }
 
     private void generateKey() {

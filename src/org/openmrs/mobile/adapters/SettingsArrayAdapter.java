@@ -14,15 +14,20 @@
 
 package org.openmrs.mobile.adapters;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.SettingsListItemDTO;
 import org.openmrs.mobile.utilities.FontsUtil;
 
@@ -45,6 +50,7 @@ public class SettingsArrayAdapter extends ArrayAdapter<SettingsListItemDTO> {
         this.mItems = items;
     }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View rowView = convertView;
@@ -68,10 +74,15 @@ public class SettingsArrayAdapter extends ArrayAdapter<SettingsListItemDTO> {
 
         if (mItems.get(position).isVisibleSwitch()) {
             RelativeLayout.LayoutParams layoutParams =
-                    (RelativeLayout.LayoutParams)holder.mTitle.getLayoutParams();
+                    (RelativeLayout.LayoutParams) holder.mTitle.getLayoutParams();
             layoutParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
             holder.mTitle.setLayoutParams(layoutParams);
             holder.switchButton.setVisibility(View.VISIBLE);
+            if (OpenMRS.getInstance().isRunningIceCreamVersionOrHigher()) {
+                ((Switch) holder.switchButton).setChecked(OpenMRS.getInstance().getOnlineMode());
+            } else {
+                ((ToggleButton) holder.switchButton).setChecked(OpenMRS.getInstance().getOnlineMode());
+            }
         }
 
         if (mItems.get(position).getDesc1() != null) {

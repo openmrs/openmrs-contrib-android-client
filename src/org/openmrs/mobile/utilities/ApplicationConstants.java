@@ -27,6 +27,7 @@ public abstract class ApplicationConstants {
     public static final String SECRET_KEY = "secretKey";
     public static final String LOCATION = "location";
     public static final String VISIT_TYPE_UUID = "visit_type_uuid";
+    public static final String ONLINE_MODE = "online_mode";
 
     public static final String AUTHORIZATION_PARAM = "Authorization";
     public static final String JSESSIONID_PARAM = "JSESSIONID";
@@ -116,4 +117,6 @@ public abstract class ApplicationConstants {
     public abstract static class EncounterTypes {
         public static final String VITALS = "67a71486-1a54-468f-ac3e-7091a9a79584";
     }
+
+    public static final boolean DEFAULT_ONLINE_MODE = true;
 }

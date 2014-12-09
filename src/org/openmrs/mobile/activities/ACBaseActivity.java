@@ -68,6 +68,14 @@ public abstract class ACBaseActivity extends ActionBarActivity {
                     || this instanceof FindPatientsActivity || this instanceof FindActiveVisitsActivity) {
                 this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, mOpenMRS.getUsername()));
             }
+
+            if (!OpenMRS.getInstance().getOnlineMode()) {
+                if (!((String) this.getSupportActionBar().getTitle()).endsWith(getString(R.string.settings_toggle_off) + ")")) {
+                    this.getSupportActionBar().setTitle(this.getSupportActionBar().getTitle() + " (" + getString(R.string.settings_toggle_off) + ")");
+                }
+            } else if (((String) this.getSupportActionBar().getTitle()).endsWith(getString(R.string.settings_toggle_off) + ")")) {
+                this.getSupportActionBar().setTitle(((String) this.getSupportActionBar().getTitle()).replace(" (" + getString(R.string.settings_toggle_off) + ")", ApplicationConstants.EMPTY_STRING));
+            }
         }
 
         mOpenMRS.setCurrentActivity(this);
@@ -83,6 +91,7 @@ public abstract class ACBaseActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.basic_menu, menu);
+
         return true;
     }
 

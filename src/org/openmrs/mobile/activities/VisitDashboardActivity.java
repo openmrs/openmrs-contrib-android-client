@@ -96,8 +96,13 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
     public boolean onCreateOptionsMenu(Menu menu) {
         if (DateUtils.ZERO.equals(mVisit.getStopDate())) {
             getMenuInflater().inflate(R.menu.active_visit_menu, menu);
+
+            if (!mOpenMRS.getOnlineMode()) {
+                menu.findItem(R.id.actionEndVisit).setTitle(R.string.action_end_visit_offline);
+            }
         }
         getSupportActionBar().setSubtitle(mPatientName);
+
         return true;
     }
 
@@ -155,6 +160,10 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
     public void endVisit() {
         mVisitsManager.endVisitByUUID(
                 VisitsHelper.createEndVisitsByUUIDListener(mVisit.getUuid(), mPatient.getId(), mVisit.getId(), this));
+        if (!mOpenMRS.getOnlineMode()) {
+            mVisit.setStopDate(System.currentTimeMillis());
+            new VisitDAO().updateVisit(mVisit, mVisit.getId(), mPatient.getId());
+        }
     }
 
     private void startCaptureVitals() {

@@ -15,6 +15,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.FindPatientsActivity;
 import org.openmrs.mobile.listeners.findPatients.LastViewedPatientListener;
 import org.openmrs.mobile.adapters.PatientArrayAdapter;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FindPatientsManager;
 import org.openmrs.mobile.net.helpers.FindPatientsHelper;
@@ -123,7 +124,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     }
 
     public void updateLastViewedList() {
-        if (NetworkUtils.isNetworkAvailable(getActivity())) {
+        if (OpenMRS.getInstance().getOnlineMode()) {
             setRefreshing(true);
             mSwipeLayout.setRefreshing(true);
             mSwipeLayout.setEnabled(false);
@@ -135,7 +136,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
             FindPatientsManager fpm = new FindPatientsManager();
             fpm.getLastViewedPatient(mFpmResponseListener);
         } else {
-            mEmptyList.setText(getString(R.string.find_patient_no_connection));
+            mEmptyList.setText(getString(R.string.no_connection));
             mPatientsListView.setEmptyView(mEmptyList);
             mSwipeLayout.setRefreshing(false);
         }

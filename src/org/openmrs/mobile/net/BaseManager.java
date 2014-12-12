@@ -27,7 +27,7 @@ public class BaseManager {
     public static final boolean DO_GZIP_REQUEST = false;
     protected OpenMRS mOpenMRS = OpenMRS.getInstance();
     protected OpenMRSLogger mLogger = mOpenMRS.getOpenMRSLogger();
-
+    protected boolean mOnlineMode = OpenMRS.getInstance().getOnlineMode();
 
     public static String getBaseRestURL() {
         return OpenMRS.getInstance().getServerUrl() + ApplicationConstants.API.REST_ENDPOINT;

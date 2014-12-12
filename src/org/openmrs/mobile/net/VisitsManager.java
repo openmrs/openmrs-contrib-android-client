@@ -16,6 +16,7 @@ package org.openmrs.mobile.net;
 
 import com.android.volley.Request;
 import org.json.JSONObject;
+
 import org.openmrs.mobile.listeners.visit.CheckVisitBeforeStartListener;
 import org.openmrs.mobile.listeners.visit.FindVisitsByPatientUUIDListener;
 import org.openmrs.mobile.listeners.visit.StartVisitListener;
@@ -23,6 +24,7 @@ import org.openmrs.mobile.listeners.visit.FindVisitByUUIDListener;
 import org.openmrs.mobile.listeners.visit.EndVisitByUUIDListener;
 import org.openmrs.mobile.listeners.visit.LastVitalsListener;
 import org.openmrs.mobile.listeners.visit.VisitTypeListener;
+
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
@@ -30,6 +32,7 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 
 import java.io.File;
+
 import java.util.HashMap;
 
 import static org.openmrs.mobile.utilities.ApplicationConstants.API;

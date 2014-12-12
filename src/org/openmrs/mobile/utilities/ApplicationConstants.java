@@ -126,4 +126,6 @@ public abstract class ApplicationConstants {
         public static final String VITALS_XFORM = "Vitals XForm";
     }
     public static final boolean DEFAULT_ONLINE_MODE = true;
+    public static final int DISABLED_ICON_ALPHA = 70;
+    public static final int ENABLED_ICON_ALPHA = 255;
 }

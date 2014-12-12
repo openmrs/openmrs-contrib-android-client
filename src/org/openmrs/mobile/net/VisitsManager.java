@@ -41,6 +41,7 @@ import org.openmrs.mobile.dao.ObservationDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Observation;
+import org.openmrs.mobile.models.OfflineRequest;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.mappers.ObservationMapper;
@@ -227,12 +228,11 @@ public class VisitsManager extends BaseManager {
         final String currentDate = DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT);
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("stopDatetime", currentDate);
-
-        JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.POST, visitURL, new JSONObject(params), new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(final JSONObject response) {
-                logger.d(response.toString());
-                if (mOnlineMode) {
+        if (mOnlineMode) {
+            JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.POST, visitURL, new JSONObject(params), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(final JSONObject response) {
+                    logger.d(response.toString());
                     Thread thread = new Thread() {
                         @Override
                         public void run() {
@@ -249,17 +249,20 @@ public class VisitsManager extends BaseManager {
                     thread.start();
                 }
             }
-        }
-                , new GeneralErrorListenerImpl(mContext) {
+                    , new GeneralErrorListenerImpl(mContext) {
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                super.onErrorResponse(error);
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    super.onErrorResponse(error);
+                }
             }
+            );
+            RequestQueue queue = Volley.newRequestQueue(mContext);
+            queue.add(jsObjRequest);
+        } else {
+            OfflineRequest offlineRequest = new OfflineRequest(Request.Method.POST, visitURL, new JSONObject(params));
+            OpenMRS.getInstance().addToRequestQueue(offlineRequest);
         }
-
-        );
-        OpenMRS.getInstance().getRequestQueue().add(jsObjRequest);
     }
 
     public void createVisit(final Patient patient) {

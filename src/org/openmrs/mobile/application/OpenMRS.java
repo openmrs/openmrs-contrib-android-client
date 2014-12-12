@@ -20,20 +20,25 @@ import android.os.Build;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
 import org.odk.collect.android.application.Collect;
+
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
+import org.openmrs.mobile.models.OfflineRequest;
 import org.openmrs.mobile.security.SecretKeyGenerator;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OpenMRS extends Collect {
@@ -41,6 +46,7 @@ public class OpenMRS extends Collect {
     private OpenMRSLogger mLogger;
     private Activity mCurrentActivity;
     private RequestQueue mRequestQueue;
+    private List<OfflineRequest> mOfflineRequestQueue;
 
     @Override
     public void onCreate() {
@@ -107,6 +113,15 @@ public class OpenMRS extends Collect {
         editor.commit();
     }
 
+
+    public void setOfflineRequestQueue(List<OfflineRequest> offlineRequestList) {
+        Gson gson = new Gson();
+        String json = gson.toJson(offlineRequestList);
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.REQUEST_QUEUE, json);
+        editor.commit();
+    }
+
     public void setRequestQueueActive(RequestQueue requestQueue, boolean state) {
         if (state) {
             requestQueue.start();
@@ -125,8 +140,25 @@ public class OpenMRS extends Collect {
         return mRequestQueue;
     }
 
-    public <T> void addToRequestQueue(Request<T> req) {
-        getRequestQueue().add(req);
+    public List<OfflineRequest> getOfflineRequestQueue() {
+        if (mOfflineRequestQueue == null) {
+            mOfflineRequestQueue = new ArrayList<OfflineRequest>();
+            Gson gson = new Gson();
+            SharedPreferences prefs = getOpenMRSSharedPreferences();
+            String json = prefs.getString(ApplicationConstants.REQUEST_QUEUE, ApplicationConstants.EMPTY_STRING);
+            if (!json.equals(ApplicationConstants.EMPTY_STRING)) {
+                mOfflineRequestQueue = gson.fromJson(json,
+                        new TypeToken<List<OfflineRequest>>() { }.getType());
+            }
+        }
+        return mOfflineRequestQueue;
+    }
+
+    public void addToRequestQueue(OfflineRequest req) {
+        if (!getOnlineMode()) {
+            getOfflineRequestQueue().add(req);
+            setOfflineRequestQueue(getOfflineRequestQueue());
+        }
     }
 
     public String getUsername() {

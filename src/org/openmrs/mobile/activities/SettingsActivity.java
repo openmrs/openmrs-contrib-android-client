@@ -28,8 +28,10 @@ import android.widget.ToggleButton;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.adapters.SettingsArrayAdapter;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.models.OfflineRequest;
 import org.openmrs.mobile.models.SettingsListItemDTO;
 import org.openmrs.mobile.net.AuthorizationManager;
+import org.openmrs.mobile.net.OfflineRequestManager;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -120,6 +122,13 @@ public class SettingsActivity extends ACBaseActivity {
         if (isChecked) {
             if (NetworkUtils.isNetworkAvailable(this)) {
                 ToastUtil.showShortToast(this, ToastUtil.ToastType.SUCCESS, getString(R.string.settings_online_mode_on));
+
+                OfflineRequestManager orm = new OfflineRequestManager(this);
+
+                List<OfflineRequest> offlineRequestList = OpenMRS.getInstance().getOfflineRequestQueue();
+                for (OfflineRequest or: offlineRequestList) {
+                    orm.sendOldRequest(or);
+                }
             } else {
                 if (OpenMRS.getInstance().isRunningIceCreamVersionOrHigher()) {
                     ((Switch) view).setChecked(false);

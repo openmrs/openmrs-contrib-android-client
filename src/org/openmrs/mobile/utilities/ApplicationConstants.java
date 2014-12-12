@@ -28,6 +28,7 @@ public abstract class ApplicationConstants {
     public static final String LOCATION = "location";
     public static final String VISIT_TYPE_UUID = "visit_type_uuid";
     public static final String ONLINE_MODE = "online_mode";
+    public static final String REQUEST_QUEUE = "request_queue";
 
     public static final String AUTHORIZATION_PARAM = "Authorization";
     public static final String JSESSIONID_PARAM = "JSESSIONID";

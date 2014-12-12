@@ -27,6 +27,7 @@ import org.openmrs.mobile.listeners.visit.VisitTypeListener;
 
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.LocationDAO;
+import org.openmrs.mobile.models.OfflineRequest;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
@@ -100,10 +101,15 @@ public class VisitsManager extends BaseManager {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put(STOP_DATE_TIME, DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
 
-        JsonObjectRequestWrapper jsObjRequest =
-                new JsonObjectRequestWrapper(Request.Method.POST,
-                        url, new JSONObject(params), listener, listener, DO_GZIP_REQUEST);
-        mOpenMRS.addToRequestQueue(jsObjRequest);
+        if (mOnlineMode) {
+            JsonObjectRequestWrapper jsObjRequest =
+                    new JsonObjectRequestWrapper(Request.Method.POST,
+                            url, new JSONObject(params), listener, listener, DO_GZIP_REQUEST);
+            mOpenMRS.addToRequestQueue(jsObjRequest);
+        } else {
+            OfflineRequest offlineRequest = new OfflineRequest(Request.Method.POST, url, new JSONObject(params));
+            mOpenMRS.addToRequestQueue(offlineRequest);
+        }
     }
 
     public void startVisit(StartVisitListener listener) {

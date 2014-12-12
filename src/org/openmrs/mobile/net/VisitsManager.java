@@ -26,6 +26,7 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.FindPatientsActivity;
@@ -49,6 +50,7 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 
 import java.io.File;
+
 import java.util.HashMap;
 
 import static org.openmrs.mobile.utilities.ApplicationConstants.API;
@@ -219,7 +221,6 @@ public class VisitsManager extends BaseManager {
     }
 
     public void inactivateVisitByUUID(final String visitUUID, final long patientID) {
-        RequestQueue queue = Volley.newRequestQueue(mContext);
         String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS + File.separator + visitUUID;
         logger.d(SENDING_REQUEST + visitURL);
 
@@ -231,21 +232,22 @@ public class VisitsManager extends BaseManager {
             @Override
             public void onResponse(final JSONObject response) {
                 logger.d(response.toString());
-
-                Thread thread = new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            Visit visit = VisitMapper.map(response);
-                            long visitId = new VisitDAO().getVisitsIDByUUID(visit.getUuid());
-                            new VisitDAO().updateVisit(visit, visitId, patientID);
-                            ((VisitDashboardActivity) mContext).moveToPatientDashboard();
-                        } catch (JSONException e) {
-                            logger.d(e.toString());
+                if (mOnlineMode) {
+                    Thread thread = new Thread() {
+                        @Override
+                        public void run() {
+                            try {
+                                Visit visit = VisitMapper.map(response);
+                                long visitId = new VisitDAO().getVisitsIDByUUID(visit.getUuid());
+                                new VisitDAO().updateVisit(visit, visitId, patientID);
+                                ((VisitDashboardActivity) mContext).moveToPatientDashboard();
+                            } catch (JSONException e) {
+                                logger.d(e.toString());
+                            }
                         }
-                    }
-                };
-                thread.start();
+                    };
+                    thread.start();
+                }
             }
         }
                 , new GeneralErrorListenerImpl(mContext) {
@@ -257,8 +259,7 @@ public class VisitsManager extends BaseManager {
         }
 
         );
-
-        queue.add(jsObjRequest);
+        OpenMRS.getInstance().getRequestQueue().add(jsObjRequest);
     }
 
     public void createVisit(final Patient patient) {

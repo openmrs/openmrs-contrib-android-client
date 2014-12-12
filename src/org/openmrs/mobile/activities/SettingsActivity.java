@@ -42,6 +42,7 @@ public class SettingsActivity extends ACBaseActivity {
 
     private ListView mSettingsListView;
     private List<SettingsListItemDTO> mListItem = new ArrayList<SettingsListItemDTO>();
+    private OpenMRS mOpenMRS = OpenMRS.getInstance();
 
     private AuthorizationManager mAuthorizationManager;
 
@@ -128,9 +129,10 @@ public class SettingsActivity extends ACBaseActivity {
                 ToastUtil.showShortToast(this, ToastUtil.ToastType.ERROR, getString(R.string.settings_online_mode_not_available));
             }
         } else {
-            ToastUtil.showShortToast(this, ToastUtil.ToastType.WARNING,getString(R.string.settings_online_mode_off));
+            ToastUtil.showShortToast(this, ToastUtil.ToastType.WARNING, getString(R.string.settings_online_mode_off));
         }
-        OpenMRS.getInstance().setOnlineMode(isChecked);
+        mOpenMRS.setOnlineMode(isChecked);
+        mOpenMRS.setRequestQueueActive(mOpenMRS.getRequestQueue(), isChecked);
         onResume();
     }
 }

@@ -18,6 +18,14 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Build;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+
 import net.sqlcipher.database.SQLiteDatabase;
 
 import org.odk.collect.android.application.Collect;
@@ -32,6 +40,7 @@ public class OpenMRS extends Collect {
     private static OpenMRS instance;
     private OpenMRSLogger mLogger;
     private Activity mCurrentActivity;
+    private RequestQueue mRequestQueue;
 
     @Override
     public void onCreate() {
@@ -96,6 +105,28 @@ public class OpenMRS extends Collect {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putBoolean(ApplicationConstants.ONLINE_MODE, onlineMode);
         editor.commit();
+    }
+
+    public void setRequestQueueActive(RequestQueue requestQueue, boolean state) {
+        if (state) {
+            requestQueue.start();
+        } else {
+            requestQueue.stop();
+        }
+    }
+
+    public RequestQueue getRequestQueue() {
+        if (mRequestQueue == null) {
+            Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+            Network network = new BasicNetwork(new HurlStack());
+            mRequestQueue = new RequestQueue(cache, network);
+            setRequestQueueActive(mRequestQueue, getOnlineMode());
+        }
+        return mRequestQueue;
+    }
+
+    public <T> void addToRequestQueue(Request<T> req) {
+        getRequestQueue().add(req);
     }
 
     public String getUsername() {

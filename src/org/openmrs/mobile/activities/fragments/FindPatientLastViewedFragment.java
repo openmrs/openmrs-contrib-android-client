@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.adapters.PatientArrayAdapter;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FindPatientsManager;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -112,7 +113,7 @@ public class FindPatientLastViewedFragment extends Fragment implements SwipeRefr
     }
 
     public void updateLastViewedList() {
-        if (NetworkUtils.isNetworkAvailable(getActivity())) {
+        if (OpenMRS.getInstance().getOnlineMode()) {
             setRefreshing(true);
             swipeLayout.setRefreshing(true);
             swipeLayout.setEnabled(false);
@@ -124,7 +125,7 @@ public class FindPatientLastViewedFragment extends Fragment implements SwipeRefr
             FindPatientsManager fpm = new FindPatientsManager(getActivity());
             fpm.getLastViewedPatient();
         } else {
-            mEmptyList.setText(getString(R.string.find_patient_no_connection));
+            mEmptyList.setText(getString(R.string.no_connection));
             mPatientsListView.setEmptyView(mEmptyList);
             swipeLayout.setRefreshing(false);
         }

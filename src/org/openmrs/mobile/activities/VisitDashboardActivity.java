@@ -83,8 +83,13 @@ public class VisitDashboardActivity extends ACBaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (DateUtils.ZERO.equals(mVisit.getStopDate())) {
             getMenuInflater().inflate(R.menu.active_visit_menu, menu);
+
+            if (!mOpenMRS.getOnlineMode()) {
+                menu.findItem(R.id.actionEndVisit).setTitle(R.string.action_end_visit_offline);
+            }
         }
         getSupportActionBar().setSubtitle(mPatientName);
+
         return true;
     }
 
@@ -104,6 +109,11 @@ public class VisitDashboardActivity extends ACBaseActivity {
 
     public void endVisit() {
         mVisitsManager.inactivateVisitByUUID(mVisit.getUuid(), mPatient.getId());
+        if (!mOpenMRS.getOnlineMode()) {
+            mVisit.setStopDate(System.currentTimeMillis());
+            new VisitDAO().updateVisit(mVisit, mVisit.getId(), mPatient.getId());
+            moveToPatientDashboard();
+        }
     }
 
     private void showEndVisitDialog() {

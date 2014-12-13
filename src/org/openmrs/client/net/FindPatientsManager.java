@@ -17,9 +17,11 @@ package org.openmrs.client.net;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
@@ -31,6 +33,7 @@ import org.openmrs.client.activities.FindPatientsSearchActivity;
 import org.openmrs.client.activities.PatientDashboardActivity;
 import org.openmrs.client.activities.fragments.FindPatientLastViewedFragment;
 import org.openmrs.client.models.mappers.PatientMapper;
+import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.PatientCacheHelper;
 
 import static org.openmrs.client.utilities.ApplicationConstants.API;
@@ -171,6 +174,9 @@ public class FindPatientsManager extends BaseManager {
                     }
                 }
         );
+        int socketTimeout = ApplicationConstants.API.REQUEST_TIMEOUT;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsObjRequest.setRetryPolicy(policy);
         queue.add(jsObjRequest);
         queue.start();
     }
@@ -212,6 +218,9 @@ public class FindPatientsManager extends BaseManager {
             }
         }
         );
+        int socketTimeout = ApplicationConstants.API.REQUEST_TIMEOUT;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        jsObjRequest.setRetryPolicy(policy);
         queue.add(jsObjRequest);
         queue.start();
     }

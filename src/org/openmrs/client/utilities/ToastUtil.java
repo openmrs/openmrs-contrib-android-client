@@ -124,18 +124,22 @@ public final class ToastUtil {
         public void run() {
             try {
                 if (mDuration == Toast.LENGTH_SHORT) {
-                    Thread.sleep(2000);
+                    Thread.sleep(4000);
                 } else {
-                    Thread.sleep(3500);
-                }
-                logger.d("Recycle bitmap: " + mBitmap.toString());
-                mBitmap.recycle();
-                toastQueue.remove(0);
-                if (toastQueue.size() > 0) {
-                    toastQueue.get(0).run();
+                    Thread.sleep(7000);
                 }
             } catch (Exception e) {
                 logger.e(e.toString());
+            }
+            logger.d("Recycle bitmap: " + mBitmap.toString());
+            try {
+                mBitmap.recycle();
+            } catch (Exception e) {
+                logger.w("Bitmap already recycled", e);
+            }
+            toastQueue.remove(0);
+            if (toastQueue.size() > 0) {
+                toastQueue.get(0).run();
             }
         }
     }

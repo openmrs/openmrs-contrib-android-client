@@ -30,3 +30,29 @@ Before creating pull request run code review tools, *PMD & Checkstyle*, and test
     * modules/support/gridlayout
 3. Add libs for tests module
     * tests module **libs folder**
+
+# Release Notes
+### Version 2.0
+#### The first release is named to match OpenMRS 2.0.
+### Summary:
+1. Login screen
+2. Read-only access to patient details (full name, birthdate, address), vitals and visits.
+3. Downloading and storing patient data in the encrypted database on the device
+[See more in JIRA](https://issues.openmrs.org/browse/AC/fixforversion/16506/?selectedTab=com.atlassian.jira.jira-projects-plugin:version-summary-panel)
+
+# Objectives
+### Version 2.0.1
+- Starting/stopping visits
+- To Be Determined
+[See more in JIRA](https://issues.openmrs.org/browse/AC/?selectedTab=com.atlassian.jira.jira-projects-plugin:summary-panel)
+
+# User Manual
+- [Version 2.0](https://wiki.openmrs.org/download/attachments/74252444/User%20Manual%202.0.pdf?version=1&modificationDate=1414759790000&api=v2)
+
+# Resources
+- JIRA https://issues.openmrs.org/browse/AC/?selectedTab=com.atlassian.jira.jira-projects-plugin:summary-panel 
+- Sprint board https://issues.openmrs.org/secure/RapidBoard.jspa?rapidView=60
+- Dashboard https://issues.openmrs.org/secure/Dashboard.jspa?selectPageId=12851
+- Repository https://github.com/openmrs/openmrs-contrib-android-client
+- CI http://openmrs-ac-ci.soldevelo.com/ci/ 
+- Google Play https://play.google.com/store/apps/details?id=org.openmrs.client

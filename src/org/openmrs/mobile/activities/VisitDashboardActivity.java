@@ -46,7 +46,6 @@ public class VisitDashboardActivity extends ACBaseActivity {
     private TextView mEmptyListView;
     private Visit mVisit;
     private String mPatientName;
-    private Patient mPatient;
     private VisitsManager mVisitsManager;
 
     @Override
@@ -57,8 +56,6 @@ public class VisitDashboardActivity extends ACBaseActivity {
         Intent intent = getIntent();
 
         mVisit = new VisitDAO().getVisitsByID(intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0));
-        mPatient = new PatientDAO().findPatientByID(String.valueOf(mVisit.getPatientID()));
-
         mPatientName = intent.getStringExtra(ApplicationConstants.BundleKeys.PATIENT_NAME);
         mVisitEncounters = mVisit.getEncounters();
 
@@ -108,12 +105,7 @@ public class VisitDashboardActivity extends ACBaseActivity {
     }
 
     public void endVisit() {
-        mVisitsManager.inactivateVisitByUUID(mVisit.getUuid(), mPatient.getId());
-        if (!mOpenMRS.getOnlineMode()) {
-            mVisit.setStopDate(System.currentTimeMillis());
-            new VisitDAO().updateVisit(mVisit, mVisit.getId(), mPatient.getId());
-            moveToPatientDashboard();
-        }
+        mVisitsManager.inactivateVisitByUUID(mVisit);
     }
 
     private void showEndVisitDialog() {

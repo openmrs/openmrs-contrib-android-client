@@ -221,14 +221,17 @@ public class VisitsManager extends BaseManager {
         queue.add(jsObjRequest);
     }
 
-    public void inactivateVisitByUUID(final String visitUUID, final long patientID) {
-        String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS + File.separator + visitUUID;
-        logger.d(SENDING_REQUEST + visitURL);
+    public void inactivateVisitByUUID(final Visit visit) {
+        long currentTimeMillis = System.currentTimeMillis();
+        final String currentDate = DateUtils.convertTime(currentTimeMillis, DateUtils.OPEN_MRS_REQUEST_FORMAT);
 
-        final String currentDate = DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT);
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("stopDatetime", currentDate);
         if (mOnlineMode) {
+            String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS + File.separator + visit.getUuid();
+
+            logger.d(SENDING_REQUEST + visitURL);
+
             JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.POST, visitURL, new JSONObject(params), new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(final JSONObject response) {
@@ -237,9 +240,9 @@ public class VisitsManager extends BaseManager {
                         @Override
                         public void run() {
                             try {
-                                Visit visit = VisitMapper.map(response);
-                                long visitId = new VisitDAO().getVisitsIDByUUID(visit.getUuid());
-                                new VisitDAO().updateVisit(visit, visitId, patientID);
+                                Visit updatedVisit = VisitMapper.map(response);
+                                long visitId = new VisitDAO().getVisitsIDByUUID(updatedVisit.getUuid());
+                                new VisitDAO().updateVisit(updatedVisit, visitId, visit.getPatientID());
                                 ((VisitDashboardActivity) mContext).moveToPatientDashboard();
                             } catch (JSONException e) {
                                 logger.d(e.toString());
@@ -260,8 +263,11 @@ public class VisitsManager extends BaseManager {
             RequestQueue queue = Volley.newRequestQueue(mContext);
             queue.add(jsObjRequest);
         } else {
-            OfflineRequest offlineRequest = new OfflineRequest(Request.Method.POST, visitURL, new JSONObject(params));
+            visit.setStopDate(currentTimeMillis);
+            new VisitDAO().updateVisit(visit, visit.getId(), visit.getPatientID());
+            OfflineRequest offlineRequest = new OfflineRequest(Request.Method.POST, new JSONObject(params), visit.getId(), "inactivateVisit");
             OpenMRS.getInstance().addToRequestQueue(offlineRequest);
+            ((VisitDashboardActivity) mContext).moveToPatientDashboard();
         }
     }
 

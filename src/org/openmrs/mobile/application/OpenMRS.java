@@ -148,7 +148,7 @@ public class OpenMRS extends Collect {
             String json = prefs.getString(ApplicationConstants.REQUEST_QUEUE, ApplicationConstants.EMPTY_STRING);
             if (!json.equals(ApplicationConstants.EMPTY_STRING)) {
                 mOfflineRequestQueue = gson.fromJson(json,
-                        new TypeToken<List<OfflineRequest>>() { }.getType());
+                        new TypeToken<List<OfflineRequest>>() { } .getType());
             }
         }
         return mOfflineRequestQueue;

@@ -8,6 +8,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
+import org.openmrs.mobile.activities.SettingsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.OfflineRequest;
 
@@ -19,7 +20,16 @@ public class OfflineRequestManager extends BaseManager {
         super(context);
     }
 
-    public void sendOldRequest(final OfflineRequest offlineRequest) {
+    public void sendAllOldRequestOneByOne() {
+        List<OfflineRequest> offlineRequestList = OpenMRS.getInstance().getOfflineRequestQueue();
+        if (offlineRequestList.size() > 0) {
+            sendOldRequest(offlineRequestList.get(0), true);
+        } else {
+            ((SettingsActivity) mContext).setListView();
+        }
+    }
+
+    public void sendOldRequest(final OfflineRequest offlineRequest, final boolean sendNext) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(offlineRequest.getMethod(), offlineRequest.getUrl(), offlineRequest.getJSONRequest(), new Response.Listener<JSONObject>() {
             @Override
@@ -29,6 +39,9 @@ public class OfflineRequestManager extends BaseManager {
                 List<OfflineRequest> offlineRequestList = OpenMRS.getInstance().getOfflineRequestQueue();
                 offlineRequestList.remove(offlineRequest);
                 OpenMRS.getInstance().setOfflineRequestQueue(offlineRequestList);
+                if (sendNext) {
+                    sendAllOldRequestOneByOne();
+                }
             }
         }
                 , new GeneralErrorListenerImpl(mContext) {

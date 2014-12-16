@@ -28,6 +28,7 @@ import android.widget.ToggleButton;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.activities.SettingsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.SettingsListItemDTO;
 import org.openmrs.mobile.net.FormsManager;
@@ -56,7 +57,7 @@ public class SettingsArrayAdapter extends ArrayAdapter<SettingsListItemDTO> {
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View rowView = convertView;
         // reuse views
         if (rowView == null) {
@@ -66,6 +67,9 @@ public class SettingsArrayAdapter extends ArrayAdapter<SettingsListItemDTO> {
             ViewHolder viewHolder = new ViewHolder();
 
             viewHolder.mRowLayout = (RelativeLayout) rowView;
+            viewHolder.mTitle = (TextView) rowView.findViewById(R.id.settingsTitle);
+            viewHolder.mDesc1 = (TextView) rowView.findViewById(R.id.settingsDesc1);
+            viewHolder.mDesc2 = (TextView) rowView.findViewById(R.id.settingsDesc2);
             viewHolder.switchButton = rowView.findViewById(R.id.settingsOnlineMode);
 
             rowView.setTag(viewHolder);
@@ -77,16 +81,17 @@ public class SettingsArrayAdapter extends ArrayAdapter<SettingsListItemDTO> {
         holder.mTitle.setText(mItems.get(position).getTitle());
 
         if (mItems.get(position).isVisibleSwitch()) {
-            RelativeLayout.LayoutParams layoutParams =
-                    (RelativeLayout.LayoutParams) holder.mTitle.getLayoutParams();
-            layoutParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-            holder.mTitle.setLayoutParams(layoutParams);
+            setTitleCenter(holder);
             holder.switchButton.setVisibility(View.VISIBLE);
             if (OpenMRS.getInstance().isRunningIceCreamVersionOrHigher()) {
                 ((Switch) holder.switchButton).setChecked(OpenMRS.getInstance().getOnlineMode());
             } else {
                 ((ToggleButton) holder.switchButton).setChecked(OpenMRS.getInstance().getOnlineMode());
             }
+        }
+
+        if (OpenMRS.getInstance().getOnlineMode() && position == 1) {
+            setTitleCenter(holder);
         }
 
         if (mItems.get(position).getDesc1() != null) {
@@ -116,7 +121,23 @@ public class SettingsArrayAdapter extends ArrayAdapter<SettingsListItemDTO> {
             });
         }
 
+        holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (OpenMRS.getInstance().getOnlineMode() && position == 2) {
+                    ((SettingsActivity) mContext).sendAllOldRequestOneByOne();
+                }
+            }
+        });
+
         FontsUtil.setFont((ViewGroup) rowView);
         return rowView;
+    }
+
+    private void setTitleCenter(ViewHolder holder) {
+        RelativeLayout.LayoutParams layoutParams =
+                (RelativeLayout.LayoutParams) holder.mTitle.getLayoutParams();
+        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+        holder.mTitle.setLayoutParams(layoutParams);
     }
 }

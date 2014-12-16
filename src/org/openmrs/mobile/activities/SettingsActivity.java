@@ -28,10 +28,10 @@ import android.widget.ToggleButton;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.adapters.SettingsArrayAdapter;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.models.OfflineRequest;
 import org.openmrs.mobile.models.SettingsListItemDTO;
 import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.net.OfflineRequestManager;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -43,7 +43,7 @@ public class SettingsActivity extends ACBaseActivity {
     private static final int ONE_KB = 1024;
 
     private ListView mSettingsListView;
-    private List<SettingsListItemDTO> mListItem = new ArrayList<SettingsListItemDTO>();
+    private List<SettingsListItemDTO> mListItem;
     private OpenMRS mOpenMRS = OpenMRS.getInstance();
 
     private AuthorizationManager mAuthorizationManager;
@@ -52,12 +52,9 @@ public class SettingsActivity extends ACBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
         mOpenMRSLogger.d("onCreate");
-        fillList();
         mSettingsListView = (ListView) findViewById(R.id.settingsListView);
-        SettingsArrayAdapter mAdapter = new SettingsArrayAdapter(this, mListItem);
-        mSettingsListView.setAdapter(mAdapter);
+        setListView();
     }
 
     @Override
@@ -73,10 +70,20 @@ public class SettingsActivity extends ACBaseActivity {
         }
     }
 
-    private void fillList() {
-        mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_downloadForms)));
-        mListItem.add(new SettingsListItemDTO("Online Mode", true));
+    public void setListView() {
+        fillList();
+        SettingsArrayAdapter mAdapter = new SettingsArrayAdapter(this, mListItem);
+        mSettingsListView.setAdapter(mAdapter);
+    }
 
+    private void fillList() {
+        mListItem = new ArrayList<SettingsListItemDTO>();
+        mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_downloadForms)));
+        mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_online_mode), true));
+
+        if (mOpenMRS.getOnlineMode()) {
+            mListItem.add(new SettingsListItemDTO(getString(R.string.settings_synchronize_requests, mOpenMRS.getOfflineRequestQueue().size())));
+        }
         long size = 0;
         String filename = OpenMRS.getInstance().getOpenMRSDir()
                 + File.separator + mOpenMRSLogger.getLogFilename();
@@ -91,9 +98,9 @@ public class SettingsActivity extends ACBaseActivity {
 
         mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_logs),
                 filename,
-                "Size: " + size + "kB"));
+                getString(R.string.settings_file_size, size)));
 
-        String versionName = "";
+        String versionName = ApplicationConstants.EMPTY_STRING;
         int buildVersion = 0;
 
         try {
@@ -123,13 +130,7 @@ public class SettingsActivity extends ACBaseActivity {
         if (isChecked) {
             if (NetworkUtils.isNetworkAvailable(this)) {
                 ToastUtil.showShortToast(this, ToastUtil.ToastType.SUCCESS, getString(R.string.settings_online_mode_on));
-
-                OfflineRequestManager orm = new OfflineRequestManager(this);
-
-                List<OfflineRequest> offlineRequestList = OpenMRS.getInstance().getOfflineRequestQueue();
-                for (OfflineRequest or: offlineRequestList) {
-                    orm.sendOldRequest(or);
-                }
+                sendAllOldRequestOneByOne();
             } else {
                 if (OpenMRS.getInstance().isRunningIceCreamVersionOrHigher()) {
                     ((Switch) view).setChecked(false);
@@ -143,6 +144,12 @@ public class SettingsActivity extends ACBaseActivity {
         }
         mOpenMRS.setOnlineMode(isChecked);
         mOpenMRS.setRequestQueueActive(mOpenMRS.getRequestQueue(), isChecked);
+        setListView();
         onResume();
+    }
+
+    public void sendAllOldRequestOneByOne() {
+        OfflineRequestManager orm = new OfflineRequestManager(this);
+        orm.sendAllOldRequestOneByOne();
     }
 }

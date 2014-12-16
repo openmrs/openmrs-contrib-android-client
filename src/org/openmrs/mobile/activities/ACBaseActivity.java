@@ -79,7 +79,7 @@ public abstract class ACBaseActivity extends ActionBarActivity {
             if (!mOpenMRS.getOnlineMode() && !(this instanceof PatientDashboardActivity)
                     && !title.endsWith(offlineTitle)) {
                 actionBar.setTitle(title + offlineTitle);
-            } else if (title.endsWith(offlineTitle)) {
+            } else if (mOpenMRS.getOnlineMode() && title.endsWith(offlineTitle)) {
                 actionBar.setTitle(title.replace(offlineTitle, ApplicationConstants.EMPTY_STRING));
             }
         }

@@ -56,7 +56,18 @@ public class EndVisitByUUIDListener extends GeneralErrorListener implements Resp
         }
     }
 
+    public void offlineAction(long time) {
+        Visit visit = visitDAO.getVisitsByID(mVisitID);
+        visit.setStopDate(time);
+        visitDAO.updateVisit(visit, mVisitID, mPatientID);
+        mCaller.moveToPatientDashboard();
+    }
+
     public String getVisitUUID() {
         return mVisitUUID;
+    }
+
+    public long getVisitID() {
+        return mVisitID;
     }
 }

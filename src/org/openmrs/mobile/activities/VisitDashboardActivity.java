@@ -56,7 +56,6 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
     private Visit mVisit;
     private String mPatientName;
     private Patient mPatient;
-
     private VisitsManager mVisitsManager;
     private FormsManager mFormsManager;
 
@@ -68,8 +67,6 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
         Intent intent = getIntent();
 
         mVisit = new VisitDAO().getVisitsByID(intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0));
-        mPatient = new PatientDAO().findPatientByID(String.valueOf(mVisit.getPatientID()));
-
         mPatientName = intent.getStringExtra(ApplicationConstants.BundleKeys.PATIENT_NAME);
         mVisitEncounters = mVisit.getEncounters();
 
@@ -160,10 +157,6 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
     public void endVisit() {
         mVisitsManager.endVisitByUUID(
                 VisitsHelper.createEndVisitsByUUIDListener(mVisit.getUuid(), mPatient.getId(), mVisit.getId(), this));
-        if (!mOpenMRS.getOnlineMode()) {
-            mVisit.setStopDate(System.currentTimeMillis());
-            new VisitDAO().updateVisit(mVisit, mVisit.getId(), mPatient.getId());
-        }
     }
 
     private void startCaptureVitals() {

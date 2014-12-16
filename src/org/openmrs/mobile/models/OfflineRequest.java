@@ -21,11 +21,21 @@ public class OfflineRequest {
     private int method;
     private String url;
     private String jsonRequest;
+    private long objectID;
+    private String actionName;
 
-    public OfflineRequest(int method, String url, JSONObject jsonRequest) {
+    public OfflineRequest(int method, String url, JSONObject jsonRequest, String actionName) {
         this.method = method;
         this.url = url;
         this.jsonRequest = jsonRequest.toString();
+        this.actionName = actionName;
+    }
+
+    public OfflineRequest(int method, JSONObject jsonRequest, long objectID, String actionName) {
+        this.method = method;
+        this.jsonRequest = jsonRequest.toString();
+        this.objectID = objectID;
+        this.actionName = actionName;
     }
 
     public void setMethod(int method) {
@@ -54,5 +64,13 @@ public class OfflineRequest {
         } catch (JSONException e) {
             return new JSONObject();
         }
+    }
+
+    public long getObjectID() {
+        return objectID;
+    }
+
+    public String getActionName() {
+        return actionName;
     }
 }

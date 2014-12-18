@@ -12,11 +12,11 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.test.unit;
+package org.openmrs.client.test.unit;
 
 import android.test.InstrumentationTestCase;
 
-import org.openmrs.mobile.utilities.URLValidator;
+import org.openmrs.client.utilities.URLValidator;
 
 public class URLValidatorTest extends InstrumentationTestCase {
     private static final String INVALID_URL_1;

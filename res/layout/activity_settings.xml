@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="org.openmrs.mobile.activities.SettingsActivity">
+    tools:context="org.openmrs.client.activities.SettingsActivity">
 
     <ListView android:id="@+id/settingsListView"
         android:layout_width="fill_parent"

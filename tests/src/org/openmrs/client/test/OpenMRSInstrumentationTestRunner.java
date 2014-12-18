@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.test;
+package org.openmrs.client.test;
 
 import android.os.Bundle;
 

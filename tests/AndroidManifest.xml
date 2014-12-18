@@ -24,7 +24,7 @@
     <application>
         <uses-library android:name="android.test.runner"/>
     </application>
-    <instrumentation android:name="org.openmrs.client.test.OpenMRSInstrumentationTestRunner"
+    <instrumentation android:name="org.openmrs.mobile.test.OpenMRSInstrumentationTestRunner"
                      android:targetPackage="org.openmrs.client"/>
 
 </manifest>

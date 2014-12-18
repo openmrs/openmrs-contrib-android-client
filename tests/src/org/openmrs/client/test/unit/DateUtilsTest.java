@@ -12,11 +12,11 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.client.test.unit;
+package org.openmrs.mobile.test.unit;
 
 import android.test.InstrumentationTestCase;
 
-import org.openmrs.client.utilities.DateUtils;
+import org.openmrs.mobile.utilities.DateUtils;
 
 public class DateUtilsTest extends InstrumentationTestCase {
     private static final String INITIAL_DATA_1;

@@ -26,6 +26,7 @@ import org.openmrs.client.activities.ACBaseActivity;
 import org.openmrs.client.activities.DialogActivity;
 import org.openmrs.client.activities.LoginActivity;
 import org.openmrs.client.activities.VisitDashboardActivity;
+import org.openmrs.client.activities.PatientDashboardActivity;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.bundle.CustomDialogBundle;
 import org.openmrs.client.utilities.ApplicationConstants;
@@ -38,7 +39,7 @@ public class CustomFragmentDialog extends DialogFragment {
     private static final int TYPED_DIMENSION_VALUE = 10;
 
     public enum OnClickAction {
-        SET_URL, SHOW_URL_DIALOG, DISMISS_URL_DIALOG, DISMISS, LOGOUT, UNAUTHORIZED, END_VISIT
+        SET_URL, SHOW_URL_DIALOG, DISMISS_URL_DIALOG, DISMISS, LOGOUT, UNAUTHORIZED, END_VISIT, START_VISIT
     }
 
     protected LayoutInflater mInflater;
@@ -284,6 +285,15 @@ public class CustomFragmentDialog extends DialogFragment {
                     case END_VISIT:
                         ((VisitDashboardActivity) getActivity()).endVisit();
                         dismiss();
+                        break;
+                    case START_VISIT:
+                        PatientDashboardActivity pda = ((PatientDashboardActivity) getActivity());
+                        PatientVisitsFragment fragment = (PatientVisitsFragment) pda.getSupportFragmentManager().getFragments().get(PatientDashboardActivity.TabHost.VISITS_TAB_POS);
+                        if (fragment != null) {
+                            fragment.startVisit();
+                        }
+                        dismiss();
+                        break;
                     default:
                         break;
                 }

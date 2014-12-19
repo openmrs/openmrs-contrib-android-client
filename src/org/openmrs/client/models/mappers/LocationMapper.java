@@ -14,10 +14,12 @@
 
 package org.openmrs.client.models.mappers;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.models.Location;
+import org.openmrs.client.utilities.ApplicationConstants;
 
 public final class LocationMapper {
 
@@ -32,9 +34,27 @@ public final class LocationMapper {
             location.setName(json.getString("name"));
             location.setDescription(json.getString("description"));
             location.setAddress(AddressMapper.parseAddress(json));
+            location.setParentLocationUuid(findVisitLocationUUID(json));
         } catch (JSONException e) {
             OpenMRS.getInstance().getOpenMRSLogger().d("Failed to parse Location json : " + e.toString());
         }
         return location;
+    }
+
+    private static String findVisitLocationUUID(JSONObject json) throws JSONException {
+        String visitLocationUUID = ApplicationConstants.EMPTY_STRING;
+
+        JSONArray tags = json.getJSONArray("tags");
+        for (int i = 0; i < tags.length(); i++) {
+            JSONObject tag = tags.getJSONObject(i);
+            String tagName = tag.getString("display");
+            if ("Visit Location".equals(tagName)) {
+                return json.getString("uuid");
+            }
+        }
+        if (!json.isNull("parentLocation")) {
+            visitLocationUUID = findVisitLocationUUID(json.getJSONObject("parentLocation"));
+        }
+        return visitLocationUUID;
     }
 }

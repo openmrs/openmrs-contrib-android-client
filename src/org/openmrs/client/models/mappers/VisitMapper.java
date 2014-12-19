@@ -39,31 +39,35 @@ public final class VisitMapper {
         visit.setVisitType(jsonObject.getJSONObject("visitType").getString(DISPLAY_KEY));
         visit.setStartDate(DateUtils.convertTime(jsonObject.getString("startDatetime")));
         visit.setStopDate(DateUtils.convertTime(jsonObject.getString("stopDatetime")));
-        JSONArray encountersJSONArray = jsonObject.getJSONArray("encounters");
         List<Encounter> encounterList = new ArrayList<Encounter>();
-        for (int i = 0; i < encountersJSONArray.length(); i++) {
-            Encounter encounter = new Encounter();
-            JSONObject encounterJSONObject = encountersJSONArray.getJSONObject(i);
-            List<Observation> observationList = new ArrayList<Observation>();
-            encounter.setDisplay(encounterJSONObject.getString(DISPLAY_KEY));
-            encounter.setUuid(encounterJSONObject.getString("uuid"));
-            encounter.setEncounterType(Encounter.EncounterType.getType(encounterJSONObject.getJSONObject("encounterType").getString(DISPLAY_KEY)));
-            encounter.setEncounterDatetime(DateUtils.convertTime(encounterJSONObject.getString("encounterDatetime")));
-            JSONArray obsJSONArray = encounterJSONObject.getJSONArray("obs");
-            for (int j = 0; j < obsJSONArray.length(); j++) {
-                Observation observation;
-                JSONObject observationJSONObject = obsJSONArray.getJSONObject(j);
-                if (Encounter.EncounterType.VITALS.equals(encounter.getEncounterType())) {
-                    observation = ObservationMapper.vitalsMap(observationJSONObject);
-                } else {
-                    observation = new Observation();
+
+        if (!jsonObject.isNull("encounters")) {
+            JSONArray encountersJSONArray = jsonObject.getJSONArray("encounters");
+            for (int i = 0; i < encountersJSONArray.length(); i++) {
+                Encounter encounter = new Encounter();
+                JSONObject encounterJSONObject = encountersJSONArray.getJSONObject(i);
+                List<Observation> observationList = new ArrayList<Observation>();
+                encounter.setDisplay(encounterJSONObject.getString(DISPLAY_KEY));
+                encounter.setUuid(encounterJSONObject.getString("uuid"));
+                encounter.setEncounterType(Encounter.EncounterType.getType(encounterJSONObject.getJSONObject("encounterType").getString(DISPLAY_KEY)));
+                encounter.setEncounterDatetime(DateUtils.convertTime(encounterJSONObject.getString("encounterDatetime")));
+                JSONArray obsJSONArray = encounterJSONObject.getJSONArray("obs");
+                for (int j = 0; j < obsJSONArray.length(); j++) {
+                    Observation observation = new Observation();
+                    JSONObject observationJSONObject = obsJSONArray.getJSONObject(j);
                     observation.setUuid(observationJSONObject.getString("uuid"));
-                    observation.setDisplay(observationJSONObject.getString(DISPLAY_KEY));
+                    if (Encounter.EncounterType.VITALS.equals(encounter.getEncounterType())) {
+                        String[] labelAndValue = observationJSONObject.getString(DISPLAY_KEY).split(":");
+                        observation.setDisplay(labelAndValue[0]);
+                        observation.setDisplayValue(labelAndValue[1]);
+                    } else {
+                        observation.setDisplay(observationJSONObject.getString(DISPLAY_KEY));
+                    }
+                    observationList.add(observation);
                 }
-                observationList.add(observation);
+                encounter.setObservations(observationList);
+                encounterList.add(encounter);
             }
-            encounter.setObservations(observationList);
-            encounterList.add(encounter);
         }
         visit.setEncounters(encounterList);
         return visit;

@@ -27,6 +27,7 @@ public abstract class ApplicationConstants {
     public static final String AUTHORIZATION_TOKEN = "authorisation";
     public static final String SECRET_KEY = "secretKey";
     public static final String LOCATION = "location";
+    public static final String VISIT_TYPE_UUID = "visit_type_uuid";
 
     public static final String AUTHORIZATION_PARAM = "Authorization";
     public static final String JSESSIONID_PARAM = "JSESSIONID";
@@ -38,6 +39,7 @@ public abstract class ApplicationConstants {
         public static final String PATIENT_DETAILS = "patient/";
         public static final String VISIT_DETAILS = "visit/";
         public static final String OBS_DETAILS = "obs/";
+        public static final String VISIT_TYPE = "visittype/";
 
         public static final String FULL_VERSION = "?v=full";
         public static final int REQUEST_TIMEOUT = 20000;
@@ -56,6 +58,8 @@ public abstract class ApplicationConstants {
         public static final String SERVER_ERROR_DIALOG_TAG = "serverErrorDialog";
         public static final String SOCKET_EXCEPTION_DIALOG_TAG = "socketExceptionDialog";
         public static final String SERVER_NOT_SUPPORTED_DIALOG_TAG = "serverNotSupportedDialog";
+        public static final String START_VISIT_DIALOG_TAG = "startVisitDialog";
+        public static final String START_VISIT_IMPOSSIBLE_DIALOG_TAG = "startVisitImpossibleDialog";
     }
 
     public abstract static class BundleKeys {

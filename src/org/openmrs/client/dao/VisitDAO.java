@@ -33,7 +33,7 @@ import java.util.List;
 
 public class VisitDAO {
 
-    public void saveVisit(Visit visit, long patientID) {
+    public long saveVisit(Visit visit, long patientID) {
         EncounterDAO encounterDAO = new EncounterDAO();
         ObservationDAO observationDAO = new ObservationDAO();
         visit.setPatientID(patientID);
@@ -44,6 +44,7 @@ public class VisitDAO {
                 observationDAO.saveObservation(obs, encounterID);
             }
         }
+        return visitID;
     }
 
     public boolean updateVisit(Visit visit, long visitID, long patientID) {

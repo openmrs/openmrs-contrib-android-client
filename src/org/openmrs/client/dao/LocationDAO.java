@@ -58,13 +58,33 @@ public class LocationDAO {
         return locations;
     }
 
-    private Location cursorToLocation(Cursor cursor) {
+    public static Location findLocationByName(String name) {
+        Location location = new Location();
+        String where = String.format("%s = ?", LocationTable.Column.DISPLAY);
+        String[] whereArgs = new String[]{name};
+
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        final Cursor cursor = helper.getReadableDatabase().query(LocationTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        if (null != cursor) {
+            try {
+                if (cursor.moveToFirst()) {
+                    location = cursorToLocation(cursor);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return location;
+    }
+
+    private static Location cursorToLocation(Cursor cursor) {
         Location location = new Location();
         location.setId(cursor.getLong(cursor.getColumnIndex(LocationTable.Column.ID)));
         location.setUuid(cursor.getString(cursor.getColumnIndex(LocationTable.Column.UUID)));
         location.setDisplay(cursor.getString(cursor.getColumnIndex(LocationTable.Column.DISPLAY)));
         location.setName(cursor.getString(cursor.getColumnIndex(LocationTable.Column.NAME)));
         location.setDescription(cursor.getString(cursor.getColumnIndex(LocationTable.Column.DESCRIPTION)));
+        location.setParentLocationUuid(cursor.getString(cursor.getColumnIndex(LocationTable.Column.PARENT_LOCATION_UUID)));
         return location;
     }
 }

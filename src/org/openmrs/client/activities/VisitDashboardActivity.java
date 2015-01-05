@@ -111,7 +111,7 @@ public class VisitDashboardActivity extends ACBaseActivity {
         bundle.setTitleViewMessage(getString(R.string.end_visit_dialog_title));
         bundle.setTextViewMessage(getString(R.string.end_visit_dialog_message));
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.END_VISIT);
-        bundle.setRightButtonText(getString(R.string.end_visit_dialog_button));
+        bundle.setRightButtonText(getString(R.string.dialog_button_ok));
         bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.END_VISIT_DIALOG_TAG);

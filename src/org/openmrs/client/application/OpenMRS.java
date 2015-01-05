@@ -92,6 +92,12 @@ public class OpenMRS extends Collect {
         editor.commit();
     }
 
+    public void setVisitTypeUUID(String visitTypeUUID) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.VISIT_TYPE_UUID, visitTypeUUID);
+        editor.commit();
+    }
+
     public String getUsername() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.USER_NAME, ApplicationConstants.EMPTY_STRING);
@@ -115,6 +121,11 @@ public class OpenMRS extends Collect {
     public String getLocation() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.LOCATION, ApplicationConstants.EMPTY_STRING);
+    }
+
+    public String getVisitTypeUUID() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        return prefs.getString(ApplicationConstants.VISIT_TYPE_UUID, ApplicationConstants.EMPTY_STRING);
     }
 
     private void generateKey() {

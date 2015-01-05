@@ -27,7 +27,7 @@ public class LocationTable extends Table<Location> {
      *
      * @see Table#values(int)
      */
-    private static final int INSERT_COLUMNS_COUNT = 10;
+    private static final int INSERT_COLUMNS_COUNT = 11;
 
     @Override
     public String crateTableDefinition() {
@@ -42,7 +42,8 @@ public class LocationTable extends Table<Location> {
                 + Column.CITY + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.STATE + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.COUNTRY + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.POSTAL_CODE + Column.Type.TEXT_TYPE
+                + Column.POSTAL_CODE + Column.Type.TEXT_TYPE_WITH_COMMA
+                + Column.PARENT_LOCATION_UUID + Column.Type.TEXT_TYPE
                 + ");";
     }
 
@@ -58,7 +59,8 @@ public class LocationTable extends Table<Location> {
                 + Column.CITY + Column.COMMA
                 + Column.STATE + Column.COMMA
                 + Column.COUNTRY + Column.COMMA
-                + Column.POSTAL_CODE + ")"
+                + Column.POSTAL_CODE + Column.COMMA
+                + Column.PARENT_LOCATION_UUID + ")"
                 + values(INSERT_COLUMNS_COUNT);
     }
 
@@ -93,6 +95,7 @@ public class LocationTable extends Table<Location> {
         public static final String COUNTRY = "country";
         public static final String STATE = "state";
         public static final String CITY = "city";
+        public static final String PARENT_LOCATION_UUID = "parentLocationUuid";
     }
 
     @Override

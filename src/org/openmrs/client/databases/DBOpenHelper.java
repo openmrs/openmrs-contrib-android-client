@@ -285,6 +285,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(8, loc.getAddress().getState(), locationStatement);
             bindString(9, loc.getAddress().getCountry(), locationStatement);
             bindString(10, loc.getAddress().getPostalCode(), locationStatement);
+            bindString(11, loc.getParentLocationUuid(), locationStatement);
             locID = locationStatement.executeInsert();
             locationStatement.clearBindings();
             db.setTransactionSuccessful();

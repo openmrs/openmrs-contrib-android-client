@@ -60,11 +60,17 @@
     <!-- End Visit dialog -->
     <string name="end_visit_dialog_title">End Visit</string>
     <string name="end_visit_dialog_message">Are you sure you want to end this visit?</string>
-    <string name="end_visit_dialog_button">OK</string>
+    <!-- Start visit dialog -->
+    <string name="start_visit_dialog_title">Start Visit</string>
+    <string name="start_visit_dialog_message">Are you sure you want to start visit for %1$s now?</string>
+    <!-- Start visit dialog impossible-->
+    <string name="start_visit_impossible_dialog_title">Start Visit Impossible</string>
+    <string name="start_visit_impossible_dialog_message">There are already active visit. Synchronize patient or close previous visit</string>
     <!-- Buttons -->
     <string name="dialog_button_done">Done</string>
     <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_confirm">Confirm</string>
     <!-- Settings activity -->
     <string name="settings_logs">Logs</string>
     <string name="settings_about">About</string>
@@ -93,6 +99,9 @@
     <string name="action_synchronize_patients">Synchronize Patient</string>
     <string name="synchronize_patient_successful">Synchronize patient data successful</string>
     <string name="synchronize_patient_error">Synchronize patient data unsuccessful</string>
+    <string name="action_start_visit">Start visit</string>
+    <string name="start_visit_successful">Start new visit successful</string>
+    <string name="start_visit_error">Start new visit unsuccessful</string>
     <string name="patient_scroll_tab_details_label">Details</string>
     <string name="patient_scroll_tab_diagnosis_label">Diagnosis</string>
     <string name="patient_scroll_tab_visits_label">Visits</string>

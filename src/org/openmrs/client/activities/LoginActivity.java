@@ -58,10 +58,12 @@ public class LoginActivity extends ACBaseActivity {
     private LinearLayout mLoginFormView;
     private SparseArray<Bitmap> mBitmapCache;
     private static boolean mErrorOccurred;
+    private static String mLastCorrectURL = "";
     private static String mLastURL = "";
     private static List<Location> mLocationsList;
     private TextView mUrlTextView;
     private RelativeLayout mUrlField;
+    private OpenMRS mOpenMRS = OpenMRS.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +78,14 @@ public class LoginActivity extends ACBaseActivity {
             @Override
             public void onClick(View v) {
                 if (validateLoginFields()) {
-                    login();
+                    if ((!mOpenMRS.getUsername().equals(ApplicationConstants.EMPTY_STRING) &&
+                            !mOpenMRS.getUsername().equals(mUsername.getText().toString())) ||
+                            ((!mOpenMRS.getServerUrl().equals(ApplicationConstants.EMPTY_STRING) &&
+                                    !mOpenMRS.getServerUrl().equals(mUrlTextView.getText().toString())))) {
+                        showWarningDialog();
+                    } else {
+                        login();
+                    }
                 } else {
                     ToastUtil.showShortToast(getApplicationContext(),
                             ToastUtil.ToastType.ERROR,
@@ -91,13 +100,16 @@ public class LoginActivity extends ACBaseActivity {
         if (mErrorOccurred || OpenMRS.getInstance().getServerUrl().equals(ApplicationConstants.EMPTY_STRING)) {
             showURLDialog();
         } else {
-            mUrlTextView.setText(OpenMRS.getInstance().getServerUrl());
+            if (mLastCorrectURL.equals(ApplicationConstants.EMPTY_STRING)) {
+                mUrlTextView.setText(OpenMRS.getInstance().getServerUrl());
+                mLastCorrectURL = OpenMRS.getInstance().getServerUrl();
+            } else {
+                mUrlTextView.setText(mLastCorrectURL);
+            }
             mUrlField.setVisibility(View.VISIBLE);
             hideURLDialog();
         }
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
-
-
     }
 
     @Override
@@ -138,15 +150,16 @@ public class LoginActivity extends ACBaseActivity {
         mUrlField.setVisibility(View.INVISIBLE);
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.login_dialog_title));
-        if (mLastURL.equals(ApplicationConstants.EMPTY_STRING)) {
+        if (!mLastURL.equals(ApplicationConstants.EMPTY_STRING)) {
+            bundle.setEditTextViewMessage(mLastURL);
+        } else if (mLastCorrectURL.equals(ApplicationConstants.EMPTY_STRING)) {
             bundle.setEditTextViewMessage(OpenMRS.getInstance().getServerUrl());
         } else {
-            bundle.setEditTextViewMessage(mLastURL);
+            bundle.setEditTextViewMessage(mLastCorrectURL);
         }
         bundle.setRightButtonText(getString(R.string.dialog_button_done));
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.SET_URL);
         if (!OpenMRS.getInstance().getServerUrl().equals(ApplicationConstants.EMPTY_STRING)) {
-
             bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
             bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS_URL_DIALOG);
         }
@@ -161,10 +174,21 @@ public class LoginActivity extends ACBaseActivity {
         startActivity(i);
     }
 
-    private void login() {
+    private void showWarningDialog() {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.warning_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.warning_lost_data_dialog));
+        bundle.setRightButtonText(getString(R.string.dialog_button_ok));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.LOGIN);
+        bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
+        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.WARNING_LOST_DATA_DIALOG_TAG);
+    }
+
+    public void login() {
         mLoginFormView.setVisibility(View.GONE);
         mSpinner.setVisibility(View.VISIBLE);
-        mAuthorizationManager.login(mUsername.getText().toString(), mPassword.getText().toString());
+        mAuthorizationManager.login(mUsername.getText().toString(), mPassword.getText().toString(), mUrlTextView.getText().toString());
     }
 
     private void bindDrawableResources() {
@@ -195,9 +219,9 @@ public class LoginActivity extends ACBaseActivity {
 
     public void initLoginForm(List<Location> locationsList, String serverURL) {
         mErrorOccurred = false;
+        mLastCorrectURL = serverURL;
         mLastURL = ApplicationConstants.EMPTY_STRING;
-        OpenMRS.getInstance().setServerUrl(serverURL);
-        mUrlTextView.setText(OpenMRS.getInstance().getServerUrl());
+        mUrlTextView.setText(serverURL);
         mUrlField.setVisibility(View.VISIBLE);
         mLocationsList = locationsList;
         List<String> items = getLocationStringList(locationsList);
@@ -262,9 +286,9 @@ public class LoginActivity extends ACBaseActivity {
     public void hideURLDialog() {
         if (mLocationsList == null) {
             LocationManager lm = new LocationManager(this);
-            lm.getAvailableLocation(OpenMRS.getInstance().getServerUrl());
+            lm.getAvailableLocation(mLastCorrectURL);
         } else {
-            initLoginForm(mLocationsList, OpenMRS.getInstance().getServerUrl());
+            initLoginForm(mLocationsList, mLastCorrectURL);
         }
     }
 }

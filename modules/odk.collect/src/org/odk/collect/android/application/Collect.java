@@ -36,6 +36,7 @@ import org.opendatakit.httpclientandroidlib.protocol.BasicHttpContext;
 import org.opendatakit.httpclientandroidlib.protocol.HttpContext;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Extends the Application class to implement
@@ -149,6 +150,40 @@ public class Collect extends Application {
                 }
             }
         }
+    }
+
+    /**
+     * Clear odk directories on the SDCard (or other external storage)
+     *
+     * @throws RuntimeException if there is no SDCard or the directory exists as a non directory
+     */
+    public static void clearODKDirs() throws RuntimeException {
+        String cardstatus = Environment.getExternalStorageState();
+        if (!cardstatus.equals(Environment.MEDIA_MOUNTED)) {
+            throw new RuntimeException(Collect.getInstance().getString(R.string.sdcard_unmounted, cardstatus));
+        }
+
+        String[] dirs = {
+                ODK_ROOT
+        };
+
+        for (String dirName : dirs) {
+            File file = new File(dirName);
+
+            if (file.exists()) {
+                String deleteCmd = "rm -r " + dirName;
+                Runtime runtime = Runtime.getRuntime();
+                try {
+                    runtime.exec(deleteCmd);
+                } catch (IOException e) {
+                    RuntimeException ex =
+                            new RuntimeException("ODK reports :: " + dirName
+                                    + " can't be deleted");
+                }
+            }
+        }
+
+        createODKDirs();
     }
 
     /**

@@ -39,7 +39,7 @@ public class CustomFragmentDialog extends DialogFragment {
     private static final int TYPED_DIMENSION_VALUE = 10;
 
     public enum OnClickAction {
-        SET_URL, SHOW_URL_DIALOG, DISMISS_URL_DIALOG, DISMISS, LOGOUT, UNAUTHORIZED, END_VISIT, START_VISIT
+        SET_URL, SHOW_URL_DIALOG, DISMISS_URL_DIALOG, DISMISS, LOGOUT, UNAUTHORIZED, END_VISIT, START_VISIT, LOGIN
     }
 
     protected LayoutInflater mInflater;
@@ -269,6 +269,10 @@ public class CustomFragmentDialog extends DialogFragment {
                         break;
                     case DISMISS_URL_DIALOG:
                         ((LoginActivity) getActivity()).hideURLDialog();
+                        dismiss();
+                        break;
+                    case LOGIN:
+                        ((LoginActivity) getActivity()).login();
                         dismiss();
                         break;
                     case DISMISS:

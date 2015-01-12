@@ -22,6 +22,8 @@
     <string name="login_username_hint">username</string>
     <string name="login_password_hint">password</string>
     <string name="login_location_select">Choose location for this session</string>
+    <string name="warning_dialog_title">Warning</string>
+    <string name="warning_lost_data_dialog">You change url or username. All data will be lost. Are you sure?</string>
     <!-- Url dialog -->
     <string name="login_dialog_title">Enter URL address</string>
     <string name="login_dialog_server_url_empty_error">Server URL can not be empty.</string>

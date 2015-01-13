@@ -78,7 +78,7 @@ public class CaptureVitalsActivity extends ACBaseActivity {
             case RESULT_OK:
                 String path = data.getData().toString();
                 String instanceID = path.substring(path.lastIndexOf('/') + 1);
-                new FormsManger(this).uploadXFormWIthMultiPartRequest(new FormsDAO(getContentResolver()).getSurveysSubmissionDataFromFormInstanceId(instanceID).getFormInstanceFilePath(), mSelectedPatientUUID);
+                new FormsManger(this).uploadXFormWithMultiPartRequest(new FormsDAO(getContentResolver()).getSurveysSubmissionDataFromFormInstanceId(instanceID).getFormInstanceFilePath(), mSelectedPatientUUID);
                 break;
             case RESULT_CANCELED:
             default:

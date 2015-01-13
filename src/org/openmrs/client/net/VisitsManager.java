@@ -32,6 +32,7 @@ import org.openmrs.client.activities.FindPatientsActivity;
 import org.openmrs.client.activities.FindPatientsSearchActivity;
 import org.openmrs.client.activities.PatientDashboardActivity;
 import org.openmrs.client.activities.VisitDashboardActivity;
+import org.openmrs.client.dao.EncounterDAO;
 import org.openmrs.client.dao.ObservationDAO;
 import org.openmrs.client.dao.VisitDAO;
 import org.openmrs.client.models.Encounter;
@@ -44,9 +45,12 @@ import org.openmrs.client.models.Visit;
 import org.openmrs.client.models.mappers.ObservationMapper;
 import org.openmrs.client.models.mappers.VisitMapper;
 import org.openmrs.client.net.volley.wrappers.JsonObjectRequestWrapper;
+import org.openmrs.client.utilities.ApplicationConstants;
 import org.openmrs.client.utilities.DateUtils;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.openmrs.client.utilities.ApplicationConstants.API;
 
@@ -59,6 +63,30 @@ public class VisitsManager extends BaseManager {
 
     public VisitsManager(Context context) {
         super(context);
+    }
+
+
+    public void getLastVitals(final String patientUUID) {
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+        String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.ENCOUNTER_DETAILS + "?patient=" + patientUUID
+                + "&encounterType=" + ApplicationConstants.EncounterTypes.VITALS + "&v=custom:(obs:full)&limit=1&order=desc";
+        logger.d(SENDING_REQUEST + visitURL);
+
+        JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
+                visitURL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                new EncounterDAO().saveLastVitalsEncounter(ObservationMapper.lastVitalsMap(response));
+            }
+        }
+                , new GeneralErrorListenerImpl(mContext) {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                subtractExpectedResponses(true);
+                super.onErrorResponse(error);
+            }
+        });
+        queue.add(jsObjRequest);
     }
 
     public void findVisitsByPatientUUID(final String patientUUID, final long patientID) {
@@ -98,7 +126,7 @@ public class VisitsManager extends BaseManager {
 
     public void findVisitByUUID(final String visitUUID, final long patientID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS + visitUUID
+        String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS + File.separator + visitUUID
                 + API.FULL_VERSION;
         logger.d(SENDING_REQUEST + visitURL);
 
@@ -157,7 +185,7 @@ public class VisitsManager extends BaseManager {
 
     public void getVisitDiagnosesByUUID(final String diagnosesUUID, final long patientID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String diagnoseURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.OBS_DETAILS + diagnosesUUID;
+        String diagnoseURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.OBS_DETAILS + File.separator + diagnosesUUID;
         logger.d(SENDING_REQUEST + diagnoseURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
@@ -191,7 +219,7 @@ public class VisitsManager extends BaseManager {
 
     public void inactivateVisitByUUID(final String visitUUID, final long patientID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS + visitUUID;
+        String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS + File.separator + visitUUID;
         logger.d(SENDING_REQUEST + visitURL);
 
         final String currentDate = DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT);
@@ -234,7 +262,7 @@ public class VisitsManager extends BaseManager {
 
     public void createVisit(final Patient patient) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String visitURL = mOpenMRS.getServerUrl() + API.COMMON_PART + API.VISIT_DETAILS;
+        String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS;
         logger.d("Sending request to : " + visitURL);
 
         final String currentDate = DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT);
@@ -278,7 +306,7 @@ public class VisitsManager extends BaseManager {
 
     public void getVisitType() {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String visitTypeURL = mOpenMRS.getServerUrl() + API.COMMON_PART + API.VISIT_TYPE;
+        String visitTypeURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_TYPE;
         logger.d("Sending request to : " + visitTypeURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET, visitTypeURL, null, new Response.Listener<JSONObject>() {

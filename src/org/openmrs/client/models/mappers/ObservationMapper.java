@@ -17,7 +17,13 @@ package org.openmrs.client.models.mappers;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.openmrs.client.application.OpenMRS;
+import org.openmrs.client.models.Encounter;
 import org.openmrs.client.models.Observation;
+import org.openmrs.client.utilities.DateUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public final class ObservationMapper {
 
@@ -53,6 +59,32 @@ public final class ObservationMapper {
             observation.setDiagnosisNote(observationJSONObject.getString(VALUE_KEY));
         }
         return observation;
+    }
+
+    public static Encounter lastVitalsMap(JSONObject jsonObject) {
+        Encounter encounter = new Encounter();
+        List<Observation> observationList = new ArrayList<Observation>();
+        try {
+            JSONObject obsObject = jsonObject.getJSONArray("results").getJSONObject(0).getJSONArray("obs").getJSONObject(0);
+            JSONArray groupMembers = obsObject.getJSONArray("groupMembers");
+            JSONObject encounterJSON = obsObject.getJSONObject("encounter");
+            for (int i = 0; i < groupMembers.length(); i++) {
+                JSONObject object = groupMembers.getJSONObject(i);
+                Observation observation = new Observation();
+                observation.setDisplay(object.getString("display"));
+                observation.setDisplayValue(object.getString("value"));
+                observationList.add(observation);
+            }
+            encounter.setUuid(encounterJSON.getString("uuid"));
+            encounter.setEncounterDatetime(DateUtils.convertTime(encounterJSON.getString("encounterDatetime")));
+            encounter.setEncounterType(Encounter.EncounterType.VITALS);
+            encounter.setDisplay(encounterJSON.getString("display"));
+            encounter.setObservations(observationList);
+        } catch (JSONException e) {
+            OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
+        }
+
+        return encounter;
     }
 
     public static Observation vitalsMap(JSONObject observationJSONObject) throws JSONException {

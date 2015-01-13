@@ -28,6 +28,7 @@ import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.net.volley.wrappers.JsonObjectRequestWrapper;
 import org.openmrs.client.utilities.ApplicationConstants;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,7 +68,7 @@ public class UserManager extends BaseManager {
 
     private void getFullInformation(String userUUID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String visitURL = mOpenMRS.getServerUrl() + ApplicationConstants.API.REST_ENDPOINT + API.USER_DETAILS + userUUID;
+        String visitURL = mOpenMRS.getServerUrl() + ApplicationConstants.API.REST_ENDPOINT + API.USER_DETAILS + File.separator + userUUID;
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
                 visitURL, null, new Response.Listener<JSONObject>() {

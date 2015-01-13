@@ -34,6 +34,8 @@ import org.openmrs.client.models.mappers.PatientMapper;
 import org.openmrs.client.net.volley.wrappers.JsonObjectRequestWrapper;
 import org.openmrs.client.utilities.PatientCacheHelper;
 
+import java.io.File;
+
 import static org.openmrs.client.utilities.ApplicationConstants.API;
 
 public class FindPatientsManager extends BaseManager {
@@ -140,7 +142,7 @@ public class FindPatientsManager extends BaseManager {
 
     public void getFullPatientData(final String patientUUID, final Integer searchId) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String patientURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.PATIENT_DETAILS
+        String patientURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.PATIENT_DETAILS + File.separator
                 + patientUUID + API.FULL_VERSION;
         logger.d(SENDING_REQUEST + patientURL);
 
@@ -178,7 +180,7 @@ public class FindPatientsManager extends BaseManager {
 
     public void getFullLastViewedPatientData(final String patientUUID, final int searchId) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String patientURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.PATIENT_DETAILS
+        String patientURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.PATIENT_DETAILS + File.separator
                 + patientUUID + API.FULL_VERSION;
         logger.d(SENDING_REQUEST + patientURL);
 

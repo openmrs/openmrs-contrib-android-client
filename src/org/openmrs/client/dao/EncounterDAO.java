@@ -19,7 +19,9 @@ import net.sqlcipher.Cursor;
 import org.openmrs.client.databases.DBOpenHelper;
 import org.openmrs.client.databases.OpenMRSDBOpenHelper;
 import org.openmrs.client.databases.tables.EncounterTable;
+import org.openmrs.client.databases.tables.ObservationTable;
 import org.openmrs.client.models.Encounter;
+import org.openmrs.client.models.Observation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,36 @@ public class EncounterDAO {
     public long saveEncounter(Encounter encounter, long visitID) {
         encounter.setVisitID(visitID);
         return new EncounterTable().insert(encounter);
+    }
+
+    public void saveLastVitalsEncounter(Encounter encounter) {
+        long oldLastVitalsEncounterID = getLastVitalsEncounterID();
+        if (0 != oldLastVitalsEncounterID) {
+            for (Observation obs: new ObservationDAO().findObservationByEncounterID(oldLastVitalsEncounterID)) {
+                new ObservationTable().delete(obs.getId());
+            }
+            new EncounterTable().delete(oldLastVitalsEncounterID);
+        }
+        saveEncounter(encounter, 0);
+    }
+
+    public long getLastVitalsEncounterID() {
+        long encounterID = 0;
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        String where = String.format("%s = ?", EncounterTable.Column.VISIT_KEY_ID);
+        String[] whereArgs = new String[]{"0"};
+        final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        if (null != cursor) {
+            try {
+                if (cursor.moveToFirst()) {
+                    int id_CI = cursor.getColumnIndex(EncounterTable.Column.ID);
+                    encounterID = cursor.getLong(id_CI);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return encounterID;
     }
 
     public boolean updateEncounter(long encounterID, Encounter encounter, long visitID) {

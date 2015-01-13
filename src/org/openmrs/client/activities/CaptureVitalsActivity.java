@@ -35,10 +35,16 @@ public class CaptureVitalsActivity extends ACBaseActivity {
 
     public static final int CAPTURE_VITALS_REQUEST_CODE = 1;
 
+    private String mSelectedPatientUUID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_capture_vitals);
+
+        if (null != savedInstanceState) {
+            mSelectedPatientUUID = savedInstanceState.getString(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE);
+        }
 
         List<Patient> patientList = new PatientDAO().getAllPatients();
         getSupportFragmentManager().beginTransaction()
@@ -46,6 +52,7 @@ public class CaptureVitalsActivity extends ACBaseActivity {
     }
 
     public void startFormEntryForResult(String patientUUID) {
+        mSelectedPatientUUID = patientUUID;
         try {
             Intent intent = new Intent(this, FormEntryActivity.class);
             Uri formURI = new FormsDAO(this.getContentResolver()).getFormURI("8");
@@ -59,13 +66,19 @@ public class CaptureVitalsActivity extends ACBaseActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE, mSelectedPatientUUID);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode) {
             case RESULT_OK:
                 String path = data.getData().toString();
                 String instanceID = path.substring(path.lastIndexOf('/') + 1);
-                new FormsManger(this).uploadXFormWIthMultiPartRequest(new FormsDAO(getContentResolver()).getSurveysSubmissionDataFromFormInstanceId(instanceID).getFormInstanceFilePath());
+                new FormsManger(this).uploadXFormWIthMultiPartRequest(new FormsDAO(getContentResolver()).getSurveysSubmissionDataFromFormInstanceId(instanceID).getFormInstanceFilePath(), mSelectedPatientUUID);
                 break;
             case RESULT_CANCELED:
             default:

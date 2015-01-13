@@ -31,6 +31,7 @@ public abstract class ApplicationConstants {
     public static final String AUTHORIZATION_PARAM = "Authorization";
     public static final String JSESSIONID_PARAM = "JSESSIONID";
     public static final String COOKIE_PARAM = "Cookie";
+    public static final String PATIENT_UUID_PARAM = "ACCEPT_PATIENT_UUID";
 
     public abstract static class API {
         public static final String REST_ENDPOINT = "/ws/rest/v1/";

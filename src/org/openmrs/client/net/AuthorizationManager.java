@@ -48,7 +48,7 @@ public class AuthorizationManager extends BaseManager {
     public void login(final String username, final String password, final String serverURL) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         encodeAuthorizationToken(username, password);
-        String loginURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.AUTHORISATION_END_POINT;
+        String loginURL = serverURL + API.REST_ENDPOINT + API.AUTHORISATION_END_POINT;
 
         logger.i("Sending request to : " + loginURL);
 

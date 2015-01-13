@@ -124,7 +124,7 @@ public class FormsManger extends BaseManager {
         queue.add(mRequestDecorator);
     }
 
-    public void uploadXFormWIthMultiPartRequest(final String instancePath) {
+    public void uploadXFormWIthMultiPartRequest(final String instancePath, final String pattientUUID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String xFormsListURL = mOpenMRS.getServerUrl() + API.XFORM_ENDPOINT + API.XFORM_UPLOAD;
         MultiPartRequest multipartRequest = new MultiPartRequest(xFormsListURL,
@@ -135,7 +135,7 @@ public class FormsManger extends BaseManager {
                     public void onResponse(String response) {
                         mOpenMRS.getOpenMRSLogger().d(response.toString());
                     }
-                }, new File(instancePath)) {
+                }, new File(instancePath), pattientUUID) {
         };
 
         queue.add(multipartRequest);

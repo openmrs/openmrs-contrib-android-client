@@ -20,8 +20,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyLog;
 
-import org.opendatakit.httpclientandroidlib.entity.mime.MultipartEntity;
-import org.opendatakit.httpclientandroidlib.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.utilities.ApplicationConstants;
 
@@ -32,18 +32,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MultiPartRequest extends Request<String> {
+    private int mStatusCode;
+
     private MultipartEntity entity = new MultipartEntity();
 
     private static final String FILE_PART_NAME = "xml_submission_file";
 
     private final Response.Listener<String> mListener;
     private final File mFilePart;
+    private final String mPatientUUID;
 
-    public MultiPartRequest(String url, Response.ErrorListener errorListener, Response.Listener<String> listener, File file) {
+    public MultiPartRequest(String url, Response.ErrorListener errorListener, Response.Listener<String> listener, File file, String patientUUID) {
         super(Method.POST, url, errorListener);
 
         mListener = listener;
         mFilePart = file;
+        mPatientUUID = patientUUID;
         buildMultiPartEntity();
     }
 
@@ -69,6 +73,7 @@ public class MultiPartRequest extends Request<String> {
 
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
+        mStatusCode = response.statusCode;
         return Response.success("Uploaded", getCacheEntry());
     }
 
@@ -81,7 +86,7 @@ public class MultiPartRequest extends Request<String> {
         builder.append("=");
         builder.append(OpenMRS.getInstance().getSessionToken());
         params.put(ApplicationConstants.COOKIE_PARAM, builder.toString());
-
+        params.put(ApplicationConstants.PATIENT_UUID_PARAM, mPatientUUID);
         return params;
     }
 

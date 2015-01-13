@@ -14,10 +14,13 @@
 
 package org.odk.collect.android.application;
 
+import android.annotation.TargetApi;
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 
@@ -48,10 +51,19 @@ public class Collect extends Application {
     // Storage paths
     public static String ODK_ROOT = Environment.getExternalStorageDirectory()
             + File.separator + "odk";
-    public static String FORMS_PATH = ODK_ROOT + File.separator + "forms";
-    public static String INSTANCES_PATH = ODK_ROOT + File.separator + "instances";
-    public static String CACHE_PATH = ODK_ROOT + File.separator + ".cache";
-    public static String METADATA_PATH = ODK_ROOT + File.separator + "metadata";
+
+    public static final String OPENMRS_DIR_NAME = "OpenMRS";
+    public static final String OPENMRS_DIR_PATH = File.separator + OPENMRS_DIR_NAME;
+    private static final String ODK_DIR_PATH = File.separator + "odk";
+    private static final String FORMS_DIR_PATH = File.separator + "forms";
+    private static final String INSTANCES_DIR_PATH = File.separator + "instances";
+    private static final String METADATA_DIR_PATH = File.separator + "metadata";
+    private static final String CACHE_DIR_PATH = File.separator + ".cache";
+
+    public static String FORMS_PATH = ODK_ROOT + FORMS_DIR_PATH;
+    public static String INSTANCES_PATH = ODK_ROOT + INSTANCES_DIR_PATH;
+    public static String CACHE_PATH = ODK_ROOT + CACHE_DIR_PATH;
+    public static String METADATA_PATH = ODK_ROOT + METADATA_DIR_PATH;
     public static final String TMPFILE_PATH = CACHE_PATH + File.separator + "tmp.jpg";
     public static final String TMPDRAWFILE_PATH = CACHE_PATH + File.separator + "tmpDraw.jpg";
     public static final String TMPXML_PATH = CACHE_PATH + File.separator + "tmp.xml";
@@ -66,6 +78,7 @@ public class Collect extends Application {
     private ActivityLogger mActivityLogger;
     private FormController mFormController = null;
     private ExternalDataManager externalDataManager;
+    protected static String mExternalDirectoryPath;
 
     private static Collect singleton = null;
 
@@ -261,4 +274,26 @@ public class Collect extends Application {
                 mgr.getSingularProperty(PropertyManager.DEVICE_ID_PROPERTY));
     }
 
+
+    /**
+     * Overriding ODK directories path for :
+     * - forms
+     * - instances
+     * - metadata
+     */
+    @TargetApi(Build.VERSION_CODES.FROYO)
+    public static void overrideODKDirs(Context context) {
+        if (mExternalDirectoryPath == null) {
+            mExternalDirectoryPath = context.getExternalFilesDir(null).toString();
+            overrideODKDirs();
+        }
+    }
+
+    public static void overrideODKDirs() {
+        ODK_ROOT = mExternalDirectoryPath + OPENMRS_DIR_PATH + ODK_DIR_PATH;
+        FORMS_PATH = ODK_ROOT + FORMS_DIR_PATH;
+        INSTANCES_PATH = ODK_ROOT + INSTANCES_DIR_PATH;
+        METADATA_PATH = ODK_ROOT + METADATA_DIR_PATH;
+        CACHE_PATH = ODK_ROOT + CACHE_DIR_PATH;
+    }
 }

@@ -242,6 +242,7 @@ public class FormsProvider extends ContentProvider {
 		// must be at the beginning of any activity that can be called from an
 		// external intent
 		try {
+			Collect.overrideODKDirs(getContext());
 			Collect.createODKDirs();
 		} catch (RuntimeException e) {
 			return false;

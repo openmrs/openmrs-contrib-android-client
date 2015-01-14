@@ -32,14 +32,14 @@ import org.openmrs.client.activities.FindPatientsActivity;
 import org.openmrs.client.activities.FindPatientsSearchActivity;
 import org.openmrs.client.activities.PatientDashboardActivity;
 import org.openmrs.client.activities.VisitDashboardActivity;
+import org.openmrs.client.activities.fragments.PatientVisitsFragment;
+import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.dao.EncounterDAO;
+import org.openmrs.client.dao.LocationDAO;
 import org.openmrs.client.dao.ObservationDAO;
 import org.openmrs.client.dao.VisitDAO;
 import org.openmrs.client.models.Encounter;
 import org.openmrs.client.models.Observation;
-import org.openmrs.client.activities.fragments.PatientVisitsFragment;
-import org.openmrs.client.application.OpenMRS;
-import org.openmrs.client.dao.LocationDAO;
 import org.openmrs.client.models.Patient;
 import org.openmrs.client.models.Visit;
 import org.openmrs.client.models.mappers.ObservationMapper;
@@ -50,7 +50,6 @@ import org.openmrs.client.utilities.DateUtils;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 
 import static org.openmrs.client.utilities.ApplicationConstants.API;
 

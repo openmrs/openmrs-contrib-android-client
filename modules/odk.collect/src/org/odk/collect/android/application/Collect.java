@@ -184,19 +184,20 @@ public class Collect extends Application {
             File file = new File(dirName);
 
             if (file.exists()) {
-                String deleteCmd = "rm -r " + dirName;
-                Runtime runtime = Runtime.getRuntime();
-                try {
-                    runtime.exec(deleteCmd);
-                } catch (IOException e) {
-                    RuntimeException ex =
-                            new RuntimeException("ODK reports :: " + dirName
-                                    + " can't be deleted");
-                }
+                deleteRecursive(file);
             }
         }
 
         createODKDirs();
+    }
+
+    private static void deleteRecursive(File fileOrDirectory) {
+        if (fileOrDirectory.isDirectory()) {
+            for (File child : fileOrDirectory.listFiles()) {
+                deleteRecursive(child);
+            }
+        }
+        fileOrDirectory.delete();
     }
 
     /**

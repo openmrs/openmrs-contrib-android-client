@@ -14,7 +14,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.openmrs.client.test"
+    package="org.openmrs.mobile.test"
     android:versionCode="1"
     android:versionName="1.0">
     <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="19"/>
@@ -24,7 +24,7 @@
     <application>
         <uses-library android:name="android.test.runner"/>
     </application>
-    <instrumentation android:name="org.openmrs.client.test.OpenMRSInstrumentationTestRunner"
-                     android:targetPackage="org.openmrs.client"/>
+    <instrumentation android:name="org.openmrs.mobile.test.OpenMRSInstrumentationTestRunner"
+                     android:targetPackage="org.openmrs.mobile"/>
 
 </manifest>

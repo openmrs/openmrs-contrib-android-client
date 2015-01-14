@@ -56,7 +56,7 @@
         <mkdir dir="${junit.reports.dir}" />
         <exec executable="${adb}" failonerror="true" dir="${junit.reports.dir}">
             <arg value="pull" />
-            <arg value="/data/data/org.openmrs.client/files/junit/" />
+            <arg value="/data/data/org.openmrs.mobile/files/junit/" />
         </exec>
     </target>
 
@@ -71,7 +71,7 @@
     </target>
 
     <target name="demoVersion">
-        <replaceregexp file="${src.dir}/org/openmrs/client/utilities/ApplicationConstants.java" match='DEFAULT_OPEN_MRS_URL = EMPTY_STRING'
+        <replaceregexp file="${src.dir}/org/openmrs/mobile/utilities/ApplicationConstants.java" match='DEFAULT_OPEN_MRS_URL = EMPTY_STRING'
                        replace='DEFAULT_OPEN_MRS_URL = "http://demo.openmrs.org/openmrs/"' />
     </target>
 </project>

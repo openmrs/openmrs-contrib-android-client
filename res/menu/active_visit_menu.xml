@@ -15,7 +15,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="org.openmrs.client.activities.VisitDashboardActivity">
+    tools:context="org.openmrs.mobile.activities.VisitDashboardActivity">
     <item
         android:id="@+id/actionEndVisit"
         android:orderInCategory="100"

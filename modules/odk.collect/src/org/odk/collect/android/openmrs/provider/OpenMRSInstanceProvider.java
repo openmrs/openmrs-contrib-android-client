@@ -46,7 +46,6 @@ public class OpenMRSInstanceProvider extends ContentProvider {
             super(Collect.METADATA_PATH, databaseName, null, DATABASE_VERSION);
         }
 
-
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL("CREATE TABLE " + INSTANCES_TABLE_NAME + " ("

@@ -32,7 +32,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MultiPartRequest extends Request<String> {
-    private int mStatusCode;
 
     private MultipartEntity entity = new MultipartEntity();
 
@@ -73,7 +72,6 @@ public class MultiPartRequest extends Request<String> {
 
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
-        mStatusCode = response.statusCode;
         return Response.success("Uploaded", getCacheEntry());
     }
 

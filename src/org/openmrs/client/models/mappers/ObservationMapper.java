@@ -29,13 +29,14 @@ public final class ObservationMapper {
 
     private static final String DISPLAY_KEY = "display";
     private static final String VALUE_KEY = "value";
+    private static final String UUID_KEY = "uuid";
 
     private ObservationMapper() {
     }
 
     public static Observation diagnosisMap(JSONObject observationJSONObject) throws JSONException {
         Observation observation = new Observation();
-        observation.setUuid(observationJSONObject.getString("uuid"));
+        observation.setUuid(observationJSONObject.getString(UUID_KEY));
         observation.setDisplay(observationJSONObject.getString(DISPLAY_KEY));
 
         if ("Visit Diagnoses".equals(observationJSONObject.getJSONObject("concept").getString(DISPLAY_KEY))) {
@@ -62,34 +63,69 @@ public final class ObservationMapper {
     }
 
     public static Encounter lastVitalsMap(JSONObject jsonObject) {
+        Encounter encounter = null;
+        try {
+            encounter = parseLastVitalsAfterFormSending(jsonObject);
+        } catch (JSONException e) {
+            OpenMRS.getInstance().getOpenMRSLogger().d("Failed to parse LastVitals encounter. Trying to parse different JSON model.");
+            try {
+                encounter = parseOtherLastVitalsEncounterResponse(jsonObject);
+            } catch (JSONException je) {
+                OpenMRS.getInstance().getOpenMRSLogger().d(je.toString());
+                OpenMRS.getInstance().getOpenMRSLogger().d("Failed to parse LastVitals encounter different JSON model.");
+            }
+        }
+        return encounter;
+    }
+
+    private static Encounter parseLastVitalsAfterFormSending(JSONObject jsonObject) throws JSONException {
         Encounter encounter = new Encounter();
         List<Observation> observationList = new ArrayList<Observation>();
-        try {
-            JSONObject obsObject = jsonObject.getJSONArray("results").getJSONObject(0).getJSONArray("obs").getJSONObject(0);
-            JSONArray groupMembers = obsObject.getJSONArray("groupMembers");
-            JSONObject encounterJSON = obsObject.getJSONObject("encounter");
-            for (int i = 0; i < groupMembers.length(); i++) {
-                JSONObject object = groupMembers.getJSONObject(i);
-                Observation observation = new Observation();
-                observation.setDisplay(object.getString("display"));
-                observation.setDisplayValue(object.getString("value"));
-                observationList.add(observation);
-            }
-            encounter.setUuid(encounterJSON.getString("uuid"));
-            encounter.setEncounterDatetime(DateUtils.convertTime(encounterJSON.getString("encounterDatetime")));
-            encounter.setEncounterType(Encounter.EncounterType.VITALS);
-            encounter.setDisplay(encounterJSON.getString("display"));
-            encounter.setObservations(observationList);
-        } catch (JSONException e) {
-            OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
+        JSONObject obsObject = jsonObject.getJSONArray("results").getJSONObject(0).getJSONArray("obs").getJSONObject(0);
+        JSONArray groupMembers = obsObject.getJSONArray("groupMembers");
+        JSONObject encounterJSON = obsObject.getJSONObject("encounter");
+        for (int i = 0; i < groupMembers.length(); i++) {
+            JSONObject object = groupMembers.getJSONObject(i);
+            Observation observation = new Observation();
+            observation.setDisplay(object.getString(DISPLAY_KEY));
+            observation.setDisplayValue(object.getString(VALUE_KEY));
+            observation.setUuid(object.getString(UUID_KEY));
+            observationList.add(observation);
         }
+        encounter.setUuid(encounterJSON.getString(UUID_KEY));
+        encounter.setEncounterDatetime(DateUtils.convertTime(encounterJSON.getString("encounterDatetime")));
+        encounter.setEncounterType(Encounter.EncounterType.VITALS);
+        encounter.setDisplay(encounterJSON.getString(DISPLAY_KEY));
+        encounter.setObservations(observationList);
+        return encounter;
+    }
 
+    private static Encounter parseOtherLastVitalsEncounterResponse(JSONObject jsonObject) throws JSONException {
+        Encounter encounter = new Encounter();
+        List<Observation> observationList = new ArrayList<Observation>();
+        JSONArray obsArray = jsonObject.getJSONArray("results").getJSONObject(0).getJSONArray("obs");
+        for (int i = 0; i < obsArray.length(); i++) {
+            JSONObject obsObject = obsArray.getJSONObject(i);
+            Observation observation = new Observation();
+            observation.setDisplay(obsObject.getString(DISPLAY_KEY));
+            observation.setDisplayValue(obsObject.getString(VALUE_KEY));
+            observation.setUuid(obsObject.getString(UUID_KEY));
+            observationList.add(observation);
+            if (obsArray.length() - 1 == i) {
+                JSONObject encounterJSON = obsObject.getJSONObject("encounter");
+                encounter.setUuid(encounterJSON.getString(UUID_KEY));
+                encounter.setEncounterDatetime(DateUtils.convertTime(encounterJSON.getString("encounterDatetime")));
+                encounter.setEncounterType(Encounter.EncounterType.VITALS);
+                encounter.setDisplay(encounterJSON.getString(DISPLAY_KEY));
+                encounter.setObservations(observationList);
+            }
+        }
         return encounter;
     }
 
     public static Observation vitalsMap(JSONObject observationJSONObject) throws JSONException {
         Observation observation = new Observation();
-        observation.setUuid(observationJSONObject.getString("uuid"));
+        observation.setUuid(observationJSONObject.getString(UUID_KEY));
         String[] labelAndValue = observationJSONObject.getString(DISPLAY_KEY).split(":");
         observation.setDisplay(labelAndValue[0]);
         observation.setDisplayValue(labelAndValue[1]);

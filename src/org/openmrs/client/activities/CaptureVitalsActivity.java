@@ -17,6 +17,7 @@ package org.openmrs.client.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 
 import org.openmrs.client.R;
 import org.openmrs.client.activities.fragments.PatientsVitalsListFragment;
@@ -49,6 +50,12 @@ public class CaptureVitalsActivity extends ACBaseActivity {
         List<Patient> patientList = new PatientDAO().getAllPatients();
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.patientVitalsList, PatientsVitalsListFragment.newInstance(new PatientListBundle(patientList))).commit();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //no context menu for this activity
+        return false;
     }
 
     public void startFormEntryForResult(String patientUUID) {

@@ -75,7 +75,7 @@ public class VisitsManager extends BaseManager {
                 visitURL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                new EncounterDAO().saveLastVitalsEncounter(ObservationMapper.lastVitalsMap(response));
+                new EncounterDAO().saveLastVitalsEncounter(ObservationMapper.lastVitalsMap(response), patientUUID);
             }
         }
                 , new GeneralErrorListenerImpl(mContext) {
@@ -106,6 +106,8 @@ public class VisitsManager extends BaseManager {
                         for (int i = 0; i < visitResultJSON.length(); i++) {
                             findVisitByUUID(visitResultJSON.getJSONObject(i).getString(UUID_KEY), patientID);
                         }
+                    } else {
+                        subtractExpectedResponses(false);
                     }
                 } catch (JSONException e) {
                     subtractExpectedResponses(true);
@@ -341,7 +343,7 @@ public class VisitsManager extends BaseManager {
         if (errorOccurred) {
             mErrorOccurred = errorOccurred;
         }
-        if (mExpectedResponses == 0) {
+        if (mExpectedResponses <= 0) {
             if (mContext instanceof PatientDashboardActivity) {
                 ((PatientDashboardActivity) mContext).updatePatientVisitsData(mErrorOccurred);
             } else if (mContext instanceof FindPatientsSearchActivity

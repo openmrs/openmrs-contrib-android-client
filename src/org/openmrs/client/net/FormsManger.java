@@ -26,11 +26,13 @@ import org.kxml2.io.KXmlParser;
 import org.kxml2.kdom.Document;
 import org.kxml2.kdom.Element;
 import org.odk.collect.android.logic.FormDetails;
+import org.openmrs.client.R;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.net.volley.wrappers.MultiPartRequest;
 import org.openmrs.client.net.volley.wrappers.StringRequestDecorator;
 import org.openmrs.client.utilities.FileUtils;
 import org.openmrs.client.utilities.FormsLoaderUtil;
+import org.openmrs.client.utilities.ToastUtil;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -124,7 +126,7 @@ public class FormsManger extends BaseManager {
         queue.add(mRequestDecorator);
     }
 
-    public void uploadXFormWithMultiPartRequest(final String instancePath, final String pattientUUID) {
+    public void uploadXFormWithMultiPartRequest(final String instancePath, final String patientUUID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String xFormsListURL = mOpenMRS.getServerUrl() + API.XFORM_ENDPOINT + API.XFORM_UPLOAD;
         MultiPartRequest multipartRequest = new MultiPartRequest(xFormsListURL,
@@ -133,9 +135,9 @@ public class FormsManger extends BaseManager {
                 {
                     @Override
                     public void onResponse(String response) {
-                        new VisitsManager(mContext).getLastVitals(pattientUUID);
+                        ToastUtil.showLongToast(mContext, ToastUtil.ToastType.SUCCESS, mContext.getString(R.string.forms_sent_successfully));
                     }
-                }, new File(instancePath), pattientUUID) {
+                }, new File(instancePath), patientUUID) {
         };
 
         queue.add(multipartRequest);

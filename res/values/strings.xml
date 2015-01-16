@@ -146,4 +146,5 @@
     <string name="failed_to_open_vitals_form">An error occurred. Invalid or corrupted form file.</string>
     <!-- Form Entry Activity -->
     <string name="save_upload_button">Save and Send Vitals</string>
+    <string name="forms_sent_successfully">Form has been sent successfully.</string>
 </resources>

@@ -74,6 +74,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
             patientBundle = getIntent().getExtras();
         }
         mPatient = new PatientDAO().findPatientByUUID(patientBundle.getString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE));
+        new VisitsManager(this).getLastVitals(mPatient.getUuid());
         mPatientDashboardPagerAdapter = new PatientDashboardPagerAdapter(getSupportFragmentManager(), tabHosts);
         initViewPager();
     }
@@ -250,7 +251,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
                 case TabHost.VISITS_TAB_POS:
                     return PatientVisitsFragment.newInstance(mPatient);
                 case TabHost.VITALS_TAB_POS:
-                    return PatientVitalsFragment.newInstance(mPatient.getId());
+                    return PatientVitalsFragment.newInstance(mPatient.getId(), mPatient.getUuid());
                 default:
                     return null;
             }

@@ -14,7 +14,7 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="org.openmrs.client"
+          package="org.openmrs.mobile"
           android:versionCode="2"
           android:versionName="Beta 2.1.0-SNAPSHOT">
     <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="19"/>
@@ -43,14 +43,14 @@
 
         <receiver android:name=".application.OpenMRSBroadcastReceiver" >
             <intent-filter>
-                <action android:name="org.openmrs.client.intent.action.AUTH_FAILED_BROADCAST"/>
-                <action android:name="org.openmrs.client.intent.action.UNAUTHORIZED_BROADCAST"/>
-                <action android:name="org.openmrs.client.intent.action.CONN_TIMEOUT_BROADCAST"/>
-                <action android:name="org.openmrs.client.intent.action.NO_INTERNET_CONNECTION_BROADCAST"/>
-                <action android:name="org.openmrs.client.intent.action.SERVER_UNAVAILABLE_BROADCAST"/>
-                <action android:name="org.openmrs.client.intent.action.SERVER_ERROR_BROADCAST"/>
-                <action android:name="org.openmrs.client.intent.action.SOCKET_EXCEPTION_BROADCAST"/>
-                <action android:name="org.openmrs.client.intent.action.SERVER_NOT_SUPPORTED_BROADCAST"/>
+                <action android:name="org.openmrs.mobile.intent.action.AUTH_FAILED_BROADCAST"/>
+                <action android:name="org.openmrs.mobile.intent.action.UNAUTHORIZED_BROADCAST"/>
+                <action android:name="org.openmrs.mobile.intent.action.CONN_TIMEOUT_BROADCAST"/>
+                <action android:name="org.openmrs.mobile.intent.action.NO_INTERNET_CONNECTION_BROADCAST"/>
+                <action android:name="org.openmrs.mobile.intent.action.SERVER_UNAVAILABLE_BROADCAST"/>
+                <action android:name="org.openmrs.mobile.intent.action.SERVER_ERROR_BROADCAST"/>
+                <action android:name="org.openmrs.mobile.intent.action.SOCKET_EXCEPTION_BROADCAST"/>
+                <action android:name="org.openmrs.mobile.intent.action.SERVER_NOT_SUPPORTED_BROADCAST"/>
             </intent-filter>
         </receiver>
         <activity

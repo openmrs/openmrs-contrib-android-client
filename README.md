@@ -55,4 +55,4 @@ Before creating pull request run code review tools, *PMD & Checkstyle*, and test
 - Dashboard https://issues.openmrs.org/secure/Dashboard.jspa?selectPageId=12851
 - Repository https://github.com/openmrs/openmrs-contrib-android-client
 - CI http://openmrs-ac-ci.soldevelo.com/ci/ 
-- Google Play https://play.google.com/store/apps/details?id=org.openmrs.client
+- Google Play https://play.google.com/store/apps/details?id=org.openmrs.mobile

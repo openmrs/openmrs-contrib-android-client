@@ -25,10 +25,11 @@ public class PatientVitalsFragment extends Fragment {
     public PatientVitalsFragment() {
     }
 
-    public static PatientVitalsFragment newInstance(Long patientID) {
+    public static PatientVitalsFragment newInstance(Long patientID, String patientUUID) {
         PatientVitalsFragment patientVitalsFragment = new PatientVitalsFragment();
         Bundle bundle = new Bundle();
-        bundle.putSerializable(ApplicationConstants.BundleKeys.PATIENT_BUNDLE, patientID);
+        bundle.putLong(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patientID);
+        bundle.putString(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE, patientUUID);
         patientVitalsFragment.setArguments(bundle);
         return patientVitalsFragment;
     }
@@ -40,12 +41,15 @@ public class PatientVitalsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mVitalsEncounter = new EncounterDAO().getLastEncounterForVisitByType(
-                getArguments().getLong(ApplicationConstants.BundleKeys.PATIENT_BUNDLE),
-                Encounter.EncounterType.VITALS);
         View fragmentLayout = inflater.inflate(R.layout.fragment_patient_vitals, null, false);
         LinearLayout content = (LinearLayout) fragmentLayout.findViewById(R.id.vitalsDetailsContent);
         TextView lastVitalsLabel = (TextView) fragmentLayout.findViewById(R.id.lastVitalsLabel);
+        String patientUUID = getArguments().getString(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE);
+        long patientID = getArguments().getLong(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE);
+        mVitalsEncounter = new EncounterDAO().getLastEncounterForVisitByType(patientID, Encounter.EncounterType.VITALS);
+        if (null == mVitalsEncounter) {
+            mVitalsEncounter = new EncounterDAO().getLastVitalsEncounter(patientUUID);
+        }
         if (null == mVitalsEncounter) {
             lastVitalsLabel.setVisibility(View.GONE);
             content.setVisibility(View.GONE);

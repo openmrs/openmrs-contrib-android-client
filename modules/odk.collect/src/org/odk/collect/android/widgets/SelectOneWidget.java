@@ -200,4 +200,15 @@ public class SelectOneWidget extends QuestionWidget implements
 		}
 	}
 
+    public void setAnswer(String answer){
+        for (RadioButton button : this.buttons) {
+            button.setClickable(false);
+            button.setFocusable(false);
+            button.setEnabled(false);
+            final String buttonText = button.getText().toString();
+            if (buttonText.contains(answer)) {
+                button.setChecked(true);
+            }
+        }
+    }
 }

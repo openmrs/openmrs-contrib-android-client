@@ -30,6 +30,7 @@ import org.json.JSONObject;
 import org.openmrs.mobile.activities.LoginActivity;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.mappers.LocationMapper;
+import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class LocationManager extends BaseManager {
     public void getAvailableLocation(final String serverUrl) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
 
-        String locationURL = serverUrl + API.COMMON_PART + LOCATION_QUERY;
+        String locationURL = serverUrl + API.REST_ENDPOINT + LOCATION_QUERY;
         logger.d("Sending request to : " + locationURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,

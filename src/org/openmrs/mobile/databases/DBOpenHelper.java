@@ -33,7 +33,7 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
 
 public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String WHERE_ID_CLAUSE = String.format("%s = ?", Table.MasterColumn.ID);
 
     private PatientTable mPatientTable;
@@ -197,6 +197,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(3, encounter.getDisplay(), encounterStatement);
             bindLong(4, encounter.getEncounterDatetime(), encounterStatement);
             bindString(5, encounter.getEncounterType().getType(), encounterStatement);
+            bindString(6, encounter.getPatientUUID(), encounterStatement);
             encounterId = encounterStatement.executeInsert();
             encounterStatement.clearBindings();
             db.setTransactionSuccessful();

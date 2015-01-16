@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+
+<h:html xmlns:h="http://www.w3.org/1999/xhtml" xmlns:jr="http://openrosa.org/javarosa"
+        xmlns:xf="http://www.w3.org/2002/xforms">
+    <parsererror
+        style="display: block; white-space: pre; border: 2px solid #c77; padding: 0 1em 0 1em; margin: 1em; background-color: #fdd; color: black"
+        xmlns="http://www.w3.org/1999/xhtml">
+        <h3>This page contains the following errors:</h3>
+        <div style="font-family:monospace;font-size:12px">error on line 17 at column 41:
+            xmlns:openmrs: 'formentry.infopath_server_url cannot be
+            empty/moduleServlet/formentry/forms/schema/8-1' is not a valid URI
+        </div>
+        <h3>Below is a rendering of the page up to the first error.</h3>
+    </parsererror>
+    <parsererror
+        style="display: block; white-space: pre; border: 2px solid #c77; padding: 0 1em 0 1em; margin: 1em; background-color: #fdd; color: black"
+        xmlns="http://www.w3.org/1999/xhtml">
+        <h3>This page contains the following errors:</h3>
+        <div style="font-family:monospace;font-size:12px">error on line 16 at column 41:
+            xmlns:openmrs: 'formentry.infopath_server_url cannot be
+            empty/moduleServlet/formentry/forms/schema/8-1' is not a valid URI
+        </div>
+        <h3>Below is a rendering of the page up to the first error.</h3>
+    </parsererror>
+
+    <h:head>
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+        <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+
+        <h:title ref="jr:itext('vitals_xform')">Vitals XForm</h:title>
+
+        <xf:model id="openmrs_model">
+
+
+            <xf:instance id="openmrs_model_instance">
+
+
+                <form name="Vitals XForm" id="8" uuid="23dc6e43-a21f-4264-afa6-b28348f782f1"
+                      version="1.0"
+                      xmlns:openmrs="formentry.infopath_server_url cannot be empty/moduleServlet/formentry/forms/schema/8-1"
+                      xmlns:xd="http://schemas.microsoft.com/office/infopath/2003">
+
+
+                    <header>
+
+
+                        <enterer/>
+
+
+                        <date_entered/>
+
+
+                        <session/>
+
+
+                        <uid/>
+
+
+                    </header>
+
+
+                    <patient>
+
+
+                        <patient.patient_id openmrs_attribute="patient_id" openmrs_table="patient"/>
+
+
+                    </patient>
+
+
+                    <encounter>
+
+
+                        <encounter.encounter_datetime openmrs_attribute="encounter_datetime"
+                                                      openmrs_table="encounter"
+                                                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                                      xsi:nil="true">'today()'
+                        </encounter.encounter_datetime>
+
+
+                        <encounter.location_id openmrs_attribute="location_id"
+                                               openmrs_table="encounter"
+                                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                               xsi:nil="true"/>
+
+
+                        <encounter.provider_id openmrs_attribute="provider_id"
+                                               openmrs_table="encounter"
+                                               provider_id_type="PROVIDER.ID"
+                                               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                               xsi:nil="true"/>
+
+
+                    </encounter>
+
+
+                    <obs openmrs_concept="162584^MEDICAL RECORD OBSERVATIONS^99DCT"
+                         openmrs_datatype="ZZ">
+
+
+                        <mid-upper_arm_circumference
+                            openmrs_concept="1343^MID-UPPER ARM CIRCUMFERENCE^99DCT"
+                            openmrs_datatype="NM">
+
+
+                            <date xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <time xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                   xsi:nil="true"/>
+
+
+                        </mid-upper_arm_circumference>
+
+
+                        <blood_oxygen_saturation
+                            openmrs_concept="5092^Blood oxygen saturation^99DCT"
+                            openmrs_datatype="NM">
+
+
+                            <date xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <time xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                   xsi:nil="true"/>
+
+
+                        </blood_oxygen_saturation>
+
+
+                        <diastolic_blood_pressure
+                            openmrs_concept="5086^DIASTOLIC BLOOD PRESSURE^99DCT"
+                            openmrs_datatype="NM">
+
+
+                            <date xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <time xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                   xsi:nil="true"/>
+
+
+                        </diastolic_blood_pressure>
+
+
+                        <systolic_blood_pressure
+                            openmrs_concept="5085^SYSTOLIC BLOOD PRESSURE^99DCT"
+                            openmrs_datatype="NM">
+
+
+                            <date xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <time xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                   xsi:nil="true"/>
+
+
+                        </systolic_blood_pressure>
+
+
+                        <respiratory_rate openmrs_concept="5242^Respiratory rate^99DCT"
+                                          openmrs_datatype="NM">
+
+
+                            <date xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <time xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                   xsi:nil="true"/>
+
+
+                        </respiratory_rate>
+
+
+                        <pulse openmrs_concept="5087^Pulse^99DCT" openmrs_datatype="NM">
+
+
+                            <date xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <time xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                   xsi:nil="true"/>
+
+
+                        </pulse>
+
+
+                        <temperature_c openmrs_concept="5088^Temperature (C)^99DCT"
+                                       openmrs_datatype="NM">
+
+
+                            <date xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <time xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                   xsi:nil="true"/>
+
+
+                        </temperature_c>
+
+
+                        <weight_kg openmrs_concept="5089^Weight (kg)^99DCT" openmrs_datatype="NM">
+
+
+                            <date xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <time xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                   xsi:nil="true"/>
+
+
+                        </weight_kg>
+
+
+                        <height_cm openmrs_concept="5090^Height (cm)^99DCT" openmrs_datatype="NM">
+
+
+                            <date xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <time xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                  xsi:nil="true"/>
+
+
+                            <value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                   xsi:nil="true"/>
+
+
+                        </height_cm>
+
+
+                    </obs>
+
+
+                </form>
+
+
+            </xf:instance>
+
+
+            <xf:bind constraint=". &gt;= 10.0 and . &lt;= 228.0" id="height_cm"
+                     message="value should be between 10.0 and 228.0 inclusive"
+                     nodeset="/form/obs/height_cm/value"
+                     ref="jr:itext('value_should_be_between_10.0_and_228.0_inclusive')"
+                     type="xsd:decimal"
+                     jr:constraintMsg="value should be between 10.0 and 228.0 inclusive"/>
+
+            <xf:bind constraint=". &gt;= 0.0 and . &lt;= 250.0" id="weight_kg"
+                     message="value should be between 0.0 and 250.0 inclusive"
+                     nodeset="/form/obs/weight_kg/value"
+                     ref="jr:itext('value_should_be_between_0.0_and_250.0_inclusive')"
+                     type="xsd:decimal"
+                     jr:constraintMsg="value should be between 0.0 and 250.0 inclusive"/>
+
+            <xf:bind constraint=". &gt;= 25.0 and . &lt;= 43.0" id="temperature_c"
+                     message="value should be between 25.0 and 43.0 inclusive"
+                     nodeset="/form/obs/temperature_c/value"
+                     ref="jr:itext('value_should_be_between_25.0_and_43.0_inclusive')"
+                     type="xsd:decimal"
+                     jr:constraintMsg="value should be between 25.0 and 43.0 inclusive"/>
+
+            <xf:bind id="pulse" nodeset="/form/obs/pulse/value" type="xsd:decimal"/>
+
+            <xf:bind id="respiratory_rate" nodeset="/form/obs/respiratory_rate/value"
+                     type="xsd:decimal"/>
+
+            <xf:bind id="systolic_blood_pressure" nodeset="/form/obs/systolic_blood_pressure/value"
+                     type="xsd:decimal"/>
+
+            <xf:bind id="diastolic_blood_pressure"
+                     nodeset="/form/obs/diastolic_blood_pressure/value" type="xsd:decimal"/>
+
+            <xf:bind id="blood_oxygen_saturation" nodeset="/form/obs/blood_oxygen_saturation/value"
+                     type="xsd:decimal"/>
+
+
+            <xf:bind id="patient.patient_id" nodeset="/form/patient/patient.patient_id"
+                     required="true()" type="xsd:string" visible="false()" jr:preload="patient"
+                     jr:preloadParams="patientId"/>
+
+
+            <xf:bind constraint=". &lt;= today()" id="encounter.encounter_datetime"
+                     message="Encounter date cannot be after today"
+                     nodeset="/form/encounter/encounter.encounter_datetime"
+                     ref="jr:itext('encounter_date_cannot_be_after_today')" required="true()"
+                     type="xsd:date" jr:constraintMsg="Encounter date cannot be after today"/>
+
+
+            <xf:bind id="encounter.location_id" nodeset="/form/encounter/encounter.location_id"
+                     required="true()" type="xsd:string"/>
+
+
+            <xf:bind id="encounter.provider_id" nodeset="/form/encounter/encounter.provider_id"
+                     required="true()" type="xsd:string"/>
+
+
+            <itext>
+                <translation lang="en" lang-name="English">
+                    <text id="vitals_xform">
+                        <value>Vitals XForm</value>
+                    </text>
+                    <text id="page1">
+                        <value>Page1</value>
+                    </text>
+                    <text id="height_cm">
+                        <value>Height (cm)</value>
+                    </text>
+                    <text id="patients_height_in_centimeters.">
+                        <value>Patient's height in centimeters.</value>
+                    </text>
+                    <text id="weight_kg">
+                        <value>Weight (kg)</value>
+                    </text>
+                    <text id="patients_weight_in_kilograms.">
+                        <value>Patient's weight in kilograms.</value>
+                    </text>
+                    <text id="temperature_c">
+                        <value>Temperature (C)</value>
+                    </text>
+                    <text id="patients_temperature_in_degrees_centigrade.">
+                        <value>Patient's temperature in degrees centigrade.</value>
+                    </text>
+                    <text id="pulse">
+                        <value>Pulse</value>
+                    </text>
+                    <text id="patient_pulse_rate_as_measured_with_a_peripheral_oximeter.">
+                        <value>Patient pulse rate, as measured with a peripheral oximeter.</value>
+                    </text>
+                    <text id="respiratory_rate">
+                        <value>Respiratory rate</value>
+                    </text>
+                    <text id="measured_respiratory_rate_in_breaths_per_minute">
+                        <value>Measured respiratory rate in breaths per minute</value>
+                    </text>
+                    <text id="systolic_blood_pressure">
+                        <value>SYSTOLIC BLOOD PRESSURE</value>
+                    </text>
+                    <text
+                        id="a_patients_systolic_blood_pressure_measurement_taken_with_a_manual_cuff_in_either_a_sitting_or_standing_position">
+                        <value>A patient's systolic blood pressure measurement (taken with a manual
+                            cuff in either a sitting or standing position)
+                        </value>
+                    </text>
+                    <text id="diastolic_blood_pressure">
+                        <value>DIASTOLIC BLOOD PRESSURE</value>
+                    </text>
+                    <text
+                        id="a_patients_diastolic_blood_pressure_measurement_taken_with_a_manual_cuff_in_either_a_sitting_or_standing_position">
+                        <value>A patient's diastolic blood pressure measurement (taken with a manual
+                            cuff in either a sitting or standing position)
+                        </value>
+                    </text>
+                    <text id="blood_oxygen_saturation">
+                        <value>Blood oxygen saturation</value>
+                    </text>
+                    <text id="oxygen_saturation_as_measured_from_a_peripheral_oximeter.">
+                        <value>Oxygen saturation, as measured from a peripheral oximeter.</value>
+                    </text>
+                    <text id="patient_id">
+                        <value>PATIENT ID</value>
+                    </text>
+                    <text id="encounter_datetime">
+                        <value>ENCOUNTER DATETIME</value>
+                    </text>
+                    <text id="location_id">
+                        <value>LOCATION ID</value>
+                    </text>
+                    <text id="amani_hospital_8">
+                        <value>Amani Hospital [8]</value>
+                    </text>
+                    <text id="inpatient_ward_6">
+                        <value>Inpatient Ward [6]</value>
+                    </text>
+                    <text id="isolation_ward_4">
+                        <value>Isolation Ward [4]</value>
+                    </text>
+                    <text id="laboratory_3">
+                        <value>Laboratory [3]</value>
+                    </text>
+                    <text id="outpatient_clinic_7">
+                        <value>Outpatient Clinic [7]</value>
+                    </text>
+                    <text id="pharmacy_2">
+                        <value>Pharmacy [2]</value>
+                    </text>
+                    <text id="registration_desk_5">
+                        <value>Registration Desk [5]</value>
+                    </text>
+                    <text id="unknown_location_1">
+                        <value>Unknown Location [1]</value>
+                    </text>
+                    <text id="provider_id">
+                        <value>PROVIDER ID</value>
+                    </text>
+                    <text id="super_user_unknown">
+                        <value>Super User [UNKNOWN]</value>
+                    </text>
+                    <text id="john_smith_clerk">
+                        <value>John Smith [clerk]</value>
+                    </text>
+                    <text id="value_should_be_between_10.0_and_228.0_inclusive">
+                        <value>value should be between 10.0 and 228.0 inclusive</value>
+                    </text>
+                    <text id="value_should_be_between_0.0_and_250.0_inclusive">
+                        <value>value should be between 0.0 and 250.0 inclusive</value>
+                    </text>
+                    <text id="value_should_be_between_25.0_and_43.0_inclusive">
+                        <value>value should be between 25.0 and 43.0 inclusive</value>
+                    </text>
+                    <text id="encounter_date_cannot_be_after_today">
+                        <value>Encounter date cannot be after today</value>
+                    </text>
+                </translation>
+            </itext>
+        </xf:model>
+
+    </h:head>
+
+    <h:body>
+
+        <xf:group id="1">
+
+            <xf:label ref="jr:itext('page1')"/>
+
+            <xf:input bind="height_cm">
+
+                <xf:label ref="jr:itext('height_cm')"/>
+
+                <xf:hint ref="jr:itext('patients_height_in_centimeters.')"/>
+
+            </xf:input>
+
+            <xf:input bind="weight_kg">
+
+                <xf:label ref="jr:itext('weight_kg')"/>
+
+                <xf:hint ref="jr:itext('patients_weight_in_kilograms.')"/>
+
+            </xf:input>
+
+            <xf:input bind="temperature_c">
+
+                <xf:label ref="jr:itext('temperature_c')"/>
+
+                <xf:hint ref="jr:itext('patients_temperature_in_degrees_centigrade.')"/>
+
+            </xf:input>
+
+            <xf:input bind="pulse">
+
+                <xf:label ref="jr:itext('pulse')"/>
+
+                <xf:hint
+                    ref="jr:itext('patient_pulse_rate_as_measured_with_a_peripheral_oximeter.')"/>
+
+            </xf:input>
+
+            <xf:input bind="respiratory_rate">
+
+                <xf:label ref="jr:itext('respiratory_rate')"/>
+
+                <xf:hint ref="jr:itext('measured_respiratory_rate_in_breaths_per_minute')"/>
+
+            </xf:input>
+
+            <xf:input bind="systolic_blood_pressure">
+
+                <xf:label ref="jr:itext('systolic_blood_pressure')"/>
+
+                <xf:hint
+                    ref="jr:itext('a_patients_systolic_blood_pressure_measurement_taken_with_a_manual_cuff_in_either_a_sitting_or_standing_position')"/>
+
+            </xf:input>
+
+            <xf:input bind="diastolic_blood_pressure">
+
+                <xf:label ref="jr:itext('diastolic_blood_pressure')"/>
+
+                <xf:hint
+                    ref="jr:itext('a_patients_diastolic_blood_pressure_measurement_taken_with_a_manual_cuff_in_either_a_sitting_or_standing_position')"/>
+
+            </xf:input>
+
+            <xf:input bind="blood_oxygen_saturation">
+
+                <xf:label ref="jr:itext('blood_oxygen_saturation')"/>
+
+                <xf:hint
+                    ref="jr:itext('oxygen_saturation_as_measured_from_a_peripheral_oximeter.')"/>
+
+            </xf:input>
+
+
+            <xf:input bind="patient.patient_id">
+
+                <xf:label ref="jr:itext('patient_id')"/>
+
+            </xf:input>
+
+            <xf:input bind="encounter.encounter_datetime">
+
+                <xf:label ref="jr:itext('encounter_datetime')"/>
+
+            </xf:input>
+
+            <xf:select1 bind="encounter.location_id">
+
+                <xf:label ref="jr:itext('location_id')"/>
+
+                <xf:item id="8">
+
+                    <xf:label ref="jr:itext('amani_hospital_8')"/>
+
+                    <xf:value>8</xf:value>
+
+                </xf:item>
+
+                <xf:item id="6">
+
+                    <xf:label ref="jr:itext('inpatient_ward_6')"/>
+
+                    <xf:value>6</xf:value>
+
+                </xf:item>
+
+                <xf:item id="4">
+
+                    <xf:label ref="jr:itext('isolation_ward_4')"/>
+
+                    <xf:value>4</xf:value>
+
+                </xf:item>
+
+                <xf:item id="3">
+
+                    <xf:label ref="jr:itext('laboratory_3')"/>
+
+                    <xf:value>3</xf:value>
+
+                </xf:item>
+
+                <xf:item id="7">
+
+                    <xf:label ref="jr:itext('outpatient_clinic_7')"/>
+
+                    <xf:value>7</xf:value>
+
+                </xf:item>
+
+                <xf:item id="2">
+
+                    <xf:label ref="jr:itext('pharmacy_2')"/>
+
+                    <xf:value>2</xf:value>
+
+                </xf:item>
+
+                <xf:item id="5">
+
+                    <xf:label ref="jr:itext('registration_desk_5')"/>
+
+                    <xf:value>5</xf:value>
+
+                </xf:item>
+
+                <xf:item id="1">
+
+                    <xf:label ref="jr:itext('unknown_location_1')"/>
+
+                    <xf:value>1</xf:value>
+
+                </xf:item>
+
+            </xf:select1>
+
+            <xf:select1 bind="encounter.provider_id">
+
+                <xf:label ref="jr:itext('provider_id')"/>
+
+                <xf:item id="1">
+
+                    <xf:label ref="jr:itext('super_user_unknown')"/>
+
+                    <xf:value>1</xf:value>
+
+                </xf:item>
+
+                <xf:item id="2">
+
+                    <xf:label ref="jr:itext('john_smith_clerk')"/>
+
+                    <xf:value>2</xf:value>
+
+                </xf:item>
+
+
+            </xf:select1>
+
+        </xf:group>
+
+    </h:body>
+
+</h:html>

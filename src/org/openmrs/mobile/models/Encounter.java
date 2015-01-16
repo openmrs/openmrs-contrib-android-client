@@ -25,6 +25,7 @@ public class Encounter implements Serializable {
     private Long encounterDatetime;
     private EncounterType encounterType;
     private List<Observation> observations;
+    private String patientUUID;
 
     public Long getId() {
         return id;
@@ -80,6 +81,14 @@ public class Encounter implements Serializable {
 
     public void setObservations(List<Observation> observations) {
         this.observations = observations;
+    }
+
+    public String getPatientUUID() {
+        return patientUUID;
+    }
+
+    public void setPatientUUID(String patientUUID) {
+        this.patientUUID = patientUUID;
     }
 
     public enum EncounterType {

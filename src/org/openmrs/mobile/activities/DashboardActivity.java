@@ -47,6 +47,11 @@ public class DashboardActivity extends ACBaseActivity {
         startActivity(intent);
     }
 
+    public void onCaptureVitalsCallback(View v) {
+        Intent intent = new Intent(this, CaptureVitalsActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -72,12 +77,15 @@ public class DashboardActivity extends ACBaseActivity {
         ImageView findPatientImageButton = (ImageView) findViewById(R.id.findPatientButton);
         ImageView registryPatientImageButton = (ImageView) findViewById(R.id.registryPatientButton);
         ImageView activeVisitsImageButton = (ImageView) findViewById(R.id.activeVisitsButton);
+        ImageView captureVitalsImageButton = (ImageView) findViewById(R.id.captureVitalsButton);
         createImageBitmap(R.drawable.ico_search, findPatientImageButton.getLayoutParams());
         createImageBitmap(R.drawable.ico_registry, registryPatientImageButton.getLayoutParams());
         createImageBitmap(R.drawable.ico_visits, activeVisitsImageButton.getLayoutParams());
+        createImageBitmap(R.drawable.ico_vitals, captureVitalsImageButton.getLayoutParams());
         findPatientImageButton.setImageBitmap(mBitmapCache.get(R.drawable.ico_search));
         registryPatientImageButton.setImageBitmap(mBitmapCache.get(R.drawable.ico_registry));
         activeVisitsImageButton.setImageBitmap(mBitmapCache.get(R.drawable.ico_visits));
+        captureVitalsImageButton.setImageBitmap(mBitmapCache.get(R.drawable.ico_vitals));
     }
 
     private void createImageBitmap(Integer key, ViewGroup.LayoutParams layoutParams) {

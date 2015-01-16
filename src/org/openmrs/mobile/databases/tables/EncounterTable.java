@@ -27,17 +27,18 @@ public class EncounterTable extends Table<Encounter> {
      *
      * @see org.openmrs.mobile.databases.tables.Table#values(int)
      */
-    private static final int INSERT_COLUMNS_COUNT = 5;
+    private static final int INSERT_COLUMNS_COUNT = 6;
 
     @Override
     public String crateTableDefinition() {
         return CREATE_TABLE + TABLE_NAME + "("
                 + Column.ID + PRIMARY_KEY
-                + Column.VISIT_KEY_ID + Column.Type.INT_TYPE_NOT_NULL
+                + Column.VISIT_KEY_ID + Column.Type.INT_TYPE_WITH_COMMA
                 + Column.UUID + Column.Type.TEXT_TYPE_NOT_NULL
                 + Column.DISPLAY + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.ENCOUNTER_DATETIME + Column.Type.DATE_TYPE_NOT_NULL
-                + Column.ENCOUNTER_TYPE + Column.Type.DATE_TYPE
+                + Column.ENCOUNTER_TYPE + Column.Type.DATE_TYPE_WITH_COMMA
+                + Column.PATIENT_UUID + Column.Type.TEXT_TYPE
                 + ");";
     }
 
@@ -48,7 +49,8 @@ public class EncounterTable extends Table<Encounter> {
                 + Column.UUID + Column.COMMA
                 + Column.DISPLAY + Column.COMMA
                 + Column.ENCOUNTER_DATETIME + Column.COMMA
-                + Column.ENCOUNTER_TYPE + ")"
+                + Column.ENCOUNTER_TYPE + Column.COMMA
+                + Column.PATIENT_UUID + ")"
                 + values(INSERT_COLUMNS_COUNT);
     }
 
@@ -79,6 +81,7 @@ public class EncounterTable extends Table<Encounter> {
         public static final String VISIT_KEY_ID = "visit_id";
         public static final String ENCOUNTER_DATETIME = "encounterDatetime";
         public static final String ENCOUNTER_TYPE = "type";
+        public static final String PATIENT_UUID = "patient_uuid";
     }
 
     @Override

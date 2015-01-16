@@ -51,9 +51,9 @@ public class FindActiveVisitsSearchActivity extends ACBaseActivity {
         setContentView(R.layout.activity_find_visits);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mSpinner = (ProgressBar) findViewById(R.id.visits_list_view_loading);
-        mVisitsListView = (ListView) findViewById(R.id.visits_list_view);
-        mEmptyList = (TextView) findViewById(R.id.empty_visits_list_view);
+        mSpinner = (ProgressBar) findViewById(R.id.visitsListViewLoading);
+        mVisitsListView = (ListView) findViewById(R.id.visitsListView);
+        mEmptyList = (TextView) findViewById(R.id.emptyVisitsListViewLabel);
         mEmptyList.setText(getString(R.string.search_visits_no_results));
         mVisitsListView.setEmptyView(mEmptyList);
 

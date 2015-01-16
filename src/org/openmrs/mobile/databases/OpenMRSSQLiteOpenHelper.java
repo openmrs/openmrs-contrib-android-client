@@ -107,8 +107,6 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
     public void bindString(int columnIndex, String columnValue, SQLiteStatement statement) {
         if (StringUtils.notNull(columnValue)) {
             statement.bindString(columnIndex, columnValue);
-        } else {
-            statement.bindNull(columnIndex);
         }
     }
 
@@ -123,8 +121,6 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
     public void bindLong(int columnIndex, Long columnValue, SQLiteStatement statement) {
         if (null != columnValue) {
             statement.bindLong(columnIndex, columnValue);
-        } else {
-            statement.bindNull(columnIndex);
         }
     }
     /**
@@ -138,8 +134,6 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
     public void bindDouble(int columnIndex, Double columnValue, SQLiteStatement statement) {
         if (null != columnValue) {
             statement.bindDouble(columnIndex, columnValue);
-        } else {
-            statement.bindNull(columnIndex);
         }
     }
 }

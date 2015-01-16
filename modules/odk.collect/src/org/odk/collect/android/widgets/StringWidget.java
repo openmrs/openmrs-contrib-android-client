@@ -191,4 +191,11 @@ public class StringWidget extends QuestionWidget {
         mAnswer.cancelLongPress();
     }
 
+    public void setAnswer(String answer) {
+        mAnswer.setText(answer);
+        mAnswer.setEnabled(false);
+        mAnswer.setFocusable(false);
+        mAnswer.setClickable(false);
+    }
+
 }

@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import org.openmrs.client.activities.LoginActivity;
 import org.openmrs.client.application.OpenMRS;
 import org.openmrs.client.databases.OpenMRSSQLiteOpenHelper;
+import org.openmrs.client.net.volley.wrappers.JsonObjectRequestWrapper;
 import org.openmrs.client.utilities.ApplicationConstants;
 
 import java.util.HashMap;
@@ -47,7 +48,7 @@ public class AuthorizationManager extends BaseManager {
     public void login(final String username, final String password, final String serverURL) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         encodeAuthorizationToken(username, password);
-        String loginURL = serverURL + API.COMMON_PART + API.AUTHORISATION_END_POINT;
+        String loginURL = serverURL + API.REST_ENDPOINT + API.AUTHORISATION_END_POINT;
 
         logger.i("Sending request to : " + loginURL);
 
@@ -61,7 +62,7 @@ public class AuthorizationManager extends BaseManager {
                     Boolean isAuthenticated = Boolean.parseBoolean(response.getString(AUTHENTICATION_KEY));
 
                     if (isAuthenticated) {
-                        if (!mOpenMRS.getUsername().equals(username) || !mOpenMRS.getServerUrl().equals(serverURL)) {
+                        if (isDBCleaningRequired(username, serverURL)) {
                             mOpenMRS.deleteDatabase(OpenMRSSQLiteOpenHelper.DATABASE_NAME);
                             OpenMRS.clearODKDirs();
                         }
@@ -69,6 +70,8 @@ public class AuthorizationManager extends BaseManager {
                         mOpenMRS.setSessionToken(sessionToken);
                         mOpenMRS.setUsername(username);
                         (new VisitsManager(mContext)).getVisitType();
+                        new UserManager(mContext).getUserInformation(username);
+                        new FormsManger(mContext).getAvailableFormsList();
                         ((LoginActivity) mContext).saveLocationsToDatabase();
                         ((LoginActivity) mContext).finish();
                     } else {
@@ -89,6 +92,32 @@ public class AuthorizationManager extends BaseManager {
             }
         };
         queue.add(jsObjRequest);
+    }
+
+    private boolean isUsernameNotEmptyOrNotSameUser(String username) {
+        boolean result = false;
+        if (!mOpenMRS.getUsername().equals(ApplicationConstants.EMPTY_STRING)
+                && !mOpenMRS.getUsername().equals(username)) {
+            result = true;
+        }
+        return result;
+    }
+
+    private boolean isServerURLNotEmptyOrNorSameURL(String serverURL) {
+        boolean result = false;
+        if (!mOpenMRS.getServerUrl().equals(ApplicationConstants.EMPTY_STRING)
+                && !mOpenMRS.getServerUrl().equals(serverURL)) {
+            result = true;
+        }
+        return result;
+    }
+
+    private boolean isDBCleaningRequired(String username, String serverURL) {
+        boolean result = false;
+        if (isUsernameNotEmptyOrNotSameUser(username) || isServerURLNotEmptyOrNorSameURL(serverURL)) {
+            result = true;
+        }
+        return result;
     }
 
     public boolean isUserLoggedIn() {

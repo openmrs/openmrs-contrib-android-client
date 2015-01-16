@@ -31,6 +31,7 @@ import org.openmrs.client.activities.LoginActivity;
 import org.openmrs.client.models.Location;
 import org.openmrs.client.models.mappers.LocationMapper;
 import org.openmrs.client.utilities.ApplicationConstants;
+import org.openmrs.client.net.volley.wrappers.JsonObjectRequestWrapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,7 +50,7 @@ public class LocationManager extends BaseManager {
     public void getAvailableLocation(final String serverUrl) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
 
-        String locationURL = serverUrl + API.COMMON_PART + LOCATION_QUERY;
+        String locationURL = serverUrl + API.REST_ENDPOINT + LOCATION_QUERY;
         logger.d("Sending request to : " + locationURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,

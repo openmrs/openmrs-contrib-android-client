@@ -19,16 +19,88 @@ import net.sqlcipher.Cursor;
 import org.openmrs.client.databases.DBOpenHelper;
 import org.openmrs.client.databases.OpenMRSDBOpenHelper;
 import org.openmrs.client.databases.tables.EncounterTable;
+import org.openmrs.client.databases.tables.ObservationTable;
 import org.openmrs.client.models.Encounter;
+import org.openmrs.client.models.Observation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EncounterDAO {
 
-    public long saveEncounter(Encounter encounter, long visitID) {
+    public long saveEncounter(Encounter encounter, Long visitID) {
         encounter.setVisitID(visitID);
         return new EncounterTable().insert(encounter);
+    }
+
+    public void saveLastVitalsEncounter(Encounter encounter, String patientUUID) {
+        if (null != encounter) {
+            encounter.setPatientUUID(patientUUID);
+            long oldLastVitalsEncounterID = getLastVitalsEncounterID(patientUUID);
+            if (0 != oldLastVitalsEncounterID) {
+                for (Observation obs: new ObservationDAO().findObservationByEncounterID(oldLastVitalsEncounterID)) {
+                    new ObservationTable().delete(obs.getId());
+                }
+                new EncounterTable().delete(oldLastVitalsEncounterID);
+            }
+            ObservationDAO observationDAO = new ObservationDAO();
+            long encounterID = saveEncounter(encounter, null);
+            for (Observation obs : encounter.getObservations()) {
+                observationDAO.saveObservation(obs, encounterID);
+            }
+        }
+    }
+
+    public long getLastVitalsEncounterID(String patientUUID) {
+        long encounterID = 0;
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        String where = String.format("%s is NULL AND %s = ?", EncounterTable.Column.VISIT_KEY_ID, EncounterTable.Column.PATIENT_UUID);
+        String[] whereArgs = new String[]{patientUUID};
+        final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        if (null != cursor) {
+            try {
+                if (cursor.moveToFirst()) {
+                    int id_CI = cursor.getColumnIndex(EncounterTable.Column.ID);
+                    encounterID = cursor.getLong(id_CI);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return encounterID;
+    }
+
+    public Encounter getLastVitalsEncounter(String patientUUID) {
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        Encounter encounter = null;
+
+        String where = String.format("%s = ?", EncounterTable.Column.PATIENT_UUID);
+        String[] whereArgs = new String[]{patientUUID};
+        final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        if (null != cursor) {
+            try {
+                if (cursor.moveToFirst()) {
+                    int id_CI = cursor.getColumnIndex(EncounterTable.Column.ID);
+                    int uuid_CI = cursor.getColumnIndex(EncounterTable.Column.UUID);
+                    int display_CI = cursor.getColumnIndex(EncounterTable.Column.DISPLAY);
+                    int datetime_CI = cursor.getColumnIndex(EncounterTable.Column.ENCOUNTER_DATETIME);
+                    Long id = cursor.getLong(id_CI);
+                    String uuid = cursor.getString(uuid_CI);
+                    String display = cursor.getString(display_CI);
+                    Long datetime = cursor.getLong(datetime_CI);
+                    encounter = new Encounter();
+                    encounter.setId(id);
+                    encounter.setUuid(uuid);
+                    encounter.setDisplay(display);
+                    encounter.setEncounterDatetime(datetime);
+                    encounter.setEncounterType(Encounter.EncounterType.VITALS);
+                    encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return encounter;
     }
 
     public boolean updateEncounter(long encounterID, Encounter encounter, long visitID) {

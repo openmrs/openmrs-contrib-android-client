@@ -31,12 +31,15 @@ import org.openmrs.client.activities.FindPatientsSearchActivity;
 import org.openmrs.client.activities.PatientDashboardActivity;
 import org.openmrs.client.activities.fragments.FindPatientLastViewedFragment;
 import org.openmrs.client.models.mappers.PatientMapper;
+import org.openmrs.client.net.volley.wrappers.JsonObjectRequestWrapper;
 import org.openmrs.client.utilities.PatientCacheHelper;
+
+import java.io.File;
 
 import static org.openmrs.client.utilities.ApplicationConstants.API;
 
 public class FindPatientsManager extends BaseManager {
-    private static final String PATIENT_QUERY = "patient?q=";
+
     private static final String PATIENT_LAST_VIEWED_QUERY = "patient?lastviewed";
     private static final String SENDING_REQUEST = "Sending request to : ";
 
@@ -46,7 +49,7 @@ public class FindPatientsManager extends BaseManager {
 
     public void findPatient(final String query, final int searchId) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String patientsURL = mOpenMRS.getServerUrl() + API.COMMON_PART + PATIENT_QUERY + query;
+        String patientsURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.PATIENT_QUERY + query;
         logger.d(SENDING_REQUEST + patientsURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
@@ -84,7 +87,7 @@ public class FindPatientsManager extends BaseManager {
 
     public void getLastViewedPatient(final int searchId) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String patientsURL = mOpenMRS.getServerUrl() + API.COMMON_PART + PATIENT_LAST_VIEWED_QUERY;
+        String patientsURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + PATIENT_LAST_VIEWED_QUERY;
         logger.d(SENDING_REQUEST + patientsURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
@@ -139,7 +142,7 @@ public class FindPatientsManager extends BaseManager {
 
     public void getFullPatientData(final String patientUUID, final Integer searchId) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String patientURL = mOpenMRS.getServerUrl() + API.COMMON_PART + API.PATIENT_DETAILS
+        String patientURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.PATIENT_DETAILS + File.separator
                 + patientUUID + API.FULL_VERSION;
         logger.d(SENDING_REQUEST + patientURL);
 
@@ -177,7 +180,7 @@ public class FindPatientsManager extends BaseManager {
 
     public void getFullLastViewedPatientData(final String patientUUID, final int searchId) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String patientURL = mOpenMRS.getServerUrl() + API.COMMON_PART + API.PATIENT_DETAILS
+        String patientURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.PATIENT_DETAILS + File.separator
                 + patientUUID + API.FULL_VERSION;
         logger.d(SENDING_REQUEST + patientURL);
 

@@ -336,10 +336,10 @@ public class OpenMRSFormsProvider extends ContentProvider {
                 values.put(OpenMRSFormsProviderAPI.FormsColumns.JRCACHE_FILE_PATH, cachePath);
             }
             if (values.containsKey(OpenMRSFormsProviderAPI.FormsColumns.FORM_MEDIA_PATH) == false) {
-                String pathNoExtension = filePath.substring(0,
-                        filePath.lastIndexOf("."));
-                String mediaPath = pathNoExtension + "-media";
-                values.put(OpenMRSFormsProviderAPI.FormsColumns.FORM_MEDIA_PATH, mediaPath);
+//                String pathNoExtension = filePath.substring(0,
+//                        filePath.lastIndexOf("."));
+//                String mediaPath = pathNoExtension + "-media";
+                values.put(OpenMRSFormsProviderAPI.FormsColumns.FORM_MEDIA_PATH, "");
             }
 
             SQLiteDatabase db = mDbHelper.getWritableDatabase();

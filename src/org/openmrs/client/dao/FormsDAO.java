@@ -20,13 +20,12 @@ import android.database.Cursor;
 import android.net.Uri;
 
 import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI;
+import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI;
 import org.openmrs.client.application.OpenMRS;
-import org.openmrs.client.models.Form;
+import org.openmrs.client.models.FormSubmission;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FormsDAO {
     private final ContentResolver mContentResolver;
@@ -62,23 +61,29 @@ public class FormsDAO {
         return ContentUris.withAppendedId(OpenMRSFormsProviderAPI.FormsColumns.CONTENT_URI, id);
     }
 
-    public List<Form> loadAllForms() {
-        List<Form> forms = new ArrayList<Form>();
-        final Cursor cursor = mContentResolver.query(OpenMRSFormsProviderAPI.FormsColumns.CONTENT_URI, null, null, null, null);
+    public FormSubmission getSurveysSubmissionDataFromFormInstanceId(String instanceId) {
+        String where = String.format("%s = ?", OpenMRSInstanceProviderAPI.InstanceColumns._ID);
+        String[] whereArgs = new String[]{instanceId};
+        FormSubmission formSubmission = null;
+
+        Cursor cursor = mContentResolver.query(OpenMRSInstanceProviderAPI.InstanceColumns.CONTENT_URI, null, where, whereArgs, null);
         if (cursor != null) {
             try {
                 while (cursor.moveToNext()) {
-                    int idIndex = cursor.getColumnIndex(OpenMRSFormsProviderAPI.FormsColumns.JR_FORM_ID);
-                    int nameIndex = cursor.getColumnIndex(OpenMRSFormsProviderAPI.FormsColumns.DISPLAY_NAME);
-                    int formPathIndex = cursor.getColumnIndex(OpenMRSFormsProviderAPI.FormsColumns.FORM_FILE_PATH);
-                    int submissionUriIndex = cursor.getColumnIndex(OpenMRSFormsProviderAPI.FormsColumns.SUBMISSION_URI);
-                forms.add(new Form(cursor.getString(nameIndex), cursor.getString(idIndex), cursor.getString(formPathIndex),
-                        cursor.getString(submissionUriIndex)));
+                    int formInstanceIdColumnIndex = cursor.getColumnIndex(OpenMRSInstanceProviderAPI.InstanceColumns._ID);
+                    int instanceFilePathColumnIndex = cursor.getColumnIndex(OpenMRSInstanceProviderAPI.InstanceColumns.INSTANCE_FILE_PATH);
+
+                    Long formInstanceId = cursor.getLong(formInstanceIdColumnIndex);
+                    String instanceFilePath = cursor.getString(instanceFilePathColumnIndex);
+
+                    Uri toUpdate = Uri.withAppendedPath(OpenMRSInstanceProviderAPI.InstanceColumns.CONTENT_URI, formInstanceId.toString());
+
+                    formSubmission = new FormSubmission(formInstanceId, instanceFilePath, toUpdate);
                 }
             } finally {
                 cursor.close();
             }
         }
-        return forms;
+        return formSubmission;
     }
 }

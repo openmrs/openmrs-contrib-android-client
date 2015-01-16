@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.client.net;
+package org.openmrs.client.net.volley.wrappers;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;

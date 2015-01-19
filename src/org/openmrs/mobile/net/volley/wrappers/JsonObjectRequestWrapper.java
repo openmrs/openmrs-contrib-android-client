@@ -16,6 +16,7 @@ package org.openmrs.mobile.net.volley.wrappers;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -54,6 +55,19 @@ public class JsonObjectRequestWrapper extends JsonObjectRequest {
         params.put(ApplicationConstants.COOKIE_PARAM, builder.toString());
 
         return params;
+    }
+
+    @Override
+    protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+        /***
+         http://stackoverflow.com/a/24422376/584369
+
+         Temporary disabled but should be managed in reasonable way.
+         */
+        if (response.data.length > 10000) {
+            setShouldCache(false);
+        }
+        return super.parseNetworkResponse(response);
     }
 
     private void setSocketTimeout() {

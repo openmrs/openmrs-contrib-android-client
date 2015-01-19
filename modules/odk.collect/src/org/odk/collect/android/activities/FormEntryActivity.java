@@ -1777,36 +1777,36 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						switch (which) {
+//TODO: AC-65 : Disabled save incomplete form since this is not supported yet
+//						case 0: // save and exit
+//							// this is slightly complicated because if the
+//							// option is disabled in
+//							// the admin menu, then case 0 actually becomes
+//							// 'discard and exit'
+//							// whereas if it's enabled it's 'save and exit'
+//							if (mAdminPreferences
+//									.getBoolean(
+//											AdminPreferencesActivity.KEY_SAVE_MID,
+//											true)) {
+//								Collect.getInstance()
+//										.getActivityLogger()
+//										.logInstanceAction(this,
+//												"createQuitDialog",
+//												"saveAndExit");
+//								saveDataToDisk(EXIT, isInstanceComplete(false),
+//										null);
+//							} else {
+//								Collect.getInstance()
+//										.getActivityLogger()
+//										.logInstanceAction(this,
+//												"createQuitDialog",
+//												"discardAndExit");
+//								removeTempInstance();
+//								finishReturnInstance();
+//							}
+//							break;
 
-						case 0: // save and exit
-							// this is slightly complicated because if the
-							// option is disabled in
-							// the admin menu, then case 0 actually becomes
-							// 'discard and exit'
-							// whereas if it's enabled it's 'save and exit'
-							if (mAdminPreferences
-									.getBoolean(
-											AdminPreferencesActivity.KEY_SAVE_MID,
-											true)) {
-								Collect.getInstance()
-										.getActivityLogger()
-										.logInstanceAction(this,
-												"createQuitDialog",
-												"saveAndExit");
-								saveDataToDisk(EXIT, isInstanceComplete(false),
-										null);
-							} else {
-								Collect.getInstance()
-										.getActivityLogger()
-										.logInstanceAction(this,
-												"createQuitDialog",
-												"discardAndExit");
-								removeTempInstance();
-								finishReturnInstance();
-							}
-							break;
-
-						case 1: // discard changes and exit
+						case 0: // discard changes and exit
 							Collect.getInstance()
 									.getActivityLogger()
 									.logInstanceAction(this,
@@ -1817,10 +1817,13 @@ public class FormEntryActivity extends Activity implements AnimationListener,
                             Collect.getInstance().getExternalDataManager().close();
 
 							removeTempInstance();
-							finishReturnInstance();
+//							finishReturnInstance();
+                            //TODO: AC-65 : Disabled save incomplete form since this is not supported yet
+                            setResult(RESULT_CANCELED);
+                            finish();
 							break;
 
-						case 2:// do nothing
+						case 1:// do nothing
 							Collect.getInstance()
 									.getActivityLogger()
 									.logInstanceAction(this,
@@ -2473,13 +2476,10 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 			sendSavedBroadcast();
 			break;
 		case SaveToDiskTask.SAVED_AND_EXIT:
-            //TODO: AC-65 : Disabled save incomplete form since this is not supported yet
-            setResult(RESULT_CANCELED);
-            finish();
-//			Toast.makeText(this, getString(R.string.data_saved_ok),
-//					Toast.LENGTH_SHORT).show();
-//			sendSavedBroadcast();
-//			finishReturnInstance();
+			Toast.makeText(this, getString(R.string.data_saved_ok),
+					Toast.LENGTH_SHORT).show();
+			sendSavedBroadcast();
+			finishReturnInstance();
 			break;
 		case SaveToDiskTask.SAVE_ERROR:
             String message;

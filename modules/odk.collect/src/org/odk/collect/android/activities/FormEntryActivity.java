@@ -1741,8 +1741,9 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 	private void createQuitDialog() {
 		FormController formController = Collect.getInstance()
 				.getFormController();
-		String[] items;
-		if (mAdminPreferences.getBoolean(AdminPreferencesActivity.KEY_SAVE_MID,
+		String[] items = { getString(R.string.do_not_save) };
+//TODO: AC-65 : Disabled save incomplete form since this is not supported yet
+/*		if (mAdminPreferences.getBoolean(AdminPreferencesActivity.KEY_SAVE_MID,
 				true)) {
 			String[] two = { getString(R.string.keep_changes),
 					getString(R.string.do_not_save) };
@@ -1750,7 +1751,7 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 		} else {
 			String[] one = { getString(R.string.do_not_save) };
 			items = one;
-		}
+		}*/
 
 		Collect.getInstance().getActivityLogger()
 				.logInstanceAction(this, "createQuitDialog", "show");
@@ -2472,10 +2473,13 @@ public class FormEntryActivity extends Activity implements AnimationListener,
 			sendSavedBroadcast();
 			break;
 		case SaveToDiskTask.SAVED_AND_EXIT:
-			Toast.makeText(this, getString(R.string.data_saved_ok),
-					Toast.LENGTH_SHORT).show();
-			sendSavedBroadcast();
-			finishReturnInstance();
+            //TODO: AC-65 : Disabled save incomplete form since this is not supported yet
+            setResult(RESULT_CANCELED);
+            finish();
+//			Toast.makeText(this, getString(R.string.data_saved_ok),
+//					Toast.LENGTH_SHORT).show();
+//			sendSavedBroadcast();
+//			finishReturnInstance();
 			break;
 		case SaveToDiskTask.SAVE_ERROR:
             String message;

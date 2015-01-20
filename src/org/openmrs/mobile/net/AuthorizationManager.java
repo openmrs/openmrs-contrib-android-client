@@ -25,6 +25,8 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI;
+import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI;
 import org.openmrs.mobile.activities.LoginActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.OpenMRSSQLiteOpenHelper;
@@ -64,7 +66,12 @@ public class AuthorizationManager extends BaseManager {
                     if (isAuthenticated) {
                         if (isDBCleaningRequired(username, serverURL)) {
                             mOpenMRS.deleteDatabase(OpenMRSSQLiteOpenHelper.DATABASE_NAME);
-                            OpenMRS.clearODKDirs();
+                            OpenMRS.getInstance()
+                                    .getContentResolver()
+                                    .delete(OpenMRSFormsProviderAPI.FormsColumns.CONTENT_URI, null, null);
+                            OpenMRS.getInstance()
+                                    .getContentResolver()
+                                    .delete(OpenMRSInstanceProviderAPI.InstanceColumns.CONTENT_URI, null, null);
                         }
                         mOpenMRS.setServerUrl(serverURL);
                         mOpenMRS.setSessionToken(sessionToken);

@@ -30,7 +30,6 @@ import org.openmrs.mobile.activities.FindPatientsActivity;
 import org.openmrs.mobile.activities.FindPatientsSearchActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
-import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.mappers.PatientMapper;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
@@ -69,8 +68,8 @@ public class FindPatientsManager extends BaseManager {
                         patientsList.add(PatientMapper.map(patientsJSONList.getJSONObject(i)));
                     }
 
-                    if (OpenMRS.getInstance().getCurrentActivity() instanceof  FindPatientsSearchActivity) {
-                        ((FindPatientsSearchActivity) OpenMRS.getInstance().getCurrentActivity()).updatePatientsData(searchId, patientsList);
+                    if (mOpenMRS.getCurrentActivity() instanceof  FindPatientsSearchActivity) {
+                        ((FindPatientsSearchActivity) mOpenMRS.getCurrentActivity()).updatePatientsData(searchId, patientsList);
                     }
 
                 } catch (JSONException e) {
@@ -110,8 +109,8 @@ public class FindPatientsManager extends BaseManager {
 
                     FindPatientLastViewedFragment.setLastViewedPatientList(patientsList);
 
-                    if (OpenMRS.getInstance().getCurrentActivity() instanceof FindPatientsActivity) {
-                        FragmentManager fm = ((FindPatientsActivity) OpenMRS.getInstance().getCurrentActivity()).getSupportFragmentManager();
+                    if (mOpenMRS.getCurrentActivity() instanceof FindPatientsActivity) {
+                        FragmentManager fm = ((FindPatientsActivity) mOpenMRS.getCurrentActivity()).getSupportFragmentManager();
                         FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) fm
                                 .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
 
@@ -122,8 +121,8 @@ public class FindPatientsManager extends BaseManager {
                     FindPatientLastViewedFragment.setRefreshing(false);
                 } catch (JSONException e) {
                     logger.d(e.toString());
-                    if (OpenMRS.getInstance().getCurrentActivity() instanceof FindPatientsActivity) {
-                        FragmentManager fm = ((FindPatientsActivity) OpenMRS.getInstance().getCurrentActivity()).getSupportFragmentManager();
+                    if (mOpenMRS.getCurrentActivity() instanceof FindPatientsActivity) {
+                        FragmentManager fm = ((FindPatientsActivity) mOpenMRS.getCurrentActivity()).getSupportFragmentManager();
                         FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) fm
                                 .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
 
@@ -140,8 +139,8 @@ public class FindPatientsManager extends BaseManager {
             @Override
             public void onErrorResponse(VolleyError error) {
                 super.onErrorResponse(error);
-                if (OpenMRS.getInstance().getCurrentActivity() instanceof FindPatientsActivity) {
-                    FragmentManager fm = ((FindPatientsActivity) OpenMRS.getInstance().getCurrentActivity()).getSupportFragmentManager();
+                if (mOpenMRS.getCurrentActivity() instanceof FindPatientsActivity) {
+                    FragmentManager fm = ((FindPatientsActivity) mOpenMRS.getCurrentActivity()).getSupportFragmentManager();
                     FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) fm
                             .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
 

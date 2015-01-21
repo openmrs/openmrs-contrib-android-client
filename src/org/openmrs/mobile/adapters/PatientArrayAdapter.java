@@ -118,6 +118,8 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
 
     public void setUpCheckBoxLogic(final ViewHolder holder, final Patient patient) {
         if (new PatientDAO().userDoesNotExist(patient.getUuid())) {
+            holder.mAvailableOfflineCheckbox.setChecked(false);
+            holder.mAvailableOfflineCheckbox.setVisibility(View.VISIBLE);
             holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_download_label));
             holder.mAvailableOfflineCheckbox.setOnClickListener(new View.OnClickListener() {
                 @Override

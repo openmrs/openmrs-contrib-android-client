@@ -37,20 +37,23 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FindPatientsManager;
 import org.openmrs.mobile.utilities.FontsUtil;
-import org.openmrs.mobile.utilities.PatientCacheHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class FindPatientsSearchActivity extends ACBaseActivity {
-    private static String mLastQuery;
+    private String mLastQuery;
     private MenuItem mFindPatientMenuItem;
-    private static PatientArrayAdapter mAdapter;
+    private ArrayList<Patient> mSearchedPatientsList;
+    private PatientArrayAdapter mAdapter;
     private ListView mPatientsListView;
     private TextView mEmptyList;
     private ProgressBar mSpinner;
-    private static boolean searching;
+    private boolean mSearching;
     private static int lastSearchId;
+
+    private static final String SEARCH_BUNDLE = "searchBundle";
+    private static final String LAST_QUERY_BUNDLE = "lastQueryBundle";
+    private static final String PATIENT_LIST_BUNDLE = "patientListBundle";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,16 +66,32 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         mEmptyList = (TextView) findViewById(R.id.emptyPatientListView);
 
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
-        if (getIntent().getAction() == null || searching) {
+
+        if (savedInstanceState != null) {
+            mSearching = savedInstanceState.getBoolean(SEARCH_BUNDLE);
+            mLastQuery = savedInstanceState.getString(LAST_QUERY_BUNDLE);
+            mSearchedPatientsList = (ArrayList<Patient>) savedInstanceState.getSerializable(PATIENT_LIST_BUNDLE);
+        }
+
+        if (mSearching) {
+            mPatientsListView.setEmptyView(mSpinner);
+        } else if (mSearchedPatientsList != null) {
+            mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row, mSearchedPatientsList);
+            mPatientsListView.setAdapter(mAdapter);
+            mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
+            mPatientsListView.setEmptyView(mEmptyList);
+        } else if (getIntent().getAction() == null) {
             getIntent().setAction(Intent.ACTION_SEARCH);
             handleIntent(getIntent());
-        } else if (mAdapter != null) {
-            mPatientsListView.setAdapter(mAdapter);
-            if (mAdapter.getCount() == 0) {
-                mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
-                mPatientsListView.setEmptyView(mEmptyList);
-            }
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(SEARCH_BUNDLE, mSearching);
+        outState.putString(LAST_QUERY_BUNDLE, mLastQuery);
+        outState.putSerializable(PATIENT_LIST_BUNDLE, mSearchedPatientsList);
     }
 
     @Override
@@ -91,15 +110,14 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            searching = true;
+            mSearching = true;
             lastSearchId++;
             mEmptyList.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mSpinner);
-            mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row, new ArrayList<Patient>());
+            mSearchedPatientsList = new ArrayList<Patient>();
+            mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row, mSearchedPatientsList);
             mPatientsListView.setAdapter(mAdapter);
             mLastQuery = intent.getStringExtra(SearchManager.QUERY);
-            PatientCacheHelper.clearCache();
-            PatientCacheHelper.setId(lastSearchId);
             FindPatientsManager fpm = new FindPatientsManager(this);
             fpm.findPatient(mLastQuery, lastSearchId);
 
@@ -132,9 +150,9 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         return true;
     }
 
-    public void updatePatientsData(int searchId) {
+    public void updatePatientsData(int searchId, ArrayList<Patient> patientsList) {
         if (lastSearchId == searchId) {
-            List<Patient> patientsList = PatientCacheHelper.getCachedPatients();
+            mSearchedPatientsList = patientsList;
             if (patientsList.size() == 0) {
                 mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
                 mSpinner.setVisibility(View.GONE);
@@ -142,13 +160,13 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
             }
             mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row, patientsList);
             mPatientsListView.setAdapter(mAdapter);
-            searching = false;
+            mSearching = false;
         }
     }
 
     public void stopLoader(int searchId) {
         if (lastSearchId == searchId) {
-            searching = false;
+            mSearching = false;
             mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
             mSpinner.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mEmptyList);

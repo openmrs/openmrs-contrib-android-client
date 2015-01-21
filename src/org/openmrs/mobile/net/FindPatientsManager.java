@@ -34,7 +34,6 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.mappers.PatientMapper;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
-import org.openmrs.mobile.utilities.PatientCacheHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -44,7 +43,7 @@ import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
 public class FindPatientsManager extends BaseManager {
 
-    private static final String PATIENT_LAST_VIEWED_QUERY = "patient?lastviewed=&v=full";
+    private static final String PATIENT_LAST_VIEWED_QUERY = "patient?lastviewed=" + API.FULL_VERSION_NEXT_PARAM;
     private static final String SENDING_REQUEST = "Sending request to : ";
 
     public FindPatientsManager(Context context) {
@@ -53,7 +52,7 @@ public class FindPatientsManager extends BaseManager {
 
     public void findPatient(final String query, final int searchId) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String patientsURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.PATIENT_QUERY + query;
+        String patientsURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.PATIENT_QUERY + query + API.FULL_VERSION_NEXT_PARAM;
         logger.d(SENDING_REQUEST + patientsURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
@@ -62,15 +61,16 @@ public class FindPatientsManager extends BaseManager {
             public void onResponse(JSONObject response) {
                 logger.d(response.toString());
 
+                ArrayList<Patient> patientsList = new ArrayList<Patient>();
                 try {
                     JSONArray patientsJSONList = response.getJSONArray(RESULTS_KEY);
 
-                    if (patientsJSONList.length() > 0) {
-                        for (int i = 0; i < patientsJSONList.length(); i++) {
-                            getFullPatientData(patientsJSONList.getJSONObject(i).getString(UUID_KEY), searchId);
-                        }
-                    } else {
-                        ((FindPatientsSearchActivity) mContext).updatePatientsData(searchId);
+                    for (int i = 0; i < patientsJSONList.length(); i++) {
+                        patientsList.add(PatientMapper.map(patientsJSONList.getJSONObject(i)));
+                    }
+
+                    if (OpenMRS.getInstance().getCurrentActivity() instanceof  FindPatientsSearchActivity) {
+                        ((FindPatientsSearchActivity) OpenMRS.getInstance().getCurrentActivity()).updatePatientsData(searchId, patientsList);
                     }
 
                 } catch (JSONException e) {
@@ -158,11 +158,6 @@ public class FindPatientsManager extends BaseManager {
     }
 
     public void getFullPatientData(final String patientUUID) {
-        //method called by PatientDashboardActivity. searchId is never used
-       getFullPatientData(patientUUID, null);
-    }
-
-    public void getFullPatientData(final String patientUUID, final Integer searchId) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String patientURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.PATIENT_DETAILS + File.separator
                 + patientUUID + API.FULL_VERSION;
@@ -176,11 +171,6 @@ public class FindPatientsManager extends BaseManager {
 
                 if (mContext instanceof PatientDashboardActivity) {
                     ((PatientDashboardActivity) mContext).updatePatientDetailsData(PatientMapper.map(response));
-                } else {
-                    if (PatientCacheHelper.getId() == searchId) {
-                        PatientCacheHelper.addPatient(PatientMapper.map(response));
-                    }
-                    ((FindPatientsSearchActivity) mContext).updatePatientsData(searchId);
                 }
             }
         }
@@ -190,8 +180,6 @@ public class FindPatientsManager extends BaseManager {
                         super.onErrorResponse(error);
                         if (mContext instanceof PatientDashboardActivity) {
                             ((PatientDashboardActivity) mContext).stopLoader(true);
-                        } else {
-                            ((FindPatientsSearchActivity) mContext).stopLoader(searchId);
                         }
                     }
                 }

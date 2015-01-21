@@ -49,8 +49,10 @@ public class FindPatientLastViewedFragment extends Fragment implements SwipeRefr
             swipeLayout.setEnabled(false);
             mEmptyList.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mSpinner);
-        } else {
+        } else if (mLastViewedPatientsList != null) {
             updatePatientsData();
+        } else {
+            updateLastViewedList();
         }
     }
 
@@ -85,18 +87,6 @@ public class FindPatientLastViewedFragment extends Fragment implements SwipeRefr
             }
         });
 
-        if (mRefreshing) {
-            swipeLayout.setRefreshing(true);
-            swipeLayout.setEnabled(false);
-            mEmptyList.setVisibility(View.GONE);
-            mPatientsListView.setEmptyView(mSpinner);
-        } else if (mLastViewedPatientsList != null) {
-            mPatientsListView.setEmptyView(mEmptyList);
-            mAdapter = new PatientArrayAdapter(getActivity(), R.layout.find_patients_row, mLastViewedPatientsList);
-            mPatientsListView.setAdapter(mAdapter);
-        } else {
-            updateLastViewedList();
-        }
         FontsUtil.setFont((ViewGroup) fragmentLayout);
         return fragmentLayout;
     }

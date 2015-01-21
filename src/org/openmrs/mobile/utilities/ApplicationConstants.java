@@ -52,6 +52,7 @@ public abstract class ApplicationConstants {
         public static final String FORM_LIST = "xformDownload?target=xformslist&format=withurl";
 
         public static final String FULL_VERSION = "?v=full";
+        public static final String FULL_VERSION_NEXT_PARAM = "&v=full";
         public static final int REQUEST_TIMEOUT = 20000;
     }
 

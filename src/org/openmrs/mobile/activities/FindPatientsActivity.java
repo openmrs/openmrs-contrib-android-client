@@ -130,7 +130,7 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
                 (FindPatientLastViewedFragment) this.getSupportFragmentManager().
                     getFragments().get(TabHost.LAST_VIEWED_TAB_POS);
 
-        viewedFragment.updateLastViewedList();
+        viewedFragment.onResume();
 
         FindPatientInDatabaseFragment databaseFragment =
                 (FindPatientInDatabaseFragment) this.getSupportFragmentManager().

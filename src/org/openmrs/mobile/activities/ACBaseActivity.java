@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.view.MenuItem;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
+import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
@@ -35,7 +37,8 @@ import org.openmrs.mobile.utilities.ToastUtil;
 public abstract class ACBaseActivity extends ActionBarActivity {
 
     protected FragmentManager mFragmentManager;
-    protected final OpenMRSLogger mOpenMRSLogger = OpenMRS.getInstance().getOpenMRSLogger();
+    protected final OpenMRS mOpenMRS = OpenMRS.getInstance();
+    protected final OpenMRSLogger mOpenMRSLogger = mOpenMRS.getOpenMRSLogger();
     private CustomFragmentDialog mCurrentDialog;
     protected AuthorizationManager mAuthorizationManager;
     private ProgressDialog mProgressDialog;
@@ -52,6 +55,7 @@ public abstract class ACBaseActivity extends ActionBarActivity {
     protected void onDestroy() {
         super.onDestroy();
         mCurrentDialog = null;
+        clearReferences();
     }
 
     @Override
@@ -62,9 +66,17 @@ public abstract class ACBaseActivity extends ActionBarActivity {
                 mAuthorizationManager.moveToLoginActivity();
             } else if (this instanceof DashboardActivity || this instanceof SettingsActivity
                     || this instanceof FindPatientsActivity || this instanceof FindActiveVisitsActivity) {
-                this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, OpenMRS.getInstance().getUsername()));
+                this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, mOpenMRS.getUsername()));
             }
         }
+
+        mOpenMRS.setCurrentActivity(this);
+    }
+
+    @Override
+    protected void onPause() {
+        clearReferences();
+        super.onPause();
     }
 
     @Override
@@ -94,7 +106,8 @@ public abstract class ACBaseActivity extends ActionBarActivity {
     }
 
     public void logout() {
-        OpenMRS.getInstance().clearUserPreferencesData();
+        mOpenMRS.clearUserPreferencesData();
+        FindPatientLastViewedFragment.clearLastViewedPatientList();
         mAuthorizationManager.moveToLoginActivity();
         OpenMRSDBOpenHelper.getInstance().closeDatabases();
     }
@@ -184,7 +197,8 @@ public abstract class ACBaseActivity extends ActionBarActivity {
 
     public void moveUnauthorizedUserToLoginScreen() {
         OpenMRSDBOpenHelper.getInstance().closeDatabases();
-        OpenMRS.getInstance().clearUserPreferencesData();
+        mOpenMRS.clearUserPreferencesData();
+        FindPatientLastViewedFragment.clearLastViewedPatientList();
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);
@@ -213,6 +227,13 @@ public abstract class ACBaseActivity extends ActionBarActivity {
             ToastUtil.showShortToast(this,
                     ToastUtil.ToastType.ERROR,
                     errorMessageId);
+        }
+    }
+
+    private void clearReferences() {
+        Activity currActivity = mOpenMRS.getCurrentActivity();
+        if (currActivity != null && this.equals(currActivity)) {
+            mOpenMRS.setCurrentActivity(null);
         }
     }
 }

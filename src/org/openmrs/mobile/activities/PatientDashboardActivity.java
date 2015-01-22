@@ -223,10 +223,12 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     }
 
     private void recreateFragmentView(final Fragment fragment) {
-        FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
-        fragTransaction.detach(fragment);
-        fragTransaction.attach(fragment);
-        fragTransaction.commit();
+        if (fragment != null) {
+            FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
+            fragTransaction.detach(fragment);
+            fragTransaction.attach(fragment);
+            fragTransaction.commit();
+        }
     }
 
     public class PatientDashboardPagerAdapter extends FragmentPagerAdapter {

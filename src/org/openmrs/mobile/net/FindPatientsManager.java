@@ -30,17 +30,19 @@ import org.openmrs.mobile.activities.FindPatientsActivity;
 import org.openmrs.mobile.activities.FindPatientsSearchActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
+import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.mappers.PatientMapper;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
-import org.openmrs.mobile.utilities.PatientCacheHelper;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
 public class FindPatientsManager extends BaseManager {
 
-    private static final String PATIENT_LAST_VIEWED_QUERY = "patient?lastviewed";
+    private static final String PATIENT_LAST_VIEWED_QUERY = "patient?lastviewed=" + API.FULL_VERSION_NEXT_PARAM;
     private static final String SENDING_REQUEST = "Sending request to : ";
 
     public FindPatientsManager(Context context) {
@@ -49,7 +51,7 @@ public class FindPatientsManager extends BaseManager {
 
     public void findPatient(final String query, final int searchId) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String patientsURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.PATIENT_QUERY + query;
+        String patientsURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.PATIENT_QUERY + query + API.FULL_VERSION_NEXT_PARAM;
         logger.d(SENDING_REQUEST + patientsURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
@@ -58,15 +60,16 @@ public class FindPatientsManager extends BaseManager {
             public void onResponse(JSONObject response) {
                 logger.d(response.toString());
 
+                ArrayList<Patient> patientsList = new ArrayList<Patient>();
                 try {
                     JSONArray patientsJSONList = response.getJSONArray(RESULTS_KEY);
 
-                    if (patientsJSONList.length() > 0) {
-                        for (int i = 0; i < patientsJSONList.length(); i++) {
-                            getFullPatientData(patientsJSONList.getJSONObject(i).getString(UUID_KEY), searchId);
-                        }
-                    } else {
-                        ((FindPatientsSearchActivity) mContext).updatePatientsData(searchId);
+                    for (int i = 0; i < patientsJSONList.length(); i++) {
+                        patientsList.add(PatientMapper.map(patientsJSONList.getJSONObject(i)));
+                    }
+
+                    if (mOpenMRS.getCurrentActivity() instanceof  FindPatientsSearchActivity) {
+                        ((FindPatientsSearchActivity) mOpenMRS.getCurrentActivity()).updatePatientsData(searchId, patientsList);
                     }
 
                 } catch (JSONException e) {
@@ -85,7 +88,7 @@ public class FindPatientsManager extends BaseManager {
         queue.add(jsObjRequest);
     }
 
-    public void getLastViewedPatient(final int searchId) {
+    public void getLastViewedPatient() {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String patientsURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + PATIENT_LAST_VIEWED_QUERY;
         logger.d(SENDING_REQUEST + patientsURL);
@@ -96,25 +99,39 @@ public class FindPatientsManager extends BaseManager {
             public void onResponse(JSONObject response) {
                 logger.d(response.toString());
 
+                List<Patient> patientsList = new ArrayList<Patient>();
                 try {
                     JSONArray patientsJSONList = response.getJSONArray(RESULTS_KEY);
 
-                    if (patientsJSONList.length() > 0) {
-                        for (int i = 0; i < patientsJSONList.length(); i++) {
-                            getFullLastViewedPatientData(patientsJSONList.getJSONObject(i).getString(UUID_KEY), searchId);
-                        }
-                    } else {
-                        FragmentManager fm = ((FindPatientsActivity) mContext).getSupportFragmentManager();
+                    for (int i = 0; i < patientsJSONList.length(); i++) {
+                        patientsList.add(PatientMapper.map(patientsJSONList.getJSONObject(i)));
+                    }
+
+                    FindPatientLastViewedFragment.setLastViewedPatientList(patientsList);
+
+                    if (mOpenMRS.getCurrentActivity() instanceof FindPatientsActivity) {
+                        FragmentManager fm = ((FindPatientsActivity) mOpenMRS.getCurrentActivity()).getSupportFragmentManager();
                         FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) fm
                                 .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
 
                         if (fragment != null) {
-                            fragment.updatePatientsData(searchId);
+                            fragment.updatePatientsData();
                         }
                     }
-
+                    FindPatientLastViewedFragment.setRefreshing(false);
                 } catch (JSONException e) {
                     logger.d(e.toString());
+                    if (mOpenMRS.getCurrentActivity() instanceof FindPatientsActivity) {
+                        FragmentManager fm = ((FindPatientsActivity) mOpenMRS.getCurrentActivity()).getSupportFragmentManager();
+                        FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) fm
+                                .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
+
+                        if (fragment != null) {
+                            fragment.stopLoader();
+                        }
+                    }
+                    FindPatientLastViewedFragment.setLastViewedPatientList(new ArrayList<Patient>());
+                    FindPatientLastViewedFragment.setRefreshing(false);
                 }
             }
         }
@@ -122,13 +139,17 @@ public class FindPatientsManager extends BaseManager {
             @Override
             public void onErrorResponse(VolleyError error) {
                 super.onErrorResponse(error);
-                FragmentManager fm = ((FindPatientsActivity) mContext).getSupportFragmentManager();
-                FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) fm
-                        .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
+                if (mOpenMRS.getCurrentActivity() instanceof FindPatientsActivity) {
+                    FragmentManager fm = ((FindPatientsActivity) mOpenMRS.getCurrentActivity()).getSupportFragmentManager();
+                    FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) fm
+                            .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
 
-                if (fragment != null) {
-                    fragment.stopLoader(searchId);
+                    if (fragment != null) {
+                        fragment.stopLoader();
+                    }
                 }
+                FindPatientLastViewedFragment.setLastViewedPatientList(new ArrayList<Patient>());
+                FindPatientLastViewedFragment.setRefreshing(false);
             }
         }
         );
@@ -136,11 +157,6 @@ public class FindPatientsManager extends BaseManager {
     }
 
     public void getFullPatientData(final String patientUUID) {
-        //method called by PatientDashboardActivity. searchId is never used
-       getFullPatientData(patientUUID, null);
-    }
-
-    public void getFullPatientData(final String patientUUID, final Integer searchId) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String patientURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.PATIENT_DETAILS + File.separator
                 + patientUUID + API.FULL_VERSION;
@@ -154,11 +170,6 @@ public class FindPatientsManager extends BaseManager {
 
                 if (mContext instanceof PatientDashboardActivity) {
                     ((PatientDashboardActivity) mContext).updatePatientDetailsData(PatientMapper.map(response));
-                } else {
-                    if (PatientCacheHelper.getId() == searchId) {
-                        PatientCacheHelper.addPatient(PatientMapper.map(response));
-                    }
-                    ((FindPatientsSearchActivity) mContext).updatePatientsData(searchId);
                 }
             }
         }
@@ -168,52 +179,9 @@ public class FindPatientsManager extends BaseManager {
                         super.onErrorResponse(error);
                         if (mContext instanceof PatientDashboardActivity) {
                             ((PatientDashboardActivity) mContext).stopLoader(true);
-                        } else {
-                            ((FindPatientsSearchActivity) mContext).stopLoader(searchId);
                         }
                     }
                 }
-        );
-        queue.add(jsObjRequest);
-        queue.start();
-    }
-
-    public void getFullLastViewedPatientData(final String patientUUID, final int searchId) {
-        RequestQueue queue = Volley.newRequestQueue(mContext);
-        String patientURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.PATIENT_DETAILS + File.separator
-                + patientUUID + API.FULL_VERSION;
-        logger.d(SENDING_REQUEST + patientURL);
-
-        JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                patientURL, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                logger.d(response.toString());
-                if (PatientCacheHelper.getId() == searchId) {
-                    PatientCacheHelper.addPatient(PatientMapper.map(response));
-                }
-                FragmentManager fm = ((FindPatientsActivity) mContext).getSupportFragmentManager();
-                FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) fm
-                        .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
-
-                if (fragment != null) {
-                    fragment.updatePatientsData(searchId);
-                }
-            }
-        }
-                , new GeneralErrorListenerImpl(mContext) {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                super.onErrorResponse(error);
-                FragmentManager fm = ((FindPatientsActivity) mContext).getSupportFragmentManager();
-                FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) fm
-                        .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
-
-                if (fragment != null) {
-                    fragment.stopLoader(searchId);
-                }
-            }
-        }
         );
         queue.add(jsObjRequest);
         queue.start();

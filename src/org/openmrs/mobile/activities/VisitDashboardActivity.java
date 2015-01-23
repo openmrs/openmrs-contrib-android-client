@@ -30,7 +30,6 @@ import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.bundle.FormManagerBundle;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.FormsDAO;
-import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.intefaces.VisitDashboardCallbackListener;
 import org.openmrs.mobile.models.Encounter;

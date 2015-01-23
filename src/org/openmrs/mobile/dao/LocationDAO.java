@@ -85,6 +85,7 @@ public class LocationDAO {
         location.setName(cursor.getString(cursor.getColumnIndex(LocationTable.Column.NAME)));
         location.setDescription(cursor.getString(cursor.getColumnIndex(LocationTable.Column.DESCRIPTION)));
         location.setParentLocationUuid(cursor.getString(cursor.getColumnIndex(LocationTable.Column.PARENT_LOCATION_UUID)));
+        location.setParentLocationDisplay(cursor.getString(cursor.getColumnIndex(LocationTable.Column.PARENT_LOCATION_DISPLAY)));
         return location;
     }
 }

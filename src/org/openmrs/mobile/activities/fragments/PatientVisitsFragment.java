@@ -13,6 +13,7 @@ import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.adapters.PatientVisitsArrayAdapter;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
@@ -49,6 +50,11 @@ public class PatientVisitsFragment extends ACBaseFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.patients_visit_tab_menu, menu);
+
+        if (!OpenMRS.getInstance().getOnlineMode()) {
+            menu.findItem(R.id.actionStartVisit).setTitle(R.string.action_start_visit_offline);
+        }
+
         super.onCreateOptionsMenu(menu, inflater);
     }
 

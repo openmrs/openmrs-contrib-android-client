@@ -17,7 +17,6 @@ package org.openmrs.mobile.net;
 import com.android.volley.Request;
 import org.json.JSONObject;
 
-import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.listeners.visit.CheckVisitBeforeStartListener;
 import org.openmrs.mobile.listeners.visit.FindVisitsByPatientUUIDListener;
 import org.openmrs.mobile.listeners.visit.StartVisitListener;
@@ -118,19 +117,28 @@ public class VisitsManager extends BaseManager {
 
     public void startVisit(StartVisitListener listener) {
         mLogger.d(SENDING_REQUEST + mVisitBaseUrl);
+        long currentTimeMillis = System.currentTimeMillis();
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put(PATIENT, listener.getPatientUUID());
         params.put(VISIT_TYPE, OpenMRS.getInstance().getVisitTypeUUID());
-        params.put(START_DATE_TIME, DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
+        params.put(START_DATE_TIME, DateUtils.convertTime(currentTimeMillis, DateUtils.OPEN_MRS_REQUEST_FORMAT));
         params.put(LOCATION, LocationDAO.findLocationByName(OpenMRS.getInstance().getLocation()).getParentLocationUuid());
 
-        JsonObjectRequestWrapper jsObjRequest =
-                new JsonObjectRequestWrapper(Request.Method.POST,
-                        mVisitBaseUrl, new JSONObject(params), listener, listener, DO_GZIP_REQUEST);
-        mOpenMRS.addToRequestQueue(jsObjRequest);
-    }
+        if (mOnlineMode) {
+            JsonObjectRequestWrapper jsObjRequest =
+                    new JsonObjectRequestWrapper(Request.Method.POST,
+                            mVisitBaseUrl, new JSONObject(params), listener, listener, DO_GZIP_REQUEST);
+            mOpenMRS.addToRequestQueue(jsObjRequest);
+        } else {
+            long visitID = listener.offlineAction(currentTimeMillis);
 
+            if (visitID > 0) {
+                OfflineRequest offlineRequest = new OfflineRequest(Request.Method.POST, mVisitBaseUrl, new JSONObject(params), visitID, "startVisit");
+                OpenMRS.getInstance().addToRequestQueue(offlineRequest);
+            }
+        }
+    }
 
     public void getVisitType(VisitTypeListener listener) {
         mLogger.d(SENDING_REQUEST + mVisitTypeBaseUrl);

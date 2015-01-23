@@ -123,6 +123,12 @@ public class OpenMRS extends Collect {
         editor.putString(ApplicationConstants.VISIT_TYPE_UUID, visitTypeUUID);
     }
 
+    public void setVisitTypeDisplay(String visitTypeDisplay) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.VISIT_TYPE_DISPLAY, visitTypeDisplay);
+        editor.commit();
+    }
+
     public void setOnlineMode(boolean onlineMode) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putBoolean(ApplicationConstants.ONLINE_MODE, onlineMode);
@@ -188,6 +194,11 @@ public class OpenMRS extends Collect {
     public String getVisitTypeUUID() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.VISIT_TYPE_UUID, ApplicationConstants.EMPTY_STRING);
+    }
+
+    public String getVisitTypeDisplay() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        return prefs.getString(ApplicationConstants.VISIT_TYPE_DISPLAY, ApplicationConstants.EMPTY_STRING);
     }
 
     public boolean getOnlineMode() {

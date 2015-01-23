@@ -24,10 +24,11 @@ public class OfflineRequest {
     private long objectID;
     private String actionName;
 
-    public OfflineRequest(int method, String url, JSONObject jsonRequest, String actionName) {
+    public OfflineRequest(int method, String url, JSONObject jsonRequest, long objectID, String actionName) {
         this.method = method;
         this.url = url;
         this.jsonRequest = jsonRequest.toString();
+        this.objectID = objectID;
         this.actionName = actionName;
     }
 

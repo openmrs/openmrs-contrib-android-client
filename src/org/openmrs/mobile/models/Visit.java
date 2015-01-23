@@ -30,6 +30,13 @@ public class Visit implements Serializable {
     public Visit() {
     }
 
+    public Visit(Long patientID, String visitType, String visitPlace, Long startDate) {
+        this.patientID = patientID;
+        this.visitType = visitType;
+        this.visitPlace = visitPlace;
+        this.startDate = startDate;
+    }
+
     public Long getId() {
         return id;
     }

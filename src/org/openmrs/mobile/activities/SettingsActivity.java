@@ -28,7 +28,6 @@ import android.widget.ToggleButton;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.adapters.SettingsArrayAdapter;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.models.OfflineRequest;
 import org.openmrs.mobile.models.SettingsListItemDTO;
 import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.net.OfflineRequestManager;

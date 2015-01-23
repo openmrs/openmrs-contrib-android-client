@@ -7,12 +7,15 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import org.openmrs.mobile.activities.SettingsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.OfflineRequest;
+import org.openmrs.mobile.models.Visit;
+import org.openmrs.mobile.models.mappers.VisitMapper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.io.File;
@@ -28,12 +31,10 @@ public class OfflineRequestManager extends BaseManager {
         List<OfflineRequest> offlineRequestList = OpenMRS.getInstance().getOfflineRequestQueue();
         if (offlineRequestList.size() > 0) {
             sendOldRequest(offlineRequestList.get(0), 0, true);
-        } else {
-            ((SettingsActivity) mContext).setListView();
         }
     }
 
-    public void sendOldRequest(OfflineRequest offlineRequest, final int id, final boolean sendNext) {
+    public void sendOldRequest(final OfflineRequest offlineRequest, final int id, final boolean sendNext) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
 
         OfflineRequest requestData = offlineRequest;
@@ -46,11 +47,28 @@ public class OfflineRequestManager extends BaseManager {
             public void onResponse(final JSONObject response) {
                 logger.d(response.toString());
                 //remove from queue if ok
-                List<OfflineRequest> offlineRequestList = OpenMRS.getInstance().getOfflineRequestQueue();
-                offlineRequestList.remove(id);
-                OpenMRS.getInstance().setOfflineRequestQueue(offlineRequestList);
-                if (sendNext) {
-                    sendAllOldRequestOneByOne();
+                boolean updateSuccessful = true;
+
+                if ("startVisit".equals(offlineRequest.getActionName())) {
+                    try {
+                        Visit updatedVisit = VisitMapper.map(response);
+                        Visit visit = new VisitDAO().getVisitsByID(offlineRequest.getObjectID());
+                        visit.setUuid(updatedVisit.getUuid());
+                        new VisitDAO().updateVisit(visit, visit.getId(), visit.getPatientID());
+                    } catch (JSONException e) {
+                        logger.d(e.toString());
+                        updateSuccessful = false;
+                    }
+                }
+
+                if (updateSuccessful) {
+                    List<OfflineRequest> offlineRequestList = OpenMRS.getInstance().getOfflineRequestQueue();
+                    offlineRequestList.remove(id);
+                    OpenMRS.getInstance().setOfflineRequestQueue(offlineRequestList);
+                    ((SettingsActivity) mContext).setListView();
+                    if (sendNext) {
+                        sendAllOldRequestOneByOne();
+                    }
                 }
             }
         }

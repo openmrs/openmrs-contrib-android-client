@@ -272,47 +272,64 @@ public class VisitsManager extends BaseManager {
     }
 
     public void createVisit(final Patient patient) {
-        RequestQueue queue = Volley.newRequestQueue(mContext);
         String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS;
+
         logger.d("Sending request to : " + visitURL);
 
-        final String currentDate = DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT);
+        long currentTimeMillis = System.currentTimeMillis();
+        final String currentDate = DateUtils.convertTime(currentTimeMillis, DateUtils.OPEN_MRS_REQUEST_FORMAT);
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("patient", patient.getUuid());
         params.put("visitType", OpenMRS.getInstance().getVisitTypeUUID());
         params.put("startDatetime", currentDate);
         params.put("location", LocationDAO.findLocationByName(OpenMRS.getInstance().getLocation()).getParentLocationUuid());
 
-        JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.POST, visitURL, new JSONObject(params), new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(final JSONObject response) {
-                logger.d(response.toString());
+        if (mOnlineMode) {
+            JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.POST, visitURL, new JSONObject(params), new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(final JSONObject response) {
+                    logger.d(response.toString());
 
-                try {
-                    Visit visit = VisitMapper.map(response);
-                    long visitID = new VisitDAO().saveVisit(visit, patient.getId());
-                    FragmentManager fm = ((PatientDashboardActivity) mContext).getSupportFragmentManager();
-                    PatientVisitsFragment fragment = (PatientVisitsFragment) fm
-                            .getFragments().get(PatientDashboardActivity.TabHost.VISITS_TAB_POS);
-                    fragment.visitStarted(visitID, visitID <= 0);
-                } catch (JSONException e) {
-                    logger.d(e.toString());
+                    try {
+                        Visit visit = VisitMapper.map(response);
+                        long visitID = new VisitDAO().saveVisit(visit, patient.getId());
+                        FragmentManager fm = ((PatientDashboardActivity) mContext).getSupportFragmentManager();
+                        PatientVisitsFragment fragment = (PatientVisitsFragment) fm
+                                .getFragments().get(PatientDashboardActivity.TabHost.VISITS_TAB_POS);
+                        fragment.visitStarted(visitID, visitID <= 0);
+                    } catch (JSONException e) {
+                        logger.d(e.toString());
+                    }
                 }
             }
-        }
-                , new GeneralErrorListenerImpl(mContext) {
+                    , new GeneralErrorListenerImpl(mContext) {
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                super.onErrorResponse(error);
-                ((PatientDashboardActivity) mContext).stopLoader(true);
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    super.onErrorResponse(error);
+                    ((PatientDashboardActivity) mContext).stopLoader(true);
+                }
             }
+
+            ) {
+            };
+
+            RequestQueue queue = Volley.newRequestQueue(mContext);
+            queue.add(jsObjRequest);
+        } else {
+            Visit visit = new Visit(patient.getId(), OpenMRS.getInstance().getVisitTypeDisplay(),
+                    LocationDAO.findLocationByName(OpenMRS.getInstance().getLocation()).getParentLocationDisplay(), currentTimeMillis);
+            long visitID = new VisitDAO().saveVisit(visit, patient.getId());
+
+            if (visitID > 0) {
+                OfflineRequest offlineRequest = new OfflineRequest(Request.Method.POST, visitURL, new JSONObject(params), visitID, "startVisit");
+                OpenMRS.getInstance().addToRequestQueue(offlineRequest);
+            }
+            FragmentManager fm = ((PatientDashboardActivity) mContext).getSupportFragmentManager();
+            PatientVisitsFragment fragment = (PatientVisitsFragment) fm
+                    .getFragments().get(PatientDashboardActivity.TabHost.VISITS_TAB_POS);
+            fragment.visitStarted(visitID, visitID <= 0);
         }
-
-        ) {
-        };
-
-        queue.add(jsObjRequest);
     }
 
     public void getVisitType() {
@@ -329,6 +346,8 @@ public class VisitsManager extends BaseManager {
                     JSONArray visitTypesObj = response.getJSONArray("results");
                     String visitTypeUUID = ((JSONObject) visitTypesObj.get(0)).getString("uuid");
                     OpenMRS.getInstance().setVisitTypeUUID(visitTypeUUID);
+                    String visitTypeDisplay = ((JSONObject) visitTypesObj.get(0)).getString("display");
+                    OpenMRS.getInstance().setVisitTypeDisplay(visitTypeDisplay);
                 } catch (JSONException e) {
                     logger.d(e.toString());
                 }

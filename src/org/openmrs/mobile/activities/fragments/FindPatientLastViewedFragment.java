@@ -18,7 +18,6 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FindPatientsManager;
 import org.openmrs.mobile.utilities.FontsUtil;
-import org.openmrs.mobile.utilities.NetworkUtils;
 
 import java.util.List;
 

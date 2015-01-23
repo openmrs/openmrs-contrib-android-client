@@ -112,6 +112,7 @@
     <string name="synchronize_patient_successful">Synchronize patient data successful</string>
     <string name="synchronize_patient_error">Synchronize patient data unsuccessful</string>
     <string name="action_start_visit">Start visit</string>
+    <string name="action_start_visit_offline">Start visit (Offline)</string>
     <string name="start_visit_successful">Start new visit successful</string>
     <string name="start_visit_error">Start new visit unsuccessful</string>
     <string name="patient_scroll_tab_details_label">Details</string>

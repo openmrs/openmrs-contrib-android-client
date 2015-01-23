@@ -38,10 +38,12 @@ public class VisitDAO {
         ObservationDAO observationDAO = new ObservationDAO();
         visit.setPatientID(patientID);
         long visitID = new VisitTable().insert(visit);
-        for (Encounter encounter : visit.getEncounters()) {
-            long encounterID = encounterDAO.saveEncounter(encounter, visitID);
-            for (Observation obs : encounter.getObservations()) {
-                observationDAO.saveObservation(obs, encounterID);
+        if (visit.getEncounters() != null) {
+            for (Encounter encounter : visit.getEncounters()) {
+                long encounterID = encounterDAO.saveEncounter(encounter, visitID);
+                for (Observation obs : encounter.getObservations()) {
+                    observationDAO.saveObservation(obs, encounterID);
+                }
             }
         }
         return visitID;
@@ -88,7 +90,7 @@ public class VisitDAO {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
 
         String sort = VisitTable.Column.PATIENT_KEY_ID + " ASC";
-        String visitWhere = String.format("%s IS NULL OR %s = ''", VisitTable.Column.STOP_DATE, VisitTable.Column.STOP_DATE);
+        String visitWhere = String.format("%s IS NULL OR %s = '' OR %s = 0", VisitTable.Column.STOP_DATE, VisitTable.Column.STOP_DATE, VisitTable.Column.STOP_DATE);
         final Cursor visitCursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, visitWhere, null, null, null, sort);
 
         sort = Table.MasterColumn.ID + " ASC";

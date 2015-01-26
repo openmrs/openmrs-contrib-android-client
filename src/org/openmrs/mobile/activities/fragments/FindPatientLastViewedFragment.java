@@ -2,7 +2,6 @@ package org.openmrs.mobile.activities.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,7 @@ import org.openmrs.mobile.utilities.NetworkUtils;
 
 import java.util.List;
 
-public class FindPatientLastViewedFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class FindPatientLastViewedFragment extends ACBaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private ProgressBar mSpinner;
     private View fragmentLayout;
@@ -31,6 +30,7 @@ public class FindPatientLastViewedFragment extends Fragment implements SwipeRefr
     private static List<Patient> mLastViewedPatientsList;
     private SwipeRefreshLayout swipeLayout;
     private static boolean mRefreshing;
+    private boolean isConnectionAvailable;
 
     public FindPatientLastViewedFragment() {
     }
@@ -38,6 +38,7 @@ public class FindPatientLastViewedFragment extends Fragment implements SwipeRefr
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        isConnectionAvailable = checkIfConnectionIsAvailable();
     }
 
     @Override
@@ -78,7 +79,8 @@ public class FindPatientLastViewedFragment extends Fragment implements SwipeRefr
             }
 
             @Override
-            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            public void onScroll(AbsListView absListView, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
                 if (firstVisibleItem == 0 && !swipeLayout.isRefreshing()) {
                     swipeLayout.setEnabled(true);
                 } else {
@@ -128,6 +130,15 @@ public class FindPatientLastViewedFragment extends Fragment implements SwipeRefr
             mPatientsListView.setEmptyView(mEmptyList);
             swipeLayout.setRefreshing(false);
         }
+    }
+
+    public boolean checkIfConnectionIsAvailable() {
+        isConnectionAvailable = NetworkUtils.isNetworkAvailable(getActivity());
+        if (isConnectionAvailable) {
+            FindPatientsManager fpm = new FindPatientsManager(getActivity());
+            fpm.getLastViewedPatient();
+        }
+        return isConnectionAvailable;
     }
 
     @Override

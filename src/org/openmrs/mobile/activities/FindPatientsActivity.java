@@ -19,7 +19,6 @@ import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,6 +29,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -46,12 +46,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FindPatientsActivity extends ACBaseActivity implements ActionBar.TabListener {
-
     private String mQuery;
     private MenuItem mFindPatientMenuItem;
 
     private ViewPager mViewPager;
     private FindPatientPagerAdapter mFindPatientPagerAdapter;
+    protected LayoutInflater mInflater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,12 +92,6 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
     }
 
     @Override
-    public void onConfigurationChanged(final Configuration config) {
-        super.onConfigurationChanged(config);
-        TabUtil.setHasEmbeddedTabs(getSupportActionBar(), getWindowManager(), TabUtil.MIN_SCREEN_WIDTH_FOR_FINDPATIENTSACTIVITY);
-    }
-
-    @Override
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
         handleIntent(intent);
@@ -128,7 +122,7 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         FindPatientLastViewedFragment viewedFragment =
                 (FindPatientLastViewedFragment) this.getSupportFragmentManager().
-                    getFragments().get(TabHost.LAST_VIEWED_TAB_POS);
+                        getFragments().get(TabHost.LAST_VIEWED_TAB_POS);
 
         viewedFragment.onResume();
 

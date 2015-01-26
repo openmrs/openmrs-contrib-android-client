@@ -113,8 +113,8 @@ public class LoginActivity extends ACBaseActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onResumeFragments() {
+        super.onResumeFragments();
         bindDrawableResources();
     }
 

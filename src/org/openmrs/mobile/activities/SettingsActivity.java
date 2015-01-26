@@ -56,8 +56,8 @@ public class SettingsActivity extends ACBaseActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onResumeFragments() {
+        super.onResumeFragments();
         if (null == mAuthorizationManager) {
             mAuthorizationManager = new AuthorizationManager(this);
         }

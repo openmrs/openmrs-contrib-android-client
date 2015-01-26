@@ -3,11 +3,7 @@ package org.openmrs.mobile.activities.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -16,21 +12,19 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.activities.VisitDashboardActivity;
 import org.openmrs.mobile.adapters.PatientVisitsArrayAdapter;
-import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.DateUtils;
 
 import java.util.List;
 
-public class PatientVisitsFragment extends Fragment {
+public class PatientVisitsFragment extends ACBaseFragment {
 
     private List<Visit> mPatientVisits;
-    private Patient mPatient;
     private VisitsManager mVisitsManager;
+    private Patient mPatient;
 
     public PatientVisitsFragment() {
     }
@@ -50,27 +44,11 @@ public class PatientVisitsFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.patients_visit_tab_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.actionStartVisit:
-                showStartVisitDialog();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mPatient = (Patient) getArguments().getSerializable(ApplicationConstants.BundleKeys.PATIENT_BUNDLE);
-        mPatientVisits = new VisitDAO().getVisitsByPatientID(mPatient.getId());
+        mPatientVisits = new VisitDAO().getVisitsByPatientID(((Patient) getArguments().getSerializable(ApplicationConstants.BundleKeys.PATIENT_BUNDLE)).getId());
 
         View fragmentLayout = inflater.inflate(R.layout.fragment_patient_visit, null, false);
         ListView visitList = (ListView) fragmentLayout.findViewById(R.id.patientVisitList);
@@ -82,6 +60,7 @@ public class PatientVisitsFragment extends Fragment {
         ((PatientDashboardActivity) getActivity())
                 .showProgressDialog(R.string.action_start_visit, PatientDashboardActivity.DialogAction.ADD_VISIT);
         mVisitsManager.createVisit(mPatient);
+
     }
 
     public void visitStarted(long visitID, boolean errorOccurred) {
@@ -91,37 +70,8 @@ public class PatientVisitsFragment extends Fragment {
             intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, visitID);
             intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_NAME, mPatient.getDisplay());
             this.startActivity(intent);
+
         }
     }
 
-    private void showStartVisitDialog() {
-        boolean activeVisit = false;
-        for (int i = 0; i < mPatientVisits.size(); i++) {
-            if (DateUtils.ZERO.equals(mPatientVisits.get(i).getStopDate())) {
-                activeVisit = true;
-                break;
-            }
-        }
-        if (!activeVisit) {
-            CustomDialogBundle bundle = new CustomDialogBundle();
-            bundle.setTitleViewMessage(getString(R.string.start_visit_dialog_title));
-            bundle.setTextViewMessage(getString(R.string.start_visit_dialog_message,
-                    ((PatientDashboardActivity) getActivity()).getSupportActionBar().getTitle()));
-            bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.START_VISIT);
-            bundle.setRightButtonText(getString(R.string.dialog_button_confirm));
-            bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
-            bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
-            ((PatientDashboardActivity) getActivity()).
-                    createAndShowDialog(bundle, ApplicationConstants.DialogTAG.START_VISIT_DIALOG_TAG);
-        } else {
-            CustomDialogBundle bundle = new CustomDialogBundle();
-            bundle.setTitleViewMessage(getString(R.string.start_visit_impossible_dialog_title));
-            bundle.setTextViewMessage(getString(R.string.start_visit_impossible_dialog_message,
-                    ((PatientDashboardActivity) getActivity()).getSupportActionBar().getTitle()));
-            bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
-            bundle.setRightButtonText(getString(R.string.dialog_button_ok));
-            ((PatientDashboardActivity) getActivity()).
-                    createAndShowDialog(bundle, ApplicationConstants.DialogTAG.START_VISIT_IMPOSSIBLE_DIALOG_TAG);
-        }
-    }
 }

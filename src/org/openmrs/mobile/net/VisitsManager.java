@@ -53,6 +53,7 @@ import java.util.HashMap;
 
 import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
+
 public class VisitsManager extends BaseManager {
     private static final String VISIT_QUERY = "visit?patient=";
     private static final String SENDING_REQUEST = "Sending request to : ";
@@ -81,7 +82,6 @@ public class VisitsManager extends BaseManager {
                 , new GeneralErrorListenerImpl(mContext) {
             @Override
             public void onErrorResponse(VolleyError error) {
-                subtractExpectedResponses(true);
                 super.onErrorResponse(error);
             }
         });
@@ -343,9 +343,12 @@ public class VisitsManager extends BaseManager {
         if (errorOccurred) {
             mErrorOccurred = errorOccurred;
         }
-        if (mExpectedResponses <= 0) {
-            if (mContext instanceof PatientDashboardActivity) {
-                ((PatientDashboardActivity) mContext).updatePatientVisitsData(mErrorOccurred);
+
+        if (mExpectedResponses == 0) {
+            Context context = OpenMRS.getInstance().getCurrentActivity();
+            if (mContext instanceof PatientDashboardActivity &&
+                    context instanceof PatientDashboardActivity) {
+                ((PatientDashboardActivity) context).updatePatientVisitsData(mErrorOccurred);
             } else if (mContext instanceof FindPatientsSearchActivity
                     || mContext instanceof FindPatientsActivity) {
                 ((ACBaseActivity) mContext).dismissProgressDialog(errorOccurred,

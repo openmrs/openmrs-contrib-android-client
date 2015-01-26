@@ -69,14 +69,14 @@ public class VisitDashboardActivity extends ACBaseActivity {
     }
 
     @Override
-    protected void onResume() {
+    protected void onResumeFragments() {
         if (!mVisitEncounters.isEmpty()) {
             mEmptyListView.setVisibility(View.GONE);
             mExpandableListAdapter = new VisitExpandableListAdapter(this, mVisitEncounters);
             mExpandableListView.setAdapter(mExpandableListAdapter);
             mExpandableListView.setGroupIndicator(null);
         }
-        super.onResume();
+        super.onResumeFragments();
     }
 
     @Override

@@ -87,8 +87,8 @@ public class FindActiveVisitsActivity extends ACBaseActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onResumeFragments() {
+        super.onResumeFragments();
         mAdapter = new ActiveVisitsArrayAdapter(this, R.layout.find_visits_row, new VisitDAO().getAllActiveVisits());
         mVisitListView.setAdapter(mAdapter);
     }

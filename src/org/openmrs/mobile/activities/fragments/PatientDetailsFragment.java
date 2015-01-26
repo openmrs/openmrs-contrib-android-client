@@ -2,7 +2,6 @@ package org.openmrs.mobile.activities.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 
-public class PatientDetailsFragment extends Fragment {
+public class PatientDetailsFragment extends ACBaseFragment {
 
     private Patient mPatient;
 
@@ -70,4 +69,5 @@ public class PatientDetailsFragment extends Fragment {
     public void reloadPatientData(Patient patient) {
         mPatient = patient;
     }
+
 }

@@ -15,7 +15,6 @@
 package org.openmrs.mobile.activities;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -41,7 +40,7 @@ public abstract class ACBaseActivity extends ActionBarActivity {
     protected final OpenMRSLogger mOpenMRSLogger = mOpenMRS.getOpenMRSLogger();
     private CustomFragmentDialog mCurrentDialog;
     protected AuthorizationManager mAuthorizationManager;
-    private ProgressDialog mProgressDialog;
+    protected CustomFragmentDialog mCustomFragmentDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -185,6 +184,7 @@ public abstract class ACBaseActivity extends ActionBarActivity {
         bundle.setRightButtonText(getString(R.string.dialog_button_ok));
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.SERVER_ERROR_DIALOG_TAG);
     }
+
     public void createAndShowDialog(CustomDialogBundle bundle, String tag) {
         CustomFragmentDialog instance = CustomFragmentDialog.newInstance(bundle);
         instance.show(mFragmentManager, tag);
@@ -209,15 +209,17 @@ public abstract class ACBaseActivity extends ActionBarActivity {
     }
 
     protected void showProgressDialog(String dialogMessage) {
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setMessage(dialogMessage);
-        mProgressDialog.setIndeterminate(false);
-        mProgressDialog.setCancelable(false);
-        mProgressDialog.show();
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setProgressViewMessage(dialogMessage);
+        bundle.setProgressDialog(true);
+        mCustomFragmentDialog = CustomFragmentDialog.newInstance(bundle);
+        mCustomFragmentDialog.setCancelable(false);
+        mCustomFragmentDialog.setRetainInstance(true);
+        mCustomFragmentDialog.show(mFragmentManager, dialogMessage);
     }
 
     public void dismissProgressDialog(boolean errorOccurred, Integer successMessageId, Integer errorMessageId) {
-        mProgressDialog.dismiss();
+        mCustomFragmentDialog.dismiss();
 
         if (!errorOccurred && successMessageId != null) {
             ToastUtil.showShortToast(this,

@@ -21,8 +21,8 @@ import net.sqlcipher.Cursor;
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.tables.PatientTable;
-import org.openmrs.mobile.databases.tables.VisitTable;
 import org.openmrs.mobile.databases.tables.Table;
+import org.openmrs.mobile.databases.tables.VisitTable;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Visit;
@@ -138,7 +138,9 @@ public class VisitDAO {
 
         String where = String.format("%s = ?", VisitTable.Column.PATIENT_KEY_ID);
         String[] whereArgs = new String[]{patientID.toString()};
-        final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        String date = VisitTable.Column.START_DATE + " DESC";
+
+        final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null, null,  date);
         if (null != cursor) {
             try {
                 while (cursor.moveToNext()) {
@@ -162,6 +164,7 @@ public class VisitDAO {
                 cursor.close();
             }
         }
+
         return visits;
     }
 
@@ -218,4 +221,5 @@ public class VisitDAO {
         }
         return visitID;
     }
+
 }

@@ -28,7 +28,6 @@ import org.kxml2.kdom.Element;
 import org.odk.collect.android.logic.FormDetails;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.OfflineRequest;
 import org.openmrs.mobile.net.volley.wrappers.MultiPartRequest;
 import org.openmrs.mobile.net.volley.wrappers.StringRequestDecorator;

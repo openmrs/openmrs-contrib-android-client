@@ -110,7 +110,7 @@ public class VisitsManager extends BaseManager {
             mOpenMRS.addToRequestQueue(jsObjRequest);
         } else {
             listener.offlineAction(currentTimeMillis);
-            OfflineRequest offlineRequest = new OfflineRequest(Request.Method.POST, new JSONObject(params), listener.getVisitID(), "inactivateVisit");
+            OfflineRequest offlineRequest = new OfflineRequest(Request.Method.POST, new JSONObject(params), listener.getVisitID(), ApplicationConstants.OfflineRequests.INACTIVATE_VISIT);
             mOpenMRS.addToRequestQueue(offlineRequest);
         }
     }
@@ -134,7 +134,7 @@ public class VisitsManager extends BaseManager {
             long visitID = listener.offlineAction(currentTimeMillis);
 
             if (visitID > 0) {
-                OfflineRequest offlineRequest = new OfflineRequest(Request.Method.POST, mVisitBaseUrl, new JSONObject(params), visitID, "startVisit");
+                OfflineRequest offlineRequest = new OfflineRequest(Request.Method.POST, mVisitBaseUrl, new JSONObject(params), visitID, ApplicationConstants.OfflineRequests.START_VISIT);
                 OpenMRS.getInstance().addToRequestQueue(offlineRequest);
             }
         }

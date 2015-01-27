@@ -17,7 +17,8 @@
     <string name="app_name">OpenMRS Client</string>
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
-    <string name="no_connection">No internet connection available,\nONLINE mode disable</string>
+    <string name="online_mode_disable">No internet connection available,\nONLINE mode disable</string>
+    <string name="no_connection_available">No network connection available</string>
     <!-- Login view -->
     <string name="login_button">Login</string>
     <string name="login_username_hint">username</string>
@@ -97,7 +98,7 @@
     <string name="settings_online_mode_not_available">Network is not available</string>
     <string name="settings_toggle_on">Online</string>
     <string name="settings_toggle_off">Offline</string>
-    <string name="settings_synchronize_requests">Synchronize with sever. %1$s request remaining</string>
+    <string name="settings_synchronize_requests">%1$s request waiting to synchronize with server</string>
     <string name="settings_file_size">Size: %1$s kB</string>
 
     <!-- FindPatients activity -->

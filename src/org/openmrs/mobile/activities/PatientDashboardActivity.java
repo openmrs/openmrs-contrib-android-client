@@ -171,7 +171,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
                 if (mOpenMRS.getOnlineMode()) {
                     synchronizePatient();
                 } else {
-                    ToastUtil.showShortToast(this, ToastUtil.ToastType.WARNING, R.string.no_connection);
+                    ToastUtil.showShortToast(this, ToastUtil.ToastType.WARNING, R.string.online_mode_disable);
                 }
             default:
                 return super.onOptionsItemSelected(item);

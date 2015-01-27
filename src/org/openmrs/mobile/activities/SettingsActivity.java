@@ -81,9 +81,8 @@ public class SettingsActivity extends ACBaseActivity {
         mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_downloadForms)));
         mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_online_mode), true));
 
-        if (mOpenMRS.getOnlineMode()) {
-            mListItem.add(new SettingsListItemDTO(getString(R.string.settings_synchronize_requests, mOpenMRS.getOfflineRequestQueue().size())));
-        }
+        mListItem.add(new SettingsListItemDTO(getString(R.string.settings_synchronize_requests, mOpenMRS.getOfflineRequestQueue().size())));
+
         long size = 0;
         String filename = OpenMRS.getInstance().getOpenMRSDir()
                 + File.separator + mOpenMRSLogger.getLogFilename();

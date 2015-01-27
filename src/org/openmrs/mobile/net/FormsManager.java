@@ -21,6 +21,7 @@ import org.openmrs.mobile.listeners.forms.AvailableFormsListListener;
 import org.openmrs.mobile.listeners.forms.UploadXFormListener;
 import org.openmrs.mobile.listeners.forms.UploadXFormWithMultiPartRequestListener;
 import org.openmrs.mobile.listeners.forms.DownloadFormListener;
+import org.openmrs.mobile.models.OfflineRequest;
 import org.openmrs.mobile.net.volley.wrappers.MultiPartRequest;
 import org.openmrs.mobile.net.volley.wrappers.StringRequestDecorator;
 import org.openmrs.mobile.utilities.FileUtils;
@@ -56,11 +57,16 @@ public class FormsManager extends BaseManager {
     }
 
     public void uploadXFormWithMultiPartRequest(UploadXFormWithMultiPartRequestListener listener) {
-        mLogger.d(SENDING_REQUEST + mUploadXformBaseUrl);
+        if (mOnlineMode) {
+                mLogger.d(SENDING_REQUEST + mUploadXformBaseUrl);
 
-        MultiPartRequest multipartRequest = new MultiPartRequest(mUploadXformBaseUrl,
-                listener, listener, new File(listener.getInstancePath()), listener.getPatientUUID(), DO_GZIP_REQUEST);
-        mOpenMRS.addToRequestQueue(multipartRequest);
+            MultiPartRequest multipartRequest = new MultiPartRequest(mUploadXformBaseUrl,
+                    listener, listener, new File(listener.getInstancePath()), listener.getPatientUUID(), DO_GZIP_REQUEST);
+            mOpenMRS.addToRequestQueue(multipartRequest);
+        } else {
+            OfflineRequest offlineRequest = new OfflineRequest(MultiPartRequest.class.getName(), mUploadXformBaseUrl, listener.getInstancePath(), listener.getPatientUUID());
+            mOpenMRS.addToRequestQueue(offlineRequest);
+        }
     }
 
     public void downloadForm(DownloadFormListener listener) {

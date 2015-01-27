@@ -28,6 +28,8 @@ import org.kxml2.kdom.Element;
 import org.odk.collect.android.logic.FormDetails;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.models.OfflineRequest;
 import org.openmrs.mobile.net.volley.wrappers.MultiPartRequest;
 import org.openmrs.mobile.net.volley.wrappers.StringRequestDecorator;
 import org.openmrs.mobile.utilities.FileUtils;
@@ -127,20 +129,25 @@ public class FormsManger extends BaseManager {
     }
 
     public void uploadXFormWithMultiPartRequest(final String instancePath, final String patientUUID) {
-        RequestQueue queue = Volley.newRequestQueue(mContext);
         String xFormsListURL = mOpenMRS.getServerUrl() + API.XFORM_ENDPOINT + API.XFORM_UPLOAD;
-        MultiPartRequest multipartRequest = new MultiPartRequest(xFormsListURL,
-                new GeneralErrorListenerImpl(mContext),
-                new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response) {
-                        ToastUtil.showLongToast(mContext, ToastUtil.ToastType.SUCCESS, mContext.getString(R.string.forms_sent_successfully));
-                    }
-                }, new File(instancePath), patientUUID) {
-        };
+        if (mOnlineMode) {
+            RequestQueue queue = Volley.newRequestQueue(mContext);
 
-        queue.add(multipartRequest);
+            MultiPartRequest multipartRequest = new MultiPartRequest(xFormsListURL,
+                    new GeneralErrorListenerImpl(mContext),
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            ToastUtil.showLongToast(mContext, ToastUtil.ToastType.SUCCESS, mContext.getString(R.string.forms_sent_successfully));
+                        }
+                    }, new File(instancePath), patientUUID) {
+            };
+
+            queue.add(multipartRequest);
+        } else {
+            OfflineRequest offlineRequest = new OfflineRequest(MultiPartRequest.class.getName(), xFormsListURL, instancePath, patientUUID);
+            OpenMRS.getInstance().addToRequestQueue(offlineRequest);
+        }
     }
 
     private List<FormDetails> getFormDetails(Document xFormsDoc) {

@@ -105,6 +105,7 @@ public class OpenMRS extends Collect {
     public void setVisitTypeUUID(String visitTypeUUID) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(ApplicationConstants.VISIT_TYPE_UUID, visitTypeUUID);
+        editor.commit();
     }
 
     public void setVisitTypeDisplay(String visitTypeDisplay) {

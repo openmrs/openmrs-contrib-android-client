@@ -174,7 +174,7 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
         switch (id) {
             case R.id.actionSearch:
                 if (!OpenMRS.getInstance().getOnlineMode()) {
-                    ToastUtil.showShortToast(this, ToastUtil.ToastType.WARNING, R.string.no_connection);
+                    ToastUtil.showShortToast(this, ToastUtil.ToastType.WARNING, R.string.online_mode_disable);
                 }
             default:
                 return super.onOptionsItemSelected(item);

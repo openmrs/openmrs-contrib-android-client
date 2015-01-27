@@ -20,23 +20,32 @@ import org.json.JSONObject;
 public class OfflineRequest {
     private int method;
     private String url;
-    private String jsonRequest;
+    private String request;
     private long objectID;
+    private String objectUUID;
     private String actionName;
+    private String wrapperName;
 
     public OfflineRequest(int method, String url, JSONObject jsonRequest, long objectID, String actionName) {
         this.method = method;
         this.url = url;
-        this.jsonRequest = jsonRequest.toString();
+        this.request = jsonRequest.toString();
         this.objectID = objectID;
         this.actionName = actionName;
     }
 
     public OfflineRequest(int method, JSONObject jsonRequest, long objectID, String actionName) {
         this.method = method;
-        this.jsonRequest = jsonRequest.toString();
+        this.request = jsonRequest.toString();
         this.objectID = objectID;
         this.actionName = actionName;
+    }
+
+    public OfflineRequest(String wrapperName, String url, String instancePath, String patientUUID) {
+        this.wrapperName = wrapperName;
+        this.url = url;
+        this.request = instancePath;
+        this.objectUUID = patientUUID;
     }
 
     public void setMethod(int method) {
@@ -45,10 +54,6 @@ public class OfflineRequest {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public void setJsonRequest(JSONObject jsonRequest) {
-        this.jsonRequest = jsonRequest.toString();
     }
 
     public int getMethod() {
@@ -61,10 +66,14 @@ public class OfflineRequest {
 
     public JSONObject getJSONRequest() {
         try {
-            return new JSONObject(jsonRequest);
+            return new JSONObject(request);
         } catch (JSONException e) {
             return new JSONObject();
         }
+    }
+
+    public String getRequest() {
+        return request;
     }
 
     public long getObjectID() {
@@ -74,4 +83,13 @@ public class OfflineRequest {
     public String getActionName() {
         return actionName;
     }
+
+    public String getWrapperName() {
+        return wrapperName;
+    }
+
+    public String getObjectUUID() {
+        return objectUUID;
+    }
+
 }

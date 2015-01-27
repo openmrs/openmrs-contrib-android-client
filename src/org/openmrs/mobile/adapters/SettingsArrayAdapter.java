@@ -85,7 +85,7 @@ public class SettingsArrayAdapter extends ArrayAdapter<SettingsListItemDTO> {
             }
         }
 
-        if (OpenMRS.getInstance().getOnlineMode() && position == 1) {
+        if (position == 1) {
             setTitleCenter(holder);
         }
 

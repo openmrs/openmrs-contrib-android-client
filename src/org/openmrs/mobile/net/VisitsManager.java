@@ -67,7 +67,6 @@ public class VisitsManager extends BaseManager {
         super(context);
     }
 
-
     public void getLastVitals(final String patientUUID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.ENCOUNTER_DETAILS + "?patient=" + patientUUID
@@ -84,7 +83,6 @@ public class VisitsManager extends BaseManager {
                 , new GeneralErrorListenerImpl(mContext) {
             @Override
             public void onErrorResponse(VolleyError error) {
-                subtractExpectedResponses(true);
                 super.onErrorResponse(error);
             }
         });
@@ -265,7 +263,7 @@ public class VisitsManager extends BaseManager {
         } else {
             visit.setStopDate(currentTimeMillis);
             new VisitDAO().updateVisit(visit, visit.getId(), visit.getPatientID());
-            OfflineRequest offlineRequest = new OfflineRequest(Request.Method.POST, new JSONObject(params), visit.getId(), "inactivateVisit");
+            OfflineRequest offlineRequest = new OfflineRequest(Request.Method.POST, new JSONObject(params), visit.getId(), ApplicationConstants.OfflineRequests.INACTIVATE_VISIT);
             OpenMRS.getInstance().addToRequestQueue(offlineRequest);
             ((VisitDashboardActivity) mContext).moveToPatientDashboard();
         }
@@ -322,7 +320,7 @@ public class VisitsManager extends BaseManager {
             long visitID = new VisitDAO().saveVisit(visit, patient.getId());
 
             if (visitID > 0) {
-                OfflineRequest offlineRequest = new OfflineRequest(Request.Method.POST, visitURL, new JSONObject(params), visitID, "startVisit");
+                OfflineRequest offlineRequest = new OfflineRequest(Request.Method.POST, visitURL, new JSONObject(params), visitID, ApplicationConstants.OfflineRequests.START_VISIT);
                 OpenMRS.getInstance().addToRequestQueue(offlineRequest);
             }
             FragmentManager fm = ((PatientDashboardActivity) mContext).getSupportFragmentManager();

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.adapters.PatientArrayAdapter;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FindPatientsManager;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -44,11 +45,12 @@ public class FindPatientLastViewedFragment extends Fragment implements SwipeRefr
     public void onResume() {
         super.onResume();
 
-        if (mRefreshing) {
-            swipeLayout.setRefreshing(true);
-            swipeLayout.setEnabled(false);
-            mEmptyList.setVisibility(View.GONE);
-            mPatientsListView.setEmptyView(mSpinner);
+        if (!OpenMRS.getInstance().getOnlineMode()) {
+            setEmptyList(R.string.online_mode_disable);
+        } else if (!NetworkUtils.isNetworkAvailable(getActivity())) {
+            setEmptyList(R.string.no_connection_available);
+        } else if (mRefreshing) {
+            setSpinner();
         } else if (mLastViewedPatientsList != null) {
             updatePatientsData();
         } else {
@@ -93,9 +95,7 @@ public class FindPatientLastViewedFragment extends Fragment implements SwipeRefr
 
     public void updatePatientsData() {
         if (mLastViewedPatientsList.size() == 0) {
-            mEmptyList.setText(getString(R.string.find_patient_no_last_viewed));
-            mSpinner.setVisibility(View.GONE);
-            mPatientsListView.setEmptyView(mEmptyList);
+            setEmptyList(R.string.find_patient_no_last_viewed);
         }
         mAdapter = new PatientArrayAdapter(getActivity(), R.layout.find_patients_row, mLastViewedPatientsList);
         mPatientsListView.setAdapter(mAdapter);
@@ -104,30 +104,41 @@ public class FindPatientLastViewedFragment extends Fragment implements SwipeRefr
     }
 
     public void stopLoader() {
-        mEmptyList.setText(getString(R.string.find_patient_no_last_viewed));
+        setEmptyList(R.string.find_patient_no_last_viewed);
+    }
+
+    public void updateLastViewedList() {
+        if (OpenMRS.getInstance().getOnlineMode()) {
+            if (!NetworkUtils.isNetworkAvailable(getActivity())) {
+                setEmptyList(R.string.no_connection_available);
+            } else {
+                setRefreshing(true);
+                setSpinner();
+                if (mAdapter != null) {
+                    mAdapter.clear();
+                }
+                FindPatientsManager fpm = new FindPatientsManager(getActivity());
+                fpm.getLastViewedPatient();
+            }
+        } else {
+            setEmptyList(R.string.online_mode_disable);
+        }
+    }
+
+    private void setEmptyList(int resId) {
         mSpinner.setVisibility(View.GONE);
+        mEmptyList.setText(getString(resId));
         mPatientsListView.setEmptyView(mEmptyList);
+        mPatientsListView.setAdapter(null);
         swipeLayout.setRefreshing(false);
         swipeLayout.setEnabled(true);
     }
 
-    public void updateLastViewedList() {
-        if (NetworkUtils.isNetworkAvailable(getActivity())) {
-            setRefreshing(true);
-            swipeLayout.setRefreshing(true);
-            swipeLayout.setEnabled(false);
-            mEmptyList.setVisibility(View.GONE);
-            mPatientsListView.setEmptyView(mSpinner);
-            if (mAdapter != null) {
-                mAdapter.clear();
-            }
-            FindPatientsManager fpm = new FindPatientsManager(getActivity());
-            fpm.getLastViewedPatient();
-        } else {
-            mEmptyList.setText(getString(R.string.find_patient_no_connection));
-            mPatientsListView.setEmptyView(mEmptyList);
-            swipeLayout.setRefreshing(false);
-        }
+    private void setSpinner() {
+        mEmptyList.setVisibility(View.GONE);
+        mPatientsListView.setEmptyView(mSpinner);
+        swipeLayout.setRefreshing(true);
+        swipeLayout.setEnabled(false);
     }
 
     @Override

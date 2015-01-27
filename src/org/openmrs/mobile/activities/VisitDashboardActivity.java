@@ -26,10 +26,8 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
 import org.openmrs.mobile.adapters.VisitExpandableListAdapter;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
-import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -46,7 +44,6 @@ public class VisitDashboardActivity extends ACBaseActivity {
     private TextView mEmptyListView;
     private Visit mVisit;
     private String mPatientName;
-    private Patient mPatient;
     private VisitsManager mVisitsManager;
 
     @Override
@@ -57,8 +54,6 @@ public class VisitDashboardActivity extends ACBaseActivity {
         Intent intent = getIntent();
 
         mVisit = new VisitDAO().getVisitsByID(intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0));
-        mPatient = new PatientDAO().findPatientByID(String.valueOf(mVisit.getPatientID()));
-
         mPatientName = intent.getStringExtra(ApplicationConstants.BundleKeys.PATIENT_NAME);
         mVisitEncounters = mVisit.getEncounters();
 
@@ -83,8 +78,13 @@ public class VisitDashboardActivity extends ACBaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (DateUtils.ZERO.equals(mVisit.getStopDate())) {
             getMenuInflater().inflate(R.menu.active_visit_menu, menu);
+
+            if (!mOpenMRS.getOnlineMode()) {
+                menu.findItem(R.id.actionEndVisit).setTitle(R.string.action_end_visit_offline);
+            }
         }
         getSupportActionBar().setSubtitle(mPatientName);
+
         return true;
     }
 
@@ -103,7 +103,7 @@ public class VisitDashboardActivity extends ACBaseActivity {
     }
 
     public void endVisit() {
-        mVisitsManager.inactivateVisitByUUID(mVisit.getUuid(), mPatient.getId());
+        mVisitsManager.inactivateVisitByUUID(mVisit);
     }
 
     private void showEndVisitDialog() {

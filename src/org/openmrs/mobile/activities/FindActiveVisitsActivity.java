@@ -33,6 +33,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.adapters.ActiveVisitsArrayAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.VisitDAO;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 
 public class FindActiveVisitsActivity extends ACBaseActivity {
@@ -69,6 +70,7 @@ public class FindActiveVisitsActivity extends ACBaseActivity {
         SearchView findVisitView;
 
         mFindVisitItem = menu.findItem(R.id.actionSearch);
+        mFindVisitItem.getIcon().setAlpha(ApplicationConstants.ENABLED_ICON_ALPHA);
         if (OpenMRS.getInstance().isRunningHoneycombVersionOrHigher()) {
             findVisitView = (SearchView) mFindVisitItem.getActionView();
         } else {

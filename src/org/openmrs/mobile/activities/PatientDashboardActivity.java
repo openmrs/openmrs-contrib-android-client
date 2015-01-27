@@ -122,6 +122,10 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
         getMenuInflater().inflate(R.menu.patients_menu, menu);
         getSupportActionBar().setTitle(mPatient.getDisplay());
         getSupportActionBar().setSubtitle("#" + mPatient.getIdentifier());
+
+        if (!mOpenMRS.getOnlineMode()) {
+            menu.findItem(R.id.actionSynchronize).getIcon().setAlpha(ApplicationConstants.DISABLED_ICON_ALPHA);
+        }
         return true;
     }
 
@@ -130,7 +134,11 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
         int id = item.getItemId();
         switch (id) {
             case R.id.actionSynchronize:
-                synchronizePatient();
+                if (mOpenMRS.getOnlineMode()) {
+                    synchronizePatient();
+                } else {
+                    ToastUtil.showShortToast(this, ToastUtil.ToastType.WARNING, R.string.online_mode_disable);
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -253,7 +261,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
                 case TabHost.VISITS_TAB_POS:
                     return PatientVisitsFragment.newInstance(mPatient);
                 case TabHost.VITALS_TAB_POS:
-                    return PatientVitalsFragment.newInstance(mPatient.getId(), mPatient.getUuid());
+                    return PatientVitalsFragment.newInstance(mPatient.getUuid());
                 default:
                     return null;
             }

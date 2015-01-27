@@ -184,6 +184,5 @@ public class FindPatientsManager extends BaseManager {
                 }
         );
         queue.add(jsObjRequest);
-        queue.start();
     }
 }

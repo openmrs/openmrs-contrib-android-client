@@ -17,6 +17,8 @@
     <string name="app_name">OpenMRS Client</string>
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
+    <string name="online_mode_disable">No internet connection available,\nONLINE mode disable</string>
+    <string name="no_connection_available">No network connection available</string>
     <!-- Login view -->
     <string name="login_button">Login</string>
     <string name="login_username_hint">username</string>
@@ -77,13 +79,21 @@
     <string name="settings_logs">Logs</string>
     <string name="settings_about">About</string>
     <string name="settings_logout">Logout</string>
+    <string name="settings_online_mode">Online Mode</string>
+    <string name="settings_online_mode_on">Online Mode is currently ON</string>
+    <string name="settings_online_mode_off">Online Mode is currently OFF</string>
+    <string name="settings_online_mode_not_available">Network is not available</string>
+    <string name="settings_toggle_on">Online</string>
+    <string name="settings_toggle_off">Offline</string>
+    <string name="settings_synchronize_requests">%1$s request waiting to synchronize with server</string>
+    <string name="settings_file_size">Size: %1$s kB</string>
+
     <!-- FindPatients activity -->
     <string name="action_find_patients">Find Patients</string>
     <string name="search_patient_hint">Patient name</string>
     <string name="search_patient_no_results">No patients in database</string>
     <string name="search_patient_no_result_for_query">No results found for query \"%1$s\"</string>
     <string name="find_patient_no_last_viewed">No last viewed patients</string>
-    <string name="find_patient_no_connection">No internet connection available</string>
     <string name="find_patient_tab_downloaded_label">Downloaded</string>
     <string name="find_patient_tab_last_viewed_label">Last viewed</string>
     <string name="save_patient_data_dialog">Saving patient data...</string>
@@ -103,6 +113,7 @@
     <string name="synchronize_patient_successful">Synchronize patient data successful</string>
     <string name="synchronize_patient_error">Synchronize patient data unsuccessful</string>
     <string name="action_start_visit">Start visit</string>
+    <string name="action_start_visit_offline">Start visit (Offline)</string>
     <string name="start_visit_successful">Start new visit successful</string>
     <string name="start_visit_error">Start new visit unsuccessful</string>
     <string name="patient_scroll_tab_details_label">Details</string>
@@ -136,6 +147,7 @@
     <string name="diagnosis_note_label">Text of encounter note</string>
     <!-- Visit dashboard activity -->
     <string name="action_end_visit">End Visit</string>
+    <string name="action_end_visit_offline">End Visit (Offline)</string>
     <string name="visit_dashboard_label">Encounters</string>
     <string name="list_visit_selector_show">show details</string>
     <string name="list_visit_selector_hide">hide details</string>

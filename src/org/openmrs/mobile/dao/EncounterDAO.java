@@ -74,8 +74,8 @@ public class EncounterDAO {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
         Encounter encounter = null;
 
-        String where = String.format("%s = ?", EncounterTable.Column.PATIENT_UUID);
-        String[] whereArgs = new String[]{patientUUID};
+        String where = String.format("%s = ? AND %s = ? ORDER BY %s DESC LIMIT 1", EncounterTable.Column.PATIENT_UUID, EncounterTable.Column.ENCOUNTER_TYPE, EncounterTable.Column.ENCOUNTER_DATETIME);
+        String[] whereArgs = new String[]{patientUUID, Encounter.EncounterType.VITALS.getType()};
         final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
         if (null != cursor) {
             try {

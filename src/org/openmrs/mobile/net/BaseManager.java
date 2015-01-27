@@ -35,6 +35,7 @@ public class BaseManager {
     protected Context mContext;
     protected OpenMRS mOpenMRS = OpenMRS.getInstance();
     protected OpenMRSLogger logger = mOpenMRS.getOpenMRSLogger();
+    protected boolean mOnlineMode = OpenMRS.getInstance().getOnlineMode();
 
     public BaseManager(Context context) {
         this.mContext = context;

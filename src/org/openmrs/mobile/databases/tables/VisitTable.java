@@ -34,7 +34,7 @@ public class VisitTable extends Table<Visit> {
         return CREATE_TABLE + TABLE_NAME + "("
                 + Column.ID + PRIMARY_KEY
                 + Column.PATIENT_KEY_ID + Column.Type.INT_TYPE_NOT_NULL
-                + Column.UUID + Column.Type.DATE_TYPE_NOT_NULL
+                + Column.UUID + Column.Type.DATE_TYPE_WITH_COMMA
                 + Column.VISIT_TYPE + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.VISIT_PLACE + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.START_DATE + Column.Type.DATE_TYPE_NOT_NULL

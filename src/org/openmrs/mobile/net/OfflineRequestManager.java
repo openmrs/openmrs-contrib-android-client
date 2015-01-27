@@ -12,7 +12,6 @@ import org.json.JSONObject;
 
 import org.openmrs.mobile.activities.SettingsActivity;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.OfflineRequest;
 import org.openmrs.mobile.models.Visit;
@@ -41,7 +40,8 @@ public class OfflineRequestManager extends BaseManager {
 
         OfflineRequest requestData = offlineRequest;
 
-        if (requestData.getWrapperName().equals(MultiPartRequest.class.getName())) {
+        if (requestData.getWrapperName() != null &&
+                requestData.getWrapperName().equals(MultiPartRequest.class.getName())) {
             MultiPartRequest multipartRequest = new MultiPartRequest(requestData.getUrl(),
                     new GeneralErrorListenerImpl(mContext),
                     new Response.Listener<String>() {

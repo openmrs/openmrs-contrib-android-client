@@ -171,7 +171,9 @@ public class VisitDAO {
 
         String where = String.format("%s = ?", VisitTable.Column.ID);
         String[] whereArgs = new String[]{visitID.toString()};
-        final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        String orderBy = VisitTable.Column.START_DATE + " DESC";
+
+        final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null, null, orderBy);
         if (null != cursor) {
             try {
                 if (cursor.moveToFirst()) {

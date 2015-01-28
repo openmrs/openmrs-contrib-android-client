@@ -46,7 +46,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FindPatientsActivity extends ACBaseActivity implements ActionBar.TabListener {
-
     private String mQuery;
     private MenuItem mFindPatientMenuItem;
 
@@ -128,7 +127,7 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         FindPatientLastViewedFragment viewedFragment =
                 (FindPatientLastViewedFragment) this.getSupportFragmentManager().
-                    getFragments().get(TabHost.LAST_VIEWED_TAB_POS);
+                        getFragments().get(TabHost.LAST_VIEWED_TAB_POS);
 
         viewedFragment.onResume();
 

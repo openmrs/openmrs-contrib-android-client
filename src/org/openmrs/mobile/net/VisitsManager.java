@@ -81,7 +81,6 @@ public class VisitsManager extends BaseManager {
                 , new GeneralErrorListenerImpl(mContext) {
             @Override
             public void onErrorResponse(VolleyError error) {
-                subtractExpectedResponses(true);
                 super.onErrorResponse(error);
             }
         });

@@ -3,7 +3,6 @@ package org.openmrs.mobile.activities.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,7 +25,7 @@ import org.openmrs.mobile.utilities.DateUtils;
 
 import java.util.List;
 
-public class PatientVisitsFragment extends Fragment {
+public class PatientVisitsFragment extends ACBaseFragment {
 
     private List<Visit> mPatientVisits;
     private Patient mPatient;
@@ -70,7 +69,7 @@ public class PatientVisitsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mPatient = (Patient) getArguments().getSerializable(ApplicationConstants.BundleKeys.PATIENT_BUNDLE);
-        mPatientVisits = new VisitDAO().getVisitsByPatientID(mPatient.getId());
+        mPatientVisits = new VisitDAO().getVisitsByPatientID(((Patient) getArguments().getSerializable(ApplicationConstants.BundleKeys.PATIENT_BUNDLE)).getId());
 
         View fragmentLayout = inflater.inflate(R.layout.fragment_patient_visit, null, false);
         ListView visitList = (ListView) fragmentLayout.findViewById(R.id.patientVisitList);

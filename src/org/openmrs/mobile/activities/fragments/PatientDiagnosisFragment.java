@@ -2,7 +2,6 @@ package org.openmrs.mobile.activities.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Observation;
@@ -20,7 +20,7 @@ import org.openmrs.mobile.utilities.FontsUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PatientDiagnosisFragment extends Fragment {
+public class PatientDiagnosisFragment extends ACBaseFragment {
 
     private List<Encounter> mVisitNoteEncounters;
 

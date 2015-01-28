@@ -17,8 +17,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
@@ -111,6 +111,7 @@ public class CustomFragmentDialog extends DialogFragment {
         }
     }
 
+
     @Override
     public void show(FragmentManager manager, String tag) {
         if (null == manager.findFragmentByTag(tag)) {
@@ -185,7 +186,11 @@ public class CustomFragmentDialog extends DialogFragment {
             mRightButton.setOnClickListener(onClickActionSolver(mCustomDialogBundle.getRightButtonAction()));
         }
         if (mCustomDialogBundle.hasLoadingBar()) {
-            addProgressBar();
+            addProgressBar(mCustomDialogBundle.getTitleViewMessage());
+            this.setCancelable(false);
+        }
+        if (mCustomDialogBundle.hasProgressDialog()) {
+            addProgressBar(mCustomDialogBundle.getProgressViewMessage());
             this.setCancelable(false);
         }
     }
@@ -245,9 +250,11 @@ public class CustomFragmentDialog extends DialogFragment {
         this.mLeftButton = (Button) dialogLayout.findViewById(R.id.dialogFormButtonsCancelButton);
     }
 
-    public void addProgressBar() {
-        RelativeLayout progressBaLayout = (RelativeLayout) mInflater.inflate(R.layout.dialog_progress, null);
-        mFieldsLayout.addView(progressBaLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+    public void addProgressBar(String message) {
+        FrameLayout progressBarLayout = (FrameLayout) mInflater.inflate(R.layout.dialog_progress, null);
+        TextView textView = (TextView) progressBarLayout.findViewById(R.id.progressTextView);
+        textView.setText(message);
+        mFieldsLayout.addView(progressBarLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
     public String getEditTextValue() {

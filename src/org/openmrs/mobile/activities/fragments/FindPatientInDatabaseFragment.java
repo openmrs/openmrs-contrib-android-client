@@ -2,7 +2,6 @@ package org.openmrs.mobile.activities.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,7 @@ import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
-public class FindPatientInDatabaseFragment extends Fragment {
+public class FindPatientInDatabaseFragment extends ACBaseFragment {
 
     private View fragmentLayout;
     private ListView visitList;
@@ -49,5 +48,6 @@ public class FindPatientInDatabaseFragment extends Fragment {
         List<Patient> mPatientList = new PatientDAO().getAllPatients();
         visitList.setAdapter(new PatientArrayAdapter(getActivity(), R.layout.find_patients_row, mPatientList));
     }
+
 }
 

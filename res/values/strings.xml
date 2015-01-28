@@ -99,7 +99,7 @@
     <string name="find_patients_row_toast_patient_saved">Patient is now available locally</string>
     <string name="find_patients_row_toast_patient_save_error">Some error occurred. Try synchronize patient data</string>
     <!-- Patient Dashboard Activity -->
-    <string name="action_synchronize_patients">Synchronize Patient</string>
+    <string name="action_synchronize_patients">Synchronizing Patient...</string>
     <string name="synchronize_patient_successful">Synchronize patient data successful</string>
     <string name="synchronize_patient_error">Synchronize patient data unsuccessful</string>
     <string name="action_start_visit">Start visit</string>

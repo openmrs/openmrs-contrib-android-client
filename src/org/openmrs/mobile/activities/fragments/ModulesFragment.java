@@ -1,7 +1,6 @@
 package org.openmrs.mobile.activities.fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.adapters.ScreenSlidePagerAdapter;
 import org.openmrs.mobile.models.ModuleInfo;
 
-public class ModulesFragment extends Fragment {
+public class ModulesFragment extends ACBaseFragment {
 
     private static final String POSITION_KEY = "position_key";
     private int mPosition;

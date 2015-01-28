@@ -14,15 +14,12 @@
 
 package org.openmrs.mobile.bundle;
 
-import android.content.Context;
-
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
 
 import java.io.Serializable;
 
 public class CustomDialogBundle implements Serializable {
 
-    private Context context;
     private CustomFragmentDialog.OnClickAction leftButtonAction;
     private CustomFragmentDialog.OnClickAction rightButtonAction;
     private String textViewMessage;
@@ -30,15 +27,22 @@ public class CustomDialogBundle implements Serializable {
     private String editTextViewMessage;
     private String leftButtonText;
     private String rightButtonText;
+    private String progressViewMessage;
     private boolean loadingBar;
+    private boolean progressDialog;
 
     public CustomDialogBundle() {
 
     }
 
-    public CustomDialogBundle(Context context) {
-        this.context = context;
+    public boolean hasProgressDialog() {
+        return progressDialog;
     }
+
+    public void setProgressDialog(boolean progressDialog) {
+        this.progressDialog = progressDialog;
+    }
+
 
     public boolean hasLoadingBar() {
         return loadingBar;
@@ -62,10 +66,6 @@ public class CustomDialogBundle implements Serializable {
 
     public void setRightButtonAction(CustomFragmentDialog.OnClickAction rightButtonAction) {
         this.rightButtonAction = rightButtonAction;
-    }
-
-    public Context getContext() {
-        return context;
     }
 
     public String getTextViewMessage() {
@@ -94,6 +94,14 @@ public class CustomDialogBundle implements Serializable {
 
     public String getTitleViewMessage() {
         return titleViewMessage;
+    }
+
+    public void setProgressViewMessage(String progressViewMessage) {
+        this.progressViewMessage = progressViewMessage;
+    }
+
+    public String getProgressViewMessage() {
+        return progressViewMessage;
     }
 
     public void setTitleViewMessage(String titleViewMessage) {

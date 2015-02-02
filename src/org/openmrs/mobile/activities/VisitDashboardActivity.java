@@ -103,7 +103,7 @@ public class VisitDashboardActivity extends ACBaseActivity {
     }
 
     public void endVisit() {
-        mVisitsManager.inactivateVisitByUUID(mVisit.getUuid(), mPatient.getId());
+        mVisitsManager.inactivateVisitByUUID(mVisit.getUuid(), mPatient.getId(), mVisit.getId());
     }
 
     private void showEndVisitDialog() {
@@ -118,6 +118,8 @@ public class VisitDashboardActivity extends ACBaseActivity {
     }
 
     public void moveToPatientDashboard() {
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
         finish();
     }
 }

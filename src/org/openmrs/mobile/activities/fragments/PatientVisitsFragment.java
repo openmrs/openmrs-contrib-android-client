@@ -1,6 +1,5 @@
 package org.openmrs.mobile.activities.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
-import org.openmrs.mobile.activities.VisitDashboardActivity;
 import org.openmrs.mobile.adapters.PatientVisitsArrayAdapter;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.dao.VisitDAO;
@@ -87,16 +85,6 @@ public class PatientVisitsFragment extends ACBaseFragment {
         ((PatientDashboardActivity) getActivity())
                 .showProgressDialog(R.string.action_start_visit, PatientDashboardActivity.DialogAction.ADD_VISIT);
         mVisitsManager.createVisit(mPatient);
-    }
-
-    public void visitStarted(long visitID, boolean errorOccurred) {
-        ((PatientDashboardActivity) getActivity()).stopLoader(errorOccurred);
-        if (!errorOccurred) {
-            Intent intent = new Intent(getActivity(), VisitDashboardActivity.class);
-            intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, visitID);
-            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_NAME, mPatient.getDisplay());
-            this.startActivity(intent);
-        }
     }
 
     private void showStartVisitDialog() {

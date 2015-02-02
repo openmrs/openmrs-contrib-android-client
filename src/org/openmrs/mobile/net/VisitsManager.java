@@ -340,7 +340,7 @@ public class VisitsManager extends BaseManager {
         }
         if (mExpectedResponses <= 0) {
             if (mContext instanceof PatientDashboardActivity) {
-                ((PatientDashboardActivity) mContext).updatePatientVisitsData(mErrorOccurred);
+                ((PatientDashboardActivity) OpenMRS.getInstance().getCurrentActivity()).updatePatientVisitsData(mErrorOccurred);
             } else if (mContext instanceof FindPatientsSearchActivity
                     || mContext instanceof FindPatientsActivity) {
                 ((ACBaseActivity) mContext).dismissProgressDialog(errorOccurred,

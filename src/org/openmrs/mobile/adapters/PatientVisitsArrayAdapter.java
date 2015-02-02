@@ -15,7 +15,6 @@
 package org.openmrs.mobile.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +25,7 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
-import org.openmrs.mobile.activities.VisitDashboardActivity;
 import org.openmrs.mobile.models.Visit;
-import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.ImageUtils;
 
@@ -92,11 +89,7 @@ public class PatientVisitsArrayAdapter extends ArrayAdapter<Visit> {
         holder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), VisitDashboardActivity.class);
-                intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, mVisits.get(position).getId());
-                intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_NAME, ((PatientDashboardActivity) getContext()).getSupportActionBar().getTitle().toString());
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
+                ((PatientDashboardActivity) mContext).goToVisitDashboard(mVisits.get(position).getId());
             }
         });
         return rowView;

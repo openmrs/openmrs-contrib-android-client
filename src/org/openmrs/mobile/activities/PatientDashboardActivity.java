@@ -191,13 +191,14 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     public void updatePatientVisitsData(boolean errorOccurred) {
         final List<Fragment> fragments = getSupportFragmentManager().getFragments();
         for (final Fragment fragment : fragments) {
-            this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    recreateFragmentView(fragment);
-
-                }
-            });
+            if (null != fragment) {
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        recreateFragmentView(fragment);
+                    }
+                });
+            }
         }
         stopLoader(errorOccurred);
     }

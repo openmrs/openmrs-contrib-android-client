@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
@@ -73,6 +74,11 @@ public class PatientVisitsFragment extends ACBaseFragment {
 
         View fragmentLayout = inflater.inflate(R.layout.fragment_patient_visit, null, false);
         ListView visitList = (ListView) fragmentLayout.findViewById(R.id.patientVisitList);
+        
+        TextView emptyList = (TextView) fragmentLayout.findViewById(R.id.emptyVisitsListView);
+        visitList.setEmptyView(emptyList);
+
+        
         visitList.setAdapter(new PatientVisitsArrayAdapter(getActivity(), mPatientVisits));
         return fragmentLayout;
     }

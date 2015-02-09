@@ -147,4 +147,5 @@
     <!-- Form Entry Activity -->
     <string name="save_upload_button">Save and Send Vitals</string>
     <string name="forms_sent_successfully">Form has been sent successfully.</string>
+    <string name="empty_visits_list">Patient has no visits yet.</string>
 </resources>

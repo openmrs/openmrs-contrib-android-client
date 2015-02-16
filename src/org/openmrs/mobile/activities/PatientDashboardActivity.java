@@ -94,10 +94,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     public void visitStarted(long visitID, boolean errorOccurred) {
         this.stopLoader(errorOccurred);
         if (!errorOccurred) {
-            Intent intent = new Intent(this, VisitDashboardActivity.class);
-            intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, visitID);
-            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_NAME, mPatient.getDisplay());
-            startActivityForResult(intent, REQUEST_CODE_FOR_VISIT);
+            goToVisitDashboard(visitID);
         }
     }
 

@@ -263,7 +263,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
                 case TabHost.VISITS_TAB_POS:
                     return PatientVisitsFragment.newInstance(mPatient);
                 case TabHost.VITALS_TAB_POS:
-                    return PatientVitalsFragment.newInstance(mPatient.getId(), mPatient.getUuid());
+                    return PatientVitalsFragment.newInstance(mPatient.getUuid());
                 default:
                     return null;
             }

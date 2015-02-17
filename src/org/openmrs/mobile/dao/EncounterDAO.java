@@ -74,8 +74,8 @@ public class EncounterDAO {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
         Encounter encounter = null;
 
-        String where = String.format("%s = ?", EncounterTable.Column.PATIENT_UUID);
-        String[] whereArgs = new String[]{patientUUID};
+        String where = String.format("%s = ? AND %s = ? ORDER BY %s DESC LIMIT 1", EncounterTable.Column.PATIENT_UUID, EncounterTable.Column.ENCOUNTER_TYPE, EncounterTable.Column.ENCOUNTER_DATETIME);
+        String[] whereArgs = new String[]{patientUUID, Encounter.EncounterType.VITALS.getType()};
         final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
         if (null != cursor) {
             try {
@@ -144,40 +144,6 @@ public class EncounterDAO {
         }
 
         return encounters;
-    }
-
-    public Encounter getLastEncounterForVisitByType(Long patientID, Encounter.EncounterType type) {
-        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        Encounter encounter = null;
-        String query = "SELECT e.* FROM observations AS o JOIN encounters AS e ON o.encounter_id = e._id " +
-                "JOIN visits AS v on e.visit_id = v._id WHERE v.patient_id = ? AND e.type = ? ORDER BY e.encounterDatetime DESC LIMIT 1";
-        String type1 = type.getType();
-        String[] whereArgs = new String[]{patientID.toString(), type1};
-        final Cursor cursor = helper.getReadableDatabase().rawQuery(query, whereArgs);
-        if (null != cursor) {
-            try {
-                if (cursor.moveToFirst()) {
-                    int id_CI = cursor.getColumnIndex(EncounterTable.Column.ID);
-                    int uuid_CI = cursor.getColumnIndex(EncounterTable.Column.UUID);
-                    int display_CI = cursor.getColumnIndex(EncounterTable.Column.DISPLAY);
-                    int datetime_CI = cursor.getColumnIndex(EncounterTable.Column.ENCOUNTER_DATETIME);
-                    Long id = cursor.getLong(id_CI);
-                    String uuid = cursor.getString(uuid_CI);
-                    String display = cursor.getString(display_CI);
-                    Long datetime = cursor.getLong(datetime_CI);
-                    encounter = new Encounter();
-                    encounter.setId(id);
-                    encounter.setUuid(uuid);
-                    encounter.setDisplay(display);
-                    encounter.setEncounterDatetime(datetime);
-                    encounter.setEncounterType(type);
-                    encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
-                }
-            } finally {
-                cursor.close();
-            }
-        }
-        return encounter;
     }
 
     public List<Encounter> getAllEncountersByType(Long patientID, Encounter.EncounterType type) {

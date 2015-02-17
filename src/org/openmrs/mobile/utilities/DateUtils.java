@@ -26,7 +26,7 @@ public final class DateUtils {
     public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
     public static final String DATE_WITH_TIME_FORMAT = "dd/MM/yyyy HH:mm";
 
-    private static final String OPEN_MRS_RESPONSE_FORMAT = "yyyy-MM-dd'T'HH:mm";
+    private static final String OPEN_MRS_RESPONSE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     public static final String OPEN_MRS_REQUEST_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
     public static final Long ZERO = 0L;

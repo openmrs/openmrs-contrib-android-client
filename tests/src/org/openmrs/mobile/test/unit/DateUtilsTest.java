@@ -18,6 +18,8 @@ import android.test.InstrumentationTestCase;
 
 import org.openmrs.mobile.utilities.DateUtils;
 
+import java.util.TimeZone;
+
 public class DateUtilsTest extends InstrumentationTestCase {
     private static final String INITIAL_DATA_1;
     private static final String INITIAL_DATA_2;
@@ -49,10 +51,10 @@ public class DateUtilsTest extends InstrumentationTestCase {
         String longToStringResult;
 
         stringToLongResult = DateUtils.convertTime(INITIAL_DATA_1);
-        longToStringResult = DateUtils.convertTime(stringToLongResult);
+        longToStringResult = DateUtils.convertTime(stringToLongResult, TimeZone.getTimeZone("GMT+02:00"));
         assertEquals(EXPECTED_DATA_1, longToStringResult);
 
-        stringToLongResult = DateUtils.convertTime(INITIAL_DATA_2);
+        stringToLongResult = DateUtils.convertTime(INITIAL_DATA_2, "yyyy-MM-dd'T'HH:mm");
         longToStringResult = DateUtils.convertTime(stringToLongResult);
         assertEquals(EXPECTED_DATA_2, longToStringResult);
 

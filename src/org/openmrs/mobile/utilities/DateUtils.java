@@ -17,10 +17,10 @@ package org.openmrs.mobile.utilities;
 import org.openmrs.mobile.application.OpenMRS;
 
 import java.text.DateFormat;
-import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public final class DateUtils {
     public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
@@ -35,20 +35,33 @@ public final class DateUtils {
 
     }
 
-    public static String convertTime(long time, String dateFormat) {
+    public static String convertTime(long time, String dateFormat, TimeZone timeZone) {
         Date date = new Date(time);
-        Format format = new SimpleDateFormat(dateFormat);
+        SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+        format.setTimeZone(timeZone);
         return format.format(date);
     }
 
+    public static String convertTime(long time, String dateFormat) {
+        return convertTime(time, dateFormat, TimeZone.getDefault());
+    }
+
+    public static String convertTime(long timestamp, TimeZone timeZone) {
+        return convertTime(timestamp, DEFAULT_DATE_FORMAT, timeZone);
+    }
+
     public static String convertTime(long timestamp) {
-        return convertTime(timestamp, DEFAULT_DATE_FORMAT);
+        return convertTime(timestamp, DEFAULT_DATE_FORMAT, TimeZone.getDefault());
     }
 
     public static Long convertTime(String dateAsString) {
+        return convertTime(dateAsString, OPEN_MRS_RESPONSE_FORMAT);
+    }
+
+    public static Long convertTime(String dateAsString, String dateFormat) {
         Long time = null;
         if (StringUtils.notNull(dateAsString)) {
-            DateFormat format = new SimpleDateFormat(OPEN_MRS_RESPONSE_FORMAT);
+            DateFormat format = new SimpleDateFormat(dateFormat);
             Date formattedDate;
             try {
                 formattedDate = format.parse(dateAsString);

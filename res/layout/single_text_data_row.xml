@@ -24,6 +24,5 @@
               android:layout_height="wrap_content"
               android:gravity="center"
               android:textSize="14sp"
-              android:layout_marginRight="10dp"
         />
 </LinearLayout>

@@ -144,7 +144,7 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
         }
         switch (encounter.getEncounterType()) {
             case VITALS:
-                bindDrawableResources(R.drawable.ico_vitals, encounterIcon);
+                bindDrawableResources(R.drawable.ico_vitals_small, encounterIcon);
                 break;
             case VISIT_NOTE:
                 bindDrawableResources(R.drawable.visit_note, encounterIcon);

@@ -22,7 +22,9 @@
     <ExpandableListView android:id="@+id/visitDashboardExpList"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-        />
+                        android:dividerHeight="1dp"
+                        android:divider="@drawable/exp_list_divider"
+                        android:childDivider="@drawable/exp_list_divider"/>
 
     <TextView android:id="@+id/visitDashboardEmpty"
               android:layout_width="match_parent"

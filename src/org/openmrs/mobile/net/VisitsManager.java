@@ -215,7 +215,7 @@ public class VisitsManager extends BaseManager {
         queue.add(jsObjRequest);
     }
 
-    public void inactivateVisitByUUID(final String visitUUID, final long patientID) {
+    public void inactivateVisitByUUID(final String visitUUID, final long patientID, final long visitID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS + File.separator + visitUUID;
         logger.d(SENDING_REQUEST + visitURL);
@@ -233,9 +233,9 @@ public class VisitsManager extends BaseManager {
                     @Override
                     public void run() {
                         try {
-                            Visit visit = VisitMapper.map(response);
-                            long visitId = new VisitDAO().getVisitsIDByUUID(visit.getUuid());
-                            new VisitDAO().updateVisit(visit, visitId, patientID);
+                            Visit visit = new VisitDAO().getVisitsByID(visitID);
+                            visit.setStopDate(DateUtils.convertTime(response.getString("stopDatetime")));
+                            new VisitDAO().updateVisit(visit, visitID, patientID);
                             ((VisitDashboardActivity) mContext).moveToPatientDashboard();
                         } catch (JSONException e) {
                             logger.d(e.toString());
@@ -257,6 +257,7 @@ public class VisitsManager extends BaseManager {
 
         queue.add(jsObjRequest);
     }
+
 
     public void createVisit(final Patient patient) {
         RequestQueue queue = Volley.newRequestQueue(mContext);

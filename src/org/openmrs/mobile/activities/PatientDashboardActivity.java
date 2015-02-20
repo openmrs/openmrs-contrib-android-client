@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -45,6 +46,7 @@ import java.util.List;
 
 public class PatientDashboardActivity extends ACBaseActivity implements ActionBar.TabListener {
 
+    private static final int REQUEST_CODE_FOR_VISIT = 1;
     private Patient mPatient;
     private ViewPager mViewPager;
     private PatientDashboardPagerAdapter mPatientDashboardPagerAdapter;
@@ -89,6 +91,33 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
         outState.putBoolean(ApplicationConstants.BundleKeys.PROGRESS_BAR, progressDialog);
     }
 
+    public void visitStarted(long visitID, boolean errorOccurred) {
+        this.stopLoader(errorOccurred);
+        if (!errorOccurred) {
+            goToVisitDashboard(visitID);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        List<Fragment> fragments;
+        switch (requestCode) {
+            case REQUEST_CODE_FOR_VISIT:
+                fragments = getSupportFragmentManager().getFragments();
+                recreateFragmentView(fragments.get(TabHost.VISITS_TAB_POS));
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void goToVisitDashboard(Long visitID) {
+        Intent intent = new Intent(this, VisitDashboardActivity.class);
+        intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, visitID);
+        intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_NAME, this.getSupportActionBar().getTitle().toString());
+        startActivityForResult(intent, REQUEST_CODE_FOR_VISIT);
+    }
+
     private void initViewPager() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -107,7 +136,6 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
         }
         TabUtil.setHasEmbeddedTabs(actionBar, getWindowManager(), TabUtil.MIN_SCREEN_WIDTH_FOR_PATIENTDASHBOARDACTIVITY);
     }
-
 
     @Override
     public void onConfigurationChanged(final Configuration config) {
@@ -191,13 +219,14 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     public void updatePatientVisitsData(boolean errorOccurred) {
         final List<Fragment> fragments = getSupportFragmentManager().getFragments();
         for (final Fragment fragment : fragments) {
-            this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    recreateFragmentView(fragment);
-
-                }
-            });
+            if (null != fragment) {
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        recreateFragmentView(fragment);
+                    }
+                });
+            }
         }
         stopLoader(errorOccurred);
     }

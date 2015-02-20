@@ -118,6 +118,8 @@ public class VisitDashboardActivity extends ACBaseActivity {
     }
 
     public void moveToPatientDashboard() {
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
         finish();
     }
 }

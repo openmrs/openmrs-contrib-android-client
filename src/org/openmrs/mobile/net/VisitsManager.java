@@ -15,7 +15,6 @@
 package org.openmrs.mobile.net;
 
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,7 +31,6 @@ import org.openmrs.mobile.activities.FindPatientsActivity;
 import org.openmrs.mobile.activities.FindPatientsSearchActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.activities.VisitDashboardActivity;
-import org.openmrs.mobile.activities.fragments.PatientVisitsFragment;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.LocationDAO;
@@ -280,10 +278,7 @@ public class VisitsManager extends BaseManager {
                 try {
                     Visit visit = VisitMapper.map(response);
                     long visitID = new VisitDAO().saveVisit(visit, patient.getId());
-                    FragmentManager fm = ((PatientDashboardActivity) mContext).getSupportFragmentManager();
-                    PatientVisitsFragment fragment = (PatientVisitsFragment) fm
-                            .getFragments().get(PatientDashboardActivity.TabHost.VISITS_TAB_POS);
-                    fragment.visitStarted(visitID, visitID <= 0);
+                    ((PatientDashboardActivity) mContext).visitStarted(visitID, visitID <= 0);
                 } catch (JSONException e) {
                     logger.d(e.toString());
                 }
@@ -344,7 +339,7 @@ public class VisitsManager extends BaseManager {
         }
         if (mExpectedResponses <= 0) {
             if (mContext instanceof PatientDashboardActivity) {
-                ((PatientDashboardActivity) mContext).updatePatientVisitsData(mErrorOccurred);
+                ((PatientDashboardActivity) OpenMRS.getInstance().getCurrentActivity()).updatePatientVisitsData(mErrorOccurred);
             } else if (mContext instanceof FindPatientsSearchActivity
                     || mContext instanceof FindPatientsActivity) {
                 ((ACBaseActivity) mContext).dismissProgressDialog(errorOccurred,

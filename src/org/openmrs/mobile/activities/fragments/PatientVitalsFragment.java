@@ -2,7 +2,6 @@ package org.openmrs.mobile.activities.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 
-public class PatientVitalsFragment extends Fragment {
+public class PatientVitalsFragment extends ACBaseFragment {
 
     private Encounter mVitalsEncounter;
 

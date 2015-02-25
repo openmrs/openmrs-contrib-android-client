@@ -60,6 +60,8 @@ public final class VisitMapper {
                         String[] labelAndValue = observationJSONObject.getString(DISPLAY_KEY).split(":");
                         observation.setDisplay(labelAndValue[0]);
                         observation.setDisplayValue(labelAndValue[1]);
+                    } else if (Encounter.EncounterType.VISIT_NOTE.equals(encounter.getEncounterType())) {
+                        observation = ObservationMapper.diagnosisMap(observationJSONObject);
                     } else {
                         observation.setDisplay(observationJSONObject.getString(DISPLAY_KEY));
                     }

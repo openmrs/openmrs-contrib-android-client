@@ -53,8 +53,8 @@ public class ObservationTable extends Table<Observation> {
                 + Column.DISPLAY_VALUE + Column.COMMA
                 + Column.DIAGNOSIS_ORDER + Column.COMMA
                 + Column.DIAGNOSIS_LIST + Column.COMMA
-                + Column.DIAGNOSIS_NOTE + Column.COMMA
-                + Column.DIAGNOSIS_CERTAINTY + ")"
+                + Column.DIAGNOSIS_CERTAINTY + Column.COMMA
+                + Column.DIAGNOSIS_NOTE + ")"
                 + values(INSERT_COLUMNS_COUNT);
     }
 

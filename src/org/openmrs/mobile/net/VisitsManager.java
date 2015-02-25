@@ -34,10 +34,7 @@ import org.openmrs.mobile.activities.VisitDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.LocationDAO;
-import org.openmrs.mobile.dao.ObservationDAO;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.mappers.ObservationMapper;
@@ -61,7 +58,6 @@ public class VisitsManager extends BaseManager {
     public VisitsManager(Context context) {
         super(context);
     }
-
 
     public void getLastVitals(final String patientUUID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
@@ -87,7 +83,9 @@ public class VisitsManager extends BaseManager {
 
     public void findVisitsByPatientUUID(final String patientUUID, final long patientID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
-        String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + VISIT_QUERY + patientUUID;
+        String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + VISIT_QUERY + patientUUID
+                + "&v=custom:(uuid,location:ref,visitType:ref,startDatetime,stopDatetime,encounters:full)";
+
         logger.d(SENDING_REQUEST + visitURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
@@ -101,7 +99,26 @@ public class VisitsManager extends BaseManager {
                     mExpectedResponses = visitResultJSON.length();
                     if (visitResultJSON.length() > 0) {
                         for (int i = 0; i < visitResultJSON.length(); i++) {
-                            findVisitByUUID(visitResultJSON.getJSONObject(i).getString(UUID_KEY), patientID);
+                            final Visit visit = VisitMapper.map(visitResultJSON.getJSONObject(i));
+
+                            if (mContext instanceof PatientDashboardActivity) {
+                                Thread thread = new Thread() {
+                                    @Override
+                                    public void run() {
+                                        long visitId = new VisitDAO().getVisitsIDByUUID(visit.getUuid());
+
+                                        if (visitId > 0) {
+                                            new VisitDAO().updateVisit(visit, visitId, patientID);
+                                        } else {
+                                            new VisitDAO().saveVisit(visit, patientID);
+                                        }
+                                    }
+                                };
+                                thread.start();
+                            } else {
+                                new VisitDAO().saveVisit(visit, patientID);
+                            }
+                            subtractExpectedResponses(false);
                         }
                     } else {
                         subtractExpectedResponses(false);
@@ -125,7 +142,8 @@ public class VisitsManager extends BaseManager {
     public void findVisitByUUID(final String visitUUID, final long patientID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS + File.separator + visitUUID
-                + API.FULL_VERSION;
+                + "&v=custom:(uuid,location:ref,visitType:ref,startDatetime,stopDatetime,encounters:full)";
+
         logger.d(SENDING_REQUEST + visitURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
@@ -156,51 +174,9 @@ public class VisitsManager extends BaseManager {
                     }
                     subtractExpectedResponses(false);
 
-                    for (Encounter encounter : visit.getEncounters()) {
-                        if (Encounter.EncounterType.VISIT_NOTE.equals(encounter.getEncounterType())) {
-                            for (Observation obs : encounter.getObservations()) {
-                                getVisitDiagnosesByUUID(obs.getUuid(), patientID);
-                                mExpectedResponses++;
-                            }
-                        }
-                    }
                 } catch (JSONException e) {
                     subtractExpectedResponses(true);
                     logger.d(e.toString());
-                }
-            }
-        }
-                , new GeneralErrorListenerImpl(mContext) {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                super.onErrorResponse(error);
-                subtractExpectedResponses(true);
-            }
-        }
-        );
-        queue.add(jsObjRequest);
-    }
-
-    public void getVisitDiagnosesByUUID(final String diagnosesUUID, final long patientID) {
-        RequestQueue queue = Volley.newRequestQueue(mContext);
-        String diagnoseURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.OBS_DETAILS + File.separator + diagnosesUUID;
-        logger.d(SENDING_REQUEST + diagnoseURL);
-
-        JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                diagnoseURL, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(final JSONObject response) {
-                logger.d(response.toString());
-
-                try {
-                    Observation observation = ObservationMapper.diagnosisMap(response);
-                    Observation obsInDB = new ObservationDAO().getObservationByUUID(observation.getUuid());
-                    new ObservationDAO().updateObservation(obsInDB.getId(), observation, obsInDB.getEncounterID());
-
-                    subtractExpectedResponses(false);
-                } catch (JSONException e) {
-                    logger.d(e.toString());
-                    subtractExpectedResponses(true);
                 }
             }
         }

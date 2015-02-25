@@ -117,4 +117,8 @@ public abstract class ApplicationConstants {
     public abstract static class EncounterTypes {
         public static final String VITALS = "67a71486-1a54-468f-ac3e-7091a9a79584";
     }
+
+    public abstract static class FormNames {
+        public static final String VITALS_XFORM = "Vitals XForm";
+    }
 }

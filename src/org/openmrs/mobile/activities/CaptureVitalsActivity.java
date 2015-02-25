@@ -62,7 +62,7 @@ public class CaptureVitalsActivity extends ACBaseActivity {
         mSelectedPatientUUID = patientUUID;
         try {
             Intent intent = new Intent(this, FormEntryActivity.class);
-            Uri formURI = new FormsDAO(this.getContentResolver()).getFormURI("8");
+            Uri formURI = new FormsDAO(this.getContentResolver()).getFormURI(ApplicationConstants.FormNames.VITALS_XFORM);
             intent.setData(formURI);
             intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE, patientUUID);
             this.startActivityForResult(intent, CAPTURE_VITALS_REQUEST_CODE);

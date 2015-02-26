@@ -23,6 +23,7 @@ import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI;
 import org.openmrs.mobile.application.OpenMRS;
 import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI;
 import org.openmrs.mobile.models.FormSubmission;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -38,13 +39,13 @@ public class FormsDAO {
         this.mContentResolver = contentResolver;
     }
 
-    public Uri getFormURI(String jrFormId) throws IOException {
-        if (jrFormId == null || "".equals(jrFormId)) {
+    public Uri getFormURI(String jrFormName) throws IOException {
+        if (jrFormName == null || ApplicationConstants.EMPTY_STRING.equals(jrFormName)) {
             throw new InvalidParameterException("FormId must not be null or empty");
         }
         int id = 1;
-        String[] projection = new String[]{OpenMRSFormsProviderAPI.FormsColumns._ID, OpenMRSFormsProviderAPI.FormsColumns.JR_FORM_ID};
-        final Cursor cursor = mContentResolver.query(OpenMRSFormsProviderAPI.FormsColumns.CONTENT_URI, projection, OpenMRSFormsProviderAPI.FormsColumns.JR_FORM_ID + "=?", new String[]{jrFormId}, null);
+        String[] projection = new String[]{OpenMRSFormsProviderAPI.FormsColumns._ID, OpenMRSFormsProviderAPI.FormsColumns.DISPLAY_NAME};
+        final Cursor cursor = mContentResolver.query(OpenMRSFormsProviderAPI.FormsColumns.CONTENT_URI, projection, OpenMRSFormsProviderAPI.FormsColumns.DISPLAY_NAME + "=?", new String[]{jrFormName}, null);
         if (cursor != null) {
             try {
                 if (cursor.moveToFirst()) {

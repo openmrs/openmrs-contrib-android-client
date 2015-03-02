@@ -30,3 +30,8 @@ modules/odk.collect/android/*
 
 #git patches
 *.patch
+
+# Eclipse files
+*.project
+*.classpath
+.settings/

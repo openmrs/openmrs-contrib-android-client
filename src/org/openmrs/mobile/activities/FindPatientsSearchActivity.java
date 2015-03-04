@@ -30,26 +30,32 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
+import com.android.volley.Response;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.adapters.PatientArrayAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.mappers.PatientMapper;
+import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.net.FindPatientsManager;
 import org.openmrs.mobile.utilities.FontsUtil;
-
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FindPatientsSearchActivity extends ACBaseActivity {
     private String mLastQuery;
     private MenuItem mFindPatientMenuItem;
-    private ArrayList<Patient> mSearchedPatientsList;
+    private List<Patient> mSearchedPatientsList;
     private PatientArrayAdapter mAdapter;
     private ListView mPatientsListView;
     private TextView mEmptyList;
     private ProgressBar mSpinner;
     private boolean mSearching;
-    private static int lastSearchId;
+    private static int mLastSearchId;
 
     private static final String SEARCH_BUNDLE = "searchBundle";
     private static final String LAST_QUERY_BUNDLE = "lastQueryBundle";
@@ -91,7 +97,7 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         super.onSaveInstanceState(outState);
         outState.putBoolean(SEARCH_BUNDLE, mSearching);
         outState.putString(LAST_QUERY_BUNDLE, mLastQuery);
-        outState.putSerializable(PATIENT_LIST_BUNDLE, mSearchedPatientsList);
+        outState.putSerializable(PATIENT_LIST_BUNDLE, (ArrayList) mSearchedPatientsList);
     }
 
     @Override
@@ -111,7 +117,7 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             mSearching = true;
-            lastSearchId++;
+            mLastSearchId++;
             mEmptyList.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mSpinner);
             mSearchedPatientsList = new ArrayList<Patient>();
@@ -119,7 +125,7 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
             mPatientsListView.setAdapter(mAdapter);
             mLastQuery = intent.getStringExtra(SearchManager.QUERY);
             FindPatientsManager fpm = new FindPatientsManager(this);
-            fpm.findPatient(mLastQuery, lastSearchId);
+            fpm.findPatient(mLastQuery, createNewResponseListener(mLastSearchId));
 
             if (mFindPatientMenuItem != null) {
                 MenuItemCompat.collapseActionView(mFindPatientMenuItem);
@@ -150,8 +156,8 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         return true;
     }
 
-    public void updatePatientsData(int searchId, ArrayList<Patient> patientsList) {
-        if (lastSearchId == searchId) {
+    public void updatePatientsData(int searchId, List<Patient> patientsList) {
+        if (mLastSearchId == searchId) {
             mSearchedPatientsList = patientsList;
             if (patientsList.size() == 0) {
                 mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
@@ -165,11 +171,52 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
     }
 
     public void stopLoader(int searchId) {
-        if (lastSearchId == searchId) {
+        if (mLastSearchId == searchId) {
             mSearching = false;
             mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
             mSpinner.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mEmptyList);
+        }
+    }
+
+
+    public FindPatientsResponseListener createNewResponseListener(final int searchId) {
+        return new FindPatientsResponseListener(FindPatientsSearchActivity.this, searchId);
+    }
+
+    public final class FindPatientsResponseListener implements Response.Listener<JSONObject> {
+        private int searchId;
+        private WeakReference<FindPatientsSearchActivity> findPatientsWeakRef;
+
+        public FindPatientsResponseListener(FindPatientsSearchActivity findPatientsSearchActivity, int searchId) {
+            this.findPatientsWeakRef = new WeakReference<FindPatientsSearchActivity>(findPatientsSearchActivity);
+            this.searchId = searchId;
+        }
+
+        public WeakReference<FindPatientsSearchActivity> getFindPatientsWeakRef() {
+            return findPatientsWeakRef;
+        }
+
+        public int getSearchId() {
+            return searchId;
+        }
+
+        @Override
+        public void onResponse(JSONObject response) {
+            List<Patient> patientsList = new ArrayList<Patient>();
+            mOpenMRS.getOpenMRSLogger().d(response.toString());
+
+            try {
+                JSONArray patientsJSONList = response.getJSONArray(BaseManager.RESULTS_KEY);
+                for (int i = 0; i < patientsJSONList.length(); i++) {
+                    patientsList.add(PatientMapper.map(patientsJSONList.getJSONObject(i)));
+                }
+
+                updatePatientsData(searchId, patientsList);
+
+            } catch (JSONException e) {
+                mOpenMRS.getOpenMRSLogger().d(e.toString());
+            }
         }
     }
 }

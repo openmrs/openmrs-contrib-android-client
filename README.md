@@ -20,16 +20,18 @@ Before creating pull request run code review tools, *PMD & Checkstyle*, and test
      cd tests/
      ant clean debug install test
 
-# Configuration 
-1. Add libs for openmrs-client module
-    * openmrs-client module **libs folder**
-    * android-support-v4.jar and android-support-v7-appcompat.jar from **/support/appcompat/libs/**
-2. Add modules from directory
+# Configuration
+1. Add modules from directory
     * modules/odk
     * modules/support/appcompat
     * modules/support/gridlayout
-3. Add libs for tests module
+3. Add libs for openmrs-client module
+    * openmrs-client module **libs folder**
+    * android-support-v4.jar and android-support-v7-appcompat.jar from **/support/appcompat/libs/**
+4. Add libs for tests module
     * tests module **libs folder**
+
+### In case of problems (1. modules) use *IDEA IntelliJ 13* instead of *Android Studio* for configuration also follow http://stackoverflow.com/a/18916738/584369
 
 # Release Notes
 ### Version 2.0

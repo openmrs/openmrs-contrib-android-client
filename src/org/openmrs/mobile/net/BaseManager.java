@@ -29,7 +29,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.io.UnsupportedEncodingException;
 
 public class BaseManager {
-    protected static final String RESULTS_KEY = "results";
+    public static final String RESULTS_KEY = "results";
     protected static final String UUID_KEY = "uuid";
 
     protected Context mContext;

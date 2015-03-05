@@ -1,5 +1,6 @@
 package org.openmrs.mobile.activities.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,27 +11,27 @@ import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.FindPatientsActivity;
 import org.openmrs.mobile.adapters.PatientArrayAdapter;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FindPatientsManager;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.NetworkUtils;
-
 import java.util.List;
 
 public class FindPatientLastViewedFragment extends ACBaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private ProgressBar mSpinner;
-    private View fragmentLayout;
+    private View mFragmentLayout;
     private TextView mEmptyList;
     private ListView mPatientsListView;
     private PatientArrayAdapter mAdapter;
     private static List<Patient> mLastViewedPatientsList;
-    private SwipeRefreshLayout swipeLayout;
+    private SwipeRefreshLayout mSwipeLayout;
     private static boolean mRefreshing;
-    private boolean isConnectionAvailable;
+    private boolean mIsConnectionAvailable;
+    private FindPatientsActivity.FindPatientsResponseListener mFpmResponseListener;
 
     public FindPatientLastViewedFragment() {
     }
@@ -38,7 +39,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        isConnectionAvailable = checkIfConnectionIsAvailable();
+        mIsConnectionAvailable = checkIfConnectionIsAvailable();
     }
 
     @Override
@@ -46,8 +47,8 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
         super.onResume();
 
         if (mRefreshing) {
-            swipeLayout.setRefreshing(true);
-            swipeLayout.setEnabled(false);
+            mSwipeLayout.setRefreshing(true);
+            mSwipeLayout.setEnabled(false);
             mEmptyList.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mSpinner);
         } else if (mLastViewedPatientsList != null) {
@@ -58,16 +59,22 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        fragmentLayout = inflater.inflate(R.layout.fragment_last_viewed_patients, null, false);
-        mEmptyList = (TextView) fragmentLayout.findViewById(R.id.emptyPatientListView);
-        mPatientsListView = (ListView) fragmentLayout.findViewById(R.id.patientListView);
-        mSpinner = (ProgressBar) fragmentLayout.findViewById(R.id.patientListViewLoading);
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mFpmResponseListener = ((FindPatientsActivity) getActivity()).createNewResponseListener();
+    }
 
-        swipeLayout = (SwipeRefreshLayout) fragmentLayout.findViewById(R.id.swipe_container);
-        swipeLayout.setEnabled(false);
-        swipeLayout.setOnRefreshListener(this);
-        swipeLayout.setColorSchemeResources(R.color.light_teal,
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mFragmentLayout = inflater.inflate(R.layout.fragment_last_viewed_patients, null, false);
+        mEmptyList = (TextView) mFragmentLayout.findViewById(R.id.emptyPatientListView);
+        mPatientsListView = (ListView) mFragmentLayout.findViewById(R.id.patientListView);
+        mSpinner = (ProgressBar) mFragmentLayout.findViewById(R.id.patientListViewLoading);
+
+        mSwipeLayout = (SwipeRefreshLayout) mFragmentLayout.findViewById(R.id.swipe_container);
+        mSwipeLayout.setEnabled(false);
+        mSwipeLayout.setOnRefreshListener(this);
+        mSwipeLayout.setColorSchemeResources(R.color.light_teal,
                 R.color.green,
                 R.color.yellow,
                 R.color.light_red);
@@ -81,16 +88,16 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
             @Override
             public void onScroll(AbsListView absListView, int firstVisibleItem,
                                  int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0 && !swipeLayout.isRefreshing()) {
-                    swipeLayout.setEnabled(true);
+                if (firstVisibleItem == 0 && !mSwipeLayout.isRefreshing()) {
+                    mSwipeLayout.setEnabled(true);
                 } else {
-                    swipeLayout.setEnabled(false);
+                    mSwipeLayout.setEnabled(false);
                 }
             }
         });
 
-        FontsUtil.setFont((ViewGroup) fragmentLayout);
-        return fragmentLayout;
+        FontsUtil.setFont((ViewGroup) mFragmentLayout);
+        return mFragmentLayout;
     }
 
     public void updatePatientsData() {
@@ -101,49 +108,49 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
         }
         mAdapter = new PatientArrayAdapter(getActivity(), R.layout.find_patients_row, mLastViewedPatientsList);
         mPatientsListView.setAdapter(mAdapter);
-        swipeLayout.setRefreshing(false);
-        swipeLayout.setEnabled(true);
+        mSwipeLayout.setRefreshing(false);
+        mSwipeLayout.setEnabled(true);
     }
 
     public void stopLoader() {
         mEmptyList.setText(getString(R.string.find_patient_no_last_viewed));
         mSpinner.setVisibility(View.GONE);
         mPatientsListView.setEmptyView(mEmptyList);
-        swipeLayout.setRefreshing(false);
-        swipeLayout.setEnabled(true);
+        mSwipeLayout.setRefreshing(false);
+        mSwipeLayout.setEnabled(true);
     }
 
     public void updateLastViewedList() {
         if (NetworkUtils.isNetworkAvailable(getActivity())) {
             setRefreshing(true);
-            swipeLayout.setRefreshing(true);
-            swipeLayout.setEnabled(false);
+            mSwipeLayout.setRefreshing(true);
+            mSwipeLayout.setEnabled(false);
             mEmptyList.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mSpinner);
             if (mAdapter != null) {
                 mAdapter.clear();
             }
             FindPatientsManager fpm = new FindPatientsManager(getActivity());
-            fpm.getLastViewedPatient();
+            fpm.getLastViewedPatient(mFpmResponseListener);
         } else {
             mEmptyList.setText(getString(R.string.find_patient_no_connection));
             mPatientsListView.setEmptyView(mEmptyList);
-            swipeLayout.setRefreshing(false);
+            mSwipeLayout.setRefreshing(false);
         }
     }
 
     public boolean checkIfConnectionIsAvailable() {
         boolean connection = NetworkUtils.isNetworkAvailable(getActivity());
-        if (isConnectionAvailable) {
+        if (mIsConnectionAvailable) {
             FindPatientsManager fpm = new FindPatientsManager(getActivity());
-            fpm.getLastViewedPatient();
+            fpm.getLastViewedPatient(mFpmResponseListener);
         }
         return connection;
     }
 
     @Override
     public void onRefresh() {
-        if (swipeLayout.isEnabled()) {
+        if (mSwipeLayout.isEnabled()) {
             updateLastViewedList();
         }
     }

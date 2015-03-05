@@ -25,7 +25,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import com.android.volley.Response;
+import org.json.JSONObject;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
 import org.openmrs.mobile.activities.fragments.PatientDetailsFragment;
@@ -34,12 +35,13 @@ import org.openmrs.mobile.activities.fragments.PatientVisitsFragment;
 import org.openmrs.mobile.activities.fragments.PatientVitalsFragment;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.mappers.PatientMapper;
 import org.openmrs.mobile.net.FindPatientsManager;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.TabUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
-
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +52,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     private Patient mPatient;
     private ViewPager mViewPager;
     private PatientDashboardPagerAdapter mPatientDashboardPagerAdapter;
-    private boolean progressDialog;
+    private boolean mProgressDialog;
     private DialogAction mDialogAction;
 
     public enum DialogAction {
@@ -88,7 +90,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPatient.getUuid());
-        outState.putBoolean(ApplicationConstants.BundleKeys.PROGRESS_BAR, progressDialog);
+        outState.putBoolean(ApplicationConstants.BundleKeys.PROGRESS_BAR, mProgressDialog);
     }
 
     public void visitStarted(long visitID, boolean errorOccurred) {
@@ -186,11 +188,13 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
     private void synchronizePatient() {
         showProgressDialog(R.string.action_synchronize_patients, DialogAction.SYNCHRONIZE);
-        new FindPatientsManager(this).getFullPatientData(mPatient.getUuid());
+        PatientDashboardResponseListener fpmResponseListener = createNewResponseListener();
+        FindPatientsManager fpm = new FindPatientsManager(this);
+        fpm.getFullPatientData(mPatient.getUuid(), fpmResponseListener);
     }
 
     public void showProgressDialog(int resId, DialogAction dialogAction) {
-        progressDialog = true;
+        mProgressDialog = true;
         super.showProgressDialog(getString(resId));
         mDialogAction = dialogAction;
     }
@@ -232,7 +236,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     }
 
     public void stopLoader(boolean errorOccurred) {
-        progressDialog = false;
+        mProgressDialog = false;
         mCustomFragmentDialog.dismiss();
         if (mDialogAction == DialogAction.SYNCHRONIZE) {
             mViewPager.setCurrentItem(TabHost.DETAILS_TAB_POS);
@@ -325,6 +329,28 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
         public String getTabLabel() {
             return mTabLabel;
+        }
+    }
+
+    public PatientDashboardResponseListener createNewResponseListener() {
+        return new PatientDashboardResponseListener(PatientDashboardActivity.this);
+    }
+
+    public final class PatientDashboardResponseListener implements Response.Listener<JSONObject> {
+        private WeakReference<PatientDashboardActivity> patientDashboardWeakRef;
+
+        public PatientDashboardResponseListener(PatientDashboardActivity findPatientsSearchActivity) {
+            this.patientDashboardWeakRef = new WeakReference<PatientDashboardActivity>(findPatientsSearchActivity);
+        }
+
+        public WeakReference<PatientDashboardActivity> getPatientDashboardWeakRef() {
+            return patientDashboardWeakRef;
+        }
+
+        @Override
+        public void onResponse(JSONObject response) {
+            mOpenMRS.getOpenMRSLogger().d(response.toString());
+            updatePatientDetailsData(PatientMapper.map(response));
         }
     }
 }

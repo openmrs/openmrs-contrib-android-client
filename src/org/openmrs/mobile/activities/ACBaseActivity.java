@@ -210,8 +210,9 @@ public abstract class ACBaseActivity extends ActionBarActivity {
 
     protected void showProgressDialog(String dialogMessage) {
         CustomDialogBundle bundle = new CustomDialogBundle();
-        bundle.setProgressViewMessage(dialogMessage);
+        bundle.setProgressViewMessage(getString(R.string.progress_dialog_message));
         bundle.setProgressDialog(true);
+        bundle.setTitleViewMessage(dialogMessage);
         mCustomFragmentDialog = CustomFragmentDialog.newInstance(bundle);
         mCustomFragmentDialog.setCancelable(false);
         mCustomFragmentDialog.setRetainInstance(true);

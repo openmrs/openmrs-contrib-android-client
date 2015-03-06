@@ -18,18 +18,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.PatientsVitalsListFragment;
+import org.openmrs.mobile.activities.listeners.UploadXFormWithMultiPartRequestListener;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.PatientListBundle;
 import org.openmrs.mobile.dao.FormsDAO;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.net.FormsManger;
+import org.openmrs.mobile.net.FormsManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
-
 import java.util.List;
 
 public class CaptureVitalsActivity extends ACBaseActivity {
@@ -85,7 +84,9 @@ public class CaptureVitalsActivity extends ACBaseActivity {
             case RESULT_OK:
                 String path = data.getData().toString();
                 String instanceID = path.substring(path.lastIndexOf('/') + 1);
-                new FormsManger(this).uploadXFormWithMultiPartRequest(new FormsDAO(getContentResolver()).getSurveysSubmissionDataFromFormInstanceId(instanceID).getFormInstanceFilePath(), mSelectedPatientUUID);
+                new FormsManager().uploadXFormWithMultiPartRequest(
+                        createResponseAndErrorListener(new FormsDAO(getContentResolver()).getSurveysSubmissionDataFromFormInstanceId(instanceID).getFormInstanceFilePath(),
+                                mSelectedPatientUUID));
                 finish();
                 break;
             case RESULT_CANCELED:
@@ -93,5 +94,9 @@ public class CaptureVitalsActivity extends ACBaseActivity {
             default:
                 break;
         }
+    }
+
+    private UploadXFormWithMultiPartRequestListener createResponseAndErrorListener(String instancePath, String patientUUID) {
+        return new UploadXFormWithMultiPartRequestListener(instancePath, patientUUID);
     }
 }

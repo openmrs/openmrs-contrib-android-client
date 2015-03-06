@@ -14,82 +14,29 @@
 
 package org.openmrs.mobile.net;
 
-import android.content.Context;
 import android.content.Intent;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI;
-import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI;
 import org.openmrs.mobile.activities.LoginActivity;
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.databases.OpenMRSSQLiteOpenHelper;
+import org.openmrs.mobile.activities.listeners.LoginListener;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
 public class AuthorizationManager extends BaseManager {
+    private static String sLoginURL;
 
-    private static final String SESSION_ID_KEY = "sessionId";
-    private static final String AUTHENTICATION_KEY = "authenticated";
-
-    public AuthorizationManager(Context context) {
-        super(context);
-    }
-
-    public void login(final String username, final String password, final String serverURL) {
-        RequestQueue queue = Volley.newRequestQueue(mContext);
-        encodeAuthorizationToken(username, password);
-        String loginURL = serverURL + API.REST_ENDPOINT + API.AUTHORISATION_END_POINT;
-
-        logger.i("Sending request to : " + loginURL);
-
+    public void login(LoginListener listener) {
+        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
+        encodeAuthorizationToken(listener.getUsername(), listener.getPassword());
+        sLoginURL = listener.getServerURL() + API.REST_ENDPOINT + API.AUTHORISATION_END_POINT;
+        mLogger.i("Sending request to : " + sLoginURL);
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                loginURL, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                logger.d(response.toString());
-                try {
-                    String sessionToken = response.getString(SESSION_ID_KEY);
-                    Boolean isAuthenticated = Boolean.parseBoolean(response.getString(AUTHENTICATION_KEY));
-
-                    if (isAuthenticated) {
-                        if (isDBCleaningRequired(username, serverURL)) {
-                            mOpenMRS.deleteDatabase(OpenMRSSQLiteOpenHelper.DATABASE_NAME);
-                            OpenMRS.getInstance()
-                                    .getContentResolver()
-                                    .delete(OpenMRSFormsProviderAPI.FormsColumns.CONTENT_URI, null, null);
-                            OpenMRS.getInstance()
-                                    .getContentResolver()
-                                    .delete(OpenMRSInstanceProviderAPI.InstanceColumns.CONTENT_URI, null, null);
-                        }
-                        mOpenMRS.setServerUrl(serverURL);
-                        mOpenMRS.setSessionToken(sessionToken);
-                        mOpenMRS.setUsername(username);
-                        (new VisitsManager(mContext)).getVisitType();
-                        new UserManager(mContext).getUserInformation(username);
-                        new FormsManger(mContext).getAvailableFormsList();
-                        ((LoginActivity) mContext).saveLocationsToDatabase();
-                        ((LoginActivity) mContext).finish();
-                    } else {
-                        mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST));
-                    }
-                } catch (JSONException e) {
-                    logger.d(e.toString());
-                }
-            }
-        }
-                , new GeneralErrorListenerImpl(mContext)) {
+                sLoginURL, null, listener, listener) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -119,7 +66,7 @@ public class AuthorizationManager extends BaseManager {
         return result;
     }
 
-    private boolean isDBCleaningRequired(String username, String serverURL) {
+    public boolean isDBCleaningRequired(String username, String serverURL) {
         boolean result = false;
         if (isUsernameNotEmptyOrNotSameUser(username) || isServerURLNotEmptyOrNorSameURL(serverURL)) {
             result = true;
@@ -132,8 +79,8 @@ public class AuthorizationManager extends BaseManager {
     }
 
     public void moveToLoginActivity() {
-        Intent intent = new Intent(mContext, LoginActivity.class);
+        Intent intent = new Intent(getCurrentContext(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mContext.startActivity(intent);
+        getCurrentContext().startActivity(intent);
     }
 }

@@ -14,83 +14,24 @@
 
 package org.openmrs.mobile.net;
 
-import android.content.Context;
-import android.content.Intent;
-
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.openmrs.mobile.activities.LoginActivity;
-import org.openmrs.mobile.models.Location;
-import org.openmrs.mobile.models.mappers.LocationMapper;
+import org.openmrs.mobile.activities.listeners.AvailableLocationListener;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
-import org.openmrs.mobile.utilities.ApplicationConstants;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
 public class LocationManager extends BaseManager {
     private static final String LOCATION_QUERY = "location?tag=Login%20Location&v=full";
 
-    public LocationManager(Context context) {
-        super(context);
-    }
-
-    public void getAvailableLocation(final String serverUrl) {
-        RequestQueue queue = Volley.newRequestQueue(mContext);
-
-        String locationURL = serverUrl + API.REST_ENDPOINT + LOCATION_QUERY;
-        logger.d("Sending request to : " + locationURL);
-
+    public void getAvailableLocation(AvailableLocationListener listener) {
+        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
+        String locationURL = listener.getServerUrl() + API.REST_ENDPOINT + LOCATION_QUERY;
+        mLogger.d("Sending request to : " + locationURL);
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                locationURL, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                logger.d(response.toString());
-
-                try {
-                    JSONArray locationResultJSON = response.getJSONArray(RESULTS_KEY);
-                    List<Location> locationList = new ArrayList<Location>();
-                    if (locationResultJSON.length() > 0) {
-                        for (int i = 0; i < locationResultJSON.length(); i++) {
-                            locationList.add(LocationMapper.map(locationResultJSON.getJSONObject(i)));
-                        }
-                    }
-                    ((LoginActivity) mContext).initLoginForm(locationList, serverUrl);
-                } catch (JSONException e) {
-                    logger.d(e.toString());
-                }
-            }
-        }
-                , new GeneralErrorListenerImpl(mContext) {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        if (isUserUnauthorized(error.toString())) {
-                            mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SERVER_NOT_SUPPORTED_BROADCAST));
-                        } else {
-                            super.onErrorResponse(error);
-                        }
-                        ((LoginActivity) mContext).setErrorOccurred(true);
-                    }
-                }
-        ) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> params = new HashMap<String, String>();
-                return params;
-            }
-        };
+                locationURL, null, listener, listener);
         queue.add(jsObjRequest);
     }
 }

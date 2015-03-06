@@ -59,7 +59,7 @@ public class SettingsActivity extends ACBaseActivity {
     protected void onResumeFragments() {
         super.onResumeFragments();
         if (null == mAuthorizationManager) {
-            mAuthorizationManager = new AuthorizationManager(this);
+            mAuthorizationManager = new AuthorizationManager();
         }
     }
 

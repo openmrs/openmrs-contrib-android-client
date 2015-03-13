@@ -14,12 +14,16 @@
 
 package org.openmrs.mobile.net;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import org.openmrs.mobile.activities.listeners.AvailableLocationListener;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
 
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
@@ -31,7 +35,15 @@ public class LocationManager extends BaseManager {
         String locationURL = listener.getServerUrl() + API.REST_ENDPOINT + LOCATION_QUERY;
         mLogger.d("Sending request to : " + locationURL);
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                locationURL, null, listener, listener);
+                locationURL, null, listener, listener) {
+
+            /* Override is needed
+            * because we put session object into header */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return new HashMap<String, String>();
+            }
+        };
         queue.add(jsObjRequest);
     }
 }

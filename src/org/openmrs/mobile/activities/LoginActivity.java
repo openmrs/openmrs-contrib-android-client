@@ -30,9 +30,10 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
+import org.openmrs.mobile.activities.listeners.AvailableLocationListener;
+import org.openmrs.mobile.activities.listeners.LoginListener;
 import org.openmrs.mobile.adapters.LocationArrayAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
@@ -63,7 +64,6 @@ public class LoginActivity extends ACBaseActivity {
     private static List<Location> mLocationsList;
     private TextView mUrlTextView;
     private RelativeLayout mUrlField;
-    private OpenMRS mOpenMRS = OpenMRS.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -188,7 +188,7 @@ public class LoginActivity extends ACBaseActivity {
     public void login() {
         mLoginFormView.setVisibility(View.GONE);
         mSpinner.setVisibility(View.VISIBLE);
-        mAuthorizationManager.login(mUsername.getText().toString(), mPassword.getText().toString(), mUrlTextView.getText().toString());
+        mAuthorizationManager.login(createResponseAndErrorListener(mUsername.getText().toString(), mPassword.getText().toString(), mUrlTextView.getText().toString()));
     }
 
     private void bindDrawableResources() {
@@ -272,23 +272,31 @@ public class LoginActivity extends ACBaseActivity {
         if (result.isURLValid()) {
             mSpinner.setVisibility(View.VISIBLE);
             mLoginFormView.setVisibility(View.GONE);
-            LocationManager lm = new LocationManager(this);
-            lm.getAvailableLocation(result.getUrl());
+            LocationManager lm = new LocationManager();
+            lm.getAvailableLocation(createResponseAndErrorListener(result.getUrl()));
         } else {
             showInvalidURLDialog();
         }
     }
 
     public void setErrorOccurred(boolean errorOccurred) {
-        this.mErrorOccurred = errorOccurred;
+        mErrorOccurred = errorOccurred;
     }
 
     public void hideURLDialog() {
         if (mLocationsList == null) {
-            LocationManager lm = new LocationManager(this);
-            lm.getAvailableLocation(mLastCorrectURL);
+            LocationManager lm = new LocationManager();
+            lm.getAvailableLocation(createResponseAndErrorListener(mLastCorrectURL));
         } else {
             initLoginForm(mLocationsList, mLastCorrectURL);
         }
+    }
+
+    private AvailableLocationListener createResponseAndErrorListener(String serverURL) {
+        return new AvailableLocationListener(serverURL, this);
+    }
+
+    private LoginListener createResponseAndErrorListener(String username, String password, String serverURL) {
+        return new LoginListener(username, password, serverURL, this);
     }
 }

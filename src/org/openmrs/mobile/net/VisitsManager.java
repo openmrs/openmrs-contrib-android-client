@@ -51,7 +51,6 @@ import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 public class VisitsManager extends BaseManager {
     private static final String VISIT_QUERY = "visit?patient=";
     private static final String SENDING_REQUEST = "Sending request to : ";
-
     private int mExpectedResponses;
     private boolean mErrorOccurred;
 
@@ -63,7 +62,7 @@ public class VisitsManager extends BaseManager {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.ENCOUNTER_DETAILS + "?patient=" + patientUUID
                 + "&encounterType=" + ApplicationConstants.EncounterTypes.VITALS + "&v=custom:(obs:full)&limit=1&order=desc";
-        logger.d(SENDING_REQUEST + visitURL);
+        mLogger.d(SENDING_REQUEST + visitURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
                 visitURL, null, new Response.Listener<JSONObject>() {
@@ -72,7 +71,7 @@ public class VisitsManager extends BaseManager {
                 new EncounterDAO().saveLastVitalsEncounter(ObservationMapper.lastVitalsMap(response), patientUUID);
             }
         }
-                , new GeneralErrorListenerImpl(mContext) {
+                , new GeneralErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 super.onErrorResponse(error);
@@ -86,13 +85,13 @@ public class VisitsManager extends BaseManager {
         String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + VISIT_QUERY + patientUUID
                 + "&v=custom:(uuid,location:ref,visitType:ref,startDatetime,stopDatetime,encounters:full)";
 
-        logger.d(SENDING_REQUEST + visitURL);
+        mLogger.d(SENDING_REQUEST + visitURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
                 visitURL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                logger.d(response.toString());
+                mLogger.d(response.toString());
 
                 try {
                     JSONArray visitResultJSON = response.getJSONArray(RESULTS_KEY);
@@ -125,11 +124,11 @@ public class VisitsManager extends BaseManager {
                     }
                 } catch (JSONException e) {
                     subtractExpectedResponses(true);
-                    logger.d(e.toString());
+                    mLogger.d(e.toString());
                 }
             }
         }
-                , new GeneralErrorListenerImpl(mContext) {
+                , new GeneralErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 subtractExpectedResponses(true);
@@ -144,13 +143,13 @@ public class VisitsManager extends BaseManager {
         String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS + File.separator + visitUUID
                 + "&v=custom:(uuid,location:ref,visitType:ref,startDatetime,stopDatetime,encounters:full)";
 
-        logger.d(SENDING_REQUEST + visitURL);
+        mLogger.d(SENDING_REQUEST + visitURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
                 visitURL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(final JSONObject response) {
-                logger.d(response.toString());
+                mLogger.d(response.toString());
 
                 try {
                     final Visit visit = VisitMapper.map(response);
@@ -176,11 +175,11 @@ public class VisitsManager extends BaseManager {
 
                 } catch (JSONException e) {
                     subtractExpectedResponses(true);
-                    logger.d(e.toString());
+                    mLogger.d(e.toString());
                 }
             }
         }
-                , new GeneralErrorListenerImpl(mContext) {
+                , new GeneralErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 super.onErrorResponse(error);
@@ -194,7 +193,7 @@ public class VisitsManager extends BaseManager {
     public void inactivateVisitByUUID(final String visitUUID, final long patientID,  final long visitID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS + File.separator + visitUUID;
-        logger.d(SENDING_REQUEST + visitURL);
+        mLogger.d(SENDING_REQUEST + visitURL);
 
         final String currentDate = DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT);
         HashMap<String, String> params = new HashMap<String, String>();
@@ -203,7 +202,7 @@ public class VisitsManager extends BaseManager {
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.POST, visitURL, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(final JSONObject response) {
-                logger.d(response.toString());
+                mLogger.d(response.toString());
 
                 Thread thread = new Thread() {
                     @Override
@@ -214,14 +213,14 @@ public class VisitsManager extends BaseManager {
                             new VisitDAO().updateVisit(visit, visitID, patientID);
                             ((VisitDashboardActivity) mContext).moveToPatientDashboard();
                         } catch (JSONException e) {
-                            logger.d(e.toString());
+                            mLogger.d(e.toString());
                         }
                     }
                 };
                 thread.start();
             }
         }
-                , new GeneralErrorListenerImpl(mContext) {
+                , new GeneralErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -237,7 +236,7 @@ public class VisitsManager extends BaseManager {
     public void createVisit(final Patient patient) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS;
-        logger.d("Sending request to : " + visitURL);
+        mLogger.d("Sending request to : " + visitURL);
 
         final String currentDate = DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT);
         HashMap<String, String> params = new HashMap<String, String>();
@@ -249,18 +248,18 @@ public class VisitsManager extends BaseManager {
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.POST, visitURL, new JSONObject(params), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(final JSONObject response) {
-                logger.d(response.toString());
+                mLogger.d(response.toString());
 
                 try {
                     Visit visit = VisitMapper.map(response);
                     long visitID = new VisitDAO().saveVisit(visit, patient.getId());
                     ((PatientDashboardActivity) mContext).visitStarted(visitID, visitID <= 0);
                 } catch (JSONException e) {
-                    logger.d(e.toString());
+                    mLogger.d(e.toString());
                 }
             }
         }
-                , new GeneralErrorListenerImpl(mContext) {
+                , new GeneralErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -278,23 +277,23 @@ public class VisitsManager extends BaseManager {
     public void getVisitType() {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String visitTypeURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_TYPE;
-        logger.d("Sending request to : " + visitTypeURL);
+        mLogger.d("Sending request to : " + visitTypeURL);
 
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET, visitTypeURL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(final JSONObject response) {
-                logger.d(response.toString());
+                mLogger.d(response.toString());
 
                 try {
                     JSONArray visitTypesObj = response.getJSONArray("results");
                     String visitTypeUUID = ((JSONObject) visitTypesObj.get(0)).getString("uuid");
                     OpenMRS.getInstance().setVisitTypeUUID(visitTypeUUID);
                 } catch (JSONException e) {
-                    logger.d(e.toString());
+                    mLogger.d(e.toString());
                 }
             }
         }
-                , new GeneralErrorListenerImpl(mContext) {
+                , new GeneralErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {

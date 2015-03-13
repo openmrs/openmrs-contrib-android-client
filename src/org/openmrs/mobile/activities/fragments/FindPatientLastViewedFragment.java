@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.FindPatientsActivity;
+import org.openmrs.mobile.activities.listeners.LastViewedPatientListener;
 import org.openmrs.mobile.adapters.PatientArrayAdapter;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FindPatientsManager;
@@ -31,7 +32,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     private SwipeRefreshLayout mSwipeLayout;
     private static boolean mRefreshing;
     private boolean mIsConnectionAvailable;
-    private FindPatientsActivity.FindPatientsResponseListener mFpmResponseListener;
+    private LastViewedPatientListener mFpmResponseListener;
 
     public FindPatientLastViewedFragment() {
     }
@@ -61,7 +62,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mFpmResponseListener = ((FindPatientsActivity) getActivity()).createNewResponseListener();
+        mFpmResponseListener = ((FindPatientsActivity) activity).createResponseAndErrorListener();
     }
 
     @Override
@@ -130,7 +131,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
             if (mAdapter != null) {
                 mAdapter.clear();
             }
-            FindPatientsManager fpm = new FindPatientsManager(getActivity());
+            FindPatientsManager fpm = new FindPatientsManager();
             fpm.getLastViewedPatient(mFpmResponseListener);
         } else {
             mEmptyList.setText(getString(R.string.find_patient_no_connection));
@@ -142,7 +143,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     public boolean checkIfConnectionIsAvailable() {
         boolean connection = NetworkUtils.isNetworkAvailable(getActivity());
         if (mIsConnectionAvailable) {
-            FindPatientsManager fpm = new FindPatientsManager(getActivity());
+            FindPatientsManager fpm = new FindPatientsManager();
             fpm.getLastViewedPatient(mFpmResponseListener);
         }
         return connection;

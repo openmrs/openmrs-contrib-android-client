@@ -15,54 +15,56 @@
 package org.openmrs.mobile.net;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Base64;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.ToastUtil;
-
 import java.io.UnsupportedEncodingException;
 
 public class BaseManager {
     public static final String RESULTS_KEY = "results";
-    protected static final String UUID_KEY = "uuid";
-
     protected Context mContext;
     protected OpenMRS mOpenMRS = OpenMRS.getInstance();
-    protected OpenMRSLogger logger = mOpenMRS.getOpenMRSLogger();
+    protected OpenMRSLogger mLogger = mOpenMRS.getOpenMRSLogger();
 
     public BaseManager(Context context) {
         this.mContext = context;
     }
 
-    protected boolean isConnectionTimeout(String errorMessage) {
+    public BaseManager() {
+    }
+
+    /* It's called everytime to be sure
+     * that context is always actual */
+    public static Context getCurrentContext()  {
+        return OpenMRS.getInstance().getApplicationContext();
+    }
+
+    /* Methods are now static - they don't work on class state
+     * and need to be accessed from outside */
+    protected static boolean isConnectionTimeout(String errorMessage) {
         return errorMessage.contains(ApplicationConstants.VolleyErrors.CONNECTION_TIMEOUT);
     }
 
-    protected boolean isUserUnauthorized(String errorMessage) {
+    public static boolean isUserUnauthorized(String errorMessage) {
         return errorMessage.contains(ApplicationConstants.VolleyErrors.AUTHORISATION_FAILURE);
     }
 
-    protected boolean isNoInternetConnection(String errorMessage) {
+    protected static boolean isNoInternetConnection(String errorMessage) {
         return (errorMessage.contains(ApplicationConstants.VolleyErrors.NO_CONNECTION)
                 && errorMessage.contains(ApplicationConstants.VolleyErrors.UNKNOWN_HOST));
     }
 
-    protected boolean isServerUnavailable(String errorMessage) {
+    protected static boolean isServerUnavailable(String errorMessage) {
         return (errorMessage.contains(ApplicationConstants.VolleyErrors.NO_CONNECTION)
                 && errorMessage.contains(ApplicationConstants.VolleyErrors.CONNECT_EXCEPTION));
     }
 
-    protected boolean isServerError(String errorMessage) {
+    protected static boolean isServerError(String errorMessage) {
         return errorMessage.contains(ApplicationConstants.VolleyErrors.SERVER_ERROR);
     }
 
-    protected boolean isSocketException(String errorMessage) {
+    protected static boolean isSocketException(String errorMessage) {
         return errorMessage.contains(ApplicationConstants.VolleyErrors.SOCKET_EXCEPTION);
     }
 
@@ -74,41 +76,5 @@ public class BaseManager {
             OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
         }
         OpenMRS.getInstance().setAuthorizationToken(auth);
-    }
-
-    private abstract class GeneralErrorListener implements Response.ErrorListener {
-        private Context mContext;
-
-        protected GeneralErrorListener(Context context) {
-            this.mContext = context;
-        }
-
-        @Override
-        public void onErrorResponse(VolleyError error) {
-            if (isConnectionTimeout(error.toString())) {
-                mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_CONN_TIMEOUT_BROADCAST));
-            } else if (isUserUnauthorized(error.toString())) {
-                mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_UNAUTHORIZED_BROADCAST));
-            } else if (isServerUnavailable(error.toString())) {
-                mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SERVER_UNAVAILABLE_BROADCAST));
-            } else if (isNoInternetConnection(error.toString())) {
-                mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_NO_INTERNET_CONNECTION_BROADCAST));
-            } else if (isServerError(error.toString())) {
-                mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SERVER_ERROR_BROADCAST));
-            } else if (isSocketException(error.toString())) {
-                mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SOCKET_EXCEPTION_BROADCAST));
-
-            } else {
-                ToastUtil.showShortToast(mContext, ToastUtil.ToastType.ERROR, error.toString());
-                logger.e(error.toString());
-            }
-        }
-    }
-
-    public class GeneralErrorListenerImpl extends GeneralErrorListener {
-
-        public GeneralErrorListenerImpl(Context context) {
-            super(context);
-        }
     }
 }

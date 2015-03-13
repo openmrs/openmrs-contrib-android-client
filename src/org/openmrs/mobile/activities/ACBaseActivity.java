@@ -46,7 +46,7 @@ public abstract class ACBaseActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFragmentManager = getSupportFragmentManager();
-        mAuthorizationManager = new AuthorizationManager(this);
+        mAuthorizationManager = new AuthorizationManager();
 
     }
 
@@ -68,7 +68,6 @@ public abstract class ACBaseActivity extends ActionBarActivity {
                 this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, mOpenMRS.getUsername()));
             }
         }
-
         mOpenMRS.setCurrentActivity(this);
     }
 
@@ -238,5 +237,9 @@ public abstract class ACBaseActivity extends ActionBarActivity {
         if (currActivity != null && this.equals(currActivity)) {
             mOpenMRS.setCurrentActivity(null);
         }
+    }
+
+    public AuthorizationManager getAuthorizationManager() {
+        return mAuthorizationManager;
     }
 }

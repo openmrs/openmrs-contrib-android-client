@@ -33,20 +33,13 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import com.android.volley.Response;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.FindPatientInDatabaseFragment;
 import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
+import org.openmrs.mobile.activities.listeners.LastViewedPatientListener;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.mappers.PatientMapper;
-import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.TabUtil;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -233,59 +226,12 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
     }
 
 
-    public FindPatientsResponseListener createNewResponseListener() {
-        return new FindPatientsResponseListener(FindPatientsActivity.this);
+    public LastViewedPatientListener createResponseAndErrorListener() {
+        return new LastViewedPatientListener(this);
     }
 
-    public final class FindPatientsResponseListener implements Response.Listener<JSONObject> {
-        private WeakReference<FindPatientsActivity> findPatientsWeakRef;
-
-        public FindPatientsResponseListener(FindPatientsActivity findPatientsActivity) {
-            this.findPatientsWeakRef = new WeakReference<FindPatientsActivity>(findPatientsActivity);
-        }
-
-        public WeakReference<FindPatientsActivity> getFindPatientsWeakRef() {
-            return findPatientsWeakRef;
-        }
-
-        @Override
-        public void onResponse(JSONObject response) {
-
-            List<Patient> patientsList = new ArrayList<Patient>();
-            mOpenMRS.getOpenMRSLogger().d(response.toString());
-
-            try {
-                JSONArray patientsJSONList = response.getJSONArray(BaseManager.RESULTS_KEY);
-                for (int i = 0; i < patientsJSONList.length(); i++) {
-                    patientsList.add(PatientMapper.map(patientsJSONList.getJSONObject(i)));
-                }
-
-                FindPatientLastViewedFragment.setLastViewedPatientList(patientsList);
-                FragmentManager fm = getSupportFragmentManager();
-                FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) fm
-                        .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
-
-                if (fragment != null) {
-                    fragment.updatePatientsData();
-                }
-
-                FindPatientLastViewedFragment.setRefreshing(false);
-
-            } catch (JSONException e) {
-                mOpenMRS.getOpenMRSLogger().d(e.toString());
-
-                FragmentManager fm = getSupportFragmentManager();
-                FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) fm
-                        .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
-
-                if (fragment != null) {
-                    fragment.stopLoader();
-                }
-
-                FindPatientLastViewedFragment.setLastViewedPatientList(new ArrayList<Patient>());
-                FindPatientLastViewedFragment.setRefreshing(false);
-            }
-        }
-
+    public enum FragmentMethod {
+        StopLoader,
+        Update
     }
 }

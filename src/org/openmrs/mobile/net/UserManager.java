@@ -14,78 +14,32 @@
 
 package org.openmrs.mobile.net;
 
-import android.content.Context;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.activities.listeners.FullInformationListener;
+import org.openmrs.mobile.activities.listeners.UserInformationListener;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
 
 public class UserManager extends BaseManager {
 
-    public UserManager(Context context) {
-        super(context);
-    }
-
-    public void getUserInformation(String username) {
-        RequestQueue queue = Volley.newRequestQueue(mContext);
-        String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.USER_QUERY + username;
-
+    public void getUserInformation(UserInformationListener listener) {
+        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
+        String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.USER_QUERY + listener.getUsername();
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                visitURL, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                logger.d(response.toString());
-                try {
-                    JSONArray resultJSON = response.getJSONArray(RESULTS_KEY);
-                    if (resultJSON.length() > 0) {
-                        for (int i = 0; i < resultJSON.length(); i++) {
-                            getFullInformation(resultJSON.getJSONObject(i).getString(UUID_KEY));
-                        }
-                    }
-                } catch (JSONException e) {
-                    logger.d(e.toString());
-                }
-            }
-        }
-                , new GeneralErrorListenerImpl(mContext));
+                visitURL, null, listener, listener);
         queue.add(jsObjRequest);
     }
 
-    private void getFullInformation(String userUUID) {
-        RequestQueue queue = Volley.newRequestQueue(mContext);
-        String visitURL = mOpenMRS.getServerUrl() + ApplicationConstants.API.REST_ENDPOINT + API.USER_DETAILS + File.separator + userUUID;
-
+    public void getFullInformation(FullInformationListener listener) {
+        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
+        String visitURL = mOpenMRS.getServerUrl() + ApplicationConstants.API.REST_ENDPOINT + API.USER_DETAILS + File.separator + listener.getUserUUID();
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                visitURL, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                logger.d(response.toString());
-                try {
-                    Map<String, String> userInfo = new HashMap<String, String>();
-                    userInfo.put(ApplicationConstants.UserKeys.USER_PERSON_NAME, response.getJSONObject("person").getString("display"));
-                    userInfo.put(ApplicationConstants.UserKeys.USER_UUID, response.getString("uuid"));
-                    OpenMRS.getInstance().setCurrentUserInformation(userInfo);
-                } catch (JSONException e) {
-                    logger.d(e.toString());
-                }
-            }
-        }
-                , new GeneralErrorListenerImpl(mContext));
+                visitURL, null, listener, listener);
         queue.add(jsObjRequest);
     }
 }

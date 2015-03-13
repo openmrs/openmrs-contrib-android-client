@@ -25,23 +25,20 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.android.volley.Response;
-import org.json.JSONObject;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
 import org.openmrs.mobile.activities.fragments.PatientDetailsFragment;
 import org.openmrs.mobile.activities.fragments.PatientDiagnosisFragment;
 import org.openmrs.mobile.activities.fragments.PatientVisitsFragment;
 import org.openmrs.mobile.activities.fragments.PatientVitalsFragment;
+import org.openmrs.mobile.activities.listeners.FullPatientDataListener;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.mappers.PatientMapper;
 import org.openmrs.mobile.net.FindPatientsManager;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.TabUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -116,6 +113,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     public void goToVisitDashboard(Long visitID) {
         Intent intent = new Intent(this, VisitDashboardActivity.class);
         intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, visitID);
+        // Null pointer?
         intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_NAME, this.getSupportActionBar().getTitle().toString());
         startActivityForResult(intent, REQUEST_CODE_FOR_VISIT);
     }
@@ -188,9 +186,8 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
     private void synchronizePatient() {
         showProgressDialog(R.string.action_synchronize_patients, DialogAction.SYNCHRONIZE);
-        PatientDashboardResponseListener fpmResponseListener = createNewResponseListener();
-        FindPatientsManager fpm = new FindPatientsManager(this);
-        fpm.getFullPatientData(mPatient.getUuid(), fpmResponseListener);
+        FindPatientsManager fpm = new FindPatientsManager();
+        fpm.getFullPatientData(createResponseAndErrorListener(mPatient.getUuid()));
     }
 
     public void showProgressDialog(int resId, DialogAction dialogAction) {
@@ -332,25 +329,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
         }
     }
 
-    public PatientDashboardResponseListener createNewResponseListener() {
-        return new PatientDashboardResponseListener(PatientDashboardActivity.this);
-    }
-
-    public final class PatientDashboardResponseListener implements Response.Listener<JSONObject> {
-        private WeakReference<PatientDashboardActivity> patientDashboardWeakRef;
-
-        public PatientDashboardResponseListener(PatientDashboardActivity findPatientsSearchActivity) {
-            this.patientDashboardWeakRef = new WeakReference<PatientDashboardActivity>(findPatientsSearchActivity);
-        }
-
-        public WeakReference<PatientDashboardActivity> getPatientDashboardWeakRef() {
-            return patientDashboardWeakRef;
-        }
-
-        @Override
-        public void onResponse(JSONObject response) {
-            mOpenMRS.getOpenMRSLogger().d(response.toString());
-            updatePatientDetailsData(PatientMapper.map(response));
-        }
+    private FullPatientDataListener createResponseAndErrorListener(String patientUUID) {
+        return new FullPatientDataListener(patientUUID, this);
     }
 }

@@ -23,6 +23,8 @@ import java.io.UnsupportedEncodingException;
 
 public class BaseManager {
     public static final String RESULTS_KEY = "results";
+    public static final String SENDING_REQUEST = "Sending request to : ";
+    public static final boolean DO_GZIP_REQUEST = false;
     protected Context mContext;
     protected OpenMRS mOpenMRS = OpenMRS.getInstance();
     protected OpenMRSLogger mLogger = mOpenMRS.getOpenMRSLogger();

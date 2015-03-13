@@ -17,12 +17,16 @@ package org.openmrs.mobile.net.volley.wrappers;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.Volley;
 
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.io.ByteArrayOutputStream;
@@ -32,26 +36,45 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MultiPartRequest extends Request<String> {
-
     private MultipartEntity entity = new MultipartEntity();
-
     private static final String FILE_PART_NAME = "xml_submission_file";
-
+    private final String mUrl;
+    private final Response.ErrorListener mErrorListener;
     private final Response.Listener<String> mListener;
     private final File mFilePart;
     private final String mPatientUUID;
+    private boolean mSetToEncode;
 
-    public MultiPartRequest(String url, Response.ErrorListener errorListener, Response.Listener<String> listener, File file, String patientUUID) {
+    public MultiPartRequest(String url, Response.ErrorListener errorListener, Response.Listener<String> listener, File file, String patientUUID, boolean setToEncode) {
         super(Method.POST, url, errorListener);
-
+        mUrl = url;
+        mErrorListener = errorListener;
         mListener = listener;
         mFilePart = file;
         mPatientUUID = patientUUID;
+        mSetToEncode = setToEncode;
         buildMultiPartEntity();
     }
 
     private void buildMultiPartEntity() {
         entity.addPart(FILE_PART_NAME, new FileBody(mFilePart));
+    }
+
+    /**
+     * If it's set to compress POST request
+     * into GZIP, and server will not be able
+     * to read it, RETRY to send it as raw file.
+     */
+    @Override
+    public void deliverError(VolleyError error) {
+        if (mSetToEncode) {
+            OpenMRS.getInstance().getOpenMRSLogger().e("Server cannot read GZIP file! Retrying to send raw file.");
+            RequestQueue queue = Volley.newRequestQueue(BaseManager.getCurrentContext());
+            MultiPartRequest mpRequest = new MultiPartRequest(mUrl, mErrorListener, mListener, mFilePart, mPatientUUID, false);
+            queue.add(mpRequest);
+            return;
+        }
+        super.deliverError(error);
     }
 
     @Override
@@ -61,13 +84,18 @@ public class MultiPartRequest extends Request<String> {
 
     @Override
     public byte[] getBody() throws AuthFailureError {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ByteArrayOutputStream entityBytes = new ByteArrayOutputStream();
         try {
-            entity.writeTo(bos);
+            entity.writeTo(entityBytes);
         } catch (IOException e) {
             VolleyLog.e("IOException writing to ByteArrayOutputStream");
         }
-        return bos.toByteArray();
+
+        if (mSetToEncode) {
+            return GZIPByteEncoder.encodeByteArray(entityBytes.toByteArray());
+        } else {
+            return entityBytes.toByteArray();
+        }
     }
 
     @Override
@@ -77,7 +105,7 @@ public class MultiPartRequest extends Request<String> {
 
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
-        HashMap<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<String, String>();
 
         StringBuilder builder = new StringBuilder();
         builder.append(ApplicationConstants.JSESSIONID_PARAM);
@@ -85,6 +113,11 @@ public class MultiPartRequest extends Request<String> {
         builder.append(OpenMRS.getInstance().getSessionToken());
         params.put(ApplicationConstants.COOKIE_PARAM, builder.toString());
         params.put(ApplicationConstants.PATIENT_UUID_PARAM, mPatientUUID);
+        if (mSetToEncode) {
+            /** Sending encoded POST */
+            params.put(GZIPByteEncoder.RESPONSE_HEADER_PARAM, GZIPByteEncoder.GZIP_HEADER_VALUE);
+        }
+        params.put(GZIPByteEncoder.REQUEST_HEADER_PARAM, GZIPByteEncoder.GZIP_HEADER_VALUE);
         return params;
     }
 

@@ -212,5 +212,4 @@ public class OpenMRS extends Collect {
         clearCurrentLoggedInUserInfo();
         editor.commit();
     }
-
 }

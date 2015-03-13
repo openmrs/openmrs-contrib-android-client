@@ -33,9 +33,9 @@ public class LocationManager extends BaseManager {
     public void getAvailableLocation(AvailableLocationListener listener) {
         RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String locationURL = listener.getServerUrl() + API.REST_ENDPOINT + LOCATION_QUERY;
-        mLogger.d("Sending request to : " + locationURL);
+        mLogger.d(SENDING_REQUEST + locationURL);
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                locationURL, null, listener, listener) {
+                locationURL, null, listener, listener, DO_GZIP_REQUEST) {
 
             /* Override is needed
             * because we put session object into header */

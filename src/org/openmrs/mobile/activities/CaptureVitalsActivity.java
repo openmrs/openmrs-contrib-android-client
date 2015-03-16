@@ -22,6 +22,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.PatientsVitalsListFragment;
 import org.openmrs.mobile.activities.listeners.UploadXFormWithMultiPartRequestListener;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.bundle.FormManagerBundle;
 import org.openmrs.mobile.bundle.PatientListBundle;
 import org.openmrs.mobile.dao.FormsDAO;
 import org.openmrs.mobile.dao.PatientDAO;
@@ -32,8 +33,6 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.List;
 
 public class CaptureVitalsActivity extends ACBaseActivity {
-
-    public static final int CAPTURE_VITALS_REQUEST_CODE = 1;
 
     private String mSelectedPatientUUID;
 
@@ -84,9 +83,11 @@ public class CaptureVitalsActivity extends ACBaseActivity {
             case RESULT_OK:
                 String path = data.getData().toString();
                 String instanceID = path.substring(path.lastIndexOf('/') + 1);
-                new FormsManager().uploadXFormWithMultiPartRequest(
-                        createResponseAndErrorListener(new FormsDAO(getContentResolver()).getSurveysSubmissionDataFromFormInstanceId(instanceID).getFormInstanceFilePath(),
-                                mSelectedPatientUUID));
+                FormManagerBundle bundle = new FormManagerBundle();
+                bundle.putStringField(FormManagerBundle.INSTANCE_PATH_KEY,
+                        new FormsDAO(getContentResolver()).getSurveysSubmissionDataFromFormInstanceId(instanceID).getFormInstanceFilePath());
+                bundle.putStringField(FormManagerBundle.PATIENT_UUID_KEY, mSelectedPatientUUID);
+                new FormsManager().uploadXFormWithMultiPartRequest(createResponseAndErrorListener(bundle));
                 finish();
                 break;
             case RESULT_CANCELED:
@@ -96,7 +97,7 @@ public class CaptureVitalsActivity extends ACBaseActivity {
         }
     }
 
-    private UploadXFormWithMultiPartRequestListener createResponseAndErrorListener(String instancePath, String patientUUID) {
-        return new UploadXFormWithMultiPartRequestListener(instancePath, patientUUID);
+    private UploadXFormWithMultiPartRequestListener createResponseAndErrorListener(FormManagerBundle bundle) {
+        return new UploadXFormWithMultiPartRequestListener(bundle);
     }
 }

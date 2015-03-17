@@ -20,7 +20,7 @@ public class FormManagerBundle extends FieldsBundle {
     public static final String VISIT_UUID_KEY = "b_visitUUID";
     public static final String INSTANCE_PATH_KEY = "b_instancePath";
 
-    public long getPatientId() {
+    public Long getPatientId() {
         return getLongField(PATIENT_ID_KEY);
     }
 

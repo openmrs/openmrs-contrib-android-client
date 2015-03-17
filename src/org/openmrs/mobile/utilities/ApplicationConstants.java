@@ -78,6 +78,7 @@ public abstract class ApplicationConstants {
         public static final String START_VISIT_DIALOG_TAG = "startVisitDialog";
         public static final String START_VISIT_IMPOSSIBLE_DIALOG_TAG = "startVisitImpossibleDialog";
         public static final String WARNING_LOST_DATA_DIALOG_TAG = "warningLostDataDialog";
+        public static final String NO_VISIT_DIALOG_TAG = "noVisitDialogTag";
     }
 
     public abstract static class BundleKeys {

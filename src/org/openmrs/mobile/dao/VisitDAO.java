@@ -27,6 +27,7 @@ import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.VisitItemDTO;
+import org.openmrs.mobile.utilities.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -165,6 +166,29 @@ public class VisitDAO {
             }
         }
         return visits;
+    }
+
+    public boolean isPatientNowOnVisit(Long patientID) {
+        return (null != getActiveVisitFromList(getVisitsByPatientID(patientID)));
+    }
+
+    public boolean isPatientNowOnVisit(List<Visit> patientVisits) {
+        return (null != getActiveVisitFromList(patientVisits));
+    }
+
+    public Visit getPatientCurrentVisit(Long patientID) {
+        return getActiveVisitFromList(getVisitsByPatientID(patientID));
+    }
+
+    private Visit getActiveVisitFromList(List<Visit> patientVisits) {
+        Visit activeVisit = null;
+        for (int i = 0; i < patientVisits.size(); i++) {
+            if (DateUtils.ZERO.equals(patientVisits.get(i).getStopDate())) {
+                activeVisit = patientVisits.get(i);
+                break;
+            }
+        }
+        return activeVisit;
     }
 
     public Visit getVisitsByID(final Long visitID) {

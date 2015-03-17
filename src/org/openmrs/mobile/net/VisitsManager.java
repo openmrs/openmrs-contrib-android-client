@@ -27,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.activities.CaptureVitalsActivity;
 import org.openmrs.mobile.activities.FindPatientsActivity;
 import org.openmrs.mobile.activities.FindPatientsSearchActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
@@ -36,7 +37,6 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.mappers.ObservationMapper;
 import org.openmrs.mobile.models.mappers.VisitMapper;
@@ -192,14 +192,14 @@ public class VisitsManager extends BaseManager {
         queue.add(jsObjRequest);
     }
 
-    public void createVisit(final Patient patient) {
+    public void createVisit(final String patientUUID, final Long patientID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS;
         mLogger.d("Sending request to : " + visitURL);
 
         final String currentDate = DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT);
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put("patient", patient.getUuid());
+        params.put("patient", patientUUID);
         params.put("visitType", OpenMRS.getInstance().getVisitTypeUUID());
         params.put("startDatetime", currentDate);
         params.put("location", LocationDAO.findLocationByName(OpenMRS.getInstance().getLocation()).getParentLocationUuid());
@@ -211,8 +211,18 @@ public class VisitsManager extends BaseManager {
 
                 try {
                     Visit visit = VisitMapper.map(response);
-                    long visitID = new VisitDAO().saveVisit(visit, patient.getId());
-                    ((PatientDashboardActivity) mContext).visitStarted(visitID, visitID <= 0);
+                    long visitID = new VisitDAO().saveVisit(visit, patientID);
+                    if (mContext instanceof PatientDashboardActivity) {
+                        ((PatientDashboardActivity) mContext).visitStarted(visitID, visitID <= 0);
+                    } else if (mContext instanceof CaptureVitalsActivity) {
+                        ((CaptureVitalsActivity) mContext).dismissProgressDialog(false, R.string.start_visit_successful,
+                                R.string.start_visit_error);
+                        ((CaptureVitalsActivity) mContext).startCheckedFormEntryForResult(
+                                ((CaptureVitalsActivity) mContext).getSelectedPatientUUID()
+                        );
+
+                    }
+
                 } catch (JSONException e) {
                     mLogger.d(e.toString());
                 }
@@ -223,7 +233,12 @@ public class VisitsManager extends BaseManager {
             @Override
             public void onErrorResponse(VolleyError error) {
                 super.onErrorResponse(error);
-                ((PatientDashboardActivity) mContext).stopLoader(true);
+                if (mContext instanceof PatientDashboardActivity) {
+                    ((PatientDashboardActivity) mContext).stopLoader(true);
+                } else if (mContext instanceof CaptureVitalsActivity) {
+                    ((CaptureVitalsActivity) mContext).dismissProgressDialog(true, R.string.start_visit_successful,
+                            R.string.start_visit_error);
+                }
             }
         }
 

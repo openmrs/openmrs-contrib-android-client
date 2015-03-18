@@ -15,17 +15,31 @@ package org.openmrs.mobile.activities.listeners;
 
 import com.android.volley.Response;
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.bundle.FormManagerBundle;
+import org.openmrs.mobile.intefaces.VisitDashboardCallbackListener;
 import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.net.GeneralErrorListener;
+import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 public final class UploadXFormWithMultiPartRequestListener extends GeneralErrorListener implements Response.Listener<String> {
     private final String mInstancePath;
     private final String mPatientUUID;
+    private final String mVisitUUID;
+    private final long mPatientID;
+    private VisitDashboardCallbackListener mCallbackListener;
 
-    public UploadXFormWithMultiPartRequestListener(String instancePath, String patientUUID) {
-        mInstancePath = instancePath;
-        mPatientUUID = patientUUID;
+    public UploadXFormWithMultiPartRequestListener(FormManagerBundle bundle) {
+        mInstancePath = bundle.getInstancePath();
+        mPatientUUID = bundle.getPatientUuid();
+        mVisitUUID = bundle.getVisitUuid();
+        mPatientID = bundle.getPatientId();
+        mCallbackListener = null;
+    }
+
+    public UploadXFormWithMultiPartRequestListener(FormManagerBundle bundle, VisitDashboardCallbackListener callbackListener) {
+        this(bundle);
+        mCallbackListener = callbackListener;
     }
 
     @Override
@@ -33,6 +47,7 @@ public final class UploadXFormWithMultiPartRequestListener extends GeneralErrorL
         ToastUtil.showLongToast(BaseManager.getCurrentContext(),
                 ToastUtil.ToastType.SUCCESS,
                 BaseManager.getCurrentContext().getString(R.string.forms_sent_successfully));
+        new VisitsManager(BaseManager.getCurrentContext()).findVisitByUUID(mVisitUUID, createFindVisitCallbacksListener(mCallbackListener));
     }
 
     public String getInstancePath() {
@@ -41,5 +56,9 @@ public final class UploadXFormWithMultiPartRequestListener extends GeneralErrorL
 
     public String getPatientUUID() {
         return mPatientUUID;
+    }
+
+    private FindVisitByUUIDListener createFindVisitCallbacksListener(VisitDashboardCallbackListener callbackListener) {
+        return new FindVisitByUUIDListener(mPatientID, callbackListener);
     }
 }

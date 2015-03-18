@@ -176,6 +176,12 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
+    @Override
+    public void notifyDataSetChanged() {
+        this.mChildLayouts = generateChildLayouts();
+        super.notifyDataSetChanged();
+    }
+
     private void bindDrawableResources(int drawableID, ImageView imageView) {
         createImageBitmap(drawableID, imageView.getLayoutParams());
         imageView.setImageBitmap(mBitmapCache.get(drawableID));

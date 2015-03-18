@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,21 +25,29 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
+import org.openmrs.mobile.activities.listeners.UploadXFormWithMultiPartRequestListener;
 import org.openmrs.mobile.adapters.VisitExpandableListAdapter;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
+import org.openmrs.mobile.bundle.FormManagerBundle;
+import org.openmrs.mobile.dao.EncounterDAO;
+import org.openmrs.mobile.dao.FormsDAO;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
+import org.openmrs.mobile.intefaces.VisitDashboardCallbackListener;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
+import org.openmrs.mobile.net.FormsManager;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
-public class VisitDashboardActivity extends ACBaseActivity {
+public class VisitDashboardActivity extends ACBaseActivity implements VisitDashboardCallbackListener {
 
     private ExpandableListView mExpandableListView;
     private VisitExpandableListAdapter mExpandableListAdapter;
@@ -47,13 +56,15 @@ public class VisitDashboardActivity extends ACBaseActivity {
     private Visit mVisit;
     private String mPatientName;
     private Patient mPatient;
+
     private VisitsManager mVisitsManager;
+    private FormsManager mFormsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visit_dashboard);
-        mVisitsManager = new VisitsManager(this);
+
         Intent intent = getIntent();
 
         mVisit = new VisitDAO().getVisitsByID(intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0));
@@ -69,14 +80,16 @@ public class VisitDashboardActivity extends ACBaseActivity {
     }
 
     @Override
-    protected void onResumeFragments() {
+    protected void onResume() {
+        mVisitsManager = new VisitsManager(this);
+        mFormsManager = new FormsManager();
         if (!mVisitEncounters.isEmpty()) {
             mEmptyListView.setVisibility(View.GONE);
-            mExpandableListAdapter = new VisitExpandableListAdapter(this, mVisitEncounters);
-            mExpandableListView.setAdapter(mExpandableListAdapter);
-            mExpandableListView.setGroupIndicator(null);
         }
-        super.onResumeFragments();
+        mExpandableListAdapter = new VisitExpandableListAdapter(this, mVisitEncounters);
+        mExpandableListView.setAdapter(mExpandableListAdapter);
+        mExpandableListView.setGroupIndicator(null);
+        super.onResume();
     }
 
     @Override
@@ -94,16 +107,65 @@ public class VisitDashboardActivity extends ACBaseActivity {
             case android.R.id.home:
                 this.finish();
                 break;
+            case R.id.actionCaptureVitals:
+                startCaptureVitals();
+                break;
             case R.id.actionEndVisit:
                 this.showEndVisitDialog();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case RESULT_OK:
+                String path = data.getData().toString();
+                String instanceID = path.substring(path.lastIndexOf('/') + 1);
+                FormManagerBundle bundle = new FormManagerBundle();
+                bundle.putStringField(FormManagerBundle.INSTANCE_PATH_KEY, new FormsDAO(getContentResolver())
+                        .getSurveysSubmissionDataFromFormInstanceId(instanceID)
+                        .getFormInstanceFilePath());
+                bundle.putStringField(FormManagerBundle.PATIENT_UUID_KEY, mPatient.getUuid());
+                bundle.putLongField(FormManagerBundle.PATIENT_ID_KEY, mPatient.getId());
+                bundle.putStringField(FormManagerBundle.VISIT_UUID_KEY, mVisit.getUuid());
+                mFormsManager.uploadXFormWithMultiPartRequest(createResponseAndErrorListener(bundle, this));
+                break;
+            case RESULT_CANCELED:
+                finish();
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void updateEncounterList() {
+        mVisitEncounters.clear();
+        mExpandableListAdapter.notifyDataSetChanged();
+        mVisit.setEncounters(new EncounterDAO().findEncountersByVisitID(mVisit.getId()));
+        mVisitEncounters.addAll(mVisit.getEncounters());
+        mExpandableListAdapter.notifyDataSetChanged();
+    }
+
     public void endVisit() {
         mVisitsManager.inactivateVisitByUUID(mVisit.getUuid(), mPatient.getId(), mVisit.getId());
+    }
+
+    private void startCaptureVitals() {
+        try {
+            Intent intent = new Intent(this, FormEntryActivity.class);
+            Uri formURI = new FormsDAO(this.getContentResolver()).getFormURI(ApplicationConstants.FormNames.VITALS_XFORM);
+            intent.setData(formURI);
+            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE, mPatient.getUuid());
+            this.startActivityForResult(intent, CAPTURE_VITALS_REQUEST_CODE);
+        } catch (Exception e) {
+            ToastUtil.showLongToast(this, ToastUtil.ToastType.ERROR, R.string.failed_to_open_vitals_form);
+            OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
+        }
     }
 
     private void showEndVisitDialog() {
@@ -121,5 +183,9 @@ public class VisitDashboardActivity extends ACBaseActivity {
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    private UploadXFormWithMultiPartRequestListener createResponseAndErrorListener(FormManagerBundle bundle, VisitDashboardCallbackListener callbackListener) {
+        return new UploadXFormWithMultiPartRequestListener(bundle, callbackListener);
     }
 }

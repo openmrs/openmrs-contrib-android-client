@@ -185,6 +185,37 @@ public abstract class ACBaseActivity extends ActionBarActivity {
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.SERVER_ERROR_DIALOG_TAG);
     }
 
+    public void showNoVisitDialog() {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.no_visit_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.no_visit_dialog_message));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.START_VISIT);
+        bundle.setRightButtonText(getString(R.string.no_visit_dialog_button_accept));
+        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        bundle.setLeftButtonText(getString(R.string.no_visit_dialog_button_cancel));
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.NO_VISIT_DIALOG_TAG);
+    }
+
+    public void showStartVisitImpossibleDialog(CharSequence title) {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.start_visit_impossible_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.start_visit_impossible_dialog_message, title));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        bundle.setRightButtonText(getString(R.string.dialog_button_ok));
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.START_VISIT_IMPOSSIBLE_DIALOG_TAG);
+    }
+
+    public void showStartVisitDialog(CharSequence title) {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.start_visit_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.start_visit_dialog_message, title));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.START_VISIT);
+        bundle.setRightButtonText(getString(R.string.dialog_button_confirm));
+        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.START_VISIT_DIALOG_TAG);
+    }
+
     public void createAndShowDialog(CustomDialogBundle bundle, String tag) {
         CustomFragmentDialog instance = CustomFragmentDialog.newInstance(bundle);
         instance.show(mFragmentManager, tag);

@@ -28,10 +28,10 @@ import org.openmrs.mobile.net.GeneralErrorListener;
 
 public class FindVisitByUUIDListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
-    private final long mPatientID;
+    private final Long mPatientID;
     private VisitDashboardCallbackListener mVisitDashboardCallback;
 
-    public FindVisitByUUIDListener(long patientID, VisitDashboardCallbackListener visitDashboardCallback) {
+    public FindVisitByUUIDListener(Long patientID, VisitDashboardCallbackListener visitDashboardCallback) {
         mPatientID = patientID;
         mVisitDashboardCallback = visitDashboardCallback;
     }
@@ -47,7 +47,10 @@ public class FindVisitByUUIDListener extends GeneralErrorListener implements Res
             } else {
                 new VisitDAO().saveVisit(visit, mPatientID);
             }
-            mVisitDashboardCallback.updateEncounterList();
+            if (null != mVisitDashboardCallback) {
+                mVisitDashboardCallback.updateEncounterList();
+            }
+
         } catch (JSONException e) {
             mLogger.d(e.toString());
         }

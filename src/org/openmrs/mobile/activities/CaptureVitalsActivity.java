@@ -26,8 +26,10 @@ import org.openmrs.mobile.bundle.FormManagerBundle;
 import org.openmrs.mobile.bundle.PatientListBundle;
 import org.openmrs.mobile.dao.FormsDAO;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FormsManager;
+import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.List;
@@ -35,6 +37,7 @@ import java.util.List;
 public class CaptureVitalsActivity extends ACBaseActivity {
 
     private String mSelectedPatientUUID;
+    private Long mSelectedPatientID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +59,17 @@ public class CaptureVitalsActivity extends ACBaseActivity {
         return false;
     }
 
-    public void startFormEntryForResult(String patientUUID) {
+    public void startFormEntry(String patientUUID, Long patientID) {
         mSelectedPatientUUID = patientUUID;
+        mSelectedPatientID = patientID;
+        if (new VisitDAO().isPatientNowOnVisit(patientID)) {
+            startCheckedFormEntryForResult(mSelectedPatientUUID);
+        } else {
+            showNoVisitDialog();
+        }
+    }
+
+    public void startCheckedFormEntryForResult(String patientUUID) {
         try {
             Intent intent = new Intent(this, FormEntryActivity.class);
             Uri formURI = new FormsDAO(this.getContentResolver()).getFormURI(ApplicationConstants.FormNames.VITALS_XFORM);
@@ -68,6 +80,11 @@ public class CaptureVitalsActivity extends ACBaseActivity {
             ToastUtil.showLongToast(this, ToastUtil.ToastType.ERROR, R.string.failed_to_open_vitals_form);
             OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
         }
+    }
+
+    public void startVisit() {
+        showProgressDialog(R.string.action_start_visit);
+        new VisitsManager(this).createVisit(mSelectedPatientUUID, mSelectedPatientID);
     }
 
     @Override
@@ -87,6 +104,8 @@ public class CaptureVitalsActivity extends ACBaseActivity {
                 bundle.putStringField(FormManagerBundle.INSTANCE_PATH_KEY,
                         new FormsDAO(getContentResolver()).getSurveysSubmissionDataFromFormInstanceId(instanceID).getFormInstanceFilePath());
                 bundle.putStringField(FormManagerBundle.PATIENT_UUID_KEY, mSelectedPatientUUID);
+                bundle.putLongField(FormManagerBundle.PATIENT_ID_KEY, mSelectedPatientID);
+                bundle.putStringField(FormManagerBundle.VISIT_UUID_KEY, new VisitDAO().getPatientCurrentVisit(mSelectedPatientID).getUuid());
                 new FormsManager().uploadXFormWithMultiPartRequest(createResponseAndErrorListener(bundle));
                 finish();
                 break;
@@ -99,5 +118,9 @@ public class CaptureVitalsActivity extends ACBaseActivity {
 
     private UploadXFormWithMultiPartRequestListener createResponseAndErrorListener(FormManagerBundle bundle) {
         return new UploadXFormWithMultiPartRequestListener(bundle);
+    }
+
+    public String getSelectedPatientUUID() {
+        return mSelectedPatientUUID;
     }
 }

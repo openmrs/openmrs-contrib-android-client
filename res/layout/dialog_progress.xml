@@ -42,7 +42,7 @@
             android:id="@+id/progressTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_toRightOf="@+id/progressBarDialog"
             android:layout_centerVertical="true"
             android:layout_gravity="center_horizontal"
             android:layout_toEndOf="@+id/progressBarDialog"

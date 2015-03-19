@@ -113,7 +113,6 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     public void goToVisitDashboard(Long visitID) {
         Intent intent = new Intent(this, VisitDashboardActivity.class);
         intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, visitID);
-        // Null pointer?
         intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_NAME, this.getSupportActionBar().getTitle().toString());
         startActivityForResult(intent, REQUEST_CODE_FOR_VISIT);
     }

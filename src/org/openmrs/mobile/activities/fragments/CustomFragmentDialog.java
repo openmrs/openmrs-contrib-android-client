@@ -1,5 +1,6 @@
 package org.openmrs.mobile.activities.fragments;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.activities.CaptureVitalsActivity;
 import org.openmrs.mobile.activities.DialogActivity;
 import org.openmrs.mobile.activities.LoginActivity;
 import org.openmrs.mobile.activities.VisitDashboardActivity;
@@ -56,7 +58,6 @@ public class CustomFragmentDialog extends DialogFragment {
     private CustomDialogBundle mCustomDialogBundle;
 
     public CustomFragmentDialog() {
-
     }
 
     public static CustomFragmentDialog newInstance(CustomDialogBundle customDialogBundle) {
@@ -267,6 +268,7 @@ public class CustomFragmentDialog extends DialogFragment {
 
     private View.OnClickListener onClickActionSolver(final OnClickAction action) {
         return new View.OnClickListener() {
+            //CHECKSTYLE:OFF
             @Override
             public void onClick(View v) {
                 switch (action) {
@@ -298,19 +300,28 @@ public class CustomFragmentDialog extends DialogFragment {
                         dismiss();
                         break;
                     case START_VISIT:
-                        PatientDashboardActivity pda = ((PatientDashboardActivity) getActivity());
-                        PatientVisitsFragment fragment = (PatientVisitsFragment) pda.getSupportFragmentManager().getFragments().get(PatientDashboardActivity.TabHost.VISITS_TAB_POS);
-                        if (fragment != null) {
-                            fragment.startVisit();
-                        }
+                        doStartVisitAction();
                         dismiss();
                         break;
                     default:
                         break;
                 }
             }
+            //CHECKSTYLE:ON
         };
     }
 
-
+    private void doStartVisitAction() {
+        Activity activity = getActivity();
+        if (activity instanceof PatientDashboardActivity) {
+            PatientDashboardActivity pda = ((PatientDashboardActivity) activity);
+            PatientVisitsFragment fragment = (PatientVisitsFragment) pda.getSupportFragmentManager().getFragments().get(PatientDashboardActivity.TabHost.VISITS_TAB_POS);
+            if (fragment != null) {
+                fragment.startVisit();
+            }
+        } else {
+            CaptureVitalsActivity cva = ((CaptureVitalsActivity) activity);
+            cva.startVisit();
+        }
+    }
 }

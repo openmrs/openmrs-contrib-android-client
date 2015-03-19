@@ -70,6 +70,11 @@
     <string name="start_visit_impossible_dialog_message">There are already active visit. Synchronize patient or close previous visit</string>
     <!-- Progress dialog -->
     <string name="progress_dialog_message">Please wait ...</string>
+    <!-- Capture vitals no visit dialog -->
+    <string name="no_visit_dialog_title">Start new visit</string>
+    <string name="no_visit_dialog_message">This user has no active visit. Would you like to start one now?</string>
+    <string name="no_visit_dialog_button_accept">Yes</string>
+    <string name="no_visit_dialog_button_cancel">Cancel</string>
     <!-- Buttons -->
     <string name="dialog_button_done">Done</string>
     <string name="dialog_button_cancel">Cancel</string>
@@ -146,6 +151,7 @@
     <!-- Capture Vitals activity -->
     <string name="action_capture_vitals">Capture Vitals</string>
     <string name="failed_to_open_vitals_form">An error occurred. Invalid or corrupted form file.</string>
+    <string name="active_visit_label_capture_vitals">On Visit</string>
     <!-- Form Entry Activity -->
     <string name="save_upload_button">Save and Send Vitals</string>
     <string name="forms_sent_successfully">Form has been sent successfully.</string>

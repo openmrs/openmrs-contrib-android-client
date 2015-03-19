@@ -26,7 +26,7 @@ public final class UploadXFormWithMultiPartRequestListener extends GeneralErrorL
     private final String mInstancePath;
     private final String mPatientUUID;
     private final String mVisitUUID;
-    private final long mPatientID;
+    private final Long mPatientID;
     private VisitDashboardCallbackListener mCallbackListener;
 
     public UploadXFormWithMultiPartRequestListener(FormManagerBundle bundle) {

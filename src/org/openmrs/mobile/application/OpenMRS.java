@@ -14,7 +14,6 @@
 
 package org.openmrs.mobile.application;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Build;
 
@@ -31,7 +30,6 @@ import java.util.Map;
 public class OpenMRS extends Collect {
     private static OpenMRS instance;
     private OpenMRSLogger mLogger;
-    private Activity mCurrentActivity;
 
     @Override
     public void onCreate() {
@@ -136,14 +134,6 @@ public class OpenMRS extends Collect {
     public String getSecretKey() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.SECRET_KEY, ApplicationConstants.EMPTY_STRING);
-    }
-
-    public void setCurrentActivity(Activity mCurrentActivity) {
-        this.mCurrentActivity = mCurrentActivity;
-    }
-
-    public Activity getCurrentActivity() {
-        return mCurrentActivity;
     }
 
     public void setDefaultFormLoadID(String xFormName, String xFormID) {

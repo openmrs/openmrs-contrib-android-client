@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.PatientsVitalsListFragment;
+import org.openmrs.mobile.activities.listeners.StartVisitListener;
 import org.openmrs.mobile.activities.listeners.UploadXFormWithMultiPartRequestListener;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.FormManagerBundle;
@@ -84,7 +85,7 @@ public class CaptureVitalsActivity extends ACBaseActivity {
 
     public void startVisit() {
         showProgressDialog(R.string.action_start_visit);
-        new VisitsManager(this).createVisit(mSelectedPatientUUID, mSelectedPatientID);
+        new VisitsManager().startVisit(createCreateVisitListener(mSelectedPatientUUID, mSelectedPatientID));
     }
 
     @Override
@@ -120,7 +121,7 @@ public class CaptureVitalsActivity extends ACBaseActivity {
         return new UploadXFormWithMultiPartRequestListener(bundle);
     }
 
-    public String getSelectedPatientUUID() {
-        return mSelectedPatientUUID;
+    private StartVisitListener createCreateVisitListener(String patientUUID, long patientID) {
+        return new StartVisitListener(patientUUID, patientID, this);
     }
 }

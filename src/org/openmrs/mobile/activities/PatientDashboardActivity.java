@@ -31,7 +31,9 @@ import org.openmrs.mobile.activities.fragments.PatientDetailsFragment;
 import org.openmrs.mobile.activities.fragments.PatientDiagnosisFragment;
 import org.openmrs.mobile.activities.fragments.PatientVisitsFragment;
 import org.openmrs.mobile.activities.fragments.PatientVitalsFragment;
+import org.openmrs.mobile.activities.listeners.FindVisitsByPatientUUIDListener;
 import org.openmrs.mobile.activities.listeners.FullPatientDataListener;
+import org.openmrs.mobile.activities.listeners.LastVitalsListener;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FindPatientsManager;
@@ -78,7 +80,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
             showProgressDialog(R.string.action_synchronize_patients, DialogAction.SYNCHRONIZE);
         }
         mPatient = new PatientDAO().findPatientByUUID(patientBundle.getString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE));
-        new VisitsManager(this).getLastVitals(mPatient.getUuid());
+        new VisitsManager().getLastVitals(createLastVitalsListener(mPatient.getUuid()));
         mPatientDashboardPagerAdapter = new PatientDashboardPagerAdapter(getSupportFragmentManager(), tabHosts);
         initViewPager();
     }
@@ -186,7 +188,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     private void synchronizePatient() {
         showProgressDialog(R.string.action_synchronize_patients, DialogAction.SYNCHRONIZE);
         FindPatientsManager fpm = new FindPatientsManager();
-        fpm.getFullPatientData(createResponseAndErrorListener(mPatient.getUuid()));
+        fpm.getFullPatientData(createFullPatientDataListener(mPatient.getUuid()));
     }
 
     public void showProgressDialog(int resId, DialogAction dialogAction) {
@@ -197,20 +199,14 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
     public void updatePatientDetailsData(final Patient patient) {
         if (new PatientDAO().updatePatient(mPatient.getId(), patient)) {
-            final VisitsManager fvm = new VisitsManager(this);
-            Thread thread = new Thread() {
-                @Override
-                public void run() {
-                    mPatient = new PatientDAO().findPatientByUUID(mPatient.getUuid());
+            VisitsManager fvm = new VisitsManager();
+            mPatient = new PatientDAO().findPatientByUUID(mPatient.getUuid());
 
-                    PatientDetailsFragment fragment = (PatientDetailsFragment) getSupportFragmentManager().getFragments().get(PatientDashboardActivity.TabHost.DETAILS_TAB_POS);
-                    fragment.reloadPatientData(mPatient);
+            PatientDetailsFragment fragment = (PatientDetailsFragment) getSupportFragmentManager().
+                    getFragments().get(PatientDashboardActivity.TabHost.DETAILS_TAB_POS);
+            fragment.reloadPatientData(mPatient);
 
-                    fvm.findVisitsByPatientUUID(patient.getUuid(), mPatient.getId());
-                }
-            };
-            thread.start();
-
+            fvm.findVisitsByPatientUUID(createVisitsByPatientUUIDListener(patient.getUuid(), mPatient.getId()));
         } else {
             stopLoader(true);
         }
@@ -328,7 +324,15 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
         }
     }
 
-    private FullPatientDataListener createResponseAndErrorListener(String patientUUID) {
+    private FullPatientDataListener createFullPatientDataListener(String patientUUID) {
         return new FullPatientDataListener(patientUUID, this);
+    }
+
+    private LastVitalsListener createLastVitalsListener(String patientUUID) {
+        return new LastVitalsListener(patientUUID);
+    }
+
+    private FindVisitsByPatientUUIDListener createVisitsByPatientUUIDListener(String patientUUID, long patientID) {
+        return new FindVisitsByPatientUUIDListener(patientUUID, patientID, this);
     }
 }

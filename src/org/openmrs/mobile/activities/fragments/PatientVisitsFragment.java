@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
+import org.openmrs.mobile.activities.listeners.StartVisitListener;
 import org.openmrs.mobile.adapters.PatientVisitsArrayAdapter;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Patient;
@@ -42,7 +43,7 @@ public class PatientVisitsFragment extends ACBaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mVisitsManager = new VisitsManager(getActivity());
+        mVisitsManager = new VisitsManager();
         setHasOptionsMenu(true);
     }
 
@@ -82,7 +83,7 @@ public class PatientVisitsFragment extends ACBaseFragment {
     public void startVisit() {
         ((PatientDashboardActivity) getActivity())
                 .showProgressDialog(R.string.action_start_visit, PatientDashboardActivity.DialogAction.ADD_VISIT);
-        mVisitsManager.createVisit(mPatient.getUuid(), mPatient.getId());
+        mVisitsManager.startVisit(createStartVisitListener(mPatient.getUuid(), mPatient.getId()));
     }
 
     private void showStartVisitDialog() {
@@ -92,5 +93,9 @@ public class PatientVisitsFragment extends ACBaseFragment {
         } else {
             caller.showStartVisitDialog(caller.getSupportActionBar().getTitle());
         }
+    }
+
+    private StartVisitListener createStartVisitListener(String patientUUID, long patientID) {
+        return new StartVisitListener(patientUUID, patientID, (PatientDashboardActivity) getActivity());
     }
 }

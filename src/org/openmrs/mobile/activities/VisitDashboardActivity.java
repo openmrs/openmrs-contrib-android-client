@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
+import org.openmrs.mobile.activities.listeners.EndVisitByUUIDListener;
 import org.openmrs.mobile.activities.listeners.UploadXFormWithMultiPartRequestListener;
 import org.openmrs.mobile.adapters.VisitExpandableListAdapter;
 import org.openmrs.mobile.application.OpenMRS;
@@ -81,7 +82,7 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
 
     @Override
     protected void onResume() {
-        mVisitsManager = new VisitsManager(this);
+        mVisitsManager = new VisitsManager();
         mFormsManager = new FormsManager();
         if (!mVisitEncounters.isEmpty()) {
             mEmptyListView.setVisibility(View.GONE);
@@ -133,7 +134,7 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
                 bundle.putStringField(FormManagerBundle.PATIENT_UUID_KEY, mPatient.getUuid());
                 bundle.putLongField(FormManagerBundle.PATIENT_ID_KEY, mPatient.getId());
                 bundle.putStringField(FormManagerBundle.VISIT_UUID_KEY, mVisit.getUuid());
-                mFormsManager.uploadXFormWithMultiPartRequest(createResponseAndErrorListener(bundle, this));
+                mFormsManager.uploadXFormWithMultiPartRequest(createResponseAndErrorListener(bundle));
                 break;
             case RESULT_CANCELED:
                 finish();
@@ -152,7 +153,7 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
     }
 
     public void endVisit() {
-        mVisitsManager.inactivateVisitByUUID(mVisit.getUuid(), mPatient.getId(), mVisit.getId());
+        mVisitsManager.endVisitByUUID(createResponseAndErrorListener(mVisit.getUuid(), mPatient.getId(), mVisit.getId()));
     }
 
     private void startCaptureVitals() {
@@ -185,7 +186,11 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
         finish();
     }
 
-    private UploadXFormWithMultiPartRequestListener createResponseAndErrorListener(FormManagerBundle bundle, VisitDashboardCallbackListener callbackListener) {
-        return new UploadXFormWithMultiPartRequestListener(bundle, callbackListener);
+    private UploadXFormWithMultiPartRequestListener createResponseAndErrorListener(FormManagerBundle bundle) {
+        return new UploadXFormWithMultiPartRequestListener(bundle, this);
+    }
+
+    private EndVisitByUUIDListener createResponseAndErrorListener(String visitUUID, long patientID, long visitID) {
+        return new EndVisitByUUIDListener(visitUUID, patientID, visitID, this);
     }
 }

@@ -25,7 +25,6 @@ import org.openmrs.mobile.activities.listeners.UploadXFormWithMultiPartRequestLi
 import org.openmrs.mobile.activities.listeners.DownloadFormListener;
 import org.openmrs.mobile.net.volley.wrappers.MultiPartRequest;
 import org.openmrs.mobile.net.volley.wrappers.StringRequestDecorator;
-import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FileUtils;
 
 import java.io.File;
@@ -34,20 +33,24 @@ import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
 public class FormsManager extends BaseManager {
     private StringRequestDecorator mRequestDecorator;
+    private static final String AVAILABLE_FORMS_LIST_BASE_URL = getBaseXFormURL() + API.FORM_LIST;
+    private static final String UPLOAD_XFORM_BASE_URL = getBaseXFormURL() + API.XFORM_UPLOAD;
 
     public void getAvailableFormsList(AvailableFormsListListener listener) {
         RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
-        String xFormsListURL = mOpenMRS.getServerUrl() + API.XFORM_ENDPOINT + API.FORM_LIST;
-        mRequestDecorator = new StringRequestDecorator(Request.Method.GET, xFormsListURL,
-                listener, listener, DO_GZIP_REQUEST);
+        mLogger.d(SENDING_REQUEST + AVAILABLE_FORMS_LIST_BASE_URL);
+
+        mRequestDecorator = new StringRequestDecorator(Request.Method.GET,
+                AVAILABLE_FORMS_LIST_BASE_URL, listener, listener, DO_GZIP_REQUEST);
         queue.add(mRequestDecorator);
     }
 
     public void uploadXForm(final UploadXFormListener listener) {
         RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
-        String xFormsListURL = mOpenMRS.getServerUrl() + API.XFORM_ENDPOINT + API.XFORM_UPLOAD;
-        mRequestDecorator = new StringRequestDecorator(Request.Method.POST, xFormsListURL,
-                listener, listener, DO_GZIP_REQUEST) {
+        mLogger.d(SENDING_REQUEST + UPLOAD_XFORM_BASE_URL);
+
+        mRequestDecorator = new StringRequestDecorator(Request.Method.POST,
+                UPLOAD_XFORM_BASE_URL, listener, listener, DO_GZIP_REQUEST) {
             @Override
             public byte[] getBody() throws AuthFailureError {
                 return FileUtils.fileToByteArray(listener.getInstancePath());
@@ -58,17 +61,20 @@ public class FormsManager extends BaseManager {
 
     public void uploadXFormWithMultiPartRequest(UploadXFormWithMultiPartRequestListener listener) {
         RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
-        String xFormsListURL = mOpenMRS.getServerUrl() + API.XFORM_ENDPOINT + API.XFORM_UPLOAD;
-        MultiPartRequest multipartRequest = new MultiPartRequest(xFormsListURL,
+        mLogger.d(SENDING_REQUEST + UPLOAD_XFORM_BASE_URL);
+
+        MultiPartRequest multipartRequest = new MultiPartRequest(UPLOAD_XFORM_BASE_URL,
                 listener, listener, new File(listener.getInstancePath()), listener.getPatientUUID(), DO_GZIP_REQUEST);
         queue.add(multipartRequest);
     }
 
     public void downloadForm(DownloadFormListener listener) {
         RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
-        String xFormsListURL = mOpenMRS.getServerUrl() + ApplicationConstants.API.XFORM_ENDPOINT + listener.getDownloadURL();
-        mRequestDecorator = new StringRequestDecorator(Request.Method.GET, xFormsListURL,
-                listener, listener, DO_GZIP_REQUEST);
+        String url = getBaseXFormURL() + listener.getDownloadURL();
+        mLogger.d(SENDING_REQUEST + url);
+
+        mRequestDecorator = new StringRequestDecorator(Request.Method.GET,
+                url, listener, listener, DO_GZIP_REQUEST);
         queue.add(mRequestDecorator);
     }
 

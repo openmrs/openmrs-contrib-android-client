@@ -20,30 +20,32 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import org.openmrs.mobile.activities.listeners.AvailableLocationListener;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.openmrs.mobile.utilities.ApplicationConstants.API;
-
 public class LocationManager extends BaseManager {
     private static final String LOCATION_QUERY = "location?tag=Login%20Location&v=full";
+    private static final String AVAILABLE_LOCATION_END_URL = ApplicationConstants.API.REST_ENDPOINT + LOCATION_QUERY;
 
     public void getAvailableLocation(AvailableLocationListener listener) {
         RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
-        String locationURL = listener.getServerUrl() + API.REST_ENDPOINT + LOCATION_QUERY;
-        mLogger.d(SENDING_REQUEST + locationURL);
-        JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                locationURL, null, listener, listener, DO_GZIP_REQUEST) {
+        String url = listener.getServerUrl() + AVAILABLE_LOCATION_END_URL;
+        mLogger.d(SENDING_REQUEST + url);
 
-            /* Override is needed
-            * because we put session object into header */
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return new HashMap<String, String>();
-            }
-        };
+        JsonObjectRequestWrapper jsObjRequest =
+                new JsonObjectRequestWrapper(Request.Method.GET,
+                        url, null, listener, listener, DO_GZIP_REQUEST) {
+
+                    /* Override is needed
+                    * because we put session object into header */
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        return new HashMap<String, String>();
+                    }
+                };
         queue.add(jsObjRequest);
     }
 }

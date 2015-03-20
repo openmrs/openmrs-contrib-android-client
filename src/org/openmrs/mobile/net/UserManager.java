@@ -20,26 +20,34 @@ import com.android.volley.toolbox.Volley;
 import org.openmrs.mobile.activities.listeners.FullInformationListener;
 import org.openmrs.mobile.activities.listeners.UserInformationListener;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+
 import java.io.File;
 import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
 
 public class UserManager extends BaseManager {
-
-    public void getUserInformation(UserInformationListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
-        String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.USER_QUERY + listener.getUsername();
-        JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                visitURL, null, listener, listener, DO_GZIP_REQUEST);
-        queue.add(jsObjRequest);
-    }
+    private static final String FULL_INFORMATION_BASE_URL = getBaseRestURL() + API.USER_DETAILS + File.separator;
+    private static final String USER_INFORMATION_BASE_URL = getBaseRestURL() + API.USER_QUERY;
 
     public void getFullInformation(FullInformationListener listener) {
         RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
-        String visitURL = mOpenMRS.getServerUrl() + ApplicationConstants.API.REST_ENDPOINT + API.USER_DETAILS + File.separator + listener.getUserUUID();
-        JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                visitURL, null, listener, listener, DO_GZIP_REQUEST);
+        String url = FULL_INFORMATION_BASE_URL + listener.getUserUUID();
+        mLogger.d(SENDING_REQUEST + url);
+
+        JsonObjectRequestWrapper jsObjRequest =
+                new JsonObjectRequestWrapper(Request.Method.GET,
+                        url, null, listener, listener, DO_GZIP_REQUEST);
+        queue.add(jsObjRequest);
+    }
+
+    public void getUserInformation(UserInformationListener listener) {
+        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
+        String url = USER_INFORMATION_BASE_URL + listener.getUsername();
+        mLogger.d(SENDING_REQUEST + url);
+
+        JsonObjectRequestWrapper jsObjRequest =
+                new JsonObjectRequestWrapper(Request.Method.GET,
+                        url, null, listener, listener, DO_GZIP_REQUEST);
         queue.add(jsObjRequest);
     }
 }

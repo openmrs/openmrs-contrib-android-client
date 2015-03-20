@@ -73,6 +73,10 @@ public final class ObservationMapper {
             } catch (JSONException je) {
                 OpenMRS.getInstance().getOpenMRSLogger().d(je.toString());
                 OpenMRS.getInstance().getOpenMRSLogger().d("Failed to parse LastVitals encounter different JSON model.");
+            } catch (NullPointerException ne) {
+                OpenMRS.getInstance().getOpenMRSLogger().d(ne.toString());
+                OpenMRS.getInstance().getOpenMRSLogger().d("Failed to parse LastVitals encounter! Response returned empty encounter type!");
+                return null;
             }
         }
         return encounter;
@@ -119,6 +123,10 @@ public final class ObservationMapper {
                 encounter.setDisplay(encounterJSON.getString(DISPLAY_KEY));
                 encounter.setObservations(observationList);
             }
+        }
+        // it means that form is empty
+        if (null == encounter.getEncounterType()) {
+            throw new NullPointerException();
         }
         return encounter;
     }

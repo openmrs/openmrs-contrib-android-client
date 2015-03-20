@@ -118,7 +118,6 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
             mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row, mSearchedPatientsList);
             mPatientsListView.setAdapter(mAdapter);
             mLastQuery = intent.getStringExtra(SearchManager.QUERY);
-            mOpenMRS.setCurrentActivity(this);
             FindPatientsManager fpm = new FindPatientsManager();
             fpm.findPatient(createResponseAndErrorListener(mLastQuery, mLastSearchId));
 

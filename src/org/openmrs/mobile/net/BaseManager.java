@@ -22,18 +22,22 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import java.io.UnsupportedEncodingException;
 
 public class BaseManager {
-    public static final String RESULTS_KEY = "results";
     public static final String SENDING_REQUEST = "Sending request to : ";
+    public static final String RESULTS_KEY = "results";
     public static final boolean DO_GZIP_REQUEST = false;
-    protected Context mContext;
+
     protected OpenMRS mOpenMRS = OpenMRS.getInstance();
     protected OpenMRSLogger mLogger = mOpenMRS.getOpenMRSLogger();
 
-    public BaseManager(Context context) {
-        this.mContext = context;
+    public BaseManager() {
     }
 
-    public BaseManager() {
+    public static String getBaseRestURL() {
+        return OpenMRS.getInstance().getServerUrl() + ApplicationConstants.API.REST_ENDPOINT;
+    }
+
+    public static String getBaseXFormURL() {
+        return OpenMRS.getInstance().getServerUrl() + ApplicationConstants.API.XFORM_ENDPOINT;
     }
 
     /* It's called everytime to be sure
@@ -42,8 +46,6 @@ public class BaseManager {
         return OpenMRS.getInstance().getApplicationContext();
     }
 
-    /* Methods are now static - they don't work on class state
-     * and need to be accessed from outside */
     protected static boolean isConnectionTimeout(String errorMessage) {
         return errorMessage.contains(ApplicationConstants.VolleyErrors.CONNECTION_TIMEOUT);
     }

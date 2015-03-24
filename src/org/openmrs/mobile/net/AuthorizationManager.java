@@ -34,9 +34,9 @@ public class AuthorizationManager extends BaseManager {
         RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         encodeAuthorizationToken(listener.getUsername(), listener.getPassword());
         sLoginURL = listener.getServerURL() + API.REST_ENDPOINT + API.AUTHORISATION_END_POINT;
-        mLogger.i("Sending request to : " + sLoginURL);
+        mLogger.i(SENDING_REQUEST + sLoginURL);
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                sLoginURL, null, listener, listener) {
+                sLoginURL, null, listener, listener, DO_GZIP_REQUEST) {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

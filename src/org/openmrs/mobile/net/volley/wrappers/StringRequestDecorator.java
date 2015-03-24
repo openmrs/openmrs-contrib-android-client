@@ -16,12 +16,15 @@ package org.openmrs.mobile.net.volley.wrappers;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
-
+import com.android.volley.toolbox.Volley;
 
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.io.UnsupportedEncodingException;
@@ -29,22 +32,61 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class StringRequestDecorator extends StringRequest {
-    private int mStatusCode;
+    private boolean mSetToEncode;
+    private int mMethod;
+    private final String mUrl;
+    private final Response.Listener<String> mListener;
+    private final Response.ErrorListener mErrorListener;
 
-    public StringRequestDecorator(int method, String url, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+    public StringRequestDecorator(int method, String url, Response.Listener<String> listener, Response.ErrorListener errorListener, boolean setToEncode) {
         super(method, url, listener, errorListener);
+        mMethod = method;
+        mUrl = url;
+        mListener = listener;
+        mErrorListener = errorListener;
+        mSetToEncode = setToEncode;
     }
 
-    public StringRequestDecorator(String url, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+    public StringRequestDecorator(String url, Response.Listener<String> listener, Response.ErrorListener errorListener, boolean setToEncode) {
         super(url, listener, errorListener);
+        mUrl = url;
+        mListener = listener;
+        mErrorListener = errorListener;
+        mSetToEncode = setToEncode;
+    }
+
+    /**
+     * If it's set to compress POST request
+     * into GZIP, and server will not be able
+     * to read it, RETRY to send it as raw file.
+     */
+    @Override
+    public void deliverError(VolleyError error) {
+        if (mSetToEncode) {
+            OpenMRS.getInstance().getOpenMRSLogger().e("Server cannot read GZIP file! Retrying to send raw file.");
+            RequestQueue queue = Volley.newRequestQueue(BaseManager.getCurrentContext());
+            StringRequestDecorator strRequest = new StringRequestDecorator(mMethod, mUrl, mListener, mErrorListener, false);
+            queue.add(strRequest);
+            return;
+        }
+        super.deliverError(error);
+    }
+
+    @Override
+    public byte[] getBody() throws  AuthFailureError {
+        if (mSetToEncode) {
+            return GZIPByteEncoder.encodeByteArray(super.getBody());
+        } else {
+            return super.getBody();
+        }
     }
 
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
-        mStatusCode = response.statusCode;
+        NetworkResponse checkedResponse = GZIPByteEncoder.decompressGZIPResponse(response);
         String responseAsString = null;
         try {
-            responseAsString = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+            responseAsString = new String(checkedResponse.data, HttpHeaderParser.parseCharset(checkedResponse.headers));
         } catch (UnsupportedEncodingException e) {
             OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
         }
@@ -53,7 +95,7 @@ public class StringRequestDecorator extends StringRequest {
                 return Response.error(new AuthFailureError(ApplicationConstants.VolleyErrors.AUTHORISATION_FAILURE));
             }
         }
-        return super.parseNetworkResponse(response);
+        return super.parseNetworkResponse(checkedResponse);
     }
 
     @Override
@@ -65,11 +107,8 @@ public class StringRequestDecorator extends StringRequest {
         builder.append("=");
         builder.append(OpenMRS.getInstance().getSessionToken());
         params.put(ApplicationConstants.COOKIE_PARAM, builder.toString());
+        params.put(GZIPByteEncoder.REQUEST_HEADER_PARAM, GZIPByteEncoder.GZIP_HEADER_VALUE);
 
         return params;
-    }
-
-    public int getStatusCode() {
-        return mStatusCode;
     }
 }

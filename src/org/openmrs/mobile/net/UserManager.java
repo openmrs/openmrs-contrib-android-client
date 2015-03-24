@@ -31,7 +31,7 @@ public class UserManager extends BaseManager {
         RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.USER_QUERY + listener.getUsername();
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                visitURL, null, listener, listener);
+                visitURL, null, listener, listener, DO_GZIP_REQUEST);
         queue.add(jsObjRequest);
     }
 
@@ -39,7 +39,7 @@ public class UserManager extends BaseManager {
         RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String visitURL = mOpenMRS.getServerUrl() + ApplicationConstants.API.REST_ENDPOINT + API.USER_DETAILS + File.separator + listener.getUserUUID();
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                visitURL, null, listener, listener);
+                visitURL, null, listener, listener, DO_GZIP_REQUEST);
         queue.add(jsObjRequest);
     }
 }

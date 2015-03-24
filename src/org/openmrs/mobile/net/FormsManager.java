@@ -39,7 +39,7 @@ public class FormsManager extends BaseManager {
         RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String xFormsListURL = mOpenMRS.getServerUrl() + API.XFORM_ENDPOINT + API.FORM_LIST;
         mRequestDecorator = new StringRequestDecorator(Request.Method.GET, xFormsListURL,
-                listener, listener);
+                listener, listener, DO_GZIP_REQUEST);
         queue.add(mRequestDecorator);
     }
 
@@ -47,7 +47,7 @@ public class FormsManager extends BaseManager {
         RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String xFormsListURL = mOpenMRS.getServerUrl() + API.XFORM_ENDPOINT + API.XFORM_UPLOAD;
         mRequestDecorator = new StringRequestDecorator(Request.Method.POST, xFormsListURL,
-                listener, listener) {
+                listener, listener, DO_GZIP_REQUEST) {
             @Override
             public byte[] getBody() throws AuthFailureError {
                 return FileUtils.fileToByteArray(listener.getInstancePath());
@@ -60,7 +60,7 @@ public class FormsManager extends BaseManager {
         RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String xFormsListURL = mOpenMRS.getServerUrl() + API.XFORM_ENDPOINT + API.XFORM_UPLOAD;
         MultiPartRequest multipartRequest = new MultiPartRequest(xFormsListURL,
-                listener, listener, new File(listener.getInstancePath()), listener.getPatientUUID());
+                listener, listener, new File(listener.getInstancePath()), listener.getPatientUUID(), DO_GZIP_REQUEST);
         queue.add(multipartRequest);
     }
 
@@ -68,7 +68,7 @@ public class FormsManager extends BaseManager {
         RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String xFormsListURL = mOpenMRS.getServerUrl() + ApplicationConstants.API.XFORM_ENDPOINT + listener.getDownloadURL();
         mRequestDecorator = new StringRequestDecorator(Request.Method.GET, xFormsListURL,
-                listener, listener);
+                listener, listener, DO_GZIP_REQUEST);
         queue.add(mRequestDecorator);
     }
 

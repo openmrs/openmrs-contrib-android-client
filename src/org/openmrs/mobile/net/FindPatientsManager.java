@@ -30,7 +30,6 @@ public class FindPatientsManager extends BaseManager {
     private static final String BASE_PATIENT_MANAGER_URL = OpenMRS.getInstance().getServerUrl() + API.REST_ENDPOINT;
     private static final String BASE_FINDPATIENTURL = BASE_PATIENT_MANAGER_URL + API.PATIENT_QUERY;
     private static final String BASE_GETFULLPATIENTDATA = BASE_PATIENT_MANAGER_URL + API.PATIENT_DETAILS + File.separator;
-    private static final String SENDING_REQUEST = "Sending request to : ";
     private static String sFindPatientURL = BASE_FINDPATIENTURL;
     private static final String LAST_VIEWED_PATIENT_URL = BASE_PATIENT_MANAGER_URL + PATIENT_LAST_VIEWED_QUERY;
     private static String sFullPatientDataURL = BASE_GETFULLPATIENTDATA;
@@ -40,7 +39,7 @@ public class FindPatientsManager extends BaseManager {
         sFindPatientURL = BASE_FINDPATIENTURL + listener.getLastQuery() + API.FULL_VERSION_NEXT_PARAM;
         mLogger.d(SENDING_REQUEST + sFindPatientURL);
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                sFindPatientURL, null, listener, listener);
+                sFindPatientURL, null, listener, listener, DO_GZIP_REQUEST);
         queue.add(jsObjRequest);
     }
 
@@ -48,7 +47,7 @@ public class FindPatientsManager extends BaseManager {
         RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         mLogger.d(SENDING_REQUEST + LAST_VIEWED_PATIENT_URL);
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                LAST_VIEWED_PATIENT_URL, null, listener, listener);
+                LAST_VIEWED_PATIENT_URL, null, listener, listener, DO_GZIP_REQUEST);
         queue.add(jsObjRequest);
     }
 
@@ -57,7 +56,7 @@ public class FindPatientsManager extends BaseManager {
         sFullPatientDataURL = BASE_GETFULLPATIENTDATA + listener.getPatientUUID() + API.FULL_VERSION;
         mLogger.d(SENDING_REQUEST + sFullPatientDataURL);
         JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                sFullPatientDataURL, null, listener, listener);
+                sFullPatientDataURL, null, listener, listener, DO_GZIP_REQUEST);
         queue.add(jsObjRequest);
         queue.start();
     }

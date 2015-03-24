@@ -51,7 +51,6 @@ import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
 public class VisitsManager extends BaseManager {
     private static final String VISIT_QUERY = "visit?patient=";
-    private static final String SENDING_REQUEST = "Sending request to : ";
     private int mExpectedResponses;
     private boolean mErrorOccurred;
 
@@ -77,7 +76,7 @@ public class VisitsManager extends BaseManager {
             public void onErrorResponse(VolleyError error) {
                 super.onErrorResponse(error);
             }
-        });
+        }, DO_GZIP_REQUEST);
         queue.add(jsObjRequest);
     }
 
@@ -135,7 +134,7 @@ public class VisitsManager extends BaseManager {
                 subtractExpectedResponses(true);
                 super.onErrorResponse(error);
             }
-        });
+        }, DO_GZIP_REQUEST);
         queue.add(jsObjRequest);
     }
 
@@ -145,7 +144,7 @@ public class VisitsManager extends BaseManager {
                 + "?v=custom:(uuid,location:ref,visitType:ref,startDatetime,stopDatetime,encounters:full)";
         mLogger.d(SENDING_REQUEST + visitURL);
         JsonObjectRequestWrapper jsObjRequest =
-                new JsonObjectRequestWrapper(Request.Method.GET, visitURL, null, listener, listener);
+                new JsonObjectRequestWrapper(Request.Method.GET, visitURL, null, listener, listener, DO_GZIP_REQUEST);
         queue.add(jsObjRequest);
     }
 
@@ -187,7 +186,7 @@ public class VisitsManager extends BaseManager {
             }
         }
 
-        );
+                , DO_GZIP_REQUEST);
 
         queue.add(jsObjRequest);
     }
@@ -195,7 +194,7 @@ public class VisitsManager extends BaseManager {
     public void createVisit(final String patientUUID, final Long patientID) {
         RequestQueue queue = Volley.newRequestQueue(mContext);
         String visitURL = mOpenMRS.getServerUrl() + API.REST_ENDPOINT + API.VISIT_DETAILS;
-        mLogger.d("Sending request to : " + visitURL);
+        mLogger.d(SENDING_REQUEST + visitURL);
 
         final String currentDate = DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT);
         HashMap<String, String> params = new HashMap<String, String>();
@@ -242,7 +241,7 @@ public class VisitsManager extends BaseManager {
             }
         }
 
-        ) {
+                , DO_GZIP_REQUEST) {
         };
 
         queue.add(jsObjRequest);
@@ -273,7 +272,10 @@ public class VisitsManager extends BaseManager {
             public void onErrorResponse(VolleyError error) {
                 super.onErrorResponse(error);
             }
-        });
+        }
+                , DO_GZIP_REQUEST) {
+        };
+
 
         queue.add(jsObjRequest);
     }

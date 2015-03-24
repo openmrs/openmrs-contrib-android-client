@@ -18,15 +18,13 @@ package org.openmrs.mobile.net.volley.wrappers;
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
 import org.json.JSONObject;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
@@ -50,6 +48,8 @@ public class JsonObjectRequestWrapper extends JsonObjectRequest {
     private final JSONObject mJsonRequest;
     private final Response.Listener<JSONObject> mListener;
     private final Response.ErrorListener mErrorListener;
+    private final OpenMRS mOpenMRS = OpenMRS.getInstance();
+    private final OpenMRSLogger mLogger = mOpenMRS.getOpenMRSLogger();
 
     public JsonObjectRequestWrapper(int method, String url, JSONObject jsonRequest, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener, boolean setToEncode) {
         super(method, url, jsonRequest, listener, errorListener);
@@ -76,6 +76,7 @@ public class JsonObjectRequestWrapper extends JsonObjectRequest {
         int socketTimeout = ApplicationConstants.API.REQUEST_TIMEOUT;
         RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         this.setRetryPolicy(policy);
+        setShouldCache(false);
     }
 
     /**
@@ -86,10 +87,10 @@ public class JsonObjectRequestWrapper extends JsonObjectRequest {
     @Override
     public void deliverError(VolleyError error) {
         if (mSetToEncode) {
-            OpenMRS.getInstance().getOpenMRSLogger().e("Server cannot read GZIP file! Retrying to send raw file.");
-            RequestQueue queue = Volley.newRequestQueue(BaseManager.getCurrentContext());
+            mLogger.e("Server cannot read GZIP file! Retrying to send raw file.");
+            mLogger.i(BaseManager.SENDING_REQUEST + mUrl);
             JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(mMethod, mUrl, mJsonRequest, mListener, mErrorListener, false);
-            queue.add(jsObjRequest);
+            mOpenMRS.addToRequestQueue(jsObjRequest);
             return;
         }
         super.deliverError(error);
@@ -97,7 +98,6 @@ public class JsonObjectRequestWrapper extends JsonObjectRequest {
 
     @Override
     public byte[] getBody() {
-        OpenMRS.getInstance().getOpenMRSLogger().i(mSetToEncode + "");
         if (mSetToEncode) {
             return GZIPByteEncoder.encodeByteArray(super.getBody());
         } else {
@@ -112,7 +112,7 @@ public class JsonObjectRequestWrapper extends JsonObjectRequest {
         StringBuilder builder = new StringBuilder();
         builder.append(ApplicationConstants.JSESSIONID_PARAM);
         builder.append("=");
-        builder.append(OpenMRS.getInstance().getSessionToken());
+        builder.append(mOpenMRS.getSessionToken());
         params.put(ApplicationConstants.COOKIE_PARAM, builder.toString());
         params.put(GZIPByteEncoder.REQUEST_HEADER_PARAM, GZIPByteEncoder.GZIP_HEADER_VALUE);
         if (mSetToEncode) {

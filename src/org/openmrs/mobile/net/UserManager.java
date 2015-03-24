@@ -15,8 +15,6 @@
 package org.openmrs.mobile.net;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import org.openmrs.mobile.activities.listeners.FullInformationListener;
 import org.openmrs.mobile.activities.listeners.UserInformationListener;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
@@ -30,24 +28,22 @@ public class UserManager extends BaseManager {
     private static final String USER_INFORMATION_BASE_URL = getBaseRestURL() + API.USER_QUERY;
 
     public void getFullInformation(FullInformationListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String url = FULL_INFORMATION_BASE_URL + listener.getUserUUID();
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.GET,
                         url, null, listener, listener, DO_GZIP_REQUEST);
-        queue.add(jsObjRequest);
+        mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 
     public void getUserInformation(UserInformationListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String url = USER_INFORMATION_BASE_URL + listener.getUsername();
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.GET,
                         url, null, listener, listener, DO_GZIP_REQUEST);
-        queue.add(jsObjRequest);
+        mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 }

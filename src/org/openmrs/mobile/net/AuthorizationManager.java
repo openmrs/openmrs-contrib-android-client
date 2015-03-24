@@ -17,8 +17,6 @@ package org.openmrs.mobile.net;
 import android.content.Intent;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import org.openmrs.mobile.activities.LoginActivity;
 import org.openmrs.mobile.activities.listeners.LoginListener;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
@@ -31,7 +29,6 @@ public class AuthorizationManager extends BaseManager {
     private static final String LOGIN_END_URL = API.REST_ENDPOINT + API.AUTHORISATION_END_POINT;
 
     public void login(LoginListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         encodeAuthorizationToken(listener.getUsername(), listener.getPassword());
         String url = listener.getServerURL() + LOGIN_END_URL;
         mLogger.i(SENDING_REQUEST + url);
@@ -47,7 +44,7 @@ public class AuthorizationManager extends BaseManager {
                         return params;
                     }
                 };
-        queue.add(jsObjRequest);
+        mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 
     private boolean isUsernameNotEmptyOrNotSameUser(String username) {

@@ -17,15 +17,13 @@ package org.openmrs.mobile.net.volley.wrappers;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.Volley;
-
 import org.apache.http.entity.mime.MultipartEntity;
 import org.apache.http.entity.mime.content.FileBody;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
@@ -38,6 +36,8 @@ import java.util.Map;
 public class MultiPartRequest extends Request<String> {
     private MultipartEntity entity = new MultipartEntity();
     private static final String FILE_PART_NAME = "xml_submission_file";
+    private final OpenMRS mOpenMRS = OpenMRS.getInstance();
+    private final OpenMRSLogger mLogger = mOpenMRS.getOpenMRSLogger();
     private final String mUrl;
     private final Response.ErrorListener mErrorListener;
     private final Response.Listener<String> mListener;
@@ -53,6 +53,7 @@ public class MultiPartRequest extends Request<String> {
         mFilePart = file;
         mPatientUUID = patientUUID;
         mSetToEncode = setToEncode;
+        setShouldCache(false);
         buildMultiPartEntity();
     }
 
@@ -68,10 +69,10 @@ public class MultiPartRequest extends Request<String> {
     @Override
     public void deliverError(VolleyError error) {
         if (mSetToEncode) {
-            OpenMRS.getInstance().getOpenMRSLogger().e("Server cannot read GZIP file! Retrying to send raw file.");
-            RequestQueue queue = Volley.newRequestQueue(BaseManager.getCurrentContext());
+            mLogger.e("Server cannot read GZIP file! Retrying to send raw file.");
+            mLogger.i(BaseManager.SENDING_REQUEST + mUrl);
             MultiPartRequest mpRequest = new MultiPartRequest(mUrl, mErrorListener, mListener, mFilePart, mPatientUUID, false);
-            queue.add(mpRequest);
+            mOpenMRS.addToRequestQueue(mpRequest);
             return;
         }
         super.deliverError(error);
@@ -110,7 +111,7 @@ public class MultiPartRequest extends Request<String> {
         StringBuilder builder = new StringBuilder();
         builder.append(ApplicationConstants.JSESSIONID_PARAM);
         builder.append("=");
-        builder.append(OpenMRS.getInstance().getSessionToken());
+        builder.append(mOpenMRS.getSessionToken());
         params.put(ApplicationConstants.COOKIE_PARAM, builder.toString());
         params.put(ApplicationConstants.PATIENT_UUID_PARAM, mPatientUUID);
         if (mSetToEncode) {

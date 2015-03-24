@@ -16,9 +16,10 @@ package org.openmrs.mobile.application;
 
 import android.content.SharedPreferences;
 import android.os.Build;
-
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import net.sqlcipher.database.SQLiteDatabase;
-
 import org.odk.collect.android.application.Collect;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.security.SecretKeyGenerator;
@@ -30,6 +31,7 @@ import java.util.Map;
 public class OpenMRS extends Collect {
     private static OpenMRS instance;
     private OpenMRSLogger mLogger;
+    private static RequestQueue mRequestQueue;
 
     @Override
     public void onCreate() {
@@ -44,6 +46,17 @@ public class OpenMRS extends Collect {
         mLogger = new OpenMRSLogger();
         generateKey();
         OpenMRSDBOpenHelper.init();
+    }
+
+    public RequestQueue getRequestQueue() {
+        if (mRequestQueue == null) {
+            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+        }
+        return mRequestQueue;
+    }
+
+    public <T> void addToRequestQueue(Request<T> request) {
+        getRequestQueue().add(request);
     }
 
     public static OpenMRS getInstance() {

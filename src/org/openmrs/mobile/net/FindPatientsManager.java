@@ -15,8 +15,6 @@
 package org.openmrs.mobile.net;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import org.openmrs.mobile.activities.listeners.FindPatientListener;
 import org.openmrs.mobile.activities.listeners.FullPatientDataListener;
 import org.openmrs.mobile.activities.listeners.LastViewedPatientListener;
@@ -31,35 +29,31 @@ public class FindPatientsManager extends BaseManager {
     private static final String FIND_PATIENT_BASE_URL = getBaseRestURL() + API.PATIENT_QUERY;
 
     public void findPatient(FindPatientListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String url = FIND_PATIENT_BASE_URL + listener.getLastQuery() + API.FULL_VERSION_NEXT_PARAM;
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.GET,
                         url, null, listener, listener, DO_GZIP_REQUEST);
-        queue.add(jsObjRequest);
+        mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 
     public void getLastViewedPatient(LastViewedPatientListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         mLogger.d(SENDING_REQUEST + LAST_VIEWED_PATIENT_BASE_URL);
 
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.GET,
                         LAST_VIEWED_PATIENT_BASE_URL, null, listener, listener, DO_GZIP_REQUEST);
-        queue.add(jsObjRequest);
+        mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 
     public void getFullPatientData(FullPatientDataListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String url = FULL_PATIENT_DATA_BASE_URL + listener.getPatientUUID() + API.FULL_VERSION;
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.GET,
                         url, null, listener, listener, DO_GZIP_REQUEST);
-        queue.add(jsObjRequest);
-        queue.start();
+        mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 }

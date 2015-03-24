@@ -25,12 +25,9 @@ public class BaseManager {
     public static final String SENDING_REQUEST = "Sending request to : ";
     public static final String RESULTS_KEY = "results";
     public static final boolean DO_GZIP_REQUEST = false;
-
     protected OpenMRS mOpenMRS = OpenMRS.getInstance();
     protected OpenMRSLogger mLogger = mOpenMRS.getOpenMRSLogger();
 
-    public BaseManager() {
-    }
 
     public static String getBaseRestURL() {
         return OpenMRS.getInstance().getServerUrl() + ApplicationConstants.API.REST_ENDPOINT;

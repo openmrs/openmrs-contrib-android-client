@@ -47,7 +47,7 @@ public final class UploadXFormWithMultiPartRequestListener extends GeneralErrorL
         ToastUtil.showLongToast(BaseManager.getCurrentContext(),
                 ToastUtil.ToastType.SUCCESS,
                 BaseManager.getCurrentContext().getString(R.string.forms_sent_successfully));
-        new VisitsManager(BaseManager.getCurrentContext()).findVisitByUUID(mVisitUUID, createFindVisitCallbacksListener(mCallbackListener));
+        new VisitsManager().findVisitByUUID(createFindVisitCallbacksListener(mCallbackListener));
     }
 
     public String getInstancePath() {
@@ -59,6 +59,6 @@ public final class UploadXFormWithMultiPartRequestListener extends GeneralErrorL
     }
 
     private FindVisitByUUIDListener createFindVisitCallbacksListener(VisitDashboardCallbackListener callbackListener) {
-        return new FindVisitByUUIDListener(mPatientID, callbackListener);
+        return new FindVisitByUUIDListener(mPatientID, mVisitUUID, callbackListener);
     }
 }

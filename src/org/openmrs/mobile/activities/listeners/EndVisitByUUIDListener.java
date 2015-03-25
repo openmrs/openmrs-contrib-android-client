@@ -1,4 +1,4 @@
-/*
+/**
  * The contents of this file are subject to the OpenMRS Public License
  * Version 1.0 (the "License"); you may not use this file except in
  * compliance with the License. You may obtain a copy of the License at
@@ -18,50 +18,45 @@ import com.android.volley.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.openmrs.mobile.activities.VisitDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.intefaces.VisitDashboardCallbackListener;
 import org.openmrs.mobile.models.Visit;
-import org.openmrs.mobile.models.mappers.VisitMapper;
 import org.openmrs.mobile.net.GeneralErrorListener;
+import org.openmrs.mobile.net.VisitsManager;
+import org.openmrs.mobile.utilities.DateUtils;
 
-public class FindVisitByUUIDListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
+public class EndVisitByUUIDListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
-    private VisitDashboardCallbackListener mVisitDashboardCallback;
-    private VisitDAO visitDAO = new VisitDAO();
-    private final String mPatientUUID;
-    private final Long mPatientID;
+    private final VisitDAO visitDAO = new VisitDAO();
+    private final VisitDashboardActivity mCaller;
+    private final String mVisitUUID;
+    private final long mPatientID;
+    private final long mVisitID;
 
 
-
-    public FindVisitByUUIDListener(Long patientID, String patientUUID, VisitDashboardCallbackListener visitDashboardCallback) {
+    public EndVisitByUUIDListener(String visitUUID, long patientID, long visitID, VisitDashboardActivity caller) {
+        mVisitUUID = visitUUID;
         mPatientID = patientID;
-        mPatientUUID = patientUUID;
-        mVisitDashboardCallback = visitDashboardCallback;
+        mVisitID = visitID;
+        mCaller = caller;
     }
 
     @Override
-    public void onResponse(JSONObject response) {
+    public void onResponse(final JSONObject response) {
         mLogger.d(response.toString());
         try {
-            Visit visit = VisitMapper.map(response);
-            long visitId = visitDAO.getVisitsIDByUUID(visit.getUuid());
-            if (visitId > 0) {
-                visitDAO.updateVisit(visit, visitId, mPatientID);
-            } else {
-                visitDAO.saveVisit(visit, mPatientID);
-            }
-            if (null != mVisitDashboardCallback) {
-                mVisitDashboardCallback.updateEncounterList();
-            }
-
+            Visit visit = visitDAO.getVisitsByID(mVisitID);
+            visit.setStopDate(DateUtils.convertTime(response.getString(VisitsManager.STOP_DATE_TIME)));
+            visitDAO.updateVisit(visit, mVisitID, mPatientID);
+            mCaller.moveToPatientDashboard();
         } catch (JSONException e) {
             mLogger.d(e.toString());
         }
     }
 
-    public String getPatientUUID() {
-        return mPatientUUID;
+    public String getVisitUUID() {
+        return mVisitUUID;
     }
 }

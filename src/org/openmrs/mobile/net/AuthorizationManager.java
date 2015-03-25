@@ -28,23 +28,25 @@ import java.util.Map;
 import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
 public class AuthorizationManager extends BaseManager {
-    private static String sLoginURL;
+    private static final String LOGIN_END_URL = API.REST_ENDPOINT + API.AUTHORISATION_END_POINT;
 
     public void login(LoginListener listener) {
         RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         encodeAuthorizationToken(listener.getUsername(), listener.getPassword());
-        sLoginURL = listener.getServerURL() + API.REST_ENDPOINT + API.AUTHORISATION_END_POINT;
-        mLogger.i(SENDING_REQUEST + sLoginURL);
-        JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(Request.Method.GET,
-                sLoginURL, null, listener, listener, DO_GZIP_REQUEST) {
+        String url = listener.getServerURL() + LOGIN_END_URL;
+        mLogger.i(SENDING_REQUEST + url);
 
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> params = new HashMap<String, String>();
-                params.put(ApplicationConstants.AUTHORIZATION_PARAM, mOpenMRS.getAuthorizationToken());
-                return params;
-            }
-        };
+        JsonObjectRequestWrapper jsObjRequest =
+                new JsonObjectRequestWrapper(Request.Method.GET,
+                        url, null, listener, listener, DO_GZIP_REQUEST) {
+
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> params = new HashMap<String, String>();
+                        params.put(ApplicationConstants.AUTHORIZATION_PARAM, mOpenMRS.getAuthorizationToken());
+                        return params;
+                    }
+                };
         queue.add(jsObjRequest);
     }
 

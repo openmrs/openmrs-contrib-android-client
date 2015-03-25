@@ -27,7 +27,6 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.databases.OpenMRSSQLiteOpenHelper;
 import org.openmrs.mobile.net.AuthorizationManager;
-import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.net.FormsManager;
 import org.openmrs.mobile.net.GeneralErrorListener;
 import org.openmrs.mobile.net.UserManager;
@@ -74,7 +73,7 @@ public final class LoginListener extends GeneralErrorListener implements Respons
                 mOpenMRS.setServerUrl(mServerURL);
                 mOpenMRS.setSessionToken(sessionToken);
                 mOpenMRS.setUsername(mUsername);
-                new VisitsManager(BaseManager.getCurrentContext()).getVisitType();
+                new VisitsManager().getVisitType(createResponseAndErrorListener());
                 UserManager userManager = new UserManager();
                 userManager.getUserInformation(createResponseAndErrorListener(mUsername, userManager));
                 FormsManager formsManager = new FormsManager();
@@ -95,6 +94,10 @@ public final class LoginListener extends GeneralErrorListener implements Respons
 
     private UserInformationListener createResponseAndErrorListener(String username, UserManager userManager) {
         return new UserInformationListener(username, userManager);
+    }
+
+    private VisitTypeListener createResponseAndErrorListener() {
+        return new VisitTypeListener();
     }
 
     public String getUsername() {

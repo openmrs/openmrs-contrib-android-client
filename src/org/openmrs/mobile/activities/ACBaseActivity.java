@@ -14,7 +14,6 @@
 
 package org.openmrs.mobile.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -55,7 +54,6 @@ public abstract class ACBaseActivity extends ActionBarActivity {
     protected void onDestroy() {
         super.onDestroy();
         mCurrentDialog = null;
-        clearReferences();
     }
 
     @Override
@@ -69,12 +67,10 @@ public abstract class ACBaseActivity extends ActionBarActivity {
                 this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, mOpenMRS.getUsername()));
             }
         }
-        mOpenMRS.setCurrentActivity(this);
     }
 
     @Override
     protected void onPause() {
-        clearReferences();
         super.onPause();
     }
 
@@ -261,13 +257,6 @@ public abstract class ACBaseActivity extends ActionBarActivity {
             ToastUtil.showShortToast(this,
                     ToastUtil.ToastType.ERROR,
                     errorMessageId);
-        }
-    }
-
-    private void clearReferences() {
-        Activity currActivity = mOpenMRS.getCurrentActivity();
-        if (currActivity != null && this.equals(currActivity)) {
-            mOpenMRS.setCurrentActivity(null);
         }
     }
 

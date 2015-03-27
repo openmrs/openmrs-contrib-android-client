@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.listeners;
+package org.openmrs.mobile.listeners.visit;
 
 import com.android.volley.Response;
 
@@ -21,41 +21,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
-import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.net.GeneralErrorListener;
-import org.openmrs.mobile.net.UserManager;
 
-public final class UserInformationListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
-    private static final String UUID_KEY = "uuid";
+public class VisitTypeListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
-    private final UserManager mCallerManager;
-    private final String mUsername;
-
-    public UserInformationListener(String username, UserManager callerManager) {
-        mUsername = username;
-        mCallerManager = callerManager;
-    }
 
     @Override
     public void onResponse(JSONObject response) {
         mLogger.d(response.toString());
+
         try {
-            JSONArray resultJSON = response.getJSONArray(BaseManager.RESULTS_KEY);
-            if (resultJSON.length() > 0) {
-                for (int i = 0; i < resultJSON.length(); i++) {
-                    mCallerManager.getFullInformation(createResponseAndErrorListener(resultJSON.getJSONObject(i).getString(UUID_KEY)));
-                }
-            }
+            JSONArray visitTypesObj = response.getJSONArray("results");
+            String visitTypeUUID = ((JSONObject) visitTypesObj.get(0)).getString("uuid");
+            OpenMRS.getInstance().setVisitTypeUUID(visitTypeUUID);
         } catch (JSONException e) {
             mLogger.d(e.toString());
         }
-    }
-
-    private FullInformationListener createResponseAndErrorListener(String userUUID) {
-        return new FullInformationListener(userUUID);
-    }
-
-    public String getUsername() {
-        return mUsername;
     }
 }

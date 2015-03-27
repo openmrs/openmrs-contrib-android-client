@@ -12,41 +12,40 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.listeners;
+package org.openmrs.mobile.listeners.findPatients;
 
 import com.android.volley.Response;
-
-import org.json.JSONException;
+import com.android.volley.VolleyError;
 import org.json.JSONObject;
+import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
+import org.openmrs.mobile.models.mappers.PatientMapper;
 import org.openmrs.mobile.net.GeneralErrorListener;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import java.util.HashMap;
-import java.util.Map;
 
-public final class FullInformationListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
+public final class FullPatientDataListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
-    private String mUserUUID;
+    private final PatientDashboardActivity mCaller;
+    private final String mPatientUUID;
 
-    public FullInformationListener(String userUUID) {
-        mUserUUID = userUUID;
+    public FullPatientDataListener(String patientUUID, PatientDashboardActivity caller) {
+        mCaller = caller;
+        mPatientUUID = patientUUID;
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        super.onErrorResponse(error);
+        mCaller.stopLoader(true);
     }
 
     @Override
     public void onResponse(JSONObject response) {
         mLogger.d(response.toString());
-        try {
-            Map<String, String> userInfo = new HashMap<String, String>();
-            userInfo.put(ApplicationConstants.UserKeys.USER_PERSON_NAME, response.getJSONObject("person").getString("display"));
-            userInfo.put(ApplicationConstants.UserKeys.USER_UUID, response.getString("uuid"));
-            OpenMRS.getInstance().setCurrentUserInformation(userInfo);
-        } catch (JSONException e) {
-            mLogger.d(e.toString());
-        }
+        mCaller.updatePatientDetailsData(PatientMapper.map(response));
     }
 
-    public String getUserUUID() {
-        return mUserUUID;
+    public String getPatientUUID() {
+        return mPatientUUID;
     }
 }

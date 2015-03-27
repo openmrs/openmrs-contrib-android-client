@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.listeners;
+package org.openmrs.mobile.listeners.authorization;
 
 import android.content.Intent;
 
@@ -25,12 +25,16 @@ import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI;
 import org.openmrs.mobile.activities.LoginActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
+import org.openmrs.mobile.bundle.AuthorizationManagerBundle;
 import org.openmrs.mobile.databases.OpenMRSSQLiteOpenHelper;
 import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.net.FormsManager;
 import org.openmrs.mobile.net.GeneralErrorListener;
 import org.openmrs.mobile.net.UserManager;
 import org.openmrs.mobile.net.VisitsManager;
+import org.openmrs.mobile.net.helpers.FormsHelper;
+import org.openmrs.mobile.net.helpers.UserHelper;
+import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 public final class LoginListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
@@ -44,10 +48,10 @@ public final class LoginListener extends GeneralErrorListener implements Respons
     private final String mPassword;
     private final String mServerURL;
 
-    public LoginListener(String username, String password, String serverURL, LoginActivity callerActivity) {
-        mUsername = username;
-        mPassword = password;
-        mServerURL = serverURL;
+    public LoginListener(AuthorizationManagerBundle bundle, LoginActivity callerActivity) {
+        mUsername = bundle.getUsername();
+        mPassword = bundle.getPassword();
+        mServerURL = bundle.getURL();
         mCallerActivity = callerActivity;
         mCallerManager = mCallerActivity.getAuthorizationManager();
     }
@@ -73,11 +77,14 @@ public final class LoginListener extends GeneralErrorListener implements Respons
                 mOpenMRS.setServerUrl(mServerURL);
                 mOpenMRS.setSessionToken(sessionToken);
                 mOpenMRS.setUsername(mUsername);
-                new VisitsManager().getVisitType(createResponseAndErrorListener());
+                new VisitsManager().getVisitType(
+                        VisitsHelper.createVisitTypeListener());
                 UserManager userManager = new UserManager();
-                userManager.getUserInformation(createResponseAndErrorListener(mUsername, userManager));
+                userManager.getUserInformation(
+                        UserHelper.createUserInformationListener(mUsername, userManager));
                 FormsManager formsManager = new FormsManager();
-                formsManager.getAvailableFormsList(createResponseAndErrorListener(formsManager));
+                formsManager.getAvailableFormsList(
+                        FormsHelper.createAvailableFormsListListener(formsManager));
                 mCallerActivity.saveLocationsToDatabase();
                 mCallerActivity.finish();
             } else {
@@ -88,17 +95,8 @@ public final class LoginListener extends GeneralErrorListener implements Respons
         }
     }
 
-    private AvailableFormsListListener createResponseAndErrorListener(FormsManager formsManager) {
-        return new AvailableFormsListListener(formsManager);
-    }
 
-    private UserInformationListener createResponseAndErrorListener(String username, UserManager userManager) {
-        return new UserInformationListener(username, userManager);
-    }
 
-    private VisitTypeListener createResponseAndErrorListener() {
-        return new VisitTypeListener();
-    }
 
     public String getUsername() {
         return mUsername;

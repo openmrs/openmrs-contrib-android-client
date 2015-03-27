@@ -16,7 +16,7 @@ package org.openmrs.mobile.net;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import org.openmrs.mobile.activities.listeners.AvailableLocationListener;
+import org.openmrs.mobile.listeners.location.AvailableLocationListener;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 

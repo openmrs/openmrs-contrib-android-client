@@ -18,7 +18,7 @@ import android.content.Intent;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import org.openmrs.mobile.activities.LoginActivity;
-import org.openmrs.mobile.activities.listeners.LoginListener;
+import org.openmrs.mobile.listeners.authorization.LoginListener;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import java.util.HashMap;

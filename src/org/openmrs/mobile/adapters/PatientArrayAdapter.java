@@ -24,16 +24,15 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.FindPatientsActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.activities.fragments.FindPatientInDatabaseFragment;
-import org.openmrs.mobile.activities.listeners.FindVisitsByPatientUUIDListener;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.VisitsManager;
+import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -128,7 +127,8 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
                     if (((CheckBox) v).isChecked()) {
                         long patientId = new PatientDAO().savePatient(patient);
                         ((ACBaseActivity) mContext).showProgressDialog(R.string.save_patient_data_dialog);
-                        new VisitsManager().findVisitsByPatientUUID(createVisitsByPatientUUIDListener(patient.getUuid(), patientId));
+                        new VisitsManager().findVisitsByPatientUUID(
+                                VisitsHelper.createVisitsByPatientUUIDListener(patient.getUuid(), patientId, (ACBaseActivity) mContext));
                         disableCheckBox(holder);
 
                         if (mContext instanceof FindPatientsActivity) {
@@ -151,9 +151,5 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
         holder.mAvailableOfflineCheckbox.setClickable(false);
         holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_available_offline_label));
         holder.mAvailableOfflineCheckbox.setVisibility(View.GONE);
-    }
-
-    private FindVisitsByPatientUUIDListener createVisitsByPatientUUIDListener(String patientUUID, long patientID) {
-        return new FindVisitsByPatientUUIDListener(patientUUID, patientID, (ACBaseActivity) mContext);
     }
 }

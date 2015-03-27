@@ -20,8 +20,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.PatientsVitalsListFragment;
-import org.openmrs.mobile.activities.listeners.StartVisitListener;
-import org.openmrs.mobile.activities.listeners.UploadXFormWithMultiPartRequestListener;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.FormManagerBundle;
 import org.openmrs.mobile.bundle.PatientListBundle;
@@ -31,6 +29,8 @@ import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FormsManager;
 import org.openmrs.mobile.net.VisitsManager;
+import org.openmrs.mobile.net.helpers.FormsHelper;
+import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.List;
@@ -85,7 +85,8 @@ public class CaptureVitalsActivity extends ACBaseActivity {
 
     public void startVisit() {
         showProgressDialog(R.string.action_start_visit);
-        new VisitsManager().startVisit(createCreateVisitListener(mSelectedPatientUUID, mSelectedPatientID));
+        new VisitsManager().startVisit(
+                VisitsHelper.createStartVisitListener(mSelectedPatientUUID, mSelectedPatientID, this));
     }
 
     @Override
@@ -101,13 +102,15 @@ public class CaptureVitalsActivity extends ACBaseActivity {
             case RESULT_OK:
                 String path = data.getData().toString();
                 String instanceID = path.substring(path.lastIndexOf('/') + 1);
-                FormManagerBundle bundle = new FormManagerBundle();
-                bundle.putStringField(FormManagerBundle.INSTANCE_PATH_KEY,
-                        new FormsDAO(getContentResolver()).getSurveysSubmissionDataFromFormInstanceId(instanceID).getFormInstanceFilePath());
-                bundle.putStringField(FormManagerBundle.PATIENT_UUID_KEY, mSelectedPatientUUID);
-                bundle.putLongField(FormManagerBundle.PATIENT_ID_KEY, mSelectedPatientID);
-                bundle.putStringField(FormManagerBundle.VISIT_UUID_KEY, new VisitDAO().getPatientCurrentVisit(mSelectedPatientID).getUuid());
-                new FormsManager().uploadXFormWithMultiPartRequest(createResponseAndErrorListener(bundle));
+                FormManagerBundle bundle = FormsHelper.createBundle(
+                        new FormsDAO(getContentResolver()).
+                                getSurveysSubmissionDataFromFormInstanceId(instanceID).
+                                getFormInstanceFilePath(),
+                        mSelectedPatientUUID,
+                        mSelectedPatientID,
+                        new VisitDAO().getPatientCurrentVisit(mSelectedPatientID).getUuid());
+                new FormsManager().uploadXFormWithMultiPartRequest(
+                        FormsHelper.createUploadXFormWithMultiPartRequestListener(bundle));
                 finish();
                 break;
             case RESULT_CANCELED:
@@ -115,13 +118,5 @@ public class CaptureVitalsActivity extends ACBaseActivity {
             default:
                 break;
         }
-    }
-
-    private UploadXFormWithMultiPartRequestListener createResponseAndErrorListener(FormManagerBundle bundle) {
-        return new UploadXFormWithMultiPartRequestListener(bundle);
-    }
-
-    private StartVisitListener createCreateVisitListener(String patientUUID, long patientID) {
-        return new StartVisitListener(patientUUID, patientID, this);
     }
 }

@@ -32,20 +32,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
-import org.openmrs.mobile.activities.listeners.AvailableLocationListener;
-import org.openmrs.mobile.activities.listeners.LoginListener;
+import org.openmrs.mobile.bundle.AuthorizationManagerBundle;
 import org.openmrs.mobile.adapters.LocationArrayAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.net.LocationManager;
+import org.openmrs.mobile.net.helpers.AuthorizationHelper;
+import org.openmrs.mobile.net.helpers.LocationHelper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.URLValidator;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -188,7 +188,13 @@ public class LoginActivity extends ACBaseActivity {
     public void login() {
         mLoginFormView.setVisibility(View.GONE);
         mSpinner.setVisibility(View.VISIBLE);
-        mAuthorizationManager.login(createResponseAndErrorListener(mUsername.getText().toString(), mPassword.getText().toString(), mUrlTextView.getText().toString()));
+        AuthorizationManagerBundle bundle =
+                AuthorizationHelper.createBundle(
+                        mUsername.getText().toString(),
+                        mPassword.getText().toString(),
+                        mUrlTextView.getText().toString());
+        mAuthorizationManager.login(
+                AuthorizationHelper.createLoginListener(bundle, this));
     }
 
     private void bindDrawableResources() {
@@ -272,8 +278,8 @@ public class LoginActivity extends ACBaseActivity {
         if (result.isURLValid()) {
             mSpinner.setVisibility(View.VISIBLE);
             mLoginFormView.setVisibility(View.GONE);
-            LocationManager lm = new LocationManager();
-            lm.getAvailableLocation(createResponseAndErrorListener(result.getUrl()));
+            new LocationManager().getAvailableLocation(
+                    LocationHelper.createAvailableLocationListener(result.getUrl(), this));
         } else {
             showInvalidURLDialog();
         }
@@ -285,18 +291,10 @@ public class LoginActivity extends ACBaseActivity {
 
     public void hideURLDialog() {
         if (mLocationsList == null) {
-            LocationManager lm = new LocationManager();
-            lm.getAvailableLocation(createResponseAndErrorListener(mLastCorrectURL));
+            new LocationManager().getAvailableLocation(
+                    LocationHelper.createAvailableLocationListener(mLastCorrectURL, this));
         } else {
             initLoginForm(mLocationsList, mLastCorrectURL);
         }
-    }
-
-    private AvailableLocationListener createResponseAndErrorListener(String serverURL) {
-        return new AvailableLocationListener(serverURL, this);
-    }
-
-    private LoginListener createResponseAndErrorListener(String username, String password, String serverURL) {
-        return new LoginListener(username, password, serverURL, this);
     }
 }

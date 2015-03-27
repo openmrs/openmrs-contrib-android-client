@@ -15,9 +15,6 @@
 package org.openmrs.mobile.net;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-
 import org.json.JSONObject;
 import org.openmrs.mobile.activities.listeners.FindVisitsByPatientUUIDListener;
 import org.openmrs.mobile.activities.listeners.StartVisitListener;
@@ -52,44 +49,37 @@ public class VisitsManager extends BaseManager {
     public static final String PATIENT = "patient";
 
 
-    public VisitsManager() {
-    }
-
     public void getLastVitals(LastVitalsListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String url = LAST_VITALS_BASE_URL + listener.getPatientUUID() + LAST_VITALS_END_URL;
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.GET,
                         url, null, listener, listener, DO_GZIP_REQUEST);
-        queue.add(jsObjRequest);
+        mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 
     public void findVisitsByPatientUUID(FindVisitsByPatientUUIDListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String url = VISITS_BY_PATIENT_UUID_BASE_URL + listener.getPatientUUID() + VISITS_BY_PATIENT_UUID_END_URL;
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.GET,
                         url, null, listener, listener, DO_GZIP_REQUEST);
-        queue.add(jsObjRequest);
+        mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 
     public void findVisitByUUID(FindVisitByUUIDListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String url = VISITS_BY_UUID_BASE_URL + listener.getPatientUUID() + VISIT_BY_UUID_END_URL;
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.GET,
                         url, null, listener, listener, DO_GZIP_REQUEST);
-        queue.add(jsObjRequest);
+        mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 
     public void endVisitByUUID(EndVisitByUUIDListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String url = VISITS_BY_UUID_BASE_URL + listener.getVisitUUID();
         mLogger.d(SENDING_REQUEST + url);
 
@@ -99,11 +89,10 @@ public class VisitsManager extends BaseManager {
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.POST,
                         url, new JSONObject(params), listener, listener, DO_GZIP_REQUEST);
-        queue.add(jsObjRequest);
+        mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 
     public void startVisit(StartVisitListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         mLogger.d(SENDING_REQUEST + VISIT_BASE_URL);
 
         HashMap<String, String> params = new HashMap<String, String>();
@@ -115,17 +104,16 @@ public class VisitsManager extends BaseManager {
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.POST,
                         VISIT_BASE_URL, new JSONObject(params), listener, listener, DO_GZIP_REQUEST);
-        queue.add(jsObjRequest);
+        mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 
 
     public void getVisitType(VisitTypeListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         mLogger.d(SENDING_REQUEST + VISIT_TYPE_BASE_URL);
 
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.GET,
                         VISIT_TYPE_BASE_URL, null, listener, listener, DO_GZIP_REQUEST);
-        queue.add(jsObjRequest);
+        mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 }

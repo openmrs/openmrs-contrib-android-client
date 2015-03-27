@@ -16,8 +16,6 @@ package org.openmrs.mobile.net;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 
 import org.openmrs.mobile.activities.listeners.AvailableFormsListListener;
 import org.openmrs.mobile.activities.listeners.UploadXFormListener;
@@ -37,16 +35,14 @@ public class FormsManager extends BaseManager {
     private static final String UPLOAD_XFORM_BASE_URL = getBaseXFormURL() + API.XFORM_UPLOAD;
 
     public void getAvailableFormsList(AvailableFormsListListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         mLogger.d(SENDING_REQUEST + AVAILABLE_FORMS_LIST_BASE_URL);
 
         mRequestDecorator = new StringRequestDecorator(Request.Method.GET,
                 AVAILABLE_FORMS_LIST_BASE_URL, listener, listener, DO_GZIP_REQUEST);
-        queue.add(mRequestDecorator);
+        mOpenMRS.addToRequestQueue(mRequestDecorator);
     }
 
     public void uploadXForm(final UploadXFormListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         mLogger.d(SENDING_REQUEST + UPLOAD_XFORM_BASE_URL);
 
         mRequestDecorator = new StringRequestDecorator(Request.Method.POST,
@@ -56,28 +52,23 @@ public class FormsManager extends BaseManager {
                 return FileUtils.fileToByteArray(listener.getInstancePath());
             }
         };
-        queue.add(mRequestDecorator);
+        mOpenMRS.addToRequestQueue(mRequestDecorator);
     }
 
     public void uploadXFormWithMultiPartRequest(UploadXFormWithMultiPartRequestListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         mLogger.d(SENDING_REQUEST + UPLOAD_XFORM_BASE_URL);
 
         MultiPartRequest multipartRequest = new MultiPartRequest(UPLOAD_XFORM_BASE_URL,
                 listener, listener, new File(listener.getInstancePath()), listener.getPatientUUID(), DO_GZIP_REQUEST);
-        queue.add(multipartRequest);
+        mOpenMRS.addToRequestQueue(multipartRequest);
     }
 
     public void downloadForm(DownloadFormListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String url = getBaseXFormURL() + listener.getDownloadURL();
         mLogger.d(SENDING_REQUEST + url);
 
         mRequestDecorator = new StringRequestDecorator(Request.Method.GET,
                 url, listener, listener, DO_GZIP_REQUEST);
-        queue.add(mRequestDecorator);
+        mOpenMRS.addToRequestQueue(mRequestDecorator);
     }
-
-
-
 }

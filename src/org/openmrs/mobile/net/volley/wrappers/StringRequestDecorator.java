@@ -16,17 +16,14 @@ package org.openmrs.mobile.net.volley.wrappers;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +34,8 @@ public class StringRequestDecorator extends StringRequest {
     private final String mUrl;
     private final Response.Listener<String> mListener;
     private final Response.ErrorListener mErrorListener;
+    private final OpenMRS mOpenMRS = OpenMRS.getInstance();
+    private final OpenMRSLogger mLogger = mOpenMRS.getOpenMRSLogger();
 
     public StringRequestDecorator(int method, String url, Response.Listener<String> listener, Response.ErrorListener errorListener, boolean setToEncode) {
         super(method, url, listener, errorListener);
@@ -45,6 +44,7 @@ public class StringRequestDecorator extends StringRequest {
         mListener = listener;
         mErrorListener = errorListener;
         mSetToEncode = setToEncode;
+        setShouldCache(false);
     }
 
     public StringRequestDecorator(String url, Response.Listener<String> listener, Response.ErrorListener errorListener, boolean setToEncode) {
@@ -53,6 +53,7 @@ public class StringRequestDecorator extends StringRequest {
         mListener = listener;
         mErrorListener = errorListener;
         mSetToEncode = setToEncode;
+        setShouldCache(false);
     }
 
     /**
@@ -63,10 +64,10 @@ public class StringRequestDecorator extends StringRequest {
     @Override
     public void deliverError(VolleyError error) {
         if (mSetToEncode) {
-            OpenMRS.getInstance().getOpenMRSLogger().e("Server cannot read GZIP file! Retrying to send raw file.");
-            RequestQueue queue = Volley.newRequestQueue(BaseManager.getCurrentContext());
+            mLogger.e("Server cannot read GZIP file! Retrying to send raw file.");
+            mLogger.i(BaseManager.SENDING_REQUEST + mUrl);
             StringRequestDecorator strRequest = new StringRequestDecorator(mMethod, mUrl, mListener, mErrorListener, false);
-            queue.add(strRequest);
+            mOpenMRS.addToRequestQueue(strRequest);
             return;
         }
         super.deliverError(error);
@@ -88,7 +89,7 @@ public class StringRequestDecorator extends StringRequest {
         try {
             responseAsString = new String(checkedResponse.data, HttpHeaderParser.parseCharset(checkedResponse.headers));
         } catch (UnsupportedEncodingException e) {
-            OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
+            mLogger.d(e.toString());
         }
         if (null != responseAsString && !responseAsString .isEmpty()) {
             if (responseAsString.contains("<!DOCTYPE html>")) {
@@ -105,7 +106,7 @@ public class StringRequestDecorator extends StringRequest {
         StringBuilder builder = new StringBuilder();
         builder.append(ApplicationConstants.JSESSIONID_PARAM);
         builder.append("=");
-        builder.append(OpenMRS.getInstance().getSessionToken());
+        builder.append(mOpenMRS.getSessionToken());
         params.put(ApplicationConstants.COOKIE_PARAM, builder.toString());
         params.put(GZIPByteEncoder.REQUEST_HEADER_PARAM, GZIPByteEncoder.GZIP_HEADER_VALUE);
 

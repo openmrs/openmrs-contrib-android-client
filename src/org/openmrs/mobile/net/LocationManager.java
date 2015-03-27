@@ -16,8 +16,6 @@ package org.openmrs.mobile.net;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import org.openmrs.mobile.activities.listeners.AvailableLocationListener;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -31,7 +29,6 @@ public class LocationManager extends BaseManager {
     private static final String AVAILABLE_LOCATION_END_URL = ApplicationConstants.API.REST_ENDPOINT + LOCATION_QUERY;
 
     public void getAvailableLocation(AvailableLocationListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(getCurrentContext());
         String url = listener.getServerUrl() + AVAILABLE_LOCATION_END_URL;
         mLogger.d(SENDING_REQUEST + url);
 
@@ -46,6 +43,6 @@ public class LocationManager extends BaseManager {
                         return new HashMap<String, String>();
                     }
                 };
-        queue.add(jsObjRequest);
+        mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 }

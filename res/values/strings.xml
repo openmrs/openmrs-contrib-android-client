@@ -62,6 +62,8 @@
     <!-- End Visit dialog -->
     <string name="end_visit_dialog_title">End Visit</string>
     <string name="end_visit_dialog_message">Are you sure you want to end this visit?</string>
+    <!-- Check visit dialog -->
+    <string name="check_visit_dialog_title">Checking Visits</string>
     <!-- Start visit dialog -->
     <string name="start_visit_dialog_title">Start Visit</string>
     <string name="start_visit_dialog_message">Are you sure you want to start visit for %1$s now?</string>

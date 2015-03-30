@@ -20,6 +20,7 @@ import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.activities.VisitDashboardActivity;
 import org.openmrs.mobile.bundle.VisitsManagerBundle;
 import org.openmrs.mobile.intefaces.VisitDashboardCallbackListener;
+import org.openmrs.mobile.listeners.visit.CheckVisitBeforeStartListener;
 import org.openmrs.mobile.listeners.visit.EndVisitByUUIDListener;
 import org.openmrs.mobile.listeners.visit.FindVisitByUUIDListener;
 import org.openmrs.mobile.listeners.visit.FindVisitsByPatientUUIDListener;
@@ -45,6 +46,14 @@ public final class VisitsHelper {
 
     public static FindVisitsByPatientUUIDListener createVisitsByPatientUUIDListener(String patientUUID, Long patientID, ACBaseActivity caller) {
         return new FindVisitsByPatientUUIDListener(patientUUID, patientID, caller);
+    }
+
+    public static CheckVisitBeforeStartListener createCheckVisitsBeforeStartListener(String patientUUID, long patientID, CaptureVitalsActivity callerAdapter) {
+        return new CheckVisitBeforeStartListener(patientUUID, patientID, callerAdapter);
+    }
+
+    public static CheckVisitBeforeStartListener createCheckVisitsBeforeStartListener(String patientUUID, long patientID, PatientDashboardActivity callerAdapter) {
+        return new CheckVisitBeforeStartListener(patientUUID, patientID, callerAdapter);
     }
 
     public static FindVisitByUUIDListener createFindVisitCallbacksListener(Long patientID, String visitUUID, VisitDashboardCallbackListener callbackListener) {

@@ -31,14 +31,14 @@ import org.openmrs.mobile.models.mappers.VisitMapper;
 import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.net.GeneralErrorListener;
 
-public final class FindVisitsByPatientUUIDListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
-    private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
+public class FindVisitsByPatientUUIDListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
+    protected final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
+    protected final String mPatientUUID;
+    protected final long mPatientID;
+    protected PatientDashboardActivity mCallerPDA;
+    protected ACBaseActivity mCallerAdapter;
     private final VisitDAO visitDAO = new VisitDAO();
-    private PatientDashboardActivity mCallerPDA;
-    private ACBaseActivity mCallerAdapter;
     private boolean mErrorOccurred;
-    private final String mPatientUUID;
-    private final long mPatientID;
 
     public FindVisitsByPatientUUIDListener(String patientUUID, long patientID, ACBaseActivity callerAdapter) {
         mPatientUUID = patientUUID;

@@ -31,11 +31,11 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.listeners.FindPatientListener;
 import org.openmrs.mobile.adapters.PatientArrayAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FindPatientsManager;
+import org.openmrs.mobile.net.helpers.FindPatientsHelper;
 import org.openmrs.mobile.utilities.FontsUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -118,8 +118,8 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
             mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row, mSearchedPatientsList);
             mPatientsListView.setAdapter(mAdapter);
             mLastQuery = intent.getStringExtra(SearchManager.QUERY);
-            FindPatientsManager fpm = new FindPatientsManager();
-            fpm.findPatient(createResponseAndErrorListener(mLastQuery, mLastSearchId));
+            new FindPatientsManager().findPatient(
+                    FindPatientsHelper.createFindPatientListener(mLastQuery, mLastSearchId, this));
 
             if (mFindPatientMenuItem != null) {
                 MenuItemCompat.collapseActionView(mFindPatientMenuItem);
@@ -171,9 +171,5 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
             mSpinner.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mEmptyList);
         }
-    }
-
-    private FindPatientListener createResponseAndErrorListener(String lastQuery, int searchId) {
-        return new FindPatientListener(lastQuery, searchId, this);
     }
 }

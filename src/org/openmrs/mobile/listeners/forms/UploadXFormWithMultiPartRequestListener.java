@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.mobile.activities.listeners;
+package org.openmrs.mobile.listeners.forms;
 
 import com.android.volley.Response;
 import org.openmrs.mobile.R;
@@ -20,6 +20,7 @@ import org.openmrs.mobile.intefaces.VisitDashboardCallbackListener;
 import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.net.GeneralErrorListener;
 import org.openmrs.mobile.net.VisitsManager;
+import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 public final class UploadXFormWithMultiPartRequestListener extends GeneralErrorListener implements Response.Listener<String> {
@@ -29,7 +30,7 @@ public final class UploadXFormWithMultiPartRequestListener extends GeneralErrorL
     private final Long mPatientID;
     private VisitDashboardCallbackListener mCallbackListener;
 
-    public UploadXFormWithMultiPartRequestListener(FormManagerBundle bundle) {
+    private UploadXFormWithMultiPartRequestListener(FormManagerBundle bundle) {
         mInstancePath = bundle.getInstancePath();
         mPatientUUID = bundle.getPatientUuid();
         mVisitUUID = bundle.getVisitUuid();
@@ -47,7 +48,8 @@ public final class UploadXFormWithMultiPartRequestListener extends GeneralErrorL
         ToastUtil.showLongToast(BaseManager.getCurrentContext(),
                 ToastUtil.ToastType.SUCCESS,
                 BaseManager.getCurrentContext().getString(R.string.forms_sent_successfully));
-        new VisitsManager().findVisitByUUID(createFindVisitCallbacksListener(mCallbackListener));
+        new VisitsManager().findVisitByUUID(
+                VisitsHelper.createFindVisitCallbacksListener(mPatientID, mVisitUUID, mCallbackListener));
     }
 
     public String getInstancePath() {
@@ -56,9 +58,5 @@ public final class UploadXFormWithMultiPartRequestListener extends GeneralErrorL
 
     public String getPatientUUID() {
         return mPatientUUID;
-    }
-
-    private FindVisitByUUIDListener createFindVisitCallbacksListener(VisitDashboardCallbackListener callbackListener) {
-        return new FindVisitByUUIDListener(mPatientID, mVisitUUID, callbackListener);
     }
 }

@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.listeners;
+package org.openmrs.mobile.listeners.forms;
 
 import com.android.volley.Response;
 import org.kxml2.io.KXmlParser;
@@ -23,6 +23,7 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.net.FormsManager;
 import org.openmrs.mobile.net.GeneralErrorListener;
+import org.openmrs.mobile.net.helpers.FormsHelper;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import java.io.IOException;
@@ -35,14 +36,14 @@ public final class AvailableFormsListListener extends GeneralErrorListener imple
     private static final String FORM_KEY = "form";
     private static final String URL_KEY = "url";
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
-    private final FormsManager mManagerCaller;
+    private final FormsManager mFormsManagerCaller;
 
     public AvailableFormsListListener(FormsManager managerCaller) {
         /*
         It needs manager because it USES request called from it -
-        see mManagerCaller.downloadForm
+        see mFormsManagerCaller.downloadForm
         */
-        mManagerCaller = managerCaller;
+        mFormsManagerCaller = managerCaller;
     }
 
     @Override
@@ -53,7 +54,8 @@ public final class AvailableFormsListListener extends GeneralErrorListener imple
         if (!formList.isEmpty()) {
             for (FormDetails fd: formList) {
                 if (VITALS_FORM_NAME.equals(fd.formName)) {
-                    mManagerCaller.downloadForm(createResponseAndErrorListener(fd.downloadUrl, fd.formName));
+                    mFormsManagerCaller.downloadForm(
+                            FormsHelper.createDownloadFormListener(fd.downloadUrl, fd.formName));
                 }
             }
         }
@@ -118,10 +120,4 @@ public final class AvailableFormsListListener extends GeneralErrorListener imple
         }
         return formList;
     }
-
-    private DownloadFormListener createResponseAndErrorListener(String downloadURL, String formName) {
-        return new DownloadFormListener(downloadURL, formName);
-    }
-
-
 }

@@ -36,7 +36,6 @@ import android.view.ViewGroup;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.FindPatientInDatabaseFragment;
 import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
-import org.openmrs.mobile.activities.listeners.LastViewedPatientListener;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.TabUtil;
@@ -223,11 +222,6 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
         public String getTabLabel() {
             return mTabLabel;
         }
-    }
-
-
-    public LastViewedPatientListener createResponseAndErrorListener() {
-        return new LastViewedPatientListener(this);
     }
 
     public enum FragmentMethod {

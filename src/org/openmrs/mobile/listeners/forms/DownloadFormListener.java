@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.listeners;
+package org.openmrs.mobile.listeners.forms;
 
 import com.android.volley.Response;
 

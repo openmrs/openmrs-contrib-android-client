@@ -15,9 +15,9 @@
 package org.openmrs.mobile.net;
 
 import com.android.volley.Request;
-import org.openmrs.mobile.activities.listeners.FindPatientListener;
-import org.openmrs.mobile.activities.listeners.FullPatientDataListener;
-import org.openmrs.mobile.activities.listeners.LastViewedPatientListener;
+import org.openmrs.mobile.listeners.findPatients.FindPatientListener;
+import org.openmrs.mobile.listeners.findPatients.FullPatientDataListener;
+import org.openmrs.mobile.listeners.findPatients.LastViewedPatientListener;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
 import java.io.File;
 import static org.openmrs.mobile.utilities.ApplicationConstants.API;

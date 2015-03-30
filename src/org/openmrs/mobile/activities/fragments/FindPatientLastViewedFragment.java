@@ -13,10 +13,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.FindPatientsActivity;
-import org.openmrs.mobile.activities.listeners.LastViewedPatientListener;
+import org.openmrs.mobile.listeners.findPatients.LastViewedPatientListener;
 import org.openmrs.mobile.adapters.PatientArrayAdapter;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FindPatientsManager;
+import org.openmrs.mobile.net.helpers.FindPatientsHelper;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import java.util.List;
@@ -62,7 +63,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mFpmResponseListener = ((FindPatientsActivity) activity).createResponseAndErrorListener();
+        mFpmResponseListener = FindPatientsHelper.createLastViewedPatientListener((FindPatientsActivity) activity);
     }
 
     @Override

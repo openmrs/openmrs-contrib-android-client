@@ -12,40 +12,41 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.listeners;
+package org.openmrs.mobile.listeners.user;
 
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
+
+import org.json.JSONException;
 import org.json.JSONObject;
-import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
-import org.openmrs.mobile.models.mappers.PatientMapper;
 import org.openmrs.mobile.net.GeneralErrorListener;
+import org.openmrs.mobile.utilities.ApplicationConstants;
+import java.util.HashMap;
+import java.util.Map;
 
-public final class FullPatientDataListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
+public final class FullInformationListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
-    private final PatientDashboardActivity mCaller;
-    private final String mPatientUUID;
+    private String mUserUUID;
 
-    public FullPatientDataListener(String patientUUID, PatientDashboardActivity caller) {
-        mCaller = caller;
-        mPatientUUID = patientUUID;
-    }
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-        super.onErrorResponse(error);
-        mCaller.stopLoader(true);
+    public FullInformationListener(String userUUID) {
+        mUserUUID = userUUID;
     }
 
     @Override
     public void onResponse(JSONObject response) {
         mLogger.d(response.toString());
-        mCaller.updatePatientDetailsData(PatientMapper.map(response));
+        try {
+            Map<String, String> userInfo = new HashMap<String, String>();
+            userInfo.put(ApplicationConstants.UserKeys.USER_PERSON_NAME, response.getJSONObject("person").getString("display"));
+            userInfo.put(ApplicationConstants.UserKeys.USER_UUID, response.getString("uuid"));
+            OpenMRS.getInstance().setCurrentUserInformation(userInfo);
+        } catch (JSONException e) {
+            mLogger.d(e.toString());
+        }
     }
 
-    public String getPatientUUID() {
-        return mPatientUUID;
+    public String getUserUUID() {
+        return mUserUUID;
     }
 }

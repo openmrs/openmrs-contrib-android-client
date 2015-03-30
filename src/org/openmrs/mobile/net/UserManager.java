@@ -15,8 +15,8 @@
 package org.openmrs.mobile.net;
 
 import com.android.volley.Request;
-import org.openmrs.mobile.activities.listeners.FullInformationListener;
-import org.openmrs.mobile.activities.listeners.UserInformationListener;
+import org.openmrs.mobile.listeners.user.FullInformationListener;
+import org.openmrs.mobile.listeners.user.UserInformationListener;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
 
 import java.io.File;

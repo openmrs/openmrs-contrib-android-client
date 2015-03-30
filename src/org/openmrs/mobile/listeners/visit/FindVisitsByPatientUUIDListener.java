@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.listeners;
+package org.openmrs.mobile.listeners.visit;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -40,19 +40,14 @@ public final class FindVisitsByPatientUUIDListener extends GeneralErrorListener 
     private final String mPatientUUID;
     private final long mPatientID;
 
-    public FindVisitsByPatientUUIDListener(String patientUUID, long patientID, PatientDashboardActivity caller) {
-        this(patientUUID, patientID);
-        mCallerPDA = caller;
-    }
-
     public FindVisitsByPatientUUIDListener(String patientUUID, long patientID, ACBaseActivity callerAdapter) {
-        this(patientUUID, patientID);
-        mCallerAdapter = callerAdapter;
-    }
-
-    private FindVisitsByPatientUUIDListener(String patientUUID, long patientID) {
         mPatientUUID = patientUUID;
         mPatientID = patientID;
+        if (callerAdapter instanceof PatientDashboardActivity) {
+            mCallerPDA = (PatientDashboardActivity) callerAdapter;
+        } else {
+            mCallerAdapter = callerAdapter;
+        }
     }
 
     @Override

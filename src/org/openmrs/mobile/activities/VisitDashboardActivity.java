@@ -22,11 +22,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
-import org.openmrs.mobile.activities.listeners.EndVisitByUUIDListener;
-import org.openmrs.mobile.activities.listeners.UploadXFormWithMultiPartRequestListener;
 import org.openmrs.mobile.adapters.VisitExpandableListAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
@@ -41,6 +38,8 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.net.FormsManager;
 import org.openmrs.mobile.net.VisitsManager;
+import org.openmrs.mobile.net.helpers.FormsHelper;
+import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -127,14 +126,15 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
             case RESULT_OK:
                 String path = data.getData().toString();
                 String instanceID = path.substring(path.lastIndexOf('/') + 1);
-                FormManagerBundle bundle = new FormManagerBundle();
-                bundle.putStringField(FormManagerBundle.INSTANCE_PATH_KEY, new FormsDAO(getContentResolver())
-                        .getSurveysSubmissionDataFromFormInstanceId(instanceID)
-                        .getFormInstanceFilePath());
-                bundle.putStringField(FormManagerBundle.PATIENT_UUID_KEY, mPatient.getUuid());
-                bundle.putLongField(FormManagerBundle.PATIENT_ID_KEY, mPatient.getId());
-                bundle.putStringField(FormManagerBundle.VISIT_UUID_KEY, mVisit.getUuid());
-                mFormsManager.uploadXFormWithMultiPartRequest(createResponseAndErrorListener(bundle));
+                FormManagerBundle bundle = FormsHelper.createBundle(
+                        new FormsDAO(getContentResolver())
+                                .getSurveysSubmissionDataFromFormInstanceId(instanceID)
+                                .getFormInstanceFilePath(),
+                        mPatient.getUuid(),
+                        mPatient.getId(),
+                        mVisit.getUuid());
+                mFormsManager.uploadXFormWithMultiPartRequest(
+                        FormsHelper.createUploadXFormWithMultiPartRequestListener(bundle, this));
                 break;
             case RESULT_CANCELED:
                 finish();
@@ -153,7 +153,8 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
     }
 
     public void endVisit() {
-        mVisitsManager.endVisitByUUID(createResponseAndErrorListener(mVisit.getUuid(), mPatient.getId(), mVisit.getId()));
+        mVisitsManager.endVisitByUUID(
+                VisitsHelper.createEndVisitsByUUIDListener(mVisit.getUuid(), mPatient.getId(), mVisit.getId(), this));
     }
 
     private void startCaptureVitals() {
@@ -184,13 +185,5 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
-    }
-
-    private UploadXFormWithMultiPartRequestListener createResponseAndErrorListener(FormManagerBundle bundle) {
-        return new UploadXFormWithMultiPartRequestListener(bundle, this);
-    }
-
-    private EndVisitByUUIDListener createResponseAndErrorListener(String visitUUID, long patientID, long visitID) {
-        return new EndVisitByUUIDListener(visitUUID, patientID, visitID, this);
     }
 }

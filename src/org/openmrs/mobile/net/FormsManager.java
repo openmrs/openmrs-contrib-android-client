@@ -17,10 +17,10 @@ package org.openmrs.mobile.net;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 
-import org.openmrs.mobile.activities.listeners.AvailableFormsListListener;
-import org.openmrs.mobile.activities.listeners.UploadXFormListener;
-import org.openmrs.mobile.activities.listeners.UploadXFormWithMultiPartRequestListener;
-import org.openmrs.mobile.activities.listeners.DownloadFormListener;
+import org.openmrs.mobile.listeners.forms.AvailableFormsListListener;
+import org.openmrs.mobile.listeners.forms.UploadXFormListener;
+import org.openmrs.mobile.listeners.forms.UploadXFormWithMultiPartRequestListener;
+import org.openmrs.mobile.listeners.forms.DownloadFormListener;
 import org.openmrs.mobile.net.volley.wrappers.MultiPartRequest;
 import org.openmrs.mobile.net.volley.wrappers.StringRequestDecorator;
 import org.openmrs.mobile.utilities.FileUtils;

@@ -12,30 +12,32 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.listeners;
+package org.openmrs.mobile.listeners.visit;
 
 import com.android.volley.Response;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
+import org.openmrs.mobile.dao.EncounterDAO;
+import org.openmrs.mobile.models.mappers.ObservationMapper;
 import org.openmrs.mobile.net.GeneralErrorListener;
 
-public class VisitTypeListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
+
+public final class LastVitalsListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
+    private final String mPatientUUID;
+
+    public LastVitalsListener(String patientUUD) {
+        mPatientUUID = patientUUD;
+    }
 
     @Override
     public void onResponse(JSONObject response) {
         mLogger.d(response.toString());
+        new EncounterDAO().saveLastVitalsEncounter(ObservationMapper.lastVitalsMap(response), mPatientUUID);
+    }
 
-        try {
-            JSONArray visitTypesObj = response.getJSONArray("results");
-            String visitTypeUUID = ((JSONObject) visitTypesObj.get(0)).getString("uuid");
-            OpenMRS.getInstance().setVisitTypeUUID(visitTypeUUID);
-        } catch (JSONException e) {
-            mLogger.d(e.toString());
-        }
+    public String getPatientUUID() {
+        return mPatientUUID;
     }
 }

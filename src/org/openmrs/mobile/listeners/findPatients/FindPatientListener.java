@@ -12,37 +12,40 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.listeners;
+package org.openmrs.mobile.listeners.findPatients;
 
-import android.support.v4.app.FragmentManager;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.openmrs.mobile.activities.FindPatientsActivity;
-import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
+import org.openmrs.mobile.activities.FindPatientsSearchActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.mappers.PatientMapper;
 import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.net.GeneralErrorListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class LastViewedPatientListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
+public final class FindPatientListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
-    private FragmentManager mFragmentManager;
+    private final FindPatientsSearchActivity mActivityCaller;
+    private final String mLastQuery;
+    private final int mSearchId;
 
-    public LastViewedPatientListener(FindPatientsActivity caller) {
-        mFragmentManager = caller.getSupportFragmentManager();
+    public FindPatientListener(String lastQuery, int searchId, FindPatientsSearchActivity activityCaller) {
+        mSearchId = searchId;
+        mLastQuery = lastQuery;
+        mActivityCaller = activityCaller;
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         super.onErrorResponse(error);
-        refreshFragment(null, FindPatientsActivity.FragmentMethod.StopLoader);
+        mActivityCaller.stopLoader(mSearchId);
     }
 
     @Override
@@ -56,34 +59,14 @@ public class LastViewedPatientListener extends GeneralErrorListener implements R
                 patientsList.add(PatientMapper.map(patientsJSONList.getJSONObject(i)));
             }
 
-            refreshFragment(patientsList, FindPatientsActivity.FragmentMethod.Update);
+            mActivityCaller.updatePatientsData(mSearchId, patientsList);
 
         } catch (JSONException e) {
             mLogger.d(e.toString());
-            refreshFragment(null, FindPatientsActivity.FragmentMethod.StopLoader);
         }
     }
 
-    private void refreshFragment(List<Patient> patientsList, FindPatientsActivity.FragmentMethod method) {
-        List<Patient> localPatientsList;
-        if (null == patientsList) {
-            localPatientsList = new ArrayList<Patient>();
-        } else {
-            localPatientsList = new ArrayList<Patient>(patientsList);
-        }
-
-        FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) mFragmentManager
-                .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
-
-        FindPatientLastViewedFragment.setLastViewedPatientList(localPatientsList);
-        if (fragment != null) {
-            if (method.equals(FindPatientsActivity.FragmentMethod.StopLoader)) {
-                fragment.stopLoader();
-            } else if (method.equals(FindPatientsActivity.FragmentMethod.Update)) {
-                fragment.updatePatientsData();
-            }
-        }
-
-        FindPatientLastViewedFragment.setRefreshing(false);
+    public String getLastQuery() {
+        return mLastQuery;
     }
 }

@@ -53,6 +53,7 @@ public class FormEntryActivity extends org.odk.collect.android.activities.FormEn
         super.onCreate(savedInstanceState);
         if (null != savedInstanceState) {
             mPatientUUID = savedInstanceState.getString(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE);
+            mFormName = savedInstanceState.getString(ApplicationConstants.BundleKeys.FORM_NAME);
         } else {
             mPatientUUID = getIntent().getExtras().getString(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE);
         }
@@ -61,6 +62,7 @@ public class FormEntryActivity extends org.odk.collect.android.activities.FormEn
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE, mPatientUUID);
+        outState.putString(ApplicationConstants.BundleKeys.FORM_NAME, mFormName);
         super.onSaveInstanceState(outState);
     }
 

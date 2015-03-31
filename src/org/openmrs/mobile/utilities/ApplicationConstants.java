@@ -90,6 +90,7 @@ public abstract class ApplicationConstants {
         public static final String PATIENT_NAME = "patientName";
         public static final String PATIENT_LIST = "patientList";
         public static final String PROGRESS_BAR = "progressBar";
+        public static final String FORM_NAME = "formName";
     }
 
     public abstract static class CustomIntentActions {

@@ -82,8 +82,8 @@ public class PatientVisitsFragment extends ACBaseFragment {
     public void startVisit() {
         ((PatientDashboardActivity) getActivity())
                 .showProgressDialog(R.string.action_start_visit, PatientDashboardActivity.DialogAction.ADD_VISIT);
-        mVisitsManager.startVisit(
-                VisitsHelper.createStartVisitListener(mPatient.getUuid(), mPatient.getId(), (PatientDashboardActivity) getActivity()));
+        mVisitsManager.checkVisitBeforeStart(
+                VisitsHelper.createCheckVisitsBeforeStartListener(mPatient.getUuid(), mPatient.getId(), (PatientDashboardActivity) getActivity()));
     }
 
     private void showStartVisitDialog() {

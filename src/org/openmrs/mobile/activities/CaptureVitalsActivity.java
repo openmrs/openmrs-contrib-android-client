@@ -63,11 +63,10 @@ public class CaptureVitalsActivity extends ACBaseActivity {
     public void startFormEntry(String patientUUID, Long patientID) {
         mSelectedPatientUUID = patientUUID;
         mSelectedPatientID = patientID;
-        if (new VisitDAO().isPatientNowOnVisit(patientID)) {
-            startCheckedFormEntryForResult(mSelectedPatientUUID);
-        } else {
-            showNoVisitDialog();
-        }
+
+        showProgressDialog(R.string.check_visit_dialog_title);
+        new VisitsManager().checkVisitBeforeStart(
+                VisitsHelper.createCheckVisitsBeforeStartListener(patientUUID, patientID, this));
     }
 
     public void startCheckedFormEntryForResult(String patientUUID) {

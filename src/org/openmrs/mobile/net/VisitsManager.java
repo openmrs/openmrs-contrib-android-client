@@ -16,6 +16,7 @@ package org.openmrs.mobile.net;
 
 import com.android.volley.Request;
 import org.json.JSONObject;
+import org.openmrs.mobile.listeners.visit.CheckVisitBeforeStartListener;
 import org.openmrs.mobile.listeners.visit.FindVisitsByPatientUUIDListener;
 import org.openmrs.mobile.listeners.visit.StartVisitListener;
 import org.openmrs.mobile.listeners.visit.FindVisitByUUIDListener;
@@ -60,6 +61,16 @@ public class VisitsManager extends BaseManager {
     }
 
     public void findVisitsByPatientUUID(FindVisitsByPatientUUIDListener listener) {
+        String url = VISITS_BY_PATIENT_UUID_BASE_URL + listener.getPatientUUID() + VISITS_BY_PATIENT_UUID_END_URL;
+        mLogger.d(SENDING_REQUEST + url);
+
+        JsonObjectRequestWrapper jsObjRequest =
+                new JsonObjectRequestWrapper(Request.Method.GET,
+                        url, null, listener, listener, DO_GZIP_REQUEST);
+        mOpenMRS.addToRequestQueue(jsObjRequest);
+    }
+
+    public  void checkVisitBeforeStart(CheckVisitBeforeStartListener listener) {
         String url = VISITS_BY_PATIENT_UUID_BASE_URL + listener.getPatientUUID() + VISITS_BY_PATIENT_UUID_END_URL;
         mLogger.d(SENDING_REQUEST + url);
 

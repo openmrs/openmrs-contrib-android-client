@@ -15,9 +15,11 @@
 package org.openmrs.mobile.net.volley.wrappers;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import org.apache.http.entity.mime.MultipartEntity;
@@ -55,10 +57,17 @@ public class MultiPartRequest extends Request<String> {
         mSetToEncode = setToEncode;
         setShouldCache(false);
         buildMultiPartEntity();
+        setSocketTimeout();
     }
 
     private void buildMultiPartEntity() {
         entity.addPart(FILE_PART_NAME, new FileBody(mFilePart));
+    }
+
+    private void setSocketTimeout() {
+        int socketTimeout = ApplicationConstants.API.REQUEST_TIMEOUT;
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        this.setRetryPolicy(policy);
     }
 
     /**

@@ -44,6 +44,8 @@ public class GeneralErrorListener implements Response.ErrorListener {
             mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SERVER_ERROR_BROADCAST));
         } else if (BaseManager.isSocketException(error.toString())) {
             mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SOCKET_EXCEPTION_BROADCAST));
+        } else if (BaseManager.isEOFException(error.toString())) {
+            mContext.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SERVER_ERROR_BROADCAST));
 
         } else {
             ToastUtil.showShortToast(mContext, ToastUtil.ToastType.ERROR, error.toString());

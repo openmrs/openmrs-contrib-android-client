@@ -112,6 +112,7 @@ public abstract class ApplicationConstants {
         public static final String AUTHORISATION_FAILURE = "com.android.volley.AuthFailureError";
         public static final String SERVER_ERROR = "com.android.volley.ServerError";
         public static final String SOCKET_EXCEPTION = "java.net.SocketException";
+        public static final String EOF_EXCEPTION = "java.io.EOFException";
     }
 
     public static final String DEFAULT_OPEN_MRS_URL = EMPTY_STRING;

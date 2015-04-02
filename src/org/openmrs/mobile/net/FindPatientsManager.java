@@ -24,12 +24,12 @@ import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
 public class FindPatientsManager extends BaseManager {
     private static final String PATIENT_LAST_VIEWED_QUERY = String.format("patient?lastviewed=%s", API.FULL_VERSION_NEXT_PARAM);
-    private static final String FULL_PATIENT_DATA_BASE_URL = getBaseRestURL() + API.PATIENT_DETAILS + File.separator;
-    private static final String LAST_VIEWED_PATIENT_BASE_URL = getBaseRestURL() + PATIENT_LAST_VIEWED_QUERY;
-    private static final String FIND_PATIENT_BASE_URL = getBaseRestURL() + API.PATIENT_QUERY;
+    private String mFullPatientDataBaseUrl = getBaseRestURL() + API.PATIENT_DETAILS + File.separator;
+    private String mLastViewedPatientBaseUrl = getBaseRestURL() + PATIENT_LAST_VIEWED_QUERY;
+    private String mFindPatientBaseUrl = getBaseRestURL() + API.PATIENT_QUERY;
 
     public void findPatient(FindPatientListener listener) {
-        String url = FIND_PATIENT_BASE_URL + listener.getLastQuery() + API.FULL_VERSION_NEXT_PARAM;
+        String url = mFindPatientBaseUrl + listener.getLastQuery() + API.FULL_VERSION_NEXT_PARAM;
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =
@@ -39,16 +39,16 @@ public class FindPatientsManager extends BaseManager {
     }
 
     public void getLastViewedPatient(LastViewedPatientListener listener) {
-        mLogger.d(SENDING_REQUEST + LAST_VIEWED_PATIENT_BASE_URL);
+        mLogger.d(SENDING_REQUEST + mLastViewedPatientBaseUrl);
 
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.GET,
-                        LAST_VIEWED_PATIENT_BASE_URL, null, listener, listener, DO_GZIP_REQUEST);
+                        mLastViewedPatientBaseUrl, null, listener, listener, DO_GZIP_REQUEST);
         mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 
     public void getFullPatientData(FullPatientDataListener listener) {
-        String url = FULL_PATIENT_DATA_BASE_URL + listener.getPatientUUID() + API.FULL_VERSION;
+        String url = mFullPatientDataBaseUrl + listener.getPatientUUID() + API.FULL_VERSION;
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =

@@ -35,14 +35,14 @@ import java.util.HashMap;
 import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
 public class VisitsManager extends BaseManager {
-    private static final String VISIT_BASE_URL = getBaseRestURL() + API.VISIT_DETAILS;
-    private static final String VISITS_BY_PATIENT_UUID_BASE_URL = getBaseRestURL() + "visit?patient=";
+    private String mVisitBaseUrl = getBaseRestURL() + API.VISIT_DETAILS;
+    private String mVisitsByPatientUuidBaseUrl = getBaseRestURL() + "visit?patient=";
     private static final String VISITS_BY_PATIENT_UUID_END_URL = "&v=custom:(uuid,location:ref,visitType:ref,startDatetime,stopDatetime,encounters:full)";
-    private static final String LAST_VITALS_BASE_URL =  getBaseRestURL() + API.ENCOUNTER_DETAILS + "?patient=";
+    private String mLastVitalsBaseUrl =  getBaseRestURL() + API.ENCOUNTER_DETAILS + "?patient=";
     private static final String LAST_VITALS_END_URL = "&encounterType=" + ApplicationConstants.EncounterTypes.VITALS + "&v=custom:(obs:full)&limit=1&order=desc";
-    private static final String VISITS_BY_UUID_BASE_URL = VISIT_BASE_URL + File.separator;
+    private String mVisitsByUuidBaseUrl = mVisitBaseUrl + File.separator;
     private static final String VISIT_BY_UUID_END_URL = "?v=custom:(uuid,location:ref,visitType:ref,startDatetime,stopDatetime,encounters:full)";
-    private static final String VISIT_TYPE_BASE_URL = getBaseRestURL() + API.VISIT_TYPE;
+    private String mVisitTypeBaseUrl = getBaseRestURL() + API.VISIT_TYPE;
     public static final String START_DATE_TIME = "startDatetime";
     public static final String STOP_DATE_TIME = "stopDatetime";
     public static final String VISIT_TYPE = "visitType";
@@ -51,7 +51,7 @@ public class VisitsManager extends BaseManager {
 
 
     public void getLastVitals(LastVitalsListener listener) {
-        String url = LAST_VITALS_BASE_URL + listener.getPatientUUID() + LAST_VITALS_END_URL;
+        String url = mLastVitalsBaseUrl + listener.getPatientUUID() + LAST_VITALS_END_URL;
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =
@@ -61,7 +61,7 @@ public class VisitsManager extends BaseManager {
     }
 
     public void findVisitsByPatientUUID(FindVisitsByPatientUUIDListener listener) {
-        String url = VISITS_BY_PATIENT_UUID_BASE_URL + listener.getPatientUUID() + VISITS_BY_PATIENT_UUID_END_URL;
+        String url = mVisitsByPatientUuidBaseUrl + listener.getPatientUUID() + VISITS_BY_PATIENT_UUID_END_URL;
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =
@@ -71,7 +71,7 @@ public class VisitsManager extends BaseManager {
     }
 
     public  void checkVisitBeforeStart(CheckVisitBeforeStartListener listener) {
-        String url = VISITS_BY_PATIENT_UUID_BASE_URL + listener.getPatientUUID() + VISITS_BY_PATIENT_UUID_END_URL;
+        String url = mVisitsByPatientUuidBaseUrl + listener.getPatientUUID() + VISITS_BY_PATIENT_UUID_END_URL;
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =
@@ -81,7 +81,7 @@ public class VisitsManager extends BaseManager {
     }
 
     public void findVisitByUUID(FindVisitByUUIDListener listener) {
-        String url = VISITS_BY_UUID_BASE_URL + listener.getPatientUUID() + VISIT_BY_UUID_END_URL;
+        String url = mVisitsByUuidBaseUrl + listener.getPatientUUID() + VISIT_BY_UUID_END_URL;
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =
@@ -91,7 +91,7 @@ public class VisitsManager extends BaseManager {
     }
 
     public void endVisitByUUID(EndVisitByUUIDListener listener) {
-        String url = VISITS_BY_UUID_BASE_URL + listener.getVisitUUID();
+        String url = mVisitsByUuidBaseUrl + listener.getVisitUUID();
         mLogger.d(SENDING_REQUEST + url);
 
         HashMap<String, String> params = new HashMap<String, String>();
@@ -104,7 +104,7 @@ public class VisitsManager extends BaseManager {
     }
 
     public void startVisit(StartVisitListener listener) {
-        mLogger.d(SENDING_REQUEST + VISIT_BASE_URL);
+        mLogger.d(SENDING_REQUEST + mVisitBaseUrl);
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put(PATIENT, listener.getPatientUUID());
@@ -114,17 +114,17 @@ public class VisitsManager extends BaseManager {
 
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.POST,
-                        VISIT_BASE_URL, new JSONObject(params), listener, listener, DO_GZIP_REQUEST);
+                        mVisitBaseUrl, new JSONObject(params), listener, listener, DO_GZIP_REQUEST);
         mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 
 
     public void getVisitType(VisitTypeListener listener) {
-        mLogger.d(SENDING_REQUEST + VISIT_TYPE_BASE_URL);
+        mLogger.d(SENDING_REQUEST + mVisitTypeBaseUrl);
 
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.GET,
-                        VISIT_TYPE_BASE_URL, null, listener, listener, DO_GZIP_REQUEST);
+                        mVisitTypeBaseUrl, null, listener, listener, DO_GZIP_REQUEST);
         mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 }

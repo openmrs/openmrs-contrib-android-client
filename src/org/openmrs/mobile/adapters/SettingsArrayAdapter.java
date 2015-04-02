@@ -19,10 +19,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.models.SettingsListItemDTO;
+import org.openmrs.mobile.net.FormsManager;
+import org.openmrs.mobile.net.helpers.FormsHelper;
 import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
@@ -32,6 +36,7 @@ public class SettingsArrayAdapter extends ArrayAdapter<SettingsListItemDTO> {
     private List<SettingsListItemDTO> mItems;
 
     class ViewHolder {
+        private RelativeLayout mRowLayout;
         private TextView mTitle;
         private TextView mDesc1;
         private TextView mDesc2;
@@ -52,9 +57,10 @@ public class SettingsArrayAdapter extends ArrayAdapter<SettingsListItemDTO> {
             rowView = inflater.inflate(R.layout.activity_settings_row, null);
             // configure view holder
             ViewHolder viewHolder = new ViewHolder();
-            viewHolder.mTitle = (TextView) rowView.findViewById(R.id.settings_title);
-            viewHolder.mDesc1 = (TextView) rowView.findViewById(R.id.settings_desc1);
-            viewHolder.mDesc2 = (TextView) rowView.findViewById(R.id.settings_desc2);
+            viewHolder.mRowLayout = (RelativeLayout) rowView;
+            viewHolder.mTitle = (TextView) rowView.findViewById(R.id.settingsTitle);
+            viewHolder.mDesc1 = (TextView) rowView.findViewById(R.id.settingsDesc1);
+            viewHolder.mDesc2 = (TextView) rowView.findViewById(R.id.settingsDesc2);
             rowView.setTag(viewHolder);
         }
 
@@ -69,6 +75,25 @@ public class SettingsArrayAdapter extends ArrayAdapter<SettingsListItemDTO> {
 
         if (mItems.get(position).getDesc2() != null) {
             holder.mDesc2.setText(mItems.get(position).getDesc2());
+        }
+
+        if (mItems.get(position).getDesc1() == null && mItems.get(position).getDesc2() == null) {
+            RelativeLayout.LayoutParams layoutParams =
+                (RelativeLayout.LayoutParams) holder.mTitle.getLayoutParams();
+            layoutParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
+            holder.mTitle.setLayoutParams(layoutParams);
+        }
+
+        if (mItems.get(position).getTitle().equals(mContext.getResources().getString(R.string.settings_downloadForms))) {
+            holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ((ACBaseActivity) mContext).showProgressDialog(R.string.settings_forms_downloading);
+                    FormsManager formsManager = new FormsManager();
+                    formsManager.getAvailableFormsList(
+                            FormsHelper.createAvailableFormsListListener(formsManager, (ACBaseActivity) mContext));
+                }
+            });
         }
 
         FontsUtil.setFont((ViewGroup) rowView);

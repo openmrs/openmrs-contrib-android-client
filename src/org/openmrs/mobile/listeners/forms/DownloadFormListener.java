@@ -52,13 +52,7 @@ public final class DownloadFormListener extends GeneralErrorListener implements 
         rootName = rootName.trim();
 
         String path = OpenMRS.FORMS_PATH + File.separator + rootName + ".xml";
-        int i = 2;
         File file = new File(path);
-        while (file.exists()) {
-            path = OpenMRS.FORMS_PATH + File.separator + rootName + "_" + i + ".xml";
-            file = new File(path);
-            i++;
-        }
 
         // ???
         file.createNewFile();

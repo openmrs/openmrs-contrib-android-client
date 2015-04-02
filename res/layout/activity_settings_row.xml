@@ -19,22 +19,22 @@
     android:padding="6dp"
     android:background="@drawable/list_item_selector">
 
-    <TextView android:id="@+id/settings_title"
+    <TextView android:id="@+id/settingsTitle"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
-
-    <TextView android:id="@+id/settings_desc1"
-        android:textSize="12sp"
-        android:layout_below="@id/settings_title"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"/>
 
-    <TextView android:id="@+id/settings_desc2"
+    <TextView android:id="@+id/settingsDesc1"
+        android:textSize="12sp"
+        android:layout_below="@id/settingsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"/>
+
+    <TextView android:id="@+id/settingsDesc2"
         android:typeface="sans"
         android:textSize="12sp"
-        android:layout_below="@id/settings_desc1"
+        android:layout_below="@id/settingsDesc1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

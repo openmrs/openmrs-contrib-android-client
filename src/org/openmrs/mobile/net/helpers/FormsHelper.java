@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.net.helpers;
 
+import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.VisitDashboardActivity;
 import org.openmrs.mobile.bundle.FormManagerBundle;
 import org.openmrs.mobile.listeners.forms.AvailableFormsListListener;
@@ -40,6 +41,10 @@ public final class FormsHelper {
         return new AvailableFormsListListener(formsManager);
     }
 
+    public static AvailableFormsListListener createAvailableFormsListListener(FormsManager formsManager, ACBaseActivity caller) {
+        return new AvailableFormsListListener(formsManager, caller);
+    }
+
     public static UploadXFormListener createUploadXFormListener(String instancePath) {
         return new UploadXFormListener(instancePath);
     }
@@ -55,4 +60,5 @@ public final class FormsHelper {
     public static DownloadFormListener createDownloadFormListener(String downloadURL, String formName) {
         return new DownloadFormListener(downloadURL, formName);
     }
+
 }

@@ -15,10 +15,14 @@
 package org.openmrs.mobile.listeners.forms;
 
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
 import org.kxml2.io.KXmlParser;
 import org.kxml2.kdom.Document;
 import org.kxml2.kdom.Element;
 import org.odk.collect.android.logic.FormDetails;
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.net.FormsManager;
@@ -37,6 +41,7 @@ public final class AvailableFormsListListener extends GeneralErrorListener imple
     private static final String URL_KEY = "url";
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
     private final FormsManager mFormsManagerCaller;
+    protected ACBaseActivity mCallerAdapter;
 
     public AvailableFormsListListener(FormsManager managerCaller) {
         /*
@@ -44,6 +49,11 @@ public final class AvailableFormsListListener extends GeneralErrorListener imple
         see mFormsManagerCaller.downloadForm
         */
         mFormsManagerCaller = managerCaller;
+    }
+
+    public AvailableFormsListListener(FormsManager managerCaller, ACBaseActivity callerAdapter) {
+        mFormsManagerCaller = managerCaller;
+        mCallerAdapter = callerAdapter;
     }
 
     @Override
@@ -55,10 +65,25 @@ public final class AvailableFormsListListener extends GeneralErrorListener imple
             for (FormDetails fd: formList) {
                 if (VITALS_FORM_NAME.equals(fd.formName)) {
                     mFormsManagerCaller.downloadForm(
-                            FormsHelper.createDownloadFormListener(fd.downloadUrl, fd.formName));
+                        FormsHelper.createDownloadFormListener(fd.downloadUrl, fd.formName));
                 }
             }
         }
+        dismissDialog(false);
+    }
+
+    private void dismissDialog(boolean mErrorOccurred) {
+        if (mCallerAdapter != null) {
+            mCallerAdapter.dismissProgressDialog(mErrorOccurred,
+                    R.string.settings_forms_downloaded_succesfull,
+                    R.string.settings_forms_downloaded_error);
+        }
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        dismissDialog(true);
+        super.onErrorResponse(error);
     }
 
     private Document writeResponseToDoc(String response) {

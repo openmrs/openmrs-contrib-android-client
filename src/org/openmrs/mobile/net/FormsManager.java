@@ -31,22 +31,22 @@ import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
 public class FormsManager extends BaseManager {
     private StringRequestDecorator mRequestDecorator;
-    private static final String AVAILABLE_FORMS_LIST_BASE_URL = getBaseXFormURL() + API.FORM_LIST;
-    private static final String UPLOAD_XFORM_BASE_URL = getBaseXFormURL() + API.XFORM_UPLOAD;
+    private String mAvailableFormsListBaseUrl = getBaseXFormURL() + API.FORM_LIST;
+    private String mUploadXformBaseUrl = getBaseXFormURL() + API.XFORM_UPLOAD;
 
     public void getAvailableFormsList(AvailableFormsListListener listener) {
-        mLogger.d(SENDING_REQUEST + AVAILABLE_FORMS_LIST_BASE_URL);
+        mLogger.d(SENDING_REQUEST + mAvailableFormsListBaseUrl);
 
         mRequestDecorator = new StringRequestDecorator(Request.Method.GET,
-                AVAILABLE_FORMS_LIST_BASE_URL, listener, listener, DO_GZIP_REQUEST);
+                mAvailableFormsListBaseUrl, listener, listener, DO_GZIP_REQUEST);
         mOpenMRS.addToRequestQueue(mRequestDecorator);
     }
 
     public void uploadXForm(final UploadXFormListener listener) {
-        mLogger.d(SENDING_REQUEST + UPLOAD_XFORM_BASE_URL);
+        mLogger.d(SENDING_REQUEST + mUploadXformBaseUrl);
 
         mRequestDecorator = new StringRequestDecorator(Request.Method.POST,
-                UPLOAD_XFORM_BASE_URL, listener, listener, DO_GZIP_REQUEST) {
+                mUploadXformBaseUrl, listener, listener, DO_GZIP_REQUEST) {
             @Override
             public byte[] getBody() throws AuthFailureError {
                 return FileUtils.fileToByteArray(listener.getInstancePath());
@@ -56,9 +56,9 @@ public class FormsManager extends BaseManager {
     }
 
     public void uploadXFormWithMultiPartRequest(UploadXFormWithMultiPartRequestListener listener) {
-        mLogger.d(SENDING_REQUEST + UPLOAD_XFORM_BASE_URL);
+        mLogger.d(SENDING_REQUEST + mUploadXformBaseUrl);
 
-        MultiPartRequest multipartRequest = new MultiPartRequest(UPLOAD_XFORM_BASE_URL,
+        MultiPartRequest multipartRequest = new MultiPartRequest(mUploadXformBaseUrl,
                 listener, listener, new File(listener.getInstancePath()), listener.getPatientUUID(), DO_GZIP_REQUEST);
         mOpenMRS.addToRequestQueue(multipartRequest);
     }

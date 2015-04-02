@@ -72,19 +72,22 @@ public final class LoginListener extends GeneralErrorListener implements Respons
                     OpenMRS.getInstance()
                             .getContentResolver()
                             .delete(OpenMRSInstanceProviderAPI.InstanceColumns.CONTENT_URI, null, null);
-                }
 
-                mOpenMRS.setServerUrl(mServerURL);
-                mOpenMRS.setSessionToken(sessionToken);
-                mOpenMRS.setUsername(mUsername);
+                    mOpenMRS.setServerUrl(mServerURL);
+                    mOpenMRS.setSessionToken(sessionToken);
+                    mOpenMRS.setUsername(mUsername);
+
+                    FormsManager formsManager = new FormsManager();
+                    formsManager.getAvailableFormsList(
+                            FormsHelper.createAvailableFormsListListener(formsManager));
+                } else {
+                    mOpenMRS.setSessionToken(sessionToken);
+                }
                 new VisitsManager().getVisitType(
                         VisitsHelper.createVisitTypeListener());
                 UserManager userManager = new UserManager();
                 userManager.getUserInformation(
                         UserHelper.createUserInformationListener(mUsername, userManager));
-                FormsManager formsManager = new FormsManager();
-                formsManager.getAvailableFormsList(
-                        FormsHelper.createAvailableFormsListListener(formsManager));
                 mCallerActivity.saveLocationsToDatabase();
                 mCallerActivity.finish();
             } else {

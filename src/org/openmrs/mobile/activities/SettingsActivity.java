@@ -64,6 +64,8 @@ public class SettingsActivity extends ACBaseActivity {
     }
 
     private void fillList() {
+        mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_downloadForms)));
+
         long size = 0;
         String filename = OpenMRS.getInstance().getOpenMRSDir()
                 + File.separator + mOpenMRSLogger.getLogFilename();

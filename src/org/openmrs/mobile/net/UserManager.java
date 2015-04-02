@@ -24,11 +24,11 @@ import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
 
 public class UserManager extends BaseManager {
-    private static final String FULL_INFORMATION_BASE_URL = getBaseRestURL() + API.USER_DETAILS + File.separator;
-    private static final String USER_INFORMATION_BASE_URL = getBaseRestURL() + API.USER_QUERY;
+    private String mFullInformationBaseUrl = getBaseRestURL() + API.USER_DETAILS + File.separator;
+    private String mUserInformationBaseUrl = getBaseRestURL() + API.USER_QUERY;
 
     public void getFullInformation(FullInformationListener listener) {
-        String url = FULL_INFORMATION_BASE_URL + listener.getUserUUID();
+        String url = mFullInformationBaseUrl + listener.getUserUUID();
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =
@@ -38,7 +38,7 @@ public class UserManager extends BaseManager {
     }
 
     public void getUserInformation(UserInformationListener listener) {
-        String url = USER_INFORMATION_BASE_URL + listener.getUsername();
+        String url = mUserInformationBaseUrl + listener.getUsername();
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =

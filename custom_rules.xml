@@ -76,6 +76,6 @@
 
     <target name="demoVersion">
         <replaceregexp file="${src.dir}/org/openmrs/mobile/utilities/ApplicationConstants.java" match='DEFAULT_OPEN_MRS_URL = EMPTY_STRING'
-                       replace='DEFAULT_OPEN_MRS_URL = "http://devtest04.openmrs.org:8080/openmrs/"' />
+                       replace='DEFAULT_OPEN_MRS_URL = "http://devtest04.openmrs.org:8080/openmrs"' />
     </target>
 </project>

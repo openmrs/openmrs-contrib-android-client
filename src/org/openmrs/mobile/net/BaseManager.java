@@ -69,6 +69,10 @@ public class BaseManager {
         return errorMessage.contains(ApplicationConstants.VolleyErrors.SOCKET_EXCEPTION);
     }
 
+    protected static boolean isEOFException(String errorMessage) {
+        return errorMessage.contains(ApplicationConstants.VolleyErrors.EOF_EXCEPTION);
+    }
+
     protected static void encodeAuthorizationToken(String username, String password) {
         String auth = null;
         try {

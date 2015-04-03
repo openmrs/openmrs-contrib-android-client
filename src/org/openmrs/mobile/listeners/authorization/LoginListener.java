@@ -74,10 +74,9 @@ public final class LoginListener extends GeneralErrorListener implements Respons
                             .delete(OpenMRSInstanceProviderAPI.InstanceColumns.CONTENT_URI, null, null);
 
                     setData(sessionToken);
-                } else if (mCallerManager.isUserLoggedIn()) {
+                } else if (mCallerManager.isUserNameOrServerEmpty()) {
                     setData(sessionToken);
-                }
-                else {
+                } else {
                     mOpenMRS.setSessionToken(sessionToken);
                 }
                 new VisitsManager().getVisitType(

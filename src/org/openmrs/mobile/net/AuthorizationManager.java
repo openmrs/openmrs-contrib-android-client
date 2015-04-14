@@ -65,6 +65,15 @@ public class AuthorizationManager extends BaseManager {
         return result;
     }
 
+    public boolean isUserNameOrServerEmpty() {
+        boolean result = false;
+        if (mOpenMRS.getUsername().equals(ApplicationConstants.EMPTY_STRING) ||
+                (mOpenMRS.getServerUrl().equals(ApplicationConstants.EMPTY_STRING))) {
+            result = true;
+        }
+        return result;
+    }
+
     public boolean isDBCleaningRequired(String username, String serverURL) {
         boolean result = false;
         if (isUsernameNotEmptyOrNotSameUser(username) || isServerURLNotEmptyOrNorSameURL(serverURL)) {

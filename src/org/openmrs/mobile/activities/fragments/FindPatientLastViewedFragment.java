@@ -33,7 +33,6 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     private static List<Patient> mLastViewedPatientsList;
     private SwipeRefreshLayout mSwipeLayout;
     private static boolean mRefreshing;
-    private boolean mIsConnectionAvailable;
     private LastViewedPatientListener mFpmResponseListener;
 
     public FindPatientLastViewedFragment() {
@@ -42,7 +41,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mIsConnectionAvailable = checkIfConnectionIsAvailable();
+        checkIfConnectionIsAvailable();
     }
 
     @Override

@@ -1,21 +1,12 @@
 package org.openmrs.mobile.net;
 
-import android.content.Context;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import org.openmrs.mobile.activities.SettingsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.VisitDAO;
+import org.openmrs.mobile.listeners.offline.JsonObjectOfflineRequestListener;
+import org.openmrs.mobile.listeners.offline.MultiPartOfflineRequestListener;
 import org.openmrs.mobile.models.OfflineRequest;
-import org.openmrs.mobile.models.Visit;
-import org.openmrs.mobile.models.mappers.VisitMapper;
+import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
 import org.openmrs.mobile.net.volley.wrappers.MultiPartRequest;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
@@ -24,8 +15,11 @@ import java.util.List;
 
 public class OfflineRequestManager extends BaseManager {
 
-    public OfflineRequestManager(Context context) {
-        super(context);
+    private final SettingsActivity mActivityCaller;
+
+    public OfflineRequestManager(SettingsActivity activityCaller) {
+        super();
+        mActivityCaller = activityCaller;
     }
 
     public void sendAllOldRequestOneByOne() {
@@ -36,77 +30,35 @@ public class OfflineRequestManager extends BaseManager {
     }
 
     public void sendOldRequest(final OfflineRequest offlineRequest, final int id, final boolean sendNext) {
-        RequestQueue queue = Volley.newRequestQueue(mContext);
-
         OfflineRequest requestData = offlineRequest;
 
         if (requestData.getWrapperName() != null &&
                 requestData.getWrapperName().equals(MultiPartRequest.class.getName())) {
+            MultiPartOfflineRequestListener mporListener = new MultiPartOfflineRequestListener(offlineRequest, sendNext, this);
             MultiPartRequest multipartRequest = new MultiPartRequest(requestData.getUrl(),
-                    new GeneralErrorListenerImpl(mContext),
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            logger.d(response.toString());
-                            //remove from queue if ok
-                            List<OfflineRequest> offlineRequestList = OpenMRS.getInstance().getOfflineRequestQueue();
-                            offlineRequestList.remove(id);
-                            OpenMRS.getInstance().setOfflineRequestQueue(offlineRequestList);
-                            ((SettingsActivity) mContext).setListView();
-                            if (sendNext) {
-                                sendAllOldRequestOneByOne();
-                            }
-                        }
-                    }, new File(requestData.getRequest()), requestData.getObjectUUID()) {
+                    mporListener, mporListener, new File(requestData.getRequest()), requestData.getObjectUUID(), false) {
             };
-
-            queue.add(multipartRequest);
+            mOpenMRS.addToRequestQueue(multipartRequest);
         } else {
             if (ApplicationConstants.OfflineRequests.INACTIVATE_VISIT.equals(offlineRequest.getActionName()) && offlineRequest.getUrl() == null) {
                 requestData = prepareInactivateVisitRequest(offlineRequest);
             }
+            JsonObjectOfflineRequestListener joorListener = new JsonObjectOfflineRequestListener(offlineRequest, sendNext, this);
 
-            JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(requestData.getMethod(), requestData.getUrl(), requestData.getJSONRequest(), new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(final JSONObject response) {
-                    logger.d(response.toString());
-                    //remove from queue if ok
-                    boolean updateSuccessful = true;
+            JsonObjectRequestWrapper jsObjRequest = new JsonObjectRequestWrapper(requestData.getMethod(), requestData.getUrl(),
+                    requestData.getJSONRequest(), joorListener, joorListener, false);
 
-                    if (ApplicationConstants.OfflineRequests.START_VISIT.equals(offlineRequest.getActionName())) {
-                        try {
-                            Visit updatedVisit = VisitMapper.map(response);
-                            Visit visit = new VisitDAO().getVisitsByID(offlineRequest.getObjectID());
-                            visit.setUuid(updatedVisit.getUuid());
-                            new VisitDAO().updateVisit(visit, visit.getId(), visit.getPatientID());
-                        } catch (JSONException e) {
-                            logger.d(e.toString());
-                            updateSuccessful = false;
-                        }
-                    }
+            mOpenMRS.addToRequestQueue(jsObjRequest);
+        }
+    }
 
-                    if (updateSuccessful) {
-                        List<OfflineRequest> offlineRequestList = OpenMRS.getInstance().getOfflineRequestQueue();
-                        offlineRequestList.remove(id);
-                        OpenMRS.getInstance().setOfflineRequestQueue(offlineRequestList);
-                        ((SettingsActivity) mContext).setListView();
-                        if (sendNext) {
-                            sendAllOldRequestOneByOne();
-                        }
-                    }
-                }
-            }
-                    , new GeneralErrorListenerImpl(mContext) {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    super.onErrorResponse(error);
-                    //don't remove from queue if error occurred
-                }
-            }
-            );
-
-            queue.add(jsObjRequest);
+    public void removeFromQueue(OfflineRequest offlineRequest, boolean sendNext) {
+        List<OfflineRequest> offlineRequestList = OpenMRS.getInstance().getOfflineRequestQueue();
+        offlineRequestList.remove(offlineRequest);
+        OpenMRS.getInstance().setOfflineRequestQueue(offlineRequestList);
+        mActivityCaller.setListView();
+        if (sendNext) {
+            sendAllOldRequestOneByOne();
         }
     }
 

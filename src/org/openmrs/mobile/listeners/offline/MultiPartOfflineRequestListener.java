@@ -18,9 +18,13 @@ import com.android.volley.Response;
 
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
+import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.OfflineRequest;
 import org.openmrs.mobile.net.GeneralErrorListener;
 import org.openmrs.mobile.net.OfflineRequestManager;
+import org.openmrs.mobile.net.VisitsManager;
+import org.openmrs.mobile.net.helpers.VisitsHelper;
 
 public class MultiPartOfflineRequestListener extends GeneralErrorListener implements Response.Listener<String> {
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
@@ -37,6 +41,14 @@ public class MultiPartOfflineRequestListener extends GeneralErrorListener implem
     @Override
     public void onResponse(String response) {
         mLogger.d(response);
+
+        String visitUUID = new VisitDAO().getVisitsByID(mOfflineRequest.getObjectID()).getUuid();
+        Long patientID = new PatientDAO().findPatientByUUID(mOfflineRequest.getObjectUUID()).getId();
+        new VisitsManager().findVisitByUUIDAfterCaptureVitals(
+                VisitsHelper.createFindVisitCallbacksListener(patientID, visitUUID, this));
+    }
+
+    public void removeFromQueue() {
         mManagerCaller.removeFromQueue(mOfflineRequest, mSendNext);
     }
 }

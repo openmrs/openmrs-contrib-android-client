@@ -24,10 +24,10 @@ public class PatientVitalsFragment extends ACBaseFragment {
     public PatientVitalsFragment() {
     }
 
-    public static PatientVitalsFragment newInstance(String patientUUID) {
+    public static PatientVitalsFragment newInstance(Long patientID) {
         PatientVitalsFragment patientVitalsFragment = new PatientVitalsFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE, patientUUID);
+        bundle.putLong(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patientID);
         patientVitalsFragment.setArguments(bundle);
         return patientVitalsFragment;
     }
@@ -43,9 +43,9 @@ public class PatientVitalsFragment extends ACBaseFragment {
         View fragmentLayout = inflater.inflate(R.layout.fragment_patient_vitals, null, false);
         LinearLayout content = (LinearLayout) fragmentLayout.findViewById(R.id.vitalsDetailsContent);
         TextView lastVitalsLabel = (TextView) fragmentLayout.findViewById(R.id.lastVitalsLabel);
-        String patientUUID = getArguments().getString(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE);
+        Long patientID = getArguments().getLong(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE);
 
-        mVitalsEncounter = new EncounterDAO().getLastVitalsEncounter(patientUUID);
+        mVitalsEncounter = new EncounterDAO().getLastVitalsEncounter(patientID);
 
         if (null == mVitalsEncounter) {
             lastVitalsLabel.setVisibility(View.GONE);

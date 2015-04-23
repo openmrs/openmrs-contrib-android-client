@@ -34,11 +34,11 @@ public class EncounterTable extends Table<Encounter> {
         return CREATE_TABLE + TABLE_NAME + "("
                 + Column.ID + PRIMARY_KEY
                 + Column.VISIT_KEY_ID + Column.Type.INT_TYPE_WITH_COMMA
-                + Column.UUID + Column.Type.TEXT_TYPE_NOT_NULL
+                + Column.UUID + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.DISPLAY + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.ENCOUNTER_DATETIME + Column.Type.DATE_TYPE_NOT_NULL
                 + Column.ENCOUNTER_TYPE + Column.Type.DATE_TYPE_WITH_COMMA
-                + Column.PATIENT_UUID + Column.Type.TEXT_TYPE
+                + Column.PATIENT_ID + Column.Type.TEXT_TYPE
                 + ");";
     }
 
@@ -50,7 +50,7 @@ public class EncounterTable extends Table<Encounter> {
                 + Column.DISPLAY + Column.COMMA
                 + Column.ENCOUNTER_DATETIME + Column.COMMA
                 + Column.ENCOUNTER_TYPE + Column.COMMA
-                + Column.PATIENT_UUID + ")"
+                + Column.PATIENT_ID + ")"
                 + values(INSERT_COLUMNS_COUNT);
     }
 
@@ -81,7 +81,7 @@ public class EncounterTable extends Table<Encounter> {
         public static final String VISIT_KEY_ID = "visit_id";
         public static final String ENCOUNTER_DATETIME = "encounterDatetime";
         public static final String ENCOUNTER_TYPE = "type";
-        public static final String PATIENT_UUID = "patient_uuid";
+        public static final String PATIENT_ID = "patient_id";
     }
 
     @Override

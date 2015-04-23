@@ -21,43 +21,45 @@ import org.json.JSONObject;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.intefaces.VisitDashboardCallbackListener;
+import org.openmrs.mobile.listeners.offline.MultiPartOfflineRequestListener;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.mappers.VisitMapper;
 import org.openmrs.mobile.net.GeneralErrorListener;
 
-public class FindVisitByUUIDListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
+public class FindVisitByUUIDAfterOfflineCaptureVitalsListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
-    private VisitDashboardCallbackListener mVisitDashboardCallback;
     private VisitDAO visitDAO = new VisitDAO();
     private final String mVisitUUID;
     private final Long mPatientID;
+    private final MultiPartOfflineRequestListener mManagerCaller;
 
 
 
-    public FindVisitByUUIDListener(Long patientID, String visitUUID, VisitDashboardCallbackListener visitDashboardCallback) {
+    public FindVisitByUUIDAfterOfflineCaptureVitalsListener(Long patientID, String visitUUID, MultiPartOfflineRequestListener callbackListener) {
         mPatientID = patientID;
         mVisitUUID = visitUUID;
-        mVisitDashboardCallback = visitDashboardCallback;
+        mManagerCaller = callbackListener;
     }
 
     @Override
     public void onResponse(JSONObject response) {
         mLogger.d(response.toString());
+        boolean updateSuccessful = true;
         try {
             Visit visit = VisitMapper.map(response);
             long visitId = visitDAO.getVisitsIDByUUID(visit.getUuid());
             if (visitId > 0) {
-                visitDAO.updateVisit(visit, visitId, mPatientID);
+                visitDAO.updateVisitAfterOfflineCaptureVitals(visit, visitId);
             } else {
                 visitDAO.saveVisit(visit, mPatientID);
             }
-            if (null != mVisitDashboardCallback) {
-                mVisitDashboardCallback.updateEncounterList();
-            }
-
         } catch (JSONException e) {
             mLogger.d(e.toString());
+            updateSuccessful = false;
+        }
+
+        if (updateSuccessful) {
+            mManagerCaller.removeFromQueue();
         }
     }
 

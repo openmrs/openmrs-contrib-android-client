@@ -30,6 +30,7 @@ import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.bundle.FormManagerBundle;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.FormsDAO;
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.intefaces.VisitDashboardCallbackListener;
 import org.openmrs.mobile.models.Encounter;
@@ -66,6 +67,8 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
         Intent intent = getIntent();
 
         mVisit = new VisitDAO().getVisitsByID(intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0));
+        mPatient = new PatientDAO().findPatientByID(mVisit.getPatientID());
+
         mPatientName = intent.getStringExtra(ApplicationConstants.BundleKeys.PATIENT_NAME);
         mVisitEncounters = mVisit.getEncounters();
 
@@ -133,7 +136,7 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
                                 .getFormInstanceFilePath(),
                         mPatient.getUuid(),
                         mPatient.getId(),
-                        mVisit.getUuid());
+                        mVisit.getId());
                 mFormsManager.uploadXFormWithMultiPartRequest(
                         FormsHelper.createUploadXFormWithMultiPartRequestListener(bundle, this));
                 break;

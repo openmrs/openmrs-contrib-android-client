@@ -107,7 +107,7 @@ public class CaptureVitalsActivity extends ACBaseActivity {
                                 getFormInstanceFilePath(),
                         mSelectedPatientUUID,
                         mSelectedPatientID,
-                        new VisitDAO().getPatientCurrentVisit(mSelectedPatientID).getUuid());
+                        new VisitDAO().getPatientCurrentVisit(mSelectedPatientID).getId());
                 new FormsManager().uploadXFormWithMultiPartRequest(
                         FormsHelper.createUploadXFormWithMultiPartRequestListener(bundle));
                 finish();

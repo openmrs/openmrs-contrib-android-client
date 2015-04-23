@@ -125,10 +125,10 @@ public class PatientDAO {
         return patient;
     }
 
-    public Patient findPatientByID(String id) {
+    public Patient findPatientByID(Long id) {
         Patient patient = new Patient();
         String where = String.format("%s = ?", PatientTable.Column.ID);
-        String[] whereArgs = new String[]{id};
+        String[] whereArgs = new String[]{String.valueOf(id)};
 
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
         final Cursor cursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null, where, whereArgs, null, null, null);

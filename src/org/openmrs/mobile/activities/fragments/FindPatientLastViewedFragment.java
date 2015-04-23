@@ -41,7 +41,6 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkIfConnectionIsAvailable();
     }
 
     @Override
@@ -134,26 +133,6 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
             mPatientsListView.setEmptyView(mEmptyList);
             mSwipeLayout.setRefreshing(false);
         }
-    }
-
-    public boolean checkIfConnectionIsAvailable() {
-        boolean connection = NetworkUtils.isNetworkAvailable(getActivity());
-        if (OpenMRS.getInstance().getOnlineMode()) {
-            if (!connection) {
-                setEmptyList(R.string.no_connection_available);
-            } else {
-                setRefreshing(true);
-                setSpinner();
-                if (mAdapter != null) {
-                    mAdapter.clear();
-                }
-                FindPatientsManager fpm = new FindPatientsManager();
-                fpm.getLastViewedPatient(mFpmResponseListener);
-            }
-        } else {
-            setEmptyList(R.string.online_mode_disable);
-        }
-        return connection;
     }
 
     private void setEmptyList(int resId) {

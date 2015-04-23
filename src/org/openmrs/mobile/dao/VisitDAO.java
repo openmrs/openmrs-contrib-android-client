@@ -41,6 +41,7 @@ public class VisitDAO {
         long visitID = new VisitTable().insert(visit);
         if (visit.getEncounters() != null) {
             for (Encounter encounter : visit.getEncounters()) {
+                encounter.setPatientID(patientID);
                 long encounterID = encounterDAO.saveEncounter(encounter, visitID);
                 for (Observation obs : encounter.getObservations()) {
                     observationDAO.saveObservation(obs, encounterID);
@@ -55,7 +56,40 @@ public class VisitDAO {
         ObservationDAO observationDAO = new ObservationDAO();
         visit.setPatientID(patientID);
         for (Encounter encounter : visit.getEncounters()) {
-            long encounterID = encounterDAO.getEncounterByUUID(encounter.getUuid());
+            long encounterID;
+            if (encounter.getUuid() != null) {
+                encounterID = encounterDAO.getEncounterIDByUUID(encounter.getUuid());
+            } else {
+                encounterID = encounterDAO.getEncounterIDByDatetimeAndVisitId(encounter.getEncounterDatetime(), visitID);
+            }
+            if (encounterID > 0) {
+                encounterDAO.updateEncounter(encounterID, encounter, visitID);
+            } else {
+                encounterID = encounterDAO.saveEncounter(encounter, visitID);
+            }
+
+            List<Observation> oldObs = observationDAO.findObservationByEncounterID(encounterID);
+            for (Observation obs : oldObs) {
+                observationDAO.deleteObservation(obs.getId());
+            }
+
+            for (Observation obs : encounter.getObservations()) {
+                observationDAO.saveObservation(obs, encounterID);
+            }
+        }
+        return new VisitTable().update(visitID, visit) > 0;
+    }
+
+    public void updateVisitAfterOfflineCaptureVitals(Visit visit, long visitID) {
+        EncounterDAO encounterDAO = new EncounterDAO();
+        ObservationDAO observationDAO = new ObservationDAO();
+
+        for (Encounter encounter : visit.getEncounters()) {
+            long encounterID = encounterDAO.getEncounterIDByDatetimeAndVisitId(encounter.getEncounterDatetime(), visitID);
+
+            if (encounterID == 0) {
+                encounterID = encounterDAO.getEncounterIDByUUID(encounter.getUuid());
+            }
 
             if (encounterID > 0) {
                 encounterDAO.updateEncounter(encounterID, encounter, visitID);
@@ -72,6 +106,23 @@ public class VisitDAO {
                 observationDAO.saveObservation(obs, encounterID);
             }
         }
+    }
+
+    public boolean addEncounterToVisit(long visitID, Encounter encounter) {
+        Visit visit = getVisitsByID(visitID);
+        EncounterDAO encounterDAO = new EncounterDAO();
+        ObservationDAO observationDAO = new ObservationDAO();
+
+        List<Encounter> encounterList = visit.getEncounters();
+        encounterList.add(encounter);
+        visit.setEncounters(encounterList);
+
+        long encounterID = encounterDAO.saveEncounter(encounter, visitID);
+
+        for (Observation obs : encounter.getObservations()) {
+            observationDAO.saveObservation(obs, encounterID);
+        }
+
         return new VisitTable().update(visitID, visit) > 0;
     }
 

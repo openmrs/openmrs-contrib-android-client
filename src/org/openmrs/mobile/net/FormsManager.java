@@ -64,7 +64,8 @@ public class FormsManager extends BaseManager {
                     listener, listener, new File(listener.getInstancePath()), listener.getPatientUUID(), DO_GZIP_REQUEST);
             mOpenMRS.addToRequestQueue(multipartRequest);
         } else {
-            OfflineRequest offlineRequest = new OfflineRequest(MultiPartRequest.class.getName(), mUploadXformBaseUrl, listener.getInstancePath(), listener.getPatientUUID());
+            listener.offlineAction();
+            OfflineRequest offlineRequest = new OfflineRequest(MultiPartRequest.class.getName(), mUploadXformBaseUrl, listener.getInstancePath(), listener.getPatientUUID(), listener.getVisitID());
             mOpenMRS.addToRequestQueue(offlineRequest);
         }
     }

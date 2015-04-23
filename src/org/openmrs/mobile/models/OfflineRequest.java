@@ -41,11 +41,12 @@ public class OfflineRequest {
         this.actionName = actionName;
     }
 
-    public OfflineRequest(String wrapperName, String url, String instancePath, String patientUUID) {
+    public OfflineRequest(String wrapperName, String url, String instancePath, String patientUUID, Long visitId) {
         this.wrapperName = wrapperName;
         this.url = url;
         this.request = instancePath;
         this.objectUUID = patientUUID;
+        this.objectID = visitId;
     }
 
     public void setMethod(int method) {

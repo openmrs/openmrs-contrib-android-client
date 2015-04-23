@@ -17,7 +17,9 @@ package org.openmrs.mobile.net;
 import com.android.volley.Request;
 import org.json.JSONObject;
 
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.visit.CheckVisitBeforeStartListener;
+import org.openmrs.mobile.listeners.visit.FindVisitByUUIDAfterOfflineCaptureVitalsListener;
 import org.openmrs.mobile.listeners.visit.FindVisitsByPatientUUIDListener;
 import org.openmrs.mobile.listeners.visit.StartVisitListener;
 import org.openmrs.mobile.listeners.visit.FindVisitByUUIDListener;
@@ -55,7 +57,8 @@ public class VisitsManager extends BaseManager {
 
 
     public void getLastVitals(LastVitalsListener listener) {
-        String url = mLastVitalsBaseUrl + listener.getPatientUUID() + LAST_VITALS_END_URL;
+        String patientUUID = new PatientDAO().findPatientByID(listener.getPatientID()).getUuid();
+        String url = mLastVitalsBaseUrl + patientUUID + LAST_VITALS_END_URL;
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =
@@ -78,14 +81,29 @@ public class VisitsManager extends BaseManager {
         String url = mVisitsByPatientUuidBaseUrl + listener.getPatientUUID() + VISITS_BY_PATIENT_UUID_END_URL;
         mLogger.d(SENDING_REQUEST + url);
 
+        if (mOnlineMode) {
+        JsonObjectRequestWrapper jsObjRequest =
+                new JsonObjectRequestWrapper(Request.Method.GET,
+                        url, null, listener, listener, DO_GZIP_REQUEST);
+        mOpenMRS.addToRequestQueue(jsObjRequest);
+        } else {
+            listener.offlineAction();
+        }
+    }
+
+    public void findVisitByUUID(FindVisitByUUIDListener listener) {
+        String url = mVisitsByUuidBaseUrl + listener.getVisitUUID() + VISIT_BY_UUID_END_URL;
+        mLogger.d(SENDING_REQUEST + url);
+
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.GET,
                         url, null, listener, listener, DO_GZIP_REQUEST);
         mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 
-    public void findVisitByUUID(FindVisitByUUIDListener listener) {
-        String url = mVisitsByUuidBaseUrl + listener.getPatientUUID() + VISIT_BY_UUID_END_URL;
+
+    public void findVisitByUUIDAfterCaptureVitals(FindVisitByUUIDAfterOfflineCaptureVitalsListener listener) {
+        String url = mVisitsByUuidBaseUrl + listener.getVisitUUID() + VISIT_BY_UUID_END_URL;
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =

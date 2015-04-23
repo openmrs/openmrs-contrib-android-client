@@ -33,10 +33,10 @@ public class EncounterDAO {
         return new EncounterTable().insert(encounter);
     }
 
-    public void saveLastVitalsEncounter(Encounter encounter, String patientUUID) {
+    public void saveLastVitalsEncounter(Encounter encounter, Long patientID) {
         if (null != encounter) {
-            encounter.setPatientUUID(patientUUID);
-            long oldLastVitalsEncounterID = getLastVitalsEncounterID(patientUUID);
+            encounter.setPatientID(patientID);
+            long oldLastVitalsEncounterID = getLastVitalsEncounterID(patientID);
             if (0 != oldLastVitalsEncounterID) {
                 for (Observation obs: new ObservationDAO().findObservationByEncounterID(oldLastVitalsEncounterID)) {
                     new ObservationTable().delete(obs.getId());
@@ -51,11 +51,11 @@ public class EncounterDAO {
         }
     }
 
-    public long getLastVitalsEncounterID(String patientUUID) {
+    public long getLastVitalsEncounterID(Long patientID) {
         long encounterID = 0;
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        String where = String.format("%s is NULL AND %s = ?", EncounterTable.Column.VISIT_KEY_ID, EncounterTable.Column.PATIENT_UUID);
-        String[] whereArgs = new String[]{patientUUID};
+        String where = String.format("%s is NULL AND %s = ?", EncounterTable.Column.VISIT_KEY_ID, EncounterTable.Column.PATIENT_ID);
+        String[] whereArgs = new String[]{String.valueOf(patientID)};
         final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
         if (null != cursor) {
             try {
@@ -70,12 +70,12 @@ public class EncounterDAO {
         return encounterID;
     }
 
-    public Encounter getLastVitalsEncounter(String patientUUID) {
+    public Encounter getLastVitalsEncounter(Long patientID) {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
         Encounter encounter = null;
 
-        String where = String.format("%s = ? AND %s = ? ORDER BY %s DESC LIMIT 1", EncounterTable.Column.PATIENT_UUID, EncounterTable.Column.ENCOUNTER_TYPE, EncounterTable.Column.ENCOUNTER_DATETIME);
-        String[] whereArgs = new String[]{patientUUID, Encounter.EncounterType.VITALS.getType()};
+        String where = String.format("%s = ? AND %s = ? ORDER BY %s DESC LIMIT 1", EncounterTable.Column.PATIENT_ID, EncounterTable.Column.ENCOUNTER_TYPE, EncounterTable.Column.ENCOUNTER_DATETIME);
+        String[] whereArgs = new String[]{String.valueOf(patientID), Encounter.EncounterType.VITALS.getType()};
         final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
         if (null != cursor) {
             try {
@@ -182,11 +182,31 @@ public class EncounterDAO {
         return encounters;
     }
 
-    public long getEncounterByUUID(final String encounterUUID) {
+    public long getEncounterIDByUUID(final String encounterUUID) {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
 
         String where = String.format("%s = ?", EncounterTable.Column.UUID);
         String[] whereArgs = new String[]{encounterUUID};
+        long encounterID = 0;
+        final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        if (null != cursor) {
+            try {
+                if (cursor.moveToFirst()) {
+                    int encounterID_CI = cursor.getColumnIndex(EncounterTable.Column.ID);
+                    encounterID = cursor.getLong(encounterID_CI);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return encounterID;
+    }
+
+    public long getEncounterIDByDatetimeAndVisitId(long encounterDatetime, long encounterVisitId) {
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+
+        String where = String.format("%s is NULL AND %s = ? AND %s = ? ", EncounterTable.Column.UUID, EncounterTable.Column.ENCOUNTER_DATETIME, EncounterTable.Column.VISIT_KEY_ID);
+        String[] whereArgs = new String[]{String.valueOf(encounterDatetime), String.valueOf(encounterVisitId)};
         long encounterID = 0;
         final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
         if (null != cursor) {

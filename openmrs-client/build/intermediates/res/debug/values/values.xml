@@ -1,0 +1,1474 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string-array name="constraint_behavior_entries">
+		<item>@string/constraint_behavior_on_swipe</item>
+		<item>@string/constraint_behavior_on_finalize</item>
+	</string-array>
+    <string-array name="constraint_behavior_entry_values" translatable="false">
+		<item>on_swipe</item>
+		<item>on_finalize</item>
+	</string-array>
+    <string-array name="font_size_entries">
+		<item>@string/font_size_extra_large</item>
+		<item>@string/font_size_large</item>
+		<item>@string/font_size_medium</item>
+		<item>@string/font_size_small</item>
+		<item>@string/font_size_extra_small</item>
+	</string-array>
+    <string-array name="font_size_entry_values" translatable="false">
+		<item>29</item>
+		<item>25</item>
+		<item>21</item>
+		<item>17</item>
+		<item>13</item>
+	</string-array>
+    <string-array name="navigation_entries">
+		<item>@string/swipe_navigation</item>
+		<item>@string/buttons_navigation</item>
+		<item>@string/swipe_buttons_navigation</item>
+	</string-array>
+    <string-array name="navigation_entry_values" translatable="false">
+		<item>swipe</item>
+		<item>buttons</item>
+		<item>swipe_buttons</item>
+	</string-array>
+    <string-array name="protocol_entries">
+		<item>@string/server_platform_odk_aggregate</item>
+		<item>@string/server_platform_google_forms</item>
+		<item>@string/server_platform_other</item>
+	</string-array>
+    <string-array name="protocol_entry_values">
+		<item>@string/protocol_odk_default</item>
+		<item>@string/protocol_google</item>
+		<item>@string/protocol_other</item>
+	</string-array>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <eat-comment/>
+    <attr format="reference" name="actionBarDivider"/>
+    <attr format="reference" name="actionBarItemBackground"/>
+    <attr format="dimension" name="actionBarSize"/>
+    <attr format="reference" name="actionBarSplitStyle"/>
+    <attr format="reference" name="actionBarStyle"/>
+    <attr format="reference" name="actionBarTabBarStyle"/>
+    <attr format="reference" name="actionBarTabStyle"/>
+    <attr format="reference" name="actionBarTabTextStyle"/>
+    <attr format="reference" name="actionBarWidgetTheme"/>
+    <attr format="reference" name="actionButtonStyle"/>
+    <attr format="reference" name="actionMenuTextAppearance"/>
+    <attr format="color|reference" name="actionMenuTextColor"/>
+    <attr format="reference" name="actionModeBackground"/>
+    <attr format="reference" name="actionModeCloseButtonStyle"/>
+    <attr format="reference" name="actionModeCloseDrawable"/>
+    <attr format="reference" name="actionModeCopyDrawable"/>
+    <attr format="reference" name="actionModeCutDrawable"/>
+    <attr format="reference" name="actionModeFindDrawable"/>
+    <attr format="reference" name="actionModePasteDrawable"/>
+    <attr format="reference" name="actionModePopupWindowStyle"/>
+    <attr format="reference" name="actionModeSelectAllDrawable"/>
+    <attr format="reference" name="actionModeShareDrawable"/>
+    <attr format="reference" name="actionModeSplitBackground"/>
+    <attr format="reference" name="actionModeStyle"/>
+    <attr format="reference" name="actionModeWebSearchDrawable"/>
+    <attr format="reference" name="actionOverflowButtonStyle"/>
+    <attr format="reference" name="activityChooserViewStyle"/>
+    <attr format="reference" name="buttonBarButtonStyle"/>
+    <attr format="reference" name="buttonBarStyle"/>
+    <attr format="reference" name="dividerHorizontal"/>
+    <attr format="reference" name="dividerVertical"/>
+    <attr format="reference" name="dropDownListViewStyle"/>
+    <attr format="dimension" name="height"/>
+    <attr format="reference" name="homeAsUpIndicator"/>
+    <attr format="boolean" name="isLightTheme"/>
+    <attr format="reference" name="listPopupWindowStyle"/>
+    <attr format="dimension" name="listPreferredItemHeight"/>
+    <attr format="dimension" name="listPreferredItemHeightLarge"/>
+    <attr format="dimension" name="listPreferredItemHeightSmall"/>
+    <attr format="dimension" name="listPreferredItemPaddingLeft"/>
+    <attr format="dimension" name="listPreferredItemPaddingRight"/>
+    <attr format="reference" name="searchDropdownBackground"/>
+    <attr format="dimension" name="searchResultListItemHeight"/>
+    <attr format="reference" name="searchViewAutoCompleteTextView"/>
+    <attr format="reference" name="searchViewCloseIcon"/>
+    <attr format="reference" name="searchViewEditQuery"/>
+    <attr format="reference" name="searchViewEditQueryBackground"/>
+    <attr format="reference" name="searchViewGoIcon"/>
+    <attr format="reference" name="searchViewSearchIcon"/>
+    <attr format="reference" name="searchViewTextField"/>
+    <attr format="reference" name="searchViewTextFieldRight"/>
+    <attr format="reference" name="searchViewVoiceIcon"/>
+    <attr format="reference" name="selectableItemBackground"/>
+    <attr format="reference" name="spinnerDropDownItemStyle"/>
+    <attr format="reference" name="spinnerStyle"/>
+    <attr format="reference" name="textAppearanceLargePopupMenu"/>
+    <attr format="reference" name="textAppearanceListItem"/>
+    <attr format="reference" name="textAppearanceListItemSmall"/>
+    <attr format="reference" name="textAppearanceSearchResultSubtitle"/>
+    <attr format="reference" name="textAppearanceSearchResultTitle"/>
+    <attr format="reference" name="textAppearanceSmallPopupMenu"/>
+    <attr format="reference|color" name="textColorSearchUrl"/>
+    <attr format="string" name="title"/>
+    <bool name="abc_action_bar_embed_tabs_pre_jb">false</bool>
+    <bool name="abc_action_bar_expanded_action_views_exclusive">true</bool>
+    <bool name="abc_config_actionMenuItemAllCaps">true</bool>
+    <bool name="abc_config_allowActionMenuItemTextWithIcon">false</bool>
+    <bool name="abc_config_showMenuShortcutsWhenKeyboardPresent">false</bool>
+    <bool name="abc_split_action_bar_is_narrow">true</bool>
+    <color name="abc_search_url_text_normal">#7fa87f</color>
+    <color name="abc_search_url_text_pressed">@android:color/black</color>
+    <color name="abc_search_url_text_selected">@android:color/black</color>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/color.xml -->
+    <eat-comment/>
+    <color name="black">#000</color>
+    <color name="dark_grey">#231F20</color>
+    <color name="dark_purple">#363463</color>
+    <color name="dark_teal">#00463f</color>
+    <color name="green">#88af28</color>
+    <color name="grey">#dddddd</color>
+    <color name="light_green">#a1d030</color>
+    <color name="light_red">#ff6666</color>
+    <color name="light_teal">#009384</color>
+    <color name="orange">#F26522</color>
+    <color name="purple">#5B57A6</color>
+    <color name="red">#ff3d3d</color>
+    <color name="white">#FFF</color>
+    <color name="yellow">#EEA616</color>
+    <declare-styleable name="ActionBar"><attr name="navigationMode"><enum name="normal" value="0"/><enum name="listMode" value="1"/><enum name="tabMode" value="2"/></attr><attr name="displayOptions"><flag name="useLogo" value="0x1"/><flag name="showHome" value="0x2"/><flag name="homeAsUp" value="0x4"/><flag name="showTitle" value="0x8"/><flag name="showCustom" value="0x10"/><flag name="disableHome" value="0x20"/></attr><attr name="title"/><attr format="string" name="subtitle"/><attr format="reference" name="titleTextStyle"/><attr format="reference" name="subtitleTextStyle"/><attr format="reference" name="icon"/><attr format="reference" name="logo"/><attr format="reference" name="divider"/><attr format="reference" name="background"/><attr format="reference|color" name="backgroundStacked"/><attr format="reference|color" name="backgroundSplit"/><attr format="reference" name="customNavigationLayout"/><attr name="height"/><attr format="reference" name="homeLayout"/><attr format="reference" name="progressBarStyle"/><attr format="reference" name="indeterminateProgressStyle"/><attr format="dimension" name="progressBarPadding"/><attr format="dimension" name="itemPadding"/></declare-styleable>
+    <declare-styleable name="ActionBarLayout"><attr name="android:layout_gravity"/></declare-styleable>
+    <declare-styleable name="ActionBarWindow"><attr format="boolean" name="windowActionBar"/><attr format="boolean" name="windowActionBarOverlay"/><attr format="boolean" name="windowSplitActionBar"/><attr format="dimension|fraction" name="windowFixedWidthMajor"/><attr format="dimension|fraction" name="windowFixedHeightMinor"/><attr format="dimension|fraction" name="windowFixedWidthMinor"/><attr format="dimension|fraction" name="windowFixedHeightMajor"/></declare-styleable>
+    <declare-styleable name="ActionMenuItemView"><attr name="android:minWidth"/></declare-styleable>
+    <declare-styleable name="ActionMenuView"/>
+    <declare-styleable name="ActionMode"><attr name="titleTextStyle"/><attr name="subtitleTextStyle"/><attr name="background"/><attr name="backgroundSplit"/><attr name="height"/></declare-styleable>
+    <declare-styleable name="ActivityChooserView"><attr format="string" name="initialActivityCount"/><attr format="reference" name="expandActivityOverflowButtonDrawable"/></declare-styleable>
+    <declare-styleable name="CompatTextView"><attr format="reference|boolean" name="textAllCaps"/></declare-styleable>
+    <declare-styleable name="GridLayout"><attr name="orientation"><enum name="horizontal" value="0"/><enum name="vertical" value="1"/></attr><attr format="integer" name="rowCount"/><attr format="integer" name="columnCount"/><attr format="boolean" name="useDefaultMargins"/><attr name="alignmentMode"><enum name="alignBounds" value="0"/><enum name="alignMargins" value="1"/></attr><attr format="boolean" name="rowOrderPreserved"/><attr format="boolean" name="columnOrderPreserved"/></declare-styleable>
+    <declare-styleable name="GridLayout_Layout"><attr name="android:layout_width"/><attr name="android:layout_height"/><attr name="android:layout_margin"/><attr name="android:layout_marginLeft"/><attr name="android:layout_marginTop"/><attr name="android:layout_marginRight"/><attr name="android:layout_marginBottom"/><attr format="integer" name="layout_row"/><attr format="integer" min="1" name="layout_rowSpan"/><attr format="integer" name="layout_column"/><attr format="integer" min="1" name="layout_columnSpan"/><attr name="layout_gravity"><flag name="top" value="0x30"/><flag name="bottom" value="0x50"/><flag name="left" value="0x03"/><flag name="right" value="0x05"/><flag name="center_vertical" value="0x10"/><flag name="fill_vertical" value="0x70"/><flag name="center_horizontal" value="0x01"/><flag name="fill_horizontal" value="0x07"/><flag name="center" value="0x11"/><flag name="fill" value="0x77"/><flag name="clip_vertical" value="0x80"/><flag name="clip_horizontal" value="0x08"/><flag name="start" value="0x00800003"/><flag name="end" value="0x00800005"/></attr></declare-styleable>
+    <declare-styleable name="LinearLayoutICS"><attr name="divider"/><attr name="showDividers"><flag name="none" value="0"/><flag name="beginning" value="1"/><flag name="middle" value="2"/><flag name="end" value="4"/></attr><attr format="dimension" name="dividerPadding"/></declare-styleable>
+    <declare-styleable name="MenuGroup"><attr name="android:id"/><attr name="android:menuCategory"/><attr name="android:orderInCategory"/><attr name="android:checkableBehavior"/><attr name="android:visible"/><attr name="android:enabled"/></declare-styleable>
+    <declare-styleable name="MenuItem"><attr name="android:id"/><attr name="android:menuCategory"/><attr name="android:orderInCategory"/><attr name="android:title"/><attr name="android:titleCondensed"/><attr name="android:icon"/><attr name="android:alphabeticShortcut"/><attr name="android:numericShortcut"/><attr name="android:checkable"/><attr name="android:checked"/><attr name="android:visible"/><attr name="android:enabled"/><attr name="android:onClick"/><attr name="showAsAction"><flag name="never" value="0"/><flag name="ifRoom" value="1"/><flag name="always" value="2"/><flag name="withText" value="4"/><flag name="collapseActionView" value="8"/></attr><attr format="reference" name="actionLayout"/><attr format="string" name="actionViewClass"/><attr format="string" name="actionProviderClass"/></declare-styleable>
+    <declare-styleable name="MenuView"><attr name="android:itemTextAppearance"/><attr name="android:horizontalDivider"/><attr name="android:verticalDivider"/><attr name="android:headerBackground"/><attr name="android:itemBackground"/><attr name="android:windowAnimationStyle"/><attr name="android:itemIconDisabledAlpha"/><attr name="android:preserveIconSpacing"/></declare-styleable>
+    <declare-styleable name="SearchView"><attr format="boolean" name="iconifiedByDefault"/><attr name="android:maxWidth"/><attr format="string" name="queryHint"/><attr name="android:imeOptions"/><attr name="android:inputType"/></declare-styleable>
+    <declare-styleable name="Spinner"><attr format="reference" name="prompt"/><attr format="enum" name="spinnerMode"><enum name="dialog" value="0"/><enum name="dropdown" value="1"/></attr><attr name="android:dropDownSelector"/><attr name="android:popupBackground"/><attr name="android:dropDownVerticalOffset"/><attr name="android:dropDownHorizontalOffset"/><attr name="android:dropDownWidth"/><attr format="reference" name="popupPromptView"/><attr name="android:gravity"/><attr format="boolean" name="disableChildrenWhenDisabled"/></declare-styleable>
+    <declare-styleable name="Theme"><attr format="reference" name="actionDropDownStyle"/><attr format="dimension" name="dropdownListPreferredItemHeight"/><attr format="reference" name="popupMenuStyle"/><attr format="dimension" name="panelMenuListWidth"/><attr format="reference" name="panelMenuListTheme"/><attr format="reference" name="listChoiceBackgroundIndicator"/></declare-styleable>
+    <declare-styleable name="View"><attr format="dimension" name="paddingStart"/><attr format="dimension" name="paddingEnd"/><attr name="android:focusable"/></declare-styleable>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="abc_action_bar_default_height">48dip</dimen>
+    <dimen name="abc_action_bar_icon_vertical_padding">8dip</dimen>
+    <dimen name="abc_action_bar_progress_bar_size">40dp</dimen>
+    <dimen name="abc_action_bar_stacked_max_height">48dp</dimen>
+    <dimen name="abc_action_bar_stacked_tab_max_width">180dp</dimen>
+    <dimen name="abc_action_bar_subtitle_bottom_margin">5dip</dimen>
+    <dimen name="abc_action_bar_subtitle_text_size">14dp</dimen>
+    <dimen name="abc_action_bar_subtitle_top_margin">-3dp</dimen>
+    <dimen name="abc_action_bar_title_text_size">18dp</dimen>
+    <dimen name="abc_action_button_min_width">56dip</dimen>
+    <dimen name="abc_config_prefDialogWidth">320dp</dimen>
+    <dimen name="abc_dropdownitem_icon_width">32dip</dimen>
+    <dimen name="abc_dropdownitem_text_padding_left">8dip</dimen>
+    <dimen name="abc_dropdownitem_text_padding_right">8dip</dimen>
+    <dimen name="abc_panel_menu_list_width">296dp</dimen>
+    <dimen name="abc_search_view_preferred_width">320dip</dimen>
+    <dimen name="abc_search_view_text_min_width">160dip</dimen>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/com.android.support/gridlayout-v7/18.0.0/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="default_gap">16dip</dimen>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <eat-comment/>
+    <item name="dialog_fixed_height_major" type="dimen">80%</item>
+    <item name="dialog_fixed_height_minor" type="dimen">100%</item>
+    <item name="dialog_fixed_width_major" type="dimen">320dp</item>
+    <item name="dialog_fixed_width_minor" type="dimen">320dp</item>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <drawable name="black">#ff000000</drawable>
+    <drawable name="white">#ffffffff</drawable>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <eat-comment/>
+    <item name="action_bar_activity_content" type="id"/>
+    <item name="action_menu_divider" type="id"/>
+    <item name="action_menu_presenter" type="id"/>
+    <item name="home" type="id"/>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <item name="mapview" type="id"/>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <eat-comment/>
+    <item name="progress_circular" type="id"/>
+    <item name="progress_horizontal" type="id"/>
+    <integer name="abc_max_action_buttons">2</integer>
+    <string name="abc_action_bar_home_description">Navigate home</string>
+    <string name="abc_action_bar_up_description">Navigate up</string>
+    <string name="abc_action_menu_overflow_description">More options</string>
+    <string name="abc_action_mode_done">Done</string>
+    <string name="abc_activity_chooser_view_see_all">See all</string>
+    <string name="abc_activitychooserview_choose_application">Choose an app</string>
+    <string name="abc_searchview_description_clear">Clear query</string>
+    <string name="abc_searchview_description_query">Search query</string>
+    <string name="abc_searchview_description_search">Search</string>
+    <string name="abc_searchview_description_submit">Submit query</string>
+    <string name="abc_searchview_description_voice">Voice search</string>
+    <string name="abc_shareactionprovider_share_with">Share with</string>
+    <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="accept_bearing">Record Bearing</string>
+    <string name="accept_location">Record Location</string>
+    <string name="access_error">Error while accessing %s: </string>
+    <string name="accuracy">Accuracy</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="action_active_visits">Active Visits</string>
+    <string name="action_capture_vitals">Capture Vitals</string>
+    <string name="action_end_visit">End Visit</string>
+    <string name="action_find_patients">Find Patients</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_start_visit">Start visit</string>
+    <string name="action_synchronize_patients">Synchronizing patient</string>
+    <string name="active_visit_label">Active visit</string>
+    <string name="active_visit_label_capture_vitals">On Visit</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="activity_not_found">No activity found to handle: %s</string>
+    <string name="add_another">Add Group</string>
+    <string name="add_another_repeat">Add another \"%s\" group?</string>
+    <string name="add_more">Add more</string>
+    <string name="add_repeat">Add a new \"%s\" group?</string>
+    <string name="add_repeat_no">Do Not Add</string>
+    <string name="added_on_date_at_time">\'Added on\' EEE, MMM dd, yyyy \'at\' HH:mm</string>
+    <string name="admin_access_settings">Tap for admin access to settings</string>
+    <string name="admin_password_changed">Admin password successfully changed</string>
+    <string name="admin_password_disabled">Admin password disabled</string>
+    <string name="admin_password_incorrect">Sorry, password is incorrect!</string>
+    <string name="admin_password_mismatch">Sorry, passwords do not match!</string>
+    <string name="admin_preferences">Admin Settings</string>
+    <string name="advance">forward to\nnext\nprompt</string>
+    <string name="altitude">Altitude</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="app_name">OpenMRS Client</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="app_url">http://opendatakit.org</string>
+    <string name="audio_file_error">No audio file was specified.</string>
+    <string name="audio_file_invalid">File: %s is not a valid audio file.</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="auth_failed_dialog_message">Your user name or password may be incorrect. Please try again.</string>
+    <string name="auth_failed_dialog_title">Authentication Failed</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="autosend">Auto Send</string>
+    <string name="autosend_network">Auto send with network</string>
+    <string name="autosend_network_summary">Auto send when network is available</string>
+    <string name="autosend_wifi">Auto send with Wi-Fi</string>
+    <string name="autosend_wifi_summary">Auto send when Wi-Fi is available</string>
+    <string name="backup">backward to\nprevious\nprompt</string>
+    <string name="barcode_scanner_error">Sorry, Barcode Scanner is not installed!</string>
+    <string name="buttons_instructions">You are at the start of %s. Tap the arrow buttons below to go backward and forward.</string>
+    <string name="buttons_navigation">Use forward/backward buttons</string>
+    <string name="cancel">Cancel</string>
+    <string name="cancel_loading_form">Cancel</string>
+    <string name="cancel_location">Cancel</string>
+    <string name="cancel_saving_form">Cancel</string>
+    <string name="cannot_edit_completed_form">This form cannot be edited once it has been marked as complete. It may be encrypted.</string>
+    <string name="capture_audio">Record Sound</string>
+    <string name="capture_image">Take Picture</string>
+    <string name="capture_video">Record Video</string>
+    <string name="change_font_size">Text font size</string>
+    <string name="change_formlist_url">Form list path (appended to URL)</string>
+    <string name="change_language">Change Language</string>
+    <string name="change_password">ODK Password</string>
+    <string name="change_protocol">Platform</string>
+    <string name="change_server">Platform</string>
+    <string name="change_server_url">URL</string>
+    <string name="change_splash_path">Change image</string>
+    <string name="change_submission_url">Submission path (appended to URL)</string>
+    <string name="change_url_default">URL</string>
+    <string name="change_username">ODK Username</string>
+    <string name="change_username_default">Username</string>
+    <string name="change_view">Change View</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="check_visit_dialog_title">Checking Visits</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="choose_image">Choose Image</string>
+    <string name="choose_sound">Choose Sound</string>
+    <string name="choose_video">Choose Video</string>
+    <string name="clear_answer">Remove response</string>
+    <string name="clear_answer_ask">Remove This Response?</string>
+    <string name="clear_answer_no">Cancel</string>
+    <string name="clearanswer_confirm">Remove the response to \"%s\"?</string>
+    <string name="click_to_web">Tap to visit http://opendatakit.org</string>
+    <string name="client">User Interface</string>
+    <string name="completed_data">Complete (%s)</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="conn_timeout_dialog_message">A network error has occurred - Connection Timeout.\nPlease try again in a few seconds.</string>
+    <string name="conn_timeout_dialog_title">Connection Failed</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="constraint_behavior">Constraint processing behavior</string>
+    <string name="constraint_behavior_on_finalize">Defer validation until finalized</string>
+    <string name="constraint_behavior_on_swipe">Validate upon forward swipe</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="dashboard_logged_as">logged as %1$s</string>
+    <string name="dashboard_registry_icon_label">Registry Patient</string>
+    <string name="dashboard_search_icon_label">Find Patients</string>
+    <string name="dashboard_visits_icon_label">Active Visits</string>
+    <string name="dashboard_vitals_icon_label">Capture Vitals</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="data">Saved Forms</string>
+    <string name="data_saved_error">Sorry, form save failed!</string>
+    <string name="data_saved_ok">Form successfully saved!</string>
+    <string name="default_completed">Default to finalized</string>
+    <string name="default_completed_summary">Mark form as finalized by default</string>
+    <string name="default_odk_formlist" translatable="false">/formList</string>
+    <string name="default_odk_submission" translatable="false">/submission</string>
+    <string name="default_server_url" translatable="false">http://opendatakit.appspot.com</string>
+    <string name="default_splash_path">ODK Default</string>
+    <string name="delete_confirm">Delete %s form(s)?</string>
+    <string name="delete_file">Delete Selected</string>
+    <string name="delete_no">Do Not Delete</string>
+    <string name="delete_repeat">Remove group</string>
+    <string name="delete_repeat_ask">Remove This Group?</string>
+    <string name="delete_repeat_confirm">Remove group \"%s\" and all of its sub-groups?</string>
+    <string name="delete_repeat_no">Cancel</string>
+    <string name="delete_yes">Delete Forms</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="diagnosis_none_label">Diagnoses are not available yet</string>
+    <string name="diagnosis_note_label">Text of encounter note</string>
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_confirm">Confirm</string>
+    <string name="dialog_button_done">Done</string>
+    <string name="dialog_button_ok">OK</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="discard_answer">Remove response</string>
+    <string name="discard_group">Remove group</string>
+    <string name="do_not_change">Cancel</string>
+    <string name="do_not_exit">Cancel</string>
+    <string name="do_not_save">Ignore Changes</string>
+    <string name="download">Get Selected</string>
+    <string name="download_forms_result">Download Result</string>
+    <string name="downloading_data">Connecting to Server</string>
+    <string name="draw_image">Sketch Image</string>
+    <string name="edit_prompt">Edit Prompt</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="empty_diagnoses_list">Patient has no diagnoses yet.</string>
+    <string name="empty_visits_list">Patient has no visits yet.</string>
+    <string name="end_visit_dialog_message">Are you sure you want to end this visit?</string>
+    <string name="end_visit_dialog_title">End Visit</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="enter_admin_password">Enter Admin Password</string>
+    <string name="enter_data">Fill Blank Form</string>
+    <string name="enter_data_button">Fill Blank Form</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="entering_repeat">Add Group</string>
+    <string name="entering_repeat_ask">Add New Group?</string>
+    <string name="error_attaching_binary_file">An error occurred while attaching the media: %s</string>
+    <string name="error_occured">Error Occurred</string>
+    <string name="ext_assign_value_error">Cannot assign the value at \'%s\'.</string>
+    <string name="ext_conflicting_columns_error">Columns %s match!</string>
+    <string name="ext_file_no_data_error">The file contains no data!</string>
+    <string name="ext_import_cancelled_message">Reading data cancelled!</string>
+    <string name="ext_import_completed_message">Reading data completed!</string>
+    <string name="ext_import_csv_missing_error">External data for %1$s has not been imported. Perhaps you forgot to include the %2$s.csv file with your form?</string>
+    <string name="ext_import_finalizing_message">Finalizing pre-loaded data…</string>
+    <string name="ext_import_generic_error">Could not import data from %1$s. Reason: %2$s</string>
+    <string name="ext_import_progress_message">Pre-loading data from \'%1$s\', please wait… %2$s</string>
+    <string name="ext_not_initialized_error">The ExternalDataManager has not been initialized.</string>
+    <string name="ext_search_bad_function_error">Syntax error in search() function: \'%s\' was not evaluated as a function.</string>
+    <string name="ext_search_generic_error">Syntax error in search() function: %s</string>
+    <string name="ext_search_return_error">The search handler returned a object of type \'%s\'.</string>
+    <string name="ext_search_wrong_arguments_error">"Syntax error in search() function: The function needs 1, 4 or 6 arguments."</string>
+    <string name="ext_search_wrong_function_error">Syntax error in search() function : Unrecognised function \'%s\'.</string>
+    <string name="ext_sortBy_numeric_error">Your sortby column should contain only numeric values. Conflicting value was \'%s\'.</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="failed_to_open_vitals_form">An error occurred. Invalid or corrupted form file.</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="fetching_file">Getting %1$s.\n\nForm %2$s of %3$s form(s).</string>
+    <string name="fetching_manifest">%s. Getting manifest </string>
+    <string name="file_delete_in_progress">Sorry, a form delete action is already in progress!</string>
+    <string name="file_deleted_error">Sorry, %1$s of %2$s selected form(s) failed to delete!</string>
+    <string name="file_deleted_ok">%s form(s) successfully deleted!</string>
+    <string name="file_fetch_failed">Error: %2$s (%3$s) at %1$s</string>
+    <string name="file_invalid">File: %s is invalid.</string>
+    <string name="file_missing">File: %s is missing.</string>
+    <string name="finalized_on_date_at_time">\'Finalized on\' EEE, MMM dd, yyyy \'at\' HH:mm</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="find_patient_no_connection">No internet connection available</string>
+    <string name="find_patient_no_last_viewed">No last viewed patients</string>
+    <string name="find_patient_tab_downloaded_label">Downloaded</string>
+    <string name="find_patient_tab_last_viewed_label">Last viewed</string>
+    <string name="find_patients_row_checkbox_available_offline_label">Available offline</string>
+    <string name="find_patients_row_checkbox_download_label">Download</string>
+    <string name="find_patients_row_toast_patient_save_error">Some error occurred. Try synchronize patient data</string>
+    <string name="find_patients_row_toast_patient_saved">Patient is now available locally</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="finished_disk_scan">Finished scanning. All forms loaded.</string>
+    <string name="font_size">Text font size</string>
+    <string name="font_size_extra_large">Extra Large</string>
+    <string name="font_size_extra_small">Extra Small</string>
+    <string name="font_size_large">Large</string>
+    <string name="font_size_medium">Medium</string>
+    <string name="font_size_small">Small</string>
+    <string name="form_backward">Prev</string>
+    <string name="form_download_progress">%1$s. Getting media files: %2$s of %3$s</string>
+    <string name="form_forward">Next</string>
+    <string name="form_scan_starting">Scanning for forms…</string>
+    <string name="formlist_url">Form list path</string>
+    <string name="forms">Blank Forms</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="forms_sent_successfully">Form has been sent successfully.</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="found_at_end">Uncheck to hide from end of Form Entry</string>
+    <string name="found_in_main">Uncheck to hide from Main Menu</string>
+    <string name="found_in_menu">Uncheck to hide from menu in Form Entry</string>
+    <string name="found_in_settings">Uncheck to hide from General Settings</string>
+    <string name="fs_create_folder_error">Collect reports: Cannot create directory: %s</string>
+    <string name="fs_create_folder_is_file_error">Collect reports: \'%s\' exists, but is not a directory.</string>
+    <string name="fs_create_media_folder_error">Could not create media folder \'%s\'.</string>
+    <string name="fs_delete_media_path_if_file_error">Could not delete \'%s\'. Please delete the file manually and re-download the form.</string>
+    <string name="fs_file_copy_error">Could not copy \'%1$s\' over \'%2$s\'. Reason: %3$s</string>
+    <string name="general_preferences">General Settings</string>
+    <string name="get_barcode">Get Barcode</string>
+    <string name="get_bearing">Record Bearing</string>
+    <string name="get_forms">Get Blank Form</string>
+    <string name="get_location">Record Location</string>
+    <string name="getting_bearing">Loading Bearing</string>
+    <string name="getting_location">Loading Location</string>
+    <string name="go_to_location">Go to Location</string>
+    <string name="high_resolution">Enable hi-res video</string>
+    <string name="high_resolution_summary">Enable high-resolution video recordings</string>
+    <string name="invalid_answer_error">Sorry, this response is invalid!</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="invalid_url_dialog_message">Cannot find server. Please check the URL and try again.</string>
+    <string name="invalid_url_dialog_title">Cannot find server</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="jump_to_beginning">Go To Start</string>
+    <string name="jump_to_end">Go To End</string>
+    <string name="jump_to_previous">Go Up</string>
+    <string name="keep_changes">Save Changes</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="last_vitals_label">Last Vitals: </string>
+    <string name="last_vitals_none_label">None</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="latitude">Latitude</string>
+    <string name="launch_app">Launch</string>
+    <string name="launch_printer">Initiate Printing</string>
+    <string name="leave_repeat_yes">Do Not Add</string>
+    <string name="leaving_repeat_ask">Add One More Group?</string>
+    <string name="list_failed_with_error">Form listing failed. %s.</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="list_item_encounter_no_notes">No notes for this encounter.</string>
+    <string name="list_visit_selector_hide">hide details</string>
+    <string name="list_visit_selector_show">show details</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="load_remote_form_error">Error Getting Form List</string>
+    <string name="loading_form">Loading Form</string>
+    <string name="location_accuracy">Accuracy is %1$s m</string>
+    <string name="location_provider_accuracy">Using %1$s. Accuracy is %2$s m.</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="login_button">Login</string>
+    <string name="login_dialog_login_or_password_empty">Login and password can not be empty.</string>
+    <string name="login_dialog_server_url_empty_error">Server URL can not be empty.</string>
+    <string name="login_dialog_title">Enter URL address</string>
+    <string name="login_location_select">Choose location for this session</string>
+    <string name="login_password_hint">password</string>
+    <string name="login_username_hint">username</string>
+    <string name="logout_dialog_button">Logout</string>
+    <string name="logout_dialog_message">Are you sure you want to logout from OpenMRS client?</string>
+    <string name="logout_dialog_title">Logging out</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="longitude">Longitude</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="main_menu_details">Data collection made easier…</string>
+    <string name="manage_files">Delete Saved Form</string>
+    <string name="manifest_server_error">Manifest reply does not report an OpenRosa version — bad server?</string>
+    <string name="manifest_tag_error">Manifest entry %s is missing one or more tags: filename, hash, or downloadUrl</string>
+    <string name="mark_finished">Mark form as finalized</string>
+    <string name="markup_image">Markup Image</string>
+    <string name="navigation">Navigation</string>
+    <string name="no_account">No account</string>
+    <string name="no_app">The requested application is missing. Please manually enter the reading.</string>
+    <string name="no_connection">No network connection available</string>
+    <string name="no_forms_uploaded">Sorry, no form was uploaded.</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="no_internet_conn_dialog_message">Your have no internet connection.\nPlease check phone or Wi-Fi connection and signal strength and try again.</string>
+    <string name="no_internet_conn_dialog_title">No internet connection</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="no_items_display">Nothing available to display.</string>
+    <string name="no_items_display_forms">Nothing available to display.\n\nTry getting and filling out a blank form.</string>
+    <string name="no_items_display_instances">Nothing available to display.\n\nTry finalizing saved forms before sending.</string>
+    <string name="no_printer">The requested printer is not installed. Please install the printer.</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="no_visit_dialog_button_accept">Yes</string>
+    <string name="no_visit_dialog_button_cancel">Cancel</string>
+    <string name="no_visit_dialog_message">This user has no active visit. Would you like to start one now?</string>
+    <string name="no_visit_dialog_title">Start new visit</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="noselect_error">Sorry, you have not selected any forms!</string>
+    <string name="ok">OK</string>
+    <string name="open_url">Open Url</string>
+    <string name="parent_form_not_present">Unable to edit this saved form because the corresponding blank form is not present or was deleted.\n\nForm ID: %1$s</string>
+    <string name="parse_error">Sorry, unable to parse form.</string>
+    <string name="parse_legacy_formlist_failed">The server has not provided an available-forms document compatible with Aggregate 0.9.x. : %s</string>
+    <string name="parse_openrosa_formlist_failed">The server has not provided an available-forms document compatible with the OpenRosa version 1.0 standard: %s</string>
+    <string name="password">Password</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="past_visit_label">Past visit</string>
+    <string name="patient_address_info_label">Contact information</string>
+    <string name="patient_address_label">Address</string>
+    <string name="patient_city_label">City</string>
+    <string name="patient_country_label">Country</string>
+    <string name="patient_details_birth_date_label">Birth date</string>
+    <string name="patient_details_gender_label">Gender</string>
+    <string name="patient_details_phone_label">Phone number</string>
+    <string name="patient_information_label">Patient information</string>
+    <string name="patient_postal_label">Postal Code</string>
+    <string name="patient_scroll_tab_details_label">Details</string>
+    <string name="patient_scroll_tab_diagnosis_label">Diagnosis</string>
+    <string name="patient_scroll_tab_visits_label">Visits</string>
+    <string name="patient_scroll_tab_vitals_label">Vitals</string>
+    <string name="patient_state_label">State</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="play_audio">Play Sound</string>
+    <string name="play_video">Play Video</string>
+    <string name="please_wait">Please wait a few moments.</string>
+    <string name="please_wait_long">Please wait. This could take a few minutes.</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="progress_dialog_message">Please wait ...</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="protocol">Platform</string>
+    <string name="protocol_google" translatable="false">google</string>
+    <string name="protocol_odk_default" translatable="false">odk_default</string>
+    <string name="protocol_other" translatable="false"/>
+    <string name="provider_disabled_error">Sorry, Location providers are disabled!</string>
+    <string name="quit_application">Exit %s</string>
+    <string name="quit_entry">Save Form and Exit</string>
+    <string name="refresh">Refresh</string>
+    <string name="replace_barcode">Replace Barcode</string>
+    <string name="replace_bearing">Replace Bearing</string>
+    <string name="replace_location">Replace Location</string>
+    <string name="required_answer_error">Sorry, this response is required!</string>
+    <string name="reset_image">Reset</string>
+    <string name="review_data">Edit Saved Form</string>
+    <string name="review_data_button">Edit Saved Form (%s)</string>
+    <string name="root_element_error">Root element is not &lt;manifest\> — was %s</string>
+    <string name="root_namespace_error">Root element Namespace is incorrect: %s</string>
+    <string name="save_all_answers">Save Form</string>
+    <string name="save_and_close">Save and Close</string>
+    <string name="save_as_error">Saved name must not be blank!</string>
+    <string name="save_enter_data_description">You are at the end of %s.</string>
+    <string name="save_form_as">Name this form</string>
+    <string name="save_mid">Save Form</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="save_patient_data_dialog">Saving patient data</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="save_point_error">Error saving recovery point: %s</string>
+    <string name="save_preferences">Save Settings to Disk</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="save_upload_button">Save and Send Vitals</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="saved_data">Incomplete (%s)</string>
+    <string name="saved_on_date_at_time">\'Saved on\' EEE, MMM dd, yyyy \'at\' HH:mm</string>
+    <string name="savepoint_used">Unsaved changes recovered from savepoint!</string>
+    <string name="saving_form">Saving Form</string>
+    <string name="sdcard_unmounted">Collect cannot access the SD card. Perhaps it is mounted via USB? (Current state: %s)</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="search_patient_hint">Patient name</string>
+    <string name="search_patient_no_result_for_query">No results found for query \"%1$s\"</string>
+    <string name="search_patient_no_results">No patients in database</string>
+    <string name="search_visits_no_results">No visits in database</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="select_another_image">Select another image</string>
+    <string name="select_answer">Select Answer</string>
+    <string name="select_drawing_color">Select Drawing Color</string>
+    <string name="select_one">Select One Answer</string>
+    <string name="selected">Selected: </string>
+    <string name="selected_google_account_text">Google account</string>
+    <string name="send_data">Send Finalized Form</string>
+    <string name="send_data_button">Send Finalized Form (%s)</string>
+    <string name="send_selected_data">Send Selected</string>
+    <string name="sending_failed_on_date_at_time">\'Sending failed on\' EEE, MMM dd, yyyy \'at\' HH:mm</string>
+    <string name="sending_items">Sending %1$s of %2$s form(s)</string>
+    <string name="sent_on_date_at_time">\'Sent on\' EEE, MMM dd, yyyy \'at\' HH:mm</string>
+    <string name="server_auth_credentials">Please enter username and password for server:\n%s</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="server_error_dialog_message">Server error occurred.\nPlease check the URL or internet connection and try again.</string>
+    <string name="server_error_dialog_title">Server Error</string>
+    <string name="server_not_supported_dialog_message">Server could not be supported. Change URL address.</string>
+    <string name="server_not_supported_dialog_title">Server Not Supported</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="server_platform_google_forms">Google Forms</string>
+    <string name="server_platform_odk_aggregate">ODK Aggregate</string>
+    <string name="server_platform_other">Other</string>
+    <string name="server_preferences">Server Settings</string>
+    <string name="server_requires_auth">Server Requires Authentication</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="server_unavailable_dialog_message">Cannot connect with server.\nPlease check the URL or internet connection and try again.</string>
+    <string name="server_unavailable_dialog_title">Server Unavailable</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="server_url">URL</string>
+    <string name="set_color">Set Color</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="settings_about">About</string>
+    <string name="settings_downloadForms">Download forms</string>
+    <string name="settings_forms_downloaded_error">Some error occurred during downloaded forms.</string>
+    <string name="settings_forms_downloaded_succesfull">Forms downloaded successful.</string>
+    <string name="settings_forms_downloading">Downloading forms...</string>
+    <string name="settings_logout">Logout</string>
+    <string name="settings_logs">Logs</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="show_location">Show Location</string>
+    <string name="show_sent_and_unsent_forms">Show Sent and Unsent Forms</string>
+    <string name="show_splash">Show splash screen</string>
+    <string name="show_splash_summary">Shows when application starts</string>
+    <string name="show_unsent_forms">Show Unsent Forms</string>
+    <string name="sign_button">Gather Signature</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="socket_exception_dialog_message">A connection error has occurred .\nPlease try again in a few seconds.</string>
+    <string name="socket_exception_dialog_title">Connection Failed</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="splash_path">Selected splash image</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="start_visit_dialog_message">Are you sure you want to start visit for %1$s now?</string>
+    <string name="start_visit_dialog_title">Start Visit</string>
+    <string name="start_visit_error">Start new visit unsuccessful</string>
+    <string name="start_visit_impossible_dialog_message">There are already active visit. Synchronize patient or close previous visit</string>
+    <string name="start_visit_impossible_dialog_title">Start Visit Impossible</string>
+    <string name="start_visit_successful">Start new visit successful</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="submission_url">Submission path</string>
+    <string name="success">Success</string>
+    <string name="survey_internal_error">Internal error: step to prompt failed.</string>
+    <string name="survey_loading_reading_csv_message">Reading CSV files…</string>
+    <string name="survey_loading_reading_data_message">Reading survey data…</string>
+    <string name="survey_loading_reading_form_message">Reading form definition…</string>
+    <string name="survey_multiple_forms_error">You have downloaded two different forms with the same form ID and version. Maybe they were the same form uploaded at different times or to different servers. In any case, you should delete one.</string>
+    <string name="survey_saving_collecting_message">Collecting data…</string>
+    <string name="survey_saving_encrypting_message">Encrypting data…</string>
+    <string name="survey_saving_finalizing_message">Finalizing to SD card…</string>
+    <string name="survey_saving_saving_message">Saving to SD card…</string>
+    <string name="survey_saving_validating_message">Validating answers…</string>
+    <string name="swipe_buttons_instructions">You are at the start of %s. Swipe the screen as shown below or tap the arrow buttons to go backward and forward.</string>
+    <string name="swipe_buttons_navigation">Use swipes and buttons</string>
+    <string name="swipe_instructions">You are at the start of %s. Swipe the screen as shown below to go backward and forward.</string>
+    <string name="swipe_navigation">Use horizontal swipes</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="synchronize_patient_error">Synchronize patient data unsuccessful</string>
+    <string name="synchronize_patient_successful">Synchronize patient data successful</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="toggle_selected">Toggle All</string>
+    <string name="trigger">OK. Please continue.</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="unauthorized_dialog_message">Session expired. Please log in again.</string>
+    <string name="unauthorized_dialog_title">Unauthorized</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="upload_results">Upload Results</string>
+    <string name="uploading_data">Sending Form</string>
+    <string name="url_error">Sorry, invalid URL!</string>
+    <string name="use_odk_default">Use default image</string>
+    <string name="user_access_form_entry">User can access Form Entry items:</string>
+    <string name="user_access_main_menu">User can access Main Menu items:</string>
+    <string name="user_access_preferences">User can access Change Settings items:</string>
+    <string name="username">Username</string>
+    <string name="verify_new_password">Re-enter new password</string>
+    <string name="version">Version:</string>
+    <string name="view_change_location">View or Change Location</string>
+    <string name="view_hierarchy">Go To Prompt</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="visit_dashboard_label">Encounters</string>
+    <string name="visit_exp_list_empty">Visit has no encounters yet.</string>
+    <string name="visit_in">in %1$s</string>
+    <string name="warning_dialog_title">Warning</string>
+    <string name="warning_lost_data_dialog">You change url or username. All data will be lost. Are you sure?</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <string name="xform_parse_error">XForm parse error. %1$s is missing element %2$s</string>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/styles_openmrs.xml -->
+    <eat-comment/>
+    <style name="ActionBar.Solid.Openmrs" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/ab_solid_openmrs</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_openmrs</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_openmrs</item>
+        <item name="progressBarStyle">@style/ProgressBar.Openmrs</item>
+    </style>
+    <style name="ActionBar.Transparent.Openmrs" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="background">@drawable/ab_transparent_openmrs</item>
+        <item name="progressBarStyle">@style/ProgressBar.Openmrs</item>
+    </style>
+    <style name="ActionBarTabStyle.Openmrs" parent="@style/Widget.AppCompat.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_openmrs</item>
+    </style>
+    <style name="ActionButton.CloseMode.Openmrs" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_openmrs</item>
+    </style>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="AddressFields">
+        <item name="android:layout_marginTop">3dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="AddressFieldsLabel">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Medium</item>
+    </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    </style>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client-gradle/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
+    <style name="Collect" parent="android:Theme.Light">
+	    <item name="android:scrollbarThumbHorizontal">@+drawable/thumb</item>
+	    <item name="android:scrollbarThumbVertical">@+drawable/thumb</item>
+	    <item name="android:scrollbarSize">1.75mm</item>
+	    <item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
+	    <item name="android:fadeScrollbars">false</item>
+	</style>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="DialogLabelBorderless">
+        <item name="android:background">@color/black</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/theme.xml -->
+    <eat-comment/>
+    <style name="DialogTheme" parent="android:Theme.Dialog">
+        <item name="android:background">#ffffff</item>
+    </style>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="Divider">
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+    <style name="Divider.Horizontal">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+    <style name="Divider.Horizontal.DarkGray">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">55dp</item>
+        <item name="android:background">@color/dark_grey</item>
+    </style>
+    <style name="Divider.Vertical">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">?android:attr/listDivider</item>
+    </style>
+    <style name="Divider.Vertical.NoStickyEdges">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+    </style>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/styles_openmrs.xml -->
+    <eat-comment/>
+    <style name="DropDownListView.Openmrs" parent="@style/Widget.AppCompat.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_openmrs</item>
+    </style>
+    <style name="DropDownNav.Openmrs" parent="@style/Widget.AppCompat.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_openmrs</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_openmrs</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_openmrs</item>
+    </style>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/theme.xml -->
+    <eat-comment/>
+    <style name="LoadingDialogTheme.DialogTheme" parent="android:Theme.Dialog">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/styles_openmrs.xml -->
+    <eat-comment/>
+    <style name="MenuTextApearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item> <!-- For 2.x version  -->
+    </style>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/styles_openmrs.xml -->
+    <eat-comment/>
+    <style name="PopupMenu.Openmrs" parent="@style/Widget.AppCompat.PopupMenu">	
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_openmrs</item>	
+    </style>
+    <style name="ProgressBar.Openmrs" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_openmrs</item>
+    </style>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <eat-comment/>
+    <style name="TextAppearance.AppCompat.Base.CompactMenu.Dialog" parent="android:TextAppearance.Medium">
+        <item name="android:textColor">@android:color/primary_text_light</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Base.SearchResult" parent="">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textColorHint">?android:textColorHint</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Base.SearchResult.Subtitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Base.SearchResult.Title">
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Base.Widget.PopupMenu.Large" parent="android:TextAppearance.Widget">
+        <item name="android:textColor">?android:attr/textColorPrimaryDisableOnly</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Base.Widget.PopupMenu.Small" parent="android:TextAppearance.Widget">
+        <item name="android:textColor">?android:attr/textColorPrimaryDisableOnly</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Light.Base.SearchResult" parent="TextAppearance.AppCompat.Base.SearchResult">
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="android:textColorHint">?android:textColorHint</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Light.Base.SearchResult.Subtitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?android:textColorSecondary</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Light.Base.SearchResult.Title">
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Light.Base.Widget.PopupMenu.Large" parent="TextAppearance.AppCompat.Base.Widget.PopupMenu.Large"/>
+    <style name="TextAppearance.AppCompat.Light.Base.Widget.PopupMenu.Small" parent="TextAppearance.AppCompat.Base.Widget.PopupMenu.Small"/>
+    <style name="TextAppearance.AppCompat.Light.SearchResult.Subtitle" parent="TextAppearance.AppCompat.Light.Base.SearchResult.Subtitle"/>
+    <style name="TextAppearance.AppCompat.Light.SearchResult.Title" parent="TextAppearance.AppCompat.Light.Base.SearchResult.Title"/>
+    <style name="TextAppearance.AppCompat.Light.Widget.PopupMenu.Large" parent="TextAppearance.AppCompat.Light.Base.Widget.PopupMenu.Large"/>
+    <style name="TextAppearance.AppCompat.Light.Widget.PopupMenu.Small" parent="TextAppearance.AppCompat.Light.Base.Widget.PopupMenu.Small"/>
+    <style name="TextAppearance.AppCompat.SearchResult.Subtitle" parent="TextAppearance.AppCompat.Base.SearchResult.Subtitle"/>
+    <style name="TextAppearance.AppCompat.SearchResult.Title" parent="TextAppearance.AppCompat.Base.SearchResult.Title"/>
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Menu" parent="TextAppearance.AppCompat.Widget.Base.ActionBar.Menu"/>
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Subtitle" parent="TextAppearance.AppCompat.Widget.Base.ActionBar.Subtitle"/>
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse" parent="TextAppearance.AppCompat.Widget.Base.ActionBar.Subtitle.Inverse"/>
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Title" parent="TextAppearance.AppCompat.Widget.Base.ActionBar.Title"/>
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse" parent="TextAppearance.AppCompat.Widget.Base.ActionBar.Title.Inverse"/>
+    <style name="TextAppearance.AppCompat.Widget.ActionMode.Subtitle" parent="TextAppearance.AppCompat.Widget.Base.ActionMode.Subtitle"/>
+    <style name="TextAppearance.AppCompat.Widget.ActionMode.Subtitle.Inverse" parent="TextAppearance.AppCompat.Widget.Base.ActionMode.Subtitle.Inverse"/>
+    <style name="TextAppearance.AppCompat.Widget.ActionMode.Title" parent="TextAppearance.AppCompat.Widget.Base.ActionMode.Title"/>
+    <style name="TextAppearance.AppCompat.Widget.ActionMode.Title.Inverse" parent="TextAppearance.AppCompat.Widget.Base.ActionMode.Title.Inverse"/>
+    <style name="TextAppearance.AppCompat.Widget.Base.ActionBar.Menu" parent="android:TextAppearance.Small">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/actionMenuTextColor</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Widget.Base.ActionBar.Subtitle" parent="android:TextAppearance.Small">
+        <item name="android:textSize">@dimen/abc_action_bar_subtitle_text_size</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Widget.Base.ActionBar.Subtitle.Inverse" parent="android:TextAppearance.Small.Inverse">
+        <item name="android:textSize">@dimen/abc_action_bar_subtitle_text_size</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Widget.Base.ActionBar.Title" parent="android:TextAppearance.Medium">
+        <item name="android:textSize">@dimen/abc_action_bar_title_text_size</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Widget.Base.ActionBar.Title.Inverse" parent="android:TextAppearance.Medium.Inverse">
+        <item name="android:textSize">@dimen/abc_action_bar_title_text_size</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Widget.Base.ActionMode.Subtitle" parent="android:TextAppearance.Small">
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Widget.Base.ActionMode.Subtitle.Inverse" parent="android:TextAppearance.Small.Inverse">
+        <item name="android:textColor">?android:attr/textColorSecondaryInverse</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Widget.Base.ActionMode.Title" parent="android:TextAppearance.Medium"/>
+    <style name="TextAppearance.AppCompat.Widget.Base.ActionMode.Title.Inverse" parent="android:TextAppearance.Medium.Inverse"/>
+    <style name="TextAppearance.AppCompat.Widget.Base.DropDownItem" parent="android:TextAppearance.Small">
+        <item name="android:textColor">?android:attr/textColorPrimaryDisableOnly</item>
+    </style>
+    <style name="TextAppearance.AppCompat.Widget.DropDownItem" parent="TextAppearance.AppCompat.Widget.Base.DropDownItem"/>
+    <style name="TextAppearance.AppCompat.Widget.PopupMenu.Large" parent="TextAppearance.AppCompat.Base.Widget.PopupMenu.Large"/>
+    <style name="TextAppearance.AppCompat.Widget.PopupMenu.Small" parent="TextAppearance.AppCompat.Base.Widget.PopupMenu.Small"/>
+    <style name="TextAppearance.Widget.AppCompat.Base.ExpandedMenu.Item" parent="android:TextAppearance.Medium">
+        <item name="android:textColor">?android:attr/textColorPrimaryDisableOnly</item>
+    </style>
+    <style name="TextAppearance.Widget.AppCompat.ExpandedMenu.Item" parent="TextAppearance.Widget.AppCompat.Base.ExpandedMenu.Item"/>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="TextLabel" parent="">
+        <item name="android:textSize">22sp</item>
+    </style>
+    <style name="TextLabel.Bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <eat-comment/>
+    <style name="Theme.AppCompat" parent="Theme.Base.AppCompat">
+        <item name="isLightTheme">false</item>
+
+        <!-- Required for use of support_simple_spinner_dropdown_item.xml -->
+        <item name="spinnerDropDownItemStyle">            @style/Widget.AppCompat.DropDownItem.Spinner</item>
+        <item name="dropdownListPreferredItemHeight">?attr/listPreferredItemHeightSmall</item>
+        <item name="searchResultListItemHeight">58dip</item>
+
+        <!-- Popup Menu styles -->
+        <item name="popupMenuStyle">@style/Widget.AppCompat.PopupMenu</item>
+        <item name="textAppearanceLargePopupMenu">            @style/TextAppearance.AppCompat.Widget.PopupMenu.Large</item>
+        <item name="textAppearanceSmallPopupMenu">            @style/TextAppearance.AppCompat.Widget.PopupMenu.Small</item>
+        <item name="listPopupWindowStyle">@style/Widget.AppCompat.ListPopupWindow</item>
+        <item name="dropDownListViewStyle">@style/Widget.AppCompat.ListView.DropDown</item>
+
+        <!-- SearchView attributes -->
+        <item name="searchDropdownBackground">@drawable/abc_search_dropdown_dark</item>
+        <item name="searchViewTextField">@drawable/abc_textfield_searchview_holo_dark</item>
+        <item name="searchViewTextFieldRight">@drawable/abc_textfield_searchview_right_holo_dark</item>
+        <item name="searchViewCloseIcon">@drawable/abc_ic_clear</item>
+        <item name="searchViewSearchIcon">@drawable/abc_ic_search</item>
+        <item name="searchViewGoIcon">@drawable/abc_ic_go</item>
+        <item name="searchViewVoiceIcon">@drawable/abc_ic_voice_search</item>
+        <item name="searchViewEditQuery">@drawable/abc_ic_commit_search_api_holo_dark</item>
+        <item name="searchViewEditQueryBackground">?attr/selectableItemBackground</item>
+        <item name="searchViewAutoCompleteTextView">            @style/Widget.AppCompat.AutoCompleteTextView</item>
+        <item name="textColorSearchUrl">@color/abc_search_url_text_holo</item>
+        <item name="textAppearanceSearchResultTitle">            @style/TextAppearance.AppCompat.SearchResult.Title</item>
+        <item name="textAppearanceSearchResultSubtitle">            @style/TextAppearance.AppCompat.SearchResult.Subtitle</item>
+        <item name="actionModeShareDrawable">@drawable/abc_ic_menu_share_holo_dark</item>
+
+        <!-- ShareActionProvider attributes -->
+        <item name="activityChooserViewStyle">@style/Widget.AppCompat.ActivityChooserView</item>
+    </style>
+    <style name="Theme.AppCompat.Base.CompactMenu" parent="">
+        <item name="android:itemTextAppearance">            @style/TextAppearance.Widget.AppCompat.ExpandedMenu.Item</item>
+        <item name="android:listViewStyle">@style/Widget.AppCompat.ListView.Menu</item>
+    </style>
+    <style name="Theme.AppCompat.Base.CompactMenu.Dialog" parent="">
+        <item name="android:itemTextAppearance">            @style/TextAppearance.AppCompat.Base.CompactMenu.Dialog</item>
+        <item name="android:listViewStyle">@android:style/Widget.ListView.Menu</item>
+    </style>
+    <style name="Theme.AppCompat.CompactMenu" parent="Theme.AppCompat.Base.CompactMenu"/>
+    <style name="Theme.AppCompat.CompactMenu.Dialog" parent="Theme.AppCompat.Base.CompactMenu.Dialog"/>
+    <style name="Theme.AppCompat.DialogWhenLarge" parent="Theme.Base.AppCompat.DialogWhenLarge"/>
+    <style name="Theme.AppCompat.Light" parent="Theme.Base.AppCompat.Light">
+        <item name="isLightTheme">true</item>
+
+        <!-- Required for use of support_simple_spinner_dropdown_item.xml -->
+        <item name="spinnerDropDownItemStyle">            @style/Widget.AppCompat.Light.DropDownItem.Spinner</item>
+        <item name="dropdownListPreferredItemHeight">?attr/listPreferredItemHeightSmall</item>
+        <item name="searchResultListItemHeight">58dip</item>
+
+        <!-- Popup Menu styles -->
+        <item name="popupMenuStyle">@style/Widget.AppCompat.Light.PopupMenu</item>
+        <item name="textAppearanceLargePopupMenu">            @style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large</item>
+        <item name="textAppearanceSmallPopupMenu">            @style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small</item>
+        <item name="listPopupWindowStyle">@style/Widget.AppCompat.Light.ListPopupWindow</item>
+        <item name="dropDownListViewStyle">@style/Widget.AppCompat.Light.ListView.DropDown</item>
+
+        <!-- SearchView attributes -->
+        <item name="searchDropdownBackground">@drawable/abc_search_dropdown_light</item>
+        <item name="searchViewTextField">@drawable/abc_textfield_searchview_holo_light</item>
+        <item name="searchViewTextFieldRight">@drawable/abc_textfield_searchview_right_holo_light</item>
+        <item name="searchViewCloseIcon">@drawable/abc_ic_clear_holo_light</item>
+        <item name="searchViewSearchIcon">@drawable/abc_ic_search_api_holo_light</item>
+        <item name="searchViewGoIcon">@drawable/abc_ic_go_search_api_holo_light</item>
+        <item name="searchViewVoiceIcon">@drawable/abc_ic_voice_search_api_holo_light</item>
+        <item name="searchViewEditQuery">@drawable/abc_ic_commit_search_api_holo_light</item>
+        <item name="searchViewEditQueryBackground">?attr/selectableItemBackground</item>
+        <item name="searchViewAutoCompleteTextView">            @style/Widget.AppCompat.Light.AutoCompleteTextView</item>
+        <item name="textColorSearchUrl">@color/abc_search_url_text_holo</item>
+        <item name="textAppearanceSearchResultTitle">            @style/TextAppearance.AppCompat.Light.SearchResult.Title</item>
+        <item name="textAppearanceSearchResultSubtitle">            @style/TextAppearance.AppCompat.Light.SearchResult.Subtitle</item>
+        <item name="actionModeShareDrawable">@drawable/abc_ic_menu_share_holo_light</item>
+
+        <!-- ShareActionProvider attributes -->
+        <item name="activityChooserViewStyle">@style/Widget.AppCompat.Light.ActivityChooserView</item>
+    </style>
+    <style name="Theme.AppCompat.Light.DarkActionBar" parent="Theme.Base.AppCompat.Light.DarkActionBar">
+        <item name="isLightTheme">true</item>
+
+        <!-- Required for use of support_simple_spinner_dropdown_item.xml -->
+        <item name="spinnerDropDownItemStyle">            @style/Widget.AppCompat.Light.DropDownItem.Spinner</item>
+        <item name="dropdownListPreferredItemHeight">?attr/listPreferredItemHeightSmall</item>
+        <item name="searchResultListItemHeight">58dip</item>
+
+        <!-- Popup Menu styles -->
+        <item name="popupMenuStyle">@style/Widget.AppCompat.Light.PopupMenu</item>
+        <item name="textAppearanceLargePopupMenu">            @style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large</item>
+        <item name="textAppearanceSmallPopupMenu">            @style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small</item>
+        <item name="listPopupWindowStyle">@style/Widget.AppCompat.ListPopupWindow</item>
+        <item name="dropDownListViewStyle">@style/Widget.AppCompat.ListView.DropDown</item>
+
+        <!-- SearchView attributes -->
+        <item name="searchDropdownBackground">@drawable/abc_search_dropdown_dark</item>
+        <item name="searchViewTextField">@drawable/abc_textfield_searchview_holo_dark</item>
+        <item name="searchViewTextFieldRight">@drawable/abc_textfield_searchview_right_holo_dark</item>
+        <item name="searchViewCloseIcon">@drawable/abc_ic_clear</item>
+        <item name="searchViewSearchIcon">@drawable/abc_ic_search</item>
+        <item name="searchViewGoIcon">@drawable/abc_ic_go</item>
+        <item name="searchViewVoiceIcon">@drawable/abc_ic_voice_search</item>
+        <item name="searchViewEditQuery">@drawable/abc_ic_commit_search_api_holo_dark</item>
+        <item name="searchViewEditQueryBackground">?attr/selectableItemBackground</item>
+        <item name="searchViewAutoCompleteTextView">            @style/Widget.AppCompat.AutoCompleteTextView</item>
+        <item name="textColorSearchUrl">@color/abc_search_url_text_holo</item>
+        <item name="textAppearanceSearchResultTitle">            @style/TextAppearance.AppCompat.SearchResult.Title</item>
+        <item name="textAppearanceSearchResultSubtitle">            @style/TextAppearance.AppCompat.SearchResult.Subtitle</item>
+        <item name="actionModeShareDrawable">@drawable/abc_ic_menu_share_holo_dark</item>
+
+        <!-- ShareActionProvider attributes -->
+        <item name="activityChooserViewStyle">@style/Widget.AppCompat.ActivityChooserView</item>
+    </style>
+    <style name="Theme.AppCompat.Light.DialogWhenLarge" parent="Theme.Base.AppCompat.Light.DialogWhenLarge"/>
+    <style name="Theme.Base" parent="android:Theme"/>
+    <style name="Theme.Base.AppCompat" parent="Theme.Base">
+        <item name="windowActionBar">true</item>
+        <!-- Remove system title bars; we will add the action bar ourselves. -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="buttonBarStyle">@android:style/ButtonBar</item>
+        <item name="buttonBarButtonStyle">@android:style/Widget.Button</item>
+        <item name="selectableItemBackground">@drawable/abc_item_background_holo_dark</item>
+        <item name="homeAsUpIndicator">@drawable/abc_ic_ab_back_holo_dark</item>
+        <item name="dividerVertical">@drawable/abc_list_divider_holo_dark</item>
+        <item name="dividerHorizontal">@drawable/abc_list_divider_holo_dark</item>
+        <item name="listPreferredItemHeight">?android:attr/listPreferredItemHeight</item>
+        <item name="listPreferredItemHeightSmall">48dp</item>
+        <item name="listPreferredItemHeightLarge">80dp</item>
+        <item name="listPreferredItemPaddingLeft">8dip</item>
+        <item name="listPreferredItemPaddingRight">8dip</item>
+        <item name="textAppearanceListItem">?android:attr/textAppearanceMedium</item>
+        <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
+        <item name="actionBarTabStyle">@style/Widget.AppCompat.ActionBar.TabView</item>
+        <item name="actionBarTabBarStyle">@style/Widget.AppCompat.ActionBar.TabBar</item>
+        <item name="actionBarTabTextStyle">@style/Widget.AppCompat.ActionBar.TabText</item>
+        <item name="actionButtonStyle">@style/Widget.AppCompat.ActionButton</item>
+        <item name="actionOverflowButtonStyle">@style/Widget.AppCompat.ActionButton.Overflow</item>
+        <item name="actionBarStyle">@style/Widget.AppCompat.ActionBar</item>
+        <item name="actionBarSplitStyle">?attr/actionBarStyle</item>
+        <item name="actionBarWidgetTheme">@null</item>
+        <item name="actionBarSize">@dimen/abc_action_bar_default_height</item>
+        <item name="actionBarDivider">?attr/dividerVertical</item>
+        <item name="actionBarItemBackground">?attr/selectableItemBackground</item>
+        <item name="actionMenuTextAppearance">            @style/TextAppearance.AppCompat.Widget.ActionBar.Menu</item>
+        <item name="actionMenuTextColor">?android:attr/textColorPrimaryDisableOnly</item>
+
+        <!-- Dropdown Spinner Attributes -->
+        <item name="actionDropDownStyle">@style/Widget.AppCompat.Spinner.DropDown.ActionBar</item>
+
+        <!-- Action Mode -->
+        <item name="actionModeStyle">@style/Widget.AppCompat.ActionMode</item>
+        <item name="actionModeBackground">@drawable/abc_cab_background_top_holo_dark</item>
+        <item name="actionModeSplitBackground">@drawable/abc_cab_background_bottom_holo_dark</item>
+        <item name="actionModeCloseDrawable">@drawable/abc_ic_cab_done_holo_dark</item>
+        <item name="actionModeCloseButtonStyle">@style/Widget.AppCompat.ActionButton.CloseMode</item>
+
+        <!-- Panel attributes -->
+        <item name="panelMenuListWidth">@dimen/abc_panel_menu_list_width</item>
+        <item name="panelMenuListTheme">@style/Theme.AppCompat.CompactMenu</item>
+        <item name="android:panelBackground">@drawable/abc_menu_hardkey_panel_holo_dark</item>
+        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
+    </style>
+    <style name="Theme.Base.AppCompat.Dialog.FixedSize" parent="android:Theme.Dialog">
+        <item name="windowFixedWidthMajor">@dimen/dialog_fixed_width_major</item>
+        <item name="windowFixedWidthMinor">@dimen/dialog_fixed_width_minor</item>
+        <item name="windowFixedHeightMajor">@dimen/dialog_fixed_height_major</item>
+        <item name="windowFixedHeightMinor">@dimen/dialog_fixed_height_minor</item>
+        <item name="windowActionBar">true</item>
+        <!-- Remove system title bars; we will add the action bar ourselves. -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="buttonBarStyle">@android:style/ButtonBar</item>
+        <item name="buttonBarButtonStyle">@android:style/Widget.Button</item>
+        <item name="selectableItemBackground">@drawable/abc_item_background_holo_dark</item>
+        <item name="dividerVertical">@drawable/abc_list_divider_holo_dark</item>
+        <item name="dividerHorizontal">@drawable/abc_list_divider_holo_dark</item>
+        <item name="listPreferredItemHeight">?android:attr/listPreferredItemHeight</item>
+        <item name="listPreferredItemHeightSmall">48dp</item>
+        <item name="listPreferredItemHeightLarge">80dp</item>
+        <item name="listPreferredItemPaddingLeft">8dip</item>
+        <item name="listPreferredItemPaddingRight">8dip</item>
+        <item name="textAppearanceListItem">?android:attr/textAppearanceMedium</item>
+        <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
+
+        <!-- Action Mode -->
+        <item name="actionModeStyle">@style/Widget.AppCompat.ActionMode</item>
+        <item name="actionModeBackground">@drawable/abc_cab_background_top_holo_dark</item>
+        <item name="actionModeSplitBackground">@drawable/abc_cab_background_bottom_holo_dark</item>
+        <item name="actionModeCloseDrawable">@drawable/abc_ic_cab_done_holo_dark</item>
+        <item name="actionModeCloseButtonStyle">@style/Widget.AppCompat.ActionButton.CloseMode</item>
+
+        <!-- Panel attributes -->
+        <item name="panelMenuListWidth">@dimen/abc_panel_menu_list_width</item>
+        <item name="panelMenuListTheme">@style/Theme.AppCompat.CompactMenu</item>
+        <item name="android:panelBackground">@drawable/abc_menu_hardkey_panel_holo_dark</item>
+        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
+    </style>
+    <style name="Theme.Base.AppCompat.Dialog.Light.FixedSize" parent="Theme.Base.AppCompat.Dialog.FixedSize"/>
+    <style name="Theme.Base.AppCompat.DialogWhenLarge" parent="Theme.Base.AppCompat"/>
+    <style name="Theme.Base.AppCompat.Light" parent="Theme.Base.Light">
+        <item name="windowActionBar">true</item>
+        <!-- Remove system title bars; we will add the action bar ourselves. -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="buttonBarStyle">@android:style/ButtonBar</item>
+        <item name="buttonBarButtonStyle">@android:style/Widget.Button</item>
+        <item name="selectableItemBackground">@drawable/abc_item_background_holo_light</item>
+        <item name="homeAsUpIndicator">@drawable/abc_ic_ab_back_holo_light</item>
+        <item name="dividerVertical">@drawable/abc_list_divider_holo_light</item>
+        <item name="dividerHorizontal">@drawable/abc_list_divider_holo_light</item>
+        <item name="listPreferredItemHeight">?android:attr/listPreferredItemHeight</item>
+        <item name="listPreferredItemHeightSmall">48dp</item>
+        <item name="listPreferredItemHeightLarge">80dp</item>
+        <item name="listPreferredItemPaddingLeft">8dip</item>
+        <item name="listPreferredItemPaddingRight">8dip</item>
+        <item name="textAppearanceListItem">?android:attr/textAppearanceMedium</item>
+        <item name="textAppearanceListItemSmall">?android:attr/textAppearanceMedium</item>
+
+        <!-- Action Bar Styles -->
+        <item name="actionBarTabStyle">@style/Widget.AppCompat.Light.ActionBar.TabView</item>
+        <item name="actionBarTabBarStyle">@style/Widget.AppCompat.Light.ActionBar.TabBar</item>
+        <item name="actionBarTabTextStyle">@style/Widget.AppCompat.Light.ActionBar.TabText</item>
+        <item name="actionButtonStyle">@style/Widget.AppCompat.Light.ActionButton</item>
+        <item name="actionOverflowButtonStyle">            @style/Widget.AppCompat.Light.ActionButton.Overflow</item>
+        <item name="actionBarStyle">@style/Widget.AppCompat.Light.ActionBar</item>
+        <item name="actionBarSplitStyle">?attr/actionBarStyle</item>
+        <item name="actionBarWidgetTheme">@null</item>
+        <item name="actionBarSize">@dimen/abc_action_bar_default_height</item>
+        <item name="actionBarDivider">?attr/dividerVertical</item>
+        <item name="actionBarItemBackground">?attr/selectableItemBackground</item>
+        <item name="actionMenuTextAppearance">            @style/TextAppearance.AppCompat.Widget.ActionBar.Menu</item>
+        <item name="actionMenuTextColor">?android:attr/textColorPrimaryDisableOnly</item>
+
+        <!-- Action Mode -->
+        <item name="actionModeStyle">@style/Widget.AppCompat.ActionMode</item>
+        <item name="actionModeBackground">@drawable/abc_cab_background_top_holo_light</item>
+        <item name="actionModeSplitBackground">@drawable/abc_cab_background_bottom_holo_light</item>
+        <item name="actionModeCloseDrawable">@drawable/abc_ic_cab_done_holo_light</item>
+        <item name="actionModeCloseButtonStyle">@style/Widget.AppCompat.Light.ActionButton.CloseMode</item>
+
+        <!-- Dropdown Spinner Attributes -->
+        <item name="actionDropDownStyle">            @style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar</item>
+
+        <!-- Panel attributes -->
+        <item name="panelMenuListWidth">@dimen/abc_panel_menu_list_width</item>
+        <item name="panelMenuListTheme">@style/Theme.AppCompat.CompactMenu</item>
+        <item name="android:panelBackground">@drawable/abc_menu_hardkey_panel_holo_light</item>
+        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_light</item>
+    </style>
+    <style name="Theme.Base.AppCompat.Light.DarkActionBar" parent="Theme.Base.AppCompat.Light">
+        <item name="homeAsUpIndicator">@drawable/abc_ic_ab_back_holo_dark</item>
+        <item name="actionOverflowButtonStyle">@style/Widget.AppCompat.ActionButton.Overflow</item>
+        <item name="actionBarStyle">@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse</item>
+        <item name="actionBarWidgetTheme">@style/Theme.AppCompat</item>
+        <item name="actionBarDivider">@drawable/abc_list_divider_holo_dark</item>
+        <item name="actionBarItemBackground">@drawable/abc_item_background_holo_dark</item>
+        <item name="actionBarTabStyle">@style/Widget.AppCompat.Light.ActionBar.TabView.Inverse</item>
+        <item name="actionBarTabBarStyle">@style/Widget.AppCompat.Light.ActionBar.TabBar.Inverse</item>
+        <item name="actionBarTabTextStyle">@style/Widget.AppCompat.Light.ActionBar.TabText.Inverse</item>
+        <item name="actionMenuTextColor">?android:attr/textColorPrimaryInverseDisableOnly</item>
+
+        <!-- Action Mode -->
+        <item name="actionModeStyle">@style/Widget.AppCompat.Light.ActionMode.Inverse</item>
+        <item name="actionModeBackground">@drawable/abc_cab_background_top_holo_dark</item>
+        <item name="actionModeSplitBackground">@drawable/abc_cab_background_bottom_holo_dark</item>
+        <item name="actionModeCloseDrawable">@drawable/abc_ic_cab_done_holo_dark</item>
+        <item name="actionModeCloseButtonStyle">@style/Widget.AppCompat.ActionButton.CloseMode</item>
+
+        <!-- Dropdown Spinner Attributes -->
+        <item name="actionDropDownStyle">@style/Widget.AppCompat.Spinner.DropDown.ActionBar</item>
+
+        <!-- Panel attributes -->
+        <item name="android:panelBackground">@drawable/abc_menu_hardkey_panel_holo_dark</item>
+        <item name="listChoiceBackgroundIndicator">@drawable/abc_list_selector_holo_dark</item>
+    </style>
+    <style name="Theme.Base.AppCompat.Light.DialogWhenLarge" parent="Theme.Base.AppCompat.Light"/>
+    <style name="Theme.Base.Light" parent="android:Theme.Light"/>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/styles_openmrs.xml -->
+    <eat-comment/>
+    <style name="Theme.Openmrs" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+        <item name="actionBarItemBackground">@drawable/selectable_background_openmrs</item>
+        <item name="popupMenuStyle">@style/PopupMenu.Openmrs</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Openmrs</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Openmrs</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Openmrs</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Openmrs</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_openmrs</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_openmrs</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Openmrs</item>
+        <item name="android:textColor">@color/dark_purple</item>
+        <item name="android:itemTextAppearance">@style/menuTextApearance</item>
+
+                <!-- Light.DarkActionBar specific -->
+        <item name="actionBarWidgetTheme">@style/Theme.Openmrs.Widget</item>
+
+    </style>
+    <style name="Theme.Openmrs.Widget" parent="@style/Theme.AppCompat">
+        <item name="popupMenuStyle">@style/PopupMenu.Openmrs</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Openmrs</item>
+    </style>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/20.0.0/res/values/values.xml -->
+    <eat-comment/>
+    <style name="Widget.AppCompat.ActionBar" parent="Widget.AppCompat.Base.ActionBar"/>
+    <style name="Widget.AppCompat.ActionBar.Solid" parent="Widget.AppCompat.Base.ActionBar.Solid"/>
+    <style name="Widget.AppCompat.ActionBar.TabBar" parent="Widget.AppCompat.Base.ActionBar.TabBar"/>
+    <style name="Widget.AppCompat.ActionBar.TabText" parent="Widget.AppCompat.Base.ActionBar.TabText"/>
+    <style name="Widget.AppCompat.ActionBar.TabView" parent="Widget.AppCompat.Base.ActionBar.TabView"/>
+    <style name="Widget.AppCompat.ActionButton" parent="Widget.AppCompat.Base.ActionButton"/>
+    <style name="Widget.AppCompat.ActionButton.CloseMode" parent="Widget.AppCompat.Base.ActionButton.CloseMode"/>
+    <style name="Widget.AppCompat.ActionButton.Overflow" parent="Widget.AppCompat.Base.ActionButton.Overflow"/>
+    <style name="Widget.AppCompat.ActionMode" parent="Widget.AppCompat.Base.ActionMode"/>
+    <style name="Widget.AppCompat.ActivityChooserView" parent="Widget.AppCompat.Base.ActivityChooserView"/>
+    <style name="Widget.AppCompat.AutoCompleteTextView" parent="Widget.AppCompat.Base.AutoCompleteTextView"/>
+    <style name="Widget.AppCompat.Base.ActionBar" parent="">
+        <item name="displayOptions">useLogo|showHome|showTitle</item>
+        <item name="divider">?attr/dividerVertical</item>
+        <item name="height">?attr/actionBarSize</item>
+        <item name="homeLayout">@layout/abc_action_bar_home</item>
+        <item name="titleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Title</item>
+        <item name="subtitleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle</item>
+        <item name="background">@drawable/abc_ab_transparent_dark_holo</item>
+        <item name="backgroundStacked">@drawable/abc_ab_stacked_transparent_dark_holo</item>
+        <item name="backgroundSplit">@drawable/abc_ab_bottom_transparent_dark_holo</item>
+        <item name="actionButtonStyle">@style/Widget.AppCompat.ActionButton</item>
+        <item name="actionOverflowButtonStyle">@style/Widget.AppCompat.ActionButton.Overflow</item>
+        <item name="progressBarStyle">@style/Widget.AppCompat.ProgressBar.Horizontal</item>
+        <item name="indeterminateProgressStyle">@style/Widget.AppCompat.ProgressBar</item>
+    </style>
+    <style name="Widget.AppCompat.Base.ActionBar.Solid" parent="Widget.AppCompat.Base.ActionBar">
+        <item name="background">@drawable/abc_ab_solid_dark_holo</item>
+        <item name="backgroundStacked">@drawable/abc_ab_stacked_solid_dark_holo</item>
+        <item name="backgroundSplit">@drawable/abc_ab_bottom_solid_dark_holo</item>
+    </style>
+    <style name="Widget.AppCompat.Base.ActionBar.TabBar" parent="">
+        <item name="divider">?attr/actionBarDivider</item>
+        <item name="showDividers">middle</item>
+        <item name="dividerPadding">12dip</item>
+    </style>
+    <style name="Widget.AppCompat.Base.ActionBar.TabText" parent="">
+        <item name="android:textAppearance">@null</item>
+        <item name="android:textColor">?android:attr/textColorPrimaryDisableOnly</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:maxLines">2</item>
+        <item name="textAllCaps">true</item>
+    </style>
+    <style name="Widget.AppCompat.Base.ActionBar.TabView" parent="">
+        <item name="android:background">@drawable/abc_tab_indicator_ab_holo</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:paddingLeft">16dip</item>
+        <item name="android:paddingRight">16dip</item>
+        <item name="android:minWidth">80dip</item>
+    </style>
+    <style name="Widget.AppCompat.Base.ActionButton" parent="">
+        <item name="android:background">?attr/actionBarItemBackground</item>
+        <item name="android:paddingLeft">12dip</item>
+        <item name="android:paddingRight">12dip</item>
+        <item name="android:minWidth">@dimen/abc_action_button_min_width</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">2</item>
+        <item name="textAllCaps">@bool/abc_config_actionMenuItemAllCaps</item>
+    </style>
+    <style name="Widget.AppCompat.Base.ActionButton.CloseMode" parent="Widget.AppCompat.Base.ActionButton"/>
+    <style name="Widget.AppCompat.Base.ActionButton.Overflow" parent="Widget.AppCompat.Base.ActionButton">
+        <item name="android:src">@drawable/abc_ic_menu_moreoverflow_normal_holo_dark</item>
+    </style>
+    <style name="Widget.AppCompat.Base.ActionMode" parent="">
+        <item name="background">?attr/actionModeBackground</item>
+        <item name="backgroundSplit">?attr/actionModeSplitBackground</item>
+        <item name="height">?attr/actionBarSize</item>
+        <item name="titleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionMode.Title</item>
+        <item name="subtitleTextStyle">@style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle</item>
+    </style>
+    <style name="Widget.AppCompat.Base.ActivityChooserView" parent="">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/abc_ab_share_pack_holo_dark</item>
+        <item name="divider">?attr/dividerVertical</item>
+        <item name="showDividers">middle</item>
+        <item name="dividerPadding">6dip</item>
+    </style>
+    <style name="Widget.AppCompat.Base.AutoCompleteTextView" parent="android:Widget.AutoCompleteTextView">
+        <item name="android:textColor">?attr/actionMenuTextColor</item>
+        <item name="android:dropDownSelector">@drawable/abc_list_selector_holo_dark</item>
+        <item name="android:popupBackground">@drawable/abc_menu_dropdown_panel_holo_dark</item>
+    </style>
+    <style name="Widget.AppCompat.Base.DropDownItem.Spinner" parent="">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Widget.DropDownItem</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <style name="Widget.AppCompat.Base.ListPopupWindow" parent="">
+        <item name="android:dropDownSelector">@drawable/abc_list_selector_holo_dark</item>
+        <item name="android:popupBackground">@drawable/abc_menu_dropdown_panel_holo_dark</item>
+        <item name="android:dropDownVerticalOffset">0dip</item>
+        <item name="android:dropDownHorizontalOffset">0dip</item>
+        <item name="android:dropDownWidth">wrap_content</item>
+    </style>
+    <style name="Widget.AppCompat.Base.ListView.DropDown" parent="android:Widget.ListView">
+        <item name="android:listSelector">@drawable/abc_list_selector_holo_dark</item>
+    </style>
+    <style name="Widget.AppCompat.Base.ListView.Menu" parent="android:Widget.ListView.Menu">
+        <item name="android:listSelector">?attr/listChoiceBackgroundIndicator</item>
+        <item name="android:divider">?attr/dividerHorizontal</item>
+    </style>
+    <style name="Widget.AppCompat.Base.PopupMenu" parent="@style/Widget.AppCompat.Base.ListPopupWindow"/>
+    <style name="Widget.AppCompat.Base.ProgressBar" parent="android:Widget.ProgressBar">
+        <item name="android:minWidth">@dimen/abc_action_bar_progress_bar_size</item>
+        <item name="android:maxWidth">@dimen/abc_action_bar_progress_bar_size</item>
+        <item name="android:minHeight">@dimen/abc_action_bar_progress_bar_size</item>
+        <item name="android:maxHeight">@dimen/abc_action_bar_progress_bar_size</item>
+    </style>
+    <style name="Widget.AppCompat.Base.ProgressBar.Horizontal" parent="android:Widget.ProgressBar.Horizontal"/>
+    <style name="Widget.AppCompat.Base.Spinner" parent="">
+        <item name="spinnerMode">dropdown</item>
+        <item name="android:popupBackground">@drawable/abc_menu_dropdown_panel_holo_dark</item>
+        <item name="android:dropDownSelector">@drawable/abc_list_selector_holo_dark</item>
+        <item name="android:dropDownVerticalOffset">0dip</item>
+        <item name="android:dropDownHorizontalOffset">0dip</item>
+        <item name="android:dropDownWidth">wrap_content</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@drawable/abc_spinner_ab_holo_dark</item>
+    </style>
+    <style name="Widget.AppCompat.DropDownItem.Spinner" parent="Widget.AppCompat.Base.DropDownItem.Spinner"/>
+    <style name="Widget.AppCompat.Light.ActionBar" parent="Widget.AppCompat.Light.Base.ActionBar"/>
+    <style name="Widget.AppCompat.Light.ActionBar.Solid" parent="Widget.AppCompat.Light.Base.ActionBar.Solid"/>
+    <style name="Widget.AppCompat.Light.ActionBar.Solid.Inverse" parent="Widget.AppCompat.Light.Base.ActionBar.Solid.Inverse"/>
+    <style name="Widget.AppCompat.Light.ActionBar.TabBar" parent="Widget.AppCompat.Light.Base.ActionBar.TabBar"/>
+    <style name="Widget.AppCompat.Light.ActionBar.TabBar.Inverse" parent="Widget.AppCompat.Light.Base.ActionBar.TabBar.Inverse"/>
+    <style name="Widget.AppCompat.Light.ActionBar.TabText" parent="Widget.AppCompat.Light.Base.ActionBar.TabText"/>
+    <style name="Widget.AppCompat.Light.ActionBar.TabText.Inverse" parent="Widget.AppCompat.Light.Base.ActionBar.TabText.Inverse"/>
+    <style name="Widget.AppCompat.Light.ActionBar.TabView" parent="Widget.AppCompat.Light.Base.ActionBar.TabView"/>
+    <style name="Widget.AppCompat.Light.ActionBar.TabView.Inverse" parent="Widget.AppCompat.Light.Base.ActionBar.TabView.Inverse"/>
+    <style name="Widget.AppCompat.Light.ActionButton" parent="Widget.AppCompat.Light.Base.ActionButton"/>
+    <style name="Widget.AppCompat.Light.ActionButton.CloseMode" parent="Widget.AppCompat.Light.Base.ActionButton.CloseMode"/>
+    <style name="Widget.AppCompat.Light.ActionButton.Overflow" parent="Widget.AppCompat.Light.Base.ActionButton.Overflow"/>
+    <style name="Widget.AppCompat.Light.ActionMode.Inverse" parent="Widget.AppCompat.Light.Base.ActionMode.Inverse"/>
+    <style name="Widget.AppCompat.Light.ActivityChooserView" parent="Widget.AppCompat.Light.Base.ActivityChooserView"/>
+    <style name="Widget.AppCompat.Light.AutoCompleteTextView" parent="Widget.AppCompat.Light.Base.AutoCompleteTextView"/>
+    <style name="Widget.AppCompat.Light.Base.ActionBar" parent="Widget.AppCompat.Base.ActionBar">
+        <item name="background">@drawable/abc_ab_transparent_light_holo</item>
+        <item name="backgroundStacked">@drawable/abc_ab_stacked_transparent_light_holo</item>
+        <item name="backgroundSplit">@drawable/abc_ab_bottom_transparent_light_holo</item>
+        <item name="actionButtonStyle">@style/Widget.AppCompat.Light.ActionButton</item>
+        <item name="actionOverflowButtonStyle">@style/Widget.AppCompat.Light.ActionButton.Overflow</item>
+        <item name="progressBarStyle">@style/Widget.AppCompat.ProgressBar.Horizontal</item>
+        <item name="indeterminateProgressStyle">@style/Widget.AppCompat.ProgressBar</item>
+    </style>
+    <style name="Widget.AppCompat.Light.Base.ActionBar.Solid" parent="Widget.AppCompat.Light.Base.ActionBar">
+        <item name="background">@drawable/abc_ab_solid_light_holo</item>
+        <item name="backgroundStacked">@drawable/abc_ab_stacked_solid_light_holo</item>
+        <item name="backgroundSplit">@drawable/abc_ab_bottom_solid_light_holo</item>
+    </style>
+    <style name="Widget.AppCompat.Light.Base.ActionBar.Solid.Inverse" parent="Widget.AppCompat.Base.ActionBar.Solid">
+        <item name="titleTextStyle">            @style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse</item>
+        <item name="subtitleTextStyle">            @style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle.Inverse</item>
+        <item name="actionButtonStyle">@style/Widget.AppCompat.ActionButton</item>
+        <item name="actionOverflowButtonStyle">@style/Widget.AppCompat.ActionButton.Overflow</item>
+    </style>
+    <style name="Widget.AppCompat.Light.Base.ActionBar.TabBar" parent="Widget.AppCompat.Base.ActionBar.TabBar"/>
+    <style name="Widget.AppCompat.Light.Base.ActionBar.TabBar.Inverse" parent="Widget.AppCompat.Light.Base.ActionBar.TabBar"/>
+    <style name="Widget.AppCompat.Light.Base.ActionBar.TabText" parent="Widget.AppCompat.Base.ActionBar.TabText"/>
+    <style name="Widget.AppCompat.Light.Base.ActionBar.TabText.Inverse" parent="Widget.AppCompat.Light.Base.ActionBar.TabText">
+        <item name="android:textColor">?android:attr/textColorPrimaryInverseDisableOnly</item>
+    </style>
+    <style name="Widget.AppCompat.Light.Base.ActionBar.TabView" parent="Widget.AppCompat.Base.ActionBar.TabView"/>
+    <style name="Widget.AppCompat.Light.Base.ActionBar.TabView.Inverse" parent="Widget.AppCompat.Light.Base.ActionBar.TabView"/>
+    <style name="Widget.AppCompat.Light.Base.ActionButton" parent="Widget.AppCompat.Base.ActionButton"/>
+    <style name="Widget.AppCompat.Light.Base.ActionButton.CloseMode" parent="Widget.AppCompat.Light.Base.ActionButton"/>
+    <style name="Widget.AppCompat.Light.Base.ActionButton.Overflow" parent="Widget.AppCompat.Light.Base.ActionButton">
+        <item name="android:src">@drawable/abc_ic_menu_moreoverflow_normal_holo_light</item>
+    </style>
+    <style name="Widget.AppCompat.Light.Base.ActionMode.Inverse" parent="Widget.AppCompat.Base.ActionMode">
+        <item name="titleTextStyle">            @style/TextAppearance.AppCompat.Widget.ActionMode.Title.Inverse</item>
+        <item name="subtitleTextStyle">            @style/TextAppearance.AppCompat.Widget.ActionMode.Subtitle.Inverse</item>
+    </style>
+    <style name="Widget.AppCompat.Light.Base.ActivityChooserView" parent="Widget.AppCompat.Base.ActivityChooserView">
+        <item name="android:background">@drawable/abc_ab_share_pack_holo_light</item>
+    </style>
+    <style name="Widget.AppCompat.Light.Base.AutoCompleteTextView" parent="android:Widget.AutoCompleteTextView">
+        <item name="android:textColor">?attr/actionMenuTextColor</item>
+        <item name="android:dropDownSelector">@drawable/abc_list_selector_holo_light</item>
+        <item name="android:popupBackground">@drawable/abc_menu_dropdown_panel_holo_light</item>
+    </style>
+    <style name="Widget.AppCompat.Light.Base.DropDownItem.Spinner" parent="Widget.AppCompat.Base.DropDownItem.Spinner"/>
+    <style name="Widget.AppCompat.Light.Base.ListPopupWindow" parent="">
+        <item name="android:dropDownSelector">@drawable/abc_list_selector_holo_light</item>
+        <item name="android:popupBackground">@drawable/abc_menu_dropdown_panel_holo_light</item>
+        <item name="android:dropDownVerticalOffset">0dip</item>
+        <item name="android:dropDownHorizontalOffset">0dip</item>
+        <item name="android:dropDownWidth">wrap_content</item>
+    </style>
+    <style name="Widget.AppCompat.Light.Base.ListView.DropDown" parent="android:Widget.ListView">
+        <item name="android:listSelector">@drawable/abc_list_selector_holo_light</item>
+    </style>
+    <style name="Widget.AppCompat.Light.Base.PopupMenu" parent="@style/Widget.AppCompat.Light.Base.ListPopupWindow"/>
+    <style name="Widget.AppCompat.Light.Base.Spinner" parent="Widget.AppCompat.Base.Spinner">
+        <item name="android:dropDownSelector">@drawable/abc_list_selector_holo_light</item>
+        <item name="android:popupBackground">@drawable/abc_menu_dropdown_panel_holo_light</item>
+        <item name="android:background">@drawable/abc_spinner_ab_holo_light</item>
+    </style>
+    <style name="Widget.AppCompat.Light.DropDownItem.Spinner" parent="Widget.AppCompat.Light.Base.DropDownItem.Spinner"/>
+    <style name="Widget.AppCompat.Light.ListPopupWindow" parent="Widget.AppCompat.Light.Base.ListPopupWindow"/>
+    <style name="Widget.AppCompat.Light.ListView.DropDown" parent="Widget.AppCompat.Light.Base.ListView.DropDown"/>
+    <style name="Widget.AppCompat.Light.PopupMenu" parent="Widget.AppCompat.Light.Base.PopupMenu"/>
+    <style name="Widget.AppCompat.Light.Spinner.DropDown.ActionBar" parent="Widget.AppCompat.Light.Base.Spinner"/>
+    <style name="Widget.AppCompat.ListPopupWindow" parent="Widget.AppCompat.Base.ListPopupWindow"/>
+    <style name="Widget.AppCompat.ListView.DropDown" parent="Widget.AppCompat.Base.ListView.DropDown"/>
+    <style name="Widget.AppCompat.ListView.Menu" parent="Widget.AppCompat.Base.ListView.Menu"/>
+    <style name="Widget.AppCompat.PopupMenu" parent="Widget.AppCompat.Base.PopupMenu"/>
+    <style name="Widget.AppCompat.ProgressBar" parent="Widget.AppCompat.Base.ProgressBar"/>
+    <style name="Widget.AppCompat.ProgressBar.Horizontal" parent="Widget.AppCompat.Base.ProgressBar.Horizontal"/>
+    <style name="Widget.AppCompat.Spinner.DropDown.ActionBar" parent="Widget.AppCompat.Base.Spinner"/>
+    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/openmrs-client/src/main/res/values/styles_openmrs.xml -->
+    <eat-comment/>
+    <style name="menuTextApearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">22dp</item>
+    </style>
+</resources>

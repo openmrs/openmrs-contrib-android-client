@@ -1,0 +1,28 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        minSdkVersion 7
+        targetSdkVersion 19
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+
+}
+
+dependencies {
+    compile 'joda-time:joda-time:2.0'
+    compile files('libs/commons-io-2.4.jar')
+    compile files('libs/httpclientandroidlib-4.2.1.jar')
+    compile files('libs/javarosa-libraries-2014-04-29.jar')
+    compile files('libs/kxml2-2.3.0.jar')
+    compile files('libs/opencsv-2.3.jar')
+}

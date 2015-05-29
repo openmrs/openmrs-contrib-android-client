@@ -1,0 +1,253 @@
+-- Merging decision tree log ---
+manifest
+ADDED from AndroidManifest.xml:16:1
+	xmlns:android
+		ADDED from AndroidManifest.xml:16:11
+	package
+		ADDED from AndroidManifest.xml:17:11
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:versionName
+		ADDED from AndroidManifest.xml:19:11
+	android:versionCode
+		ADDED from AndroidManifest.xml:18:11
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+uses-sdk
+ADDED from AndroidManifest.xml:20:5
+MERGED from openmrs-contrib-android-client-gradle:odkcollect:unspecified:16:5
+MERGED from com.android.support:appcompat-v7:20.0.0:16:5
+MERGED from com.android.support:support-v4:20.0.0:16:5
+MERGED from com.android.support:gridlayout-v7:18.0.0:18:5
+	android:targetSdkVersion
+		ADDED from AndroidManifest.xml:20:42
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:minSdkVersion
+		ADDED from AndroidManifest.xml:20:15
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:22:5
+	android:name
+		ADDED from AndroidManifest.xml:22:22
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from AndroidManifest.xml:23:5
+	android:name
+		ADDED from AndroidManifest.xml:23:22
+uses-permission#android.permission.READ_LOGS
+ADDED from AndroidManifest.xml:24:5
+	android:name
+		ADDED from AndroidManifest.xml:24:22
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from AndroidManifest.xml:25:5
+	android:name
+		ADDED from AndroidManifest.xml:25:22
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from AndroidManifest.xml:26:5
+	android:name
+		ADDED from AndroidManifest.xml:26:22
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from AndroidManifest.xml:27:5
+	android:name
+		ADDED from AndroidManifest.xml:27:22
+application
+ADDED from AndroidManifest.xml:29:5
+MERGED from openmrs-contrib-android-client-gradle:odkcollect:unspecified:20:5
+MERGED from com.android.support:appcompat-v7:20.0.0:17:5
+MERGED from com.android.support:support-v4:20.0.0:17:5
+MERGED from com.android.support:gridlayout-v7:18.0.0:19:5
+	android:label
+		ADDED from AndroidManifest.xml:32:9
+	android:allowBackup
+		ADDED from AndroidManifest.xml:30:9
+	android:icon
+		ADDED from AndroidManifest.xml:31:9
+	android:theme
+		ADDED from AndroidManifest.xml:33:9
+	android:name
+		ADDED from AndroidManifest.xml:34:9
+meta-data#buildVersion
+ADDED from AndroidManifest.xml:35:9
+	android:name
+		ADDED from AndroidManifest.xml:35:20
+	android:value
+		ADDED from AndroidManifest.xml:35:48
+provider#org.odk.collect.android.openmrs.provider.OpenMRSFormsProvider
+ADDED from AndroidManifest.xml:37:9
+	android:exported
+		ADDED from AndroidManifest.xml:39:19
+	android:authorities
+		ADDED from AndroidManifest.xml:38:19
+	android:name
+		ADDED from AndroidManifest.xml:37:19
+provider#org.odk.collect.android.openmrs.provider.OpenMRSInstanceProvider
+ADDED from AndroidManifest.xml:40:9
+	android:exported
+		ADDED from AndroidManifest.xml:42:19
+	android:authorities
+		ADDED from AndroidManifest.xml:41:19
+	android:name
+		ADDED from AndroidManifest.xml:40:19
+receiver#org.openmrs.mobile.application.OpenMRSBroadcastReceiver
+ADDED from AndroidManifest.xml:44:9
+	android:name
+		ADDED from AndroidManifest.xml:44:19
+intent-filter#org.openmrs.mobile.intent.action.AUTH_FAILED_BROADCAST+org.openmrs.mobile.intent.action.CONN_TIMEOUT_BROADCAST+org.openmrs.mobile.intent.action.NO_INTERNET_CONNECTION_BROADCAST+org.openmrs.mobile.intent.action.SERVER_ERROR_BROADCAST+org.openmrs.mobile.intent.action.SERVER_NOT_SUPPORTED_BROADCAST+org.openmrs.mobile.intent.action.SERVER_UNAVAILABLE_BROADCAST+org.openmrs.mobile.intent.action.SOCKET_EXCEPTION_BROADCAST+org.openmrs.mobile.intent.action.UNAUTHORIZED_BROADCAST
+ADDED from AndroidManifest.xml:45:13
+action#org.openmrs.mobile.intent.action.AUTH_FAILED_BROADCAST
+ADDED from AndroidManifest.xml:46:17
+	android:name
+		ADDED from AndroidManifest.xml:46:25
+action#org.openmrs.mobile.intent.action.UNAUTHORIZED_BROADCAST
+ADDED from AndroidManifest.xml:47:17
+	android:name
+		ADDED from AndroidManifest.xml:47:25
+action#org.openmrs.mobile.intent.action.CONN_TIMEOUT_BROADCAST
+ADDED from AndroidManifest.xml:48:17
+	android:name
+		ADDED from AndroidManifest.xml:48:25
+action#org.openmrs.mobile.intent.action.NO_INTERNET_CONNECTION_BROADCAST
+ADDED from AndroidManifest.xml:49:17
+	android:name
+		ADDED from AndroidManifest.xml:49:25
+action#org.openmrs.mobile.intent.action.SERVER_UNAVAILABLE_BROADCAST
+ADDED from AndroidManifest.xml:50:17
+	android:name
+		ADDED from AndroidManifest.xml:50:25
+action#org.openmrs.mobile.intent.action.SERVER_ERROR_BROADCAST
+ADDED from AndroidManifest.xml:51:17
+	android:name
+		ADDED from AndroidManifest.xml:51:25
+action#org.openmrs.mobile.intent.action.SOCKET_EXCEPTION_BROADCAST
+ADDED from AndroidManifest.xml:52:17
+	android:name
+		ADDED from AndroidManifest.xml:52:25
+action#org.openmrs.mobile.intent.action.SERVER_NOT_SUPPORTED_BROADCAST
+ADDED from AndroidManifest.xml:53:17
+	android:name
+		ADDED from AndroidManifest.xml:53:25
+activity#org.openmrs.mobile.activities.DashboardActivity
+ADDED from AndroidManifest.xml:56:9
+	android:label
+		ADDED from AndroidManifest.xml:58:13
+	android:name
+		ADDED from AndroidManifest.xml:57:13
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:59:13
+action#android.intent.action.MAIN
+ADDED from AndroidManifest.xml:60:17
+	android:name
+		ADDED from AndroidManifest.xml:60:25
+category#android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:61:17
+	android:name
+		ADDED from AndroidManifest.xml:61:27
+activity#org.openmrs.mobile.activities.DialogActivity
+ADDED from AndroidManifest.xml:64:9
+	android:noHistory
+		ADDED from AndroidManifest.xml:66:13
+	android:theme
+		ADDED from AndroidManifest.xml:67:13
+	android:name
+		ADDED from AndroidManifest.xml:65:13
+activity#org.openmrs.mobile.activities.FindPatientsActivity
+ADDED from AndroidManifest.xml:69:9
+	android:label
+		ADDED from AndroidManifest.xml:71:13
+	android:configChanges
+		ADDED from AndroidManifest.xml:72:13
+	android:name
+		ADDED from AndroidManifest.xml:70:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:73:13
+meta-data#android.support.PARENT_ACTIVITY
+ADDED from AndroidManifest.xml:75:13
+	android:name
+		ADDED from AndroidManifest.xml:76:17
+	android:value
+		ADDED from AndroidManifest.xml:77:17
+meta-data#android.app.searchable
+ADDED from AndroidManifest.xml:78:13
+	android:resource
+		ADDED from AndroidManifest.xml:79:24
+	android:name
+		ADDED from AndroidManifest.xml:78:24
+intent-filter#android.intent.action.SEARCH
+ADDED from AndroidManifest.xml:80:13
+action#android.intent.action.SEARCH
+ADDED from AndroidManifest.xml:81:17
+	android:name
+		ADDED from AndroidManifest.xml:81:25
+activity#org.openmrs.mobile.activities.FindPatientsSearchActivity
+ADDED from AndroidManifest.xml:84:9
+	android:label
+		ADDED from AndroidManifest.xml:86:13
+	android:name
+		ADDED from AndroidManifest.xml:85:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:87:13
+activity#org.openmrs.mobile.activities.LoginActivity
+ADDED from AndroidManifest.xml:98:9
+	android:noHistory
+		ADDED from AndroidManifest.xml:102:13
+	android:label
+		ADDED from AndroidManifest.xml:101:13
+	android:theme
+		ADDED from AndroidManifest.xml:99:13
+	android:name
+		ADDED from AndroidManifest.xml:100:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:103:13
+activity#org.openmrs.mobile.activities.SettingsActivity
+ADDED from AndroidManifest.xml:105:9
+	android:noHistory
+		ADDED from AndroidManifest.xml:108:13
+	android:label
+		ADDED from AndroidManifest.xml:107:13
+	android:name
+		ADDED from AndroidManifest.xml:106:13
+activity#org.openmrs.mobile.activities.PatientDashboardActivity
+ADDED from AndroidManifest.xml:110:9
+	android:name
+		ADDED from AndroidManifest.xml:111:13
+activity#org.openmrs.mobile.activities.FindActiveVisitsActivity
+ADDED from AndroidManifest.xml:117:9
+	android:label
+		ADDED from AndroidManifest.xml:119:13
+	android:name
+		ADDED from AndroidManifest.xml:118:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:120:13
+activity#org.openmrs.mobile.activities.FindActiveVisitsSearchActivity
+ADDED from AndroidManifest.xml:131:9
+	android:label
+		ADDED from AndroidManifest.xml:133:13
+	android:name
+		ADDED from AndroidManifest.xml:132:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:134:13
+activity#org.openmrs.mobile.activities.VisitDashboardActivity
+ADDED from AndroidManifest.xml:145:9
+	android:label
+		ADDED from AndroidManifest.xml:147:13
+	android:name
+		ADDED from AndroidManifest.xml:146:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:148:13
+activity#org.openmrs.mobile.activities.FormEntryActivity
+ADDED from AndroidManifest.xml:154:9
+	android:label
+		ADDED from AndroidManifest.xml:156:13
+	android:name
+		ADDED from AndroidManifest.xml:155:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:157:13
+activity#org.openmrs.mobile.activities.CaptureVitalsActivity
+ADDED from AndroidManifest.xml:159:9
+	android:label
+		ADDED from AndroidManifest.xml:160:13
+	android:configChanges
+		ADDED from AndroidManifest.xml:162:13
+	android:name
+		ADDED from AndroidManifest.xml:161:13

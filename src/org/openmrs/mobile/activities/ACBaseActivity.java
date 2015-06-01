@@ -17,6 +17,7 @@ package org.openmrs.mobile.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -60,11 +61,26 @@ public abstract class ACBaseActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
         if (!(this instanceof LoginActivity || this instanceof DialogActivity)) {
+            ActionBar actionBar = this.getSupportActionBar();
             if (!mAuthorizationManager.isUserLoggedIn()) {
                 mAuthorizationManager.moveToLoginActivity();
             } else if (this instanceof DashboardActivity || this instanceof SettingsActivity
                     || this instanceof FindPatientsActivity || this instanceof FindActiveVisitsActivity) {
-                this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, mOpenMRS.getUsername()));
+                actionBar.setSubtitle(getString(R.string.dashboard_logged_as, mOpenMRS.getUsername()));
+            }
+            setOfflineActionBarTitle(actionBar);
+        }
+    }
+
+    private void setOfflineActionBarTitle(ActionBar actionBar) {
+        String title = (String) actionBar.getTitle();
+        if (title != null) {
+            String offlineTitle = " (" + getString(R.string.settings_toggle_off) + ")";
+            if (!mOpenMRS.getOnlineMode() && !(this instanceof PatientDashboardActivity)
+                    && !title.endsWith(offlineTitle)) {
+                actionBar.setTitle(title + offlineTitle);
+            } else if (mOpenMRS.getOnlineMode() && title.endsWith(offlineTitle)) {
+                actionBar.setTitle(title.replace(offlineTitle, ApplicationConstants.EMPTY_STRING));
             }
         }
     }
@@ -78,6 +94,7 @@ public abstract class ACBaseActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.basic_menu, menu);
+
         return true;
     }
 

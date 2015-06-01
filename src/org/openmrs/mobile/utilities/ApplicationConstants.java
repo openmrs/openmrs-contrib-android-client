@@ -27,6 +27,9 @@ public abstract class ApplicationConstants {
     public static final String SECRET_KEY = "secretKey";
     public static final String LOCATION = "location";
     public static final String VISIT_TYPE_UUID = "visit_type_uuid";
+    public static final String VISIT_TYPE_DISPLAY = "visit_type_display";
+    public static final String ONLINE_MODE = "online_mode";
+    public static final String REQUEST_QUEUE = "request_queue";
 
     public static final String AUTHORIZATION_PARAM = "Authorization";
     public static final String JSESSIONID_PARAM = "JSESSIONID";
@@ -123,5 +126,13 @@ public abstract class ApplicationConstants {
 
     public abstract static class FormNames {
         public static final String VITALS_XFORM = "Vitals XForm";
+    }
+    public static final boolean DEFAULT_ONLINE_MODE = true;
+    public static final int DISABLED_ICON_ALPHA = 70;
+    public static final int ENABLED_ICON_ALPHA = 255;
+
+    public abstract static class OfflineRequests {
+        public static final String INACTIVATE_VISIT = "inactivateVisit";
+        public static final String START_VISIT = "startVisit";
     }
 }

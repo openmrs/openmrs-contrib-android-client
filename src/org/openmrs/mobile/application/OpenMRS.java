@@ -18,20 +18,32 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import net.sqlcipher.database.SQLiteDatabase;
 import org.odk.collect.android.application.Collect;
+
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
+import org.openmrs.mobile.models.OfflineRequest;
 import org.openmrs.mobile.security.SecretKeyGenerator;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OpenMRS extends Collect {
     private static OpenMRS instance;
     private OpenMRSLogger mLogger;
     private static RequestQueue mRequestQueue;
+    private List<OfflineRequest> mOfflineRequestQueue;
 
     @Override
     public void onCreate() {
@@ -50,13 +62,21 @@ public class OpenMRS extends Collect {
 
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
+            Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+            Network network = new BasicNetwork(new HurlStack());
+            mRequestQueue = new RequestQueue(cache, network);
+            setRequestQueueActive(mRequestQueue, getOnlineMode());
         }
         return mRequestQueue;
     }
 
     public <T> void addToRequestQueue(Request<T> request) {
         getRequestQueue().add(request);
+    }
+
+    public void addToRequestQueue(OfflineRequest request) {
+        getOfflineRequestQueue().add(request);
+        setOfflineRequestQueue(getOfflineRequestQueue());
     }
 
     public static OpenMRS getInstance() {
@@ -104,6 +124,49 @@ public class OpenMRS extends Collect {
         editor.commit();
     }
 
+    public void setVisitTypeDisplay(String visitTypeDisplay) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.VISIT_TYPE_DISPLAY, visitTypeDisplay);
+        editor.commit();
+    }
+
+    public void setOnlineMode(boolean onlineMode) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putBoolean(ApplicationConstants.ONLINE_MODE, onlineMode);
+        editor.commit();
+    }
+
+
+    public void setOfflineRequestQueue(List<OfflineRequest> offlineRequestList) {
+        Gson gson = new Gson();
+        String json = gson.toJson(offlineRequestList);
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.REQUEST_QUEUE, json);
+        editor.commit();
+    }
+
+    public void setRequestQueueActive(RequestQueue requestQueue, boolean state) {
+        if (state) {
+            requestQueue.start();
+        } else {
+            requestQueue.stop();
+        }
+    }
+
+    public List<OfflineRequest> getOfflineRequestQueue() {
+        if (mOfflineRequestQueue == null) {
+            mOfflineRequestQueue = new ArrayList<OfflineRequest>();
+            Gson gson = new Gson();
+            SharedPreferences prefs = getOpenMRSSharedPreferences();
+            String json = prefs.getString(ApplicationConstants.REQUEST_QUEUE, ApplicationConstants.EMPTY_STRING);
+            if (!json.equals(ApplicationConstants.EMPTY_STRING)) {
+                mOfflineRequestQueue = gson.fromJson(json,
+                        new TypeToken<List<OfflineRequest>>() { } .getType());
+            }
+        }
+        return mOfflineRequestQueue;
+    }
+
     public String getUsername() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.UserKeys.USER_NAME, ApplicationConstants.EMPTY_STRING);
@@ -132,6 +195,16 @@ public class OpenMRS extends Collect {
     public String getVisitTypeUUID() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.VISIT_TYPE_UUID, ApplicationConstants.EMPTY_STRING);
+    }
+
+    public String getVisitTypeDisplay() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        return prefs.getString(ApplicationConstants.VISIT_TYPE_DISPLAY, ApplicationConstants.EMPTY_STRING);
+    }
+
+    public boolean getOnlineMode() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        return prefs.getBoolean(ApplicationConstants.ONLINE_MODE, ApplicationConstants.DEFAULT_ONLINE_MODE);
     }
 
     private void generateKey() {
@@ -193,6 +266,10 @@ public class OpenMRS extends Collect {
 
     public boolean isRunningHoneycombVersionOrHigher() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB;
+    }
+
+    public boolean isRunningIceCreamVersionOrHigher() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
     }
 
     public boolean isRunningJellyBeanVersionOrHigher() {

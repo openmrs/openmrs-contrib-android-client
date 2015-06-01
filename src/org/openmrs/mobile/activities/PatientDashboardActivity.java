@@ -71,16 +71,16 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
         Bundle patientBundle = savedInstanceState;
         if (null != patientBundle) {
-            patientBundle.getString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE);
+            patientBundle.getLong(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE);
         } else {
             patientBundle = getIntent().getExtras();
         }
         if (patientBundle.getBoolean(ApplicationConstants.BundleKeys.PROGRESS_BAR)) {
             showProgressDialog(R.string.action_synchronize_patients, DialogAction.SYNCHRONIZE);
         }
-        mPatient = new PatientDAO().findPatientByUUID(patientBundle.getString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE));
+        mPatient = new PatientDAO().findPatientByID(patientBundle.getLong(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE));
         new VisitsManager().getLastVitals(
-                VisitsHelper.createLastVitalsListener(mPatient.getUuid()));
+                VisitsHelper.createLastVitalsListener(mPatient.getId()));
         mPatientDashboardPagerAdapter = new PatientDashboardPagerAdapter(getSupportFragmentManager(), tabHosts);
         initViewPager();
     }
@@ -88,7 +88,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPatient.getUuid());
+        outState.putString(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE, mPatient.getUuid());
         outState.putBoolean(ApplicationConstants.BundleKeys.PROGRESS_BAR, mProgressDialog);
     }
 
@@ -155,6 +155,10 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
         getMenuInflater().inflate(R.menu.patients_menu, menu);
         getSupportActionBar().setTitle(mPatient.getDisplay());
         getSupportActionBar().setSubtitle("#" + mPatient.getIdentifier());
+
+        if (!mOpenMRS.getOnlineMode()) {
+            menu.findItem(R.id.actionSynchronize).getIcon().setAlpha(ApplicationConstants.DISABLED_ICON_ALPHA);
+        }
         return true;
     }
 
@@ -164,7 +168,11 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
         int id = item.getItemId();
         switch (id) {
             case R.id.actionSynchronize:
-                synchronizePatient();
+                if (mOpenMRS.getOnlineMode()) {
+                    synchronizePatient();
+                } else {
+                    ToastUtil.showShortToast(this, ToastUtil.ToastType.WARNING, R.string.online_mode_disable);
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -289,7 +297,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
                 case TabHost.VISITS_TAB_POS:
                     return PatientVisitsFragment.newInstance(mPatient);
                 case TabHost.VITALS_TAB_POS:
-                    return PatientVitalsFragment.newInstance(mPatient.getUuid());
+                    return PatientVitalsFragment.newInstance(mPatient.getId());
                 default:
                     return null;
             }

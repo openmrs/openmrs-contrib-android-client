@@ -30,14 +30,14 @@ public class FindVisitByUUIDListener extends GeneralErrorListener implements Res
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
     private VisitDashboardCallbackListener mVisitDashboardCallback;
     private VisitDAO visitDAO = new VisitDAO();
-    private final String mPatientUUID;
+    private final String mVisitUUID;
     private final Long mPatientID;
 
 
 
-    public FindVisitByUUIDListener(Long patientID, String patientUUID, VisitDashboardCallbackListener visitDashboardCallback) {
+    public FindVisitByUUIDListener(Long patientID, String visitUUID, VisitDashboardCallbackListener visitDashboardCallback) {
         mPatientID = patientID;
-        mPatientUUID = patientUUID;
+        mVisitUUID = visitUUID;
         mVisitDashboardCallback = visitDashboardCallback;
     }
 
@@ -61,7 +61,7 @@ public class FindVisitByUUIDListener extends GeneralErrorListener implements Res
         }
     }
 
-    public String getPatientUUID() {
-        return mPatientUUID;
+    public String getVisitUUID() {
+        return mVisitUUID;
     }
 }

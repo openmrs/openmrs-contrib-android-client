@@ -16,20 +16,26 @@ package org.openmrs.mobile.net;
 
 import com.android.volley.Request;
 import org.json.JSONObject;
+
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.visit.CheckVisitBeforeStartListener;
+import org.openmrs.mobile.listeners.visit.FindVisitByUUIDAfterOfflineCaptureVitalsListener;
 import org.openmrs.mobile.listeners.visit.FindVisitsByPatientUUIDListener;
 import org.openmrs.mobile.listeners.visit.StartVisitListener;
 import org.openmrs.mobile.listeners.visit.FindVisitByUUIDListener;
 import org.openmrs.mobile.listeners.visit.EndVisitByUUIDListener;
 import org.openmrs.mobile.listeners.visit.LastVitalsListener;
 import org.openmrs.mobile.listeners.visit.VisitTypeListener;
+
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.LocationDAO;
+import org.openmrs.mobile.models.OfflineRequest;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 
 import java.io.File;
+
 import java.util.HashMap;
 
 import static org.openmrs.mobile.utilities.ApplicationConstants.API;
@@ -51,7 +57,8 @@ public class VisitsManager extends BaseManager {
 
 
     public void getLastVitals(LastVitalsListener listener) {
-        String url = mLastVitalsBaseUrl + listener.getPatientUUID() + LAST_VITALS_END_URL;
+        String patientUUID = new PatientDAO().findPatientByID(listener.getPatientID()).getUuid();
+        String url = mLastVitalsBaseUrl + patientUUID + LAST_VITALS_END_URL;
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =
@@ -74,14 +81,29 @@ public class VisitsManager extends BaseManager {
         String url = mVisitsByPatientUuidBaseUrl + listener.getPatientUUID() + VISITS_BY_PATIENT_UUID_END_URL;
         mLogger.d(SENDING_REQUEST + url);
 
+        if (mOnlineMode) {
+        JsonObjectRequestWrapper jsObjRequest =
+                new JsonObjectRequestWrapper(Request.Method.GET,
+                        url, null, listener, listener, DO_GZIP_REQUEST);
+        mOpenMRS.addToRequestQueue(jsObjRequest);
+        } else {
+            listener.offlineAction();
+        }
+    }
+
+    public void findVisitByUUID(FindVisitByUUIDListener listener) {
+        String url = mVisitsByUuidBaseUrl + listener.getVisitUUID() + VISIT_BY_UUID_END_URL;
+        mLogger.d(SENDING_REQUEST + url);
+
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.GET,
                         url, null, listener, listener, DO_GZIP_REQUEST);
         mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 
-    public void findVisitByUUID(FindVisitByUUIDListener listener) {
-        String url = mVisitsByUuidBaseUrl + listener.getPatientUUID() + VISIT_BY_UUID_END_URL;
+
+    public void findVisitByUUIDAfterCaptureVitals(FindVisitByUUIDAfterOfflineCaptureVitalsListener listener) {
+        String url = mVisitsByUuidBaseUrl + listener.getVisitUUID() + VISIT_BY_UUID_END_URL;
         mLogger.d(SENDING_REQUEST + url);
 
         JsonObjectRequestWrapper jsObjRequest =
@@ -91,33 +113,50 @@ public class VisitsManager extends BaseManager {
     }
 
     public void endVisitByUUID(EndVisitByUUIDListener listener) {
-        String url = mVisitsByUuidBaseUrl + listener.getVisitUUID();
-        mLogger.d(SENDING_REQUEST + url);
+        long currentTimeMillis = System.currentTimeMillis();
 
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put(STOP_DATE_TIME, DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
+        params.put(STOP_DATE_TIME, DateUtils.convertTime(currentTimeMillis, DateUtils.OPEN_MRS_REQUEST_FORMAT));
 
-        JsonObjectRequestWrapper jsObjRequest =
-                new JsonObjectRequestWrapper(Request.Method.POST,
-                        url, new JSONObject(params), listener, listener, DO_GZIP_REQUEST);
-        mOpenMRS.addToRequestQueue(jsObjRequest);
+        if (mOnlineMode) {
+            String url = mVisitsByUuidBaseUrl + listener.getVisitUUID();
+            mLogger.d(SENDING_REQUEST + url);
+
+            JsonObjectRequestWrapper jsObjRequest =
+                    new JsonObjectRequestWrapper(Request.Method.POST,
+                            url, new JSONObject(params), listener, listener, DO_GZIP_REQUEST);
+            mOpenMRS.addToRequestQueue(jsObjRequest);
+        } else {
+            listener.offlineAction(currentTimeMillis);
+            OfflineRequest offlineRequest = new OfflineRequest(Request.Method.POST, new JSONObject(params), listener.getVisitID(), ApplicationConstants.OfflineRequests.INACTIVATE_VISIT);
+            mOpenMRS.addToRequestQueue(offlineRequest);
+        }
     }
 
     public void startVisit(StartVisitListener listener) {
         mLogger.d(SENDING_REQUEST + mVisitBaseUrl);
+        long currentTimeMillis = System.currentTimeMillis();
 
         HashMap<String, String> params = new HashMap<String, String>();
         params.put(PATIENT, listener.getPatientUUID());
         params.put(VISIT_TYPE, OpenMRS.getInstance().getVisitTypeUUID());
-        params.put(START_DATE_TIME, DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
+        params.put(START_DATE_TIME, DateUtils.convertTime(currentTimeMillis, DateUtils.OPEN_MRS_REQUEST_FORMAT));
         params.put(LOCATION, LocationDAO.findLocationByName(OpenMRS.getInstance().getLocation()).getParentLocationUuid());
 
-        JsonObjectRequestWrapper jsObjRequest =
-                new JsonObjectRequestWrapper(Request.Method.POST,
-                        mVisitBaseUrl, new JSONObject(params), listener, listener, DO_GZIP_REQUEST);
-        mOpenMRS.addToRequestQueue(jsObjRequest);
-    }
+        if (mOnlineMode) {
+            JsonObjectRequestWrapper jsObjRequest =
+                    new JsonObjectRequestWrapper(Request.Method.POST,
+                            mVisitBaseUrl, new JSONObject(params), listener, listener, DO_GZIP_REQUEST);
+            mOpenMRS.addToRequestQueue(jsObjRequest);
+        } else {
+            long visitID = listener.offlineAction(currentTimeMillis);
 
+            if (visitID > 0) {
+                OfflineRequest offlineRequest = new OfflineRequest(Request.Method.POST, mVisitBaseUrl, new JSONObject(params), visitID, ApplicationConstants.OfflineRequests.START_VISIT);
+                OpenMRS.getInstance().addToRequestQueue(offlineRequest);
+            }
+        }
+    }
 
     public void getVisitType(VisitTypeListener listener) {
         mLogger.d(SENDING_REQUEST + mVisitTypeBaseUrl);

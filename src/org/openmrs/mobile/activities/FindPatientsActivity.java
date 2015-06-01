@@ -37,8 +37,11 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.FindPatientInDatabaseFragment;
 import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.TabUtil;
+import org.openmrs.mobile.utilities.ToastUtil;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -140,21 +143,39 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.find_patients_menu, menu);
 
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-        SearchView findPatientView;
-
         mFindPatientMenuItem = menu.findItem(R.id.actionSearch);
-        if (OpenMRS.getInstance().isRunningHoneycombVersionOrHigher()) {
-            findPatientView = (SearchView) mFindPatientMenuItem.getActionView();
+        if (!OpenMRS.getInstance().getOnlineMode()) {
+            mFindPatientMenuItem.setEnabled(false);
+            mFindPatientMenuItem.getIcon().setAlpha(ApplicationConstants.DISABLED_ICON_ALPHA);
         } else {
-            findPatientView = (SearchView) MenuItemCompat.getActionView(mFindPatientMenuItem);
-        }
+            SearchManager searchManager =
+                    (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
-        SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
-        findPatientView.setSearchableInfo(info);
+            SearchView findPatientView;
+
+            if (OpenMRS.getInstance().isRunningHoneycombVersionOrHigher()) {
+                findPatientView = (SearchView) mFindPatientMenuItem.getActionView();
+            } else {
+                findPatientView = (SearchView) MenuItemCompat.getActionView(mFindPatientMenuItem);
+            }
+
+            SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
+            findPatientView.setSearchableInfo(info);
+        }
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.actionSearch:
+                if (!OpenMRS.getInstance().getOnlineMode()) {
+                    ToastUtil.showShortToast(this, ToastUtil.ToastType.WARNING, R.string.online_mode_disable);
+                }
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

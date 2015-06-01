@@ -40,6 +40,14 @@ public class CheckVisitBeforeStartListener extends FindVisitsByPatientUUIDListen
     public void onResponse(JSONObject response) {
         super.onResponse(response);
         mLogger.i(CHECKING + response.toString());
+        checkVisit();
+    }
+
+    public void offlineAction() {
+        checkVisit();
+    }
+
+    private void checkVisit() {
         if (mCaller != null) {
             if (new VisitDAO().isPatientNowOnVisit(mPatientID)) {
                 mCaller.startCheckedFormEntryForResult(mPatientUUID);

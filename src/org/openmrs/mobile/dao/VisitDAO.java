@@ -39,10 +39,13 @@ public class VisitDAO {
         ObservationDAO observationDAO = new ObservationDAO();
         visit.setPatientID(patientID);
         long visitID = new VisitTable().insert(visit);
-        for (Encounter encounter : visit.getEncounters()) {
-            long encounterID = encounterDAO.saveEncounter(encounter, visitID);
-            for (Observation obs : encounter.getObservations()) {
-                observationDAO.saveObservation(obs, encounterID);
+        if (visit.getEncounters() != null) {
+            for (Encounter encounter : visit.getEncounters()) {
+                encounter.setPatientID(patientID);
+                long encounterID = encounterDAO.saveEncounter(encounter, visitID);
+                for (Observation obs : encounter.getObservations()) {
+                    observationDAO.saveObservation(obs, encounterID);
+                }
             }
         }
         return visitID;
@@ -53,7 +56,40 @@ public class VisitDAO {
         ObservationDAO observationDAO = new ObservationDAO();
         visit.setPatientID(patientID);
         for (Encounter encounter : visit.getEncounters()) {
-            long encounterID = encounterDAO.getEncounterByUUID(encounter.getUuid());
+            long encounterID;
+            if (encounter.getUuid() != null) {
+                encounterID = encounterDAO.getEncounterIDByUUID(encounter.getUuid());
+            } else {
+                encounterID = encounterDAO.getEncounterIDByDatetimeAndVisitId(encounter.getEncounterDatetime(), visitID);
+            }
+            if (encounterID > 0) {
+                encounterDAO.updateEncounter(encounterID, encounter, visitID);
+            } else {
+                encounterID = encounterDAO.saveEncounter(encounter, visitID);
+            }
+
+            List<Observation> oldObs = observationDAO.findObservationByEncounterID(encounterID);
+            for (Observation obs : oldObs) {
+                observationDAO.deleteObservation(obs.getId());
+            }
+
+            for (Observation obs : encounter.getObservations()) {
+                observationDAO.saveObservation(obs, encounterID);
+            }
+        }
+        return new VisitTable().update(visitID, visit) > 0;
+    }
+
+    public void updateVisitAfterOfflineCaptureVitals(Visit visit, long visitID) {
+        EncounterDAO encounterDAO = new EncounterDAO();
+        ObservationDAO observationDAO = new ObservationDAO();
+
+        for (Encounter encounter : visit.getEncounters()) {
+            long encounterID = encounterDAO.getEncounterIDByDatetimeAndVisitId(encounter.getEncounterDatetime(), visitID);
+
+            if (encounterID == 0) {
+                encounterID = encounterDAO.getEncounterIDByUUID(encounter.getUuid());
+            }
 
             if (encounterID > 0) {
                 encounterDAO.updateEncounter(encounterID, encounter, visitID);
@@ -70,6 +106,23 @@ public class VisitDAO {
                 observationDAO.saveObservation(obs, encounterID);
             }
         }
+    }
+
+    public boolean addEncounterToVisit(long visitID, Encounter encounter) {
+        Visit visit = getVisitsByID(visitID);
+        EncounterDAO encounterDAO = new EncounterDAO();
+        ObservationDAO observationDAO = new ObservationDAO();
+
+        List<Encounter> encounterList = visit.getEncounters();
+        encounterList.add(encounter);
+        visit.setEncounters(encounterList);
+
+        long encounterID = encounterDAO.saveEncounter(encounter, visitID);
+
+        for (Observation obs : encounter.getObservations()) {
+            observationDAO.saveObservation(obs, encounterID);
+        }
+
         return new VisitTable().update(visitID, visit) > 0;
     }
 
@@ -89,7 +142,7 @@ public class VisitDAO {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
 
         String sort = VisitTable.Column.PATIENT_KEY_ID + " ASC";
-        String visitWhere = String.format("%s IS NULL OR %s = ''", VisitTable.Column.STOP_DATE, VisitTable.Column.STOP_DATE);
+        String visitWhere = String.format("%s IS NULL OR %s = '' OR %s = 0", VisitTable.Column.STOP_DATE, VisitTable.Column.STOP_DATE, VisitTable.Column.STOP_DATE);
         final Cursor visitCursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, visitWhere, null, null, null, sort);
 
         sort = Table.MasterColumn.ID + " ASC";

@@ -22,6 +22,7 @@ public class Location {
     private String description;
     private Address address;
     private String parentLocationUuid;
+    private String parentLocationDisplay;
 
     public Location(String uuid, String display) {
         this.uuid = uuid;
@@ -84,8 +85,15 @@ public class Location {
         this.parentLocationUuid = parentLocationUuid;
     }
 
+    public void setParentLocationDisplay(String parentLocationDisplay) {
+        this.parentLocationDisplay = parentLocationDisplay;
+    }
+
     public String getParentLocationUuid() {
         return parentLocationUuid;
     }
 
+    public String getParentLocationDisplay() {
+        return parentLocationDisplay;
+    }
 }

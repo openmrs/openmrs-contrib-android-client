@@ -105,7 +105,8 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
             public void onClick(View v) {
                 if (new PatientDAO().isUserAlreadySaved(patient.getUuid())) {
                     Intent intent = new Intent(mContext, PatientDashboardActivity.class);
-                    intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getUuid());
+                    Long patientID = new PatientDAO().findPatientByUUID(patient.getUuid()).getId();
+                    intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patientID);
                     mContext.startActivity(intent);
                 }
             }

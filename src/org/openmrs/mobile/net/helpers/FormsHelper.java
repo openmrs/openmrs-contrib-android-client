@@ -28,12 +28,12 @@ public final class FormsHelper {
     private FormsHelper() {
     }
 
-    public static FormManagerBundle createBundle(String filePath, String patientUUID, Long patientID, String visitUUID) {
+    public static FormManagerBundle createBundle(String filePath, String patientUUID, Long patientID, Long visitID) {
         FormManagerBundle bundle = new FormManagerBundle();
         bundle.putStringField(FormManagerBundle.INSTANCE_PATH_KEY, filePath);
         bundle.putStringField(FormManagerBundle.PATIENT_UUID_KEY, patientUUID);
         bundle.putLongField(FormManagerBundle.PATIENT_ID_KEY, patientID);
-        bundle.putStringField(FormManagerBundle.VISIT_UUID_KEY, visitUUID);
+        bundle.putLongField(FormManagerBundle.VISIT_ID_KEY, visitID);
         return bundle;
     }
 

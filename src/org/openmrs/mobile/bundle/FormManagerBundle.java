@@ -17,7 +17,7 @@ package org.openmrs.mobile.bundle;
 public class FormManagerBundle extends FieldsBundle {
     public static final String PATIENT_ID_KEY = "b_patientID";
     public static final String PATIENT_UUID_KEY = "b_patientUUID";
-    public static final String VISIT_UUID_KEY = "b_visitUUID";
+    public static final String VISIT_ID_KEY = "b_visitID";
     public static final String INSTANCE_PATH_KEY = "b_instancePath";
 
     public Long getPatientId() {
@@ -28,8 +28,8 @@ public class FormManagerBundle extends FieldsBundle {
         return getStringField(PATIENT_UUID_KEY);
     }
 
-    public String getVisitUuid() {
-        return getStringField(VISIT_UUID_KEY);
+    public Long getVisitId() {
+        return getLongField(VISIT_ID_KEY);
     }
 
     public String getInstancePath() {

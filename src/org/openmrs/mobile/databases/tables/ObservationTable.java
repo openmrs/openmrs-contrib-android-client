@@ -34,7 +34,7 @@ public class ObservationTable extends Table<Observation> {
         return CREATE_TABLE + TABLE_NAME + "("
                 + Column.ID + PRIMARY_KEY
                 + Column.ENCOUNTER_KEY_ID  + Column.Type.INT_TYPE_NOT_NULL
-                + Column.UUID + Column.Type.TEXT_TYPE_NOT_NULL
+                + Column.UUID + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.DISPLAY + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.DISPLAY_VALUE + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.DIAGNOSIS_ORDER + Column.Type.TEXT_TYPE_WITH_COMMA

@@ -15,6 +15,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.FindPatientsActivity;
 import org.openmrs.mobile.listeners.findPatients.LastViewedPatientListener;
 import org.openmrs.mobile.adapters.PatientArrayAdapter;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FindPatientsManager;
 import org.openmrs.mobile.net.helpers.FindPatientsHelper;
@@ -32,7 +33,6 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     private static List<Patient> mLastViewedPatientsList;
     private SwipeRefreshLayout mSwipeLayout;
     private static boolean mRefreshing;
-    private boolean mIsConnectionAvailable;
     private LastViewedPatientListener mFpmResponseListener;
 
     public FindPatientLastViewedFragment() {
@@ -41,18 +41,18 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mIsConnectionAvailable = checkIfConnectionIsAvailable();
     }
 
     @Override
     public void onResume() {
         super.onResume();
 
-        if (mRefreshing) {
-            mSwipeLayout.setRefreshing(true);
-            mSwipeLayout.setEnabled(false);
-            mEmptyList.setVisibility(View.GONE);
-            mPatientsListView.setEmptyView(mSpinner);
+        if (!OpenMRS.getInstance().getOnlineMode()) {
+            setEmptyList(R.string.online_mode_disable);
+        } else if (!NetworkUtils.isNetworkAvailable(getActivity())) {
+            setEmptyList(R.string.no_connection_available);
+        } else if (mRefreshing) {
+            setSpinner();
         } else if (mLastViewedPatientsList != null) {
             updatePatientsData();
         } else {
@@ -104,9 +104,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
 
     public void updatePatientsData() {
         if (mLastViewedPatientsList.size() == 0) {
-            mEmptyList.setText(getString(R.string.find_patient_no_last_viewed));
-            mSpinner.setVisibility(View.GONE);
-            mPatientsListView.setEmptyView(mEmptyList);
+            setEmptyList(R.string.find_patient_no_last_viewed);
         }
         mAdapter = new PatientArrayAdapter(getActivity(), R.layout.find_patients_row, mLastViewedPatientsList);
         mPatientsListView.setAdapter(mAdapter);
@@ -115,15 +113,11 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     }
 
     public void stopLoader() {
-        mEmptyList.setText(getString(R.string.find_patient_no_last_viewed));
-        mSpinner.setVisibility(View.GONE);
-        mPatientsListView.setEmptyView(mEmptyList);
-        mSwipeLayout.setRefreshing(false);
-        mSwipeLayout.setEnabled(true);
+        setEmptyList(R.string.find_patient_no_last_viewed);
     }
 
     public void updateLastViewedList() {
-        if (NetworkUtils.isNetworkAvailable(getActivity())) {
+        if (OpenMRS.getInstance().getOnlineMode()) {
             setRefreshing(true);
             mSwipeLayout.setRefreshing(true);
             mSwipeLayout.setEnabled(false);
@@ -135,19 +129,26 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
             FindPatientsManager fpm = new FindPatientsManager();
             fpm.getLastViewedPatient(mFpmResponseListener);
         } else {
-            mEmptyList.setText(getString(R.string.find_patient_no_connection));
+            mEmptyList.setText(getString(R.string.no_connection));
             mPatientsListView.setEmptyView(mEmptyList);
             mSwipeLayout.setRefreshing(false);
         }
     }
 
-    public boolean checkIfConnectionIsAvailable() {
-        boolean connection = NetworkUtils.isNetworkAvailable(getActivity());
-        if (mIsConnectionAvailable) {
-            FindPatientsManager fpm = new FindPatientsManager();
-            fpm.getLastViewedPatient(mFpmResponseListener);
-        }
-        return connection;
+    private void setEmptyList(int resId) {
+        mSpinner.setVisibility(View.GONE);
+        mEmptyList.setText(getString(resId));
+        mPatientsListView.setEmptyView(mEmptyList);
+        mPatientsListView.setAdapter(null);
+        mSwipeLayout.setRefreshing(false);
+        mSwipeLayout.setEnabled(true);
+    }
+
+    private void setSpinner() {
+        mEmptyList.setVisibility(View.GONE);
+        mPatientsListView.setEmptyView(mSpinner);
+        mSwipeLayout.setRefreshing(true);
+        mSwipeLayout.setEnabled(false);
     }
 
     @Override

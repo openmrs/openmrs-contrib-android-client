@@ -25,19 +25,19 @@ import org.openmrs.mobile.net.GeneralErrorListener;
 
 public final class LastVitalsListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
-    private final String mPatientUUID;
+    private final Long mPatientID;
 
-    public LastVitalsListener(String patientUUD) {
-        mPatientUUID = patientUUD;
+    public LastVitalsListener(Long patientID) {
+        mPatientID = patientID;
     }
 
     @Override
     public void onResponse(JSONObject response) {
         mLogger.d(response.toString());
-        new EncounterDAO().saveLastVitalsEncounter(ObservationMapper.lastVitalsMap(response), mPatientUUID);
+        new EncounterDAO().saveLastVitalsEncounter(ObservationMapper.lastVitalsMap(response), mPatientID);
     }
 
-    public String getPatientUUID() {
-        return mPatientUUID;
+    public Long getPatientID() {
+        return mPatientID;
     }
 }

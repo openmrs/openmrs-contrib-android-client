@@ -16,7 +16,9 @@ package org.openmrs.mobile.listeners.forms;
 import com.android.volley.Response;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.bundle.FormManagerBundle;
+import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.intefaces.VisitDashboardCallbackListener;
+import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.net.GeneralErrorListener;
 import org.openmrs.mobile.net.VisitsManager;
@@ -26,14 +28,14 @@ import org.openmrs.mobile.utilities.ToastUtil;
 public final class UploadXFormWithMultiPartRequestListener extends GeneralErrorListener implements Response.Listener<String> {
     private final String mInstancePath;
     private final String mPatientUUID;
-    private final String mVisitUUID;
+    private final Long mVisitID;
     private final Long mPatientID;
     private VisitDashboardCallbackListener mCallbackListener;
 
     private UploadXFormWithMultiPartRequestListener(FormManagerBundle bundle) {
         mInstancePath = bundle.getInstancePath();
         mPatientUUID = bundle.getPatientUuid();
-        mVisitUUID = bundle.getVisitUuid();
+        mVisitID = bundle.getVisitId();
         mPatientID = bundle.getPatientId();
         mCallbackListener = null;
     }
@@ -48,8 +50,20 @@ public final class UploadXFormWithMultiPartRequestListener extends GeneralErrorL
         ToastUtil.showLongToast(BaseManager.getCurrentContext(),
                 ToastUtil.ToastType.SUCCESS,
                 BaseManager.getCurrentContext().getString(R.string.forms_sent_successfully));
+        String visitUUID = new VisitDAO().getVisitsByID(mVisitID).getUuid();
         new VisitsManager().findVisitByUUID(
-                VisitsHelper.createFindVisitCallbacksListener(mPatientID, mVisitUUID, mCallbackListener));
+                VisitsHelper.createFindVisitCallbacksListener(mPatientID, visitUUID, mCallbackListener));
+    }
+
+    public void offlineAction() {
+        Encounter encounter = new ParseVitalsXMLForm().parseVitalsForm(mInstancePath);
+        encounter.setPatientID(mPatientID);
+        encounter.setVisitID(mVisitID);
+        new VisitDAO().addEncounterToVisit(mVisitID, encounter);
+
+        if (null != mCallbackListener) {
+            mCallbackListener.updateEncounterList();
+        }
     }
 
     public String getInstancePath() {
@@ -58,5 +72,9 @@ public final class UploadXFormWithMultiPartRequestListener extends GeneralErrorL
 
     public String getPatientUUID() {
         return mPatientUUID;
+    }
+
+    public Long getVisitID() {
+        return mVisitID;
     }
 }

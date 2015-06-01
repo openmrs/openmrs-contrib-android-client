@@ -56,7 +56,6 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
     private Visit mVisit;
     private String mPatientName;
     private Patient mPatient;
-
     private VisitsManager mVisitsManager;
     private FormsManager mFormsManager;
 
@@ -68,7 +67,7 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
         Intent intent = getIntent();
 
         mVisit = new VisitDAO().getVisitsByID(intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0));
-        mPatient = new PatientDAO().findPatientByID(String.valueOf(mVisit.getPatientID()));
+        mPatient = new PatientDAO().findPatientByID(mVisit.getPatientID());
 
         mPatientName = intent.getStringExtra(ApplicationConstants.BundleKeys.PATIENT_NAME);
         mVisitEncounters = mVisit.getEncounters();
@@ -96,8 +95,13 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
     public boolean onCreateOptionsMenu(Menu menu) {
         if (DateUtils.ZERO.equals(mVisit.getStopDate())) {
             getMenuInflater().inflate(R.menu.active_visit_menu, menu);
+
+            if (!mOpenMRS.getOnlineMode()) {
+                menu.findItem(R.id.actionEndVisit).setTitle(R.string.action_end_visit_offline);
+            }
         }
         getSupportActionBar().setSubtitle(mPatientName);
+
         return true;
     }
 
@@ -132,7 +136,7 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
                                 .getFormInstanceFilePath(),
                         mPatient.getUuid(),
                         mPatient.getId(),
-                        mVisit.getUuid());
+                        mVisit.getId());
                 mFormsManager.uploadXFormWithMultiPartRequest(
                         FormsHelper.createUploadXFormWithMultiPartRequestListener(bundle, this));
                 break;

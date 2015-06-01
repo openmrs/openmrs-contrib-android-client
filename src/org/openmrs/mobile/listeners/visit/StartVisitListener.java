@@ -24,7 +24,9 @@ import org.openmrs.mobile.activities.CaptureVitalsActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
+import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.dao.VisitDAO;
+import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.mappers.VisitMapper;
 import org.openmrs.mobile.net.GeneralErrorListener;
 
@@ -66,15 +68,29 @@ public class StartVisitListener extends GeneralErrorListener implements Response
         mLogger.d(response.toString());
         try {
             long visitID = new VisitDAO().saveVisit(VisitMapper.map(response), mPatientID);
-            if (null != mCallerPDA) {
-                mCallerPDA.visitStarted(visitID, visitID <= 0);
-            } else {
-                mCallerCVA.dismissProgressDialog(false, R.string.start_visit_successful,
-                        R.string.start_visit_error);
-                mCallerCVA.startCheckedFormEntryForResult(mPatientUUID);
-            }
+            callerAction(visitID);
         } catch (JSONException e) {
             mLogger.d(e.toString());
+        }
+    }
+
+    public long offlineAction(long time) {
+        Visit visit = new Visit(mPatientID, OpenMRS.getInstance().getVisitTypeDisplay(),
+                LocationDAO.findLocationByName(OpenMRS.getInstance().getLocation()).getParentLocationDisplay(), time);
+        long visitID = new VisitDAO().saveVisit(visit, mPatientID);
+
+        callerAction(visitID);
+
+        return visitID;
+    }
+
+    private void callerAction(long visitID) {
+        if (null != mCallerPDA) {
+            mCallerPDA.visitStarted(visitID, visitID <= 0);
+        } else {
+            mCallerCVA.dismissProgressDialog(false, R.string.start_visit_successful,
+                    R.string.start_visit_error);
+            mCallerCVA.startCheckedFormEntryForResult(mPatientUUID);
         }
     }
 

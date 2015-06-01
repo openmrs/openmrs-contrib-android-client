@@ -197,7 +197,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(3, encounter.getDisplay(), encounterStatement);
             bindLong(4, encounter.getEncounterDatetime(), encounterStatement);
             bindString(5, encounter.getEncounterType().getType(), encounterStatement);
-            bindString(6, encounter.getPatientUUID(), encounterStatement);
+            bindLong(6, encounter.getPatientID(), encounterStatement);
             encounterId = encounterStatement.executeInsert();
             encounterStatement.clearBindings();
             db.setTransactionSuccessful();
@@ -287,6 +287,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(9, loc.getAddress().getCountry(), locationStatement);
             bindString(10, loc.getAddress().getPostalCode(), locationStatement);
             bindString(11, loc.getParentLocationUuid(), locationStatement);
+            bindString(12, loc.getParentLocationDisplay(), locationStatement);
             locID = locationStatement.executeInsert();
             locationStatement.clearBindings();
             db.setTransactionSuccessful();

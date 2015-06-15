@@ -8,6 +8,13 @@ The goal of this project is to provide OpenMRS 2.x client for Android devices. T
 The app will communicate with OpenMRS using REST. It will support working off-line (without network connection) with a chosen subset of patients. The database on the device will be encrypted and password protected to secure patient data.
 For more information, including screenshots of the client, visit https://wiki.openmrs.org/display/projects/OpenMRS+2.x+Android+Client
 
+# Setup local OpenMRS server
+## Download, unzip and run https://sourceforge.net/projects/openmrs/files/releases/OpenMRS_2.2/openmrs-standalone-2.2.zip/download
+## Download https://wiki.openmrs.org/download/attachments/74252444/webservices.rest-omod-2.12-20150615.175221-10.omod?version=1&modificationDate=1434391646461&api=v2
+## Login with username "admin" and password "Admin123". Go to Administration -> Advanced Administration -> Manage Modules -> Add or Upgrade Module -> Type: xforms and hit install. Repeat to upgrade webservices.rest, but instead of typing upload the omod file downloaded in the previous step.
+## Restart the server.
+## You should be able to login using your Android Client given server is accessible over the network.
+
 # Development
 Before creating pull request run code review tools, *PMD & Checkstyle*, and tests.
 

@@ -1,0 +1,184 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>WebRTC Demo - Video chatting in room </title>
+  
+</head>
+<body>
+
+<div class="container">
+
+  <div id="streams_container">
+    <div class="streamContainer" id="myPublisherContainer">
+      <div id="myPublisher"></div>
+    </div>
+  </div>
+
+  <div id="controlsContainer">
+    <div class="controlsBody">
+      <div id="controlOptions" class="optionContainer">
+        <
+    <div id="controlOptionsRight">
+      <a href= "mailto:qaribasar@gmail.com?subject=OpenMRSRTC%20Feedback" id="mailButton" data-tooltip-title="Send Feedback!" class="controlOption option">
+      </a>
+      <div id="filtersButton" data-tooltip-title = "Filters" class="controlOption option popover-dismiss" data-toggle="popover" data-placement="top" data-html="true" title="Filters" data-content="<ul id='filtersList'><li><button data-value='Sepia' type='button'>Sepia</button></li><li><button data-value='Invert' type='button'>Inverted</button></li><li><button data-value='Grayscale' type='button'>Grayscale</button></li><li><button data-value='Blur' type='button'>Blur</button></li><li><button data-value='None' type='button'>None</button></li></ul>"></div>
+      <div id="roomLinkButton" data-tooltip-title="Share Room Link!" title="Share Room Link!" class="controlOption option popover-dismiss" data-placement="top"  data-activity="roomLink">
+      </div>
+      <div id="recordButton" data-tooltip-title="Start Recording" class="controlOption option"data-activity="record">
+      </div>
+      <div id="chatButton" data-tooltip-title="Text Chat" class="controlOption option no-after" data-activity="chat">
+      </div>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script id = "chattrBaseTpl" type = "text/x-handlebars-template">
+  <div id = 'chattr'> 
+    <div id ='relative_wrapper'>
+      <div id='chat_header' class='chat-header' > 
+        <div><span></span><span></span><span></span></div> 
+        <h4 id='roomId'></h4> 
+      </div> 
+      <div class='inner-chat'> 
+        <p id = 'displayHelp'> Type /help for a list of commands 
+        <ul id='messages'> 
+        </ul> 
+      </div> 
+      <div class='chat-input-wrapper'> 
+        <input type='text' id='chatInput' placeholder= 'Write here...'  /> 
+      </div> 
+    </div>
+  </div>
+</script>
+<script id = "chattrChatTpl" type="text/x-handlebars-template">
+  <li class="chat {{cls}}">
+  <label>{{nickname}}</label>
+  <p data-date="{{date}}" title="{{time}}">{{message}}</p>
+</script>
+<script id="chattrStatusTpl" type="text/x-handlebars-template">
+  <li class = 'status'>
+    <p><span class='oldName'>{{oldName}}</span> is now known as <span class='newName'>{{newName}}</span></p>
+  </li>
+</script>
+<script id="chattrNewUserTpl" type="text/x-handlebars-template">
+  <li class= "status newUser">
+    <p><span>{{nickname}}</span> has joined the room</p>
+  </li>
+</script>
+<script id="chattrUserLeaveTpl" type="text/x-handlebars-template">
+  <li class= "status newUser">
+    <p><span>{{nickname}}</span> has left the room</p>
+  </li>
+</script>
+<script id="chattrUpdateTpl" type="text/x-handlebars-template">
+  <li class="status {{cls}}">
+  {{{text}}}
+  </li>
+</script>
+<script id="chattrUserListTpl" type="text/x-handlebars-template">
+  <p class='userList'>Users in this room right now</p>
+  {{#users}}
+  <p class = "userList {{last}}">- {{name}}</p>
+  {{/users}}
+</script>
+<script id="chattrHelpTpl" type="text/x-handlebars-template">
+  <p>Type <span>/name your_name</span> to change your display name</p> 
+  <p>Type <span>/list</span> to see a list of users in the room</p> 
+  <p>Type <span>/focus</span> to focus the room on yourself</p>
+  <p>Type <span>/unfocus</span> to take focus away from any focussed people in the room</p>
+  <p class='last'>Type <span>/help</span> to see a list of commands</p>
+</script>
+<script id="chattrNameExistsTpl" type="text/x-handlebars-template">
+  <p>User <span>{{newName}}</span> already exists. Please choose another name.</p>
+</script>
+<script id="chattrFocusTpl" type="text/x-handlebars-template">
+  <li class="status">
+    <p>User <span>{{nick}}</span> now has focus.</p>
+  </li>
+</script>
+<script id="chattrUnfocusTpl" type="text/x-handlebars-template">
+  <li class="status">
+    <p>Focus has been removed.</p>
+  </li>
+</script>
+
+
+<script id="userStreamTemplate" type="text/x-handlebars-template">
+  <div class="streamContainer {{id}}" data-connectionid="{{connectionId}}">
+    <div id="{{id}}"></div>
+    <div class="flagUser" data-streamconnection="{{id}}">Remove User</div>
+  </div>
+</script>
+
+
+<link rel="stylesheet" href="/css/room.css" />
+<link rel="stylesheet" href="/css/OpenTokChattr.css" />
+<script src="//static.opentok.com/v2.2/js/opentok.min.js"></script>
+<script src="/vendors/handlebars.js" type="text/javascript"></script>
+<script src="/js/layoutContainer.js" type="text/javascript"></script>
+<script src="/vendors/jquery.event.ue.js" type="text/javascript"></script>
+<script src="/vendors/jquery.udraggable.js" type="text/javascript"></script>
+<script src="/vendors/ZeroClipboard/ZeroClipboard.min.js" type="text/javascript"></script>
+<script src="/js/OpenTokChattr.js" type="text/javascript"></script>
+
+<script src="/js/room.js" type="text/javascript"></script>
+<script type="text/javascript">
+  var session = OT.initSession( "<%= apiKey %>", "<%= sid %>" );
+  chattr = new OpenTokChattr("body","<%= rid %>",session,
+ {"draggable": true,
+  "startPosition":{
+    x: startX,
+    y: startY
+  },
+  "closeable": function(){
+    $("#chattr").hide();
+    $("#chatButton").removeClass("selected");
+  }
+ });
+  room = new Room("<%= rid %>", session, "<%= token %>", chattr);
+  var startX = $(window).width()-10-$("#chattr").width();
+  var startY = $(window).height()-56-$("#chattr").height();
+  $('#filtersButton').popover();
+  $(".controlOption").each(function(){
+    $(this).tooltip({
+      title: $(this).data("tooltip-title"),
+      placement: "top"
+    });
+  });
+  $('body').on('click', function (e) {
+    $('.popover-dismiss').each(function () {
+        //the 'is' for buttons that trigger popups
+        //the 'has' for icons within a button that triggers a popup
+        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+            $(this).popover('hide');
+            $(this).removeClass('selected');
+        }
+    });
+  });
+  $("#roomLinkButton").popover({
+    title: $(this).attr("title"),
+    content: "<input id='roomLinkInput' type='text' value='"+window.location.origin+"/<%= rid %>' ><button id='copyButton'>Copy</button>",
+    html: true
+  });
+  $("#roomLinkButton").on('shown.bs.popover', function(){
+    var client = new ZeroClipboard($("#copyButton"));
+    client.on("ready", function(readyEvent){
+      client.on("copy", function(event){
+        var clipboard = event.clipboardData;
+        clipboard.setData( "text/plain", window.location.origin+"/<%= rid %>" );
+      });
+      client.on("aftercopy", function(event){
+        $("#copyButton").html("Copied!");
+      });
+    });
+  });
+  $(".controlOption").click(function(){
+    $(this).toggleClass("selected");
+  });
+</script>
+
+</body>
+</html>

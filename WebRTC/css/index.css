@@ -1,0 +1,320 @@
+/*
+ * Mixins
+ */
+/*
+ * Normalize variables
+ */
+/*
+ * Bootstrap variables
+ */
+/*
+ * Colors
+ */
+/*
+ * Layout
+ */
+/*
+ * Elements
+ */
+info-icon .icon-question-mark {
+  pointer-events: none; }
+
+.close-x {
+  width: 15px;
+  height: 15px;
+  fill: #fff;
+  cursor: pointer; }
+
+.fill-container {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%; }
+
+.d-table-container {
+  padding: 0 40px;
+  height: 100%; }
+
+.d-white-top {
+  text-align: center;
+  display: table;
+  width: 100%;
+  position: relative;
+  top: 95px;
+  padding-top: 50px;
+  border-top: solid 1px rgba(255, 255, 255, 0.3); }
+
+.d-table-center {
+  text-align: center;
+  display: table; }
+
+.d-cell {
+  display: table-cell;
+  vertical-align: middle; }
+
+.animate-fade-in.ng-enter {
+  -webkit-animation: fadeIn 0.4s;
+  -moz-animation: fadeIn 0.4s;
+  animation: fadeIn 0.4s; }
+
+.animate-show.ng-hide-add,
+.animate-show.ng-hide-remove {
+  display: block !important;
+  -webkit-transition: opacity 0.4s cubic-bezier(0, 0.99, 0.01, 1);
+  transition: opacity 0.4s cubic-bezier(0, 0.99, 0.01, 1); }
+
+.animate-show.ng-hide-remove,
+.animate-show.ng-hide-add.ng-hide-add-active {
+  opacity: 0; }
+
+.animate-show.ng-hide-add,
+.animate-show.ng-hide-remove.ng-hide-remove-active {
+  opacity: 1; }
+
+.form-error-box {
+  height: 24px;
+  margin: 5px 0;
+  font-size: 18px;
+  color: #fff; }
+
+.footer-logos {
+  position: absolute;
+  width: 100%;
+  bottom: 20px;
+  text-align: center; }
+  .footer-logos h6 {
+    margin-bottom: 12px;
+    color: #205e82;
+    font-size: 12px; }
+
+@media screen and (max-width: 885px), screen and (max-height: 656px) {
+  .footer-logos {
+    display: none; } }
+.blueView img.logo-big {
+  width: 429px;
+  height: 127px;
+  margin-bottom: 40px; }
+.blueView h1 {
+  margin-bottom: 20px; }
+
+input[type="text"]:focus {
+  border-color: #286B92;
+  outline: none; }
+
+@media screen and (max-width: 1011px), screen and (max-height: 750px) {
+  .blueView .d-white-top {
+    padding-top: 30px; }
+  .blueView img.logo-big {
+    width: 280px;
+    height: 83px;
+    margin-bottom: 20px; }
+  .blueView h1 {
+    margin-bottom: 12px;
+    font-size: 28px; } }
+body {
+  font-family: 'Muli';
+  font-weight: 300;
+  color: #fff; }
+
+h1, h2, h3 {
+  font-family: "AvantGardeGothicITCW01X";
+  font-weight: lighter; }
+  h1 b, h2 b, h3 b {
+    font-family: "AvantGardeGothicITCW01B 731069"; }
+
+h1.big {
+  font-size: 48px; }
+
+h1 {
+  font-size: 32px; }
+
+h2 {
+  font-size: 28px; }
+
+h3 {
+  font-size: 24px; }
+
+h4 {
+  font-size: 20px; }
+
+h5 {
+  font-size: 16px; }
+
+h6 {
+  font-size: 14px; }
+
+b {
+  font-weight: 700; }
+
+a {
+  color: #003F5F; }
+
+p {
+  font-size: 14px;
+  line-height: 16px; }
+
+.font18 {
+  font-size: 18px; }
+
+input, button, .btn-standard {
+  font-family: 'AvantExtraLight'; }
+
+input[type='submit'], button, .btn-standard {
+  display: inline-block;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid #205e82;
+  padding: 12px 40px;
+  font-weight: 300;
+  font-size: 22px;
+  text-decoration: none;
+  background-color: #529ec8;
+  background-image: -webkit-linear-gradient(#529ec8, #205e82);
+  background-image: linear-gradient(#529ec8, #205e82);
+  background-color: #3a7ea6;
+  color: #fff; }
+  input[type='submit']:hover, button:hover, .btn-standard:hover {
+    background-color: #3a7ea6;
+    background-image: -webkit-linear-gradient(#3a7ea6, #3a7ea6);
+    background-image: linear-gradient(#3a7ea6, #3a7ea6); }
+  input[type='submit']:disabled, button:disabled, .btn-standard:disabled {
+    background-color: #529ec8;
+    background-image: -webkit-linear-gradient(#529ec8, #205e82);
+    background-image: linear-gradient(#529ec8, #205e82);
+    opacity: 0.5;
+    cursor: default; }
+
+.btn-grey {
+  background-color: #aaaaaa;
+  background-image: -webkit-linear-gradient(#aaaaaa, #777777);
+  background-image: linear-gradient(#aaaaaa, #777777);
+  border-color: #888; }
+  .btn-grey:hover {
+    background-color: #999999;
+    background-image: -webkit-linear-gradient(#999999, #999999);
+    background-image: linear-gradient(#999999, #999999); }
+
+.btn-small {
+  font-size: 16px;
+  padding: 8px 20px; }
+
+input[type="text"] {
+  border: solid 2px #529ec8;
+  border-radius: 5px;
+  height: 58px;
+  font-size: 24px; }
+
+input.std-input-text[type="text"] {
+  display: inline-block;
+  margin: 8px 0;
+  width: 400px;
+  padding: 0 20px;
+  text-align: center; }
+
+form {
+  margin: 0; }
+
+#roomContainer form {
+  margin: 70px 0px 30px 0px; }
+
+#store_icons {
+  margin-top: 70px; }
+
+@media screen and (max-width: 885px), screen and (max-height: 656px) {
+  input[type="text"] {
+    height: 35px;
+    font-size: 14px; }
+
+  input.std-input-text[type="text"] {
+    width: 300px;
+    padding: 0 10px; } }
+input.error {
+  border: solid #ff0000;
+  background-color: #ffeeee; }
+
+html, body {
+  height: 100%; }
+
+body {
+  background: #7fbfd6 no-repeat center center fixed;
+  /* Old browsers */
+  background-image: radial-gradient(circle at 50% 50%, #7fbfd6, #5598b0);
+  background-image: -webkit-radial-gradient(50% 50%, circle, #7fbfd6, #5598b0);
+  background-image: -moz-radial-gradient(50% 50%, circle, #7fbfd6, #5598b0);
+  background-image: -ms-radial-gradient(50% 50%, circle, #7fbfd6, #5598b0);
+  background-image: -o-radial-gradient(50% 50%, circle, #7fbfd6, #5598b0);
+  min-height: 100%; }
+
+.container {
+  width: 960px;
+  box-sizing: border-box;
+  min-height: 100%;
+  text-align: center; }
+  .container #opentokLogo {
+    position: fixed;
+    bottom: 20px;
+    left: 20px; }
+
+body, input {
+  font-family: "AvantGardeGothicITCW01X";
+  color: #ffffff; }
+
+h5 {
+  font-family: 'Muli';
+  font-weight: 300; }
+
+/*
+h1, h1 b{
+  font-family: $avantFont;
+  font-size:60px;
+  line-height:100%;
+  margin-top:0;
+  margin-bottom:30px;
+  text-transform:capitalize;
+  text-align:center;
+  line-height:100%;
+}
+h1 b{
+  font-weight: bold;
+}*/
+#roomContainer {
+  text-align: center; }
+
+#store_icons a#playStoreButton {
+  margin-right: 20px; }
+
+#actionItem {
+  width: 565px;
+  text-align: left;
+  margin: auto; }
+
+#submitButton {
+  color: white;
+  font-family: 'AvantGardeGothicITCW01X'; }
+  #submitButton:hover {
+    color: white;
+    text-decoration: none; }
+
+input {
+  vertical-align: bottom; }
+
+input::-webkit-input-placeholder {
+  /* WebKit browsers */
+  line-height: 130%; }
+
+input:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  line-height: 130%; }
+
+input::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  line-height: 130%; }
+
+input:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  line-height: 130%; }
+
+#infoBox {
+  margin-top: 50px; }

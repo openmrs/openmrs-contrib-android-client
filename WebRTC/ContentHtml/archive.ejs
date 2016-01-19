@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>WebRTC Demo - Archive</title>
+  
+</head>
+<body>
+  <div id="logoContainer"></div>
+
+  <div class="container">
+
+  
+  <% if(error) {%>
+    <%= error %>
+  <% }else{ %>
+    <% if(archive.url) {%>
+      <h1>OpenTok Archive: <%= archive.name %></h1>
+
+      <div id="roomContainer">
+        <video id="archiveVideo" src="<%= archive.url %>" autoplay="" controls="true"></video>
+        <br>
+        <br>
+
+        <a href="<%= archive.url %>" id="submitButton" class="actionButton" download>Download</a>
+      </div>
+    <% }else{ %>
+      <p>Archive is not ready. Please check back in a few minutes.</p>
+      <p>Archive ID: <%= archive.id %></p>
+    <% } %>
+
+  <% } %>
+
+</div>
+  </div>
+
+  
+  <link rel="stylesheet" href="/css/index.css" />
+  <script src="/js/index.js" type="text/javascript"></script>
+  <script>
+    var video = document.getElementById('archiveVideo');
+    video.addEventListener('loadedmetadata', function(){
+      verticalCenter();
+    });
+  </script>
+  
+</body>
+</html>

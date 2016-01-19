@@ -1,0 +1,104 @@
+/*
+ * Mixins
+ */
+/*
+ * Normalize variables
+ */
+/*
+ * Bootstrap variables
+ */
+/*
+ * Colors
+ */
+/*
+ * Layout
+ */
+/*
+ * Elements
+ */
+#chatroom {
+  background: white;
+  border: 3px solid #1ba3dd;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  box-sizing: border-box; }
+
+#title {
+  position: absolute;
+  top: 0;
+  left: 0px;
+  right: 0px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 5; }
+  #title #title_content {
+    position: relative;
+    width: 100%;
+    height: 100%; }
+    #title #title_content p {
+      color: #eeeef2;
+      text-align: center; }
+      #title #title_content p a {
+        color: #1ba3dd; }
+    #title #title_content .titleText {
+      width: 100%;
+      min-height: 25px;
+      text-align: center;
+      color: white;
+      font-family: "AvantGardeGothicITCW01X";
+      font-weight: lighter;
+      vertical-align: middle;
+      line-height: 100%;
+      padding-top: 5px;
+      font-size: 25px; }
+
+#displayChat {
+  padding: 5px;
+  overflow: auto;
+  background: #EEE;
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 40px; }
+  #displayChat .chatEvent {
+    text-align: center;
+    color: #aaa; }
+  #displayChat .chatMessage {
+    margin: 10px 5px 5px 5px;
+    font-size: 15px;
+    word-wrap: break-word; }
+    #displayChat .chatMessage:first-child {
+      margin-top: 75px; }
+  #displayChat li h4 {
+    display: inline;
+    font-size: 15px; }
+
+#chatInput {
+  height: 40px;
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0; }
+  #chatInput input {
+    border: 1px solid #DDD;
+    background: none;
+    height: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 20px;
+    color: #444444;
+    padding-left: 45px; }
+    #chatInput input:focus {
+      outline: none;
+      box-shadow: 1px 1px 3px #999 inset; }
+  #chatInput i {
+    font-size: 30px;
+    position: relative;
+    left: 10px;
+    top: -25px;
+    color: #8D8F8F;
+    float: left; }

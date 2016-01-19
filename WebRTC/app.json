@@ -1,0 +1,16 @@
+
+{
+  "name": "OpenMRS",
+  "description": "OpenMRS is a WebRTC APP that supports multi-party video chat, Audio/Video recording, mobile support on iOS and Android, and text-chat.",
+  "repository": "https://github.com/openmrs-gci",
+  "logo": "http://www.tokbox.com/blog/wp-content/uploads/2014/08/LogoOpenTok.png",
+  "keywords": ["webrtc", "Openmrs", "video", "video chat", "multiparty"],
+  "env": {
+    "TB_KEY": {
+      "description": "233951"
+    },
+    "TB_SECRET": {
+      "description": "871040ee34bf9a1f45ad2500202e3b27c8677a97"
+    }
+  }
+}

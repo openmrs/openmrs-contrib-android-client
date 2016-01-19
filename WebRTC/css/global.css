@@ -1,0 +1,70 @@
+/*
+Syntax error: Undefined variable: "$gutter_width".
+        on line 28 of ./global.scss
+23: 
+24: 
+25: 
+26: 
+27: .d-table-container {
+28:   padding: 0 $gutter_width;
+29:   height: 100%;
+30: }
+31: .d-white-top {
+32:   text-align: center;
+33:   display: table;
+Backtrace:
+./global.scss:28
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/script/tree/variable.rb:49:in `_perform'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/script/tree/node.rb:50:in `perform'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/script/tree/list_literal.rb:62:in `block in _perform'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/script/tree/list_literal.rb:62:in `map'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/script/tree/list_literal.rb:62:in `_perform'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/script/tree/node.rb:50:in `perform'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/perform.rb:366:in `visit_prop'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/base.rb:36:in `visit'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/perform.rb:152:in `block in visit'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/stack.rb:79:in `block in with_base'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/stack.rb:121:in `with_frame'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/stack.rb:79:in `with_base'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/perform.rb:152:in `visit'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/perform.rb:389:in `block (2 levels) in visit_rule'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/perform.rb:389:in `map'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/perform.rb:389:in `block in visit_rule'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/perform.rb:173:in `with_environment'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/perform.rb:387:in `visit_rule'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/base.rb:36:in `visit'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/perform.rb:152:in `block in visit'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/stack.rb:79:in `block in with_base'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/stack.rb:121:in `with_frame'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/stack.rb:79:in `with_base'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/perform.rb:152:in `visit'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/base.rb:52:in `map'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/base.rb:52:in `visit_children'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/perform.rb:161:in `block in visit_children'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/perform.rb:173:in `with_environment'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/perform.rb:160:in `visit_children'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/base.rb:36:in `block in visit'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/perform.rb:180:in `visit_root'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/base.rb:36:in `visit'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/perform.rb:151:in `visit'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/visitors/perform.rb:8:in `visit'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/root_node.rb:36:in `css_tree'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/tree/root_node.rb:20:in `render'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/engine.rb:274:in `render'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/plugin/compiler.rb:484:in `update_stylesheet'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/plugin/compiler.rb:214:in `block in update_stylesheets'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/plugin/compiler.rb:208:in `each'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/plugin/compiler.rb:208:in `update_stylesheets'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/plugin/compiler.rb:462:in `on_file_changed'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/lib/sass/plugin/compiler.rb:324:in `block in watch'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/vendor/listen/lib/listen/listener.rb:252:in `call'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/vendor/listen/lib/listen/listener.rb:252:in `on_change'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/vendor/listen/lib/listen/listener.rb:290:in `block in initialize_adapter'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/vendor/listen/lib/listen/adapters/polling.rb:48:in `call'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/vendor/listen/lib/listen/adapters/polling.rb:48:in `poll_changed_directories'
+/usr/local/var/rbenv/versions/2.1.2/lib/ruby/gems/2.1.0/gems/sass-3.3.14/vendor/listen/lib/listen/adapter.rb:299:in `block in start_poller'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;

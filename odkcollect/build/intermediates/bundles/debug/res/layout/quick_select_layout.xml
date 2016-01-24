@@ -19,4 +19,4 @@
         android:layout_alignParentRight="true"
         android:contentDescription="@+string/select_answer" />
 
-</RelativeLayout><!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/odkcollect/src/main/res/layout/quick_select_layout.xml -->
+</RelativeLayout><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/quick_select_layout.xml -->

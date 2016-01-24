@@ -73,4 +73,4 @@ android:layout_weight="1"      />
       android:gravity="center"/>
 
 
-</RelativeLayout><!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/odkcollect/src/main/res/layout/remote_file_manage_list.xml -->
+</RelativeLayout><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/remote_file_manage_list.xml -->

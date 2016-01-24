@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/odkcollect/src/main/res/values/arrays.xml -->
+    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values/arrays.xml -->
     <eat-comment/>
     <string-array name="constraint_behavior_entries">
 		<item>@string/constraint_behavior_on_swipe</item>
@@ -44,14 +44,14 @@
 		<item>@string/protocol_google</item>
 		<item>@string/protocol_other</item>
 	</string-array>
-    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/odkcollect/src/main/res/values/colors.xml -->
+    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values/colors.xml -->
     <eat-comment/>
     <drawable name="black">#ff000000</drawable>
     <drawable name="white">#ffffffff</drawable>
-    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/odkcollect/src/main/res/values/untranslated.xml -->
+    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values/untranslated.xml -->
     <eat-comment/>
     <item name="mapview" type="id"/>
-    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/odkcollect/src/main/res/values/strings.xml -->
+    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="accept_bearing">Record Bearing</string>
     <string name="accept_location">Record Location</string>
@@ -72,10 +72,10 @@
     <string name="admin_preferences">Admin Settings</string>
     <string name="advance">forward to\nnext\nprompt</string>
     <string name="altitude">Altitude</string>
-    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/odkcollect/src/main/res/values/untranslated.xml -->
+    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values/untranslated.xml -->
     <eat-comment/>
     <string name="app_name" translatable="false">ODK Collect</string>
-    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/odkcollect/src/main/res/values/strings.xml -->
+    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_url">http://opendatakit.org</string>
     <string name="audio_file_error">No audio file was specified.</string>
@@ -128,12 +128,12 @@
     <string name="data_saved_ok">Form successfully saved!</string>
     <string name="default_completed">Default to finalized</string>
     <string name="default_completed_summary">Mark form as finalized by default</string>
-    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/odkcollect/src/main/res/values/untranslated.xml -->
+    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values/untranslated.xml -->
     <eat-comment/>
     <string name="default_odk_formlist" translatable="false">/formList</string>
     <string name="default_odk_submission" translatable="false">/submission</string>
     <string name="default_server_url" translatable="false">http://opendatakit.appspot.com</string>
-    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/odkcollect/src/main/res/values/strings.xml -->
+    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="default_splash_path">ODK Default</string>
     <string name="delete_confirm">Delete %s form(s)?</string>
@@ -264,12 +264,12 @@
     <string name="please_wait">Please wait a few moments.</string>
     <string name="please_wait_long">Please wait. This could take a few minutes.</string>
     <string name="protocol">Platform</string>
-    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/odkcollect/src/main/res/values/untranslated.xml -->
+    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values/untranslated.xml -->
     <eat-comment/>
     <string name="protocol_google" translatable="false">google</string>
     <string name="protocol_odk_default" translatable="false">odk_default</string>
     <string name="protocol_other" translatable="false"/>
-    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/odkcollect/src/main/res/values/strings.xml -->
+    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="provider_disabled_error">Sorry, Location providers are disabled!</string>
     <string name="quit_application">Exit %s</string>
@@ -355,7 +355,7 @@
     <string name="view_change_location">View or Change Location</string>
     <string name="view_hierarchy">Go To Prompt</string>
     <string name="xform_parse_error">XForm parse error. %1$s is missing element %2$s</string>
-    <!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/odkcollect/src/main/res/values/theme.xml -->
+    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values/theme.xml -->
     <eat-comment/>
     <style name="Collect" parent="android:Theme.Light">
 	    <item name="android:scrollbarThumbHorizontal">@+drawable/thumb</item>

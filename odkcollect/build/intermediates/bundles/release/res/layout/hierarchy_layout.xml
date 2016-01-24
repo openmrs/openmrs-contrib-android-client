@@ -69,4 +69,4 @@ the License.
 		android:padding="20dp"
 		android:gravity="center"
 		android:background="@drawable/white" />
-</RelativeLayout><!-- From: file:/home/kkalfas/workspace/openmrs/openmrs-contrib-android-client-gradle/odkcollect/src/main/res/layout/hierarchy_layout.xml -->
+</RelativeLayout><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/hierarchy_layout.xml -->

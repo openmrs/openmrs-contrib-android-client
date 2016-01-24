@@ -1,0 +1,5 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+	<solid android:color="#5f000040"/>
+	<stroke android:width="2dp" android:color="#00ffffff"/>
+	<corners android:radius="6dp"/>
+</shape><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/drawable/thumb.xml --><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/drawable/thumb.xml -->

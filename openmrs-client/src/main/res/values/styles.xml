@@ -19,7 +19,7 @@
     </style>
 
     <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item> <!-- For 2.x version  -->
     </style>
 

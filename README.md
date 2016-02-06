@@ -13,7 +13,7 @@ Before creating pull request run code review tools, *PMD & Checkstyle*, and test
 
 # QuickStart
 
-As of February 2015, this project has been migrated to gradle to work successfully with Android studio. Steps to set up:
+As of February 2016, this project has been migrated to gradle to work successfully with Android studio. Steps to set up:
 
 1. Clone the project
 2. From the Android Studio menu select File > New > Import Project. Alternatively, from the Welcome screen, select Import project.

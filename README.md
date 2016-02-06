@@ -11,27 +11,26 @@ For more information, including screenshots of the client, visit https://wiki.op
 # Development
 Before creating pull request run code review tools, *PMD & Checkstyle*, and tests.
 
-### Build project with code review tools
- 
-     ant clean debug
+# QuickStart
 
-### Build test and run them on device 
+As of February 2015, this project has been migrated to gradle to work successfully with Android studio. Steps to set up:
 
-     cd tests/
-     ant clean debug install test
+1. Clone the project
+2. From the Android Studio menu select File > New > Import Project. Alternatively, from the Welcome screen, select Import project.
+3. Navigate to the folder when you have cloned this repo and select the build.gradle file inside it. CLick import.
+4. Done! Wait for dependencies to load and download from Maven, and you are ready to go! 
+5. Make sure that you have the latest SDK and build tools downloaded, as we will always build against the latest release.
 
-# Configuration
-1. Add modules from directory
-    * modules/odk
-    * modules/support/appcompat
-    * modules/support/gridlayout
-3. Add libs for openmrs-client module
-    * openmrs-client module **libs folder**
-    * android-support-v4.jar and android-support-v7-appcompat.jar from **/support/appcompat/libs/**
-4. Add libs for tests module
-    * tests module **libs folder**
+[In-depth tutorial] (https://github.com/codepath/android_guides/wiki/Getting-Started-with-Gradle)
 
-### In case of problems (1. modules) use *IDEA IntelliJ 13* instead of *Android Studio* for configuration also follow http://stackoverflow.com/a/18916738/584369
+If you have been building on Eclipse before this change was made, you have two options:
+
+A. Re-clone, import in Studio and manually change the files if any done after February 2016. This is easier and recommended.
+
+B. Open Android Studio, import project and select your openmrs project. Next, import module and in this step, import the odkcollect module. Set it as your project dependency. As a final step, add the lines useLibrary 'org.apache.http.legacy' in odkcollect/build.gradle under android{ }.
+
+Note: If you are working behind a proxy, check [this](https://wiki.appcelerator.org/display/guides2/Using+Studio+From+Behind+a+Proxy) to get things working.
+
 
 # Release Notes
 ### Version 2.0

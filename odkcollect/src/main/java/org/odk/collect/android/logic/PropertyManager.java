@@ -22,6 +22,7 @@ import org.javarosa.core.services.IPropertyManager;
 import org.javarosa.core.services.properties.IPropertyRules;
 import org.odk.collect.android.preferences.PreferencesActivity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiInfo;
@@ -39,6 +40,7 @@ import android.util.Log;
 
 public class PropertyManager implements IPropertyManager {
 
+    private String deviceId=null;
     private String t = "PropertyManager";
 
     private Context mContext;
@@ -74,7 +76,8 @@ public class PropertyManager implements IPropertyManager {
         mProperties = new HashMap<String, String>();
         mTelephonyManager = (TelephonyManager) mContext.getSystemService(Context.TELEPHONY_SERVICE);
 
-        String deviceId = mTelephonyManager.getDeviceId();
+
+        deviceId = mTelephonyManager.getDeviceId();
         String orDeviceId = null;
         if (deviceId != null ) {
         	if ((deviceId.contains("*") || deviceId.contains("000000000000000"))) {

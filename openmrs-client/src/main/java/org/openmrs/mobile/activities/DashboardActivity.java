@@ -14,13 +14,17 @@
 
 package org.openmrs.mobile.activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -28,14 +32,55 @@ import org.openmrs.mobile.utilities.ImageUtils;
 
 public class DashboardActivity extends ACBaseActivity {
 
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
+    Bundle currinstantstate;
     private SparseArray<Bitmap> mBitmapCache;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+//        currinstantstate=savedInstanceState;
+//        if (Build.VERSION.SDK_INT >= 23) {
+//            // Marshmallow+
+//            int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.READ_PHONE_STATE);
+//            if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+//                requestPermissions(new String[]{Manifest.permission.READ_PHONE_STATE},
+//                        REQUEST_CODE_ASK_PERMISSIONS);
+//                return;
+//            }
+//        }
+////        } else {
+////            // Pre-Marshmallow
+////        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
     }
+
+    //Permission handling to be coded later, moving to SDK 22 for now.
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        switch (requestCode) {
+//            case REQUEST_CODE_ASK_PERMISSIONS:
+//                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    // Permission Granted
+//                    super.onCreate(currinstantstate);
+//                    setContentView(R.layout.activity_dashboard);
+//                    FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
+//
+//                } else {
+//                    // Permission Denied
+//                    Toast.makeText(DashboardActivity.this, "Permission Denied, Exiting", Toast.LENGTH_SHORT)
+//                            .show();
+//                    finish();
+//                }
+//                break;
+//            default:
+//                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        }
+//    }
 
     public void onFindPatientCallback(View v) {
         Intent i = new Intent(this, FindPatientsActivity.class);

@@ -78,4 +78,4 @@
 </FrameLayout>
 <!-- android:text="@string/cancel"
 android:text="@string/accept_location"
-android:text="@string/go_to_location" --><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/geopoint_layout.xml --><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/layout/geopoint_layout.xml -->
+android:text="@string/go_to_location" --><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/geopoint_layout.xml --><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/layout/geopoint_layout.xml -->

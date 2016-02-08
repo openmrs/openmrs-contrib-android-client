@@ -2,4 +2,4 @@
 
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
     android:src="@drawable/ab_texture_tile_openmrs"
-    android:tileMode="repeat" /><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/drawable/ab_background_textured_openmrs.xml -->
+    android:tileMode="repeat" /><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/drawable/ab_background_textured_openmrs.xml -->

@@ -16,4 +16,4 @@ the License.
 <set xmlns:android="http://schemas.android.com/apk/res/android">
 	<alpha android:fromAlpha="0.0" android:toAlpha="1.0" android:duration="300" />
 </set>
-<!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/anim/fade_in.xml --><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/anim/fade_in.xml -->
+<!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/anim/fade_in.xml --><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/anim/fade_in.xml -->

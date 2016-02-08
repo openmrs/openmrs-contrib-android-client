@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/values-tr/values-tr.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/values-tr/values-tr.xml -->
     <eat-comment/>
     <string name="accept_location">Kayit Yeri</string>
     <string name="access_error">Hata:%s ulaşırken</string>

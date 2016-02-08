@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values-my/values-my.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values-my/values-my.xml -->
     <eat-comment/>
     <string name="accept_location">တည္ေနရာကိုမွတ္ရန္</string>
     <string name="access_error">လုပ္ဆာင္မွုမွားယြင္းေနသည္ %s:</string>

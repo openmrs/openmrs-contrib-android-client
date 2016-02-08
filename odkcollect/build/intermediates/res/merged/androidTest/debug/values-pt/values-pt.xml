@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/values-pt/values-pt.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/values-pt/values-pt.xml -->
     <eat-comment/>
     <string name="accept_bearing">Gravar Mensagem de Suporte</string>
     <string name="accept_location">Gravar Localização</string>

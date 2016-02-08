@@ -15,4 +15,4 @@
 -->
 
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-        android:color="?android:attr/colorControlHighlight"/><!-- From: file:/usr/local/google/buildbot/src/googleplex-android/mnc-supportlib-release/frameworks/support/v7/appcompat/res/drawable-v21/abc_action_bar_item_background_material.xml --><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/drawable-v21/abc_action_bar_item_background_material.xml -->
+        android:color="?android:attr/colorControlHighlight"/><!-- From: file:/usr/local/google/buildbot/src/googleplex-android/mnc-supportlib-release/frameworks/support/v7/appcompat/res/drawable-v21/abc_action_bar_item_background_material.xml --><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/drawable-v21/abc_action_bar_item_background_material.xml -->

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values-no/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values-no/strings.xml -->
     <eat-comment/>
     <string name="accept_location">Registrer posisjon</string>
     <string name="access_error">Det er oppstått en feil ved %s.</string>

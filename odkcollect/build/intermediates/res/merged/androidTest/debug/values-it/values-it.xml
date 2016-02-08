@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/values-it/values-it.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/values-it/values-it.xml -->
     <eat-comment/>
     <string name="accept_location">Registrare Posizione</string>
     <string name="access_error">Errore durante l\'accesso %s: </string>

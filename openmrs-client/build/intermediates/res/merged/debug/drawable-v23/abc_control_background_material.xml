@@ -16,4 +16,4 @@
 
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
         android:color="@color/abc_color_highlight_material"
-        android:radius="20dp" /><!-- From: file:/usr/local/google/buildbot/src/googleplex-android/mnc-supportlib-release/frameworks/support/v7/appcompat/res/drawable-v23/abc_control_background_material.xml --><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/drawable-v23/abc_control_background_material.xml -->
+        android:radius="20dp" /><!-- From: file:/usr/local/google/buildbot/src/googleplex-android/mnc-supportlib-release/frameworks/support/v7/appcompat/res/drawable-v23/abc_control_background_material.xml --><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/drawable-v23/abc_control_background_material.xml -->

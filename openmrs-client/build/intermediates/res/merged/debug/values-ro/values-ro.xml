@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-ro/values-ro.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-ro/values-ro.xml -->
     <eat-comment/>
     <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Navigați la ecranul de pornire"</string>
     <string msgid="1397052879051804371" name="abc_action_bar_home_description_format">"%1$s, %2$s"</string>
@@ -21,7 +21,7 @@
     <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Trimiteți la"</string>
     <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"Trimiteți la %s"</string>
     <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"Restrângeți"</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values-ro/values-ro.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values-ro/values-ro.xml -->
     <eat-comment/>
     <string name="accept_location">Înregistreză locația</string>
     <string name="access_error">Error while accessing %s: </string>
@@ -241,10 +241,10 @@
     <string name="show_unsent_forms">Unsent Forms Only</string>
     <string name="sign_button">Gather Signature</string>
     <string name="splash_path">Selected Splash Image</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-ro/values-ro.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-ro/values-ro.xml -->
     <eat-comment/>
     <string msgid="2869576371154716097" name="status_bar_notification_info_overflow">"˃999"</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values-ro/values-ro.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values-ro/values-ro.xml -->
     <eat-comment/>
     <string name="submission_url">Submission Path</string>
     <string name="success">Success</string>

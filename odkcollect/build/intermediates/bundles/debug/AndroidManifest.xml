@@ -15,7 +15,9 @@
 
     <uses-sdk
         android:minSdkVersion="7"
-        android:targetSdkVersion="23" />
+        android:targetSdkVersion="22" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application />
 

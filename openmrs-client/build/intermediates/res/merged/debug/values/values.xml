@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string-array name="constraint_behavior_entries">
 		<item>@string/constraint_behavior_on_swipe</item>
@@ -44,7 +44,7 @@
 		<item>@string/protocol_google</item>
 		<item>@string/protocol_other</item>
 	</string-array>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
     <attr format="dimension" name="height"/>
@@ -68,10 +68,10 @@
     <color name="background_floating_material_light">@android:color/white</color>
     <color name="background_material_dark">@color/material_grey_850</color>
     <color name="background_material_light">@color/material_grey_50</color>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/color.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="black">#000</color>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
     <color name="bright_foreground_disabled_material_light">#80000000</color>
@@ -81,12 +81,12 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/color.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="dark_grey">#231F20</color>
     <color name="dark_purple">#363463</color>
     <color name="dark_teal">#00463f</color>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <color name="dim_foreground_disabled_material_dark">#80bebebe</color>
     <color name="dim_foreground_disabled_material_light">#80323232</color>
@@ -94,22 +94,22 @@
     <color name="dim_foreground_material_light">#ff323232</color>
     <color name="foreground_material_dark">@android:color/white</color>
     <color name="foreground_material_light">@android:color/black</color>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/color.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="green">#88af28</color>
     <color name="grey">#dddddd</color>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <color name="highlighted_text_material_dark">#6680cbc4</color>
     <color name="highlighted_text_material_light">#66009688</color>
     <color name="hint_foreground_material_dark">@color/bright_foreground_disabled_material_dark</color>
     <color name="hint_foreground_material_light">@color/bright_foreground_disabled_material_light</color>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/color.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="light_green">#a1d030</color>
     <color name="light_red">#ff6666</color>
     <color name="light_teal">#009384</color>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <color name="material_blue_grey_800">#ff37474f</color>
     <color name="material_blue_grey_900">#ff263238</color>
@@ -123,10 +123,10 @@
     <color name="material_grey_800">#ff424242</color>
     <color name="material_grey_850">#ff303030</color>
     <color name="material_grey_900">#ff212121</color>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/color.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="orange">#F26522</color>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <color name="primary_dark_material_dark">@android:color/black</color>
     <color name="primary_dark_material_light">@color/material_grey_600</color>
@@ -136,11 +136,11 @@
     <color name="primary_text_default_material_light">#de000000</color>
     <color name="primary_text_disabled_material_dark">#4Dffffff</color>
     <color name="primary_text_disabled_material_light">#39000000</color>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/color.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="purple">#5B57A6</color>
     <color name="red">#ff3d3d</color>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <color name="ripple_material_dark">#33ffffff</color>
     <color name="ripple_material_light">#1f000000</color>
@@ -152,7 +152,7 @@
     <color name="switch_thumb_disabled_material_light">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_light">#fff1f1f1</color>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/color.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/color.xml -->
     <eat-comment/>
     <color name="white">#FFF</color>
     <color name="yellow">#EEA616</color>
@@ -186,7 +186,7 @@
     <declare-styleable name="View"><attr format="dimension" name="paddingStart"/><attr format="dimension" name="paddingEnd"/><attr name="android:focusable"/><attr format="reference" name="theme"/><attr name="android:theme"/></declare-styleable>
     <declare-styleable name="ViewBackgroundHelper"><attr name="android:background"/><attr format="color" name="backgroundTint"/><attr name="backgroundTintMode"><enum name="src_over" value="3"/><enum name="src_in" value="5"/><enum name="src_atop" value="9"/><enum name="multiply" value="14"/><enum name="screen" value="15"/></attr></declare-styleable>
     <declare-styleable name="ViewStubCompat"><attr name="android:layout"/><attr name="android:inflatedId"/><attr name="android:id"/></declare-styleable>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <dimen name="abc_action_bar_content_inset_material">16dp</dimen>
     <dimen name="abc_action_bar_default_height_material">56dp</dimen>
@@ -255,14 +255,14 @@
     <dimen name="abc_text_size_subtitle_material_toolbar">16dp</dimen>
     <dimen name="abc_text_size_title_material">20sp</dimen>
     <dimen name="abc_text_size_title_material_toolbar">20dp</dimen>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/dimens.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/gridlayout-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/gridlayout-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <dimen name="default_gap">8dip</dimen>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <item format="float" name="disabled_alpha_material_dark" type="dimen">0.30</item>
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
@@ -272,26 +272,26 @@
     <dimen name="notification_large_icon_height">64dp</dimen>
     <dimen name="notification_large_icon_width">64dp</dimen>
     <dimen name="notification_subtext_size">12dp</dimen>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <drawable name="black">#ff000000</drawable>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <drawable name="notification_template_icon_bg">#3333B5E5</drawable>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <drawable name="white">#ffffffff</drawable>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <item name="action_bar_activity_content" type="id"/>
     <item name="action_bar_spinner" type="id"/>
     <item name="action_menu_divider" type="id"/>
     <item name="action_menu_presenter" type="id"/>
     <item name="home" type="id"/>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <item name="mapview" type="id"/>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <item name="progress_circular" type="id"/>
     <item name="progress_horizontal" type="id"/>
@@ -321,13 +321,13 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="accept_bearing">Record Bearing</string>
     <string name="accept_location">Record Location</string>
     <string name="access_error">Error while accessing %s: </string>
     <string name="accuracy">Accuracy</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_active_visits">Active Visits</string>
     <string name="action_capture_vitals">Capture Vitals</string>
@@ -339,7 +339,7 @@
     <string name="action_synchronize_patients">Synchronizing patient</string>
     <string name="active_visit_label">Active visit</string>
     <string name="active_visit_label_capture_vitals">On Visit</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="activity_not_found">No activity found to handle: %s</string>
     <string name="add_another">Add Group</string>
@@ -356,19 +356,19 @@
     <string name="admin_preferences">Admin Settings</string>
     <string name="advance">forward to\nnext\nprompt</string>
     <string name="altitude">Altitude</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="app_name">OpenMRS Client</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="app_url">http://opendatakit.org</string>
     <string name="audio_file_error">No audio file was specified.</string>
     <string name="audio_file_invalid">File: %s is not a valid audio file.</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="auth_failed_dialog_message">Your user name or password may be incorrect. Please try again.</string>
     <string name="auth_failed_dialog_title">Authentication Failed</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="autosend">Auto Send</string>
     <string name="autosend_network">Auto send with network</string>
@@ -400,10 +400,10 @@
     <string name="change_username">ODK Username</string>
     <string name="change_username_default">Username</string>
     <string name="change_view">Change View</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="check_visit_dialog_title">Checking Visits</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="choose_image">Choose Image</string>
     <string name="choose_sound">Choose Sound</string>
@@ -415,23 +415,23 @@
     <string name="click_to_web">Tap to visit http://opendatakit.org</string>
     <string name="client">User Interface</string>
     <string name="completed_data">Complete (%s)</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="conn_timeout_dialog_message">A network error has occurred - Connection Timeout.\nPlease try again in a few seconds.</string>
     <string name="conn_timeout_dialog_title">Connection Failed</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="constraint_behavior">Constraint processing behavior</string>
     <string name="constraint_behavior_on_finalize">Defer validation until finalized</string>
     <string name="constraint_behavior_on_swipe">Validate upon forward swipe</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="dashboard_logged_as">logged as %1$s</string>
     <string name="dashboard_registry_icon_label">Registry Patient</string>
     <string name="dashboard_search_icon_label">Find Patients</string>
     <string name="dashboard_visits_icon_label">Active Visits</string>
     <string name="dashboard_vitals_icon_label">Capture Vitals</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="data">Saved Forms</string>
     <string name="data_saved_error">Sorry, form save failed!</string>
@@ -450,7 +450,7 @@
     <string name="delete_repeat_confirm">Remove group \"%s\" and all of its sub-groups?</string>
     <string name="delete_repeat_no">Cancel</string>
     <string name="delete_yes">Delete Forms</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="diagnosis_none_label">Diagnoses are not available yet</string>
     <string name="diagnosis_note_label">Text of encounter note</string>
@@ -458,7 +458,7 @@
     <string name="dialog_button_confirm">Confirm</string>
     <string name="dialog_button_done">Done</string>
     <string name="dialog_button_ok">OK</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="discard_answer">Remove response</string>
     <string name="discard_group">Remove group</string>
@@ -470,13 +470,13 @@
     <string name="downloading_data">Connecting to Server</string>
     <string name="draw_image">Sketch Image</string>
     <string name="edit_prompt">Edit Prompt</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="empty_diagnoses_list">Patient has no diagnoses yet.</string>
     <string name="empty_visits_list">Patient has no visits yet.</string>
     <string name="end_visit_dialog_message">Are you sure you want to end this visit?</string>
     <string name="end_visit_dialog_title">End Visit</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="enter_admin_password">Enter Admin Password</string>
     <string name="enter_data">Fill Blank Form</string>
@@ -502,10 +502,10 @@
     <string name="ext_search_wrong_arguments_error">"Syntax error in search() function: The function needs 1, 4 or 6 arguments."</string>
     <string name="ext_search_wrong_function_error">Syntax error in search() function : Unrecognised function \'%s\'.</string>
     <string name="ext_sortBy_numeric_error">Your sortby column should contain only numeric values. Conflicting value was \'%s\'.</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="failed_to_open_vitals_form">An error occurred. Invalid or corrupted form file.</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="fetching_file">Getting %1$s.\n\nForm %2$s of %3$s form(s).</string>
     <string name="fetching_manifest">%s. Getting manifest </string>
@@ -516,7 +516,7 @@
     <string name="file_invalid">File: %s is invalid.</string>
     <string name="file_missing">File: %s is missing.</string>
     <string name="finalized_on_date_at_time">\'Finalized on\' EEE, MMM dd, yyyy \'at\' HH:mm</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="find_patient_no_connection">No internet connection available</string>
     <string name="find_patient_no_last_viewed">No last viewed patients</string>
@@ -526,7 +526,7 @@
     <string name="find_patients_row_checkbox_download_label">Download</string>
     <string name="find_patients_row_toast_patient_save_error">Some error occurred. Try synchronize patient data</string>
     <string name="find_patients_row_toast_patient_saved">Patient is now available locally</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="finished_disk_scan">Finished scanning. All forms loaded.</string>
     <string name="font_size">Text font size</string>
@@ -541,10 +541,10 @@
     <string name="form_scan_starting">Scanning for forms…</string>
     <string name="formlist_url">Form list path</string>
     <string name="forms">Blank Forms</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="forms_sent_successfully">Form has been sent successfully.</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="found_at_end">Uncheck to hide from end of Form Entry</string>
     <string name="found_in_main">Uncheck to hide from Main Menu</string>
@@ -563,24 +563,29 @@
     <string name="getting_bearing">Loading Bearing</string>
     <string name="getting_location">Loading Location</string>
     <string name="go_to_location">Go to Location</string>
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/net.zetetic/android-database-sqlcipher/3.3.1-2/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="hello">Hello World!</string>
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <eat-comment/>
     <string name="high_resolution">Enable hi-res video</string>
     <string name="high_resolution_summary">Enable high-resolution video recordings</string>
     <string name="invalid_answer_error">Sorry, this response is invalid!</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="invalid_url_dialog_message">Cannot find server. Please check the URL and try again.</string>
     <string name="invalid_url_dialog_title">Cannot find server</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="jump_to_beginning">Go To Start</string>
     <string name="jump_to_end">Go To End</string>
     <string name="jump_to_previous">Go Up</string>
     <string name="keep_changes">Save Changes</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="last_vitals_label">Last Vitals: </string>
     <string name="last_vitals_none_label">None</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="latitude">Latitude</string>
     <string name="launch_app">Launch</string>
@@ -588,18 +593,18 @@
     <string name="leave_repeat_yes">Do Not Add</string>
     <string name="leaving_repeat_ask">Add One More Group?</string>
     <string name="list_failed_with_error">Form listing failed. %s.</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="list_item_encounter_no_notes">No notes for this encounter.</string>
     <string name="list_visit_selector_hide">hide details</string>
     <string name="list_visit_selector_show">show details</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="load_remote_form_error">Error Getting Form List</string>
     <string name="loading_form">Loading Form</string>
     <string name="location_accuracy">Accuracy is %1$s m</string>
     <string name="location_provider_accuracy">Using %1$s. Accuracy is %2$s m.</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="login_button">Login</string>
     <string name="login_dialog_login_or_password_empty">Login and password can not be empty.</string>
@@ -611,7 +616,7 @@
     <string name="logout_dialog_button">Logout</string>
     <string name="logout_dialog_message">Are you sure you want to logout from OpenMRS client?</string>
     <string name="logout_dialog_title">Logging out</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="longitude">Longitude</string>
     <string name="main_menu">Main Menu</string>
@@ -626,23 +631,23 @@
     <string name="no_app">The requested application is missing. Please manually enter the reading.</string>
     <string name="no_connection">No network connection available</string>
     <string name="no_forms_uploaded">Sorry, no form was uploaded.</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="no_internet_conn_dialog_message">Your have no internet connection.\nPlease check phone or Wi-Fi connection and signal strength and try again.</string>
     <string name="no_internet_conn_dialog_title">No internet connection</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="no_items_display">Nothing available to display.</string>
     <string name="no_items_display_forms">Nothing available to display.\n\nTry getting and filling out a blank form.</string>
     <string name="no_items_display_instances">Nothing available to display.\n\nTry finalizing saved forms before sending.</string>
     <string name="no_printer">The requested printer is not installed. Please install the printer.</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="no_visit_dialog_button_accept">Yes</string>
     <string name="no_visit_dialog_button_cancel">Cancel</string>
     <string name="no_visit_dialog_message">This user has no active visit. Would you like to start one now?</string>
     <string name="no_visit_dialog_title">Start new visit</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="noselect_error">Sorry, you have not selected any forms!</string>
     <string name="ok">OK</string>
@@ -652,7 +657,7 @@
     <string name="parse_legacy_formlist_failed">The server has not provided an available-forms document compatible with Aggregate 0.9.x. : %s</string>
     <string name="parse_openrosa_formlist_failed">The server has not provided an available-forms document compatible with the OpenRosa version 1.0 standard: %s</string>
     <string name="password">Password</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="past_visit_label">Past visit</string>
     <string name="patient_address_info_label">Contact information</string>
@@ -669,16 +674,16 @@
     <string name="patient_scroll_tab_visits_label">Visits</string>
     <string name="patient_scroll_tab_vitals_label">Vitals</string>
     <string name="patient_state_label">State</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="play_audio">Play Sound</string>
     <string name="play_video">Play Video</string>
     <string name="please_wait">Please wait a few moments.</string>
     <string name="please_wait_long">Please wait. This could take a few minutes.</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="progress_dialog_message">Please wait ...</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="protocol">Platform</string>
     <string name="protocol_google" translatable="false">google</string>
@@ -703,30 +708,30 @@
     <string name="save_enter_data_description">You are at the end of %s.</string>
     <string name="save_form_as">Name this form</string>
     <string name="save_mid">Save Form</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="save_patient_data_dialog">Saving patient data</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="save_point_error">Error saving recovery point: %s</string>
     <string name="save_preferences">Save Settings to Disk</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="save_upload_button">Save and Send Vitals</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="saved_data">Incomplete (%s)</string>
     <string name="saved_on_date_at_time">\'Saved on\' EEE, MMM dd, yyyy \'at\' HH:mm</string>
     <string name="savepoint_used">Unsaved changes recovered from savepoint!</string>
     <string name="saving_form">Saving Form</string>
     <string name="sdcard_unmounted">Collect cannot access the SD card. Perhaps it is mounted via USB? (Current state: %s)</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="search_patient_hint">Patient name</string>
     <string name="search_patient_no_result_for_query">No results found for query \"%1$s\"</string>
     <string name="search_patient_no_results">No patients in database</string>
     <string name="search_visits_no_results">No visits in database</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="select_another_image">Select another image</string>
     <string name="select_answer">Select Answer</string>
@@ -741,28 +746,28 @@
     <string name="sending_items">Sending %1$s of %2$s form(s)</string>
     <string name="sent_on_date_at_time">\'Sent on\' EEE, MMM dd, yyyy \'at\' HH:mm</string>
     <string name="server_auth_credentials">Please enter username and password for server:\n%s</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="server_error_dialog_message">Server error occurred.\nPlease check the URL or internet connection and try again.</string>
     <string name="server_error_dialog_title">Server Error</string>
     <string name="server_not_supported_dialog_message">Server could not be supported. Change URL address.</string>
     <string name="server_not_supported_dialog_title">Server Not Supported</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="server_platform_google_forms">Google Forms</string>
     <string name="server_platform_odk_aggregate">ODK Aggregate</string>
     <string name="server_platform_other">Other</string>
     <string name="server_preferences">Server Settings</string>
     <string name="server_requires_auth">Server Requires Authentication</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="server_unavailable_dialog_message">Cannot connect with server.\nPlease check the URL or internet connection and try again.</string>
     <string name="server_unavailable_dialog_title">Server Unavailable</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="server_url">URL</string>
     <string name="set_color">Set Color</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="settings_about">About</string>
     <string name="settings_downloadForms">Download forms</string>
@@ -771,7 +776,7 @@
     <string name="settings_forms_downloading">Downloading forms...</string>
     <string name="settings_logout">Logout</string>
     <string name="settings_logs">Logs</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="show_location">Show Location</string>
     <string name="show_sent_and_unsent_forms">Show Sent and Unsent Forms</string>
@@ -779,14 +784,14 @@
     <string name="show_splash_summary">Shows when application starts</string>
     <string name="show_unsent_forms">Show Unsent Forms</string>
     <string name="sign_button">Gather Signature</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="socket_exception_dialog_message">A connection error has occurred .\nPlease try again in a few seconds.</string>
     <string name="socket_exception_dialog_title">Connection Failed</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="splash_path">Selected splash image</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="start_visit_dialog_message">Are you sure you want to start visit for %1$s now?</string>
     <string name="start_visit_dialog_title">Start Visit</string>
@@ -794,10 +799,10 @@
     <string name="start_visit_impossible_dialog_message">There are already active visit. Synchronize patient or close previous visit</string>
     <string name="start_visit_impossible_dialog_title">Start Visit Impossible</string>
     <string name="start_visit_successful">Start new visit successful</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <string name="status_bar_notification_info_overflow">999+</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="submission_url">Submission path</string>
     <string name="success">Success</string>
@@ -815,19 +820,19 @@
     <string name="swipe_buttons_navigation">Use swipes and buttons</string>
     <string name="swipe_instructions">You are at the start of %s. Swipe the screen as shown below to go backward and forward.</string>
     <string name="swipe_navigation">Use horizontal swipes</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="synchronize_patient_error">Synchronize patient data unsuccessful</string>
     <string name="synchronize_patient_successful">Synchronize patient data successful</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="toggle_selected">Toggle All</string>
     <string name="trigger">OK. Please continue.</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="unauthorized_dialog_message">Session expired. Please log in again.</string>
     <string name="unauthorized_dialog_title">Unauthorized</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="upload_results">Upload Results</string>
     <string name="uploading_data">Sending Form</string>
@@ -841,17 +846,17 @@
     <string name="version">Version:</string>
     <string name="view_change_location">View or Change Location</string>
     <string name="view_hierarchy">Go To Prompt</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="visit_dashboard_label">Encounters</string>
     <string name="visit_exp_list_empty">Visit has no encounters yet.</string>
     <string name="visit_in">in %1$s</string>
     <string name="warning_dialog_title">Warning</string>
     <string name="warning_lost_data_dialog">You change url or username. All data will be lost. Are you sure?</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="xform_parse_error">XForm parse error. %1$s is missing element %2$s</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles_openmrs.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles_openmrs.xml -->
     <eat-comment/>
     <style name="ActionBar.Solid.Openmrs" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="background">@drawable/ab_solid_openmrs</item>
@@ -869,7 +874,7 @@
     <style name="ActionButton.CloseMode.Openmrs" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
         <item name="android:background">@drawable/btn_cab_done_openmrs</item>
     </style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AddressFields">
         <item name="android:layout_marginTop">3dp</item>
@@ -882,17 +887,17 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textAppearance">@android:style/TextAppearance.Medium</item>
     </style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
     <style name="Animation.AppCompat.Dialog" parent="Base.Animation.AppCompat.Dialog"/>
     <style name="Animation.AppCompat.DropDownUp" parent="Base.Animation.AppCompat.DropDownUp"/>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
     </style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <style name="Base.AlertDialog.AppCompat" parent="android:Widget">
         <item name="android:layout">@layout/abc_alert_dialog_material</item>
@@ -1829,7 +1834,7 @@
         <item name="android:minWidth">56dp</item>
         <item name="android:scaleType">center</item>
     </style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values/values.xml -->
     <eat-comment/>
     <style name="Collect" parent="android:Theme.Light">
 	    <item name="android:scrollbarThumbHorizontal">@+drawable/thumb</item>
@@ -1838,19 +1843,19 @@
 	    <item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>
 	    <item name="android:fadeScrollbars">false</item>
 	</style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="DialogLabelBorderless">
         <item name="android:background">@color/black</item>
         <item name="android:textSize">22sp</item>
         <item name="android:textColor">@color/white</item>
     </style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/theme.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/theme.xml -->
     <eat-comment/>
     <style name="DialogTheme" parent="android:Theme.Dialog">
         <item name="android:background">#ffffff</item>
     </style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="Divider">
         <item name="android:background">?android:attr/listDivider</item>
@@ -1873,7 +1878,7 @@
         <item name="android:paddingLeft">10dp</item>
         <item name="android:paddingRight">10dp</item>
     </style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles_openmrs.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles_openmrs.xml -->
     <eat-comment/>
     <style name="DropDownListView.Openmrs" parent="@style/Widget.AppCompat.ListView.DropDown">
         <item name="android:listSelector">@drawable/selectable_background_openmrs</item>
@@ -1883,23 +1888,23 @@
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_openmrs</item>
         <item name="android:dropDownSelector">@drawable/selectable_background_openmrs</item>
     </style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/theme.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/theme.xml -->
     <eat-comment/>
     <style name="LoadingDialogTheme.DialogTheme" parent="android:Theme.Dialog">
         <item name="android:background">@android:color/transparent</item>
     </style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles_openmrs.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles_openmrs.xml -->
     <eat-comment/>
     <style name="MenuTextApearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
         <item name="android:textColor">@color/white</item>
     </style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item> <!-- For 2.x version  -->
     </style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <style name="Platform.AppCompat" parent="android:Theme">
         <item name="android:windowNoTitle">true</item>
@@ -1999,7 +2004,7 @@
         <item name="android:dropDownItemStyle">@style/Widget.AppCompat.DropDownItem.Spinner</item>
     </style>
     <style name="Platform.Widget.AppCompat.Spinner" parent="android:Widget.Spinner"/>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles_openmrs.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles_openmrs.xml -->
     <eat-comment/>
     <style name="PopupMenu.Openmrs" parent="@style/Widget.AppCompat.PopupMenu">	
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_openmrs</item>	
@@ -2007,7 +2012,7 @@
     <style name="ProgressBar.Openmrs" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_openmrs</item>
     </style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <style name="RtlOverlay.DialogWindowTitle.AppCompat" parent="Base.DialogWindowTitle.AppCompat">
     </style>
@@ -2122,7 +2127,7 @@
     </style>
     <style name="TextAppearance.Widget.AppCompat.Toolbar.Title" parent="Base.TextAppearance.Widget.AppCompat.Toolbar.Title">
     </style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="TextLabel" parent="">
         <item name="android:textSize">22sp</item>
@@ -2130,7 +2135,7 @@
     <style name="TextLabel.Bold">
         <item name="android:textStyle">bold</item>
     </style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <style name="Theme.AppCompat" parent="Base.Theme.AppCompat"/>
     <style name="Theme.AppCompat.CompactMenu" parent="Base.Theme.AppCompat.CompactMenu"/>
@@ -2154,7 +2159,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles_openmrs.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles_openmrs.xml -->
     <eat-comment/>
     <style name="Theme.Openmrs" parent="@style/Theme.AppCompat.Light.DarkActionBar">
         <item name="actionBarItemBackground">@drawable/selectable_background_openmrs</item>
@@ -2177,7 +2182,7 @@
         <item name="popupMenuStyle">@style/PopupMenu.Openmrs</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Openmrs</item>
     </style>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <style name="ThemeOverlay.AppCompat" parent="Base.ThemeOverlay.AppCompat"/>
     <style name="ThemeOverlay.AppCompat.ActionBar" parent="Base.ThemeOverlay.AppCompat.ActionBar"/>
@@ -2277,7 +2282,7 @@
     <style name="Widget.AppCompat.TextView.SpinnerItem" parent="Base.Widget.AppCompat.TextView.SpinnerItem"/>
     <style name="Widget.AppCompat.Toolbar" parent="Base.Widget.AppCompat.Toolbar"/>
     <style name="Widget.AppCompat.Toolbar.Button.Navigation" parent="Base.Widget.AppCompat.Toolbar.Button.Navigation"/>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles_openmrs.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/values/styles_openmrs.xml -->
     <eat-comment/>
     <style name="menuTextApearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
         <item name="android:textColor">@color/white</item>

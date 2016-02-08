@@ -4,7 +4,7 @@
 
     <uses-sdk
         android:minSdkVersion="7"
-        android:targetSdkVersion="23" />
+        android:targetSdkVersion="22" />
 
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
@@ -12,6 +12,8 @@
         android:handleProfiling="false"
         android:label="Tests for org.odk.collect.android.test"
         android:targetPackage="org.odk.collect.android.test" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application>
         <uses-library android:name="android.test.runner" />

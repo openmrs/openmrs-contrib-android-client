@@ -48,4 +48,4 @@
                   android:layout_gravity="center"
                   android:visibility="gone" />
     </FrameLayout>
-</android.support.v4.widget.SwipeRefreshLayout><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/layout/fragment_last_viewed_patients.xml -->
+</android.support.v4.widget.SwipeRefreshLayout><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/layout/fragment_last_viewed_patients.xml -->

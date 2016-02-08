@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/values/values.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/values/values.xml -->
     <eat-comment/>
     <string-array name="constraint_behavior_entries">
 		<item>@string/constraint_behavior_on_swipe</item>

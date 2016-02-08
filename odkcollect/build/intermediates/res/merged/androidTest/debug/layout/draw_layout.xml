@@ -41,4 +41,4 @@
             android:text="@string/cancel" />
     </LinearLayout>
 
-</RelativeLayout><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/draw_layout.xml --><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/layout/draw_layout.xml -->
+</RelativeLayout><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/draw_layout.xml --><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/layout/draw_layout.xml -->

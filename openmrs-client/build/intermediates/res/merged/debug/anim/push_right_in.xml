@@ -17,4 +17,4 @@ the License.
 	<translate android:fromXDelta="-100%p" android:toXDelta="0" android:duration="300"/>
 	<alpha android:fromAlpha="0.0" android:toAlpha="1.0" android:duration="300" />
 </set>
-<!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/anim/push_right_in.xml --><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/anim/push_right_in.xml -->
+<!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/anim/push_right_in.xml --><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/anim/push_right_in.xml -->

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-ur-rPK/values-ur-rPK.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-ur-rPK/values-ur-rPK.xml -->
     <eat-comment/>
     <string msgid="4600421777120114993" name="abc_action_bar_home_description">"ہوم پر نیویگیٹ کریں"</string>
     <string msgid="1397052879051804371" name="abc_action_bar_home_description_format">"%1$s, %2$s"</string>
@@ -21,7 +21,7 @@
     <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"اشتراک کریں مع"</string>
     <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"‏%s کے ساتھ اشتراک کریں"</string>
     <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"سکیڑیں"</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values-ur-rPK/values-ur-rPK.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values-ur-rPK/values-ur-rPK.xml -->
     <eat-comment/>
     <string name="accept_location">مقام کا ا ندراج</string>
     <string name="access_error">‎%s‏ تک رسائی غلطی آ رہی ہے</string>
@@ -237,10 +237,10 @@
     <string name="show_unsent_forms">نہ بھیجے گئے فارم دکھایٰیں</string>
     <string name="sign_button">signature حاصل کریں</string>
     <string name="splash_path">منتخب شدہ سپلیش تصویر</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-ur-rPK/values-ur-rPK.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values-ur-rPK/values-ur-rPK.xml -->
     <eat-comment/>
     <string msgid="2869576371154716097" name="status_bar_notification_info_overflow">"‎999+‎"</string>
-    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values-ur-rPK/values-ur-rPK.xml -->
+    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/values-ur-rPK/values-ur-rPK.xml -->
     <eat-comment/>
     <string name="success">کامیابی</string>
     <string name="swipe_buttons_instructions">’پ ‎%s‏ کے اغاز پر ہیں۔ آگے اور پیچھے جانے کیلئے نیچھے دیکھائے گئے طریقے کے مطابق سکرین کو سوائپ کریں یا تیر والے بٹنوں کو دبایئں</string>

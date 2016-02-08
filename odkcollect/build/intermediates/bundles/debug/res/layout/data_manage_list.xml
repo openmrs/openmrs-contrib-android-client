@@ -62,4 +62,4 @@ the License.
         android:text="@string/no_items_display"
         android:textSize="21sp" />
 
-</RelativeLayout><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/data_manage_list.xml -->
+</RelativeLayout><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/data_manage_list.xml -->

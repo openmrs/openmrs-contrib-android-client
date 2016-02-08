@@ -166,4 +166,4 @@
             android:title="@string/mark_finished" />
     </PreferenceCategory>
 
-</PreferenceScreen><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/xml/admin_preferences.xml --><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/xml/admin_preferences.xml -->
+</PreferenceScreen><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/xml/admin_preferences.xml --><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/build/intermediates/exploded-aar/openmrs-contrib-android-client/odkcollect/unspecified/res/xml/admin_preferences.xml -->

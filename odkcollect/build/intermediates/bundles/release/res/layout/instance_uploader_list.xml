@@ -58,4 +58,4 @@ the License.
 		android:gravity="center"
 		android:background="@drawable/white"
 		android:textColor="@drawable/black" />
-</RelativeLayout><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/instance_uploader_list.xml -->
+</RelativeLayout><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/instance_uploader_list.xml -->

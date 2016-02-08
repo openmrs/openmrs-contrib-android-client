@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.openmrs.mobile.test">
 
-    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="23" />
+    <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="22" />
 
     <application>
         <uses-library android:name="android.test.runner" />

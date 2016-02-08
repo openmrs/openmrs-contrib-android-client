@@ -8,4 +8,4 @@
     <item android:state_pressed="true"
           android:drawable="@color/light_teal" />
     <item android:drawable="@android:color/transparent" />
-</selector><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/drawable/list_item_selector.xml -->
+</selector><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/openmrs-client/src/main/res/drawable/list_item_selector.xml -->

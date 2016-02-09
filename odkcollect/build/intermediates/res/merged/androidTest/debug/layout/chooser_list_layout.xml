@@ -45,4 +45,4 @@ the License.
 			android:background="@drawable/white"
 			android:textColor="@drawable/black" />
 </LinearLayout>
-<!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/chooser_list_layout.xml --><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/layout/chooser_list_layout.xml -->
+<!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/chooser_list_layout.xml --><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/layout/chooser_list_layout.xml -->

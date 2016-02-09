@@ -3,4 +3,4 @@
     android:id="@android:id/text1"
         style="?android:attr/spinnerItemStyle"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" /><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/custom_spinner_item.xml -->
+    android:layout_height="wrap_content" /><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/custom_spinner_item.xml -->

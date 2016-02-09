@@ -33,4 +33,4 @@
 			android:layout_alignParentLeft="true"
 			android:textAppearance="?android:attr/textAppearanceSmall"/>
 </RelativeLayout>
-<!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/two_item.xml --><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/layout/two_item.xml -->
+<!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/two_item.xml --><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/layout/two_item.xml -->

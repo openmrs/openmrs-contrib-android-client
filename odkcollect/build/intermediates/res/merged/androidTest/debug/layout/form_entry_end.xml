@@ -78,4 +78,4 @@
             android:layout_weight="1.0" />
     </LinearLayout>
 
-</ScrollView><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/form_entry_end.xml --><!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/layout/form_entry_end.xml -->
+</ScrollView><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/layout/form_entry_end.xml --><!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/layout/form_entry_end.xml -->

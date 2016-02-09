@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/values-th-rTH/values-th-rTH.xml -->
+    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/values-th-rTH/values-th-rTH.xml -->
     <eat-comment/>
     <string name="accept_bearing">บันทึกทิศทาง</string>
     <string name="accept_location">บันทึกตำแหน่งที่อยู่</string>

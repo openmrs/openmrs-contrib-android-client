@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values-tl/strings.xml -->
+    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values-tl/strings.xml -->
     <eat-comment/>
     <string name="accept_location">Itala ang Kinalalagyan</string>
     <string name="access_error">May mali habang sa pag-access ng %s: </string>

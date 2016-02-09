@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/values-ka/values-ka.xml -->
+    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/build/intermediates/bundles/debug/res/values-ka/values-ka.xml -->
     <eat-comment/>
     <string name="accept_location">ჩანაწერის მდებარეობა</string>
     <string name="access_error">შეცდომა %s-თან დაკავშირებისას </string>

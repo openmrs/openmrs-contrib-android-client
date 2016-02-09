@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values-lo-rLA/strings.xml -->
+    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values-lo-rLA/strings.xml -->
     <eat-comment/>
     <string name="accept_bearing">ບັກທືກທິດທາງ</string>
     <string name="accept_location">ບັນທືກຕຳແໜ່ງຂອງພື້ນທີ່</string>

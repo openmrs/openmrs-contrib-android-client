@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/D:/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values-fr/strings.xml -->
+    <!-- From: file:/media/avijit/User/OPENMRS/openmrs-contrib-android-client/odkcollect/src/main/res/values-fr/strings.xml -->
     <eat-comment/>
     <string name="accept_bearing">Enregistrer la Position</string>
     <string name="accept_location">Enregistrer le Lieu</string>

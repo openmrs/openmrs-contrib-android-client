@@ -21,9 +21,6 @@ tests/gen/*
 gen/*
 tests/out/*
 out/*
-/openmrs-client/build
-/odkcollect/build
-
 modules/support/appcompat/gen/*
 modules/support/appcompat/bin/*
 modules/support/appcompat/out/*

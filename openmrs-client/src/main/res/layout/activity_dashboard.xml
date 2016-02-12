@@ -12,11 +12,11 @@
   ~
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EEE"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -47,6 +47,7 @@
 
                 <FrameLayout
                     android:layout_width="0dp"
+                    android:background="@drawable/card"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
@@ -54,6 +55,7 @@
                         android:id="@+id/relativeLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:layout_gravity="center_horizontal">
 
                         <ImageView
@@ -78,17 +80,19 @@
                             android:onClick="onFindPatientCallback"
                             android:paddingTop="10dp"
                             android:text="@string/dashboard_search_icon_label"
-                            android:textSize="22sp"/>
+                            android:textSize="20sp"/>
                 </RelativeLayout>
                 </FrameLayout>
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/card"
                     android:layout_weight="1">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:layout_gravity="center_horizontal">
 
                         <ImageView
@@ -112,7 +116,7 @@
                             android:paddingTop="10dp"
                             android:text="@string/dashboard_visits_icon_label"
                             android:onClick="onActiveVisitsCallback"
-                            android:textSize="22sp"/>
+                            android:textSize="20sp"/>
                     </RelativeLayout>
                 </FrameLayout>
             </TableRow>
@@ -121,11 +125,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@drawable/card"
                     android:layout_marginTop="10dp">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:layout_gravity="center_horizontal">
 
                         <ImageView
@@ -150,7 +156,7 @@
                             android:paddingTop="10dp"
                             android:text="@string/dashboard_vitals_icon_label"
                             android:onClick="onCaptureVitalsCallback"
-                            android:textSize="22sp"/>
+                            android:textSize="20sp"/>
                     </RelativeLayout>
                 </FrameLayout>
                 <FrameLayout

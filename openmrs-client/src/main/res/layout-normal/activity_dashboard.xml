@@ -59,8 +59,9 @@
                         <ImageView
                             android:id="@+id/findPatientButton"
                             android:layout_centerInParent="true"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_margin="30dp"
                             android:layout_alignParentTop="true"
                             android:clickable="true"
                             android:contentDescription="@string/dashboard_search_icon_label"
@@ -92,9 +93,9 @@
 
                         <ImageView
                             android:id="@+id/activeVisitsButton"
-                            android:layout_centerInParent="true"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_margin="30dp"
                             android:layout_alignParentTop="true"
                             android:contentDescription="@string/dashboard_visits_icon_label"
                             android:onClick="onActiveVisitsCallback"
@@ -130,8 +131,9 @@
                         <ImageView
                             android:id="@+id/captureVitalsButton"
                             android:layout_centerInParent="true"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_margin="30dp"
                             android:layout_alignParentTop="true"
                             android:contentDescription="@string/dashboard_registry_icon_label"
                             android:onClick="onCaptureVitalsCallback"

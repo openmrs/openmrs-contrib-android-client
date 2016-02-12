@@ -147,6 +147,7 @@
         <activity
             android:name=".activities.VisitDashboardActivity"
             android:label="@string/visit_dashboard_label"
+            android:theme="@style/AppTheme"
             android:launchMode="singleTop">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -156,7 +157,6 @@
         <activity
             android:name=".activities.FormEntryActivity"
             android:label="@string/action_active_visits"
-            android:theme="@style/AppTheme"
             android:launchMode="singleTop">
         </activity>
         <activity

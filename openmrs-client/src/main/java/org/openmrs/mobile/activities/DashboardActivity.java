@@ -60,8 +60,6 @@ public class DashboardActivity extends ACBaseActivity {
         setContentView(R.layout.activity_dashboard);
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        //getSupportActionBar().setLogo(R.drawable.ic_openmrs);
-        //getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setIcon(R.drawable.openmrs_action_logo);
 
     }

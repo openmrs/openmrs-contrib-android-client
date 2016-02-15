@@ -13,7 +13,12 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
+
+  //NOTE: This is a text file to keep track of temporarily removed large screen layout from earlier build. This will be visited later when we switch to fragments for scaleability. For now we use a single activity. This file is in a separate folder and not packaged in the build apk.
+
     <!--For Large-->
+
+
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"

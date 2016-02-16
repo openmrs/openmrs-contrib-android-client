@@ -146,6 +146,15 @@ public class LoginActivity extends ACBaseActivity {
         showURLDialog();
     }
 
+    public void forgotpass(View v) {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.forgot_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.forgot_dialog_message));
+        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        bundle.setLeftButtonText(getString(R.string.forgot_button_ok));
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.LOGOUT_DIALOG_TAG);
+    }
+
     public void showURLDialog() {
         mUrlField.setVisibility(View.INVISIBLE);
         CustomDialogBundle bundle = new CustomDialogBundle();

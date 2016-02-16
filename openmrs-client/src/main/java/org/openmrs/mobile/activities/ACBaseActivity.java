@@ -17,7 +17,10 @@ package org.openmrs.mobile.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -32,7 +35,7 @@ import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-public abstract class ACBaseActivity extends ActionBarActivity {
+public abstract class ACBaseActivity extends AppCompatActivity {
     public static final int CAPTURE_VITALS_REQUEST_CODE = 1;
 
     protected FragmentManager mFragmentManager;
@@ -47,6 +50,7 @@ public abstract class ACBaseActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         mFragmentManager = getSupportFragmentManager();
         mAuthorizationManager = new AuthorizationManager();
+
 
     }
 

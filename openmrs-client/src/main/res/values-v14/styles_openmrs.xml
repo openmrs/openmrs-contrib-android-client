@@ -16,9 +16,8 @@
 
 <resources>
 
-    <style name="Theme.Openmrs" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.Openmrs" parent="@style/AppTheme">
         <item name="android:actionBarItemBackground">@drawable/selectable_background_openmrs</item>
-        <item name="android:popupMenuStyle">@style/PopupMenu.Openmrs</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Openmrs</item>
         <item name="android:actionBarTabStyle">@style/ActionBarTabStyle.Openmrs</item>
         <item name="android:actionDropDownStyle">@style/DropDownNav.Openmrs</item>
@@ -34,21 +33,20 @@
 
     </style>
 
-    <style name="ActionBar.Solid.Openmrs" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+    <style name="ActionBar.Solid.Openmrs" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@drawable/ab_solid_openmrs</item>
         <item name="android:backgroundStacked">@drawable/ab_stacked_solid_openmrs</item>
         <item name="android:backgroundSplit">@drawable/ab_bottom_solid_openmrs</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Openmrs</item>
     </style>
 
-    <style name="ActionBar.Transparent.Openmrs" parent="@style/Widget.AppCompat.ActionBar">
+    <style name="ActionBar.Transparent.Openmrs" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@drawable/ab_transparent_openmrs</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Openmrs</item>
     </style>
     
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Openmrs.Widget" parent="@style/Theme.AppCompat">
-        <item name="android:popupMenuStyle">@style/PopupMenu.Openmrs</item>
+    <style name="Theme.Openmrs.Widget" parent="Theme.AppCompat">
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Openmrs</item>
     </style>
 

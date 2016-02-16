@@ -16,9 +16,8 @@
 
 <resources>
 
-    <style name="Theme.Openmrs" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.Openmrs" parent="@style/AppTheme">
         <item name="actionBarItemBackground">@drawable/selectable_background_openmrs</item>
-        <item name="popupMenuStyle">@style/PopupMenu.Openmrs</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Openmrs</item>
         <item name="actionBarTabStyle">@style/ActionBarTabStyle.Openmrs</item>
         <item name="actionDropDownStyle">@style/DropDownNav.Openmrs</item>
@@ -34,47 +33,46 @@
 
     </style>
 
-    <style name="ActionBar.Solid.Openmrs" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+    <style name="ActionBar.Solid.Openmrs" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="background">@drawable/ab_solid_openmrs</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_openmrs</item>
         <item name="backgroundSplit">@drawable/ab_bottom_solid_openmrs</item>
         <item name="progressBarStyle">@style/ProgressBar.Openmrs</item>
     </style>
 
-    <style name="ActionBar.Transparent.Openmrs" parent="@style/Widget.AppCompat.ActionBar">
+    <style name="ActionBar.Transparent.Openmrs" parent="Widget.AppCompat.ActionBar">
         <item name="background">@drawable/ab_transparent_openmrs</item>
         <item name="progressBarStyle">@style/ProgressBar.Openmrs</item>
     </style>
 	
-    <style name="PopupMenu.Openmrs" parent="@style/Widget.AppCompat.PopupMenu">	
-        <item name="android:popupBackground">@drawable/menu_dropdown_panel_openmrs</item>	
+    <style name="PopupMenu.Openmrs" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@color/primary</item>
     </style>
 	
-    <style name="DropDownListView.Openmrs" parent="@style/Widget.AppCompat.ListView.DropDown">
+    <style name="DropDownListView.Openmrs" parent="Widget.AppCompat.ListView.DropDown">
         <item name="android:listSelector">@drawable/selectable_background_openmrs</item>
     </style>
 
-    <style name="ActionBarTabStyle.Openmrs" parent="@style/Widget.AppCompat.ActionBar.TabView">
+    <style name="ActionBarTabStyle.Openmrs" parent="Widget.AppCompat.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_ab_openmrs</item>
     </style>
 	
-    <style name="DropDownNav.Openmrs" parent="@style/Widget.AppCompat.Spinner.DropDown.ActionBar">
+    <style name="DropDownNav.Openmrs" parent="Widget.AppCompat.Spinner.DropDown.ActionBar">
         <item name="android:background">@drawable/spinner_background_ab_openmrs</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_openmrs</item>
         <item name="android:dropDownSelector">@drawable/selectable_background_openmrs</item>
     </style>
     
-    <style name="ProgressBar.Openmrs" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+    <style name="ProgressBar.Openmrs" parent="Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_openmrs</item>
     </style>
     
-    <style name="ActionButton.CloseMode.Openmrs" parent="@style/Widget.AppCompat.ActionButton.CloseMode">
+    <style name="ActionButton.CloseMode.Openmrs" parent="Widget.AppCompat.ActionButton.CloseMode">
         <item name="android:background">@drawable/btn_cab_done_openmrs</item>
     </style>
     
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
-    <style name="Theme.Openmrs.Widget" parent="@style/Theme.AppCompat">
-        <item name="popupMenuStyle">@style/PopupMenu.Openmrs</item>
+    <style name="Theme.Openmrs.Widget" parent="Theme.AppCompat">
         <item name="dropDownListViewStyle">@style/DropDownListView.Openmrs</item>
     </style>
 

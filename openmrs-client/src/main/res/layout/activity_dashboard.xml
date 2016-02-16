@@ -12,11 +12,11 @@
   ~
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EEE"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -40,13 +40,14 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:stretchColumns="1"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp">
 
             <TableRow>
 
                 <FrameLayout
                     android:layout_width="0dp"
+                    android:background="@drawable/card"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
 
@@ -54,13 +55,15 @@
                         android:id="@+id/relativeLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:layout_gravity="center_horizontal">
 
                         <ImageView
                             android:id="@+id/findPatientButton"
                             android:layout_centerInParent="true"
-                            android:layout_width="330dp"
-                            android:layout_height="330dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_margin="30dp"
                             android:layout_alignParentTop="true"
                             android:clickable="true"
                             android:contentDescription="@string/dashboard_search_icon_label"
@@ -77,24 +80,26 @@
                             android:onClick="onFindPatientCallback"
                             android:paddingTop="10dp"
                             android:text="@string/dashboard_search_icon_label"
-                            android:textSize="46sp"/>
+                            android:textSize="20sp"/>
                 </RelativeLayout>
                 </FrameLayout>
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/card"
                     android:layout_weight="1">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:layout_gravity="center_horizontal">
 
                         <ImageView
                             android:id="@+id/activeVisitsButton"
-                            android:layout_centerInParent="true"
-                            android:layout_width="330dp"
-                            android:layout_height="330dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_margin="30dp"
                             android:layout_alignParentTop="true"
                             android:contentDescription="@string/dashboard_visits_icon_label"
                             android:onClick="onActiveVisitsCallback"
@@ -111,7 +116,7 @@
                             android:paddingTop="10dp"
                             android:text="@string/dashboard_visits_icon_label"
                             android:onClick="onActiveVisitsCallback"
-                            android:textSize="46sp"/>
+                            android:textSize="20sp"/>
                     </RelativeLayout>
                 </FrameLayout>
             </TableRow>
@@ -120,20 +125,23 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginTop="20dp">
+                    android:background="@drawable/card"
+                    android:layout_marginTop="10dp">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:layout_gravity="center_horizontal">
 
                         <ImageView
                             android:id="@+id/captureVitalsButton"
                             android:layout_centerInParent="true"
-                            android:layout_width="330dp"
-                            android:layout_height="330dp"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_margin="30dp"
                             android:layout_alignParentTop="true"
-                            android:contentDescription="@string/dashboard_vitals_icon_label"
+                            android:contentDescription="@string/dashboard_registry_icon_label"
                             android:onClick="onCaptureVitalsCallback"
                             android:clickable="true"/>
 
@@ -146,16 +154,16 @@
                             android:layout_gravity="center"
                             android:clickable="true"
                             android:paddingTop="10dp"
-                            android:onClick="onCaptureVitalsCallback"
                             android:text="@string/dashboard_vitals_icon_label"
-                            android:textSize="46sp"/>
+                            android:onClick="onCaptureVitalsCallback"
+                            android:textSize="20sp"/>
                     </RelativeLayout>
                 </FrameLayout>
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="10dp">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -165,8 +173,8 @@
                         <ImageView
                             android:id="@+id/registryPatientButton"
                             android:layout_centerInParent="true"
-                            android:layout_width="330dp"
-                            android:layout_height="330dp"
+                            android:layout_width="110dp"
+                            android:layout_height="110dp"
                             android:layout_alignParentTop="true"
                             android:contentDescription="@string/dashboard_registry_icon_label"
                             android:visibility="invisible"
@@ -183,7 +191,7 @@
                             android:paddingTop="10dp"
                             android:text="@string/dashboard_registry_icon_label"
                             android:visibility="invisible"
-                            android:textSize="46sp"/>
+                            android:textSize="22sp"/>
                     </RelativeLayout>
                 </FrameLayout>
             </TableRow>

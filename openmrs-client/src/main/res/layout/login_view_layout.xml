@@ -50,8 +50,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:orientation="vertical"
                 android:visibility="gone"
+                android:orientation="vertical"
                 android:layout_marginBottom="10dp">
 
                 <EditText
@@ -97,7 +97,17 @@
                     android:gravity="center_vertical|center_horizontal"
                     android:text="@string/login_button"
                     android:textColor="@color/dark_purple"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="30dp"/>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Unable to login?"
+                    android:textColor="@color/primary"
+                    android:textSize="16sp"
+                    android:onClick="forgotpass"
+                    />
 
             </LinearLayout>
 

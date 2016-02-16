@@ -18,6 +18,8 @@
     <color name="black">#000</color>
     <color name="light_teal">#009384</color>
     <color name="dark_teal">#00463f</color>
+    <color name="primary">#00463f</color>
+    <color name="primary_dark">#01302b</color>
     <color name="orange">#F26522</color>
     <color name="purple">#5B57A6</color>
     <color name="dark_purple">#363463</color>

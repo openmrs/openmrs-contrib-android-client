@@ -24,6 +24,10 @@
     <string name="login_location_select">Choose location for this session</string>
     <string name="warning_dialog_title">Warning</string>
     <string name="warning_lost_data_dialog">You change url or username. All data will be lost. Are you sure?</string>
+    <string name="forgot_dialog_title">Unable to login?</string>
+    <string name="forgot_dialog_message">Please contact your system administrator</string>
+    <string name="forgot_button_ok">Dismiss</string>
+
     <!-- Url dialog -->
     <string name="login_dialog_title">Enter URL address</string>
     <string name="login_dialog_server_url_empty_error">Server URL can not be empty.</string>

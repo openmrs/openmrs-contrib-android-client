@@ -18,6 +18,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import org.openmrs.mobile.R;
@@ -42,7 +43,7 @@ public class SettingsActivity extends ACBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mOpenMRSLogger.d("onCreate");
         fillList();
         mSettingsListView = (ListView) findViewById(R.id.settingsListView);
@@ -53,6 +54,17 @@ public class SettingsActivity extends ACBaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

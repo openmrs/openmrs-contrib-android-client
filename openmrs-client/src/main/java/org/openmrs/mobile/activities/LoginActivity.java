@@ -46,9 +46,6 @@ import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.URLValidator;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -276,7 +273,7 @@ public class LoginActivity extends ACBaseActivity {
     }
 
     public void setUrl(String url) {
-        url=ensure_has_protocol(url);
+        url=ensureprotocol(url);
         mLastURL = url;
         URLValidator.ValidationResult result = URLValidator.validate(url);
         if (result.isURLValid()) {
@@ -289,13 +286,13 @@ public class LoginActivity extends ACBaseActivity {
         }
     }
 
-    public String ensure_has_protocol(String a_url)
+    public String ensureprotocol(String url)
     {
-        if (!a_url.matches("\\w+:.*"))
+        if (!url.matches("\\w+:.*"))
         {
-            return "http://" + a_url;
+            return "http://" + url;
         }
-        return a_url;
+        return url;
     }
 
     public void setErrorOccurred(boolean errorOccurred) {

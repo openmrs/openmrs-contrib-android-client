@@ -42,7 +42,7 @@ public class AuthorizationManager extends BaseManager {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                mLogger.i(error.toString());
+                mLogger.e(error.toString());
             }
         };
 

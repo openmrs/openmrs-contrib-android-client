@@ -17,10 +17,7 @@ package org.openmrs.mobile.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -63,13 +60,12 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!(this instanceof LoginActivity || this instanceof DialogActivity)) {
-            if (!mAuthorizationManager.isUserLoggedIn()) {
-                mAuthorizationManager.moveToLoginActivity();
-            } else if (this instanceof DashboardActivity || this instanceof SettingsActivity
-                    || this instanceof FindPatientsActivity || this instanceof FindActiveVisitsActivity) {
-                this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, mOpenMRS.getUsername()));
-            }
+        if (isLoginScreen() || isDialogScreen()) return;
+        if (!mAuthorizationManager.isUserLoggedIn()) {
+            mAuthorizationManager.moveToLoginActivity();
+        } else if (this instanceof DashboardActivity || this instanceof SettingsActivity
+                || this instanceof FindPatientsActivity || this instanceof FindActiveVisitsActivity) {
+            this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, mOpenMRS.getUsername()));
         }
     }
 
@@ -266,5 +262,13 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
     public AuthorizationManager getAuthorizationManager() {
         return mAuthorizationManager;
+    }
+
+    private boolean isDialogScreen() {
+        return this instanceof DialogActivity;
+    }
+
+    private boolean isLoginScreen() {
+        return this instanceof LoginActivity;
     }
 }

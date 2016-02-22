@@ -282,6 +282,7 @@ public class LoginActivity extends ACBaseActivity {
     }
 
     public void setUrl(String url) {
+        url=ensureprotocol(url);
         mLastURL = url;
         URLValidator.ValidationResult result = URLValidator.validate(url);
         if (result.isURLValid()) {
@@ -292,6 +293,15 @@ public class LoginActivity extends ACBaseActivity {
         } else {
             showInvalidURLDialog();
         }
+    }
+
+    public String ensureprotocol(String url)
+    {
+        if (!url.matches("\\w+:.*"))
+        {
+            return "http://" + url;
+        }
+        return url;
     }
 
     public void setErrorOccurred(boolean errorOccurred) {

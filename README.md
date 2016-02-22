@@ -3,7 +3,7 @@ openmrs-contrib-android-client
 
 ### Android client for OpenMRS
 
-[![Build Status](https://travis-ci.org/AvijitGhosh82/openmrs-contrib-android-client.svg?branch=Travis-build)](https://travis-ci.org/AvijitGhosh82/openmrs-contrib-android-client)
+[![Build Status](https://travis-ci.org/openmrs/openmrs-contrib-android-client.svg?branch=master)](https://travis-ci.org/openmrs/openmrs-contrib-android-client)
 
 #Description
 The goal of this project is to provide OpenMRS 2.x client for Android devices. The app is designed to cover most of the functionality of the web application including registering patients, taking visit notes, capturing vitals, etc.

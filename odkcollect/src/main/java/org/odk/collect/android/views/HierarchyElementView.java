@@ -37,7 +37,7 @@ public class HierarchyElementView extends RelativeLayout {
 
         mIcon = new ImageView(context);
         mIcon.setImageDrawable(it.getIcon());
-        mIcon.setId(1);
+        mIcon.setId(generateViewId());
         mIcon.setPadding(0, 0, dipToPx(4), 0);
 
         addView(mIcon, new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -46,7 +46,7 @@ public class HierarchyElementView extends RelativeLayout {
         mPrimaryTextView = new TextView(context);
         mPrimaryTextView.setTextAppearance(context, android.R.style.TextAppearance_Large);
         mPrimaryTextView.setText(it.getPrimaryText());
-        mPrimaryTextView.setId(2);
+        mPrimaryTextView.setId(generateViewId());
         mPrimaryTextView.setGravity(Gravity.CENTER_VERTICAL);
         LayoutParams l =
             new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -67,6 +67,26 @@ public class HierarchyElementView extends RelativeLayout {
         setPadding(dipToPx(8), dipToPx(4), dipToPx(8), dipToPx(8));
 
     }
+
+    private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
+
+	/**
+	 * Generate a value suitable for use in {@link #setId(int)}.
+	 * This value will not collide with ID values generated at build time by aapt for R.id.
+	 *
+	 * @return a generated ID value
+	 */
+	public int generateViewId() {
+	    for (;;) {
+	        final int result = sNextGeneratedId.get();
+	        // aapt-generated IDs have the high byte nonzero; clamp to the range under that.
+	        int newValue = result + 1;
+	        if (newValue > 0x00FFFFFF) newValue = 1; // Roll over to 1, not 0.
+	        if (sNextGeneratedId.compareAndSet(result, newValue)) {
+	            return result;
+	        }
+	    }
+	}
 
 
     public void setPrimaryText(String text) {

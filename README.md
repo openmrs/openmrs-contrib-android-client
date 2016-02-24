@@ -5,6 +5,10 @@ openmrs-contrib-android-client
 
 [![Build Status](https://travis-ci.org/openmrs/openmrs-contrib-android-client.svg?branch=master)](https://travis-ci.org/openmrs/openmrs-contrib-android-client)
 
+# GSoC 2016
+
+The project has been selected as a candidate for Google Summer of Code 2016. Please visit the project's page for more details: https://wiki.openmrs.org/display/projects/OpenMRS+Android+Client+-+GSoC+2016
+
 #Description
 The goal of this project is to provide OpenMRS 2.x client for Android devices. The app is designed to cover most of the functionality of the web application including registering patients, taking visit notes, capturing vitals, etc.
 The app will communicate with OpenMRS using REST. It will support working off-line (without network connection) with a chosen subset of patients. The database on the device will be encrypted and password protected to secure patient data.

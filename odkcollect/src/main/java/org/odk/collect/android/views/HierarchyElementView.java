@@ -30,6 +30,8 @@ public class HierarchyElementView extends RelativeLayout {
     private TextView mPrimaryTextView;
     private TextView mSecondaryTextView;
     private ImageView mIcon;
+    private final AtomicInteger lastGeneratedId = new AtomicInteger(1);
+
 
 
     public HierarchyElementView(Context context, HierarchyElement it) {
@@ -70,14 +72,12 @@ public class HierarchyElementView extends RelativeLayout {
 
     }
 
-    public final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
-    
 	public int generateNewViewId() {
 	    while (true) {
-	        final int result = sNextGeneratedId.get();
+	        final int result = lastGeneratedId.get();
 	        int newValue = result + 1;
 	        if (newValue > 0x00FFFFFF) newValue = 1;
-	        if (sNextGeneratedId.compareAndSet(result, newValue)) {
+	        if (lastGeneratedId.compareAndSet(result, newValue)) {
 	            return result;
 	        }
 	    }

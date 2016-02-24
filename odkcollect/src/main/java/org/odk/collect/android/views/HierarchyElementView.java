@@ -23,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class HierarchyElementView extends RelativeLayout {
 
     private TextView mPrimaryTextView;

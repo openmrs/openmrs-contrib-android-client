@@ -62,5 +62,5 @@ Note: If you are working behind a proxy, check [this](https://wiki.appcelerator.
 - Sprint board https://issues.openmrs.org/secure/RapidBoard.jspa?rapidView=60
 - Dashboard https://issues.openmrs.org/secure/Dashboard.jspa?selectPageId=12851
 - Repository https://github.com/openmrs/openmrs-contrib-android-client
-- CI http://openmrs-ac-ci.soldevelo.com/ci/ 
+- CI https://travis-ci.org/openmrs/openmrs-contrib-android-client 
 - Google Play https://play.google.com/store/apps/details?id=org.openmrs.mobile

@@ -20,6 +20,7 @@ import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.listeners.findPatients.FindPatientListener;
 import org.openmrs.mobile.listeners.findPatients.FullPatientDataListener;
 import org.openmrs.mobile.listeners.findPatients.LastViewedPatientListener;
+import java.net.URI;
 
 public final class FindPatientsHelper {
 
@@ -27,6 +28,12 @@ public final class FindPatientsHelper {
     }
 
     public static FindPatientListener createFindPatientListener(String lastQuery, int searchId, FindPatientsSearchActivity caller) {
+        try {
+            URI uri = new URI(null,null,null,lastQuery);
+            lastQuery = uri.toString().substring(1);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         return new FindPatientListener(lastQuery, searchId, caller);
     }
 

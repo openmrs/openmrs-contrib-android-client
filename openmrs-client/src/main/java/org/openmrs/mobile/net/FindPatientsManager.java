@@ -15,11 +15,16 @@
 package org.openmrs.mobile.net;
 
 import com.android.volley.Request;
+
 import org.openmrs.mobile.listeners.findPatients.FindPatientListener;
 import org.openmrs.mobile.listeners.findPatients.FullPatientDataListener;
 import org.openmrs.mobile.listeners.findPatients.LastViewedPatientListener;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
+
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
 public class FindPatientsManager extends BaseManager {
@@ -29,13 +34,18 @@ public class FindPatientsManager extends BaseManager {
     private String mFindPatientBaseUrl = getBaseRestURL() + API.PATIENT_QUERY;
 
     public void findPatient(FindPatientListener listener) {
-        String url = mFindPatientBaseUrl + listener.getLastQuery() + API.FULL_VERSION_NEXT_PARAM;
-        mLogger.d(SENDING_REQUEST + url);
+        try {
+            String encodedQuery = URLEncoder.encode(listener.getLastQuery(), "UTF-8");
+            String url = mFindPatientBaseUrl + encodedQuery + API.FULL_VERSION_NEXT_PARAM;
+            mLogger.d(SENDING_REQUEST + url);
 
-        JsonObjectRequestWrapper jsObjRequest =
-                new JsonObjectRequestWrapper(Request.Method.GET,
-                        url, null, listener, listener, DO_GZIP_REQUEST);
-        mOpenMRS.addToRequestQueue(jsObjRequest);
+            JsonObjectRequestWrapper jsObjRequest =
+                    new JsonObjectRequestWrapper(Request.Method.GET,
+                            url, null, listener, listener, DO_GZIP_REQUEST);
+            mOpenMRS.addToRequestQueue(jsObjRequest);
+        } catch (UnsupportedEncodingException e) {
+            mLogger.e(e.getMessage());
+        }
     }
 
     public void getLastViewedPatient(LastViewedPatientListener listener) {

@@ -22,7 +22,6 @@ import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.listeners.findPatients.FindPatientListener;
 import org.openmrs.mobile.listeners.findPatients.FullPatientDataListener;
 import org.openmrs.mobile.listeners.findPatients.LastViewedPatientListener;
-
 import java.net.URLEncoder;
 
 public final class FindPatientsHelper {

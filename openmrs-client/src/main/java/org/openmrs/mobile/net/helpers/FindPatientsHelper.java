@@ -17,22 +17,26 @@ package org.openmrs.mobile.net.helpers;
 import org.openmrs.mobile.activities.FindPatientsActivity;
 import org.openmrs.mobile.activities.FindPatientsSearchActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
+import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.listeners.findPatients.FindPatientListener;
 import org.openmrs.mobile.listeners.findPatients.FullPatientDataListener;
 import org.openmrs.mobile.listeners.findPatients.LastViewedPatientListener;
-import java.net.URI;
+
+import java.net.URLEncoder;
 
 public final class FindPatientsHelper {
+    private static OpenMRS mOpenMRS = OpenMRS.getInstance();
+    private static OpenMRSLogger mLogger = mOpenMRS.getOpenMRSLogger();
 
     private FindPatientsHelper() {
     }
 
     public static FindPatientListener createFindPatientListener(String lastQuery, int searchId, FindPatientsSearchActivity caller) {
         try {
-            URI uri = new URI(null,null,null,lastQuery);
-            lastQuery = uri.toString().substring(1);
-        }catch (Exception e){
-            e.printStackTrace();
+            lastQuery = URLEncoder.encode(lastQuery,"UTF-8").toString();
+        } catch (Exception exception) {
+            mLogger.e(exception.toString());
         }
         return new FindPatientListener(lastQuery, searchId, caller);
     }

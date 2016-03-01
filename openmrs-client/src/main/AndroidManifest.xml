@@ -71,6 +71,7 @@
             android:name=".activities.FindPatientsActivity"
             android:label="@string/action_find_patients"
             android:configChanges="keyboardHidden|screenSize"
+            android:theme="@style/AppTheme"
             android:launchMode="singleTop">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data

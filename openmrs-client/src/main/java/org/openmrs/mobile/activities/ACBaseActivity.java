@@ -144,8 +144,10 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.no_internet_conn_dialog_title));
         bundle.setTextViewMessage(getString(R.string.no_internet_conn_dialog_message));
-        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
-        bundle.setRightButtonText(getString(R.string.dialog_button_cancel));
+        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.FINISH);
+        bundle.setLeftButtonText(getString(R.string.no_internet_exit));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.INTERNET);
+        bundle.setRightButtonText(getString(R.string.no_internet_open_settings));
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.NO_INTERNET_CONN_DIALOG_TAG);
     }
 

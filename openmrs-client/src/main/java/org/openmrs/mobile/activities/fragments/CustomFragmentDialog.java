@@ -2,10 +2,12 @@ package org.openmrs.mobile.activities.fragments;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -41,7 +43,7 @@ public class CustomFragmentDialog extends DialogFragment {
     private static final int TYPED_DIMENSION_VALUE = 10;
 
     public enum OnClickAction {
-        SET_URL, SHOW_URL_DIALOG, DISMISS_URL_DIALOG, DISMISS, LOGOUT, UNAUTHORIZED, END_VISIT, START_VISIT, LOGIN
+        SET_URL, SHOW_URL_DIALOG, DISMISS_URL_DIALOG, DISMISS, LOGOUT, FINISH, INTERNET, UNAUTHORIZED, END_VISIT, START_VISIT, LOGIN
     }
 
     protected LayoutInflater mInflater;
@@ -289,6 +291,15 @@ public class CustomFragmentDialog extends DialogFragment {
                         break;
                     case LOGOUT:
                         ((ACBaseActivity) getActivity()).logout();
+                        dismiss();
+                        break;
+                    case FINISH:
+                        getActivity().moveTaskToBack(true);
+                        android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(1);
+                        break;
+                    case INTERNET:
+                        getActivity().startActivity(new Intent(Settings.ACTION_SETTINGS));
                         dismiss();
                         break;
                     case UNAUTHORIZED:

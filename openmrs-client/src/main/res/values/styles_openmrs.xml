@@ -55,6 +55,7 @@
 
     <style name="ActionBarTabStyle.Openmrs" parent="Widget.AppCompat.ActionBar.TabView">
         <item name="android:background">@drawable/tab_indicator_ab_openmrs</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 	
     <style name="DropDownNav.Openmrs" parent="Widget.AppCompat.Spinner.DropDown.ActionBar">

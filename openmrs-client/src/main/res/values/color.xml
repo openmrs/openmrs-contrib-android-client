@@ -31,6 +31,7 @@
     <color name="dark_purple">#363463</color>
     <color name="yellow">#EEA616</color>
     <color name="grey">#dddddd</color>
+    <color name="muted">#aaa</color>
     <color name="dark_grey">#231F20</color>
     <color name="light_green">#a1d030</color>
     <color name="green">#88af28</color>

@@ -13,7 +13,7 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<resources>
+<resources xmlns:android="http://schemas.android.com/tools">
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -25,9 +25,15 @@
         <item name="colorAccent">@color/primary</item>
         <item name="android:textColor">@color/dark_purple</item>
 
+        <item name="actionBarTabTextStyle">@style/Tabtext</item>
 
 
     </style>
+
+    <style name="Tabtext" parent="Base.Widget.AppCompat.ActionBar.TabText">
+        <item name="android:textColor">@color/tabcolor</item>
+    </style>
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

@@ -25,7 +25,6 @@
         <item name="android:actionModeBackground">@drawable/cab_background_top_openmrs</item>
         <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_openmrs</item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Openmrs</item>
-        <item name="android:textColor">@color/dark_purple</item>
         <item name="android:itemTextAppearance">@style/menuTextApearance</item>
 
                 <!-- Light.DarkActionBar specific -->

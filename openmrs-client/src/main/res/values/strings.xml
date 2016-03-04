@@ -40,10 +40,15 @@
     <string name="auth_failed_dialog_message">Your user name or password may be incorrect. Please try again.</string>
     <!-- No internet dialog -->
     <string name="no_internet_conn_dialog_title">No internet connection</string>
-    <string name="no_internet_conn_dialog_message">Your have no internet connection.\nPlease check phone or Wi-Fi connection and signal strength and try again.</string>
+    <string name="no_internet_conn_dialog_message">You have no internet connection.\nPlease check phone or Wi-Fi connection and signal strength and try again.</string>
+    <string name="no_internet_exit">Exit</string>
+    <string name="no_internet_open_settings">Open Settings</string>
+
+
     <!-- Socket Exception dialog -->
     <string name="socket_exception_dialog_title">Connection Failed</string>
     <string name="socket_exception_dialog_message">A connection error has occurred .\nPlease try again in a few seconds.</string>
+
     <!-- Invalid URL dialog -->
     <string name="invalid_url_dialog_title">Cannot find server</string>
     <string name="invalid_url_dialog_message">Cannot find server. Please check the URL and try again.</string>

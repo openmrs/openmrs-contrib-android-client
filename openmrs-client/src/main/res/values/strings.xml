@@ -73,7 +73,7 @@
     <string name="start_visit_dialog_message">Are you sure you want to start visit for %1$s now?</string>
     <!-- Start visit dialog impossible-->
     <string name="start_visit_impossible_dialog_title">Start Visit Impossible</string>
-    <string name="start_visit_impossible_dialog_message">There are already active visit for %1$s. Synchronize patient or close previous visit</string>
+    <string name="start_visit_impossible_dialog_message">There are already active visits of %1$s. Try synchronizing patient or close previous visits</string>
     <!-- Progress dialog -->
     <string name="progress_dialog_message">Please wait ...</string>
     <!-- Capture vitals no visit dialog -->

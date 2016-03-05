@@ -14,9 +14,11 @@
 
 package org.openmrs.mobile.listeners.forms;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import org.apache.http.HttpStatus;
 import org.kxml2.io.KXmlParser;
 import org.kxml2.kdom.Document;
 import org.kxml2.kdom.Element;
@@ -72,6 +74,8 @@ public final class AvailableFormsListListener extends GeneralErrorListener imple
         dismissDialog(false);
     }
 
+
+
     private void dismissDialog(boolean mErrorOccurred) {
         if (mCallerAdapter != null) {
             mCallerAdapter.dismissProgressDialog(mErrorOccurred,
@@ -80,10 +84,23 @@ public final class AvailableFormsListListener extends GeneralErrorListener imple
         }
     }
 
+    private void dismissDialog(boolean isServerError, boolean mErrorOccurred) {
+        if (mCallerAdapter != null) {
+            if (isServerError) {
+                mCallerAdapter.dismissProgressDialog(mErrorOccurred, null,
+                        R.string.settings_forms_download_server_error_404);
+            }
+        }
+    }
     @Override
     public void onErrorResponse(VolleyError error) {
-        dismissDialog(true);
-        super.onErrorResponse(error);
+        NetworkResponse errorResponse = error.networkResponse;
+        if (errorResponse.statusCode == HttpStatus.SC_NOT_FOUND) {
+            dismissDialog(true, true);
+        } else {
+            dismissDialog(true);
+            super.onErrorResponse(error);
+        }
     }
 
     private Document writeResponseToDoc(String response) {

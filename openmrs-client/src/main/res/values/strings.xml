@@ -96,9 +96,11 @@
     <string name="settings_about">About</string>
     <string name="settings_logout">Logout</string>
     <string name="settings_downloadForms">Download forms</string>
+    <string name="settings_forms_download_server_error_404">The server does not support xforms.Please contact the administrator.</string>
     <string name="settings_forms_downloading">Downloading forms...</string>
     <string name="settings_forms_downloaded_succesfull">Forms downloaded successful.</string>
     <string name="settings_forms_downloaded_error">Some error occurred during downloaded forms.</string>
+    <string name="settings_forms_download_no_connection">No internet connection available</string>
     <!-- FindPatients activity -->
     <string name="action_find_patients">Find Patients</string>
     <string name="search_patient_hint">Patient name</string>

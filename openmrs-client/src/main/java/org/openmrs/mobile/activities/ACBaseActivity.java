@@ -175,7 +175,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         bundle.setTextViewMessage(getString(R.string.server_error_dialog_message));
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         bundle.setRightButtonText(getString(R.string.dialog_button_ok));
-        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.SOCKET_EXCEPTION_DIALOG_TAG);
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.SERVER_ERROR_DIALOG_TAG);
     }
 
     protected void showSocketExceptionErrorDialog() {
@@ -184,7 +184,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         bundle.setTextViewMessage(getString(R.string.socket_exception_dialog_message));
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         bundle.setRightButtonText(getString(R.string.dialog_button_ok));
-        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.SERVER_ERROR_DIALOG_TAG);
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.SOCKET_EXCEPTION_DIALOG_TAG);
     }
 
     public void showNoVisitDialog() {

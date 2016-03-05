@@ -33,7 +33,7 @@ import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 public class AuthorizationManager extends BaseManager {
     private static final String LOGIN_END_URL = API.REST_ENDPOINT + API.AUTHORISATION_END_POINT;
 
-    public void login(LoginListener listener) {
+    public void login(LoginListener listener,final LoginActivity loginActivityContext) {
         encodeAuthorizationToken(listener.getUsername(), listener.getPassword());
         String url = listener.getServerURL() + LOGIN_END_URL;
         mLogger.i(SENDING_REQUEST + url);
@@ -43,6 +43,7 @@ public class AuthorizationManager extends BaseManager {
             @Override
             public void onErrorResponse(VolleyError error) {
                 mLogger.e(error.toString());
+                loginActivityContext.showNoInternetConnectionDialog();
             }
         };
 

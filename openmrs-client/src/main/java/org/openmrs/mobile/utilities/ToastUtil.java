@@ -128,8 +128,6 @@ public final class ToastUtil {
                 } else {
                     Thread.sleep(3500);
                 }
-                logger.d("Recycle bitmap: " + mBitmap.toString());
-                mBitmap.recycle();
                 toastQueue.remove(0);
                 if (toastQueue.size() > 0) {
                     toastQueue.get(0).run();

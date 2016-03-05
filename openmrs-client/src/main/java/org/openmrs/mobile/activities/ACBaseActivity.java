@@ -140,7 +140,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.AUTH_FAILED_DIALOG_TAG);
     }
 
-    protected void showNoInternetConnectionDialog() {
+    public void showNoInternetConnectionDialog() {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.no_internet_conn_dialog_title));
         bundle.setTextViewMessage(getString(R.string.no_internet_conn_dialog_message));

@@ -203,7 +203,7 @@ public class LoginActivity extends ACBaseActivity {
                         mPassword.getText().toString(),
                         mUrlTextView.getText().toString());
         mAuthorizationManager.login(
-                AuthorizationHelper.createLoginListener(bundle, this));
+                AuthorizationHelper.createLoginListener(bundle, this),this);
     }
 
     private void bindDrawableResources() {

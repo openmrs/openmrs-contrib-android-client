@@ -140,12 +140,14 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.AUTH_FAILED_DIALOG_TAG);
     }
 
-    protected void showNoInternetConnectionDialog() {
+    public void showNoInternetConnectionDialog() {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.no_internet_conn_dialog_title));
         bundle.setTextViewMessage(getString(R.string.no_internet_conn_dialog_message));
-        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
-        bundle.setRightButtonText(getString(R.string.dialog_button_cancel));
+        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.FINISH);
+        bundle.setLeftButtonText(getString(R.string.no_internet_exit));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.INTERNET);
+        bundle.setRightButtonText(getString(R.string.no_internet_open_settings));
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.NO_INTERNET_CONN_DIALOG_TAG);
     }
 
@@ -173,7 +175,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         bundle.setTextViewMessage(getString(R.string.server_error_dialog_message));
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         bundle.setRightButtonText(getString(R.string.dialog_button_ok));
-        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.SOCKET_EXCEPTION_DIALOG_TAG);
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.SERVER_ERROR_DIALOG_TAG);
     }
 
     protected void showSocketExceptionErrorDialog() {
@@ -182,7 +184,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         bundle.setTextViewMessage(getString(R.string.socket_exception_dialog_message));
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         bundle.setRightButtonText(getString(R.string.dialog_button_ok));
-        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.SERVER_ERROR_DIALOG_TAG);
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.SOCKET_EXCEPTION_DIALOG_TAG);
     }
 
     public void showNoVisitDialog() {
@@ -264,6 +266,17 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         }
     }
 
+    public void showShortToast(boolean errorOccurred, Integer successMessageId, Integer errorMessageId) {
+        if (!errorOccurred && successMessageId != null) {
+            ToastUtil.showShortToast(this,
+                    ToastUtil.ToastType.SUCCESS,
+                    successMessageId);
+        } else if (errorMessageId != null) {
+            ToastUtil.showShortToast(this,
+                    ToastUtil.ToastType.ERROR,
+                    errorMessageId);
+        }
+    }
     public AuthorizationManager getAuthorizationManager() {
         return mAuthorizationManager;
     }

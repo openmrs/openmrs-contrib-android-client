@@ -133,6 +133,7 @@
     <string name="patient_scroll_tab_diagnosis_label">Diagnosis</string>
     <string name="patient_scroll_tab_visits_label">Visits</string>
     <string name="patient_scroll_tab_vitals_label">Vitals</string>
+    <string name="download_started">"Downloading..."</string>
     <!-- fragment_patient_details layout -->
     <string name="patient_details_gender_label">Gender</string>
     <string name="patient_details_birth_date_label">Birth date</string>

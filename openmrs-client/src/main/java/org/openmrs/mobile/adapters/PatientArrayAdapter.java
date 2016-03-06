@@ -37,6 +37,7 @@ import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
@@ -129,7 +130,9 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
                 public void onClick(View v) {
                     if (((CheckBox) v).isChecked()) {
                         long patientId = new PatientDAO().savePatient(patient);
-                        ((ACBaseActivity) mContext).showProgressDialog(R.string.save_patient_data_dialog);
+                        ToastUtil.showShortToast(mContext,
+                                ToastUtil.ToastType.NOTICE,
+                                R.string.download_started);
                         new VisitsManager().findVisitsByPatientUUID(
                                 VisitsHelper.createVisitsByPatientUUIDListener(patient.getUuid(), patientId, (ACBaseActivity) mContext));
                         disableCheckBox(holder);

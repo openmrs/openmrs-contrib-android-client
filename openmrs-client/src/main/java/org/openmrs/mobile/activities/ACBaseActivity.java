@@ -266,6 +266,17 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         }
     }
 
+    public void showShortToast(boolean errorOccurred, Integer successMessageId, Integer errorMessageId) {
+        if (!errorOccurred && successMessageId != null) {
+            ToastUtil.showShortToast(this,
+                    ToastUtil.ToastType.SUCCESS,
+                    successMessageId);
+        } else if (errorMessageId != null) {
+            ToastUtil.showShortToast(this,
+                    ToastUtil.ToastType.ERROR,
+                    errorMessageId);
+        }
+    }
     public AuthorizationManager getAuthorizationManager() {
         return mAuthorizationManager;
     }

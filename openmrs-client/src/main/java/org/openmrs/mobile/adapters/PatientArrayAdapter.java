@@ -124,6 +124,7 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
         if (new PatientDAO().userDoesNotExist(patient.getUuid())) {
             holder.mAvailableOfflineCheckbox.setChecked(false);
             holder.mAvailableOfflineCheckbox.setVisibility(View.VISIBLE);
+            holder.mAvailableOfflineCheckbox.setButtonDrawable(R.drawable.ic_download);
             holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_download_label));
             holder.mAvailableOfflineCheckbox.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -155,7 +156,6 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
     public void disableCheckBox(ViewHolder holder) {
         holder.mAvailableOfflineCheckbox.setChecked(true);
         holder.mAvailableOfflineCheckbox.setClickable(false);
-        holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_available_offline_label));
-        holder.mAvailableOfflineCheckbox.setVisibility(View.GONE);
+        holder.mAvailableOfflineCheckbox.setButtonDrawable(R.drawable.ic_offline);
     }
 }

@@ -14,17 +14,16 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="5dp"
-                android:background="@drawable/list_item_selector">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
     <RelativeLayout
         android:id="@+id/topRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        >
+        android:gravity="center_vertical">
 
         <TextView android:id="@+id/patientIdentifier"
                   android:layout_width="wrap_content"
@@ -39,40 +38,41 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textSize="22sp"
-
                   android:layout_toRightOf="@+id/patientIdentifier"
+                  android:layout_toEndOf="@+id/patientIdentifier"
                   android:layout_alignParentRight="true"
                   android:layout_alignParentEnd="true"
-                  android:gravity="right"/>
+                  android:gravity="end"/>
+
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/bottomRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        >
+        android:gravity="center_vertical">
 
         <TextView android:id="@+id/patientGender"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:textSize="16sp"
-            />
+                  android:textSize="16sp" />
 
         <TextView android:id="@+id/patientAge"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textSize="16sp"
                   android:layout_marginLeft="15dp"
+                  android:layout_marginStart="15dp"
                   android:layout_toRightOf="@id/patientGender"
-            />
+                  android:layout_toEndOf="@+id/patientGender"/>
 
         <TextView android:id="@+id/patientBirthDate"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textSize="16sp"
                   android:layout_marginLeft="15dp"
+                  android:layout_marginStart="15dp"
                   android:layout_toRightOf="@id/patientAge"
-            />
+                  android:layout_toEndOf="@id/patientAge"/>
 
         <CheckBox android:id="@+id/offlineCheckbox"
                   android:layout_width="wrap_content"

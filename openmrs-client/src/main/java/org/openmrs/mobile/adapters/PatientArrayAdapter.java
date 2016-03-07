@@ -37,6 +37,7 @@ import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
@@ -123,13 +124,16 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
         if (new PatientDAO().userDoesNotExist(patient.getUuid())) {
             holder.mAvailableOfflineCheckbox.setChecked(false);
             holder.mAvailableOfflineCheckbox.setVisibility(View.VISIBLE);
+            holder.mAvailableOfflineCheckbox.setButtonDrawable(R.drawable.ic_download);
             holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_download_label));
             holder.mAvailableOfflineCheckbox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (((CheckBox) v).isChecked()) {
                         long patientId = new PatientDAO().savePatient(patient);
-                        ((ACBaseActivity) mContext).showProgressDialog(R.string.save_patient_data_dialog);
+                        ToastUtil.showShortToast(mContext,
+                                ToastUtil.ToastType.NOTICE,
+                                R.string.download_started);
                         new VisitsManager().findVisitsByPatientUUID(
                                 VisitsHelper.createVisitsByPatientUUIDListener(patient.getUuid(), patientId, (ACBaseActivity) mContext));
                         disableCheckBox(holder);
@@ -152,7 +156,6 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
     public void disableCheckBox(ViewHolder holder) {
         holder.mAvailableOfflineCheckbox.setChecked(true);
         holder.mAvailableOfflineCheckbox.setClickable(false);
-        holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_available_offline_label));
-        holder.mAvailableOfflineCheckbox.setVisibility(View.GONE);
+        holder.mAvailableOfflineCheckbox.setButtonDrawable(R.drawable.ic_offline);
     }
 }

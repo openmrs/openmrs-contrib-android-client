@@ -95,7 +95,7 @@ public class FindVisitsByPatientUUIDListener extends GeneralErrorListener implem
             if (null != mCallerPDA) {
                 mCallerPDA.updatePatientVisitsData(mErrorOccurred);
             } else {
-                mCallerAdapter.dismissProgressDialog(mErrorOccurred,
+                mCallerAdapter.showShortToast(mErrorOccurred,
                         R.string.find_patients_row_toast_patient_saved,
                         R.string.find_patients_row_toast_patient_save_error);
             }

@@ -14,9 +14,11 @@
 
 package org.openmrs.mobile.listeners.forms;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import org.apache.http.HttpStatus;
 import org.kxml2.io.KXmlParser;
 import org.kxml2.kdom.Document;
 import org.kxml2.kdom.Element;
@@ -39,6 +41,7 @@ public final class AvailableFormsListListener extends GeneralErrorListener imple
     private static final String VITALS_FORM_NAME = "Vitals XForm";
     private static final String FORM_KEY = "form";
     private static final String URL_KEY = "url";
+    private static final int NO_INTERNET_CONNECTION = 0;
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
     private final FormsManager mFormsManagerCaller;
     protected ACBaseActivity mCallerAdapter;
@@ -72,6 +75,8 @@ public final class AvailableFormsListListener extends GeneralErrorListener imple
         dismissDialog(false);
     }
 
+
+
     private void dismissDialog(boolean mErrorOccurred) {
         if (mCallerAdapter != null) {
             mCallerAdapter.dismissProgressDialog(mErrorOccurred,
@@ -80,10 +85,36 @@ public final class AvailableFormsListListener extends GeneralErrorListener imple
         }
     }
 
+    private void dismissDialog(boolean isServerError, int errorCode) {
+        if (mCallerAdapter != null) {
+            if (isServerError) {
+                switch (errorCode) {
+                    case NO_INTERNET_CONNECTION:
+                        mCallerAdapter.dismissProgressDialog(true, null,
+                                R.string.settings_forms_download_no_connection);
+                        break;
+                    case HttpStatus.SC_NOT_FOUND:
+                        mCallerAdapter.dismissProgressDialog(true, null,
+                                R.string.settings_forms_download_server_error_404);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
     @Override
     public void onErrorResponse(VolleyError error) {
-        dismissDialog(true);
-        super.onErrorResponse(error);
+        NetworkResponse errorResponse = error.networkResponse;
+        if (errorResponse == null) {
+            dismissDialog(true, NO_INTERNET_CONNECTION);
+        } else if (errorResponse.statusCode == HttpStatus.SC_NOT_FOUND) {
+            dismissDialog(true, HttpStatus.SC_NOT_FOUND);
+        } else {
+            dismissDialog(true);
+            super.onErrorResponse(error);
+        }
     }
 
     private Document writeResponseToDoc(String response) {

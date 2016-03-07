@@ -23,11 +23,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class HierarchyElementView extends RelativeLayout {
 
     private TextView mPrimaryTextView;
     private TextView mSecondaryTextView;
     private ImageView mIcon;
+    private final AtomicInteger lastGeneratedId = new AtomicInteger(1);
+
 
 
     public HierarchyElementView(Context context, HierarchyElement it) {
@@ -37,7 +41,7 @@ public class HierarchyElementView extends RelativeLayout {
 
         mIcon = new ImageView(context);
         mIcon.setImageDrawable(it.getIcon());
-        mIcon.setId(1);
+        mIcon.setId(generateNewViewId());
         mIcon.setPadding(0, 0, dipToPx(4), 0);
 
         addView(mIcon, new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
@@ -46,7 +50,7 @@ public class HierarchyElementView extends RelativeLayout {
         mPrimaryTextView = new TextView(context);
         mPrimaryTextView.setTextAppearance(context, android.R.style.TextAppearance_Large);
         mPrimaryTextView.setText(it.getPrimaryText());
-        mPrimaryTextView.setId(2);
+        mPrimaryTextView.setId(generateNewViewId());
         mPrimaryTextView.setGravity(Gravity.CENTER_VERTICAL);
         LayoutParams l =
             new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -67,6 +71,17 @@ public class HierarchyElementView extends RelativeLayout {
         setPadding(dipToPx(8), dipToPx(4), dipToPx(8), dipToPx(8));
 
     }
+
+	public int generateNewViewId() {
+	    while (true) {
+	        final int result = lastGeneratedId.get();
+	        int newValue = result + 1;
+	        if (newValue > 0x00FFFFFF) newValue = 1;
+	        if (lastGeneratedId.compareAndSet(result, newValue)) {
+	            return result;
+	        }
+	    }
+	}
 
 
     public void setPrimaryText(String text) {

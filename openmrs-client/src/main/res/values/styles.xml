@@ -27,7 +27,15 @@
 
         <item name="actionBarTabTextStyle">@style/Tabtext</item>
 
+        <item name="actionModeStyle">@style/LongPress</item>
 
+
+
+    </style>
+
+    <style name="LongPress" parent="@style/Widget.AppCompat.ActionMode">
+        <item name="background">@color/primary_dark</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 
     <style name="Tabtext" parent="Base.Widget.AppCompat.ActionBar.TabText">

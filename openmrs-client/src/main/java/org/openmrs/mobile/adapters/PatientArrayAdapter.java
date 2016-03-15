@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -80,7 +81,7 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
             isChecked = value;
             holder.mRowLayout.setSelected(value);
             if (isChecked)
-                holder.mRowLayout.setBackgroundColor(Color.GRAY);
+                holder.mRowLayout.setBackgroundColor(ContextCompat.getColor(mContext,R.color.light_teal));
             else
                 holder.mRowLayout.setBackgroundColor(Color.WHITE);
             mOpenMRSLogger.i("isSelected: " + isChecked +".ID: " + patient.getId());
@@ -186,6 +187,7 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
         });
 
         holder.mRowLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB)
             @Override
             public boolean onLongClick(View v) {
                 if (v.isSelected()) {
@@ -222,6 +224,7 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
             return false;
         }
 
+        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
@@ -236,6 +239,7 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
                     downloadPatientData();
                     break;
                 case R.id.close_context_menu:
+                    unselectAll();
                     mode.finish();
                     break;
                 default:
@@ -247,6 +251,7 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
+            unselectAll();
             mActionMode = null;
         }
     };

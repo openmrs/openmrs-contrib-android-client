@@ -86,6 +86,7 @@
         <activity
             android:name=".activities.FindPatientsSearchActivity"
             android:label="@string/action_find_patients"
+            android:theme="@style/AppTheme"
             android:launchMode="singleTop" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -119,6 +120,7 @@
         <activity
             android:name=".activities.FindActiveVisitsActivity"
             android:label="@string/action_active_visits"
+            android:theme="@style/AppTheme"
             android:launchMode="singleTop">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -133,6 +135,7 @@
         <activity
             android:name=".activities.FindActiveVisitsSearchActivity"
             android:label="@string/action_active_visits"
+            android:theme="@style/AppTheme"
             android:launchMode="singleTop">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data

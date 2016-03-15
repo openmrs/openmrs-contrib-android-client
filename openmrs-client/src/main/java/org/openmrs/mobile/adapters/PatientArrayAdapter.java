@@ -14,11 +14,18 @@
 
 package org.openmrs.mobile.adapters;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -30,6 +37,8 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.FindPatientsActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.activities.fragments.FindPatientInDatabaseFragment;
+import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.VisitsManager;
@@ -39,12 +48,71 @@ import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PatientArrayAdapter extends ArrayAdapter<Patient> {
     private Activity mContext;
     private List<Patient> mItems;
     private int mResourceID;
+
+    private boolean isAllSelected = false;
+    private ActionMode mActionMode;
+    private boolean isLongClicked = false;
+    private PatientDataArrayList patientDataArrayList = new PatientDataArrayList();
+
+
+    private final OpenMRS mOpenMRS = OpenMRS.getInstance();
+    private final OpenMRSLogger mOpenMRSLogger = mOpenMRS.getOpenMRSLogger();
+
+    private class PatientData {
+        private int position;
+        private Patient patient;
+        private ViewHolder holder;
+        private boolean isChecked = false;
+
+        public PatientData(ViewHolder holder, Patient patient, int position) {
+            this.holder = holder;
+            this.patient = patient;
+            this.position = position;
+        }
+
+        public void setChecked(boolean value) {
+            isChecked = value;
+            holder.mRowLayout.setSelected(value);
+            if (isChecked)
+                holder.mRowLayout.setBackgroundColor(ContextCompat.getColor(mContext,R.color.light_teal));
+            else
+                holder.mRowLayout.setBackgroundColor(Color.WHITE);
+            mOpenMRSLogger.i("isSelected: " + isChecked +".ID: " + patient.getId());
+        }
+
+        public int getPosition() {
+            return position;
+        }
+    }
+
+    private class PatientDataArrayList extends ArrayList<PatientData> {
+        public void check(int position) {
+            for (int index = 0; index < size(); index++) {
+                PatientData patientData = get(index);
+                if (patientData.getPosition() == position) {
+                    patientData.setChecked(true);
+                    break;
+                }
+            }
+        }
+
+        public void uncheck(int position) {
+            for (int index = 0; index < size(); index++) {
+                PatientData patientData = get(index);
+                if (patientData.getPosition() == position) {
+                    patientData.setChecked(false);
+                    break;
+                }
+            }
+        }
+    }
 
     class ViewHolder {
         private LinearLayout mRowLayout;
@@ -64,7 +132,9 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final Patient patient = mItems.get(position);
+
         View rowView = convertView;
         // reuse views
         if (rowView == null) {
@@ -80,11 +150,12 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
             viewHolder.mBirthDate = (TextView) rowView.findViewById(R.id.patientBirthDate);
             viewHolder.mAvailableOfflineCheckbox = (CheckBox) rowView.findViewById(R.id.offlineCheckbox);
             rowView.setTag(viewHolder);
+
+            patientDataArrayList.add(new PatientData(viewHolder, patient, position));
         }
 
         // fill data
         final ViewHolder holder = (ViewHolder) rowView.getTag();
-        final Patient patient = mItems.get(position);
 
         if (null != patient.getIdentifier()) {
             holder.mIdentifier.setText("#" + patient.getIdentifier());
@@ -115,12 +186,101 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
             }
         });
 
+        holder.mRowLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+            @Override
+            public boolean onLongClick(View v) {
+                if (v.isSelected()) {
+                    mOpenMRSLogger.i("ID: " + position + " Unselected");
+                    patientDataArrayList.uncheck(position);
+                } else {
+                    if (!isLongClicked)
+                        mActionMode = mContext.startActionMode(mActionModeCallback);
+                    isLongClicked = true;
+                    mOpenMRSLogger.i("ID: " + position + " Selected");
+                    patientDataArrayList.check(position);
+                }
+                return true;
+            }
+        });
+
 
         FontsUtil.setFont((ViewGroup) rowView);
         return rowView;
     }
 
-    public void setUpCheckBoxLogic(final ViewHolder holder, final Patient patient) {
+    private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            mode.setTitle("Download Multiple");
+            MenuInflater inflator = mode.getMenuInflater();
+            inflator.inflate(R.menu.download_multiple, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            return false;
+        }
+
+        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_select_all:
+                    if (isAllSelected)
+                        unselectAll();
+                    else
+                        selectAll();
+                    isAllSelected = !isAllSelected;
+                    break;
+                case R.id.action_download:
+                    downloadPatientData();
+                    break;
+                case R.id.close_context_menu:
+                    unselectAll();
+                    mode.finish();
+                    break;
+                default:
+                    unselectAll();
+                    break;
+            }
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            unselectAll();
+            mActionMode = null;
+        }
+    };
+
+    public void selectAll() {
+        for (PatientData patientData : patientDataArrayList) {
+            patientData.setChecked(true);
+        }
+    }
+
+    public void unselectAll() {
+        for (PatientData patientData : patientDataArrayList) {
+            patientData.setChecked(false);
+        }
+    }
+
+
+    public void downloadPatientData() {
+        for (PatientData patientData : patientDataArrayList) {
+            long patientId = new PatientDAO().savePatient(patientData.patient);
+            new VisitsManager().findVisitsByPatientUUID(
+                    VisitsHelper.createVisitsByPatientUUIDListener(patientData.patient.getUuid(),
+                            patientId, (ACBaseActivity) mContext));
+            ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE, R.string.download_started);
+        }
+
+    }
+
+    public void setUpCheckBoxLogic(final ViewHolder holder, final Patient patient){
         if (new PatientDAO().userDoesNotExist(patient.getUuid())) {
             holder.mAvailableOfflineCheckbox.setChecked(false);
             holder.mAvailableOfflineCheckbox.setVisibility(View.VISIBLE);

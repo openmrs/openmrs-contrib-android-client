@@ -108,19 +108,6 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
         return mFragmentLayout;
     }
 
-   /* @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.download_multiple, menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        mAdapter.downloadPatientData();
-        return true;
-    }*/
-
     public void updatePatientsData() {
         if (mLastViewedPatientsList.size() == 0) {
             mEmptyList.setText(getString(R.string.find_patient_no_last_viewed));

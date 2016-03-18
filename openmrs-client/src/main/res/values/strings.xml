@@ -113,6 +113,8 @@
     <string name="save_patient_data_dialog">Saving patient data</string>
     <string name="select_all_downloadable_data">Select all</string>
     <string name="download_selected_patient_data">Download</string>
+    <string name="patient_alreadly_available">Patient is already available locally</string>
+    <string name="download_multiple">Download Multiple</string>
     <!-- Dashboard Activity -->
     <string name="dashboard_search_icon_label">Find Patients</string>
     <string name="dashboard_registry_icon_label">Registry Patient</string>

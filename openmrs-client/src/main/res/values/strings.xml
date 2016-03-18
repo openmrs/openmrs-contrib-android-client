@@ -117,7 +117,7 @@
     <string name="download_multiple">Download Multiple</string>
     <!-- Dashboard Activity -->
     <string name="dashboard_search_icon_label">Find Patients</string>
-    <string name="dashboard_registry_icon_label">Registry Patient</string>
+    <string name="dashboard_registry_icon_label">Register a Patient</string>
     <string name="dashboard_logged_as">logged as %1$s</string>
     <string name="dashboard_visits_icon_label">Active Visits</string>
     <string name="dashboard_vitals_icon_label">Capture Vitals</string>

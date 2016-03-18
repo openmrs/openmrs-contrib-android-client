@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.view.ActionMode;
@@ -37,6 +38,7 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.FindPatientsActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.activities.fragments.FindPatientInDatabaseFragment;
+import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.PatientDAO;
@@ -55,6 +57,7 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
     private Activity mContext;
     private List<Patient> mItems;
     private int mResourceID;
+    private int fragmentID;
 
     private boolean isAllDownloadableSelected = false;
     private ActionMode actionMode;
@@ -65,6 +68,24 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
 
     private final OpenMRS openMRSInstance = OpenMRS.getInstance();
     private final OpenMRSLogger openMRSLogger = openMRSInstance.getOpenMRSLogger();
+
+    public PatientArrayAdapter(Activity context, int resourceID, List<Patient> items, int fragmentID) {
+        super(context, resourceID, items);
+        this.mContext = context;
+        this.mItems = items;
+        this.mResourceID = resourceID;
+        this.fragmentID = fragmentID;
+    }
+
+    class ViewHolder {
+        private LinearLayout mRowLayout;
+        private TextView mIdentifier;
+        private TextView mDisplayName;
+        private TextView mGender;
+        private TextView mAge;
+        private TextView mBirthDate;
+        private CheckBox mAvailableOfflineCheckbox;
+    }
 
     private class PatientData {
         // class to store patient data
@@ -130,22 +151,6 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
         }
     }
 
-    class ViewHolder {
-        private LinearLayout mRowLayout;
-        private TextView mIdentifier;
-        private TextView mDisplayName;
-        private TextView mGender;
-        private TextView mAge;
-        private TextView mBirthDate;
-        private CheckBox mAvailableOfflineCheckbox;
-    }
-
-    public PatientArrayAdapter(Activity context, int resourceID, List<Patient> items) {
-        super(context, resourceID, items);
-        this.mContext = context;
-        this.mItems = items;
-        this.mResourceID = resourceID;
-    }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -167,8 +172,9 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
             viewHolder.mAvailableOfflineCheckbox = (CheckBox) rowView.findViewById(R.id.offlineCheckbox);
             rowView.setTag(viewHolder);
 
-            if (!new PatientDAO().isUserAlreadySaved(patient.getUuid()))
+            if (!new PatientDAO().isUserAlreadySaved(patient.getUuid())) {
                 howManyDownloadables++;
+            }
 
             patientDataArrayList.add(new PatientData(viewHolder, patient, position));
         }
@@ -204,10 +210,13 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
                 }
             }
         });
-
         holder.mRowLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                if (fragmentID == FindPatientInDatabaseFragment.FIND_PATIENT_IN_DB_FM_ID) {
+                    // this listener shouldn't work in FindPatientInDatabase Fragment
+                    return true;
+                }
                 PatientData patientData = patientDataArrayList.getPatientDataByPosition(position);
                 if (patientData.isDownloadable()) {
                     if (v.isSelected()) {
@@ -215,8 +224,9 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
                         patientData.setSelected(false);
                     } else {
                         // selected
-                        if (!isLongClicked)
+                        if (!isLongClicked) {
                             actionMode = mContext.startActionMode(mActionModeCallback);
+                        }
                         isLongClicked = true;
                         patientData.setSelected(true);
                     }
@@ -228,7 +238,6 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
                 return true;
             }
         });
-
 
         FontsUtil.setFont((ViewGroup) rowView);
         return rowView;
@@ -253,14 +262,14 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_select_all:
-                    if (isAllDownloadableSelected)
+                    if (isAllDownloadableSelected) {
                         unselectAll();
-                    else
+                    } else
                         selectAll();
                     updateIsAllDownloadableSelected();
                     break;
                 case R.id.action_download:
-                    downloadPatientData();
+                    downloadSelectedPatients();
                     mode.finish();
                     break;
                 case R.id.close_context_menu:
@@ -284,20 +293,22 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
 
     public void selectAll() {
         for (PatientData patientData : patientDataArrayList) {
-            if (patientData.isDownloadable())
+            if (patientData.isDownloadable()) {
                 patientData.setSelected(true);
+            }
         }
     }
 
     public void unselectAll() {
         for (PatientData patientData : patientDataArrayList) {
-            if (patientData.isDownloadable())
+            if (patientData.isDownloadable()) {
                 patientData.setSelected(false);
+            }
         }
     }
 
 
-    public void downloadPatientData() {
+    public void downloadSelectedPatients() {
         for (PatientData patientData : patientDataArrayList) {
             if (patientData.isDownloadable() && patientData.isSelected) {
                 downloadPatient(patientData.patient);

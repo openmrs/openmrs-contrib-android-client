@@ -40,6 +40,8 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     private boolean mIsConnectionAvailable;
     private LastViewedPatientListener mFpmResponseListener;
 
+    public static final int FIND_PATIENT_LAST_VIEWED_FM_ID = 0;
+
     public FindPatientLastViewedFragment() {
     }
 
@@ -114,7 +116,8 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
             mSpinner.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mEmptyList);
         }
-        mAdapter = new PatientArrayAdapter(getActivity(), R.layout.find_patients_row, mLastViewedPatientsList);
+        mAdapter = new PatientArrayAdapter(getActivity(), R.layout.find_patients_row,
+                mLastViewedPatientsList, FIND_PATIENT_LAST_VIEWED_FM_ID);
         mPatientsListView.setAdapter(mAdapter);
         mSwipeLayout.setRefreshing(false);
         mSwipeLayout.setEnabled(true);

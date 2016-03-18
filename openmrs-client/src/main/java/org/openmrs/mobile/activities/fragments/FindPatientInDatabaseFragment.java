@@ -21,6 +21,8 @@ public class FindPatientInDatabaseFragment extends ACBaseFragment {
     private View fragmentLayout;
     private ListView visitList;
 
+    public final static int FIND_PATIENT_IN_DB_FM_ID = 1;
+
     public FindPatientInDatabaseFragment() {
     }
 
@@ -46,7 +48,8 @@ public class FindPatientInDatabaseFragment extends ACBaseFragment {
 
     public void updatePatientsInDatabaseList() {
         List<Patient> mPatientList = new PatientDAO().getAllPatients();
-        visitList.setAdapter(new PatientArrayAdapter(getActivity(), R.layout.find_patients_row, mPatientList));
+        visitList.setAdapter(new PatientArrayAdapter(getActivity(), R.layout.find_patients_row,
+                mPatientList, FIND_PATIENT_IN_DB_FM_ID));
     }
 
 }

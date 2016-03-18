@@ -31,6 +31,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
 import org.openmrs.mobile.adapters.PatientArrayAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
@@ -76,7 +77,8 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         if (mSearching) {
             mPatientsListView.setEmptyView(mSpinner);
         } else if (mSearchedPatientsList != null) {
-            mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row, mSearchedPatientsList);
+            mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row,
+                    mSearchedPatientsList, FindPatientLastViewedFragment.FIND_PATIENT_LAST_VIEWED_FM_ID);
             mPatientsListView.setAdapter(mAdapter);
             mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
             mPatientsListView.setEmptyView(mEmptyList);
@@ -115,7 +117,8 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
             mEmptyList.setVisibility(View.GONE);
             mPatientsListView.setEmptyView(mSpinner);
             mSearchedPatientsList = new ArrayList<Patient>();
-            mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row, mSearchedPatientsList);
+            mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row,
+                    mSearchedPatientsList, FindPatientLastViewedFragment.FIND_PATIENT_LAST_VIEWED_FM_ID);
             mPatientsListView.setAdapter(mAdapter);
             mLastQuery = intent.getStringExtra(SearchManager.QUERY);
             new FindPatientsManager().findPatient(
@@ -158,7 +161,8 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
                 mSpinner.setVisibility(View.GONE);
                 mPatientsListView.setEmptyView(mEmptyList);
             }
-            mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row, patientsList);
+            mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row, patientsList,
+                    FindPatientLastViewedFragment.FIND_PATIENT_LAST_VIEWED_FM_ID);
             mPatientsListView.setAdapter(mAdapter);
             mSearching = false;
         }

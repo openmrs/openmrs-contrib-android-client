@@ -19,7 +19,7 @@
     tools:context="org.openmrs.mobile.activities.DashboardActivity" >
     <item android:id="@+id/actionSearch"
         android:title="@string/action_find_patients"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/ic_search"
         app:showAsAction="ifRoom|collapseActionView"
         android:actionViewClass="android.support.v7.widget.SearchView"
         app:actionViewClass="android.support.v7.widget.SearchView"/>

@@ -6,7 +6,7 @@ android {
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "org.openmrs.mobile"
-        minSdkVersion 10
+        minSdkVersion 11
         targetSdkVersion 22
 
         testApplicationId "org.openmrs.mobile.test"

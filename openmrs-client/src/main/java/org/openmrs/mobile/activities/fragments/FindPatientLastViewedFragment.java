@@ -4,13 +4,18 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.FindPatientsActivity;
 import org.openmrs.mobile.listeners.findPatients.LastViewedPatientListener;
@@ -99,6 +104,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
         });
 
         FontsUtil.setFont((ViewGroup) mFragmentLayout);
+        //registerForContextMenu(mPatientsListView);
         return mFragmentLayout;
     }
 

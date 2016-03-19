@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_select_all"
+        android:title="@string/select_all_downloadable_data"
+        android:icon="@drawable/ic_select_all"/>
+
+    <item android:id="@+id/action_download"
+        android:title="@string/download_selected_patient_data"
+        android:icon="@drawable/ic_mult_down"/>
+
+    <item android:id="@+id/close_context_menu"
+        android:orderInCategory="100"
+        android:title="@android:string/cancel"
+        android:icon="@drawable/ic_close"/>
+</menu>

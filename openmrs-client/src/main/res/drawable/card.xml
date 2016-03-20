@@ -25,7 +25,7 @@
     <!-- Background -->
     <item>
         <shape >
-            <solid android:color="@color/card_background" />
+            <solid android:color="@color/cardhighlight" />
             <corners android:radius="2dp" />
         </shape>
     </item>

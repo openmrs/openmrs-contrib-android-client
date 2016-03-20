@@ -17,10 +17,13 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="5dp"
-                android:background="@drawable/list_item_selector">
+                android:padding="10dp"
+                android:background="@drawable/card">
     <RelativeLayout
         android:id="@+id/topRow"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -47,6 +50,9 @@
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/bottomRow"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"

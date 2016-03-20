@@ -21,7 +21,7 @@
               android:paddingLeft="5dp"
               android:paddingRight="0dp"
               android:weightSum="2"
-              android:background="@drawable/list_item_selector">
+              android:background="@drawable/card">
 
     <LinearLayout
         android:gravity="center_vertical"

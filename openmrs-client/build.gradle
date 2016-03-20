@@ -39,7 +39,6 @@ dependencies {
     compile files('libs/commons-codec.jar')
     compile files('libs/httpcore-4.3.2.jar')
     compile files('libs/httpmime-4.3.6.jar')
-//    compile files('libs/sqlcipher.jar')
     compile 'net.zetetic:android-database-sqlcipher:3.3.1-2@aar'
     compile files('libs/volley.jar')
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:4.2'

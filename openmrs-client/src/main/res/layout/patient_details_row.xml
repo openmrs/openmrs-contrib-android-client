@@ -17,9 +17,12 @@
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:padding="5dp"
-              android:background="@drawable/list_item_selector">
+              android:padding="10dp"
+              android:background="@drawable/card">
     <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:id="@+id/topRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -29,7 +32,7 @@
         <TextView android:id="@+id/patientIdentifier"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:textSize="22sp"
+                  android:textSize="20sp"
                   android:textStyle="bold"
                   android:layout_alignTop="@+id/patientDisplayName"
                   android:layout_alignParentLeft="true"
@@ -38,7 +41,7 @@
         <TextView android:id="@+id/patientDisplayName"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:textSize="22sp"
+                  android:textSize="18sp"
 
                   android:layout_toRightOf="@+id/patientIdentifier"
                   android:layout_alignParentRight="true"
@@ -47,6 +50,9 @@
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/bottomRow"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -55,13 +61,13 @@
         <TextView android:id="@+id/patientGender"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:textSize="16sp"
+                  android:textSize="12sp"
             />
 
         <TextView android:id="@+id/patientAge"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:textSize="16sp"
+                  android:textSize="12sp"
                   android:layout_marginLeft="15dp"
                   android:layout_toRightOf="@id/patientGender"
             />
@@ -69,7 +75,7 @@
         <TextView android:id="@+id/patientBirthDate"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:textSize="16sp"
+                  android:textSize="12sp"
                   android:layout_marginLeft="15dp"
                   android:layout_toRightOf="@id/patientAge"
             />
@@ -77,7 +83,7 @@
         <TextView android:id="@+id/visitStatusLabel"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:textSize="16sp"
+                  android:textSize="14sp"
                   android:textStyle="bold"
                   android:layout_alignParentRight="true"
             />

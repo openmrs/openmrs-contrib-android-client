@@ -18,7 +18,9 @@ import org.json.JSONObject;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.CaptureVitalsActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
+import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
 
@@ -49,7 +51,8 @@ public class CheckVisitBeforeStartListener extends FindVisitsByPatientUUIDListen
             }
         } else {
             if (new VisitDAO().isPatientNowOnVisit(mPatientID)) {
-                mCallerPDA.showStartVisitImpossibleDialog(mCallerPDA.getString(R.string.start_visit_impossible_dialog_title));
+                Patient patient = new PatientDAO().findPatientByID(String.valueOf(mPatientID));
+                mCallerPDA.showStartVisitImpossibleDialog(patient.getDisplay());
             } else {
                 new VisitsManager().startVisit(
                         VisitsHelper.createStartVisitListener(mPatientUUID, mPatientID, mCallerPDA));

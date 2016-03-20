@@ -20,6 +20,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/swipe_container"
+    android:background="#fff3f3f3"
     tools:context="org.openmrs.mobile.activities.FindPatientsActivity">
 
     <FrameLayout
@@ -29,6 +30,7 @@
         <ListView android:id="@+id/patientListView"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
+                  android:divider="@null"
                   android:layout_weight="1"/>
 
         <TextView android:id="@+id/emptyPatientListView"

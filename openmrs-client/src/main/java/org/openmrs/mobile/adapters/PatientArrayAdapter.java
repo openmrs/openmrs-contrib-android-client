@@ -111,7 +111,7 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
                 // unselected and previously was selected, otherwise no change needed
                     howManySelected--;
                     holder.mRowLayout.setSelected(false);
-                    holder.mRowLayout.setBackgroundColor(Color.TRANSPARENT);
+                    holder.mRowLayout.setBackgroundResource(R.drawable.card);
             }
             isSelected = value;
         }

@@ -22,17 +22,18 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.adapters.ActiveVisitsArrayAdapter;
+import org.openmrs.mobile.adapters.ActiveVisitsRecyclerViewAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -40,8 +41,8 @@ import org.openmrs.mobile.utilities.FontsUtil;
 public class FindActiveVisitsSearchActivity extends ACBaseActivity {
     private String mQuery;
     private MenuItem mFindActiveVisitItem;
-    private static ActiveVisitsArrayAdapter mAdapter;
-    private ListView mVisitsListView;
+    private static ActiveVisitsRecyclerViewAdapter mAdapter;
+    private RecyclerView visitsRecyclerView;
     private TextView mEmptyList;
     private ProgressBar mSpinner;
 
@@ -52,17 +53,20 @@ public class FindActiveVisitsSearchActivity extends ACBaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mSpinner = (ProgressBar) findViewById(R.id.visitsListViewLoading);
-        mVisitsListView = (ListView) findViewById(R.id.visitsListView);
+        visitsRecyclerView = (RecyclerView) findViewById(R.id.visitsRecyclerView);
+        visitsRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        visitsRecyclerView.setLayoutManager(linearLayoutManager);
+
         mEmptyList = (TextView) findViewById(R.id.emptyVisitsListViewLabel);
         mEmptyList.setText(getString(R.string.search_visits_no_results));
-        mVisitsListView.setEmptyView(mEmptyList);
 
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
         if (getIntent().getAction() == null) {
             getIntent().setAction(Intent.ACTION_SEARCH);
             handleIntent(getIntent());
         } else if (mAdapter != null) {
-            mVisitsListView.setAdapter(mAdapter);
+            visitsRecyclerView.setAdapter(mAdapter);
         }
     }
 
@@ -84,10 +88,16 @@ public class FindActiveVisitsSearchActivity extends ACBaseActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             mQuery = intent.getStringExtra(SearchManager.QUERY);
             mEmptyList.setVisibility(View.GONE);
-            mVisitsListView.setEmptyView(mSpinner);
-            mAdapter = new ActiveVisitsArrayAdapter(this, R.layout.find_visits_row, new VisitDAO().findActiveVisitsByPatientNameLike(mQuery));
-            mVisitsListView.setAdapter(mAdapter);
-            stopLoader();
+            mSpinner.setVisibility(View.VISIBLE);
+            mAdapter = new ActiveVisitsRecyclerViewAdapter(this,new VisitDAO().findActiveVisitsByPatientNameLike(mQuery));
+            if (new VisitDAO().findActiveVisitsByPatientNameLike(mQuery).isEmpty()){
+                mEmptyList.setVisibility(View.VISIBLE);
+                mSpinner.setVisibility(View.GONE);
+                visitsRecyclerView.setVisibility(View.GONE);
+            }
+            visitsRecyclerView.setAdapter(mAdapter);
+            mSpinner.setVisibility(View.GONE);
+
             if (mFindActiveVisitItem != null) {
                 MenuItemCompat.collapseActionView(mFindActiveVisitItem);
             }
@@ -115,11 +125,5 @@ public class FindActiveVisitsSearchActivity extends ACBaseActivity {
         findPatientView.setSearchableInfo(info);
         findPatientView.setIconifiedByDefault(false);
         return true;
-    }
-
-    public void stopLoader() {
-        mEmptyList.setText(getString(R.string.search_visits_no_results));
-        mSpinner.setVisibility(View.GONE);
-        mVisitsListView.setEmptyView(mEmptyList);
     }
 }

@@ -22,15 +22,17 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.adapters.ActiveVisitsArrayAdapter;
+import org.openmrs.mobile.adapters.ActiveVisitsRecyclerViewAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -38,8 +40,9 @@ import org.openmrs.mobile.utilities.FontsUtil;
 public class FindActiveVisitsActivity extends ACBaseActivity {
 
     private String mQuery;
-    private ActiveVisitsArrayAdapter mAdapter;
-    private ListView mVisitListView;
+    private ActiveVisitsRecyclerViewAdapter mAdapter;
+    private RecyclerView visitsRecyclerView;
+    private TextView emptyList;
     private MenuItem mFindVisitItem;
 
     @Override
@@ -48,10 +51,14 @@ public class FindActiveVisitsActivity extends ACBaseActivity {
         setContentView(R.layout.activity_find_visits);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mVisitListView = (ListView) findViewById(R.id.visitsListView);
-        TextView emptyList = (TextView) findViewById(R.id.emptyVisitsListViewLabel);
+        visitsRecyclerView = (RecyclerView) findViewById(R.id.visitsRecyclerView);
+        visitsRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        visitsRecyclerView.setLayoutManager(linearLayoutManager);
+
+        emptyList = (TextView) findViewById(R.id.emptyVisitsListViewLabel);
         emptyList.setText(getString(R.string.search_visits_no_results));
-        mVisitListView.setEmptyView(emptyList);
+        emptyList.setVisibility(View.INVISIBLE);
 
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
         handleIntent(getIntent());
@@ -89,8 +96,12 @@ public class FindActiveVisitsActivity extends ACBaseActivity {
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
-        mAdapter = new ActiveVisitsArrayAdapter(this, R.layout.find_visits_row, new VisitDAO().getAllActiveVisits());
-        mVisitListView.setAdapter(mAdapter);
+        mAdapter = new ActiveVisitsRecyclerViewAdapter(this, new VisitDAO().getAllActiveVisits());
+        if (new VisitDAO().getAllActiveVisits().isEmpty()){
+            emptyList.setVisibility(View.VISIBLE);
+            visitsRecyclerView.setVisibility(View.GONE);
+        }
+        visitsRecyclerView.setAdapter(mAdapter);
     }
 
     private void handleIntent(Intent intent) {

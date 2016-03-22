@@ -22,17 +22,18 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
-import org.openmrs.mobile.adapters.PatientArrayAdapter;
+import org.openmrs.mobile.adapters.PatientRecyclerViewAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FindPatientsManager;
@@ -45,8 +46,8 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
     private String mLastQuery;
     private MenuItem mFindPatientMenuItem;
     private List<Patient> mSearchedPatientsList;
-    private PatientArrayAdapter mAdapter;
-    private ListView mPatientsListView;
+    private PatientRecyclerViewAdapter mAdapter;
+    private RecyclerView patientsRecyclerView;
     private TextView mEmptyList;
     private ProgressBar mSpinner;
     private boolean mSearching;
@@ -62,9 +63,12 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         setContentView(R.layout.fragment_find_patients);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mSpinner = (ProgressBar) findViewById(R.id.patientListViewLoading);
-        mPatientsListView = (ListView) findViewById(R.id.patientListView);
-        mEmptyList = (TextView) findViewById(R.id.emptyPatientListView);
+        mSpinner = (ProgressBar) findViewById(R.id.patientRecyclerViewLoading);
+        patientsRecyclerView = (RecyclerView) findViewById(R.id.patientRecyclerView);
+        patientsRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        patientsRecyclerView.setLayoutManager(linearLayoutManager);
+        mEmptyList = (TextView) findViewById(R.id.emptyPatientList);
 
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
 
@@ -75,14 +79,19 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
         }
 
         if (mSearching) {
-            mPatientsListView.setEmptyView(mSpinner);
+            patientsRecyclerView.setVisibility(View.GONE);
+            mSpinner.setVisibility(View.VISIBLE);
         } else if (mSearchedPatientsList != null) {
-            mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row,
-                    mSearchedPatientsList, FindPatientLastViewedFragment.FIND_PATIENT_LAST_VIEWED_FM_ID);
-            mPatientsListView.setAdapter(mAdapter);
-            mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
-            mPatientsListView.setEmptyView(mEmptyList);
-        } else if (getIntent().getAction() == null) {
+            mAdapter = new PatientRecyclerViewAdapter(this, mSearchedPatientsList, FindPatientLastViewedFragment.FIND_PATIENT_LAST_VIEWED_FM_ID);
+            patientsRecyclerView.setAdapter(mAdapter);
+            if (mSearchedPatientsList.isEmpty()){
+                mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
+                patientsRecyclerView.setVisibility(View.GONE);
+                mSpinner.setVisibility(View.GONE);
+                mEmptyList.setVisibility(View.VISIBLE);
+            }
+        }
+        else if (getIntent().getAction() == null) {
             getIntent().setAction(Intent.ACTION_SEARCH);
             handleIntent(getIntent());
         }
@@ -115,11 +124,12 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
             mSearching = true;
             mLastSearchId++;
             mEmptyList.setVisibility(View.GONE);
-            mPatientsListView.setEmptyView(mSpinner);
+            patientsRecyclerView.setVisibility(View.GONE);
+            mSpinner.setVisibility(View.VISIBLE);
             mSearchedPatientsList = new ArrayList<Patient>();
-            mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row,
+            mAdapter = new PatientRecyclerViewAdapter(this,
                     mSearchedPatientsList, FindPatientLastViewedFragment.FIND_PATIENT_LAST_VIEWED_FM_ID);
-            mPatientsListView.setAdapter(mAdapter);
+            patientsRecyclerView.setAdapter(mAdapter);
             mLastQuery = intent.getStringExtra(SearchManager.QUERY);
             new FindPatientsManager().findPatient(
                     FindPatientsHelper.createFindPatientListener(mLastQuery, mLastSearchId, this));
@@ -156,14 +166,17 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
     public void updatePatientsData(int searchId, List<Patient> patientsList) {
         if (mLastSearchId == searchId) {
             mSearchedPatientsList = patientsList;
-            if (patientsList.size() == 0) {
+            if (patientsList.isEmpty()) {
                 mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
                 mSpinner.setVisibility(View.GONE);
-                mPatientsListView.setEmptyView(mEmptyList);
+                patientsRecyclerView.setVisibility(View.GONE);
+                mEmptyList.setVisibility(View.VISIBLE);
             }
-            mAdapter = new PatientArrayAdapter(this, R.layout.find_patients_row, patientsList,
+            mAdapter = new PatientRecyclerViewAdapter(this, patientsList,
                     FindPatientLastViewedFragment.FIND_PATIENT_LAST_VIEWED_FM_ID);
-            mPatientsListView.setAdapter(mAdapter);
+            patientsRecyclerView.setAdapter(mAdapter);
+            patientsRecyclerView.setVisibility(View.VISIBLE);
+            mSpinner.setVisibility(View.GONE);
             mSearching = false;
         }
     }
@@ -173,7 +186,8 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
             mSearching = false;
             mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, mLastQuery));
             mSpinner.setVisibility(View.GONE);
-            mPatientsListView.setEmptyView(mEmptyList);
+            patientsRecyclerView.setVisibility(View.GONE);
+            mEmptyList.setVisibility(View.VISIBLE);
         }
     }
 }

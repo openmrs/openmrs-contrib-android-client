@@ -4,22 +4,17 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.ContextMenu;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.FindPatientsActivity;
+import org.openmrs.mobile.adapters.PatientRecyclerViewAdapter;
 import org.openmrs.mobile.listeners.findPatients.LastViewedPatientListener;
-import org.openmrs.mobile.adapters.PatientArrayAdapter;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FindPatientsManager;
 import org.openmrs.mobile.net.helpers.FindPatientsHelper;
@@ -32,8 +27,8 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     private ProgressBar mSpinner;
     private View mFragmentLayout;
     private TextView mEmptyList;
-    private ListView mPatientsListView;
-    private PatientArrayAdapter mAdapter;
+    private RecyclerView patientsRecyclerView;
+    private PatientRecyclerViewAdapter mAdapter;
     private static List<Patient> mLastViewedPatientsList;
     private SwipeRefreshLayout mSwipeLayout;
     private static boolean mRefreshing;
@@ -59,7 +54,8 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
             mSwipeLayout.setRefreshing(true);
             mSwipeLayout.setEnabled(false);
             mEmptyList.setVisibility(View.GONE);
-            mPatientsListView.setEmptyView(mSpinner);
+            patientsRecyclerView.setVisibility(View.GONE);
+            mSpinner.setVisibility(View.VISIBLE);
         } else if (mLastViewedPatientsList != null) {
             updatePatientsData();
         } else {
@@ -76,9 +72,16 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mFragmentLayout = inflater.inflate(R.layout.fragment_last_viewed_patients, null, false);
-        mEmptyList = (TextView) mFragmentLayout.findViewById(R.id.emptyPatientListView);
-        mPatientsListView = (ListView) mFragmentLayout.findViewById(R.id.patientListView);
-        mSpinner = (ProgressBar) mFragmentLayout.findViewById(R.id.patientListViewLoading);
+        mEmptyList = (TextView) mFragmentLayout.findViewById(R.id.emptyPatientList);
+        mEmptyList.setVisibility(View.VISIBLE);
+
+        patientsRecyclerView = (RecyclerView) mFragmentLayout.findViewById(R.id.patientRecyclerView);
+        patientsRecyclerView.setVisibility(View.GONE);
+        patientsRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        patientsRecyclerView.setLayoutManager(linearLayoutManager);
+
+        mSpinner = (ProgressBar) mFragmentLayout.findViewById(R.id.patientRecyclerViewLoading);
 
         mSwipeLayout = (SwipeRefreshLayout) mFragmentLayout.findViewById(R.id.swipe_container);
         mSwipeLayout.setEnabled(false);
@@ -88,16 +91,15 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
                 R.color.yellow,
                 R.color.light_red);
 
-        mPatientsListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+        patientsRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrollStateChanged(AbsListView absListView, int i) {
+            public void onScrollStateChanged(RecyclerView recyclerView, int i) {
 
             }
-
             @Override
-            public void onScroll(AbsListView absListView, int firstVisibleItem,
-                                 int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem == 0 && !mSwipeLayout.isRefreshing()) {
+            public void onScrolled(RecyclerView recyclerView, int dx,
+                                 int dy) {
+                if (dy > 0 && !mSwipeLayout.isRefreshing()) {
                     mSwipeLayout.setEnabled(true);
                 } else {
                     mSwipeLayout.setEnabled(false);
@@ -111,22 +113,28 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     }
 
     public void updatePatientsData() {
-        if (mLastViewedPatientsList.size() == 0) {
+        if (mLastViewedPatientsList.isEmpty()) {
             mEmptyList.setText(getString(R.string.find_patient_no_last_viewed));
             mSpinner.setVisibility(View.GONE);
-            mPatientsListView.setEmptyView(mEmptyList);
+            patientsRecyclerView.setVisibility(View.GONE);
+            mEmptyList.setVisibility(View.VISIBLE);
         }
-        mAdapter = new PatientArrayAdapter(getActivity(), R.layout.find_patients_row,
-                mLastViewedPatientsList, FIND_PATIENT_LAST_VIEWED_FM_ID);
-        mPatientsListView.setAdapter(mAdapter);
-        mSwipeLayout.setRefreshing(false);
-        mSwipeLayout.setEnabled(true);
+        else {
+            mAdapter = new PatientRecyclerViewAdapter(getActivity(), mLastViewedPatientsList, FIND_PATIENT_LAST_VIEWED_FM_ID);
+            patientsRecyclerView.setAdapter(mAdapter);
+            patientsRecyclerView.setVisibility(View.VISIBLE);
+            mSpinner.setVisibility(View.GONE);
+            mEmptyList.setVisibility(View.GONE);
+            mSwipeLayout.setRefreshing(false);
+            mSwipeLayout.setEnabled(true);
+        }
     }
 
     public void stopLoader() {
         mEmptyList.setText(getString(R.string.find_patient_no_last_viewed));
         mSpinner.setVisibility(View.GONE);
-        mPatientsListView.setEmptyView(mEmptyList);
+        patientsRecyclerView.setVisibility(View.GONE);
+        mEmptyList.setVisibility(View.VISIBLE);
         mSwipeLayout.setRefreshing(false);
         mSwipeLayout.setEnabled(true);
     }
@@ -137,7 +145,8 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
             mSwipeLayout.setRefreshing(true);
             mSwipeLayout.setEnabled(false);
             mEmptyList.setVisibility(View.GONE);
-            mPatientsListView.setEmptyView(mSpinner);
+            patientsRecyclerView.setVisibility(View.GONE);
+            mSpinner.setVisibility(View.GONE);
             if (mAdapter != null) {
                 mAdapter.clear();
             }
@@ -145,7 +154,9 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
             fpm.getLastViewedPatient(mFpmResponseListener);
         } else {
             mEmptyList.setText(getString(R.string.find_patient_no_connection));
-            mPatientsListView.setEmptyView(mEmptyList);
+            patientsRecyclerView.setVisibility(View.GONE);
+            mEmptyList.setVisibility(View.VISIBLE);
+            mSpinner.setVisibility(View.GONE);
             mSwipeLayout.setRefreshing(false);
         }
     }

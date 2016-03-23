@@ -36,6 +36,7 @@ dependencies {
     compile 'com.google.guava:guava:18.0'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:gridlayout-v7:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
     compile files('libs/commons-codec.jar')
     compile files('libs/httpcore-4.3.2.jar')
     compile files('libs/httpmime-4.3.6.jar')

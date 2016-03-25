@@ -5,8 +5,9 @@
     android:layout_height="match_parent"
     tools:context="org.openmrs.mobile.activities.SettingsActivity">
 
-    <ListView android:id="@+id/settingsListView"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-    />
+    <android.support.v7.widget.RecyclerView android:id="@+id/settingsRecyclerView"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 </LinearLayout>

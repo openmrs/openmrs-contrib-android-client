@@ -15,6 +15,7 @@
 package org.openmrs.mobile.adapters;
 
 import android.app.Activity;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,50 +34,24 @@ import org.openmrs.mobile.utilities.ImageUtils;
 
 import java.util.List;
 
-public class PatientHierarchyAdapter extends ArrayAdapter<Patient> {
+public class PatientHierarchyAdapter extends RecyclerView.Adapter<PatientHierarchyAdapter.PatientViewHolder> {
     private Activity mContext;
     private List<Patient> mItems;
-    private int mResourceID;
 
-    class ViewHolder {
-        private LinearLayout mRowLayout;
-        private TextView mIdentifier;
-        private TextView mDisplayName;
-        private TextView mGender;
-        private TextView mAge;
-        private TextView mBirthDate;
-        private ImageView mVisitStatusIcon;
-        private TextView mVisitStatus;
-    }
-
-    public PatientHierarchyAdapter(Activity context, int resourceID, List<Patient> items) {
-        super(context, resourceID, items);
+    public PatientHierarchyAdapter(Activity context, List<Patient> items) {
         this.mContext = context;
         this.mItems = items;
-        this.mResourceID = resourceID;
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        View rowView = convertView;
-        // reuse views
-        if (rowView == null) {
-            LayoutInflater inflater = mContext.getLayoutInflater();
-            rowView = inflater.inflate(mResourceID, null);
-            // configure view holder
-            ViewHolder viewHolder = new ViewHolder();
-            viewHolder.mVisitStatusIcon = (ImageView) rowView.findViewById(R.id.visitStatusIcon);
-            viewHolder.mVisitStatus = (TextView) rowView.findViewById(R.id.visitStatusLabel);
-            viewHolder.mRowLayout = (LinearLayout) rowView;
-            viewHolder.mIdentifier = (TextView) rowView.findViewById(R.id.patientIdentifier);
-            viewHolder.mDisplayName = (TextView) rowView.findViewById(R.id.patientDisplayName);
-            viewHolder.mGender = (TextView) rowView.findViewById(R.id.patientGender);
-            viewHolder.mAge = (TextView) rowView.findViewById(R.id.patientAge);
-            viewHolder.mBirthDate = (TextView) rowView.findViewById(R.id.patientBirthDate);
-            rowView.setTag(viewHolder);
-        }
+    public PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_details_row, parent, false);
+        FontsUtil.setFont((ViewGroup) itemView);
+        return new PatientViewHolder(itemView);
+    }
 
-        final ViewHolder holder = (ViewHolder) rowView.getTag();
+    @Override
+    public void onBindViewHolder(PatientViewHolder holder, final int position) {
         final Patient patient = mItems.get(position);
         if (new VisitDAO().isPatientNowOnVisit(patient.getId())) {
             holder.mVisitStatusIcon.setImageBitmap(
@@ -110,7 +85,34 @@ public class PatientHierarchyAdapter extends ArrayAdapter<Patient> {
         });
 
         holder.mBirthDate.setText(DateUtils.convertTime(patient.getBirthDate()));
-        FontsUtil.setFont((ViewGroup) rowView);
-        return rowView;
     }
+
+    @Override
+    public int getItemCount() {
+        return mItems.size();
+    }
+
+    class PatientViewHolder extends RecyclerView.ViewHolder{
+        private LinearLayout mRowLayout;
+        private TextView mIdentifier;
+        private TextView mDisplayName;
+        private TextView mGender;
+        private TextView mAge;
+        private TextView mBirthDate;
+        private ImageView mVisitStatusIcon;
+        private TextView mVisitStatus;
+
+        public PatientViewHolder(View itemView) {
+            super(itemView);
+            mVisitStatusIcon = (ImageView) itemView.findViewById(R.id.visitStatusIcon);
+            mVisitStatus = (TextView) itemView.findViewById(R.id.visitStatusLabel);
+            mRowLayout = (LinearLayout) itemView;
+            mIdentifier = (TextView) itemView.findViewById(R.id.patientIdentifier);
+            mDisplayName = (TextView) itemView.findViewById(R.id.patientDisplayName);
+            mGender = (TextView) itemView.findViewById(R.id.patientGender);
+            mAge = (TextView) itemView.findViewById(R.id.patientAge);
+            mBirthDate = (TextView) itemView.findViewById(R.id.patientBirthDate);
+        }
+    }
+
 }

@@ -2,17 +2,18 @@ package org.openmrs.mobile.activities.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
-import org.openmrs.mobile.adapters.PatientVisitsArrayAdapter;
+import org.openmrs.mobile.adapters.PatientVisitsRecyclerViewAdapter;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
@@ -69,13 +70,23 @@ public class PatientVisitsFragment extends ACBaseFragment {
         mPatientVisits = new VisitDAO().getVisitsByPatientID(((Patient) getArguments().getSerializable(ApplicationConstants.BundleKeys.PATIENT_BUNDLE)).getId());
 
         View fragmentLayout = inflater.inflate(R.layout.fragment_patient_visit, null, false);
-        ListView visitList = (ListView) fragmentLayout.findViewById(R.id.patientVisitList);
 
-        TextView emptyList = (TextView) fragmentLayout.findViewById(R.id.emptyVisitsListView);
-        visitList.setEmptyView(emptyList);
+        RecyclerView visitRecyclerView = (RecyclerView) fragmentLayout.findViewById(R.id.patientVisitRecyclerView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        visitRecyclerView.setHasFixedSize(true);
+        visitRecyclerView.setLayoutManager(linearLayoutManager);
 
+        TextView emptyList = (TextView) fragmentLayout.findViewById(R.id.emptyVisitsList);
 
-        visitList.setAdapter(new PatientVisitsArrayAdapter(getActivity(), mPatientVisits));
+        if (mPatientVisits!=null && mPatientVisits.isEmpty()) {
+            visitRecyclerView.setVisibility(View.GONE);
+            emptyList.setVisibility(View.VISIBLE);
+        }
+        else {
+            visitRecyclerView.setVisibility(View.VISIBLE);
+            emptyList.setVisibility(View.GONE);
+            visitRecyclerView.setAdapter(new PatientVisitsRecyclerViewAdapter(getActivity(), mPatientVisits));
+        }
         return fragmentLayout;
     }
 

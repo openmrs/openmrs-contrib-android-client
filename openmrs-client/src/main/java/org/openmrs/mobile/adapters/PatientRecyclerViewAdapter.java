@@ -22,6 +22,7 @@ import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.RecyclerView;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -53,10 +54,9 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PatientArrayAdapter extends ArrayAdapter<Patient> {
+public class PatientRecyclerViewAdapter extends RecyclerView.Adapter<PatientRecyclerViewAdapter.PatientViewHolder> {
     private Activity mContext;
     private List<Patient> mItems;
-    private int mResourceID;
     private int fragmentID;
 
     private boolean isAllDownloadableSelected = false;
@@ -69,118 +69,27 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
     private final OpenMRS openMRSInstance = OpenMRS.getInstance();
     private final OpenMRSLogger openMRSLogger = openMRSInstance.getOpenMRSLogger();
 
-    public PatientArrayAdapter(Activity context, int resourceID, List<Patient> items, int fragmentID) {
-        super(context, resourceID, items);
+    public PatientRecyclerViewAdapter(Activity context, List<Patient> items, int fragmentID){
         this.mContext = context;
         this.mItems = items;
-        this.mResourceID = resourceID;
         this.fragmentID = fragmentID;
     }
 
-    class ViewHolder {
-        private LinearLayout mRowLayout;
-        private TextView mIdentifier;
-        private TextView mDisplayName;
-        private TextView mGender;
-        private TextView mAge;
-        private TextView mBirthDate;
-        private CheckBox mAvailableOfflineCheckbox;
+    @Override
+    public PatientRecyclerViewAdapter.PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_patients_row, parent, false);
+        FontsUtil.setFont((ViewGroup) itemView);
+        return new PatientViewHolder(itemView);
     }
-
-    private class PatientData {
-        // class to store patient data
-        private int position;
-        private Patient patient;
-        private ViewHolder holder;
-        private boolean isSelected = false;
-
-        public PatientData(ViewHolder holder, Patient patient, int position) {
-            this.holder = holder;
-            this.patient = patient;
-            this.position = position;
-        }
-
-        public void setSelected(boolean value) {
-            if (value && !isSelected) {
-                // selected and previously was not selected, otherwise no change needed
-                    howManySelected++;
-                    holder.mRowLayout.setSelected(true);
-                    holder.mRowLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.light_teal));
-            }
-            else if (!value && isSelected){
-                // unselected and previously was selected, otherwise no change needed
-                    howManySelected--;
-                    holder.mRowLayout.setSelected(false);
-                    holder.mRowLayout.setBackgroundResource(R.drawable.card);
-            }
-            isSelected = value;
-        }
-
-        public int getPosition() {
-            return position;
-        }
-
-        public boolean isDownloadable() {
-            return new PatientDAO().userDoesNotExist(this.patient.getUuid());
-        }
-
-        public void downloaded() {
-            howManyDownloadables--;
-            holder.mRowLayout.setSelected(false);
-            holder.mRowLayout.setBackgroundColor(Color.TRANSPARENT);
-        }
-    }
-
-    private class PatientDataArrayList extends ArrayList<PatientData> {
-        public PatientData getPatientDataByPosition(int position) {
-            for (int index = 0; index < size(); index++) {
-                PatientData patientData = get(index);
-                if (patientData.getPosition() == position) {
-                    return patientData;
-                }
-            }
-            return null;
-        }
-    }
-
-    private void updateIsAllDownloadableSelected() {
-        if (howManyDownloadables == howManySelected && howManyDownloadables != 0) {
-            isAllDownloadableSelected = true;
-        } else {
-            isAllDownloadableSelected = false;
-        }
-    }
-
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public void onBindViewHolder(PatientRecyclerViewAdapter.PatientViewHolder holder, final int position) {
         final Patient patient = mItems.get(position);
-
-        View rowView = convertView;
-        // reuse views
-        if (rowView == null) {
-            LayoutInflater inflater = mContext.getLayoutInflater();
-            rowView = inflater.inflate(mResourceID, null);
-            // configure view holder
-            ViewHolder viewHolder = new ViewHolder();
-            viewHolder.mRowLayout = (LinearLayout) rowView;
-            viewHolder.mIdentifier = (TextView) rowView.findViewById(R.id.patientIdentifier);
-            viewHolder.mDisplayName = (TextView) rowView.findViewById(R.id.patientDisplayName);
-            viewHolder.mGender = (TextView) rowView.findViewById(R.id.patientGender);
-            viewHolder.mAge = (TextView) rowView.findViewById(R.id.patientAge);
-            viewHolder.mBirthDate = (TextView) rowView.findViewById(R.id.patientBirthDate);
-            viewHolder.mAvailableOfflineCheckbox = (CheckBox) rowView.findViewById(R.id.offlineCheckbox);
-            rowView.setTag(viewHolder);
-
-            if (!new PatientDAO().isUserAlreadySaved(patient.getUuid())) {
-                howManyDownloadables++;
-            }
-
-            patientDataArrayList.add(new PatientData(viewHolder, patient, position));
+        if (!new PatientDAO().isUserAlreadySaved(patient.getUuid())) {
+            howManyDownloadables++;
         }
 
-        // fill data
-        final ViewHolder holder = (ViewHolder) rowView.getTag();
+        patientDataArrayList.add(new PatientData(holder, patient, position));
 
         if (null != patient.getIdentifier()) {
             holder.mIdentifier.setText("#" + patient.getIdentifier());
@@ -239,8 +148,101 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
             }
         });
 
-        FontsUtil.setFont((ViewGroup) rowView);
-        return rowView;
+    }
+
+    @Override
+    public int getItemCount() {
+        return mItems.size();
+    }
+
+    public void clear() {
+        mItems.clear();
+        notifyDataSetChanged();
+    }
+
+    class PatientViewHolder extends RecyclerView.ViewHolder {
+        private LinearLayout mRowLayout;
+        private TextView mIdentifier;
+        private TextView mDisplayName;
+        private TextView mGender;
+        private TextView mAge;
+        private TextView mBirthDate;
+        private CheckBox mAvailableOfflineCheckbox;
+
+        public PatientViewHolder(View itemView) {
+            super(itemView);
+            mRowLayout = (LinearLayout) itemView;
+            mIdentifier = (TextView) itemView.findViewById(R.id.patientIdentifier);
+            mDisplayName = (TextView) itemView.findViewById(R.id.patientDisplayName);
+            mGender = (TextView) itemView.findViewById(R.id.patientGender);
+            mAge = (TextView) itemView.findViewById(R.id.patientAge);
+            mBirthDate = (TextView) itemView.findViewById(R.id.patientBirthDate);
+            mAvailableOfflineCheckbox = (CheckBox) itemView.findViewById(R.id.offlineCheckbox);
+        }
+    }
+
+    private class PatientData {
+        // class to store patient data
+        private int position;
+        private Patient patient;
+        private PatientViewHolder holder;
+        private boolean isSelected = false;
+
+        public PatientData(PatientViewHolder holder, Patient patient, int position) {
+            this.holder = holder;
+            this.patient = patient;
+            this.position = position;
+        }
+
+        public void setSelected(boolean value) {
+            if (value && !isSelected) {
+                // selected and previously was not selected, otherwise no change needed
+                    howManySelected++;
+                    holder.mRowLayout.setSelected(true);
+                    holder.mRowLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.light_teal));
+            }
+            else if (!value && isSelected){
+                // unselected and previously was selected, otherwise no change needed
+                    howManySelected--;
+                    holder.mRowLayout.setSelected(false);
+                    holder.mRowLayout.setBackgroundResource(R.drawable.card);
+            }
+            isSelected = value;
+        }
+
+        public int getPosition() {
+            return position;
+        }
+
+        public boolean isDownloadable() {
+            return new PatientDAO().userDoesNotExist(this.patient.getUuid());
+        }
+
+        public void downloaded() {
+            howManyDownloadables--;
+            holder.mRowLayout.setSelected(false);
+            holder.mRowLayout.setBackgroundColor(Color.TRANSPARENT);
+        }
+    }
+
+    private class PatientDataArrayList extends ArrayList<PatientData> {
+        public PatientData getPatientDataByPosition(int position) {
+            for (int index = 0; index < size(); index++) {
+                PatientData patientData = get(index);
+                if (patientData.getPosition() == position) {
+                    return patientData;
+                }
+            }
+            return null;
+        }
+    }
+
+    private void updateIsAllDownloadableSelected() {
+        if (howManyDownloadables == howManySelected && howManyDownloadables != 0) {
+            isAllDownloadableSelected = true;
+        } else {
+            isAllDownloadableSelected = false;
+        }
     }
 
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
@@ -319,7 +321,7 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
         updatePatientsInDatabase();
     }
 
-    public void setUpCheckBoxLogic(final ViewHolder holder, final Patient patient){
+    public void setUpCheckBoxLogic(final PatientViewHolder holder, final Patient patient){
         if (new PatientDAO().userDoesNotExist(patient.getUuid())) {
             holder.mAvailableOfflineCheckbox.setChecked(false);
             holder.mAvailableOfflineCheckbox.setVisibility(View.VISIBLE);
@@ -357,7 +359,7 @@ public class PatientArrayAdapter extends ArrayAdapter<Patient> {
         }
     }
 
-    public void disableCheckBox(ViewHolder holder) {
+    public void disableCheckBox(PatientViewHolder holder) {
         holder.mAvailableOfflineCheckbox.setChecked(true);
         holder.mAvailableOfflineCheckbox.setClickable(false);
         holder.mAvailableOfflineCheckbox.setButtonDrawable(R.drawable.ic_offline);

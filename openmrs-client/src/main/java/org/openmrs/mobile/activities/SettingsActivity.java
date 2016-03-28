@@ -17,12 +17,12 @@ package org.openmrs.mobile.activities;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
-
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.adapters.SettingsArrayAdapter;
+import org.openmrs.mobile.adapters.SettingsRecyclerViewAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.SettingsListItemDTO;
 import org.openmrs.mobile.net.AuthorizationManager;
@@ -34,7 +34,7 @@ import java.util.List;
 public class SettingsActivity extends ACBaseActivity {
     private static final int ONE_KB = 1024;
 
-    private ListView mSettingsListView;
+    private RecyclerView settingsRecyclerView;
     private List<SettingsListItemDTO> mListItem = new ArrayList<SettingsListItemDTO>();
 
     private AuthorizationManager mAuthorizationManager;
@@ -46,9 +46,13 @@ public class SettingsActivity extends ACBaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mOpenMRSLogger.d("onCreate");
         fillList();
-        mSettingsListView = (ListView) findViewById(R.id.settingsListView);
-        SettingsArrayAdapter mAdapter = new SettingsArrayAdapter(this, mListItem);
-        mSettingsListView.setAdapter(mAdapter);
+        settingsRecyclerView = (RecyclerView) findViewById(R.id.settingsRecyclerView);
+        settingsRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        settingsRecyclerView.setLayoutManager(linearLayoutManager);
+
+        SettingsRecyclerViewAdapter mAdapter = new SettingsRecyclerViewAdapter(this, mListItem);
+        settingsRecyclerView.setAdapter(mAdapter);
     }
 
     @Override

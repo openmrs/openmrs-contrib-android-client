@@ -30,7 +30,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import org.openmrs.mobile.utilities.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -58,7 +58,6 @@ public class PatientRecyclerViewAdapter extends RecyclerView.Adapter<PatientRecy
     private Activity mContext;
     private List<Patient> mItems;
     private int fragmentID;
-
     private boolean isAllDownloadableSelected = false;
     private ActionMode actionMode;
     private boolean isLongClicked = false;
@@ -147,8 +146,14 @@ public class PatientRecyclerViewAdapter extends RecyclerView.Adapter<PatientRecy
                 return true;
             }
         });
-
+        new AnimationUtils().setAnimation(holder.mRowLayout,mContext,position);
     }
+
+    @Override
+    public void onViewDetachedFromWindow(PatientViewHolder holder) {
+        holder.clearAnimation();
+    }
+
 
     @Override
     public int getItemCount() {
@@ -178,6 +183,10 @@ public class PatientRecyclerViewAdapter extends RecyclerView.Adapter<PatientRecy
             mAge = (TextView) itemView.findViewById(R.id.patientAge);
             mBirthDate = (TextView) itemView.findViewById(R.id.patientBirthDate);
             mAvailableOfflineCheckbox = (CheckBox) itemView.findViewById(R.id.offlineCheckbox);
+        }
+
+        public void clearAnimation() {
+            mRowLayout.clearAnimation();
         }
     }
 

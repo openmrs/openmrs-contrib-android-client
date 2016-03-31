@@ -65,6 +65,9 @@ public class LoginActivity extends ACBaseActivity {
     private TextView mUrlTextView;
     private RelativeLayout mUrlField;
 
+    private static String lastSavedURL = "";
+    CustomDialogBundle urlDialog = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +116,15 @@ public class LoginActivity extends ACBaseActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        if (urlDialog != null) {
+            // saving last typed URL
+            lastSavedURL = getDialogEditTextValue();
+        }
+    }
+
+    @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
         bindDrawableResources();
@@ -157,22 +169,27 @@ public class LoginActivity extends ACBaseActivity {
 
     public void showURLDialog() {
         mUrlField.setVisibility(View.INVISIBLE);
-        CustomDialogBundle bundle = new CustomDialogBundle();
-        bundle.setTitleViewMessage(getString(R.string.login_dialog_title));
+        urlDialog = new CustomDialogBundle();
+        urlDialog.setTitleViewMessage(getString(R.string.login_dialog_title));
+        String serverURL = OpenMRS.getInstance().getServerUrl();
         if (!mLastURL.equals(ApplicationConstants.EMPTY_STRING)) {
-            bundle.setEditTextViewMessage(mLastURL);
-        } else if (mLastCorrectURL.equals(ApplicationConstants.EMPTY_STRING)) {
-            bundle.setEditTextViewMessage(OpenMRS.getInstance().getServerUrl());
+            urlDialog.setEditTextViewMessage(mLastURL);
+        } else if (mLastCorrectURL.equals(ApplicationConstants.EMPTY_STRING) &&
+                !serverURL.equals(ApplicationConstants.EMPTY_STRING)) {
+            urlDialog.setEditTextViewMessage(serverURL);
+        } else if (!lastSavedURL.equals(ApplicationConstants.EMPTY_STRING)) {
+            // restoring last typed URL
+            urlDialog.setEditTextViewMessage(lastSavedURL);
         } else {
-            bundle.setEditTextViewMessage(mLastCorrectURL);
+            urlDialog.setEditTextViewMessage(mLastCorrectURL);
         }
-        bundle.setRightButtonText(getString(R.string.dialog_button_done));
-        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.SET_URL);
+        urlDialog.setRightButtonText(getString(R.string.dialog_button_done));
+        urlDialog.setRightButtonAction(CustomFragmentDialog.OnClickAction.SET_URL);
         if (!OpenMRS.getInstance().getServerUrl().equals(ApplicationConstants.EMPTY_STRING)) {
-            bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
-            bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS_URL_DIALOG);
+            urlDialog.setLeftButtonText(getString(R.string.dialog_button_cancel));
+            urlDialog.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS_URL_DIALOG);
         }
-        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.URL_DIALOG_TAG);
+        createAndShowDialog(urlDialog, ApplicationConstants.DialogTAG.URL_DIALOG_TAG);
     }
 
     private void showInvalidURLDialog() {

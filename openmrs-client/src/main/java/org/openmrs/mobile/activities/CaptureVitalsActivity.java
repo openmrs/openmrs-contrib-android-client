@@ -77,7 +77,7 @@ public class CaptureVitalsActivity extends ACBaseActivity {
             intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE, patientUUID);
             this.startActivityForResult(intent, CAPTURE_VITALS_REQUEST_CODE);
         } catch (Exception e) {
-            ToastUtil.showLongToast(this, ToastUtil.ToastType.ERROR, R.string.failed_to_open_vitals_form);
+            dismissProgressDialog(true, null, R.string.failed_to_open_vitals_form);
             OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
         }
     }

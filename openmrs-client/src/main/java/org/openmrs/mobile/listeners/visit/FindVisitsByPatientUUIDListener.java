@@ -22,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.activities.CaptureVitalsActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
@@ -37,6 +38,7 @@ public class FindVisitsByPatientUUIDListener extends GeneralErrorListener implem
     protected final long mPatientID;
     protected PatientDashboardActivity mCallerPDA;
     protected ACBaseActivity mCallerAdapter;
+    protected CaptureVitalsActivity callerActivity;
     private final VisitDAO visitDAO = new VisitDAO();
     private boolean mErrorOccurred;
 
@@ -45,7 +47,11 @@ public class FindVisitsByPatientUUIDListener extends GeneralErrorListener implem
         mPatientID = patientID;
         if (callerAdapter instanceof PatientDashboardActivity) {
             mCallerPDA = (PatientDashboardActivity) callerAdapter;
-        } else {
+        }
+        else if (callerAdapter instanceof CaptureVitalsActivity) {
+            callerActivity = (CaptureVitalsActivity) callerAdapter;
+        }
+        else {
             mCallerAdapter = callerAdapter;
         }
     }
@@ -94,7 +100,13 @@ public class FindVisitsByPatientUUIDListener extends GeneralErrorListener implem
     public void updateData() {
             if (null != mCallerPDA) {
                 mCallerPDA.updatePatientVisitsData(mErrorOccurred);
-            } else {
+            }
+            else if (null != callerActivity){
+                callerActivity.dismissProgressDialog(mErrorOccurred,
+                        R.string.check_visit_success_dialog_title,
+                        R.string.find_patients_row_toast_patient_save_error);
+            }
+            else {
                 mCallerAdapter.showShortToast(mErrorOccurred,
                         R.string.find_patients_row_toast_patient_saved,
                         R.string.find_patients_row_toast_patient_save_error);

@@ -19,7 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import org.openmrs.mobile.utilities.AnimationUtils;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -78,6 +78,13 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
                 }
             });
         }
+
+        new AnimationUtils().setAnimation(holder.mRowLayout,mContext,position);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(SettingsViewHolder holder) {
+        holder.clearAnimation();
     }
 
     @Override
@@ -98,5 +105,11 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
             mDesc1 = (TextView) itemView.findViewById(R.id.settingsDesc1);
             mDesc2 = (TextView) itemView.findViewById(R.id.settingsDesc2);
         }
+
+        public void clearAnimation() {
+            mRowLayout.clearAnimation();
+        }
     }
+
+
 }

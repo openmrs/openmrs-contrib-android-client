@@ -20,6 +20,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import org.openmrs.mobile.utilities.AnimationUtils;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -67,6 +68,12 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
                 mContext.startActivity(intent);
             }
         });
+        new AnimationUtils().setAnimation(visitViewHolder.mTableLayout,mContext,position);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(VisitViewHolder holder) {
+        holder.clearAnimation();
     }
 
     @Override
@@ -89,5 +96,10 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
             mVisitPlace = (TextView) itemView.findViewById(R.id.patientVisitPlace);
             mVisitStart = (TextView) itemView.findViewById(R.id.patientVisitStartDate);
         }
+
+        public void clearAnimation() {
+            mTableLayout.clearAnimation();
+        }
     }
+
 }

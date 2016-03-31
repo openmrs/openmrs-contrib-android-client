@@ -19,7 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import org.openmrs.mobile.utilities.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,6 +36,7 @@ import java.util.List;
 public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<PatientVisitsRecyclerViewAdapter.VisitViewHolder> {
     private Context mContext;
     private List<Visit> mVisits;
+
 
     public PatientVisitsRecyclerViewAdapter(Context context, List<Visit> items) {
         this.mContext = context;
@@ -77,7 +78,12 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
                 ((PatientDashboardActivity) mContext).goToVisitDashboard(mVisits.get(position).getId());
             }
         });
+        new AnimationUtils().setAnimation(visitViewHolder.mRelativeLayout,mContext,position);
+    }
 
+    @Override
+    public void onViewDetachedFromWindow(VisitViewHolder holder) {
+        holder.clearAnimation();
     }
 
     @Override
@@ -95,12 +101,15 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
 
         public VisitViewHolder(View itemView) {
             super(itemView);
-            mRelativeLayout = (RelativeLayout) itemView.findViewById(R.id.visitRow);
+            mRelativeLayout = (RelativeLayout) itemView;
             mVisitStart = (TextView) itemView.findViewById(R.id.patientVisitStartDate);
             mVisitEnd = (TextView) itemView.findViewById(R.id.patientVisitEndDate);
             mVisitPlace = (TextView) itemView.findViewById(R.id.patientVisitPlace);
             mVisitStatusIcon = (ImageView) itemView.findViewById(R.id.visitStatusIcon);
             mVisitStatus = (TextView) itemView.findViewById(R.id.visitStatusLabel);
+        }
+        public void clearAnimation() {
+            mRelativeLayout.clearAnimation();
         }
     }
 }

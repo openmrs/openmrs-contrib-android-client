@@ -19,7 +19,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import org.openmrs.mobile.utilities.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -85,6 +85,12 @@ public class PatientHierarchyAdapter extends RecyclerView.Adapter<PatientHierarc
         });
 
         holder.mBirthDate.setText(DateUtils.convertTime(patient.getBirthDate()));
+        new AnimationUtils().setAnimation(holder.mRowLayout,mContext,position);
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(PatientViewHolder holder) {
+        holder.clearAnimation();
     }
 
     @Override
@@ -112,6 +118,10 @@ public class PatientHierarchyAdapter extends RecyclerView.Adapter<PatientHierarc
             mGender = (TextView) itemView.findViewById(R.id.patientGender);
             mAge = (TextView) itemView.findViewById(R.id.patientAge);
             mBirthDate = (TextView) itemView.findViewById(R.id.patientBirthDate);
+        }
+
+        public void clearAnimation() {
+            mRowLayout.clearAnimation();
         }
     }
 

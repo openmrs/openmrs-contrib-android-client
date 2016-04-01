@@ -275,7 +275,7 @@ public class CustomFragmentDialog extends DialogFragment {
             public void onClick(View v) {
                 switch (action) {
                     case SET_URL:
-                        ((LoginActivity) getActivity()).setUrl(CustomFragmentDialog.this.mEditText.getText().toString());
+                        ((LoginActivity) getActivity()).setUrl(CustomFragmentDialog.this.mEditText.getText().toString().trim());
                         dismiss();
                         break;
                     case DISMISS_URL_DIALOG:

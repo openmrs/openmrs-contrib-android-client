@@ -218,7 +218,7 @@ public class LoginActivity extends ACBaseActivity {
                 AuthorizationHelper.createBundle(
                         mUsername.getText().toString(),
                         mPassword.getText().toString(),
-                        mUrlTextView.getText().toString());
+                        mUrlTextView.getText().toString().trim());
         mAuthorizationManager.login(
                 AuthorizationHelper.createLoginListener(bundle, this),this);
     }
@@ -299,9 +299,8 @@ public class LoginActivity extends ACBaseActivity {
     }
 
     public void setUrl(String url) {
-        url=ensureprotocol(url);
-        mLastURL = url;
         URLValidator.ValidationResult result = URLValidator.validate(url);
+        mLastURL = result.getUrl();
         if (result.isURLValid()) {
             mSpinner.setVisibility(View.VISIBLE);
             mLoginFormView.setVisibility(View.GONE);
@@ -310,15 +309,6 @@ public class LoginActivity extends ACBaseActivity {
         } else {
             showInvalidURLDialog();
         }
-    }
-
-    public String ensureprotocol(String url)
-    {
-        if (!url.matches("\\w+:.*"))
-        {
-            return "http://" + url;
-        }
-        return url;
     }
 
     public void setErrorOccurred(boolean errorOccurred) {

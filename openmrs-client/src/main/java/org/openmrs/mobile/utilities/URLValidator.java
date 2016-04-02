@@ -27,11 +27,13 @@ public final class URLValidator {
 
     public static ValidationResult validate(String url) {
         ValidationResult result;
+        url = ensureProtocol(url);
         Pattern urlPattern = Pattern.compile(URL_PATTERN);
         Matcher matcher = urlPattern.matcher(trimLastSpace(url));
         String validURL = trimLastSpace(url);
         if (matcher.matches()) {
             validURL = trimLastSlash(validURL);
+            validURL = toLowerCase(validURL);
             result = new ValidationResult(true, validURL);
         } else {
             result = new ValidationResult(false, validURL);
@@ -47,12 +49,25 @@ public final class URLValidator {
         return trimmedUrl;
     }
 
+    public static String toLowerCase(String url){
+        return url.toLowerCase();
+    }
+
     public static String trimLastSlash(String url) {
         String validUrl = url;
         while (validUrl.endsWith(SLASH)) {
             validUrl = validUrl.substring(0, validUrl.lastIndexOf(SLASH));
         }
         return validUrl;
+    }
+
+    public static String ensureProtocol(String url)
+    {
+        if (!url.matches("\\w+:.*"))
+        {
+            return "http://" + url;
+        }
+        return url;
     }
 
     public static class ValidationResult {

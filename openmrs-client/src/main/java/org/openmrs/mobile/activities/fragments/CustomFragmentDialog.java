@@ -261,7 +261,11 @@ public class CustomFragmentDialog extends DialogFragment {
     }
 
     public String getEditTextValue() {
-        return mEditText.getText().toString();
+        String value = "";
+        if (mEditText!=null) {
+            value = mEditText.getText().toString();
+        }
+        return value;
     }
 
     private boolean isDialogAvailable() {

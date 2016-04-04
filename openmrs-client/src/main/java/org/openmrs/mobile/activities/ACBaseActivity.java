@@ -225,7 +225,11 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
 
     public String getDialogEditTextValue() {
-        return mCurrentDialog.getEditTextValue();
+        String value = "";
+        if (mCurrentDialog!=null){
+            value = mCurrentDialog.getEditTextValue();
+        }
+        return value;
     }
 
     public synchronized CustomFragmentDialog getCurrentDialog() {

@@ -71,7 +71,7 @@
             android:name=".activities.FindPatientsActivity"
             android:label="@string/action_find_patients"
             android:configChanges="keyboardHidden|screenSize"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppThemeOrig"
             android:launchMode="singleTop">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -86,7 +86,7 @@
         <activity
             android:name=".activities.FindPatientsSearchActivity"
             android:label="@string/action_find_patients"
-            android:theme="@style/AppTheme"
+            android:theme="@style/AppThemeOrig"
             android:launchMode="singleTop" >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -111,7 +111,8 @@
             android:noHistory="true">
         </activity>
         <activity
-            android:name=".activities.PatientDashboardActivity">
+            android:name=".activities.PatientDashboardActivity"
+            android:theme="@style/AppThemeOrig">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -165,6 +166,7 @@
         <activity
             android:label="@string/action_capture_vitals"
             android:name=".activities.CaptureVitalsActivity"
+            android:theme="@style/AppTheme"
             android:configChanges="keyboardHidden|orientation|screenSize">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data

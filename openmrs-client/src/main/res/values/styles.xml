@@ -15,18 +15,19 @@
 
 <resources xmlns:android="http://schemas.android.com/tools">
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <!--   your app branding color for the app bar -->
+    <style name="AppThemeOrig" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/primary</item>
-        <!--   darker variant for the status bar and contextual app bars -->
         <item name="colorPrimaryDark">@color/primary_dark</item>
-        <!--   theme UI controls like checkboxes and text fields -->
         <item name="colorAccent">@color/primary</item>
         <item name="android:textColor">@color/dark_purple</item>
+        <item name="actionModeStyle">@style/LongPress</item>
+    </style>
 
-        <item name="actionBarTabTextStyle">@style/Tabtext</item>
-
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/primary</item>
+        <item name="android:textColor">@color/dark_purple</item>
         <item name="actionModeStyle">@style/LongPress</item>
 
 
@@ -38,12 +39,8 @@
         <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 
-    <style name="Tabtext" parent="Base.Widget.AppCompat.ActionBar.TabText">
-        <item name="android:textColor">@color/tabcolor</item>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
     </style>
-
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 

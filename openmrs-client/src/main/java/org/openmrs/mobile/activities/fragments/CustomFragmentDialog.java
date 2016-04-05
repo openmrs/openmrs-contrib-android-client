@@ -330,7 +330,7 @@ public class CustomFragmentDialog extends DialogFragment {
         Activity activity = getActivity();
         if (activity instanceof PatientDashboardActivity) {
             PatientDashboardActivity pda = ((PatientDashboardActivity) activity);
-            PatientVisitsFragment fragment = (PatientVisitsFragment) pda.getSupportFragmentManager().getFragments().get(PatientDashboardActivity.TabHost.VISITS_TAB_POS);
+            PatientVisitsFragment fragment = (PatientVisitsFragment) pda.getSupportFragmentManager().getFragments().get(PatientDashboardActivity.VISITS_TAB_POS);
             if (fragment != null) {
                 fragment.startVisit();
             }

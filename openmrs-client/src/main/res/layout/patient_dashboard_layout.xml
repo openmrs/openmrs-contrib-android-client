@@ -14,6 +14,25 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:elevation="0dp"
+        android:layout_height="wrap_content">
+
+
+        <net.yanzm.mth.MaterialTabHost
+            android:id="@+id/tabhost"
+            app:colorTabIndicator="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.AppBarLayout>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -29,4 +48,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+
 </RelativeLayout>
+    </LinearLayout>

@@ -65,7 +65,6 @@ public class LoginActivity extends ACBaseActivity {
     private TextView mUrlTextView;
     private RelativeLayout mUrlField;
 
-    private static String lastSavedURL = "";
     CustomDialogBundle urlDialog = null;
 
     @Override
@@ -120,7 +119,7 @@ public class LoginActivity extends ACBaseActivity {
         super.onPause();
         if (urlDialog != null) {
             // saving last typed URL
-            lastSavedURL = getDialogEditTextValue();
+            mLastURL = getDialogEditTextValue();
         }
     }
 
@@ -177,9 +176,6 @@ public class LoginActivity extends ACBaseActivity {
         } else if (mLastCorrectURL.equals(ApplicationConstants.EMPTY_STRING) &&
                 !serverURL.equals(ApplicationConstants.EMPTY_STRING)) {
             urlDialog.setEditTextViewMessage(serverURL);
-        } else if (!lastSavedURL.equals(ApplicationConstants.EMPTY_STRING)) {
-            // restoring last typed URL
-            urlDialog.setEditTextViewMessage(lastSavedURL);
         } else {
             urlDialog.setEditTextViewMessage(mLastCorrectURL);
         }

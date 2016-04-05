@@ -73,7 +73,7 @@ public class LastViewedPatientListener extends GeneralErrorListener implements R
         }
 
         FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) mFragmentManager
-                .getFragments().get(FindPatientsActivity.TabHost.LAST_VIEWED_TAB_POS);
+                .getFragments().get(FindPatientsActivity.LAST_VIEWED_TAB_POS);
 
         FindPatientLastViewedFragment.setLastViewedPatientList(localPatientsList);
         if (fragment != null) {

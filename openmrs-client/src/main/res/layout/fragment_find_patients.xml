@@ -13,6 +13,7 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,7 +22,8 @@
     android:id="@+id/find_patient_fragment"
     tools:context="org.openmrs.mobile.activities.FindPatientsActivity">
 
-    <android.support.v7.widget.RecyclerView android:id="@+id/patientRecyclerView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/patientRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

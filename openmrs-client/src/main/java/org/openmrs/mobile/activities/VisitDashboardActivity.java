@@ -17,6 +17,7 @@ package org.openmrs.mobile.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,6 +65,13 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visit_dashboard);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
 
         Intent intent = getIntent();
 

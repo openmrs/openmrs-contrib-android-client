@@ -25,6 +25,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,6 +62,7 @@ public class FindPatientsSearchActivity extends ACBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_find_patients);
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mSpinner = (ProgressBar) findViewById(R.id.patientRecyclerViewLoading);

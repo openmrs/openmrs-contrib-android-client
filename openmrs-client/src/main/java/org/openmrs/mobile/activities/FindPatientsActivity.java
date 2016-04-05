@@ -30,9 +30,13 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+
+import net.yanzm.mth.MaterialTabHost;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.FindPatientInDatabaseFragment;
 import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
@@ -47,6 +51,9 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
     private String mQuery;
     private MenuItem mFindPatientMenuItem;
 
+    public static final int LAST_VIEWED_TAB_POS = 0;
+    public static final int DOWNLOADED_TAB_POS = 1;
+
     private ViewPager mViewPager;
     private FindPatientPagerAdapter mFindPatientPagerAdapter;
 
@@ -54,37 +61,37 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_patients);
+        getSupportActionBar().setElevation(0);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        List<TabHost> tabHosts = new ArrayList<TabHost>(Arrays.asList(
-                new TabHost(TabHost.LAST_VIEWED_TAB_POS, getString(R.string.find_patient_tab_last_viewed_label)),
-                new TabHost(TabHost.DOWNLOADED_TAB_POS, getString(R.string.find_patient_tab_downloaded_label))
 
-        ));
 
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
-        mFindPatientPagerAdapter = new FindPatientPagerAdapter(getSupportFragmentManager(), tabHosts);
+        mFindPatientPagerAdapter = new FindPatientPagerAdapter(getSupportFragmentManager());
         initViewPager();
         handleIntent(getIntent());
     }
 
     private void initViewPager() {
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        MaterialTabHost tabHost = (MaterialTabHost) findViewById(R.id.tabhost);
+        tabHost.setType(MaterialTabHost.Type.FullScreenWidth);
+
+        for (int i = 0; i < mFindPatientPagerAdapter.getCount(); i++) {
+            tabHost.addTab(mFindPatientPagerAdapter.getpagetitle(i));
+        }
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mFindPatientPagerAdapter);
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        mViewPager.setOnPageChangeListener(tabHost);
+
+
+        tabHost.setOnTabChangeListener(new MaterialTabHost.OnTabChangeListener() {
             @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
+            public void onTabSelected(int position) {
+                mViewPager.setCurrentItem(position);
             }
         });
-        for (TabHost tabHost : mFindPatientPagerAdapter.getTabHosts()) {
-            actionBar.addTab(actionBar.newTab()
-                    .setText(tabHost.getTabLabel())
-                    .setTabListener(this));
-        }
-        TabUtil.setHasEmbeddedTabs(actionBar, getWindowManager(), TabUtil.MIN_SCREEN_WIDTH_FOR_FINDPATIENTSACTIVITY);
+
     }
 
     @Override
@@ -124,13 +131,13 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         FindPatientLastViewedFragment viewedFragment =
                 (FindPatientLastViewedFragment) this.getSupportFragmentManager().
-                        getFragments().get(TabHost.LAST_VIEWED_TAB_POS);
+                        getFragments().get(LAST_VIEWED_TAB_POS);
 
         viewedFragment.onResume();
 
         FindPatientInDatabaseFragment databaseFragment =
                 (FindPatientInDatabaseFragment) this.getSupportFragmentManager().
-                        getFragments().get(TabHost.DOWNLOADED_TAB_POS);
+                        getFragments().get(DOWNLOADED_TAB_POS);
 
         databaseFragment.updatePatientsInDatabaseList();
     }
@@ -173,23 +180,30 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
     }
 
     public class FindPatientPagerAdapter extends FragmentPagerAdapter {
-        private List<TabHost> mTabHosts;
 
-        public FindPatientPagerAdapter(FragmentManager fm, List<TabHost> tabHosts) {
+        public FindPatientPagerAdapter(FragmentManager fm) {
             super(fm);
-            mTabHosts = tabHosts;
         }
 
-        public List<TabHost> getTabHosts() {
-            return mTabHosts;
+        public String getpagetitle(int i)
+        {
+            switch (i) {
+                case DOWNLOADED_TAB_POS:
+                    return getString(R.string.find_patient_tab_downloaded_label).toUpperCase();
+                case LAST_VIEWED_TAB_POS:
+                    return getString(R.string.find_patient_tab_last_viewed_label).toUpperCase();
+                default:
+                    return null;
+            }
         }
+
 
         @Override
         public Fragment getItem(int i) {
             switch (i) {
-                case TabHost.DOWNLOADED_TAB_POS:
+                case DOWNLOADED_TAB_POS:
                     return new FindPatientInDatabaseFragment();
-                case TabHost.LAST_VIEWED_TAB_POS:
+                case LAST_VIEWED_TAB_POS:
                     return new FindPatientLastViewedFragment();
                 default:
                     return null;
@@ -198,34 +212,15 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
 
         @Override
         public int getCount() {
-            return mTabHosts.size();
+            return 2;
         }
 
-    }
-
-    public final class TabHost {
-        public static final int LAST_VIEWED_TAB_POS = 0;
-        public static final int DOWNLOADED_TAB_POS = 1;
-
-        private Integer mTabPosition;
-        private String mTabLabel;
-
-        private TabHost(Integer position, String tabLabel) {
-            mTabPosition = position;
-            mTabLabel = tabLabel;
-        }
-
-        public Integer getTabPosition() {
-            return mTabPosition;
-        }
-
-        public String getTabLabel() {
-            return mTabLabel;
-        }
     }
 
     public enum FragmentMethod {
         StopLoader,
         Update
     }
+
+
 }

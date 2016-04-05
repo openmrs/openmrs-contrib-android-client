@@ -17,6 +17,7 @@ package org.openmrs.mobile.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.PatientsVitalsListFragment;
@@ -44,6 +45,13 @@ public class CaptureVitalsActivity extends ACBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_capture_vitals);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+        }
 
         if (null != savedInstanceState) {
             mSelectedPatientUUID = savedInstanceState.getString(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE);

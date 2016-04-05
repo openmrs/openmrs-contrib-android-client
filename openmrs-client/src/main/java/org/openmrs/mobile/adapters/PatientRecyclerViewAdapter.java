@@ -362,7 +362,7 @@ public class PatientRecyclerViewAdapter extends RecyclerView.Adapter<PatientRecy
         if (mContext instanceof FindPatientsActivity) {
             FragmentManager fm = ((FindPatientsActivity) mContext).getSupportFragmentManager();
             FindPatientInDatabaseFragment fragment = (FindPatientInDatabaseFragment) fm
-                    .getFragments().get(FindPatientsActivity.TabHost.DOWNLOADED_TAB_POS);
+                    .getFragments().get(FindPatientsActivity.DOWNLOADED_TAB_POS);
 
             fragment.updatePatientsInDatabaseList();
         }

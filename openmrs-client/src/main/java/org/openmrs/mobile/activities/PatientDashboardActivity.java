@@ -25,6 +25,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import net.yanzm.mth.MaterialTabHost;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
 import org.openmrs.mobile.activities.fragments.PatientDetailsFragment;
@@ -53,6 +56,11 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     private boolean mProgressDialog;
     private DialogAction mDialogAction;
 
+    public static final int DETAILS_TAB_POS = 0;
+    public static final int DIAGNOSIS_TAB_POS = 1;
+    public static final int VISITS_TAB_POS = 2;
+    public static final int VITALS_TAB_POS = 3;
+
     public enum DialogAction {
         SYNCHRONIZE, ADD_VISIT
     }
@@ -61,13 +69,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patient_dashboard_layout);
-
-        List<TabHost> tabHosts = new ArrayList<TabHost>(Arrays.asList(
-                new TabHost(TabHost.DETAILS_TAB_POS, getString(R.string.patient_scroll_tab_details_label)),
-                new TabHost(TabHost.DIAGNOSIS_TAB_POS, getString(R.string.patient_scroll_tab_diagnosis_label)),
-                new TabHost(TabHost.VISITS_TAB_POS, getString(R.string.patient_scroll_tab_visits_label)),
-                new TabHost(TabHost.VITALS_TAB_POS, getString(R.string.patient_scroll_tab_vitals_label))
-        ));
+        getSupportActionBar().setElevation(0);
 
         Bundle patientBundle = savedInstanceState;
         if (null != patientBundle) {
@@ -81,7 +83,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
         mPatient = new PatientDAO().findPatientByUUID(patientBundle.getString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE));
         new VisitsManager().getLastVitals(
                 VisitsHelper.createLastVitalsListener(mPatient.getUuid()));
-        mPatientDashboardPagerAdapter = new PatientDashboardPagerAdapter(getSupportFragmentManager(), tabHosts);
+        mPatientDashboardPagerAdapter = new PatientDashboardPagerAdapter(getSupportFragmentManager());
         initViewPager();
     }
 
@@ -105,7 +107,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
         switch (requestCode) {
             case REQUEST_CODE_FOR_VISIT:
                 fragments = getSupportFragmentManager().getFragments();
-                recreateFragmentView(fragments.get(TabHost.VISITS_TAB_POS));
+                recreateFragmentView(fragments.get(VISITS_TAB_POS));
                 break;
             default:
                 break;
@@ -120,22 +122,26 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     }
 
     private void initViewPager() {
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        MaterialTabHost tabHost = (MaterialTabHost) findViewById(R.id.tabhost);
+        tabHost.setType(MaterialTabHost.Type.FullScreenWidth);
+
+        for (int i = 0; i < mPatientDashboardPagerAdapter.getCount(); i++) {
+            tabHost.addTab(mPatientDashboardPagerAdapter.getpagetitle(i));
+        }
+
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mPatientDashboardPagerAdapter);
-        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        mViewPager.setOnPageChangeListener(tabHost);
+
+
+        tabHost.setOnTabChangeListener(new MaterialTabHost.OnTabChangeListener() {
             @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
+            public void onTabSelected(int position) {
+                mViewPager.setCurrentItem(position);
             }
         });
-        for (TabHost tabHost : mPatientDashboardPagerAdapter.getTabHosts()) {
-            actionBar.addTab(actionBar.newTab()
-                    .setText(tabHost.getTabLabel())
-                    .setTabListener(this));
-        }
-        TabUtil.setHasEmbeddedTabs(actionBar, getWindowManager(), TabUtil.MIN_SCREEN_WIDTH_FOR_PATIENTDASHBOARDACTIVITY);
+
     }
 
     @Override
@@ -203,7 +209,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
             mPatient = new PatientDAO().findPatientByUUID(mPatient.getUuid());
 
             PatientDetailsFragment fragment = (PatientDetailsFragment) getSupportFragmentManager().
-                    getFragments().get(PatientDashboardActivity.TabHost.DETAILS_TAB_POS);
+                    getFragments().get(PatientDashboardActivity.DETAILS_TAB_POS);
             fragment.reloadPatientData(mPatient);
 
             fvm.findVisitsByPatientUUID(
@@ -232,7 +238,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
         mProgressDialog = false;
         mCustomFragmentDialog.dismiss();
         if (mDialogAction == DialogAction.SYNCHRONIZE) {
-            mViewPager.setCurrentItem(TabHost.DETAILS_TAB_POS);
+            mViewPager.setCurrentItem(DETAILS_TAB_POS);
             if (!errorOccurred) {
                 ToastUtil.showShortToast(this,
                         ToastUtil.ToastType.SUCCESS,
@@ -244,7 +250,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
             }
         } else if (mDialogAction == DialogAction.ADD_VISIT) {
             List<Fragment> fragments = getSupportFragmentManager().getFragments();
-            recreateFragmentView(fragments.get(TabHost.VISITS_TAB_POS));
+            recreateFragmentView(fragments.get(VISITS_TAB_POS));
             if (!errorOccurred) {
                 ToastUtil.showShortToast(this,
                         ToastUtil.ToastType.SUCCESS,
@@ -268,27 +274,22 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     }
 
     public class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
-        private List<TabHost> mTabHosts;
 
-        public PatientDashboardPagerAdapter(FragmentManager fm, List<TabHost> tabHosts) {
+        public PatientDashboardPagerAdapter(FragmentManager fm) {
             super(fm);
-            mTabHosts = tabHosts;
         }
 
-        public List<TabHost> getTabHosts() {
-            return mTabHosts;
-        }
 
         @Override
         public Fragment getItem(int i) {
             switch (i) {
-                case TabHost.DETAILS_TAB_POS:
+                case DETAILS_TAB_POS:
                     return PatientDetailsFragment.newInstance(mPatient);
-                case TabHost.DIAGNOSIS_TAB_POS:
+                case DIAGNOSIS_TAB_POS:
                     return PatientDiagnosisFragment.newInstance(mPatient.getId());
-                case TabHost.VISITS_TAB_POS:
+                case VISITS_TAB_POS:
                     return PatientVisitsFragment.newInstance(mPatient);
-                case TabHost.VITALS_TAB_POS:
+                case VITALS_TAB_POS:
                     return PatientVitalsFragment.newInstance(mPatient.getUuid());
                 default:
                     return null;
@@ -297,31 +298,27 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
         @Override
         public int getCount() {
-            return mTabHosts.size();
+            return 4;
+        }
+
+        public String getpagetitle( int i)
+        {
+            switch(i)
+            {
+                case DETAILS_TAB_POS:
+                    return getString(R.string.patient_scroll_tab_details_label).toUpperCase();
+                case DIAGNOSIS_TAB_POS:
+                    return getString(R.string.patient_scroll_tab_diagnosis_label).toUpperCase();
+                case VISITS_TAB_POS:
+                    return getString(R.string.patient_scroll_tab_visits_label).toUpperCase();
+                case VITALS_TAB_POS:
+                    return getString(R.string.patient_scroll_tab_vitals_label).toUpperCase();
+                default:
+                    return null;
+
+            }
         }
 
     }
 
-    public final class TabHost {
-        public static final int DETAILS_TAB_POS = 0;
-        public static final int DIAGNOSIS_TAB_POS = 1;
-        public static final int VISITS_TAB_POS = 2;
-        public static final int VITALS_TAB_POS = 3;
-
-        private Integer mTabPosition;
-        private String mTabLabel;
-
-        private TabHost(Integer position, String tabLabel) {
-            mTabPosition = position;
-            mTabLabel = tabLabel;
-        }
-
-        public Integer getTabPosition() {
-            return mTabPosition;
-        }
-
-        public String getTabLabel() {
-            return mTabLabel;
-        }
-    }
 }

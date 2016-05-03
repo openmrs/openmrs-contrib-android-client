@@ -12,3 +12,11 @@ android:
 script:
     - chmod +x gradlew
     - ./gradlew assembleDebug
+
+deploy:
+  provider: releases
+  file: openmrs-client/build/outputs/apk/openmrs-client-release.apk
+  skip_cleanup: true
+  on:
+    tags: false
+    all_branches: true

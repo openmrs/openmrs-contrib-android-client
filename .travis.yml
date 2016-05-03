@@ -1,22 +1,24 @@
 sudo: required
 language: android
 jdk: oraclejdk7
-
 android:
   components:
-    - tools
-    - platform-tools
-    - build-tools-23.0.2
-    - android-23
-    - extra-android-m2repository
+  - tools
+  - platform-tools
+  - build-tools-23.0.2
+  - android-23
+  - extra-android-m2repository
 script:
-    - chmod +x gradlew
-    - ./gradlew assembleDebug
-
+- chmod +x gradlew
+- "./gradlew assembleDebug"
 deploy:
   provider: releases
-  file: openmrs-client/build/outputs/apk/openmrs-client-release.apk
   skip_cleanup: true
+  api_key:
+    secure: DM3G028fQgIoSB0AeeaIQxBzEkxKpCXl99RPR9vswPGLqMKnVzW/xyV72OttuzFZvDbg0bMYCAFwv3dpWyb5lp/hOZ9vf+L5hhZcmrC4whxAPYGkMUdVaegAtaYnolpxlZPbL20MeHykAfJLVRtpafpL7Y55ubPQFSFKDhdEPetqLEKexhKsW1cCEvzYuViETpOHB/dCprMqm2Q4lrphJE/ZQKK9Uk/NcAbUY+wegE1Zylf5BOCZdI91MpnYw2qyatyeEi10vyuRhu/+MF2S3t6fu+sGQjenO/QRxhDhBmVhcb6zoJVUopJHRCIm9ovkDbPeHQwOKEvVIiNFtv/ANcmWzZjqBYyrK1AcsacYioZVtIaDWe/pWudGWf9rMvl6fWa1n3lplQ0spqtR0ysvcJHgWY7pXcjEuOewiwXX5UREOWqJPXk1J7FzcxchP3ilpsOXW2N2aupOzkY8wW0cEg+fJE5SRTlnCshCRooslktgjRGKSMdggnvSzoFPtviodDGjHPoT1QQ1uSYpXwQPAwleE8fpoP3mHH9cxOCsA5Ot0oNFGYO1TSzuPXHE43JZqmJdChqiPKx/+b+OYPc/ZUk0/1ITgWojr6stNpkAYNUF1/JiXDZGNvnuHMUbZJ2r6wRv0G2xqyrRYJVrvtwH5us6BsEq3IGqhjPfOLP33hY=
+  file: openmrs-client/build/outputs/apk/openmrs-client-release.apk
   on:
-    tags: false
+    repo: AvijitGhosh82/openmrs-contrib-android-client
     all_branches: true
+    tags: false
+

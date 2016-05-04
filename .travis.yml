@@ -8,17 +8,11 @@ android:
   - build-tools-23.0.2
   - android-23
   - extra-android-m2repository
-<<<<<<< HEAD
 
 script:
 - chmod +x gradlew
 - "./gradlew build assembleRelease"
 
-=======
-script:
-- chmod +x gradlew
-- "./gradlew assembleDebug"
->>>>>>> efcec8c... Secure Api key added
 deploy:
   provider: releases
   skip_cleanup: true

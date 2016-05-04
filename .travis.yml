@@ -12,7 +12,6 @@ android:
 script:
 - chmod +x gradlew
 - "./gradlew build assembleRelease"
-- find
 
 deploy:
   provider: releases

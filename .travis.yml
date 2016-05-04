@@ -12,7 +12,7 @@ android:
 script:
 - chmod +x gradlew
 - "./gradlew build assembleRelease"
-- ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/ /' -e 's/-/|/'
+- find
 
 deploy:
   provider: releases

@@ -22,6 +22,6 @@ deploy:
   file: openmrs-client/build/outputs/apk/openmrs-client-release.apk
   on:
     repo: AvijitGhosh82/openmrs-contrib-android-client
-    #all_branches: true
+    all_branches: true
     tags: true
 

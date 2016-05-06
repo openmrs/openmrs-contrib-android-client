@@ -24,4 +24,3 @@ deploy:
     tags: true
 before_install:
   - echo $encryptpass | gpg --passphrase-fd 0 release.keystore.gpg
-

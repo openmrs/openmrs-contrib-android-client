@@ -23,5 +23,5 @@ deploy:
     all_branches: true
     tags: true
 before_install:
-- openssl aes-256-cbc -K $encrypted_66597b6def7b_key -iv $encrypted_66597b6def7b_iv
-  -in release.keystore.enc -out release.keystore -d
+  - echo encryptpass | gpg --passphrase-fd 0 release.keystore.gpg
+

@@ -26,5 +26,3 @@ deploy:
   file: openmrs-client/build/outputs/apk/openmrs-client-release.apk
   on:
     tags: true
-before_install:
- -

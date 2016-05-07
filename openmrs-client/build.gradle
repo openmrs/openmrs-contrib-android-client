@@ -14,19 +14,13 @@ android {
     }
 
     signingConfigs {
-        debug {
-            storeFile rootProject.file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-        }
 
         if (System.getenv("TRAVIS")) {
             release {
                 storeFile rootProject.file('release.keystore')
-                storePassword System.getenv("KEYSTORE_PASS")
-                keyAlias System.getenv("ALIAS_NAME")
-                keyPassword System.getenv("ALIAS_PASS")
+                storePassword System.getenv("KEYSTORE_PASSWORD")
+                keyAlias System.getenv("KEYSTORE_ALIAS_NAME")
+                keyPassword System.getenv("KEYSTORE_ALIAS_PASS")
             }
         }
     }

@@ -7,10 +7,14 @@ android {
 
     def travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
     def buildNumber = (travisBuildNumber) ? (travisBuildNumber as int) : 1
+	
+    def applicationVersion = "2.1"
+    def travisTag = System.getenv("TRAVIS_TAG")
+    def buildVersionName = (travisTag) ? travisTag : applicationVersion + "-debug." + buildNumber
 
-	defaultConfig {
+    defaultConfig {
         applicationId "org.openmrs.mobile"
-        versionName "2.1." + buildNumber
+        versionName buildVersionName
         versionCode buildNumber
 
         minSdkVersion 11

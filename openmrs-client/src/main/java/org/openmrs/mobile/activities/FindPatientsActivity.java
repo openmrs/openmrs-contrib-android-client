@@ -43,8 +43,9 @@ import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.TabUtil;
+
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class FindPatientsActivity extends ACBaseActivity implements ActionBar.TabListener {
@@ -82,7 +83,7 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mFindPatientPagerAdapter);
-        mViewPager.setOnPageChangeListener(tabHost);
+        mViewPager.addOnPageChangeListener(tabHost);
 
 
         tabHost.setOnTabChangeListener(new MaterialTabHost.OnTabChangeListener() {
@@ -92,6 +93,22 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
             }
         });
 
+    }
+
+    public List<Fragment> getVisibleFragments() {
+        List<Fragment> allFragments = this.getSupportFragmentManager().getFragments();
+        if (allFragments == null || allFragments.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        List<Fragment> visibleFragments = new ArrayList<Fragment>();
+        for (Fragment fragment : allFragments) {
+            if (fragment.isVisible()) {
+                visibleFragments.add(fragment);
+            }
+        }
+        Collections.reverse(visibleFragments); //the tabs are being added in inverse order
+        return visibleFragments;
     }
 
     @Override
@@ -130,14 +147,12 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         FindPatientLastViewedFragment viewedFragment =
-                (FindPatientLastViewedFragment) this.getSupportFragmentManager().
-                        getFragments().get(LAST_VIEWED_TAB_POS);
+                (FindPatientLastViewedFragment) this.getVisibleFragments().get(LAST_VIEWED_TAB_POS);
 
         viewedFragment.onResume();
 
         FindPatientInDatabaseFragment databaseFragment =
-                (FindPatientInDatabaseFragment) this.getSupportFragmentManager().
-                        getFragments().get(DOWNLOADED_TAB_POS);
+                (FindPatientInDatabaseFragment) this.getVisibleFragments().get(DOWNLOADED_TAB_POS);
 
         databaseFragment.updatePatientsInDatabaseList();
     }

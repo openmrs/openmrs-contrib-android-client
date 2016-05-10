@@ -71,6 +71,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         mFragmentLayout = inflater.inflate(R.layout.fragment_last_viewed_patients, null, false);
         mEmptyList = (TextView) mFragmentLayout.findViewById(R.id.emptyPatientList);
         mEmptyList.setVisibility(View.VISIBLE);

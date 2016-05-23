@@ -177,7 +177,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/card"
                     android:layout_marginTop="10dp"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     android:clickable="true">
 
                     <RelativeLayout
@@ -203,7 +203,7 @@
                             android:layout_centerHorizontal="true"
                             android:layout_gravity="center"
                             android:paddingTop="10dp"
-                            android:text="@string/dashboard_registry_icon_label"
+                            android:text="@string/action_register_patient"
                             android:textSize="20sp"/>
                     </RelativeLayout>
                 </FrameLayout>

@@ -1,20 +1,5 @@
 apply plugin: 'com.android.application'
 
-
-buildscript {
-
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.github.triplet.gradle:play-publisher:1.1.4'
-    }
-}
-
-apply plugin: 'com.github.triplet.play'
-
-
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -74,10 +59,7 @@ android {
 
 repositories {
     maven { url 'http://yanzm.github.io/MaterialTabHost/repository' }
-    mavenCentral()
 }
-
-
 
 dependencies {
     compile project(':odkcollect')
@@ -99,10 +81,4 @@ dependencies {
             'com.jayway.android.robotium:robotium-solo:4.2'
     )
     androidTestCompile files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
-}
-
-play {
-    track = 'alpha'
-    serviceAccountEmail = 'avijitghosh82@openmrs.org'
-    pk12File = file('key.p12') //I do not have access to this
 }

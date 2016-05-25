@@ -95,7 +95,7 @@
                             android:layout_gravity="center"
                             android:paddingTop="10dp"
                             android:text="@string/dashboard_search_icon_label"
-                            android:textSize="20sp"/>
+                            android:textSize="18sp"/>
                 </RelativeLayout>
                 </FrameLayout>
                 <FrameLayout
@@ -129,7 +129,7 @@
                             android:layout_gravity="center"
                             android:paddingTop="10dp"
                             android:text="@string/dashboard_visits_icon_label"
-                            android:textSize="20sp"/>
+                            android:textSize="18sp"/>
                     </RelativeLayout>
                 </FrameLayout>
             </TableRow>
@@ -168,13 +168,14 @@
                             android:layout_gravity="center"
                             android:paddingTop="10dp"
                             android:text="@string/dashboard_vitals_icon_label"
-                            android:textSize="20sp"/>
+                            android:textSize="18sp"/>
                     </RelativeLayout>
                 </FrameLayout>
                 <FrameLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:onClick="onRegisterPatientCallback"
                     android:background="@drawable/card"
                     android:layout_marginTop="10dp"
                     android:visibility="visible"
@@ -204,7 +205,7 @@
                             android:layout_gravity="center"
                             android:paddingTop="10dp"
                             android:text="@string/action_register_patient"
-                            android:textSize="20sp"/>
+                            android:textSize="18sp"/>
                     </RelativeLayout>
                 </FrameLayout>
 

@@ -140,6 +140,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
         mSwipeLayout.setEnabled(true);
     }
 
+
     public void updateLastViewedList() {
         if (NetworkUtils.isNetworkAvailable(getActivity())) {
             setRefreshing(true);

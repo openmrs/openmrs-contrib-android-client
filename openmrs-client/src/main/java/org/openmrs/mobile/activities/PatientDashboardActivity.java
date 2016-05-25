@@ -162,9 +162,22 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.patient_dashboard_menu, menu);
         getSupportActionBar().setTitle(mPatient.getDisplay());
         getSupportActionBar().setSubtitle("#" + mPatient.getIdentifier());
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.actionDelete:
+                new PatientDAO().deletePatient(mPatient.getId());
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

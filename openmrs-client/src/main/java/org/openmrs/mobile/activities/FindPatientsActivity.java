@@ -96,21 +96,6 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
 
     }
 
-//    public List<Fragment> getVisibleFragments() {
-//        List<Fragment> allFragments = this.getSupportFragmentManager().getFragments();
-//        if (allFragments == null || allFragments.isEmpty()) {
-//            return Collections.emptyList();
-//        }
-//
-//        List<Fragment> visibleFragments = new ArrayList<Fragment>();
-//        for (Fragment fragment : allFragments) {
-//            if (fragment.isVisible()) {
-//                visibleFragments.add(fragment);
-//            }
-//        }
-//        Collections.reverse(visibleFragments); //the tabs are being added in inverse order
-//        return visibleFragments;
-//    }
 
     @Override
     public void onConfigurationChanged(final Configuration config) {
@@ -199,7 +184,6 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
     public class FindPatientPagerAdapter extends FragmentPagerAdapter {
 
         SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
-
 
         public FindPatientPagerAdapter(FragmentManager fm) {
             super(fm);

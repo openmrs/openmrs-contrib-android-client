@@ -43,7 +43,7 @@ public class PatientDetailsFragment extends ACBaseFragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.sync_patients_menu, menu);
+        inflater.inflate(R.menu.patient_details_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 

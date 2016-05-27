@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
     useLibrary 'org.apache.http.legacy'
 
     def travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
@@ -64,10 +64,10 @@ repositories {
 dependencies {
     compile project(':odkcollect')
     compile 'com.google.guava:guava:18.0'
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:gridlayout-v7:23.3.0'
-    compile 'com.android.support:recyclerview-v7:23.3.0'
-    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:gridlayout-v7:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
     compile 'com.android.volley:volley:1.0.0'
     compile 'commons-codec:commons-codec:1.10'
     compile 'org.apache.httpcomponents:httpcore:4.4.4'

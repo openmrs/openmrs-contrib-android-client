@@ -10,7 +10,7 @@ import retrofit2.http.POST;
 /**
  * Created by Avijit Ghosh on 01/06/16.
  */
-public interface Restapi {
+public interface RestApi {
 
 
     @GET("location")

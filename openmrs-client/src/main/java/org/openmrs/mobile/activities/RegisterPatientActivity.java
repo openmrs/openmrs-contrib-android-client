@@ -27,7 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.api.Restapi;
+import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.models.location.Location;
 import org.openmrs.mobile.models.location.Result;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -180,8 +180,8 @@ public class RegisterPatientActivity extends ACBaseActivity {
                 .client(client)
                 .build();
 
-        Restapi apiService =
-                retrofit.create(Restapi.class);
+        RestApi apiService =
+                retrofit.create(RestApi.class);
 
         Call<Location> call = apiService.getlocationlist();
         call.enqueue(new Callback<Location>() {

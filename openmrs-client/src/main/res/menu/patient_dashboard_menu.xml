@@ -17,10 +17,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="org.openmrs.mobile.activities.PatientDashboardActivity" >
-    <item
-        android:id="@+id/actionStartVisit"
-        android:orderInCategory="100"
-        android:title="@string/action_start_visit"
-        android:icon="@drawable/start_visit"
-        app:showAsAction="ifRoom|collapseActionView" />
+    <item android:id="@+id/actionDelete"
+        android:title="@string/action_delete_patient"
+        android:icon="@drawable/delete_patient"
+        app:showAsAction="ifRoom|collapseActionView"/>
 </menu>

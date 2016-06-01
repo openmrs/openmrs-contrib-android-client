@@ -174,6 +174,8 @@
     <string name="visit_exp_list_empty">Visit has no encounters yet.</string>
     <!-- Capture Vitals activity -->
     <string name="action_capture_vitals">Capture Vitals</string>
+    <string name="action_delete_patient">Delete Patient</string>
+    <string name="action_register_patient">Register Patient</string>
     <string name="failed_to_open_vitals_form">An error occurred. Invalid or corrupted form file.</string>
     <string name="active_visit_label_capture_vitals">On Visit</string>
     <!-- Form Entry Activity -->

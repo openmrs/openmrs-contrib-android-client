@@ -14,7 +14,6 @@
 
 package org.openmrs.mobile.listeners.findPatients;
 
-import android.support.v4.app.FragmentManager;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import org.json.JSONArray;
@@ -33,11 +32,9 @@ import java.util.List;
 
 public class LastViewedPatientListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
-    private FragmentManager mFragmentManager;
     private  FindPatientsActivity mCaller;
 
     public LastViewedPatientListener(FindPatientsActivity caller) {
-        mFragmentManager = caller.getSupportFragmentManager();
         mCaller=caller;
     }
 
@@ -74,8 +71,8 @@ public class LastViewedPatientListener extends GeneralErrorListener implements R
             localPatientsList = new ArrayList<Patient>(patientsList);
         }
 
-        FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment) mCaller.getVisibleFragments()
-                .get(FindPatientsActivity.LAST_VIEWED_TAB_POS);
+        FindPatientLastViewedFragment fragment = (FindPatientLastViewedFragment)  ((mCaller)
+                .mFindPatientPagerAdapter.getRegisteredFragment(FindPatientsActivity.LAST_VIEWED_TAB_POS));
 
         FindPatientLastViewedFragment.setLastViewedPatientList(localPatientsList);
         if (fragment != null) {

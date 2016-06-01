@@ -99,6 +99,11 @@ public class DashboardActivity extends ACBaseActivity {
         startActivity(i);
     }
 
+    public void onRegisterPatientCallback(View v) {
+        Intent i = new Intent(this, RegisterPatientActivity.class);
+        startActivity(i);
+    }
+
     public void onActiveVisitsCallback(View v) {
         Intent intent = new Intent(this, FindActiveVisitsActivity.class);
         startActivity(intent);

@@ -28,10 +28,8 @@ public class ServiceGenerator {
                     .addConverterFactory(GsonConverterFactory.create());
 
     public static <S> S createService(Class<S> serviceClass) {
-        return createService(serviceClass, null, null);
-    }
-
-    public static <S> S createService(Class<S> serviceClass, String username, String password) {
+        String username=mOpenMRS.getUsername();
+        String password=mOpenMRS.getPassword();
         if (username != null && password != null) {
             String credentials = username + ":" + password;
             final String basic =

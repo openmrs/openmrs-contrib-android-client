@@ -4,12 +4,8 @@ import org.openmrs.mobile.models.retrofit.Location;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
 
-/**
- * Created by Avijit Ghosh on 01/06/16.
- */
 public interface RestApi {
 
 
@@ -18,6 +14,6 @@ public interface RestApi {
 
 
     @POST("patient")
-    void createpatient(@Header("Authorization") String authorization);
+    void createpatient();
 
 }

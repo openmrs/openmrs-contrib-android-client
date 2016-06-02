@@ -26,8 +26,10 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.api.GenIDApi;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.ServiceGenerator;
+import org.openmrs.mobile.models.retrofit.GenID;
 import org.openmrs.mobile.models.retrofit.Location;
 import org.openmrs.mobile.models.retrofit.Result;
 
@@ -36,10 +38,13 @@ import java.util.Calendar;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterPatientActivity extends ACBaseActivity {
 
     String locUUID;
+    String genId;
 
 
     @Override
@@ -152,9 +157,39 @@ public class RegisterPatientActivity extends ACBaseActivity {
             gendererror.setVisibility(View.VISIBLE);
 
         getlocuuid();
+        getgenId();
 
 
 
+    }
+
+
+    void getgenId()
+    {
+        String IDGEN_BASE_URL= mOpenMRS.getServerUrl()+'/';
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(IDGEN_BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        GenIDApi apiService =
+                retrofit.create(GenIDApi.class);
+        Call<GenID> call = apiService.getidlist(mOpenMRS.getUsername(),mOpenMRS.getPassword());
+        call.enqueue(new Callback<GenID>() {
+            @Override
+            public void onResponse(Call<GenID> call, Response<GenID> response) {
+                GenID idList = response.body();
+                genId=idList.getIdentifiers().get(0);
+                Toast.makeText(RegisterPatientActivity.this,genId,Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<GenID> call, Throwable t) {
+                Toast.makeText(RegisterPatientActivity.this,t.toString(),Toast.LENGTH_SHORT).show();
+            }
+
+        });
     }
 
 
@@ -162,7 +197,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
     void getlocuuid()
     {
         RestApi apiService =
-                ServiceGenerator.createService(RestApi.class, mOpenMRS.getUsername(), mOpenMRS.getPassword());
+                ServiceGenerator.createService(RestApi.class);
         Call<Location> call = apiService.getlocationlist();
         call.enqueue(new Callback<Location>() {
             @Override

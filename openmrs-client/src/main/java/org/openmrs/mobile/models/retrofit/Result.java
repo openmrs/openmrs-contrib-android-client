@@ -1,10 +1,12 @@
 
-package org.openmrs.mobile.models.location;
+package org.openmrs.mobile.models.retrofit;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 
 import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 public class Result {
 
@@ -19,7 +21,7 @@ public class Result {
     private List<Link> links = new ArrayList<Link>();
 
     /**
-     * 
+     *
      * @return
      *     The uuid
      */
@@ -28,7 +30,7 @@ public class Result {
     }
 
     /**
-     * 
+     *
      * @param uuid
      *     The uuid
      */
@@ -37,7 +39,7 @@ public class Result {
     }
 
     /**
-     * 
+     *
      * @return
      *     The display
      */
@@ -46,7 +48,7 @@ public class Result {
     }
 
     /**
-     * 
+     *
      * @param display
      *     The display
      */
@@ -55,7 +57,7 @@ public class Result {
     }
 
     /**
-     * 
+     *
      * @return
      *     The links
      */
@@ -64,7 +66,7 @@ public class Result {
     }
 
     /**
-     * 
+     *
      * @param links
      *     The links
      */

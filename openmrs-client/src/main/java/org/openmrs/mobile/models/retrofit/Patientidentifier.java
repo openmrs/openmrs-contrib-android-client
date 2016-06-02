@@ -1,19 +1,21 @@
 
-package org.openmrs.mobile.models.location;
+package org.openmrs.mobile.models.retrofit;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Location {
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Patientidentifier {
 
     @SerializedName("results")
     @Expose
     private List<Result> results = new ArrayList<Result>();
 
     /**
-     * 
+     *
      * @return
      *     The results
      */
@@ -22,7 +24,7 @@ public class Location {
     }
 
     /**
-     * 
+     *
      * @param results
      *     The results
      */

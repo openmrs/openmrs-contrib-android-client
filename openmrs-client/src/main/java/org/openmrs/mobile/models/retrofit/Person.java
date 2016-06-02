@@ -1,5 +1,5 @@
 
-package org.openmrs.mobile.models.patientreg;
+package org.openmrs.mobile.models.retrofit;
 
 import java.util.ArrayList;
 import java.util.List;

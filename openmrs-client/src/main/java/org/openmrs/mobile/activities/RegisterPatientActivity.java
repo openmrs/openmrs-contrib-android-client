@@ -25,26 +25,22 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.models.location.Location;
-import org.openmrs.mobile.models.location.Result;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.api.ServiceGenerator;
+import org.openmrs.mobile.models.retrofit.Location;
+import org.openmrs.mobile.models.retrofit.Result;
 
-import java.io.IOException;
 import java.util.Calendar;
 
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterPatientActivity extends ACBaseActivity {
+
+    String locUUID;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +54,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
 
         RadioGroup gen=(RadioGroup)findViewById(R.id.gender);
         final TextView e=(TextView)findViewById(R.id.gendererror);
@@ -154,55 +151,40 @@ public class RegisterPatientActivity extends ACBaseActivity {
         if (gen.getCheckedRadioButtonId() == -1)
             gendererror.setVisibility(View.VISIBLE);
 
+        getlocuuid();
 
 
 
-
-        String BASE_URL=mOpenMRS.getServerUrl()+ ApplicationConstants.API.REST_ENDPOINT;
-
-        Interceptor interceptor = new Interceptor() {
-            @Override
-            public okhttp3.Response intercept(Interceptor.Chain chain) throws IOException {
-                Request newRequest = chain.request().newBuilder().header("Authorization", "Basic "+ getAuthParam()).build();
-                return chain.proceed(newRequest);
-            }
-        };
-
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.interceptors().add(interceptor);
-        OkHttpClient client = builder.build();
+    }
 
 
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
-                .build();
-
+    void getlocuuid()
+    {
         RestApi apiService =
-                retrofit.create(RestApi.class);
-
+                ServiceGenerator.createService(RestApi.class, mOpenMRS.getUsername(), mOpenMRS.getPassword());
         Call<Location> call = apiService.getlocationlist();
         call.enqueue(new Callback<Location>() {
             @Override
             public void onResponse(Call<Location> call, Response<Location> response) {
-                int statusCode = response.code();
                 Location locationList = response.body();
                 for (Result result : locationList.getResults()) {
-                    Toast.makeText(RegisterPatientActivity.this,result.getDisplay(),Toast.LENGTH_SHORT).show();
-                }
+                    if ((result.getDisplay().trim()).equalsIgnoreCase((mOpenMRS.getLocation().trim()))) {
+                        locUUID = result.getUuid();
+                        Toast.makeText(RegisterPatientActivity.this,locUUID,Toast.LENGTH_SHORT).show();
+                    }
+
+
+                    }
             }
 
             @Override
             public void onFailure(Call<Location> call, Throwable t) {
                 Toast.makeText(RegisterPatientActivity.this,t.toString(),Toast.LENGTH_SHORT).show();
-
+                locUUID ="";
             }
 
         });
-
-
     }
 
 

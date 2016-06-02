@@ -1,6 +1,6 @@
 package org.openmrs.mobile.api;
 
-import org.openmrs.mobile.models.location.Location;
+import org.openmrs.mobile.models.retrofit.Location;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

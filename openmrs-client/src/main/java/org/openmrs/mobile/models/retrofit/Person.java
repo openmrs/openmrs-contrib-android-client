@@ -17,6 +17,9 @@ public class Person {
     @SerializedName("birthdate")
     @Expose
     private String birthdate;
+    @SerializedName("birthdateEstimated")
+    @Expose
+    private String birthdateEstimated;
     @SerializedName("addresses")
     @Expose
     private List<Address> addresses = new ArrayList<Address>();
@@ -77,6 +80,24 @@ public class Person {
     public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
+    /**
+     *
+     * @return
+     *     The birthdateEstimated
+     */
+    public String getBirthdateEstimated() {
+        return birthdateEstimated;
+    }
+
+    /**
+     *
+     * @param birthdateEstimated
+     *     The birthdate
+     */
+    public void setBirthdateEstimated(String birthdateEstimated) {
+        this.birthdateEstimated = birthdateEstimated;
+    }
+
 
     /**
      * 
@@ -106,7 +127,7 @@ public class Person {
     }
 
     /**
-     * 
+     *
      * @param attributes
      *     The attributes
      */

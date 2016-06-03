@@ -9,6 +9,9 @@ public class Name {
     @SerializedName("givenName")
     @Expose
     private String givenName;
+    @SerializedName("middleName")
+    @Expose
+    private String middleName;
     @SerializedName("familyName")
     @Expose
     private String familyName;
@@ -49,4 +52,21 @@ public class Name {
         this.familyName = familyName;
     }
 
+    /**
+     *
+     * @return
+     *     The middleName
+     */
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    /**
+     *
+     * @param middleName
+     *     The middleName
+     */
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
 }

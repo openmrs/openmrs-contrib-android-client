@@ -11,6 +11,9 @@ public class Address {
     private Boolean preferred;
     @SerializedName("address1")
     @Expose
+    private String address2;
+    @SerializedName("address2")
+    @Expose
     private String address1;
     @SerializedName("cityVillage")
     @Expose
@@ -59,6 +62,23 @@ public class Address {
      */
     public void setAddress1(String address1) {
         this.address1 = address1;
+    }
+    /**
+     *
+     * @return
+     *     The address2
+     */
+    public String getAddress2() {
+        return address2;
+    }
+
+    /**
+     *
+     * @param address2
+     *     The address2
+     */
+    public void setAddress2(String address2) {
+        this.address2 = address2;
     }
 
     /**

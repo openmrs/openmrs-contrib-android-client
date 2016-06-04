@@ -12,15 +12,11 @@
   ~
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
-<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:background="#EEE"
-    android:layout_height="match_parent">
-
     <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
+        android:background="#EEE"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
@@ -378,46 +374,46 @@
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
                         android:focusable="true"
+                        android:layout_marginBottom="20dp"
                         android:hint="@string/patient_postal_label"
                         android:inputType="text"
                         android:singleLine="true" />
 
                 </LinearLayout>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="12dp"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="#555"
-                    android:text="@string/reg_ques_phno"/>
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="20dp"-->
+                    <!--android:layout_marginLeft="12dp"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:textColor="#555"-->
+                    <!--android:text="@string/reg_ques_phno"/>-->
 
-                <EditText
-                    android:id="@+id/phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:textSize="14sp"
-                    android:focusable="true"
-                    android:hint="@string/phone_hint"
-                    android:inputType="phone"
-                    android:singleLine="true" />
+                <!--<EditText-->
+                    <!--android:id="@+id/phone"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="20dp"-->
+                    <!--android:layout_marginRight="20dp"-->
+                    <!--android:layout_marginBottom="20dp"-->
+                    <!--android:textSize="14sp"-->
+                    <!--android:focusable="true"-->
+                    <!--android:hint="@string/phone_hint"-->
+                    <!--android:inputType="phone"-->
+                    <!--android:singleLine="true" />-->
             </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="confirm"
+                android:text="Confirm"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/primary"/>
 
         </LinearLayout>
     </ScrollView>
     </LinearLayout>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btconfirm"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="20dp"
-        android:layout_width="wrap_content"
-        android:onClick="confirm"
-        android:layout_height="wrap_content"
-        android:src="@drawable/form_done"
-        app:elevation="4dp" />
-</RelativeLayout>

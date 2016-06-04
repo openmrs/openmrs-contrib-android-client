@@ -21,18 +21,11 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
-
 import org.joda.time.DateTime;
-import org.joda.time.Interval;
 import org.joda.time.LocalDate;
-import org.joda.time.Period;
-import org.joda.time.PeriodType;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.ServiceGenerator;
@@ -46,7 +39,6 @@ import org.openmrs.mobile.models.retrofit.PatientResponse;
 import org.openmrs.mobile.models.retrofit.Patientidentifier;
 import org.openmrs.mobile.models.retrofit.Person;
 import org.openmrs.mobile.models.retrofit.Result;
-import org.openmrs.mobile.net.volley.wrappers.StringRequestDecorator;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -131,12 +123,6 @@ public class RegisterPatientActivity extends ACBaseActivity {
             public void onCheckedChanged(RadioGroup rGroup, int checkedId)
             {
                 gendererror.setVisibility(View.GONE);
-                RadioButton checkedRadioButton = (RadioButton)rGroup.findViewById(checkedId);
-                boolean isChecked = checkedRadioButton.isChecked();
-                if (isChecked)
-                {
-                    //tv.setText("Checked:" + checkedRadioButton.getText());
-                }
             }
         });
 
@@ -391,6 +377,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
                 PatientResponse newpatient = response.body();
                 Toast.makeText(RegisterPatientActivity.this,"Patient created with UUID "+ newpatient.getUuid()
                         ,Toast.LENGTH_SHORT).show();
+                RegisterPatientActivity.this.finish();
 
             }
 

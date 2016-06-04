@@ -26,6 +26,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
 import org.joda.time.LocalDate;
@@ -228,7 +230,6 @@ public class RegisterPatientActivity extends ACBaseActivity {
                 for (Result result : locationList.getResults()) {
                     if ((result.getDisplay().trim()).equalsIgnoreCase((mOpenMRS.getLocation().trim()))) {
                         locUUID = result.getUuid();
-                        Toast.makeText(RegisterPatientActivity.this,"Location "+ locUUID,Toast.LENGTH_SHORT).show();
                         getgenId();
                     }
                 }
@@ -261,7 +262,6 @@ public class RegisterPatientActivity extends ACBaseActivity {
             public void onResponse(Call<GenID> call, Response<GenID> response) {
                 GenID idList = response.body();
                 genId=idList.getIdentifiers().get(0);
-                Toast.makeText(RegisterPatientActivity.this,"ID : "+genId,Toast.LENGTH_SHORT).show();
                 getidentifiertypeuuid();
 
             }
@@ -285,9 +285,8 @@ public class RegisterPatientActivity extends ACBaseActivity {
             public void onResponse(Call<Patientidentifier> call, Response<Patientidentifier> response) {
                 Patientidentifier idresList = response.body();
                 for (Result result : idresList.getResults()) {
-                        idtypelist.add(result.getUuid());
-                        Toast.makeText(RegisterPatientActivity.this,"IDTYPE "+result.getUuid(),Toast.LENGTH_SHORT).show();
-
+                        if(result.getDisplay().equals("OpenMRS ID"))
+                            idtypelist.add(result.getUuid());
                 }
                 setPOSTpatient();
             }
@@ -378,8 +377,9 @@ public class RegisterPatientActivity extends ACBaseActivity {
 
 
         Patient patient=new Patient();
-        patient.setPerson(person);
         patient.setIdentifiers(identifiers);
+        patient.setPerson(person);
+
 
 
         RestApi apiService =

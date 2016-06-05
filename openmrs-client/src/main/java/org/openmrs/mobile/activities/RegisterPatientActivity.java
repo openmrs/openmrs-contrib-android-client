@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -72,6 +73,8 @@ public class RegisterPatientActivity extends ACBaseActivity {
     EditText edpostal;
 
     RadioGroup gen;
+    ProgressDialog pd;
+
 
 
     TextView fnameerror;
@@ -200,7 +203,12 @@ public class RegisterPatientActivity extends ACBaseActivity {
         }
 
         if(ferr && lerr && doberr && adderr && gerr)
+        {
+            ProgressDialog pd = new ProgressDialog(RegisterPatientActivity.this);
+            pd.setMessage("Please wait");
+            pd.show();
             registerpatient();
+        }
     }
 
 
@@ -345,7 +353,8 @@ public class RegisterPatientActivity extends ACBaseActivity {
             bdt=now.toDateTimeAtStartOfDay().toDateTime();
             bdt=bdt.minusYears(yeardiff);
             bdt=bdt.minusMonths(mondiff);
-            person.setBirthdateEstimated(bdt.toString());
+            person.setBirthdateEstimated(true);
+            person.setBirthdate(bdt.toString());
         }
         else
             person.setBirthdate(bdt.toString());
@@ -377,6 +386,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
                 PatientResponse newpatient = response.body();
                 Toast.makeText(RegisterPatientActivity.this,"Patient created with UUID "+ newpatient.getUuid()
                         ,Toast.LENGTH_SHORT).show();
+                //pd.dismiss();
                 RegisterPatientActivity.this.finish();
 
             }

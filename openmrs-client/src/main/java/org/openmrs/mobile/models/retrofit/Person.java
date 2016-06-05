@@ -19,7 +19,7 @@ public class Person {
     private String birthdate;
     @SerializedName("birthdateEstimated")
     @Expose
-    private String birthdateEstimated;
+    private boolean birthdateEstimated;
     @SerializedName("addresses")
     @Expose
     private List<Address> addresses = new ArrayList<Address>();
@@ -85,7 +85,7 @@ public class Person {
      * @return
      *     The birthdateEstimated
      */
-    public String getBirthdateEstimated() {
+    public boolean getBirthdateEstimated() {
         return birthdateEstimated;
     }
 
@@ -94,7 +94,7 @@ public class Person {
      * @param birthdateEstimated
      *     The birthdate
      */
-    public void setBirthdateEstimated(String birthdateEstimated) {
+    public void setBirthdateEstimated(boolean birthdateEstimated) {
         this.birthdateEstimated = birthdateEstimated;
     }
 

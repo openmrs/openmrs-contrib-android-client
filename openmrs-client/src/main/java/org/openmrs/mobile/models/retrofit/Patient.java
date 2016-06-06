@@ -6,14 +6,41 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Patient {
+public class Patient extends Resource {
+
+    @SerializedName("identifiers")
+    @Expose
+    private List<PatientIdentifier> identifiers = new ArrayList<PatientIdentifier>();
 
     @SerializedName("person")
     @Expose
     private Person person;
-    @SerializedName("identifiers")
+
+    @SerializedName("voided")
     @Expose
-    private List<Identifier> identifiers = new ArrayList<Identifier>();
+    private Boolean voided;
+
+    @SerializedName("resourceVersion")
+    @Expose
+    private String resourceVersion;
+
+    /**
+     * 
+     * @return
+     *     The identifiers
+     */
+    public List<PatientIdentifier> getIdentifiers() {
+        return identifiers;
+    }
+
+    /**
+     * 
+     * @param identifiers
+     *     The identifiers
+     */
+    public void setIdentifiers(List<PatientIdentifier> identifiers) {
+        this.identifiers = identifiers;
+    }
 
     /**
      * 
@@ -36,19 +63,37 @@ public class Patient {
     /**
      * 
      * @return
-     *     The identifiers
+     *     The voided
      */
-    public List<Identifier> getIdentifiers() {
-        return identifiers;
+    public Boolean getVoided() {
+        return voided;
     }
 
     /**
      * 
-     * @param identifiers
-     *     The identifiers
+     * @param voided
+     *     The voided
      */
-    public void setIdentifiers(List<Identifier> identifiers) {
-        this.identifiers = identifiers;
+    public void setVoided(Boolean voided) {
+        this.voided = voided;
+    }
+
+    /**
+     * 
+     * @return
+     *     The resourceVersion
+     */
+    public String getResourceVersion() {
+        return resourceVersion;
+    }
+
+    /**
+     * 
+     * @param resourceVersion
+     *     The resourceVersion
+     */
+    public void setResourceVersion(String resourceVersion) {
+        this.resourceVersion = resourceVersion;
     }
 
 }

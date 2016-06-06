@@ -10,7 +10,7 @@ public class Person {
 
     @SerializedName("names")
     @Expose
-    private List<Name> names = new ArrayList<Name>();
+    private List<PersonName> names = new ArrayList<PersonName>();
     @SerializedName("gender")
     @Expose
     private String gender;
@@ -22,17 +22,17 @@ public class Person {
     private boolean birthdateEstimated;
     @SerializedName("addresses")
     @Expose
-    private List<Address> addresses = new ArrayList<Address>();
+    private List<PersonAddress> addresses = new ArrayList<PersonAddress>();
     @SerializedName("attributes")
     @Expose
-    private List<Attribute> attributes = new ArrayList<Attribute>();
+    private List<PersonAttribute> attributes = new ArrayList<PersonAttribute>();
 
     /**
      * 
      * @return
      *     The names
      */
-    public List<Name> getNames() {
+    public List<PersonName> getNames() {
         return names;
     }
 
@@ -41,7 +41,7 @@ public class Person {
      * @param names
      *     The names
      */
-    public void setNames(List<Name> names) {
+    public void setNames(List<PersonName> names) {
         this.names = names;
     }
 
@@ -104,7 +104,7 @@ public class Person {
      * @return
      *     The addresses
      */
-    public List<Address> getAddresses() {
+    public List<PersonAddress> getAddresses() {
         return addresses;
     }
 
@@ -113,7 +113,7 @@ public class Person {
      * @param addresses
      *     The addresses
      */
-    public void setAddresses(List<Address> addresses) {
+    public void setAddresses(List<PersonAddress> addresses) {
         this.addresses = addresses;
     }
 
@@ -122,7 +122,7 @@ public class Person {
      * @return
      *     The attributes
      */
-    public List<Attribute> getAttributes() {
+    public List<PersonAttribute> getAttributes() {
         return attributes;
     }
 
@@ -131,7 +131,7 @@ public class Person {
      * @param attributes
      *     The attributes
      */
-    public void setAttributes(List<Attribute> attributes) {
+    public void setAttributes(List<PersonAttribute> attributes) {
         this.attributes = attributes;
     }
 

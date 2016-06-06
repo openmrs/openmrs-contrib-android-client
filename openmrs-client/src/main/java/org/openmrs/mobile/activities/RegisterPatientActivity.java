@@ -30,16 +30,14 @@ import org.joda.time.LocalDate;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.ServiceGenerator;
-import org.openmrs.mobile.models.retrofit.Address;
-import org.openmrs.mobile.models.retrofit.GenID;
-import org.openmrs.mobile.models.retrofit.Identifier;
-import org.openmrs.mobile.models.retrofit.Location;
-import org.openmrs.mobile.models.retrofit.Name;
+import org.openmrs.mobile.models.retrofit.PersonAddress;
+import org.openmrs.mobile.models.retrofit.IdGenPatientIdentifiers;
+import org.openmrs.mobile.models.retrofit.PatientIdentifier;
+import org.openmrs.mobile.models.retrofit.PersonName;
 import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.models.retrofit.PatientResponse;
-import org.openmrs.mobile.models.retrofit.Patientidentifier;
 import org.openmrs.mobile.models.retrofit.Person;
-import org.openmrs.mobile.models.retrofit.Result;
+import org.openmrs.mobile.models.retrofit.Resource;
+import org.openmrs.mobile.models.retrofit.Results;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -216,12 +214,12 @@ public class RegisterPatientActivity extends ACBaseActivity {
     {
         RestApi apiService =
                 ServiceGenerator.createService(RestApi.class);
-        Call<Location> call = apiService.getlocationlist();
-        call.enqueue(new Callback<Location>() {
+        Call<Results<Resource>> call = apiService.getLocations();
+        call.enqueue(new Callback<Results<Resource>>() {
             @Override
-            public void onResponse(Call<Location> call, Response<Location> response) {
-                Location locationList = response.body();
-                for (Result result : locationList.getResults()) {
+            public void onResponse(Call<Results<Resource>> call, Response<Results<Resource>> response) {
+                Results<Resource> locationList = response.body();
+                for (Resource result : locationList.getResults()) {
                     if ((result.getDisplay().trim()).equalsIgnoreCase((mOpenMRS.getLocation().trim()))) {
                         locUUID = result.getUuid();
                         getgenId();
@@ -230,7 +228,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
             }
 
             @Override
-            public void onFailure(Call<Location> call, Throwable t) {
+            public void onFailure(Call<Results<Resource>> call, Throwable t) {
                 Toast.makeText(RegisterPatientActivity.this,t.toString(),Toast.LENGTH_SHORT).show();
                 locUUID ="";
             }
@@ -250,18 +248,18 @@ public class RegisterPatientActivity extends ACBaseActivity {
 
         RestApi apiService =
                 retrofit.create(RestApi.class);
-        Call<GenID> call = apiService.getidlist(mOpenMRS.getUsername(),mOpenMRS.getPassword());
-        call.enqueue(new Callback<GenID>() {
+        Call<IdGenPatientIdentifiers> call = apiService.getPatientIdentifiers(mOpenMRS.getUsername(),mOpenMRS.getPassword());
+        call.enqueue(new Callback<IdGenPatientIdentifiers>() {
             @Override
-            public void onResponse(Call<GenID> call, Response<GenID> response) {
-                GenID idList = response.body();
+            public void onResponse(Call<IdGenPatientIdentifiers> call, Response<IdGenPatientIdentifiers> response) {
+                IdGenPatientIdentifiers idList = response.body();
                 genId=idList.getIdentifiers().get(0);
                 getidentifiertypeuuid();
 
             }
 
             @Override
-            public void onFailure(Call<GenID> call, Throwable t) {
+            public void onFailure(Call<IdGenPatientIdentifiers> call, Throwable t) {
                 Toast.makeText(RegisterPatientActivity.this,t.toString(),Toast.LENGTH_SHORT).show();
             }
 
@@ -273,12 +271,12 @@ public class RegisterPatientActivity extends ACBaseActivity {
     {
         RestApi apiService =
                 ServiceGenerator.createService(RestApi.class);
-        Call<Patientidentifier> call = apiService.getidentifiertypelist();
-        call.enqueue(new Callback<Patientidentifier>() {
+        Call<Results<PatientIdentifier>> call = apiService.getIdentifierTypes();
+        call.enqueue(new Callback<Results<PatientIdentifier>>() {
             @Override
-            public void onResponse(Call<Patientidentifier> call, Response<Patientidentifier> response) {
-                Patientidentifier idresList = response.body();
-                for (Result result : idresList.getResults()) {
+            public void onResponse(Call<Results<PatientIdentifier>> call, Response<Results<PatientIdentifier>> response) {
+                Results<PatientIdentifier> idresList = response.body();
+                for (Resource result : idresList.getResults()) {
                         if(result.getDisplay().equals("OpenMRS ID"))
                             idtypelist.add(result.getUuid());
                 }
@@ -286,7 +284,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
             }
 
             @Override
-            public void onFailure(Call<Patientidentifier> call, Throwable t) {
+            public void onFailure(Call<Results<PatientIdentifier>> call, Throwable t) {
                 Toast.makeText(RegisterPatientActivity.this,t.toString(),Toast.LENGTH_SHORT).show();
             }
 
@@ -318,7 +316,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
         country=getInput(edcountry);
         postal=getInput(edpostal);
 
-        Address address=new Address();
+        PersonAddress address=new PersonAddress();
 
         if(address1!=null) address.setAddress1(address1);
         if(address2!=null) address.setAddress2(address2);
@@ -328,15 +326,15 @@ public class RegisterPatientActivity extends ACBaseActivity {
         if(state!=null) address.setStateProvince(state);
         address.setPreferred(true);
 
-        List<Address> addresses=new ArrayList<>();
+        List<PersonAddress> addresses=new ArrayList<>();
         addresses.add(address);
 
-        Name name=new Name();
+        PersonName name=new PersonName();
         name.setFamilyName(lastname);
         name.setGivenName(firstname);
         if(middlename!=null) name.setMiddleName(middlename);
 
-        List<Name> names=new ArrayList<>();
+        List<PersonName> names=new ArrayList<>();
         names.add(name);
 
         Person person=new Person();
@@ -359,10 +357,10 @@ public class RegisterPatientActivity extends ACBaseActivity {
         else
             person.setBirthdate(bdt.toString());
 
-        List<Identifier> identifiers=new ArrayList<>();
+        List<PatientIdentifier> identifiers=new ArrayList<>();
 
         for (String idtype : idtypelist) {
-            Identifier identifier=new Identifier();
+            PatientIdentifier identifier=new PatientIdentifier();
             identifier.setIdentifier(genId);
             identifier.setLocation(locUUID);
             identifier.setIdentifierType(idtype);
@@ -379,11 +377,11 @@ public class RegisterPatientActivity extends ACBaseActivity {
 
         RestApi apiService =
                 ServiceGenerator.createService(RestApi.class);
-        Call<PatientResponse> call = apiService.createpatient(patient);
-        call.enqueue(new Callback<PatientResponse>() {
+        Call<Patient> call = apiService.createPatient(patient);
+        call.enqueue(new Callback<Patient>() {
             @Override
-            public void onResponse(Call<PatientResponse> call, Response<PatientResponse> response) {
-                PatientResponse newpatient = response.body();
+            public void onResponse(Call<Patient> call, Response<Patient> response) {
+                Patient newpatient = response.body();
                 Toast.makeText(RegisterPatientActivity.this,"Patient created with UUID "+ newpatient.getUuid()
                         ,Toast.LENGTH_SHORT).show();
                 //pd.dismiss();
@@ -392,7 +390,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
             }
 
             @Override
-            public void onFailure(Call<PatientResponse> call, Throwable t) {
+            public void onFailure(Call<Patient> call, Throwable t) {
                 Toast.makeText(RegisterPatientActivity.this,t.toString(),Toast.LENGTH_SHORT).show();
             }
 

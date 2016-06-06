@@ -4,7 +4,7 @@ package org.openmrs.mobile.models.retrofit;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Address {
+public class PersonAddress {
 
     @SerializedName("preferred")
     @Expose

@@ -4,11 +4,11 @@ package org.openmrs.mobile.models.retrofit;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Attribute {
+public class PersonAttribute {
 
     @SerializedName("attributeType")
     @Expose
-    private AttributeType attributeType;
+    private PersonAttributeType attributeType;
     @SerializedName("value")
     @Expose
     private String value;
@@ -18,7 +18,7 @@ public class Attribute {
      * @return
      *     The attributeType
      */
-    public AttributeType getAttributeType() {
+    public PersonAttributeType getAttributeType() {
         return attributeType;
     }
 
@@ -27,7 +27,7 @@ public class Attribute {
      * @param attributeType
      *     The attributeType
      */
-    public void setAttributeType(AttributeType attributeType) {
+    public void setAttributeType(PersonAttributeType attributeType) {
         this.attributeType = attributeType;
     }
 

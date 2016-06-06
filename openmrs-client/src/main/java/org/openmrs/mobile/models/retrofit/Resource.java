@@ -1,12 +1,14 @@
 
 package org.openmrs.mobile.models.retrofit;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PreferredAddress {
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Resource {
 
     @SerializedName("uuid")
     @Expose
@@ -19,7 +21,7 @@ public class PreferredAddress {
     private List<Link> links = new ArrayList<Link>();
 
     /**
-     * 
+     *
      * @return
      *     The uuid
      */
@@ -28,7 +30,7 @@ public class PreferredAddress {
     }
 
     /**
-     * 
+     *
      * @param uuid
      *     The uuid
      */
@@ -37,7 +39,7 @@ public class PreferredAddress {
     }
 
     /**
-     * 
+     *
      * @return
      *     The display
      */
@@ -46,7 +48,7 @@ public class PreferredAddress {
     }
 
     /**
-     * 
+     *
      * @param display
      *     The display
      */
@@ -55,7 +57,7 @@ public class PreferredAddress {
     }
 
     /**
-     * 
+     *
      * @return
      *     The links
      */
@@ -64,7 +66,7 @@ public class PreferredAddress {
     }
 
     /**
-     * 
+     *
      * @param links
      *     The links
      */

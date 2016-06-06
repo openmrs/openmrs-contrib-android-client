@@ -12,12 +12,14 @@
   ~
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:background="#EEE"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -26,23 +28,392 @@
         android:background="?attr/colorPrimary"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/loginUsernameField"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:focusable="true"
-        android:hint="@string/login_username_hint"
-        android:inputType="text"
-        android:singleLine="true" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
 
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:background="@drawable/card"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary"
+                    android:text="Demographics"/>
 
-</LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="12dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#555"
+                    android:text="@string/reg_ques_name"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:weightSum="3">
+
+                    <EditText
+                        android:id="@+id/firstname"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:focusable="true"
+                        android:hint="@string/reg_firstname_hint"
+                        android:inputType="text"
+                        android:singleLine="true" />
+
+                    <EditText
+                        android:id="@+id/middlename"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:focusable="true"
+                        android:hint="@string/reg_midname_hint"
+                        android:inputType="text"
+                        android:singleLine="true" />
+                    <EditText
+                        android:id="@+id/surname"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:focusable="true"
+                        android:hint="@string/reg_surname_hint"
+                        android:inputType="text"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:weightSum="2">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:textSize="14sp"
+                        android:padding="2dp"
+                        android:layout_weight="1"
+                        android:id="@+id/fnameerror"
+                        android:visibility="invisible"
+                        android:textStyle="bold"
+                        android:textColor="@color/red"
+                        android:text="@string/emptyerror"/>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:textSize="14sp"
+                        android:padding="2dp"
+                        android:gravity="right"
+                        android:layout_weight="1"
+                        android:id="@+id/lnameerror"
+                        android:visibility="invisible"
+                        android:textStyle="bold"
+                        android:textColor="@color/red"
+                        android:text="@string/emptyerror"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#555"
+                    android:text="@string/reg_ques_gender"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:textSize="14sp"
+                    android:padding="2dp"
+                    android:id="@+id/gendererror"
+                    android:visibility="gone"
+                    android:textStyle="bold"
+                    android:textColor="@color/red"
+                    android:text="@string/emptyerror"/>
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/gender">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/male"
+                        android:text="@string/male" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/female"
+                        android:text="@string/female" />
+
+                </RadioGroup>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="12dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#555"
+                    android:text="@string/reg_ques_dob"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:textSize="14sp"
+                    android:padding="2dp"
+                    android:id="@+id/doberror"
+                    android:visibility="gone"
+                    android:textStyle="bold"
+                    android:textColor="@color/red"
+                    android:text="@string/emptyerror"/>
+                <EditText
+                    android:id="@+id/dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textSize="14sp"
+                    android:focusable="false"
+                    android:hint="@string/dob_hint"
+                    android:inputType="text"
+                    android:singleLine="true" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#777"
+                    android:text="or"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:weightSum="2">
+
+                    <EditText
+                        android:id="@+id/estyr"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:focusable="true"
+                        android:hint="@string/estyr"
+                        android:inputType="number"
+                        android:singleLine="true" />
+
+                    <EditText
+                        android:id="@+id/estmonth"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:focusable="true"
+                        android:hint="@string/estmonth"
+                        android:inputType="number"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:background="@drawable/card"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary"
+                    android:text="Contact Info"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:textSize="14sp"
+                    android:padding="2dp"
+                    android:id="@+id/addrerror"
+                    android:visibility="gone"
+                    android:textStyle="bold"
+                    android:textColor="@color/red"
+                    android:text="@string/atleastone"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="12dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="#555"
+                    android:text="@string/reg_ques_address"/>
+
+                <EditText
+                    android:id="@+id/addr1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:textSize="14sp"
+                    android:focusable="true"
+                    android:hint="@string/addr1_hint"
+                    android:inputType="text"
+                    android:singleLine="true" />
+                <EditText
+                    android:id="@+id/addr2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:textSize="14sp"
+                    android:focusable="true"
+                    android:hint="@string/addr2_hint"
+                    android:inputType="text"
+                    android:singleLine="true" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:weightSum="2">
+
+                    <EditText
+                        android:id="@+id/city"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:focusable="true"
+                        android:hint="@string/patient_city_label"
+                        android:inputType="text"
+                        android:singleLine="true" />
+
+                    <EditText
+                        android:id="@+id/state"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:focusable="true"
+                        android:hint="@string/patient_state_label"
+                        android:inputType="text"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:weightSum="2">
+
+                    <EditText
+                        android:id="@+id/country"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:focusable="true"
+                        android:hint="@string/patient_country_label"
+                        android:inputType="text"
+                        android:singleLine="true" />
+
+                    <EditText
+                        android:id="@+id/postal"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:focusable="true"
+                        android:layout_marginBottom="20dp"
+                        android:hint="@string/patient_postal_label"
+                        android:inputType="text"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+                <!--<TextView-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="20dp"-->
+                    <!--android:layout_marginLeft="12dp"-->
+                    <!--android:textSize="18sp"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:textColor="#555"-->
+                    <!--android:text="@string/reg_ques_phno"/>-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/phone"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="20dp"-->
+                    <!--android:layout_marginRight="20dp"-->
+                    <!--android:layout_marginBottom="20dp"-->
+                    <!--android:textSize="14sp"-->
+                    <!--android:focusable="true"-->
+                    <!--android:hint="@string/phone_hint"-->
+                    <!--android:inputType="phone"-->
+                    <!--android:singleLine="true" />-->
+            </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="confirm"
+                android:text="Confirm"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/primary"/>
+
+        </LinearLayout>
+    </ScrollView>
     </LinearLayout>

@@ -108,5 +108,5 @@ dependencies {
 play {
     track = 'alpha'
     serviceAccountEmail = 'avijitghosh82@openmrs.org'
-    pk12File = file('key.p12') //I do not have access to this
+    jsonFile = rootProject.file('google_play.json')
 }

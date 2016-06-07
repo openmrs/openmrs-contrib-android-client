@@ -1,5 +1,20 @@
 apply plugin: 'com.android.application'
 
+
+buildscript {
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.github.triplet.gradle:play-publisher:1.1.4'
+    }
+}
+
+apply plugin: 'com.github.triplet.play'
+
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -7,7 +22,7 @@ android {
 
     def travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
     def buildNumber = (travisBuildNumber) ? (travisBuildNumber as int) : 1
-	
+
     def applicationVersion = "2.1"
     def travisTag = System.getenv("TRAVIS_TAG")
     def buildVersionName = (travisTag) ? travisTag : applicationVersion + "-debug." + buildNumber
@@ -25,12 +40,12 @@ android {
     }
 
     signingConfigs {
-            release {
-                storeFile rootProject.file('release.keystore')
-                storePassword System.getenv("KEYSTORE_PASSWORD")
-                keyAlias System.getenv("KEYSTORE_ALIAS_NAME")
-                keyPassword System.getenv("KEYSTORE_ALIAS_PASS")
-            }
+        release {
+            storeFile rootProject.file('release.keystore')
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyAlias System.getenv("KEYSTORE_ALIAS_NAME")
+            keyPassword System.getenv("KEYSTORE_ALIAS_PASS")
+        }
     }
 
     buildTypes {
@@ -42,8 +57,8 @@ android {
     }
 
     lintOptions {
-      abortOnError false
-      checkReleaseBuilds false
+        abortOnError false
+        checkReleaseBuilds false
     }
 
     packagingOptions {
@@ -62,6 +77,8 @@ repositories {
     mavenCentral()
     jcenter()
 }
+
+
 
 dependencies {
     compile project(':odkcollect')
@@ -86,4 +103,11 @@ dependencies {
             'com.jayway.android.robotium:robotium-solo:4.2'
     )
     androidTestCompile files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
+}
+
+play {
+    track = 'alpha'
+    serviceAccountEmail = System.getenv("PUBLISHER_ACCOUNT_ID")
+    jsonFile = rootProject.file('google_play.json')
+
 }

@@ -108,5 +108,5 @@ dependencies {
 play {
     track = 'alpha'
     serviceAccountEmail = 'avijitghosh82@openmrs.org'
-    jsonFile = project.rootProject.file('google_play.json')
+    jsonFile = rootProject.file('google_play.json')
 }

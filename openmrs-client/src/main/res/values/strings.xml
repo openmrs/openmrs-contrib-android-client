@@ -28,6 +28,33 @@
     <string name="forgot_dialog_message">Please contact your system administrator</string>
     <string name="forgot_button_ok">Dismiss</string>
 
+    <string name="emptyerror">Required</string>
+    <string name="reg_firstname_hint">Given Name</string>
+    <string name="reg_midname_hint">Middle Name</string>
+    <string name="reg_surname_hint">Family Name</string>
+    <string name="phone_hint">Phone Number</string>
+    <string name="reg_ques_name">What\'s the patient\'s name?</string>
+    <string name="reg_ques_gender">What\'s the patient\'s gender?</string>
+    <string name="reg_ques_dob">What\'s the patient\'s birth date?</string>
+    <string name="reg_ques_phno">Phone number</string>
+    <string name="reg_ques_address">Address</string>
+    <string name="addr1_hint">Address</string>
+    <string name="addr2_hint">Address 2</string>
+    <string name="atleastone">Fill at least one field</string>
+
+
+
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="dob_hint">Date of Birth</string>
+    <string name="estyr">Estimated Years</string>
+    <string name="estmonth">Estimated Months</string>
+
+
+
+
+
+
     <!-- Url dialog -->
     <string name="login_dialog_title">Enter URL address</string>
     <string name="login_dialog_server_url_empty_error">Server URL can not be empty.</string>
@@ -174,6 +201,8 @@
     <string name="visit_exp_list_empty">Visit has no encounters yet.</string>
     <!-- Capture Vitals activity -->
     <string name="action_capture_vitals">Capture Vitals</string>
+    <string name="action_delete_patient">Delete Patient</string>
+    <string name="action_register_patient">Register Patient</string>
     <string name="failed_to_open_vitals_form">An error occurred. Invalid or corrupted form file.</string>
     <string name="active_visit_label_capture_vitals">On Visit</string>
     <!-- Form Entry Activity -->

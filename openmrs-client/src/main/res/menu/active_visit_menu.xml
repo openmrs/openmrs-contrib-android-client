@@ -12,17 +12,17 @@
   ~ copyright (c) openmrs, llc.  all rights reserved.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="org.openmrs.mobile.activities.VisitDashboardActivity">
     <item
         android:id="@+id/actionEndVisit"
         android:orderInCategory="100"
-        android:showAsAction="never"
+        app:showAsAction="never"
         android:title="@string/action_end_visit" />
-    <item
-        android:id="@+id/actionCaptureVitals"
-        android:title="@string/action_capture_vitals"
-        android:showAsAction="never" />
+    <!--<item-->
+        <!--android:id="@+id/actionCaptureVitals"-->
+        <!--android:title="@string/action_capture_vitals"-->
+        <!--app:showAsAction="never" />-->
 </menu>

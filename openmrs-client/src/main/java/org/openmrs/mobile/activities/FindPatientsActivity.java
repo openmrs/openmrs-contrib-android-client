@@ -31,6 +31,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -56,7 +57,7 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
     public static final int DOWNLOADED_TAB_POS = 1;
 
     private ViewPager mViewPager;
-    private FindPatientPagerAdapter mFindPatientPagerAdapter;
+    public  FindPatientPagerAdapter mFindPatientPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,21 +96,6 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
 
     }
 
-    public List<Fragment> getVisibleFragments() {
-        List<Fragment> allFragments = this.getSupportFragmentManager().getFragments();
-        if (allFragments == null || allFragments.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        List<Fragment> visibleFragments = new ArrayList<Fragment>();
-        for (Fragment fragment : allFragments) {
-            if (fragment.isVisible()) {
-                visibleFragments.add(fragment);
-            }
-        }
-        Collections.reverse(visibleFragments); //the tabs are being added in inverse order
-        return visibleFragments;
-    }
 
     @Override
     public void onConfigurationChanged(final Configuration config) {
@@ -147,12 +133,13 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         FindPatientLastViewedFragment viewedFragment =
-                (FindPatientLastViewedFragment) this.getVisibleFragments().get(LAST_VIEWED_TAB_POS);
+                (FindPatientLastViewedFragment) mFindPatientPagerAdapter.getRegisteredFragment(LAST_VIEWED_TAB_POS);
+
 
         viewedFragment.onResume();
 
         FindPatientInDatabaseFragment databaseFragment =
-                (FindPatientInDatabaseFragment) this.getVisibleFragments().get(DOWNLOADED_TAB_POS);
+                (FindPatientInDatabaseFragment) mFindPatientPagerAdapter.getRegisteredFragment(DOWNLOADED_TAB_POS);
 
         databaseFragment.updatePatientsInDatabaseList();
     }
@@ -196,6 +183,8 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
 
     public class FindPatientPagerAdapter extends FragmentPagerAdapter {
 
+        SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+
         public FindPatientPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -212,6 +201,22 @@ public class FindPatientsActivity extends ACBaseActivity implements ActionBar.Ta
             }
         }
 
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            registeredFragments.put(position, fragment);
+            return fragment;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            registeredFragments.remove(position);
+            super.destroyItem(container, position, object);
+        }
+
+        public Fragment getRegisteredFragment(int position) {
+            return registeredFragments.get(position);
+        }
 
         @Override
         public Fragment getItem(int i) {

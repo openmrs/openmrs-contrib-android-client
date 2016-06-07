@@ -98,6 +98,7 @@ public final class LoginListener extends GeneralErrorListener implements Respons
         mOpenMRS.setServerUrl(mServerURL);
         mOpenMRS.setSessionToken(sessionToken);
         mOpenMRS.setUsername(mUsername);
+        mOpenMRS.setPassword(mPassword);
 
         FormsManager formsManager = new FormsManager();
         formsManager.getAvailableFormsList(

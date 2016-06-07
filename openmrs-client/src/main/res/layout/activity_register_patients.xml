@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:weightSum="3">
+                    android:weightSum="2">
 
                     <EditText
                         android:id="@+id/firstname"
@@ -93,53 +93,52 @@
                         android:hint="@string/reg_midname_hint"
                         android:inputType="text"
                         android:singleLine="true" />
-                    <EditText
-                        android:id="@+id/surname"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:focusable="true"
-                        android:hint="@string/reg_surname_hint"
-                        android:inputType="text"
-                        android:singleLine="true" />
+
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:weightSum="2">
+
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
+                        android:layout_marginLeft="20dp"
                         android:textSize="14sp"
                         android:padding="2dp"
                         android:layout_weight="1"
                         android:id="@+id/fnameerror"
-                        android:visibility="invisible"
+                        android:visibility="gone"
                         android:textStyle="bold"
                         android:textColor="@color/red"
                         android:text="@string/emptyerror"/>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:textSize="14sp"
-                        android:padding="2dp"
-                        android:gravity="right"
-                        android:layout_weight="1"
-                        android:id="@+id/lnameerror"
-                        android:visibility="invisible"
-                        android:textStyle="bold"
-                        android:textColor="@color/red"
-                        android:text="@string/emptyerror"/>
 
-                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/surname"
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:focusable="true"
+                    android:hint="@string/reg_surname_hint"
+                    android:inputType="text"
+                    android:singleLine="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="14sp"
+                    android:padding="2dp"
+                    android:gravity="right"
+                    android:layout_weight="1"
+                    android:id="@+id/lnameerror"
+                    android:visibility="invisible"
+                    android:textStyle="bold"
+                    android:textColor="@color/red"
+                    android:text="@string/emptyerror"/>
 
                 <TextView
                     android:layout_width="match_parent"

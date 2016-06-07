@@ -29,8 +29,8 @@
     <string name="forgot_button_ok">Dismiss</string>
 
     <string name="emptyerror">Required</string>
-    <string name="reg_firstname_hint">Given</string>
-    <string name="reg_midname_hint">Middle</string>
+    <string name="reg_firstname_hint">Given Name</string>
+    <string name="reg_midname_hint">Middle Name</string>
     <string name="reg_surname_hint">Family Name</string>
     <string name="phone_hint">Phone Number</string>
     <string name="reg_ques_name">What\'s the patient\'s name?</string>

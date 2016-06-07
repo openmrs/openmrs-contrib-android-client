@@ -345,8 +345,8 @@ public class RegisterPatientActivity extends ACBaseActivity {
 
         if(isEmpty(eddob))
         {
-            int yeardiff= Integer.parseInt(edyr.getText().toString());
-            int mondiff=Integer.parseInt(edmonth.getText().toString());
+            int yeardiff= isEmpty(edyr)? 0:Integer.parseInt(edyr.getText().toString());
+            int mondiff=isEmpty(edmonth)? 0:Integer.parseInt(edmonth.getText().toString());
             LocalDate now = new LocalDate();
             bdt=now.toDateTimeAtStartOfDay().toDateTime();
             bdt=bdt.minusYears(yeardiff);

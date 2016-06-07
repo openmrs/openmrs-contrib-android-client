@@ -1,5 +1,20 @@
 apply plugin: 'com.android.application'
 
+
+buildscript {
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.github.triplet.gradle:play-publisher:1.1.4'
+    }
+}
+
+apply plugin: 'com.github.triplet.play'
+
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
@@ -63,6 +78,8 @@ repositories {
     jcenter()
 }
 
+
+
 dependencies {
     compile project(':odkcollect')
     compile 'com.google.guava:guava:18.0'
@@ -86,4 +103,11 @@ dependencies {
             'com.jayway.android.robotium:robotium-solo:4.2'
     )
     androidTestCompile files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
+}
+
+play {
+    track = 'alpha'
+    serviceAccountEmail = 'avijitghosh82@openmrs.org'
+    jsonFile = rootProject.file('google_play.json')
+
 }

@@ -51,7 +51,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterPatientActivity extends ACBaseActivity {
 
-    String locUUID;
+    String initLocationUuid;
     String genId;
     ArrayList<String> idtypelist=new ArrayList<>();
 
@@ -210,7 +210,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
     }
 
 
-    void getlocuuid()
+    void fetchLocationUuid()
     {
         RestApi apiService =
                 ServiceGenerator.createService(RestApi.class);
@@ -221,8 +221,8 @@ public class RegisterPatientActivity extends ACBaseActivity {
                 Results<Resource> locationList = response.body();
                 for (Resource result : locationList.getResults()) {
                     if ((result.getDisplay().trim()).equalsIgnoreCase((mOpenMRS.getLocation().trim()))) {
-                        locUUID = result.getUuid();
-                        getgenId();
+                        initLocationUuid = result.getUuid();
+                        initIdGenPatientIdentifier();
                     }
                 }
             }
@@ -230,7 +230,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
             @Override
             public void onFailure(Call<Results<Resource>> call, Throwable t) {
                 Toast.makeText(RegisterPatientActivity.this,t.toString(),Toast.LENGTH_SHORT).show();
-                locUUID ="";
+                initLocationUuid ="";
             }
 
         });
@@ -238,7 +238,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
 
 
 
-    void getgenId()
+    void initIdGenPatientIdentifier()
     {
         String IDGEN_BASE_URL= mOpenMRS.getServerUrl()+'/';
         Retrofit retrofit = new Retrofit.Builder()
@@ -254,7 +254,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
             public void onResponse(Call<IdGenPatientIdentifiers> call, Response<IdGenPatientIdentifiers> response) {
                 IdGenPatientIdentifiers idList = response.body();
                 genId=idList.getIdentifiers().get(0);
-                getidentifiertypeuuid();
+                initPatientIdentifierTypeUuid();
 
             }
 
@@ -267,7 +267,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
     }
 
 
-    void getidentifiertypeuuid()
+    void initPatientIdentifierTypeUuid()
     {
         RestApi apiService =
                 ServiceGenerator.createService(RestApi.class);
@@ -294,7 +294,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
 
     void registerpatient()
     {
-        getlocuuid();
+        fetchLocationUuid();
     }
 
     void setPOSTpatient()
@@ -362,7 +362,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
         for (String idtype : idtypelist) {
             PatientIdentifier identifier=new PatientIdentifier();
             identifier.setIdentifier(genId);
-            identifier.setLocation(locUUID);
+            identifier.setLocation(initLocationUuid);
             identifier.setIdentifierType(idtype);
             identifiers.add(identifier);
 

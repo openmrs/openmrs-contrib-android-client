@@ -115,9 +115,9 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
             case android.R.id.home:
                 this.finish();
                 break;
-            case R.id.actionCaptureVitals:
-                startCaptureVitals();
-                break;
+//            case R.id.actionCaptureVitals:
+//                startCaptureVitals();
+//                break;
             case R.id.actionEndVisit:
                 this.showEndVisitDialog();
                 break;

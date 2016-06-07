@@ -54,10 +54,16 @@ public abstract class ApplicationConstants {
         public static final String FULL_VERSION = "?v=full";
         public static final String FULL_VERSION_NEXT_PARAM = "&v=full";
         public static final int REQUEST_TIMEOUT = 20000;
+
+        public static final String PATIENT = "patient?";
+
+
     }
+
 
     public abstract static class UserKeys {
         public static final String USER_NAME = "username";
+        public static final String PASSWORD = "password";
         public static final String USER_PERSON_NAME = "userDisplay";
         public static final String USER_UUID = "userUUID";
     }

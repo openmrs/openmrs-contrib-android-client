@@ -17,10 +17,8 @@ package org.openmrs.mobile.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -58,6 +56,10 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mCurrentDialog = null;
+    }
+
+    public String getAuthParam(){
+        return Base64.encodeToString(String.format("%s:%s", mOpenMRS.getUsername(), mOpenMRS.getPassword()).getBytes(), Base64.NO_WRAP);
     }
 
     @Override

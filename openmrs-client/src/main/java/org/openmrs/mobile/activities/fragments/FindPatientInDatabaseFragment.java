@@ -32,6 +32,12 @@ public class FindPatientInDatabaseFragment extends ACBaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        updatePatientsInDatabaseList();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentLayout = inflater.inflate(R.layout.fragment_find_patients, null, false);
 

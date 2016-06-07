@@ -23,8 +23,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 
 import net.yanzm.mth.MaterialTabHost;
 
@@ -43,8 +45,7 @@ import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.TabUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
 public class PatientDashboardActivity extends ACBaseActivity implements ActionBar.TabListener {
@@ -85,6 +86,8 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
                 VisitsHelper.createLastVitalsListener(mPatient.getUuid()));
         mPatientDashboardPagerAdapter = new PatientDashboardPagerAdapter(getSupportFragmentManager());
         initViewPager();
+
+
     }
 
     @Override
@@ -132,7 +135,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mPatientDashboardPagerAdapter);
-        mViewPager.setOnPageChangeListener(tabHost);
+        mViewPager.addOnPageChangeListener(tabHost);
 
 
         tabHost.setOnTabChangeListener(new MaterialTabHost.OnTabChangeListener() {
@@ -141,6 +144,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
                 mViewPager.setCurrentItem(position);
             }
         });
+
 
     }
 
@@ -158,23 +162,24 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.patients_menu, menu);
+        getMenuInflater().inflate(R.menu.patient_dashboard_menu, menu);
         getSupportActionBar().setTitle(mPatient.getDisplay());
         getSupportActionBar().setSubtitle("#" + mPatient.getIdentifier());
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.actionSynchronize:
-                synchronizePatient();
+            case R.id.actionDelete:
+                new PatientDAO().deletePatient(mPatient.getId());
+                finish();
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
@@ -191,7 +196,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
     }
 
-    private void synchronizePatient() {
+    public void synchronizePatient() {
         showProgressDialog(R.string.action_synchronize_patients, DialogAction.SYNCHRONIZE);
         new FindPatientsManager().getFullPatientData(
                 FindPatientsHelper.createFullPatientDataListener(mPatient.getUuid(), this));
@@ -208,8 +213,8 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
             VisitsManager fvm = new VisitsManager();
             mPatient = new PatientDAO().findPatientByUUID(mPatient.getUuid());
 
-            PatientDetailsFragment fragment = (PatientDetailsFragment) getSupportFragmentManager().
-                    getFragments().get(PatientDashboardActivity.DETAILS_TAB_POS);
+            PatientDetailsFragment fragment = (PatientDetailsFragment) mPatientDashboardPagerAdapter
+                    .getRegisteredFragment(PatientDashboardActivity.DETAILS_TAB_POS);
             fragment.reloadPatientData(mPatient);
 
             fvm.findVisitsByPatientUUID(
@@ -275,6 +280,9 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
     public class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
 
+        SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+
+
         public PatientDashboardPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -294,6 +302,23 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
                 default:
                     return null;
             }
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            registeredFragments.put(position, fragment);
+            return fragment;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            registeredFragments.remove(position);
+            super.destroyItem(container, position, object);
+        }
+
+        public Fragment getRegisteredFragment(int position) {
+            return registeredFragments.get(position);
         }
 
         @Override

@@ -74,6 +74,12 @@ public class OpenMRS extends Collect {
         editor.commit();
     }
 
+    public void setPassword(String password) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.UserKeys.PASSWORD, password);
+        editor.commit();
+    }
+
     public void setServerUrl(String serverUrl) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(ApplicationConstants.SERVER_URL, serverUrl);
@@ -107,6 +113,11 @@ public class OpenMRS extends Collect {
     public String getUsername() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.UserKeys.USER_NAME, ApplicationConstants.EMPTY_STRING);
+    }
+
+    public String getPassword() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        return prefs.getString(ApplicationConstants.UserKeys.PASSWORD, ApplicationConstants.EMPTY_STRING);
     }
 
     public String getServerUrl() {
@@ -215,4 +226,6 @@ public class OpenMRS extends Collect {
         clearCurrentLoggedInUserInfo();
         editor.commit();
     }
+
+
 }

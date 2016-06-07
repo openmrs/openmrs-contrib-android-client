@@ -173,5 +173,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.DashboardActivity" />
         </activity>
+        <activity
+            android:label="@string/action_register_patient"
+            android:name=".activities.RegisterPatientActivity"
+            android:theme="@style/AppTheme"
+            android:configChanges="keyboardHidden|orientation|screenSize">
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.DashboardActivity" />
+        </activity>
     </application>
 </manifest>

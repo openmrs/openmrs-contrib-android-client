@@ -109,4 +109,5 @@ play {
     track = 'alpha'
     serviceAccountEmail = 'avijitghosh82@openmrs.org'
     jsonFile = rootProject.file('google_play.json')
+
 }

@@ -59,16 +59,21 @@ android {
 
 repositories {
     maven { url 'http://yanzm.github.io/MaterialTabHost/repository' }
+    mavenCentral()
+    jcenter()
 }
 
 dependencies {
     compile project(':odkcollect')
     compile 'com.google.guava:guava:18.0'
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:gridlayout-v7:23.3.0'
-    compile 'com.android.support:recyclerview-v7:23.3.0'
-    compile 'com.android.support:design:23.3.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:gridlayout-v7:23.4.0'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
     compile 'com.android.volley:volley:1.0.0'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.6.2'
     compile 'commons-codec:commons-codec:1.10'
     compile 'org.apache.httpcomponents:httpcore:4.4.4'
     compile 'org.apache.httpcomponents:httpmime:4.5.2'

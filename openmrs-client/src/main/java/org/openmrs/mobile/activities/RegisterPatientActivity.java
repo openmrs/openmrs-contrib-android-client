@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,9 +57,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterPatientActivity extends ACBaseActivity {
-
-    String genId;
-    ArrayList<String> idtypelist=new ArrayList<>();
 
     LocalDate birthdate;
     DateTime bdt;
@@ -207,10 +205,14 @@ public class RegisterPatientActivity extends ACBaseActivity {
 
         if(ferr && lerr && doberr && adderr && gerr)
         {
-            ProgressDialog pd = new ProgressDialog(RegisterPatientActivity.this);
+            pd = new ProgressDialog(RegisterPatientActivity.this);
             pd.setMessage("Please wait");
             pd.show();
             registerPatient();
+        }
+        else{
+            ScrollView scrollView=(ScrollView)findViewById(R.id.scrollView);
+            scrollView.smoothScrollTo(0, scrollView.getPaddingTop());
         }
     }
 
@@ -373,8 +375,8 @@ public class RegisterPatientActivity extends ACBaseActivity {
                                 Patient newPatient = response.body();
                                 Toast.makeText(RegisterPatientActivity.this,"Patient created with UUID "+ newPatient.getUuid()
                                         ,Toast.LENGTH_SHORT).show();
-                                //pd.dismiss();
                                 RegisterPatientActivity.this.finish();
+                                pd.dismiss();
                             }
 
                             @Override

@@ -18,6 +18,8 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.View;
 import android.widget.DatePicker;
@@ -141,6 +143,10 @@ public class RegisterPatientActivity extends ACBaseActivity {
                     int cMonth=currentDate.get(Calendar.MONTH);
                     int cDay=currentDate.get(Calendar.DAY_OF_MONTH);
 
+                    edmonth.getText().clear();
+                    edyr.getText().clear();
+
+
                     DatePickerDialog mDatePicker=new DatePickerDialog(RegisterPatientActivity.this, new DatePickerDialog.OnDateSetListener() {
                         public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                             eddob.setText(selectedday+"/"+selectedmonth+"/"+selectedyear);
@@ -152,6 +158,19 @@ public class RegisterPatientActivity extends ACBaseActivity {
                     mDatePicker.show();  }
             });
         }
+
+
+        TextWatcher tw=new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                eddob.getText().clear();
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        };
+        edyr.addTextChangedListener(tw);
+        edmonth.addTextChangedListener(tw);
+
 
 
     }

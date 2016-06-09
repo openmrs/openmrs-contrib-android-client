@@ -25,11 +25,17 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.jdeferred.DoneCallback;
+import org.jdeferred.android.AndroidDeferredManager;
+import org.jdeferred.multiple.MultipleResults;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.api.SimpleDeferredObject;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.ServiceGenerator;
+import org.openmrs.mobile.api.SimplePromise;
 import org.openmrs.mobile.models.retrofit.PersonAddress;
 import org.openmrs.mobile.models.retrofit.IdGenPatientIdentifiers;
 import org.openmrs.mobile.models.retrofit.PatientIdentifier;
@@ -51,7 +57,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterPatientActivity extends ACBaseActivity {
 
-    String initLocationUuid;
     String genId;
     ArrayList<String> idtypelist=new ArrayList<>();
 
@@ -180,7 +185,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
             lerr=false;
         }
 
-        if(isEmpty(eddob)&& (isEmpty(edyr)||isEmpty(edmonth)))
+        if(isEmpty(eddob) && (isEmpty(edyr) && isEmpty(edmonth)))
         {
             doberror.setVisibility(View.VISIBLE);
             doberr=false;
@@ -205,13 +210,13 @@ public class RegisterPatientActivity extends ACBaseActivity {
             ProgressDialog pd = new ProgressDialog(RegisterPatientActivity.this);
             pd.setMessage("Please wait");
             pd.show();
-            registerpatient();
+            registerPatient();
         }
     }
 
+    SimplePromise<String> getLocationUuid() {
+        final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
 
-    void fetchLocationUuid()
-    {
         RestApi apiService =
                 ServiceGenerator.createService(RestApi.class);
         Call<Results<Resource>> call = apiService.getLocations();
@@ -221,8 +226,8 @@ public class RegisterPatientActivity extends ACBaseActivity {
                 Results<Resource> locationList = response.body();
                 for (Resource result : locationList.getResults()) {
                     if ((result.getDisplay().trim()).equalsIgnoreCase((mOpenMRS.getLocation().trim()))) {
-                        initLocationUuid = result.getUuid();
-                        initIdGenPatientIdentifier();
+                        String locationUuid = result.getUuid();
+                        deferred.resolve(locationUuid);
                     }
                 }
             }
@@ -230,16 +235,17 @@ public class RegisterPatientActivity extends ACBaseActivity {
             @Override
             public void onFailure(Call<Results<Resource>> call, Throwable t) {
                 Toast.makeText(RegisterPatientActivity.this,t.toString(),Toast.LENGTH_SHORT).show();
-                initLocationUuid ="";
+                deferred.reject(t);
             }
 
         });
+
+        return deferred.promise();
     }
 
+    SimplePromise<String> getIdGenPatientIdentifier() {
+        final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
 
-
-    void initIdGenPatientIdentifier()
-    {
         String IDGEN_BASE_URL= mOpenMRS.getServerUrl()+'/';
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(IDGEN_BASE_URL)
@@ -253,22 +259,24 @@ public class RegisterPatientActivity extends ACBaseActivity {
             @Override
             public void onResponse(Call<IdGenPatientIdentifiers> call, Response<IdGenPatientIdentifiers> response) {
                 IdGenPatientIdentifiers idList = response.body();
-                genId=idList.getIdentifiers().get(0);
-                initPatientIdentifierTypeUuid();
-
+                deferred.resolve(idList.getIdentifiers().get(0));
             }
 
             @Override
             public void onFailure(Call<IdGenPatientIdentifiers> call, Throwable t) {
                 Toast.makeText(RegisterPatientActivity.this,t.toString(),Toast.LENGTH_SHORT).show();
+                deferred.reject(t);
             }
 
         });
+
+        return deferred.promise();
     }
 
 
-    void initPatientIdentifierTypeUuid()
-    {
+    SimplePromise<String> getPatientIdentifierTypeUuid() {
+        final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
+
         RestApi apiService =
                 ServiceGenerator.createService(RestApi.class);
         Call<Results<PatientIdentifier>> call = apiService.getIdentifierTypes();
@@ -277,139 +285,116 @@ public class RegisterPatientActivity extends ACBaseActivity {
             public void onResponse(Call<Results<PatientIdentifier>> call, Response<Results<PatientIdentifier>> response) {
                 Results<PatientIdentifier> idresList = response.body();
                 for (Resource result : idresList.getResults()) {
-                    if(result.getDisplay().equals("OpenMRS ID"))
-                        idtypelist.add(result.getUuid());
+                    if(result.getDisplay().equals("OpenMRS ID")) {
+                        deferred.resolve(result.getUuid());
+                        return;
+                    }
                 }
-                setPOSTpatient();
             }
 
             @Override
             public void onFailure(Call<Results<PatientIdentifier>> call, Throwable t) {
                 Toast.makeText(RegisterPatientActivity.this,t.toString(),Toast.LENGTH_SHORT).show();
+                deferred.reject(t);
             }
 
         });
+
+        return deferred.promise();
     }
 
+    void registerPatient() {
+        Person person = new Person();
 
-    void registerpatient()
-    {
-        fetchLocationUuid();
-    }
-
-    void setPOSTpatient()
-    {
-
-        String firstname=getInput(edfname);
-        String middlename=getInput(edmname);
-        String lastname=getInput(edlname);
-
-        String genchoices[]={"M","F"};
-        int index = gen.indexOfChild(findViewById(gen.getCheckedRadioButtonId()));
-        String gender=genchoices[index];
-
-        String address1,address2,city,state,country,postal;
-        address1=getInput(edaddr1);
-        address2=getInput(edaddr2);
-        city=getInput(edcity);
-        state=getInput(edstate);
-        country=getInput(edcountry);
-        postal=getInput(edpostal);
-
-        PersonAddress address=new PersonAddress();
-
-        if(address1!=null) address.setAddress1(address1);
-        if(address2!=null) address.setAddress2(address2);
-        if(city!=null) address.setCityVillage(city);
-        if(postal!=null) address.setPostalCode(postal);
-        if(country!=null) address.setCountry(country);
-        if(state!=null) address.setStateProvince(state);
+        PersonAddress address = new PersonAddress();
+        address.setAddress1(getInput(edaddr1));
+        address.setAddress2(getInput(edaddr2));
+        address.setCityVillage(getInput(edcity));
+        address.setPostalCode(getInput(edpostal));
+        address.setCountry(getInput(edcountry));
+        address.setStateProvince(getInput(edstate));
         address.setPreferred(true);
 
-        List<PersonAddress> addresses=new ArrayList<>();
+        List<PersonAddress> addresses = new ArrayList<>();
         addresses.add(address);
-
-        PersonName name=new PersonName();
-        name.setFamilyName(lastname);
-        name.setGivenName(firstname);
-        if(middlename!=null) name.setMiddleName(middlename);
-
-        List<PersonName> names=new ArrayList<>();
-        names.add(name);
-
-        Person person=new Person();
-
-        person.setGender(gender);
-        person.setNames(names);
         person.setAddresses(addresses);
 
-        if(isEmpty(eddob))
-        {
-            int yeardiff= isEmpty(edyr)? 0:Integer.parseInt(edyr.getText().toString());
-            int mondiff=isEmpty(edmonth)? 0:Integer.parseInt(edmonth.getText().toString());
+        PersonName name = new PersonName();
+        name.setFamilyName(getInput(edlname));
+        name.setGivenName(getInput(edfname));
+        name.setMiddleName(getInput(edmname));
+
+        List<PersonName> names = new ArrayList<>();
+        names.add(name);
+        person.setNames(names);
+
+        String[] genderChoices = {"M","F"};
+        int index = gen.indexOfChild(findViewById(gen.getCheckedRadioButtonId()));
+        String gender = genderChoices[index];
+        person.setGender(gender);
+
+        if(isEmpty(eddob)) {
+            int yeardiff = isEmpty(edyr)? 0 : Integer.parseInt(edyr.getText().toString());
+            int mondiff = isEmpty(edmonth)? 0 : Integer.parseInt(edmonth.getText().toString());
             LocalDate now = new LocalDate();
-            bdt=now.toDateTimeAtStartOfDay().toDateTime();
-            bdt=bdt.minusYears(yeardiff);
-            bdt=bdt.minusMonths(mondiff);
+            bdt = now.toDateTimeAtStartOfDay().toDateTime();
+            bdt = bdt.minusYears(yeardiff);
+            bdt = bdt.minusMonths(mondiff);
             person.setBirthdateEstimated(true);
             person.setBirthdate(bdt.toString());
-        }
-        else
+        } else {
             person.setBirthdate(bdt.toString());
-
-        List<PatientIdentifier> identifiers=new ArrayList<>();
-
-        for (String idtype : idtypelist) {
-            PatientIdentifier identifier=new PatientIdentifier();
-            identifier.setIdentifier(genId);
-            identifier.setLocation(initLocationUuid);
-            identifier.setIdentifierType(idtype);
-            identifiers.add(identifier);
-
         }
 
-
-        Patient patient=new Patient();
-        patient.setIdentifiers(identifiers);
+        final Patient patient = new Patient();
         patient.setPerson(person);
 
+        AndroidDeferredManager dm = new AndroidDeferredManager();
+        dm.when(getLocationUuid(), getIdGenPatientIdentifier(), getPatientIdentifierTypeUuid())
+                .done(new DoneCallback<MultipleResults>() {
+                    @Override
+                    public void onDone(MultipleResults results) {
+                        List<PatientIdentifier> identifiers = new ArrayList<>();
 
+                        PatientIdentifier identifier=new PatientIdentifier();
+                        identifier.setLocation((String) results.get(0).getResult());
+                        identifier.setIdentifier((String) results.get(1).getResult());
+                        identifier.setIdentifierType((String) results.get(2).getResult());
+                        identifiers.add(identifier);
 
-        RestApi apiService =
-                ServiceGenerator.createService(RestApi.class);
-        Call<Patient> call = apiService.createPatient(patient);
-        call.enqueue(new Callback<Patient>() {
-            @Override
-            public void onResponse(Call<Patient> call, Response<Patient> response) {
-                Patient newpatient = response.body();
-                Toast.makeText(RegisterPatientActivity.this,"Patient created with UUID "+ newpatient.getUuid()
-                        ,Toast.LENGTH_SHORT).show();
-                //pd.dismiss();
-                RegisterPatientActivity.this.finish();
+                        patient.setIdentifiers(identifiers);
 
-            }
+                        RestApi apiService =
+                                ServiceGenerator.createService(RestApi.class);
+                        Call<Patient> call = apiService.createPatient(patient);
+                        call.enqueue(new Callback<Patient>() {
+                            @Override
+                            public void onResponse(Call<Patient> call, Response<Patient> response) {
+                                Patient newPatient = response.body();
+                                Toast.makeText(RegisterPatientActivity.this,"Patient created with UUID "+ newPatient.getUuid()
+                                        ,Toast.LENGTH_SHORT).show();
+                                //pd.dismiss();
+                                RegisterPatientActivity.this.finish();
+                            }
 
-            @Override
-            public void onFailure(Call<Patient> call, Throwable t) {
-                Toast.makeText(RegisterPatientActivity.this,t.toString(),Toast.LENGTH_SHORT).show();
-            }
-
-        });
-
-
-
+                            @Override
+                            public void onFailure(Call<Patient> call, Throwable t) {
+                                Toast.makeText(RegisterPatientActivity.this,t.toString(),Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
     }
 
-
-    String getInput(EditText e)
-    {
-        if(e.getText()==null)
+    private String getInput(EditText e) {
+        if(e.getText() == null) {
             return null;
-        else
+        } else if (isEmpty(e)) {
+            return null;
+        } else {
             return e.getText().toString();
+        }
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

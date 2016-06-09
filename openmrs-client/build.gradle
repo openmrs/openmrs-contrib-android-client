@@ -96,6 +96,8 @@ dependencies {
     compile 'org.apache.httpcomponents:httpmime:4.5.2'
     compile 'net.yanzm:mth:1.0.4'
     compile 'net.zetetic:android-database-sqlcipher:3.4.0@aar'
+    compile 'org.jdeferred:jdeferred-android-aar:1.2.4'
+
     androidTestCompile(
             'org.mockito:mockito-core:1.10.19',
             'com.google.dexmaker:dexmaker-mockito:1.0',

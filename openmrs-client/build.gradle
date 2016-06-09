@@ -108,6 +108,7 @@ dependencies {
 }
 
 play {
+    track = 'production'
     serviceAccountEmail = System.getenv("PUBLISHER_ACCOUNT_ID")
     jsonFile = rootProject.file('google_play.json')
 }

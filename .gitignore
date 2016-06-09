@@ -23,6 +23,8 @@ out/*
 /openmrs-client/build
 /odkcollect/build
 
+*.DS_Store
+
 modules/support/appcompat/gen/*
 modules/support/appcompat/bin/*
 modules/support/appcompat/out/*

@@ -21,7 +21,7 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     def travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
-    def buildNumber = (travisBuildNumber) ? ((travisBuildNumber as int)+1000) : 1
+    def buildNumber = (travisBuildNumber) ? (travisBuildNumber as int) : 1
 
     def applicationVersion = "2.1"
     def travisTag = System.getenv("TRAVIS_TAG")

@@ -18,11 +18,14 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,9 +59,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterPatientActivity extends ACBaseActivity {
-
-    String genId;
-    ArrayList<String> idtypelist=new ArrayList<>();
 
     LocalDate birthdate;
     DateTime bdt;
@@ -143,6 +143,10 @@ public class RegisterPatientActivity extends ACBaseActivity {
                     int cMonth=currentDate.get(Calendar.MONTH);
                     int cDay=currentDate.get(Calendar.DAY_OF_MONTH);
 
+                    edmonth.getText().clear();
+                    edyr.getText().clear();
+
+
                     DatePickerDialog mDatePicker=new DatePickerDialog(RegisterPatientActivity.this, new DatePickerDialog.OnDateSetListener() {
                         public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                             eddob.setText(selectedday+"/"+selectedmonth+"/"+selectedyear);
@@ -154,6 +158,19 @@ public class RegisterPatientActivity extends ACBaseActivity {
                     mDatePicker.show();  }
             });
         }
+
+
+        TextWatcher tw=new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                eddob.getText().clear();
+            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        };
+        edyr.addTextChangedListener(tw);
+        edmonth.addTextChangedListener(tw);
+
 
 
     }
@@ -207,10 +224,14 @@ public class RegisterPatientActivity extends ACBaseActivity {
 
         if(ferr && lerr && doberr && adderr && gerr)
         {
-            ProgressDialog pd = new ProgressDialog(RegisterPatientActivity.this);
+            pd = new ProgressDialog(RegisterPatientActivity.this);
             pd.setMessage("Please wait");
             pd.show();
             registerPatient();
+        }
+        else{
+            ScrollView scrollView=(ScrollView)findViewById(R.id.scrollView);
+            scrollView.smoothScrollTo(0, scrollView.getPaddingTop());
         }
     }
 
@@ -373,8 +394,8 @@ public class RegisterPatientActivity extends ACBaseActivity {
                                 Patient newPatient = response.body();
                                 Toast.makeText(RegisterPatientActivity.this,"Patient created with UUID "+ newPatient.getUuid()
                                         ,Toast.LENGTH_SHORT).show();
-                                //pd.dismiss();
                                 RegisterPatientActivity.this.finish();
+                                pd.dismiss();
                             }
 
                             @Override

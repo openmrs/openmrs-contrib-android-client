@@ -30,6 +30,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <LinearLayout
@@ -407,7 +408,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="confirm"
-                android:text="Confirm"
+                android:text="Register"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:textColor="@color/white"

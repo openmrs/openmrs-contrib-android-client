@@ -110,6 +110,6 @@ dependencies {
 play {
     track = 'alpha'
     serviceAccountEmail = System.getenv("PUBLISHER_ACCOUNT_ID")
-    pk12File = rootProject.file('google_play.p12')
+    jsonFile = rootProject.file('google_play.json')
 
 }

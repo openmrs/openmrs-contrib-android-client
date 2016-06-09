@@ -17,7 +17,7 @@ if [ -n "$TRAVIS_TAG" ]; then
 
 echo "Building relase apk for Github and Play Store..."
 echo $KEYSTORE_GPG_PASSPHRASE | gpg --passphrase-fd 0 release.keystore.gpg
-echo $KEYSTORE_GPG_PASSPHRASE | gpg --passphrase-fd 0 google_play.p12.gpg
+echo $KEYSTORE_GPG_PASSPHRASE | gpg --passphrase-fd 0 google_play.json.gpg
 
 ./gradlew build assembleRelease
 ./gradlew publishRelease

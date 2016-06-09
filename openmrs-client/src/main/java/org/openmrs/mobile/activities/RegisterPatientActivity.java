@@ -306,10 +306,10 @@ public class RegisterPatientActivity extends ACBaseActivity {
             public void onResponse(Call<Results<PatientIdentifier>> call, Response<Results<PatientIdentifier>> response) {
                 Results<PatientIdentifier> idresList = response.body();
                 for (Resource result : idresList.getResults()) {
-                        if(result.getDisplay().equals("OpenMRS ID")) {
-                            deferred.resolve(result.getUuid());
-                            return;
-                        }
+                    if(result.getDisplay().equals("OpenMRS ID")) {
+                        deferred.resolve(result.getUuid());
+                        return;
+                    }
                 }
             }
 
@@ -404,7 +404,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
                             }
                         });
                     }
-        });
+                });
     }
 
     private String getInput(EditText e) {

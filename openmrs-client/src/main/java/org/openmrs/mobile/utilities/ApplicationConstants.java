@@ -121,7 +121,7 @@ public abstract class ApplicationConstants {
         public static final String EOF_EXCEPTION = "java.io.EOFException";
     }
 
-    public static final String DEFAULT_OPEN_MRS_URL = EMPTY_STRING;
+    public static final String DEFAULT_OPEN_MRS_URL = "devtest04.openmrs.org:8080/openmrs";
 
     public abstract static class EncounterTypes {
         public static final String VITALS = "67a71486-1a54-468f-ac3e-7091a9a79584";

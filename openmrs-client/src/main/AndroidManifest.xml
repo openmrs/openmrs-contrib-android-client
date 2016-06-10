@@ -53,6 +53,11 @@
                 <action android:name="org.openmrs.mobile.intent.action.SERVER_NOT_SUPPORTED_BROADCAST"/>
             </intent-filter>
         </receiver>
+        <receiver android:name=".api.NetworkStateReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name=".activities.DashboardActivity"
             android:theme="@style/AppTheme"
@@ -183,5 +188,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.DashboardActivity" />
         </activity>
+        <service
+            android:enabled="true"
+            android:name=".services.PatientRegisterService"/>
     </application>
 </manifest>

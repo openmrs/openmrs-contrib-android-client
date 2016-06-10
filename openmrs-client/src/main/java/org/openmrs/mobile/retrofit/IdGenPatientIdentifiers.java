@@ -1,4 +1,4 @@
-package org.openmrs.mobile.models.retrofit;
+package org.openmrs.mobile.retrofit;
 
 import java.util.ArrayList;
 import java.util.List;

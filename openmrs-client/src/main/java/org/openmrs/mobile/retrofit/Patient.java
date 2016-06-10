@@ -1,5 +1,5 @@
 
-package org.openmrs.mobile.models.retrofit;
+package org.openmrs.mobile.retrofit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Patient extends Resource {
+
+    private boolean synced=false;
 
     @SerializedName("identifiers")
     @Expose
@@ -94,6 +96,16 @@ public class Patient extends Resource {
      */
     public void setResourceVersion(String resourceVersion) {
         this.resourceVersion = resourceVersion;
+    }
+
+    public boolean getSynced()
+    {
+        return synced;
+    }
+
+    public void setSynced(boolean synced)
+    {
+        this.synced=synced;
     }
 
 }

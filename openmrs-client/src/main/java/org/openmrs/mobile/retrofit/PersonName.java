@@ -1,5 +1,5 @@
 
-package org.openmrs.mobile.models.retrofit;
+package org.openmrs.mobile.retrofit;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

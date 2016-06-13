@@ -14,13 +14,15 @@
 
 package org.openmrs.mobile.models;
 
+import org.openmrs.mobile.retrofit.PersonAddress;
+
 public class Location {
     private Long id;
     private String uuid;
     private String display;
     private String name;
     private String description;
-    private Address address;
+    private PersonAddress address;
     private String parentLocationUuid;
 
     public Location(String uuid, String display) {
@@ -72,11 +74,11 @@ public class Location {
         return description;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(PersonAddress address) {
         this.address = address;
     }
 
-    public Address getAddress() {
+    public PersonAddress getAddress() {
         return address;
     }
 

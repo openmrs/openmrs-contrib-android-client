@@ -257,9 +257,9 @@ public class RegisterPatientActivity extends ACBaseActivity {
             bdt = bdt.minusYears(yeardiff);
             bdt = bdt.minusMonths(mondiff);
             person.setBirthdateEstimated(true);
-            person.setBirthdate(bdt.toString());
+            person.setBirthdate(bdt.toDate());
         } else {
-            person.setBirthdate(bdt.toString());
+            person.setBirthdate(bdt.toDate());
         }
 
         final Patient patient = new Patient();

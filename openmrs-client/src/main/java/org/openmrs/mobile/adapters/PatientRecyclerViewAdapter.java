@@ -19,8 +19,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.ActionMode;
@@ -30,6 +28,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.openmrs.mobile.retrofit.Patient;
 import org.openmrs.mobile.utilities.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -39,11 +39,9 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.FindPatientsActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.activities.fragments.FindPatientInDatabaseFragment;
-import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -96,14 +94,11 @@ public class PatientRecyclerViewAdapter extends RecyclerView.Adapter<PatientRecy
         if (null != patient.getDisplay()) {
             holder.mDisplayName.setText(patient.getDisplay());
         }
-        if (null != patient.getGender()) {
-            holder.mGender.setText(patient.getGender());
+        if (null != patient.getPerson().getGender()) {
+            holder.mGender.setText(patient.getPerson().getGender());
         }
-        if (null != patient.getAge()) {
-            holder.mAge.setText(patient.getAge());
-        }
-        if(null!=patient.getBirthDate()) {
-            holder.mBirthDate.setText(DateUtils.convertTime(patient.getBirthDate()));
+        if(null!=patient.getPerson().getBirthdate()) {
+            holder.mBirthDate.setText(DateUtils.convertTime(patient.getPerson().getBirthdate().getTime()));
         }
         if (null != holder.mAvailableOfflineCheckbox) {
             setUpCheckBoxLogic(holder, patient);

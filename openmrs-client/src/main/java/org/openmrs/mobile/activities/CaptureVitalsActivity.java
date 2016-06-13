@@ -27,13 +27,13 @@ import org.openmrs.mobile.bundle.PatientListBundle;
 import org.openmrs.mobile.dao.FormsDAO;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FormsManager;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.FormsHelper;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
+import org.openmrs.mobile.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.ToastUtil;
+
 import java.util.List;
 
 public class CaptureVitalsActivity extends ACBaseActivity {

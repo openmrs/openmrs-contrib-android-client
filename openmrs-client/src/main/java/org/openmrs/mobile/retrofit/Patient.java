@@ -1,6 +1,7 @@
 
 package org.openmrs.mobile.retrofit;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;
@@ -9,6 +10,8 @@ import com.google.gson.annotations.SerializedName;
 public class Patient extends Resource {
 
     private boolean synced=false;
+
+    private Long id;
 
     @SerializedName("identifiers")
     @Expose
@@ -26,6 +29,14 @@ public class Patient extends Resource {
     @Expose
     private String resourceVersion;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     /**
      * 
      * @return
@@ -42,6 +53,14 @@ public class Patient extends Resource {
      */
     public void setIdentifiers(List<PatientIdentifier> identifiers) {
         this.identifiers = identifiers;
+    }
+
+    public PatientIdentifier getIdentifier() {
+        if (!identifiers.isEmpty()) {
+            return identifiers.get(0);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -107,5 +126,7 @@ public class Patient extends Resource {
     {
         this.synced=synced;
     }
+
+
 
 }

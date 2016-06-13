@@ -11,7 +11,7 @@ import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.adapters.PatientRecyclerViewAdapter;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.retrofit.Patient;
 import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;

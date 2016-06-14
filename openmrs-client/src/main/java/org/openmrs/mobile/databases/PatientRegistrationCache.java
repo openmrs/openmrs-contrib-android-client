@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.openmrs.mobile.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.Patient;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

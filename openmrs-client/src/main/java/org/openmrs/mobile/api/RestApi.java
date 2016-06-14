@@ -1,10 +1,10 @@
 package org.openmrs.mobile.api;
 
-import org.openmrs.mobile.retrofit.IdGenPatientIdentifiers;
-import org.openmrs.mobile.retrofit.Patient;
-import org.openmrs.mobile.retrofit.PatientIdentifier;
-import org.openmrs.mobile.retrofit.Resource;
-import org.openmrs.mobile.retrofit.Results;
+import org.openmrs.mobile.models.retrofit.IdGenPatientIdentifiers;
+import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.PatientIdentifier;
+import org.openmrs.mobile.models.retrofit.Resource;
+import org.openmrs.mobile.models.retrofit.Results;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

@@ -238,7 +238,8 @@
                         android:id="@+id/phoneNumberLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="invisible">
 
                         <TextView
                             android:id="@+id/patientDetailsPhoneLabel"

@@ -1,9 +1,9 @@
 
-package org.openmrs.mobile.retrofit;
+package org.openmrs.mobile.models.retrofit;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -17,7 +17,7 @@ public class Person {
     private String gender;
     @SerializedName("birthdate")
     @Expose
-    private Date birthdate;
+    private String birthdate;
     @SerializedName("birthdateEstimated")
     @Expose
     private boolean birthdateEstimated;
@@ -77,7 +77,7 @@ public class Person {
      * @return
      *     The birthdate
      */
-    public Date getBirthdate() {
+    public String getBirthdate() {
         return birthdate;
     }
 
@@ -86,7 +86,7 @@ public class Person {
      * @param birthdate
      *     The birthdate
      */
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 

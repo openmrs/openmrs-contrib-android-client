@@ -18,7 +18,7 @@ import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
-import org.openmrs.mobile.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.List;

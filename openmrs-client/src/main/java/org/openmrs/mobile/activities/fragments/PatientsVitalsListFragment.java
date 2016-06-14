@@ -28,7 +28,7 @@ import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.adapters.PatientHierarchyAdapter;
 import org.openmrs.mobile.bundle.PatientListBundle;
-import org.openmrs.mobile.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 

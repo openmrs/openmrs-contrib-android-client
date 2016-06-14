@@ -21,7 +21,7 @@ import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
-import org.openmrs.mobile.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.Patient;
 
 public class CheckVisitBeforeStartListener extends FindVisitsByPatientUUIDListener {
     private final CaptureVitalsActivity mCaller;

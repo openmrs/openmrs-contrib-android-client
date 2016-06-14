@@ -1,5 +1,5 @@
 
-package org.openmrs.mobile.retrofit;
+package org.openmrs.mobile.models.retrofit;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -86,6 +86,15 @@ public class PersonAddress {
      * @return
      *     The cityVillage
      */
+    public String getAddressString()
+    {
+        String addr="";
+        if(address1!=null)
+            addr+=address1+"\n";
+        if(address2!=null)
+            addr+=address2;
+        return addr;
+    }
     public String getCityVillage() {
         return cityVillage;
     }

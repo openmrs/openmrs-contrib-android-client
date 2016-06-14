@@ -21,14 +21,13 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.tables.PatientTable;
-import org.openmrs.mobile.retrofit.Patient;
-import org.openmrs.mobile.retrofit.PatientIdentifier;
-import org.openmrs.mobile.retrofit.Person;
-import org.openmrs.mobile.retrofit.PersonAddress;
-import org.openmrs.mobile.retrofit.PersonName;
+import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.PatientIdentifier;
+import org.openmrs.mobile.models.retrofit.Person;
+import org.openmrs.mobile.models.retrofit.PersonAddress;
+import org.openmrs.mobile.models.retrofit.PersonName;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class PatientDAO {
@@ -87,7 +86,7 @@ public class PatientDAO {
         person.getNames().add(personName);
 
         patient.getPerson().setGender(cursor.getString(cursor.getColumnIndex(PatientTable.Column.GENDER)));
-        patient.getPerson().setBirthdate(new Date(cursor.getLong(cursor.getColumnIndex(PatientTable.Column.BIRTH_DATE))));
+        patient.getPerson().setBirthdate(cursor.getString(cursor.getColumnIndex(PatientTable.Column.BIRTH_DATE)));
         patient.getPerson().getAddresses().add(cursorToAddress(cursor));
         return patient;
     }

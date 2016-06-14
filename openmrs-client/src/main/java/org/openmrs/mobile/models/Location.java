@@ -14,7 +14,7 @@
 
 package org.openmrs.mobile.models;
 
-import org.openmrs.mobile.retrofit.PersonAddress;
+import org.openmrs.mobile.models.retrofit.PersonAddress;
 
 public class Location {
     private Long id;

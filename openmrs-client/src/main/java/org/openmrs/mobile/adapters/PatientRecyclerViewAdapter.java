@@ -29,7 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.openmrs.mobile.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -89,17 +89,22 @@ public class PatientRecyclerViewAdapter extends RecyclerView.Adapter<PatientRecy
         patientDataArrayList.add(new PatientData(holder, patient, position));
 
         if (null != patient.getIdentifier()) {
-            holder.mIdentifier.setText("#" + patient.getIdentifier());
+            holder.mIdentifier.setText("#" + patient.getIdentifier().getIdentifier());
         }
-        if (null != patient.getDisplay()) {
-            holder.mDisplayName.setText(patient.getDisplay());
+        if (null != patient.getPerson().getName()) {
+            holder.mDisplayName.setText(patient.getPerson().getName().getNameString());
         }
         if (null != patient.getPerson().getGender()) {
             holder.mGender.setText(patient.getPerson().getGender());
         }
-        if(null!=patient.getPerson().getBirthdate()) {
-            holder.mBirthDate.setText(DateUtils.convertTime(patient.getPerson().getBirthdate().getTime()));
+        try{
+            holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
         }
+        catch (Exception e)
+        {
+            holder.mBirthDate.setText(" ");
+        }
+
         if (null != holder.mAvailableOfflineCheckbox) {
             setUpCheckBoxLogic(holder, patient);
         }

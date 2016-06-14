@@ -32,10 +32,10 @@ import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.databases.PatientRegistrationCache;
-import org.openmrs.mobile.retrofit.PersonAddress;
-import org.openmrs.mobile.retrofit.PersonName;
-import org.openmrs.mobile.retrofit.Patient;
-import org.openmrs.mobile.retrofit.Person;
+import org.openmrs.mobile.models.retrofit.PersonAddress;
+import org.openmrs.mobile.models.retrofit.PersonName;
+import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.Person;
 import org.openmrs.mobile.services.PatientRegisterService;
 
 import java.util.ArrayList;
@@ -257,9 +257,9 @@ public class RegisterPatientActivity extends ACBaseActivity {
             bdt = bdt.minusYears(yeardiff);
             bdt = bdt.minusMonths(mondiff);
             person.setBirthdateEstimated(true);
-            person.setBirthdate(bdt.toDate());
+            person.setBirthdate(bdt.toString());
         } else {
-            person.setBirthdate(bdt.toDate());
+            person.setBirthdate(bdt.toString());
         }
 
         final Patient patient = new Patient();

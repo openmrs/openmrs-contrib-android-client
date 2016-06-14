@@ -1,5 +1,5 @@
 
-package org.openmrs.mobile.retrofit;
+package org.openmrs.mobile.models.retrofit;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -11,7 +11,7 @@ public class PersonName {
     private String givenName;
     @SerializedName("middleName")
     @Expose
-    private String middleName;
+    private String middleName=" ";
     @SerializedName("familyName")
     @Expose
     private String familyName;
@@ -68,5 +68,13 @@ public class PersonName {
      */
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
+    }
+
+    public String getNameString()
+    {
+        if (middleName==null || middleName.equals("null"))
+            return givenName+" "+familyName;
+        else
+            return givenName+" "+middleName+" "+familyName;
     }
 }

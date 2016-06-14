@@ -16,11 +16,11 @@ import org.openmrs.mobile.api.SimpleDeferredObject;
 import org.openmrs.mobile.api.SimplePromise;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.PatientRegistrationCache;
-import org.openmrs.mobile.retrofit.IdGenPatientIdentifiers;
-import org.openmrs.mobile.retrofit.Patient;
-import org.openmrs.mobile.retrofit.PatientIdentifier;
-import org.openmrs.mobile.retrofit.Resource;
-import org.openmrs.mobile.retrofit.Results;
+import org.openmrs.mobile.models.retrofit.IdGenPatientIdentifiers;
+import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.PatientIdentifier;
+import org.openmrs.mobile.models.retrofit.Resource;
+import org.openmrs.mobile.models.retrofit.Results;
 
 import java.util.ArrayList;
 import java.util.List;

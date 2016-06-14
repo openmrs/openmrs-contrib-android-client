@@ -31,7 +31,7 @@ import org.openmrs.mobile.net.FormsManager;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.FormsHelper;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
-import org.openmrs.mobile.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.List;

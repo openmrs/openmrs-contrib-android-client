@@ -37,7 +37,7 @@ import org.openmrs.mobile.adapters.PatientRecyclerViewAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.net.FindPatientsManager;
 import org.openmrs.mobile.net.helpers.FindPatientsHelper;
-import org.openmrs.mobile.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.FontsUtil;
 import java.util.ArrayList;
 import java.util.List;

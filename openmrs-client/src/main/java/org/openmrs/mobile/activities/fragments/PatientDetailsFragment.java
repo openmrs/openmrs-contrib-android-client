@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
-import org.openmrs.mobile.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.StringUtils;
@@ -67,9 +67,9 @@ public class PatientDetailsFragment extends ACBaseFragment {
         } else {
             ((TextView) fragmentLayout.findViewById(R.id.patientDetailsGender)).setText("Female");
         }
-        ((TextView) fragmentLayout.findViewById(R.id.patientDetailsBirthDate)).setText(DateUtils.convertTime(mPatient.getPerson().getBirthdate().getTime()));
+        ((TextView) fragmentLayout.findViewById(R.id.patientDetailsBirthDate)).setText(DateUtils.convertTime(DateUtils.convertTime(mPatient.getPerson().getBirthdate())));
         if (null != mPatient.getPerson().getAddress()) {
-            showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.addressLayout), R.id.addressDetailsStreet, mPatient.getPerson().getAddress().toString());
+            showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.addressLayout), R.id.addressDetailsStreet, mPatient.getPerson().getAddress().getAddressString());
             showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.stateLayout), R.id.addressDetailsState, mPatient.getPerson().getAddress().getStateProvince());
             showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.countryLayout), R.id.addressDetailsCountry, mPatient.getPerson().getAddress().getCountry());
             showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.postalCodeLayout), R.id.addressDetailsPostalCode, mPatient.getPerson().getAddress().getPostalCode());

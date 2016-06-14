@@ -16,7 +16,7 @@ package org.openmrs.mobile.models.mappers;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.openmrs.mobile.retrofit.PersonAddress;
+import org.openmrs.mobile.models.retrofit.PersonAddress;
 
 public final class AddressMapper {
 

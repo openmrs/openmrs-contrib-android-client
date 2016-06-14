@@ -14,18 +14,13 @@
 
 package org.openmrs.mobile.models.mappers;
 
-import com.google.gson.Gson;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.retrofit.Patient;
-import org.openmrs.mobile.retrofit.PatientIdentifier;
-import org.openmrs.mobile.retrofit.Person;
-import org.openmrs.mobile.retrofit.PersonName;
-import org.openmrs.mobile.utilities.DateUtils;
-
-import java.util.Date;
+import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.PatientIdentifier;
+import org.openmrs.mobile.models.retrofit.Person;
+import org.openmrs.mobile.models.retrofit.PersonName;
 
 public final class PatientMapper {
 
@@ -47,7 +42,7 @@ public final class PatientMapper {
             patient.setUuid(personJSON.getString("uuid"));
             patient.getPerson().setGender(personJSON.getString("gender"));
 
-            patient.getPerson().setBirthdate(new Date(DateUtils.convertTime(personJSON.getString("birthdate"))));
+            patient.getPerson().setBirthdate(personJSON.getString("birthdate"));
             JSONObject namesJSON = personJSON.getJSONArray("names").getJSONObject(0);
 
             PersonName personName = new PersonName();

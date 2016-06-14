@@ -1,7 +1,6 @@
 
-package org.openmrs.mobile.retrofit;
+package org.openmrs.mobile.models.retrofit;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.annotations.Expose;

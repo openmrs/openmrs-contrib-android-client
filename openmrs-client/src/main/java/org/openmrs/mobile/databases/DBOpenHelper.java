@@ -30,7 +30,7 @@ import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Visit;
-import org.openmrs.mobile.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.Patient;
 
 public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     private static final int DATABASE_VERSION = 2;
@@ -96,7 +96,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(5, patient.getPerson().getName().getMiddleName(), patientStatement);
             bindString(6, patient.getPerson().getName().getFamilyName(), patientStatement);
             bindString(7, patient.getPerson().getGender(), patientStatement);
-            bindLong(8, patient.getPerson().getBirthdate().getTime(), patientStatement);
+            bindString(8, patient.getPerson().getBirthdate(), patientStatement);
             bindLong(9, null, patientStatement);
             bindString(10, null, patientStatement);
             bindString(11, null, patientStatement);
@@ -129,7 +129,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         newValues.put(PatientTable.Column.MIDDLE_NAME, patient.getPerson().getName().getMiddleName());
         newValues.put(PatientTable.Column.FAMILY_NAME, patient.getPerson().getName().getFamilyName());
         newValues.put(PatientTable.Column.GENDER, patient.getPerson().getGender());
-        newValues.put(PatientTable.Column.BIRTH_DATE, patient.getPerson().getBirthdate().getTime());
+        newValues.put(PatientTable.Column.BIRTH_DATE, patient.getPerson().getBirthdate());
         newValues.put(PatientTable.Column.DEATH_DATE, (Long) null);
         newValues.put(PatientTable.Column.CAUSE_OF_DEATH, (String) null);
         newValues.put(PatientTable.Column.AGE, (String) null);

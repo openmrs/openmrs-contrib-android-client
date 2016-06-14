@@ -20,7 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.openmrs.mobile.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -82,7 +82,7 @@ public class PatientHierarchyAdapter extends RecyclerView.Adapter<PatientHierarc
 
         });
 
-        holder.mBirthDate.setText(DateUtils.convertTime(patient.getPerson().getBirthdate().getTime()));
+        holder.mBirthDate.setText(DateUtils.convertTime(patient.getPerson().getBirthdate()).toString());
         new AnimationUtils().setAnimation(holder.mRowLayout,mContext,position);
     }
 

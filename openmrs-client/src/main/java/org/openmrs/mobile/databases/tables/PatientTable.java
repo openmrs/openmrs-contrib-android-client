@@ -13,7 +13,6 @@
  */
 
 package org.openmrs.mobile.databases.tables;
-
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.models.retrofit.Patient;
@@ -30,12 +29,13 @@ public class PatientTable extends Table<Patient> {
     private static final int INSERT_COLUMNS_COUNT = 18;
 
     @Override
-    public String crateTableDefinition() {
+    public String createTableDefinition() {
         return CREATE_TABLE + TABLE_NAME + "("
                 + Column.ID + PRIMARY_KEY
+                + Column.SYNCED + Column.Type.BOOLEAN
                 + Column.DISPLAY + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.UUID + Column.Type.TEXT_TYPE_NOT_NULL
-                + Column.IDENTIFIER + Column.Type.TEXT_TYPE_NOT_NULL
+                + Column.UUID + Column.Type.TEXT_TYPE_WITH_COMMA
+                + Column.IDENTIFIER + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.GIVEN_NAME + Column.Type.TEXT_TYPE_NOT_NULL
                 + Column.MIDDLE_NAME + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.FAMILY_NAME + Column.Type.TEXT_TYPE_NOT_NULL
@@ -49,15 +49,15 @@ public class PatientTable extends Table<Patient> {
                 + Column.POSTAL_CODE + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.COUNTRY + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.STATE + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.CITY + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.PHONE + Column.Type.TEXT_TYPE
+                + Column.CITY + Column.Type.TEXT_TYPE
                 + ");";
     }
 
     @Override
     public String insertIntoTableDefinition() {
         return INSERT_INTO + TABLE_NAME + "("
-                + Column.DISPLAY + Column.COMMA 
+                + Column.DISPLAY + Column.COMMA
+                + Column.SYNCED+ Column.COMMA
                 + Column.UUID + Column.COMMA
                 + Column.IDENTIFIER + Column.COMMA 
                 + Column.GIVEN_NAME + Column.COMMA
@@ -73,8 +73,7 @@ public class PatientTable extends Table<Patient> {
                 + Column.POSTAL_CODE + Column.COMMA 
                 + Column.COUNTRY + Column.COMMA
                 + Column.STATE + Column.COMMA 
-                + Column.CITY + Column.COMMA 
-                + Column.PHONE + ")"
+                + Column.CITY  + ")"
                 + values(INSERT_COLUMNS_COUNT);
     }
 
@@ -103,6 +102,7 @@ public class PatientTable extends Table<Patient> {
 
     public class Column extends MasterColumn {
         public static final String IDENTIFIER = "identifier";
+        public static final String SYNCED = "synced";
         public static final String GIVEN_NAME = "givenName";
         public static final String MIDDLE_NAME = "middleName";
         public static final String FAMILY_NAME = "familyName";
@@ -117,11 +117,10 @@ public class PatientTable extends Table<Patient> {
         public static final String COUNTRY = "country";
         public static final String STATE = "state";
         public static final String CITY = "city";
-        public static final String PHONE = "phone";
     }
 
     @Override
     public String toString() {
-        return TABLE_NAME + crateTableDefinition();
+        return TABLE_NAME + createTableDefinition();
     }
 }

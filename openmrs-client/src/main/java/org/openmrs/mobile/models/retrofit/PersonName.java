@@ -11,7 +11,7 @@ public class PersonName {
     private String givenName;
     @SerializedName("middleName")
     @Expose
-    private String middleName=" ";
+    private String middleName;
     @SerializedName("familyName")
     @Expose
     private String familyName;
@@ -69,6 +69,7 @@ public class PersonName {
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
     }
+
 
     public String getNameString()
     {

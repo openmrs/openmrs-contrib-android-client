@@ -71,6 +71,8 @@ public class PatientDAO {
         Person person = new Person();
         patient.setPerson(person);
 
+        patient.setSynced(Boolean.parseBoolean(PatientTable.Column.SYNCED));
+
         patient.setId(cursor.getLong(cursor.getColumnIndex(PatientTable.Column.ID)));
         patient.setDisplay(cursor.getString(cursor.getColumnIndex(PatientTable.Column.DISPLAY)));
         patient.setUuid(cursor.getString(cursor.getColumnIndex(PatientTable.Column.UUID)));
@@ -167,6 +169,7 @@ public class PatientDAO {
         personAddress.setPostalCode(cursor.getString(postalColumnIndex));
         personAddress.setCountry( cursor.getString(countryColumnIndex));
         personAddress.setStateProvince(cursor.getString(stateColumnIndex));
+        personAddress.setCityVillage(cursor.getString(cityColumnIndex));
 
         return personAddress;
     }

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
   ~ compliance with the License. You may obtain a copy of the License at
@@ -43,16 +42,11 @@
     <string name="atleastone">Fill at least one field</string>
 
 
-
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="dob_hint">Date of Birth</string>
     <string name="estyr">Estimated Years</string>
     <string name="estmonth">Estimated Months</string>
-
-
-
-
 
 
     <!-- Url dialog -->
@@ -150,6 +144,8 @@
     <string name="dashboard_logged_as">logged as %1$s</string>
     <string name="dashboard_visits_icon_label">Active Visits</string>
     <string name="dashboard_vitals_icon_label">Capture Vitals</string>
+    <string name="dashboard_forms_icon_label">Form Entry</string>
+
     <!-- find_patients_row layout-->
     <string name="find_patients_row_checkbox_download_label">Download</string>
     <string name="find_patients_row_checkbox_available_offline_label">Available offline</string>
@@ -180,6 +176,8 @@
     <string name="patient_country_label">Country</string>
     <!-- Find Active visit activity -->
     <string name="action_active_visits">Active Visits</string>
+    <string name="action_form_entry">Form Entry</string>
+
     <string name="search_visits_no_results">No visits in database</string>
     <!-- fragment_patient_visits layout -->
     <string name="active_visit_label">Active visit</string>
@@ -209,4 +207,6 @@
     <string name="save_upload_button">Save and Send Vitals</string>
     <string name="forms_sent_successfully">Form has been sent successfully.</string>
     <string name="empty_visits_list">Patient has no visits yet.</string>
+    <string name="title_activity_form_create">FormCreateActivity</string>
+    <string name="page_format">Hello World from section: %1$d</string>
 </resources>

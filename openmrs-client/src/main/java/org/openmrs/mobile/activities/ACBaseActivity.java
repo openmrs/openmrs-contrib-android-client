@@ -326,4 +326,5 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     public AuthorizationManager getAuthorizationManager() {
         return mAuthorizationManager;
     }
+
 }

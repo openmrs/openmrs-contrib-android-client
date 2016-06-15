@@ -14,12 +14,13 @@
 
 package org.openmrs.mobile.models;
 
-import java.io.Serializable;
+import org.openmrs.mobile.models.retrofit.Encounter;
+import org.openmrs.mobile.models.retrofit.Resource;
+
 import java.util.List;
 
-public class Visit implements Serializable {
+public class Visit extends Resource {
     private Long id;
-    private String uuid;
     private Long patientID;
     private String visitType;
     private String visitPlace;
@@ -36,14 +37,6 @@ public class Visit implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public String getVisitType() {

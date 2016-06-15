@@ -45,6 +45,7 @@ public class PatientService extends IntentService {
         return syncPatient(patient);
     }
 
+
     public SimplePromise<Patient> syncPatient(final Patient patient) {
         final SimpleDeferredObject<Patient> deferred = new SimpleDeferredObject<>();
 

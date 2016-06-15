@@ -20,8 +20,9 @@ import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.tables.EncounterTable;
 import org.openmrs.mobile.databases.tables.ObservationTable;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Observation;
+import org.openmrs.mobile.models.retrofit.Encounter;
+import org.openmrs.mobile.models.retrofit.Observation;
+import org.openmrs.mobile.utilities.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +93,7 @@ public class EncounterDAO {
                     encounter.setId(id);
                     encounter.setUuid(uuid);
                     encounter.setDisplay(display);
-                    encounter.setEncounterDatetime(datetime);
+                    encounter.setEncounterDatetime(DateUtils.convertTime(datetime,DateUtils.OPEN_MRS_REQUEST_FORMAT));
                     encounter.setEncounterType(Encounter.EncounterType.VITALS);
                     encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
                 }
@@ -133,7 +134,7 @@ public class EncounterDAO {
                     encounter.setVisitID(visitID);
                     encounter.setUuid(uuid);
                     encounter.setDisplay(display);
-                    encounter.setEncounterDatetime(datetime);
+                    encounter.setEncounterDatetime(DateUtils.convertTime(datetime,DateUtils.OPEN_MRS_REQUEST_FORMAT));
                     encounter.setEncounterType(type);
                     encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
                     encounters.add(encounter);
@@ -170,7 +171,7 @@ public class EncounterDAO {
                     encounter.setId(id);
                     encounter.setUuid(uuid);
                     encounter.setDisplay(display);
-                    encounter.setEncounterDatetime(datetime);
+                    encounter.setEncounterDatetime(DateUtils.convertTime(datetime,DateUtils.OPEN_MRS_REQUEST_FORMAT));
                     encounter.setEncounterType(type);
                     encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
                     encounters.add(encounter);

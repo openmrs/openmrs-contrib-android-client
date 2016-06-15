@@ -15,11 +15,14 @@
 package org.openmrs.mobile.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.openmrs.mobile.activities.FormListActivity;
+import org.openmrs.mobile.activities.PatientListActivity;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.AnimationUtils;
 import android.widget.ImageView;
@@ -27,7 +30,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.CaptureVitalsActivity;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -61,10 +63,10 @@ public class PatientHierarchyAdapter extends RecyclerView.Adapter<PatientHierarc
             holder.mVisitStatus.setText(mContext.getString(R.string.active_visit_label_capture_vitals));
         }
         if (null != patient.getIdentifier()) {
-            holder.mIdentifier.setText("#" + patient.getIdentifier());
+            holder.mIdentifier.setText("#" + patient.getIdentifier().getIdentifier());
         }
         if (null != patient.getDisplay()) {
-            holder.mDisplayName.setText(patient.getDisplay());
+            holder.mDisplayName.setText(patient.getPerson().getName().getNameString());
         }
         if (null != patient.getPerson().getGender()) {
             holder.mGender.setText(patient.getPerson().getGender());
@@ -73,16 +75,16 @@ public class PatientHierarchyAdapter extends RecyclerView.Adapter<PatientHierarc
         holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mContext instanceof CaptureVitalsActivity) {
-                    ((CaptureVitalsActivity) mContext).startFormEntry(mItems.get(position).getUuid(), mItems.get(position).getId());
+                if (mContext instanceof PatientListActivity) {
+                    ((PatientListActivity) mContext).startFormEntry(mItems.get(position).getUuid(), mItems.get(position).getId());
                 } else {
-                    throw new IllegalStateException("Current context is not an instance of CaptureVitalsActivity.class");
+                    throw new IllegalStateException("Current context is not an instance of PatientListActivity.class");
                 }
             }
 
         });
 
-        holder.mBirthDate.setText(DateUtils.convertTime(patient.getPerson().getBirthdate()).toString());
+        holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
         new AnimationUtils().setAnimation(holder.mRowLayout,mContext,position);
     }
 

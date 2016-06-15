@@ -18,9 +18,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Observation;
-import org.openmrs.mobile.utilities.DateUtils;
+import org.openmrs.mobile.models.retrofit.Encounter;
+import org.openmrs.mobile.models.retrofit.Observation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +96,7 @@ public final class ObservationMapper {
             observationList.add(observation);
         }
         encounter.setUuid(encounterJSON.getString(UUID_KEY));
-        encounter.setEncounterDatetime(DateUtils.convertTime(encounterJSON.getString("encounterDatetime")));
+        encounter.setEncounterDatetime(encounterJSON.getString("encounterDatetime"));
         encounter.setEncounterType(Encounter.EncounterType.VITALS);
         encounter.setDisplay(encounterJSON.getString(DISPLAY_KEY));
         encounter.setObservations(observationList);
@@ -118,7 +117,7 @@ public final class ObservationMapper {
             if (obsArray.length() - 1 == i) {
                 JSONObject encounterJSON = obsObject.getJSONObject("encounter");
                 encounter.setUuid(encounterJSON.getString(UUID_KEY));
-                encounter.setEncounterDatetime(DateUtils.convertTime(encounterJSON.getString("encounterDatetime")));
+                encounter.setEncounterDatetime(encounterJSON.getString("encounterDatetime"));
                 encounter.setEncounterType(Encounter.EncounterType.VITALS);
                 encounter.setDisplay(encounterJSON.getString(DISPLAY_KEY));
                 encounter.setObservations(observationList);

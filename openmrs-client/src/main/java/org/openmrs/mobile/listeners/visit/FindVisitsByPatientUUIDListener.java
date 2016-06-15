@@ -22,7 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.CaptureVitalsActivity;
+import org.openmrs.mobile.activities.PatientListActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
@@ -38,7 +38,7 @@ public class FindVisitsByPatientUUIDListener extends GeneralErrorListener implem
     protected final long mPatientID;
     protected PatientDashboardActivity mCallerPDA;
     protected ACBaseActivity mCallerAdapter;
-    protected CaptureVitalsActivity callerActivity;
+    protected PatientListActivity callerActivity;
     private final VisitDAO visitDAO = new VisitDAO();
     private boolean mErrorOccurred;
 
@@ -48,8 +48,8 @@ public class FindVisitsByPatientUUIDListener extends GeneralErrorListener implem
         if (callerAdapter instanceof PatientDashboardActivity) {
             mCallerPDA = (PatientDashboardActivity) callerAdapter;
         }
-        else if (callerAdapter instanceof CaptureVitalsActivity) {
-            callerActivity = (CaptureVitalsActivity) callerAdapter;
+        else if (callerAdapter instanceof PatientListActivity) {
+            callerActivity = (PatientListActivity) callerAdapter;
         }
         else {
             mCallerAdapter = callerAdapter;

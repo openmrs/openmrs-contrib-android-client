@@ -20,7 +20,7 @@ import com.android.volley.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.CaptureVitalsActivity;
+import org.openmrs.mobile.activities.PatientListActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
@@ -33,14 +33,14 @@ public class StartVisitListener extends GeneralErrorListener implements Response
     private final String mPatientUUID;
     private final long mPatientID;
     private PatientDashboardActivity mCallerPDA;
-    private CaptureVitalsActivity mCallerCVA;
+    private PatientListActivity mCallerCVA;
 
     public StartVisitListener(String patientUUD, long patientID, PatientDashboardActivity callerPDA) {
         this(patientUUD, patientID);
         mCallerPDA = callerPDA;
     }
 
-    public StartVisitListener(String patientUUD, long patientID, CaptureVitalsActivity callerCVA) {
+    public StartVisitListener(String patientUUD, long patientID, PatientListActivity callerCVA) {
         this(patientUUD, patientID);
         mCallerCVA = callerCVA;
     }
@@ -71,7 +71,7 @@ public class StartVisitListener extends GeneralErrorListener implements Response
             } else {
                 mCallerCVA.dismissProgressDialog(false, R.string.start_visit_successful,
                         R.string.start_visit_error);
-                mCallerCVA.startCheckedFormEntryForResult(mPatientUUID);
+                mCallerCVA.startCheckedFormEntryForResult();
             }
         } catch (JSONException e) {
             mLogger.d(e.toString());

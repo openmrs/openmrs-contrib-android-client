@@ -173,13 +173,13 @@
                     </RelativeLayout>
                 </FrameLayout>
                 <FrameLayout
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="@drawable/card"
                     android:layout_marginTop="10dp"
-                    android:onClick="onCaptureVitalsCallback"
+                    android:onClick="onFormsCallback"
                     android:clickable="false">
 
                     <RelativeLayout
@@ -198,14 +198,14 @@
                             android:contentDescription="@string/dashboard_registry_icon_label" />
 
                         <TextView
-                            android:id="@+id/captureVitalsLabel"
+                            android:id="@+id/FormsLabel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/captureVitalsButton"
                             android:layout_centerHorizontal="true"
                             android:layout_gravity="center"
                             android:paddingTop="10dp"
-                            android:text="@string/dashboard_vitals_icon_label"
+                            android:text="@string/dashboard_forms_icon_label"
                             android:textSize="18sp"/>
                     </RelativeLayout>
                 </FrameLayout>

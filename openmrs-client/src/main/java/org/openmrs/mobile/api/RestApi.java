@@ -1,10 +1,15 @@
 package org.openmrs.mobile.api;
 
+import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.retrofit.IdGenPatientIdentifiers;
+import org.openmrs.mobile.models.retrofit.Obscreate;
+import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.PatientIdentifier;
 import org.openmrs.mobile.models.retrofit.Resource;
 import org.openmrs.mobile.models.retrofit.Results;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -28,5 +33,14 @@ public interface RestApi {
     @POST("patient")
     Call<Patient> createPatient(
             @Body Patient patient);
+
+    @POST("obs")
+    Call<Observation> createObs(@Body Obscreate obscreate);
+
+    @POST("encounter")
+    Call<Encounter> createEncounter(@Body Encounter encounter);
+
+    @GET("encountertype")
+    Call<Results<Resource>> getEncounterTypes();
 
 }

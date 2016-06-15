@@ -16,7 +16,7 @@ package org.openmrs.mobile.databases.tables;
 
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
-import org.openmrs.mobile.models.Observation;
+import org.openmrs.mobile.models.retrofit.Observation;
 
 public class ObservationTable extends Table<Observation> {
     public static final String TABLE_NAME = "observations";

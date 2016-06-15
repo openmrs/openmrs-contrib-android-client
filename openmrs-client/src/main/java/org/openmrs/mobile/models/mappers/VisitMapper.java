@@ -17,8 +17,8 @@ package org.openmrs.mobile.models.mappers;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Observation;
+import org.openmrs.mobile.models.retrofit.Encounter;
+import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.DateUtils;
 
@@ -53,7 +53,7 @@ public final class VisitMapper {
                 encounter.setDisplay(getStringFromObject(encounterJSONObject,DISPLAY_KEY));
                 encounter.setUuid(getStringFromObject(encounterJSONObject,"uuid"));
                 encounter.setEncounterType(Encounter.EncounterType.getType(getStringFromObject(getJSONObject(encounterJSONObject,"encounterType"),DISPLAY_KEY)));
-                encounter.setEncounterDatetime(DateUtils.convertTime(getStringFromObject(encounterJSONObject,"encounterDatetime")));
+                encounter.setEncounterDatetime(getStringFromObject(encounterJSONObject,"encounterDatetime"));
                 JSONArray obsJSONArray = encounterJSONObject.getJSONArray("obs");
                 for (int j = 0; j < obsJSONArray.length(); j++) {
                     Observation observation = new Observation();

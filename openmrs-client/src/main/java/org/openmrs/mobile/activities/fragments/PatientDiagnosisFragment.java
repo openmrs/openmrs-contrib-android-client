@@ -12,8 +12,8 @@ import android.widget.TextView;
 import org.openmrs.mobile.R;
 
 import org.openmrs.mobile.dao.EncounterDAO;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Observation;
+import org.openmrs.mobile.models.retrofit.Encounter;
+import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 

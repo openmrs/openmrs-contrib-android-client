@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
 import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
+import org.openmrs.mobile.activities.fragments.FormPageFragment;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
@@ -290,4 +291,5 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     public AuthorizationManager getAuthorizationManager() {
         return mAuthorizationManager;
     }
+
 }

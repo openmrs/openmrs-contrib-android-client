@@ -46,6 +46,7 @@ public class PatientService extends IntentService {
         return syncPatient(patient);
     }
 
+
     public SimplePromise<Patient> syncPatient(final Patient patient) {
         final SimpleDeferredObject<Patient> deferred = new SimpleDeferredObject<>();
 
@@ -112,7 +113,6 @@ public class PatientService extends IntentService {
             final ListIterator<Patient> it = patientList.listIterator();
             while (it.hasNext()) {
                 final Patient patient=it.next();
-                final Long pid=patient.getId();
                 if(!patient.isSynced()) {
                     syncPatient(patient);
                 }

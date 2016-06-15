@@ -21,8 +21,11 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.tables.PatientTable;
-import org.openmrs.mobile.models.Address;
-import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.PatientIdentifier;
+import org.openmrs.mobile.models.retrofit.Person;
+import org.openmrs.mobile.models.retrofit.PersonAddress;
+import org.openmrs.mobile.models.retrofit.PersonName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,20 +68,26 @@ public class PatientDAO {
 
     private Patient cursorToPatient(Cursor cursor) {
         Patient patient = new Patient();
+        Person person = new Person();
+        patient.setPerson(person);
+
         patient.setId(cursor.getLong(cursor.getColumnIndex(PatientTable.Column.ID)));
         patient.setDisplay(cursor.getString(cursor.getColumnIndex(PatientTable.Column.DISPLAY)));
         patient.setUuid(cursor.getString(cursor.getColumnIndex(PatientTable.Column.UUID)));
-        patient.setIdentifier(cursor.getString(cursor.getColumnIndex(PatientTable.Column.IDENTIFIER)));
-        patient.setGivenName(cursor.getString(cursor.getColumnIndex(PatientTable.Column.GIVEN_NAME)));
-        patient.setMiddleName(cursor.getString(cursor.getColumnIndex(PatientTable.Column.MIDDLE_NAME)));
-        patient.setFamilyName(cursor.getString(cursor.getColumnIndex(PatientTable.Column.FAMILY_NAME)));
-        patient.setGender(cursor.getString(cursor.getColumnIndex(PatientTable.Column.GENDER)));
-        patient.setBirthDate(cursor.getLong(cursor.getColumnIndex(PatientTable.Column.BIRTH_DATE)));
-        patient.setDeathDate(cursor.getLong(cursor.getColumnIndex(PatientTable.Column.DEATH_DATE)));
-        patient.setCauseOfDeath(cursor.getString(cursor.getColumnIndex(PatientTable.Column.CAUSE_OF_DEATH)));
-        patient.setAge(cursor.getString(cursor.getColumnIndex(PatientTable.Column.AGE)));
-        patient.setPhoneNumber(cursor.getString(cursor.getColumnIndex(PatientTable.Column.PHONE)));
-        patient.setAddress(cursorToAddress(cursor));
+
+        PatientIdentifier patientIdentifier = new PatientIdentifier();
+        patientIdentifier.setIdentifier(cursor.getString(cursor.getColumnIndex(PatientTable.Column.IDENTIFIER)));
+        patient.getIdentifiers().add(patientIdentifier);
+
+        PersonName personName = new PersonName();
+        personName.setGivenName(cursor.getString(cursor.getColumnIndex(PatientTable.Column.GIVEN_NAME)));
+        personName.setMiddleName(cursor.getString(cursor.getColumnIndex(PatientTable.Column.MIDDLE_NAME)));
+        personName.setFamilyName(cursor.getString(cursor.getColumnIndex(PatientTable.Column.FAMILY_NAME)));
+        person.getNames().add(personName);
+
+        patient.getPerson().setGender(cursor.getString(cursor.getColumnIndex(PatientTable.Column.GENDER)));
+        patient.getPerson().setBirthdate(cursor.getString(cursor.getColumnIndex(PatientTable.Column.BIRTH_DATE)));
+        patient.getPerson().getAddresses().add(cursorToAddress(cursor));
         return patient;
     }
 
@@ -144,15 +153,21 @@ public class PatientDAO {
         return patient;
     }
 
-    private Address cursorToAddress(Cursor cursor) {
+    private PersonAddress cursorToAddress(Cursor cursor) {
         int address1ColumnIndex = cursor.getColumnIndex(PatientTable.Column.ADDRESS_1);
         int address2ColumnIndex = cursor.getColumnIndex(PatientTable.Column.ADDRESS_2);
         int postalColumnIndex = cursor.getColumnIndex(PatientTable.Column.POSTAL_CODE);
         int countryColumnIndex = cursor.getColumnIndex(PatientTable.Column.COUNTRY);
         int stateColumnIndex = cursor.getColumnIndex(PatientTable.Column.STATE);
         int cityColumnIndex = cursor.getColumnIndex(PatientTable.Column.CITY);
-        return new Address(cursor.getString(address1ColumnIndex), cursor.getString(address2ColumnIndex),
-                cursor.getString(postalColumnIndex), cursor.getString(cityColumnIndex),
-                cursor.getString(countryColumnIndex), cursor.getString(stateColumnIndex));
+
+        PersonAddress personAddress = new PersonAddress();
+        personAddress.setAddress1(cursor.getString(address1ColumnIndex));
+        personAddress.setAddress2(cursor.getString(address2ColumnIndex));
+        personAddress.setPostalCode(cursor.getString(postalColumnIndex));
+        personAddress.setCountry( cursor.getString(countryColumnIndex));
+        personAddress.setStateProvince(cursor.getString(stateColumnIndex));
+
+        return personAddress;
     }
 }

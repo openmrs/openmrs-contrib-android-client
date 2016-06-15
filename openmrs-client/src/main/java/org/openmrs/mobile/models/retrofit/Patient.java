@@ -8,6 +8,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class Patient extends Resource {
 
+    private boolean synced=false;
+
+    private Long id;
+
     @SerializedName("identifiers")
     @Expose
     private List<PatientIdentifier> identifiers = new ArrayList<PatientIdentifier>();
@@ -23,6 +27,14 @@ public class Patient extends Resource {
     @SerializedName("resourceVersion")
     @Expose
     private String resourceVersion;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     /**
      * 
@@ -40,6 +52,14 @@ public class Patient extends Resource {
      */
     public void setIdentifiers(List<PatientIdentifier> identifiers) {
         this.identifiers = identifiers;
+    }
+
+    public PatientIdentifier getIdentifier() {
+        if (!identifiers.isEmpty()) {
+            return identifiers.get(0);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -95,5 +115,17 @@ public class Patient extends Resource {
     public void setResourceVersion(String resourceVersion) {
         this.resourceVersion = resourceVersion;
     }
+
+    public boolean getSynced()
+    {
+        return synced;
+    }
+
+    public void setSynced(boolean synced)
+    {
+        this.synced=synced;
+    }
+
+
 
 }

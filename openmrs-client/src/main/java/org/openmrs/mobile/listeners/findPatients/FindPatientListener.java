@@ -22,10 +22,10 @@ import org.json.JSONObject;
 import org.openmrs.mobile.activities.FindPatientsSearchActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
-import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.mappers.PatientMapper;
 import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.net.GeneralErrorListener;
+import org.openmrs.mobile.models.retrofit.Patient;
 
 import java.util.ArrayList;
 import java.util.List;

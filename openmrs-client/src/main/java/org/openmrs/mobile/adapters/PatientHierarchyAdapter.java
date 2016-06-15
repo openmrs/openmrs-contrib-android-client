@@ -19,6 +19,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,7 +29,6 @@ import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.CaptureVitalsActivity;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
@@ -65,11 +66,8 @@ public class PatientHierarchyAdapter extends RecyclerView.Adapter<PatientHierarc
         if (null != patient.getDisplay()) {
             holder.mDisplayName.setText(patient.getDisplay());
         }
-        if (null != patient.getGender()) {
-            holder.mGender.setText(patient.getGender());
-        }
-        if (null != patient.getAge()) {
-            holder.mAge.setText(patient.getAge());
+        if (null != patient.getPerson().getGender()) {
+            holder.mGender.setText(patient.getPerson().getGender());
         }
 
         holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +82,7 @@ public class PatientHierarchyAdapter extends RecyclerView.Adapter<PatientHierarc
 
         });
 
-        holder.mBirthDate.setText(DateUtils.convertTime(patient.getBirthDate()));
+        holder.mBirthDate.setText(DateUtils.convertTime(patient.getPerson().getBirthdate()).toString());
         new AnimationUtils().setAnimation(holder.mRowLayout,mContext,position);
     }
 

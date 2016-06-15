@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
-import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.StringUtils;
@@ -62,20 +62,19 @@ public class PatientDetailsFragment extends ACBaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragmentLayout = inflater.inflate(R.layout.fragment_patient_details, null, false);
 
-        if (("M").equals(mPatient.getGender())) {
+        if (("M").equals(mPatient.getPerson().getGender())) {
             ((TextView) fragmentLayout.findViewById(R.id.patientDetailsGender)).setText("Male");
         } else {
             ((TextView) fragmentLayout.findViewById(R.id.patientDetailsGender)).setText("Female");
         }
-        ((TextView) fragmentLayout.findViewById(R.id.patientDetailsBirthDate)).setText(DateUtils.convertTime(mPatient.getBirthDate()));
-        if (null != mPatient.getAddress()) {
-            showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.addressLayout), R.id.addressDetailsStreet, mPatient.getAddress().toString());
-            showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.stateLayout), R.id.addressDetailsState, mPatient.getAddress().getState());
-            showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.countryLayout), R.id.addressDetailsCountry, mPatient.getAddress().getCountry());
-            showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.postalCodeLayout), R.id.addressDetailsPostalCode, mPatient.getAddress().getPostalCode());
-            showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.cityLayout), R.id.addressDetailsCity, mPatient.getAddress().getCityVillage());
+        ((TextView) fragmentLayout.findViewById(R.id.patientDetailsBirthDate)).setText(DateUtils.convertTime(DateUtils.convertTime(mPatient.getPerson().getBirthdate())));
+        if (null != mPatient.getPerson().getAddress()) {
+            showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.addressLayout), R.id.addressDetailsStreet, mPatient.getPerson().getAddress().getAddressString());
+            showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.stateLayout), R.id.addressDetailsState, mPatient.getPerson().getAddress().getStateProvince());
+            showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.countryLayout), R.id.addressDetailsCountry, mPatient.getPerson().getAddress().getCountry());
+            showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.postalCodeLayout), R.id.addressDetailsPostalCode, mPatient.getPerson().getAddress().getPostalCode());
+            showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.cityLayout), R.id.addressDetailsCity, mPatient.getPerson().getAddress().getCityVillage());
         }
-        showAddressDetailsViewElement(fragmentLayout.findViewById(R.id.phoneNumberLayout), R.id.patientDetailsPhone, mPatient.getPhoneNumber());
 
         FontsUtil.setFont((ViewGroup) fragmentLayout);
         return fragmentLayout;

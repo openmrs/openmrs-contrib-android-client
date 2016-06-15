@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -27,36 +28,19 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.jdeferred.DoneCallback;
-import org.jdeferred.android.AndroidDeferredManager;
-import org.jdeferred.multiple.MultipleResults;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.api.SimpleDeferredObject;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.ServiceGenerator;
-import org.openmrs.mobile.api.SimplePromise;
+import org.openmrs.mobile.databases.PatientRegistrationCache;
 import org.openmrs.mobile.models.retrofit.PersonAddress;
-import org.openmrs.mobile.models.retrofit.IdGenPatientIdentifiers;
-import org.openmrs.mobile.models.retrofit.PatientIdentifier;
 import org.openmrs.mobile.models.retrofit.PersonName;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.Person;
-import org.openmrs.mobile.models.retrofit.Resource;
-import org.openmrs.mobile.models.retrofit.Results;
+import org.openmrs.mobile.services.PatientRegisterService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegisterPatientActivity extends ACBaseActivity {
 
@@ -85,6 +69,9 @@ public class RegisterPatientActivity extends ACBaseActivity {
     TextView doberror;
     TextView gendererror;
     TextView addrerror;
+
+    PatientRegistrationCache cache=new PatientRegistrationCache(RegisterPatientActivity.this);
+
 
 
     @Override
@@ -224,104 +211,12 @@ public class RegisterPatientActivity extends ACBaseActivity {
 
         if(ferr && lerr && doberr && adderr && gerr)
         {
-            pd = new ProgressDialog(RegisterPatientActivity.this);
-            pd.setMessage("Please wait");
-            pd.show();
             registerPatient();
         }
         else{
             ScrollView scrollView=(ScrollView)findViewById(R.id.scrollView);
             scrollView.smoothScrollTo(0, scrollView.getPaddingTop());
         }
-    }
-
-    SimplePromise<String> getLocationUuid() {
-        final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
-
-        RestApi apiService =
-                ServiceGenerator.createService(RestApi.class);
-        Call<Results<Resource>> call = apiService.getLocations();
-        call.enqueue(new Callback<Results<Resource>>() {
-            @Override
-            public void onResponse(Call<Results<Resource>> call, Response<Results<Resource>> response) {
-                Results<Resource> locationList = response.body();
-                for (Resource result : locationList.getResults()) {
-                    if ((result.getDisplay().trim()).equalsIgnoreCase((mOpenMRS.getLocation().trim()))) {
-                        String locationUuid = result.getUuid();
-                        deferred.resolve(locationUuid);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Results<Resource>> call, Throwable t) {
-                Toast.makeText(RegisterPatientActivity.this,t.toString(),Toast.LENGTH_SHORT).show();
-                deferred.reject(t);
-            }
-
-        });
-
-        return deferred.promise();
-    }
-
-    SimplePromise<String> getIdGenPatientIdentifier() {
-        final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
-
-        String IDGEN_BASE_URL= mOpenMRS.getServerUrl()+'/';
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(IDGEN_BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        RestApi apiService =
-                retrofit.create(RestApi.class);
-        Call<IdGenPatientIdentifiers> call = apiService.getPatientIdentifiers(mOpenMRS.getUsername(),mOpenMRS.getPassword());
-        call.enqueue(new Callback<IdGenPatientIdentifiers>() {
-            @Override
-            public void onResponse(Call<IdGenPatientIdentifiers> call, Response<IdGenPatientIdentifiers> response) {
-                IdGenPatientIdentifiers idList = response.body();
-                deferred.resolve(idList.getIdentifiers().get(0));
-            }
-
-            @Override
-            public void onFailure(Call<IdGenPatientIdentifiers> call, Throwable t) {
-                Toast.makeText(RegisterPatientActivity.this,t.toString(),Toast.LENGTH_SHORT).show();
-                deferred.reject(t);
-            }
-
-        });
-
-        return deferred.promise();
-    }
-
-
-    SimplePromise<String> getPatientIdentifierTypeUuid() {
-        final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
-
-        RestApi apiService =
-                ServiceGenerator.createService(RestApi.class);
-        Call<Results<PatientIdentifier>> call = apiService.getIdentifierTypes();
-        call.enqueue(new Callback<Results<PatientIdentifier>>() {
-            @Override
-            public void onResponse(Call<Results<PatientIdentifier>> call, Response<Results<PatientIdentifier>> response) {
-                Results<PatientIdentifier> idresList = response.body();
-                for (Resource result : idresList.getResults()) {
-                    if(result.getDisplay().equals("OpenMRS ID")) {
-                        deferred.resolve(result.getUuid());
-                        return;
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Results<PatientIdentifier>> call, Throwable t) {
-                Toast.makeText(RegisterPatientActivity.this,t.toString(),Toast.LENGTH_SHORT).show();
-                deferred.reject(t);
-            }
-
-        });
-
-        return deferred.promise();
     }
 
     void registerPatient() {
@@ -369,42 +264,10 @@ public class RegisterPatientActivity extends ACBaseActivity {
 
         final Patient patient = new Patient();
         patient.setPerson(person);
-
-        AndroidDeferredManager dm = new AndroidDeferredManager();
-        dm.when(getLocationUuid(), getIdGenPatientIdentifier(), getPatientIdentifierTypeUuid())
-                .done(new DoneCallback<MultipleResults>() {
-                    @Override
-                    public void onDone(MultipleResults results) {
-                        List<PatientIdentifier> identifiers = new ArrayList<>();
-
-                        PatientIdentifier identifier=new PatientIdentifier();
-                        identifier.setLocation((String) results.get(0).getResult());
-                        identifier.setIdentifier((String) results.get(1).getResult());
-                        identifier.setIdentifierType((String) results.get(2).getResult());
-                        identifiers.add(identifier);
-
-                        patient.setIdentifiers(identifiers);
-
-                        RestApi apiService =
-                                ServiceGenerator.createService(RestApi.class);
-                        Call<Patient> call = apiService.createPatient(patient);
-                        call.enqueue(new Callback<Patient>() {
-                            @Override
-                            public void onResponse(Call<Patient> call, Response<Patient> response) {
-                                Patient newPatient = response.body();
-                                Toast.makeText(RegisterPatientActivity.this,"Patient created with UUID "+ newPatient.getUuid()
-                                        ,Toast.LENGTH_SHORT).show();
-                                RegisterPatientActivity.this.finish();
-                                pd.dismiss();
-                            }
-
-                            @Override
-                            public void onFailure(Call<Patient> call, Throwable t) {
-                                Toast.makeText(RegisterPatientActivity.this,t.toString(),Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                });
+        cache.addPatient(patient);
+        Intent intent = new Intent(this, PatientRegisterService.class);
+        startService(intent);
+        RegisterPatientActivity.this.finish();
     }
 
     private String getInput(EditText e) {

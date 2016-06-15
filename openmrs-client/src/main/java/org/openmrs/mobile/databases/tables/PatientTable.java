@@ -16,7 +16,7 @@ package org.openmrs.mobile.databases.tables;
 
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
-import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.retrofit.Patient;
 
 public class PatientTable extends Table<Patient> {
     public static final String TABLE_NAME = "patients";

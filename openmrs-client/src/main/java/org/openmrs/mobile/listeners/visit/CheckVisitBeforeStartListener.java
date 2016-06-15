@@ -15,14 +15,13 @@
 package org.openmrs.mobile.listeners.visit;
 
 import org.json.JSONObject;
-import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.CaptureVitalsActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
+import org.openmrs.mobile.models.retrofit.Patient;
 
 public class CheckVisitBeforeStartListener extends FindVisitsByPatientUUIDListener {
     private final CaptureVitalsActivity mCaller;

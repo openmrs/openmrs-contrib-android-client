@@ -3,6 +3,7 @@ package org.openmrs.mobile.models.retrofit;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -34,6 +35,14 @@ public class Person {
      */
     public List<PersonName> getNames() {
         return names;
+    }
+
+    public PersonName getName() {
+        if (!names.isEmpty()) {
+            return names.get(0);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -80,6 +89,7 @@ public class Person {
     public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
+
     /**
      *
      * @return
@@ -108,6 +118,14 @@ public class Person {
         return addresses;
     }
 
+    public PersonAddress getAddress() {
+        if (!addresses.isEmpty()) {
+            return addresses.get(0);
+        } else {
+            return null;
+        }
+    }
+
     /**
      * 
      * @param addresses
@@ -134,5 +152,6 @@ public class Person {
     public void setAttributes(List<PersonAttribute> attributes) {
         this.attributes = attributes;
     }
+
 
 }

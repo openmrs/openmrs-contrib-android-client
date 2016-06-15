@@ -37,11 +37,11 @@ import org.openmrs.mobile.activities.fragments.PatientDiagnosisFragment;
 import org.openmrs.mobile.activities.fragments.PatientVisitsFragment;
 import org.openmrs.mobile.activities.fragments.PatientVitalsFragment;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.FindPatientsManager;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.FindPatientsHelper;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
+import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.TabUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -163,8 +163,8 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.patient_dashboard_menu, menu);
-        getSupportActionBar().setTitle(mPatient.getDisplay());
-        getSupportActionBar().setSubtitle("#" + mPatient.getIdentifier());
+        getSupportActionBar().setTitle(mPatient.getPerson().getName().getNameString());
+        getSupportActionBar().setSubtitle("#" + mPatient.getIdentifier().getIdentifier());
         return true;
     }
 

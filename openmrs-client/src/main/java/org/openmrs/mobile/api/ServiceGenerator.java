@@ -2,6 +2,9 @@ package org.openmrs.mobile.api;
 
 import android.util.Base64;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
@@ -28,7 +31,7 @@ public class ServiceGenerator {
         builder =
                 new Retrofit.Builder()
                         .baseUrl(API_BASE_URL)
-                        .addConverterFactory(GsonConverterFactory.create());
+                        .addConverterFactory(buildGsonConverter());
     }
 
     public static <S> S createService(Class<S> serviceClass) {
@@ -59,4 +62,12 @@ public class ServiceGenerator {
         Retrofit retrofit = builder.client(client).build();
         return retrofit.create(serviceClass);
     }
+
+    private static GsonConverterFactory buildGsonConverter() {
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        Gson myGson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
+
+        return GsonConverterFactory.create(myGson);
+    }
+
 }

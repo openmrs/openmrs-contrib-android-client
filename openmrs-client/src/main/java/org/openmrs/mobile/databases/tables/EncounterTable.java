@@ -30,7 +30,7 @@ public class EncounterTable extends Table<Encounter> {
     private static final int INSERT_COLUMNS_COUNT = 6;
 
     @Override
-    public String crateTableDefinition() {
+    public String createTableDefinition() {
         return CREATE_TABLE + TABLE_NAME + "("
                 + Column.ID + PRIMARY_KEY
                 + Column.VISIT_KEY_ID + Column.Type.INT_TYPE_WITH_COMMA
@@ -86,6 +86,6 @@ public class EncounterTable extends Table<Encounter> {
 
     @Override
     public String toString() {
-        return TABLE_NAME + crateTableDefinition();
+        return TABLE_NAME + createTableDefinition();
     }
 }

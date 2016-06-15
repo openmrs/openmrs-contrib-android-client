@@ -7,6 +7,10 @@ import android.net.NetworkInfo;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.google.common.io.Files;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.jdeferred.DoneCallback;
 import org.jdeferred.android.AndroidDeferredManager;
 import org.jdeferred.multiple.MultipleResults;
@@ -15,13 +19,16 @@ import org.openmrs.mobile.api.ServiceGenerator;
 import org.openmrs.mobile.api.SimpleDeferredObject;
 import org.openmrs.mobile.api.SimplePromise;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.databases.PatientRegistrationCache;
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.retrofit.IdGenPatientIdentifiers;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.PatientIdentifier;
 import org.openmrs.mobile.models.retrofit.Resource;
 import org.openmrs.mobile.models.retrofit.Results;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -34,8 +41,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PatientRegisterService extends IntentService {
     protected final OpenMRS mOpenMRS = OpenMRS.getInstance();
-    PatientRegistrationCache cache=new PatientRegistrationCache(PatientRegisterService.this);
-    Patient patient;
     List<Patient> patientList;
 
     public PatientRegisterService() {
@@ -44,39 +49,53 @@ public class PatientRegisterService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        final List<Patient> tbd=new ArrayList<>();
         if(isNetworkAvailable()) {
-            patientList=cache.getPatientList();
+            patientList=new PatientDAO().getAllPatients();
             final ListIterator<Patient> it = patientList.listIterator();
             while (it.hasNext()) {
-                patient=it.next();
+                final Patient patient=it.next();
+                final Long pid=patient.getId();
                 if(patient.getSynced()==false) {
                     AndroidDeferredManager dm = new AndroidDeferredManager();
                     dm.when(getLocationUuid(), getIdGenPatientIdentifier(), getPatientIdentifierTypeUuid())
                             .done(new DoneCallback<MultipleResults>() {
                                 @Override
-                                public void onDone(MultipleResults results) {
+                                public void onDone(final MultipleResults results) {
                                     List<PatientIdentifier> identifiers = new ArrayList<>();
 
-                                    PatientIdentifier identifier = new PatientIdentifier();
+                                    final PatientIdentifier identifier = new PatientIdentifier();
                                     identifier.setLocation((String) results.get(0).getResult());
                                     identifier.setIdentifier((String) results.get(1).getResult());
                                     identifier.setIdentifierType((String) results.get(2).getResult());
                                     identifiers.add(identifier);
 
-                                    patient.setIdentifiers(identifiers);
-
-                                    RestApi apiService =
+                                    final RestApi apiService =
                                             ServiceGenerator.createService(RestApi.class);
                                     Call<Patient> call = apiService.createPatient(patient);
                                     call.enqueue(new Callback<Patient>() {
                                         @Override
                                         public void onResponse(Call<Patient> call, Response<Patient> response) {
                                             Patient newPatient = response.body();
-                                            Toast.makeText(PatientRegisterService.this, "Patient created with UUID " + newPatient.getUuid()
+
+//                                            Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+//                                            String text=gson.toJson(newPatient);
+//                                            File path=getExternalFilesDir(null);
+//                                            File file=new File(path,"daojson2.txt");
+//
+//                                            try {
+//                                                Files.write(text,file, Charset.forName("UTF-8"));
+//                                            } catch (IOException e) {
+//                                                e.printStackTrace();
+//                                            }
+
+                                            Toast.makeText(PatientRegisterService.this, "Patient created with UUID "+ newPatient.getUuid()
                                                     , Toast.LENGTH_SHORT).show();
-                                            patient.setSynced(true);
-                                            cache.setPatientList(patientList);
+                                            newPatient.setSynced(true);
+
+                                            newPatient.getPerson().setNames(patient.getPerson().getNames());
+                                            newPatient.getPerson().setAddresses(patient.getPerson().getAddresses());
+
+                                            new PatientDAO().updatePatient(pid, newPatient);
 
                                         }
 

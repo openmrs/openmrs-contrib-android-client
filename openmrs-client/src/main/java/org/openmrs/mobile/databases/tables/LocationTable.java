@@ -30,7 +30,7 @@ public class LocationTable extends Table<Location> {
     private static final int INSERT_COLUMNS_COUNT = 11;
 
     @Override
-    public String crateTableDefinition() {
+    public String createTableDefinition() {
         return CREATE_TABLE + TABLE_NAME + "("
                 + Column.ID + PRIMARY_KEY
                 + Column.UUID + Column.Type.TEXT_TYPE_NOT_NULL
@@ -100,6 +100,6 @@ public class LocationTable extends Table<Location> {
 
     @Override
     public String toString() {
-        return TABLE_NAME + crateTableDefinition();
+        return TABLE_NAME + createTableDefinition();
     }
 }

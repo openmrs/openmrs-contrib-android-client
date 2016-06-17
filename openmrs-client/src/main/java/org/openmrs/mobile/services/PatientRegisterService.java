@@ -61,13 +61,15 @@ public class PatientRegisterService extends IntentService {
                             .done(new DoneCallback<MultipleResults>() {
                                 @Override
                                 public void onDone(final MultipleResults results) {
-                                    List<PatientIdentifier> identifiers = new ArrayList<>();
+                                    final List<PatientIdentifier> identifiers = new ArrayList<>();
 
                                     final PatientIdentifier identifier = new PatientIdentifier();
                                     identifier.setLocation((String) results.get(0).getResult());
                                     identifier.setIdentifier((String) results.get(1).getResult());
                                     identifier.setIdentifierType((String) results.get(2).getResult());
                                     identifiers.add(identifier);
+
+                                    patient.setIdentifiers(identifiers);
 
                                     final RestApi apiService =
                                             ServiceGenerator.createService(RestApi.class);
@@ -77,16 +79,16 @@ public class PatientRegisterService extends IntentService {
                                         public void onResponse(Call<Patient> call, Response<Patient> response) {
                                             Patient newPatient = response.body();
 
-//                                            Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-//                                            String text=gson.toJson(newPatient);
-//                                            File path=getExternalFilesDir(null);
-//                                            File file=new File(path,"daojson2.txt");
-//
-//                                            try {
-//                                                Files.write(text,file, Charset.forName("UTF-8"));
-//                                            } catch (IOException e) {
-//                                                e.printStackTrace();
-//                                            }
+                                            Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+                                            String text=gson.toJson(newPatient);
+                                            File path=getExternalFilesDir(null);
+                                            File file=new File(path,"daojson2.txt");
+
+                                            try {
+                                                Files.write(text,file, Charset.forName("UTF-8"));
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
 
                                             Toast.makeText(PatientRegisterService.this, "Patient created with UUID "+ newPatient.getUuid()
                                                     , Toast.LENGTH_SHORT).show();

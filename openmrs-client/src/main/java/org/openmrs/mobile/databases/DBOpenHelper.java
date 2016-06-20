@@ -33,7 +33,7 @@ import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.retrofit.Patient;
 
 public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String WHERE_ID_CLAUSE = String.format("%s = ?", Table.MasterColumn.ID);
 
     private PatientTable mPatientTable;
@@ -54,15 +54,16 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         mLogger.d("Database creating...");
-        sqLiteDatabase.execSQL(mPatientTable.crateTableDefinition());
+
+        sqLiteDatabase.execSQL(mPatientTable.createTableDefinition());
         logOnCreate(mPatientTable.toString());
-        sqLiteDatabase.execSQL(mVisitTable.crateTableDefinition());
+        sqLiteDatabase.execSQL(mVisitTable.createTableDefinition());
         logOnCreate(mVisitTable.toString());
-        sqLiteDatabase.execSQL(mEncounterTable.crateTableDefinition());
+        sqLiteDatabase.execSQL(mEncounterTable.createTableDefinition());
         logOnCreate(mEncounterTable.toString());
-        sqLiteDatabase.execSQL(mObservationTable.crateTableDefinition());
+        sqLiteDatabase.execSQL(mObservationTable.createTableDefinition());
         logOnCreate(mObservationTable.toString());
-        sqLiteDatabase.execSQL(mLocationTable.crateTableDefinition());
+        sqLiteDatabase.execSQL(mLocationTable.createTableDefinition());
         logOnCreate(mLocationTable.toString());
     }
 
@@ -89,26 +90,36 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
 
         try {
             db.beginTransaction();
-            bindString(1, patient.getDisplay(), patientStatement);
-            bindString(2, patient.getUuid(), patientStatement);
-            bindString(3, patient.getIdentifiers().get(0).getIdentifier(), patientStatement);
-            bindString(4, patient.getPerson().getName().getGivenName(), patientStatement);
-            bindString(5, patient.getPerson().getName().getMiddleName(), patientStatement);
-            bindString(6, patient.getPerson().getName().getFamilyName(), patientStatement);
-            bindString(7, patient.getPerson().getGender(), patientStatement);
-            bindString(8, patient.getPerson().getBirthdate(), patientStatement);
-            bindLong(9, null, patientStatement);
-            bindString(10, null, patientStatement);
+            bindString(1, patient.getPerson().getName().getNameString(), patientStatement);
+            bindString(2,String.valueOf(patient.getSynced()),patientStatement);
+
+            if(patient.getUuid()!=null)
+                bindString(3, patient.getUuid(), patientStatement);
+            else
+                bindString(3, null, patientStatement);
+
+            if(patient.getIdentifier()!=null)
+                bindString(4, patient.getIdentifier().getIdentifier(), patientStatement);
+            else
+                bindString(4, null, patientStatement);
+
+            bindString(5, patient.getPerson().getName().getGivenName(), patientStatement);
+            bindString(6, patient.getPerson().getName().getMiddleName(), patientStatement);
+            bindString(7, patient.getPerson().getName().getFamilyName(), patientStatement);
+            bindString(8, patient.getPerson().getGender(), patientStatement);
+            bindString(9, patient.getPerson().getBirthdate(), patientStatement);
+            bindLong(10, null, patientStatement);
             bindString(11, null, patientStatement);
+            bindString(12, null, patientStatement);
             if (null != patient.getPerson().getAddress()) {
-                bindString(12, patient.getPerson().getAddress().getAddress1(), patientStatement);
-                bindString(13, patient.getPerson().getAddress().getAddress2(), patientStatement);
-                bindString(14, patient.getPerson().getAddress().getPostalCode(), patientStatement);
-                bindString(15, patient.getPerson().getAddress().getCountry(), patientStatement);
-                bindString(16, patient.getPerson().getAddress().getStateProvince(), patientStatement);
-                bindString(17, patient.getPerson().getAddress().getCityVillage(), patientStatement);
+                bindString(13, patient.getPerson().getAddress().getAddress1(), patientStatement);
+                bindString(14, patient.getPerson().getAddress().getAddress2(), patientStatement);
+                bindString(15, patient.getPerson().getAddress().getPostalCode(), patientStatement);
+                bindString(16, patient.getPerson().getAddress().getCountry(), patientStatement);
+                bindString(17, patient.getPerson().getAddress().getStateProvince(), patientStatement);
+                bindString(18, patient.getPerson().getAddress().getCityVillage(), patientStatement);
             }
-            bindString(18, null, patientStatement);
+            bindString(19, null, patientStatement);
             patientId = patientStatement.executeInsert();
             patientStatement.clearBindings();
             db.setTransactionSuccessful();
@@ -123,16 +134,21 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     public int updatePatient(SQLiteDatabase db, long patientID, Patient patient) {
         ContentValues newValues = new ContentValues();
         newValues.put(PatientTable.Column.UUID, patient.getUuid());
+        newValues.put(PatientTable.Column.SYNCED, patient.getSynced());
         newValues.put(PatientTable.Column.DISPLAY, patient.getDisplay());
-        newValues.put(PatientTable.Column.IDENTIFIER, patient.getIdentifiers().get(0).getIdentifier());
+
+        newValues.put(PatientTable.Column.IDENTIFIER, patient.getIdentifier().getIdentifier());
         newValues.put(PatientTable.Column.GIVEN_NAME, patient.getPerson().getName().getGivenName());
         newValues.put(PatientTable.Column.MIDDLE_NAME, patient.getPerson().getName().getMiddleName());
+
         newValues.put(PatientTable.Column.FAMILY_NAME, patient.getPerson().getName().getFamilyName());
         newValues.put(PatientTable.Column.GENDER, patient.getPerson().getGender());
         newValues.put(PatientTable.Column.BIRTH_DATE, patient.getPerson().getBirthdate());
+
         newValues.put(PatientTable.Column.DEATH_DATE, (Long) null);
         newValues.put(PatientTable.Column.CAUSE_OF_DEATH, (String) null);
         newValues.put(PatientTable.Column.AGE, (String) null);
+
         if (null != patient.getPerson().getAddress()) {
             newValues.put(PatientTable.Column.ADDRESS_1, patient.getPerson().getAddress().getAddress1());
             newValues.put(PatientTable.Column.ADDRESS_2, patient.getPerson().getAddress().getAddress2());
@@ -141,8 +157,6 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             newValues.put(PatientTable.Column.STATE, patient.getPerson().getAddress().getStateProvince());
             newValues.put(PatientTable.Column.CITY, patient.getPerson().getAddress().getCityVillage());
         }
-        newValues.put(PatientTable.Column.PHONE, (String) null);
-
         String[] whereArgs = new String[]{String.valueOf(patientID)};
 
         return db.update(PatientTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);

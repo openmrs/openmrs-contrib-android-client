@@ -24,7 +24,7 @@ public abstract class Table<T> {
     /**
      * @return Appended String which is representation of create table definition
      */
-    public abstract String crateTableDefinition();
+    public abstract String createTableDefinition();
 
     /**
      * @return Appended String which is representation of insert into table definition
@@ -91,6 +91,7 @@ public abstract class Table<T> {
             public static final String TEXT_TYPE_WITH_COMMA = TEXT_TYPE + COMMA;
             public static final String TEXT_TYPE_NOT_NULL = " text not null,";
             public static final String DATE_TYPE = " date";
+            public static final String BOOLEAN = " boolean,";
             public static final String DATE_TYPE_WITH_COMMA = DATE_TYPE + COMMA;
             public static final String DATE_TYPE_NOT_NULL = " data not null,";
             public static final String INT_TYPE = " integer";

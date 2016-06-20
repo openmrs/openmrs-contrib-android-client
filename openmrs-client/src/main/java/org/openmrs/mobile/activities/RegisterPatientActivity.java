@@ -31,7 +31,7 @@ import android.widget.TextView;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.databases.PatientRegistrationCache;
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.retrofit.PersonAddress;
 import org.openmrs.mobile.models.retrofit.PersonName;
 import org.openmrs.mobile.models.retrofit.Patient;
@@ -69,9 +69,6 @@ public class RegisterPatientActivity extends ACBaseActivity {
     TextView doberror;
     TextView gendererror;
     TextView addrerror;
-
-    PatientRegistrationCache cache=new PatientRegistrationCache(RegisterPatientActivity.this);
-
 
 
     @Override
@@ -264,7 +261,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
 
         final Patient patient = new Patient();
         patient.setPerson(person);
-        cache.addPatient(patient);
+        new PatientDAO().savePatient(patient);
         Intent intent = new Intent(this, PatientRegisterService.class);
         startService(intent);
         RegisterPatientActivity.this.finish();

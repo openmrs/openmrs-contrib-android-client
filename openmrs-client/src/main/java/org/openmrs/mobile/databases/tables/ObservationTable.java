@@ -30,7 +30,7 @@ public class ObservationTable extends Table<Observation> {
     private static final int INSERT_COLUMNS_COUNT = 8;
 
     @Override
-    public String crateTableDefinition() {
+    public String createTableDefinition() {
         return CREATE_TABLE + TABLE_NAME + "("
                 + Column.ID + PRIMARY_KEY
                 + Column.ENCOUNTER_KEY_ID  + Column.Type.INT_TYPE_NOT_NULL
@@ -96,6 +96,6 @@ public class ObservationTable extends Table<Observation> {
 
     @Override
     public String toString() {
-        return TABLE_NAME + crateTableDefinition();
+        return TABLE_NAME + createTableDefinition();
     }
 }

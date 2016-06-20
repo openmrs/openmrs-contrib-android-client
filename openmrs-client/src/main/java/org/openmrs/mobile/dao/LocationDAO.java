@@ -34,7 +34,7 @@ public class LocationDAO {
     public void deleteAllLocations() {
         DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
         openHelper.getWritableDatabase().execSQL(new LocationTable().dropTableDefinition());
-        openHelper.getWritableDatabase().execSQL(new LocationTable().crateTableDefinition());
+        openHelper.getWritableDatabase().execSQL(new LocationTable().createTableDefinition());
         OpenMRS.getInstance().getOpenMRSLogger().d("All Locations deleted");
     }
 

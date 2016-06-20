@@ -79,26 +79,13 @@ public class PatientRegisterService extends IntentService {
                                         public void onResponse(Call<Patient> call, Response<Patient> response) {
                                             Patient newPatient = response.body();
 
-                                            Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-                                            String text=gson.toJson(newPatient);
-                                            File path=getExternalFilesDir(null);
-                                            File file=new File(path,"daojson2.txt");
-
-                                            try {
-                                                Files.write(text,file, Charset.forName("UTF-8"));
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
-
                                             Toast.makeText(PatientRegisterService.this, "Patient created with UUID "+ newPatient.getUuid()
                                                     , Toast.LENGTH_SHORT).show();
-                                            newPatient.setSynced(true);
 
-                                            newPatient.getPerson().setNames(patient.getPerson().getNames());
-                                            newPatient.getPerson().setAddresses(patient.getPerson().getAddresses());
+                                            patient.setSynced(true);
+                                            patient.setUuid(newPatient.getUuid());
 
-                                            new PatientDAO().updatePatient(pid, newPatient);
-
+                                            new PatientDAO().updatePatient(patient.getId(), patient);
                                         }
 
                                         @Override

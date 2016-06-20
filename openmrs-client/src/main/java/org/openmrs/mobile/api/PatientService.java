@@ -5,7 +5,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.content.Intent;
-import android.widget.Toast;
 
 import org.jdeferred.DoneCallback;
 import org.jdeferred.android.AndroidDeferredManager;
@@ -31,8 +30,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PatientService extends IntentService {
-    protected final OpenMRS mOpenMRS = OpenMRS.getInstance();
-
+    OpenMRS openMrs = OpenMRS.getInstance();
     PatientDAO patientDao = new PatientDAO();
 
     public PatientService() {
@@ -75,8 +73,7 @@ public class PatientService extends IntentService {
                                     if (response.isSuccessful()) {
                                         Patient newPatient = response.body();
 
-                                        Toast.makeText(PatientService.this, "Patient created with UUID " + newPatient.getUuid()
-                                                , Toast.LENGTH_SHORT).show();
+                                        Notifier.notify("Patient created with UUID " + newPatient.getUuid());
 
                                         patient.setSynced(true);
                                         patient.setUuid(newPatient.getUuid());
@@ -85,14 +82,14 @@ public class PatientService extends IntentService {
 
                                         deferred.resolve(patient);
                                     } else {
-                                        Toast.makeText(PatientService.this, "Patient cannot be synced due to server error", Toast.LENGTH_SHORT).show();
+                                        Notifier.notify("Patient[" + patient.getId() + "] cannot be synced due to server error");
                                         deferred.reject(new RuntimeException("Patient cannot be synced due to server error: " + response.errorBody().toString()));
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call<Patient> call, Throwable t) {
-                                    Toast.makeText(PatientService.this, t.toString(), Toast.LENGTH_SHORT).show();
+                                    Notifier.notify("Patient[" + patient.getId() + "] cannot be synced due to request error: " + t.toString());
 
                                     deferred.reject(t);
                                 }
@@ -100,8 +97,8 @@ public class PatientService extends IntentService {
                         }
                     });
         } else {
-            Toast.makeText(PatientService.this, "No internet connection. Patient Registration data is saved locally " +
-                    "and will sync when internet connection is restored. ", Toast.LENGTH_SHORT).show();
+            Notifier.notify("No internet connection. Patient Registration data is saved locally " +
+                    "and will sync when internet connection is restored. ");
         }
 
         return deferred.promise();
@@ -120,8 +117,8 @@ public class PatientService extends IntentService {
                 }
             }
         } else {
-            Toast.makeText(PatientService.this, "No internet connection. Patient Registration data is saved locally " +
-                    "and will sync when internet connection is restored. ", Toast.LENGTH_SHORT).show();
+            Notifier.notify("No internet connection. Patient Registration data is saved locally " +
+                    "and will sync when internet connection is restored. ");
         }
     }
 
@@ -137,7 +134,7 @@ public class PatientService extends IntentService {
             public void onResponse(Call<Results<Resource>> call, Response<Results<Resource>> response) {
                 Results<Resource> locationList = response.body();
                 for (Resource result : locationList.getResults()) {
-                    if ((result.getDisplay().trim()).equalsIgnoreCase((mOpenMRS.getLocation().trim()))) {
+                    if ((result.getDisplay().trim()).equalsIgnoreCase((openMrs.getLocation().trim()))) {
                         String locationUuid = result.getUuid();
                         deferred.resolve(locationUuid);
                     }
@@ -146,7 +143,7 @@ public class PatientService extends IntentService {
 
             @Override
             public void onFailure(Call<Results<Resource>> call, Throwable t) {
-                Toast.makeText(PatientService.this,t.toString(),Toast.LENGTH_SHORT).show();
+                Notifier.notify(t.toString());
                 deferred.reject(t);
             }
 
@@ -158,15 +155,14 @@ public class PatientService extends IntentService {
     SimplePromise<String> getIdGenPatientIdentifier() {
         final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
 
-        String IDGEN_BASE_URL= mOpenMRS.getServerUrl()+'/';
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(IDGEN_BASE_URL)
+                .baseUrl(openMrs.getServerUrl() + '/')
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         RestApi apiService =
                 retrofit.create(RestApi.class);
-        Call<IdGenPatientIdentifiers> call = apiService.getPatientIdentifiers(mOpenMRS.getUsername(),mOpenMRS.getPassword());
+        Call<IdGenPatientIdentifiers> call = apiService.getPatientIdentifiers(openMrs.getUsername(), openMrs.getPassword());
         call.enqueue(new Callback<IdGenPatientIdentifiers>() {
             @Override
             public void onResponse(Call<IdGenPatientIdentifiers> call, Response<IdGenPatientIdentifiers> response) {
@@ -176,7 +172,7 @@ public class PatientService extends IntentService {
 
             @Override
             public void onFailure(Call<IdGenPatientIdentifiers> call, Throwable t) {
-                Toast.makeText(PatientService.this,t.toString(),Toast.LENGTH_SHORT).show();
+                Notifier.notify(t.toString());
                 deferred.reject(t);
             }
 
@@ -206,7 +202,7 @@ public class PatientService extends IntentService {
 
             @Override
             public void onFailure(Call<Results<PatientIdentifier>> call, Throwable t) {
-                Toast.makeText(PatientService.this,t.toString(),Toast.LENGTH_SHORT).show();
+                Notifier.notify(t.toString());
                 deferred.reject(t);
             }
 

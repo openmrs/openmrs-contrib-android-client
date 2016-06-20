@@ -1,4 +1,4 @@
-package org.openmrs.mobile.services;
+package org.openmrs.mobile.api;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -7,17 +7,11 @@ import android.net.NetworkInfo;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.google.common.io.Files;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import org.jdeferred.DoneCallback;
 import org.jdeferred.android.AndroidDeferredManager;
 import org.jdeferred.multiple.MultipleResults;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.ServiceGenerator;
-import org.openmrs.mobile.api.SimpleDeferredObject;
-import org.openmrs.mobile.api.SimplePromise;
+import org.openmrs.mobile.api.promise.SimpleDeferredObject;
+import org.openmrs.mobile.api.promise.SimplePromise;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.retrofit.IdGenPatientIdentifiers;
@@ -26,9 +20,6 @@ import org.openmrs.mobile.models.retrofit.PatientIdentifier;
 import org.openmrs.mobile.models.retrofit.Resource;
 import org.openmrs.mobile.models.retrofit.Results;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -39,11 +30,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class PatientRegisterService extends IntentService {
+public class PatientService extends IntentService {
     protected final OpenMRS mOpenMRS = OpenMRS.getInstance();
     List<Patient> patientList;
 
-    public PatientRegisterService() {
+    public PatientService() {
         super("Register Patients");
     }
 
@@ -72,14 +63,14 @@ public class PatientRegisterService extends IntentService {
                                     patient.setIdentifiers(identifiers);
 
                                     final RestApi apiService =
-                                            ServiceGenerator.createService(RestApi.class);
+                                            RestServiceBuilder.createService(RestApi.class);
                                     Call<Patient> call = apiService.createPatient(patient);
                                     call.enqueue(new Callback<Patient>() {
                                         @Override
                                         public void onResponse(Call<Patient> call, Response<Patient> response) {
                                             Patient newPatient = response.body();
 
-                                            Toast.makeText(PatientRegisterService.this, "Patient created with UUID "+ newPatient.getUuid()
+                                            Toast.makeText(PatientService.this, "Patient created with UUID "+ newPatient.getUuid()
                                                     , Toast.LENGTH_SHORT).show();
 
                                             patient.setSynced(true);
@@ -90,7 +81,7 @@ public class PatientRegisterService extends IntentService {
 
                                         @Override
                                         public void onFailure(Call<Patient> call, Throwable t) {
-                                            Toast.makeText(PatientRegisterService.this, t.toString(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(PatientService.this, t.toString(), Toast.LENGTH_SHORT).show();
                                         }
                                     });
                                 }
@@ -100,7 +91,7 @@ public class PatientRegisterService extends IntentService {
             }
         }
         else {
-            Toast.makeText(PatientRegisterService.this, "No internet connection. Patient Registration data is saved locally " +
+            Toast.makeText(PatientService.this, "No internet connection. Patient Registration data is saved locally " +
                     "and will sync when internet connection is restored. ", Toast.LENGTH_SHORT).show();
         }
 
@@ -112,7 +103,7 @@ public class PatientRegisterService extends IntentService {
         final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
 
         RestApi apiService =
-                ServiceGenerator.createService(RestApi.class);
+                RestServiceBuilder.createService(RestApi.class);
         Call<Results<Resource>> call = apiService.getLocations();
         call.enqueue(new Callback<Results<Resource>>() {
             @Override
@@ -128,7 +119,7 @@ public class PatientRegisterService extends IntentService {
 
             @Override
             public void onFailure(Call<Results<Resource>> call, Throwable t) {
-                Toast.makeText(PatientRegisterService.this,t.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(PatientService.this,t.toString(),Toast.LENGTH_SHORT).show();
                 deferred.reject(t);
             }
 
@@ -158,7 +149,7 @@ public class PatientRegisterService extends IntentService {
 
             @Override
             public void onFailure(Call<IdGenPatientIdentifiers> call, Throwable t) {
-                Toast.makeText(PatientRegisterService.this,t.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(PatientService.this,t.toString(),Toast.LENGTH_SHORT).show();
                 deferred.reject(t);
             }
 
@@ -172,7 +163,7 @@ public class PatientRegisterService extends IntentService {
         final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
 
         RestApi apiService =
-                ServiceGenerator.createService(RestApi.class);
+                RestServiceBuilder.createService(RestApi.class);
         Call<Results<PatientIdentifier>> call = apiService.getIdentifierTypes();
         call.enqueue(new Callback<Results<PatientIdentifier>>() {
             @Override
@@ -188,7 +179,7 @@ public class PatientRegisterService extends IntentService {
 
             @Override
             public void onFailure(Call<Results<PatientIdentifier>> call, Throwable t) {
-                Toast.makeText(PatientRegisterService.this,t.toString(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(PatientService.this,t.toString(),Toast.LENGTH_SHORT).show();
                 deferred.reject(t);
             }
 

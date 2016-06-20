@@ -7,8 +7,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.widget.Toast;
 
-import org.openmrs.mobile.services.PatientRegisterService;
-
 public class NetworkStateReceiver extends BroadcastReceiver{
 
     private boolean isConnected = false;
@@ -27,7 +25,7 @@ public class NetworkStateReceiver extends BroadcastReceiver{
                         if (!isConnected) {
                             Toast.makeText(context,"Connected to Internet, syncing patients",Toast.LENGTH_SHORT).show();
                             isConnected = true;
-                            Intent i=new Intent(context,PatientRegisterService.class);
+                            Intent i=new Intent(context,PatientService.class);
                             context.startService(i);
 
 

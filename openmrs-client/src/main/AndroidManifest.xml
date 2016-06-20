@@ -190,6 +190,6 @@
         </activity>
         <service
             android:enabled="true"
-            android:name=".services.PatientRegisterService"/>
+            android:name=".api.PatientService"/>
     </application>
 </manifest>

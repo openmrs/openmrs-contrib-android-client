@@ -17,7 +17,7 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ServiceGenerator {
+public class RestServiceBuilder {
 
     protected static final OpenMRS mOpenMRS = OpenMRS.getInstance();
 

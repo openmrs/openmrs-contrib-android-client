@@ -36,7 +36,7 @@ import org.openmrs.mobile.models.retrofit.PersonAddress;
 import org.openmrs.mobile.models.retrofit.PersonName;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.Person;
-import org.openmrs.mobile.services.PatientRegisterService;
+import org.openmrs.mobile.api.PatientService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -262,7 +262,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
         final Patient patient = new Patient();
         patient.setPerson(person);
         new PatientDAO().savePatient(patient);
-        Intent intent = new Intent(this, PatientRegisterService.class);
+        Intent intent = new Intent(this, PatientService.class);
         startService(intent);
         RegisterPatientActivity.this.finish();
     }

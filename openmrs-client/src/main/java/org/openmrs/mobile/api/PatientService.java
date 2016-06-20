@@ -32,6 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PatientService extends IntentService {
     OpenMRS openMrs = OpenMRS.getInstance();
     PatientDAO patientDao = new PatientDAO();
+    Notifier notifier = new Notifier();
 
     public PatientService() {
         super("Register Patients");
@@ -73,7 +74,7 @@ public class PatientService extends IntentService {
                                     if (response.isSuccessful()) {
                                         Patient newPatient = response.body();
 
-                                        Notifier.notify("Patient created with UUID " + newPatient.getUuid());
+                                        notifier.notify("Patient created with UUID " + newPatient.getUuid());
 
                                         patient.setSynced(true);
                                         patient.setUuid(newPatient.getUuid());
@@ -82,14 +83,14 @@ public class PatientService extends IntentService {
 
                                         deferred.resolve(patient);
                                     } else {
-                                        Notifier.notify("Patient[" + patient.getId() + "] cannot be synced due to server error");
+                                        notifier.notify("Patient[" + patient.getId() + "] cannot be synced due to server error");
                                         deferred.reject(new RuntimeException("Patient cannot be synced due to server error: " + response.errorBody().toString()));
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call<Patient> call, Throwable t) {
-                                    Notifier.notify("Patient[" + patient.getId() + "] cannot be synced due to request error: " + t.toString());
+                                    notifier.notify("Patient[" + patient.getId() + "] cannot be synced due to request error: " + t.toString());
 
                                     deferred.reject(t);
                                 }
@@ -97,7 +98,7 @@ public class PatientService extends IntentService {
                         }
                     });
         } else {
-            Notifier.notify("No internet connection. Patient Registration data is saved locally " +
+            notifier.notify("No internet connection. Patient Registration data is saved locally " +
                     "and will sync when internet connection is restored. ");
         }
 
@@ -117,7 +118,7 @@ public class PatientService extends IntentService {
                 }
             }
         } else {
-            Notifier.notify("No internet connection. Patient Registration data is saved locally " +
+            notifier.notify("No internet connection. Patient Registration data is saved locally " +
                     "and will sync when internet connection is restored. ");
         }
     }
@@ -143,7 +144,7 @@ public class PatientService extends IntentService {
 
             @Override
             public void onFailure(Call<Results<Resource>> call, Throwable t) {
-                Notifier.notify(t.toString());
+                notifier.notify(t.toString());
                 deferred.reject(t);
             }
 
@@ -172,7 +173,7 @@ public class PatientService extends IntentService {
 
             @Override
             public void onFailure(Call<IdGenPatientIdentifiers> call, Throwable t) {
-                Notifier.notify(t.toString());
+                notifier.notify(t.toString());
                 deferred.reject(t);
             }
 
@@ -202,7 +203,7 @@ public class PatientService extends IntentService {
 
             @Override
             public void onFailure(Call<Results<PatientIdentifier>> call, Throwable t) {
-                Notifier.notify(t.toString());
+                notifier.notify(t.toString());
                 deferred.reject(t);
             }
 

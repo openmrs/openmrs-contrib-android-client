@@ -91,7 +91,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         try {
             db.beginTransaction();
             bindString(1, patient.getPerson().getName().getNameString(), patientStatement);
-            bindString(2,String.valueOf(patient.getSynced()),patientStatement);
+            bindString(2,String.valueOf(patient.isSynced()),patientStatement);
 
             if(patient.getUuid()!=null)
                 bindString(3, patient.getUuid(), patientStatement);
@@ -128,13 +128,15 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             patientStatement.close();
         }
 
+        patient.setId(patientId);
+
         return patientId;
     }
 
     public int updatePatient(SQLiteDatabase db, long patientID, Patient patient) {
         ContentValues newValues = new ContentValues();
         newValues.put(PatientTable.Column.UUID, patient.getUuid());
-        newValues.put(PatientTable.Column.SYNCED, patient.getSynced());
+        newValues.put(PatientTable.Column.SYNCED, patient.isSynced());
         newValues.put(PatientTable.Column.DISPLAY, patient.getDisplay());
 
         newValues.put(PatientTable.Column.IDENTIFIER, patient.getIdentifier().getIdentifier());

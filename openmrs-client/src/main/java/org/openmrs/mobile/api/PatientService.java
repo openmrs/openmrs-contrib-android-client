@@ -32,70 +32,97 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PatientService extends IntentService {
     protected final OpenMRS mOpenMRS = OpenMRS.getInstance();
-    List<Patient> patientList;
+
+    PatientDAO patientDao = new PatientDAO();
 
     public PatientService() {
         super("Register Patients");
     }
 
-    @Override
-    protected void onHandleIntent(Intent intent) {
-        if(isNetworkAvailable()) {
-            patientList=new PatientDAO().getAllPatients();
-            final ListIterator<Patient> it = patientList.listIterator();
-            while (it.hasNext()) {
-                final Patient patient=it.next();
-                final Long pid=patient.getId();
-                if(patient.getSynced()==false) {
-                    AndroidDeferredManager dm = new AndroidDeferredManager();
-                    dm.when(getLocationUuid(), getIdGenPatientIdentifier(), getPatientIdentifierTypeUuid())
-                            .done(new DoneCallback<MultipleResults>() {
+    public SimplePromise<Patient> registerPatient(final Patient patient) {
+        patient.setSynced(false);
+
+        patientDao.savePatient(patient);
+
+        return syncPatient(patient);
+    }
+
+    public SimplePromise<Patient> syncPatient(final Patient patient) {
+        final SimpleDeferredObject<Patient> deferred = new SimpleDeferredObject<>();
+
+        if (isNetworkAvailable()) {
+            AndroidDeferredManager dm = new AndroidDeferredManager();
+            dm.when(getLocationUuid(), getIdGenPatientIdentifier(), getPatientIdentifierTypeUuid())
+                    .done(new DoneCallback<MultipleResults>() {
+                        @Override
+                        public void onDone(final MultipleResults results) {
+                            final List<PatientIdentifier> identifiers = new ArrayList<>();
+
+                            final PatientIdentifier identifier = new PatientIdentifier();
+                            identifier.setLocation((String) results.get(0).getResult());
+                            identifier.setIdentifier((String) results.get(1).getResult());
+                            identifier.setIdentifierType((String) results.get(2).getResult());
+                            identifiers.add(identifier);
+
+                            patient.setIdentifiers(identifiers);
+
+                            final RestApi apiService =
+                                    RestServiceBuilder.createService(RestApi.class);
+                            Call<Patient> call = apiService.createPatient(patient);
+                            call.enqueue(new Callback<Patient>() {
                                 @Override
-                                public void onDone(final MultipleResults results) {
-                                    final List<PatientIdentifier> identifiers = new ArrayList<>();
+                                public void onResponse(Call<Patient> call, Response<Patient> response) {
+                                    if (response.isSuccessful()) {
+                                        Patient newPatient = response.body();
 
-                                    final PatientIdentifier identifier = new PatientIdentifier();
-                                    identifier.setLocation((String) results.get(0).getResult());
-                                    identifier.setIdentifier((String) results.get(1).getResult());
-                                    identifier.setIdentifierType((String) results.get(2).getResult());
-                                    identifiers.add(identifier);
+                                        Toast.makeText(PatientService.this, "Patient created with UUID " + newPatient.getUuid()
+                                                , Toast.LENGTH_SHORT).show();
 
-                                    patient.setIdentifiers(identifiers);
+                                        patient.setSynced(true);
+                                        patient.setUuid(newPatient.getUuid());
 
-                                    final RestApi apiService =
-                                            RestServiceBuilder.createService(RestApi.class);
-                                    Call<Patient> call = apiService.createPatient(patient);
-                                    call.enqueue(new Callback<Patient>() {
-                                        @Override
-                                        public void onResponse(Call<Patient> call, Response<Patient> response) {
-                                            Patient newPatient = response.body();
+                                        new PatientDAO().updatePatient(patient.getId(), patient);
 
-                                            Toast.makeText(PatientService.this, "Patient created with UUID "+ newPatient.getUuid()
-                                                    , Toast.LENGTH_SHORT).show();
+                                        deferred.resolve(patient);
+                                    } else {
+                                        Toast.makeText(PatientService.this, "Patient cannot be synced due to server error", Toast.LENGTH_SHORT).show();
+                                        deferred.reject(new RuntimeException("Patient cannot be synced due to server error: " + response.errorBody().toString()));
+                                    }
+                                }
 
-                                            patient.setSynced(true);
-                                            patient.setUuid(newPatient.getUuid());
+                                @Override
+                                public void onFailure(Call<Patient> call, Throwable t) {
+                                    Toast.makeText(PatientService.this, t.toString(), Toast.LENGTH_SHORT).show();
 
-                                            new PatientDAO().updatePatient(patient.getId(), patient);
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<Patient> call, Throwable t) {
-                                            Toast.makeText(PatientService.this, t.toString(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                    deferred.reject(t);
                                 }
                             });
-                }
-
-            }
-        }
-        else {
+                        }
+                    });
+        } else {
             Toast.makeText(PatientService.this, "No internet connection. Patient Registration data is saved locally " +
                     "and will sync when internet connection is restored. ", Toast.LENGTH_SHORT).show();
         }
 
+        return deferred.promise();
+    }
 
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        if(isNetworkAvailable()) {
+            List<Patient> patientList = new PatientDAO().getAllPatients();
+            final ListIterator<Patient> it = patientList.listIterator();
+            while (it.hasNext()) {
+                final Patient patient=it.next();
+                final Long pid=patient.getId();
+                if(!patient.isSynced()) {
+                    syncPatient(patient);
+                }
+            }
+        } else {
+            Toast.makeText(PatientService.this, "No internet connection. Patient Registration data is saved locally " +
+                    "and will sync when internet connection is restored. ", Toast.LENGTH_SHORT).show();
+        }
     }
 
 

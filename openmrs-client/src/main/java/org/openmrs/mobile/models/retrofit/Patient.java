@@ -116,7 +116,7 @@ public class Patient extends Resource {
         this.resourceVersion = resourceVersion;
     }
 
-    public boolean getSynced()
+    public boolean isSynced()
     {
         return synced;
     }

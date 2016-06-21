@@ -28,6 +28,11 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.google.common.io.Files;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.openmrs.mobile.R;
@@ -38,6 +43,9 @@ import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.Person;
 import org.openmrs.mobile.api.PatientService;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -261,7 +269,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
 
         final Patient patient = new Patient();
         patient.setPerson(person);
-
+        patient.setUuid(" ");
         new PatientService().registerPatient(patient);
 
         RegisterPatientActivity.this.finish();
@@ -275,10 +283,5 @@ public class RegisterPatientActivity extends ACBaseActivity {
         } else {
             return e.getText().toString();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return true;
     }
 }

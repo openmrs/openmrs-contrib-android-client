@@ -26,6 +26,10 @@ public final class StringUtils {
         return null != string && !NULL_AS_STRING.equals(string);
     }
 
+    public static boolean isBlank(String string) {
+        return null == string || SPACE_CHAR.equals(string);
+    }
+
     public static boolean notEmpty(String string) {
         return !string.isEmpty();
     }

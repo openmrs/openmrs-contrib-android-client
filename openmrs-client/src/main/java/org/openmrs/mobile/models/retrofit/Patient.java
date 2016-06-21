@@ -6,6 +6,8 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.openmrs.mobile.utilities.StringUtils;
+
 public class Patient extends Resource {
 
     private boolean synced=false;
@@ -118,7 +120,8 @@ public class Patient extends Resource {
 
     public boolean isSynced()
     {
-        return synced;
+        return !StringUtils.isBlank(getUuid());
+        //Keeping it this way until the synced flag can be made to work
     }
 
     public void setSynced(boolean synced)

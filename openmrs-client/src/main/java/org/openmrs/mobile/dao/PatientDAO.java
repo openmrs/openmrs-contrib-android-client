@@ -69,7 +69,6 @@ public class PatientDAO {
     private Patient cursorToPatient(Cursor cursor) {
         Patient patient = new Patient();
         Person person = new Person();
-        patient.setPerson(person);
 
         patient.setSynced(Boolean.parseBoolean(PatientTable.Column.SYNCED));
 
@@ -87,9 +86,11 @@ public class PatientDAO {
         personName.setFamilyName(cursor.getString(cursor.getColumnIndex(PatientTable.Column.FAMILY_NAME)));
         person.getNames().add(personName);
 
-        patient.getPerson().setGender(cursor.getString(cursor.getColumnIndex(PatientTable.Column.GENDER)));
-        patient.getPerson().setBirthdate(cursor.getString(cursor.getColumnIndex(PatientTable.Column.BIRTH_DATE)));
-        patient.getPerson().getAddresses().add(cursorToAddress(cursor));
+        person.setGender(cursor.getString(cursor.getColumnIndex(PatientTable.Column.GENDER)));
+        person.setBirthdate(cursor.getString(cursor.getColumnIndex(PatientTable.Column.BIRTH_DATE)));
+        person.getAddresses().add(cursorToAddress(cursor));
+
+        patient.setPerson(person);
         return patient;
     }
 

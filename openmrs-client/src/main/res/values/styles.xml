@@ -29,9 +29,10 @@
         <item name="colorAccent">@color/primary</item>
         <item name="android:textColor">@color/dark_purple</item>
         <item name="actionModeStyle">@style/LongPress</item>
+    </style>
 
-
-
+    <style name="ToggleSwitchTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorAccent">@color/switchcolor</item>
     </style>
 
     <style name="LongPress" parent="@style/Widget.AppCompat.ActionMode">

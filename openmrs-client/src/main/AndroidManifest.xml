@@ -58,6 +58,11 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".api.SyncStateReceiver">
+            <intent-filter>
+                <action android:name="org.openmrs.mobile.intent.action.SYNC_PATIENTS" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name=".activities.DashboardActivity"
             android:theme="@style/AppTheme"

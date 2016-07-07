@@ -91,7 +91,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         try {
             db.beginTransaction();
             bindString(1, patient.getPerson().getName().getNameString(), patientStatement);
-            bindString(2,String.valueOf(patient.isSynced()),patientStatement);
+            bindString(2, Boolean.toString(patient.isSynced()),patientStatement);
 
             if(patient.getUuid()!=null)
                 bindString(3, patient.getUuid(), patientStatement);

@@ -37,4 +37,5 @@
     <color name="green">#88af28</color>
     <color name="light_red">#ff6666</color>
     <color name="red">#ff3d3d</color>
+    <color name="switchcolor">#03de95</color>
 </resources>

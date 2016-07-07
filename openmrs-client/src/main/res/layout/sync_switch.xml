@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <android.support.v7.widget.SwitchCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/syncswitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:theme="@style/ToggleSwitchTheme"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:textOn="Sync on"
+        android:textOff="Sync off"
+        />

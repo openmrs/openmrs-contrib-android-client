@@ -2,9 +2,11 @@ package org.openmrs.mobile.api;
 
 import android.app.IntentService;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.content.Intent;
+import android.preference.PreferenceManager;
 
 import org.jdeferred.DoneCallback;
 import org.jdeferred.android.AndroidDeferredManager;
@@ -18,7 +20,6 @@ import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.PatientIdentifier;
 import org.openmrs.mobile.models.retrofit.Resource;
 import org.openmrs.mobile.models.retrofit.Results;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -40,16 +41,17 @@ public class PatientService extends IntentService {
 
     public SimplePromise<Patient> registerPatient(final Patient patient) {
         patient.setSynced(false);
-
         patientDao.savePatient(patient);
-
         return syncPatient(patient);
     }
 
     public SimplePromise<Patient> syncPatient(final Patient patient) {
         final SimpleDeferredObject<Patient> deferred = new SimpleDeferredObject<>();
 
-        if (isNetworkAvailable()) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean syncstate = prefs.getBoolean("sync", true);
+
+        if (syncstate) {
             AndroidDeferredManager dm = new AndroidDeferredManager();
             dm.when(getLocationUuid(), getIdGenPatientIdentifier(), getPatientIdentifierTypeUuid())
                     .done(new DoneCallback<MultipleResults>() {
@@ -64,6 +66,7 @@ public class PatientService extends IntentService {
                             identifiers.add(identifier);
 
                             patient.setIdentifiers(identifiers);
+                            patient.setUuid(null);
 
                             final RestApi apiService =
                                     RestServiceBuilder.createService(RestApi.class);
@@ -83,7 +86,7 @@ public class PatientService extends IntentService {
 
                                         deferred.resolve(patient);
                                     } else {
-                                        notifier.notify("Patient[" + patient.getId() + "] cannot be synced due to server error");
+                                        notifier.notify("Patient[" + patient.getId() + "] cannot be synced due to server error"+ response.message());
                                         deferred.reject(new RuntimeException("Patient cannot be synced due to server error: " + response.errorBody().toString()));
                                     }
                                 }
@@ -112,7 +115,6 @@ public class PatientService extends IntentService {
             final ListIterator<Patient> it = patientList.listIterator();
             while (it.hasNext()) {
                 final Patient patient=it.next();
-                final Long pid=patient.getId();
                 if(!patient.isSynced()) {
                     syncPatient(patient);
                 }

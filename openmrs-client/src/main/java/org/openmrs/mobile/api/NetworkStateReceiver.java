@@ -3,8 +3,10 @@ package org.openmrs.mobile.api;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 public class NetworkStateReceiver extends BroadcastReceiver{
@@ -23,15 +25,15 @@ public class NetworkStateReceiver extends BroadcastReceiver{
             if (info != null) {
                     if (info.getState() == NetworkInfo.State.CONNECTED) {
                         if (!isConnected) {
-                            Toast.makeText(context,"Connected to Internet, syncing patients",Toast.LENGTH_SHORT).show();
                             isConnected = true;
-                            Intent i=new Intent(context,PatientService.class);
-                            context.startService(i);
-
-
                         return true;
                     }
-                }
+                } else{
+                        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putBoolean("sync", false);
+
+                    }
             }
         }
         isConnected = false;

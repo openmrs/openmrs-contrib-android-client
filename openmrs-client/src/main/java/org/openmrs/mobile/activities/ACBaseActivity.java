@@ -15,16 +15,21 @@
 package org.openmrs.mobile.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SwitchCompat;
 import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
 import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
+import org.openmrs.mobile.api.Notifier;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
@@ -50,6 +55,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         mAuthorizationManager = new AuthorizationManager();
 
 
+
     }
 
     @Override
@@ -65,6 +71,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        invalidateOptionsMenu();
         if (!(this instanceof LoginActivity || this instanceof DialogActivity)) {
             if (!mAuthorizationManager.isUserLoggedIn()) {
                 mAuthorizationManager.moveToLoginActivity();
@@ -84,6 +91,35 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.basic_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(final Menu menu) {
+        MenuItem switchmenu = menu.findItem(R.id.syncswitch);
+        if(switchmenu!=null)
+        {
+            final SwitchCompat mSwitch=(SwitchCompat)switchmenu.getActionView();
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            Boolean syncstate = prefs.getBoolean("sync", true);
+            mSwitch.setChecked(syncstate);
+            mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putBoolean("sync", isChecked);
+                    editor.commit();
+                    Notifier notifier=new Notifier();
+                    String text=(isChecked)? mSwitch.getTextOn().toString():mSwitch.getTextOff().toString();
+                    notifier.notify(text);
+                    if(isChecked)
+                    {
+                        Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
+                        getApplicationContext().sendBroadcast(intent);
+                    }
+                }
+            });
+        }
         return true;
     }
 

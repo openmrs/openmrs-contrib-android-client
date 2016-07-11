@@ -31,6 +31,7 @@ import android.widget.Toast;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
+import org.openmrs.mobile.utilities.NotificationUtil;
 
 public class DashboardActivity extends ACBaseActivity {
 

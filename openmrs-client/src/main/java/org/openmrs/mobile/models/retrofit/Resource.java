@@ -75,4 +75,5 @@ public class Resource implements Serializable {
         this.links = links;
     }
 
+
 }

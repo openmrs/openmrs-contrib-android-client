@@ -103,7 +103,7 @@ dependencies {
     compile 'org.apache.httpcomponents:httpcore:4.4.4'
     compile 'org.apache.httpcomponents:httpmime:4.5.2'
     compile 'net.yanzm:mth:1.0.4'
-    compile 'net.zetetic:android-database-sqlcipher:3.4.0@aar'
+    compile 'net.zetetic:android-database-sqlcipher:3.5.1@aar'
     compile 'org.jdeferred:jdeferred-android-aar:1.2.4'
     compile 'com.android.support:support-v13:23.4.0'
 }

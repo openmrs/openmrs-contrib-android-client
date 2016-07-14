@@ -4,10 +4,7 @@ import android.app.Fragment;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.text.Editable;
-import android.text.InputFilter;
 import android.text.InputType;
-import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -19,12 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.api.Notifier;
 import org.openmrs.mobile.models.retrofit.Page;
 import org.openmrs.mobile.models.retrofit.Question;
 import org.openmrs.mobile.models.retrofit.Section;
 import org.openmrs.mobile.utilities.InputField;
-import org.openmrs.mobile.utilities.InputFilterMinMax;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +30,6 @@ public class FormPageFragment extends Fragment {
     private static final String ARG_PAGE_NUMBER = "page_number";
     private static final String ARG_PAGE_OBJECT = "page_object";
     List<InputField> inputFields =new ArrayList<InputField>();
-    Notifier notifier=new Notifier();
 
 
     public FormPageFragment() {
@@ -169,7 +164,7 @@ public class FormPageFragment extends Fragment {
         {
             EditText ed=(EditText)getActivity().findViewById(field.getId());
             if(isEmpty(ed)) {
-                notifier.notify("Field cannot be empty");
+                ToastUtil.error("Field cannot be empty");
                 return false;
             }
 

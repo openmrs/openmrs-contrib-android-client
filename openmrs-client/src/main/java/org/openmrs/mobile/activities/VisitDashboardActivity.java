@@ -125,30 +125,6 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
         return true;
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        switch (resultCode) {
-//            case RESULT_OK:
-//                String path = data.getData().toString();
-//                String instanceID = path.substring(path.lastIndexOf('/') + 1);
-//                FormManagerBundle bundle = FormsHelper.createBundle(
-//                        new FormsDAO(getContentResolver())
-//                                .getSurveysSubmissionDataFromFormInstanceId(instanceID)
-//                                .getFormInstanceFilePath(),
-//                        mPatient.getUuid(),
-//                        mPatient.getId(),
-//                        mVisit.getUuid());
-//                mFormsManager.uploadXFormWithMultiPartRequest(
-//                        FormsHelper.createUploadXFormWithMultiPartRequestListener(bundle, this));
-//                break;
-//            case RESULT_CANCELED:
-//                finish();
-//            default:
-//                break;
-//        }
-//    }
-
     @Override
     public void updateEncounterList() {
         mVisitEncounters.clear();

@@ -23,13 +23,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.api.Notifier;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
-import org.openmrs.mobile.models.retrofit.Observation;
+import org.openmrs.mobile.models.retrofit.FormResource;
 import org.openmrs.mobile.models.retrofit.Resource;
 import org.openmrs.mobile.models.retrofit.Results;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.ToastUtil;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,11 +39,12 @@ import retrofit2.Response;
 
 public class FormListActivity extends ACBaseActivity {
 
-    static final String[] FORMS = new String[] { "Vitals" };
+    static String[] FORMS = null;
     long mPatientID;
     final RestApi apiService =
             RestServiceBuilder.createService(RestApi.class);
-    Notifier notifier=new Notifier();
+
+    List<FormResource> formresourcelist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,48 +67,93 @@ public class FormListActivity extends ACBaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        ListView formlist = (ListView) findViewById(R.id.formlist);
-        formlist.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, FORMS));
-        formlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    final int position, long id) {
+        Call<Results<FormResource>> call = apiService.getForms();
+        call.enqueue(new Callback<Results<FormResource>>() {
 
-                Call<Results<Resource>> call = apiService.getEncounterTypes();
-                call.enqueue(new Callback<Results<Resource>>() {
-                    @Override
-                    public void onResponse(Call<Results<Resource>> call, Response<Results<Resource>> response) {
-                        if (response.isSuccessful()) {
-                            Results<Resource> encountertypelist = response.body();
-                            String encountertype = null;
-                            for (Resource enctype :encountertypelist.getResults())
-                            {
-                                if(enctype.getDisplay().equals(FORMS[position])){
-                                    encountertype=enctype.getUuid();
-                                }
-                            }
-                            Intent intent=new Intent(FormListActivity.this, FormDisplayActivity.class);
-                            intent.putExtra(ApplicationConstants.BundleKeys.FORM_NAME,FORMS[position]);
-                            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPatientID);
-                            intent.putExtra(ApplicationConstants.BundleKeys.ENCOUNTERTYPE, encountertype);
-                            notifier.notify("Starting encounter");
-                            startActivity(intent);
-
-                        } else {
-                            notifier.notify("Could not start encounter");
-                        }
+            @Override
+            public void onResponse(Call<Results<FormResource>> call, Response<Results<FormResource>> response) {
+                if (response.isSuccessful()) {
+                    formresourcelist=response.body().getResults();
+                    int size=formresourcelist.size();
+                    FORMS=new String [size];
+                    for (int i=0;i<size;i++)
+                    {
+                        FORMS[i]=formresourcelist.get(i).getName();
                     }
 
-                    @Override
-                    public void onFailure(Call<Results<Resource>> call, Throwable t) {
-                        notifier.notify(t.getMessage());
+                    ListView formlist = (ListView) findViewById(R.id.formlist);
+                    formlist.setAdapter(new ArrayAdapter<String>(
+                            FormListActivity.this, android.R.layout.simple_list_item_1, android.R.id.text1, FORMS));
+                    formlist.setOnItemClickListener(listclick);
+                }
+                else
+                {
 
-                    }
-                });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Results<FormResource>> call, Throwable t) {
 
             }
         });
 
 
     }
+
+
+    AdapterView.OnItemClickListener listclick= new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView<?> parent, View view,
+        final int position, long id) {
+
+            Call<Results<Resource>> call = apiService.getEncounterTypes();
+            call.enqueue(new Callback<Results<Resource>>() {
+                @Override
+                public void onResponse(Call<Results<Resource>> call, Response<Results<Resource>> response) {
+                    if (response.isSuccessful()) {
+                        Results<Resource> encountertypelist = response.body();
+                        String encountertype = null;
+                        for (Resource enctype :encountertypelist.getResults())
+                        {
+                            if(enctype.getDisplay().equals(FORMS[position])){
+                                encountertype=enctype.getUuid();
+                            }
+                        }
+                        Intent intent=new Intent(FormListActivity.this, FormDisplayActivity.class);
+                        intent.putExtra(ApplicationConstants.BundleKeys.FORM_NAME,FORMS[position]);
+                        intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPatientID);
+                        intent.putExtra(ApplicationConstants.BundleKeys.ENCOUNTERTYPE, encountertype);
+                        List<FormResource> valueref=formresourcelist.get(position).getResources();
+                        String valuerefString=null;
+                        for(FormResource resource:valueref)
+                        {
+                            if(resource.getName().equals("json"))
+                                valuerefString=resource.getValueReference();
+                        }
+                        intent.putExtra(ApplicationConstants.BundleKeys.VALUEREFERENCE, valuerefString);
+
+                        if(valuerefString!=null) {
+                            ToastUtil.notify("Starting encounter");
+                            startActivity(intent);
+                        }
+                        else
+                        {
+                            ToastUtil.error("Form is empty");
+                        }
+
+                    } else {
+                        ToastUtil.error("Could not start encounter");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Results<Resource>> call, Throwable t) {
+                    ToastUtil.error(t.getMessage());
+
+                }
+            });
+
+        }
+    };
 
 }

@@ -27,28 +27,28 @@ public class Observation implements Serializable {
     private String obsDatetime;
     @SerializedName("accessionNumber")
     @Expose
-    private Object accessionNumber;
+    private int accessionNumber;
     @SerializedName("obsGroup")
     @Expose
-    private Object obsGroup;
+    private String obsGroup;
     @SerializedName("valueCodedName")
     @Expose
-    private Object valueCodedName;
+    private String valueCodedName;
     @SerializedName("groupMembers")
     @Expose
-    private Object groupMembers;
+    private String groupMembers;
     @SerializedName("comment")
     @Expose
-    private Object comment;
+    private String comment;
     @SerializedName("location")
     @Expose
-    private Object location;
+    private Resource location=null;
     @SerializedName("order")
     @Expose
-    private Object order;
+    private String order;
     @SerializedName("encounter")
     @Expose
-    private Object encounter;
+    private Encounter encounter=null;
     @SerializedName("voided")
     @Expose
     private Boolean voided;
@@ -57,13 +57,13 @@ public class Observation implements Serializable {
     private Double value;
     @SerializedName("valueModifier")
     @Expose
-    private Object valueModifier;
+    private String valueModifier;
     @SerializedName("formFieldPath")
     @Expose
-    private Object formFieldPath;
+    private String formFieldPath;
     @SerializedName("formFieldNamespace")
     @Expose
-    private Object formFieldNamespace;
+    private String formFieldNamespace;
     @SerializedName("links")
     @Expose
     private List<Link> links = new ArrayList<Link>();
@@ -166,7 +166,7 @@ public class Observation implements Serializable {
      * @return
      *     The accessionNumber
      */
-    public Object getAccessionNumber() {
+    public int getAccessionNumber() {
         return accessionNumber;
     }
 
@@ -175,7 +175,7 @@ public class Observation implements Serializable {
      * @param accessionNumber
      *     The accessionNumber
      */
-    public void setAccessionNumber(Object accessionNumber) {
+    public void setAccessionNumber(int accessionNumber) {
         this.accessionNumber = accessionNumber;
     }
 
@@ -184,7 +184,7 @@ public class Observation implements Serializable {
      * @return
      *     The obsGroup
      */
-    public Object getObsGroup() {
+    public String getObsGroup() {
         return obsGroup;
     }
 
@@ -193,7 +193,7 @@ public class Observation implements Serializable {
      * @param obsGroup
      *     The obsGroup
      */
-    public void setObsGroup(Object obsGroup) {
+    public void setObsGroup(String obsGroup) {
         this.obsGroup = obsGroup;
     }
 
@@ -202,7 +202,7 @@ public class Observation implements Serializable {
      * @return
      *     The valueCodedName
      */
-    public Object getValueCodedName() {
+    public String getValueCodedName() {
         return valueCodedName;
     }
 
@@ -211,7 +211,7 @@ public class Observation implements Serializable {
      * @param valueCodedName
      *     The valueCodedName
      */
-    public void setValueCodedName(Object valueCodedName) {
+    public void setValueCodedName(String valueCodedName) {
         this.valueCodedName = valueCodedName;
     }
 
@@ -220,7 +220,7 @@ public class Observation implements Serializable {
      * @return
      *     The groupMembers
      */
-    public Object getGroupMembers() {
+    public String getGroupMembers() {
         return groupMembers;
     }
 
@@ -229,7 +229,7 @@ public class Observation implements Serializable {
      * @param groupMembers
      *     The groupMembers
      */
-    public void setGroupMembers(Object groupMembers) {
+    public void setGroupMembers(String groupMembers) {
         this.groupMembers = groupMembers;
     }
 
@@ -238,7 +238,7 @@ public class Observation implements Serializable {
      * @return
      *     The comment
      */
-    public Object getComment() {
+    public String getComment() {
         return comment;
     }
 
@@ -247,7 +247,7 @@ public class Observation implements Serializable {
      * @param comment
      *     The comment
      */
-    public void setComment(Object comment) {
+    public void setComment(String comment) {
         this.comment = comment;
     }
 
@@ -256,7 +256,7 @@ public class Observation implements Serializable {
      * @return
      *     The location
      */
-    public Object getLocation() {
+    public Resource getLocation() {
         return location;
     }
 
@@ -265,7 +265,7 @@ public class Observation implements Serializable {
      * @param location
      *     The location
      */
-    public void setLocation(Object location) {
+    public void setLocation(Resource location) {
         this.location = location;
     }
 
@@ -274,7 +274,7 @@ public class Observation implements Serializable {
      * @return
      *     The order
      */
-    public Object getOrder() {
+    public String getOrder() {
         return order;
     }
 
@@ -283,7 +283,7 @@ public class Observation implements Serializable {
      * @param order
      *     The order
      */
-    public void setOrder(Object order) {
+    public void setOrder(String order) {
         this.order = order;
     }
 
@@ -292,7 +292,7 @@ public class Observation implements Serializable {
      * @return
      *     The encounter
      */
-    public Object getEncounter() {
+    public Encounter getEncounter() {
         return encounter;
     }
 
@@ -301,7 +301,7 @@ public class Observation implements Serializable {
      * @param encounter
      *     The encounter
      */
-    public void setEncounter(Object encounter) {
+    public void setEncounter(Encounter encounter) {
         this.encounter = encounter;
     }
 
@@ -346,7 +346,7 @@ public class Observation implements Serializable {
      * @return
      *     The valueModifier
      */
-    public Object getValueModifier() {
+    public String getValueModifier() {
         return valueModifier;
     }
 
@@ -355,7 +355,7 @@ public class Observation implements Serializable {
      * @param valueModifier
      *     The valueModifier
      */
-    public void setValueModifier(Object valueModifier) {
+    public void setValueModifier(String valueModifier) {
         this.valueModifier = valueModifier;
     }
 
@@ -364,7 +364,7 @@ public class Observation implements Serializable {
      * @return
      *     The formFieldPath
      */
-    public Object getFormFieldPath() {
+    public String getFormFieldPath() {
         return formFieldPath;
     }
 
@@ -373,7 +373,7 @@ public class Observation implements Serializable {
      * @param formFieldPath
      *     The formFieldPath
      */
-    public void setFormFieldPath(Object formFieldPath) {
+    public void setFormFieldPath(String formFieldPath) {
         this.formFieldPath = formFieldPath;
     }
 
@@ -382,7 +382,7 @@ public class Observation implements Serializable {
      * @return
      *     The formFieldNamespace
      */
-    public Object getFormFieldNamespace() {
+    public String getFormFieldNamespace() {
         return formFieldNamespace;
     }
 
@@ -391,7 +391,7 @@ public class Observation implements Serializable {
      * @param formFieldNamespace
      *     The formFieldNamespace
      */
-    public void setFormFieldNamespace(Object formFieldNamespace) {
+    public void setFormFieldNamespace(String formFieldNamespace) {
         this.formFieldNamespace = formFieldNamespace;
     }
 

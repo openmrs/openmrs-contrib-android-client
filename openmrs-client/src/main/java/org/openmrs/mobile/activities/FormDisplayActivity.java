@@ -7,7 +7,6 @@ package org.openmrs.mobile.activities;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -26,23 +25,25 @@ import com.google.gson.GsonBuilder;
 import org.joda.time.LocalDateTime;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.FormPageFragment;
-import org.openmrs.mobile.api.Notifier;
+import org.openmrs.mobile.api.EncounterService;
+import org.openmrs.mobile.api.PatientService;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.retrofit.Encounter;
+import org.openmrs.mobile.models.retrofit.Encountercreate;
 import org.openmrs.mobile.models.retrofit.Form;
 import org.openmrs.mobile.models.retrofit.Obscreate;
 import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.models.retrofit.Page;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.Resource;
-import org.openmrs.mobile.models.retrofit.Results;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FormService;
 import org.openmrs.mobile.utilities.InputField;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,12 +67,10 @@ public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnP
     private Form form;
     List<Page> pagelist;
     String formname;
-    Notifier notifier=new Notifier();
-    List<Observation> observations=new ArrayList<>();
-    final RestApi apiService =
-            RestServiceBuilder.createService(RestApi.class);
+
     private long mPatientID;
     private String encountertype;
+    private String valuereference;
     private Patient patient;
     private Visit visit;
     List<InputField> inputlist=new ArrayList<>();
@@ -97,6 +96,7 @@ public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnP
             patient=new PatientDAO().findPatientByID(Long.toString(mPatientID));
             visit=new VisitDAO().getPatientCurrentVisit(mPatientID);
             encountertype=(String)b.get(ApplicationConstants.BundleKeys.ENCOUNTERTYPE);
+            valuereference=(String)b.get(ApplicationConstants.BundleKeys.VALUEREFERENCE);
             getSupportActionBar().setTitle(formname + " Form");
         }
 
@@ -108,8 +108,7 @@ public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnP
         btnFinish.setOnClickListener(this);
 
 
-        FormService formService=new FormService(this);
-        form=formService.getFormByName(formname);
+        form=FormService.getForm(valuereference);
         pagelist = form.getPages();
 
 
@@ -157,8 +156,15 @@ public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnP
         }
     }
 
-    void createObs(final Encounter encounter)
+    void createEncounter()
     {
+        Encountercreate encountercreate=new Encountercreate();
+        encountercreate.setPatient(patient.getUuid());
+        encountercreate.setVisit(visit.getUuid());
+        encountercreate.setEncounterType(encountertype);
+
+        List<Obscreate> observations=new ArrayList<>();
+
         List<Fragment> activefrag=getActiveFragments();
         for (Fragment f:activefrag)
         {
@@ -169,83 +175,21 @@ public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnP
             inputlist.addAll(pageinputlist);
         }
 
-        for (InputField input:inputlist)
-        {
-            Obscreate obscreate=new Obscreate();
+        for (InputField input:inputlist) {
+            Obscreate obscreate = new Obscreate();
             obscreate.setConcept(input.getConcept());
             obscreate.setValue(input.getValue());
             LocalDateTime localDateTime = new LocalDateTime();
             obscreate.setObsDatetime(localDateTime.toString());
             obscreate.setPerson(patient.getUuid());
-            obscreate.setEncounter(encounter.getUuid());
-
-            Call<Observation> call = apiService.createObs(obscreate);
-            call.enqueue(new Callback<Observation>() {
-                @Override
-                public void onResponse(Call<Observation> call, Response<Observation> response) {
-                    if (response.isSuccessful()) {
-                        Observation obs = response.body();
-                        observations.add(obs);
-                        if(observations.size()==inputlist.size())
-                            linkvisit(encounter);
-                    } else {
-                        notifier.notify("Unsuccessful");
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Observation> call, Throwable t) {
-                    notifier.notify(t.getMessage());
-
-                }
-            });
-
+            observations.add(obscreate);
         }
-    }
 
-    void createEncounter()
-    {
-        Encounter encounter=new Encounter();
-        Patient newPatient=new Patient();
-        newPatient.setUuid(patient.getUuid());
-        encounter.setPatient(newPatient);
-        Visit newVisit=new Visit();
-        newVisit.setUuid(visit.getUuid());
-        encounter.setVisit(newVisit);
-        Resource enctype=new Resource();
-        enctype.setUuid(encountertype);
-        encounter.setEncounterTypeResource(enctype);
+        encountercreate.setObservations(observations);
 
-        Call<Encounter> call = apiService.createEncounter(encounter);
-        call.enqueue(new Callback<Encounter>() {
-            @Override
-            public void onResponse(Call<Encounter> call, Response<Encounter> response) {
-                if (response.isSuccessful()) {
-                    Encounter encounter = response.body();
-                    createObs(encounter);
-
-                } else {
-                    notifier.notify("Could not save encounter");
-                    notifier.notify(response.raw().toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Encounter> call, Throwable t) {
-                notifier.notify(t.getLocalizedMessage());
-
-            }
-        });
-    }
-
-    void linkvisit(Encounter encounter)
-    {
-        encounter.setEncounterType(Encounter.EncounterType.getType(formname));
-        List<Encounter> encounterList=visit.getEncounters();
-        encounterList.add(encounter);
-        new VisitDAO().updateVisit(visit,visit.getId(),mPatientID);
-        notifier.notify(formname+" data saved successfully");
+        new EncounterService().addEncounter(encountercreate,mPatientID,visit,formname);
         finish();
+
     }
 
     private void setPageIndicators() {

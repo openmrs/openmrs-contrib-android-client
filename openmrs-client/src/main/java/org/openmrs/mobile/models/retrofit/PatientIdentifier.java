@@ -16,6 +16,7 @@ public class PatientIdentifier extends Resource {
     @Expose
     private String location;
 
+
     /**
      * 
      * @return

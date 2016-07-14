@@ -219,6 +219,10 @@
             android:enabled="true"
             android:name=".api.PatientService"/>
 
+        <service
+            android:enabled="true"
+            android:name=".api.EncounterService"/>
+
         <activity
             android:name=".activities.FormDisplayActivity"
             android:theme="@style/AppTheme"

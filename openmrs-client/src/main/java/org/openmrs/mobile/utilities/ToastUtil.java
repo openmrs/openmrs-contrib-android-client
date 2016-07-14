@@ -41,6 +41,18 @@ public final class ToastUtil {
         ERROR, NOTICE, SUCCESS, WARNING
     }
 
+    public static void notify(String message) {
+        showToast(OpenMRS.getInstance(), ToastType.NOTICE, message, Toast.LENGTH_SHORT);
+    }
+
+    public static void success(String message) {
+        showToast(OpenMRS.getInstance(), ToastType.SUCCESS, message, Toast.LENGTH_SHORT);
+    }
+
+    public static void error(String message) {
+        showToast(OpenMRS.getInstance(), ToastType.ERROR, message, Toast.LENGTH_SHORT);
+    }
+
     public static void showShortToast(Context context, ToastType type, int textId) {
         showToast(context, type, context.getResources().getString(textId), Toast.LENGTH_SHORT);
     }

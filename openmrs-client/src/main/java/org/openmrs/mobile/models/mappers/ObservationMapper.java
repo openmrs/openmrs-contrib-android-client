@@ -97,7 +97,7 @@ public final class ObservationMapper {
         }
         encounter.setUuid(encounterJSON.getString(UUID_KEY));
         encounter.setEncounterDatetime(encounterJSON.getString("encounterDatetime"));
-        encounter.setEncounterType(Encounter.EncounterType.VITALS);
+        encounter.setEncounterTypeToken(Encounter.EncounterTypeToken.VITALS);
         encounter.setDisplay(encounterJSON.getString(DISPLAY_KEY));
         encounter.setObservations(observationList);
         return encounter;
@@ -118,13 +118,13 @@ public final class ObservationMapper {
                 JSONObject encounterJSON = obsObject.getJSONObject("encounter");
                 encounter.setUuid(encounterJSON.getString(UUID_KEY));
                 encounter.setEncounterDatetime(encounterJSON.getString("encounterDatetime"));
-                encounter.setEncounterType(Encounter.EncounterType.VITALS);
+                encounter.setEncounterTypeToken(Encounter.EncounterTypeToken.VITALS);
                 encounter.setDisplay(encounterJSON.getString(DISPLAY_KEY));
                 encounter.setObservations(observationList);
             }
         }
         // it means that form is empty
-        if (null == encounter.getEncounterType()) {
+        if (null == encounter.getEncounterTypeToken()) {
             throw new NullPointerException();
         }
         return encounter;

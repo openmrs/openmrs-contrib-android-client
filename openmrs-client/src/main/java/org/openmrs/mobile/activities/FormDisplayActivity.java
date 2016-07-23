@@ -109,6 +109,7 @@ public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnP
 
 
         form=FormService.getForm(valuereference);
+
         pagelist = form.getPages();
 
 

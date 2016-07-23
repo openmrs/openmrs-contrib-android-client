@@ -1,14 +1,21 @@
 
 package org.openmrs.mobile.models.retrofit;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Link {
+@Table(name = "link")
+public class Link extends Model{
 
+    @Column
     @SerializedName("rel")
     @Expose
     private String rel;
+
+    @Column
     @SerializedName("uri")
     @Expose
     private String uri;

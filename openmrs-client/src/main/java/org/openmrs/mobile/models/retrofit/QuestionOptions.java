@@ -1,6 +1,9 @@
 
 package org.openmrs.mobile.models.retrofit;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,12 +14,15 @@ public class QuestionOptions implements Serializable {
     @SerializedName("rendering")
     @Expose
     private String rendering;
+
     @SerializedName("concept")
     @Expose
     private String concept;
+
     @SerializedName("max")
     @Expose
     private String max;
+
     @SerializedName("min")
     @Expose
     private String min;

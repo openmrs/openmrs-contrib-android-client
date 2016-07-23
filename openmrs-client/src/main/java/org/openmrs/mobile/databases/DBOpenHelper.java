@@ -20,6 +20,8 @@ import android.content.Context;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteStatement;
 
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.tables.EncounterTable;
 import org.openmrs.mobile.databases.tables.LocationTable;
 import org.openmrs.mobile.databases.tables.ObservationTable;
@@ -33,7 +35,8 @@ import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.retrofit.Patient;
 
 public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 3;
+    private static int DATABASE_VERSION = OpenMRS.getInstance().
+            getResources().getInteger(R.integer.dbversion);
     private static final String WHERE_ID_CLAUSE = String.format("%s = ?", Table.MasterColumn.ID);
 
     private PatientTable mPatientTable;
@@ -212,7 +215,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(2, encounter.getUuid(), encounterStatement);
             bindString(3, encounter.getDisplay(), encounterStatement);
             bindLong(4, encounter.getEncounterDatetime(), encounterStatement);
-            bindString(5, encounter.getEncounterType().getType(), encounterStatement);
+            bindString(5, encounter.getEncounterTypeToken().getType(), encounterStatement);
             bindString(6, encounter.getPatientUUID(), encounterStatement);
             encounterId = encounterStatement.executeInsert();
             encounterStatement.clearBindings();
@@ -230,7 +233,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         newValues.put(EncounterTable.Column.VISIT_KEY_ID, encounter.getVisitID());
         newValues.put(EncounterTable.Column.DISPLAY, encounter.getDisplay());
         newValues.put(EncounterTable.Column.ENCOUNTER_DATETIME, encounter.getEncounterDatetime());
-        newValues.put(EncounterTable.Column.ENCOUNTER_TYPE, encounter.getEncounterType().getType());
+        newValues.put(EncounterTable.Column.ENCOUNTER_TYPE, encounter.getEncounterTypeToken().getType());
 
         String[] whereArgs = new String[]{String.valueOf(encounterID)};
 

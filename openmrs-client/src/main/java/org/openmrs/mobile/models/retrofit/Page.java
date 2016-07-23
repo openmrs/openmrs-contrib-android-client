@@ -4,6 +4,10 @@ package org.openmrs.mobile.models.retrofit;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,6 +16,7 @@ public class Page implements Serializable {
     @SerializedName("label")
     @Expose
     private String label;
+
     @SerializedName("sections")
     @Expose
     private List<Section> sections = new ArrayList<Section>();

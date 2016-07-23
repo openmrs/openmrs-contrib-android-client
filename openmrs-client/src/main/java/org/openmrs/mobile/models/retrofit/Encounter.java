@@ -35,7 +35,7 @@ public class Encounter implements Serializable{
     private Form form;
     @SerializedName("encounterType")
     @Expose
-    private Resource encounterTypeResource;
+    private EncounterType encounterType;
     @SerializedName("obs")
     @Expose
     private List<Observation> observations = new ArrayList<Observation>();
@@ -58,7 +58,7 @@ public class Encounter implements Serializable{
     @Expose
     private String resourceVersion;
 
-    private EncounterType encounterType;
+    private EncounterTypeToken encounterTypeToken;
     private Long visitID;
     private String patientUUID;
 
@@ -199,15 +199,15 @@ public class Encounter implements Serializable{
     /**
      *
      * @return
-     *     The encounterType
+     *     The encounterTypeToken
      */
-    public Resource getEncounterTypeResource() {
-        return encounterTypeResource;
+    public EncounterType getEncounterType() {
+        return encounterType;
     }
 
 
-    public void setEncounterTypeResource(Resource encounterTypeResource) {
-        this.encounterTypeResource = encounterTypeResource;
+    public void setEncounterType(EncounterType encounterType) {
+        this.encounterType = encounterType;
     }
 
     /**
@@ -334,18 +334,18 @@ public class Encounter implements Serializable{
         this.resourceVersion = resourceVersion;
     }
 
-    public EncounterType getEncounterType() {
-        return encounterType;
+    public EncounterTypeToken getEncounterTypeToken() {
+        return encounterTypeToken;
     }
 
-    public void setEncounterType(EncounterType encounterType) {
-        this.encounterType = encounterType;
+    public void setEncounterTypeToken(EncounterTypeToken encounterTypeToken) {
+        this.encounterTypeToken = encounterTypeToken;
     }
 
-    public enum EncounterType  {
+    public enum EncounterTypeToken {
         VITALS("Vitals"), VISIT_NOTE("Visit Note"), DISCHARGE("Discharge"), ADMISSION("Admission");
 
-        EncounterType(String type) {
+        EncounterTypeToken(String type) {
             this.type = type;
         }
 
@@ -355,7 +355,7 @@ public class Encounter implements Serializable{
             return type;
         }
 
-        public static EncounterType getType(String type) {
+        public static EncounterTypeToken getType(String type) {
             if (type.equals(VISIT_NOTE.getType())) {
                 return VISIT_NOTE;
             } else if (type.equals(DISCHARGE.getType())) {

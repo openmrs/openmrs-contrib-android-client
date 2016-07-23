@@ -8,35 +8,19 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 
-import org.jdeferred.DoneCallback;
-import org.jdeferred.android.AndroidDeferredManager;
-import org.jdeferred.multiple.MultipleResults;
-import org.openmrs.mobile.api.promise.SimpleDeferredObject;
-import org.openmrs.mobile.api.promise.SimplePromise;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.EncounterDAO;
-import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Visit;
-import org.openmrs.mobile.models.VisitItemDTO;
 import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.retrofit.Encountercreate;
-import org.openmrs.mobile.models.retrofit.IdGenPatientIdentifiers;
-import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.models.retrofit.PatientIdentifier;
-import org.openmrs.mobile.models.retrofit.Resource;
-import org.openmrs.mobile.models.retrofit.Results;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EncounterService extends IntentService {
     OpenMRS openMrs = OpenMRS.getInstance();
@@ -97,7 +81,7 @@ public class EncounterService extends IntentService {
 
     void linkvisit(Encounter encounter)
     {
-        encounter.setEncounterType(Encounter.EncounterType.getType(formname));
+        encounter.setEncounterTypeToken(Encounter.EncounterTypeToken.getType(formname));
         List<Encounter> encounterList=visit.getEncounters();
         encounterList.add(encounter);
         new VisitDAO().updateVisit(visit,visit.getId(),mPatientID);

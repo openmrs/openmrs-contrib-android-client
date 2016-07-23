@@ -16,12 +16,24 @@ package org.openmrs.mobile.application;
 
 import android.content.SharedPreferences;
 import android.os.Build;
+
+import com.activeandroid.ActiveAndroid;
+import com.activeandroid.Configuration;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import net.sqlcipher.database.SQLiteDatabase;
 import org.odk.collect.android.application.Collect;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
+import org.openmrs.mobile.models.retrofit.EncounterType;
+import org.openmrs.mobile.models.retrofit.Form;
+import org.openmrs.mobile.models.retrofit.FormResource;
+import org.openmrs.mobile.models.retrofit.Link;
+import org.openmrs.mobile.models.retrofit.Page;
+import org.openmrs.mobile.models.retrofit.Question;
+import org.openmrs.mobile.models.retrofit.QuestionOptions;
+import org.openmrs.mobile.models.retrofit.Resource;
+import org.openmrs.mobile.models.retrofit.Section;
 import org.openmrs.mobile.security.SecretKeyGenerator;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
@@ -46,6 +58,17 @@ public class OpenMRS extends Collect {
         mLogger = new OpenMRSLogger();
         generateKey();
         OpenMRSDBOpenHelper.init();
+        initializeDB();
+    }
+
+    protected void initializeDB() {
+        Configuration.Builder configurationBuilder = new Configuration.Builder(this);
+        configurationBuilder.addModelClasses(Link.class);
+        configurationBuilder.addModelClasses(FormResource.class);
+        configurationBuilder.addModelClasses(EncounterType.class);
+
+
+        ActiveAndroid.initialize(configurationBuilder.create());
     }
 
     public RequestQueue getRequestQueue() {

@@ -76,6 +76,7 @@ repositories {
     maven { url 'http://yanzm.github.io/MaterialTabHost/repository' }
     mavenCentral()
     jcenter()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 
@@ -106,6 +107,8 @@ dependencies {
     compile 'net.zetetic:android-database-sqlcipher:3.5.1@aar'
     compile 'org.jdeferred:jdeferred-android-aar:1.2.4'
     compile 'com.android.support:support-v13:23.4.0'
+    compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+
 }
 
 play {

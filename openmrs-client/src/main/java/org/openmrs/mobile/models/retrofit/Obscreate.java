@@ -1,10 +1,16 @@
 
 package org.openmrs.mobile.models.retrofit;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Obscreate {
+import java.io.Serializable;
+
+@Table(name = "obscreate")
+public class Obscreate extends Model implements Serializable {
+
 
     @SerializedName("person")
     @Expose

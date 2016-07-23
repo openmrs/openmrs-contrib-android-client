@@ -44,7 +44,7 @@ public class PatientDiagnosisFragment extends ACBaseFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mVisitNoteEncounters = new EncounterDAO().getAllEncountersByType(
                 getArguments().getLong(ApplicationConstants.BundleKeys.PATIENT_BUNDLE),
-                Encounter.EncounterType.VISIT_NOTE);
+                Encounter.EncounterTypeToken.VISIT_NOTE);
         View fragmentLayout = inflater.inflate(R.layout.fragment_patient_diagnosis, null, false);
         ListView visitList = (ListView) fragmentLayout.findViewById(R.id.patientDiagnosisList);
 

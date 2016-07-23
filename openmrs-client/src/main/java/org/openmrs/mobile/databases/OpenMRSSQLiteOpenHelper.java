@@ -24,6 +24,7 @@ import net.sqlcipher.database.SQLiteOpenHelper;
 import net.sqlcipher.database.SQLiteStatement;
 
 
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.utilities.StringUtils;
@@ -31,7 +32,8 @@ import org.openmrs.mobile.utilities.StringUtils;
 public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
     protected OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
 
-    public static final String DATABASE_NAME = "openmrs.db";
+    public static final String DATABASE_NAME = OpenMRS.getInstance().
+            getResources().getString(R.string.dbname);
 
     private String mSecretKey;
 

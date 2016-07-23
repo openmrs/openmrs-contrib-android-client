@@ -24,9 +24,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
-import org.openmrs.mobile.utilities.NotificationUtil;
 
 public class DashboardActivity extends ACBaseActivity {
 
@@ -106,6 +106,8 @@ public class DashboardActivity extends ACBaseActivity {
     }
 
     public void onFormsCallback(View v) {
+        Intent i=new Intent(this,FormListService.class);
+        startService(i);
         Intent intent = new Intent(this, PatientListActivity.class);
         startActivity(intent);
     }

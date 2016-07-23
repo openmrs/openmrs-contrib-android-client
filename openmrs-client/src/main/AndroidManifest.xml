@@ -29,6 +29,11 @@
         android:icon="@drawable/ic_openmrs"
         android:label="@string/app_name"
         android:theme="@style/Theme.Openmrs">
+
+        <meta-data android:name="AA_DB_NAME" android:value="@string/aadbname" />
+        <meta-data android:name="AA_DB_VERSION" android:value="@integer/aadbversion" />
+
+
         <meta-data
             android:name="buildVersion"
             android:value="0" />
@@ -222,6 +227,10 @@
         <service
             android:enabled="true"
             android:name=".api.EncounterService"/>
+
+        <service
+            android:enabled="true"
+            android:name=".api.FormListService"/>
 
         <activity
             android:name=".activities.FormDisplayActivity"

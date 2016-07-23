@@ -1,6 +1,7 @@
 package org.openmrs.mobile.api;
 
 import org.openmrs.mobile.models.retrofit.Encounter;
+import org.openmrs.mobile.models.retrofit.EncounterType;
 import org.openmrs.mobile.models.retrofit.Encountercreate;
 import org.openmrs.mobile.models.retrofit.FormResource;
 import org.openmrs.mobile.models.retrofit.IdGenPatientIdentifiers;
@@ -46,6 +47,6 @@ public interface RestApi {
     Call<Encounter> createEncounter(@Body Encountercreate encountercreate);
 
     @GET("encountertype")
-    Call<Results<Resource>> getEncounterTypes();
+    Call<Results<EncounterType>> getEncounterTypes();
 
 }

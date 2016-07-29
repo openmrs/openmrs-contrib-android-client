@@ -31,7 +31,6 @@ public class FormResource extends Model implements Serializable{
     private List<FormResource> resources = new ArrayList<FormResource>();
 
     @Column(name = "resources")
-    @Expose
     private String resourcelist;
 
     @Column(name = "valueReference")

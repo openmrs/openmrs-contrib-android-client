@@ -11,7 +11,6 @@ import java.io.Serializable;
 @Table(name = "obscreate")
 public class Obscreate extends Model implements Serializable {
 
-
     @SerializedName("person")
     @Expose
     private String person;

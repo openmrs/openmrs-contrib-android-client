@@ -24,11 +24,14 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.PatientListActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
+import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.mappers.VisitMapper;
+import org.openmrs.mobile.models.retrofit.Encountercreate;
 import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.net.GeneralErrorListener;
 
@@ -39,6 +42,8 @@ public class FindVisitsByPatientUUIDListener extends GeneralErrorListener implem
     protected PatientDashboardActivity mCallerPDA;
     protected ACBaseActivity mCallerAdapter;
     protected PatientListActivity callerActivity;
+    protected EncounterService mCallerService;
+    protected Encountercreate mEncountercreate=null;
     private final VisitDAO visitDAO = new VisitDAO();
     private boolean mErrorOccurred;
 
@@ -54,6 +59,13 @@ public class FindVisitsByPatientUUIDListener extends GeneralErrorListener implem
         else {
             mCallerAdapter = callerAdapter;
         }
+    }
+
+    public FindVisitsByPatientUUIDListener(long patientID, Encountercreate encountercreate, EncounterService callerService) {
+        mPatientUUID=new PatientDAO().findPatientByID(Long.toString(patientID)).getUuid();
+        mPatientID = patientID;
+        mCallerService=callerService;
+        mEncountercreate=encountercreate;
     }
 
     @Override
@@ -73,6 +85,8 @@ public class FindVisitsByPatientUUIDListener extends GeneralErrorListener implem
                 for (int i = 0; i < visitResultJSON.length(); i++) {
                     Visit visit = VisitMapper.map(visitResultJSON.getJSONObject(i));
                     long visitId = visitDAO.getVisitsIDByUUID(visit.getUuid());
+                    if(mEncountercreate!=null)
+                        mEncountercreate.setVisit(visit.getUuid());
 
                     if (visitId > 0) {
                         visitDAO.updateVisit(visit, visitId, mPatientID);
@@ -105,6 +119,10 @@ public class FindVisitsByPatientUUIDListener extends GeneralErrorListener implem
                 callerActivity.dismissProgressDialog(mErrorOccurred,
                         R.string.check_visit_success_dialog_title,
                         R.string.find_patients_row_toast_patient_save_error);
+            }
+            else if(null != mCallerService)
+            {
+                mCallerService.syncEncounter(mEncountercreate);
             }
             else {
                 mCallerAdapter.showShortToast(mErrorOccurred,

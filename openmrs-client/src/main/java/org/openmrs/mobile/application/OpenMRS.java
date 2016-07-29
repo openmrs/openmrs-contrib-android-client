@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.application;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 
@@ -24,11 +25,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import net.sqlcipher.database.SQLiteDatabase;
 import org.odk.collect.android.application.Collect;
+import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.models.retrofit.EncounterType;
+import org.openmrs.mobile.models.retrofit.Encountercreate;
 import org.openmrs.mobile.models.retrofit.Form;
 import org.openmrs.mobile.models.retrofit.FormResource;
 import org.openmrs.mobile.models.retrofit.Link;
+import org.openmrs.mobile.models.retrofit.Obscreate;
 import org.openmrs.mobile.models.retrofit.Page;
 import org.openmrs.mobile.models.retrofit.Question;
 import org.openmrs.mobile.models.retrofit.QuestionOptions;
@@ -59,6 +63,9 @@ public class OpenMRS extends Collect {
         generateKey();
         OpenMRSDBOpenHelper.init();
         initializeDB();
+
+        Intent i=new Intent(this,FormListService.class);
+        startService(i);
     }
 
     protected void initializeDB() {
@@ -66,6 +73,9 @@ public class OpenMRS extends Collect {
         configurationBuilder.addModelClasses(Link.class);
         configurationBuilder.addModelClasses(FormResource.class);
         configurationBuilder.addModelClasses(EncounterType.class);
+        configurationBuilder.addModelClasses(Encountercreate.class);
+        configurationBuilder.addModelClasses(Obscreate.class);
+
 
 
         ActiveAndroid.initialize(configurationBuilder.create());

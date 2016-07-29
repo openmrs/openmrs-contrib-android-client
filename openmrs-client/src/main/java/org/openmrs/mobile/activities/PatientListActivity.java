@@ -33,6 +33,7 @@ import org.openmrs.mobile.net.helpers.FormsHelper;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
@@ -68,12 +69,15 @@ public class PatientListActivity extends ACBaseActivity {
         mSelectedPatientUUID = patientUUID;
         mSelectedPatientID = patientID;
 
-        showProgressDialog(R.string.check_visit_dialog_title);
-        new VisitsManager().checkVisitBeforeStart(
-                VisitsHelper.createCheckVisitsBeforeStartListener(patientUUID, patientID, this));
+        if(patientUUID!=null)
+        {
+            startEncounterForPatient();
+        }
+        else
+            ToastUtil.error("Patient not yet registered, cannot create encounter.");
     }
 
-    public void startCheckedFormEntryForResult() {
+    public void startEncounterForPatient() {
         try {
             Intent intent = new Intent(this, FormListActivity.class);
             intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mSelectedPatientID);

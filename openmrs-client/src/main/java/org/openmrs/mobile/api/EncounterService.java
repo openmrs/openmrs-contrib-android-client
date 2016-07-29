@@ -8,12 +8,20 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 
+import com.activeandroid.query.Select;
+
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.PatientListActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.EncounterDAO;
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.retrofit.Encountercreate;
+import org.openmrs.mobile.models.retrofit.FormResource;
+import org.openmrs.mobile.net.VisitsManager;
+import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
@@ -24,26 +32,32 @@ import retrofit2.Response;
 
 public class EncounterService extends IntentService {
     OpenMRS openMrs = OpenMRS.getInstance();
-    EncounterDAO encounterDAO=new EncounterDAO();
     final RestApi apiService =
             RestServiceBuilder.createService(RestApi.class);
-    Long mPatientID;
-    Visit visit;
-    String formname;
 
     public EncounterService() {
         super("Save Encounter");
     }
 
-    public void addEncounter(final Encountercreate encountercreate,Long mPatientID
-                                ,Visit visit,String formname) {
+    public void addEncounter(final Encountercreate encountercreate) {
 
-        //Save encounter here
-        this.mPatientID=mPatientID;
-        this.visit=visit;
-        this.formname=formname;
+        encountercreate.save();
 
-        syncEncounter(encountercreate);
+        if(isNetworkAvailable()) {
+
+            if (new VisitDAO().isPatientNowOnVisit(encountercreate.getPatientId())) {
+                Visit visit = new VisitDAO().getPatientCurrentVisit(encountercreate.getPatientId());
+                encountercreate.setVisit(visit.getUuid());
+                syncEncounter(encountercreate);
+
+            } else {
+                new VisitsManager().checkVisitBeforeStart(
+                        VisitsHelper.createCheckVisitsBeforeStartListener(encountercreate.getPatientId(), encountercreate, this));
+            }
+        }
+        else
+            ToastUtil.error("No internet connection. Form data is saved locally " +
+                    "and will sync when internet connection is restored. ");
     }
 
     public void syncEncounter(final Encountercreate encountercreate) {
@@ -53,15 +67,18 @@ public class EncounterService extends IntentService {
 
         if (syncstate) {
 
+            encountercreate.pullObslist();
             Call<Encounter> call = apiService.createEncounter(encountercreate);
             call.enqueue(new Callback<Encounter>() {
                 @Override
                 public void onResponse(Call<Encounter> call, Response<Encounter> response) {
                     if (response.isSuccessful()) {
                         Encounter encounter = response.body();
-                        linkvisit(encounter);
+                        linkvisit(encountercreate.getPatientId(),encountercreate.getFormname(), encounter);
+                        encountercreate.setSynced(true);
+                        encountercreate.save();
                     } else {
-                        ToastUtil.error("Could not save encounter");
+                        //ToastUtil.error("Could not save encounter");
                     }
                 }
 
@@ -73,30 +90,50 @@ public class EncounterService extends IntentService {
             });
 
         } else {
-            ToastUtil.error("Sync is off.");
+            ToastUtil.error("Sync is off. Turn on sync to save form data.");
         }
 
     }
 
 
-    void linkvisit(Encounter encounter)
+    void linkvisit(Long patientid, String formname, Encounter encounter)
     {
+        Long visitid=new VisitDAO().getVisitsIDByUUID(encounter.getVisit().getUuid());
+        Visit visit=new VisitDAO().getVisitsByID(visitid);
         encounter.setEncounterTypeToken(Encounter.EncounterTypeToken.getType(formname));
         List<Encounter> encounterList=visit.getEncounters();
         encounterList.add(encounter);
-        new VisitDAO().updateVisit(visit,visit.getId(),mPatientID);
+        new VisitDAO().updateVisit(visit,visit.getId(),patientid);
         ToastUtil.success(formname+" data saved successfully");
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         if(isNetworkAvailable()) {
-            //code for getting unsaved encountercreate list from db to be added here
 
+            List<Encountercreate> encountercreatelist = new Select()
+                    .from(Encountercreate.class)
+                    .execute();
+
+            for(Encountercreate encountercreate:encountercreatelist)
+            {
+                if(encountercreate.getSynced()==false)
+                {
+                    if (new VisitDAO().isPatientNowOnVisit(encountercreate.getPatientId())) {
+                        Visit visit = new VisitDAO().getPatientCurrentVisit(encountercreate.getPatientId());
+                        encountercreate.setVisit(visit.getUuid());
+                        syncEncounter(encountercreate);
+
+                    } else {
+                        new VisitsManager().checkVisitBeforeStart(
+                                VisitsHelper.createCheckVisitsBeforeStartListener(encountercreate.getPatientId(), encountercreate, this));
+                    }
+                }
+            }
 
 
         } else {
-            ToastUtil.error("No internet connection. Patient Registration data is saved locally " +
+            ToastUtil.error("No internet connection. Form data is saved locally " +
                     "and will sync when internet connection is restored. ");
         }
     }

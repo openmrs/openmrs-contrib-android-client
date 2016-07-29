@@ -1,26 +1,56 @@
 
 package org.openmrs.mobile.models.retrofit;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Encountercreate {
+@Table(name = "encountercreate")
+public class Encountercreate extends Model implements Serializable{
 
+    Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+    Type obscreatetype = new TypeToken<List<Obscreate>>(){}.getType();
+
+    @Column(name = "visit")
     @SerializedName("visit")
     @Expose
     private String visit;
+
+    @Column(name = "patient")
     @SerializedName("patient")
     @Expose
     private String patient;
+
+    @Column(name = "patientid")
+    private Long patientId;
+
+    @Column(name = "encounterType")
     @SerializedName("encounterType")
     @Expose
     private String encounterType;
+
+    @Column(name = "formname")
+    private String formname;
+
+    @Column(name = "synced")
+    private boolean synced=false;
+
     @SerializedName("obs")
     @Expose
     private List<Obscreate> observations = new ArrayList<>();
+
+    @Column(name = "obs")
+    private String obslist;
 
     public String getVisit() {
         return visit;
@@ -30,6 +60,14 @@ public class Encountercreate {
         this.visit = visit;
     }
 
+
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
+    }
 
     public String getPatient() {
         return patient;
@@ -47,12 +85,40 @@ public class Encountercreate {
         this.encounterType = encounterType;
     }
 
+    public String getFormname() {
+        return formname;
+    }
+
+    public void setFormname(String formname) {
+        this.formname = formname;
+    }
+
+    public Boolean getSynced() {
+        return synced;
+    }
+
+    public void setSynced(Boolean synced) {
+        this.synced = synced;
+    }
+
     public List<Obscreate> getObservations() {
         return observations;
     }
 
     public void setObservations(List<Obscreate> observations) {
         this.observations = observations;
+    }
+
+
+    public void setObslist()
+    {
+        this.obslist=gson.toJson(observations,obscreatetype);
+    }
+
+    public void pullObslist() {
+
+        List<Obscreate> obscreateList=gson.fromJson(this.obslist,obscreatetype);
+        this.observations=obscreateList;
     }
 
 

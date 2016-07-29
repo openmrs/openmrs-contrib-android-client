@@ -72,7 +72,6 @@ public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnP
     private String encountertype;
     private String valuereference;
     private Patient patient;
-    private Visit visit;
     List<InputField> inputlist=new ArrayList<>();
 
     @Override
@@ -94,7 +93,6 @@ public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnP
             formname =(String) b.get(ApplicationConstants.BundleKeys.FORM_NAME);
             mPatientID =(long) b.get(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE);
             patient=new PatientDAO().findPatientByID(Long.toString(mPatientID));
-            visit=new VisitDAO().getPatientCurrentVisit(mPatientID);
             encountertype=(String)b.get(ApplicationConstants.BundleKeys.ENCOUNTERTYPE);
             valuereference=(String)b.get(ApplicationConstants.BundleKeys.VALUEREFERENCE);
             getSupportActionBar().setTitle(formname + " Form");
@@ -161,7 +159,6 @@ public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnP
     {
         Encountercreate encountercreate=new Encountercreate();
         encountercreate.setPatient(patient.getUuid());
-        encountercreate.setVisit(visit.getUuid());
         encountercreate.setEncounterType(encountertype);
 
         List<Obscreate> observations=new ArrayList<>();
@@ -187,8 +184,11 @@ public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnP
         }
 
         encountercreate.setObservations(observations);
+        encountercreate.setFormname(formname);
+        encountercreate.setPatientId(mPatientID);
+        encountercreate.setObslist();
 
-        new EncounterService().addEncounter(encountercreate,mPatientID,visit,formname);
+        new EncounterService().addEncounter(encountercreate);
         finish();
 
     }

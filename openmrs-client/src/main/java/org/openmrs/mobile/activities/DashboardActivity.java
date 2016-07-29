@@ -106,8 +106,6 @@ public class DashboardActivity extends ACBaseActivity {
     }
 
     public void onFormsCallback(View v) {
-        Intent i=new Intent(this,FormListService.class);
-        startService(i);
         Intent intent = new Intent(this, PatientListActivity.class);
         startActivity(intent);
     }

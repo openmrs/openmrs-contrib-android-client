@@ -17,8 +17,8 @@ package org.openmrs.mobile.models.mappers;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Observation;
+import org.openmrs.mobile.models.retrofit.Encounter;
+import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.DateUtils;
 
@@ -52,18 +52,18 @@ public final class VisitMapper {
                 List<Observation> observationList = new ArrayList<Observation>();
                 encounter.setDisplay(getStringFromObject(encounterJSONObject,DISPLAY_KEY));
                 encounter.setUuid(getStringFromObject(encounterJSONObject,"uuid"));
-                encounter.setEncounterType(Encounter.EncounterType.getType(getStringFromObject(getJSONObject(encounterJSONObject,"encounterType"),DISPLAY_KEY)));
-                encounter.setEncounterDatetime(DateUtils.convertTime(getStringFromObject(encounterJSONObject,"encounterDatetime")));
+                encounter.setEncounterTypeToken(Encounter.EncounterTypeToken.getType(getStringFromObject(getJSONObject(encounterJSONObject,"encounterType"),DISPLAY_KEY)));
+                encounter.setEncounterDatetime(getStringFromObject(encounterJSONObject,"encounterDatetime"));
                 JSONArray obsJSONArray = encounterJSONObject.getJSONArray("obs");
                 for (int j = 0; j < obsJSONArray.length(); j++) {
                     Observation observation = new Observation();
                     JSONObject observationJSONObject = obsJSONArray.getJSONObject(j);
                     observation.setUuid(getStringFromObject(observationJSONObject,"uuid"));
-                    if (Encounter.EncounterType.VITALS.equals(encounter.getEncounterType())) {
+                    if (Encounter.EncounterTypeToken.VITALS.equals(encounter.getEncounterTypeToken())) {
                         String[] labelAndValue = getStringFromObject(observationJSONObject,DISPLAY_KEY).split(":");
                         observation.setDisplay(labelAndValue[0]);
                         observation.setDisplayValue(labelAndValue[1]);
-                    } else if (Encounter.EncounterType.VISIT_NOTE.equals(encounter.getEncounterType())) {
+                    } else if (Encounter.EncounterTypeToken.VISIT_NOTE.equals(encounter.getEncounterTypeToken())) {
                         observation = ObservationMapper.diagnosisMap(observationJSONObject);
                     } else {
                         observation.setDisplay(getStringFromObject(observationJSONObject,DISPLAY_KEY));

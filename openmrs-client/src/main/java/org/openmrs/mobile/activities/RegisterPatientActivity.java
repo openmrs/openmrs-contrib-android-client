@@ -284,4 +284,5 @@ public class RegisterPatientActivity extends ACBaseActivity {
             return e.getText().toString();
         }
     }
+
 }

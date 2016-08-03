@@ -27,8 +27,8 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRSInflater;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Observation;
+import org.openmrs.mobile.models.retrofit.Encounter;
+import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ImageUtils;
 
@@ -57,7 +57,7 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
         for (Encounter encounter : this.mEncounters) {
             ViewGroup convertView = (ViewGroup) inflater.inflate(R.layout.list_visit_item, null);
             LinearLayout contentLayout = (LinearLayout) convertView.findViewById(R.id.listVisitItemLayoutContent);
-            switch (encounter.getEncounterType()) {
+            switch (encounter.getEncounterTypeToken()) {
                 case VITALS:
                     for (Observation obs : encounter.getObservations()) {
                         convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(), obs.getDisplayValue());
@@ -134,7 +134,7 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
         final TextView detailsSelector = (TextView) rowView.findViewById(R.id.listVisitGroupDetailsSelector);
         final ImageView detailsSelectorIcon = (ImageView) rowView.findViewById(R.id.listVisitGroupDetailsIcon);
         final Encounter encounter = mEncounters.get(groupPosition);
-        encounterName.setText(encounter.getEncounterType().getType());
+        encounterName.setText(encounter.getEncounterTypeToken().getType());
         if (isExpanded) {
             detailsSelector.setText(mContext.getString(R.string.list_visit_selector_hide));
             bindDrawableResources(R.drawable.exp_list_hide_details, detailsSelectorIcon);
@@ -142,7 +142,7 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
             detailsSelector.setText(mContext.getString(R.string.list_visit_selector_show));
             bindDrawableResources(R.drawable.exp_list_show_details, detailsSelectorIcon);
         }
-        switch (encounter.getEncounterType()) {
+        switch (encounter.getEncounterTypeToken()) {
             case VITALS:
                 bindDrawableResources(R.drawable.ico_vitals_small, encounterIcon);
                 break;

@@ -20,8 +20,9 @@ import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.tables.EncounterTable;
 import org.openmrs.mobile.databases.tables.ObservationTable;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Observation;
+import org.openmrs.mobile.models.retrofit.Encounter;
+import org.openmrs.mobile.models.retrofit.Observation;
+import org.openmrs.mobile.utilities.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +76,7 @@ public class EncounterDAO {
         Encounter encounter = null;
 
         String where = String.format("%s = ? AND %s = ? ORDER BY %s DESC LIMIT 1", EncounterTable.Column.PATIENT_UUID, EncounterTable.Column.ENCOUNTER_TYPE, EncounterTable.Column.ENCOUNTER_DATETIME);
-        String[] whereArgs = new String[]{patientUUID, Encounter.EncounterType.VITALS.getType()};
+        String[] whereArgs = new String[]{patientUUID, Encounter.EncounterTypeToken.VITALS.getType()};
         final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
         if (null != cursor) {
             try {
@@ -92,8 +93,8 @@ public class EncounterDAO {
                     encounter.setId(id);
                     encounter.setUuid(uuid);
                     encounter.setDisplay(display);
-                    encounter.setEncounterDatetime(datetime);
-                    encounter.setEncounterType(Encounter.EncounterType.VITALS);
+                    encounter.setEncounterDatetime(DateUtils.convertTime(datetime,DateUtils.OPEN_MRS_REQUEST_FORMAT));
+                    encounter.setEncounterTypeToken(Encounter.EncounterTypeToken.VITALS);
                     encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
                 }
             } finally {
@@ -127,14 +128,14 @@ public class EncounterDAO {
                     String uuid = cursor.getString(uuid_CI);
                     String display = cursor.getString(display_CI);
                     Long datetime = cursor.getLong(datetime_CI);
-                    Encounter.EncounterType type = Encounter.EncounterType.getType(cursor.getString(encounterType_CI));
+                    Encounter.EncounterTypeToken type = Encounter.EncounterTypeToken.getType(cursor.getString(encounterType_CI));
                     Encounter encounter = new Encounter();
                     encounter.setId(id);
                     encounter.setVisitID(visitID);
                     encounter.setUuid(uuid);
                     encounter.setDisplay(display);
-                    encounter.setEncounterDatetime(datetime);
-                    encounter.setEncounterType(type);
+                    encounter.setEncounterDatetime(DateUtils.convertTime(datetime,DateUtils.OPEN_MRS_REQUEST_FORMAT));
+                    encounter.setEncounterTypeToken(type);
                     encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
                     encounters.add(encounter);
                 }
@@ -146,7 +147,7 @@ public class EncounterDAO {
         return encounters;
     }
 
-    public List<Encounter> getAllEncountersByType(Long patientID, Encounter.EncounterType type) {
+    public List<Encounter> getAllEncountersByType(Long patientID, Encounter.EncounterTypeToken type) {
         List<Encounter> encounters = new ArrayList<Encounter>();
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
         String query = "SELECT e.* FROM observations AS o JOIN encounters AS e ON o.encounter_id = e._id " +
@@ -170,8 +171,8 @@ public class EncounterDAO {
                     encounter.setId(id);
                     encounter.setUuid(uuid);
                     encounter.setDisplay(display);
-                    encounter.setEncounterDatetime(datetime);
-                    encounter.setEncounterType(type);
+                    encounter.setEncounterDatetime(DateUtils.convertTime(datetime,DateUtils.OPEN_MRS_REQUEST_FORMAT));
+                    encounter.setEncounterTypeToken(type);
                     encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
                     encounters.add(encounter);
                 }

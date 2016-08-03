@@ -18,9 +18,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Observation;
-import org.openmrs.mobile.utilities.DateUtils;
+import org.openmrs.mobile.models.retrofit.Encounter;
+import org.openmrs.mobile.models.retrofit.Observation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,8 +96,8 @@ public final class ObservationMapper {
             observationList.add(observation);
         }
         encounter.setUuid(encounterJSON.getString(UUID_KEY));
-        encounter.setEncounterDatetime(DateUtils.convertTime(encounterJSON.getString("encounterDatetime")));
-        encounter.setEncounterType(Encounter.EncounterType.VITALS);
+        encounter.setEncounterDatetime(encounterJSON.getString("encounterDatetime"));
+        encounter.setEncounterTypeToken(Encounter.EncounterTypeToken.VITALS);
         encounter.setDisplay(encounterJSON.getString(DISPLAY_KEY));
         encounter.setObservations(observationList);
         return encounter;
@@ -118,14 +117,14 @@ public final class ObservationMapper {
             if (obsArray.length() - 1 == i) {
                 JSONObject encounterJSON = obsObject.getJSONObject("encounter");
                 encounter.setUuid(encounterJSON.getString(UUID_KEY));
-                encounter.setEncounterDatetime(DateUtils.convertTime(encounterJSON.getString("encounterDatetime")));
-                encounter.setEncounterType(Encounter.EncounterType.VITALS);
+                encounter.setEncounterDatetime(encounterJSON.getString("encounterDatetime"));
+                encounter.setEncounterTypeToken(Encounter.EncounterTypeToken.VITALS);
                 encounter.setDisplay(encounterJSON.getString(DISPLAY_KEY));
                 encounter.setObservations(observationList);
             }
         }
         // it means that form is empty
-        if (null == encounter.getEncounterType()) {
+        if (null == encounter.getEncounterTypeToken()) {
             throw new NullPointerException();
         }
         return encounter;

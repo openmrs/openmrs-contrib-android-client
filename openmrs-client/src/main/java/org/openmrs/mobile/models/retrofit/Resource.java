@@ -1,6 +1,8 @@
 
 package org.openmrs.mobile.models.retrofit;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,9 +16,11 @@ public class Resource implements Serializable {
     @SerializedName("uuid")
     @Expose
     private String uuid;
+
     @SerializedName("display")
     @Expose
     private String display;
+
     @SerializedName("links")
     @Expose
     private List<Link> links = new ArrayList<Link>();
@@ -74,5 +78,6 @@ public class Resource implements Serializable {
     public void setLinks(List<Link> links) {
         this.links = links;
     }
+
 
 }

@@ -33,10 +33,11 @@ import org.openmrs.mobile.net.helpers.FormsHelper;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
-public class CaptureVitalsActivity extends ACBaseActivity {
+public class PatientListActivity extends ACBaseActivity {
 
     private String mSelectedPatientUUID;
     private Long mSelectedPatientID;
@@ -51,6 +52,7 @@ public class CaptureVitalsActivity extends ACBaseActivity {
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         if (null != savedInstanceState) {
@@ -62,28 +64,24 @@ public class CaptureVitalsActivity extends ACBaseActivity {
                 .add(R.id.patientVitalsList, PatientsVitalsListFragment.newInstance(new PatientListBundle(patientList))).commit();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //no context menu for this activity
-        return false;
-    }
 
     public void startFormEntry(String patientUUID, Long patientID) {
         mSelectedPatientUUID = patientUUID;
         mSelectedPatientID = patientID;
 
-        showProgressDialog(R.string.check_visit_dialog_title);
-        new VisitsManager().checkVisitBeforeStart(
-                VisitsHelper.createCheckVisitsBeforeStartListener(patientUUID, patientID, this));
+        if(patientUUID!=null)
+        {
+            startEncounterForPatient();
+        }
+        else
+            ToastUtil.error("Patient not yet registered, cannot create encounter.");
     }
 
-    public void startCheckedFormEntryForResult(String patientUUID) {
+    public void startEncounterForPatient() {
         try {
-            Intent intent = new Intent(this, FormEntryActivity.class);
-            Uri formURI = new FormsDAO(this.getContentResolver()).getFormURI(ApplicationConstants.FormNames.VITALS_XFORM);
-            intent.setData(formURI);
-            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE, patientUUID);
-            this.startActivityForResult(intent, CAPTURE_VITALS_REQUEST_CODE);
+            Intent intent = new Intent(this, FormListActivity.class);
+            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mSelectedPatientID);
+            startActivity(intent);
         } catch (Exception e) {
             dismissProgressDialog(true, null, R.string.failed_to_open_vitals_form);
             OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
@@ -99,31 +97,8 @@ public class CaptureVitalsActivity extends ACBaseActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE, mSelectedPatientUUID);
+        outState.putSerializable(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mSelectedPatientID);
+
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode) {
-            case RESULT_OK:
-                String path = data.getData().toString();
-                String instanceID = path.substring(path.lastIndexOf('/') + 1);
-                FormManagerBundle bundle = FormsHelper.createBundle(
-                        new FormsDAO(getContentResolver()).
-                                getSurveysSubmissionDataFromFormInstanceId(instanceID).
-                                getFormInstanceFilePath(),
-                        mSelectedPatientUUID,
-                        mSelectedPatientID,
-                        new VisitDAO().getPatientCurrentVisit(mSelectedPatientID).getUuid());
-                new FormsManager().uploadXFormWithMultiPartRequest(
-                        FormsHelper.createUploadXFormWithMultiPartRequestListener(bundle));
-                finish();
-                break;
-            case RESULT_CANCELED:
-                finish();
-            default:
-                break;
-        }
-    }
 }

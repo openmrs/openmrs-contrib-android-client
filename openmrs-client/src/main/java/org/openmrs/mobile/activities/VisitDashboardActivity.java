@@ -28,17 +28,15 @@ import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
 import org.openmrs.mobile.adapters.VisitExpandableListAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
-import org.openmrs.mobile.bundle.FormManagerBundle;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.FormsDAO;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.intefaces.VisitDashboardCallbackListener;
-import org.openmrs.mobile.models.Encounter;
+import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.net.FormsManager;
 import org.openmrs.mobile.net.VisitsManager;
-import org.openmrs.mobile.net.helpers.FormsHelper;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -128,30 +126,6 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode) {
-            case RESULT_OK:
-                String path = data.getData().toString();
-                String instanceID = path.substring(path.lastIndexOf('/') + 1);
-                FormManagerBundle bundle = FormsHelper.createBundle(
-                        new FormsDAO(getContentResolver())
-                                .getSurveysSubmissionDataFromFormInstanceId(instanceID)
-                                .getFormInstanceFilePath(),
-                        mPatient.getUuid(),
-                        mPatient.getId(),
-                        mVisit.getUuid());
-                mFormsManager.uploadXFormWithMultiPartRequest(
-                        FormsHelper.createUploadXFormWithMultiPartRequestListener(bundle, this));
-                break;
-            case RESULT_CANCELED:
-                finish();
-            default:
-                break;
-        }
-    }
-
-    @Override
     public void updateEncounterList() {
         mVisitEncounters.clear();
         mExpandableListAdapter.notifyDataSetChanged();
@@ -167,7 +141,7 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
 
     private void startCaptureVitals() {
         try {
-            Intent intent = new Intent(this, FormEntryActivity.class);
+            Intent intent = new Intent(this, FormListActivity.class);
             Uri formURI = new FormsDAO(this.getContentResolver()).getFormURI(ApplicationConstants.FormNames.VITALS_XFORM);
             intent.setData(formURI);
             intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE, mPatient.getUuid());

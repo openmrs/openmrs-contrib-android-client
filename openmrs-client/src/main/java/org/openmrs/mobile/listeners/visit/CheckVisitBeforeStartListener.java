@@ -15,19 +15,23 @@
 package org.openmrs.mobile.listeners.visit;
 
 import org.json.JSONObject;
-import org.openmrs.mobile.activities.CaptureVitalsActivity;
+import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.activities.PatientListActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
+import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
+import org.openmrs.mobile.models.retrofit.Encountercreate;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 public class CheckVisitBeforeStartListener extends FindVisitsByPatientUUIDListener {
-    private final CaptureVitalsActivity mCaller;
+    private final PatientListActivity mCaller;
     private static final String CHECKING = "Checking: ";
 
-    public CheckVisitBeforeStartListener(String patientUUID, long patientID, CaptureVitalsActivity callerAdapter) {
+    public CheckVisitBeforeStartListener(String patientUUID, long patientID, PatientListActivity callerAdapter) {
         super(patientUUID, patientID, callerAdapter);
         mCaller = callerAdapter;
     }
@@ -37,24 +41,37 @@ public class CheckVisitBeforeStartListener extends FindVisitsByPatientUUIDListen
         mCaller = null;
     }
 
+    public CheckVisitBeforeStartListener(Long mPatientID, Encountercreate encountercreate, EncounterService callerAdapter) {
+        super(mPatientID,encountercreate,callerAdapter);
+        mCaller=null;
+    }
+
+
     @Override
     public void onResponse(JSONObject response) {
         super.onResponse(response);
         mLogger.i(CHECKING + response.toString());
         if (mCaller != null) {
             if (new VisitDAO().isPatientNowOnVisit(mPatientID)) {
-                mCaller.startCheckedFormEntryForResult(mPatientUUID);
+                mCaller.startEncounterForPatient();
             } else {
                 // it will start new visit if confirmed
                 mCaller.showNoVisitDialog();
             }
-        } else {
+        } else if(mCallerPDA != null) {
             if (new VisitDAO().isPatientNowOnVisit(mPatientID)) {
                 Patient patient = new PatientDAO().findPatientByID(String.valueOf(mPatientID));
                 mCallerPDA.showStartVisitImpossibleDialog(patient.getDisplay());
             } else {
                 new VisitsManager().startVisit(
                         VisitsHelper.createStartVisitListener(mPatientUUID, mPatientID, mCallerPDA));
+            }
+        } else{
+            if (!new VisitDAO().isPatientNowOnVisit(mPatientID)) {
+                Patient patient =new PatientDAO().findPatientByID(Long.toString(mPatientID));
+                ToastUtil.notify("Creating new Active Visit for Patient "+ patient.getDisplay());
+                new VisitsManager().startVisit(
+                        VisitsHelper.createStartVisitListener(mPatientID, mEncountercreate, mCallerService));
             }
         }
     }

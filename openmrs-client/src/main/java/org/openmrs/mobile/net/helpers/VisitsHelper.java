@@ -15,9 +15,10 @@
 package org.openmrs.mobile.net.helpers;
 
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.CaptureVitalsActivity;
+import org.openmrs.mobile.activities.PatientListActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.activities.VisitDashboardActivity;
+import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.bundle.VisitsManagerBundle;
 import org.openmrs.mobile.intefaces.VisitDashboardCallbackListener;
 import org.openmrs.mobile.listeners.visit.CheckVisitBeforeStartListener;
@@ -27,6 +28,7 @@ import org.openmrs.mobile.listeners.visit.FindVisitsByPatientUUIDListener;
 import org.openmrs.mobile.listeners.visit.LastVitalsListener;
 import org.openmrs.mobile.listeners.visit.StartVisitListener;
 import org.openmrs.mobile.listeners.visit.VisitTypeListener;
+import org.openmrs.mobile.models.retrofit.Encountercreate;
 
 public final class VisitsHelper {
 
@@ -48,7 +50,7 @@ public final class VisitsHelper {
         return new FindVisitsByPatientUUIDListener(patientUUID, patientID, caller);
     }
 
-    public static CheckVisitBeforeStartListener createCheckVisitsBeforeStartListener(String patientUUID, long patientID, CaptureVitalsActivity callerAdapter) {
+    public static CheckVisitBeforeStartListener createCheckVisitsBeforeStartListener(String patientUUID, long patientID, PatientListActivity callerAdapter) {
         return new CheckVisitBeforeStartListener(patientUUID, patientID, callerAdapter);
     }
 
@@ -64,7 +66,7 @@ public final class VisitsHelper {
         return new EndVisitByUUIDListener(visitUUID, patientID, visitID, caller);
     }
 
-    public static StartVisitListener createStartVisitListener(String patientUUID, long patientID, CaptureVitalsActivity caller) {
+    public static StartVisitListener createStartVisitListener(String patientUUID, long patientID, PatientListActivity caller) {
         return new StartVisitListener(patientUUID, patientID, caller);
     }
 
@@ -74,5 +76,13 @@ public final class VisitsHelper {
 
     public static VisitTypeListener createVisitTypeListener() {
         return new VisitTypeListener();
+    }
+
+    public static CheckVisitBeforeStartListener createCheckVisitsBeforeStartListener(Long mPatientID, Encountercreate encountercreate, EncounterService callerAdapter) {
+        return new CheckVisitBeforeStartListener(mPatientID, encountercreate, callerAdapter);
+    }
+
+    public static StartVisitListener createStartVisitListener(long mPatientID, Encountercreate mEncountercreate, EncounterService mCallerService) {
+        return new StartVisitListener(mPatientID, mEncountercreate, mCallerService);
     }
 }

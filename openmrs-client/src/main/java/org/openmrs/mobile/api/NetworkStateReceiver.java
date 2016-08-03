@@ -9,6 +9,8 @@ import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+import org.openmrs.mobile.application.OpenMRS;
+
 public class NetworkStateReceiver extends BroadcastReceiver{
 
     private boolean isConnected = false;
@@ -29,7 +31,7 @@ public class NetworkStateReceiver extends BroadcastReceiver{
                         return true;
                     }
                 } else{
-                        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
                         SharedPreferences.Editor editor = prefs.edit();
                         editor.putBoolean("sync", false);
 

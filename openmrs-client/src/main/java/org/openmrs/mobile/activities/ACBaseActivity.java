@@ -29,7 +29,6 @@ import android.widget.CompoundButton;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
 import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
-import org.openmrs.mobile.api.Notifier;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
@@ -100,7 +99,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         if(switchmenu!=null)
         {
             final SwitchCompat mSwitch=(SwitchCompat)switchmenu.getActionView();
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
             Boolean syncstate = prefs.getBoolean("sync", true);
             mSwitch.setChecked(syncstate);
             mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -109,9 +108,8 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putBoolean("sync", isChecked);
                     editor.commit();
-                    Notifier notifier=new Notifier();
                     String text=(isChecked)? mSwitch.getTextOn().toString():mSwitch.getTextOff().toString();
-                    notifier.notify(text);
+                    ToastUtil.notify(text);
                     if(isChecked)
                     {
                         Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
@@ -326,4 +324,5 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     public AuthorizationManager getAuthorizationManager() {
         return mAuthorizationManager;
     }
+
 }

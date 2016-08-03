@@ -20,12 +20,16 @@ import com.android.volley.VolleyError;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.CaptureVitalsActivity;
+import org.openmrs.mobile.activities.PatientListActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
+import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
+import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.mappers.VisitMapper;
+import org.openmrs.mobile.models.retrofit.Encountercreate;
 import org.openmrs.mobile.net.GeneralErrorListener;
 
 public class StartVisitListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
@@ -33,16 +37,26 @@ public class StartVisitListener extends GeneralErrorListener implements Response
     private final String mPatientUUID;
     private final long mPatientID;
     private PatientDashboardActivity mCallerPDA;
-    private CaptureVitalsActivity mCallerCVA;
+    private PatientListActivity mCallerCVA;
+    private EncounterService mService;
+    private Encountercreate mEncountercreate;
+
 
     public StartVisitListener(String patientUUD, long patientID, PatientDashboardActivity callerPDA) {
         this(patientUUD, patientID);
         mCallerPDA = callerPDA;
     }
 
-    public StartVisitListener(String patientUUD, long patientID, CaptureVitalsActivity callerCVA) {
+    public StartVisitListener(String patientUUD, long patientID, PatientListActivity callerCVA) {
         this(patientUUD, patientID);
         mCallerCVA = callerCVA;
+    }
+
+    public StartVisitListener(long patientID, Encountercreate encountercreate, EncounterService service) {
+        mPatientID = patientID;
+        mPatientUUID=new PatientDAO().findPatientByID(Long.toString(mPatientID)).getUuid();
+        mService = service;
+        mEncountercreate = encountercreate;
     }
 
     private StartVisitListener(String patientUUID, long patientID) {
@@ -65,13 +79,19 @@ public class StartVisitListener extends GeneralErrorListener implements Response
     public void onResponse(JSONObject response) {
         mLogger.d(response.toString());
         try {
-            long visitID = new VisitDAO().saveVisit(VisitMapper.map(response), mPatientID);
+            Visit visit=VisitMapper.map(response);
+            long visitID = new VisitDAO().saveVisit(visit, mPatientID);
             if (null != mCallerPDA) {
                 mCallerPDA.visitStarted(visitID, visitID <= 0);
-            } else {
+            }
+            else if(null != mCallerCVA){
                 mCallerCVA.dismissProgressDialog(false, R.string.start_visit_successful,
                         R.string.start_visit_error);
-                mCallerCVA.startCheckedFormEntryForResult(mPatientUUID);
+                mCallerCVA.startEncounterForPatient();
+            }
+            else {
+                mEncountercreate.setVisit(visit.getUuid());
+                new EncounterService().syncEncounter(mEncountercreate);
             }
         } catch (JSONException e) {
             mLogger.d(e.toString());

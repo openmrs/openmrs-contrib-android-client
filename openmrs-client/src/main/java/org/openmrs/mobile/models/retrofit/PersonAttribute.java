@@ -4,7 +4,9 @@ package org.openmrs.mobile.models.retrofit;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class PersonAttribute {
+import java.io.Serializable;
+
+public class PersonAttribute implements Serializable {
 
     @SerializedName("attributeType")
     @Expose

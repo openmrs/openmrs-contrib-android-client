@@ -26,7 +26,7 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.CaptureVitalsActivity;
+import org.openmrs.mobile.activities.PatientListActivity;
 import org.openmrs.mobile.activities.DialogActivity;
 import org.openmrs.mobile.activities.LoginActivity;
 import org.openmrs.mobile.activities.VisitDashboardActivity;
@@ -335,7 +335,7 @@ public class CustomFragmentDialog extends DialogFragment {
                 fragment.startVisit();
             }
         } else {
-            CaptureVitalsActivity cva = ((CaptureVitalsActivity) activity);
+            PatientListActivity cva = ((PatientListActivity) activity);
             cva.startVisit();
         }
     }

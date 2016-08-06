@@ -22,6 +22,7 @@ import org.openmrs.mobile.models.retrofit.Encountercreate;
 import org.openmrs.mobile.models.retrofit.FormResource;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
+import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
@@ -30,8 +31,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
+/**
+ * This Source Code Form is subject to the terms of the Mozilla Public License,
+ * v. 2.0. If a copy of the MPL was not distributed with this file, You can
+ * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
+ * the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+ *
+ * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
+ * graphic logo is a trademark of OpenMRS Inc.
+ */
+
 public class EncounterService extends IntentService {
-    OpenMRS openMrs = OpenMRS.getInstance();
     final RestApi apiService =
             RestServiceBuilder.createService(RestApi.class);
 
@@ -43,7 +54,7 @@ public class EncounterService extends IntentService {
 
         encountercreate.save();
 
-        if(isNetworkAvailable()) {
+        if(NetworkUtils.isNetworkAvailable()) {
 
             if (new VisitDAO().isPatientNowOnVisit(encountercreate.getPatientId())) {
                 Visit visit = new VisitDAO().getPatientCurrentVisit(encountercreate.getPatientId());
@@ -109,7 +120,7 @@ public class EncounterService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(isNetworkAvailable()) {
+        if(NetworkUtils.isNetworkAvailable()) {
 
             List<Encountercreate> encountercreatelist = new Select()
                     .from(Encountercreate.class)
@@ -138,10 +149,4 @@ public class EncounterService extends IntentService {
         }
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) openMrs.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
 }

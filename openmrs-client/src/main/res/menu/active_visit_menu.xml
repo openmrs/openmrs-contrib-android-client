@@ -21,8 +21,8 @@
         android:orderInCategory="100"
         app:showAsAction="never"
         android:title="@string/action_end_visit" />
-    <!--<item-->
-        <!--android:id="@+id/actionCaptureVitals"-->
-        <!--android:title="@string/action_capture_vitals"-->
-        <!--app:showAsAction="never" />-->
+    <item
+        android:id="@+id/actionFillForm"
+        android:title="@string/action_form_entry"
+        app:showAsAction="never" />
 </menu>

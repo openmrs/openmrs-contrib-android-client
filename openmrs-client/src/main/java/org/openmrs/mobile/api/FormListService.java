@@ -29,6 +29,7 @@ import org.openmrs.mobile.models.retrofit.Encountercreate;
 import org.openmrs.mobile.models.retrofit.FormResource;
 import org.openmrs.mobile.models.retrofit.Results;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.File;
@@ -42,6 +43,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * This Source Code Form is subject to the terms of the Mozilla Public License,
+ * v. 2.0. If a copy of the MPL was not distributed with this file, You can
+ * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
+ * the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+ *
+ * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
+ * graphic logo is a trademark of OpenMRS Inc.
+ */
+
 public class FormListService extends IntentService {
     OpenMRS openMrs = OpenMRS.getInstance();
     final RestApi apiService =
@@ -54,7 +65,7 @@ public class FormListService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(isNetworkAvailable()) {
+        if(NetworkUtils.isNetworkAvailable()) {
 
             Call<Results<FormResource>> call = apiService.getForms();
             call.enqueue(new Callback<Results<FormResource>>() {
@@ -76,11 +87,6 @@ public class FormListService extends IntentService {
                         }
                         finally {
                             ActiveAndroid.endTransaction();
-                            try {
-                                writeToSD();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
                         }
 
                     }
@@ -104,11 +110,6 @@ public class FormListService extends IntentService {
                         Results<EncounterType> encountertypelist = response.body();
                             for (EncounterType enctype : encountertypelist.getResults())
                                 enctype.save();
-                        try {
-                            writeToSD();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
                     }
 
                 }
@@ -127,35 +128,4 @@ public class FormListService extends IntentService {
         }
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) openMrs.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
-
-    private void writeToSD() throws IOException {
-        File sd = Environment.getExternalStorageDirectory();
-        String DB_PATH;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            DB_PATH = getFilesDir().getAbsolutePath().replace("files", "databases") + File.separator;
-        }
-        else {
-            DB_PATH = getFilesDir().getPath() + getPackageName() + "/databases/";
-        }
-        if (sd.canWrite()) {
-            String currentDBPath = "aaopenmrs.db";
-            String backupDBPath = "aaopenmrsbak.db";
-            File currentDB = new File(DB_PATH, currentDBPath);
-            File backupDB = new File(sd, backupDBPath);
-
-            if (currentDB.exists()) {
-                FileChannel src = new FileInputStream(currentDB).getChannel();
-                FileChannel dst = new FileOutputStream(backupDB).getChannel();
-                dst.transferFrom(src, 0, src.size());
-                src.close();
-                dst.close();
-            }
-        }
-    }
 }

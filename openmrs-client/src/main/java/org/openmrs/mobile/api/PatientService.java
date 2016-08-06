@@ -24,6 +24,7 @@ import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.PatientIdentifier;
 import org.openmrs.mobile.models.retrofit.Resource;
 import org.openmrs.mobile.models.retrofit.Results;
+import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.File;
@@ -38,6 +39,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+/**
+ * This Source Code Form is subject to the terms of the Mozilla Public License,
+ * v. 2.0. If a copy of the MPL was not distributed with this file, You can
+ * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
+ * the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+ *
+ * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
+ * graphic logo is a trademark of OpenMRS Inc.
+ */
 
 public class PatientService extends IntentService {
     OpenMRS openMrs = OpenMRS.getInstance();
@@ -118,7 +129,7 @@ public class PatientService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(isNetworkAvailable()) {
+        if(NetworkUtils.isNetworkAvailable()) {
             List<Patient> patientList = new PatientDAO().getAllPatients();
             final ListIterator<Patient> it = patientList.listIterator();
             while (it.hasNext()) {
@@ -222,10 +233,5 @@ public class PatientService extends IntentService {
         return deferred.promise();
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) openMrs.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
+
 }

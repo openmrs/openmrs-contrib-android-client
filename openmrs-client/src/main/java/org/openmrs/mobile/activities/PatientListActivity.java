@@ -15,21 +15,15 @@
 package org.openmrs.mobile.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.PatientsVitalsListFragment;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.bundle.FormManagerBundle;
 import org.openmrs.mobile.bundle.PatientListBundle;
-import org.openmrs.mobile.dao.FormsDAO;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.net.FormsManager;
 import org.openmrs.mobile.net.VisitsManager;
-import org.openmrs.mobile.net.helpers.FormsHelper;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;

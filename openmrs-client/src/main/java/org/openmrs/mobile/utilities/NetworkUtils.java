@@ -14,20 +14,19 @@
 
 package org.openmrs.mobile.utilities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import org.openmrs.mobile.application.OpenMRS;
+
+
 public final class NetworkUtils {
 
-    private NetworkUtils() {
 
-    }
-
-    public static boolean isNetworkAvailable(Activity activity) {
+    public static boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
-                = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+                = (ConnectivityManager) OpenMRS.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }

@@ -1,12 +1,3 @@
-package org.openmrs.mobile.api;
-
-
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-
-import org.openmrs.mobile.utilities.ToastUtil;
-
 /**
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
@@ -16,6 +7,14 @@ import org.openmrs.mobile.utilities.ToastUtil;
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
+
+package org.openmrs.mobile.api;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+
+import org.openmrs.mobile.utilities.ToastUtil;
 
 public class SyncStateReceiver extends BroadcastReceiver{
     @Override

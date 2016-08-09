@@ -1,10 +1,3 @@
-package org.openmrs.mobile.models.retrofit;
-
-import java.util.ArrayList;
-import java.util.List;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 /**
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
@@ -14,6 +7,13 @@ import com.google.gson.annotations.SerializedName;
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
+
+package org.openmrs.mobile.models.retrofit;
+
+import java.util.ArrayList;
+import java.util.List;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class IdGenPatientIdentifiers {
 

@@ -59,11 +59,6 @@
                 <action android:name="org.openmrs.mobile.intent.action.SERVER_NOT_SUPPORTED_BROADCAST" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".api.NetworkStateReceiver">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
         <receiver android:name=".api.SyncStateReceiver">
             <intent-filter>
                 <action android:name="org.openmrs.mobile.intent.action.SYNC_PATIENTS" />

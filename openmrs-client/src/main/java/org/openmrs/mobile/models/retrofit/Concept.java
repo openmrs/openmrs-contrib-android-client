@@ -1,5 +1,3 @@
-package org.openmrs.mobile.models.retrofit;
-
 /**
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
@@ -9,6 +7,8 @@ package org.openmrs.mobile.models.retrofit;
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
+
+package org.openmrs.mobile.models.retrofit;
 
 public class Concept extends Resource{
 }

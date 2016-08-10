@@ -29,7 +29,6 @@ import org.openmrs.mobile.adapters.VisitExpandableListAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.dao.EncounterDAO;
-import org.openmrs.mobile.dao.FormsDAO;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.intefaces.VisitDashboardCallbackListener;
@@ -113,9 +112,14 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
             case android.R.id.home:
                 this.finish();
                 break;
-//            case R.id.actionCaptureVitals:
-//                startCaptureVitals();
-//                break;
+            case R.id.actionFillForm:
+                if(mPatient.getUuid()!=null)
+                {
+                    startCaptureVitals();
+                }
+                else
+                    ToastUtil.error("Patient not yet registered, cannot create encounter.");
+                break;
             case R.id.actionEndVisit:
                 this.showEndVisitDialog();
                 break;
@@ -142,10 +146,8 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
     private void startCaptureVitals() {
         try {
             Intent intent = new Intent(this, FormListActivity.class);
-            Uri formURI = new FormsDAO(this.getContentResolver()).getFormURI(ApplicationConstants.FormNames.VITALS_XFORM);
-            intent.setData(formURI);
-            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_UUID_BUNDLE, mPatient.getUuid());
-            this.startActivityForResult(intent, CAPTURE_VITALS_REQUEST_CODE);
+            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPatient.getId());
+            startActivity(intent);
         } catch (Exception e) {
             ToastUtil.showLongToast(this, ToastUtil.ToastType.ERROR, R.string.failed_to_open_vitals_form);
             OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());

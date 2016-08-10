@@ -1,3 +1,12 @@
+/**
+ * This Source Code Form is subject to the terms of the Mozilla Public License,
+ * v. 2.0. If a copy of the MPL was not distributed with this file, You can
+ * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
+ * the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+ *
+ * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
+ * graphic logo is a trademark of OpenMRS Inc.
+ */
 
 package org.openmrs.mobile.models.retrofit;
 
@@ -27,56 +36,26 @@ public class Obscreate extends Model implements Serializable {
     @Expose
     private String encounter;
 
-    /**
-     * 
-     * @return
-     *     The person
-     */
     public String getPerson() {
         return person;
     }
 
-    /**
-     * 
-     * @param person
-     *     The person
-     */
     public void setPerson(String person) {
         this.person = person;
     }
 
-    /**
-     * 
-     * @return
-     *     The obsDatetime
-     */
     public String getObsDatetime() {
         return obsDatetime;
     }
 
-    /**
-     * 
-     * @param obsDatetime
-     *     The obsDatetime
-     */
     public void setObsDatetime(String obsDatetime) {
         this.obsDatetime = obsDatetime;
     }
 
-    /**
-     * 
-     * @return
-     *     The concept
-     */
     public String getConcept() {
         return concept;
     }
 
-    /**
-     * 
-     * @param concept
-     *     The concept
-     */
     public void setConcept(String concept) {
         this.concept = concept;
     }
@@ -85,29 +64,15 @@ public class Obscreate extends Model implements Serializable {
         return encounter;
     }
 
-    /**
-     *
-     * @param concept
-     *     The concept
-     */
+
     public void setEncounter(String encounter) {
         this.encounter = encounter;
     }
 
-    /**
-     * 
-     * @return
-     *     The value
-     */
     public Double getValue() {
         return value;
     }
 
-    /**
-     * 
-     * @param value
-     *     The value
-     */
     public void setValue(Double value) {
         this.value = value;
     }

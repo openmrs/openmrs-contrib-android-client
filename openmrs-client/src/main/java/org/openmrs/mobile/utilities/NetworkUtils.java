@@ -14,21 +14,41 @@
 
 package org.openmrs.mobile.utilities;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.preference.PreferenceManager;
+
+import org.openmrs.mobile.application.OpenMRS;
+
 
 public final class NetworkUtils {
 
-    private NetworkUtils() {
 
-    }
+    public static boolean isNetworkAvailable() {
 
-    public static boolean isNetworkAvailable(Activity activity) {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
+        boolean toggle=prefs.getBoolean("sync", false);
+
+        if(toggle==true) {
+            ConnectivityManager connectivityManager
+                    = (ConnectivityManager) OpenMRS.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            boolean isConnected = activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+            if(isConnected)
+                return true;
+            else
+            {
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("sync", false);
+                editor.commit();
+                return false;
+            }
+
+        }
+        else
+            return false;
+
     }
 }

@@ -26,7 +26,15 @@ import org.openmrs.mobile.application.OpenMRS;
 public final class NetworkUtils {
 
 
-    public static boolean isNetworkAvailable() {
+    public static boolean hasNetwork(){
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) OpenMRS.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+    }
+
+
+    public static boolean isOnline() {
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
         boolean toggle=prefs.getBoolean("sync", false);

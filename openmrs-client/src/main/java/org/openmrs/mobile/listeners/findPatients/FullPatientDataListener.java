@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import org.json.JSONObject;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
+import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.models.mappers.PatientMapper;
@@ -27,9 +28,17 @@ public final class FullPatientDataListener extends GeneralErrorListener implemen
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
     private final PatientDashboardActivity mCaller;
     private final String mPatientUUID;
+    private final EncounterService mCaller1;
 
     public FullPatientDataListener(String patientUUID, PatientDashboardActivity caller) {
         mCaller = caller;
+        mCaller1=null;
+        mPatientUUID = patientUUID;
+    }
+
+    public FullPatientDataListener(String patientUUID, EncounterService caller) {
+        mCaller=null;
+        mCaller1 = caller;
         mPatientUUID = patientUUID;
     }
 

@@ -17,6 +17,7 @@ package org.openmrs.mobile.net.helpers;
 import org.openmrs.mobile.activities.FindPatientsActivity;
 import org.openmrs.mobile.activities.FindPatientsSearchActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
+import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.listeners.findPatients.FindPatientListener;
@@ -45,6 +46,10 @@ public final class FindPatientsHelper {
     }
 
     public static FullPatientDataListener createFullPatientDataListener(String patientUUID, PatientDashboardActivity caller) {
+        return new FullPatientDataListener(patientUUID, caller);
+    }
+
+    public static FullPatientDataListener createFullPatientDataListener(String patientUUID, EncounterService caller) {
         return new FullPatientDataListener(patientUUID, caller);
     }
 }

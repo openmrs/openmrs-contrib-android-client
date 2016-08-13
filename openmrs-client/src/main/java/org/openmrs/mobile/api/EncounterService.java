@@ -11,25 +11,14 @@
 package org.openmrs.mobile.api;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.preference.PreferenceManager;
 
 import com.activeandroid.query.Select;
 
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.PatientListActivity;
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.dao.EncounterDAO;
-import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.retrofit.Encountercreate;
-import org.openmrs.mobile.models.retrofit.FormResource;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.utilities.NetworkUtils;
@@ -53,7 +42,7 @@ public class EncounterService extends IntentService {
 
         encountercreate.save();
 
-        if(NetworkUtils.isNetworkAvailable()) {
+        if(NetworkUtils.isOnline()) {
 
             if (new VisitDAO().isPatientNowOnVisit(encountercreate.getPatientId())) {
                 Visit visit = new VisitDAO().getPatientCurrentVisit(encountercreate.getPatientId());
@@ -72,10 +61,7 @@ public class EncounterService extends IntentService {
 
     public void syncEncounter(final Encountercreate encountercreate) {
 
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
-        Boolean syncstate = prefs.getBoolean("sync", true);
-
-        if (syncstate) {
+        if (NetworkUtils.isOnline()) {
 
             encountercreate.pullObslist();
             Call<Encounter> call = apiService.createEncounter(encountercreate);
@@ -119,7 +105,7 @@ public class EncounterService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(NetworkUtils.isNetworkAvailable()) {
+        if(NetworkUtils.isOnline()) {
 
             List<Encountercreate> encountercreatelist = new Select()
                     .from(Encountercreate.class)

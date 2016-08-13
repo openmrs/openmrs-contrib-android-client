@@ -43,6 +43,7 @@ import org.openmrs.mobile.net.helpers.FindPatientsHelper;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.TabUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -86,6 +87,9 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
                 VisitsHelper.createLastVitalsListener(mPatient.getUuid()));
         mPatientDashboardPagerAdapter = new PatientDashboardPagerAdapter(getSupportFragmentManager());
         initViewPager();
+
+        if (NetworkUtils.hasNetwork())
+            refreshPatient();
 
 
     }
@@ -202,6 +206,11 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
                 FindPatientsHelper.createFullPatientDataListener(mPatient.getUuid(), this));
     }
 
+    public void refreshPatient() {
+        new FindPatientsManager().getFullPatientData(
+                FindPatientsHelper.createFullPatientDataListener(mPatient.getUuid(), this));
+    }
+
     public void showProgressDialog(int resId, DialogAction dialogAction) {
         mProgressDialog = true;
         super.showProgressDialog(getString(resId));
@@ -241,7 +250,8 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
     public void stopLoader(boolean errorOccurred) {
         mProgressDialog = false;
-        mCustomFragmentDialog.dismiss();
+        if (mCustomFragmentDialog!=null)
+            mCustomFragmentDialog.dismiss();
         if (mDialogAction == DialogAction.SYNCHRONIZE) {
             mViewPager.setCurrentItem(DETAILS_TAB_POS);
             if (!errorOccurred) {

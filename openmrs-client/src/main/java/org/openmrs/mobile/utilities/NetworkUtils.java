@@ -31,7 +31,7 @@ public final class NetworkUtils {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
         boolean toggle=prefs.getBoolean("sync", false);
 
-        if(toggle==true) {
+        if(toggle) {
             ConnectivityManager connectivityManager
                     = (ConnectivityManager) OpenMRS.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();

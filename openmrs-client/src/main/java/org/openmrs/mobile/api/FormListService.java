@@ -123,7 +123,7 @@ public class FormListService extends IntentService {
 
 
         } else {
-            ToastUtil.notify("No internet connection. Showing previously downloaded forms");
+            //ToastUtil.notify("No internet connection. Showing previously downloaded forms");
         }
     }
 

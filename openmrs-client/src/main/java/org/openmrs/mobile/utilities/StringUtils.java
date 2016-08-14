@@ -23,7 +23,7 @@ public final class StringUtils {
     }
 
     public static boolean notNull(String string) {
-        return null != string && !NULL_AS_STRING.equals(string);
+        return null != string && !NULL_AS_STRING.equals(string.trim());
     }
 
     public static boolean isBlank(String string) {
@@ -32,14 +32,6 @@ public final class StringUtils {
 
     public static boolean notEmpty(String string) {
         return !string.isEmpty();
-    }
-
-    public static String fixjson(String string)
-    {
-        string=unescapeJavaString(string);
-        string = string.replaceAll("\"\\{", "\\{");
-        string = string.replaceAll("\\}\"", "\\}");
-        return string;
     }
 
     public static String unescapeJavaString(String st) {

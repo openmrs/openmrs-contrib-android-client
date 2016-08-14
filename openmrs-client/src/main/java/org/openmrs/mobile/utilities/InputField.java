@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
     public class InputField {
         int id;
         String concept;
-        double value;
+        double value = -1.0;
 
         public void setId(int id)
         {

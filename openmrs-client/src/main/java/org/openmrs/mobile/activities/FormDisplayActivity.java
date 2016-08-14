@@ -174,32 +174,42 @@ public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnP
         List<Obscreate> observations=new ArrayList<>();
 
         List<Fragment> activefrag=getActiveFragments();
+        boolean valid=true;
         for (Fragment f:activefrag)
         {
             FormPageFragment formPageFragment=(FormPageFragment)f;
             if(!formPageFragment.checkfields())
+            {
+                valid=false;
                 break;
+            }
             List<InputField> pageinputlist=formPageFragment.getInputFields();
             inputlist.addAll(pageinputlist);
         }
 
-        for (InputField input:inputlist) {
-            Obscreate obscreate = new Obscreate();
-            obscreate.setConcept(input.getConcept());
-            obscreate.setValue(input.getValue());
-            LocalDateTime localDateTime = new LocalDateTime();
-            obscreate.setObsDatetime(localDateTime.toString());
-            obscreate.setPerson(patient.getUuid());
-            observations.add(obscreate);
+        if(valid)
+        {
+            for (InputField input:inputlist) {
+                if(input.getValue()!=-1.0)
+                {
+                    Obscreate obscreate = new Obscreate();
+                    obscreate.setConcept(input.getConcept());
+                    obscreate.setValue(input.getValue());
+                    LocalDateTime localDateTime = new LocalDateTime();
+                    obscreate.setObsDatetime(localDateTime.toString());
+                    obscreate.setPerson(patient.getUuid());
+                    observations.add(obscreate);
+                }
+            }
+
+            encountercreate.setObservations(observations);
+            encountercreate.setFormname(formname);
+            encountercreate.setPatientId(mPatientID);
+            encountercreate.setObslist();
+
+            new EncounterService().addEncounter(encountercreate);
+            finish();
         }
-
-        encountercreate.setObservations(observations);
-        encountercreate.setFormname(formname);
-        encountercreate.setPatientId(mPatientID);
-        encountercreate.setObslist();
-
-        new EncounterService().addEncounter(encountercreate);
-        finish();
 
     }
 

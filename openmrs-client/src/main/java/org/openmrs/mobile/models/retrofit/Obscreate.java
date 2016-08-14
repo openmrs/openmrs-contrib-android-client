@@ -64,7 +64,6 @@ public class Obscreate extends Model implements Serializable {
         return encounter;
     }
 
-
     public void setEncounter(String encounter) {
         this.encounter = encounter;
     }

@@ -31,6 +31,7 @@ import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.mappers.VisitMapper;
 import org.openmrs.mobile.models.retrofit.Encountercreate;
 import org.openmrs.mobile.net.GeneralErrorListener;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 public class StartVisitListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();

@@ -13,6 +13,8 @@ package org.openmrs.mobile.models.retrofit;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.openmrs.mobile.utilities.StringUtils;
+
 import java.io.Serializable;
 
 public class PersonAddress implements Serializable {
@@ -99,10 +101,10 @@ public class PersonAddress implements Serializable {
      */
     public String getAddressString()
     {
-        String addr="";
-        if(address1!=null)
+        String addr=null;
+        if(StringUtils.notNull(address1))
             addr+=address1+"\n";
-        if(address2!=null)
+        if(StringUtils.notNull(address2))
             addr+=address2;
         return addr;
     }

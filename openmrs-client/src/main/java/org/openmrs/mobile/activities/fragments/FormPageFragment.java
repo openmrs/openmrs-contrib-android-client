@@ -1,3 +1,13 @@
+/**
+ * This Source Code Form is subject to the terms of the Mozilla Public License,
+ * v. 2.0. If a copy of the MPL was not distributed with this file, You can
+ * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
+ * the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+ *
+ * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
+ * graphic logo is a trademark of OpenMRS Inc.
+ */
+
 package org.openmrs.mobile.activities.fragments;
 
 import android.app.Fragment;
@@ -20,6 +30,7 @@ import org.openmrs.mobile.models.retrofit.Page;
 import org.openmrs.mobile.models.retrofit.Question;
 import org.openmrs.mobile.models.retrofit.Section;
 import org.openmrs.mobile.utilities.InputField;
+import org.openmrs.mobile.utilities.RangeEditText;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
@@ -135,12 +146,19 @@ public class FormPageFragment extends Fragment {
 
             layoutParams.setMargins(Math.round(pxLeftMargin), Math.round(pxTopMargin), Math.round(pxRightMargin), Math.round(pxBottomMargin));
 
-            EditText ed=new EditText(getActivity());
+            RangeEditText ed=new RangeEditText(getActivity());
+            ed.setName(question.getLabel());
             if(question.getQuestionOptions().getMax()!=null)
-                ed.setHint(question.getLabel()+" ["+question.getQuestionOptions().getMin()+"-"+
+            {   ed.setHint(question.getLabel()+" ["+question.getQuestionOptions().getMin()+"-"+
                         question.getQuestionOptions().getMax()+"]");
-            else
+                ed.setUpperlimit(Double.parseDouble(question.getQuestionOptions().getMax()));
+                ed.setLowerlimit(Double.parseDouble(question.getQuestionOptions().getMin()));
+            }
+            else {
                 ed.setHint(question.getLabel());
+                ed.setLowerlimit(-1.0);
+                ed.setUpperlimit(-1.0);
+            }
             ed.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
             ed.setInputType(InputType.TYPE_CLASS_NUMBER);
             int id=InputField.generateViewId();
@@ -160,14 +178,28 @@ public class FormPageFragment extends Fragment {
 
     public boolean checkfields()
     {
+        boolean emp=true;
         for (InputField field:inputFields)
         {
-            EditText ed=(EditText)getActivity().findViewById(field.getId());
-            if(isEmpty(ed)) {
-                ToastUtil.error("Field cannot be empty");
-                return false;
+            RangeEditText ed=(RangeEditText) getActivity().findViewById(field.getId());
+            if(!isEmpty(ed)) {
+                emp = false;
+
+                Double inp = Double.parseDouble(ed.getText().toString());
+                if (ed.getUpperlimit() != -1.0 && ed.getUpperlimit() != -1.0) {
+                    if (ed.getUpperlimit() < inp || ed.getLowerlimit() > inp) {
+                        ToastUtil.error("Value for " + ed.getName() + " is out of range. Please try again.");
+                        return false;
+                    }
+                }
             }
 
+
+        }
+        if (emp)
+        {
+            ToastUtil.error("All fields cannot be empty");
+            return false;
         }
         return true;
     }
@@ -176,7 +208,7 @@ public class FormPageFragment extends Fragment {
     {
         for (InputField field:inputFields)
         {
-            EditText ed=(EditText)getActivity().findViewById(field.getId());
+            RangeEditText ed=(RangeEditText) getActivity().findViewById(field.getId());
             if(!isEmpty(ed))
                 field.setValue(Double.parseDouble(ed.getText().toString()));
         }

@@ -152,7 +152,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
 
 
     public void updateLastViewedList() {
-        if (NetworkUtils.isNetworkAvailable()) {
+        if (NetworkUtils.isOnline()) {
             setRefreshing(true);
             mSwipeLayout.setRefreshing(true);
             mSwipeLayout.setEnabled(false);
@@ -174,7 +174,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     }
 
     public boolean checkIfConnectionIsAvailable() {
-        boolean connection = NetworkUtils.isNetworkAvailable();
+        boolean connection = NetworkUtils.isOnline();
         if (mIsConnectionAvailable) {
             FindPatientsManager fpm = new FindPatientsManager();
             fpm.getLastViewedPatient(mFpmResponseListener);

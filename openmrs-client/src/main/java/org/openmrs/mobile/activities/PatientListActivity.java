@@ -27,6 +27,7 @@ import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
@@ -63,7 +64,7 @@ public class PatientListActivity extends ACBaseActivity {
         mSelectedPatientUUID = patientUUID;
         mSelectedPatientID = patientID;
 
-        if(patientUUID!=null)
+        if(!StringUtils.isBlank(patientUUID))
         {
             startEncounterForPatient();
         }

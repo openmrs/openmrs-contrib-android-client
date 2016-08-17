@@ -119,7 +119,7 @@ public class PatientService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(NetworkUtils.isNetworkAvailable()) {
+        if(NetworkUtils.isOnline()) {
             List<Patient> patientList = new PatientDAO().getAllPatients();
             final ListIterator<Patient> it = patientList.listIterator();
             while (it.hasNext()) {

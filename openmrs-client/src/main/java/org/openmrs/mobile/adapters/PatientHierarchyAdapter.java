@@ -65,7 +65,7 @@ public class PatientHierarchyAdapter extends RecyclerView.Adapter<PatientHierarc
         if (null != patient.getIdentifier()) {
             holder.mIdentifier.setText("#" + patient.getIdentifier().getIdentifier());
         }
-        if (null != patient.getDisplay()) {
+        if (null != patient.getPerson().getName()) {
             holder.mDisplayName.setText(patient.getPerson().getName().getNameString());
         }
         if (null != patient.getPerson().getGender()) {

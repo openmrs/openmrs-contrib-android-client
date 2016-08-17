@@ -20,6 +20,8 @@ import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.StringUtils;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
@@ -58,7 +60,11 @@ public class PatientVisitsFragment extends ACBaseFragment {
         int id = item.getItemId();
         switch (id) {
             case R.id.actionStartVisit:
-                showStartVisitDialog();
+                if (!StringUtils.isBlank(mPatient.getUuid()))
+                    showStartVisitDialog();
+                else
+                    ToastUtil.error("Patient is not registered, cannot create visit. " +
+                            "Patient will be registered the next time the app is in online mode");
             default:
                 return super.onOptionsItemSelected(item);
         }

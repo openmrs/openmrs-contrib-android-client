@@ -16,7 +16,9 @@ package org.openmrs.mobile.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -26,7 +28,9 @@ import android.support.v7.app.ActionBar;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import net.yanzm.mth.MaterialTabHost;
 
@@ -43,6 +47,7 @@ import org.openmrs.mobile.net.helpers.FindPatientsHelper;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.TabUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -56,6 +61,8 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     private PatientDashboardPagerAdapter mPatientDashboardPagerAdapter;
     private boolean mProgressDialog;
     private DialogAction mDialogAction;
+    private View rootView;
+    private Snackbar snackbar;
 
     public static final int DETAILS_TAB_POS = 0;
     public static final int DIAGNOSIS_TAB_POS = 1;
@@ -71,6 +78,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patient_dashboard_layout);
         getSupportActionBar().setElevation(0);
+        rootView=findViewById(R.id.rootview);
 
         Bundle patientBundle = savedInstanceState;
         if (null != patientBundle) {
@@ -86,6 +94,18 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
                 VisitsHelper.createLastVitalsListener(mPatient.getUuid()));
         mPatientDashboardPagerAdapter = new PatientDashboardPagerAdapter(getSupportFragmentManager());
         initViewPager();
+
+        if (NetworkUtils.isOnline())
+            refreshPatient();
+        else
+        {
+            snackbar = Snackbar
+                    .make(rootView, "Offline mode. Patient data may not be up to date.", Snackbar.LENGTH_INDEFINITE);
+            View view = snackbar.getView();
+            TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+            tv.setTextColor(Color.WHITE);
+            snackbar.show();
+        }
 
 
     }
@@ -197,7 +217,17 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     }
 
     public void synchronizePatient() {
-        showProgressDialog(R.string.action_synchronize_patients, DialogAction.SYNCHRONIZE);
+        if(NetworkUtils.isOnline())
+        {
+            showProgressDialog(R.string.action_synchronize_patients, DialogAction.SYNCHRONIZE);
+            new FindPatientsManager().getFullPatientData(
+                FindPatientsHelper.createFullPatientDataListener(mPatient.getUuid(), this));
+        }
+        else
+            ToastUtil.error("Cannot sync in offline mode");
+    }
+
+    public void refreshPatient() {
         new FindPatientsManager().getFullPatientData(
                 FindPatientsHelper.createFullPatientDataListener(mPatient.getUuid(), this));
     }
@@ -241,7 +271,8 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
 
     public void stopLoader(boolean errorOccurred) {
         mProgressDialog = false;
-        mCustomFragmentDialog.dismiss();
+        if (mCustomFragmentDialog!=null)
+            mCustomFragmentDialog.dismiss();
         if (mDialogAction == DialogAction.SYNCHRONIZE) {
             mViewPager.setCurrentItem(DETAILS_TAB_POS);
             if (!errorOccurred) {

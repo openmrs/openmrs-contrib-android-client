@@ -38,6 +38,7 @@ import org.openmrs.mobile.models.retrofit.Results;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 
+import java.util.Iterator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -84,6 +85,24 @@ public class FormListActivity extends ACBaseActivity {
         }
 
         formresourcelist=getFormResourceList();
+
+        Iterator<FormResource> iterator=formresourcelist.iterator();
+
+        while (iterator.hasNext())
+        {
+            FormResource formResource=iterator.next();
+            List<FormResource> valueref=formResource.getResourceList();
+            String valuerefString=null;
+            for(FormResource resource:valueref)
+            {
+                if(resource.getName().equals("json"))
+                    valuerefString=resource.getValueReference();
+            }
+            if(valuerefString==null) {
+                iterator.remove();
+            }
+        }
+
         int size=formresourcelist.size();
         FORMS=new String [size];
         for (int i=0;i<size;i++)
@@ -109,21 +128,17 @@ public class FormListActivity extends ACBaseActivity {
                 if(resource.getName().equals("json"))
                     valuerefString=resource.getValueReference();
             }
-            if(valuerefString!=null) {
-                EncounterType enctype=getEncounterType(FORMS[position]);
-                String encountertype=enctype.getUuid();
-                Intent intent=new Intent(FormListActivity.this, FormDisplayActivity.class);
-                intent.putExtra(ApplicationConstants.BundleKeys.FORM_NAME,FORMS[position]);
-                intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPatientID);
-                intent.putExtra(ApplicationConstants.BundleKeys.VALUEREFERENCE, valuerefString);
-                intent.putExtra(ApplicationConstants.BundleKeys.ENCOUNTERTYPE, encountertype);
-                ToastUtil.notify("Starting encounter");
-                startActivity(intent);
-            }
-            else
-            {
-                ToastUtil.error("Form is empty");
-            }
+            EncounterType enctype=getEncounterType(FORMS[position]);
+            String encountertype=enctype.getUuid();
+            Intent intent=new Intent(FormListActivity.this, FormDisplayActivity.class);
+            intent.putExtra(ApplicationConstants.BundleKeys.FORM_NAME,FORMS[position]);
+            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPatientID);
+            intent.putExtra(ApplicationConstants.BundleKeys.VALUEREFERENCE, valuerefString);
+            intent.putExtra(ApplicationConstants.BundleKeys.ENCOUNTERTYPE, encountertype);
+            ToastUtil.notify("Starting encounter");
+            startActivity(intent);
+
+
         }
     };
 

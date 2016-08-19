@@ -48,8 +48,4 @@ public final class FindPatientsHelper {
     public static FullPatientDataListener createFullPatientDataListener(String patientUUID, PatientDashboardActivity caller) {
         return new FullPatientDataListener(patientUUID, caller);
     }
-
-    public static FullPatientDataListener createFullPatientDataListener(String patientUUID, EncounterService caller) {
-        return new FullPatientDataListener(patientUUID, caller);
-    }
 }

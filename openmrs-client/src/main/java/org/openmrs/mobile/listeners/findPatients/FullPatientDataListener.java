@@ -28,17 +28,9 @@ public final class FullPatientDataListener extends GeneralErrorListener implemen
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
     private final PatientDashboardActivity mCaller;
     private final String mPatientUUID;
-    private final EncounterService mCaller1;
 
     public FullPatientDataListener(String patientUUID, PatientDashboardActivity caller) {
         mCaller = caller;
-        mCaller1=null;
-        mPatientUUID = patientUUID;
-    }
-
-    public FullPatientDataListener(String patientUUID, EncounterService caller) {
-        mCaller=null;
-        mCaller1 = caller;
         mPatientUUID = patientUUID;
     }
 

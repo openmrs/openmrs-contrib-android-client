@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -35,6 +36,8 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
+
+import java.util.List;
 
 /**
  * General class for creating dialog fragment instances
@@ -330,7 +333,13 @@ public class CustomFragmentDialog extends DialogFragment {
         Activity activity = getActivity();
         if (activity instanceof PatientDashboardActivity) {
             PatientDashboardActivity pda = ((PatientDashboardActivity) activity);
-            PatientVisitsFragment fragment = (PatientVisitsFragment) pda.getSupportFragmentManager().getFragments().get(PatientDashboardActivity.VISITS_TAB_POS);
+            List<Fragment> fragments = pda.getSupportFragmentManager().getFragments();
+            PatientVisitsFragment fragment=null;
+            for (Fragment frag: fragments)
+            {
+                if ( frag instanceof PatientVisitsFragment)
+                    fragment=(PatientVisitsFragment)frag;
+            }
             if (fragment != null) {
                 fragment.startVisit();
             }

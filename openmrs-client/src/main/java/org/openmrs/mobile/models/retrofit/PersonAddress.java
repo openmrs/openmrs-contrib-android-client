@@ -101,7 +101,7 @@ public class PersonAddress implements Serializable {
      */
     public String getAddressString()
     {
-        String addr=null;
+        String addr="";
         if(StringUtils.notNull(address1))
             addr+=address1+"\n";
         if(StringUtils.notNull(address2))

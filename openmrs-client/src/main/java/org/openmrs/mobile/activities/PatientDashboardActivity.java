@@ -247,7 +247,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
             fragment.reloadPatientData(mPatient);
 
             fvm.findVisitsByPatientUUID(
-                    VisitsHelper.createVisitsByPatientUUIDListener(patient.getUuid(), mPatient.getId(), this));
+                    VisitsHelper.createVisitsByPatientUUIDListener(mPatient.getUuid(), mPatient.getId(), this));
         } else {
             stopLoader(true);
         }

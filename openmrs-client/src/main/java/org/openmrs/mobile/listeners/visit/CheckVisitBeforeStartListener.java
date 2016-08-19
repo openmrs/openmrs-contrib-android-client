@@ -69,7 +69,7 @@ public class CheckVisitBeforeStartListener extends FindVisitsByPatientUUIDListen
         } else{
             if (!new VisitDAO().isPatientNowOnVisit(mPatientID)) {
                 Patient patient =new PatientDAO().findPatientByID(Long.toString(mPatientID));
-                ToastUtil.notify("Creating new Active Visit for Patient "+ patient.getDisplay());
+                ToastUtil.notify("Creating new Active Visit for Patient "+ patient.getPerson().getName().getNameString());
                 new VisitsManager().startVisit(
                         VisitsHelper.createStartVisitListener(mPatientID, mEncountercreate, mCallerService));
             }

@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.retrofit.Page;
 import org.openmrs.mobile.models.retrofit.Question;
 import org.openmrs.mobile.models.retrofit.Section;
@@ -160,7 +161,7 @@ public class FormPageFragment extends Fragment {
                 ed.setUpperlimit(-1.0);
             }
             ed.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
-            ed.setInputType(InputType.TYPE_CLASS_NUMBER);
+            ed.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
             int id=InputField.generateViewId();
             InputField field=new InputField();
             ed.setId(id);
@@ -178,7 +179,7 @@ public class FormPageFragment extends Fragment {
 
     public boolean checkfields()
     {
-        boolean emp=true;
+        boolean emp=true, valid=true;
         for (InputField field:inputFields)
         {
             RangeEditText ed=(RangeEditText) getActivity().findViewById(field.getId());
@@ -188,8 +189,10 @@ public class FormPageFragment extends Fragment {
                 Double inp = Double.parseDouble(ed.getText().toString());
                 if (ed.getUpperlimit() != -1.0 && ed.getUpperlimit() != -1.0) {
                     if (ed.getUpperlimit() < inp || ed.getLowerlimit() > inp) {
-                        ToastUtil.error("Value for " + ed.getName() + " is out of range. Please try again.");
-                        return false;
+                        ToastUtil.error("Value for " + ed.getName() + " is out of range. Value should be between "+
+                        ed.getLowerlimit()+" and "+ed.getUpperlimit());
+                        ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(),R.color.red));
+                        valid=false;
                     }
                 }
             }
@@ -201,7 +204,7 @@ public class FormPageFragment extends Fragment {
             ToastUtil.error("All fields cannot be empty");
             return false;
         }
-        return true;
+        return valid;
     }
 
     public List<InputField> getInputFields()

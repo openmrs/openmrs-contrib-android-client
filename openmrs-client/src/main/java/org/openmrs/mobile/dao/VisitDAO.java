@@ -27,6 +27,7 @@ import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.VisitItemDTO;
+import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.DateUtils;
 
 import java.util.ArrayList;
@@ -73,18 +74,18 @@ public class VisitDAO {
         return new VisitTable().update(visitID, visit) > 0;
     }
 
-    public List<VisitItemDTO> findActiveVisitsByPatientNameLike(final String patientName) {
+    public List<Visit> findActiveVisitsByPatientNameLike(final String patientName) {
         String where = String.format("%s LIKE  ?", PatientTable.Column.DISPLAY);
         String[] whereArgs = new String[]{"%" + patientName + "%"};
-        return getAllActiveVisits(where, whereArgs);
+        return getAllActiveVisitsDTO(where, whereArgs);
     }
 
-    public List<VisitItemDTO> getAllActiveVisits() {
-        return getAllActiveVisits(null, null);
+    public List<Visit> getAllActiveVisitsDTO() {
+        return getAllActiveVisitsDTO(null, null);
     }
 
-    public List<VisitItemDTO> getAllActiveVisits(final String where, final String[] whereArgs) {
-        List<VisitItemDTO> visitItems = new ArrayList<VisitItemDTO>();
+    public List<Visit> getAllActiveVisitsDTO(final String where, final String[] whereArgs) {
+        List<Visit> visitItems = new ArrayList<>();
 
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
 
@@ -103,23 +104,8 @@ public class VisitDAO {
                 for (CursorJoiner.Result result : joiner) {
                     switch (result) {
                         case BOTH:
-                            int visitId_CI = visitCursor.getColumnIndex(VisitTable.Column.ID);
-                            int visitPlace_CI = visitCursor.getColumnIndex(VisitTable.Column.VISIT_PLACE);
-                            int visitType_CI = visitCursor.getColumnIndex(VisitTable.Column.VISIT_TYPE);
-                            int visitStart_CI = visitCursor.getColumnIndex(VisitTable.Column.START_DATE);
-                            int patientName_CI = patientCursor.getColumnIndex(PatientTable.Column.DISPLAY);
-                            int patientIdentifier_CI = patientCursor.getColumnIndex(PatientTable.Column.IDENTIFIER);
-
-                            long visitId = visitCursor.getLong(visitId_CI);
-                            String visitPlace = visitCursor.getString(visitPlace_CI);
-                            String visitType = visitCursor.getString(visitType_CI);
-                            long visitStart = visitCursor.getLong(visitStart_CI);
-                            String patientIdentifier = patientCursor.getString(patientIdentifier_CI);
-                            String patientName = patientCursor.getString(patientName_CI);
-
-                            VisitItemDTO visitItemDTO = new VisitItemDTO(visitId, patientName,
-                                    patientIdentifier, visitPlace, visitType, visitStart);
-                            visitItems.add(visitItemDTO);
+                            long visitId_CI = visitCursor.getColumnIndex(VisitTable.Column.ID);
+                            visitItems.add(getVisitsByID(visitId_CI));
                             break;
                         default:
                             break;
@@ -131,6 +117,18 @@ public class VisitDAO {
             }
         }
         return visitItems;
+    }
+
+
+    public List<Visit> getAllActiveVisits(){
+        List<Visit> allvisits=new ArrayList<>();
+        List<Patient> patientList=new PatientDAO().getAllPatients();
+        for (Patient patient:patientList)
+        {
+            if(isPatientNowOnVisit(patient.getId()))
+                allvisits.add(getPatientCurrentVisit(patient.getId()));
+        }
+        return allvisits;
     }
 
     public List<Visit> getVisitsByPatientID(final Long patientID) {
@@ -151,6 +149,7 @@ public class VisitDAO {
                     int visitPlace_CI = cursor.getColumnIndex(VisitTable.Column.VISIT_PLACE);
                     int visitStart_CI = cursor.getColumnIndex(VisitTable.Column.START_DATE);
                     int visitStop_CI = cursor.getColumnIndex(VisitTable.Column.STOP_DATE);
+                    int visitPatientID_CI = cursor.getColumnIndex(VisitTable.Column.PATIENT_KEY_ID);
                     Visit visit = new Visit();
                     visit.setUuid(cursor.getString(visitUUID_CI));
                     visit.setId(cursor.getLong(visitID_CI));
@@ -159,6 +158,7 @@ public class VisitDAO {
                     visit.setStartDate(cursor.getLong(visitStart_CI));
                     visit.setStopDate(cursor.getLong(visitStop_CI));
                     visit.setEncounters(new EncounterDAO().findEncountersByVisitID(visit.getId()));
+                    visit.setPatientID(cursor.getLong(visitPatientID_CI));
                     visits.add(visit);
                 }
             } finally {

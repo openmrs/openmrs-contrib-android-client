@@ -68,6 +68,7 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         Intent intent = getIntent();
@@ -75,7 +76,7 @@ public class VisitDashboardActivity extends ACBaseActivity implements VisitDashb
         mVisit = new VisitDAO().getVisitsByID(intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0));
         mPatient = new PatientDAO().findPatientByID(String.valueOf(mVisit.getPatientID()));
 
-        mPatientName = intent.getStringExtra(ApplicationConstants.BundleKeys.PATIENT_NAME);
+        mPatientName = mPatient.getPerson().getName().getNameString();
         mVisitEncounters = mVisit.getEncounters();
 
         mEmptyListView = (TextView) findViewById(R.id.visitDashboardEmpty);

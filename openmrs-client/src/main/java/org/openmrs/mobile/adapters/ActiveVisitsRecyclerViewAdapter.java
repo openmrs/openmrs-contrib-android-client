@@ -20,6 +20,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.models.Visit;
+import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.AnimationUtils;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -36,9 +40,9 @@ import java.util.List;
 public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<ActiveVisitsRecyclerViewAdapter.VisitViewHolder> {
 
     private Context mContext;
-    private List<VisitItemDTO> mVisitList;
+    private List<Visit> mVisitList;
 
-    public ActiveVisitsRecyclerViewAdapter(Context context, List<VisitItemDTO> items) {
+    public ActiveVisitsRecyclerViewAdapter(Context context, List<Visit> items) {
         this.mContext = context;
         this.mVisitList = items;
     }
@@ -52,23 +56,23 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
 
     @Override
     public void onBindViewHolder(VisitViewHolder visitViewHolder, final int position) {
-        final VisitItemDTO visit = mVisitList.get(position);
-        visitViewHolder.mPatientName.setText(visit.getPatientName());
-        visitViewHolder.mPatientID.setText("#" + String.valueOf(visit.getPatientIdentifier()));
+        final Visit visit = mVisitList.get(position);
+        Patient patient=new PatientDAO().findPatientByID(Long.toString(visit.getPatientID()));
+        visitViewHolder.mPatientName.setText(patient.getPerson().getName().getNameString());
+        visitViewHolder.mPatientID.setText("#" + String.valueOf(patient.getIdentifier().getIdentifier()));
         visitViewHolder.mVisitPlace.setText("@ " + visit.getVisitPlace());
-        visitViewHolder.mPatientName.setText(visit.getPatientName());
-        visitViewHolder.mVisitStart.setText(DateUtils.convertTime(visit.getVisitStart()));
+        visitViewHolder.mVisitStart.setText(DateUtils.convertTime(visit.getStartDate()));
 
         visitViewHolder.mTableLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, VisitDashboardActivity.class);
-                intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, mVisitList.get(position).getVisitID());
-                intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_NAME, mVisitList.get(position).getPatientName());
+                intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, mVisitList.get(position).getId());
                 mContext.startActivity(intent);
             }
         });
         new AnimationUtils().setAnimation(visitViewHolder.mTableLayout,mContext,position);
+
     }
 
     @Override

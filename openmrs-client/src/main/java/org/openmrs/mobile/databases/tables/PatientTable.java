@@ -26,7 +26,7 @@ public class PatientTable extends Table<Patient> {
      *
      * @see org.openmrs.mobile.databases.tables.Table#values(int)
      */
-    private static final int INSERT_COLUMNS_COUNT = 18;
+    private static final int INSERT_COLUMNS_COUNT = 19;
 
     @Override
     public String createTableDefinition() {
@@ -49,7 +49,8 @@ public class PatientTable extends Table<Patient> {
                 + Column.POSTAL_CODE + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.COUNTRY + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.STATE + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.CITY + Column.Type.TEXT_TYPE
+                + Column.CITY + Column.Type.TEXT_TYPE_WITH_COMMA
+                + Column.ENCOUNTERS + Column.Type.TEXT_TYPE
                 + ");";
     }
 
@@ -73,7 +74,8 @@ public class PatientTable extends Table<Patient> {
                 + Column.POSTAL_CODE + Column.COMMA 
                 + Column.COUNTRY + Column.COMMA
                 + Column.STATE + Column.COMMA 
-                + Column.CITY  + ")"
+                + Column.CITY  + Column.COMMA
+                + Column.ENCOUNTERS+ ")"
                 + values(INSERT_COLUMNS_COUNT);
     }
 
@@ -117,6 +119,8 @@ public class PatientTable extends Table<Patient> {
         public static final String COUNTRY = "country";
         public static final String STATE = "state";
         public static final String CITY = "city";
+        public static final String ENCOUNTERS = "encounters";
+
     }
 
     @Override

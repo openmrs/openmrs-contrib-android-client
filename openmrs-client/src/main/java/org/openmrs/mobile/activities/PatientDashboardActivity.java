@@ -240,14 +240,14 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
     public void updatePatientDetailsData(final Patient patient) {
         if (new PatientDAO().updatePatient(mPatient.getId(), patient)) {
             VisitsManager fvm = new VisitsManager();
-            mPatient = new PatientDAO().findPatientByUUID(mPatient.getUuid());
+            mPatient = new PatientDAO().findPatientByUUID(patient.getUuid());
 
             PatientDetailsFragment fragment = (PatientDetailsFragment) mPatientDashboardPagerAdapter
                     .getRegisteredFragment(PatientDashboardActivity.DETAILS_TAB_POS);
             fragment.reloadPatientData(mPatient);
 
             fvm.findVisitsByPatientUUID(
-                    VisitsHelper.createVisitsByPatientUUIDListener(mPatient.getUuid(), mPatient.getId(), this));
+                    VisitsHelper.createVisitsByPatientUUIDListener(patient.getUuid(), mPatient.getId(), this));
         } else {
             stopLoader(true);
         }

@@ -15,6 +15,7 @@ import android.content.Intent;
 
 import com.activeandroid.query.Select;
 
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.retrofit.Encounter;
@@ -39,8 +40,6 @@ public class EncounterService extends IntentService {
     }
 
     public void addEncounter(final Encountercreate encountercreate) {
-
-        encountercreate.save();
 
         if(NetworkUtils.isOnline()) {
 
@@ -74,7 +73,7 @@ public class EncounterService extends IntentService {
                         encountercreate.setSynced(true);
                         encountercreate.save();
                     } else {
-                        //ToastUtil.error("Could not save encounter");
+                        ToastUtil.error("Could not save encounter");
                     }
                 }
 
@@ -113,7 +112,8 @@ public class EncounterService extends IntentService {
 
             for(Encountercreate encountercreate:encountercreatelist)
             {
-                if(encountercreate.getSynced()==false)
+                if(encountercreate.getSynced()==false &&
+                        new PatientDAO().findPatientByID(Long.toString(encountercreate.getPatientId())).isSynced())
                 {
                     if (new VisitDAO().isPatientNowOnVisit(encountercreate.getPatientId())) {
                         Visit visit = new VisitDAO().getPatientCurrentVisit(encountercreate.getPatientId());

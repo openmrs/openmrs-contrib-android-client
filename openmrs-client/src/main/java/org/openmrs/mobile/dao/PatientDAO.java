@@ -75,6 +75,8 @@ public class PatientDAO {
         patient.setId(cursor.getLong(cursor.getColumnIndex(PatientTable.Column.ID)));
         patient.setDisplay(cursor.getString(cursor.getColumnIndex(PatientTable.Column.DISPLAY)));
         patient.setUuid(cursor.getString(cursor.getColumnIndex(PatientTable.Column.UUID)));
+        patient.setEncounters(cursor.getString(cursor.getColumnIndex(PatientTable.Column.ENCOUNTERS)));
+
 
         PatientIdentifier patientIdentifier = new PatientIdentifier();
         patientIdentifier.setIdentifier(cursor.getString(cursor.getColumnIndex(PatientTable.Column.IDENTIFIER)));

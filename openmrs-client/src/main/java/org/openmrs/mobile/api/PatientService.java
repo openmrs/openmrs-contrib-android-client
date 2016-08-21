@@ -15,6 +15,8 @@ import android.content.SharedPreferences;
 import android.content.Intent;
 import android.preference.PreferenceManager;
 
+import com.activeandroid.query.Select;
+
 import org.jdeferred.DoneCallback;
 import org.jdeferred.android.AndroidDeferredManager;
 import org.jdeferred.multiple.MultipleResults;
@@ -22,6 +24,7 @@ import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.promise.SimplePromise;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.models.retrofit.Encountercreate;
 import org.openmrs.mobile.models.retrofit.IdGenPatientIdentifiers;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.PatientIdentifier;
@@ -86,12 +89,15 @@ public class PatientService extends IntentService {
                                     if (response.isSuccessful()) {
                                         Patient newPatient = response.body();
 
-                                        ToastUtil.success("Patient created with UUID " + newPatient.getUuid());
+                                        ToastUtil.success("Patient " +patient.getPerson().getName().getNameString()
+                                                +" created with UUID " + newPatient.getUuid());
 
                                         patient.setSynced(true);
                                         patient.setUuid(newPatient.getUuid());
 
                                         new PatientDAO().updatePatient(patient.getId(), patient);
+                                        if(!patient.getEncounters().equals(""))
+                                            addEncounters(patient);
 
                                         deferred.resolve(patient);
                                     } else {
@@ -115,6 +121,25 @@ public class PatientService extends IntentService {
         }
 
         return deferred.promise();
+    }
+
+    private void addEncounters(Patient patient) {
+        String enc=patient.getEncounters();
+        List<Long> list = new ArrayList<>();
+        for (String s : enc.split(","))
+            list.add(Long.parseLong(s));
+
+
+        for(long id:list)
+        {
+            Encountercreate encountercreate = new Select()
+                        .from(Encountercreate.class)
+                        .where("id = ?",id)
+                        .executeSingle();
+            encountercreate.setPatient(patient.getUuid());
+            encountercreate.save();
+            new EncounterService().addEncounter(encountercreate);
+        }
     }
 
     @Override

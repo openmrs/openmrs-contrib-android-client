@@ -121,8 +121,10 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
                 bindString(16, patient.getPerson().getAddress().getCountry(), patientStatement);
                 bindString(17, patient.getPerson().getAddress().getStateProvince(), patientStatement);
                 bindString(18, patient.getPerson().getAddress().getCityVillage(), patientStatement);
+
             }
-            bindString(19, null, patientStatement);
+            bindString(19, patient.getEncounters(), patientStatement);
+            bindString(20, null, patientStatement);
             patientId = patientStatement.executeInsert();
             patientStatement.clearBindings();
             db.setTransactionSuccessful();
@@ -161,7 +163,10 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             newValues.put(PatientTable.Column.COUNTRY, patient.getPerson().getAddress().getCountry());
             newValues.put(PatientTable.Column.STATE, patient.getPerson().getAddress().getStateProvince());
             newValues.put(PatientTable.Column.CITY, patient.getPerson().getAddress().getCityVillage());
+
         }
+        newValues.put(PatientTable.Column.ENCOUNTERS, patient.getEncounters());
+
         String[] whereArgs = new String[]{String.valueOf(patientID)};
 
         return db.update(PatientTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);

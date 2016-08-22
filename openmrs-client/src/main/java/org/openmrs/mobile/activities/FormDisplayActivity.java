@@ -28,43 +28,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.google.common.io.Files;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import org.joda.time.LocalDateTime;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.FormPageFragment;
 import org.openmrs.mobile.api.EncounterService;
-import org.openmrs.mobile.api.PatientService;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.models.Visit;
-import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.retrofit.Encountercreate;
 import org.openmrs.mobile.models.retrofit.Form;
 import org.openmrs.mobile.models.retrofit.Obscreate;
-import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.models.retrofit.Page;
 import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.models.retrofit.Resource;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FormService;
 import org.openmrs.mobile.utilities.InputField;
+import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnPageChangeListener,View.OnClickListener{
 
@@ -81,7 +63,7 @@ public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnP
     private long mPatientID;
     private String encountertype;
     private String valuereference;
-    private Patient patient;
+    private Patient mPatient;
     List<InputField> inputlist=new ArrayList<>();
 
     @Override
@@ -102,7 +84,7 @@ public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnP
         {
             formname =(String) b.get(ApplicationConstants.BundleKeys.FORM_NAME);
             mPatientID =(long) b.get(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE);
-            patient=new PatientDAO().findPatientByID(Long.toString(mPatientID));
+            mPatient =new PatientDAO().findPatientByID(Long.toString(mPatientID));
             encountertype=(String)b.get(ApplicationConstants.BundleKeys.ENCOUNTERTYPE);
             valuereference=(String)b.get(ApplicationConstants.BundleKeys.VALUEREFERENCE);
             getSupportActionBar().setTitle(formname + " Form");
@@ -168,7 +150,7 @@ public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnP
     void createEncounter()
     {
         Encountercreate encountercreate=new Encountercreate();
-        encountercreate.setPatient(patient.getUuid());
+        encountercreate.setPatient(mPatient.getUuid());
         encountercreate.setEncounterType(encountertype);
 
         List<Obscreate> observations=new ArrayList<>();
@@ -197,7 +179,7 @@ public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnP
                     obscreate.setValue(input.getValue());
                     LocalDateTime localDateTime = new LocalDateTime();
                     obscreate.setObsDatetime(localDateTime.toString());
-                    obscreate.setPerson(patient.getUuid());
+                    obscreate.setPerson(mPatient.getUuid());
                     observations.add(obscreate);
                 }
             }
@@ -206,8 +188,17 @@ public class FormDisplayActivity extends ACBaseActivity implements ViewPager.OnP
             encountercreate.setFormname(formname);
             encountercreate.setPatientId(mPatientID);
             encountercreate.setObslist();
+            encountercreate.save();
 
-            new EncounterService().addEncounter(encountercreate);
+            if(!mPatient.isSynced())
+            {
+                mPatient.addEncounters(encountercreate.getId());
+                new PatientDAO().updatePatient(mPatient.getId(),mPatient);
+                ToastUtil.error("Patient not yet registered. Form data is saved locally " +
+                        "and will sync when internet connection is restored. ");
+            }
+            else
+                new EncounterService().addEncounter(encountercreate);
             finish();
         }
 

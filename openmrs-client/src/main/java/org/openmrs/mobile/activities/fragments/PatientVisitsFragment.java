@@ -20,6 +20,7 @@ import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -60,11 +61,17 @@ public class PatientVisitsFragment extends ACBaseFragment {
         int id = item.getItemId();
         switch (id) {
             case R.id.actionStartVisit:
-                if (!StringUtils.isBlank(mPatient.getUuid()))
-                    showStartVisitDialog();
+                if(new VisitDAO().isPatientNowOnVisit(mPatient.getId()))
+                    ToastUtil.error("There is already an active visit.");
                 else
-                    ToastUtil.error("Patient is not registered, cannot create visit. " +
-                            "Patient will be registered the next time the app is in online mode");
+                {
+                    if (NetworkUtils.isOnline())
+                        showStartVisitDialog();
+                    else
+                        ToastUtil.error("Cannot start a visit manually in offline mode." +
+                                "If you want to add encounters please do so in the Form Entry section, " +
+                                "they will be synced with an automatic new visit.");
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -63,24 +63,14 @@ public class PatientListActivity extends ACBaseActivity {
     public void startFormEntry(String patientUUID, Long patientID) {
         mSelectedPatientUUID = patientUUID;
         mSelectedPatientID = patientID;
+        startEncounterForPatient();
 
-        if(!StringUtils.isBlank(patientUUID))
-        {
-            startEncounterForPatient();
-        }
-        else
-            ToastUtil.error("Patient not yet registered, cannot create encounter.");
     }
 
     public void startEncounterForPatient() {
-        try {
-            Intent intent = new Intent(this, FormListActivity.class);
-            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mSelectedPatientID);
-            startActivity(intent);
-        } catch (Exception e) {
-            dismissProgressDialog(true, null, R.string.failed_to_open_vitals_form);
-            OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
-        }
+        Intent intent = new Intent(this, FormListActivity.class);
+        intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mSelectedPatientID);
+        startActivity(intent);
     }
 
     public void startVisit() {

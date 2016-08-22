@@ -85,8 +85,6 @@ public class FindVisitsByPatientUUIDListener extends GeneralErrorListener implem
                 for (int i = 0; i < visitResultJSON.length(); i++) {
                     Visit visit = VisitMapper.map(visitResultJSON.getJSONObject(i));
                     long visitId = visitDAO.getVisitsIDByUUID(visit.getUuid());
-                    if(mEncountercreate!=null)
-                        mEncountercreate.setVisit(visit.getUuid());
 
                     if (visitId > 0) {
                         visitDAO.updateVisit(visit, visitId, mPatientID);
@@ -122,7 +120,7 @@ public class FindVisitsByPatientUUIDListener extends GeneralErrorListener implem
             }
             else if(null != mCallerService)
             {
-                mCallerService.syncEncounter(mEncountercreate);
+                //mCallerService.syncEncounter(mEncountercreate);
             }
             else {
                 mCallerAdapter.showShortToast(mErrorOccurred,

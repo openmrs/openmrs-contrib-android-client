@@ -22,6 +22,7 @@ public class Patient extends Resource {
     private boolean synced=false;
 
     private Long id;
+    private String encounters="";
 
     @SerializedName("identifiers")
     @Expose
@@ -138,6 +139,17 @@ public class Patient extends Resource {
         this.synced=synced;
     }
 
+    public String getEncounters() {
+        return encounters;
+    }
+
+    public void setEncounters(String encounters) {
+         this.encounters=encounters;
+    }
 
 
+    public void addEncounters(Long encid)
+    {
+        this.encounters += encid+",";
+    }
 }

@@ -20,6 +20,7 @@ import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.retrofit.Encountercreate;
+import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.utilities.NetworkUtils;
@@ -69,7 +70,7 @@ public class EncounterService extends IntentService {
                 public void onResponse(Call<Encounter> call, Response<Encounter> response) {
                     if (response.isSuccessful()) {
                         Encounter encounter = response.body();
-                        linkvisit(encountercreate.getPatientId(),encountercreate.getFormname(), encounter);
+                        linkvisit(encountercreate.getPatientId(),encountercreate.getFormname(), encounter, encountercreate);
                         encountercreate.setSynced(true);
                         encountercreate.save();
                     } else {
@@ -91,11 +92,16 @@ public class EncounterService extends IntentService {
     }
 
 
-    void linkvisit(Long patientid, String formname, Encounter encounter)
+    void linkvisit(Long patientid, String formname, Encounter encounter, Encountercreate encountercreate)
     {
         Long visitid=new VisitDAO().getVisitsIDByUUID(encounter.getVisit().getUuid());
         Visit visit=new VisitDAO().getVisitsByID(visitid);
         encounter.setEncounterTypeToken(Encounter.EncounterTypeToken.getType(formname));
+        for (int i=0;i<encountercreate.getObservations().size();i++)
+        {
+            encounter.getObservations().get(i).setDisplayValue
+                    (Double.toString(encountercreate.getObservations().get(i).getValue()));
+        }
         List<Encounter> encounterList=visit.getEncounters();
         encounterList.add(encounter);
         new VisitDAO().updateVisit(visit,visit.getId(),patientid);

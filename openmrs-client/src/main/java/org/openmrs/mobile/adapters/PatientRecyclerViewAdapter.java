@@ -62,6 +62,7 @@ public class PatientRecyclerViewAdapter extends RecyclerView.Adapter<PatientRecy
     private int howManyDownloadables = 0;
     private int howManySelected = 0;
     private PatientDataArrayList patientDataArrayList = new PatientDataArrayList();
+    private boolean isUpdatingExistingData = false;
 
     private final OpenMRS openMRSInstance = OpenMRS.getInstance();
     private final OpenMRSLogger openMRSLogger = openMRSInstance.getOpenMRSLogger();
@@ -146,7 +147,11 @@ public class PatientRecyclerViewAdapter extends RecyclerView.Adapter<PatientRecy
                 return true;
             }
         });
-        new AnimationUtils().setAnimation(holder.mRowLayout,mContext,position);
+        if (!isUpdatingExistingData) {
+            //This logic is preventing list animation when local data is replaced with freshly downloaded data from network
+            //See AC-192 for details
+            new AnimationUtils().setAnimation(holder.mRowLayout,mContext,position);
+        }
     }
 
     @Override
@@ -328,6 +333,10 @@ public class PatientRecyclerViewAdapter extends RecyclerView.Adapter<PatientRecy
             }
         }
         updatePatientsInDatabase();
+    }
+
+    public void setIsUpdatingExistingData(boolean isUpdating) {
+        isUpdatingExistingData = isUpdating;
     }
 
     public void setUpCheckBoxLogic(final PatientViewHolder holder, final Patient patient){

@@ -37,7 +37,7 @@ public final class NetworkUtils {
     public static boolean isOnline() {
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
-        boolean toggle=prefs.getBoolean("sync", false);
+        boolean toggle=prefs.getBoolean("sync", true);
 
         if(toggle) {
             ConnectivityManager connectivityManager

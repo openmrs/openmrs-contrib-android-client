@@ -67,9 +67,21 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
             patientsRecyclerView.setVisibility(View.GONE);
             mSpinner.setVisibility(View.VISIBLE);
         } else if (mLastViewedPatientsList != null) {
-            updatePatientsData();
+            if (mIsConnectionAvailable) {
+                    FindPatientsManager fpm = new FindPatientsManager();
+                    fpm.getLastViewedPatient(mFpmResponseListener);
+            }
+            else {
+                updatePatientsData();
+            }
         } else {
-            updateLastViewedList();
+            if (mIsConnectionAvailable) {
+                FindPatientsManager fpm = new FindPatientsManager();
+                fpm.getLastViewedPatient(mFpmResponseListener);
+            }
+            else {
+                updateLastViewedList();
+            }
         }
     }
 
@@ -174,12 +186,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
     }
 
     public boolean checkIfConnectionIsAvailable() {
-        boolean connection = NetworkUtils.isOnline();
-        if (mIsConnectionAvailable) {
-            FindPatientsManager fpm = new FindPatientsManager();
-            fpm.getLastViewedPatient(mFpmResponseListener);
-        }
-        return connection;
+        return NetworkUtils.isOnline();
     }
 
     @Override

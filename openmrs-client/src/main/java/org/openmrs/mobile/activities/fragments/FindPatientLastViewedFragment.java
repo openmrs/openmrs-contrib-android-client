@@ -144,6 +144,7 @@ public class FindPatientLastViewedFragment extends ACBaseFragment implements Swi
         }
         else {
             mAdapter = new PatientRecyclerViewAdapter(getActivity(), mLastViewedPatientsList, FIND_PATIENT_LAST_VIEWED_FM_ID);
+            mAdapter.setIsUpdatingExistingData(NetworkUtils.isOnline());
             patientsRecyclerView.setAdapter(mAdapter);
             patientsRecyclerView.setVisibility(View.VISIBLE);
             mSpinner.setVisibility(View.GONE);

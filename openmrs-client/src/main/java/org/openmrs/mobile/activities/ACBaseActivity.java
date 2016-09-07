@@ -28,7 +28,6 @@ import android.widget.CompoundButton;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
-import org.openmrs.mobile.activities.fragments.FindPatientLastViewedFragment;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
@@ -75,7 +74,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
             if (!mAuthorizationManager.isUserLoggedIn()) {
                 mAuthorizationManager.moveToLoginActivity();
             } else if (this instanceof DashboardActivity || this instanceof SettingsActivity
-                    || this instanceof FindPatientsActivity || this instanceof FindActiveVisitsActivity) {
+                    || this instanceof FindSyncedPatientsActivity || this instanceof FindActiveVisitsActivity) {
                 this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, mOpenMRS.getUsername()));
             }
         }
@@ -131,7 +130,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
             case R.id.actionSettings:
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivity(i);
-            case R.id.actionSearch:
+            case R.id.actionSearchLocal:
                 return true;
             case R.id.actionLogout:
                 this.showLogoutDialog();
@@ -142,7 +141,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
     public void logout() {
         mOpenMRS.clearUserPreferencesData();
-        FindPatientLastViewedFragment.clearLastViewedPatientList();
+        FindLastViewedPatientsActivity.clearLastViewedPatientList();
         mAuthorizationManager.moveToLoginActivity();
         OpenMRSDBOpenHelper.getInstance().closeDatabases();
     }
@@ -275,7 +274,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     public void moveUnauthorizedUserToLoginScreen() {
         OpenMRSDBOpenHelper.getInstance().closeDatabases();
         mOpenMRS.clearUserPreferencesData();
-        FindPatientLastViewedFragment.clearLastViewedPatientList();
+        FindLastViewedPatientsActivity.clearLastViewedPatientList();
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);

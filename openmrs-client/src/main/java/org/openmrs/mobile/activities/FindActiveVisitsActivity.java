@@ -77,14 +77,15 @@ public class FindActiveVisitsActivity extends ACBaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, OpenMRS.getInstance().getUsername()));
-        getMenuInflater().inflate(R.menu.find_patients_menu, menu);
+        getMenuInflater().inflate(R.menu.find_locally_and_add_patients_menu, menu);
+        menu.findItem(R.id.addPatients).setVisible(false);
 
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
         SearchView findVisitView;
 
-        mFindVisitItem = menu.findItem(R.id.actionSearch);
+        mFindVisitItem = menu.findItem(R.id.actionSearchLocal);
         if (OpenMRS.getInstance().isRunningHoneycombVersionOrHigher()) {
             findVisitView = (SearchView) mFindVisitItem.getActionView();
         } else {
@@ -126,4 +127,8 @@ public class FindActiveVisitsActivity extends ACBaseActivity {
         }
     }
 
+    public void startFindLastViewedPatientsActivity(MenuItem item) {
+        Intent intent = new Intent(FindActiveVisitsActivity.this, FindLastViewedPatientsActivity.class);
+        startActivity(intent);
+    }
 }

@@ -24,7 +24,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
 
@@ -91,7 +90,7 @@ public class DashboardActivity extends ACBaseActivity {
 //    }
 
     public void onFindPatientCallback(View v) {
-        Intent i = new Intent(this, FindPatientsActivity.class);
+        Intent i = new Intent(this, FindSyncedPatientsActivity.class);
         startActivity(i);
     }
 

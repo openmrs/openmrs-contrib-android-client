@@ -14,35 +14,33 @@
 
 package org.openmrs.mobile.net.helpers;
 
-import org.openmrs.mobile.activities.FindPatientsActivity;
-import org.openmrs.mobile.activities.FindPatientsSearchActivity;
+import org.openmrs.mobile.activities.FindLastViewedPatientsActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
-import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.listeners.findPatients.FindPatientListener;
 import org.openmrs.mobile.listeners.findPatients.FullPatientDataListener;
-import org.openmrs.mobile.listeners.findPatients.LastViewedPatientListener;
 import java.net.URLEncoder;
 
 public final class FindPatientsHelper {
     private static OpenMRS mOpenMRS = OpenMRS.getInstance();
     private static OpenMRSLogger mLogger = mOpenMRS.getOpenMRSLogger();
 
-    private FindPatientsHelper() {
-    }
+    private FindPatientsHelper() {}
 
-    public static FindPatientListener createFindPatientListener(String lastQuery, int searchId, FindPatientsSearchActivity caller) {
+    //This listener is used to find data by query
+    public static FindPatientListener createFindPatientListener(String lastQuery, FindLastViewedPatientsActivity caller) {
         try {
             lastQuery = URLEncoder.encode(lastQuery,"UTF-8").toString();
         } catch (Exception exception) {
             mLogger.e(exception.toString());
         }
-        return new FindPatientListener(lastQuery, searchId, caller);
+        return new FindPatientListener(lastQuery, caller);
     }
 
-    public static LastViewedPatientListener createLastViewedPatientListener(FindPatientsActivity caller) {
-        return new LastViewedPatientListener(caller);
+    //This listener is used to find last viewed data
+    public static FindPatientListener createFindPatientListener(FindLastViewedPatientsActivity caller) {
+        return new FindPatientListener(caller);
     }
 
     public static FullPatientDataListener createFullPatientDataListener(String patientUUID, PatientDashboardActivity caller) {

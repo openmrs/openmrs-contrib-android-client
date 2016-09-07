@@ -20,7 +20,7 @@
                 android:padding="10dp"
                 android:background="@drawable/card">
     <RelativeLayout
-        android:id="@+id/topRow"
+        android:id="@+id/syncedTopRow"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -29,27 +29,27 @@
         android:gravity="center_vertical"
         >
 
-        <TextView android:id="@+id/patientIdentifier"
+        <TextView android:id="@+id/syncedPatientIdentifier"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textSize="22sp"
                   android:textStyle="bold"
-                  android:layout_alignTop="@+id/patientDisplayName"
+                  android:layout_alignTop="@+id/syncedPatientDisplayName"
                   android:layout_alignParentLeft="true"
                   android:layout_alignParentStart="true"/>
 
-        <TextView android:id="@+id/patientDisplayName"
+        <TextView android:id="@+id/syncedPatientDisplayName"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textSize="22sp"
 
-                  android:layout_toRightOf="@+id/patientIdentifier"
+                  android:layout_toRightOf="@+id/syncedPatientIdentifier"
                   android:layout_alignParentRight="true"
                   android:layout_alignParentEnd="true"
                   android:gravity="right"/>
     </RelativeLayout>
     <RelativeLayout
-        android:id="@+id/bottomRow"
+        android:id="@+id/syncedBottomRow"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -58,37 +58,26 @@
         android:gravity="center_vertical"
         >
 
-        <TextView android:id="@+id/patientGender"
+        <TextView android:id="@+id/syncedPatientGender"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textSize="16sp"
             />
 
-        <TextView android:id="@+id/patientAge"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textSize="16sp"
-                  android:layout_marginLeft="15dp"
-                  android:layout_toRightOf="@id/patientGender"
-            />
-
-        <TextView android:id="@+id/patientBirthDate"
+        <TextView android:id="@+id/syncedPatientAge"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:textSize="16sp"
                   android:layout_marginLeft="15dp"
-                  android:layout_toRightOf="@id/patientAge"
+                  android:layout_toRightOf="@id/syncedPatientGender"
             />
 
-        <CheckBox android:id="@+id/offlineCheckbox"
+        <TextView android:id="@+id/syncedPatientBirthDate"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
-                  android:layout_marginLeft="50dp"
-                  android:singleLine="true"
-                  android:layout_alignParentRight="true"
-                  android:layout_alignParentEnd="true"
-                  android:layout_marginTop="15dp"
-                  android:button="@drawable/checkbox"
-                  android:textColor="@color/dark_purple"/>
+                  android:textSize="16sp"
+                  android:layout_marginLeft="15dp"
+                  android:layout_toRightOf="@id/syncedPatientAge"
+            />
     </RelativeLayout>
 </LinearLayout>

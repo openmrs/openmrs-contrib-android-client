@@ -15,8 +15,10 @@
 package org.openmrs.mobile.bundle;
 
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
+import org.openmrs.mobile.models.retrofit.Patient;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class CustomDialogBundle implements Serializable {
 
@@ -28,6 +30,7 @@ public class CustomDialogBundle implements Serializable {
     private String leftButtonText;
     private String rightButtonText;
     private String progressViewMessage;
+    private List<Patient> patientsList;
     private boolean loadingBar;
     private boolean progressDialog;
 
@@ -114,5 +117,13 @@ public class CustomDialogBundle implements Serializable {
 
     public void setEditTextViewMessage(String editTextViewMessage) {
         this.editTextViewMessage = editTextViewMessage;
+    }
+
+    public List<Patient> getPatientsList() {
+        return patientsList;
+    }
+
+    public void setPatientsList(List<Patient> patientsList) {
+        this.patientsList = patientsList;
     }
 }

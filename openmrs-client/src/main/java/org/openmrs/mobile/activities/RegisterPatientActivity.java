@@ -16,27 +16,26 @@ package org.openmrs.mobile.activities;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.google.common.io.Files;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
+import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.models.retrofit.PersonAddress;
 import org.openmrs.mobile.models.retrofit.PersonName;
 import org.openmrs.mobile.models.retrofit.Patient;
@@ -44,9 +43,6 @@ import org.openmrs.mobile.models.retrofit.Person;
 import org.openmrs.mobile.api.PatientService;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -70,7 +66,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
 
     RadioGroup gen;
     ProgressDialog pd;
-
+    ProgressBar progressBar;
 
 
     TextView fnameerror;
@@ -93,7 +89,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-
+        progressBar = (ProgressBar)findViewById(R.id.progress_bar);
         edfname = (EditText) findViewById(R.id.firstname);
         edmname = (EditText) findViewById(R.id.middlename);
         edlname = (EditText) findViewById(R.id.surname);
@@ -226,6 +222,40 @@ public class RegisterPatientActivity extends ACBaseActivity {
     }
 
     void registerPatient() {
+        showProgressBar();
+        hideSoftKeys();
+        new PatientService().findSimilarPatients(this, createPatient());
+    }
+
+    private String getInput(EditText e) {
+        if(e.getText() == null) {
+            return null;
+        } else if (isEmpty(e)) {
+            return null;
+        } else {
+            return e.getText().toString();
+        }
+    }
+
+    public void showSimilarPatientDialog(List<Patient> patients,Patient newPatient){
+        hideProgressBar();
+        CustomDialogBundle similarPatientsDialog = new CustomDialogBundle();
+        similarPatientsDialog.setTitleViewMessage(getString(R.string.similar_patients_dialog_title));
+        similarPatientsDialog.setRightButtonText(getString(R.string.dialog_button_register_new));
+        similarPatientsDialog.setRightButtonAction(CustomFragmentDialog.OnClickAction.REGISTER_PATIENT);
+        similarPatientsDialog.setLeftButtonText(getString(R.string.dialog_button_cancel));
+        similarPatientsDialog.setLeftButtonAction(CustomFragmentDialog.OnClickAction.CANCEL_REGISTERING);
+        similarPatientsDialog.setPatientsList(patients);
+        createAndShowDialog(similarPatientsDialog, ApplicationConstants.DialogTAG.SIMILAR_PATIENTS_TAG);
+    }
+
+    public void registerNewPatient(){
+        Patient patient = createPatient();
+        new PatientService().registerPatient(patient);
+        finish();
+    }
+
+    private Patient createPatient(){
         Person person = new Person();
 
         PersonAddress address = new PersonAddress();
@@ -271,22 +301,27 @@ public class RegisterPatientActivity extends ACBaseActivity {
         final Patient patient = new Patient();
         patient.setPerson(person);
         patient.setUuid(" ");
-        new PatientService().registerPatient(patient);
-
-        Intent intent = new Intent(getApplicationContext(), PatientDashboardActivity.class);
-        intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getId());
-        startActivity(intent);
-        finish();
+        return patient;
     }
 
-    private String getInput(EditText e) {
-        if(e.getText() == null) {
-            return null;
-        } else if (isEmpty(e)) {
-            return null;
-        } else {
-            return e.getText().toString();
+    public void finishRegisterActivity() {
+        RegisterPatientActivity.this.finish();
+    }
+
+    public void showProgressBar(){
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    private void hideSoftKeys(){
+        View view = this.getCurrentFocus();
+        if (view == null) {
+            view = new View(this);
         }
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
-
 }

@@ -3,7 +3,7 @@ openmrs-contrib-android-client
 
 ### Android client for OpenMRS
 
-[![Build Status](https://travis-ci.org/openmrs/openmrs-contrib-android-client.svg?branch=master)](https://travis-ci.org/openmrs/openmrs-contrib-android-client) [![GitHub version](https://badge.fury.io/gh/openmrs%2Fopenmrs-contrib-android-client.svg)](https://github.com/openmrs/openmrs-contrib-android-client/releases/latest)
+[![Build Status](https://travis-ci.org/openmrs/openmrs-contrib-android-client.svg?branch=master)](https://travis-ci.org/openmrs/openmrs-contrib-android-client) [![GitHub version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=gh&type=6&v=2.3&x2=0)](https://github.com/openmrs/openmrs-contrib-android-client/releases/latest)
 
 # GSoC 2016
 

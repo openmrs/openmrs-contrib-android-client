@@ -24,8 +24,10 @@ import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.promise.SimplePromise;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.retrofit.Encountercreate;
 import org.openmrs.mobile.models.retrofit.IdGenPatientIdentifiers;
+import org.openmrs.mobile.models.retrofit.IdentifierType;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.PatientIdentifier;
 import org.openmrs.mobile.models.retrofit.Resource;
@@ -72,9 +74,9 @@ public class PatientService extends IntentService {
                             final List<PatientIdentifier> identifiers = new ArrayList<>();
 
                             final PatientIdentifier identifier = new PatientIdentifier();
-                            identifier.setLocation((String) results.get(0).getResult());
+                            identifier.setLocation((Location) results.get(0).getResult());
                             identifier.setIdentifier((String) results.get(1).getResult());
-                            identifier.setIdentifierType((String) results.get(2).getResult());
+                            identifier.setIdentifierType((IdentifierType) results.get(2).getResult());
                             identifiers.add(identifier);
 
                             patient.setIdentifiers(identifiers);
@@ -160,26 +162,25 @@ public class PatientService extends IntentService {
     }
 
 
-    SimplePromise<String> getLocationUuid() {
-        final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
+    SimplePromise<Location> getLocationUuid() {
+        final SimpleDeferredObject<Location> deferred = new SimpleDeferredObject<>();
 
         RestApi apiService =
                 RestServiceBuilder.createService(RestApi.class);
-        Call<Results<Resource>> call = apiService.getLocations();
-        call.enqueue(new Callback<Results<Resource>>() {
+        Call<Results<Location>> call = apiService.getLocations();
+        call.enqueue(new Callback<Results<Location>>() {
             @Override
-            public void onResponse(Call<Results<Resource>> call, Response<Results<Resource>> response) {
-                Results<Resource> locationList = response.body();
-                for (Resource result : locationList.getResults()) {
+            public void onResponse(Call<Results<Location>> call, Response<Results<Location>> response) {
+                Results<Location> locationList = response.body();
+                for (Location result : locationList.getResults()) {
                     if ((result.getDisplay().trim()).equalsIgnoreCase((openMrs.getLocation().trim()))) {
-                        String locationUuid = result.getUuid();
-                        deferred.resolve(locationUuid);
+                        deferred.resolve(result);
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<Results<Resource>> call, Throwable t) {
+            public void onFailure(Call<Results<Location>> call, Throwable t) {
                 ToastUtil.notify(t.toString());
                 deferred.reject(t);
             }
@@ -219,26 +220,26 @@ public class PatientService extends IntentService {
     }
 
 
-    SimplePromise<String> getPatientIdentifierTypeUuid() {
-        final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
+    SimplePromise<IdentifierType> getPatientIdentifierTypeUuid() {
+        final SimpleDeferredObject<IdentifierType> deferred = new SimpleDeferredObject<>();
 
         RestApi apiService =
                 RestServiceBuilder.createService(RestApi.class);
-        Call<Results<PatientIdentifier>> call = apiService.getIdentifierTypes();
-        call.enqueue(new Callback<Results<PatientIdentifier>>() {
+        Call<Results<IdentifierType>> call = apiService.getIdentifierTypes();
+        call.enqueue(new Callback<Results<IdentifierType>>() {
             @Override
-            public void onResponse(Call<Results<PatientIdentifier>> call, Response<Results<PatientIdentifier>> response) {
-                Results<PatientIdentifier> idresList = response.body();
-                for (Resource result : idresList.getResults()) {
+            public void onResponse(Call<Results<IdentifierType>> call, Response<Results<IdentifierType>> response) {
+                Results<IdentifierType> idresList = response.body();
+                for (IdentifierType result : idresList.getResults()) {
                     if(result.getDisplay().equals("OpenMRS ID")) {
-                        deferred.resolve(result.getUuid());
+                        deferred.resolve(result);
                         return;
                     }
                 }
             }
 
             @Override
-            public void onFailure(Call<Results<PatientIdentifier>> call, Throwable t) {
+            public void onFailure(Call<Results<IdentifierType>> call, Throwable t) {
                 ToastUtil.notify(t.toString());
                 deferred.reject(t);
             }

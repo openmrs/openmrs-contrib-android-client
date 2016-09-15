@@ -15,11 +15,10 @@
 package org.openmrs.mobile.models;
 
 import org.openmrs.mobile.models.retrofit.PersonAddress;
+import org.openmrs.mobile.models.retrofit.Resource;
 
-public class Location {
+public class Location extends Resource{
     private Long id;
-    private String uuid;
-    private String display;
     private String name;
     private String description;
     private PersonAddress address;
@@ -40,22 +39,6 @@ public class Location {
 
     public Long getId() {
         return id;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setDisplay(String display) {
-        this.display = display;
-    }
-
-    public String getDisplay() {
-        return display;
     }
 
     public void setName(String name) {

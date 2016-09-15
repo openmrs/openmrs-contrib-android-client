@@ -13,17 +13,19 @@ package org.openmrs.mobile.models.retrofit;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.openmrs.mobile.models.Location;
+
 public class PatientIdentifier extends Resource {
 
     @SerializedName("identifierType")
     @Expose
-    private String identifierType;
+    private IdentifierType identifierType;
     @SerializedName("identifier")
     @Expose
     private String identifier;
     @SerializedName("location")
     @Expose
-    private String location;
+    private Location location;
 
 
     /**
@@ -31,7 +33,7 @@ public class PatientIdentifier extends Resource {
      * @return
      *     The identifierType
      */
-    public String getIdentifierType() {
+    public IdentifierType getIdentifierType() {
         return identifierType;
     }
 
@@ -40,7 +42,7 @@ public class PatientIdentifier extends Resource {
      * @param identifierType
      *     The identifierType
      */
-    public void setIdentifierType(String identifierType) {
+    public void setIdentifierType(IdentifierType identifierType) {
         this.identifierType = identifierType;
     }
 
@@ -67,7 +69,7 @@ public class PatientIdentifier extends Resource {
      * @return
      *     The location
      */
-    public String getLocation() {
+    public Location getLocation() {
         return location;
     }
 
@@ -76,7 +78,7 @@ public class PatientIdentifier extends Resource {
      * @param location
      *     The location
      */
-    public void setLocation(String location) {
+    public void setLocation(Location location) {
         this.location = location;
     }
 

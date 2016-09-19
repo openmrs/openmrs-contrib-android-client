@@ -17,7 +17,6 @@ package org.openmrs.mobile.net;
 import com.android.volley.Request;
 import org.openmrs.mobile.listeners.findPatients.FindPatientListener;
 import org.openmrs.mobile.listeners.findPatients.FullPatientDataListener;
-import org.openmrs.mobile.listeners.findPatients.LastViewedPatientListener;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
 import java.io.File;
 import static org.openmrs.mobile.utilities.ApplicationConstants.API;
@@ -38,7 +37,7 @@ public class FindPatientsManager extends BaseManager {
         mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 
-    public void getLastViewedPatient(LastViewedPatientListener listener) {
+    public void getLastViewedPatient(FindPatientListener listener) {
         mLogger.d(SENDING_REQUEST + mLastViewedPatientBaseUrl);
 
         JsonObjectRequestWrapper jsObjRequest =

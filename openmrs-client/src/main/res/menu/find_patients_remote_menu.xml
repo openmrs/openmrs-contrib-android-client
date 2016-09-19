@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.tomek.notepad.MainActivity">
+
+        <item android:id="@+id/actionSearchRemote"
+            android:title="@string/action_find_patients"
+            android:icon="@drawable/ic_search"
+            app:showAsAction="ifRoom|collapseActionView"
+            android:actionViewClass="android.support.v7.widget.SearchView"
+            app:actionViewClass="android.support.v7.widget.SearchView"/>
+
+</menu>

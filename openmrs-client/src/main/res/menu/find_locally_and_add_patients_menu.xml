@@ -17,10 +17,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="org.openmrs.mobile.activities.DashboardActivity" >
-    <item android:id="@+id/actionSearch"
+
+    <item android:id="@+id/addPatients"
+        android:title="@string/action_add_patients"
+        android:icon="@drawable/ic_add"
+        android:onClick="startFindLastViewedPatientsActivity"
+        app:showAsAction="ifRoom|collapseActionView"/>
+
+    <item android:id="@+id/actionSearchLocal"
         android:title="@string/action_find_patients"
         android:icon="@drawable/ic_search"
         app:showAsAction="ifRoom|collapseActionView"
         android:actionViewClass="android.support.v7.widget.SearchView"
         app:actionViewClass="android.support.v7.widget.SearchView"/>
+
 </menu>

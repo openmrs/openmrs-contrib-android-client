@@ -20,7 +20,7 @@
     android:layout_height="match_parent"
     android:background="#fff3f3f3"
     android:id="@+id/find_patient_fragment"
-    tools:context="org.openmrs.mobile.activities.FindPatientsActivity">
+    tools:context=".activities.FindSyncedPatientsActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/patientRecyclerView"

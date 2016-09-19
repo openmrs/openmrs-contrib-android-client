@@ -15,13 +15,11 @@
 package org.openmrs.mobile.adapters;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.openmrs.mobile.activities.FormListActivity;
 import org.openmrs.mobile.activities.PatientListActivity;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.AnimationUtils;
@@ -113,11 +111,11 @@ public class PatientHierarchyAdapter extends RecyclerView.Adapter<PatientHierarc
             mVisitStatusIcon = (ImageView) itemView.findViewById(R.id.visitStatusIcon);
             mVisitStatus = (TextView) itemView.findViewById(R.id.visitStatusLabel);
             mRowLayout = (LinearLayout) itemView;
-            mIdentifier = (TextView) itemView.findViewById(R.id.patientIdentifier);
-            mDisplayName = (TextView) itemView.findViewById(R.id.patientDisplayName);
-            mGender = (TextView) itemView.findViewById(R.id.patientGender);
-            mAge = (TextView) itemView.findViewById(R.id.patientAge);
-            mBirthDate = (TextView) itemView.findViewById(R.id.patientBirthDate);
+            mIdentifier = (TextView) itemView.findViewById(R.id.syncedPatientIdentifier);
+            mDisplayName = (TextView) itemView.findViewById(R.id.syncedPatientDisplayName);
+            mGender = (TextView) itemView.findViewById(R.id.syncedPatientGender);
+            mAge = (TextView) itemView.findViewById(R.id.syncedPatientAge);
+            mBirthDate = (TextView) itemView.findViewById(R.id.syncedPatientBirthDate);
         }
 
         public void clearAnimation() {

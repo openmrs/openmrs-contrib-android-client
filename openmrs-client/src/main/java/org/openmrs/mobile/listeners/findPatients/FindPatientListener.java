@@ -19,7 +19,7 @@ import com.android.volley.VolleyError;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.openmrs.mobile.activities.FindPatientsSearchActivity;
+import org.openmrs.mobile.activities.FindLastViewedPatientsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.models.mappers.PatientMapper;
@@ -32,20 +32,22 @@ import java.util.List;
 
 public final class FindPatientListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
-    private final FindPatientsSearchActivity mActivityCaller;
-    private final String mLastQuery;
-    private final int mSearchId;
+    private final FindLastViewedPatientsActivity mActivityCaller;
+    private String mLastQuery;
 
-    public FindPatientListener(String lastQuery, int searchId, FindPatientsSearchActivity activityCaller) {
-        mSearchId = searchId;
+    public FindPatientListener(String lastQuery, FindLastViewedPatientsActivity activityCaller) {
         mLastQuery = lastQuery;
+        mActivityCaller = activityCaller;
+    }
+
+    public FindPatientListener(FindLastViewedPatientsActivity activityCaller) {
         mActivityCaller = activityCaller;
     }
 
     @Override
     public void onErrorResponse(VolleyError error) {
         super.onErrorResponse(error);
-        mActivityCaller.stopLoader(mSearchId);
+        mActivityCaller.stopLoader();
     }
 
     @Override
@@ -59,14 +61,34 @@ public final class FindPatientListener extends GeneralErrorListener implements R
                 patientsList.add(PatientMapper.map(patientsJSONList.getJSONObject(i)));
             }
 
-            mActivityCaller.updatePatientsData(mSearchId, patientsList);
+            refreshList(patientsList, FindLastViewedPatientsActivity.ActivityMethod.Update);
 
         } catch (JSONException e) {
             mLogger.d(e.toString());
+            refreshList(null, FindLastViewedPatientsActivity.ActivityMethod.StopLoader);
+        }
+    }
+
+    private void refreshList(List<Patient> patientsList, FindLastViewedPatientsActivity.ActivityMethod method) {
+        List<Patient> localPatientsList;
+        if (null == patientsList) {
+            localPatientsList = new ArrayList<>();
+        } else {
+            localPatientsList = new ArrayList<>(patientsList);
+        }
+
+        FindLastViewedPatientsActivity.setLastViewedPatientList(localPatientsList);
+        if (mActivityCaller != null) {
+            if (method.equals(FindLastViewedPatientsActivity.ActivityMethod.StopLoader)) {
+                mActivityCaller.stopLoader();
+            } else if (method.equals(FindLastViewedPatientsActivity.ActivityMethod.Update)) {
+                mActivityCaller.updatePatientsData(patientsList);
+            }
         }
     }
 
     public String getLastQuery() {
         return mLastQuery;
     }
+
 }

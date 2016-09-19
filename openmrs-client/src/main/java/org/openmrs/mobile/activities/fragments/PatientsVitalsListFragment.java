@@ -39,7 +39,7 @@ public class PatientsVitalsListFragment extends Fragment {
 
     private List<Patient> mPatientList;
     private View fragmentLayout;
-    private RecyclerView patientRecyclerView;
+    private RecyclerView syncedPatientRecyclerView;
 
     public PatientsVitalsListFragment() {
         //empty constructor
@@ -82,20 +82,20 @@ public class PatientsVitalsListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        fragmentLayout = inflater.inflate(R.layout.fragment_find_patients, null, false);
+        fragmentLayout = inflater.inflate(R.layout.fragment_find_synced_patients, null, false);
 
-        patientRecyclerView = (RecyclerView) fragmentLayout.findViewById(R.id.patientRecyclerView);
-        patientRecyclerView.setHasFixedSize(true);
+        syncedPatientRecyclerView = (RecyclerView) fragmentLayout.findViewById(R.id.patientRecyclerView);
+        syncedPatientRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        patientRecyclerView.setLayoutManager(linearLayoutManager);
+        syncedPatientRecyclerView.setLayoutManager(linearLayoutManager);
 
         TextView emptyList = (TextView) fragmentLayout.findViewById(R.id.emptyPatientList);
         emptyList.setText(getString(R.string.search_patient_no_results));
         if (null == mPatientList || mPatientList.isEmpty()) {
             emptyList.setVisibility(View.VISIBLE);
-            patientRecyclerView.setVisibility(View.GONE);
+            syncedPatientRecyclerView.setVisibility(View.GONE);
         } else {
-            patientRecyclerView.setAdapter(new PatientHierarchyAdapter(getActivity(), mPatientList));
+            syncedPatientRecyclerView.setAdapter(new PatientHierarchyAdapter(getActivity(), mPatientList));
         }
 
         FontsUtil.setFont((ViewGroup) fragmentLayout);

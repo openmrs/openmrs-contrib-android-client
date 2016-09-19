@@ -36,11 +36,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.FindPatientsActivity;
+import org.openmrs.mobile.activities.FindSyncedPatientsActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
-import org.openmrs.mobile.activities.fragments.FindPatientInDatabaseFragment;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
@@ -52,36 +50,33 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PatientRecyclerViewAdapter extends RecyclerView.Adapter<PatientRecyclerViewAdapter.PatientViewHolder> {
+public class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastViewedPatientRecyclerViewAdapter.PatientViewHolder> {
     private Activity mContext;
     private List<Patient> mItems;
-    private int fragmentID;
     private boolean isAllDownloadableSelected = false;
-    private ActionMode actionMode;
     private boolean isLongClicked = false;
     private int howManyDownloadables = 0;
+    ActionMode actionMode;
     private int howManySelected = 0;
     private PatientDataArrayList patientDataArrayList = new PatientDataArrayList();
     private boolean isUpdatingExistingData = false;
 
     private final OpenMRS openMRSInstance = OpenMRS.getInstance();
-    private final OpenMRSLogger openMRSLogger = openMRSInstance.getOpenMRSLogger();
 
-    public PatientRecyclerViewAdapter(Activity context, List<Patient> items, int fragmentID){
+    public LastViewedPatientRecyclerViewAdapter(Activity context, List<Patient> items){
         this.mContext = context;
         this.mItems = items;
-        this.fragmentID = fragmentID;
     }
 
     @Override
-    public PatientRecyclerViewAdapter.PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_patients_row, parent, false);
+    public LastViewedPatientRecyclerViewAdapter.PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_last_viewed_patients_row, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(PatientRecyclerViewAdapter.PatientViewHolder holder, final int position) {
+    public void onBindViewHolder(LastViewedPatientRecyclerViewAdapter.PatientViewHolder holder, final int position) {
         final Patient patient = mItems.get(position);
         if (!new PatientDAO().isUserAlreadySaved(patient.getUuid())) {
             howManyDownloadables++;
@@ -122,10 +117,6 @@ public class PatientRecyclerViewAdapter extends RecyclerView.Adapter<PatientRecy
         holder.mRowLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                if (fragmentID == FindPatientInDatabaseFragment.FIND_PATIENT_IN_DB_FM_ID) {
-                    // this listener shouldn't work in FindPatientInDatabase Fragment
-                    return true;
-                }
                 PatientData patientData = patientDataArrayList.getPatientDataByPosition(position);
                 if (patientData.isDownloadable()) {
                     if (v.isSelected()) {
@@ -182,11 +173,11 @@ public class PatientRecyclerViewAdapter extends RecyclerView.Adapter<PatientRecy
         public PatientViewHolder(View itemView) {
             super(itemView);
             mRowLayout = (LinearLayout) itemView;
-            mIdentifier = (TextView) itemView.findViewById(R.id.patientIdentifier);
-            mDisplayName = (TextView) itemView.findViewById(R.id.patientDisplayName);
-            mGender = (TextView) itemView.findViewById(R.id.patientGender);
-            mAge = (TextView) itemView.findViewById(R.id.patientAge);
-            mBirthDate = (TextView) itemView.findViewById(R.id.patientBirthDate);
+            mIdentifier = (TextView) itemView.findViewById(R.id.lastViewedPatientIdentifier);
+            mDisplayName = (TextView) itemView.findViewById(R.id.lastViewedPatientDisplayName);
+            mGender = (TextView) itemView.findViewById(R.id.lastViewedPatientGender);
+            mAge = (TextView) itemView.findViewById(R.id.lastViewedPatientAge);
+            mBirthDate = (TextView) itemView.findViewById(R.id.lastViewedPatientBirthDate);
             mAvailableOfflineCheckbox = (CheckBox) itemView.findViewById(R.id.offlineCheckbox);
         }
 
@@ -303,7 +294,7 @@ public class PatientRecyclerViewAdapter extends RecyclerView.Adapter<PatientRecy
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             unselectAll();
-            actionMode = null;
+            //actionMode = null;
         }
     };
 
@@ -350,7 +341,6 @@ public class PatientRecyclerViewAdapter extends RecyclerView.Adapter<PatientRecy
                 public void onClick(View v) {
                     if (((CheckBox) v).isChecked()) {
                         downloadPatient(patient);
-                        updatePatientsInDatabase();
                         disableCheckBox(holder);
                     }
                 }
@@ -368,11 +358,9 @@ public class PatientRecyclerViewAdapter extends RecyclerView.Adapter<PatientRecy
     }
 
     private void updatePatientsInDatabase() {
-        if (mContext instanceof FindPatientsActivity) {
-            FindPatientInDatabaseFragment fragment = (FindPatientInDatabaseFragment) (((FindPatientsActivity) mContext)
-                    .mFindPatientPagerAdapter.getRegisteredFragment(FindPatientsActivity.DOWNLOADED_TAB_POS));
-
-            fragment.updatePatientsInDatabaseList();
+        if (mContext instanceof FindSyncedPatientsActivity) {
+            //FindPatientInDatabaseFragment fragment = ((FindSyncedPatientsActivity) mContext).getFindPatientInDatabaseFragment();
+            //fragment.updatePatientsInDatabaseList();
         }
     }
 

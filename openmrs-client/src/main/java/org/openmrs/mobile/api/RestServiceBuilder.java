@@ -16,7 +16,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.models.retrofit.Resource;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.ResourceSerializer;
 
 import java.io.IOException;
 
@@ -75,7 +77,10 @@ public class RestServiceBuilder {
 
     private static GsonConverterFactory buildGsonConverter() {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        Gson myGson = gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
+        Gson myGson = gsonBuilder
+                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeAdapter(Resource.class, new ResourceSerializer())
+                .create();
 
         return GsonConverterFactory.create(myGson);
     }

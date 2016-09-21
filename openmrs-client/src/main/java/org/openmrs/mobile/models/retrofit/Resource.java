@@ -23,15 +23,15 @@ public class Resource implements Serializable {
 
     @SerializedName("uuid")
     @Expose
-    private String uuid;
+    protected String uuid;
 
     @SerializedName("display")
     @Expose
-    private String display;
+    protected String display;
 
     @SerializedName("links")
     @Expose
-    private List<Link> links = new ArrayList<Link>();
+    protected List<Link> links = new ArrayList<Link>();
 
     /**
      *

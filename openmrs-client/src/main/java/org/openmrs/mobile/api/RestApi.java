@@ -10,19 +10,17 @@
 
 package org.openmrs.mobile.api;
 
+import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.retrofit.EncounterType;
 import org.openmrs.mobile.models.retrofit.Encountercreate;
 import org.openmrs.mobile.models.retrofit.FormResource;
 import org.openmrs.mobile.models.retrofit.IdGenPatientIdentifiers;
+import org.openmrs.mobile.models.retrofit.IdentifierType;
 import org.openmrs.mobile.models.retrofit.Obscreate;
 import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.models.retrofit.PatientIdentifier;
-import org.openmrs.mobile.models.retrofit.Resource;
 import org.openmrs.mobile.models.retrofit.Results;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -37,10 +35,10 @@ public interface RestApi {
     Call<Results<FormResource>> getForms();
 
     @GET("location")
-    Call<Results<Resource>> getLocations();
+    Call<Results<Location>> getLocations();
 
     @GET("patientidentifiertype")
-    Call<Results<PatientIdentifier>> getIdentifierTypes();
+    Call<Results<IdentifierType>> getIdentifierTypes();
 
     @GET("module/idgen/generateIdentifier.form?source=1")
     Call<IdGenPatientIdentifiers> getPatientIdentifiers(@Query("username") String username,

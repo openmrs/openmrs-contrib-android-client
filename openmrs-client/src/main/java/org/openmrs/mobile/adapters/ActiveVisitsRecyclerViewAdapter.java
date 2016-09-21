@@ -25,26 +25,21 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.VisitDashboardActivity;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.models.retrofit.Person;
 import org.openmrs.mobile.utilities.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
-import org.openmrs.mobile.utilities.ImageUtils;
-import org.w3c.dom.Text;
 
 import java.util.List;
 
 public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<ActiveVisitsRecyclerViewAdapter.VisitViewHolder> {
     private Context mContext;
     private List<Visit> mVisits;
-
+    private boolean isUpdatingExistingData = false;
 
     public ActiveVisitsRecyclerViewAdapter(Context context, List<Visit> items) {
         this.mContext = context;
@@ -90,7 +85,16 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
                 mContext.startActivity(intent);
             }
         });
-        new AnimationUtils().setAnimation(visitViewHolder.mRelativeLayout,mContext,position);
+
+        if (!isUpdatingExistingData) {
+            //This logic is preventing list animation when list if filtered by query
+            new AnimationUtils().setAnimation(visitViewHolder.mRelativeLayout,mContext,position);
+        }
+    }
+
+    public void setIsFiltering(boolean isFiltering) {
+        isUpdatingExistingData = isFiltering;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -107,7 +111,6 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
         private TextView mIdentifier;
         private TextView mDisplayName;
         private TextView mGender;
-        private TextView mAge;
         private TextView mBirthDate;
         private TextView mVisitPlace;
         private LinearLayout mRelativeLayout;
@@ -118,7 +121,6 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
             mIdentifier = (TextView) itemView.findViewById(R.id.findVisitsIdentifier);
             mDisplayName = (TextView) itemView.findViewById(R.id.findVisitsDisplayName);
             mVisitPlace = (TextView) itemView.findViewById(R.id.findVisitsPlace);
-            mAge = (TextView) itemView.findViewById(R.id.findVisitsPatientAge);
             mBirthDate = (TextView) itemView.findViewById(R.id.findVisitsPatientBirthDate);
             mGender = (TextView) itemView.findViewById(R.id.findVisitsPatientGender);
         }

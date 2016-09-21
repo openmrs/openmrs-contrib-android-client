@@ -15,17 +15,13 @@
 package org.openmrs.mobile.activities;
 
 import android.annotation.TargetApi;
-import android.app.SearchManager;
-import android.app.SearchableInfo;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,100 +31,122 @@ import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.adapters.ActiveVisitsRecyclerViewAdapter;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
+import org.openmrs.mobile.models.Visit;
+import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.FontsUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FindActiveVisitsActivity extends ACBaseActivity {
 
-    private String mQuery;
-    private ActiveVisitsRecyclerViewAdapter mAdapter;
     private RecyclerView visitsRecyclerView;
     private TextView emptyList;
-    private MenuItem mFindVisitItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_find_visits);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            getSupportActionBar().setElevation(0);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         }
 
         visitsRecyclerView = (RecyclerView) findViewById(R.id.visitsRecyclerView);
         visitsRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         visitsRecyclerView.setLayoutManager(linearLayoutManager);
+        visitsRecyclerView.setAdapter(new ActiveVisitsRecyclerViewAdapter(this,
+                new ArrayList<Visit>()));
 
         emptyList = (TextView) findViewById(R.id.emptyVisitsListViewLabel);
         emptyList.setText(getString(R.string.search_visits_no_results));
         emptyList.setVisibility(View.INVISIBLE);
 
+        updateVisitsInDatabaseList();
+
         FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
-        handleIntent(getIntent());
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, OpenMRS.getInstance().getUsername()));
-        getMenuInflater().inflate(R.menu.find_locally_and_add_patients_menu, menu);
-        menu.findItem(R.id.addPatients).setVisible(false);
-
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-        SearchView findVisitView;
-
-        mFindVisitItem = menu.findItem(R.id.actionSearchLocal);
+        getMenuInflater().inflate(R.menu.find_visits_menu, menu);
+        final SearchView findVisitView;
+        MenuItem mFindVisitItem = menu.findItem(R.id.actionSearchLocalVisits);
         if (OpenMRS.getInstance().isRunningHoneycombVersionOrHigher()) {
             findVisitView = (SearchView) mFindVisitItem.getActionView();
         } else {
             findVisitView = (SearchView) MenuItemCompat.getActionView(mFindVisitItem);
         }
 
-        SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
-        findVisitView.setSearchableInfo(info);
+        findVisitView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                findVisitView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                updateVisitsInDatabaseList(query);
+                return true;
+            }
+        });
         return true;
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        setIntent(intent);
-        handleIntent(intent);
+    private void updateVisitsInDatabaseList() {
+        emptyList.setText(getString(R.string.search_patient_no_results));
+        List<Visit> visits = new VisitDAO().getAllActiveVisits();
+        updateListVisibility(visits);
+    }
+    private void updateVisitsInDatabaseList(String query) {
+        emptyList.setText(getString(R.string.search_patient_no_result_for_query, query));
+        List<Visit> visits = getPatientsFilteredByQuery(new VisitDAO().getAllActiveVisits(), query);
+        updateListVisibility(visits);
+        ((ActiveVisitsRecyclerViewAdapter) visitsRecyclerView.getAdapter()).setIsFiltering(true);
     }
 
-    @Override
-    protected void onResumeFragments() {
-        super.onResumeFragments();
-        mAdapter = new ActiveVisitsRecyclerViewAdapter(this, new VisitDAO().getAllActiveVisits());
-        if (new VisitDAO().getAllActiveVisits().isEmpty()){
-            emptyList.setVisibility(View.VISIBLE);
+    private void updateListVisibility(List<Visit> visits) {
+        if (visits.isEmpty()) {
             visitsRecyclerView.setVisibility(View.GONE);
+            emptyList.setVisibility(View.VISIBLE);
+        } else {
+            visitsRecyclerView.setAdapter(new ActiveVisitsRecyclerViewAdapter(this, visits));
+            visitsRecyclerView.setVisibility(View.VISIBLE);
+            emptyList.setVisibility(View.GONE);
         }
-        visitsRecyclerView.setAdapter(mAdapter);
     }
 
-    private void handleIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            mQuery = intent.getStringExtra(SearchManager.QUERY);
-            Intent searchIntent = new Intent(this, FindActiveVisitsSearchActivity.class);
-            searchIntent.putExtra(SearchManager.QUERY, mQuery);
-            startActivity(searchIntent);
-            intent.setAction(null);
-            if (null != mFindVisitItem) {
-                MenuItemCompat.collapseActionView(mFindVisitItem);
+    private List<Visit> getPatientsFilteredByQuery(List<Visit> visitList, String query) {
+        List<Visit> filteredList = new ArrayList<>();
+        query = query.toLowerCase();
+
+        for (Visit visit : visitList) {
+            Patient patient = new PatientDAO().findPatientByID(visit.getPatientID().toString());
+
+            String visitPlace = visit.getVisitPlace().toLowerCase();
+            String visitType = visit.getVisitType().toLowerCase();
+            String patientName = patient.getPerson().getNames().get(0).getGivenName().toLowerCase();
+            String patientSurname = patient.getPerson().getNames().get(0).getFamilyName().toLowerCase();
+            String patientIdentifier = patient.getIdentifier().getIdentifier().toLowerCase();
+
+            boolean isVisitPlaceFitQuery = visitPlace.length() >= query.length() && visitPlace.substring(0, query.length()).equals(query);
+            boolean isVisitTypeFitQuery = visitType.length() >= query.length() && visitType.substring(0, query.length()).equals(query);
+            boolean isPatientNameFitQuery = patientName.length() >= query.length() && patientName.substring(0, query.length()).equals(query);
+            boolean isPatientSurnameFitQuery = patientSurname.length() >= query.length() && patientSurname.substring(0, query.length()).equals(query);
+            boolean isPatientIdentifierFitQuery = false;
+            if (patientIdentifier != null) {
+                isPatientIdentifierFitQuery = patientIdentifier.length() >= query.length() && patientIdentifier.substring(0, query.length()).equals(query);
+            }
+            if (isPatientNameFitQuery || isPatientSurnameFitQuery || isPatientIdentifierFitQuery || isVisitPlaceFitQuery || isVisitTypeFitQuery) {
+                filteredList.add(visit);
             }
         }
-    }
-
-    public void startFindLastViewedPatientsActivity(MenuItem item) {
-        Intent intent = new Intent(FindActiveVisitsActivity.this, FindLastViewedPatientsActivity.class);
-        startActivity(intent);
+        return filteredList;
     }
 }

@@ -21,30 +21,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.models.Visit;
-import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.utilities.AnimationUtils;
-import android.widget.TableLayout;
-import android.widget.TextView;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.VisitDashboardActivity;
-import org.openmrs.mobile.models.VisitItemDTO;
+import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.retrofit.Person;
+import org.openmrs.mobile.utilities.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
+import org.openmrs.mobile.utilities.ImageUtils;
+import org.w3c.dom.Text;
 
 import java.util.List;
 
 public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<ActiveVisitsRecyclerViewAdapter.VisitViewHolder> {
-
     private Context mContext;
-    private List<Visit> mVisitList;
+    private List<Visit> mVisits;
+
 
     public ActiveVisitsRecyclerViewAdapter(Context context, List<Visit> items) {
         this.mContext = context;
-        this.mVisitList = items;
+        this.mVisits = items;
     }
 
     @Override
@@ -56,23 +60,37 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
 
     @Override
     public void onBindViewHolder(VisitViewHolder visitViewHolder, final int position) {
-        final Visit visit = mVisitList.get(position);
-        Patient patient=new PatientDAO().findPatientByID(Long.toString(visit.getPatientID()));
-        visitViewHolder.mPatientName.setText(patient.getPerson().getName().getNameString());
-        visitViewHolder.mPatientID.setText("#" + String.valueOf(patient.getIdentifier().getIdentifier()));
-        visitViewHolder.mVisitPlace.setText("@ " + visit.getVisitPlace());
-        visitViewHolder.mVisitStart.setText(DateUtils.convertTime(visit.getStartDate()));
+        Visit visit = mVisits.get(position);
+        Patient patient = new PatientDAO().findPatientByID(visit.getPatientID().toString());
 
-        visitViewHolder.mTableLayout.setOnClickListener(new View.OnClickListener() {
+        visitViewHolder.mVisitPlace.setText(mContext.getString(R.string.visit_in, visit.getVisitPlace()));
+
+        if (null != visit.getPatientID()) {
+            visitViewHolder.mIdentifier.setText("#" + patient.getIdentifier().getIdentifier());
+        }
+        if (null != patient.getPerson().getName()) {
+            visitViewHolder.mDisplayName.setText(patient.getPerson().getName().getNameString());
+        }
+        if (null != patient.getPerson().getGender()) {
+            visitViewHolder.mGender.setText(patient.getPerson().getGender());
+        }
+        try{
+            visitViewHolder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
+        }
+        catch (Exception e)
+        {
+            visitViewHolder.mBirthDate.setText(" ");
+        }
+
+        visitViewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, VisitDashboardActivity.class);
-                intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, mVisitList.get(position).getId());
+                intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, mVisits.get(position).getId());
                 mContext.startActivity(intent);
             }
         });
-        new AnimationUtils().setAnimation(visitViewHolder.mTableLayout,mContext,position);
-
+        new AnimationUtils().setAnimation(visitViewHolder.mRelativeLayout,mContext,position);
     }
 
     @Override
@@ -82,28 +100,30 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
 
     @Override
     public int getItemCount() {
-        return mVisitList.size();
+        return mVisits.size();
     }
 
-    class VisitViewHolder extends RecyclerView.ViewHolder {
-        private TableLayout mTableLayout;
-        private TextView mPatientID;
-        private TextView mPatientName;
+    class VisitViewHolder extends RecyclerView.ViewHolder{
+        private TextView mIdentifier;
+        private TextView mDisplayName;
+        private TextView mGender;
+        private TextView mAge;
+        private TextView mBirthDate;
         private TextView mVisitPlace;
-        private TextView mVisitStart;
+        private LinearLayout mRelativeLayout;
 
         public VisitViewHolder(View itemView) {
             super(itemView);
-            mTableLayout = (TableLayout) itemView.findViewById(R.id.visitRow);
-            mPatientID = (TextView) itemView.findViewById(R.id.visitPatientID);
-            mPatientName = (TextView) itemView.findViewById(R.id.visitPatientName);
-            mVisitPlace = (TextView) itemView.findViewById(R.id.patientVisitPlace);
-            mVisitStart = (TextView) itemView.findViewById(R.id.patientVisitStartDate);
+            mRelativeLayout = (LinearLayout) itemView;
+            mIdentifier = (TextView) itemView.findViewById(R.id.findVisitsIdentifier);
+            mDisplayName = (TextView) itemView.findViewById(R.id.findVisitsDisplayName);
+            mVisitPlace = (TextView) itemView.findViewById(R.id.findVisitsPlace);
+            mAge = (TextView) itemView.findViewById(R.id.findVisitsPatientAge);
+            mBirthDate = (TextView) itemView.findViewById(R.id.findVisitsPatientBirthDate);
+            mGender = (TextView) itemView.findViewById(R.id.findVisitsPatientGender);
         }
-
         public void clearAnimation() {
-            mTableLayout.clearAnimation();
+            mRelativeLayout.clearAnimation();
         }
     }
-
 }

@@ -138,9 +138,10 @@
         </activity>
         <activity
             android:name=".activities.FindActiveVisitsActivity"
+            android:configChanges="keyboardHidden|screenSize"
             android:label="@string/action_active_visits"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppThemeOrig">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data

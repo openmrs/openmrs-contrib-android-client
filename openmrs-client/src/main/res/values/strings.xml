@@ -185,7 +185,7 @@
     <!-- Find Active visit activity -->
     <string name="action_active_visits">Active Visits</string>
     <string name="action_form_entry">Form Entry</string>
-
+    <string name="action_find_visits">Find Active Visits</string>
     <string name="search_visits_no_results">No visits in database</string>
     <!-- fragment_patient_visits layout -->
     <string name="active_visit_label">Active visit</string>

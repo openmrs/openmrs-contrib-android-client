@@ -16,9 +16,7 @@ package org.openmrs.mobile.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,21 +27,16 @@ import org.openmrs.mobile.utilities.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.FindSyncedPatientsActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SyncedPatientRecyclerViewAdapter extends RecyclerView.Adapter<SyncedPatientRecyclerViewAdapter.PatientViewHolder> {
     private Activity mContext;
     private List<Patient> mItems;
-    private PatientDataArrayList patientDataArrayList = new PatientDataArrayList();
     private boolean isUpdatingExistingData = false;
 
     public SyncedPatientRecyclerViewAdapter(Activity context, List<Patient> items){
@@ -61,8 +54,6 @@ public class SyncedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Synce
     @Override
     public void onBindViewHolder(SyncedPatientRecyclerViewAdapter.PatientViewHolder holder, final int position) {
         final Patient patient = mItems.get(position);
-
-        patientDataArrayList.add(new PatientData(holder, patient, position));
 
         if (null != patient.getIdentifier()) {
             holder.mIdentifier.setText("#" + patient.getIdentifier().getIdentifier());
@@ -106,15 +97,9 @@ public class SyncedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Synce
         holder.clearAnimation();
     }
 
-
     @Override
     public int getItemCount() {
         return mItems.size();
-    }
-
-    public void clear() {
-        mItems.clear();
-        notifyDataSetChanged();
     }
 
     class PatientViewHolder extends RecyclerView.ViewHolder {
@@ -138,39 +123,5 @@ public class SyncedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Synce
         public void clearAnimation() {
             mRowLayout.clearAnimation();
         }
-    }
-
-    private class PatientData {
-        // class to store patient data
-        private int position;
-        private Patient patient;
-        private PatientViewHolder holder;
-        private boolean isSelected = false;
-
-        public PatientData(PatientViewHolder holder, Patient patient, int position) {
-            this.holder = holder;
-            this.patient = patient;
-            this.position = position;
-        }
-
-        public int getPosition() {
-            return position;
-        }
-    }
-
-    private class PatientDataArrayList extends ArrayList<PatientData> {
-        public PatientData getPatientDataByPosition(int position) {
-            for (int index = 0; index < size(); index++) {
-                PatientData patientData = get(index);
-                if (patientData.getPosition() == position) {
-                    return patientData;
-                }
-            }
-            return null;
-        }
-    }
-
-    private void updatePatientsInDatabase() {
-        ((FindSyncedPatientsActivity) mContext).updatePatientsInDatabaseList();
     }
 }

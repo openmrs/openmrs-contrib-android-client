@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
@@ -15,66 +14,77 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:orientation="vertical"
+android:padding="10dp"
+android:background="@drawable/card">
+<RelativeLayout
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/card"
-    android:orientation="horizontal">
+    android:gravity="center_vertical"
+    >
 
-    <TableLayout
-        android:id="@+id/visitRow"
-        android:layout_width="match_parent"
+    <TextView android:id="@+id/findVisitsIdentifier"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingBottom="5dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="5dp">
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_alignTop="@+id/findVisitsDisplayName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 
-        <TableRow>
+    <TextView android:id="@+id/findVisitsDisplayName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:layout_toRightOf="@+id/findVisitsIdentifier"
+        android:layout_toEndOf="@+id/findVisitsIdentifier"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="end"/>
+</RelativeLayout>
 
-            <TextView
-                android:id="@+id/visitPatientName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="22sp"
-                android:textStyle="bold" />
+<RelativeLayout
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    >
 
-            <TextView
-                android:id="@+id/visitPatientID"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-        </TableRow>
+    <TextView android:id="@+id/findVisitsPatientGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        />
 
-        <TableRow>
+    <TextView android:id="@+id/findVisitsPatientAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/findVisitsPatientGender"
+        />
 
-            <TextView
-                android:id="@+id/patientVisitStartDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-        </TableRow>
+    <TextView android:id="@+id/findVisitsPatientBirthDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@id/findVisitsPatientAge"
+        />
 
-
-        <TableRow>
-
-            <TextView
-                android:id="@+id/patientVisitPlace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="left"
-                android:singleLine="false"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:visibility="visible" />
-        </TableRow>
-
-
-    </TableLayout>
+    <TextView android:id="@+id/findVisitsPlace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        />
+</RelativeLayout>
 </LinearLayout>

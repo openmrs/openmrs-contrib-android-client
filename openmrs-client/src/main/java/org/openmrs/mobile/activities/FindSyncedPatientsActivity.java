@@ -153,8 +153,10 @@ public class FindSyncedPatientsActivity extends ACBaseActivity {
 
             boolean isPatientNameFitQuery = patientName.length() >= query.length() && patientName.substring(0,query.length()).equals(query);
             boolean isPatientSurnameFitQuery = patientSurname.length() >= query.length() && patientSurname.substring(0,query.length()).equals(query);
-            boolean isPatientIdentifierFitQuery = patientIdentifier.length() >= query.length() && patientIdentifier.substring(0,query.length()).equals(query);
-
+            boolean isPatientIdentifierFitQuery = false;
+            if (patientIdentifier != null) {
+                isPatientIdentifierFitQuery = patientIdentifier.length() >= query.length() && patientIdentifier.substring(0,query.length()).equals(query);
+            }
             if (isPatientNameFitQuery || isPatientSurnameFitQuery || isPatientIdentifierFitQuery) {
                 filteredList.add(patient);
             }

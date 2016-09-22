@@ -246,12 +246,14 @@ public class RegisterPatientActivity extends ACBaseActivity {
         similarPatientsDialog.setLeftButtonText(getString(R.string.dialog_button_cancel));
         similarPatientsDialog.setLeftButtonAction(CustomFragmentDialog.OnClickAction.CANCEL_REGISTERING);
         similarPatientsDialog.setPatientsList(patients);
+        similarPatientsDialog.setNewPatient(newPatient);
         createAndShowDialog(similarPatientsDialog, ApplicationConstants.DialogTAG.SIMILAR_PATIENTS_TAG);
     }
 
     public void registerNewPatient(){
         Patient patient = createPatient();
         new PatientService().registerPatient(patient);
+        startPatientDashbordActivity(patient);
         finish();
     }
 
@@ -323,5 +325,12 @@ public class RegisterPatientActivity extends ACBaseActivity {
         }
         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public void startPatientDashbordActivity(Patient patient){
+        Intent intent  = new Intent(getApplicationContext(), PatientDashboardActivity.class);
+        intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getId());
+        startActivity(intent);
+        finishRegisterActivity();
     }
 }

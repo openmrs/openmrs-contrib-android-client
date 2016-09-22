@@ -31,6 +31,7 @@ public class CustomDialogBundle implements Serializable {
     private String rightButtonText;
     private String progressViewMessage;
     private List<Patient> patientsList;
+    private Patient newPatient;
     private boolean loadingBar;
     private boolean progressDialog;
 
@@ -123,7 +124,22 @@ public class CustomDialogBundle implements Serializable {
         return patientsList;
     }
 
+    public boolean hasPatientList(){
+        if(patientsList != null){
+            return true;
+        }
+        return false;
+    }
+
     public void setPatientsList(List<Patient> patientsList) {
         this.patientsList = patientsList;
+    }
+
+    public Patient getNewPatient() {
+        return newPatient;
+    }
+
+    public void setNewPatient(Patient newPatient) {
+        this.newPatient = newPatient;
     }
 }

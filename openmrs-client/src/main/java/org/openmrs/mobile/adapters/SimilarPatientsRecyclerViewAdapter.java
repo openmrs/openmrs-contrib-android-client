@@ -2,6 +2,8 @@ package org.openmrs.mobile.adapters;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.common.base.Objects;
+
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.DashboardActivity;
+import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.net.VisitsManager;
-import org.openmrs.mobile.net.helpers.VisitsHelper;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -25,16 +27,18 @@ import java.util.List;
 public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<SimilarPatientsRecyclerViewAdapter.PatientViewHolder>{
 
     private List<Patient> patientList;
+    private Patient newPatient;
     private Activity mContext;
 
-    public SimilarPatientsRecyclerViewAdapter(Activity mContext, List<Patient> patientList) {
+    public SimilarPatientsRecyclerViewAdapter(Activity mContext, List<Patient> patientList, Patient patient) {
+        this.newPatient = patient;
         this.patientList = patientList;
         this.mContext = mContext;
     }
 
     @Override
     public PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_synced_patients_row, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.similar_patient_row, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
@@ -43,32 +47,27 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
     public void onBindViewHolder(PatientViewHolder holder, int position) {
         final Patient patient = patientList.get(position);
 
-        if (null != patient.getIdentifier()) {
-            holder.mIdentifier.setText("#" + patient.getIdentifier().getIdentifier());
-        }
-        if (null != patient.getPerson().getName()) {
-            holder.mDisplayName.setText(patient.getPerson().getName().getNameString());
-        }
-        if (null != patient.getPerson().getGender()) {
-            holder.mGender.setText(patient.getPerson().getGender());
-        }
-        try{
-            holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
-        }
-        catch (Exception e)
-        {
-            holder.mBirthDate.setText(" ");
-        }
+        setPatientName(holder, patient);
+        setGender(holder, patient);
+        setBirthdate(holder, patient);
+        setPatientAdres(holder, patient);
 
         holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downloadPatient(patient);
-                Intent intent = new Intent(mContext, DashboardActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                if (!(new PatientDAO().isUserAlreadySaved(patient.getUuid()))) {
+                    downloadPatient(patient);
+                }
+                Intent intent = new Intent(mContext, PatientDashboardActivity.class);
+                intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, getPatientId(patient));
                 mContext.startActivity(intent);
+                mContext.finish();
             }
         });
+    }
+
+    private String getPatientId(Patient patient) {
+        return new PatientDAO().findPatientByUUID(patient.getUuid()).getId().toString();
     }
 
     @Override
@@ -77,29 +76,110 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
     }
 
     public class PatientViewHolder extends RecyclerView.ViewHolder{
-        private LinearLayout mRowLayout;
-        private TextView mIdentifier;
-        private TextView mDisplayName;
-        private TextView mGender;
-        private TextView mAge;
-        private TextView mBirthDate;
 
+        private LinearLayout mRowLayout;
+        private TextView mGivenName;
+        private TextView mMiddleName;
+        private TextView mFamilyName;
+        private TextView mGender;
+        private TextView mBirthDate;
+        private TextView mAddres;
+        private TextView mPostalCode;
+        private TextView mCity;
+        private TextView mCountry;
         public PatientViewHolder(View itemView) {
             super(itemView);
             mRowLayout = (LinearLayout) itemView;
-            mIdentifier = (TextView) itemView.findViewById(R.id.syncedPatientIdentifier);
-            mDisplayName = (TextView) itemView.findViewById(R.id.syncedPatientDisplayName);
-            mGender = (TextView) itemView.findViewById(R.id.syncedPatientGender);
-            mAge = (TextView) itemView.findViewById(R.id.syncedPatientAge);
-            mBirthDate = (TextView) itemView.findViewById(R.id.syncedPatientBirthDate);
+            mGivenName = (TextView) itemView.findViewById(R.id.patientGivenName);
+            mMiddleName = (TextView) itemView.findViewById(R.id.patientMiddleName);
+            mFamilyName = (TextView) itemView.findViewById(R.id.patientFamilyName);
+            mGender = (TextView) itemView.findViewById(R.id.patientGender);
+            mBirthDate = (TextView) itemView.findViewById(R.id.patientBirthDate);
+            mAddres = (TextView) itemView.findViewById(R.id.patientAddres);
+            mPostalCode = (TextView) itemView.findViewById(R.id.patientPostalCode);
+            mCity = (TextView) itemView.findViewById(R.id.patientCity);
+            mCountry = (TextView) itemView.findViewById(R.id.patientCountry);
         }
+
     }
-
-
     private void downloadPatient(Patient patient) {
         ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE, R.string.download_started);
         long patientId = new PatientDAO().savePatient(patient);
-        new VisitsManager().findVisitsByPatientUUID(
-                VisitsHelper.createVisitsByPatientUUIDListener(patient.getUuid(), patientId, (ACBaseActivity) mContext));
+//        new VisitsManager().findVisitsByPatientUUID(
+//                VisitsHelper.createVisitsByPatientUUIDListener(patient.getUuid(), patientId, (ACBaseActivity) mContext));
+    }
+
+    private void setBirthdate(PatientViewHolder holder, Patient patient) {
+        try{
+            holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
+            if (Objects.equal(patient.getPerson().getBirthdate(), newPatient.getPerson().getBirthdate())) {
+                setStyleForMatchedPatientFields(holder.mBirthDate);
+            }
+        }
+        catch (Exception e)
+        {
+            holder.mBirthDate.setText(" ");
+        }
+    }
+
+    private void setGender(PatientViewHolder holder, Patient patient) {
+        if (null != patient.getPerson().getGender()) {
+            holder.mGender.setText(patient.getPerson().getGender());
+            if (Objects.equal(patient.getPerson().getGender(), newPatient.getPerson().getGender())) {
+                setStyleForMatchedPatientFields(holder.mGender);            }
+        }
+    }
+
+    private void setPatientAdres(PatientViewHolder holder, Patient patient) {
+        if (null != patient.getPerson().getAddress().getAddress1()) {
+            holder.mAddres.setText(patient.getPerson().getAddress().getAddress1());
+            if (Objects.equal(patient.getPerson().getAddress().getAddress1(), newPatient.getPerson().getAddress().getAddress1())) {
+                setStyleForMatchedPatientFields(holder.mAddres);
+            }
+        }
+        if (null != patient.getPerson().getAddress().getPostalCode()) {
+            holder.mPostalCode.setText(patient.getPerson().getAddress().getPostalCode());
+            if (Objects.equal(patient.getPerson().getAddress().getPostalCode(), newPatient.getPerson().getAddress().getPostalCode())) {
+                setStyleForMatchedPatientFields(holder.mPostalCode);
+            }
+        }
+        if (null != patient.getPerson().getAddress().getCityVillage()) {
+            holder.mCity.setText(patient.getPerson().getAddress().getCityVillage());
+            if (Objects.equal(patient.getPerson().getAddress().getCityVillage(), newPatient.getPerson().getAddress().getCityVillage())) {
+                setStyleForMatchedPatientFields(holder.mCity);
+            }
+        }
+        if (null != patient.getPerson().getAddress().getCountry()) {
+            holder.mCountry.setText(patient.getPerson().getAddress().getCountry());
+            if (Objects.equal(patient.getPerson().getAddress().getCountry(), newPatient.getPerson().getAddress().getCountry())) {
+                setStyleForMatchedPatientFields(holder.mCountry);
+            }
+        }
+    }
+
+    private void setPatientName(PatientViewHolder holder, Patient patient) {
+        if (null != patient.getPerson().getName().getGivenName()) {
+            holder.mGivenName.setText(patient.getPerson().getName().getGivenName());
+            if (Objects.equal(patient.getPerson().getName().getGivenName(), newPatient.getPerson().getName().getGivenName())) {
+                setStyleForMatchedPatientFields(holder.mGivenName);
+            }
+        }
+        if (null != patient.getPerson().getName().getMiddleName()) {
+            holder.mMiddleName.setText(patient.getPerson().getName().getMiddleName());
+            if (Objects.equal(patient.getPerson().getName().getMiddleName(), newPatient.getPerson().getName().getMiddleName())) {
+                setStyleForMatchedPatientFields(holder.mMiddleName);
+            }
+        }
+        if (null != patient.getPerson().getName().getFamilyName()) {
+            holder.mFamilyName.setText(patient.getPerson().getName().getFamilyName());
+            if (Objects.equal(patient.getPerson().getName().getFamilyName(), newPatient.getPerson().getName().getFamilyName())) {
+                setStyleForMatchedPatientFields(holder.mFamilyName);
+            }
+        }
+    }
+
+    private void setStyleForMatchedPatientFields(TextView textView){
+        textView.setTypeface(null , Typeface.BOLD);
+        textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 }

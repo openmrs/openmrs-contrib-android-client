@@ -88,6 +88,8 @@ public class CustomFragmentDialog extends DialogFragment {
         mCustomDialogBundle = (CustomDialogBundle) getArguments().getSerializable(ApplicationConstants.BundleKeys.CUSTOM_DIALOG_BUNDLE);
         if (mCustomDialogBundle.hasLoadingBar()) {
             this.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.LoadingDialogTheme_DialogTheme);
+        } else if(mCustomDialogBundle.hasPatientList()) {
+            this.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.SimilarPatients_DialogTheme);
         } else {
             this.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.DialogTheme);
         }
@@ -208,15 +210,15 @@ public class CustomFragmentDialog extends DialogFragment {
             this.setCancelable(false);
         }
         if(null != mCustomDialogBundle.getPatientsList()){
-            mRecyclerView = addRecycleView(mCustomDialogBundle.getPatientsList());
+            mRecyclerView = addRecycleView(mCustomDialogBundle.getPatientsList(), mCustomDialogBundle.getNewPatient());
         }
     }
 
-    private RecyclerView addRecycleView(List<Patient> patientsList) {
+    private RecyclerView addRecycleView(List<Patient> patientsList, Patient newPatient) {
         LinearLayout field = (LinearLayout) mInflater.inflate(R.layout.openmrs_recycle_view, null);
         RecyclerView recyclerView = (RecyclerView) field.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new SimilarPatientsRecyclerViewAdapter((getActivity()), patientsList));
+        recyclerView.setAdapter(new SimilarPatientsRecyclerViewAdapter((getActivity()), patientsList, newPatient));
         mFieldsLayout.addView(field);
         recyclerView.setHasFixedSize(true);
         return recyclerView;

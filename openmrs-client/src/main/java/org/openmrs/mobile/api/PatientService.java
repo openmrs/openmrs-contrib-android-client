@@ -34,6 +34,7 @@ import org.openmrs.mobile.models.retrofit.PatientIdentifier;
 import org.openmrs.mobile.models.retrofit.Resource;
 import org.openmrs.mobile.models.retrofit.Results;
 import org.openmrs.mobile.utilities.NetworkUtils;
+import org.openmrs.mobile.utilities.PatientComparator;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
@@ -134,7 +135,7 @@ public class PatientService extends IntentService {
             @Override
             public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
                 if (response.isSuccessful()) {
-                    List<Patient> patientsList = response.body().getResults();
+                    List<Patient> patientsList = new PatientComparator().findSimilarPatient(response.body().getResults(), patient);
                     if (!patientsList.isEmpty()) {
                         mCallerActivity.showSimilarPatientDialog(patientsList, patient);
                     } else {

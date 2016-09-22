@@ -12,9 +12,8 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.adapters;
+package org.openmrs.mobile.activities.syncedpatients;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,25 +33,25 @@ import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
-public class SyncedPatientRecyclerViewAdapter extends RecyclerView.Adapter<SyncedPatientRecyclerViewAdapter.PatientViewHolder> {
-    private Activity mContext;
+public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<SyncedPatientsRecyclerViewAdapter.PatientViewHolder> {
+    private SyncedPatientsFragment mContext;
     private List<Patient> mItems;
     private boolean isUpdatingExistingData = false;
 
-    public SyncedPatientRecyclerViewAdapter(Activity context, List<Patient> items){
+    public SyncedPatientsRecyclerViewAdapter(SyncedPatientsFragment context, List<Patient> items){
         this.mContext = context;
         this.mItems = items;
     }
 
     @Override
-    public SyncedPatientRecyclerViewAdapter.PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SyncedPatientsRecyclerViewAdapter.PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_synced_patients_row, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(SyncedPatientRecyclerViewAdapter.PatientViewHolder holder, final int position) {
+    public void onBindViewHolder(SyncedPatientsRecyclerViewAdapter.PatientViewHolder holder, final int position) {
         final Patient patient = mItems.get(position);
 
         if (null != patient.getIdentifier()) {
@@ -69,13 +68,13 @@ public class SyncedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Synce
         }
         catch (Exception e)
         {
-            holder.mBirthDate.setText(" ");
+            holder.mBirthDate.setText("");
         }
 
         holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(mContext, PatientDashboardActivity.class);
+                Intent intent = new Intent(mContext.getActivity(), PatientDashboardActivity.class);
                 intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getId());
                 mContext.startActivity(intent);
             }
@@ -83,18 +82,13 @@ public class SyncedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Synce
 
         if (!isUpdatingExistingData) {
             //This logic is preventing list animation when list if filtered by query
-            new AnimationUtils().setAnimation(holder.mRowLayout,mContext,position);
+            new AnimationUtils().setAnimation(holder.mRowLayout,mContext.getActivity(),position);
         }
     }
 
     public void setIsFiltering(boolean isFiltering) {
         isUpdatingExistingData = isFiltering;
         notifyDataSetChanged();
-    }
-
-    @Override
-    public void onViewDetachedFromWindow(PatientViewHolder holder) {
-        holder.clearAnimation();
     }
 
     @Override
@@ -118,10 +112,6 @@ public class SyncedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Synce
             mGender = (TextView) itemView.findViewById(R.id.syncedPatientGender);
             mAge = (TextView) itemView.findViewById(R.id.syncedPatientAge);
             mBirthDate = (TextView) itemView.findViewById(R.id.syncedPatientBirthDate);
-        }
-
-        public void clearAnimation() {
-            mRowLayout.clearAnimation();
         }
     }
 }

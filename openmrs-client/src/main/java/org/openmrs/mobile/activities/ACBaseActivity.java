@@ -18,7 +18,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
 import android.util.Base64;
@@ -28,6 +31,7 @@ import android.widget.CompoundButton;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
+import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
@@ -35,6 +39,8 @@ import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class ACBaseActivity extends AppCompatActivity {
     public static final int CAPTURE_VITALS_REQUEST_CODE = 1;
@@ -74,7 +80,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
             if (!mAuthorizationManager.isUserLoggedIn()) {
                 mAuthorizationManager.moveToLoginActivity();
             } else if (this instanceof DashboardActivity || this instanceof SettingsActivity
-                    || this instanceof FindSyncedPatientsActivity || this instanceof FindActiveVisitsActivity) {
+                    || this instanceof SyncedPatientsActivity || this instanceof FindActiveVisitsActivity) {
                 this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, mOpenMRS.getUsername()));
             }
         }
@@ -322,6 +328,15 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
     public AuthorizationManager getAuthorizationManager() {
         return mAuthorizationManager;
+    }
+
+    public void addFragmentToActivity (@NonNull FragmentManager fragmentManager,
+                                              @NonNull Fragment fragment, int frameId) {
+        checkNotNull(fragmentManager);
+        checkNotNull(fragment);
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.add(frameId, fragment);
+        transaction.commit();
     }
 
 }

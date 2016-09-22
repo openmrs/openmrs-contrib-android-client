@@ -36,7 +36,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.FindSyncedPatientsActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.PatientDAO;
@@ -323,7 +322,6 @@ public class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<L
                 patientData.downloaded();
             }
         }
-        updatePatientsInDatabase();
     }
 
     public void setIsUpdatingExistingData(boolean isUpdating) {
@@ -355,13 +353,6 @@ public class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<L
         ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE, R.string.download_started);
         new VisitsManager().findVisitsByPatientUUID(
                 VisitsHelper.createVisitsByPatientUUIDListener(patient.getUuid(), patientId, (ACBaseActivity) mContext));
-    }
-
-    private void updatePatientsInDatabase() {
-        if (mContext instanceof FindSyncedPatientsActivity) {
-            //FindPatientInDatabaseFragment fragment = ((FindSyncedPatientsActivity) mContext).getFindPatientInDatabaseFragment();
-            //fragment.updatePatientsInDatabaseList();
-        }
     }
 
     public void disableCheckBox(PatientViewHolder holder) {

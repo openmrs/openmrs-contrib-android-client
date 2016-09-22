@@ -81,7 +81,7 @@
             android:noHistory="true"
             android:theme="@style/NoActionBarTheme" />
         <activity
-            android:name=".activities.FindSyncedPatientsActivity"
+            android:name=".activities.syncedpatients.SyncedPatientsActivity"
             android:configChanges="keyboardHidden|screenSize"
             android:label="@string/action_synced_patients"
             android:launchMode="singleTop"
@@ -108,7 +108,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.FindSyncedPatientsActivity" />
+                android:value=".activities.syncedpatients.SyncedPatientsActivity" />
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -134,7 +134,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.FindSyncedPatientsActivity" />
+                android:value=".activities.syncedpatients.SyncedPatientsActivity" />
         </activity>
         <activity
             android:name=".activities.FindActiveVisitsActivity"

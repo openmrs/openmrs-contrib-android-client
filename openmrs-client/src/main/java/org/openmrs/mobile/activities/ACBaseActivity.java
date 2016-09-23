@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.widget.CompoundButton;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.dashboard.DashboardActivity;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.application.OpenMRS;

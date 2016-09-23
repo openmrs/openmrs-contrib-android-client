@@ -67,7 +67,7 @@
         </receiver>
 
         <activity
-            android:name=".activities.DashboardActivity"
+            android:name=".activities.dashboard.DashboardActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -90,7 +90,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.DashboardActivity" />
+                android:value=".activities.dashboard.DashboardActivity" />
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -128,7 +128,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.DashboardActivity" />
+                android:value=".activities.dashboard.DashboardActivity" />
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
@@ -162,23 +162,23 @@
             android:name=".activities.PatientListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/action_form_entry"
-            android:parentActivityName=".activities.DashboardActivity"
+            android:parentActivityName=".activities.dashboard.DashboardActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.DashboardActivity" />
+                android:value=".activities.dashboard.DashboardActivity" />
         </activity>
         <activity
             android:name=".activities.RegisterPatientActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/action_register_patient"
-            android:parentActivityName=".activities.DashboardActivity"
+            android:parentActivityName=".activities.dashboard.DashboardActivity"
             android:theme="@style/AppTheme">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.DashboardActivity" />
+                android:value=".activities.dashboard.DashboardActivity" />
         </activity>
 
         <service
@@ -210,7 +210,7 @@
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.DashboardActivity" />
+                android:value=".activities.dashboard.DashboardActivity" />
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />

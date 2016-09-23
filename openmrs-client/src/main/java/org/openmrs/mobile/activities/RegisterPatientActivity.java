@@ -42,6 +42,7 @@ import org.openmrs.mobile.models.retrofit.PersonName;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.Person;
 import org.openmrs.mobile.api.PatientService;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.io.File;
 import java.io.IOException;
@@ -272,7 +273,10 @@ public class RegisterPatientActivity extends ACBaseActivity {
         patient.setUuid(" ");
         new PatientService().registerPatient(patient);
 
-        RegisterPatientActivity.this.finish();
+        Intent intent = new Intent(getApplicationContext(), PatientDashboardActivity.class);
+        intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getId());
+        startActivity(intent);
+        finish();
     }
 
     private String getInput(EditText e) {

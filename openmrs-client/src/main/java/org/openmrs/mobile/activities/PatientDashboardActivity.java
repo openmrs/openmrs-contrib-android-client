@@ -89,7 +89,7 @@ public class PatientDashboardActivity extends ACBaseActivity implements ActionBa
         if (patientBundle.getBoolean(ApplicationConstants.BundleKeys.PROGRESS_BAR)) {
             showProgressDialog(R.string.action_synchronize_patients, DialogAction.SYNCHRONIZE);
         }
-        mPatient = new PatientDAO().findPatientByUUID(patientBundle.getString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE));
+        mPatient = new PatientDAO().findPatientByID(String.valueOf(patientBundle.get(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE)));
         new VisitsManager().getLastVitals(
                 VisitsHelper.createLastVitalsListener(mPatient.getUuid()));
         mPatientDashboardPagerAdapter = new PatientDashboardPagerAdapter(getSupportFragmentManager());

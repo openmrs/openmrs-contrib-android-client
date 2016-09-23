@@ -76,7 +76,7 @@ public class SyncedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Synce
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, PatientDashboardActivity.class);
-                intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getUuid());
+                intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getId());
                 mContext.startActivity(intent);
             }
         });

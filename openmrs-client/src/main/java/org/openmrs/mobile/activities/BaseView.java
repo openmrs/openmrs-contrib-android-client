@@ -12,6 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
+
 package org.openmrs.mobile.activities;
 
 public interface BaseView<T> {

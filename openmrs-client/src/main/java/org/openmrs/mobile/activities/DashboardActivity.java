@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
 
@@ -100,7 +101,7 @@ public class DashboardActivity extends ACBaseActivity {
     }
 
     public void onActiveVisitsCallback(View v) {
-        Intent intent = new Intent(this, FindActiveVisitsActivity.class);
+        Intent intent = new Intent(this, ActiveVisitsActivity.class);
         startActivity(intent);
     }
 

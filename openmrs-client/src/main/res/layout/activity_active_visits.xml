@@ -13,13 +13,11 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -27,16 +25,14 @@
         android:layout_height="wrap_content">
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/visitsRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
 
-    <TextView android:id="@+id/emptyVisitsListViewLabel"
-        android:layout_width="match_parent"
+    <FrameLayout
+        android:id="@+id/activeVisitContentFrame"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:visibility="gone" />
+        android:layout_gravity="center">
+
+    </FrameLayout>
+
 
 </LinearLayout>

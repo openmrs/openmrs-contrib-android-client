@@ -15,36 +15,13 @@
 package org.openmrs.mobile.net;
 
 import com.android.volley.Request;
-import org.openmrs.mobile.listeners.findPatients.FindPatientListener;
 import org.openmrs.mobile.listeners.findPatients.FullPatientDataListener;
 import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
 import java.io.File;
 import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
 public class FindPatientsManager extends BaseManager {
-    private static final String PATIENT_LAST_VIEWED_QUERY = String.format("patient?lastviewed=%s", API.FULL_VERSION_NEXT_PARAM);
     private String mFullPatientDataBaseUrl = getBaseRestURL() + API.PATIENT_DETAILS + File.separator;
-    private String mLastViewedPatientBaseUrl = getBaseRestURL() + PATIENT_LAST_VIEWED_QUERY;
-    private String mFindPatientBaseUrl = getBaseRestURL() + API.PATIENT_QUERY;
-
-    public void findPatient(FindPatientListener listener) {
-        String url = mFindPatientBaseUrl + listener.getLastQuery() + API.FULL_VERSION_NEXT_PARAM;
-        mLogger.d(SENDING_REQUEST + url);
-
-        JsonObjectRequestWrapper jsObjRequest =
-                new JsonObjectRequestWrapper(Request.Method.GET,
-                        url, null, listener, listener, DO_GZIP_REQUEST);
-        mOpenMRS.addToRequestQueue(jsObjRequest);
-    }
-
-    public void getLastViewedPatient(FindPatientListener listener) {
-        mLogger.d(SENDING_REQUEST + mLastViewedPatientBaseUrl);
-
-        JsonObjectRequestWrapper jsObjRequest =
-                new JsonObjectRequestWrapper(Request.Method.GET,
-                        mLastViewedPatientBaseUrl, null, listener, listener, DO_GZIP_REQUEST);
-        mOpenMRS.addToRequestQueue(jsObjRequest);
-    }
 
     public void getFullPatientData(FullPatientDataListener listener) {
         String url = mFullPatientDataBaseUrl + listener.getPatientUUID() + API.FULL_VERSION;

@@ -26,7 +26,7 @@ import android.view.MenuItem;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.FindLastViewedPatientsActivity;
+import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.utilities.NetworkUtils;
 
@@ -95,7 +95,7 @@ public class SyncedPatientsActivity extends ACBaseActivity {
         addPatientMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-                Intent intent = new Intent(SyncedPatientsActivity.this, FindLastViewedPatientsActivity.class);
+                Intent intent = new Intent(SyncedPatientsActivity.this, LastViewedPatientsActivity.class);
                 startActivity(intent);
                 return true;
             }

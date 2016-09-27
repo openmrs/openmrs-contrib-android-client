@@ -43,7 +43,6 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class ACBaseActivity extends AppCompatActivity {
-    public static final int CAPTURE_VITALS_REQUEST_CODE = 1;
 
     protected FragmentManager mFragmentManager;
     protected final OpenMRS mOpenMRS = OpenMRS.getInstance();
@@ -66,10 +65,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         mCurrentDialog = null;
-    }
-
-    public String getAuthParam(){
-        return Base64.encodeToString(String.format("%s:%s", mOpenMRS.getUsername(), mOpenMRS.getPassword()).getBytes(), Base64.NO_WRAP);
     }
 
     @Override
@@ -147,7 +142,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
     public void logout() {
         mOpenMRS.clearUserPreferencesData();
-        FindLastViewedPatientsActivity.clearLastViewedPatientList();
         mAuthorizationManager.moveToLoginActivity();
         OpenMRSDBOpenHelper.getInstance().closeDatabases();
     }
@@ -280,7 +274,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     public void moveUnauthorizedUserToLoginScreen() {
         OpenMRSDBOpenHelper.getInstance().closeDatabases();
         mOpenMRS.clearUserPreferencesData();
-        FindLastViewedPatientsActivity.clearLastViewedPatientList();
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         this.startActivity(intent);

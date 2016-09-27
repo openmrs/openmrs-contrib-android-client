@@ -14,34 +14,12 @@
 
 package org.openmrs.mobile.net.helpers;
 
-import org.openmrs.mobile.activities.FindLastViewedPatientsActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
-import org.openmrs.mobile.listeners.findPatients.FindPatientListener;
 import org.openmrs.mobile.listeners.findPatients.FullPatientDataListener;
-import java.net.URLEncoder;
 
 public final class FindPatientsHelper {
-    private static OpenMRS mOpenMRS = OpenMRS.getInstance();
-    private static OpenMRSLogger mLogger = mOpenMRS.getOpenMRSLogger();
 
     private FindPatientsHelper() {}
-
-    //This listener is used to find data by query
-    public static FindPatientListener createFindPatientListener(String lastQuery, FindLastViewedPatientsActivity caller) {
-        try {
-            lastQuery = URLEncoder.encode(lastQuery,"UTF-8").toString();
-        } catch (Exception exception) {
-            mLogger.e(exception.toString());
-        }
-        return new FindPatientListener(lastQuery, caller);
-    }
-
-    //This listener is used to find last viewed data
-    public static FindPatientListener createFindPatientListener(FindLastViewedPatientsActivity caller) {
-        return new FindPatientListener(caller);
-    }
 
     public static FullPatientDataListener createFullPatientDataListener(String patientUUID, PatientDashboardActivity caller) {
         return new FullPatientDataListener(patientUUID, caller);

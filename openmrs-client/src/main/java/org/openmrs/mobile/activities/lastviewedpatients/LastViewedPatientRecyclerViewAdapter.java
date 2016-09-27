@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.adapters;
+package org.openmrs.mobile.activities.lastviewedpatients;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -37,7 +37,6 @@ import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
-import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.VisitsHelper;
@@ -59,8 +58,6 @@ public class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<L
     private int howManySelected = 0;
     private PatientDataArrayList patientDataArrayList = new PatientDataArrayList();
     private boolean isUpdatingExistingData = false;
-
-    private final OpenMRS openMRSInstance = OpenMRS.getInstance();
 
     public LastViewedPatientRecyclerViewAdapter(Activity context, List<Patient> items){
         this.mContext = context;
@@ -108,7 +105,8 @@ public class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<L
             public void onClick(View v) {
                 if (new PatientDAO().isUserAlreadySaved(patient.getUuid())) {
                     Intent intent = new Intent(mContext, PatientDashboardActivity.class);
-                    intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getId());
+                    Long id = new PatientDAO().findPatientByUUID(patient.getUuid()).getId();
+                    intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, id);
                     mContext.startActivity(intent);
                 }
             }

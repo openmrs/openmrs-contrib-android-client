@@ -12,29 +12,25 @@
   ~
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    tools:context=".activities.syncedpatients.SyncedPatientsActivity">
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:elevation="0dp"
-        android:layout_height="wrap_content">
-    </android.support.design.widget.AppBarLayout>
+        android:layout_height="wrap_content"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/syncedPatientRecyclerView"
+    <FrameLayout
+        android:id="@+id/syncedPatientsContentFrame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:gravity="center"/>
 
-    <TextView android:id="@+id/emptySyncedPatientList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:visibility="gone" />
-
-    </LinearLayout>
+</LinearLayout>

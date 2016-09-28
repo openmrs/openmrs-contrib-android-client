@@ -44,6 +44,12 @@ public interface RestApi {
     Call<IdGenPatientIdentifiers> getPatientIdentifiers(@Query("username") String username,
                                                         @Query("password") String password);
 
+    @GET("patient?v=full")
+    Call<Results<Patient>> getPatients(@Query("q") String query);
+
+    @GET("patient?lastviewed&v=full")
+    Call<Results<Patient>> getLastViewedPatients();
+
     @POST("patient")
     Call<Patient> createPatient(
             @Body Patient patient);

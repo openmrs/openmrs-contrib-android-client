@@ -54,6 +54,10 @@ public interface RestApi {
     Call<Patient> createPatient(
             @Body Patient patient);
 
+    @GET("patient")
+    Call<Results<Patient>> getPatients(@Query("q") String searchQuery,
+                                       @Query("v") String representation);
+
     @POST("obs")
     Call<Observation> createObs(@Body Obscreate obscreate);
 

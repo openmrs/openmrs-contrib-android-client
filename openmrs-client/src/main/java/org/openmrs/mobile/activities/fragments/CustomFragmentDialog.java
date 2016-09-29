@@ -12,8 +12,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,13 +30,16 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.PatientListActivity;
 import org.openmrs.mobile.activities.DialogActivity;
 import org.openmrs.mobile.activities.LoginActivity;
-import org.openmrs.mobile.activities.VisitDashboardActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
+import org.openmrs.mobile.activities.PatientListActivity;
+import org.openmrs.mobile.activities.RegisterPatientActivity;
+import org.openmrs.mobile.activities.VisitDashboardActivity;
+import org.openmrs.mobile.adapters.SimilarPatientsRecyclerViewAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
+import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 
@@ -46,11 +52,13 @@ public class CustomFragmentDialog extends DialogFragment {
     private static final int TYPED_DIMENSION_VALUE = 10;
 
     public enum OnClickAction {
-        SET_URL, SHOW_URL_DIALOG, DISMISS_URL_DIALOG, DISMISS, LOGOUT, FINISH, INTERNET, UNAUTHORIZED, END_VISIT, START_VISIT, LOGIN
+        SET_URL, SHOW_URL_DIALOG, DISMISS_URL_DIALOG, DISMISS, LOGOUT, FINISH, INTERNET, UNAUTHORIZED, END_VISIT,
+        START_VISIT, LOGIN, REGISTER_PATIENT, CANCEL_REGISTERING
     }
 
     protected LayoutInflater mInflater;
     protected LinearLayout mFieldsLayout;
+    protected RecyclerView mRecyclerView;
 
     protected TextView mTextView;
     protected TextView mTitleTextView;
@@ -80,6 +88,8 @@ public class CustomFragmentDialog extends DialogFragment {
         mCustomDialogBundle = (CustomDialogBundle) getArguments().getSerializable(ApplicationConstants.BundleKeys.CUSTOM_DIALOG_BUNDLE);
         if (mCustomDialogBundle.hasLoadingBar()) {
             this.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.LoadingDialogTheme_DialogTheme);
+        } else if(mCustomDialogBundle.hasPatientList()) {
+            this.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.SimilarPatients_DialogTheme);
         } else {
             this.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.DialogTheme);
         }
@@ -199,6 +209,19 @@ public class CustomFragmentDialog extends DialogFragment {
             addProgressBar(mCustomDialogBundle.getProgressViewMessage());
             this.setCancelable(false);
         }
+        if(null != mCustomDialogBundle.getPatientsList()){
+            mRecyclerView = addRecycleView(mCustomDialogBundle.getPatientsList(), mCustomDialogBundle.getNewPatient());
+        }
+    }
+
+    private RecyclerView addRecycleView(List<Patient> patientsList, Patient newPatient) {
+        LinearLayout field = (LinearLayout) mInflater.inflate(R.layout.openmrs_recycle_view, null);
+        RecyclerView recyclerView = (RecyclerView) field.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new SimilarPatientsRecyclerViewAdapter((getActivity()), patientsList, newPatient));
+        mFieldsLayout.addView(field);
+        recyclerView.setHasFixedSize(true);
+        return recyclerView;
     }
 
     public EditText addEditTextField(String defaultMessage) {
@@ -319,6 +342,14 @@ public class CustomFragmentDialog extends DialogFragment {
                         break;
                     case START_VISIT:
                         doStartVisitAction();
+                        dismiss();
+                        break;
+                    case REGISTER_PATIENT:
+                        ((RegisterPatientActivity) getActivity()).registerNewPatient();
+                        dismiss();
+                        break;
+                    case CANCEL_REGISTERING:
+                        ((RegisterPatientActivity) getActivity()).finishRegisterActivity();
                         dismiss();
                         break;
                     default:

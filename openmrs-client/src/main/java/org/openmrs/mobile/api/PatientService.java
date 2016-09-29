@@ -11,8 +11,8 @@
 package org.openmrs.mobile.api;
 
 import android.app.IntentService;
-import android.content.SharedPreferences;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.activeandroid.query.Select;
@@ -20,6 +20,7 @@ import com.activeandroid.query.Select;
 import org.jdeferred.DoneCallback;
 import org.jdeferred.android.AndroidDeferredManager;
 import org.jdeferred.multiple.MultipleResults;
+import org.openmrs.mobile.activities.RegisterPatientActivity;
 import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.promise.SimplePromise;
 import org.openmrs.mobile.application.OpenMRS;
@@ -33,6 +34,7 @@ import org.openmrs.mobile.models.retrofit.PatientIdentifier;
 import org.openmrs.mobile.models.retrofit.Resource;
 import org.openmrs.mobile.models.retrofit.Results;
 import org.openmrs.mobile.utilities.NetworkUtils;
+import org.openmrs.mobile.utilities.PatientComparator;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PatientService extends IntentService {
+    public static final String FULL_REPRESENTATION = "full";
     OpenMRS openMrs = OpenMRS.getInstance();
     PatientDAO patientDao = new PatientDAO();
 
@@ -123,6 +126,34 @@ public class PatientService extends IntentService {
         }
 
         return deferred.promise();
+    }
+
+    public void findSimilarPatients(final RegisterPatientActivity mCallerActivity, final Patient patient){
+        RestApi apiService = RestServiceBuilder.createService(RestApi.class);
+        Call<Results<Patient>> call = apiService.getPatients(patient.getPerson().getName().getNameString(), FULL_REPRESENTATION);
+        call.enqueue(new Callback<Results<Patient>>() {
+            @Override
+            public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
+                if (response.isSuccessful()) {
+                    List<Patient> patientsList = new PatientComparator().findSimilarPatient(response.body().getResults(), patient);
+                    if (!patientsList.isEmpty()) {
+                        mCallerActivity.showSimilarPatientDialog(patientsList, patient);
+                    } else {
+                        registerPatient(patient);
+                        mCallerActivity.finishRegisterActivity();
+                    }
+                } else {
+                    mCallerActivity.hideProgressBar();
+                    ToastUtil.error(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Results<Patient>> call, Throwable t) {
+                mCallerActivity.hideProgressBar();
+                ToastUtil.error(t.toString());
+            }
+        });
     }
 
     private void addEncounters(Patient patient) {

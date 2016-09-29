@@ -26,7 +26,7 @@ import android.widget.ImageView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.FindActiveVisitsActivity;
+import org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity;
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.activities.PatientListActivity;
 import org.openmrs.mobile.activities.RegisterPatientActivity;
@@ -154,7 +154,7 @@ public class DashboardFragment extends ACBaseFragment implements DashboardContra
                         startNewActivity(RegisterPatientActivity.class);
                         break;
                     case R.id.activeVisitsButton:
-                        startNewActivity(FindActiveVisitsActivity.class);
+                        startNewActivity(ActiveVisitsActivity.class);
                         break;
                     case R.id.captureVitalsButton:
                         startNewActivity(PatientListActivity.class);

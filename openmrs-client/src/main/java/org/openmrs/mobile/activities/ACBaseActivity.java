@@ -24,12 +24,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SwitchCompat;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity;
 import org.openmrs.mobile.activities.dashboard.DashboardActivity;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
@@ -76,7 +76,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
             if (!mAuthorizationManager.isUserLoggedIn()) {
                 mAuthorizationManager.moveToLoginActivity();
             } else if (this instanceof DashboardActivity || this instanceof SettingsActivity
-                    || this instanceof SyncedPatientsActivity || this instanceof FindActiveVisitsActivity) {
+                    || this instanceof SyncedPatientsActivity || this instanceof ActiveVisitsActivity) {
                 this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, mOpenMRS.getUsername()));
             }
         }
@@ -325,7 +325,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
 
     public void addFragmentToActivity (@NonNull FragmentManager fragmentManager,
-                                              @NonNull Fragment fragment, int frameId) {
+                                       @NonNull Fragment fragment, int frameId) {
         checkNotNull(fragmentManager);
         checkNotNull(fragment);
         FragmentTransaction transaction = fragmentManager.beginTransaction();

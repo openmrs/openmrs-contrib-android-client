@@ -106,7 +106,7 @@
             android:noHistory="true"
             android:theme="@style/NoActionBarTheme" />
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name=".activities.settings.SettingsActivity"
             android:label="@string/action_settings"
             android:noHistory="true" />
         <activity

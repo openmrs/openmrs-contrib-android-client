@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.adapters;
+package org.openmrs.mobile.activities.settings;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;

@@ -225,4 +225,5 @@
     <string name="gender_hint">gender:</string>
     <string name="birthdate_hint">birthdate:</string>
     <string name="address_hint">address:</string>
+    <string name="demographics">Demographics</string>
 </resources>

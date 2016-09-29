@@ -16,7 +16,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +33,7 @@ import org.openmrs.mobile.activities.DialogActivity;
 import org.openmrs.mobile.activities.LoginActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.activities.PatientListActivity;
-import org.openmrs.mobile.activities.RegisterPatientActivity;
+import org.openmrs.mobile.activities.registerpatient.RegisterPatientActivity;
 import org.openmrs.mobile.activities.VisitDashboardActivity;
 import org.openmrs.mobile.adapters.SimilarPatientsRecyclerViewAdapter;
 import org.openmrs.mobile.application.OpenMRS;
@@ -345,11 +344,11 @@ public class CustomFragmentDialog extends DialogFragment {
                         dismiss();
                         break;
                     case REGISTER_PATIENT:
-                        ((RegisterPatientActivity) getActivity()).registerNewPatient();
+                        ((RegisterPatientActivity) getActivity()).mPresenter.registerPatient();
                         dismiss();
                         break;
                     case CANCEL_REGISTERING:
-                        ((RegisterPatientActivity) getActivity()).finishRegisterActivity();
+                        ((RegisterPatientActivity) getActivity()).mPresenter.finishRegisterActivity();
                         dismiss();
                         break;
                     default:

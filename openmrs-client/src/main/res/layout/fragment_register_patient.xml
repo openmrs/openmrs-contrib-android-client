@@ -1,33 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
-  ~ The contents of this file are subject to the OpenMRS Public License
-  ~ Version 1.0 (the "License"); you may not use this file except in
-  ~ compliance with the License. You may obtain a copy of the License at
-  ~ http://license.openmrs.org
-  ~
-  ~ Software distributed under the License is distributed on an "AS IS"
-  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
-  ~ License for the specific language governing rights and limitations
-  ~ under the License.
-  ~
-  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
-  -->
-<LinearLayout
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="#EEE"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -41,38 +14,38 @@
                 android:id="@+id/scrollView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <LinearLayout
-                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    >
+                    android:orientation="vertical">
 
                     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:orientation="vertical"
-                        android:background="@drawable/card"
-                        android:layout_margin="10dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/card"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
                             android:layout_marginLeft="8dp"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
+                            android:layout_marginTop="20dp"
+                            android:text="Demographics"
                             android:textColor="@color/primary"
-                            android:text="Demographics"/>
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
                             android:layout_marginLeft="12dp"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/reg_ques_name"
                             android:textColor="#555"
-                            android:text="@string/reg_ques_name"/>
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -84,221 +57,224 @@
                             <EditText
                                 android:id="@+id/firstname"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:textSize="14sp"
+                                android:layout_weight="1"
                                 android:focusable="true"
                                 android:hint="@string/reg_firstname_hint"
                                 android:inputType="text"
-                                android:singleLine="true" />
+                                android:singleLine="true"
+                                android:textSize="14sp" />
 
                             <EditText
                                 android:id="@+id/middlename"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:textSize="14sp"
+                                android:layout_weight="1"
                                 android:focusable="true"
                                 android:hint="@string/reg_midname_hint"
                                 android:inputType="text"
-                                android:singleLine="true" />
+                                android:singleLine="true"
+                                android:textSize="14sp" />
 
 
                         </LinearLayout>
 
 
-
                         <TextView
+                            android:id="@+id/fnameerror"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
-                            android:textSize="14sp"
-                            android:padding="2dp"
                             android:layout_weight="1"
-                            android:id="@+id/fnameerror"
-                            android:visibility="gone"
-                            android:textStyle="bold"
+                            android:padding="2dp"
+                            android:text="@string/emptyerror"
                             android:textColor="@color/red"
-                            android:text="@string/emptyerror"/>
-
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
 
                         <EditText
                             android:id="@+id/surname"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
-                            android:layout_height="wrap_content"
-                            android:textSize="14sp"
                             android:focusable="true"
                             android:hint="@string/reg_surname_hint"
                             android:inputType="text"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/lnameerror"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
-                            android:textSize="14sp"
-                            android:padding="2dp"
-                            android:gravity="right"
                             android:layout_weight="1"
-                            android:id="@+id/lnameerror"
-                            android:visibility="invisible"
-                            android:textStyle="bold"
+                            android:gravity="right"
+                            android:padding="2dp"
+                            android:text="@string/emptyerror"
                             android:textColor="@color/red"
-                            android:text="@string/emptyerror"/>
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:visibility="invisible" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
+                            android:text="@string/reg_ques_gender"
                             android:textColor="#555"
-                            android:text="@string/reg_ques_gender"/>
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/gendererror"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:textSize="14sp"
                             android:padding="2dp"
-                            android:id="@+id/gendererror"
-                            android:visibility="gone"
-                            android:textStyle="bold"
+                            android:text="@string/emptyerror"
                             android:textColor="@color/red"
-                            android:text="@string/emptyerror"/>
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
                         <RadioGroup
+                            android:id="@+id/gender"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:id="@+id/gender">
+                            android:layout_marginLeft="20dp">
 
                             <RadioButton
+                                android:id="@+id/male"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/male"
                                 android:text="@string/male" />
 
                             <RadioButton
+                                android:id="@+id/female"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/female"
                                 android:text="@string/female" />
 
                         </RadioGroup>
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
                             android:layout_marginLeft="12dp"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/reg_ques_dob"
                             android:textColor="#555"
-                            android:text="@string/reg_ques_dob"/>
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/doberror"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:textSize="14sp"
                             android:padding="2dp"
-                            android:id="@+id/doberror"
-                            android:visibility="gone"
-                            android:textStyle="bold"
+                            android:text="@string/emptyerror"
                             android:textColor="@color/red"
-                            android:text="@string/emptyerror"/>
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+
                         <EditText
                             android:id="@+id/dob"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
-                            android:textSize="14sp"
                             android:focusable="false"
                             android:hint="@string/dob_hint"
                             android:inputType="text"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:textSize="14sp" />
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
+                            android:text="or"
                             android:textColor="#777"
-                            android:text="or"/>
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginBottom="20dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
-                            android:layout_marginBottom="20dp"
                             android:weightSum="2">
 
                             <EditText
                                 android:id="@+id/estyr"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:textSize="14sp"
+                                android:layout_weight="1"
                                 android:focusable="true"
                                 android:hint="@string/estyr"
                                 android:inputType="number"
-                                android:singleLine="true" />
+                                android:singleLine="true"
+                                android:textSize="14sp" />
 
                             <EditText
                                 android:id="@+id/estmonth"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:textSize="14sp"
+                                android:layout_weight="1"
                                 android:focusable="true"
                                 android:hint="@string/estmonth"
                                 android:inputType="number"
-                                android:singleLine="true" />
+                                android:singleLine="true"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
                     </LinearLayout>
+
                     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:orientation="vertical"
-                        android:background="@drawable/card"
-                        android:layout_margin="10dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/card"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
                             android:layout_marginLeft="8dp"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
+                            android:layout_marginTop="20dp"
+                            android:text="Contact Info"
                             android:textColor="@color/primary"
-                            android:text="Contact Info"/>
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/addrerror"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
-                            android:textSize="14sp"
                             android:padding="2dp"
-                            android:id="@+id/addrerror"
-                            android:visibility="gone"
-                            android:textStyle="bold"
+                            android:text="@string/atleastone"
                             android:textColor="@color/red"
-                            android:text="@string/atleastone"/>
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
                             android:layout_marginLeft="12dp"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/reg_ques_address"
                             android:textColor="#555"
-                            android:text="@string/reg_ques_address"/>
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
                         <EditText
                             android:id="@+id/addr1"
@@ -307,85 +283,87 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
                             android:layout_marginTop="20dp"
-                            android:textSize="14sp"
                             android:focusable="true"
                             android:hint="@string/addr1_hint"
                             android:inputType="text"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:textSize="14sp" />
+
                         <EditText
                             android:id="@+id/addr2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
-                            android:layout_marginTop="20dp"
                             android:layout_marginRight="20dp"
-                            android:textSize="14sp"
+                            android:layout_marginTop="20dp"
                             android:focusable="true"
                             android:hint="@string/addr2_hint"
                             android:inputType="text"
-                            android:singleLine="true" />
+                            android:singleLine="true"
+                            android:textSize="14sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
+                            android:layout_marginTop="20dp"
                             android:weightSum="2">
 
                             <EditText
                                 android:id="@+id/city"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:textSize="14sp"
+                                android:layout_weight="1"
                                 android:focusable="true"
                                 android:hint="@string/patient_city_label"
                                 android:inputType="text"
-                                android:singleLine="true" />
+                                android:singleLine="true"
+                                android:textSize="14sp" />
 
                             <EditText
                                 android:id="@+id/state"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:textSize="14sp"
+                                android:layout_weight="1"
                                 android:focusable="true"
                                 android:hint="@string/patient_state_label"
                                 android:inputType="text"
-                                android:singleLine="true" />
+                                android:singleLine="true"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
+                            android:layout_marginTop="20dp"
                             android:weightSum="2">
 
                             <EditText
                                 android:id="@+id/country"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:textSize="14sp"
+                                android:layout_weight="1"
                                 android:focusable="true"
                                 android:hint="@string/patient_country_label"
                                 android:inputType="text"
-                                android:singleLine="true" />
+                                android:singleLine="true"
+                                android:textSize="14sp" />
 
                             <EditText
                                 android:id="@+id/postal"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
-                                android:textSize="14sp"
-                                android:focusable="true"
                                 android:layout_marginBottom="20dp"
+                                android:layout_weight="1"
+                                android:focusable="true"
                                 android:hint="@string/patient_postal_label"
                                 android:inputType="text"
-                                android:singleLine="true" />
+                                android:singleLine="true"
+                                android:textSize="14sp" />
 
                         </LinearLayout>
                         <!--<TextView-->
@@ -415,26 +393,27 @@
                     <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:onClick="confirm"
-                        android:text="Register"
+                        android:id="@+id/registerConfirm"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:textColor="@color/white"
-                        android:backgroundTint="@color/primary"/>
+                        android:backgroundTint="@color/primary"
+                        android:text="Register"
+                        android:textColor="@color/white" />
 
                 </LinearLayout>
             </ScrollView>
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ProgressBar
+                android:id="@+id/progress_bar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/progress_bar"
                 android:layout_centerInParent="true"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </RelativeLayout>
     </RelativeLayout>
 </LinearLayout>

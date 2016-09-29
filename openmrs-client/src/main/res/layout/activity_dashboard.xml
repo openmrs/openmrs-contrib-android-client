@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
   ~ compliance with the License. You may obtain a copy of the License at
@@ -13,208 +12,36 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical">
 
-<android.support.v7.widget.Toolbar
-    android:id="@+id/toolbar"
-    android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="fill_parent"
-    android:background="#EEE"
-    tools:context="org.openmrs.mobile.activities.DashboardActivity"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:gravity="center_vertical">
-
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:fillViewport="true">
-
-    <LinearLayout
-        android:id="@+id/modulesLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="#ededed"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context=".activities.dashboard.DashboardActivity">
 
-        <TableLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:stretchColumns="1"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp">
+        <FrameLayout
+            android:id="@+id/dashboardContentFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
-            <TableRow>
-
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:background="@drawable/card"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    android:onClick="onFindPatientCallback">
-
-                    <RelativeLayout
-                        android:id="@+id/relativeLayout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_gravity="center_horizontal">
-
-                        <ImageView
-                            android:id="@+id/findPatientButton"
-                            android:layout_centerInParent="true"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_margin="30dp"
-                            android:layout_alignParentTop="true"
-                            android:contentDescription="@string/dashboard_search_icon_label"/>
-
-                        <TextView
-                            android:id="@+id/findPatientLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/findPatientButton"
-                            android:layout_centerHorizontal="true"
-                            android:layout_gravity="center"
-                            android:paddingTop="10dp"
-                            android:text="@string/dashboard_search_icon_label"
-                            android:textSize="18sp"/>
-                </RelativeLayout>
-                </FrameLayout>
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/card"
-                    android:layout_weight="1"
-                    android:onClick="onActiveVisitsCallback"
-                    android:clickable="true">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_gravity="center_horizontal">
-
-                        <ImageView
-                            android:id="@+id/activeVisitsButton"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_margin="30dp"
-                            android:layout_alignParentTop="true"
-                            android:contentDescription="@string/dashboard_visits_icon_label"/>
-
-                        <TextView
-                            android:id="@+id/activeVisitsLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/activeVisitsButton"
-                            android:layout_centerHorizontal="true"
-                            android:layout_gravity="center"
-                            android:paddingTop="10dp"
-                            android:text="@string/dashboard_visits_icon_label"
-                            android:textSize="18sp"/>
-                    </RelativeLayout>
-                </FrameLayout>
-            </TableRow>
-            <TableRow>
-
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:onClick="onRegisterPatientCallback"
-                    android:background="@drawable/card"
-                    android:layout_marginTop="10dp"
-                    android:visibility="visible"
-                    android:clickable="true">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_gravity="center_horizontal">
-
-                        <ImageView
-                            android:id="@+id/registryPatientButton"
-                            android:layout_centerInParent="true"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_margin="30dp"
-                            android:layout_alignParentTop="true"
-                            android:contentDescription="@string/dashboard_registry_icon_label"/>
-
-                        <TextView
-                            android:id="@+id/registryLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/registryPatientButton"
-                            android:layout_centerHorizontal="true"
-                            android:layout_gravity="center"
-                            android:paddingTop="10dp"
-                            android:text="@string/action_register_patient"
-                            android:textSize="18sp"/>
-                    </RelativeLayout>
-                </FrameLayout>
-                <FrameLayout
-                    android:visibility="visible"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@drawable/card"
-                    android:layout_marginTop="10dp"
-                    android:onClick="onFormsCallback"
-                    android:clickable="false">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_gravity="center_horizontal">
-
-                        <ImageView
-                            android:id="@+id/captureVitalsButton"
-                            android:layout_centerInParent="true"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_margin="30dp"
-                            android:layout_alignParentTop="true"
-                            android:contentDescription="@string/dashboard_registry_icon_label" />
-
-                        <TextView
-                            android:id="@+id/FormsLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/captureVitalsButton"
-                            android:layout_centerHorizontal="true"
-                            android:layout_gravity="center"
-                            android:paddingTop="10dp"
-                            android:text="@string/dashboard_forms_icon_label"
-                            android:textSize="18sp"/>
-                    </RelativeLayout>
-                </FrameLayout>
-
-            </TableRow
-                >
-        </TableLayout>
-    </LinearLayout>
-    </ScrollView>
-
-</RelativeLayout>
+    </RelativeLayout>
 </LinearLayout>

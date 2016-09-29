@@ -10,7 +10,7 @@ import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.NotificationCompat;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.DashboardActivity;
+import org.openmrs.mobile.activities.dashboard.DashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 /**
  * This Source Code Form is subject to the terms of the Mozilla Public License,

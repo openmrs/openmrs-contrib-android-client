@@ -139,7 +139,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.VisitDashboardActivity"
+            android:name=".activities.visitdashboard.VisitDashboardActivity"
             android:label="@string/visit_dashboard_label"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme">

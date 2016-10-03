@@ -40,6 +40,7 @@ import org.openmrs.mobile.activities.fragments.PatientDetailsFragment;
 import org.openmrs.mobile.activities.fragments.PatientDiagnosisFragment;
 import org.openmrs.mobile.activities.fragments.PatientVisitsFragment;
 import org.openmrs.mobile.activities.fragments.PatientVitalsFragment;
+import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.net.FindPatientsManager;
 import org.openmrs.mobile.net.VisitsManager;

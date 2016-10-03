@@ -15,8 +15,7 @@
 package org.openmrs.mobile.listeners.visit;
 
 import org.json.JSONObject;
-import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.PatientListActivity;
+import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.dao.PatientDAO;
@@ -28,10 +27,10 @@ import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 public class CheckVisitBeforeStartListener extends FindVisitsByPatientUUIDListener {
-    private final PatientListActivity mCaller;
+    private final FormEntryPatientListActivity mCaller;
     private static final String CHECKING = "Checking: ";
 
-    public CheckVisitBeforeStartListener(String patientUUID, long patientID, PatientListActivity callerAdapter) {
+    public CheckVisitBeforeStartListener(String patientUUID, long patientID, FormEntryPatientListActivity callerAdapter) {
         super(patientUUID, patientID, callerAdapter);
         mCaller = callerAdapter;
     }
@@ -53,7 +52,8 @@ public class CheckVisitBeforeStartListener extends FindVisitsByPatientUUIDListen
         mLogger.i(CHECKING + response.toString());
         if (mCaller != null) {
             if (new VisitDAO().isPatientNowOnVisit(mPatientID)) {
-                mCaller.startEncounterForPatient();
+                //TODO: This one isn't used
+                //mCaller.startEncounterForPatient(mPatientID);
             } else {
                 // it will start new visit if confirmed
                 mCaller.showNoVisitDialog();

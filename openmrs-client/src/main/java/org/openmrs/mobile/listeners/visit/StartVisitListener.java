@@ -19,8 +19,6 @@ import com.android.volley.VolleyError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.PatientListActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.application.OpenMRS;
@@ -31,26 +29,19 @@ import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.mappers.VisitMapper;
 import org.openmrs.mobile.models.retrofit.Encountercreate;
 import org.openmrs.mobile.net.GeneralErrorListener;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 public class StartVisitListener extends GeneralErrorListener implements Response.Listener<JSONObject> {
     private final OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
     private final String mPatientUUID;
     private final long mPatientID;
-    private PatientDashboardActivity mCallerPDA;
-    private PatientListActivity mCallerCVA;
+    private PatientDashboardActivity mCaller;
     private EncounterService mService;
     private Encountercreate mEncountercreate;
 
 
-    public StartVisitListener(String patientUUD, long patientID, PatientDashboardActivity callerPDA) {
+    public StartVisitListener(String patientUUD, long patientID, PatientDashboardActivity caller) {
         this(patientUUD, patientID);
-        mCallerPDA = callerPDA;
-    }
-
-    public StartVisitListener(String patientUUD, long patientID, PatientListActivity callerCVA) {
-        this(patientUUD, patientID);
-        mCallerCVA = callerCVA;
+        mCaller = caller;
     }
 
     public StartVisitListener(long patientID, Encountercreate encountercreate, EncounterService service) {
@@ -68,11 +59,8 @@ public class StartVisitListener extends GeneralErrorListener implements Response
     @Override
     public void onErrorResponse(VolleyError error) {
         super.onErrorResponse(error);
-        if (null != mCallerPDA) {
-            mCallerPDA.stopLoader(true);
-        } else {
-            mCallerCVA.dismissProgressDialog(true, R.string.start_visit_successful,
-                    R.string.start_visit_error);
+        if (null != mCaller) {
+            mCaller.stopLoader(true);
         }
     }
 
@@ -82,13 +70,8 @@ public class StartVisitListener extends GeneralErrorListener implements Response
         try {
             Visit visit=VisitMapper.map(response);
             long visitID = new VisitDAO().saveVisit(visit, mPatientID);
-            if (null != mCallerPDA) {
-                mCallerPDA.visitStarted(visitID, visitID <= 0);
-            }
-            else if(null != mCallerCVA){
-                mCallerCVA.dismissProgressDialog(false, R.string.start_visit_successful,
-                        R.string.start_visit_error);
-                mCallerCVA.startEncounterForPatient();
+            if (null != mCaller) {
+                mCaller.visitStarted(visitID, visitID <= 0);
             }
             else {
                 mEncountercreate.setVisit(visit.getUuid());

@@ -12,34 +12,32 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.adapters;
+package org.openmrs.mobile.activities.formentrypatientlist;
 
-import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import org.openmrs.mobile.activities.PatientListActivity;
-import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.utilities.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.dao.VisitDAO;
+import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.utilities.AnimationUtils;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
 
 import java.util.List;
 
-public class PatientHierarchyAdapter extends RecyclerView.Adapter<PatientHierarchyAdapter.PatientViewHolder> {
-    private Activity mContext;
+public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryPatientListAdapter.PatientViewHolder> {
+    private FormEntryPatientListFragment mContext;
     private List<Patient> mItems;
+    private boolean isUpdatingExistingData = false;
 
-    public PatientHierarchyAdapter(Activity context, List<Patient> items) {
+    public FormEntryPatientListAdapter(FormEntryPatientListFragment context, List<Patient> items) {
         this.mContext = context;
         this.mItems = items;
     }
@@ -73,17 +71,14 @@ public class PatientHierarchyAdapter extends RecyclerView.Adapter<PatientHierarc
         holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mContext instanceof PatientListActivity) {
-                    ((PatientListActivity) mContext).startFormEntry(mItems.get(position).getUuid(), mItems.get(position).getId());
-                } else {
-                    throw new IllegalStateException("Current context is not an instance of PatientListActivity.class");
-                }
+                mContext.startEncounterForPatient(mItems.get(position).getId());
             }
-
         });
 
         holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
-        new AnimationUtils().setAnimation(holder.mRowLayout,mContext,position);
+        if (!isUpdatingExistingData) {
+            new AnimationUtils().setAnimation(holder.mRowLayout,mContext.getActivity(),position);
+        }
     }
 
     @Override
@@ -94,6 +89,11 @@ public class PatientHierarchyAdapter extends RecyclerView.Adapter<PatientHierarc
     @Override
     public int getItemCount() {
         return mItems.size();
+    }
+
+    public void setIsFiltering(boolean isFiltering) {
+        isUpdatingExistingData = isFiltering;
+        notifyDataSetChanged();
     }
 
     class PatientViewHolder extends RecyclerView.ViewHolder{

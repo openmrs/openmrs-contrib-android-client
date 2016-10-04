@@ -33,7 +33,7 @@ public class RestServiceBuilder {
 
     protected static final OpenMRS mOpenMRS = OpenMRS.getInstance();
 
-    private static String API_BASE_URL=mOpenMRS.getServerUrl()+ ApplicationConstants.API.REST_ENDPOINT;
+    private static String API_BASE_URL = mOpenMRS.getServerUrl()+ ApplicationConstants.API.REST_ENDPOINT;
 
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
@@ -46,9 +46,7 @@ public class RestServiceBuilder {
                         .addConverterFactory(buildGsonConverter());
     }
 
-    public static <S> S createService(Class<S> serviceClass) {
-        String username=mOpenMRS.getUsername();
-        String password=mOpenMRS.getPassword();
+    public static <S> S createService(Class<S> serviceClass, String username, String password){
         if (username != null && password != null) {
             String credentials = username + ":" + password;
             final String basic =
@@ -61,8 +59,8 @@ public class RestServiceBuilder {
 
                     Request.Builder requestBuilder = original.newBuilder()
                             .header("Authorization", basic)
-                    .header("Accept", "application/json")
-                    .method(original.method(), original.body());
+                            .header("Accept", "application/json")
+                            .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();
                     return chain.proceed(request);
@@ -75,6 +73,12 @@ public class RestServiceBuilder {
         return retrofit.create(serviceClass);
     }
 
+    public static <S> S createService(Class<S> serviceClass) {
+        String username=mOpenMRS.getUsername();
+        String password=mOpenMRS.getPassword();
+        return createService(serviceClass, username, password);
+    }
+
     private static GsonConverterFactory buildGsonConverter() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson myGson = gsonBuilder
@@ -83,6 +87,14 @@ public class RestServiceBuilder {
                 .create();
 
         return GsonConverterFactory.create(myGson);
+    }
+
+    public static void changeBaseUrl(String newServerUrl){
+        API_BASE_URL = newServerUrl + ApplicationConstants.API.REST_ENDPOINT;
+
+        builder = new Retrofit.Builder()
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(buildGsonConverter());
     }
 
 }

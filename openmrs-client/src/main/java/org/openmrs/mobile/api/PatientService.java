@@ -167,7 +167,7 @@ public class PatientService extends IntentService {
 
         RestApi apiService =
                 RestServiceBuilder.createService(RestApi.class);
-        Call<Results<Location>> call = apiService.getLocations();
+        Call<Results<Location>> call = apiService.getLocations(null);
         call.enqueue(new Callback<Results<Location>>() {
             @Override
             public void onResponse(Call<Results<Location>> call, Response<Results<Location>> response) {

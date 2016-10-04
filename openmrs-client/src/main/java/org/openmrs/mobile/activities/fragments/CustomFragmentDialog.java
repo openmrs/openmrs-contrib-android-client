@@ -30,11 +30,12 @@ import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.DialogActivity;
-import org.openmrs.mobile.activities.LoginActivity;
+import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.activities.PatientListActivity;
 import org.openmrs.mobile.activities.registerpatient.RegisterPatientActivity;
 import org.openmrs.mobile.activities.VisitDashboardActivity;
+import org.openmrs.mobile.activities.login.LoginFragment;
 import org.openmrs.mobile.adapters.SimilarPatientsRecyclerViewAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
@@ -157,7 +158,10 @@ public class CustomFragmentDialog extends DialogFragment {
                             getActivity().onBackPressed();
                             dismiss();
                         } else {
-                            ((LoginActivity) getActivity()).hideURLDialog();
+                            ((LoginFragment) getActivity()
+                                    .getSupportFragmentManager()
+                                    .findFragmentById(R.id.loginContentFrame))
+                                    .hideURLDialog();
                             dismiss();
                         }
                     }
@@ -304,15 +308,24 @@ public class CustomFragmentDialog extends DialogFragment {
             public void onClick(View v) {
                 switch (action) {
                     case SET_URL:
-                        ((LoginActivity) getActivity()).setUrl(CustomFragmentDialog.this.mEditText.getText().toString().trim());
+                        ((LoginFragment) getActivity()
+                                .getSupportFragmentManager()
+                                .findFragmentById(R.id.loginContentFrame))
+                                .setUrl(CustomFragmentDialog.this.mEditText.getText().toString().trim());
                         dismiss();
                         break;
                     case DISMISS_URL_DIALOG:
-                        ((LoginActivity) getActivity()).hideURLDialog();
+                        ((LoginFragment) getActivity()
+                                .getSupportFragmentManager()
+                                .findFragmentById(R.id.loginContentFrame))
+                                .hideURLDialog();
                         dismiss();
                         break;
                     case LOGIN:
-                        ((LoginActivity) getActivity()).login();
+                        ((LoginFragment) getActivity()
+                                .getSupportFragmentManager()
+                                .findFragmentById(R.id.loginContentFrame))
+                                .login();
                         dismiss();
                         break;
                     case DISMISS:

@@ -15,51 +15,11 @@
 package org.openmrs.mobile.net;
 
 import android.content.Intent;
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 
-import org.openmrs.mobile.activities.LoginActivity;
-import org.openmrs.mobile.listeners.authorization.LoginListener;
-import org.openmrs.mobile.net.volley.wrappers.JsonObjectRequestWrapper;
+import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.ToastUtil;
-
-import java.util.HashMap;
-import java.util.Map;
-import static org.openmrs.mobile.utilities.ApplicationConstants.API;
 
 public class AuthorizationManager extends BaseManager {
-    private static final String LOGIN_END_URL = API.REST_ENDPOINT + API.AUTHORISATION_END_POINT;
-
-    public void login(LoginListener listener,final LoginActivity loginActivityContext) {
-        encodeAuthorizationToken(listener.getUsername(), listener.getPassword());
-        String url = listener.getServerURL() + LOGIN_END_URL;
-        mLogger.i(SENDING_REQUEST + url);
-
-        Response.ErrorListener errorListener = new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                mLogger.e(error.toString());
-                loginActivityContext.showNoInternetConnectionDialog();
-            }
-        };
-
-        JsonObjectRequestWrapper jsObjRequest =
-                new JsonObjectRequestWrapper(Request.Method.GET,
-                        url, null, listener, errorListener, DO_GZIP_REQUEST) {
-
-                    @Override
-                    public Map<String, String> getHeaders() throws AuthFailureError {
-                        HashMap<String, String> params = new HashMap<String, String>();
-                        params.put(ApplicationConstants.AUTHORIZATION_PARAM, mOpenMRS.getAuthorizationToken());
-                        return params;
-                    }
-                };
-        mOpenMRS.addToRequestQueue(jsObjRequest);
-    }
 
     private boolean isUsernameNotEmptyOrNotSameUser(String username) {
         boolean result = false;

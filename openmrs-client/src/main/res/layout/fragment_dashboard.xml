@@ -11,11 +11,13 @@
         android:layout_height="fill_parent"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="10dp"
+        android:clickable="false"
         android:stretchColumns="1">
 
         <TableRow>
 
             <FrameLayout
+                android:id="@+id/findPatientView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -52,6 +54,7 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/activeVisitsView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -89,6 +92,7 @@
         <TableRow>
 
             <FrameLayout
+                android:id="@+id/registryPatientView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -126,12 +130,13 @@
             </FrameLayout>
 
             <FrameLayout
+                android:id="@+id/captureVitalsView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/card"
-                android:clickable="false"
+                android:clickable="true"
                 android:visibility="visible">
 
                 <RelativeLayout

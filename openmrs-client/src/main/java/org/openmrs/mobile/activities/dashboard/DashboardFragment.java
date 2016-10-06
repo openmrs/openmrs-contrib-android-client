@@ -22,21 +22,22 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity;
-import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.activities.PatientListActivity;
 import org.openmrs.mobile.activities.RegisterPatientActivity;
+import org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity;
 import org.openmrs.mobile.activities.fragments.ACBaseFragment;
+import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class DashboardFragment extends ACBaseFragment implements DashboardContract.View {
+public class DashboardFragment extends ACBaseFragment implements DashboardContract.View, View.OnClickListener {
 
     // Presenter
     private DashboardContract.Presenter mPresenter;
@@ -46,6 +47,10 @@ public class DashboardFragment extends ACBaseFragment implements DashboardContra
     private ImageView mRegistryPatientButton;
     private ImageView mActiveVisitsButton;
     private ImageView mCaptureVitalsButton;
+    private FrameLayout mFindPatientView;
+    private FrameLayout mRegistryPatientView;
+    private FrameLayout mActiveVisitsView;
+    private FrameLayout mCaptureVitalsView;
 
     private SparseArray<Bitmap> mBitmapCache;
 
@@ -54,17 +59,32 @@ public class DashboardFragment extends ACBaseFragment implements DashboardContra
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        // ImageView Button config
         if (root != null) {
-            mFindPatientButton = (ImageView) root.findViewById(R.id.findPatientButton);
-            mRegistryPatientButton = (ImageView) root.findViewById(R.id.registryPatientButton);
-            mActiveVisitsButton = (ImageView) root.findViewById(R.id.activeVisitsButton);
-            mCaptureVitalsButton = (ImageView) root.findViewById(R.id.captureVitalsButton);
+            initFragmentFields(root);
+            setListeners();
         }
 
         // Font config
         FontsUtil.setFont((ViewGroup) this.getActivity().findViewById(android.R.id.content));
         return root;
+    }
+
+    private void initFragmentFields(View root) {
+        mFindPatientButton = (ImageView) root.findViewById(R.id.findPatientButton);
+        mRegistryPatientButton = (ImageView) root.findViewById(R.id.registryPatientButton);
+        mActiveVisitsButton = (ImageView) root.findViewById(R.id.activeVisitsButton);
+        mCaptureVitalsButton = (ImageView) root.findViewById(R.id.captureVitalsButton);
+        mFindPatientView = (FrameLayout) root.findViewById(R.id.findPatientView);
+        mRegistryPatientView = (FrameLayout) root.findViewById(R.id.registryPatientView);
+        mCaptureVitalsView = (FrameLayout) root.findViewById(R.id.captureVitalsView);
+        mActiveVisitsView = (FrameLayout) root.findViewById(R.id.activeVisitsView);
+    }
+
+    private void setListeners() {
+        mActiveVisitsView.setOnClickListener(this);
+        mRegistryPatientView.setOnClickListener(this);
+        mFindPatientView.setOnClickListener(this);
+        mCaptureVitalsView.setOnClickListener(this);
     }
 
     @Override
@@ -85,24 +105,23 @@ public class DashboardFragment extends ACBaseFragment implements DashboardContra
      */
     @Override
     public void bindDrawableResources() {
-        bindDrawableResourceAndSetListeners(mFindPatientButton, R.drawable.ico_search);
-        bindDrawableResourceAndSetListeners(mRegistryPatientButton, R.drawable.ico_registry);
-        bindDrawableResourceAndSetListeners(mActiveVisitsButton, R.drawable.ico_visits);
-        bindDrawableResourceAndSetListeners(mCaptureVitalsButton, R.drawable.ico_vitals);
+        bindDrawableResource(mFindPatientButton, R.drawable.ico_search);
+        bindDrawableResource(mRegistryPatientButton, R.drawable.ico_registry);
+        bindDrawableResource(mActiveVisitsButton, R.drawable.ico_visits);
+        bindDrawableResource(mCaptureVitalsButton, R.drawable.ico_vitals);
     }
 
     /**
-     * Binds drawable resource to ImageView and sets its listener
+     * Binds drawable resource to ImageView
      * @param imageView ImageView to bind resource to
      * @param drawableId id of drawable resource (for example R.id.somePicture);
      */
-    private void bindDrawableResourceAndSetListeners(ImageView imageView, int  drawableId) {
+    private void bindDrawableResource(ImageView imageView, int  drawableId) {
         mBitmapCache = new SparseArray<>();
         if (getView() != null) {
             createImageBitmap(drawableId, imageView.getLayoutParams());
             imageView.setImageBitmap(mBitmapCache.get(drawableId));
         }
-        setButtonListener(imageView);
     }
     /**
      * Unbinds drawable resources
@@ -138,35 +157,9 @@ public class DashboardFragment extends ACBaseFragment implements DashboardContra
         mPresenter = checkNotNull(presenter);
     }
 
-    /**
-     * Sets listeners for ImageView Buttons
-     */
-    private void setButtonListener(ImageView imageView) {
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int id = view.getId();
-                switch (id) {
-                    case R.id.findPatientButton:
-                        startNewActivity(SyncedPatientsActivity.class);
-                        break;
-                    case R.id.registryPatientButton:
-                        startNewActivity(RegisterPatientActivity.class);
-                        break;
-                    case R.id.activeVisitsButton:
-                        startNewActivity(ActiveVisitsActivity.class);
-                        break;
-                    case R.id.captureVitalsButton:
-                        startNewActivity(PatientListActivity.class);
-                        break;
-                }
-            }
-        });
-    }
-
-    /**
-     * Starts new Activity depending on which ImageView triggered it
-     */
+        /**
+         * Starts new Activity depending on which ImageView triggered it
+         */
     private void startNewActivity(Class<? extends ACBaseActivity> clazz){
         Intent intent = new Intent(getActivity(), clazz);
         startActivity(intent);
@@ -177,5 +170,23 @@ public class DashboardFragment extends ACBaseFragment implements DashboardContra
      */
     public static DashboardFragment newInstance() {
         return new DashboardFragment();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.findPatientView:
+                startNewActivity(SyncedPatientsActivity.class);
+                break;
+            case R.id.registryPatientView:
+                startNewActivity(RegisterPatientActivity.class);
+                break;
+            case R.id.captureVitalsView:
+                startNewActivity(PatientListActivity.class);
+                break;
+            case R.id.activeVisitsView:
+                startNewActivity(ActiveVisitsActivity.class);
+                break;
+        }
     }
 }

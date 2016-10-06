@@ -226,4 +226,5 @@
     <string name="birthdate_hint">birthdate:</string>
     <string name="address_hint">address:</string>
     <string name="demographics">Demographics</string>
+    <string name="unable_to_login">Unable to login?</string>
 </resources>

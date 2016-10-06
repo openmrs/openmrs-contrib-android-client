@@ -304,12 +304,12 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(2, loc.getDisplay(), locationStatement);
             bindString(3, loc.getName(), locationStatement);
             bindString(4, loc.getDescription(), locationStatement);
-            bindString(5, loc.getAddress().getAddress1(), locationStatement);
-            bindString(6, loc.getAddress().getAddress2(), locationStatement);
-            bindString(7, loc.getAddress().getCityVillage(), locationStatement);
-            bindString(8, loc.getAddress().getStateProvince(), locationStatement);
-            bindString(9, loc.getAddress().getCountry(), locationStatement);
-            bindString(10, loc.getAddress().getPostalCode(), locationStatement);
+            bindString(5, loc.getAddress1(), locationStatement);
+            bindString(6, loc.getAddress2(), locationStatement);
+            bindString(7, loc.getCityVillage(), locationStatement);
+            bindString(8, loc.getStateProvince(), locationStatement);
+            bindString(9, loc.getCountry(), locationStatement);
+            bindString(10, loc.getPostalCode(), locationStatement);
             bindString(11, loc.getParentLocationUuid(), locationStatement);
             locID = locationStatement.executeInsert();
             locationStatement.clearBindings();

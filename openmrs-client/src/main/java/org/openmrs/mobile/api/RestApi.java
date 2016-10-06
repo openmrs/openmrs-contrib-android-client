@@ -10,6 +10,8 @@
 
 package org.openmrs.mobile.api;
 
+import com.google.gson.JsonObject;
+
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.retrofit.EncounterType;
@@ -21,12 +23,16 @@ import org.openmrs.mobile.models.retrofit.Obscreate;
 import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.Results;
+import org.openmrs.mobile.models.retrofit.Session;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 public interface RestApi {
 
@@ -34,8 +40,14 @@ public interface RestApi {
     @GET("form?v=custom:(uuid,name,resources)")
     Call<Results<FormResource>> getForms();
 
-    @GET("location")
-    Call<Results<Location>> getLocations();
+    @GET("location?tag=Login%20Location")
+    Call<Results<Location>> getLocations(@Query("v") String representation);
+
+
+    @GET()
+    Call<Results<Location>> getLocations(@Url String url,
+                                         @Query("tag") String tag,
+                                         @Query("v") String representation);
 
     @GET("patientidentifiertype")
     Call<Results<IdentifierType>> getIdentifierTypes();
@@ -66,5 +78,8 @@ public interface RestApi {
 
     @GET("encountertype")
     Call<Results<EncounterType>> getEncounterTypes();
+
+    @GET("session")
+    Call<Session> getSession();
 
 }

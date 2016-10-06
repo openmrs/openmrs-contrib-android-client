@@ -170,7 +170,7 @@
                 android:value=".activities.dashboard.DashboardActivity" />
         </activity>
         <activity
-            android:name=".activities.RegisterPatientActivity"
+            android:name=".activities.registerpatient.RegisterPatientActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/action_register_patient"
             android:parentActivityName=".activities.dashboard.DashboardActivity"

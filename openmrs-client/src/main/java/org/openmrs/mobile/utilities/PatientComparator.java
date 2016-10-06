@@ -25,7 +25,7 @@ import java.util.List;
 
 public class PatientComparator {
 
-    private static final int MIN_SCORE = 7;
+    private static final int MIN_SCORE = 6;
     private static final int MAX_SCORE = 11;
     private static final List<String> PATIENT_FIELDS = Arrays.asList("name", "gender",
             "birthdate", "addres");

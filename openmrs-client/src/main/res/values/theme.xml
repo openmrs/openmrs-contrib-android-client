@@ -21,6 +21,5 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
     <style name="SimilarPatients.DialogTheme" parent="android:Theme.Dialog">
-        <item name="android:background">#eeeeee</item>
     </style>
 </resources>

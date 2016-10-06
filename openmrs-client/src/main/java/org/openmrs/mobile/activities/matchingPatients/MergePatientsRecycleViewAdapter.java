@@ -1,54 +1,39 @@
-/*
- * The contents of this file are subject to the OpenMRS Public License
- * Version 1.0 (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of the License at
- * http://license.openmrs.org
- *
- * Software distributed under the License is distributed on an "AS IS"
- * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
- * License for the specific language governing rights and limitations
- * under the License.
- *
- * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
- */
-
-package org.openmrs.mobile.adapters;
+package org.openmrs.mobile.activities.matchingPatients;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.common.base.Objects;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
-import org.openmrs.mobile.api.retrofit.VisitApi;
-import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
-public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<SimilarPatientsRecyclerViewAdapter.PatientViewHolder>{
+public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergePatientsRecycleViewAdapter.PatientViewHolder>{
 
     private List<Patient> patientList;
     private Patient newPatient;
     private Activity mContext;
+    private MachingPatientsContract.Presenter mPresenter;
+    private int selectedPosition = -1;
 
-    public SimilarPatientsRecyclerViewAdapter(Activity mContext, List<Patient> patientList, Patient patient) {
+    public MergePatientsRecycleViewAdapter(Activity mContext, MachingPatientsContract.Presenter presenter, List<Patient> patientList, Patient patient) {
         this.newPatient = patient;
         this.patientList = patientList;
         this.mContext = mContext;
+        this.mPresenter = presenter;
     }
 
     @Override
@@ -66,23 +51,6 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
         setGender(holder, patient);
         setBirthdate(holder, patient);
         setPatientAdres(holder, patient);
-
-        holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!(new PatientDAO().isUserAlreadySaved(patient.getUuid()))) {
-                    downloadPatient(patient);
-                }
-                Intent intent = new Intent(mContext, PatientDashboardActivity.class);
-                intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, getPatientId(patient));
-                mContext.startActivity(intent);
-                mContext.finish();
-            }
-        });
-    }
-
-    private String getPatientId(Patient patient) {
-        return new PatientDAO().findPatientByUUID(patient.getUuid()).getId().toString();
     }
 
     @Override
@@ -92,7 +60,6 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
 
     public class PatientViewHolder extends RecyclerView.ViewHolder{
 
-        private LinearLayout mRowLayout;
         private TextView mGivenName;
         private TextView mMiddleName;
         private TextView mFamilyName;
@@ -104,7 +71,6 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
         private TextView mCountry;
         public PatientViewHolder(View itemView) {
             super(itemView);
-            mRowLayout = (LinearLayout) itemView;
             mGivenName = (TextView) itemView.findViewById(R.id.patientGivenName);
             mMiddleName = (TextView) itemView.findViewById(R.id.patientMiddleName);
             mFamilyName = (TextView) itemView.findViewById(R.id.patientFamilyName);
@@ -114,15 +80,25 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
             mPostalCode = (TextView) itemView.findViewById(R.id.patientPostalCode);
             mCity = (TextView) itemView.findViewById(R.id.patientCity);
             mCountry = (TextView) itemView.findViewById(R.id.patientCountry);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CardView cardView = (CardView)v.findViewById(R.id.cardView);
+                    if (selectedPosition == -1) {
+                        selectedPosition = getAdapterPosition();
+                        mPresenter.setSelectedPatient(patientList.get(selectedPosition));
+                        cardView.setCardBackgroundColor(v.getResources().getColor(R.color.patient_selected_highlight));
+                    } else if(selectedPosition == getAdapterPosition()){
+                        selectedPosition = -1;
+                        mPresenter.removeSelectedPatient();
+                        cardView.setCardBackgroundColor(Color.WHITE);
+                    } else {
+                        ToastUtil.notify("You can select only one similar patient");
+                    }
+                }
+            });
         }
 
-    }
-    private void downloadPatient(Patient patient) {
-        ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE, R.string.download_started);
-        new PatientDAO().savePatient(patient);
-        new VisitApi().syncVisitsData(patient);
-        new VisitApi().syncLastVitals(patient.getUuid());
-        ToastUtil.success("Patient with UUID " + patient.getUuid() + " is now available locally");
     }
 
     private void setBirthdate(PatientViewHolder holder, Patient patient) {

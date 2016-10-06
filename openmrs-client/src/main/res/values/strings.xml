@@ -229,4 +229,10 @@
     <string name="address_hint">address:</string>
     <string name="demographics">Demographics</string>
     <string name="unable_to_login">Unable to login?</string>
+    <string name="no_patient_selected">No patient selected</string>
+    <!--Matching Patient Activity-->
+    <string name="matching_patients_toolbar_tittle">Merge Patients</string>
+    <string name="patient_registered_locally">Patient registered locally</string>
+    <string name="similar_patients_on_server">Similar patients on server</string>
+    <string name="registration_core_info">To use faster and more accurate similar patient resolution please upgrade the Registration Core Module to 1.7 or higher</string>
 </resources>

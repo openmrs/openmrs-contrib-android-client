@@ -13,165 +13,164 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="20dp"
-    android:background="@drawable/card">
+    android:layout_width="match_parent">
 
-    <LinearLayout
-        android:id="@+id/topRow"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:background="@color/white"
-        >
-
-        <TextView android:id="@+id/patientGivenName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:background="@color/white"
-            android:layout_marginRight="10dp"
-            android:gravity="start"/>
-
-        <TextView android:id="@+id/patientMiddleName"
-            android:layout_width="wrap_content"
-            android:background="@color/white"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:layout_marginRight="10dp"
-            android:gravity="start"/>
-
-        <TextView android:id="@+id/patientFamilyName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:textSize="22sp"
-            android:gravity="start"/>
-
-    </LinearLayout>
-
-    <View
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@android:color/darker_gray"/>
-
-    <RelativeLayout
-        android:id="@+id/bottomRow"
-        android:background="@color/white"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        >
-
-        <LinearLayout android:id="@+id/leftColumn"
-            android:layout_width="wrap_content"
-            android:background="@color/white"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_marginRight="30dp"
-            android:orientation="vertical"
-            android:gravity="center_vertical">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="@color/white"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/gender"
-                    android:text="@string/gender_hint"
-                    android:textStyle="italic"
-                    android:background="@color/white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/patientGender"
-                    android:layout_marginLeft="10dp"
-                    android:background="@color/white"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:background="@color/white"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/birthdate"
-                    android:text="@string/birthdate_hint"
-                    android:background="@color/white"
-                    android:textStyle="italic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/patientBirthDate"
-                    android:layout_marginLeft="10dp"
-                    android:layout_width="wrap_content"
-                    android:background="@color/white"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/address"
-            android:text="@string/address_hint"
-            android:textStyle="italic"
-            android:background="@color/white"
-            android:layout_marginRight="10dp"
-            android:layout_toRightOf="@+id/leftColumn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+        android:layout_margin="10dp"
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardCornerRadius="4dp">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:background="@color/white"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@+id/address"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/patientAddres"
-                android:background="@color/white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            android:layout_margin="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/topRow"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
 
-                <TextView
-                    android:id="@+id/patientPostalCode"
+                <TextView android:id="@+id/patientGivenName"
                     android:layout_width="wrap_content"
-                    android:background="@color/white"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:id="@+id/patientCity"
-                    android:layout_marginLeft="10dp"
-                    android:background="@color/white"
+                    android:layout_height="wrap_content"
+                    android:textSize="22sp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="start"/>
+
+                <TextView android:id="@+id/patientMiddleName"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textSize="22sp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="start"/>
+
+                <TextView android:id="@+id/patientFamilyName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="22sp"
+                    android:gravity="start"/>
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/patientCountry"
-                android:background="@color/white"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <RelativeLayout
+                android:id="@+id/bottomRow"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                >
+
+                <LinearLayout android:id="@+id/leftColumn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginRight="30dp"
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/gender"
+                            android:text="@string/gender_hint"
+                            android:textStyle="italic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/patientGender"
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/birthdate"
+                            android:text="@string/birthdate_hint"
+                            android:textStyle="italic"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/patientBirthDate"
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/address"
+                    android:text="@string/address_hint"
+                    android:textStyle="italic"
+                    android:layout_marginRight="10dp"
+                    android:layout_toRightOf="@+id/leftColumn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@+id/address"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/patientAddres"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/patientPostalCode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/patientCity"
+                            android:layout_marginLeft="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/patientCountry"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </android.support.v7.widget.CardView>
 
 </LinearLayout>

@@ -28,6 +28,7 @@ import org.openmrs.mobile.models.retrofit.PersonAddress;
 import org.openmrs.mobile.models.retrofit.PersonName;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class PatientDAO {
@@ -137,6 +138,28 @@ public class PatientDAO {
             }
         }
         return patient;
+    }
+
+    public List<Patient> getUnsyncedPatients(){
+        List<Patient> patientList = new LinkedList<>();
+        String where = String.format("%s = ?", PatientTable.Column.SYNCED);
+        String[] whereArgs = new String[]{"false"};
+
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        final Cursor cursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null , where, whereArgs, null, null, null);
+        if (null != cursor) {
+            try {
+                while (cursor.moveToNext()) {
+                    Patient patient = cursorToPatient(cursor);
+                    if(!patient.isSynced()){
+                        patientList.add(patient);
+                    }
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return patientList;
     }
 
     public Patient findPatientByID(String id) {

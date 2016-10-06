@@ -38,4 +38,5 @@
     <color name="light_red">#ff6666</color>
     <color name="red">#ff3d3d</color>
     <color name="switchcolor">#03de95</color>
+    <color name="patient_selected_highlight">#3a00ff2a</color>
 </resources>

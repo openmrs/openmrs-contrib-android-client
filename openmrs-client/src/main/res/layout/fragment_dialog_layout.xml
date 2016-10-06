@@ -16,6 +16,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/dialogRelativeForm"
                 android:orientation="vertical"
+                android:background="@color/card_detailing"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
     <LinearLayout

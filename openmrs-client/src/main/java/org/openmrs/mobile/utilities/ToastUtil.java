@@ -41,6 +41,10 @@ public final class ToastUtil {
         ERROR, NOTICE, SUCCESS, WARNING
     }
 
+    public static void notifyLong(String message){
+        showToast(OpenMRS.getInstance(), ToastType.NOTICE, message, Toast.LENGTH_LONG);
+    }
+
     public static void notify(String message) {
         showToast(OpenMRS.getInstance(), ToastType.NOTICE, message, Toast.LENGTH_SHORT);
     }

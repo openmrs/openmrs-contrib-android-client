@@ -43,6 +43,8 @@ public interface RegisterPatientContract {
         void showSimilarPatientDialog(List<Patient> patients, Patient newPatient);
 
         void startPatientDashbordActivity(Patient patient);
+
+        void showUpgradeRegistrationModuleInfo();
     }
 
     interface Presenter extends BasePresenter {

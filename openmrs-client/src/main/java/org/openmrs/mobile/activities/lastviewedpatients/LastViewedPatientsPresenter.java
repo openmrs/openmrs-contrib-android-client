@@ -33,7 +33,6 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
     @NonNull
     private final LastViewedPatientsContract.View mLastViewedPatientsView;
 
-    private boolean mIsSearching;
     private String mQuery;
     private String mLastQuery = "QUERY";
 
@@ -88,7 +87,6 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
     public void updateLastViewedList(String query) {
         mQuery = query;
         if (query.isEmpty() && !mLastQuery.isEmpty()) {
-            mIsSearching = false;
             updateLastViewedList();
         }
     }
@@ -99,7 +97,6 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
         }
         mLastViewedPatientsView.setEmptyListVisibility(false);
         mLastQuery = query;
-        mIsSearching = true;
 
         RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<Results<Patient>> call = restApi.getPatients(query);
@@ -117,7 +114,6 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
                     mLastViewedPatientsView.setEmptyListText(response.message());
                     mLastViewedPatientsView.setEmptyListVisibility(true);
                 }
-                mIsSearching = false;
                 mLastViewedPatientsView.stopRefreshing();
             }
             @Override
@@ -125,7 +121,6 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
                 ToastUtil.error(t.getMessage());
                 mLastViewedPatientsView.setSpinnerVisibility(false);
                 mLastViewedPatientsView.setListVisibility(false);
-                mIsSearching = false;
                 mLastViewedPatientsView.stopRefreshing();
             }
         });
@@ -133,7 +128,7 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
 
     @Override
     public void refresh() {
-        if (StringUtils.notEmpty(mQuery)) {
+        if (!StringUtils.isBlank(mQuery) && StringUtils.notEmpty(mQuery)) {
             findPatients(mQuery);
         }
         else {

@@ -74,4 +74,12 @@ public final class DateUtils {
         }
         return time;
     }
+
+    public static String convertTime1(String dateAsString, String dateFormat) {
+        if (StringUtils.notNull(dateAsString) && StringUtils.notEmpty(dateAsString)) {
+            return convertTime(convertTime(dateAsString), dateFormat, TimeZone.getDefault());
+        }
+        return dateAsString;
+    }
+
 }

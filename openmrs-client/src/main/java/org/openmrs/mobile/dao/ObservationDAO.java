@@ -73,11 +73,11 @@ public class ObservationDAO {
                     obs.setDisplay(obsDisplay);
                     obs.setDisplayValue(obsDisplayValue);
                     if (obsDiagnosisOrder != null) {
-                        obs.setDiagnosisOrder(Observation.DiagnosisOrder.getOrder(obsDiagnosisOrder));
+                        obs.setDiagnosisOrder(obsDiagnosisOrder);
                     }
                     obs.setDiagnosisList(obsDiagnosisList);
                     if (obsDiagnosisCertainty != null) {
-                        obs.setDiagnosisCertainty(Observation.DiagnosisCertainty.getCertainty(obsDiagnosisCertainty));
+                        obs.setDiagnosisCertanity(obsDiagnosisCertainty);
                     }
                     obs.setDiagnosisNote(obsDiagnosisNote);
                     observationList.add(obs);
@@ -88,7 +88,6 @@ public class ObservationDAO {
         }
         return observationList;
     }
-
 
     public Observation getObservationByUUID(final String observationUUID) {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();

@@ -31,7 +31,7 @@ import org.openmrs.mobile.databases.tables.Table;
 import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.retrofit.Observation;
-import org.openmrs.mobile.models.Visit;
+import org.openmrs.mobile.models.retrofit.Visit;
 import org.openmrs.mobile.models.retrofit.Patient;
 
 public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
@@ -121,7 +121,6 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
                 bindString(16, patient.getPerson().getAddress().getCountry(), patientStatement);
                 bindString(17, patient.getPerson().getAddress().getStateProvince(), patientStatement);
                 bindString(18, patient.getPerson().getAddress().getCityVillage(), patientStatement);
-
             }
             bindString(19, patient.getEncounters(), patientStatement);
             bindString(20, null, patientStatement);
@@ -180,11 +179,11 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         try {
             db.beginTransaction();
             bindString(1, visit.getUuid(), visitStatement);
-            bindLong(2, visit.getPatientID(), visitStatement);
-            bindString(3, visit.getVisitType(), visitStatement);
-            bindString(4, visit.getVisitPlace(), visitStatement);
-            bindLong(5, visit.getStartDate(), visitStatement);
-            bindLong(6, visit.getStopDate(), visitStatement);
+            bindLong(2, visit.getPatient().getId(), visitStatement);
+            bindString(3, visit.getVisitType().getDisplay(), visitStatement);
+            bindString(4, visit.getLocation().getDisplay(), visitStatement);
+            bindString(5, visit.getStartDatetime(), visitStatement);
+            bindString(6, visit.getStopDatetime(), visitStatement);
             visitId = visitStatement.executeInsert();
             visitStatement.clearBindings();
             db.setTransactionSuccessful();
@@ -198,11 +197,11 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     public int updateVisit(SQLiteDatabase db, long visitID, Visit visit) {
         ContentValues newValues = new ContentValues();
         newValues.put(VisitTable.Column.UUID, visit.getUuid());
-        newValues.put(VisitTable.Column.PATIENT_KEY_ID, visit.getPatientID());
-        newValues.put(VisitTable.Column.VISIT_TYPE, visit.getVisitType());
-        newValues.put(VisitTable.Column.VISIT_PLACE, visit.getVisitPlace());
-        newValues.put(VisitTable.Column.START_DATE, visit.getStartDate());
-        newValues.put(VisitTable.Column.STOP_DATE, visit.getStopDate());
+        newValues.put(VisitTable.Column.PATIENT_KEY_ID, visit.getPatient().getId());
+        newValues.put(VisitTable.Column.VISIT_TYPE, visit.getVisitType().getDisplay());
+        newValues.put(VisitTable.Column.VISIT_PLACE, visit.getLocation().getDisplay());
+        newValues.put(VisitTable.Column.START_DATE, visit.getStartDatetime());
+        newValues.put(VisitTable.Column.STOP_DATE, visit.getStopDatetime());
 
         String[] whereArgs = new String[]{String.valueOf(visitID)};
 
@@ -220,7 +219,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(2, encounter.getUuid(), encounterStatement);
             bindString(3, encounter.getDisplay(), encounterStatement);
             bindLong(4, encounter.getEncounterDatetime(), encounterStatement);
-            bindString(5, encounter.getEncounterTypeToken().getType(), encounterStatement);
+            bindString(5, encounter.getEncounterType().getDisplay(), encounterStatement);
             bindString(6, encounter.getPatientUUID(), encounterStatement);
             encounterId = encounterStatement.executeInsert();
             encounterStatement.clearBindings();
@@ -238,7 +237,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         newValues.put(EncounterTable.Column.VISIT_KEY_ID, encounter.getVisitID());
         newValues.put(EncounterTable.Column.DISPLAY, encounter.getDisplay());
         newValues.put(EncounterTable.Column.ENCOUNTER_DATETIME, encounter.getEncounterDatetime());
-        newValues.put(EncounterTable.Column.ENCOUNTER_TYPE, encounter.getEncounterTypeToken().getType());
+        newValues.put(EncounterTable.Column.ENCOUNTER_TYPE, encounter.getEncounterType().getDisplay());
 
         String[] whereArgs = new String[]{String.valueOf(encounterID)};
 
@@ -256,11 +255,11 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(3, obs.getDisplay(), observationStatement);
             bindString(4, obs.getDisplayValue(), observationStatement);
             if (obs.getDiagnosisOrder() != null) {
-                bindString(5, obs.getDiagnosisOrder().getOrder(), observationStatement);
+                bindString(5, obs.getDiagnosisOrder(), observationStatement);
             }
             bindString(6, obs.getDiagnosisList(), observationStatement);
             if (obs.getDiagnosisCertainty() != null) {
-                bindString(7, obs.getDiagnosisCertainty().getCertainty(), observationStatement);
+                bindString(7, obs.getDiagnosisCertainty(), observationStatement);
             }
             bindString(8, obs.getDiagnosisNote(), observationStatement);
             obsID = observationStatement.executeInsert();
@@ -280,11 +279,11 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         newValues.put(ObservationTable.Column.DISPLAY, observation.getDisplay());
         newValues.put(ObservationTable.Column.DISPLAY_VALUE, observation.getDisplayValue());
         if (observation.getDiagnosisOrder() != null) {
-            newValues.put(ObservationTable.Column.DIAGNOSIS_ORDER, observation.getDiagnosisOrder().getOrder());
+            newValues.put(ObservationTable.Column.DIAGNOSIS_ORDER, observation.getDiagnosisOrder());
         }
         newValues.put(ObservationTable.Column.DIAGNOSIS_LIST, observation.getDiagnosisList());
         if (observation.getDiagnosisCertainty() != null) {
-            newValues.put(ObservationTable.Column.DIAGNOSIS_CERTAINTY, observation.getDiagnosisCertainty().getCertainty());
+            newValues.put(ObservationTable.Column.DIAGNOSIS_CERTAINTY, observation.getDiagnosisCertainty());
         }
         newValues.put(ObservationTable.Column.DIAGNOSIS_NOTE, observation.getDiagnosisNote());
 

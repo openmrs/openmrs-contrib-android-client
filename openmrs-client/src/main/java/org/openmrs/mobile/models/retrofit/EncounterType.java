@@ -38,10 +38,16 @@ public class EncounterType extends Model implements Serializable {
     @Expose
     private List<Link> links = new ArrayList<Link>();
 
-    public EncounterType()
-    {
-        super();
+    public EncounterType() {}
+
+    public EncounterType(String display) {
+        this.setDisplay(display);
     }
+
+    public static final String VITALS = "Vitals";
+    public static final String VISIT_NOTE = "Visit Note";
+    public static final String DISCHARGE = "Discharge";
+    public static final String ADMISSION = "Admission";
 
     /**
      *

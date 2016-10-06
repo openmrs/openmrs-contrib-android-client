@@ -28,6 +28,7 @@ import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRSInflater;
 import org.openmrs.mobile.models.retrofit.Encounter;
+import org.openmrs.mobile.models.retrofit.EncounterType;
 import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ImageUtils;
@@ -57,29 +58,31 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
         for (Encounter encounter : this.mEncounters) {
             ViewGroup convertView = (ViewGroup) inflater.inflate(R.layout.list_visit_item, null);
             LinearLayout contentLayout = (LinearLayout) convertView.findViewById(R.id.listVisitItemLayoutContent);
-            switch (encounter.getEncounterTypeToken()) {
-                case VITALS:
+            switch (encounter.getEncounterType().getDisplay()) {
+                case EncounterType.VITALS:
                     for (Observation obs : encounter.getObservations()) {
                         convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(), obs.getDisplayValue());
                     }
                     layouts.add(convertView);
                     break;
-                case VISIT_NOTE:
+                case EncounterType.VISIT_NOTE:
                     for (Observation obs : encounter.getObservations()) {
                         if (obs.getDiagnosisNote() != null && !obs.getDiagnosisNote().equals(ApplicationConstants.EMPTY_STRING)) {
                             convertView = openMRSInflater.addKeyValueStringView(contentLayout, mContext.getString(R.string.diagnosis_note_label), obs.getDiagnosisNote());
                         } else {
-                            convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDiagnosisOrder().getOrder(),
-                                    "(" + obs.getDiagnosisCertainty().getShortCertainty() + ") " + obs.getDiagnosisList());
+                            if (obs.getDiagnosisOrder() != null && obs.getShortDiagnosisCertainty() != null && obs.getDiagnosisList() != null) {
+                                convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDiagnosisOrder(),
+                                        "(" + obs.getShortDiagnosisCertainty() + ") " + obs.getDiagnosisList());
+                            }
                         }
                     }
                     layouts.add(convertView);
                     break;
-                case DISCHARGE:
+                case EncounterType.DISCHARGE:
                     convertView = openMRSInflater.addSingleStringView(contentLayout, mContext.getString(R.string.list_item_encounter_no_notes));
                     layouts.add(convertView);
                     break;
-                case ADMISSION:
+                case EncounterType.ADMISSION:
                     convertView = openMRSInflater.addSingleStringView(contentLayout, mContext.getString(R.string.list_item_encounter_no_notes));
                     layouts.add(convertView);
                     break;
@@ -134,7 +137,7 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
         final TextView detailsSelector = (TextView) rowView.findViewById(R.id.listVisitGroupDetailsSelector);
         final ImageView detailsSelectorIcon = (ImageView) rowView.findViewById(R.id.listVisitGroupDetailsIcon);
         final Encounter encounter = mEncounters.get(groupPosition);
-        encounterName.setText(encounter.getEncounterTypeToken().getType());
+        encounterName.setText(encounter.getEncounterType().getDisplay());
         if (isExpanded) {
             detailsSelector.setText(mContext.getString(R.string.list_visit_selector_hide));
             bindDrawableResources(R.drawable.exp_list_hide_details, detailsSelectorIcon);
@@ -142,17 +145,17 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
             detailsSelector.setText(mContext.getString(R.string.list_visit_selector_show));
             bindDrawableResources(R.drawable.exp_list_show_details, detailsSelectorIcon);
         }
-        switch (encounter.getEncounterTypeToken()) {
-            case VITALS:
+        switch (encounter.getEncounterType().getDisplay()) {
+            case EncounterType.VITALS:
                 bindDrawableResources(R.drawable.ico_vitals_small, encounterIcon);
                 break;
-            case VISIT_NOTE:
+            case EncounterType.VISIT_NOTE:
                 bindDrawableResources(R.drawable.visit_note, encounterIcon);
                 break;
-            case DISCHARGE:
+            case EncounterType.DISCHARGE:
                 bindDrawableResources(R.drawable.discharge, encounterIcon);
                 break;
-            case ADMISSION:
+            case EncounterType.ADMISSION:
                 bindDrawableResources(R.drawable.admission, encounterIcon);
                 break;
             default:

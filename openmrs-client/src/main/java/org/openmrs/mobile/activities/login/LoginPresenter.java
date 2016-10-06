@@ -5,20 +5,21 @@ import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
+import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.databases.OpenMRSSQLiteOpenHelper;
+import org.openmrs.mobile.listeners.retrofit.GetVisitTypeCallbackListener;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.retrofit.Results;
 import org.openmrs.mobile.models.retrofit.Session;
+import org.openmrs.mobile.models.retrofit.VisitType;
 import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.net.FormsManager;
 import org.openmrs.mobile.net.UserManager;
-import org.openmrs.mobile.net.VisitsManager;
 import org.openmrs.mobile.net.helpers.FormsHelper;
 import org.openmrs.mobile.net.helpers.UserHelper;
-import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -89,8 +90,20 @@ public class LoginPresenter implements LoginContract.Presenter{
                         } else {
                             mOpenMRS.setSessionToken(session.getSessionId());
                         }
-                        new VisitsManager().getVisitType(
-                                VisitsHelper.createVisitTypeListener());
+
+                        new VisitApi().getVisitType(new GetVisitTypeCallbackListener() {
+                            @Override
+                            public void onGetVisitTypeResponse(VisitType visitType) {
+                                OpenMRS.getInstance().setVisitTypeUUID(visitType.getUuid());
+                            }
+                            @Override
+                            public void onResponse() {}
+                            @Override
+                            public void onErrorResponse() {
+                                ToastUtil.error("Failed to fetch visit type");
+                            }
+                        });
+
                         UserManager userManager = new UserManager();
                         userManager.getUserInformation(
                                 UserHelper.createUserInformationListener(username, userManager));

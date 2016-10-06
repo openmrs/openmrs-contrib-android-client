@@ -64,7 +64,7 @@ public class SyncedPatientsPresenter implements SyncedPatientsContract.Presenter
     public void updateLocalPatientsList() {
         List<Patient> patientList = new PatientDAO().getAllPatients();
         final int NO_STRING_ID = R.string.last_vitals_none_label;
-        boolean isFiltering = StringUtils.notNull(mQuery);
+        boolean isFiltering = StringUtils.notNull(mQuery) && !mQuery.isEmpty();
 
         if (isFiltering) {
             patientList = FilterUtil.getPatientsFilteredByQuery(patientList, mQuery);

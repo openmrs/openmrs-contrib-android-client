@@ -19,8 +19,6 @@ import org.openmrs.mobile.bundle.FormManagerBundle;
 import org.openmrs.mobile.intefaces.VisitDashboardCallbackListener;
 import org.openmrs.mobile.net.BaseManager;
 import org.openmrs.mobile.net.GeneralErrorListener;
-import org.openmrs.mobile.net.VisitsManager;
-import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 public final class UploadXFormWithMultiPartRequestListener extends GeneralErrorListener implements Response.Listener<String> {
@@ -48,8 +46,8 @@ public final class UploadXFormWithMultiPartRequestListener extends GeneralErrorL
         ToastUtil.showLongToast(BaseManager.getCurrentContext(),
                 ToastUtil.ToastType.SUCCESS,
                 BaseManager.getCurrentContext().getString(R.string.forms_sent_successfully));
-        new VisitsManager().findVisitByUUID(
-                VisitsHelper.createFindVisitCallbacksListener(mPatientID, mVisitUUID, mCallbackListener));
+        //new VisitsManager().findVisitByUUID(
+        //        VisitsHelper.createFindVisitCallbacksListener(mPatientID, mVisitUUID, mCallbackListener));
     }
 
     public String getInstancePath() {

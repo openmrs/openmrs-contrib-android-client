@@ -30,9 +30,10 @@ import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.DialogActivity;
-import org.openmrs.mobile.activities.PatientDashboardActivity;
 import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.activities.login.LoginFragment;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
+import org.openmrs.mobile.activities.patientdashboard.visits.PatientVisitsFragment;
 import org.openmrs.mobile.activities.registerpatient.RegisterPatientActivity;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
 import org.openmrs.mobile.adapters.SimilarPatientsRecyclerViewAdapter;
@@ -376,11 +377,12 @@ public class CustomFragmentDialog extends DialogFragment {
         if (activity instanceof PatientDashboardActivity) {
             PatientDashboardActivity pda = ((PatientDashboardActivity) activity);
             List<Fragment> fragments = pda.getSupportFragmentManager().getFragments();
-            PatientVisitsFragment fragment=null;
-            for (Fragment frag: fragments)
-            {
-                if ( frag instanceof PatientVisitsFragment)
-                    fragment=(PatientVisitsFragment)frag;
+            PatientVisitsFragment fragment = null;
+            for (Fragment frag : fragments) {
+                if (frag instanceof PatientVisitsFragment) {
+                    fragment = (PatientVisitsFragment) frag;
+                    break;
+                }
             }
             if (fragment != null) {
                 fragment.startVisit();

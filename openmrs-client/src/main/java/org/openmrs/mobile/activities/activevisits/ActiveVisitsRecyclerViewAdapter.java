@@ -29,7 +29,7 @@ import org.openmrs.mobile.utilities.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.openmrs.mobile.models.Visit;
+import org.openmrs.mobile.models.retrofit.Visit;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -56,11 +56,11 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
     @Override
     public void onBindViewHolder(VisitViewHolder visitViewHolder, final int position) {
         Visit visit = mVisits.get(position);
-        Patient patient = new PatientDAO().findPatientByID(visit.getPatientID().toString());
+        Patient patient = new PatientDAO().findPatientByID(visit.getPatient().getId().toString());
 
-        visitViewHolder.mVisitPlace.setText(mContext.getString(R.string.visit_in, visit.getVisitPlace()));
+        visitViewHolder.mVisitPlace.setText(mContext.getString(R.string.visit_in, visit.getLocation().getDisplay()));
 
-        if (null != visit.getPatientID()) {
+        if (null != visit.getPatient().getId()) {
             visitViewHolder.mIdentifier.setText("#" + patient.getIdentifier().getIdentifier());
         }
         if (null != patient.getPerson().getName()) {

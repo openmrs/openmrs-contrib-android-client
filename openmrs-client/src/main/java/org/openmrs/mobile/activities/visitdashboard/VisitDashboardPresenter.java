@@ -14,16 +14,13 @@
 
 package org.openmrs.mobile.activities.visitdashboard;
 
-import com.google.gson.JsonObject;
-
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.net.VisitsManager;
+import org.openmrs.mobile.models.retrofit.Visit;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -35,7 +32,7 @@ import retrofit2.Response;
 
 public class VisitDashboardPresenter implements VisitDashboardContract.Presenter {
 
-    public long visitStopDate;
+    public String visitStopDate;
     public String mPatientName;
 
     private List<Encounter> mVisitEncounters;
@@ -48,28 +45,30 @@ public class VisitDashboardPresenter implements VisitDashboardContract.Presenter
         this.mVisitDashboardView = mVisitDashboardView;
         mVisitDashboardView.setPresenter(this);
         mVisit = new VisitDAO().getVisitsByID(id);
-        mPatient = new PatientDAO().findPatientByID(String.valueOf(mVisit.getPatientID()));
+        mPatient = new PatientDAO().findPatientByID(String.valueOf(mVisit.getPatient().getId()));
         mPatientName = mPatient.getPerson().getName().getNameString();
         mVisitEncounters = mVisit.getEncounters();
-        visitStopDate = mVisit.getStopDate();
+        visitStopDate = mVisit.getStopDatetime();
     }
 
-
-
-    public void endVisitByUUID(final Visit visitToFinish) {
+    public void endVisitByUUID(final Visit visit) {
         RestApi restApi = RestServiceBuilder.createService(RestApi.class);
-        JsonObject visit = new JsonObject();
-        visit.addProperty("stopDatetime", DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
-        Call<JsonObject> call = restApi.endVisitByUUID(visitToFinish.getUuid(), visit);
-        call.enqueue(new Callback<JsonObject>() {
+        visit.setStopDatetime(DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
+
+        Visit test = new Visit();
+        test.setStopDatetime(visit.getStopDatetime());
+
+        Call<Visit> call = restApi.endVisitByUUID(visit.getUuid(), test );
+
+        call.enqueue(new Callback<Visit>() {
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+            public void onResponse(Call<Visit> call, Response<Visit> response) {
 
                 if (response.isSuccessful()) {
                     VisitDAO visitDAO = new VisitDAO();
-                    Visit visit = visitDAO.getVisitsByID(visitToFinish.getId());
-                    visit.setStopDate(DateUtils.convertTime(response.body().get(VisitsManager.STOP_DATE_TIME).getAsString()));
-                    visitDAO.updateVisit(visit, visit.getId(), visit.getPatientID());
+                    Visit newVisit = visitDAO.getVisitsByID(visit.getId());
+                    newVisit.setStopDatetime(response.body().getStopDatetime());
+                    visitDAO.updateVisit(newVisit, newVisit.getId(), newVisit.getPatient().getId());
                     moveToPatientDashboard();
                 }
                 else {
@@ -78,13 +77,13 @@ public class VisitDashboardPresenter implements VisitDashboardContract.Presenter
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
+            public void onFailure(Call<Visit> call, Throwable t) {
                 ToastUtil.error(t.getMessage());
             }
         });
     }
 
-        public void endVisit() {
+    public void endVisit() {
         endVisitByUUID(mVisit);
     }
 
@@ -94,6 +93,7 @@ public class VisitDashboardPresenter implements VisitDashboardContract.Presenter
 
     @Override
     public void start() {
+        mVisitEncounters = new VisitDAO().getVisitsByID(mVisit.getId()).getEncounters();
         if (!mVisitEncounters.isEmpty()) {
             mVisitDashboardView.setEmptyListVisibility(false);
         }

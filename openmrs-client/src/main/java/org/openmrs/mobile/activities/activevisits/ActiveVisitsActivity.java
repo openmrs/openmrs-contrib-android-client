@@ -78,7 +78,12 @@ public class ActiveVisitsActivity extends ACBaseActivity {
 
             @Override
             public boolean onQueryTextChange(String query) {
-                mPresenter.updateVisitsInDatabaseList(query);
+                if (!query.isEmpty()) {
+                    mPresenter.updateVisitsInDatabaseList(query);
+                }
+                else {
+                    mPresenter.updateVisitsInDatabaseList();
+                }
                 return true;
             }
         });

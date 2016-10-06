@@ -2,7 +2,7 @@ package org.openmrs.mobile.activities.activevisits;
 
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.models.Visit;
+import org.openmrs.mobile.models.retrofit.Visit;
 
 import java.util.List;
 

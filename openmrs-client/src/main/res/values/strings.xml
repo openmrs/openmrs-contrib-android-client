@@ -167,6 +167,8 @@
     <string name="action_synchronize_patients">Synchronizing patient</string>
     <string name="synchronize_patient_successful">Synchronize patient data successful</string>
     <string name="synchronize_patient_error">Synchronize patient data unsuccessful</string>
+    <string name="synchronize_patient_network_error">Cannot synchronize in offline mode</string>
+    <string name="get_patient_from_database_error">Failed to fetch patient from database</string>
     <string name="action_start_visit">Start visit</string>
     <string name="start_visit_successful">Start new visit successful</string>
     <string name="start_visit_error">Start new visit unsuccessful</string>

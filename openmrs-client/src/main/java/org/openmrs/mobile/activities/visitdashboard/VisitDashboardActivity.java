@@ -24,9 +24,8 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
-import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.DateUtils;
+import org.openmrs.mobile.utilities.StringUtils;
 
 public class VisitDashboardActivity extends ACBaseActivity {
 
@@ -65,7 +64,7 @@ public class VisitDashboardActivity extends ACBaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (DateUtils.ZERO.equals(mPresenter.visitStopDate)) {
+        if (StringUtils.isBlank(mPresenter.visitStopDate)) {
             getMenuInflater().inflate(R.menu.active_visit_menu, menu);
         }
         getSupportActionBar().setSubtitle(mPresenter.mPatientName);

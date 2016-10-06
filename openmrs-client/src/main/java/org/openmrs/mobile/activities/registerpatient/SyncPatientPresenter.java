@@ -16,11 +16,13 @@ package org.openmrs.mobile.activities.registerpatient;
 
 import android.view.View;
 
-import org.openmrs.mobile.api.PatientService;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
+import org.openmrs.mobile.api.retrofit.PatientApi;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.Results;
+import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.PatientComparator;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -31,13 +33,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterPatientPresenter implements RegisterPatientContract.Presenter{
+public class SyncPatientPresenter implements RegisterPatientContract.Presenter {
 
     private final RegisterPatientContract.View mRegisterPatientView;
 
     private Patient mPatient;
 
-    public RegisterPatientPresenter(RegisterPatientContract.View mRegisterPatientView) {
+    public SyncPatientPresenter(RegisterPatientContract.View mRegisterPatientView) {
         this.mRegisterPatientView = mRegisterPatientView;
         this.mRegisterPatientView.setPresenter(this);
     }
@@ -108,14 +110,26 @@ public class RegisterPatientPresenter implements RegisterPatientContract.Present
 
     @Override
     public void registerPatient() {
-        new PatientService().registerPatient(mPatient);
-        mRegisterPatientView.startPatientDashbordActivity(mPatient);
-        mRegisterPatientView.finishRegisterActivity();
+        new PatientApi().registerPatient(mPatient, new DefaultResponseCallbackListener() {
+            @Override
+            public void onResponse() {
+                mRegisterPatientView.startPatientDashbordActivity(mPatient);
+                mRegisterPatientView.finishRegisterActivity();
+            }
+
+            @Override
+            public void onErrorResponse() {
+                if (!NetworkUtils.isOnline()) {
+                    mRegisterPatientView.finishRegisterActivity();
+                    mRegisterPatientView.startPatientDashbordActivity(mPatient);
+                }
+            }
+        });
     }
 
     public void findSimilarPatients(final Patient patient){
         RestApi apiService = RestServiceBuilder.createService(RestApi.class);
-        Call<Results<Patient>> call = apiService.getPatients(patient.getPerson().getName().getNameString(), PatientService.FULL_REPRESENTATION);
+        Call<Results<Patient>> call = apiService.getPatients(patient.getPerson().getName().getNameString(), PatientApi.FULL_REPRESENTATION);
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
             public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {

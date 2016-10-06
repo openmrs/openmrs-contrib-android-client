@@ -3,7 +3,7 @@ package org.openmrs.mobile.activities.activevisits;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.models.Visit;
+import org.openmrs.mobile.models.retrofit.Visit;
 import org.openmrs.mobile.models.retrofit.Patient;
 
 import java.util.ArrayList;
@@ -29,10 +29,10 @@ public class ActiveVisitPresenter implements ActiveVisitsContract.Presenter{
         query = query.toLowerCase();
 
         for (Visit visit : visitList) {
-            Patient patient = new PatientDAO().findPatientByID(visit.getPatientID().toString());
+            Patient patient = new PatientDAO().findPatientByID(visit.getPatient().getId().toString());
 
-            String visitPlace = visit.getVisitPlace().toLowerCase();
-            String visitType = visit.getVisitType().toLowerCase();
+            String visitPlace = visit.getLocation().getDisplay().toLowerCase();
+            String visitType = visit.getVisitType().getDisplay().toLowerCase();
             String patientName = patient.getPerson().getNames().get(0).getGivenName().toLowerCase();
             String patientSurname = patient.getPerson().getNames().get(0).getFamilyName().toLowerCase();
             String patientIdentifier = patient.getIdentifier().getIdentifier().toLowerCase();
@@ -54,7 +54,7 @@ public class ActiveVisitPresenter implements ActiveVisitsContract.Presenter{
 
     @Override
     public void updateVisitsInDatabaseList() {
-        mActiveVisitsView.setEmptyListText(R.string.search_patient_no_results);
+        mActiveVisitsView.setEmptyListText(R.string.search_visits_no_results);
         List<Visit> visits = new VisitDAO().getAllActiveVisits();
         mActiveVisitsView.updateListVisibility(visits);
     }

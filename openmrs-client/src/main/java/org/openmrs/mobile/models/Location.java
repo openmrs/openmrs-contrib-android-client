@@ -20,7 +20,7 @@ import com.google.gson.annotations.SerializedName;
 import org.openmrs.mobile.models.retrofit.PersonAddress;
 import org.openmrs.mobile.models.retrofit.Resource;
 
-public class Location extends Resource{
+public class Location extends Resource {
     @Expose
     private Long id;
     @Expose
@@ -44,6 +44,10 @@ public class Location extends Resource{
 
 
     public Location() {}
+
+    public Location(String display) {
+        this.display = display;
+    }
 
     public Location(Long id, String name, String parentLocationUuid, String description, String address2, String address1, String cityVillage, String stateProvince, String country, String postalCode) {
         this.id = id;

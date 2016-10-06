@@ -286,6 +286,12 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         showProgressDialog(getString(dialogMessageId));
     }
 
+    public void dismissCustomFragmentDialog() {
+        if (mCustomFragmentDialog != null) {
+            mCustomFragmentDialog.dismiss();
+        }
+    }
+
     protected void showProgressDialog(String dialogMessage) {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setProgressViewMessage(getString(R.string.progress_dialog_message));

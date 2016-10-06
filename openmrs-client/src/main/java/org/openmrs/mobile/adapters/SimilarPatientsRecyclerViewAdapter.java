@@ -14,8 +14,12 @@ import android.widget.TextView;
 import com.google.common.base.Objects;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.PatientDashboardActivity;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
+import org.openmrs.mobile.api.retrofit.PatientApi;
+import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
+import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
@@ -104,9 +108,10 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
     }
     private void downloadPatient(Patient patient) {
         ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE, R.string.download_started);
-        long patientId = new PatientDAO().savePatient(patient);
-//        new VisitsManager().findVisitsByPatientUUID(
-//                VisitsHelper.createVisitsByPatientUUIDListener(patient.getUuid(), patientId, (ACBaseActivity) mContext));
+        new PatientDAO().savePatient(patient);
+        new VisitApi().syncVisitsData(patient);
+        new VisitApi().syncLastVitals(patient.getUuid());
+        ToastUtil.success("Patient with UUID " + patient.getUuid() + " is now available locally");
     }
 
     private void setBirthdate(PatientViewHolder holder, Patient patient) {

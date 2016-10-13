@@ -39,15 +39,10 @@ A. Re-clone, import in Studio and manually change the files if any done after Fe
 B. Open Android Studio, import project and select your openmrs project. Next, import module and in this step, import the odkcollect module. Set it as your project dependency. As a final step, add the lines useLibrary 'org.apache.http.legacy' in odkcollect/build.gradle under android{ }.
 
 Note:
-<ul>
-  <li>
-    If you are working behind a proxy, check [this](https://wiki.appcelerator.org/display/guides2/Using+Studio+From+Behind+a+Proxy) to get things working.
-  </li>
-  <li>
-    To start development on local server, type http://10.0.2.2:8080/openmrs
-  </li>
-</ul>
-
+<br>
+- If you are working behind a proxy, check [this](https://wiki.appcelerator.org/display/guides2/Using+Studio+From+Behind+a+Proxy) to get things working.
+<br>
+- To start development on local server, type http://10.0.2.2:8080/openmrs as URL.
 
 # Releasing
 

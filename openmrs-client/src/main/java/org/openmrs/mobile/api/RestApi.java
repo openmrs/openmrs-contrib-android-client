@@ -13,6 +13,7 @@ package org.openmrs.mobile.api;
 import com.google.gson.JsonObject;
 
 import org.openmrs.mobile.models.Location;
+import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.retrofit.EncounterType;
 import org.openmrs.mobile.models.retrofit.Encountercreate;

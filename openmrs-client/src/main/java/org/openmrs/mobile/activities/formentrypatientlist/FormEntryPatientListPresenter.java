@@ -12,10 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.syncedpatients;
-
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+package org.openmrs.mobile.activities.formentrypatientlist;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.dao.PatientDAO;
@@ -23,30 +20,22 @@ import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.FilterUtil;
 import org.openmrs.mobile.utilities.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class SyncedPatientsPresenter implements SyncedPatientsContract.Presenter {
+public class FormEntryPatientListPresenter implements FormEntryPatientListContract.Presenter {
 
-    // View
-    @NonNull
-    private final SyncedPatientsContract.View mSyncedPatientsView;
+    private final FormEntryPatientListContract.View mFormEntryPatientListView;
 
-    // Query for data filtering
-    @Nullable
     private String mQuery;
 
-    public SyncedPatientsPresenter(@NonNull SyncedPatientsContract.View syncedPatientsView) {
-        mSyncedPatientsView = syncedPatientsView;
-        mSyncedPatientsView.setPresenter(this);
+    public FormEntryPatientListPresenter(FormEntryPatientListContract.View view) {
+        this.mFormEntryPatientListView = view;
+        this.mFormEntryPatientListView.setPresenter(this);
     }
 
-    /**
-     * Used to display initial data on activity trigger
-     */
     @Override
     public void start() {
-        updateLocalPatientsList();
+        updatePatientsList();
     }
 
     /**
@@ -62,7 +51,7 @@ public class SyncedPatientsPresenter implements SyncedPatientsContract.Presenter
      * It handles search events and replaces View's data to display
      */
     @Override
-    public void updateLocalPatientsList() {
+    public void updatePatientsList() {
         List<Patient> patientList = new PatientDAO().getAllPatients();
         final int NO_STRING_ID = R.string.last_vitals_none_label;
         boolean isFiltering = StringUtils.notNull(mQuery);
@@ -70,21 +59,20 @@ public class SyncedPatientsPresenter implements SyncedPatientsContract.Presenter
         if (isFiltering) {
             patientList = FilterUtil.getPatientsFilteredByQuery(patientList, mQuery);
             if (patientList.isEmpty()) {
-                mSyncedPatientsView.updateListVisibility(false, R.string.search_patient_no_result_for_query, mQuery);
+                mFormEntryPatientListView.updateListVisibility(false, R.string.search_patient_no_result_for_query, mQuery);
             }
             else {
-                mSyncedPatientsView.updateListVisibility(true, NO_STRING_ID, null);
+                mFormEntryPatientListView.updateListVisibility(true, NO_STRING_ID, null);
             }
         }
         else {
             if (patientList.isEmpty()) {
-                mSyncedPatientsView.updateListVisibility(false, R.string.search_patient_no_results, null);
+                mFormEntryPatientListView.updateListVisibility(false, R.string.search_patient_no_results, null);
             }
             else {
-                mSyncedPatientsView.updateListVisibility(true, NO_STRING_ID, null);
+                mFormEntryPatientListView.updateListVisibility(true, NO_STRING_ID, null);
             }
         }
-        mSyncedPatientsView.updateAdapter(patientList, isFiltering);
+        mFormEntryPatientListView.updateAdapter(patientList, isFiltering);
     }
-
 }

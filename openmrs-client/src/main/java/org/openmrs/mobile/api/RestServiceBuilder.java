@@ -26,6 +26,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -43,7 +44,8 @@ public class RestServiceBuilder {
         builder =
                 new Retrofit.Builder()
                         .baseUrl(API_BASE_URL)
-                        .addConverterFactory(buildGsonConverter());
+                        .addConverterFactory(buildGsonConverter())
+                        .client((httpClient).build());
     }
 
     public static <S> S createService(Class<S> serviceClass, String username, String password){
@@ -66,8 +68,10 @@ public class RestServiceBuilder {
                     return chain.proceed(request);
                 }
             });
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            httpClient.addInterceptor(logging);
         }
-
         OkHttpClient client = httpClient.build();
         Retrofit retrofit = builder.client(client).build();
         return retrofit.create(serviceClass);
@@ -83,7 +87,7 @@ public class RestServiceBuilder {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson myGson = gsonBuilder
                 .excludeFieldsWithoutExposeAnnotation()
-                .registerTypeAdapter(Resource.class, new ResourceSerializer())
+                .registerTypeHierarchyAdapter(Resource.class, new ResourceSerializer())
                 .create();
 
         return GsonConverterFactory.create(myGson);

@@ -2,6 +2,7 @@ package org.openmrs.mobile.utilities;
 
 import android.support.annotation.NonNull;
 
+import com.activeandroid.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -12,13 +13,19 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.annotations.Expose;
 
+import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.models.retrofit.Resource;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.logging.Logger;
 
 public class ResourceSerializer implements JsonSerializer<Resource> {
+
+    public static final String RESOURCE_SERIALIZER = "RESOURCE_SERIALIZER";
+    public static final String EXCEPTION = "exception";
+
     @Override
     public JsonElement serialize(Resource src, Type typeOfSrc, JsonSerializationContext context) {
         Gson myGson = getGson();
@@ -31,7 +38,7 @@ public class ResourceSerializer implements JsonSerializer<Resource> {
                     try {
                         srcJson.add(field.getName(), serializeField((Resource) field.get(src), context));
                     } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                        Log.e(RESOURCE_SERIALIZER, EXCEPTION, e);
                     }
                 } else if (Collection.class.isAssignableFrom(field.getType())) {
                     try {
@@ -52,13 +59,13 @@ public class ResourceSerializer implements JsonSerializer<Resource> {
                             }
                         }
                     } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                        Log.e(RESOURCE_SERIALIZER, EXCEPTION, e);
                     }
                 } else {
                     try {
                         srcJson.add(field.getName(), myGson.toJsonTree(field.get(src)));
                     } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                        Log.e(RESOURCE_SERIALIZER, EXCEPTION, e);
                     }
                 }
             }

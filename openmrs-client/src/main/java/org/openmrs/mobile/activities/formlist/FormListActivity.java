@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.formlist;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
@@ -56,5 +57,10 @@ public class FormListActivity extends ACBaseActivity {
         // Create the presenter
         new FormListPresenter(formListFragment, mPatientID);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
     }
 }

@@ -36,8 +36,10 @@ public class LoginActivity extends ACBaseActivity {
         if (loginFragment == null) {
             loginFragment = LoginFragment.newInstance();
         }
-        addFragmentToActivity(getSupportFragmentManager(),
-                loginFragment, R.id.loginContentFrame);
+        if (!loginFragment.isActive()) {
+            addFragmentToActivity(getSupportFragmentManager(),
+                    loginFragment, R.id.loginContentFrame);
+        }
 
         mPresenter = new LoginPresenter(loginFragment, mOpenMRS);
     }

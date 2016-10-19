@@ -41,8 +41,10 @@ public class RegisterPatientActivity extends ACBaseActivity {
         if (registerPatientFragment == null) {
             registerPatientFragment = RegisterPatientFragment.newInstance();
         }
-        addFragmentToActivity(getSupportFragmentManager(),
-                registerPatientFragment, R.id.registerPatientContentFrame);
+        if (!registerPatientFragment.isActive()) {
+            addFragmentToActivity(getSupportFragmentManager(),
+                    registerPatientFragment, R.id.registerPatientContentFrame);
+        }
 
         // Create the mPresenter
         mPresenter = new RegisterPatientPresenter(registerPatientFragment);

@@ -79,18 +79,18 @@ public class LastViewedPatientsFragment extends ACBaseFragment implements LastVi
     }
 
     @Override
-    public void setSpinnerVisibility(int visibility) {
-        mSpinner.setVisibility(visibility);
+    public void setSpinnerVisibility(boolean visibility) {
+        mSpinner.setVisibility(visibility ? View.VISIBLE : View.GONE);
     }
 
     @Override
-    public void setEmptyListVisibility(int visibility) {
-        mEmptyList.setVisibility(visibility);
+    public void setEmptyListVisibility(boolean visibility) {
+        mEmptyList.setVisibility(visibility ? View.VISIBLE : View.GONE);
     }
 
     @Override
-    public void setListVisibility(int visibility) {
-        mPatientsRecyclerView.setVisibility(visibility);
+    public void setListVisibility(boolean visibility) {
+        mPatientsRecyclerView.setVisibility(visibility ? View.VISIBLE : View.GONE);
     }
 
     @Override

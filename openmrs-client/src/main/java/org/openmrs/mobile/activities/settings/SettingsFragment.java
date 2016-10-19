@@ -63,6 +63,11 @@ public class SettingsFragment extends ACBaseFragment implements SettingsContract
     }
 
     @Override
+    public boolean isActive() {
+        return isAdded();
+    }
+
+    @Override
     public void addLogsInfo(long logSize, String logFilename) {
         mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_logs),
                 logFilename,

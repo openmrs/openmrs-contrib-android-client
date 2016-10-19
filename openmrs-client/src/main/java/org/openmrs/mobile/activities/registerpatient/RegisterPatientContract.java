@@ -24,6 +24,8 @@ public interface RegisterPatientContract {
 
     interface View extends BaseView<Presenter> {
 
+        boolean isActive();
+
         void finishRegisterActivity();
 
         void setErrorsVisibility(boolean givenNameError,

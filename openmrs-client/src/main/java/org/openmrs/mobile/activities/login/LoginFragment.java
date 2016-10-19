@@ -24,6 +24,7 @@ import org.openmrs.mobile.activities.DialogActivity;
 import org.openmrs.mobile.activities.fragments.ACBaseFragment;
 import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
 import org.openmrs.mobile.adapters.LocationArrayAdapter;
+import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.models.Location;
@@ -149,7 +150,7 @@ public class LoginFragment extends ACBaseFragment implements LoginContract.View{
 
     @Override
     public boolean isActive() {
-        return false;
+        return isAdded();
     }
 
     @Override
@@ -230,8 +231,8 @@ public class LoginFragment extends ACBaseFragment implements LoginContract.View{
     }
 
     @Override
-    public void sendBroadcast(Intent intent) {
-        getActivity().sendBroadcast(intent);
+    public void sendIntentBroadcast(String message) {
+        getActivity().sendBroadcast(new Intent(message));
     }
 
     private void bindDrawableResources() {
@@ -295,6 +296,12 @@ public class LoginFragment extends ACBaseFragment implements LoginContract.View{
     @Override
     public void userAuthenticated() {
         mPresenter.saveLocationsToDatabase(mLocationsList, mDropdownLocation.getSelectedItem().toString());
+    }
+
+    @Override
+    public void startFormListService() {
+        Intent i=new Intent(getContext(), FormListService.class);
+        getActivity().startService(i);
     }
 
     private List<String> getLocationStringList(List<Location> locationList) {

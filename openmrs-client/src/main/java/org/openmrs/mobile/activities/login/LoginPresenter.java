@@ -1,7 +1,5 @@
 package org.openmrs.mobile.activities.login;
 
-import android.content.Intent;
-
 import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI;
 import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI;
 import org.openmrs.mobile.R;
@@ -99,7 +97,7 @@ public class LoginPresenter implements LoginContract.Presenter{
                         loginView.userAuthenticated();
                         loginView.finishLoginActivity();
                     } else {
-                        loginView.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST));
+                        loginView.sendIntentBroadcast(ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST);
                     }
                 } else {
                     ToastUtil.error(response.message());
@@ -130,13 +128,13 @@ public class LoginPresenter implements LoginContract.Presenter{
         call.enqueue(new Callback<Results<Location>>() {
             @Override
             public void onResponse(Call<Results<Location>> call, Response<Results<Location>> response) {
-                //TODO: debug here
                 if(response.isSuccessful()){
                     RestServiceBuilder.changeBaseUrl(url.trim());
                     loginView.initLoginForm(response.body().getResults(), url);
+                    loginView.startFormListService();
                 } else {
                     loginView.setErrorOccurred(true);
-                    loginView.sendBroadcast(new Intent(ApplicationConstants.CustomIntentActions.ACTION_SERVER_NOT_SUPPORTED_BROADCAST));
+                    loginView.sendIntentBroadcast(ApplicationConstants.CustomIntentActions.ACTION_SERVER_NOT_SUPPORTED_BROADCAST);
                 }
             }
 

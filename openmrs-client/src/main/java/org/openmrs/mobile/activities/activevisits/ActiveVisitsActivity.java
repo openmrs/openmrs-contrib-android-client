@@ -48,8 +48,10 @@ public class ActiveVisitsActivity extends ACBaseActivity {
         if (activeVisitsFragment == null) {
             activeVisitsFragment = ActiveVisitsFragment.newInstance();
         }
-        addFragmentToActivity(getSupportFragmentManager(),
-                activeVisitsFragment, R.id.activeVisitContentFrame);
+        if (!activeVisitsFragment.isActive()) {
+            addFragmentToActivity(getSupportFragmentManager(),
+                    activeVisitsFragment, R.id.activeVisitContentFrame);
+        }
 
         // Create the presenter
         mPresenter = new ActiveVisitPresenter(activeVisitsFragment);

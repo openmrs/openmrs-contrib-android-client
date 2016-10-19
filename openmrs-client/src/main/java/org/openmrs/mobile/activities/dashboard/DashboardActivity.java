@@ -62,8 +62,10 @@ public class DashboardActivity extends ACBaseActivity {
         if (dashboardFragment == null) {
             dashboardFragment = DashboardFragment.newInstance();
         }
-        addFragmentToActivity(getSupportFragmentManager(),
-                dashboardFragment, R.id.dashboardContentFrame);
+        if (!dashboardFragment.isActive()) {
+            addFragmentToActivity(getSupportFragmentManager(),
+                    dashboardFragment, R.id.dashboardContentFrame);
+        }
 
         // Create the presenter
         new DashboardPresenter(dashboardFragment);

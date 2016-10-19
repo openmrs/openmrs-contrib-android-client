@@ -96,6 +96,11 @@ public class RegisterPatientFragment extends ACBaseFragment implements RegisterP
     }
 
     @Override
+    public boolean isActive() {
+        return isAdded();
+    }
+
+    @Override
     public void finishRegisterActivity() {
         getActivity().finish();
     }

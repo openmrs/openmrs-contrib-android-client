@@ -20,7 +20,6 @@ import org.openmrs.mobile.listeners.visit.CheckVisitBeforeStartListener;
 import org.openmrs.mobile.listeners.visit.FindVisitsByPatientUUIDListener;
 import org.openmrs.mobile.listeners.visit.StartVisitListener;
 import org.openmrs.mobile.listeners.visit.FindVisitByUUIDListener;
-import org.openmrs.mobile.listeners.visit.EndVisitByUUIDListener;
 import org.openmrs.mobile.listeners.visit.LastVitalsListener;
 import org.openmrs.mobile.listeners.visit.VisitTypeListener;
 import org.openmrs.mobile.application.OpenMRS;
@@ -87,19 +86,6 @@ public class VisitsManager extends BaseManager {
         JsonObjectRequestWrapper jsObjRequest =
                 new JsonObjectRequestWrapper(Request.Method.GET,
                         url, null, listener, listener, DO_GZIP_REQUEST);
-        mOpenMRS.addToRequestQueue(jsObjRequest);
-    }
-
-    public void endVisitByUUID(EndVisitByUUIDListener listener) {
-        String url = mVisitsByUuidBaseUrl + listener.getVisitUUID();
-        mLogger.d(SENDING_REQUEST + url);
-
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put(STOP_DATE_TIME, DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
-
-        JsonObjectRequestWrapper jsObjRequest =
-                new JsonObjectRequestWrapper(Request.Method.POST,
-                        url, new JSONObject(params), listener, listener, DO_GZIP_REQUEST);
         mOpenMRS.addToRequestQueue(jsObjRequest);
     }
 

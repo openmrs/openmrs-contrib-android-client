@@ -25,7 +25,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.FormListActivity;
+import org.openmrs.mobile.activities.formlist.FormListActivity;
 import org.openmrs.mobile.activities.fragments.ACBaseFragment;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.retrofit.Encounter;

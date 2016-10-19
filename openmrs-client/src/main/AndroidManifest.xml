@@ -150,7 +150,7 @@
                 android:value=".activities.activevisits.ActiveVisitsActivity" />
         </activity>
         <activity
-            android:name=".activities.FormListActivity"
+            android:name=".activities.formlist.FormListActivity"
             android:label="@string/action_form_entry"
             android:launchMode="singleTop"
             android:parentActivityName=".activities.formentrypatientlist.FormEntryPatientListActivity"
@@ -195,11 +195,11 @@
         <activity
             android:name=".activities.FormDisplayActivity"
             android:label="@string/title_activity_form_create"
-            android:parentActivityName=".activities.FormListActivity"
+            android:parentActivityName=".activities.formlist.FormListActivity"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.openmrs.mobile.activities.FormListActivity" />
+                android:value="org.openmrs.mobile.activities.formlist.FormListActivity" />
         </activity>
 
         <activity

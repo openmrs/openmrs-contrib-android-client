@@ -23,7 +23,6 @@ import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.FilterUtil;
 import org.openmrs.mobile.utilities.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SyncedPatientsPresenter implements SyncedPatientsContract.Presenter {

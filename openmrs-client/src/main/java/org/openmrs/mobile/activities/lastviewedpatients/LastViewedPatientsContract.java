@@ -30,11 +30,11 @@ public interface LastViewedPatientsContract {
 
         void setPresenter(@NonNull Presenter presenter);
 
-        void setSpinnerVisibility(int visibility);
+        void setSpinnerVisibility(boolean visibility);
 
-        void setEmptyListVisibility(int visibility);
+        void setEmptyListVisibility(boolean visibility);
 
-        void setListVisibility(int visibility);
+        void setListVisibility(boolean visibility);
 
         void setEmptyListText(String text);
 

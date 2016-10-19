@@ -57,8 +57,10 @@ public class LastViewedPatientsActivity extends ACBaseActivity {
         if (lastViewedPatientsFragment == null) {
             lastViewedPatientsFragment = LastViewedPatientsFragment.newInstance();
         }
-        addFragmentToActivity(getSupportFragmentManager(),
-                lastViewedPatientsFragment, R.id.lastPatientsContentFrame);
+        if (!lastViewedPatientsFragment.isActive()) {
+            addFragmentToActivity(getSupportFragmentManager(),
+                    lastViewedPatientsFragment, R.id.lastPatientsContentFrame);
+        }
 
         // Create the presenter
         mPresenter = new LastViewedPatientsPresenter(lastViewedPatientsFragment);

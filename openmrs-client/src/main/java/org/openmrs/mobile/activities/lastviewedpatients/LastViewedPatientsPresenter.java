@@ -15,7 +15,6 @@
 package org.openmrs.mobile.activities.lastviewedpatients;
 
 import android.support.annotation.NonNull;
-import android.view.View;
 
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -51,26 +50,26 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
 
     public void updateLastViewedList() {
         if (!mLastViewedPatientsView.isRefreshing()) {
-            mLastViewedPatientsView.setSpinnerVisibility(View.VISIBLE);
+            mLastViewedPatientsView.setSpinnerVisibility(true);
         }
-        mLastViewedPatientsView.setEmptyListVisibility(View.GONE);
-        mLastViewedPatientsView.setListVisibility(View.GONE);
+        mLastViewedPatientsView.setEmptyListVisibility(false);
+        mLastViewedPatientsView.setListVisibility(false);
 
         RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<Results<Patient>> call = restApi.getLastViewedPatients();
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
             public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
-                mLastViewedPatientsView.setSpinnerVisibility(View.GONE);
+                mLastViewedPatientsView.setSpinnerVisibility(false);
                 if (response.isSuccessful()) {
                     mLastViewedPatientsView.updateList(response.body().getResults());
-                    mLastViewedPatientsView.setListVisibility(View.VISIBLE);
-                    mLastViewedPatientsView.setEmptyListVisibility(View.GONE);
+                    mLastViewedPatientsView.setListVisibility(true);
+                    mLastViewedPatientsView.setEmptyListVisibility(false);
                 }
                 else {
-                    mLastViewedPatientsView.setListVisibility(View.GONE);
+                    mLastViewedPatientsView.setListVisibility(false);
                     mLastViewedPatientsView.setEmptyListText(response.message());
-                    mLastViewedPatientsView.setEmptyListVisibility(View.VISIBLE);
+                    mLastViewedPatientsView.setEmptyListVisibility(true);
                 }
                 mLastViewedPatientsView.stopRefreshing();
             }
@@ -78,8 +77,8 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
             @Override
             public void onFailure(Call<Results<Patient>> call, Throwable t) {
                 ToastUtil.error(t.getMessage());
-                mLastViewedPatientsView.setSpinnerVisibility(View.GONE);
-                mLastViewedPatientsView.setListVisibility(View.GONE);
+                mLastViewedPatientsView.setSpinnerVisibility(false);
+                mLastViewedPatientsView.setListVisibility(false);
                 mLastViewedPatientsView.stopRefreshing();
             }
         });
@@ -96,9 +95,9 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
 
     public void findPatients(String query) {
         if (!mLastViewedPatientsView.isRefreshing()) {
-            mLastViewedPatientsView.setSpinnerVisibility(View.VISIBLE);
+            mLastViewedPatientsView.setSpinnerVisibility(true);
         }
-        mLastViewedPatientsView.setEmptyListVisibility(View.GONE);
+        mLastViewedPatientsView.setEmptyListVisibility(false);
         mLastQuery = query;
         mIsSearching = true;
 
@@ -107,16 +106,16 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
             public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
-                mLastViewedPatientsView.setSpinnerVisibility(View.GONE);
+                mLastViewedPatientsView.setSpinnerVisibility(false);
                 if (response.isSuccessful()) {
                     mLastViewedPatientsView.updateList(response.body().getResults());
-                    mLastViewedPatientsView.setListVisibility(View.VISIBLE);
-                    mLastViewedPatientsView.setEmptyListVisibility(View.GONE);
+                    mLastViewedPatientsView.setListVisibility(true);
+                    mLastViewedPatientsView.setEmptyListVisibility(false);
                 }
                 else {
-                    mLastViewedPatientsView.setListVisibility(View.GONE);
+                    mLastViewedPatientsView.setListVisibility(false);
                     mLastViewedPatientsView.setEmptyListText(response.message());
-                    mLastViewedPatientsView.setEmptyListVisibility(View.VISIBLE);
+                    mLastViewedPatientsView.setEmptyListVisibility(true);
                 }
                 mIsSearching = false;
                 mLastViewedPatientsView.stopRefreshing();
@@ -124,8 +123,8 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
             @Override
             public void onFailure(Call<Results<Patient>> call, Throwable t) {
                 ToastUtil.error(t.getMessage());
-                mLastViewedPatientsView.setSpinnerVisibility(View.GONE);
-                mLastViewedPatientsView.setListVisibility(View.GONE);
+                mLastViewedPatientsView.setSpinnerVisibility(false);
+                mLastViewedPatientsView.setListVisibility(false);
                 mIsSearching = false;
                 mLastViewedPatientsView.stopRefreshing();
             }

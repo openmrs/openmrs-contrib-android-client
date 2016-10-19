@@ -38,8 +38,10 @@ public class SettingsActivity extends ACBaseActivity {
         if (settingsFragment == null) {
             settingsFragment = SettingsFragment.newInstance();
         }
-        addFragmentToActivity(getSupportFragmentManager(),
-                settingsFragment, R.id.settingsContentFrame);
+        if (!settingsFragment.isActive()) {
+            addFragmentToActivity(getSupportFragmentManager(),
+                    settingsFragment, R.id.settingsContentFrame);
+        }
 
         // Create the presenter
         new SettingsPresenter(settingsFragment, mOpenMRSLogger);

@@ -21,6 +21,8 @@ public interface SettingsContract {
 
     interface View extends BaseView<Presenter> {
 
+        boolean isActive();
+
         void addLogsInfo(long logSize, String logFilename);
 
         void addBuildVersionInfo();

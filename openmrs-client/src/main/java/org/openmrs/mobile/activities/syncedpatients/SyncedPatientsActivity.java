@@ -50,8 +50,10 @@ public class SyncedPatientsActivity extends ACBaseActivity {
         if (syncedPatientsFragment == null) {
             syncedPatientsFragment = SyncedPatientsFragment.newInstance();
         }
-        addFragmentToActivity(getSupportFragmentManager(),
-                syncedPatientsFragment, R.id.syncedPatientsContentFrame);
+        if (!syncedPatientsFragment.isActive()) {
+            addFragmentToActivity(getSupportFragmentManager(),
+                    syncedPatientsFragment, R.id.syncedPatientsContentFrame);
+        }
 
         // Create the presenter
         mPresenter = new SyncedPatientsPresenter(syncedPatientsFragment);

@@ -28,11 +28,13 @@ public interface LoginContract {
 
         void setErrorOccurred(boolean errorOccurred);
 
-        void sendBroadcast(Intent intent);
+        void sendIntentBroadcast(String message);
 
         void initLoginForm(List<Location> locationList, String url);
 
         void userAuthenticated();
+
+        void startFormListService();
     }
 
     interface  Presenter extends BasePresenter{

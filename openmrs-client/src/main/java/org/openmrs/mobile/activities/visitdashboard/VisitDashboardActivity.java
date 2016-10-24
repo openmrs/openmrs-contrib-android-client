@@ -22,7 +22,7 @@ import android.view.MenuItem;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
+import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;

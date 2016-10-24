@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.activevisits;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,14 +25,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.fragments.ACBaseFragment;
 import org.openmrs.mobile.models.retrofit.Visit;
 import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActiveVisitsFragment extends ACBaseFragment implements ActiveVisitsContract.View{
+public class ActiveVisitsFragment extends Fragment implements ActiveVisitsContract.View{
 
     private ActiveVisitsContract.Presenter mPresenter;
 

@@ -12,13 +12,13 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities;
+package org.openmrs.mobile.activities.dialog;
 
 import android.content.Intent;
 import android.os.Bundle;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
+import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 

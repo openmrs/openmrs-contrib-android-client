@@ -15,6 +15,7 @@
 
 package org.openmrs.mobile.activities.settings;
 
+import android.support.v4.app.Fragment;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -25,13 +26,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.fragments.ACBaseFragment;
 import org.openmrs.mobile.models.SettingsListItemDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SettingsFragment extends ACBaseFragment implements SettingsContract.View {
+public class SettingsFragment extends Fragment implements SettingsContract.View {
 
     SettingsContract.Presenter mPresenter;
     private List<SettingsListItemDTO> mListItem = new ArrayList<>();

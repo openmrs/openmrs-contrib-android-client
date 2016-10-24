@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.registerpatient;
 
 import android.app.DatePickerDialog;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,8 +36,7 @@ import android.widget.TextView;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.fragments.ACBaseFragment;
-import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
+import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.models.retrofit.Patient;
@@ -51,7 +51,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class RegisterPatientFragment extends ACBaseFragment implements RegisterPatientContract.View {
+public class RegisterPatientFragment extends Fragment implements RegisterPatientContract.View {
 
     RegisterPatientContract.Presenter mPresenter;
 

@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.patientdashboard.diagnosis;
 
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -26,13 +27,12 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 
-import org.openmrs.mobile.activities.fragments.ACBaseFragment;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
-public class PatientDiagnosisFragment extends ACBaseFragment implements PatientDashboardContract.ViewPatientDiagnosis {
+public class PatientDiagnosisFragment extends Fragment implements PatientDashboardContract.ViewPatientDiagnosis {
 
     PatientDashboardContract.PatientDiagnosisPresenter mPresenter;
 

@@ -39,7 +39,7 @@ public class LocationDAO {
         OpenMRS.getInstance().getOpenMRSLogger().d("All Locations deleted");
     }
 
-    public List<Location> getLocations() {
+    public static List<Location> getLocations() {
         List<Location> locations = new ArrayList<Location>();
         DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
         Cursor cursor = openHelper.getReadableDatabase().query(LocationTable.TABLE_NAME,

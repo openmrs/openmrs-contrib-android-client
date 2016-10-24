@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.patientdashboard.details;
 
+import android.support.v4.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,7 +28,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.fragments.ACBaseFragment;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.models.retrofit.Patient;
@@ -37,7 +37,7 @@ import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-public class PatientDetailsFragment extends ACBaseFragment implements PatientDashboardContract.ViewPatientDetails {
+public class PatientDetailsFragment extends Fragment implements PatientDashboardContract.ViewPatientDetails {
 
     private View rootView;
 

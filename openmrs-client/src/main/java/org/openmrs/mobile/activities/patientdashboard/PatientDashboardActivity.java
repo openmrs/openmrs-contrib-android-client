@@ -1,0 +1,117 @@
+/*
+ * The contents of this file are subject to the OpenMRS Public License
+ * Version 1.0 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://license.openmrs.org
+ *
+ * Software distributed under the License is distributed on an "AS IS"
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+ * License for the specific language governing rights and limitations
+ * under the License.
+ *
+ * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+ */
+
+package org.openmrs.mobile.activities.patientdashboard;
+
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import net.yanzm.mth.MaterialTabHost;
+
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.TabUtil;
+
+import java.util.ArrayList;
+
+public class PatientDashboardActivity extends ACBaseActivity {
+
+    private Patient mPatient;
+    private ViewPager mViewPager;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_patient_dashboard);
+        getSupportActionBar().setElevation(0);
+        Bundle patientBundle = savedInstanceState;
+        if (null != patientBundle) {
+            patientBundle.getString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE);
+        } else {
+            patientBundle = getIntent().getExtras();
+        }
+        mPatient = new PatientDAO().findPatientByID(String.valueOf(patientBundle.get(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE)));
+        initViewPager(getTabNames(), new PatientDashboardPagerAdapter(getSupportFragmentManager(),  mPatient));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPatient.getUuid());
+    }
+
+    @Override
+    public void onConfigurationChanged(final Configuration config) {
+        super.onConfigurationChanged(config);
+        TabUtil.setHasEmbeddedTabs(getSupportActionBar(), getWindowManager(), TabUtil.MIN_SCREEN_WIDTH_FOR_PATIENTDASHBOARDACTIVITY);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.patient_dashboard_menu, menu);
+        getSupportActionBar().setTitle(mPatient.getPerson().getName().getNameString());
+        getSupportActionBar().setSubtitle("#" + mPatient.getIdentifier().getIdentifier());
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.actionDelete:
+                new PatientDAO().deletePatient(mPatient.getId());
+                finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void initViewPager(ArrayList<String> tabNames, PatientDashboardPagerAdapter adapter) {
+        MaterialTabHost tabHost = (MaterialTabHost) findViewById(R.id.tabhost);
+        tabHost.setType(MaterialTabHost.Type.FullScreenWidth);
+        for (int i = 0; i < adapter.getCount(); i++) {
+            tabHost.addTab(tabNames.get(i).toUpperCase());
+        }
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(adapter);
+        mViewPager.addOnPageChangeListener(tabHost);
+        tabHost.setOnTabChangeListener(new MaterialTabHost.OnTabChangeListener() {
+            @Override
+            public void onTabSelected(int position) {
+                mViewPager.setCurrentItem(position);
+                mViewPager.getAdapter().notifyDataSetChanged();
+            }
+        });
+    }
+
+    private ArrayList<String> getTabNames() {
+        ArrayList<String> tabNames = new ArrayList<>();
+        tabNames.add(getString(R.string.patient_scroll_tab_details_label));
+        tabNames.add(getString(R.string.patient_scroll_tab_diagnosis_label));
+        tabNames.add(getString(R.string.patient_scroll_tab_visits_label));
+        tabNames.add(getString(R.string.patient_scroll_tab_vitals_label));
+        return tabNames;
+    }
+}

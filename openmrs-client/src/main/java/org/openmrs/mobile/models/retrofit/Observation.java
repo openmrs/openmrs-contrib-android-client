@@ -10,21 +10,15 @@
 
 package org.openmrs.mobile.models.retrofit;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.List;
 
-public class Observation implements Serializable {
 
-    @SerializedName("uuid")
-    @Expose
-    private String uuid;
-    @SerializedName("display")
-    @Expose
-    private String display;
+public class Observation extends Resource implements Serializable {
+
     @SerializedName("concept")
     @Expose
     private Concept concept;
@@ -39,82 +33,31 @@ public class Observation implements Serializable {
     private int accessionNumber;
     @SerializedName("obsGroup")
     @Expose
-    private String obsGroup;
+    private Observation obsGroup;
     @SerializedName("valueCodedName")
     @Expose
     private String valueCodedName;
-    @SerializedName("groupMembers")
-    @Expose
-    private String groupMembers;
     @SerializedName("comment")
     @Expose
     private String comment;
     @SerializedName("location")
     @Expose
     private Resource location=null;
-    @SerializedName("order")
-    @Expose
-    private String order;
     @SerializedName("encounter")
     @Expose
     private Encounter encounter=null;
     @SerializedName("voided")
     @Expose
     private Boolean voided;
-    @SerializedName("value")
-    @Expose
-    private Double value;
-    @SerializedName("valueModifier")
-    @Expose
-    private String valueModifier;
     @SerializedName("formFieldPath")
     @Expose
     private String formFieldPath;
     @SerializedName("formFieldNamespace")
     @Expose
     private String formFieldNamespace;
-    @SerializedName("links")
-    @Expose
-    private List<Link> links = new ArrayList<Link>();
     @SerializedName("resourceVersion")
     @Expose
     private String resourceVersion;
-
-    /**
-     *
-     * @return
-     *     The uuid
-     */
-    public String getUuid() {
-        return uuid;
-    }
-
-    /**
-     *
-     * @param uuid
-     *     The uuid
-     */
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    /**
-     *
-     * @return
-     *     The display
-     */
-    public String getDisplay() {
-        return display;
-    }
-
-    /**
-     *
-     * @param display
-     *     The display
-     */
-    public void setDisplay(String display) {
-        this.display = display;
-    }
 
     /**
      *
@@ -193,7 +136,7 @@ public class Observation implements Serializable {
      * @return
      *     The obsGroup
      */
-    public String getObsGroup() {
+    public Observation getObsGroup() {
         return obsGroup;
     }
 
@@ -202,7 +145,7 @@ public class Observation implements Serializable {
      * @param obsGroup
      *     The obsGroup
      */
-    public void setObsGroup(String obsGroup) {
+    public void setObsGroup(Observation obsGroup) {
         this.obsGroup = obsGroup;
     }
 
@@ -222,24 +165,6 @@ public class Observation implements Serializable {
      */
     public void setValueCodedName(String valueCodedName) {
         this.valueCodedName = valueCodedName;
-    }
-
-    /**
-     *
-     * @return
-     *     The groupMembers
-     */
-    public String getGroupMembers() {
-        return groupMembers;
-    }
-
-    /**
-     *
-     * @param groupMembers
-     *     The groupMembers
-     */
-    public void setGroupMembers(String groupMembers) {
-        this.groupMembers = groupMembers;
     }
 
     /**
@@ -281,24 +206,6 @@ public class Observation implements Serializable {
     /**
      *
      * @return
-     *     The order
-     */
-    public String getOrder() {
-        return order;
-    }
-
-    /**
-     *
-     * @param order
-     *     The order
-     */
-    public void setOrder(String order) {
-        this.order = order;
-    }
-
-    /**
-     *
-     * @return
      *     The encounter
      */
     public Encounter getEncounter() {
@@ -330,42 +237,6 @@ public class Observation implements Serializable {
      */
     public void setVoided(Boolean voided) {
         this.voided = voided;
-    }
-
-    /**
-     *
-     * @return
-     *     The value
-     */
-    public Double getValue() {
-        return value;
-    }
-
-    /**
-     *
-     * @param value
-     *     The value
-     */
-    public void setValue(Double value) {
-        this.value = value;
-    }
-
-    /**
-     *
-     * @return
-     *     The valueModifier
-     */
-    public String getValueModifier() {
-        return valueModifier;
-    }
-
-    /**
-     *
-     * @param valueModifier
-     *     The valueModifier
-     */
-    public void setValueModifier(String valueModifier) {
-        this.valueModifier = valueModifier;
     }
 
     /**
@@ -407,24 +278,6 @@ public class Observation implements Serializable {
     /**
      *
      * @return
-     *     The links
-     */
-    public List<Link> getLinks() {
-        return links;
-    }
-
-    /**
-     *
-     * @param links
-     *     The links
-     */
-    public void setLinks(List<Link> links) {
-        this.links = links;
-    }
-
-    /**
-     *
-     * @return
      *     The resourceVersion
      */
     public String getResourceVersion() {
@@ -443,9 +296,11 @@ public class Observation implements Serializable {
     private Long id;
     private Long encounterID;
     private String displayValue;
-    private DiagnosisOrder diagnosisOrder;
+
     private String diagnosisList;
-    private DiagnosisCertainty diagnosisCertainty;
+    private String diagnosisCertainty;
+    private String diagnosisOrder;
+
     private String diagnosisNote;
 
     public Long getId() {
@@ -465,6 +320,9 @@ public class Observation implements Serializable {
     }
 
     public String getDisplayValue() {
+        if (displayValue == null && display != null && display.contains(":")) {
+            setDisplayValue(display.split(":")[1]);
+        }
         return displayValue;
     }
 
@@ -472,28 +330,28 @@ public class Observation implements Serializable {
         this.displayValue = displayValue;
     }
 
-    public DiagnosisOrder getDiagnosisOrder() {
-        return diagnosisOrder;
+    public String getShortDiagnosisCertainty() {
+        return diagnosisCertainty.split(" ")[0];
+    }
+    public String getDiagnosisCertainty() {
+        return diagnosisCertainty;
+    }
+    public void setDiagnosisCertanity(String certanity) {
+        this.diagnosisCertainty = certanity;
     }
 
-    public void setDiagnosisOrder(DiagnosisOrder diagnosisOrder) {
+    public String getDiagnosisOrder() {
+        return diagnosisOrder;
+    }
+    public void setDiagnosisOrder(String diagnosisOrder) {
         this.diagnosisOrder = diagnosisOrder;
     }
 
     public String getDiagnosisList() {
         return diagnosisList;
     }
-
     public void setDiagnosisList(String diagnosisList) {
         this.diagnosisList = diagnosisList;
-    }
-
-    public DiagnosisCertainty getDiagnosisCertainty() {
-        return diagnosisCertainty;
-    }
-
-    public void setDiagnosisCertainty(DiagnosisCertainty diagnosisCertainty) {
-        this.diagnosisCertainty = diagnosisCertainty;
     }
 
     public String getDiagnosisNote() {
@@ -502,58 +360,6 @@ public class Observation implements Serializable {
 
     public void setDiagnosisNote(String diagnosisNote) {
         this.diagnosisNote = diagnosisNote;
-    }
-
-    public enum DiagnosisCertainty {
-        PRESUMED("Presumed diagnosis"), CONFIRMED("Confirmed diagnosis");
-
-        DiagnosisCertainty(String certainty) {
-            this.certainty = certainty;
-        }
-
-        private String certainty;
-
-        public String getCertainty() {
-            return certainty;
-        }
-
-        public String getShortCertainty() {
-            return certainty.split(" ")[0];
-        }
-
-        public static DiagnosisCertainty getCertainty(String certainty) {
-            if (certainty.equals(CONFIRMED.getCertainty())) {
-                return CONFIRMED;
-            } else if (certainty.equals(PRESUMED.getCertainty())) {
-                return PRESUMED;
-            } else {
-                return null;
-            }
-        }
-    }
-
-    public enum DiagnosisOrder {
-        PRIMARY("Primary"), SECONDARY("Secondary");
-
-        DiagnosisOrder(String order) {
-            this.order = order;
-        }
-
-        private String order;
-
-        public String getOrder() {
-            return order;
-        }
-
-        public static DiagnosisOrder getOrder(String order) {
-            if (order.equals(PRIMARY.getOrder())) {
-                return PRIMARY;
-            } else if  (order.equals(SECONDARY.getOrder())) {
-                return SECONDARY;
-            } else {
-                return null;
-            }
-        }
     }
 
 }

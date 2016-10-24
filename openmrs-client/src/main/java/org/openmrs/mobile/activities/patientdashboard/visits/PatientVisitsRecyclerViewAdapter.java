@@ -12,9 +12,8 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.adapters;
+package org.openmrs.mobile.activities.patientdashboard.visits;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,8 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.PatientDashboardActivity;
-import org.openmrs.mobile.models.Visit;
+import org.openmrs.mobile.models.retrofit.Visit;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
@@ -34,11 +32,11 @@ import org.openmrs.mobile.utilities.ImageUtils;
 import java.util.List;
 
 public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<PatientVisitsRecyclerViewAdapter.VisitViewHolder> {
-    private Context mContext;
+    private PatientVisitsFragment mContext;
     private List<Visit> mVisits;
 
 
-    public PatientVisitsRecyclerViewAdapter(Context context, List<Visit> items) {
+    public PatientVisitsRecyclerViewAdapter(PatientVisitsFragment context, List<Visit> items) {
         this.mContext = context;
         this.mVisits = items;
     }
@@ -54,10 +52,10 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
     public void onBindViewHolder(VisitViewHolder visitViewHolder, final int position) {
         Visit visit = mVisits.get(position);
 
-        visitViewHolder.mVisitStart.setText(DateUtils.convertTime(visit.getStartDate(), DateUtils.DATE_WITH_TIME_FORMAT));
-        if (!DateUtils.ZERO.equals(visit.getStopDate())) {
+        visitViewHolder.mVisitStart.setText(DateUtils.convertTime1(visit.getStartDatetime(), DateUtils.DATE_WITH_TIME_FORMAT));
+        if (DateUtils.convertTime(visit.getStopDatetime()) != null) {
             visitViewHolder.mVisitEnd.setVisibility(View.VISIBLE);
-            visitViewHolder.mVisitEnd.setText(DateUtils.convertTime(visit.getStopDate(), DateUtils.DATE_WITH_TIME_FORMAT));
+            visitViewHolder.mVisitEnd.setText(DateUtils.convertTime1((visit.getStopDatetime()), DateUtils.DATE_WITH_TIME_FORMAT));
 
             visitViewHolder.mVisitStatusIcon.setImageBitmap(
                     ImageUtils.decodeBitmapFromResource(mContext.getResources(), R.drawable.past_visit_dot,
@@ -70,15 +68,14 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
                             visitViewHolder.mVisitStatusIcon.getLayoutParams().width, visitViewHolder.mVisitStatusIcon.getLayoutParams().height));
             visitViewHolder.mVisitStatus.setText(mContext.getString(R.string.active_visit_label));
         }
-        visitViewHolder.mVisitPlace.setText(mContext.getString(R.string.visit_in, visit.getVisitPlace()));
+        visitViewHolder.mVisitPlace.setText(mContext.getString(R.string.visit_in, visit.getLocation().getDisplay()));
 
         visitViewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((PatientDashboardActivity) mContext).goToVisitDashboard(mVisits.get(position).getId());
+                mContext.goToVisitDashboard(mVisits.get(position).getId());
             }
         });
-        new AnimationUtils().setAnimation(visitViewHolder.mRelativeLayout,mContext,position);
     }
 
     @Override

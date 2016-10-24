@@ -17,13 +17,12 @@ package org.openmrs.mobile.activities;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,7 +40,6 @@ import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FormService;
 import org.openmrs.mobile.utilities.InputField;
-import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.lang.ref.WeakReference;

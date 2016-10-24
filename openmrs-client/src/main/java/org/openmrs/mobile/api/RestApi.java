@@ -13,7 +13,7 @@ package org.openmrs.mobile.api;
 import com.google.gson.JsonObject;
 
 import org.openmrs.mobile.models.Location;
-import org.openmrs.mobile.models.Visit;
+import org.openmrs.mobile.models.retrofit.Visit;
 import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.retrofit.EncounterType;
 import org.openmrs.mobile.models.retrofit.Encountercreate;
@@ -25,12 +25,11 @@ import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.Results;
 import org.openmrs.mobile.models.retrofit.Session;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.models.retrofit.VisitType;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -61,6 +60,10 @@ public interface RestApi {
     @GET("patient?v=full")
     Call<Results<Patient>> getPatients(@Query("q") String query);
 
+    @GET("patient/{uuid}")
+    Call<Patient> getPatientByUUID(@Path("uuid") String uuid,
+                                   @Query("v") String representation);
+
     @GET("patient?lastviewed&v=full")
     Call<Results<Patient>> getLastViewedPatients();
 
@@ -85,6 +88,23 @@ public interface RestApi {
     Call<Session> getSession();
 
     @POST("visit/{uuid}")
-    Call<JsonObject> endVisitByUUID(@Path("uuid") String uuid, @Body JsonObject visit);
+    Call<Visit> endVisitByUUID(@Path("uuid") String uuid, @Body Visit stopDatetime);
+
+    @POST("visit")
+    Call<Visit> startVisit(@Body Visit visit);
+
+    @GET("visit")
+    Call<Results<Visit>> findVisitsByPatientUUID(@Query("patient") String patientUUID,
+                                        @Query("v") String representation);
+
+    @GET("visittype")
+    Call<Results<VisitType>> getVisitType();
+
+    @GET("encounter")
+    Call<Results<Encounter>> getLastVitals(@Query("patient") String patientUUID,
+                                  @Query("encounterType") String encounterType,
+                                  @Query("v") String representation,
+                                  @Query("limit") int limit,
+                                  @Query("order") String order);
 
 }

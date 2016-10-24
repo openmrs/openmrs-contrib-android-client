@@ -26,7 +26,7 @@ import org.openmrs.mobile.utilities.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.PatientDashboardActivity;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;

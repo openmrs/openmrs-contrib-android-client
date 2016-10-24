@@ -16,7 +16,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="org.openmrs.mobile.activities.PatientDashboardActivity" >
+    tools:context=".activities.patientdashboard.PatientDashboardActivity" >
     <item
         android:id="@+id/actionStartVisit"
         android:orderInCategory="100"

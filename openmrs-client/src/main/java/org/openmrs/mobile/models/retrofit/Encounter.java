@@ -13,23 +13,16 @@ package org.openmrs.mobile.models.retrofit;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.DateUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Encounter implements Serializable{
+public class Encounter extends Resource implements Serializable{
 
     private Long id;
 
-    @SerializedName("uuid")
-    @Expose
-    private String uuid;
-    @SerializedName("display")
-    @Expose
-    private String display;
     @SerializedName("encounterDatetime")
     @Expose
     private String encounterDatetime;
@@ -60,17 +53,12 @@ public class Encounter implements Serializable{
     @SerializedName("encounterProviders")
     @Expose
     private List<Resource> encounterProviders = new ArrayList<Resource>();
-    @SerializedName("links")
-    @Expose
-    private List<Link> links = new ArrayList<Link>();
     @SerializedName("resourceVersion")
     @Expose
     private String resourceVersion;
 
-    private EncounterTypeToken encounterTypeToken;
     private Long visitID;
     private String patientUUID;
-
 
     public Long getId() {
         return id;
@@ -341,40 +329,6 @@ public class Encounter implements Serializable{
      */
     public void setResourceVersion(String resourceVersion) {
         this.resourceVersion = resourceVersion;
-    }
-
-    public EncounterTypeToken getEncounterTypeToken() {
-        return encounterTypeToken;
-    }
-
-    public void setEncounterTypeToken(EncounterTypeToken encounterTypeToken) {
-        this.encounterTypeToken = encounterTypeToken;
-    }
-
-    public enum EncounterTypeToken {
-        VITALS("Vitals"), VISIT_NOTE("Visit Note"), DISCHARGE("Discharge"), ADMISSION("Admission");
-
-        EncounterTypeToken(String type) {
-            this.type = type;
-        }
-
-        private String type;
-
-        public String getType() {
-            return type;
-        }
-
-        public static EncounterTypeToken getType(String type) {
-            if (type.equals(VISIT_NOTE.getType())) {
-                return VISIT_NOTE;
-            } else if (type.equals(DISCHARGE.getType())) {
-                return DISCHARGE;
-            } else if (type.equals(ADMISSION.getType())) {
-                return ADMISSION;
-            } else {
-                return VITALS;
-            }
-        }
     }
 
 }

@@ -47,7 +47,7 @@ public class RegisterPatientActivity extends ACBaseActivity {
         }
 
         // Create the mPresenter
-        mPresenter = new RegisterPatientPresenter(registerPatientFragment);
+        mPresenter = new SyncPatientPresenter(registerPatientFragment);
     }
 
 }

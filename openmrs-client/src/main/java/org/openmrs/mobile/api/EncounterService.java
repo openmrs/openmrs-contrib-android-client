@@ -15,14 +15,14 @@ import android.content.Intent;
 
 import com.activeandroid.query.Select;
 
+import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.models.Visit;
+import org.openmrs.mobile.listeners.retrofit.StartVisitResponseListenerCallback;
+import org.openmrs.mobile.models.retrofit.EncounterType;
+import org.openmrs.mobile.models.retrofit.Visit;
 import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.retrofit.Encountercreate;
-import org.openmrs.mobile.models.retrofit.Observation;
-import org.openmrs.mobile.net.VisitsManager;
-import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -48,15 +48,31 @@ public class EncounterService extends IntentService {
                 Visit visit = new VisitDAO().getPatientCurrentVisit(encountercreate.getPatientId());
                 encountercreate.setVisit(visit.getUuid());
                 syncEncounter(encountercreate);
-
-            } else {
-                new VisitsManager().checkVisitBeforeStart(
-                        VisitsHelper.createCheckVisitsBeforeStartListener(encountercreate.getPatientId(), encountercreate, this));
+            }
+            else {
+                startNewVisitForEncounter(encountercreate);
             }
         }
         else
             ToastUtil.error("No internet connection. Form data is saved locally " +
                     "and will sync when internet connection is restored. ");
+    }
+
+    private void startNewVisitForEncounter(final Encountercreate encountercreate) {
+        new VisitApi().startVisit(new PatientDAO().findPatientByUUID(encountercreate.getPatient()),
+                new StartVisitResponseListenerCallback() {
+                    @Override
+                    public void onStartVisitResponse(long id) {
+                        encountercreate.setVisit(new VisitDAO().getVisitsByID(id).getUuid());
+                        syncEncounter(encountercreate);
+                    }
+                    @Override
+                    public void onResponse() {}
+                    @Override
+                    public void onErrorResponse() {
+                        ToastUtil.error("Failed to start visit");
+                    }
+                });
     }
 
     public void syncEncounter(final Encountercreate encountercreate) {
@@ -73,6 +89,7 @@ public class EncounterService extends IntentService {
                         linkvisit(encountercreate.getPatientId(),encountercreate.getFormname(), encounter, encountercreate);
                         encountercreate.setSynced(true);
                         encountercreate.save();
+                        new VisitApi().syncLastVitals(encountercreate.getPatient());
                     } else {
                         ToastUtil.error("Could not save encounter");
                     }
@@ -96,7 +113,7 @@ public class EncounterService extends IntentService {
     {
         Long visitid=new VisitDAO().getVisitsIDByUUID(encounter.getVisit().getUuid());
         Visit visit=new VisitDAO().getVisitsByID(visitid);
-        encounter.setEncounterTypeToken(Encounter.EncounterTypeToken.getType(formname));
+        encounter.setEncounterType(new EncounterType(formname));
         for (int i=0;i<encountercreate.getObservations().size();i++)
         {
             encounter.getObservations().get(i).setDisplayValue
@@ -116,9 +133,9 @@ public class EncounterService extends IntentService {
                     .from(Encountercreate.class)
                     .execute();
 
-            for(Encountercreate encountercreate:encountercreatelist)
+            for(final Encountercreate encountercreate:encountercreatelist)
             {
-                if(encountercreate.getSynced()==false &&
+                if(!encountercreate.getSynced() &&
                         new PatientDAO().findPatientByID(Long.toString(encountercreate.getPatientId())).isSynced())
                 {
                     if (new VisitDAO().isPatientNowOnVisit(encountercreate.getPatientId())) {
@@ -127,8 +144,7 @@ public class EncounterService extends IntentService {
                         syncEncounter(encountercreate);
 
                     } else {
-                        new VisitsManager().checkVisitBeforeStart(
-                                VisitsHelper.createCheckVisitsBeforeStartListener(encountercreate.getPatientId(), encountercreate, this));
+                        startNewVisitForEncounter(encountercreate);
                     }
                 }
             }

@@ -13,13 +13,11 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.annotations.Expose;
 
-import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.models.retrofit.Resource;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.Collection;
-import java.util.logging.Logger;
 
 public class ResourceSerializer implements JsonSerializer<Resource> {
 
@@ -36,7 +34,9 @@ public class ResourceSerializer implements JsonSerializer<Resource> {
                 field.setAccessible(true);
                 if (Resource.class.isAssignableFrom(field.getType())) {
                     try {
-                        srcJson.add(field.getName(), serializeField((Resource) field.get(src), context));
+                        if (field.get(src) != null) {
+                            srcJson.add(field.getName(), serializeField((Resource) field.get(src), context));
+                        }
                     } catch (IllegalAccessException e) {
                         Log.e(RESOURCE_SERIALIZER, EXCEPTION, e);
                     }

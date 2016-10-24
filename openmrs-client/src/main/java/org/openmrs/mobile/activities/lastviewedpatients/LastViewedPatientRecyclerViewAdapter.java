@@ -29,17 +29,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import org.openmrs.mobile.api.retrofit.PatientApi;
+import org.openmrs.mobile.api.retrofit.VisitApi;
+import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
 import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.utilities.AnimationUtils;
+
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.PatientDashboardActivity;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.net.VisitsManager;
-import org.openmrs.mobile.net.helpers.VisitsHelper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -48,18 +48,17 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastViewedPatientRecyclerViewAdapter.PatientViewHolder> {
+class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastViewedPatientRecyclerViewAdapter.PatientViewHolder> {
     private Activity mContext;
     private List<Patient> mItems;
     private boolean isAllDownloadableSelected = false;
     private boolean isLongClicked = false;
     private int howManyDownloadables = 0;
-    ActionMode actionMode;
+    private ActionMode actionMode;
     private int howManySelected = 0;
     private PatientDataArrayList patientDataArrayList = new PatientDataArrayList();
-    private boolean isUpdatingExistingData = false;
 
-    public LastViewedPatientRecyclerViewAdapter(Activity context, List<Patient> items){
+    LastViewedPatientRecyclerViewAdapter(Activity context, List<Patient> items){
         this.mContext = context;
         this.mItems = items;
     }
@@ -135,11 +134,6 @@ public class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<L
                 return true;
             }
         });
-        if (!isUpdatingExistingData) {
-            //This logic is preventing list animation when local data is replaced with freshly downloaded data from network
-            //See AC-192 for details
-            new AnimationUtils().setAnimation(holder.mRowLayout,mContext,position);
-        }
     }
 
     @Override
@@ -163,7 +157,6 @@ public class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<L
         private TextView mIdentifier;
         private TextView mDisplayName;
         private TextView mGender;
-        private TextView mAge;
         private TextView mBirthDate;
         private CheckBox mAvailableOfflineCheckbox;
 
@@ -173,7 +166,6 @@ public class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<L
             mIdentifier = (TextView) itemView.findViewById(R.id.lastViewedPatientIdentifier);
             mDisplayName = (TextView) itemView.findViewById(R.id.lastViewedPatientDisplayName);
             mGender = (TextView) itemView.findViewById(R.id.lastViewedPatientGender);
-            mAge = (TextView) itemView.findViewById(R.id.lastViewedPatientAge);
             mBirthDate = (TextView) itemView.findViewById(R.id.lastViewedPatientBirthDate);
             mAvailableOfflineCheckbox = (CheckBox) itemView.findViewById(R.id.offlineCheckbox);
         }
@@ -291,7 +283,6 @@ public class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<L
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             unselectAll();
-            //actionMode = null;
         }
     };
 
@@ -322,10 +313,6 @@ public class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<L
         }
     }
 
-    public void setIsUpdatingExistingData(boolean isUpdating) {
-        isUpdatingExistingData = isUpdating;
-    }
-
     public void setUpCheckBoxLogic(final PatientViewHolder holder, final Patient patient){
         if (new PatientDAO().userDoesNotExist(patient.getUuid())) {
             holder.mAvailableOfflineCheckbox.setChecked(false);
@@ -347,10 +334,23 @@ public class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<L
     }
 
     private void downloadPatient(Patient patient) {
-        long patientId = new PatientDAO().savePatient(patient);
         ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE, R.string.download_started);
-        new VisitsManager().findVisitsByPatientUUID(
-                VisitsHelper.createVisitsByPatientUUIDListener(patient.getUuid(), patientId, (ACBaseActivity) mContext));
+        new PatientApi().downloadPatientByUuid(patient.getUuid(), new DownloadPatientCallbackListener() {
+            @Override
+            public void onPatientDownloaded(Patient patient) {
+                new PatientDAO().savePatient(patient);
+                new PatientApi().syncPatient(patient);
+                new VisitApi().syncVisitsData(patient);
+                new VisitApi().syncLastVitals(patient.getUuid());
+                ToastUtil.success("Patient with UUID " + patient.getUuid() + " is now available locally");
+            }
+            @Override
+            public void onResponse() {}
+            @Override
+            public void onErrorResponse() {
+                ToastUtil.error("Failed to fetch patient data");
+            }
+        });
     }
 
     public void disableCheckBox(PatientViewHolder holder) {

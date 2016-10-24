@@ -110,7 +110,7 @@
             android:label="@string/action_settings"
             android:noHistory="true" />
         <activity
-            android:name=".activities.PatientDashboardActivity"
+            android:name=".activities.patientdashboard.PatientDashboardActivity"
             android:theme="@style/AppThemeOrig">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->

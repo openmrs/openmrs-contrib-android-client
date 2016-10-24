@@ -10,5 +10,21 @@
 
 package org.openmrs.mobile.models.retrofit;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class Concept extends Resource{
+
+    @SerializedName("datatype")
+    @Expose
+    private Datatype datatype;
+
+    @SerializedName("name")
+    @Expose
+    private String name;
+
+    @SerializedName("conceptClass")
+    @Expose
+    private ConceptClass conceptClass;
+
 }

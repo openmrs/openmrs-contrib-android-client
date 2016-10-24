@@ -16,8 +16,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.models.retrofit.Resource;
+import org.openmrs.mobile.models.retrofit.Visit;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.ObservationDeserializer;
 import org.openmrs.mobile.utilities.ResourceSerializer;
 
 import java.io.IOException;
@@ -53,7 +56,6 @@ public class RestServiceBuilder {
             String credentials = username + ":" + password;
             final String basic =
                     "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-
             httpClient.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Interceptor.Chain chain) throws IOException {
@@ -63,6 +65,7 @@ public class RestServiceBuilder {
                             .header("Authorization", basic)
                             .header("Accept", "application/json")
                             .method(original.method(), original.body());
+
 
                     Request request = requestBuilder.build();
                     return chain.proceed(request);
@@ -88,6 +91,7 @@ public class RestServiceBuilder {
         Gson myGson = gsonBuilder
                 .excludeFieldsWithoutExposeAnnotation()
                 .registerTypeHierarchyAdapter(Resource.class, new ResourceSerializer())
+                .registerTypeHierarchyAdapter(Observation.class, new ObservationDeserializer())
                 .create();
 
         return GsonConverterFactory.create(myGson);

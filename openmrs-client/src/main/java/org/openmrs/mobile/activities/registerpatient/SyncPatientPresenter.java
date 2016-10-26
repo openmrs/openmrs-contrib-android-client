@@ -19,9 +19,13 @@ import android.view.View;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.retrofit.PatientApi;
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
+import org.openmrs.mobile.models.retrofit.Module;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.Results;
+import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.ModuleUtils;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.PatientComparator;
 import org.openmrs.mobile.utilities.StringUtils;
@@ -128,15 +132,78 @@ public class SyncPatientPresenter implements RegisterPatientContract.Presenter {
     }
 
     public void findSimilarPatients(final Patient patient){
+        if (NetworkUtils.isOnline()) {
+            RestApi apiService = RestServiceBuilder.createService(RestApi.class);
+            Call<Results<Module>> moduleCall = apiService.getModules(ApplicationConstants.API.FULL);
+            moduleCall.enqueue(new Callback<Results<Module>>() {
+                @Override
+                public void onResponse(Call<Results<Module>> call, Response<Results<Module>> response) {
+                    if(response.isSuccessful()){
+                        if(ModuleUtils.isRegistrationCore1_7orAbove(response.body().getResults())){
+                            fetchSimilarPatientsFromServer(patient);
+                        } else {
+                            fetchSimilarPatientAndCalculateLocally(patient);
+                                                    }
+                    } else {
+                        fetchSimilarPatientAndCalculateLocally(patient);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Results<Module>> call, Throwable t) {
+                    mRegisterPatientView.setProgressBarVisibility(View.GONE);
+                    ToastUtil.error(t.getMessage());
+                }
+            });
+        } else {
+            List<Patient> similarPatient = new PatientComparator().findSimilarPatient(new PatientDAO().getAllPatients(), patient);
+            if(!similarPatient.isEmpty()){
+                mRegisterPatientView.showSimilarPatientDialog(similarPatient, patient);
+            } else {
+                registerPatient();
+            }
+        }
+    }
+
+    private void fetchSimilarPatientAndCalculateLocally(final Patient patient) {
         RestApi apiService = RestServiceBuilder.createService(RestApi.class);
-        Call<Results<Patient>> call = apiService.getPatients(patient.getPerson().getName().getNameString(), PatientApi.FULL_REPRESENTATION);
+        Call<Results<Patient>> call = apiService.getPatients(patient.getPerson().getName().getGivenName(), ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
             public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
-                if (response.isSuccessful()) {
-                    List<Patient> patientsList = new PatientComparator().findSimilarPatient(response.body().getResults(), patient);
-                    if (!patientsList.isEmpty()) {
-                        mRegisterPatientView.showSimilarPatientDialog(patientsList, patient);
+                if(response.isSuccessful()){
+                    List<Patient> patientList = response.body().getResults();
+                    if(!patientList.isEmpty()){
+                        List<Patient> similarPatient = new PatientComparator().findSimilarPatient(patientList, patient);
+                        mRegisterPatientView.showSimilarPatientDialog(similarPatient, patient);
+                    } else {
+                        registerPatient();
+                    }
+                } else {
+                    mRegisterPatientView.setProgressBarVisibility(View.GONE);
+                    ToastUtil.error(response.message());
+                }
+                mRegisterPatientView.showUpgradeRegistrationModuleInfo();
+            }
+
+            @Override
+            public void onFailure(Call<Results<Patient>> call, Throwable t) {
+                mRegisterPatientView.setProgressBarVisibility(View.GONE);
+                ToastUtil.error(t.getMessage());
+            }
+        });
+    }
+
+    private void fetchSimilarPatientsFromServer(final Patient patient) {
+        RestApi apiService = RestServiceBuilder.createService(RestApi.class);
+        Call<Results<Patient>> call = apiService.getSimilarPatients(patient.toMap());
+        call.enqueue(new Callback<Results<Patient>>() {
+            @Override
+            public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
+                if(response.isSuccessful()){
+                    List<Patient> similarPatients = response.body().getResults();
+                    if(!similarPatients.isEmpty()){
+                        mRegisterPatientView.showSimilarPatientDialog(similarPatients, patient);
                     } else {
                         registerPatient();
                     }
@@ -149,7 +216,7 @@ public class SyncPatientPresenter implements RegisterPatientContract.Presenter {
             @Override
             public void onFailure(Call<Results<Patient>> call, Throwable t) {
                 mRegisterPatientView.setProgressBarVisibility(View.GONE);
-                ToastUtil.error(t.toString());
+                ToastUtil.error(t.getMessage());
             }
         });
     }

@@ -16,8 +16,10 @@ import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 @Table(name = "link")
-public class Link extends Model{
+public class Link extends Model implements Serializable{
 
     @Column
     @SerializedName("rel")

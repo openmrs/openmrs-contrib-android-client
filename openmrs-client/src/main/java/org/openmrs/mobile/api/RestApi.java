@@ -10,22 +10,23 @@
 
 package org.openmrs.mobile.api;
 
-import com.google.gson.JsonObject;
-
 import org.openmrs.mobile.models.Location;
-import org.openmrs.mobile.models.retrofit.Visit;
 import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.retrofit.EncounterType;
 import org.openmrs.mobile.models.retrofit.Encountercreate;
 import org.openmrs.mobile.models.retrofit.FormResource;
 import org.openmrs.mobile.models.retrofit.IdGenPatientIdentifiers;
 import org.openmrs.mobile.models.retrofit.IdentifierType;
+import org.openmrs.mobile.models.retrofit.Module;
 import org.openmrs.mobile.models.retrofit.Obscreate;
 import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.Results;
 import org.openmrs.mobile.models.retrofit.Session;
+import org.openmrs.mobile.models.retrofit.Visit;
 import org.openmrs.mobile.models.retrofit.VisitType;
+
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -33,6 +34,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
 public interface RestApi {
@@ -57,9 +59,6 @@ public interface RestApi {
     Call<IdGenPatientIdentifiers> getPatientIdentifiers(@Query("username") String username,
                                                         @Query("password") String password);
 
-    @GET("patient?v=full")
-    Call<Results<Patient>> getPatients(@Query("q") String query);
-
     @GET("patient/{uuid}")
     Call<Patient> getPatientByUUID(@Path("uuid") String uuid,
                                    @Query("v") String representation);
@@ -74,6 +73,9 @@ public interface RestApi {
     @GET("patient")
     Call<Results<Patient>> getPatients(@Query("q") String searchQuery,
                                        @Query("v") String representation);
+
+    @GET("patient?matchSimilar=true&v=full")
+    Call<Results<Patient>> getSimilarPatients(@QueryMap Map<String, String> patientData);
 
     @POST("obs")
     Call<Observation> createObs(@Body Obscreate obscreate);
@@ -106,5 +108,12 @@ public interface RestApi {
                                   @Query("v") String representation,
                                   @Query("limit") int limit,
                                   @Query("order") String order);
+
+    @POST("patient/{uuid}")
+    Call<Patient> updatePatient(@Body Patient patient, @Path("uuid") String uuid,
+                                @Query("v") String representation);
+
+    @GET("module")
+    Call<Results<Module>> getModules(@Query("v") String representation);
 
 }

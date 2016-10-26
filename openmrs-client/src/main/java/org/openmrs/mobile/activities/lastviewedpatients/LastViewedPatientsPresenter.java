@@ -20,6 +20,7 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.Results;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -99,7 +100,7 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
         mLastQuery = query;
 
         RestApi restApi = RestServiceBuilder.createService(RestApi.class);
-        Call<Results<Patient>> call = restApi.getPatients(query);
+        Call<Results<Patient>> call = restApi.getPatients(query, ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
             public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {

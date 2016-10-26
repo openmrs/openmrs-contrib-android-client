@@ -45,6 +45,7 @@ import org.openmrs.mobile.models.retrofit.PersonAddress;
 import org.openmrs.mobile.models.retrofit.PersonName;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -250,6 +251,11 @@ public class RegisterPatientFragment extends ACBaseFragment implements RegisterP
         Intent intent = new Intent(getActivity(), PatientDashboardActivity.class);
         intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void showUpgradeRegistrationModuleInfo() {
+        ToastUtil.notifyLong(getResources().getString(R.string.registration_core_info));
     }
 
     public static RegisterPatientFragment newInstance() {

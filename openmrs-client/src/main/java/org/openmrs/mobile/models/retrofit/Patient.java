@@ -10,14 +10,18 @@
 
 package org.openmrs.mobile.models.retrofit;
 
-import java.util.ArrayList;
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.openmrs.mobile.utilities.StringUtils;
 
-public class Patient extends Resource {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class Patient extends Resource implements Serializable{
 
     private boolean synced=false;
 
@@ -151,5 +155,27 @@ public class Patient extends Resource {
     public void addEncounters(Long encid)
     {
         this.encounters += encid+",";
+    }
+
+    public Map<String, String> toMap(){
+        Map<String, String> map = new HashMap<>();
+        puToMapIfNotNull(map, "givenname", person.getName().getGivenName());
+        puToMapIfNotNull(map, "middlename",person.getName().getMiddleName());
+        puToMapIfNotNull(map, "familyname", person.getName().getFamilyName());
+        puToMapIfNotNull(map, "gender", person.getGender());
+        puToMapIfNotNull(map, "birthdate", person.getBirthdate());
+        puToMapIfNotNull(map, "address1", person.getAddress().getAddress1());
+        puToMapIfNotNull(map, "address2", person.getAddress().getAddress2());
+        puToMapIfNotNull(map, "city", person.getAddress().getCityVillage());
+        puToMapIfNotNull(map, "state", person.getAddress().getStateProvince());
+        puToMapIfNotNull(map, "postalcode", person.getAddress().getPostalCode());
+        puToMapIfNotNull(map, "country", person.getAddress().getCountry());
+        return map;
+    }
+
+    private void puToMapIfNotNull(Map<String, String> map, String key, String value) {
+        if(StringUtils.notNull(value)){
+            map.put(key, value);
+        }
     }
 }

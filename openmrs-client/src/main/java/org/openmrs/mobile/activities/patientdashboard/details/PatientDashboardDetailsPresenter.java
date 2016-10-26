@@ -23,18 +23,16 @@ import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.NetworkUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
 
-public class PatientDashboardDetailsPresenter implements
-        PatientDashboardContract.PatientDetailsPresenter {
+public class PatientDashboardDetailsPresenter implements PatientDashboardContract.PatientDetailsPresenter {
 
     private Patient mPatient;
 
     private PatientDashboardContract.ViewPatientDetails mPatientDetailsView;
 
-    public PatientDashboardDetailsPresenter(Patient mPatient,
+    public PatientDashboardDetailsPresenter(String id,
                                             PatientDashboardContract.ViewPatientDetails mPatientDetailsView) {
-        this.mPatient = mPatient;
+        this.mPatient = new PatientDAO().findPatientByID(id);
         this.mPatientDetailsView = mPatientDetailsView;
         this.mPatientDetailsView.setPresenter(this);
     }
@@ -69,6 +67,7 @@ public class PatientDashboardDetailsPresenter implements
 
     @Override
     public void start() {
+        mPatientDetailsView.setMenuTitle(mPatient.getPerson().getName().getNameString(), mPatient.getIdentifier().getIdentifier());
         mPatientDetailsView.resolvePatientDataDisplay(new PatientDAO().findPatientByID(mPatient.getId().toString()));
         if (!NetworkUtils.isOnline()) {
             mPatientDetailsView.attachSnackbarToActivity();
@@ -117,5 +116,10 @@ public class PatientDashboardDetailsPresenter implements
                 mPatientDetailsView.showToast(R.string.synchronize_patient_error, true);
             }
         });
+    }
+
+    @Override
+    public void deletePatient() {
+        new PatientDAO().deletePatient(mPatient.getId());
     }
 }

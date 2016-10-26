@@ -33,6 +33,7 @@ public interface PatientDashboardContract {
         void showDialog(int resId);
         void dismissDialog();
         void showToast(int stringRes, boolean error);
+        void setMenuTitle(String nameString, String identifier);
     }
 
     interface ViewPatientDiagnosis extends BaseView<PatientDiagnosisPresenter> {
@@ -57,21 +58,25 @@ public interface PatientDashboardContract {
     /*
     * Presenters
     */
-    interface PatientDetailsPresenter extends BasePresenter  {
+    interface PatientDashboardMainPresenter extends BasePresenter {
+        void deletePatient();
+    }
+
+    interface PatientDetailsPresenter extends PatientDashboardMainPresenter  {
         void synchronizePatient();
         void reloadPatientData(Patient patient);
     }
 
-    interface PatientDiagnosisPresenter extends BasePresenter  {
+    interface PatientDiagnosisPresenter extends PatientDashboardMainPresenter  {
         void loadDiagnosis();
     }
 
-    interface PatientVisitsPresenter extends BasePresenter {
+    interface PatientVisitsPresenter extends PatientDashboardMainPresenter {
         void showStartVisitDialog();
         void syncVisits();
         void startVisit();
     }
 
-    interface PatientVitalsPresenter extends BasePresenter {}
+    interface PatientVitalsPresenter extends PatientDashboardMainPresenter {}
 
 }

@@ -18,6 +18,7 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.retrofit.VisitApi;
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.listeners.retrofit.StartVisitResponseListenerCallback;
 import org.openmrs.mobile.models.retrofit.Patient;
@@ -39,8 +40,8 @@ public class PatientDashboardVisitsPresenter implements PatientDashboardContract
 
     private List<Visit> mPatientVisits;
 
-    public PatientDashboardVisitsPresenter(Patient mPatient, PatientDashboardContract.ViewPatientVisits mPatientVisitsView) {
-        this.mPatient = mPatient;
+    public PatientDashboardVisitsPresenter(String id, PatientDashboardContract.ViewPatientVisits mPatientVisitsView) {
+        this.mPatient = new PatientDAO().findPatientByID(id);
         this.mPatientVisitsView = mPatientVisitsView;
         this.mPatientVisitsView.setPresenter(this);
     }
@@ -108,6 +109,11 @@ public class PatientDashboardVisitsPresenter implements PatientDashboardContract
                 mPatientVisitsView.dismissStartVisitDialog();
             }
         });
+    }
+
+    @Override
+    public void deletePatient() {
+        new PatientDAO().deletePatient(mPatient.getId());
     }
 
     @Override

@@ -28,7 +28,6 @@ import org.openmrs.mobile.activities.patientdashboard.visits.PatientDashboardVis
 import org.openmrs.mobile.activities.patientdashboard.visits.PatientVisitsFragment;
 import org.openmrs.mobile.activities.patientdashboard.vitals.PatientDashboardVitalsPresenter;
 import org.openmrs.mobile.activities.patientdashboard.vitals.PatientVitalsFragment;
-import org.openmrs.mobile.models.retrofit.Patient;
 
 class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
 
@@ -41,31 +40,32 @@ class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
 
     private SparseArray<Fragment> registeredFragments = new SparseArray<>();
 
-    private Patient mPatient;
+    private String mPatientId;
 
-    PatientDashboardPagerAdapter(FragmentManager fm, Patient patient) {
+    PatientDashboardPagerAdapter(FragmentManager fm, String id) {
         super(fm);
-        mPatient = patient;
+        this.mPatientId = id;
     }
 
     @Override
     public Fragment getItem(int i) {
+
         switch (i) {
             case DETAILS_TAB_POS:
                 PatientDetailsFragment patientDetailsFragment = PatientDetailsFragment.newInstance();
-                new PatientDashboardDetailsPresenter(mPatient, patientDetailsFragment);
+                new PatientDashboardDetailsPresenter(mPatientId, patientDetailsFragment);
                 return patientDetailsFragment;
             case DIAGNOSIS_TAB_POS:
                 PatientDiagnosisFragment patientDiagnosisFragment = PatientDiagnosisFragment.newInstance();
-                new PatientDashboardDiagnosisPresenter(mPatient, patientDiagnosisFragment);
+                new PatientDashboardDiagnosisPresenter(mPatientId, patientDiagnosisFragment);
                 return patientDiagnosisFragment;
             case VISITS_TAB_POS:
                 PatientVisitsFragment patientVisitsFragment = PatientVisitsFragment.newInstance();
-                new PatientDashboardVisitsPresenter(mPatient, patientVisitsFragment);
+                new PatientDashboardVisitsPresenter(mPatientId, patientVisitsFragment);
                 return patientVisitsFragment;
             case VITALS_TAB_POS:
                 PatientVitalsFragment patientVitalsFragment = PatientVitalsFragment.newInstance();
-                new PatientDashboardVitalsPresenter(mPatient, patientVitalsFragment);
+                new PatientDashboardVitalsPresenter(mPatientId, patientVitalsFragment);
                 return patientVitalsFragment;
             default:
                 return null;

@@ -17,6 +17,7 @@ package org.openmrs.mobile.activities.patientdashboard.diagnosis;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -59,6 +60,18 @@ public class PatientDiagnosisFragment extends ACBaseFragment implements PatientD
     public void onResume() {
         super.onResume();
         mPresenter.start();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.actionDelete:
+                mPresenter.deletePatient();
+                this.getActivity().finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

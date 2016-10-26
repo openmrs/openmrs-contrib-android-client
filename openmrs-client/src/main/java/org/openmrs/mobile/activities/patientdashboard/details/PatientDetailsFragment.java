@@ -31,9 +31,10 @@ import org.openmrs.mobile.activities.fragments.ACBaseFragment;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
-import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
+import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 public class PatientDetailsFragment extends ACBaseFragment implements PatientDashboardContract.ViewPatientDetails {
@@ -74,6 +75,9 @@ public class PatientDetailsFragment extends ACBaseFragment implements PatientDas
         switch (id) {
             case R.id.actionSynchronize:
                 mPresenter.synchronizePatient();
+            case R.id.actionDelete:
+                mPresenter.deletePatient();
+                this.getActivity().finish();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -131,6 +135,12 @@ public class PatientDetailsFragment extends ACBaseFragment implements PatientDas
     public void showToast(int stringRes, boolean error) {
         ToastUtil.ToastType toastType = error ? ToastUtil.ToastType.ERROR : ToastUtil.ToastType.SUCCESS;
         ToastUtil.showShortToast(this.getActivity() ,toastType ,stringRes);
+    }
+
+    @Override
+    public void setMenuTitle(String nameString, String identifier) {
+        ((PatientDashboardActivity) this.getActivity()).getSupportActionBar().setTitle(nameString);
+        ((PatientDashboardActivity) this.getActivity()).getSupportActionBar().setSubtitle("#" + identifier);
     }
 
     @Override

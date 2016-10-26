@@ -72,6 +72,9 @@ public class PatientVisitsFragment extends ACBaseFragment implements PatientDash
         switch (id) {
             case R.id.actionStartVisit:
                 mPresenter.syncVisits();
+            case R.id.actionDelete:
+                mPresenter.deletePatient();
+                this.getActivity().finish();
             default:
                 return super.onOptionsItemSelected(item);
         }

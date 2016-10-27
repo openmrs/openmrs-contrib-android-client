@@ -22,6 +22,7 @@ import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.tables.LocationTable;
 import org.openmrs.mobile.models.Location;
+import org.openmrs.mobile.utilities.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,9 @@ public class LocationDAO {
     }
 
     public static Location findLocationByName(String name) {
+        if(!StringUtils.notNull(name)){
+            return null;
+        }
         Location location = new Location();
         String where = String.format("%s = ?", LocationTable.Column.DISPLAY);
         String[] whereArgs = new String[]{name};

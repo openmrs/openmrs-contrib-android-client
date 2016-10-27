@@ -228,13 +228,13 @@ public class RegisterPatientFragment extends ACBaseFragment implements RegisterP
     }
 
     @Override
-    public void setProgressBarVisibility(int visibility) {
-        progressBar.setVisibility(visibility);
+    public void setProgressBarVisibility(boolean visibility) {
+        progressBar.setVisibility(visibility ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void showSimilarPatientDialog(List<Patient> patients, Patient newPatient){
-        setProgressBarVisibility(View.GONE);
+        setProgressBarVisibility(false);
         CustomDialogBundle similarPatientsDialog = new CustomDialogBundle();
         similarPatientsDialog.setTitleViewMessage(getString(R.string.similar_patients_dialog_title));
         similarPatientsDialog.setRightButtonText(getString(R.string.dialog_button_register_new));

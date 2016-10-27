@@ -68,7 +68,9 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
                             visitViewHolder.mVisitStatusIcon.getLayoutParams().width, visitViewHolder.mVisitStatusIcon.getLayoutParams().height));
             visitViewHolder.mVisitStatus.setText(mContext.getString(R.string.active_visit_label));
         }
-        visitViewHolder.mVisitPlace.setText(mContext.getString(R.string.visit_in, visit.getLocation().getDisplay()));
+        if (visit.getLocation() != null) {
+            visitViewHolder.mVisitPlace.setText(mContext.getString(R.string.visit_in, visit.getLocation().getDisplay()));
+        }
 
         visitViewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override

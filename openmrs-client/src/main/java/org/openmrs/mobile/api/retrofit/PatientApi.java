@@ -136,7 +136,7 @@ public class PatientApi extends RetrofitApi {
             ToastUtil.notify("Sync is off. Patient Registration data is saved locally " +
                     "and will sync when online mode is restored. ");
             if (callbackListener != null) {
-                callbackListener.onErrorResponse();
+                callbackListener.onResponse();
             }
         }
 

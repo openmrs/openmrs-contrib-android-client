@@ -38,7 +38,7 @@ public interface RegisterPatientContract {
 
         void hideSoftKeys();
 
-        void setProgressBarVisibility(int visibility);
+        void setProgressBarVisibility(boolean visibility);
 
         void showSimilarPatientDialog(List<Patient> patients, Patient newPatient);
 

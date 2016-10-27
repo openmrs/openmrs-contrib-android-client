@@ -39,6 +39,7 @@ import retrofit2.Response;
 public class PatientService extends IntentService {
 
     public static final String PATIENT_SERVICE_TAG = "PATIENT_SERVICE";
+    private boolean calculatedLocally = false;
 
     public PatientService() {
         super("Register Patients");
@@ -57,7 +58,8 @@ public class PatientService extends IntentService {
             if (!patientAndMatchesWrapper.getMatchingPatients().isEmpty()) {
                 Intent intent1 = new Intent(getApplicationContext(), MatchingPatientsActivity.class);
                 intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent1.putExtra("PATIENTS_AND_MATCHES", patientAndMatchesWrapper);
+                intent1.putExtra(ApplicationConstants.BundleKeys.CALCULATED_LOCALLY, calculatedLocally);
+                intent1.putExtra(ApplicationConstants.BundleKeys.PATIENTS_AND_MATCHES, patientAndMatchesWrapper);
                 startActivity(intent1);
             }
         } else {
@@ -85,6 +87,7 @@ public class PatientService extends IntentService {
     }
 
     private void fetchPatientsAndCalculateLocally(Patient patient, PatientAndMatchesWrapper patientAndMatchesWrapper) throws IOException {
+        calculatedLocally = true;
         RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<Results<Patient>> patientCall = restApi.getPatients(patient.getPerson().getName().getGivenName(), ApplicationConstants.API.FULL);
         Response<Results<Patient>> resp = patientCall.execute();
@@ -96,10 +99,10 @@ public class PatientService extends IntentService {
                 new PatientApi().syncPatient(patient);
             }
         }
-        ToastUtil.notifyLong(getApplicationContext().getResources().getString(R.string.registration_core_info));
     }
 
     private void fetchSimilarPatientsFromServer(Patient patient, PatientAndMatchesWrapper patientAndMatchesWrapper) throws IOException {
+        calculatedLocally = false;
         RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<Results<Patient>> patientCall = restApi.getSimilarPatients(patient.toMap());
         Response<Results<Patient>> patientsResp = patientCall.execute();

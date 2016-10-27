@@ -100,6 +100,8 @@ public abstract class ApplicationConstants {
         public static final String ENCOUNTERTYPE = "encounterType";
         public static final String VALUEREFERENCE = "valueReference";
         public static final String FORM_NAME = "formName";
+        public static final String CALCULATED_LOCALLY = "CALCULATED_LOCALLY";
+        public static final String PATIENTS_AND_MATCHES = "PATIENTS_AND_MATCHES";
     }
 
     public abstract static class CustomIntentActions {

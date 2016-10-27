@@ -15,8 +15,6 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-
-
     <FrameLayout
         android:id="@+id/matchingPatientsContentFrame"
         android:layout_width="match_parent"

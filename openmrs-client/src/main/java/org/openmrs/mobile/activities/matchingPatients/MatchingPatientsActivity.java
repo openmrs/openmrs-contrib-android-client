@@ -2,7 +2,6 @@ package org.openmrs.mobile.activities.matchingPatients;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -10,10 +9,9 @@ import android.view.Menu;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.PatientAndMatchesWrapper;
-import org.openmrs.mobile.utilities.PatientAndMatchingPatients;
-
-import java.util.ArrayList;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 public class MatchingPatientsActivity extends ACBaseActivity {
 
@@ -40,10 +38,18 @@ public class MatchingPatientsActivity extends ACBaseActivity {
                     matchingPatientsFragment, R.id.matchingPatientsContentFrame);
         }
 
-        PatientAndMatchesWrapper patientAndMatchesWrapper = (PatientAndMatchesWrapper) getIntent().getSerializableExtra("PATIENTS_AND_MATCHES");
+        if (getIntent().getExtras().getBoolean(ApplicationConstants.BundleKeys.CALCULATED_LOCALLY, false)) {
+            showToast(getString(R.string.registration_core_info));
+        }
+
+        PatientAndMatchesWrapper patientAndMatchesWrapper = (PatientAndMatchesWrapper) getIntent().getSerializableExtra(ApplicationConstants.BundleKeys.PATIENTS_AND_MATCHES);
 
         // Create the presenter
         new MatchingPatientsPresenter(matchingPatientsFragment, patientAndMatchesWrapper.getMatchingPatients());
+    }
+
+    private void showToast(String message) {
+        ToastUtil.notifyLong(message);
     }
 
     @Override

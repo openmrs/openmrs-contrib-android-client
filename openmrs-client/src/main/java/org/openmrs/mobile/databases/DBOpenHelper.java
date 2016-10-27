@@ -181,7 +181,9 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(1, visit.getUuid(), visitStatement);
             bindLong(2, visit.getPatient().getId(), visitStatement);
             bindString(3, visit.getVisitType().getDisplay(), visitStatement);
-            bindString(4, visit.getLocation().getDisplay(), visitStatement);
+            if (visit.getLocation() != null) {
+                bindString(4, visit.getLocation().getDisplay(), visitStatement);
+            }
             bindString(5, visit.getStartDatetime(), visitStatement);
             bindString(6, visit.getStopDatetime(), visitStatement);
             visitId = visitStatement.executeInsert();
@@ -199,7 +201,9 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         newValues.put(VisitTable.Column.UUID, visit.getUuid());
         newValues.put(VisitTable.Column.PATIENT_KEY_ID, visit.getPatient().getId());
         newValues.put(VisitTable.Column.VISIT_TYPE, visit.getVisitType().getDisplay());
-        newValues.put(VisitTable.Column.VISIT_PLACE, visit.getLocation().getDisplay());
+        if (visit.getLocation() != null) {
+            newValues.put(VisitTable.Column.VISIT_PLACE, visit.getLocation().getDisplay());
+        }
         newValues.put(VisitTable.Column.START_DATE, visit.getStartDatetime());
         newValues.put(VisitTable.Column.STOP_DATE, visit.getStopDatetime());
 

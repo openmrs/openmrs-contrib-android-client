@@ -37,13 +37,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SyncPatientPresenter implements RegisterPatientContract.Presenter {
+public class RegisterPatientPresenter implements RegisterPatientContract.Presenter {
 
     private final RegisterPatientContract.View mRegisterPatientView;
 
     private Patient mPatient;
 
-    public SyncPatientPresenter(RegisterPatientContract.View mRegisterPatientView) {
+    public RegisterPatientPresenter(RegisterPatientContract.View mRegisterPatientView) {
         this.mRegisterPatientView = mRegisterPatientView;
         this.mRegisterPatientView.setPresenter(this);
     }
@@ -54,7 +54,7 @@ public class SyncPatientPresenter implements RegisterPatientContract.Presenter {
     @Override
     public void confirm(Patient patient) {
         if(validate(patient)) {
-            mRegisterPatientView.setProgressBarVisibility(View.VISIBLE);
+            mRegisterPatientView.setProgressBarVisibility(true);
             mRegisterPatientView.hideSoftKeys();
             findSimilarPatients(patient);
         }
@@ -123,10 +123,7 @@ public class SyncPatientPresenter implements RegisterPatientContract.Presenter {
 
             @Override
             public void onErrorResponse() {
-                if (!NetworkUtils.isOnline()) {
-                    mRegisterPatientView.finishRegisterActivity();
-                    mRegisterPatientView.startPatientDashbordActivity(mPatient);
-                }
+                mRegisterPatientView.setProgressBarVisibility(false);
             }
         });
     }
@@ -151,7 +148,7 @@ public class SyncPatientPresenter implements RegisterPatientContract.Presenter {
 
                 @Override
                 public void onFailure(Call<Results<Module>> call, Throwable t) {
-                    mRegisterPatientView.setProgressBarVisibility(View.GONE);
+                    mRegisterPatientView.setProgressBarVisibility(false);
                     ToastUtil.error(t.getMessage());
                 }
             });
@@ -175,20 +172,22 @@ public class SyncPatientPresenter implements RegisterPatientContract.Presenter {
                     List<Patient> patientList = response.body().getResults();
                     if(!patientList.isEmpty()){
                         List<Patient> similarPatient = new PatientComparator().findSimilarPatient(patientList, patient);
-                        mRegisterPatientView.showSimilarPatientDialog(similarPatient, patient);
+                        if (!similarPatient.isEmpty()) {
+                            mRegisterPatientView.showSimilarPatientDialog(similarPatient, patient);
+                            mRegisterPatientView.showUpgradeRegistrationModuleInfo();
+                        }
                     } else {
                         registerPatient();
                     }
                 } else {
-                    mRegisterPatientView.setProgressBarVisibility(View.GONE);
+                    mRegisterPatientView.setProgressBarVisibility(false);
                     ToastUtil.error(response.message());
                 }
-                mRegisterPatientView.showUpgradeRegistrationModuleInfo();
             }
 
             @Override
             public void onFailure(Call<Results<Patient>> call, Throwable t) {
-                mRegisterPatientView.setProgressBarVisibility(View.GONE);
+                mRegisterPatientView.setProgressBarVisibility(false);
                 ToastUtil.error(t.getMessage());
             }
         });
@@ -208,14 +207,14 @@ public class SyncPatientPresenter implements RegisterPatientContract.Presenter {
                         registerPatient();
                     }
                 } else {
-                    mRegisterPatientView.setProgressBarVisibility(View.GONE);
+                    mRegisterPatientView.setProgressBarVisibility(false);
                     ToastUtil.error(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<Results<Patient>> call, Throwable t) {
-                mRegisterPatientView.setProgressBarVisibility(View.GONE);
+                mRegisterPatientView.setProgressBarVisibility(false);
                 ToastUtil.error(t.getMessage());
             }
         });

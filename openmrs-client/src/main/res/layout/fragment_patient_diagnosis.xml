@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
   ~ compliance with the License. You may obtain a copy of the License at
@@ -14,18 +13,25 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/fragment_background"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ListView android:id="@+id/patientDiagnosisList"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"/>
+    <ListView
+        android:id="@+id/patientDiagnosisList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-    <TextView android:id="@+id/emptyDiagnosisListView"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:gravity="center"
-              android:visibility="gone"
-              android:text="@string/empty_diagnoses_list"/>
+    <TextView
+        android:id="@+id/emptyDiagnosisListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="@string/empty_diagnoses_list"
+        android:visibility="gone" />
 </LinearLayout>

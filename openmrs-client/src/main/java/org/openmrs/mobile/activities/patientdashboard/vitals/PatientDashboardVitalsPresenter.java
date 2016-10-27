@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.patientdashboard.vitals;
 
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.dao.EncounterDAO;
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.retrofit.Encounter;
 import org.openmrs.mobile.models.retrofit.Patient;
 
@@ -25,10 +26,15 @@ public class PatientDashboardVitalsPresenter implements PatientDashboardContract
 
     private Patient mPatient;
 
-    public PatientDashboardVitalsPresenter(Patient patient, PatientDashboardContract.ViewPatientVitals mPatientVitalsView) {
-        this.mPatient = patient;
+    public PatientDashboardVitalsPresenter(String id, PatientDashboardContract.ViewPatientVitals mPatientVitalsView) {
+        this.mPatient = new PatientDAO().findPatientByID(id);
         this.mPatientVitalsView = mPatientVitalsView;
         this.mPatientVitalsView.setPresenter(this);
+    }
+
+    @Override
+    public void deletePatient() {
+        new PatientDAO().deletePatient(mPatient.getId());
     }
 
     @Override

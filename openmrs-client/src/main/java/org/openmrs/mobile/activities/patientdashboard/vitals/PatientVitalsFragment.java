@@ -17,6 +17,7 @@ package org.openmrs.mobile.activities.patientdashboard.vitals;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -63,6 +64,18 @@ public class PatientVitalsFragment extends ACBaseFragment implements PatientDash
         FontsUtil.setFont(mLastVitalsDate, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);
 
         return root;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.actionDelete:
+                mPresenter.deletePatient();
+                this.getActivity().finish();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override

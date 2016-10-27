@@ -16,16 +16,22 @@ package org.openmrs.mobile.activities.patientdashboard;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import net.yanzm.mth.MaterialTabHost;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.activities.patientdashboard.details.PatientDashboardDetailsPresenter;
+import org.openmrs.mobile.activities.patientdashboard.details.PatientDetailsFragment;
+import org.openmrs.mobile.activities.patientdashboard.diagnosis.PatientDashboardDiagnosisPresenter;
+import org.openmrs.mobile.activities.patientdashboard.diagnosis.PatientDiagnosisFragment;
+import org.openmrs.mobile.activities.patientdashboard.visits.PatientDashboardVisitsPresenter;
+import org.openmrs.mobile.activities.patientdashboard.visits.PatientVisitsFragment;
+import org.openmrs.mobile.activities.patientdashboard.vitals.PatientDashboardVitalsPresenter;
+import org.openmrs.mobile.activities.patientdashboard.vitals.PatientVitalsFragment;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.TabUtil;
 
@@ -33,8 +39,7 @@ import java.util.ArrayList;
 
 public class PatientDashboardActivity extends ACBaseActivity {
 
-    private Patient mPatient;
-    private ViewPager mViewPager;
+    private String mId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +52,19 @@ public class PatientDashboardActivity extends ACBaseActivity {
         } else {
             patientBundle = getIntent().getExtras();
         }
-        mPatient = new PatientDAO().findPatientByID(String.valueOf(patientBundle.get(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE)));
-        initViewPager(getTabNames(), new PatientDashboardPagerAdapter(getSupportFragmentManager(),  mPatient));
+        mId = String.valueOf(patientBundle.get(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE));
+        initViewPager(new PatientDashboardPagerAdapter(getSupportFragmentManager(), mId));
+    }
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        attachPresenterToFragment(fragment);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPatient.getUuid());
+        outState.putString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mId);
     }
 
     @Override
@@ -72,36 +82,23 @@ public class PatientDashboardActivity extends ACBaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.patient_dashboard_menu, menu);
-        getSupportActionBar().setTitle(mPatient.getPerson().getName().getNameString());
-        getSupportActionBar().setSubtitle("#" + mPatient.getIdentifier().getIdentifier());
         return true;
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.actionDelete:
-                new PatientDAO().deletePatient(mPatient.getId());
-                finish();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
-    private void initViewPager(ArrayList<String> tabNames, PatientDashboardPagerAdapter adapter) {
+    private void initViewPager(PatientDashboardPagerAdapter adapter) {
         MaterialTabHost tabHost = (MaterialTabHost) findViewById(R.id.tabhost);
         tabHost.setType(MaterialTabHost.Type.FullScreenWidth);
         for (int i = 0; i < adapter.getCount(); i++) {
-            tabHost.addTab(tabNames.get(i).toUpperCase());
+            tabHost.addTab(getTabNames().get(i).toUpperCase());
         }
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(adapter);
-        mViewPager.addOnPageChangeListener(tabHost);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(tabHost);
         tabHost.setOnTabChangeListener(new MaterialTabHost.OnTabChangeListener() {
             @Override
             public void onTabSelected(int position) {
-                mViewPager.setCurrentItem(position);
-                mViewPager.getAdapter().notifyDataSetChanged();
+                viewPager.setCurrentItem(position);
+                viewPager.getAdapter().notifyDataSetChanged();
             }
         });
     }
@@ -114,4 +111,23 @@ public class PatientDashboardActivity extends ACBaseActivity {
         tabNames.add(getString(R.string.patient_scroll_tab_vitals_label));
         return tabNames;
     }
+
+    private void attachPresenterToFragment(Fragment fragment) {
+        Bundle patientBundle = getIntent().getExtras();
+        String id = String.valueOf(patientBundle.get(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE));
+
+        if (fragment instanceof PatientDetailsFragment) {
+            new PatientDashboardDetailsPresenter(id, ((PatientDetailsFragment) fragment));
+        }
+        else if (fragment instanceof PatientDiagnosisFragment) {
+            new PatientDashboardDiagnosisPresenter(id, ((PatientDiagnosisFragment) fragment));
+        }
+        else if (fragment instanceof PatientVisitsFragment) {
+            new PatientDashboardVisitsPresenter(id, ((PatientVisitsFragment) fragment));
+        }
+        else if (fragment instanceof PatientVitalsFragment){
+            new PatientDashboardVitalsPresenter(id, ((PatientVitalsFragment) fragment));
+        }
+    }
+
 }

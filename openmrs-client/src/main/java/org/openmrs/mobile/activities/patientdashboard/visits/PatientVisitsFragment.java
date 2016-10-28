@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.patientdashboard.visits;
 
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -29,7 +30,6 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
-import org.openmrs.mobile.activities.fragments.ACBaseFragment;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.models.retrofit.Visit;
@@ -38,7 +38,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
-public class PatientVisitsFragment extends ACBaseFragment implements PatientDashboardContract.ViewPatientVisits {
+public class PatientVisitsFragment extends Fragment implements PatientDashboardContract.ViewPatientVisits {
 
     private RecyclerView visitRecyclerView;
     private TextView emptyList;

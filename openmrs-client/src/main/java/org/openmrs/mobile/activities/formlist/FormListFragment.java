@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.formlist;
 
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -26,12 +27,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.FormDisplayActivity;
-import org.openmrs.mobile.activities.fragments.ACBaseFragment;
+import org.openmrs.mobile.activities.formdisplay.FormDisplayActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-public class FormListFragment extends ACBaseFragment implements FormListContract.View {
+public class FormListFragment extends Fragment implements FormListContract.View {
     private ListView formList;
 
     private FormListContract.Presenter mPresenter;

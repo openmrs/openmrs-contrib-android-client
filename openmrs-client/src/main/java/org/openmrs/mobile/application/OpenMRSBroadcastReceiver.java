@@ -18,7 +18,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import org.openmrs.mobile.activities.DialogActivity;
+import org.openmrs.mobile.activities.dialog.DialogActivity;
 
 public class OpenMRSBroadcastReceiver extends BroadcastReceiver {
 

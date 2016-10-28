@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.dashboard;
 
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -29,7 +30,6 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity;
 import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity;
-import org.openmrs.mobile.activities.fragments.ACBaseFragment;
 import org.openmrs.mobile.activities.registerpatient.RegisterPatientActivity;
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -37,7 +37,7 @@ import org.openmrs.mobile.utilities.ImageUtils;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class DashboardFragment extends ACBaseFragment implements DashboardContract.View, View.OnClickListener {
+public class DashboardFragment extends Fragment implements DashboardContract.View, View.OnClickListener {
 
     // Presenter
     private DashboardContract.Presenter mPresenter;

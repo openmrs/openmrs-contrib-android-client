@@ -79,7 +79,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.DialogActivity"
+            android:name=".activities.dialog.DialogActivity"
             android:noHistory="true"
             android:theme="@style/NoActionBarTheme" />
         <activity
@@ -195,7 +195,7 @@
             android:enabled="true" />
 
         <activity
-            android:name=".activities.FormDisplayActivity"
+            android:name=".activities.formdisplay.FormDisplayActivity"
             android:label="@string/title_activity_form_create"
             android:parentActivityName=".activities.formlist.FormListActivity"
             android:theme="@style/AppTheme">

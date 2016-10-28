@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.patientdashboard.vitals;
 
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -24,7 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.fragments.ACBaseFragment;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.application.OpenMRSInflater;
 import org.openmrs.mobile.models.retrofit.Encounter;
@@ -32,7 +32,7 @@ import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 
-public class PatientVitalsFragment extends ACBaseFragment implements PatientDashboardContract.ViewPatientVitals {
+public class PatientVitalsFragment extends Fragment implements PatientDashboardContract.ViewPatientVitals {
 
     private LinearLayout mContent;
     private TextView mLastVitalsLabel;

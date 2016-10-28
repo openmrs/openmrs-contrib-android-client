@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.login;
 
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -34,10 +35,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.DialogActivity;
-import org.openmrs.mobile.activities.fragments.ACBaseFragment;
-import org.openmrs.mobile.activities.fragments.CustomFragmentDialog;
-import org.openmrs.mobile.adapters.LocationArrayAdapter;
+import org.openmrs.mobile.activities.dialog.DialogActivity;
+import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
@@ -53,7 +52,7 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class LoginFragment extends ACBaseFragment implements LoginContract.View{
+public class LoginFragment extends Fragment implements LoginContract.View{
 
     private LoginContract.Presenter mPresenter;
 

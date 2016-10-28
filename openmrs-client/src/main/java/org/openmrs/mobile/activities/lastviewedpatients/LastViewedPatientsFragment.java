@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.lastviewedpatients;
 
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -26,14 +27,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.fragments.ACBaseFragment;
 import org.openmrs.mobile.models.retrofit.Patient;
 
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class LastViewedPatientsFragment extends ACBaseFragment implements LastViewedPatientsContract.View {
+public class LastViewedPatientsFragment extends Fragment implements LastViewedPatientsContract.View {
 
     private TextView mEmptyList;
     private ProgressBar mSpinner;

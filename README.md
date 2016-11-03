@@ -20,6 +20,9 @@ For more information, including screenshots of the client, visit https://wiki.op
 # Development
 Before creating pull request run code review tools, *PMD & Checkstyle*, and tests.
 
+### Model pattern
+We are following [Google's MVP sample](https://github.com/googlesamples/android-architecture/tree/todo-mvp) for this application development.
+
 # QuickStart
 
 As of February 2016, this project has been migrated to gradle to work successfully with Android studio. Steps to set up:

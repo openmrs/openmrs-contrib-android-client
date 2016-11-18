@@ -73,9 +73,9 @@ public class PatientVitalsFragment extends Fragment implements PatientDashboardC
             case R.id.actionDelete:
                 mPresenter.deletePatient();
                 this.getActivity().finish();
-            default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -75,12 +75,13 @@ public class PatientDetailsFragment extends Fragment implements PatientDashboard
         switch (id) {
             case R.id.actionSynchronize:
                 mPresenter.synchronizePatient();
+                break;
             case R.id.actionDelete:
                 mPresenter.deletePatient();
                 this.getActivity().finish();
-            default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

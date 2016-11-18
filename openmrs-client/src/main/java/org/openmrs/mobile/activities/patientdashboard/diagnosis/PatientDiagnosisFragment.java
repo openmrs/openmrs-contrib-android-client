@@ -69,9 +69,9 @@ public class PatientDiagnosisFragment extends Fragment implements PatientDashboa
             case R.id.actionDelete:
                 mPresenter.deletePatient();
                 this.getActivity().finish();
-            default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -16,14 +16,14 @@ apply plugin: 'com.github.triplet.play'
 
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
     useLibrary 'org.apache.http.legacy'
 
     def travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
     def buildNumber = (travisBuildNumber) ? (travisBuildNumber as int) : 1
 
-    def applicationVersion = "2.1"
+    def applicationVersion = "2.4"
     def travisTag = System.getenv("TRAVIS_TAG")
     def buildVersionName = (travisTag) ? travisTag : applicationVersion + "-debug." + buildNumber
 
@@ -33,7 +33,7 @@ android {
         versionCode buildNumber
 
         minSdkVersion 13
-        targetSdkVersion 22
+        targetSdkVersion 25
 
         testApplicationId "org.openmrs.mobile.test"
         testInstrumentationRunner "org.openmrs.mobile.test.OpenMRSInstrumentationTestRunner"
@@ -93,11 +93,11 @@ dependencies {
     )
     androidTestCompile files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
     compile 'com.google.guava:guava:18.0'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:gridlayout-v7:23.4.0'
-    compile 'com.android.support:recyclerview-v7:23.4.0'
-    compile 'com.android.support:cardview-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:gridlayout-v7:25.0.0'
+    compile 'com.android.support:recyclerview-v7:25.0.0'
+    compile 'com.android.support:cardview-v7:25.0.0'
+    compile 'com.android.support:design:25.0.0'
     compile 'com.android.volley:volley:1.0.0'
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.squareup.retrofit2:converter-gson:2.0.2'
@@ -107,7 +107,7 @@ dependencies {
     compile 'net.yanzm:mth:1.0.4'
     compile 'net.zetetic:android-database-sqlcipher:3.5.1@aar'
     compile 'org.jdeferred:jdeferred-android-aar:1.2.4'
-    compile 'com.android.support:support-v13:23.4.0'
+    compile 'com.android.support:support-v13:25.0.0'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
 

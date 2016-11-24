@@ -14,15 +14,19 @@
 
 package org.odk.collect.android.application;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 
 import org.odk.collect.android.R;
 import org.odk.collect.android.database.ActivityLogger;
@@ -234,10 +238,6 @@ public class Collect extends Application {
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         super.onCreate();
-
-        PropertyManager mgr = new PropertyManager(this);
-        mActivityLogger = new ActivityLogger(
-                mgr.getSingularProperty(PropertyManager.DEVICE_ID_PROPERTY));
     }
 
 

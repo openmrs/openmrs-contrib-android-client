@@ -98,7 +98,13 @@ public class PatientDetailsFragment extends Fragment implements PatientDashboard
         } else {
             ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText("Female");
         }
-        ((TextView) rootView.findViewById(R.id.patientDetailsBirthDate)).setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
+
+        Long longTime = DateUtils.convertTime(patient.getPerson().getBirthdate());
+        
+        if (longTime != null) {
+            ((TextView) rootView.findViewById(R.id.patientDetailsBirthDate)).setText(DateUtils.convertTime(longTime));
+        }
+
         if (null != patient.getPerson().getAddress()) {
             showAddressDetailsViewElement(rootView.findViewById(R.id.addressLayout), R.id.addressDetailsStreet, patient.getPerson().getAddress().getAddressString());
             showAddressDetailsViewElement(rootView.findViewById(R.id.stateLayout), R.id.addressDetailsState, patient.getPerson().getAddress().getStateProvince());

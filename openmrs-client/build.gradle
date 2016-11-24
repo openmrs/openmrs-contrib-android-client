@@ -14,6 +14,7 @@ buildscript {
 
 apply plugin: 'com.github.triplet.play'
 
+def version = "2.4.1-beta"
 
 android {
     compileSdkVersion 25
@@ -23,7 +24,7 @@ android {
     def travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
     def buildNumber = (travisBuildNumber) ? (travisBuildNumber as int) : 1
 
-    def applicationVersion = "2.4"
+    def applicationVersion = version;
     def travisTag = System.getenv("TRAVIS_TAG")
     def buildVersionName = (travisTag) ? travisTag : applicationVersion + "-debug." + buildNumber
 
@@ -33,7 +34,7 @@ android {
         versionCode buildNumber
 
         minSdkVersion 13
-        targetSdkVersion 25
+        targetSdkVersion 22
 
         testApplicationId "org.openmrs.mobile.test"
         testInstrumentationRunner "org.openmrs.mobile.test.OpenMRSInstrumentationTestRunner"
@@ -118,7 +119,16 @@ dependencies {
 }
 
 play {
-    track = 'alpha'
+    if (version.contains("alpha")) {
+        track = 'alpha'
+    }
+    else if (version.contains("beta")) {
+        track = 'beta'
+    }
+    else {
+        track = 'production'
+    }
+
     serviceAccountEmail = System.getenv("PUBLISHER_ACCOUNT_ID")
     jsonFile = rootProject.file('google_play.json')
 }

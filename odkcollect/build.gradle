@@ -1,13 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.2"
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         minSdkVersion 13
-        targetSdkVersion 25
+        targetSdkVersion 22
     }
 
     buildTypes {
@@ -31,5 +31,5 @@ dependencies {
     compile files('libs/javarosa-libraries-2014-04-29.jar')
     compile files('libs/kxml2-2.3.0.jar')
     compile files('libs/opencsv-2.3.jar')
-    compile 'com.android.support:support-v4:25.0.0'
+    compile 'com.android.support:support-v4:23.4.0'
 }

@@ -86,9 +86,10 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
 
         layoutParams.setMargins(Math.round(pxLeftMargin), Math.round(pxTopMargin), Math.round(pxRightMargin), Math.round(pxBottomMargin));
 
-        RangeEditText ed=new RangeEditText(getActivity());
+        RangeEditText ed = new RangeEditText(getActivity());
         ed.setName(question.getLabel());
-        if(question.getQuestionOptions().getMax()!=null)
+        ed.setSingleLine(true);
+        if (question.getQuestionOptions().getMax()!=null)
         {   ed.setHint(question.getLabel()+" ["+question.getQuestionOptions().getMin()+"-"+
                 question.getQuestionOptions().getMax()+"]");
             ed.setUpperlimit(Double.parseDouble(question.getQuestionOptions().getMax()));
@@ -100,7 +101,7 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
             ed.setUpperlimit(-1.0);
         }
         ed.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
-        ed.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        ed.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         int id= InputField.generateViewId();
         InputField field=new InputField();
         ed.setId(id);

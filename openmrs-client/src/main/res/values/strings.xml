@@ -25,7 +25,7 @@
     <string name="login_button">Login</string>
     <string name="login_username_hint">Username</string>
     <string name="login_password_hint">Password</string>
-    <string name="login_location_select">Location of session</string>
+    <string name="login_location_select">Session Location</string>
     <string name="warning_dialog_title">Warning</string>
     <string name="warning_lost_data_dialog">Changing the URL or username will erase all the data. Are you sure?</string>
     <string name="forgot_dialog_title">Unable to login?</string>
@@ -57,7 +57,7 @@
     <!-- Url dialog -->
     <string name="login_dialog_title">Enter URL address</string>
     <string name="login_dialog_server_url_empty_error">Server URL cannot be empty.</string>
-    <string name="login_dialog_login_or_password_empty">Please fill the required fields (username, password).</string>
+    <string name="login_dialog_login_or_password_empty">Please fill the required fields (Username, Password).</string>
     <!-- Connection Timeout dialog -->
     <string name="conn_timeout_dialog_title">Connection Failed</string>
     <string name="conn_timeout_dialog_message">A network error has occurred - Connection Timeout.\nPlease try again in a few seconds.</string>
@@ -181,8 +181,8 @@
     <string name="patient_details_gender_label">Gender</string>
     <string name="patient_details_birth_date_label">Birth date</string>
     <string name="patient_details_phone_label">Phone number</string>
-    <string name="patient_address_info_label">Contact information</string>
-    <string name="patient_information_label">Patient information</string>
+    <string name="patient_address_info_label">Contact Information</string>
+    <string name="patient_information_label">Patient Information</string>
     <string name="patient_address_label">Address</string>
     <string name="patient_city_label">City</string>
     <string name="patient_postal_label">Postal Code</string>

@@ -14,9 +14,9 @@
 
 package org.openmrs.mobile.activities.patientdashboard.diagnosis;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +26,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.utilities.FontsUtil;
 
@@ -44,6 +43,12 @@ public class PatientDiagnosisFragment extends Fragment implements PatientDashboa
 
     public static PatientDiagnosisFragment newInstance() {
         return new PatientDiagnosisFragment();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override

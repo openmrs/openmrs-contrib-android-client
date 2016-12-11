@@ -28,18 +28,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import org.openmrs.mobile.api.retrofit.PatientApi;
-import org.openmrs.mobile.api.retrofit.VisitApi;
-import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
-import org.openmrs.mobile.models.retrofit.Patient;
-
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
+import org.openmrs.mobile.api.retrofit.PatientApi;
+import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
+import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -129,7 +128,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
                     updateIsAllDownloadableSelected();
                 } else {
                     ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE,
-                            R.string.patient_alreadly_available);
+                            R.string.patient_already_exists);
                 }
                 return true;
             }

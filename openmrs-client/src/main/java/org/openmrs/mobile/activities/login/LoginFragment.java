@@ -20,6 +20,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -171,7 +172,6 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         this.mPresenter = checkNotNull(presenter);
     }
 
-
     public void onEditUrlCallback() {
         showURLDialog();
     }
@@ -256,6 +256,12 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         createImageBitmap(R.drawable.ico_edit, urlEdit.getLayoutParams());
         openMrsLogoImage.setImageBitmap(mBitmapCache.get(R.drawable.openmrs_logo));
         urlEdit.setImageBitmap(mBitmapCache.get(R.drawable.ico_edit));
+        urlEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onEditUrlCallback();
+            }
+        });
     }
 
     private void createImageBitmap(Integer key, ViewGroup.LayoutParams layoutParams) {

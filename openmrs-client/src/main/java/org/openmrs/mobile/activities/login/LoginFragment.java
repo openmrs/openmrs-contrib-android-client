@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.login;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -289,16 +290,26 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         List<String> items = getLocationStringList(locationsList);
         final LocationArrayAdapter adapter = new LocationArrayAdapter(this.getActivity(), items);
         mDropdownLocation.setAdapter(adapter);
-
         mDropdownLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            private boolean mInitialized;
+            private boolean mInitialized = false; //If at default ("Session Location") option, false otherwise true
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (!mInitialized && position >= 0 && id >= 1) {
-                    mInitialized = true;
+                if (mInitialized && position >= 0 && id >= 1) {
                     adapter.notifyDataSetChanged();
                     mLoginButton.setEnabled(true);
+                    //Set Text Color to black once option selected
+                    TextView currentText = (TextView) parent.getChildAt(0);
+                    if (currentText != null) {
+                        currentText.setTextColor(Color.BLACK);
+                    }
+                } else if (!mInitialized && position >= 0 && id == 0) {
+                    //Set Text Color to red if spinner is at start/default option
+                    TextView currentText = (TextView) parent.getChildAt(0);
+                    if (currentText != null) {
+                        currentText.setTextColor(Color.RED);
+                    }
+                    mInitialized = true;
                 }
             }
 

@@ -78,9 +78,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         if (!(this instanceof LoginActivity || this instanceof DialogActivity)) {
             if (!mAuthorizationManager.isUserLoggedIn()) {
                 mAuthorizationManager.moveToLoginActivity();
-            } else if (this instanceof DashboardActivity || this instanceof SettingsActivity
-                    || this instanceof SyncedPatientsActivity || this instanceof ActiveVisitsActivity) {
-                this.getSupportActionBar().setSubtitle(getString(R.string.dashboard_logged_as, mOpenMRS.getUsername()));
             }
         }
     }
@@ -100,8 +97,11 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
         MenuItem switchmenu = menu.findItem(R.id.syncswitch);
-        if(switchmenu!=null)
-        {
+        MenuItem logoutMenuItem = menu.findItem(R.id.actionLogout);
+        if (logoutMenuItem != null) {
+            logoutMenuItem.setTitle(getString(R.string.action_logout) + " " + mOpenMRS.getUsername());
+        }
+        if(switchmenu!=null) {
             final SwitchCompat mSwitch=(SwitchCompat)switchmenu.getActionView();
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
             Boolean syncstate = prefs.getBoolean("sync", true);

@@ -28,18 +28,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import org.openmrs.mobile.api.retrofit.PatientApi;
-import org.openmrs.mobile.api.retrofit.VisitApi;
-import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
-import org.openmrs.mobile.models.retrofit.Patient;
-
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
+import org.openmrs.mobile.api.retrofit.PatientApi;
+import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
+import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -307,42 +306,40 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
         for (PatientData patientData : patientDataArrayList) {
             if (patientData.isDownloadable() && patientData.isSelected) {
                 downloadPatient(patientData.patient);
-                disableCheckBox(patientData.holder);
+                notifyDataSetChanged();
                 patientData.downloaded();
             }
         }
     }
 
     public void setUpCheckBoxLogic(final PatientViewHolder holder, final Patient patient){
-        if (new PatientDAO().userDoesNotExist(patient.getUuid())) {
-            holder.mAvailableOfflineCheckbox.setChecked(false);
-            holder.mAvailableOfflineCheckbox.setVisibility(View.VISIBLE);
-            holder.mAvailableOfflineCheckbox.setButtonDrawable(R.drawable.ic_download);
-            holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_download_label));
-            holder.mAvailableOfflineCheckbox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (((CheckBox) v).isChecked()) {
-                        downloadPatient(patient);
-                        disableCheckBox(holder);
-                    }
+        holder.mAvailableOfflineCheckbox.setChecked(false);
+        holder.mAvailableOfflineCheckbox.setVisibility(View.VISIBLE);
+        holder.mAvailableOfflineCheckbox.setButtonDrawable(R.drawable.ic_download);
+        holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_download_label));
+        holder.mAvailableOfflineCheckbox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (((CheckBox) v).isChecked()) {
+                    downloadPatient(patient);
+                    disableCheckBox(holder);
                 }
-            });
-        } else {
-            disableCheckBox(holder);
-        }
+            }
+        });
     }
 
-    private void downloadPatient(Patient patient) {
+    private void downloadPatient(final Patient patient) {
         ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE, R.string.download_started);
         new PatientApi().downloadPatientByUuid(patient.getUuid(), new DownloadPatientCallbackListener() {
             @Override
-            public void onPatientDownloaded(Patient patient) {
-                new PatientDAO().savePatient(patient);
-                new PatientApi().syncPatient(patient);
-                new VisitApi().syncVisitsData(patient);
-                new VisitApi().syncLastVitals(patient.getUuid());
-                ToastUtil.success("Patient with UUID " + patient.getUuid() + " is now available locally");
+            public void onPatientDownloaded(Patient newPatient) {
+                new PatientDAO().savePatient(newPatient);
+                new PatientApi().syncPatient(newPatient);
+                new VisitApi().syncVisitsData(newPatient);
+                new VisitApi().syncLastVitals(newPatient.getUuid());
+                mItems.remove(patient);
+                notifyDataSetChanged();
+                ToastUtil.success("Patient with UUID " + newPatient.getUuid() + " is now available locally");
             }
             @Override
             public void onResponse() {}

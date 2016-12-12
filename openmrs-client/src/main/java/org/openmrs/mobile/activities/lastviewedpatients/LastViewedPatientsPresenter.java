@@ -18,11 +18,15 @@ import android.support.annotation.NonNull;
 
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.Results;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,7 +66,7 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
             public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
                 mLastViewedPatientsView.setSpinnerVisibility(false);
                 if (response.isSuccessful()) {
-                    mLastViewedPatientsView.updateList(response.body().getResults());
+                    mLastViewedPatientsView.updateList(filterNotDownloadedPatients(response.body().getResults()));
                     mLastViewedPatientsView.setListVisibility(true);
                     mLastViewedPatientsView.setEmptyListVisibility(false);
                 }
@@ -83,6 +87,17 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
             }
         });
 
+    }
+
+    private List<Patient> filterNotDownloadedPatients(List<Patient> patients) {
+        List<Patient> newPatientList = new LinkedList<>();
+        for (Patient patient: patients){
+            PatientDAO patientDAO = new PatientDAO();
+            if(!patientDAO.isUserAlreadySaved(patient.getUuid())){
+                newPatientList.add(patient);
+            }
+        }
+        return newPatientList;
     }
 
     public void updateLastViewedList(String query) {
@@ -106,7 +121,7 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
             public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
                 mLastViewedPatientsView.setSpinnerVisibility(false);
                 if (response.isSuccessful()) {
-                    mLastViewedPatientsView.updateList(response.body().getResults());
+                    mLastViewedPatientsView.updateList(filterNotDownloadedPatients(response.body().getResults()));
                     mLastViewedPatientsView.setListVisibility(true);
                     mLastViewedPatientsView.setEmptyListVisibility(false);
                 }

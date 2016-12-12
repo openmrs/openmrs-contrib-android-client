@@ -23,13 +23,13 @@
 
     <!-- Login view -->
     <string name="login_button">Login</string>
-    <string name="login_username_hint">username</string>
-    <string name="login_password_hint">password</string>
-    <string name="login_location_select">Choose location for this session</string>
+    <string name="login_username_hint">Username</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_location_select">Session Location</string>
     <string name="warning_dialog_title">Warning</string>
-    <string name="warning_lost_data_dialog">You change url or username. All data will be lost. Are you sure?</string>
+    <string name="warning_lost_data_dialog">Changing the URL or username will erase all the data. Are you sure?</string>
     <string name="forgot_dialog_title">Unable to login?</string>
-    <string name="forgot_dialog_message">Please contact your system administrator</string>
+    <string name="forgot_dialog_message">Please contact the system administrator</string>
     <string name="forgot_button_ok">Dismiss</string>
 
     <string name="emptyerror">Required</string>
@@ -56,14 +56,14 @@
 
     <!-- Url dialog -->
     <string name="login_dialog_title">Enter URL address</string>
-    <string name="login_dialog_server_url_empty_error">Server URL can not be empty.</string>
-    <string name="login_dialog_login_or_password_empty">Login and password can not be empty.</string>
+    <string name="login_dialog_server_url_empty_error">Server URL cannot be empty.</string>
+    <string name="login_dialog_login_or_password_empty">Please fill the required fields (Username, Password).</string>
     <!-- Connection Timeout dialog -->
     <string name="conn_timeout_dialog_title">Connection Failed</string>
     <string name="conn_timeout_dialog_message">A network error has occurred - Connection Timeout.\nPlease try again in a few seconds.</string>
     <!-- Authentication Failed dialog -->
     <string name="auth_failed_dialog_title">Authentication Failed</string>
-    <string name="auth_failed_dialog_message">Your user name or password may be incorrect. Please try again.</string>
+    <string name="auth_failed_dialog_message">Incorrect username or password entered. Please try again.</string>
     <!-- No internet dialog -->
     <string name="no_internet_conn_dialog_title">No internet connection</string>
     <string name="no_internet_conn_dialog_message">You have no internet connection.\nPlease check phone or Wi-Fi connection and signal strength and try again.</string>
@@ -72,7 +72,7 @@
 
     <!-- SimilarPatients dialog -->
     <string name="similar_patients_dialog_title">Similar patients found</string>
-    <string name="similar_patients_dialog_message">Choose existing patients or create new one</string>
+    <string name="similar_patients_dialog_message">Choose existing patients or create a new one</string>
 
     <!-- Socket Exception dialog -->
     <string name="socket_exception_dialog_title">Connection Failed</string>
@@ -96,22 +96,22 @@
     <string name="unauthorized_dialog_message">Session expired. Please log in again.</string>
     <!-- Server not supported dialog -->
     <string name="server_not_supported_dialog_title">Server Not Supported</string>
-    <string name="server_not_supported_dialog_message">Server could not be supported. Change URL address.</string>
+    <string name="server_not_supported_dialog_message">Server could not be supported. Change the URL.</string>
     <!-- End Visit dialog -->
     <string name="end_visit_dialog_title">End Visit</string>
     <string name="end_visit_dialog_message">Are you sure you want to end this visit?</string>
     <!-- Check visit dialog -->
     <string name="check_visit_dialog_title">Checking Visits</string>
     <!-- Check visit success dialog -->
-    <string name="check_visit_success_dialog_title">"Visits checking successfully completed"</string>
+    <string name="check_visit_success_dialog_title">"Successfully checked Visits"</string>
     <!-- Start visit dialog -->
     <string name="start_visit_dialog_title">Start Visit</string>
     <string name="start_visit_dialog_message">Are you sure you want to start visit for %1$s now?</string>
-    <!-- Start visit dialog impossible-->
-    <string name="start_visit_impossible_dialog_title">Start Visit Impossible</string>
-    <string name="start_visit_impossible_dialog_message">There are already active visits of %1$s. Try synchronizing patient or close previous visits</string>
+    <!-- Start visit dialog unsuccessful-->
+    <string name="start_visit_unsuccessful_dialog_title">Starting Visit was unsuccessful</string>
+    <string name="start_visit_unsuccessful_dialog_message">There are already active visits of %1$s. Try synchronizing patient or closing previous visits</string>
     <!-- Progress dialog -->
-    <string name="progress_dialog_message">Please wait ...</string>
+    <string name="progress_dialog_message">Please wait…</string>
     <!-- Capture vitals no visit dialog -->
     <string name="no_visit_dialog_title">Start new visit</string>
     <string name="no_visit_dialog_message">This user has no active visit. Would you like to start one now?</string>
@@ -128,10 +128,10 @@
     <string name="settings_about">About</string>
     <string name="settings_logout">Logout</string>
     <string name="settings_downloadForms">Download forms</string>
-    <string name="settings_forms_download_server_error_404">The server does not support xforms.Please contact the administrator.</string>
-    <string name="settings_forms_downloading">Downloading forms...</string>
-    <string name="settings_forms_downloaded_succesfull">Forms downloaded successful.</string>
-    <string name="settings_forms_downloaded_error">Some error occurred during downloaded forms.</string>
+    <string name="settings_forms_download_server_error_404">The server does not support xforms. Please contact the system administrator.</string>
+    <string name="settings_forms_downloading">Downloading forms…</string>
+    <string name="settings_forms_downloaded_successful">Successfully downloaded forms.</string>
+    <string name="settings_forms_downloaded_error">An error occurred while downloading forms.</string>
     <string name="settings_forms_download_no_connection">No internet connection available</string>
     <!-- FindPatients activity -->
     <string name="action_find_patients">Find Patients</string>
@@ -139,7 +139,7 @@
     <string name="action_download_patients">Download Patients</string>
     <string name="action_add_patients">Add Patients</string>
     <string name="search_patient_hint">Patient name</string>
-    <string name="search_patient_no_results">No patients in database</string>
+    <string name="search_patient_no_results">No patients exist in database</string>
     <string name="search_patient_no_result_for_query">No results found for query \"%1$s\"</string>
     <string name="find_patient_no_last_viewed">No last viewed patients</string>
     <string name="find_patient_no_connection">No internet connection available</string>
@@ -147,12 +147,12 @@
     <string name="find_patient_tab_last_viewed_label">Last viewed</string>
     <string name="save_patient_data_dialog">Saving patient data</string>
     <string name="select_all_downloadable_data">Select all</string>
-    <string name="download_selected_patient_data">Download</string>
-    <string name="patient_alreadly_available">Patient is already available locally</string>
+    <string name="download_selected_patient_data">Download Patient Data</string>
+    <string name="patient_already_exists">Patient already exists locally</string>
     <string name="download_multiple">Download Multiple</string>
     <!-- Dashboard Activity -->
     <string name="dashboard_search_icon_label">Find Patients</string>
-    <string name="dashboard_registry_icon_label">Register a Patient</string>
+    <string name="dashboard_registry_icon_label">Register Patient</string>
     <string name="dashboard_logged_as">logged as %1$s</string>
     <string name="dashboard_visits_icon_label">Active Visits</string>
     <string name="dashboard_vitals_icon_label">Capture Vitals</string>
@@ -162,27 +162,27 @@
     <string name="find_patients_row_checkbox_download_label">Download</string>
     <string name="find_patients_row_checkbox_available_offline_label">Available offline</string>
     <string name="find_patients_row_toast_patient_saved">Patient is now available locally</string>
-    <string name="find_patients_row_toast_patient_save_error">Some error occurred. Try synchronize patient data</string>
+    <string name="find_patients_row_toast_patient_save_error">An error occurred. Try synchronizing patient data.</string>
     <!-- Patient Dashboard Activity -->
     <string name="action_synchronize_patients">Synchronizing patient</string>
-    <string name="synchronize_patient_successful">Synchronize patient data successful</string>
-    <string name="synchronize_patient_error">Synchronize patient data unsuccessful</string>
+    <string name="synchronize_patient_successful">Successfully synchronized patient data.</string>
+    <string name="synchronize_patient_error">Synchronizing patient data was unsuccessful</string>
     <string name="synchronize_patient_network_error">Cannot synchronize in offline mode</string>
     <string name="get_patient_from_database_error">Failed to fetch patient from database</string>
     <string name="action_start_visit">Start visit</string>
-    <string name="start_visit_successful">Start new visit successful</string>
-    <string name="start_visit_error">Start new visit unsuccessful</string>
+    <string name="start_visit_successful">Successfully started new visit</string>
+    <string name="start_visit_error">Starting new visit was unsuccessful</string>
     <string name="patient_scroll_tab_details_label">Details</string>
     <string name="patient_scroll_tab_diagnosis_label">Diagnosis</string>
     <string name="patient_scroll_tab_visits_label">Visits</string>
     <string name="patient_scroll_tab_vitals_label">Vitals</string>
-    <string name="download_started">"Downloading..."</string>
+    <string name="download_started">"Downloading…"</string>
     <!-- fragment_patient_details layout -->
     <string name="patient_details_gender_label">Gender</string>
     <string name="patient_details_birth_date_label">Birth date</string>
     <string name="patient_details_phone_label">Phone number</string>
-    <string name="patient_address_info_label">Contact information</string>
-    <string name="patient_information_label">Patient information</string>
+    <string name="patient_address_info_label">Contact Information</string>
+    <string name="patient_information_label">Patient Information</string>
     <string name="patient_address_label">Address</string>
     <string name="patient_city_label">City</string>
     <string name="patient_postal_label">Postal Code</string>
@@ -233,6 +233,6 @@
     <!--Matching Patient Activity-->
     <string name="matching_patients_toolbar_tittle">Merge Patients</string>
     <string name="patient_registered_locally">Patient registered locally</string>
-    <string name="similar_patients_on_server">Similar patients on server</string>
-    <string name="registration_core_info">To use faster and more accurate similar patient resolution please upgrade the Registration Core Module to 1.7 or higher</string>
+    <string name="similar_patients_on_server">Similar patients exist on server</string>
+    <string name="registration_core_info">To use faster and more accurate similar patient resolution, upgrade the Registration Core Module to 1.7 or higher</string>
 </resources>

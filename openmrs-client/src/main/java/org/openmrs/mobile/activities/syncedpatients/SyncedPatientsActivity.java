@@ -62,6 +62,7 @@ public class SyncedPatientsActivity extends ACBaseActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.find_locally_and_add_patients_menu, menu);
 
         // Search function

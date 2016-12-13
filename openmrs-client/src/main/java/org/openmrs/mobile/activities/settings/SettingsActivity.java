@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.settings;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import org.openmrs.mobile.R;
@@ -46,6 +47,17 @@ public class SettingsActivity extends ACBaseActivity {
         // Create the presenter
         new SettingsPresenter(settingsFragment, mOpenMRSLogger);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.basic_menu, menu);
+
+        //Disable Settings Option in Menu
+        MenuItem settingsItem = menu.findItem(R.id.actionSettings);
+        settingsItem.setVisible(false);
+        return true;
     }
 
     @Override

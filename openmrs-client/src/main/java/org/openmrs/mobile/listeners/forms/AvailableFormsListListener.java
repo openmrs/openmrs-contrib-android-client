@@ -80,7 +80,7 @@ public final class AvailableFormsListListener extends GeneralErrorListener imple
     private void dismissDialog(boolean mErrorOccurred) {
         if (mCallerAdapter != null) {
             mCallerAdapter.dismissProgressDialog(mErrorOccurred,
-                    R.string.settings_forms_downloaded_succesfull,
+                    R.string.settings_forms_downloaded_successful,
                     R.string.settings_forms_downloaded_error);
         }
     }

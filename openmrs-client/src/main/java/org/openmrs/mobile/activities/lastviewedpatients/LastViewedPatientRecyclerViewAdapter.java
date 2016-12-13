@@ -128,7 +128,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
                     updateIsAllDownloadableSelected();
                 } else {
                     ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE,
-                            R.string.patient_alreadly_available);
+                            R.string.patient_already_exists);
                 }
                 return true;
             }

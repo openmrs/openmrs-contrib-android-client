@@ -160,8 +160,6 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
 
-            params.setMargins(4, 0, 4, 0);
-
             pagerIndicator.addView(mDots[i], params);
         }
         mDots[0].setImageDrawable(ContextCompat.getDrawable(this, R.drawable.selecteditem_dot));

@@ -12,77 +12,86 @@
   ~
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
-<LinearLayout
+
+<ScrollView
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:background="#EEE"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    android:fillViewport="true">
 
     <RelativeLayout
+        android:id="@+id/formMainContainer"
+        android:orientation="vertical"
+        android:background="#EEE"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/container"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".activities.formdisplay.FormDisplayActivity" />
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <RelativeLayout
             android:id="@+id/viewPagerIndicator"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginTop="5dp"
-            android:gravity="center">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:id="@+id/buttonContainer">
+                <Button
+                    android:id="@+id/btn_next"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary"
+                    android:textColor="@color/white"
+                    android:text="Next"/>
+                <Button
+                    android:id="@+id/btn_finish"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/primary"
+                    android:textColor="@color/white"
+                    android:text="Submit"
+                    android:visibility="gone"/>
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/viewPagerCountDots"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:gravity="center"
                 android:orientation="horizontal" />
 
-            <Button
-                android:id="@+id/btn_next"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/primary"
-                android:textColor="@color/white"
-                android:text="Next"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="5dp"
-                />
-
-            <Button
-                android:id="@+id/btn_finish"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerInParent="true"
-                android:layout_margin="5dp"
-                android:backgroundTint="@color/primary"
-                android:textColor="@color/white"
-                android:text="Submit"
-                android:visibility="gone" />
-
         </RelativeLayout>
 
+        <LinearLayout
+            android:id="@+id/pagerContainer"
+            android:layout_above="@id/viewPagerIndicator"
+            android:layout_below="@+id/toolbar"
+            android:layout_alignLeft="@+id/toolbar"
+            android:layout_alignRight="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal">
+            <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".activities.formdisplay.FormDisplayActivity" />
+        </LinearLayout>
     </RelativeLayout>
-</LinearLayout>
-
+</ScrollView>

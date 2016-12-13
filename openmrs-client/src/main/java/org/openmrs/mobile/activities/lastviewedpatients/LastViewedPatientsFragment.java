@@ -28,6 +28,7 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
@@ -113,5 +114,10 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
 
     public void stopRefreshing() {
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void showErrorToast(String message) {
+        ToastUtil.error(message);
     }
 }

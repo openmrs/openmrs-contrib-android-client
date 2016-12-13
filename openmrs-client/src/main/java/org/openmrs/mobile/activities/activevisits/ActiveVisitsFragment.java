@@ -78,11 +78,6 @@ public class ActiveVisitsFragment extends Fragment implements ActiveVisitsContra
     }
 
     @Override
-    public void setAdapterFiltering(boolean filtering) {
-        ((ActiveVisitsRecyclerViewAdapter) visitsRecyclerView.getAdapter()).setIsFiltering(true);
-    }
-
-    @Override
     public void setEmptyListText(int stringId) {
         emptyList.setText(getString(stringId));
     }

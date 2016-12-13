@@ -25,7 +25,6 @@ import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.utilities.AnimationUtils;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
@@ -35,7 +34,6 @@ import java.util.List;
 public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryPatientListAdapter.PatientViewHolder> {
     private FormEntryPatientListFragment mContext;
     private List<Patient> mItems;
-    private boolean isUpdatingExistingData = false;
 
     public FormEntryPatientListAdapter(FormEntryPatientListFragment context, List<Patient> items) {
         this.mContext = context;
@@ -76,9 +74,6 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
         });
 
         holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
-        if (!isUpdatingExistingData) {
-            new AnimationUtils().setAnimation(holder.mRowLayout,mContext.getActivity(),position);
-        }
     }
 
     @Override
@@ -89,11 +84,6 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
     @Override
     public int getItemCount() {
         return mItems.size();
-    }
-
-    public void setIsFiltering(boolean isFiltering) {
-        isUpdatingExistingData = isFiltering;
-        notifyDataSetChanged();
     }
 
     class PatientViewHolder extends RecyclerView.ViewHolder{

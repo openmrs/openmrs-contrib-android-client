@@ -30,7 +30,7 @@ public interface SyncedPatientsContract {
 
         void setPresenter(@NonNull Presenter presenter);
 
-        void updateAdapter(List<Patient> patientList, boolean isFiltering);
+        void updateAdapter(List<Patient> patientList);
 
         void updateListVisibility(boolean isVisible, int emptyListTextStringId, String replacementWord);
     }

@@ -73,6 +73,6 @@ public class FormEntryPatientListPresenter implements FormEntryPatientListContra
                 mFormEntryPatientListView.updateListVisibility(true, NO_STRING_ID, null);
             }
         }
-        mFormEntryPatientListView.updateAdapter(patientList, isFiltering);
+        mFormEntryPatientListView.updateAdapter(patientList);
     }
 }

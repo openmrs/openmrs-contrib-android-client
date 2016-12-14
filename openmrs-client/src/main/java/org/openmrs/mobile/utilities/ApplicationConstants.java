@@ -89,6 +89,10 @@ public abstract class ApplicationConstants {
         public static final String SIMILAR_PATIENTS_TAG = "similarPatientsDialogTag";
     }
 
+    public abstract static class RegisterPatientRequirements {
+        public static final int MAX_PATIENT_AGE = 120;
+    }
+
     public abstract static class BundleKeys {
         public static final String CUSTOM_DIALOG_BUNDLE = "customDialogBundle";
         public static final String PATIENT_ID_BUNDLE = "patientID";

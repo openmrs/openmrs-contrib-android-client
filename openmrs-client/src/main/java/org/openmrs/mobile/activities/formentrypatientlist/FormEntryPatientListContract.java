@@ -28,7 +28,7 @@ public interface FormEntryPatientListContract {
 
         boolean isActive();
 
-        void updateAdapter(List<Patient> patientList, boolean isFiltering);
+        void updateAdapter(List<Patient> patientList);
 
         void updateListVisibility(boolean isVisible, int emptyListTextStringId, @Nullable String replacementWord);
 

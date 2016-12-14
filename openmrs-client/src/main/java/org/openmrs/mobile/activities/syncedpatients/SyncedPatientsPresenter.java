@@ -83,7 +83,7 @@ public class SyncedPatientsPresenter implements SyncedPatientsContract.Presenter
                 mSyncedPatientsView.updateListVisibility(true, NO_STRING_ID, null);
             }
         }
-        mSyncedPatientsView.updateAdapter(patientList, isFiltering);
+        mSyncedPatientsView.updateAdapter(patientList);
     }
 
 }

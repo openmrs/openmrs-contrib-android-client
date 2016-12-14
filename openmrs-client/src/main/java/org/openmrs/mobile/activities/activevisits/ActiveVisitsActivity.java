@@ -60,6 +60,7 @@ public class ActiveVisitsActivity extends ACBaseActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.find_visits_menu, menu);
         final SearchView findVisitView;
         MenuItem mFindVisitItem = menu.findItem(R.id.actionSearchLocalVisits);

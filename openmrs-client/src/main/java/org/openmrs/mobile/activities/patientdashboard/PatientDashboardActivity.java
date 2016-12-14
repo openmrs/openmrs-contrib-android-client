@@ -81,6 +81,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.patient_dashboard_menu, menu);
         return true;
     }

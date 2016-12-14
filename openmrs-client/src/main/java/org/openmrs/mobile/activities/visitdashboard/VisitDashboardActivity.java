@@ -64,6 +64,7 @@ public class VisitDashboardActivity extends ACBaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         if (StringUtils.isBlank(mPresenter.visitStopDate)) {
             getMenuInflater().inflate(R.menu.active_visit_menu, menu);
         }

@@ -38,14 +38,26 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
     @NonNull
     private final LastViewedPatientsContract.View mLastViewedPatientsView;
 
+    private PatientDAO patientDAO;
+    private RestApi restApi;
+
     private String mQuery;
     private String mLastQuery = "QUERY";
 
     public LastViewedPatientsPresenter(@NonNull LastViewedPatientsContract.View mLastViewedPatientsView) {
         this.mLastViewedPatientsView = mLastViewedPatientsView;
         this.mLastViewedPatientsView.setPresenter(this);
+        this.restApi = RestServiceBuilder.createService(RestApi.class);
+        this.patientDAO = new PatientDAO();
     }
 
+    public LastViewedPatientsPresenter(@NonNull LastViewedPatientsContract.View mLastViewedPatientsView,
+                                       RestApi restApi, PatientDAO patientDAO) {
+        this.mLastViewedPatientsView = mLastViewedPatientsView;
+        this.mLastViewedPatientsView.setPresenter(this);
+        this.restApi = restApi;
+        this.patientDAO = patientDAO;
+    }
 
     @Override
     public void start() {
@@ -59,7 +71,6 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
         mLastViewedPatientsView.setEmptyListVisibility(false);
         mLastViewedPatientsView.setListVisibility(false);
 
-        RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<Results<Patient>> call = restApi.getLastViewedPatients();
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
@@ -80,7 +91,7 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
 
             @Override
             public void onFailure(Call<Results<Patient>> call, Throwable t) {
-                ToastUtil.error(t.getMessage());
+                mLastViewedPatientsView.showErrorToast(t.getMessage());
                 mLastViewedPatientsView.setSpinnerVisibility(false);
                 mLastViewedPatientsView.setListVisibility(false);
                 mLastViewedPatientsView.stopRefreshing();
@@ -92,7 +103,6 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
     private List<Patient> filterNotDownloadedPatients(List<Patient> patients) {
         List<Patient> newPatientList = new LinkedList<>();
         for (Patient patient: patients){
-            PatientDAO patientDAO = new PatientDAO();
             if(!patientDAO.isUserAlreadySaved(patient.getUuid())){
                 newPatientList.add(patient);
             }
@@ -114,7 +124,6 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
         mLastViewedPatientsView.setEmptyListVisibility(false);
         mLastQuery = query;
 
-        RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<Results<Patient>> call = restApi.getPatients(query, ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
@@ -134,7 +143,7 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
             }
             @Override
             public void onFailure(Call<Results<Patient>> call, Throwable t) {
-                ToastUtil.error(t.getMessage());
+                mLastViewedPatientsView.showErrorToast(t.getMessage());
                 mLastViewedPatientsView.setSpinnerVisibility(false);
                 mLastViewedPatientsView.setListVisibility(false);
                 mLastViewedPatientsView.stopRefreshing();

@@ -20,15 +20,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.utilities.AnimationUtils;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import org.openmrs.mobile.models.retrofit.Visit;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
@@ -39,7 +37,6 @@ import java.util.List;
 public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<ActiveVisitsRecyclerViewAdapter.VisitViewHolder> {
     private Context mContext;
     private List<Visit> mVisits;
-    private boolean isUpdatingExistingData = false;
 
     public ActiveVisitsRecyclerViewAdapter(Context context, List<Visit> items) {
         this.mContext = context;
@@ -85,16 +82,6 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
                 mContext.startActivity(intent);
             }
         });
-
-        if (!isUpdatingExistingData) {
-            //This logic is preventing list animation when list if filtered by query
-            new AnimationUtils().setAnimation(visitViewHolder.mRelativeLayout,mContext,position);
-        }
-    }
-
-    public void setIsFiltering(boolean isFiltering) {
-        isUpdatingExistingData = isFiltering;
-        notifyDataSetChanged();
     }
 
     @Override

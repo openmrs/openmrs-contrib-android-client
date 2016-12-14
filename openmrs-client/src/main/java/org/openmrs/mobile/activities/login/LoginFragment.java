@@ -14,19 +14,25 @@
 
 package org.openmrs.mobile.activities.login;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v7.widget.SwitchCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,6 +51,7 @@ import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
+import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.URLValidator;
 
@@ -58,20 +65,21 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     private LoginContract.Presenter mPresenter;
 
     private TextView mForgotPass;
+    private EditText mUrl;
     private EditText mUsername;
     private EditText mPassword;
     private Button mLoginButton;
     private ProgressBar mSpinner;
     private Spinner mDropdownLocation;
     private LinearLayout mLoginFormView;
-    private TextView mUrlTextView;
-    private RelativeLayout mUrlField;
+    private SwitchCompat mLoginNetworkingSwitch;
     CustomDialogBundle urlDialog = null;
     private SparseArray<Bitmap> mBitmapCache;
 
     private static boolean mErrorOccurred;
     private static String mLastCorrectURL = "";
     private static String mLastURL = "";
+    private static boolean urlChanged = false;
     private static List<Location> mLocationsList;
 
     public static LoginFragment newInstance() {
@@ -89,12 +97,11 @@ public class LoginFragment extends Fragment implements LoginContract.View{
             showURLDialog();
         } else {
             if (mLastCorrectURL.equals(ApplicationConstants.EMPTY_STRING)) {
-                mUrlTextView.setText(OpenMRS.getInstance().getServerUrl());
+                mUrl.setText(OpenMRS.getInstance().getServerUrl());
                 mLastCorrectURL = OpenMRS.getInstance().getServerUrl();
             } else {
-                mUrlTextView.setText(mLastCorrectURL);
+                mUrl.setText(mLastCorrectURL);
             }
-            mUrlField.setVisibility(View.VISIBLE);
             hideURLDialog();
         }
 
@@ -105,18 +112,52 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     }
 
     private void initListeners() {
+
+
+
+        mLoginNetworkingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance()).edit();
+                editor.putBoolean("sync", isChecked);
+                editor.commit();
+            }
+        });
+
+        mUrl.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (StringUtils.notEmpty(mUrl.getText().toString()) && urlChanged) {
+                    ((LoginFragment) getActivity()
+                            .getSupportFragmentManager()
+                            .findFragmentById(R.id.loginContentFrame))
+                            .setUrl(mUrl.getText().toString());
+                    urlChanged = false;
+                }
+            }
+        });
+
+        mUrl.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!OpenMRS.getInstance().getServerUrl().equals(editable.toString()) && StringUtils.notEmpty(editable.toString())) {
+                    urlChanged = true;
+                }
+            }
+        });
+
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mPresenter.login(mUsername.getText().toString(),
                         mPassword.getText().toString(),
-                        mUrlTextView.getText().toString());
-            }
-        });
-        mUrlTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onEditUrlCallback();
+                        mUrl.getText().toString());
             }
         });
         mForgotPass.setOnClickListener(new View.OnClickListener() {
@@ -128,15 +169,15 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     }
 
     private void initViewFields(View root) {
-        mUrlField = (RelativeLayout) root.findViewById(R.id.urlField);
+        mUrl = (EditText) root.findViewById(R.id.loginUrlField);
         mUsername = (EditText) root.findViewById(R.id.loginUsernameField);
         mUsername.setText(OpenMRS.getInstance().getUsername());
         mPassword = (EditText) root.findViewById(R.id.loginPasswordField);
         mLoginButton = (Button) root.findViewById(R.id.loginButton);
         mSpinner = (ProgressBar) root.findViewById(R.id.loginLoading);
         mLoginFormView = (LinearLayout) root.findViewById(R.id.loginFormView);
+        mLoginNetworkingSwitch = ((SwitchCompat) root.findViewById(R.id.loginsyncswitch));
         mDropdownLocation = (Spinner) root.findViewById(R.id.locationSpinner);
-        mUrlTextView = (TextView) root.findViewById(R.id.urlText);
         mForgotPass = (TextView)root.findViewById(R.id.forgotPass);
     }
 
@@ -172,10 +213,6 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         this.mPresenter = checkNotNull(presenter);
     }
 
-    public void onEditUrlCallback() {
-        showURLDialog();
-    }
-
     public void forgotPassword() {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.forgot_dialog_title));
@@ -186,7 +223,6 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     }
 
     public void showURLDialog() {
-        mUrlField.setVisibility(View.INVISIBLE);
         urlDialog = new CustomDialogBundle();
         urlDialog.setTitleViewMessage(getString(R.string.login_dialog_title));
         String serverURL = OpenMRS.getInstance().getServerUrl();
@@ -239,6 +275,12 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     }
 
     @Override
+    public void hideLoadingAnimation() {
+        mLoginFormView.setVisibility(View.VISIBLE);
+        mSpinner.setVisibility(View.GONE);
+    }
+
+    @Override
     public void finishLoginActivity() {
         getActivity().finish();
     }
@@ -249,19 +291,10 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     }
 
     private void bindDrawableResources() {
-        mBitmapCache = new SparseArray<Bitmap>();
+        mBitmapCache = new SparseArray<>();
         ImageView openMrsLogoImage = (ImageView) getActivity().findViewById(R.id.openmrsLogo);
         createImageBitmap(R.drawable.openmrs_logo, openMrsLogoImage.getLayoutParams());
-        ImageView urlEdit = (ImageView) getActivity().findViewById(R.id.urlEdit);
-        createImageBitmap(R.drawable.ico_edit, urlEdit.getLayoutParams());
         openMrsLogoImage.setImageBitmap(mBitmapCache.get(R.drawable.openmrs_logo));
-        urlEdit.setImageBitmap(mBitmapCache.get(R.drawable.ico_edit));
-        urlEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onEditUrlCallback();
-            }
-        });
     }
 
     private void createImageBitmap(Integer key, ViewGroup.LayoutParams layoutParams) {
@@ -284,8 +317,7 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         mErrorOccurred = false;
         mLastCorrectURL = serverURL;
         mLastURL = ApplicationConstants.EMPTY_STRING;
-        mUrlTextView.setText(serverURL);
-        mUrlField.setVisibility(View.VISIBLE);
+        mUrl.setText(serverURL);
         mLocationsList = locationsList;
         List<String> items = getLocationStringList(locationsList);
         final LocationArrayAdapter adapter = new LocationArrayAdapter(this.getActivity(), items);
@@ -366,7 +398,7 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     public void login(){
         mPresenter.authenticateUser(mUsername.getText().toString(),
                 mPassword.getText().toString(),
-                mUrlTextView.getText().toString());
+                mUrl.getText().toString());
     }
 
 }

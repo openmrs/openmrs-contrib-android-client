@@ -80,6 +80,7 @@ public class LoginPresenter implements LoginContract.Presenter{
 
     @Override
     public void authenticateUser(final String username, final String password, final String url) {
+        loginView.showLoadingAnimation();
         RestApi restApi = RestServiceBuilder.createService(RestApi.class, username, password);
         Call<Session> call = restApi.getSession();
         call.enqueue(new Callback<Session>() {
@@ -127,12 +128,14 @@ public class LoginPresenter implements LoginContract.Presenter{
                         loginView.sendIntentBroadcast(ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST);
                     }
                 } else {
+                    loginView.hideLoadingAnimation();
                     ToastUtil.error(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<Session> call, Throwable t) {
+                loginView.hideLoadingAnimation();
                 ToastUtil.error(t.getMessage());
             }
         });
@@ -157,9 +160,11 @@ public class LoginPresenter implements LoginContract.Presenter{
             public void onResponse(Call<Results<Location>> call, Response<Results<Location>> response) {
                 if(response.isSuccessful()){
                     RestServiceBuilder.changeBaseUrl(url.trim());
+                    mOpenMRS.setServerUrl(url);
                     loginView.initLoginForm(response.body().getResults(), url);
                     loginView.startFormListService();
                 } else {
+                    loginView.hideLoadingAnimation();
                     loginView.setErrorOccurred(true);
                     loginView.sendIntentBroadcast(ApplicationConstants.CustomIntentActions.ACTION_SERVER_NOT_SUPPORTED_BROADCAST);
                 }
@@ -167,6 +172,7 @@ public class LoginPresenter implements LoginContract.Presenter{
 
             @Override
             public void onFailure(Call<Results<Location>> call, Throwable t) {
+                loginView.hideLoadingAnimation();
                 ToastUtil.error(t.getMessage());
                 loginView.setErrorOccurred(true);
             }

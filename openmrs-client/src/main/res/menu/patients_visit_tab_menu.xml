@@ -22,5 +22,5 @@
         android:orderInCategory="100"
         android:title="@string/action_start_visit"
         android:icon="@drawable/start_visit"
-        app:showAsAction="ifRoom|collapseActionView" />
+        app:showAsAction="always" />
 </menu>

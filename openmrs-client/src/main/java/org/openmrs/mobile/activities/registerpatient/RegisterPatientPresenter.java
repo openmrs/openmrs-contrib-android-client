@@ -14,8 +14,6 @@
 
 package org.openmrs.mobile.activities.registerpatient;
 
-import android.view.View;
-
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.retrofit.PatientApi;
@@ -83,7 +81,7 @@ public class RegisterPatientPresenter implements RegisterPatientContract.Present
 
         // Validate date of birth
         if(StringUtils.isBlank(patient.getPerson().getBirthdate())) {
-            doberr=true;
+            doberr = true;
         }
 
         // Validate address

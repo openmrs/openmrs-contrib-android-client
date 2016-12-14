@@ -59,6 +59,7 @@ public class FormEntryPatientListActivity extends ACBaseActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.form_entry_patient_list_menu, menu);
         final SearchView findPatientView;
         MenuItem mFindPatientMenuItem = menu.findItem(R.id.actionSearchRemoteFormEntry);

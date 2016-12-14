@@ -29,13 +29,10 @@ import android.view.MenuItem;
 import android.widget.CompoundButton;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity;
-import org.openmrs.mobile.activities.dashboard.DashboardActivity;
-import org.openmrs.mobile.activities.dialog.DialogActivity;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
+import org.openmrs.mobile.activities.dialog.DialogActivity;
 import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
-import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
@@ -239,8 +236,8 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
     public void showStartVisitImpossibleDialog(CharSequence title) {
         CustomDialogBundle bundle = new CustomDialogBundle();
-        bundle.setTitleViewMessage(getString(R.string.start_visit_impossible_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.start_visit_impossible_dialog_message, title));
+        bundle.setTitleViewMessage(getString(R.string.start_visit_unsuccessful_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.start_visit_unsuccessful_dialog_message, title));
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         bundle.setRightButtonText(getString(R.string.dialog_button_ok));
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.START_VISIT_IMPOSSIBLE_DIALOG_TAG);

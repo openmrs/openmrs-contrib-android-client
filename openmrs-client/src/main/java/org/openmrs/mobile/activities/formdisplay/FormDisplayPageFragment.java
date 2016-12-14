@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
@@ -52,7 +53,7 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
         getActivity().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        mParent = (LinearLayout) root.findViewById(R.id.viewholder);
+        mParent = (LinearLayout) root.findViewById(R.id.sectionContainer);
 
         return root;
     }

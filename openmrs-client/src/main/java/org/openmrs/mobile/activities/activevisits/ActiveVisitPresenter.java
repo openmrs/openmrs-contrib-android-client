@@ -77,6 +77,5 @@ public class ActiveVisitPresenter implements ActiveVisitsContract.Presenter{
         mActiveVisitsView.setEmptyListText(R.string.search_patient_no_result_for_query, query);
         List<Visit> visits = getPatientsFilteredByQuery(new VisitDAO().getAllActiveVisits(), query);
         mActiveVisitsView.updateListVisibility(visits);
-        mActiveVisitsView.setAdapterFiltering(true);
     }
 }

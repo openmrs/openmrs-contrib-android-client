@@ -16,6 +16,8 @@ package org.openmrs.mobile.activities.registerpatient;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 
@@ -48,6 +50,12 @@ public class RegisterPatientActivity extends ACBaseActivity {
 
         // Create the mPresenter
         mPresenter = new RegisterPatientPresenter(registerPatientFragment);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        return true;
     }
 
 }

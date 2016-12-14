@@ -15,11 +15,10 @@
 package org.openmrs.mobile.activities.registerpatient;
 
 import android.app.DatePickerDialog;
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
+import android.support.v4.app.Fragment;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +38,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
+import org.openmrs.mobile.listeners.watcher.RegisterPatientBirthdateValidatorWatcher;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.Person;
 import org.openmrs.mobile.models.retrofit.PersonAddress;
@@ -46,6 +46,7 @@ import org.openmrs.mobile.models.retrofit.PersonName;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
+import org.openmrs.mobile.utilities.ViewUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -159,12 +160,12 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
 
         // Add address
         PersonAddress address = new PersonAddress();
-        address.setAddress1(getInput(edaddr1));
-        address.setAddress2(getInput(edaddr2));
-        address.setCityVillage(getInput(edcity));
-        address.setPostalCode(getInput(edpostal));
-        address.setCountry(getInput(edcountry));
-        address.setStateProvince(getInput(edstate));
+        address.setAddress1(ViewUtils.getInput(edaddr1));
+        address.setAddress2(ViewUtils.getInput(edaddr2));
+        address.setCityVillage(ViewUtils.getInput(edcity));
+        address.setPostalCode(ViewUtils.getInput(edpostal));
+        address.setCountry(ViewUtils.getInput(edcountry));
+        address.setStateProvince(ViewUtils.getInput(edstate));
         address.setPreferred(true);
 
         List<PersonAddress> addresses = new ArrayList<>();
@@ -173,9 +174,9 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
 
         // Add names
         PersonName name = new PersonName();
-        name.setFamilyName(getInput(edlname));
-        name.setGivenName(getInput(edfname));
-        name.setMiddleName(getInput(edmname));
+        name.setFamilyName(ViewUtils.getInput(edlname));
+        name.setGivenName(ViewUtils.getInput(edfname));
+        name.setMiddleName(ViewUtils.getInput(edmname));
 
         List<PersonName> names = new ArrayList<>();
         names.add(name);
@@ -193,10 +194,10 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
 
         // Add birthdate
         String birthdate = null;
-        if(isEmpty(eddob)) {
-            if (!StringUtils.isBlank(getInput(edyr)) || !StringUtils.isBlank(getInput(edmonth))) {
-                int yeardiff = isEmpty(edyr)? 0 : Integer.parseInt(edyr.getText().toString());
-                int mondiff = isEmpty(edmonth)? 0 : Integer.parseInt(edmonth.getText().toString());
+        if(ViewUtils.isEmpty(eddob)) {
+            if (!StringUtils.isBlank(ViewUtils.getInput(edyr)) || !StringUtils.isBlank(ViewUtils.getInput(edmonth))) {
+                int yeardiff = ViewUtils.isEmpty(edyr)? 0 : Integer.parseInt(edyr.getText().toString());
+                int mondiff = ViewUtils.isEmpty(edmonth)? 0 : Integer.parseInt(edmonth.getText().toString());
                 LocalDate now = new LocalDate();
                 bdt = now.toDateTimeAtStartOfDay().toDateTime();
                 bdt = bdt.minusYears(yeardiff);
@@ -260,20 +261,6 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
 
     public static RegisterPatientFragment newInstance() {
         return new RegisterPatientFragment();
-    }
-
-    private String getInput(EditText e) {
-        if(e.getText() == null) {
-            return null;
-        } else if (isEmpty(e)) {
-            return null;
-        } else {
-            return e.getText().toString();
-        }
-    }
-
-    private boolean isEmpty(EditText etText) {
-        return etText.getText().toString().trim().length() == 0;
     }
 
     private void resolveViews(View v) {
@@ -342,15 +329,10 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
                 mPresenter.confirm(createPatient());
             }
         });
-        TextWatcher tw=new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-                eddob.getText().clear();
-            }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-        };
-        edyr.addTextChangedListener(tw);
-        edmonth.addTextChangedListener(tw);
+
+        TextWatcher textWatcher = new RegisterPatientBirthdateValidatorWatcher(eddob, edmonth, edyr);
+        edmonth.addTextChangedListener(textWatcher);
+        edyr.addTextChangedListener(textWatcher);
     }
 
 }

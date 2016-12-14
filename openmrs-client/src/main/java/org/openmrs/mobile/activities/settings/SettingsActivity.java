@@ -51,9 +51,7 @@ public class SettingsActivity extends ACBaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.basic_menu, menu);
-
+        super.onCreateOptionsMenu(menu);
         //Disable Settings Option in Menu
         MenuItem settingsItem = menu.findItem(R.id.actionSettings);
         settingsItem.setVisible(false);

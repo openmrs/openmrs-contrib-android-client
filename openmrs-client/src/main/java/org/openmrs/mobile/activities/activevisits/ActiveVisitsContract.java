@@ -28,8 +28,6 @@ public interface ActiveVisitsContract {
 
         void updateListVisibility(List<Visit> visitList);
 
-        void setAdapterFiltering(boolean filtering);
-
         void setEmptyListText(int stringId);
 
         void setEmptyListText(int stringId, String query);

@@ -76,9 +76,9 @@ public class FormEntryPatientListFragment extends Fragment implements  FormEntry
     }
 
     @Override
-    public void updateAdapter(List<Patient> patientList, boolean isFiltering) {
+    public void updateAdapter(List<Patient> patientList) {
         FormEntryPatientListAdapter adapter = new FormEntryPatientListAdapter(this,patientList);
-        adapter.setIsFiltering(isFiltering);
+        adapter.notifyDataSetChanged();
         mPatientRecyclerView.setAdapter(adapter);
     }
 

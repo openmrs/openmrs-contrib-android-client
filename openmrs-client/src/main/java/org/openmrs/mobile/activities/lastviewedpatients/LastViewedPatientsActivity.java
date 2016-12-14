@@ -81,6 +81,7 @@ public class LastViewedPatientsActivity extends ACBaseActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.find_patients_remote_menu, menu);
         final SearchView findPatientView;
         MenuItem mFindPatientMenuItem = menu.findItem(R.id.actionSearchRemote);

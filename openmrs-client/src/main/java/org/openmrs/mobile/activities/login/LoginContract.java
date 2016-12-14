@@ -37,6 +37,8 @@ public interface LoginContract {
 
         void showLoadingAnimation();
 
+        void hideLoadingAnimation();
+
         void finishLoginActivity();
 
         void setErrorOccurred(boolean errorOccurred);

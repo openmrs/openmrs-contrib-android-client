@@ -96,12 +96,11 @@ public class SyncedPatientsFragment extends Fragment implements SyncedPatientsCo
      * It creates SyncedPatientsRecyclerViewAdapter and fills it with fresh data.
      * Then new instance of SyncedPatientsRecyclerViewAdapter is set to its SyncedPatientRecyclerView.
      * @param patientList new set of data
-     * @param isFiltering used to prevent list animations when user is filtering data.
      */
     @Override
-    public void updateAdapter(List<Patient> patientList, boolean isFiltering) {
+    public void updateAdapter(List<Patient> patientList) {
         SyncedPatientsRecyclerViewAdapter adapter = new SyncedPatientsRecyclerViewAdapter(this,patientList);
-        adapter.setIsFiltering(isFiltering);
+        adapter.notifyDataSetChanged();
         mSyncedPatientRecyclerView.setAdapter(adapter);
     }
 

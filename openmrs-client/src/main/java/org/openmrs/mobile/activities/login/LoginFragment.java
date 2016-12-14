@@ -19,13 +19,13 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,8 +42,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.dialog.DialogActivity;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
+import org.openmrs.mobile.activities.dialog.DialogActivity;
 import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
@@ -322,16 +322,23 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         List<String> items = getLocationStringList(locationsList);
         final LocationArrayAdapter adapter = new LocationArrayAdapter(this.getActivity(), items);
         mDropdownLocation.setAdapter(adapter);
-
         mDropdownLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            private boolean mInitialized;
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (!mInitialized && position >= 0 && id >= 1) {
-                    mInitialized = true;
+                if (position >= 0 && id >= 1) {
                     adapter.notifyDataSetChanged();
                     mLoginButton.setEnabled(true);
+                    //Set Text Color to black once option selected
+                    TextView currentText = (TextView) parent.getChildAt(0);
+                    if (currentText != null) {
+                        currentText.setTextColor(Color.BLACK);
+                    }
+                } else if (position >= 0 && id == 0) {
+                    //Set Text Color to red if spinner is at start/default option
+                    TextView currentText = (TextView) parent.getChildAt(0);
+                    if (currentText != null) {
+                        currentText.setTextColor(Color.RED);
+                    }
                 }
             }
 

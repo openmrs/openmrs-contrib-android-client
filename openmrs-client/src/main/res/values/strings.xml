@@ -23,6 +23,7 @@
 
     <!-- Login view -->
     <string name="login_button">Login</string>
+    <string name="login_url_hint">URL address</string>
     <string name="login_username_hint">Username</string>
     <string name="login_password_hint">Password</string>
     <string name="login_location_select">Session Location</string>
@@ -235,4 +236,5 @@
     <string name="patient_registered_locally">Patient registered locally</string>
     <string name="similar_patients_on_server">Similar patients exist on server</string>
     <string name="registration_core_info">To use faster and more accurate similar patient resolution, upgrade the Registration Core Module to 1.7 or higher</string>
+    <string name="login_networking_mode">Network:</string>
 </resources>

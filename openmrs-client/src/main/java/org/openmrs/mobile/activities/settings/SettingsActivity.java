@@ -52,6 +52,9 @@ public class SettingsActivity extends ACBaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
+        //Disable Settings Option in Menu
+        MenuItem settingsItem = menu.findItem(R.id.actionSettings);
+        settingsItem.setVisible(false);
         return true;
     }
 

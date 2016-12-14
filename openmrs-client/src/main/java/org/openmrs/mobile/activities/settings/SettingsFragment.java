@@ -58,6 +58,12 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
     }
 
     @Override
+    public void onPause() {
+        super.onStop();
+        mListItem = new ArrayList<>();
+    }
+
+    @Override
     public void setPresenter(SettingsContract.Presenter presenter) {
         this.mPresenter = presenter;
     }

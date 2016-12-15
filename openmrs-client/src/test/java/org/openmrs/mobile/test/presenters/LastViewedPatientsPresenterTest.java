@@ -2,39 +2,31 @@ package org.openmrs.mobile.test.presenters;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsContract;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsPresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.Results;
-import org.openmrs.mobile.test.MockCallOnFailure;
-import org.openmrs.mobile.test.MockCallOnResponse;
+import org.openmrs.mobile.test.ACUnitTestBase;
+import org.openmrs.mobile.test.MockErrorResponse;
+import org.openmrs.mobile.test.MockFailure;
+import org.openmrs.mobile.test.MockSuccessResponse;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Response;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
-public class LastViewedPatientsPresenterTest {
-
-    @Captor
-    private ArgumentCaptor<Call<List<Patient>>> argumentCaptor;
+public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
 
     @Mock
     private PatientDAO patientDAO;
@@ -49,7 +41,6 @@ public class LastViewedPatientsPresenterTest {
 
     @Before
     public void setup(){
-        MockitoAnnotations.initMocks(this);
         lastViewedPatientsPresenter = new LastViewedPatientsPresenter(
                 view,
                 restApi,
@@ -61,15 +52,16 @@ public class LastViewedPatientsPresenterTest {
     }
 
     private Call<Results<Patient>> mockSuccessCall(List<Patient> patientList) {
-        Results<Patient> results = new Results<>();
-        results.setResults(patientList);
-        Response<Results<Patient>> success = Response.success(results);
-        return new MockCallOnResponse<>(success);
+        return new MockSuccessResponse<>(patientList);
+    }
+
+    private Call<Results<Patient>> mockErrorCall(int code){
+        return new MockErrorResponse<>(code);
     }
 
     private Call<Results<Patient>> mockFailureCall() {
         Throwable throwable = Mockito.mock(Throwable.class);
-        return new MockCallOnFailure<>(throwable);
+        return new MockFailure<>(throwable);
     }
 
     private Patient createPatient(Long id) {
@@ -88,6 +80,19 @@ public class LastViewedPatientsPresenterTest {
         verify(view).updateList(Collections.singletonList(secondPatient));
         verify(view).setListVisibility(true);
         verify(view, atLeast(2)).setEmptyListVisibility(false);
+        verify(view).stopRefreshing();
+    }
+
+    @Test
+    public void shouldUpdateLastViewedPatientList_ServerError(){
+        List<Patient> patientList = Arrays.asList(firstPatient, secondPatient);
+        when(restApi.getLastViewedPatients()).thenReturn(mockErrorCall(401));
+        lastViewedPatientsPresenter.updateLastViewedList();
+        verify(restApi).getLastViewedPatients();
+        verify(view, atLeast(2)).setListVisibility(false);
+        verify(view).setEmptyListVisibility(false);
+        verify(view).setEmptyListVisibility(true);
+        verify(view).setEmptyListText(anyString());
         verify(view).stopRefreshing();
     }
 

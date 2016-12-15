@@ -1,6 +1,5 @@
 package org.openmrs.mobile.test;
 
-
 import java.io.IOException;
 
 import okhttp3.Request;
@@ -8,12 +7,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MockCallOnFailure<T> implements Call<T> {
+public class MockErrorResponse<T> implements Call<T>{
 
-    Throwable throwable;
+    private Response response;
 
-    public MockCallOnFailure(Throwable throwable) {
-        this.throwable = throwable;
+    public MockErrorResponse(int code) {
+        response = Response.error(code, new MockResponseBody());
     }
 
     @Override
@@ -23,7 +22,7 @@ public class MockCallOnFailure<T> implements Call<T> {
 
     @Override
     public void enqueue(Callback<T> callback) {
-        callback.onFailure(this, throwable);
+        callback.onResponse(this, response);
     }
 
     @Override

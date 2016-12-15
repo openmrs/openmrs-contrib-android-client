@@ -39,9 +39,17 @@ public interface LoginContract {
 
         void hideLoadingAnimation();
 
+        void showLocationLoadingAnimation();
+
+        void hideUrlLoadingAnimation();
+
         void finishLoginActivity();
 
+        void showInvalidURLSnackbar(String message);
+
         void setErrorOccurred(boolean errorOccurred);
+
+        void enableLocationSpinner(boolean errorOccurred);
 
         void sendIntentBroadcast(String message);
 

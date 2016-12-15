@@ -236,5 +236,5 @@
     <string name="patient_registered_locally">Patient registered locally</string>
     <string name="similar_patients_on_server">Similar patients exist on server</string>
     <string name="registration_core_info">To use faster and more accurate similar patient resolution, upgrade the Registration Core Module to 1.7 or higher</string>
-    <string name="login_networking_mode">Network:</string>
+    <string name="login_sync_mode">Sync:</string>
 </resources>

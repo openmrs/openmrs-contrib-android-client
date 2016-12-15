@@ -152,6 +152,8 @@ public class LoginPresenter implements LoginContract.Presenter{
 
     @Override
     public void loadLocations(final String url) {
+        loginView.showLocationLoadingAnimation();
+        loginView.enableLocationSpinner(false);
         String locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "location";
         RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<Results<Location>> call = restApi.getLocations(locationEndPoint, "Login Location", "full");
@@ -163,18 +165,23 @@ public class LoginPresenter implements LoginContract.Presenter{
                     mOpenMRS.setServerUrl(url);
                     loginView.initLoginForm(response.body().getResults(), url);
                     loginView.startFormListService();
+                    loginView.enableLocationSpinner(true);
+                    loginView.setErrorOccurred(false);
                 } else {
-                    loginView.hideLoadingAnimation();
+                    loginView.enableLocationSpinner(false);
+                    loginView.showInvalidURLSnackbar("Failed to fetch server's locations");
                     loginView.setErrorOccurred(true);
                     loginView.sendIntentBroadcast(ApplicationConstants.CustomIntentActions.ACTION_SERVER_NOT_SUPPORTED_BROADCAST);
                 }
+                loginView.hideUrlLoadingAnimation();
             }
 
             @Override
             public void onFailure(Call<Results<Location>> call, Throwable t) {
-                loginView.hideLoadingAnimation();
-                ToastUtil.error(t.getMessage());
+                loginView.hideUrlLoadingAnimation();
+                loginView.showInvalidURLSnackbar(t.getMessage());
                 loginView.setErrorOccurred(true);
+                loginView.enableLocationSpinner(false);
             }
         });
     }

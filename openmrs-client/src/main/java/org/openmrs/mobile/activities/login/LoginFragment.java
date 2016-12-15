@@ -14,15 +14,16 @@
 
 package org.openmrs.mobile.activities.login;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -37,13 +38,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
-import org.openmrs.mobile.activities.dialog.DialogActivity;
 import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
@@ -64,6 +63,7 @@ public class LoginFragment extends Fragment implements LoginContract.View{
 
     private LoginContract.Presenter mPresenter;
 
+    private View mRootView;
     private TextView mForgotPass;
     private EditText mUrl;
     private EditText mUsername;
@@ -72,13 +72,12 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     private ProgressBar mSpinner;
     private Spinner mDropdownLocation;
     private LinearLayout mLoginFormView;
-    private SwitchCompat mLoginNetworkingSwitch;
-    CustomDialogBundle urlDialog = null;
+    private SwitchCompat mLoginSyncSwitch;
     private SparseArray<Bitmap> mBitmapCache;
+    private ProgressBar mLocationLoadingProgressBar;
 
-    private static boolean mErrorOccurred;
+    private boolean mErrorOccurred = true;
     private static String mLastCorrectURL = "";
-    private static String mLastURL = "";
     private static boolean urlChanged = false;
     private static List<Location> mLocationsList;
 
@@ -88,34 +87,26 @@ public class LoginFragment extends Fragment implements LoginContract.View{
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_login, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_login, container, false);
 
-        initViewFields(root);
+        initViewFields(mRootView);
         initListeners();
-
-        if (mErrorOccurred || OpenMRS.getInstance().getServerUrl().equals(ApplicationConstants.EMPTY_STRING)) {
-            showURLDialog();
+        if (mLastCorrectURL.equals(ApplicationConstants.EMPTY_STRING)) {
+            mUrl.setText(OpenMRS.getInstance().getServerUrl());
+            mLastCorrectURL = OpenMRS.getInstance().getServerUrl();
         } else {
-            if (mLastCorrectURL.equals(ApplicationConstants.EMPTY_STRING)) {
-                mUrl.setText(OpenMRS.getInstance().getServerUrl());
-                mLastCorrectURL = OpenMRS.getInstance().getServerUrl();
-            } else {
-                mUrl.setText(mLastCorrectURL);
-            }
-            hideURLDialog();
+            mUrl.setText(mLastCorrectURL);
         }
+        hideURLDialog();
 
         // Font config
         FontsUtil.setFont((ViewGroup) this.getActivity().findViewById(android.R.id.content));
 
-        return root;
+        return mRootView;
     }
 
     private void initListeners() {
-
-
-
-        mLoginNetworkingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mLoginSyncSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance()).edit();
@@ -127,7 +118,7 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         mUrl.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if (StringUtils.notEmpty(mUrl.getText().toString()) && urlChanged) {
+                if (StringUtils.notEmpty(mUrl.getText().toString())  && !view.isFocused() && urlChanged) {
                     ((LoginFragment) getActivity()
                             .getSupportFragmentManager()
                             .findFragmentById(R.id.loginContentFrame))
@@ -146,7 +137,7 @@ public class LoginFragment extends Fragment implements LoginContract.View{
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (!OpenMRS.getInstance().getServerUrl().equals(editable.toString()) && StringUtils.notEmpty(editable.toString())) {
+                if ((!OpenMRS.getInstance().getServerUrl().equals(editable.toString()) || mErrorOccurred) && StringUtils.notEmpty(editable.toString())) {
                     urlChanged = true;
                 }
             }
@@ -176,25 +167,23 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         mLoginButton = (Button) root.findViewById(R.id.loginButton);
         mSpinner = (ProgressBar) root.findViewById(R.id.loginLoading);
         mLoginFormView = (LinearLayout) root.findViewById(R.id.loginFormView);
-        mLoginNetworkingSwitch = ((SwitchCompat) root.findViewById(R.id.loginsyncswitch));
+        mLoginSyncSwitch = ((SwitchCompat) root.findViewById(R.id.loginsyncswitch));
         mDropdownLocation = (Spinner) root.findViewById(R.id.locationSpinner);
         mForgotPass = (TextView)root.findViewById(R.id.forgotPass);
+        mLocationLoadingProgressBar = (ProgressBar) root.findViewById(R.id.locationLoadingProgressBar);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
+        boolean syncState = prefs.getBoolean("sync", true);
+        mLoginSyncSwitch.setChecked(syncState);
+        hideUrlLoadingAnimation();
+
         mPresenter.start();
         bindDrawableResources();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (urlDialog != null) {
-            // saving last typed URL
-            mLastURL = ((LoginActivity)getActivity()).getDialogEditTextValue();
-        }
     }
 
     @Override
@@ -220,35 +209,6 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         bundle.setLeftButtonText(getString(R.string.forgot_button_ok));
         ((LoginActivity) this.getActivity()).createAndShowDialog(bundle, ApplicationConstants.DialogTAG.LOGOUT_DIALOG_TAG);
-    }
-
-    public void showURLDialog() {
-        urlDialog = new CustomDialogBundle();
-        urlDialog.setTitleViewMessage(getString(R.string.login_dialog_title));
-        String serverURL = OpenMRS.getInstance().getServerUrl();
-        if (!mLastURL.equals(ApplicationConstants.EMPTY_STRING)) {
-            urlDialog.setEditTextViewMessage(mLastURL);
-        } else if (mLastCorrectURL.equals(ApplicationConstants.EMPTY_STRING) &&
-                !serverURL.equals(ApplicationConstants.EMPTY_STRING)) {
-            urlDialog.setEditTextViewMessage(serverURL);
-        } else {
-            urlDialog.setEditTextViewMessage(mLastCorrectURL);
-        }
-        urlDialog.setRightButtonText(getString(R.string.dialog_button_done));
-        urlDialog.setRightButtonAction(CustomFragmentDialog.OnClickAction.SET_URL);
-        if (!OpenMRS.getInstance().getServerUrl().equals(ApplicationConstants.EMPTY_STRING)) {
-            urlDialog.setLeftButtonText(getString(R.string.dialog_button_cancel));
-            urlDialog.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS_URL_DIALOG);
-        }
-        ((LoginActivity) this.getActivity()).createAndShowDialog(urlDialog, ApplicationConstants.DialogTAG.URL_DIALOG_TAG);
-    }
-
-    private void showInvalidURLDialog() {
-        mErrorOccurred = true;
-        Intent i = new Intent(this.getContext(), DialogActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.setAction(ApplicationConstants.DialogTAG.INVALID_URL_DIALOG_TAG);
-        startActivity(i);
     }
 
     @Override
@@ -278,6 +238,16 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     public void hideLoadingAnimation() {
         mLoginFormView.setVisibility(View.VISIBLE);
         mSpinner.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showLocationLoadingAnimation() {
+        mLocationLoadingProgressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideUrlLoadingAnimation() {
+        mLocationLoadingProgressBar.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -316,7 +286,6 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     public void initLoginForm(List<Location> locationsList, String serverURL) {
         mErrorOccurred = false;
         mLastCorrectURL = serverURL;
-        mLastURL = ApplicationConstants.EMPTY_STRING;
         mUrl.setText(serverURL);
         mLocationsList = locationsList;
         List<String> items = getLocationStringList(locationsList);
@@ -362,6 +331,25 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         getActivity().startService(i);
     }
 
+    @Override
+    public void showInvalidURLSnackbar(String message) {
+        Snackbar snackbar = Snackbar
+                .make(mRootView, message, Snackbar.LENGTH_INDEFINITE)
+                .setAction("EDIT", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mUrl.requestFocus();
+                        mUrl.selectAll();
+                    }
+                });
+        snackbar.show();
+    }
+
+    @Override
+    public void setErrorOccurred(boolean errorOccurred) {
+        this.mErrorOccurred = errorOccurred;
+    }
+
     private List<String> getLocationStringList(List<Location> locationList) {
         List<String> list = new ArrayList<String>();
         list.add(getString(R.string.login_location_select));
@@ -373,18 +361,19 @@ public class LoginFragment extends Fragment implements LoginContract.View{
 
     public void setUrl(String url) {
         URLValidator.ValidationResult result = URLValidator.validate(url);
-        mLastURL = result.getUrl();
         if (result.isURLValid()) {
-            mSpinner.setVisibility(View.VISIBLE);
-            mLoginFormView.setVisibility(View.GONE);
             mPresenter.loadLocations(result.getUrl());
         } else {
-            showInvalidURLDialog();
+            showInvalidURLSnackbar("Invalid URL");
+            setErrorOccurred(true);
         }
     }
 
-    public void setErrorOccurred(boolean errorOccurred) {
-        mErrorOccurred = errorOccurred;
+    public void enableLocationSpinner(boolean enabled) {
+        mDropdownLocation.setEnabled(enabled);
+        if (!enabled) {
+            mLoginButton.setEnabled(false);
+        }
     }
 
     public void hideURLDialog() {

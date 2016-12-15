@@ -13,6 +13,8 @@ set -e
 
 chmod +x gradlew
 
+./gradlew test
+
 if [ -n "$TRAVIS_TAG" ]; then
 
 echo "Building relase apk for Github and Play Store..."

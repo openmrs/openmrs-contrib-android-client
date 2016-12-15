@@ -18,10 +18,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="org.openmrs.mobile.activities.ACBaseActivity">
     <item
-        android:id="@+id/syncswitch"
+        android:id="@+id/syncbutton"
         android:title="Sync"
         app:showAsAction="always"
-        app:actionLayout="@layout/sync_switch"/>
+        android:icon="@drawable/ic_sync_off"/>
     <item
         android:id="@+id/actionSettings"
         android:orderInCategory="100"

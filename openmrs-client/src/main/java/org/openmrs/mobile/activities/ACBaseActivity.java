@@ -51,6 +51,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     private CustomFragmentDialog mCurrentDialog;
     protected AuthorizationManager mAuthorizationManager;
     protected CustomFragmentDialog mCustomFragmentDialog;
+    private MenuItem mSyncbutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,33 +94,44 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(final Menu menu) {
-        MenuItem switchmenu = menu.findItem(R.id.syncswitch);
+        mSyncbutton = menu.findItem(R.id.syncbutton);
         MenuItem logoutMenuItem = menu.findItem(R.id.actionLogout);
         if (logoutMenuItem != null) {
             logoutMenuItem.setTitle(getString(R.string.action_logout) + " " + mOpenMRS.getUsername());
         }
-        if(switchmenu!=null) {
-            final SwitchCompat mSwitch=(SwitchCompat)switchmenu.getActionView();
+        if(mSyncbutton !=null) {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
-            Boolean syncstate = prefs.getBoolean("sync", true);
-            mSwitch.setChecked(syncstate);
-            mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            final Boolean syncState = prefs.getBoolean("sync", true);
+            setSyncButtonState(syncState);
+            mSyncbutton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
+                    final Boolean syncState = prefs.getBoolean("sync", true);
                     SharedPreferences.Editor editor = prefs.edit();
-                    editor.putBoolean("sync", isChecked);
-                    editor.commit();
-                    String text=(isChecked)? mSwitch.getTextOn().toString():mSwitch.getTextOff().toString();
-                    ToastUtil.notify(text);
-                    if(isChecked)
-                    {
-                        Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
-                        getApplicationContext().sendBroadcast(intent);
+                    editor.putBoolean("sync", !syncState);
+                    editor.apply();
+                    setSyncButtonState(!syncState);
+                    if (syncState) {
+                        ToastUtil.notify("Sync OFF");
                     }
+                    else {
+                        ToastUtil.notify("Sync ON");
+                    }
+                    return true;
                 }
             });
         }
         return true;
+    }
+
+    private void setSyncButtonState(boolean syncState) {
+        if (syncState) {
+            mSyncbutton.setIcon(R.drawable.ic_sync_on);
+        }
+        else {
+            mSyncbutton.setIcon(R.drawable.ic_sync_off);
+        }
     }
 
     @Override

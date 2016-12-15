@@ -20,6 +20,14 @@
     android:focusableInTouchMode="true"
     android:orientation="vertical">
 
+    <ProgressBar
+        android:id="@+id/locationLoadingProgressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="-20dp"
+        android:indeterminate="true"/>
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="fill_parent"
@@ -91,13 +99,13 @@
                     android:password="true"
                     android:singleLine="true" />
 
-                <Spinner
-                    android:id="@+id/locationSpinner"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="10dp" />
+                    <Spinner
+                        android:id="@+id/locationSpinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="10dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -108,7 +116,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/login_networking_mode"
+                        android:text="@string/login_sync_mode"
                         android:gravity="center"
                         android:textSize="16sp"/>
 

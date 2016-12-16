@@ -31,7 +31,6 @@ import org.openmrs.mobile.models.retrofit.Page;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FormService;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 public class FormDisplayActivity extends ACBaseActivity implements FormDisplayContract.View.MainView {

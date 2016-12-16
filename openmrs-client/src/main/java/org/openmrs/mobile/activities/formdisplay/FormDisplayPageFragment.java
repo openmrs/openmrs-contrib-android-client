@@ -176,18 +176,24 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
     public boolean checkfields() {
         boolean emp=true, valid=true;
         for (InputField field:inputFields) {
-            RangeEditText ed=(RangeEditText) getActivity().findViewById(field.getId());
-            if(!isEmpty(ed)) {
+            RangeEditText ed = (RangeEditText) getActivity().findViewById(field.getId());
+            if (!isEmpty(ed)) {
                 emp = false;
-
-                Double inp = Double.parseDouble(ed.getText().toString());
-                if (ed.getUpperlimit() != -1.0 && ed.getUpperlimit() != -1.0) {
-                    if (ed.getUpperlimit() < inp || ed.getLowerlimit() > inp) {
-                        ToastUtil.error("Value for " + ed.getName() + " is out of range. Value should be between "+
-                                ed.getLowerlimit()+" and "+ed.getUpperlimit());
-                        ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(),R.color.red));
-                        valid=false;
+                if (ed.getText().toString().charAt(0) != '.') {
+                    Double inp = Double.parseDouble(ed.getText().toString());
+                    if (ed.getUpperlimit() != -1.0 && ed.getUpperlimit() != -1.0) {
+                        if (ed.getUpperlimit() < inp || ed.getLowerlimit() > inp) {
+                            ToastUtil.error("Value for " + ed.getName() + " is out of range. Value should be between " +
+                                    ed.getLowerlimit() + " and " + ed.getUpperlimit());
+                            ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
+                            valid = false;
+                        }
                     }
+                }
+                else {
+                    ToastUtil.error("Comma cannot be first character of " +  ed.getName() + " value.");
+                    ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
+                    valid = false;
                 }
             }
         }

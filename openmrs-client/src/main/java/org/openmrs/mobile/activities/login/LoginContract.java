@@ -47,9 +47,7 @@ public interface LoginContract {
 
         void showInvalidURLSnackbar(String message);
 
-        void setErrorOccurred(boolean errorOccurred);
-
-        void enableLocationSpinner(boolean errorOccurred);
+        void setLocationErrorOccurred(boolean errorOccurred);
 
         void sendIntentBroadcast(String message);
 
@@ -58,13 +56,16 @@ public interface LoginContract {
         void userAuthenticated();
 
         void startFormListService();
+
     }
 
     interface  Presenter extends BasePresenter{
 
         void authenticateUser(final String username, final String password, final String url);
 
-        void login(String username, String password, String url);
+        void authenticateUser(final String username, final String password, final String url, boolean wipeDatabase);
+
+        void login(String username, String password, String url, String oldUrl);
 
         void saveLocationsToDatabase(List<Location> locationList, String selectedLocation);
 

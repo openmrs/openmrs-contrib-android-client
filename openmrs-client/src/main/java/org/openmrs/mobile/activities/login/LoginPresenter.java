@@ -14,7 +14,6 @@
 
 package org.openmrs.mobile.activities.login;
 
-import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.retrofit.VisitApi;
@@ -31,6 +30,7 @@ import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.net.UserManager;
 import org.openmrs.mobile.net.helpers.UserHelper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
@@ -45,6 +45,7 @@ public class LoginPresenter implements LoginContract.Presenter{
     private OpenMRS mOpenMRS;
     private OpenMRSLogger mLogger;
     private AuthorizationManager authorizationManager;
+    private boolean mWipeRequired;
 
     public LoginPresenter(LoginContract.View loginView, OpenMRS openMRS) {
         this.loginView = loginView;
@@ -58,25 +59,30 @@ public class LoginPresenter implements LoginContract.Presenter{
     public void start() {}
 
     @Override
-    public void login(String username, String password, String url) {
-        if (validateLoginFields(username, password)) {
+    public void login(String username, String password, String url, String oldUrl) {
+        if (validateLoginFields(username, password, url)) {
             if ((!mOpenMRS.getUsername().equals(ApplicationConstants.EMPTY_STRING) &&
                     !mOpenMRS.getUsername().equals(username)) ||
                     ((!mOpenMRS.getServerUrl().equals(ApplicationConstants.EMPTY_STRING) &&
-                            !mOpenMRS.getServerUrl().equals(url)))) {
+                            !mOpenMRS.getServerUrl().equals(oldUrl))) ||
+                    mWipeRequired) {
                 loginView.showWarningDialog();
             } else {
                 loginView.showLoadingAnimation();
                 authenticateUser(username, password, url);
             }
-        } else {
-            loginView.showToast(ToastUtil.ToastType.ERROR, R.string.login_dialog_login_or_password_empty);
         }
     }
 
     @Override
     public void authenticateUser(final String username, final String password, final String url) {
+        authenticateUser(username, password, url, mWipeRequired);
+    }
+
+    @Override
+    public void authenticateUser(final String username, final String password, final String url, final boolean wipeDatabase) {
         loginView.showLoadingAnimation();
+        mWipeRequired = wipeDatabase;
         RestApi restApi = RestServiceBuilder.createService(RestApi.class, username, password);
         Call<Session> call = restApi.getSession();
         call.enqueue(new Callback<Session>() {
@@ -86,10 +92,11 @@ public class LoginPresenter implements LoginContract.Presenter{
                 if (response.isSuccessful()) {
                     Session session = response.body();
                     if (session.isAuthenticated()) {
-                        if (authorizationManager.isDBCleaningRequired(username, url)) {
+                        if (wipeDatabase) {
                             mOpenMRS.deleteDatabase(OpenMRSSQLiteOpenHelper.DATABASE_NAME);
                             setData(session.getSessionId(), url, username, password);
-                        } else if (authorizationManager.isUserNameOrServerEmpty()) {
+                            mWipeRequired = false;
+                        } if (authorizationManager.isUserNameOrServerEmpty()) {
                             setData(session.getSessionId(), url, username, password);
                         } else {
                             mOpenMRS.setSessionToken(session.getSessionId());
@@ -142,7 +149,6 @@ public class LoginPresenter implements LoginContract.Presenter{
     @Override
     public void loadLocations(final String url) {
         loginView.showLocationLoadingAnimation();
-        loginView.enableLocationSpinner(false);
         String locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "location";
         RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<Results<Location>> call = restApi.getLocations(locationEndPoint, "Login Location", "full");
@@ -154,13 +160,10 @@ public class LoginPresenter implements LoginContract.Presenter{
                     mOpenMRS.setServerUrl(url);
                     loginView.initLoginForm(response.body().getResults(), url);
                     loginView.startFormListService();
-                    loginView.enableLocationSpinner(true);
-                    loginView.setErrorOccurred(false);
+                    loginView.setLocationErrorOccurred(false);
                 } else {
-                    loginView.enableLocationSpinner(false);
                     loginView.showInvalidURLSnackbar("Failed to fetch server's locations");
-                    loginView.setErrorOccurred(true);
-                    loginView.sendIntentBroadcast(ApplicationConstants.CustomIntentActions.ACTION_SERVER_NOT_SUPPORTED_BROADCAST);
+                    loginView.setLocationErrorOccurred(true);
                 }
                 loginView.hideUrlLoadingAnimation();
             }
@@ -168,16 +171,15 @@ public class LoginPresenter implements LoginContract.Presenter{
             @Override
             public void onFailure(Call<Results<Location>> call, Throwable t) {
                 loginView.hideUrlLoadingAnimation();
+                loginView.hideLoadingAnimation();
                 loginView.showInvalidURLSnackbar(t.getMessage());
-                loginView.setErrorOccurred(true);
-                loginView.enableLocationSpinner(false);
+                loginView.setLocationErrorOccurred(true);
             }
         });
     }
 
-    private boolean validateLoginFields(String username, String password) {
-        return !(ApplicationConstants.EMPTY_STRING.equals(username)
-                || ApplicationConstants.EMPTY_STRING.equals(password));
+    private boolean validateLoginFields(String username, String password, String url) {
+        return StringUtils.notEmpty(username) || StringUtils.notEmpty(password) || StringUtils.notEmpty(url);
     }
 
     private void setData(String sessionToken,String url, String username, String password) {

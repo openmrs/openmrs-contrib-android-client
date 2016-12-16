@@ -48,8 +48,8 @@ import org.openmrs.mobile.activities.login.LoginFragment;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.visits.PatientVisitsFragment;
 import org.openmrs.mobile.activities.registerpatient.RegisterPatientActivity;
-import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
 import org.openmrs.mobile.activities.registerpatient.SimilarPatientsRecyclerViewAdapter;
+import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.models.retrofit.Patient;
@@ -320,13 +320,6 @@ public class CustomFragmentDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 switch (action) {
-                    case SET_URL:
-                        ((LoginFragment) getActivity()
-                                .getSupportFragmentManager()
-                                .findFragmentById(R.id.loginContentFrame))
-                                .setUrl(CustomFragmentDialog.this.mEditText.getText().toString().trim());
-                        dismiss();
-                        break;
                     case DISMISS_URL_DIALOG:
                         ((LoginFragment) getActivity()
                                 .getSupportFragmentManager()
@@ -338,7 +331,7 @@ public class CustomFragmentDialog extends DialogFragment {
                         ((LoginFragment) getActivity()
                                 .getSupportFragmentManager()
                                 .findFragmentById(R.id.loginContentFrame))
-                                .login();
+                                .login(true);
                         dismiss();
                         break;
                     case DISMISS:

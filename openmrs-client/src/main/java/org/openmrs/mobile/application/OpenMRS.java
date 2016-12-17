@@ -17,16 +17,22 @@ package org.openmrs.mobile.application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Configuration;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
 import net.sqlcipher.database.SQLiteDatabase;
 import org.odk.collect.android.application.Collect;
 import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
+import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.retrofit.EncounterType;
 import org.openmrs.mobile.models.retrofit.Encountercreate;
 import org.openmrs.mobile.models.retrofit.Form;
@@ -40,8 +46,11 @@ import org.openmrs.mobile.models.retrofit.Resource;
 import org.openmrs.mobile.models.retrofit.Section;
 import org.openmrs.mobile.security.SecretKeyGenerator;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.StringUtils;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OpenMRS extends Collect {
@@ -101,6 +110,12 @@ public class OpenMRS extends Collect {
                 MODE_PRIVATE);
     }
 
+    public void setFirstLogin(boolean firstLogin) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putBoolean(ApplicationConstants.UserKeys.FIRST_LOGIN, firstLogin);
+        editor.commit();
+    }
+
     public void setUsername(String username) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(ApplicationConstants.UserKeys.USER_NAME, username);
@@ -137,10 +152,24 @@ public class OpenMRS extends Collect {
         editor.commit();
     }
 
+
+    public void setLocations(List<Location> locations) {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        String jsonList = gson.toJson(locations);
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.CACHED_LOCATIONS, jsonList);
+        editor.commit();
+    }
+
     public void setVisitTypeUUID(String visitTypeUUID) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(ApplicationConstants.VISIT_TYPE_UUID, visitTypeUUID);
         editor.commit();
+    }
+
+    public boolean getFirstLogin() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        return prefs.getBoolean(ApplicationConstants.UserKeys.FIRST_LOGIN, false);
     }
 
     public String getUsername() {
@@ -163,6 +192,11 @@ public class OpenMRS extends Collect {
         return prefs.getString(ApplicationConstants.SESSION_TOKEN, ApplicationConstants.EMPTY_STRING);
     }
 
+    public String getLastSessionToken() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        return prefs.getString(ApplicationConstants.LAST_SESSION_TOKEN, ApplicationConstants.EMPTY_STRING);
+    }
+
     public String getAuthorizationToken() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.AUTHORIZATION_TOKEN, ApplicationConstants.EMPTY_STRING);
@@ -171,6 +205,16 @@ public class OpenMRS extends Collect {
     public String getLocation() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.LOCATION, ApplicationConstants.EMPTY_STRING);
+    }
+
+    public List<Location> getLocations() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        String jsonList = prefs.getString(ApplicationConstants.CACHED_LOCATIONS, ApplicationConstants.EMPTY_STRING);
+        if (jsonList.equals(ApplicationConstants.EMPTY_STRING))
+            return null;
+        Gson gson = new Gson();
+        Type dataType = new TypeToken<List<Location>>(){}.getType();
+        return gson.fromJson(jsonList, dataType);
     }
 
     public String getVisitTypeUUID() {
@@ -254,6 +298,8 @@ public class OpenMRS extends Collect {
     public void clearUserPreferencesData() {
         SharedPreferences prefs = OpenMRS.getInstance().getOpenMRSSharedPreferences();
         SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(ApplicationConstants.LAST_SESSION_TOKEN,
+                prefs.getString(ApplicationConstants.SESSION_TOKEN, ApplicationConstants.EMPTY_STRING));
         editor.remove(ApplicationConstants.SESSION_TOKEN);
         editor.remove(ApplicationConstants.AUTHORIZATION_TOKEN);
         clearCurrentLoggedInUserInfo();

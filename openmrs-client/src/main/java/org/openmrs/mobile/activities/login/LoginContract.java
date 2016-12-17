@@ -19,6 +19,7 @@ import android.support.annotation.NonNull;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Location;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
@@ -45,6 +46,10 @@ public interface LoginContract {
         void showInvalidURLSnackbar(String message);
 
         void setLocationErrorOccurred(boolean errorOccurred);
+
+        void showToast(String message, ToastUtil.ToastType toastType);
+
+        void showToast(int textId, ToastUtil.ToastType toastType);
 
         void sendIntentBroadcast(String message);
 

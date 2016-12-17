@@ -85,6 +85,12 @@ public class OpenMRS extends Application {
                 MODE_PRIVATE);
     }
 
+    public void setUserLoggedOnline(boolean firstLogin) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putBoolean(ApplicationConstants.UserKeys.LOGIN, firstLogin);
+        editor.commit();
+    }
+
     public void setUsername(String username) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(ApplicationConstants.UserKeys.USER_NAME, username);
@@ -100,6 +106,12 @@ public class OpenMRS extends Application {
     public void setServerUrl(String serverUrl) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(ApplicationConstants.SERVER_URL, serverUrl);
+        editor.commit();
+    }
+
+    public void setLastLoginServerUrl(String url) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.LAST_LOGIN_SERVER_URL, url);
         editor.commit();
     }
 
@@ -127,6 +139,11 @@ public class OpenMRS extends Application {
         editor.commit();
     }
 
+    public boolean isUserLoggedOnline() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        return prefs.getBoolean(ApplicationConstants.UserKeys.LOGIN, false);
+    }
+
     public String getUsername() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.UserKeys.USER_NAME, ApplicationConstants.EMPTY_STRING);
@@ -142,9 +159,19 @@ public class OpenMRS extends Application {
         return prefs.getString(ApplicationConstants.SERVER_URL, ApplicationConstants.DEFAULT_OPEN_MRS_URL);
     }
 
+    public String getLastLoginServerUrl() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        return prefs.getString(ApplicationConstants.LAST_LOGIN_SERVER_URL, ApplicationConstants.EMPTY_STRING);
+    }
+
     public String getSessionToken() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.SESSION_TOKEN, ApplicationConstants.EMPTY_STRING);
+    }
+
+    public String getLastSessionToken() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        return prefs.getString(ApplicationConstants.LAST_SESSION_TOKEN, ApplicationConstants.EMPTY_STRING);
     }
 
     public String getAuthorizationToken() {
@@ -238,6 +265,8 @@ public class OpenMRS extends Application {
     public void clearUserPreferencesData() {
         SharedPreferences prefs = OpenMRS.getInstance().getOpenMRSSharedPreferences();
         SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(ApplicationConstants.LAST_SESSION_TOKEN,
+                prefs.getString(ApplicationConstants.SESSION_TOKEN, ApplicationConstants.EMPTY_STRING));
         editor.remove(ApplicationConstants.SESSION_TOKEN);
         editor.remove(ApplicationConstants.AUTHORIZATION_TOKEN);
         clearCurrentLoggedInUserInfo();

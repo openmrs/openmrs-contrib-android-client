@@ -47,6 +47,7 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.StringUtils;
+import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.URLValidator;
 
 import java.util.ArrayList;
@@ -327,6 +328,17 @@ public class LoginFragment extends Fragment implements LoginContract.View {
         this.loginValidatorWatcher.setLocationErrorOccurred(errorOccurred);
         mLoginButton.setEnabled(!errorOccurred);
     }
+
+    @Override
+    public void showToast(String message, ToastUtil.ToastType toastType) {
+        ToastUtil.showShortToast(getContext(), toastType, message);
+    }
+
+    @Override
+    public void showToast(int textId, ToastUtil.ToastType toastType) {
+        ToastUtil.showShortToast(getContext(), toastType, getResources().getString(textId));
+    }
+
 
     private List<String> getLocationStringList(List<Location> locationList) {
         List<String> list = new ArrayList<String>();

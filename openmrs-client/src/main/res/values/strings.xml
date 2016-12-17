@@ -56,6 +56,10 @@
     <string name="dob_hint">Date of Birth</string>
     <string name="estyr">Estimated Years</string>
     <string name="estmonth">Estimated Months</string>
+    
+    <!-- Offline Mode -->
+    <string name="offline_mode_unsupported_in_first_login">Offline mode is not supported during first login.Enable online mode and then try again.</string>
+
 
     <!-- Connection Timeout dialog -->
     <string name="conn_timeout_dialog_title">Connection Failed</string>

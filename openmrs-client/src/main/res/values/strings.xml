@@ -32,6 +32,8 @@
     <string name="forgot_dialog_title">Unable to login?</string>
     <string name="forgot_dialog_message">Please contact the system administrator</string>
     <string name="forgot_button_ok">Dismiss</string>
+    <string name="login_offline">Offline</string>
+    <string name="login_online">Online</string>
 
     <string name="emptyerror">Required</string>
     <string name="reg_firstname_hint">Given Name</string>
@@ -236,5 +238,4 @@
     <string name="patient_registered_locally">Patient registered locally</string>
     <string name="similar_patients_on_server">Similar patients exist on server</string>
     <string name="registration_core_info">To use faster and more accurate similar patient resolution, upgrade the Registration Core Module to 1.7 or higher</string>
-    <string name="login_sync_mode">Sync:</string>
 </resources>

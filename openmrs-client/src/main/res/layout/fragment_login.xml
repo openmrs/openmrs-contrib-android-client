@@ -113,20 +113,26 @@
                     android:orientation="horizontal"
                     android:layout_margin="5dp">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/login_sync_mode"
-                        android:gravity="center"
-                        android:textSize="16sp"/>
+                        android:gravity="center">
 
-                    <android.support.v7.widget.SwitchCompat
-                        xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:id="@+id/loginsyncswitch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:theme="@style/ToggleSwitchTheme"
-                        />
+                        <TextView
+                            android:id="@+id/syncLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/login_offline"
+                            android:layout_marginRight="10dp"/>
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:id="@+id/loginSyncButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/sync_button_selector"
+                            android:tint="@color/cardview_dark_background"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

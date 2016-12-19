@@ -17,8 +17,8 @@ import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.retrofit.Question;
 import org.openmrs.mobile.utilities.InputField;
+import org.openmrs.mobile.utilities.SelectOneField;
 
-import java.lang.ref.WeakReference;
 import java.util.List;
 
 public interface FormDisplayContract {
@@ -33,8 +33,11 @@ public interface FormDisplayContract {
             void attachSectionToView(LinearLayout linearLayout);
             void attachQuestionToSection(LinearLayout section, LinearLayout question);
             void createAndAttachNumericQuestionEditText(Question question, LinearLayout sectionLinearLayout);
+            void createAndAttachSelectQuestionDropdown(Question question, LinearLayout sectionLinearLayout);
+            void createAndAttachSelectQuestionRadioButton(Question question, LinearLayout sectionLinearLayout);
             LinearLayout createQuestionGroupLayout(String questionLabel);
             LinearLayout createSectionLayout(String sectionLabel);
+            List<SelectOneField> getSelectOneFields();
             List<InputField> getInputFields();
         }
 

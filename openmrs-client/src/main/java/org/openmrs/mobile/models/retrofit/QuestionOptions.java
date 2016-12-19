@@ -14,6 +14,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class QuestionOptions implements Serializable {
 
@@ -25,13 +26,20 @@ public class QuestionOptions implements Serializable {
     @Expose
     private String concept;
 
+    // For numeric values
     @SerializedName("max")
     @Expose
     private String max;
 
+    // For numeric values
     @SerializedName("min")
     @Expose
     private String min;
+
+    // For select radio boxes
+    @SerializedName("answers")
+    @Expose
+    private List<Answer> answers;
 
     /**
      * 
@@ -83,6 +91,14 @@ public class QuestionOptions implements Serializable {
 
     public void setMin(String min) {
         this.min = min;
+    }
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
     }
 
 }

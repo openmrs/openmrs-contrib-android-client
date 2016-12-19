@@ -21,9 +21,9 @@ import org.openmrs.mobile.models.retrofit.Obscreate;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.InputField;
+import org.openmrs.mobile.utilities.SelectOneField;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +35,9 @@ public class FormDisplayMainPresenter implements FormDisplayContract.Presenter.M
     private FormDisplayContract.View.MainView mFormDisplayView;
     private Patient mPatient;
     private List<Fragment> mFragList = new ArrayList<>();
-    private List<InputField> mInputlist;
 
     public FormDisplayMainPresenter(FormDisplayContract.View.MainView mFormDisplayView, Bundle bundle) {
         this.mFormDisplayView = mFormDisplayView;
-        this.mInputlist = new ArrayList<>();
         this.mPatientID =(long) bundle.get(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE);
         this.mPatient =new PatientDAO().findPatientByID(Long.toString(mPatientID));
         this.mEncountertype =(String)bundle.get(ApplicationConstants.BundleKeys.ENCOUNTERTYPE);
@@ -53,6 +51,9 @@ public class FormDisplayMainPresenter implements FormDisplayContract.Presenter.M
 
     @Override
     public void createEncounter() {
+        List<InputField> inputFields = new ArrayList<>();
+        List<SelectOneField> radioGroupFields = new ArrayList<>();
+
         Encountercreate encountercreate=new Encountercreate();
         encountercreate.setPatient(mPatient.getUuid());
         encountercreate.setEncounterType(mEncountertype);
@@ -63,20 +64,33 @@ public class FormDisplayMainPresenter implements FormDisplayContract.Presenter.M
         boolean valid=true;
         for (Fragment f:activefrag) {
             FormDisplayPageFragment formPageFragment=(FormDisplayPageFragment)f;
-            if(!formPageFragment.checkfields()) {
+            if(!formPageFragment.checkInputFields()) {
                 valid=false;
                 break;
             }
-            List<InputField> pageinputlist=formPageFragment.getInputFields();
-            mInputlist.addAll(pageinputlist);
+
+            inputFields.addAll(formPageFragment.getInputFields());
+            radioGroupFields.addAll(formPageFragment.getSelectOneFields());
         }
 
         if(valid) {
-            for (InputField input: mInputlist) {
+            for (InputField input: inputFields) {
                 if(input.getValue()!=-1.0) {
                     Obscreate obscreate = new Obscreate();
                     obscreate.setConcept(input.getConcept());
-                    obscreate.setValue(input.getValue());
+                    obscreate.setValue(String.valueOf(input.getValue()));
+                    LocalDateTime localDateTime = new LocalDateTime();
+                    obscreate.setObsDatetime(localDateTime.toString());
+                    obscreate.setPerson(mPatient.getUuid());
+                    observations.add(obscreate);
+                }
+            }
+
+            for (SelectOneField radioGroupField : radioGroupFields) {
+                if (radioGroupField.getChosenAnswer() != null) {
+                    Obscreate obscreate = new Obscreate();
+                    obscreate.setConcept(radioGroupField.getConcept());
+                    obscreate.setValue(radioGroupField.getChosenAnswer().getConcept());
                     LocalDateTime localDateTime = new LocalDateTime();
                     obscreate.setObsDatetime(localDateTime.toString());
                     obscreate.setPerson(mPatient.getUuid());

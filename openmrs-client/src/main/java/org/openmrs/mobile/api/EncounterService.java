@@ -117,7 +117,7 @@ public class EncounterService extends IntentService {
         for (int i=0;i<encountercreate.getObservations().size();i++)
         {
             encounter.getObservations().get(i).setDisplayValue
-                    (Double.toString(encountercreate.getObservations().get(i).getValue()));
+                    (encountercreate.getObservations().get(i).getValue());
         }
         List<Encounter> encounterList=visit.getEncounters();
         encounterList.add(encounter);

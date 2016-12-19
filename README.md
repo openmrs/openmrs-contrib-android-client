@@ -43,7 +43,7 @@ B. Open Android Studio, import project and select your openmrs project. Next, im
 
 Note:
 - If you are working behind a proxy, check [this](https://wiki.appcelerator.org/display/guides2/Using+Studio+From+Behind+a+Proxy) to get things working.
-- To start development on local server, type http://10.0.2.2:8080/openmrs as URL.
+- To start development on local server, type http://10.0.2.2:8080/openmrs (for Android Studio AVD) or http://10.0.3.2:8080/openmrs (for Genymotion) as URL.
 
 # Releasing
 

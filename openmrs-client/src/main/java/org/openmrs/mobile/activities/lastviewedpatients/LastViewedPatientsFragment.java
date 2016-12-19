@@ -58,6 +58,7 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
             @Override
             public void onRefresh() {
                 mPresenter.refresh();
+                mAdapter.finishActionMode();
             }
         });
         return root;

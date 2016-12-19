@@ -96,9 +96,6 @@ public class PatientApi extends RetrofitApi {
                                     if (response.isSuccessful()) {
                                         Patient newPatient = response.body();
 
-                                        ToastUtil.success("Patient " +patient.getPerson().getName().getNameString()
-                                                +" created with UUID " + newPatient.getUuid());
-
                                         patient.setSynced(true);
                                         patient.setUuid(newPatient.getUuid());
 

@@ -24,6 +24,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -35,6 +36,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -72,7 +74,8 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     private ProgressBar mSpinner;
     private Spinner mDropdownLocation;
     private LinearLayout mLoginFormView;
-    private SwitchCompat mLoginSyncSwitch;
+    private AppCompatImageView mLoginSyncButton;
+    private TextView mSyncStateLabel;
     private SparseArray<Bitmap> mBitmapCache;
     private ProgressBar mLocationLoadingProgressBar;
 
@@ -106,12 +109,15 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     }
 
     private void initListeners() {
-        mLoginSyncSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mLoginSyncButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+            public void onClick(View view) {
+                final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
+                boolean syncState = prefs.getBoolean("sync", true);
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance()).edit();
-                editor.putBoolean("sync", isChecked);
+                editor.putBoolean("sync", !syncState);
                 editor.commit();
+                setSyncButtonState(!syncState);
             }
         });
 
@@ -167,7 +173,8 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         mLoginButton = (Button) root.findViewById(R.id.loginButton);
         mSpinner = (ProgressBar) root.findViewById(R.id.loginLoading);
         mLoginFormView = (LinearLayout) root.findViewById(R.id.loginFormView);
-        mLoginSyncSwitch = ((SwitchCompat) root.findViewById(R.id.loginsyncswitch));
+        mLoginSyncButton = ((AppCompatImageView) root.findViewById(R.id.loginSyncButton));
+        mSyncStateLabel = ((TextView) root.findViewById(R.id.syncLabel));
         mDropdownLocation = (Spinner) root.findViewById(R.id.locationSpinner);
         mForgotPass = (TextView)root.findViewById(R.id.forgotPass);
         mLocationLoadingProgressBar = (ProgressBar) root.findViewById(R.id.locationLoadingProgressBar);
@@ -179,7 +186,7 @@ public class LoginFragment extends Fragment implements LoginContract.View{
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
         boolean syncState = prefs.getBoolean("sync", true);
-        mLoginSyncSwitch.setChecked(syncState);
+        setSyncButtonState(syncState);
         hideUrlLoadingAnimation();
 
         mPresenter.start();
@@ -200,6 +207,18 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     @Override
     public void setPresenter(@NonNull LoginContract.Presenter presenter) {
         this.mPresenter = checkNotNull(presenter);
+    }
+
+    private void setSyncButtonState(boolean syncEnabled) {
+        if (syncEnabled) {
+            mSyncStateLabel.setText(getString(R.string.login_online));
+            ToastUtil.notify("Sync ON");
+        }
+        else {
+            mSyncStateLabel.setText(getString(R.string.login_offline));
+            ToastUtil.notify("Sync OFF");
+        }
+        mLoginSyncButton.setSelected(syncEnabled);
     }
 
     public void forgotPassword() {

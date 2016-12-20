@@ -18,7 +18,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="10dp"
-                android:background="@drawable/card">
+                android:background="@drawable/last_viewed_patient_list_row_selector">
     <RelativeLayout
         android:id="@+id/lastViewedTopRow"
         android:layout_marginTop="5dp"

@@ -16,10 +16,7 @@ package org.openmrs.mobile.activities.lastviewedpatients;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -33,33 +30,31 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.api.retrofit.PatientApi;
 import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
 import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastViewedPatientRecyclerViewAdapter.PatientViewHolder> {
     private Activity mContext;
     private List<Patient> mItems;
-    private boolean isAllDownloadableSelected = false;
+    private Set<Integer> selectedPatientPositions;
+    private boolean isAllSelected = false;
     private boolean isLongClicked = false;
-    private int howManyDownloadables = 0;
     private ActionMode actionMode;
-    private int howManySelected = 0;
-    private PatientDataArrayList patientDataArrayList = new PatientDataArrayList();
 
-    LastViewedPatientRecyclerViewAdapter(Activity context, List<Patient> items){
+    LastViewedPatientRecyclerViewAdapter(Activity context, List<Patient> items) {
         this.mContext = context;
         this.mItems = items;
+        this.selectedPatientPositions = new HashSet<>();
     }
 
     @Override
@@ -70,14 +65,10 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
     }
 
     @Override
-    public void onBindViewHolder(LastViewedPatientRecyclerViewAdapter.PatientViewHolder holder, final int position) {
+    public void onBindViewHolder(LastViewedPatientRecyclerViewAdapter.PatientViewHolder holder, int position) {
         final Patient patient = mItems.get(position);
-        if (!new PatientDAO().isUserAlreadySaved(patient.getUuid())) {
-            howManyDownloadables++;
-        }
 
-        patientDataArrayList.add(new PatientData(holder, patient, position));
-
+        holder.setSelected(isPatientSelected(position));
         if (null != patient.getIdentifier()) {
             holder.mIdentifier.setText("#" + patient.getIdentifier().getIdentifier());
         }
@@ -87,52 +78,24 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
         if (null != patient.getPerson().getGender()) {
             holder.mGender.setText(patient.getPerson().getGender());
         }
-        try{
+        try {
             holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             holder.mBirthDate.setText(" ");
         }
 
         if (null != holder.mAvailableOfflineCheckbox) {
             setUpCheckBoxLogic(holder, patient);
         }
-        holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (new PatientDAO().isUserAlreadySaved(patient.getUuid())) {
-                    Intent intent = new Intent(mContext, PatientDashboardActivity.class);
-                    Long id = new PatientDAO().findPatientByUUID(patient.getUuid()).getId();
-                    intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, id);
-                    mContext.startActivity(intent);
-                }
-            }
-        });
-        holder.mRowLayout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                PatientData patientData = patientDataArrayList.getPatientDataByPosition(position);
-                if (patientData.isDownloadable()) {
-                    if (v.isSelected()) {
-                        // unselected
-                        patientData.setSelected(false);
-                    } else {
-                        // selected
-                        if (!isLongClicked) {
-                            actionMode = mContext.startActionMode(mActionModeCallback);
-                        }
-                        isLongClicked = true;
-                        patientData.setSelected(true);
-                    }
-                    updateIsAllDownloadableSelected();
-                } else {
-                    ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE,
-                            R.string.patient_already_exists);
-                }
+    }
+
+    private boolean isPatientSelected(int position) {
+        for (Integer selectedPatientPosition : selectedPatientPositions) {
+            if(selectedPatientPosition.equals(position)){
                 return true;
             }
-        });
+        }
+        return false;
     }
 
     @Override
@@ -146,12 +109,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
         return mItems.size();
     }
 
-    public void clear() {
-        mItems.clear();
-        notifyDataSetChanged();
-    }
-
-    class PatientViewHolder extends RecyclerView.ViewHolder {
+    class PatientViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener{
         private LinearLayout mRowLayout;
         private TextView mIdentifier;
         private TextView mDisplayName;
@@ -167,83 +125,62 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
             mGender = (TextView) itemView.findViewById(R.id.lastViewedPatientGender);
             mBirthDate = (TextView) itemView.findViewById(R.id.lastViewedPatientBirthDate);
             mAvailableOfflineCheckbox = (CheckBox) itemView.findViewById(R.id.offlineCheckbox);
+            mRowLayout.setOnClickListener(this);
+            mRowLayout.setOnLongClickListener(this);
         }
 
         public void clearAnimation() {
             mRowLayout.clearAnimation();
         }
-    }
 
-    private class PatientData {
-        // class to store patient data
-        private int position;
-        private Patient patient;
-        private PatientViewHolder holder;
-        private boolean isSelected = false;
-
-        public PatientData(PatientViewHolder holder, Patient patient, int position) {
-            this.holder = holder;
-            this.patient = patient;
-            this.position = position;
-        }
-
-        public void setSelected(boolean value) {
-            if (value && !isSelected) {
-                // selected and previously was not selected, otherwise no change needed
-                    howManySelected++;
-                    holder.mRowLayout.setSelected(true);
-                    holder.mRowLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.light_teal));
+        @Override
+        public void onClick(View view) {
+            if(isLongClicked){
+                setSelected(!mRowLayout.isSelected());
             }
-            else if (!value && isSelected){
-                // unselected and previously was selected, otherwise no change needed
-                    howManySelected--;
-                    holder.mRowLayout.setSelected(false);
-                    holder.mRowLayout.setBackgroundResource(R.drawable.card);
+        }
+
+        private void setSelected(boolean select) {
+            if(select){
+                selectedPatientPositions.add(getAdapterPosition());
+                this.mRowLayout.setSelected(true);
+            } else {
+                removeIdFromSelectedIds(getAdapterPosition());
+                this.mRowLayout.setSelected(false);
             }
-            isSelected = value;
         }
 
-        public int getPosition() {
-            return position;
-        }
-
-        public boolean isDownloadable() {
-            return new PatientDAO().userDoesNotExist(this.patient.getUuid());
-        }
-
-        public void downloaded() {
-            howManyDownloadables--;
-            holder.mRowLayout.setSelected(false);
-            holder.mRowLayout.setBackgroundColor(Color.TRANSPARENT);
-        }
-    }
-
-    private class PatientDataArrayList extends ArrayList<PatientData> {
-        public PatientData getPatientDataByPosition(int position) {
-            for (int index = 0; index < size(); index++) {
-                PatientData patientData = get(index);
-                if (patientData.getPosition() == position) {
-                    return patientData;
+        @Override
+        public boolean onLongClick(View v) {
+            if (v.isSelected()) {
+                setSelected(false);
+            } else {
+                if (!isLongClicked) {
+                    actionMode = mContext.startActionMode(mActionModeCallback);
                 }
+                isLongClicked = true;
+                setSelected(true);
             }
-            return null;
+            return true;
         }
     }
 
-    private void updateIsAllDownloadableSelected() {
-        if (howManyDownloadables == howManySelected && howManyDownloadables != 0) {
-            isAllDownloadableSelected = true;
-        } else {
-            isAllDownloadableSelected = false;
+    private void removeIdFromSelectedIds(Integer position) {
+        Set<Integer> newSet = new HashSet<>();
+        for (Integer selectedPatientsId : selectedPatientPositions) {
+            if(!selectedPatientsId.equals(position)){
+                newSet.add(selectedPatientsId);
+            }
         }
+        selectedPatientPositions = newSet;
     }
 
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             mode.setTitle(mContext.getString(R.string.download_multiple));
-            MenuInflater inflator = mode.getMenuInflater();
-            inflator.inflate(R.menu.download_multiple, menu);
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.download_multiple, menu);
             return true;
         }
 
@@ -257,20 +194,18 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.action_select_all:
-                    if (isAllDownloadableSelected) {
+                    if (isAllSelected) {
                         unselectAll();
                     } else
                         selectAll();
-                    updateIsAllDownloadableSelected();
                     break;
                 case R.id.action_download:
                     downloadSelectedPatients();
-                    mode.finish();
+                    finish(mode);
                     break;
                 case R.id.close_context_menu:
-                    isLongClicked = false;
                     unselectAll();
-                    mode.finish();
+                    finish(mode);
                     break;
                 default:
                     unselectAll();
@@ -282,37 +217,46 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
         @Override
         public void onDestroyActionMode(ActionMode mode) {
             unselectAll();
+            isLongClicked = false;
+        }
+
+        public void finish(ActionMode mode){
+            mode.finish();
+            isLongClicked = false;
         }
     };
 
-    public void selectAll() {
-        for (PatientData patientData : patientDataArrayList) {
-            if (patientData.isDownloadable()) {
-                patientData.setSelected(true);
-            }
+    public void finishActionMode(){
+        if (actionMode != null) {
+            actionMode.finish();
+            isLongClicked = false;
         }
     }
 
-    public void unselectAll() {
-        for (PatientData patientData : patientDataArrayList) {
-            if (patientData.isDownloadable()) {
-                patientData.setSelected(false);
-            }
+    public void selectAll() {
+        for(int i = 0; i < mItems.size(); i++){
+            selectedPatientPositions.add(i);
         }
+        isAllSelected = true;
+        notifyDataSetChanged();
+    }
+
+    public void unselectAll() {
+        selectedPatientPositions.clear();
+        isAllSelected = false;
+        notifyDataSetChanged();
     }
 
 
     public void downloadSelectedPatients() {
-        for (PatientData patientData : patientDataArrayList) {
-            if (patientData.isDownloadable() && patientData.isSelected) {
-                downloadPatient(patientData.patient);
-                notifyDataSetChanged();
-                patientData.downloaded();
-            }
+        ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE, R.string.download_started);
+        for (Integer selectedPatientPosition : selectedPatientPositions) {
+            downloadPatient(mItems.get(selectedPatientPosition));
         }
+        notifyDataSetChanged();
     }
 
-    public void setUpCheckBoxLogic(final PatientViewHolder holder, final Patient patient){
+    public void setUpCheckBoxLogic(final PatientViewHolder holder, final Patient patient) {
         holder.mAvailableOfflineCheckbox.setChecked(false);
         holder.mAvailableOfflineCheckbox.setVisibility(View.VISIBLE);
         holder.mAvailableOfflineCheckbox.setButtonDrawable(R.drawable.ic_download);
@@ -320,7 +264,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
         holder.mAvailableOfflineCheckbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (((CheckBox) v).isChecked()) {
+                if (!isLongClicked && ((CheckBox) v).isChecked()) {
                     downloadPatient(patient);
                     disableCheckBox(holder);
                 }
@@ -329,7 +273,6 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
     }
 
     private void downloadPatient(final Patient patient) {
-        ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE, R.string.download_started);
         new PatientApi().downloadPatientByUuid(patient.getUuid(), new DownloadPatientCallbackListener() {
             @Override
             public void onPatientDownloaded(Patient newPatient) {
@@ -339,10 +282,12 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
                 new VisitApi().syncLastVitals(newPatient.getUuid());
                 mItems.remove(patient);
                 notifyDataSetChanged();
-                ToastUtil.success("Patient with UUID " + newPatient.getUuid() + " is now available locally");
             }
+
             @Override
-            public void onResponse() {}
+            public void onResponse() {
+            }
+
             @Override
             public void onErrorResponse() {
                 ToastUtil.error("Failed to fetch patient data");

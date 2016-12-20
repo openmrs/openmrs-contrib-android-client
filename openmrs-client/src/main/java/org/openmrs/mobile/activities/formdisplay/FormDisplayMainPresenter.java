@@ -23,7 +23,6 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.InputField;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 

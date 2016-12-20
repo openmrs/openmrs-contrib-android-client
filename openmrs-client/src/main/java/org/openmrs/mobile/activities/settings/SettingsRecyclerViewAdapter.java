@@ -23,10 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.models.SettingsListItemDTO;
-import org.openmrs.mobile.net.FormsManager;
-import org.openmrs.mobile.net.helpers.FormsHelper;
 import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
@@ -64,18 +61,6 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
                     (RelativeLayout.LayoutParams) holder.mTitle.getLayoutParams();
             layoutParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
             holder.mTitle.setLayoutParams(layoutParams);
-        }
-
-        if (mItems.get(position).getTitle().equals(mContext.getResources().getString(R.string.settings_downloadForms))) {
-            holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((ACBaseActivity) mContext).showProgressDialog(R.string.settings_forms_downloading);
-                    FormsManager formsManager = new FormsManager();
-                    formsManager.getAvailableFormsList(
-                            FormsHelper.createAvailableFormsListListener(formsManager, (ACBaseActivity) mContext));
-                }
-            });
         }
     }
 

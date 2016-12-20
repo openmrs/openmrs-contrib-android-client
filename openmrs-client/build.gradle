@@ -78,7 +78,6 @@ repositories {
 
 
 dependencies {
-    compile project(':odkcollect')
     compile group: 'com.google.code.gson', name: 'gson', version: '2.6.2'
 
     androidTestCompile(
@@ -106,6 +105,8 @@ dependencies {
     compile 'com.android.support:support-v13:23.4.0'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
+    compile 'joda-time:joda-time:2.0'
+    compile 'net.sf.kxml:kxml2:2.3.0'
 
     testCompile(
         'org.mockito:mockito-core:1.10.19',

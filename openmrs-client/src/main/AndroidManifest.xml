@@ -41,15 +41,6 @@
             android:name="buildVersion"
             android:value="0" />
 
-        <provider
-            android:name="org.odk.collect.android.openmrs.provider.OpenMRSFormsProvider"
-            android:authorities="org.odk.collect.android.openmrs.provider.odk.forms"
-            android:exported="false" />
-        <provider
-            android:name="org.odk.collect.android.openmrs.provider.OpenMRSInstanceProvider"
-            android:authorities="org.odk.collect.android.openmrs.provider.odk.instances"
-            android:exported="false" />
-
         <receiver android:name=".application.OpenMRSBroadcastReceiver">
             <intent-filter>
                 <action android:name="org.openmrs.mobile.intent.action.AUTH_FAILED_BROADCAST" />

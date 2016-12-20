@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.application;
 
+import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -23,28 +24,29 @@ import com.activeandroid.Configuration;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+
 import net.sqlcipher.database.SQLiteDatabase;
-import org.odk.collect.android.application.Collect;
+
 import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.models.retrofit.EncounterType;
 import org.openmrs.mobile.models.retrofit.Encountercreate;
-import org.openmrs.mobile.models.retrofit.Form;
 import org.openmrs.mobile.models.retrofit.FormResource;
 import org.openmrs.mobile.models.retrofit.Link;
 import org.openmrs.mobile.models.retrofit.Obscreate;
-import org.openmrs.mobile.models.retrofit.Page;
-import org.openmrs.mobile.models.retrofit.Question;
-import org.openmrs.mobile.models.retrofit.QuestionOptions;
-import org.openmrs.mobile.models.retrofit.Resource;
-import org.openmrs.mobile.models.retrofit.Section;
 import org.openmrs.mobile.security.SecretKeyGenerator;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OpenMRS extends Collect {
+public class OpenMRS extends Application {
+
+    private static final String OPENMRS_DIR_NAME = "OpenMRS";
+    private static final String OPENMRS_DIR_PATH = File.separator + OPENMRS_DIR_NAME;
+    private static String mExternalDirectoryPath;
+
     private static OpenMRS instance;
     private OpenMRSLogger mLogger;
     private static RequestQueue mRequestQueue;
@@ -56,9 +58,7 @@ public class OpenMRS extends Collect {
         instance = this;
         if (mExternalDirectoryPath == null) {
             mExternalDirectoryPath = this.getExternalFilesDir(null).toString();
-            overrideODKDirs();
         }
-        OpenMRS.createODKDirs();
         mLogger = new OpenMRSLogger();
         generateKey();
         OpenMRSDBOpenHelper.init();

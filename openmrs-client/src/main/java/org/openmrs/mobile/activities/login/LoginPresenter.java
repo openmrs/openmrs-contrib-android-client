@@ -14,8 +14,6 @@
 
 package org.openmrs.mobile.activities.login;
 
-import org.odk.collect.android.openmrs.provider.OpenMRSFormsProviderAPI;
-import org.odk.collect.android.openmrs.provider.OpenMRSInstanceProviderAPI;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -30,9 +28,7 @@ import org.openmrs.mobile.models.retrofit.Results;
 import org.openmrs.mobile.models.retrofit.Session;
 import org.openmrs.mobile.models.retrofit.VisitType;
 import org.openmrs.mobile.net.AuthorizationManager;
-import org.openmrs.mobile.net.FormsManager;
 import org.openmrs.mobile.net.UserManager;
-import org.openmrs.mobile.net.helpers.FormsHelper;
 import org.openmrs.mobile.net.helpers.UserHelper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -92,13 +88,6 @@ public class LoginPresenter implements LoginContract.Presenter{
                     if (session.isAuthenticated()) {
                         if (authorizationManager.isDBCleaningRequired(username, url)) {
                             mOpenMRS.deleteDatabase(OpenMRSSQLiteOpenHelper.DATABASE_NAME);
-                            OpenMRS.getInstance()
-                                    .getContentResolver()
-                                    .delete(OpenMRSFormsProviderAPI.FormsColumns.CONTENT_URI, null, null);
-                            OpenMRS.getInstance()
-                                    .getContentResolver()
-                                    .delete(OpenMRSInstanceProviderAPI.InstanceColumns.CONTENT_URI, null, null);
-
                             setData(session.getSessionId(), url, username, password);
                         } else if (authorizationManager.isUserNameOrServerEmpty()) {
                             setData(session.getSessionId(), url, username, password);
@@ -196,9 +185,5 @@ public class LoginPresenter implements LoginContract.Presenter{
         mOpenMRS.setServerUrl(url);
         mOpenMRS.setUsername(username);
         mOpenMRS.setPassword(password);
-
-        FormsManager formsManager = new FormsManager();
-        formsManager.getAvailableFormsList(
-                FormsHelper.createAvailableFormsListListener(formsManager));
     }
 }

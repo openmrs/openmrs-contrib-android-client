@@ -224,6 +224,7 @@
     <string name="empty_visits_list">Patient has no visits yet.</string>
     <string name="title_activity_form_create">FormCreateActivity</string>
     <string name="page_format">Hello World from section: %1$d</string>
+    <string name="save_form_as">Name this form</string>
     <!--Similar patient card strings-->
     <string name="gender_hint">gender:</string>
     <string name="birthdate_hint">birthdate:</string>

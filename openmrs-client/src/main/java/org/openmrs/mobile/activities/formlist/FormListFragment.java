@@ -87,7 +87,6 @@ public class FormListFragment extends Fragment implements FormListContract.View 
         intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patientId);
         intent.putExtra(ApplicationConstants.BundleKeys.VALUEREFERENCE, valueRefString);
         intent.putExtra(ApplicationConstants.BundleKeys.ENCOUNTERTYPE, encounterType);
-        ToastUtil.notify("Starting encounter");
         startActivity(intent);
     }
 

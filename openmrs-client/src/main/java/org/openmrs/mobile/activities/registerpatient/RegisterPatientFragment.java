@@ -314,6 +314,7 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
 
                     DatePickerDialog mDatePicker=new DatePickerDialog(RegisterPatientFragment.this.getActivity(), new DatePickerDialog.OnDateSetListener() {
                         public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                            selectedmonth++;
                             eddob.setText(selectedday+"/"+selectedmonth+"/"+selectedyear);
                             birthdate = new LocalDate(selectedyear, selectedmonth, selectedday);
                             bdt=birthdate.toDateTimeAtStartOfDay().toDateTime();

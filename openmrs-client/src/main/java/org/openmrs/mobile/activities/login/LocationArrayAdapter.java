@@ -18,12 +18,11 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import java.util.List;
 
 public class LocationArrayAdapter extends ArrayAdapter<String> {
-
-    private boolean emptyRemoved;
 
     public LocationArrayAdapter(Context context, List<String> objects) {
         super(context, android.R.layout.simple_spinner_item, objects);
@@ -32,28 +31,27 @@ public class LocationArrayAdapter extends ArrayAdapter<String> {
 
     @Override
     public int getCount() {
-        if (emptyRemoved) {
-            return super.getCount();
-        }
-        return super.getCount() - 1;
+        return super.getCount();
     }
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        if (!emptyRemoved) {
-            emptyRemoved = true;
-            setNotifyOnChange(false);
-            remove(getItem(0));
-            setNotifyOnChange(true);
+        View v;
+        if (position == 0) {
+            TextView tv = new TextView(getContext());
+            tv.setHeight(0);
+            tv.setVisibility(View.GONE);
+            v = tv;
         }
-        return super.getDropDownView(position, convertView, parent);
+        else {
+            v = super.getDropDownView(position, null, parent);
+        }
+        parent.setVerticalScrollBarEnabled(false);
+        return v;
     }
 
     @Override
     public long getItemId(int position) {
-        if (emptyRemoved) {
-            return position + 1;
-        }
         return position;
     }
 }

@@ -26,7 +26,9 @@ public abstract class ApplicationConstants {
     public static final String AUTHORIZATION_TOKEN = "authorisation";
     public static final String SECRET_KEY = "secretKey";
     public static final String LOCATION = "location";
+    public static final String CACHED_LOCATIONS = "cached_locations";
     public static final String VISIT_TYPE_UUID = "visit_type_uuid";
+    public static final String LAST_SESSION_TOKEN = "last_session_id";
 
     public static final String AUTHORIZATION_PARAM = "Authorization";
     public static final String JSESSIONID_PARAM = "JSESSIONID";
@@ -67,6 +69,7 @@ public abstract class ApplicationConstants {
         public static final String PASSWORD = "password";
         public static final String USER_PERSON_NAME = "userDisplay";
         public static final String USER_UUID = "userUUID";
+        public static final String FIRST_LOGIN = "firstLogin";
     }
 
     public abstract static class DialogTAG {

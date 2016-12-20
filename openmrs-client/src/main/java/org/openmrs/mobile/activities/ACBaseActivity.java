@@ -113,9 +113,12 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     editor.apply();
                     setSyncButtonState(!syncState);
                     if (syncState) {
+
                         ToastUtil.notify("Sync OFF");
                     }
                     else {
+                        Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
+                        getApplicationContext().sendBroadcast(intent);
                         ToastUtil.notify("Sync ON");
                     }
                     return true;

@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.login;
 
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
+import org.openmrs.mobile.api.UserService;
 import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
@@ -27,8 +28,6 @@ import org.openmrs.mobile.models.retrofit.Results;
 import org.openmrs.mobile.models.retrofit.Session;
 import org.openmrs.mobile.models.retrofit.VisitType;
 import org.openmrs.mobile.net.AuthorizationManager;
-import org.openmrs.mobile.net.UserManager;
-import org.openmrs.mobile.net.helpers.UserHelper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -115,9 +114,8 @@ public class LoginPresenter implements LoginContract.Presenter{
                             }
                         });
 
-                        UserManager userManager = new UserManager();
-                        userManager.getUserInformation(
-                                UserHelper.createUserInformationListener(username, userManager));
+                        new UserService().updateUserInformation(username);
+
                         loginView.userAuthenticated();
                         loginView.finishLoginActivity();
                     } else {
@@ -136,6 +134,7 @@ public class LoginPresenter implements LoginContract.Presenter{
             }
         });
     }
+
 
     @Override
     public void saveLocationsToDatabase(List<Location> locationList, String selectedLocation) {

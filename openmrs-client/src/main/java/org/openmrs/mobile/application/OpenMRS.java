@@ -21,9 +21,6 @@ import android.os.Build;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Configuration;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
@@ -49,7 +46,6 @@ public class OpenMRS extends Application {
 
     private static OpenMRS instance;
     private OpenMRSLogger mLogger;
-    private static RequestQueue mRequestQueue;
 
     @Override
     public void onCreate() {
@@ -77,19 +73,7 @@ public class OpenMRS extends Application {
         configurationBuilder.addModelClasses(Obscreate.class);
 
 
-
         ActiveAndroid.initialize(configurationBuilder.create());
-    }
-
-    public RequestQueue getRequestQueue() {
-        if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
-        }
-        return mRequestQueue;
-    }
-
-    public <T> void addToRequestQueue(Request<T> request) {
-        getRequestQueue().add(request);
     }
 
     public static OpenMRS getInstance() {

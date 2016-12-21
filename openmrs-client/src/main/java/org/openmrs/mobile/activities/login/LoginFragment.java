@@ -24,15 +24,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.SwitchCompat;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -50,7 +47,6 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.StringUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.URLValidator;
 
 import java.util.ArrayList;
@@ -229,11 +225,6 @@ public class LoginFragment extends Fragment implements LoginContract.View {
         bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
         bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         ((LoginActivity) this.getActivity()).createAndShowDialog(bundle, ApplicationConstants.DialogTAG.WARNING_LOST_DATA_DIALOG_TAG);
-    }
-
-    @Override
-    public void showToast(ToastUtil.ToastType toastType, int message) {
-        ToastUtil.showShortToast(getActivity(), toastType, message);
     }
 
     @Override

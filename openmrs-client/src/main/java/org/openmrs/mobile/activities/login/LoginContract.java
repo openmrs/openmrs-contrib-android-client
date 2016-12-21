@@ -19,7 +19,6 @@ import android.support.annotation.NonNull;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Location;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
@@ -32,8 +31,6 @@ public interface LoginContract {
         void setPresenter(@NonNull Presenter presenter);
 
         void showWarningDialog();
-
-        void showToast(ToastUtil.ToastType toastType, int message);
 
         void showLoadingAnimation();
 
@@ -70,5 +67,6 @@ public interface LoginContract {
         void saveLocationsToDatabase(List<Location> locationList, String selectedLocation);
 
         void loadLocations(String url);
+
     }
 }

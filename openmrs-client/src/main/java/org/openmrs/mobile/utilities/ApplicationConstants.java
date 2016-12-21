@@ -87,6 +87,7 @@ public abstract class ApplicationConstants {
         public static final String WARNING_LOST_DATA_DIALOG_TAG = "warningLostDataDialog";
         public static final String NO_VISIT_DIALOG_TAG = "noVisitDialogTag";
         public static final String SIMILAR_PATIENTS_TAG = "similarPatientsDialogTag";
+        public static final String DELET_PATIENT_DIALOG_TAG = "deletePatientDialogTag";
     }
 
     public abstract static class RegisterPatientRequirements {

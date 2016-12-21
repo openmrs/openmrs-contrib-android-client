@@ -269,6 +269,17 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.START_VISIT_DIALOG_TAG);
     }
 
+    public void showDeletePatientDialog() {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.action_delete_patient));
+        bundle.setTextViewMessage(getString(R.string.delete_patient_dialog_message));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DELETE_PATIENT);
+        bundle.setRightButtonText(getString(R.string.dialog_button_confirm));
+        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.DELET_PATIENT_DIALOG_TAG);
+    }
+
     public void createAndShowDialog(CustomDialogBundle bundle, String tag) {
         CustomFragmentDialog instance = CustomFragmentDialog.newInstance(bundle);
         instance.show(mFragmentManager, tag);

@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,19 +29,17 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
-public class PatientDiagnosisFragment extends Fragment implements PatientDashboardContract.ViewPatientDiagnosis {
+public class PatientDiagnosisFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDiagnosis {
 
     PatientDashboardContract.PatientDiagnosisPresenter mPresenter;
 
     private ListView diagnosisList;
     private TextView emptyList;
-
-    public PatientDiagnosisFragment() {
-    }
 
     public static PatientDiagnosisFragment newInstance() {
         return new PatientDiagnosisFragment();
@@ -48,6 +48,7 @@ public class PatientDiagnosisFragment extends Fragment implements PatientDashboa
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.setPresenter(mPresenter);
         setHasOptionsMenu(true);
     }
 
@@ -68,16 +69,7 @@ public class PatientDiagnosisFragment extends Fragment implements PatientDashboa
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.actionDelete:
-                mPresenter.deletePatient();
-                this.getActivity().finish();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {}
 
     @Override
     public void setDiagnosesToDisplay(List<String> encounters) {
@@ -87,7 +79,7 @@ public class PatientDiagnosisFragment extends Fragment implements PatientDashboa
     }
 
     @Override
-    public void setPresenter(PatientDashboardContract.PatientDiagnosisPresenter presenter) {
-        this.mPresenter = presenter;
+    public void setPresenter(PatientDashboardContract.PatientDashboardMainPresenter presenter) {
+        this.mPresenter = ((PatientDashboardDiagnosisPresenter) presenter);
     }
 }

@@ -115,6 +115,9 @@
     <string name="no_visit_dialog_message">This user has no active visit. Would you like to start one now?</string>
     <string name="no_visit_dialog_button_accept">Yes</string>
     <string name="no_visit_dialog_button_cancel">Cancel</string>
+    <!-- Delete patient dialog message -->
+    <string name="delete_patient_dialog_message">Are you sure you want to delete this patient?</string>
+
     <!-- Buttons -->
     <string name="dialog_button_done">Done</string>
     <string name="dialog_button_cancel">Cancel</string>

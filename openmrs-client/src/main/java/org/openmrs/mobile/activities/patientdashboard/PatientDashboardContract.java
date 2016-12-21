@@ -27,7 +27,12 @@ public interface PatientDashboardContract {
     /*
     * Views
     */
-    interface ViewPatientDetails extends BaseView<PatientDetailsPresenter> {
+
+    interface ViewPatientMain extends BaseView<PatientDashboardMainPresenter> {
+
+    }
+
+    interface ViewPatientDetails extends ViewPatientMain {
         void attachSnackbarToActivity();
         void resolvePatientDataDisplay(Patient patient);
         void showDialog(int resId);
@@ -36,11 +41,11 @@ public interface PatientDashboardContract {
         void setMenuTitle(String nameString, String identifier);
     }
 
-    interface ViewPatientDiagnosis extends BaseView<PatientDiagnosisPresenter> {
+    interface ViewPatientDiagnosis extends ViewPatientMain {
         void setDiagnosesToDisplay(List<String> encounters);
     }
 
-    interface ViewPatientVisits extends BaseView<PatientVisitsPresenter> {
+    interface ViewPatientVisits extends ViewPatientMain {
         void showErrorToast(String message);
         void showStartVisitDialog();
         void dismissStartVisitDialog();
@@ -50,7 +55,7 @@ public interface PatientDashboardContract {
         void showStartVisitDialog(boolean isVisitPossible);
     }
 
-    interface ViewPatientVitals extends BaseView<PatientVitalsPresenter> {
+    interface ViewPatientVitals extends ViewPatientMain {
         void showNoVitalsNotification();
         void showEncounterVitals(Encounter encounter);
     }

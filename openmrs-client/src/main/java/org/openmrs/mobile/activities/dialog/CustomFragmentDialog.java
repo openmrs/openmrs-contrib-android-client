@@ -46,6 +46,8 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.activities.login.LoginFragment;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
+import org.openmrs.mobile.activities.patientdashboard.details.PatientDetailsFragment;
 import org.openmrs.mobile.activities.patientdashboard.visits.PatientVisitsFragment;
 import org.openmrs.mobile.activities.registerpatient.RegisterPatientActivity;
 import org.openmrs.mobile.activities.registerpatient.SimilarPatientsRecyclerViewAdapter;
@@ -66,7 +68,7 @@ public class CustomFragmentDialog extends DialogFragment {
 
     public enum OnClickAction {
         SET_URL, SHOW_URL_DIALOG, DISMISS_URL_DIALOG, DISMISS, LOGOUT, FINISH, INTERNET, UNAUTHORIZED, END_VISIT,
-        START_VISIT, LOGIN, REGISTER_PATIENT, CANCEL_REGISTERING
+        START_VISIT, LOGIN, REGISTER_PATIENT, CANCEL_REGISTERING, DELETE_PATIENT
     }
 
     protected LayoutInflater mInflater;
@@ -370,6 +372,12 @@ public class CustomFragmentDialog extends DialogFragment {
                         ((RegisterPatientActivity) getActivity()).mPresenter.finishRegisterActivity();
                         dismiss();
                         break;
+                    case DELETE_PATIENT:
+                        PatientDashboardActivity activity = (PatientDashboardActivity) getActivity();
+                        activity.mPresenter.deletePatient();
+                        dismiss();
+                        activity.finish();
+
                     default:
                         break;
                 }

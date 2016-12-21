@@ -16,8 +16,8 @@ package org.openmrs.mobile.activities.formlist;
 
 import com.activeandroid.query.Select;
 
-import org.openmrs.mobile.models.retrofit.EncounterType;
-import org.openmrs.mobile.models.retrofit.FormResource;
+import org.openmrs.mobile.models.EncounterType;
+import org.openmrs.mobile.models.FormResource;
 
 import java.util.Iterator;
 import java.util.List;

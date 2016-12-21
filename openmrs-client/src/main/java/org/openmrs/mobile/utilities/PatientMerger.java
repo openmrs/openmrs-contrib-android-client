@@ -1,9 +1,9 @@
 package org.openmrs.mobile.utilities;
 
-import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.models.retrofit.Person;
-import org.openmrs.mobile.models.retrofit.PersonAddress;
-import org.openmrs.mobile.models.retrofit.PersonName;
+import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.Person;
+import org.openmrs.mobile.models.PersonAddress;
+import org.openmrs.mobile.models.PersonName;
 
 public class PatientMerger {
 

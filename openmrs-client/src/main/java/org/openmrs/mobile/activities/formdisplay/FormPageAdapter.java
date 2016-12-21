@@ -4,8 +4,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.v13.app.FragmentPagerAdapter;
 
-import org.openmrs.mobile.models.retrofit.Form;
-import org.openmrs.mobile.models.retrofit.Page;
+import org.openmrs.mobile.models.Form;
+import org.openmrs.mobile.models.Page;
 import org.openmrs.mobile.utilities.FormService;
 
 import java.util.List;

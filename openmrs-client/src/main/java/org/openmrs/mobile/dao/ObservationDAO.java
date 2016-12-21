@@ -19,7 +19,7 @@ import net.sqlcipher.Cursor;
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.tables.ObservationTable;
-import org.openmrs.mobile.models.retrofit.Observation;
+import org.openmrs.mobile.models.Observation;
 
 import java.util.ArrayList;
 import java.util.List;

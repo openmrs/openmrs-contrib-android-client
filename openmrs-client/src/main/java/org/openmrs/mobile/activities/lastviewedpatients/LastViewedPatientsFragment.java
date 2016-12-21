@@ -27,7 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;

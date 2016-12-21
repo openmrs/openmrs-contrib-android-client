@@ -15,7 +15,7 @@ import android.widget.LinearLayout;
 
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.models.retrofit.Question;
+import org.openmrs.mobile.models.Question;
 import org.openmrs.mobile.utilities.InputField;
 import org.openmrs.mobile.utilities.SelectOneField;
 

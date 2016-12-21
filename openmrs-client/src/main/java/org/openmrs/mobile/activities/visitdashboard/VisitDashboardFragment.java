@@ -28,7 +28,7 @@ import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.formlist.FormListActivity;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.models.retrofit.Encounter;
+import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;

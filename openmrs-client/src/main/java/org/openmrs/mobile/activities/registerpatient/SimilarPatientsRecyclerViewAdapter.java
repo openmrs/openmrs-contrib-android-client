@@ -31,7 +31,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;

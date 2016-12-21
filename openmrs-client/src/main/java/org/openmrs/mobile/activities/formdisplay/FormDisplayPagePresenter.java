@@ -12,9 +12,9 @@ package org.openmrs.mobile.activities.formdisplay;
 
 import android.widget.LinearLayout;
 
-import org.openmrs.mobile.models.retrofit.Page;
-import org.openmrs.mobile.models.retrofit.Question;
-import org.openmrs.mobile.models.retrofit.Section;
+import org.openmrs.mobile.models.Page;
+import org.openmrs.mobile.models.Question;
+import org.openmrs.mobile.models.Section;
 
 import java.util.List;
 

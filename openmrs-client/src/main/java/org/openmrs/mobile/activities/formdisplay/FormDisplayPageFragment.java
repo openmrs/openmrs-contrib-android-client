@@ -32,8 +32,8 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.models.retrofit.Answer;
-import org.openmrs.mobile.models.retrofit.Question;
+import org.openmrs.mobile.models.Answer;
+import org.openmrs.mobile.models.Question;
 import org.openmrs.mobile.utilities.InputField;
 import org.openmrs.mobile.utilities.SelectOneField;
 import org.openmrs.mobile.utilities.RangeEditText;

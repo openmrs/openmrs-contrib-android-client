@@ -19,10 +19,10 @@ import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.listeners.retrofit.StartVisitResponseListenerCallback;
-import org.openmrs.mobile.models.retrofit.EncounterType;
-import org.openmrs.mobile.models.retrofit.Visit;
-import org.openmrs.mobile.models.retrofit.Encounter;
-import org.openmrs.mobile.models.retrofit.Encountercreate;
+import org.openmrs.mobile.models.EncounterType;
+import org.openmrs.mobile.models.Visit;
+import org.openmrs.mobile.models.Encounter;
+import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 

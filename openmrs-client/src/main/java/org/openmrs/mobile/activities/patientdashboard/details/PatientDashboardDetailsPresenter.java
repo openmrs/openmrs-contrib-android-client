@@ -22,7 +22,7 @@ import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
-import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.NetworkUtils;
 
 public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientDetailsPresenter {

@@ -33,7 +33,7 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
-import org.openmrs.mobile.models.retrofit.Visit;
+import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 

@@ -14,7 +14,7 @@ package org.openmrs.mobile.utilities;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.openmrs.mobile.models.retrofit.Form;
+import org.openmrs.mobile.models.Form;
 
 import java.lang.reflect.Modifier;
 

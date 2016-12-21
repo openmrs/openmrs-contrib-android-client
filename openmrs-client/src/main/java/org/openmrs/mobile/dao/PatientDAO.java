@@ -21,11 +21,11 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.tables.PatientTable;
-import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.models.retrofit.PatientIdentifier;
-import org.openmrs.mobile.models.retrofit.Person;
-import org.openmrs.mobile.models.retrofit.PersonAddress;
-import org.openmrs.mobile.models.retrofit.PersonName;
+import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.PatientIdentifier;
+import org.openmrs.mobile.models.Person;
+import org.openmrs.mobile.models.PersonAddress;
+import org.openmrs.mobile.models.PersonName;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

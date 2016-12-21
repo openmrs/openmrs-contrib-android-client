@@ -56,11 +56,6 @@
     <string name="estyr">Estimated Years</string>
     <string name="estmonth">Estimated Months</string>
 
-
-    <!-- Url dialog -->
-    <string name="login_dialog_title">Enter URL address</string>
-    <string name="login_dialog_server_url_empty_error">Server URL cannot be empty.</string>
-    <string name="login_dialog_login_or_password_empty">Please fill the required fields (Username, Password).</string>
     <!-- Connection Timeout dialog -->
     <string name="conn_timeout_dialog_title">Connection Failed</string>
     <string name="conn_timeout_dialog_message">A network error has occurred - Connection Timeout.\nPlease try again in a few seconds.</string>

@@ -17,7 +17,6 @@ package org.openmrs.mobile.activities.login;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -26,13 +25,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.SwitchCompat;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -48,6 +44,7 @@ import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
+import org.openmrs.mobile.listeners.watcher.LoginValidatorWatcher;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -61,7 +58,7 @@ import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class LoginFragment extends Fragment implements LoginContract.View{
+public class LoginFragment extends Fragment implements LoginContract.View {
 
     private LoginContract.Presenter mPresenter;
 
@@ -79,10 +76,11 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     private SparseArray<Bitmap> mBitmapCache;
     private ProgressBar mLocationLoadingProgressBar;
 
-    private boolean mErrorOccurred = true;
+    private LoginValidatorWatcher loginValidatorWatcher;
+
     private static String mLastCorrectURL = "";
-    private static boolean urlChanged = false;
     private static List<Location> mLocationsList;
+    final private String initialUrl = OpenMRS.getInstance().getServerUrl();
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -121,30 +119,21 @@ public class LoginFragment extends Fragment implements LoginContract.View{
             }
         });
 
+        loginValidatorWatcher = new LoginValidatorWatcher(mUrl, mUsername, mPassword, mDropdownLocation, mLoginButton);
+
         mUrl.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if (StringUtils.notEmpty(mUrl.getText().toString())  && !view.isFocused() && urlChanged) {
+                if (StringUtils.notEmpty(mUrl.getText().toString())
+                        && !view.isFocused() 
+                        && loginValidatorWatcher.isUrlChanged()
+                        || (loginValidatorWatcher.isUrlChanged()
+                        && loginValidatorWatcher.isLocationErrorOccurred())) {
                     ((LoginFragment) getActivity()
                             .getSupportFragmentManager()
                             .findFragmentById(R.id.loginContentFrame))
                             .setUrl(mUrl.getText().toString());
-                    urlChanged = false;
-                }
-            }
-        });
-
-        mUrl.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if ((!OpenMRS.getInstance().getServerUrl().equals(editable.toString()) || mErrorOccurred) && StringUtils.notEmpty(editable.toString())) {
-                    urlChanged = true;
+                    loginValidatorWatcher.setUrlChanged(false);
                 }
             }
         });
@@ -154,9 +143,11 @@ public class LoginFragment extends Fragment implements LoginContract.View{
             public void onClick(View v) {
                 mPresenter.login(mUsername.getText().toString(),
                         mPassword.getText().toString(),
-                        mUrl.getText().toString());
+                        mUrl.getText().toString(),
+                        initialUrl);
             }
         });
+
         mForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,7 +167,7 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         mLoginSyncButton = ((AppCompatImageView) root.findViewById(R.id.loginSyncButton));
         mSyncStateLabel = ((TextView) root.findViewById(R.id.syncLabel));
         mDropdownLocation = (Spinner) root.findViewById(R.id.locationSpinner);
-        mForgotPass = (TextView)root.findViewById(R.id.forgotPass);
+        mForgotPass = (TextView) root.findViewById(R.id.forgotPass);
         mLocationLoadingProgressBar = (ProgressBar) root.findViewById(R.id.locationLoadingProgressBar);
     }
 
@@ -212,11 +203,9 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     private void setSyncButtonState(boolean syncEnabled) {
         if (syncEnabled) {
             mSyncStateLabel.setText(getString(R.string.login_online));
-            ToastUtil.notify("Sync ON");
         }
         else {
             mSyncStateLabel.setText(getString(R.string.login_offline));
-            ToastUtil.notify("Sync OFF");
         }
         mLoginSyncButton.setSelected(syncEnabled);
     }
@@ -261,6 +250,7 @@ public class LoginFragment extends Fragment implements LoginContract.View{
 
     @Override
     public void showLocationLoadingAnimation() {
+        mLoginButton.setEnabled(false);
         mLocationLoadingProgressBar.setVisibility(View.VISIBLE);
     }
 
@@ -303,37 +293,13 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     }
 
     public void initLoginForm(List<Location> locationsList, String serverURL) {
-        mErrorOccurred = false;
+        setLocationErrorOccurred(false);
         mLastCorrectURL = serverURL;
         mUrl.setText(serverURL);
         mLocationsList = locationsList;
         List<String> items = getLocationStringList(locationsList);
         final LocationArrayAdapter adapter = new LocationArrayAdapter(this.getActivity(), items);
         mDropdownLocation.setAdapter(adapter);
-        mDropdownLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position >= 0 && id >= 1) {
-                    adapter.notifyDataSetChanged();
-                    mLoginButton.setEnabled(true);
-                    //Set Text Color to black once option selected
-                    TextView currentText = (TextView) parent.getChildAt(0);
-                    if (currentText != null) {
-                        currentText.setTextColor(Color.BLACK);
-                    }
-                } else if (position >= 0 && id == 0) {
-                    //Set Text Color to red if spinner is at start/default option
-                    TextView currentText = (TextView) parent.getChildAt(0);
-                    if (currentText != null) {
-                        currentText.setTextColor(Color.RED);
-                    }
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
         mLoginButton.setEnabled(false);
         mSpinner.setVisibility(View.GONE);
         mLoginFormView.setVisibility(View.VISIBLE);
@@ -346,14 +312,14 @@ public class LoginFragment extends Fragment implements LoginContract.View{
 
     @Override
     public void startFormListService() {
-        Intent i=new Intent(getContext(), FormListService.class);
+        Intent i = new Intent(getContext(), FormListService.class);
         getActivity().startService(i);
     }
 
     @Override
     public void showInvalidURLSnackbar(String message) {
         Snackbar snackbar = Snackbar
-                .make(mRootView, message, Snackbar.LENGTH_INDEFINITE)
+                .make(mRootView, message, Snackbar.LENGTH_LONG)
                 .setAction("EDIT", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -365,8 +331,9 @@ public class LoginFragment extends Fragment implements LoginContract.View{
     }
 
     @Override
-    public void setErrorOccurred(boolean errorOccurred) {
-        this.mErrorOccurred = errorOccurred;
+    public void setLocationErrorOccurred(boolean errorOccurred) {
+        this.loginValidatorWatcher.setLocationErrorOccurred(errorOccurred);
+        mLoginButton.setEnabled(!errorOccurred);
     }
 
     private List<String> getLocationStringList(List<Location> locationList) {
@@ -384,14 +351,6 @@ public class LoginFragment extends Fragment implements LoginContract.View{
             mPresenter.loadLocations(result.getUrl());
         } else {
             showInvalidURLSnackbar("Invalid URL");
-            setErrorOccurred(true);
-        }
-    }
-
-    public void enableLocationSpinner(boolean enabled) {
-        mDropdownLocation.setEnabled(enabled);
-        if (!enabled) {
-            mLoginButton.setEnabled(false);
         }
     }
 
@@ -403,10 +362,16 @@ public class LoginFragment extends Fragment implements LoginContract.View{
         }
     }
 
-    public void login(){
+    public void login() {
         mPresenter.authenticateUser(mUsername.getText().toString(),
                 mPassword.getText().toString(),
                 mUrl.getText().toString());
+    }
+
+    public void login(boolean wipeDatabase) {
+        mPresenter.authenticateUser(mUsername.getText().toString(),
+                mPassword.getText().toString(),
+                mUrl.getText().toString(), wipeDatabase);
     }
 
 }

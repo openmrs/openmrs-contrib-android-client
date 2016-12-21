@@ -21,36 +21,10 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 
 public class AuthorizationManager extends BaseManager {
 
-    private boolean isUsernameNotEmptyOrNotSameUser(String username) {
-        boolean result = false;
-        if (!mOpenMRS.getUsername().equals(ApplicationConstants.EMPTY_STRING)
-                && !mOpenMRS.getUsername().equals(username)) {
-            result = true;
-        }
-        return result;
-    }
-
-    private boolean isServerURLNotEmptyOrNorSameURL(String serverURL) {
-        boolean result = false;
-        if (!mOpenMRS.getServerUrl().equals(ApplicationConstants.EMPTY_STRING)
-                && !mOpenMRS.getServerUrl().equals(serverURL)) {
-            result = true;
-        }
-        return result;
-    }
-
     public boolean isUserNameOrServerEmpty() {
         boolean result = false;
         if (mOpenMRS.getUsername().equals(ApplicationConstants.EMPTY_STRING) ||
                 (mOpenMRS.getServerUrl().equals(ApplicationConstants.EMPTY_STRING))) {
-            result = true;
-        }
-        return result;
-    }
-
-    public boolean isDBCleaningRequired(String username, String serverURL) {
-        boolean result = false;
-        if (isUsernameNotEmptyOrNotSameUser(username) || isServerURLNotEmptyOrNorSameURL(serverURL)) {
             result = true;
         }
         return result;

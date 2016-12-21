@@ -23,6 +23,7 @@ import org.openmrs.mobile.models.retrofit.Observation;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.Results;
 import org.openmrs.mobile.models.retrofit.Session;
+import org.openmrs.mobile.models.retrofit.User;
 import org.openmrs.mobile.models.retrofit.Visit;
 import org.openmrs.mobile.models.retrofit.VisitType;
 
@@ -115,5 +116,11 @@ public interface RestApi {
 
     @GET("module")
     Call<Results<Module>> getModules(@Query("v") String representation);
+
+    @GET("user")
+    Call<Results<User>> getUserInfo(@Query("q") String username);
+
+    @GET("user/{uuid}")
+    Call<User> getFullUserInfo(@Path("uuid") String uuid);
 
 }

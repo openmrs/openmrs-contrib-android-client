@@ -28,37 +28,9 @@ public abstract class ApplicationConstants {
     public static final String LOCATION = "location";
     public static final String VISIT_TYPE_UUID = "visit_type_uuid";
 
-    public static final String AUTHORIZATION_PARAM = "Authorization";
-    public static final String JSESSIONID_PARAM = "JSESSIONID";
-    public static final String COOKIE_PARAM = "Cookie";
-    public static final String PATIENT_UUID_PARAM = "ACCEPT_PATIENT_UUID";
-
     public abstract static class API {
         public static final String REST_ENDPOINT = "/ws/rest/v1/";
-        public static final String XFORM_ENDPOINT = "/moduleServlet/xforms/";
-        public static final String XFORM_UPLOAD = "xformDataUpload";
-
-        public static final String AUTHORISATION_END_POINT = "session";
-        public static final String PATIENT_DETAILS = "patient";
-        public static final String VISIT_DETAILS = "visit";
-        public static final String OBS_DETAILS = "obs";
-        public static final String VISIT_TYPE = "visittype";
-        public static final String ENCOUNTER_DETAILS = "encounter";
-        public static final String USER_DETAILS = "user";
-
-        public static final String PATIENT_QUERY = "patient?q=";
-        public static final String USER_QUERY = "user?q=";
-
-        public static final String FORM_LIST = "xformDownload?target=xformslist&format=withurl";
-
-        public static final String FULL_VERSION = "?v=full";
-        public static final String FULL_VERSION_NEXT_PARAM = "&v=full";
         public static final String FULL = "full";
-        public static final int REQUEST_TIMEOUT = 20000;
-
-        public static final String PATIENT = "patient?";
-
-
     }
 
 
@@ -70,7 +42,6 @@ public abstract class ApplicationConstants {
     }
 
     public abstract static class DialogTAG {
-        public static final String URL_DIALOG_TAG = "urlDialog";
         public static final String AUTH_FAILED_DIALOG_TAG = "authFailedDialog";
         public static final String CONN_TIMEOUT_DIALOG_TAG = "connectionTimeoutDialog";
         public static final String NO_INTERNET_CONN_DIALOG_TAG = "noInternetConnectionDialog";
@@ -96,11 +67,7 @@ public abstract class ApplicationConstants {
     public abstract static class BundleKeys {
         public static final String CUSTOM_DIALOG_BUNDLE = "customDialogBundle";
         public static final String PATIENT_ID_BUNDLE = "patientID";
-        public static final String PATIENT_UUID_BUNDLE = "patientUUID";
-        public static final String PATIENT_BUNDLE = "patientBundle";
         public static final String VISIT_ID = "visitID";
-        public static final String PATIENT_NAME = "patientName";
-        public static final String PATIENT_LIST = "patientList";
         public static final String ENCOUNTERTYPE = "encounterType";
         public static final String VALUEREFERENCE = "valueReference";
         public static final String FORM_NAME = "formName";
@@ -119,25 +86,10 @@ public abstract class ApplicationConstants {
         public static final String ACTION_SERVER_NOT_SUPPORTED_BROADCAST = "org.openmrs.mobile.intent.action.SERVER_NOT_SUPPORTED_BROADCAST";
     }
 
-    public abstract static class VolleyErrors {
-        public static final String CONNECTION_TIMEOUT = "com.android.volley.TimeoutError";
-        public static final String NO_CONNECTION = "com.android.volley.NoConnectionError";
-        public static final String CONNECT_EXCEPTION = "java.net.ConnectException";
-        public static final String UNKNOWN_HOST = "java.net.UnknownHostException";
-        public static final String AUTHORISATION_FAILURE = "com.android.volley.AuthFailureError";
-        public static final String SERVER_ERROR = "com.android.volley.ServerError";
-        public static final String SOCKET_EXCEPTION = "java.net.SocketException";
-        public static final String EOF_EXCEPTION = "java.io.EOFException";
-    }
-
-
     public static final String DEFAULT_OPEN_MRS_URL = "http://devtest04.openmrs.org:8080/openmrs";
 
     public abstract static class EncounterTypes {
         public static final String VITALS = "67a71486-1a54-468f-ac3e-7091a9a79584";
     }
 
-    public abstract static class FormNames {
-        public static final String VITALS_XFORM = "Vitals XForm";
-    }
 }

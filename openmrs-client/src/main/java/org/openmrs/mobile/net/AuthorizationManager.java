@@ -17,9 +17,12 @@ package org.openmrs.mobile.net;
 import android.content.Intent;
 
 import org.openmrs.mobile.activities.login.LoginActivity;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
-public class AuthorizationManager extends BaseManager {
+public class AuthorizationManager {
+
+    protected OpenMRS mOpenMRS = OpenMRS.getInstance();
 
     public boolean isUserNameOrServerEmpty() {
         boolean result = false;
@@ -35,8 +38,8 @@ public class AuthorizationManager extends BaseManager {
     }
 
     public void moveToLoginActivity() {
-        Intent intent = new Intent(getCurrentContext(), LoginActivity.class);
+        Intent intent = new Intent(mOpenMRS.getApplicationContext(), LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        getCurrentContext().startActivity(intent);
+        mOpenMRS.getApplicationContext().startActivity(intent);
     }
 }

@@ -26,13 +26,13 @@ import org.openmrs.mobile.databases.tables.EncounterTable;
 import org.openmrs.mobile.databases.tables.LocationTable;
 import org.openmrs.mobile.databases.tables.ObservationTable;
 import org.openmrs.mobile.databases.tables.PatientTable;
-import org.openmrs.mobile.databases.tables.VisitTable;
 import org.openmrs.mobile.databases.tables.Table;
+import org.openmrs.mobile.databases.tables.VisitTable;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Observation;
-import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.Visit;
 
 public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     private static int DATABASE_VERSION = OpenMRS.getInstance().

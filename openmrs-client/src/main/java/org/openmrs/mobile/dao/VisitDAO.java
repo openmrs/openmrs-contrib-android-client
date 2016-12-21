@@ -21,13 +21,13 @@ import net.sqlcipher.Cursor;
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.tables.PatientTable;
-import org.openmrs.mobile.databases.tables.VisitTable;
 import org.openmrs.mobile.databases.tables.Table;
-import org.openmrs.mobile.models.Location;
+import org.openmrs.mobile.databases.tables.VisitTable;
 import org.openmrs.mobile.models.Encounter;
+import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Observation;
-import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.VisitType;
 import org.openmrs.mobile.utilities.DateUtils;
 

@@ -21,7 +21,6 @@ import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Observation;
-import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.ArrayList;

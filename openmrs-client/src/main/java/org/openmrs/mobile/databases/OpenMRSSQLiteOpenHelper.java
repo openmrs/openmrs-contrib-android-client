@@ -16,13 +16,11 @@ package org.openmrs.mobile.databases;
 
 import android.content.Context;
 
-
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteDatabaseHook;
 import net.sqlcipher.database.SQLiteException;
 import net.sqlcipher.database.SQLiteOpenHelper;
 import net.sqlcipher.database.SQLiteStatement;
-
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRS;

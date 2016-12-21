@@ -35,8 +35,8 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Answer;
 import org.openmrs.mobile.models.Question;
 import org.openmrs.mobile.utilities.InputField;
-import org.openmrs.mobile.utilities.SelectOneField;
 import org.openmrs.mobile.utilities.RangeEditText;
+import org.openmrs.mobile.utilities.SelectOneField;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;

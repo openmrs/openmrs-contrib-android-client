@@ -31,7 +31,7 @@ public class Obscreate extends Model implements Serializable {
     private String concept;
     @SerializedName("value")
     @Expose
-    private Double value;
+    private String value;
     @SerializedName("encounter")
     @Expose
     private String encounter;
@@ -68,11 +68,11 @@ public class Obscreate extends Model implements Serializable {
         this.encounter = encounter;
     }
 
-    public Double getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(Double value) {
+    public void setValue(String value) {
         this.value = value;
     }
 

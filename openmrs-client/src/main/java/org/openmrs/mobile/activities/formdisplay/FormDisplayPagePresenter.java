@@ -61,6 +61,14 @@ public class FormDisplayPagePresenter implements FormDisplayContract.Presenter.P
         if(question.getQuestionOptions().getRendering().equals("number")) {
             mFormDisplayPageView.createAndAttachNumericQuestionEditText(question, sectionLinearLayout);
         }
+
+        if (question.getQuestionOptions().getRendering().equals("select")) {
+            mFormDisplayPageView.createAndAttachSelectQuestionDropdown(question, sectionLinearLayout);
+        }
+
+        if (question.getQuestionOptions().getRendering().equals("radio")) {
+            mFormDisplayPageView.createAndAttachSelectQuestionRadioButton(question, sectionLinearLayout);
+        }
     }
 
 }

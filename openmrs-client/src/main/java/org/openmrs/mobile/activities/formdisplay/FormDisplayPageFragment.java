@@ -21,15 +21,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.models.retrofit.Answer;
 import org.openmrs.mobile.models.retrofit.Question;
 import org.openmrs.mobile.utilities.InputField;
+import org.openmrs.mobile.utilities.SelectOneField;
 import org.openmrs.mobile.utilities.RangeEditText;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -39,6 +45,7 @@ import java.util.List;
 public class FormDisplayPageFragment extends Fragment implements FormDisplayContract.View.PageView {
 
     List<InputField> inputFields =new ArrayList<>();
+    List<SelectOneField> selectOneFields = new ArrayList<>();
     private FormDisplayContract.Presenter.PagePresenter mPresenter;
     private LinearLayout mParent;
 
@@ -113,6 +120,100 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
     }
 
     @Override
+    public void createAndAttachSelectQuestionDropdown(Question question, LinearLayout sectionLinearLayout) {
+        TextView textView = new TextView(getActivity());
+        textView.setText(question.getLabel());
+        Spinner spinner = new Spinner(getActivity());
+
+        List<String> answerLabels = new ArrayList<>();
+        for (Answer answer : question.getQuestionOptions().getAnswers()) {
+            answerLabels.add(answer.getLabel());
+        }
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, answerLabels);
+        spinner.setAdapter(arrayAdapter);
+
+        final SelectOneField spinnerField = new SelectOneField(question.getQuestionOptions().getAnswers(),
+                question.getQuestionOptions().getConcept());
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                spinnerField.setAnswer(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                spinnerField.setAnswer(-1);
+            }
+        });
+
+        LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        linearLayoutParams.gravity = Gravity.START;
+
+        Resources r = getActivity().getResources();
+        float pxLeftMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
+        float pxTopMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
+        float pxRightMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
+        float pxBottomMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
+
+        linearLayoutParams.setMargins(Math.round(pxLeftMargin), Math.round(pxTopMargin), Math.round(pxRightMargin), Math.round(pxBottomMargin));
+
+        sectionLinearLayout.setLayoutParams(linearLayoutParams);
+
+        sectionLinearLayout.addView(textView);
+        sectionLinearLayout.addView(spinner);
+
+        selectOneFields.add(spinnerField);
+    }
+
+    @Override
+    public void createAndAttachSelectQuestionRadioButton(Question question, LinearLayout sectionLinearLayout) {
+        TextView textView = new TextView(getActivity());
+        textView.setText(question.getLabel());
+
+        RadioGroup radioGroup = new RadioGroup(getActivity());
+        for (Answer answer : question.getQuestionOptions().getAnswers()) {
+            RadioButton radioButton = new RadioButton(getActivity());
+            radioButton.setText(answer.getLabel());
+            radioGroup.addView(radioButton);
+        }
+
+        final SelectOneField radioGroupField = new SelectOneField(question.getQuestionOptions().getAnswers(),
+                question.getQuestionOptions().getConcept());
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                View radioButton = radioGroup.findViewById(i);
+                int idx = radioGroup.indexOfChild(radioButton);
+                radioGroupField.setAnswer(idx);
+            }
+        });
+
+        LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        linearLayoutParams.gravity = Gravity.START;
+
+        Resources r = getActivity().getResources();
+        float pxLeftMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
+        float pxTopMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
+        float pxRightMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
+        float pxBottomMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
+
+        linearLayoutParams.setMargins(Math.round(pxLeftMargin), Math.round(pxTopMargin), Math.round(pxRightMargin), Math.round(pxBottomMargin));
+
+        sectionLinearLayout.addView(textView);
+        sectionLinearLayout.addView(radioGroup);
+
+        sectionLinearLayout.setLayoutParams(linearLayoutParams);
+
+        selectOneFields.add(radioGroupField);
+    }
+
+    @Override
     public LinearLayout createQuestionGroupLayout(String questionLabel) {
         LinearLayout questionLinearLayout = new LinearLayout(getActivity());
         questionLinearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -164,6 +265,11 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
     }
 
     @Override
+    public List<SelectOneField> getSelectOneFields() {
+        return selectOneFields;
+    }
+
+    @Override
     public List<InputField> getInputFields() {
         for (InputField field:inputFields) {
             RangeEditText ed=(RangeEditText) getActivity().findViewById(field.getId());
@@ -173,12 +279,12 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
         return inputFields;
     }
 
-    public boolean checkfields() {
-        boolean emp=true, valid=true;
+    public boolean checkInputFields() {
+        boolean allEmpty = true, valid=true;
         for (InputField field:inputFields) {
             RangeEditText ed = (RangeEditText) getActivity().findViewById(field.getId());
             if (!isEmpty(ed)) {
-                emp = false;
+                allEmpty = false;
                 if (ed.getText().toString().charAt(0) != '.') {
                     Double inp = Double.parseDouble(ed.getText().toString());
                     if (ed.getUpperlimit() != -1.0 && ed.getUpperlimit() != -1.0) {
@@ -197,7 +303,14 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
                 }
             }
         }
-        if (emp) {
+
+        for (SelectOneField radioGroupField : selectOneFields) {
+            if (radioGroupField.getChosenAnswer() != null) {
+                allEmpty = false;
+            }
+        }
+
+        if (allEmpty) {
             ToastUtil.error("All fields cannot be empty");
             return false;
         }

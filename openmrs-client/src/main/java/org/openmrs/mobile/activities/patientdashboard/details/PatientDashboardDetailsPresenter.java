@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.patientdashboard.details;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
 import org.openmrs.mobile.api.retrofit.PatientApi;
 import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.dao.PatientDAO;
@@ -24,9 +25,7 @@ import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.NetworkUtils;
 
-public class PatientDashboardDetailsPresenter implements PatientDashboardContract.PatientDetailsPresenter {
-
-    private Patient mPatient;
+public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientDetailsPresenter {
 
     private PatientDashboardContract.ViewPatientDetails mPatientDetailsView;
 
@@ -118,8 +117,4 @@ public class PatientDashboardDetailsPresenter implements PatientDashboardContrac
         });
     }
 
-    @Override
-    public void deletePatient() {
-        new PatientDAO().deletePatient(mPatient.getId());
-    }
 }

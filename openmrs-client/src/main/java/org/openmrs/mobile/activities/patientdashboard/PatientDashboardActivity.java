@@ -41,6 +41,8 @@ public class PatientDashboardActivity extends ACBaseActivity {
 
     private String mId;
 
+    public PatientDashboardContract.PatientDashboardMainPresenter mPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,18 +118,17 @@ public class PatientDashboardActivity extends ACBaseActivity {
     private void attachPresenterToFragment(Fragment fragment) {
         Bundle patientBundle = getIntent().getExtras();
         String id = String.valueOf(patientBundle.get(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE));
-
         if (fragment instanceof PatientDetailsFragment) {
-            new PatientDashboardDetailsPresenter(id, ((PatientDetailsFragment) fragment));
+            mPresenter = new PatientDashboardDetailsPresenter(id, ((PatientDetailsFragment) fragment));
         }
         else if (fragment instanceof PatientDiagnosisFragment) {
-            new PatientDashboardDiagnosisPresenter(id, ((PatientDiagnosisFragment) fragment));
+            mPresenter = new PatientDashboardDiagnosisPresenter(id, ((PatientDiagnosisFragment) fragment));
         }
         else if (fragment instanceof PatientVisitsFragment) {
-            new PatientDashboardVisitsPresenter(id, ((PatientVisitsFragment) fragment));
+            mPresenter = new PatientDashboardVisitsPresenter(id, ((PatientVisitsFragment) fragment));
         }
         else if (fragment instanceof PatientVitalsFragment){
-            new PatientDashboardVitalsPresenter(id, ((PatientVitalsFragment) fragment));
+            mPresenter = new PatientDashboardVitalsPresenter(id, ((PatientVitalsFragment) fragment));
         }
     }
 

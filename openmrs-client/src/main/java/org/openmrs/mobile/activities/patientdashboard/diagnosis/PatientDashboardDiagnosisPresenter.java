@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.patientdashboard.diagnosis;
 
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.retrofit.Encounter;
@@ -26,9 +27,8 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PatientDashboardDiagnosisPresenter implements PatientDashboardContract.PatientDiagnosisPresenter {
+public class PatientDashboardDiagnosisPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientDiagnosisPresenter {
 
-    private Patient mPatient;
     private PatientDashboardContract.ViewPatientDiagnosis mPatientDiagnosisView;
 
 
@@ -57,11 +57,6 @@ public class PatientDashboardDiagnosisPresenter implements PatientDashboardContr
     @Override
     public void start() {
         loadDiagnosis();
-    }
-
-    @Override
-    public void deletePatient() {
-        new PatientDAO().deletePatient(mPatient.getId());
     }
 
     @Override

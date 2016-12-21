@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.patientdashboard.visits;
 
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.retrofit.VisitApi;
@@ -33,9 +34,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PatientDashboardVisitsPresenter implements PatientDashboardContract.PatientVisitsPresenter {
+public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientVisitsPresenter {
 
-    private Patient mPatient;
     private PatientDashboardContract.ViewPatientVisits mPatientVisitsView;
 
     private List<Visit> mPatientVisits;
@@ -109,11 +109,6 @@ public class PatientDashboardVisitsPresenter implements PatientDashboardContract
                 mPatientVisitsView.dismissStartVisitDialog();
             }
         });
-    }
-
-    @Override
-    public void deletePatient() {
-        new PatientDAO().deletePatient(mPatient.getId());
     }
 
     @Override

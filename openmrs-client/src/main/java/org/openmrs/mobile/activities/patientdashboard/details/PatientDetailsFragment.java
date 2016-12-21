@@ -30,6 +30,7 @@ import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
@@ -37,7 +38,7 @@ import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-public class PatientDetailsFragment extends Fragment implements PatientDashboardContract.ViewPatientDetails {
+public class PatientDetailsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDetails {
 
     private View rootView;
 
@@ -60,13 +61,13 @@ public class PatientDetailsFragment extends Fragment implements PatientDashboard
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.setPresenter(mPresenter);
         setHasOptionsMenu(true);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.patient_details_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -75,10 +76,6 @@ public class PatientDetailsFragment extends Fragment implements PatientDashboard
         switch (id) {
             case R.id.actionSynchronize:
                 mPresenter.synchronizePatient();
-                break;
-            case R.id.actionDelete:
-                mPresenter.deletePatient();
-                this.getActivity().finish();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -151,7 +148,7 @@ public class PatientDetailsFragment extends Fragment implements PatientDashboard
     }
 
     @Override
-    public void setPresenter(PatientDashboardContract.PatientDetailsPresenter presenter) {
-        this.mPresenter = presenter;
+    public void setPresenter(PatientDashboardContract.PatientDashboardMainPresenter presenter) {
+        this.mPresenter = ((PatientDashboardContract.PatientDetailsPresenter) presenter);
     }
 }

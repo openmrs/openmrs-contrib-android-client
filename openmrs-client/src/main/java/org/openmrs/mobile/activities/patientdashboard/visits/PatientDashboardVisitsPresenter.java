@@ -93,7 +93,7 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
                         } else {
                             visitDAO.saveVisit(visit, mPatient.getId());
                         }
-                        mPatientVisitsView.setVisitsToDisplay(visits);
+                        mPatientVisitsView.setVisitsToDisplay(visitDAO.getVisitsByPatientID(mPatient.getId()));
                     }
                     showStartVisitDialog();
                 }

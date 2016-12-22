@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
@@ -47,10 +48,10 @@ public class DashboardFragment extends Fragment implements DashboardContract.Vie
     private ImageView mRegistryPatientButton;
     private ImageView mActiveVisitsButton;
     private ImageView mCaptureVitalsButton;
-    private FrameLayout mFindPatientView;
-    private FrameLayout mRegistryPatientView;
-    private FrameLayout mActiveVisitsView;
-    private FrameLayout mCaptureVitalsView;
+    private RelativeLayout mFindPatientView;
+    private RelativeLayout mRegistryPatientView;
+    private RelativeLayout mActiveVisitsView;
+    private RelativeLayout mCaptureVitalsView;
 
     private SparseArray<Bitmap> mBitmapCache;
 
@@ -74,10 +75,10 @@ public class DashboardFragment extends Fragment implements DashboardContract.Vie
         mRegistryPatientButton = (ImageView) root.findViewById(R.id.registryPatientButton);
         mActiveVisitsButton = (ImageView) root.findViewById(R.id.activeVisitsButton);
         mCaptureVitalsButton = (ImageView) root.findViewById(R.id.captureVitalsButton);
-        mFindPatientView = (FrameLayout) root.findViewById(R.id.findPatientView);
-        mRegistryPatientView = (FrameLayout) root.findViewById(R.id.registryPatientView);
-        mCaptureVitalsView = (FrameLayout) root.findViewById(R.id.captureVitalsView);
-        mActiveVisitsView = (FrameLayout) root.findViewById(R.id.activeVisitsView);
+        mFindPatientView = (RelativeLayout) root.findViewById(R.id.findPatientView);
+        mRegistryPatientView = (RelativeLayout) root.findViewById(R.id.registryPatientView);
+        mCaptureVitalsView = (RelativeLayout) root.findViewById(R.id.captureVitalsView);
+        mActiveVisitsView = (RelativeLayout) root.findViewById(R.id.activeVisitsView);
     }
 
     private void setListeners() {

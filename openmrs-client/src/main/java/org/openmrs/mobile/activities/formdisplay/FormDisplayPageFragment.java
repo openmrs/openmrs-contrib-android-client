@@ -34,6 +34,8 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Answer;
 import org.openmrs.mobile.models.Question;
+import org.openmrs.mobile.bundle.FormFieldsWrapper;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.InputField;
 import org.openmrs.mobile.utilities.RangeEditText;
 import org.openmrs.mobile.utilities.SelectOneField;
@@ -69,6 +71,23 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
     public void onResume() {
         super.onResume();
         mPresenter.start();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        FormFieldsWrapper formFieldsWrapper = new FormFieldsWrapper(getInputFields(), getSelectOneFields());
+        outState.putSerializable(ApplicationConstants.BundleKeys.FORM_FIELDS_BUNDLE, formFieldsWrapper);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState != null) {
+            FormFieldsWrapper formFieldsWrapper = (FormFieldsWrapper) savedInstanceState.getSerializable(ApplicationConstants.BundleKeys.FORM_FIELDS_BUNDLE);
+            inputFields = formFieldsWrapper.getInputFields();
+            selectOneFields = formFieldsWrapper.getSelectOneFields();
+        }
     }
 
     @Override
@@ -110,13 +129,36 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
         }
         ed.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
         ed.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        int id= InputField.generateViewId();
-        InputField field=new InputField();
-        ed.setId(id);
-        field.setId(id);
-        field.setConcept(question.getQuestionOptions().getConcept());
-        inputFields.add(field);
+        InputField field = new InputField(question.getQuestionOptions().getConcept());
+        ed.setId(field.getId());
+        InputField inputField = getInputField(field.getConcept());
+        if (inputField != null){
+            inputField.setId(field.getId());
+            Double value = inputField.getValue();
+            if (!(-1.0 == value)) ed.setText(value.toString());
+        } else {
+            field.setConcept(question.getQuestionOptions().getConcept());
+            inputFields.add(field);
+        }
         sectionLinearLayout.addView(ed,layoutParams);
+    }
+
+    public InputField getInputField(String concept){
+        for (InputField inputField : inputFields) {
+            if(concept.equals(inputField.getConcept())){
+                return inputField;
+            }
+        }
+        return null;
+    }
+
+    public SelectOneField getSelectOneField(String concept){
+        for (SelectOneField selectOneField: selectOneFields) {
+            if(concept.equals(selectOneField.getConcept())){
+                return selectOneField;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -130,23 +172,11 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
             answerLabels.add(answer.getLabel());
         }
 
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, answerLabels);
-        spinner.setAdapter(arrayAdapter);
-
-        final SelectOneField spinnerField = new SelectOneField(question.getQuestionOptions().getAnswers(),
+        SelectOneField spinnerField = new SelectOneField(question.getQuestionOptions().getAnswers(),
                 question.getQuestionOptions().getConcept());
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                spinnerField.setAnswer(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                spinnerField.setAnswer(-1);
-            }
-        });
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, answerLabels);
+        spinner.setAdapter(arrayAdapter);
 
         LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -165,7 +195,28 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
         sectionLinearLayout.addView(textView);
         sectionLinearLayout.addView(spinner);
 
-        selectOneFields.add(spinnerField);
+        SelectOneField selectOneField = getSelectOneField(spinnerField.getConcept());
+        if(selectOneField != null) {
+            spinner.setSelection(selectOneField.getChosenAnswerPosition());
+            setOnItemSelectedListener(spinner, selectOneField);
+        } else {
+            setOnItemSelectedListener(spinner, spinnerField);
+            selectOneFields.add(spinnerField);
+        }
+    }
+
+    private void setOnItemSelectedListener(Spinner spinner, final SelectOneField spinnerField) {
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                spinnerField.setAnswer(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                spinnerField.setAnswer(-1);
+            }
+        });
     }
 
     @Override
@@ -180,17 +231,8 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
             radioGroup.addView(radioButton);
         }
 
-        final SelectOneField radioGroupField = new SelectOneField(question.getQuestionOptions().getAnswers(),
+        SelectOneField radioGroupField = new SelectOneField(question.getQuestionOptions().getAnswers(),
                 question.getQuestionOptions().getConcept());
-
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                View radioButton = radioGroup.findViewById(i);
-                int idx = radioGroup.indexOfChild(radioButton);
-                radioGroupField.setAnswer(idx);
-            }
-        });
 
         LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -210,7 +252,28 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
 
         sectionLinearLayout.setLayoutParams(linearLayoutParams);
 
-        selectOneFields.add(radioGroupField);
+        SelectOneField selectOneField = getSelectOneField(radioGroupField.getConcept());
+        if(selectOneField != null){
+            if (selectOneField.getChosenAnswerPosition() != -1) {
+                RadioButton radioButton = (RadioButton) radioGroup.getChildAt(selectOneField.getChosenAnswerPosition());
+                radioButton.setChecked(true);
+            }
+            setOnCheckedChangeListener(radioGroup, selectOneField);
+        } else {
+            setOnCheckedChangeListener(radioGroup, radioGroupField);
+            selectOneFields.add(radioGroupField);
+        }
+    }
+
+    private void setOnCheckedChangeListener(RadioGroup radioGroup, final SelectOneField radioGroupField) {
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                View radioButton = radioGroup.findViewById(i);
+                int idx = radioGroup.indexOfChild(radioButton);
+                radioGroupField.setAnswer(idx);
+            }
+        });
     }
 
     @Override
@@ -275,6 +338,8 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
             RangeEditText ed=(RangeEditText) getActivity().findViewById(field.getId());
             if(!isEmpty(ed))
                 field.setValue(Double.parseDouble(ed.getText().toString()));
+            else
+                field.setValue(-1.0);
         }
         return inputFields;
     }

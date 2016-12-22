@@ -14,54 +14,41 @@
 
 package org.openmrs.mobile.utilities;
 
-import java.util.concurrent.atomic.AtomicInteger;
+import java.io.Serializable;
 
-    public class InputField {
-        int id;
-        String concept;
-        double value = -1.0;
+public class InputField implements Serializable {
 
-        public void setId(int id)
-        {
-            this.id=id;
-        }
+    private int id;
+    private String concept;
+    private double value = -1.0;
 
-        public int getId()
-        {
-            return id;
-        }
-
-        public void setConcept(String concept)
-        {
-            this.concept=concept;
-        }
-
-        public String getConcept()
-        {
-            return concept;
-        }
-
-        public void setValue(Double value)
-        {
-            this.value=value;
-        }
-
-        public Double getValue()
-        {
-            return value;
-        }
-
-        private static final AtomicInteger sNextGeneratedId = new AtomicInteger(1);
-
-        public static int generateViewId() {
-            while (true) {
-                final int result = sNextGeneratedId.get();
-                int newValue = result + 1;
-                if (newValue > 0x00FFFFFF) newValue = 1;
-                if (sNextGeneratedId.compareAndSet(result, newValue)) {
-                    return result;
-                }
-            }
-        }
-
+    public InputField(String concept) {
+        this.concept = concept;
+        this.id = Math.abs(concept.hashCode());
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setConcept(String concept) {
+        this.concept = concept;
+    }
+
+    public String getConcept() {
+        return concept;
+    }
+
+    public void setValue(Double value) {
+        this.value = value;
+    }
+
+    public Double getValue() {
+        return value;
+    }
+
+}

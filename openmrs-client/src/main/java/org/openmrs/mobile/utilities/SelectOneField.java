@@ -2,9 +2,10 @@ package org.openmrs.mobile.utilities;
 
 import org.openmrs.mobile.models.Answer;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class SelectOneField {
+public class SelectOneField implements Serializable{
 
     private String concept = null;
     private Answer chosenAnswer = null;
@@ -24,6 +25,10 @@ public class SelectOneField {
         }
     }
 
+    public void setChosenAnswer(Answer chosenAnswer) {
+        this.chosenAnswer = chosenAnswer;
+    }
+
     public Answer getChosenAnswer() {
         return chosenAnswer;
     }
@@ -32,5 +37,8 @@ public class SelectOneField {
         return concept;
     }
 
+    public int getChosenAnswerPosition() {
+        return answerList.indexOf(chosenAnswer);
+    }
 
 }

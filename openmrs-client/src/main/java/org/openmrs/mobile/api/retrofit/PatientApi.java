@@ -159,6 +159,53 @@ public class PatientApi extends RetrofitApi {
     }
 
     /**
+     * Update Patient
+     */
+    public void updatePatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
+        Boolean syncstate = prefs.getBoolean("sync", true);
+        new PatientDAO().updatePatient(patient.getId(), patient);
+        if (syncstate) {
+            RestApi restApi = RestServiceBuilder.createService(RestApi.class);
+            Call<Patient> call = restApi.updatePatient(patient, patient.getUuid(), "full");
+            call.enqueue(new Callback<Patient>() {
+                @Override
+                public void onResponse(Call<Patient> call, Response<Patient> response) {
+                    if (response.isSuccessful()) {
+                        ToastUtil.success("Patient " + patient.getPerson().getName().getNameString()
+                                + " updated");
+                        patient.setSynced(true);
+                        if (callbackListener != null) {
+                            callbackListener.onResponse();
+                        }
+                    } else {
+                        ToastUtil.error("Patient " + patient.getPerson().getName().getNameString()
+                                + " cannot be updated due to server error" + response.message());
+                        if (callbackListener != null) {
+                            callbackListener.onErrorResponse();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Patient> call, Throwable t) {
+                    ToastUtil.notify("Patient " + patient.getPerson().getName().getNameString()
+                            + " cannot be updated due to request error: " + t.toString());
+                    if (callbackListener != null) {
+                        callbackListener.onErrorResponse();
+                    }
+                }
+            });
+        } else {
+            ToastUtil.notify("Sync is off. Patient Update data is saved locally " +
+                    "and will sync when online mode is restored. ");
+            if (callbackListener != null) {
+                callbackListener.onResponse();
+            }
+        }
+    }
+
+    /**
      * Download Patient by UUID
      */
     public void downloadPatientByUuid(@NonNull final String uuid, @NonNull final DownloadPatientCallbackListener callbackListener) {

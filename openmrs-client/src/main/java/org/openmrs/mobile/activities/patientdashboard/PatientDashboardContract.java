@@ -65,6 +65,7 @@ public interface PatientDashboardContract {
     */
     interface PatientDashboardMainPresenter extends BasePresenter {
         void deletePatient();
+        long getPatientId();
     }
 
     interface PatientDetailsPresenter extends PatientDashboardMainPresenter  {

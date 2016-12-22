@@ -4,7 +4,7 @@ import android.test.InstrumentationTestCase;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-import org.openmrs.mobile.listeners.watcher.RegisterPatientBirthdateValidatorWatcher;
+import org.openmrs.mobile.listeners.watcher.PatientBirthdateValidatorWatcher;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 public class RegisterPatientBirthDateValidatorWatcherTest extends InstrumentationTestCase {
@@ -19,7 +19,7 @@ public class RegisterPatientBirthDateValidatorWatcherTest extends Instrumentatio
         monthEditText = new EditText(this.getInstrumentation().getContext());
         yearEditText = new EditText(this.getInstrumentation().getContext());
 
-        TextWatcher textWatcher = new RegisterPatientBirthdateValidatorWatcher(birthdateEditText, monthEditText, yearEditText);
+        TextWatcher textWatcher = new PatientBirthdateValidatorWatcher(birthdateEditText, monthEditText, yearEditText);
 
         monthEditText.addTextChangedListener(textWatcher);
         yearEditText.addTextChangedListener(textWatcher);

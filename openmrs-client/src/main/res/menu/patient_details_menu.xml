@@ -21,4 +21,7 @@
         android:title="@string/action_synchronize_patients"
         android:icon="@drawable/ic_menu_refresh"
         app:showAsAction="always"/>
+    <item android:id="@+id/actionEditData"
+        android:title="@string/action_edit_patient_data"
+        app:showAsAction="ifRoom|collapseActionView"/>
 </menu>

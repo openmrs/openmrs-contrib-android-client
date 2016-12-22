@@ -14,7 +14,7 @@
 
 package org.openmrs.mobile.activities.patientdashboard.details;
 
-import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.editpatient.EditPatientActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
@@ -76,6 +77,9 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
         switch (id) {
             case R.id.actionSynchronize:
                 mPresenter.synchronizePatient();
+                break;
+            case R.id.actionEditData:
+                startPatientEditActivity();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -150,5 +154,11 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     @Override
     public void setPresenter(PatientDashboardContract.PatientDashboardMainPresenter presenter) {
         this.mPresenter = ((PatientDashboardContract.PatientDetailsPresenter) presenter);
+    }
+
+    public void startPatientEditActivity() {
+        Intent editPatient = new Intent(this.getActivity(), EditPatientActivity.class);
+        editPatient.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPresenter.getPatientId());
+        startActivity(editPatient);
     }
 }

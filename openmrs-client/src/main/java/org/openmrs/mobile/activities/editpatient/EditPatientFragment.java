@@ -1,22 +1,7 @@
-/*
- * The contents of this file are subject to the OpenMRS Public License
- * Version 1.0 (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of the License at
- * http://license.openmrs.org
- *
- * Software distributed under the License is distributed on an "AS IS"
- * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
- * License for the specific language governing rights and limitations
- * under the License.
- *
- * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
- */
-
-package org.openmrs.mobile.activities.registerpatient;
+package org.openmrs.mobile.activities.editpatient;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextWatcher;
@@ -35,26 +20,22 @@ import android.widget.TextView;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
-import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
-import org.openmrs.mobile.bundle.CustomDialogBundle;
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.watcher.PatientBirthdateValidatorWatcher;
 import org.openmrs.mobile.models.retrofit.Patient;
 import org.openmrs.mobile.models.retrofit.Person;
 import org.openmrs.mobile.models.retrofit.PersonAddress;
 import org.openmrs.mobile.models.retrofit.PersonName;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.StringUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.ViewUtils;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-public class RegisterPatientFragment extends Fragment implements RegisterPatientContract.View {
+public class EditPatientFragment extends Fragment implements EditPatientContract.View{
 
-    RegisterPatientContract.Presenter mPresenter;
+    EditPatientContract.Presenter mPresenter;
 
     LocalDate birthdate;
     DateTime bdt;
@@ -81,19 +62,20 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
     TextView gendererror;
     TextView addrerror;
 
-    Button registerConfirm;
+    Button updateConfirm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_register_patient, container, false);
+        View root = inflater.inflate(R.layout.fragment_patient_edit, container, false);
         resolveViews(root);
         addListeners();
+        setFormValues();
         return root;
     }
 
     @Override
-    public void setPresenter(RegisterPatientContract.Presenter presenter) {
+    public void setPresenter(EditPatientContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
 
@@ -103,7 +85,7 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
     }
 
     @Override
-    public void finishRegisterActivity() {
+    public void finishEditActivity() {
         getActivity().finish();
     }
 
@@ -155,7 +137,11 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
         }
     }
 
-    private Patient createPatient() {
+    /**
+     * This updates an existing patient.
+     * @return updated patient
+     */
+    private Patient updatePatient(String id) {
         Person person = new Person();
 
         // Add address
@@ -205,17 +191,15 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
                 person.setBirthdateEstimated(true);
                 birthdate = bdt.toString();
             }
-        }
-        else {
+        } else {
             birthdate = bdt.toString();
         }
 
         person.setBirthdate(birthdate);
 
-        final Patient patient = new Patient();
-        patient.setPerson(person);
-        patient.setUuid(" ");
-        return patient;
+        Patient updatedPatient = new PatientDAO().findPatientByID(id);
+        updatedPatient.setPerson(person);
+        return updatedPatient;
     }
 
     @Override
@@ -233,34 +217,8 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
         progressBar.setVisibility(visibility ? View.VISIBLE : View.GONE);
     }
 
-    @Override
-    public void showSimilarPatientDialog(List<Patient> patients, Patient newPatient){
-        setProgressBarVisibility(false);
-        CustomDialogBundle similarPatientsDialog = new CustomDialogBundle();
-        similarPatientsDialog.setTitleViewMessage(getString(R.string.similar_patients_dialog_title));
-        similarPatientsDialog.setRightButtonText(getString(R.string.dialog_button_register_new));
-        similarPatientsDialog.setRightButtonAction(CustomFragmentDialog.OnClickAction.REGISTER_PATIENT);
-        similarPatientsDialog.setLeftButtonText(getString(R.string.dialog_button_cancel));
-        similarPatientsDialog.setLeftButtonAction(CustomFragmentDialog.OnClickAction.CANCEL_REGISTERING);
-        similarPatientsDialog.setPatientsList(patients);
-        similarPatientsDialog.setNewPatient(newPatient);
-        ((RegisterPatientActivity) this.getActivity()).createAndShowDialog(similarPatientsDialog, ApplicationConstants.DialogTAG.SIMILAR_PATIENTS_TAG);
-    }
-
-    @Override
-    public void startPatientDashbordActivity(Patient patient) {
-        Intent intent = new Intent(getActivity(), PatientDashboardActivity.class);
-        intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getId());
-        startActivity(intent);
-    }
-
-    @Override
-    public void showUpgradeRegistrationModuleInfo() {
-        ToastUtil.notifyLong(getResources().getString(R.string.registration_core_info));
-    }
-
-    public static RegisterPatientFragment newInstance() {
-        return new RegisterPatientFragment();
+    public static EditPatientFragment newInstance() {
+        return new EditPatientFragment();
     }
 
     private void resolveViews(View v) {
@@ -286,7 +244,35 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
         gendererror=(TextView)v.findViewById(R.id.gendererror);
         addrerror=(TextView)v.findViewById(R.id.addrerror);
 
-        registerConfirm= (Button) v.findViewById(R.id.registerConfirm);
+        updateConfirm = (Button) v.findViewById(R.id.updateConfirm);
+    }
+
+    private void setFormValues() {
+        Person person = new PatientDAO().findPatientByID(mPresenter.getPatientId()).getPerson();
+        TextView.BufferType defaultBuffer = TextView.BufferType.EDITABLE;
+
+        edfname.setText(person.getName().getGivenName(), defaultBuffer);
+        edmname.setText(person.getName().getMiddleName(), defaultBuffer);
+        edlname.setText(person.getName().getFamilyName(), defaultBuffer);
+
+        if (StringUtils.notNull(person.getBirthdate()) || StringUtils.notEmpty(person.getBirthdate())) {
+            bdt = DateUtils.convertTimeString(person.getBirthdate());
+            eddob.setText(DateUtils.convertTime(DateUtils.convertTime(bdt.toString(), DateUtils.OPEN_MRS_REQUEST_FORMAT),
+                        DateUtils.DEFAULT_DATE_FORMAT));
+        }
+
+        edaddr1.setText(person.getAddress().getAddress1());
+        edaddr2.setText(person.getAddress().getAddress2());
+        edcity.setText(person.getAddress().getCityVillage());
+        edstate.setText(person.getAddress().getStateProvince());
+        edcountry.setText(person.getAddress().getCountry());
+        edpostal.setText(person.getAddress().getPostalCode());
+
+        if (("M").equals(person.getGender())) {
+            gen.check(R.id.male);
+        } else if (("F").equals(person.getGender())) {
+            gen.check(R.id.female);
+        }
     }
 
     private void addListeners() {
@@ -303,31 +289,33 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
 
                 @Override
                 public void onClick(View v) {
-                    Calendar currentDate=Calendar.getInstance();
-                    int cYear=currentDate.get(Calendar.YEAR);
-                    int cMonth=currentDate.get(Calendar.MONTH);
-                    int cDay=currentDate.get(Calendar.DAY_OF_MONTH);
-
+                    int cYear = 0;
+                    int cMonth = 0;
+                    int cDay = 0;
+                    if (bdt != null) {
+                        cYear = bdt.getYear();
+                        cMonth = bdt.getMonthOfYear() - 1;
+                        cDay = bdt.getDayOfMonth();
+                    }
                     edmonth.getText().clear();
                     edyr.getText().clear();
 
-
-                    DatePickerDialog mDatePicker=new DatePickerDialog(RegisterPatientFragment.this.getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    DatePickerDialog mDatePicker=new DatePickerDialog(EditPatientFragment.this.getActivity(), new DatePickerDialog.OnDateSetListener() {
                         public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                             selectedmonth++;
-                            eddob.setText(selectedday+"/"+selectedmonth+"/"+selectedyear);
-                            birthdate = new LocalDate(selectedyear, selectedmonth, selectedday);
-                            bdt=birthdate.toDateTimeAtStartOfDay().toDateTime();
+                            eddob.setText(selectedday+"/"+(selectedmonth)+"/"+selectedyear);
+                            birthdate = new LocalDate(selectedyear, (selectedmonth), selectedday);
+                            bdt = birthdate.toDateTimeAtStartOfDay().toDateTime();
                         }
                     },cYear, cMonth, cDay);
                     mDatePicker.setTitle("Select Date");
                     mDatePicker.show();  }
             });
         }
-        registerConfirm.setOnClickListener(new View.OnClickListener() {
+        updateConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.confirm(createPatient());
+                mPresenter.confirm(updatePatient(mPresenter.getPatientId()));
             }
         });
 
@@ -335,5 +323,4 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
         edmonth.addTextChangedListener(textWatcher);
         edyr.addTextChangedListener(textWatcher);
     }
-
 }

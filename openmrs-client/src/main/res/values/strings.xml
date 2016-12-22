@@ -166,6 +166,7 @@
     <string name="find_patients_row_toast_patient_save_error">An error occurred. Try synchronizing patient data.</string>
     <!-- Patient Dashboard Activity -->
     <string name="action_synchronize_patients">Synchronizing patient</string>
+    <string name="action_edit_patient_data">Edit Patient</string>
     <string name="synchronize_patient_successful">Successfully synchronized patient data.</string>
     <string name="synchronize_patient_error">Synchronizing patient data was unsuccessful</string>
     <string name="synchronize_patient_network_error">Cannot synchronize in offline mode</string>

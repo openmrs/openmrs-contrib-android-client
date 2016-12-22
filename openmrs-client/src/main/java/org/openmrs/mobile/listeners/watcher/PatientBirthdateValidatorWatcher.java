@@ -8,13 +8,13 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-public class RegisterPatientBirthdateValidatorWatcher implements TextWatcher{
+public class PatientBirthdateValidatorWatcher implements TextWatcher{
 
     private EditText eddob;
     private EditText edmonth;
     private EditText edyr;
 
-    public RegisterPatientBirthdateValidatorWatcher(EditText dateOfBirthEditText, EditText monthEditText, EditText yearsEditText) {
+    public PatientBirthdateValidatorWatcher(EditText dateOfBirthEditText, EditText monthEditText, EditText yearsEditText) {
         this.eddob = dateOfBirthEditText;
         this.edmonth = monthEditText;
         this.edyr = yearsEditText;

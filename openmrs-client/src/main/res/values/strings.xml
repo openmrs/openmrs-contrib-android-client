@@ -48,6 +48,7 @@
     <string name="addr1_hint">Address</string>
     <string name="addr2_hint">Address 2</string>
     <string name="atleastone">Fill at least one field</string>
+    <string name="incorrect_country">Country name is incorrect</string>
 
 
     <string name="male">Male</string>

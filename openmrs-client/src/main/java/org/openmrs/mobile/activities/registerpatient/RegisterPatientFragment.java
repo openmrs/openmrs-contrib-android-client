@@ -24,6 +24,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -69,7 +71,7 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
     EditText edaddr2;
     EditText edcity;
     EditText edstate;
-    EditText edcountry;
+    AutoCompleteTextView edcountry;
     EditText edpostal;
 
     RadioGroup gen;
@@ -80,6 +82,7 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
     TextView doberror;
     TextView gendererror;
     TextView addrerror;
+    TextView countryerror;
 
     Button registerConfirm;
 
@@ -88,6 +91,7 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_register_patient, container, false);
         resolveViews(root);
+        addSuggestionsToAutoCompleTextView();
         addListeners();
         return root;
     }
@@ -118,6 +122,7 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
                                     boolean familyNameError,
                                     boolean dayOfBirthError,
                                     boolean addressError,
+                                    boolean countryError,
                                     boolean genderError) {
         if (givenNameError) {
             fnameerror.setVisibility(View.VISIBLE);
@@ -145,6 +150,13 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
         }
         else {
             addrerror.setVisibility(View.GONE);
+        }
+
+        if (countryError) {
+            countryerror.setVisibility(View.VISIBLE);
+        }
+        else {
+            countryerror.setVisibility(View.GONE);
         }
 
         if (genderError) {
@@ -274,7 +286,7 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
         edaddr2=(EditText)v.findViewById(R.id.addr2);
         edcity=(EditText)v.findViewById(R.id.city);
         edstate=(EditText)v.findViewById(R.id.state);
-        edcountry=(EditText)v.findViewById(R.id.country);
+        edcountry=(AutoCompleteTextView) v.findViewById(R.id.country);
         edpostal=(EditText)v.findViewById(R.id.postal);
 
         gen=(RadioGroup)v.findViewById(R.id.gender);
@@ -285,8 +297,16 @@ public class RegisterPatientFragment extends Fragment implements RegisterPatient
         doberror=(TextView)v.findViewById(R.id.doberror);
         gendererror=(TextView)v.findViewById(R.id.gendererror);
         addrerror=(TextView)v.findViewById(R.id.addrerror);
+        countryerror=(TextView)v.findViewById(R.id.countryerror);
 
         registerConfirm= (Button) v.findViewById(R.id.registerConfirm);
+    }
+
+    private void addSuggestionsToAutoCompleTextView() {
+        String[] countries = getContext().getResources().getStringArray(R.array.countries_array);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
+                android.R.layout.simple_dropdown_item_1line, countries);
+        edcountry.setAdapter(adapter);
     }
 
     private void addListeners() {

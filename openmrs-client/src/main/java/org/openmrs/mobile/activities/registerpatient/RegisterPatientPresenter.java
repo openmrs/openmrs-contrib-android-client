@@ -29,6 +29,7 @@ import org.openmrs.mobile.utilities.PatientComparator;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -40,10 +41,12 @@ public class RegisterPatientPresenter implements RegisterPatientContract.Present
     private final RegisterPatientContract.View mRegisterPatientView;
 
     private Patient mPatient;
+    private List<String> mCountries;
 
-    public RegisterPatientPresenter(RegisterPatientContract.View mRegisterPatientView) {
+    public RegisterPatientPresenter(RegisterPatientContract.View mRegisterPatientView, List<String> countries) {
         this.mRegisterPatientView = mRegisterPatientView;
         this.mRegisterPatientView.setPresenter(this);
+        this.mCountries = countries;
     }
     
     @Override
@@ -68,8 +71,8 @@ public class RegisterPatientPresenter implements RegisterPatientContract.Present
 
     private boolean validate(Patient patient) {
 
-        boolean ferr=false, lerr=false, doberr=false, gerr=false, adderr=false;
-        mRegisterPatientView.setErrorsVisibility(ferr, lerr, doberr, gerr, adderr);
+        boolean ferr=false, lerr=false, doberr=false, gerr=false, adderr=false, countryerr=false;
+        mRegisterPatientView.setErrorsVisibility(ferr, lerr, doberr, gerr, adderr, countryerr);
 
         // Validate names
         if(StringUtils.isBlank(patient.getPerson().getName().getGivenName())) {
@@ -94,18 +97,22 @@ public class RegisterPatientPresenter implements RegisterPatientContract.Present
             adderr=true;
         }
 
+        if (!StringUtils.isBlank(patient.getPerson().getAddress().getCountry()) && !mCountries.contains(patient.getPerson().getAddress().getCountry())) {
+            countryerr = true;
+        }
+
         // Validate gender
         if (StringUtils.isBlank(patient.getPerson().getGender())) {
             gerr=true;
         }
 
-        boolean result = !ferr && !lerr && !doberr && !adderr && !gerr;
+        boolean result = !ferr && !lerr && !doberr && !adderr && !countryerr && !gerr;
         if (result) {
             mPatient = patient;
             return true;
         }
         else {
-            mRegisterPatientView.setErrorsVisibility(ferr, lerr, doberr, adderr, gerr);
+            mRegisterPatientView.setErrorsVisibility(ferr, lerr, doberr, adderr, countryerr, gerr);
             return false;
         }
     }

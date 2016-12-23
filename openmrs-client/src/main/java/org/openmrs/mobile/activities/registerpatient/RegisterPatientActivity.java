@@ -21,6 +21,10 @@ import android.view.Menu;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class RegisterPatientActivity extends ACBaseActivity {
 
     public RegisterPatientContract.Presenter mPresenter;
@@ -48,8 +52,9 @@ public class RegisterPatientActivity extends ACBaseActivity {
                     registerPatientFragment, R.id.registerPatientContentFrame);
         }
 
+        List<String> countries = Arrays.asList(getResources().getStringArray(R.array.countries_array));
         // Create the mPresenter
-        mPresenter = new RegisterPatientPresenter(registerPatientFragment);
+        mPresenter = new RegisterPatientPresenter(registerPatientFragment, countries);
     }
 
     @Override

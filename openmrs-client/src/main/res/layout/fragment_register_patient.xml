@@ -281,6 +281,18 @@
                             android:visibility="gone" />
 
                         <TextView
+                            android:id="@+id/countryerror"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:padding="2dp"
+                            android:text="@string/incorrect_country"
+                            android:textColor="@color/red"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="12dp"
@@ -356,7 +368,7 @@
                             android:layout_marginTop="20dp"
                             android:weightSum="2">
 
-                            <EditText
+                            <AutoCompleteTextView
                                 android:id="@+id/country"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"

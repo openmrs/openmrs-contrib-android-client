@@ -31,8 +31,9 @@ public interface RegisterPatientContract {
         void setErrorsVisibility(boolean givenNameError,
                                  boolean familyNameError,
                                  boolean dayOfBirthError,
-                                 boolean genderError,
-                                 boolean addressError);
+                                 boolean addressError,
+                                 boolean countryError,
+                                 boolean genderError);
 
         void scrollToTop();
 

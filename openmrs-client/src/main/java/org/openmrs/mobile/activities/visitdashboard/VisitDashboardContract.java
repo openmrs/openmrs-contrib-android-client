@@ -18,7 +18,7 @@ import android.support.annotation.NonNull;
 
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.models.retrofit.Encounter;
+import org.openmrs.mobile.models.Encounter;
 
 import java.util.List;
 

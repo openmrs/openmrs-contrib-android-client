@@ -14,9 +14,9 @@
 
 package org.openmrs.mobile.activities.lastviewedpatients;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;

@@ -16,7 +16,7 @@ package org.openmrs.mobile.databases.tables;
 
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
-import org.openmrs.mobile.models.retrofit.Encounter;
+import org.openmrs.mobile.models.Encounter;
 
 public class EncounterTable extends Table<Encounter> {
     public static final String TABLE_NAME = "encounters";

@@ -18,10 +18,9 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.models.retrofit.Encounter;
-import org.openmrs.mobile.models.retrofit.EncounterType;
-import org.openmrs.mobile.models.retrofit.Observation;
-import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.Encounter;
+import org.openmrs.mobile.models.EncounterType;
+import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.ArrayList;

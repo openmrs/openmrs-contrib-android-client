@@ -22,9 +22,8 @@ import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.listeners.retrofit.StartVisitResponseListenerCallback;
-import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.models.retrofit.Results;
-import org.openmrs.mobile.models.retrofit.Visit;
+import org.openmrs.mobile.models.Results;
+import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 

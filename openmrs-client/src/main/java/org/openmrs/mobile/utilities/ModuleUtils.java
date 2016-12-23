@@ -1,6 +1,6 @@
 package org.openmrs.mobile.utilities;
 
-import org.openmrs.mobile.models.retrofit.Module;
+import org.openmrs.mobile.models.Module;
 
 import java.util.List;
 

@@ -10,22 +10,22 @@
 
 package org.openmrs.mobile.api;
 
+import org.openmrs.mobile.models.Encounter;
+import org.openmrs.mobile.models.EncounterType;
+import org.openmrs.mobile.models.Encountercreate;
+import org.openmrs.mobile.models.FormResource;
+import org.openmrs.mobile.models.IdGenPatientIdentifiers;
+import org.openmrs.mobile.models.IdentifierType;
 import org.openmrs.mobile.models.Location;
-import org.openmrs.mobile.models.retrofit.Encounter;
-import org.openmrs.mobile.models.retrofit.EncounterType;
-import org.openmrs.mobile.models.retrofit.Encountercreate;
-import org.openmrs.mobile.models.retrofit.FormResource;
-import org.openmrs.mobile.models.retrofit.IdGenPatientIdentifiers;
-import org.openmrs.mobile.models.retrofit.IdentifierType;
-import org.openmrs.mobile.models.retrofit.Module;
-import org.openmrs.mobile.models.retrofit.Obscreate;
-import org.openmrs.mobile.models.retrofit.Observation;
-import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.models.retrofit.Results;
-import org.openmrs.mobile.models.retrofit.Session;
-import org.openmrs.mobile.models.retrofit.User;
-import org.openmrs.mobile.models.retrofit.Visit;
-import org.openmrs.mobile.models.retrofit.VisitType;
+import org.openmrs.mobile.models.Module;
+import org.openmrs.mobile.models.Obscreate;
+import org.openmrs.mobile.models.Observation;
+import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.Results;
+import org.openmrs.mobile.models.Session;
+import org.openmrs.mobile.models.User;
+import org.openmrs.mobile.models.Visit;
+import org.openmrs.mobile.models.VisitType;
 
 import java.util.Map;
 

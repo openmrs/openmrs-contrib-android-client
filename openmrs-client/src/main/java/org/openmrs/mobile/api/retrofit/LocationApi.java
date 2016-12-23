@@ -19,7 +19,7 @@ import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.promise.SimplePromise;
 import org.openmrs.mobile.models.Location;
-import org.openmrs.mobile.models.retrofit.Results;
+import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import retrofit2.Call;

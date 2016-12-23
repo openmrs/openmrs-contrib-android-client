@@ -1,14 +1,11 @@
 package org.openmrs.mobile.test;
 
-import org.openmrs.mobile.models.retrofit.Results;
+import org.openmrs.mobile.models.Results;
 
 import java.io.IOException;
 import java.util.List;
 
-import okhttp3.MediaType;
 import okhttp3.Request;
-import okhttp3.ResponseBody;
-import okio.BufferedSource;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -22,12 +22,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.openmrs.mobile.models.IdentifierType;
 import org.openmrs.mobile.models.Location;
-import org.openmrs.mobile.models.retrofit.IdentifierType;
-import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.models.retrofit.PatientIdentifier;
-import org.openmrs.mobile.models.retrofit.Person;
-import org.openmrs.mobile.models.retrofit.PersonName;
+import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.PatientIdentifier;
+import org.openmrs.mobile.models.Person;
+import org.openmrs.mobile.models.PersonName;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.ResourceSerializer;
 

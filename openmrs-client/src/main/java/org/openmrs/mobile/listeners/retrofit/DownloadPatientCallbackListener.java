@@ -14,7 +14,7 @@
 
 package org.openmrs.mobile.listeners.retrofit;
 
-import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.Patient;
 
 public interface DownloadPatientCallbackListener extends DefaultResponseCallbackListener {
 

@@ -18,7 +18,7 @@ import android.support.annotation.Nullable;
 
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.Patient;
 
 import java.util.List;
 

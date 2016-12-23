@@ -27,7 +27,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.annotations.Expose;
 
-import org.openmrs.mobile.models.retrofit.Resource;
+import org.openmrs.mobile.models.Resource;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;

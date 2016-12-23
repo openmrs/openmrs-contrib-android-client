@@ -15,7 +15,7 @@
 package org.openmrs.mobile.bundle;
 
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
-import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.Patient;
 
 import java.io.Serializable;
 import java.util.List;

@@ -23,7 +23,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.openmrs.mobile.models.retrofit.Observation;
+import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.utilities.ObservationDeserializer;
 
 import java.io.BufferedReader;

@@ -26,8 +26,8 @@ import android.widget.LinearLayout;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.models.retrofit.Form;
-import org.openmrs.mobile.models.retrofit.Page;
+import org.openmrs.mobile.models.Form;
+import org.openmrs.mobile.models.Page;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FormService;
 

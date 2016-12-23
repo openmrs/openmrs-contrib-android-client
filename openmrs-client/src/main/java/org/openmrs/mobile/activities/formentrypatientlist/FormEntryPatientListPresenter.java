@@ -16,7 +16,7 @@ package org.openmrs.mobile.activities.formentrypatientlist;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.FilterUtil;
 import org.openmrs.mobile.utilities.StringUtils;
 

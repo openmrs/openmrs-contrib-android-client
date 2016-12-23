@@ -1,7 +1,7 @@
 package org.openmrs.mobile.activities.patientdashboard;
 
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.Patient;
 
 public abstract class PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientDashboardMainPresenter {
 

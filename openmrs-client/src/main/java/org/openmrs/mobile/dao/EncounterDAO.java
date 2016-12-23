@@ -20,9 +20,9 @@ import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.tables.EncounterTable;
 import org.openmrs.mobile.databases.tables.ObservationTable;
-import org.openmrs.mobile.models.retrofit.Encounter;
-import org.openmrs.mobile.models.retrofit.EncounterType;
-import org.openmrs.mobile.models.retrofit.Observation;
+import org.openmrs.mobile.models.Encounter;
+import org.openmrs.mobile.models.EncounterType;
+import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.utilities.DateUtils;
 
 import java.util.ArrayList;

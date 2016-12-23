@@ -16,9 +16,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.models.retrofit.Observation;
-import org.openmrs.mobile.models.retrofit.Resource;
-import org.openmrs.mobile.models.retrofit.Visit;
+import org.openmrs.mobile.models.Observation;
+import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ObservationDeserializer;
 import org.openmrs.mobile.utilities.ResourceSerializer;

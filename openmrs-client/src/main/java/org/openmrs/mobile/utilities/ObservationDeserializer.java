@@ -21,7 +21,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
-import org.openmrs.mobile.models.retrofit.Observation;
+import org.openmrs.mobile.models.Observation;
 
 import java.lang.reflect.Type;
 

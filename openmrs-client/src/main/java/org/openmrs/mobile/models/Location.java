@@ -15,10 +15,6 @@
 package org.openmrs.mobile.models;
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-import org.openmrs.mobile.models.retrofit.PersonAddress;
-import org.openmrs.mobile.models.retrofit.Resource;
 
 public class Location extends Resource {
     @Expose

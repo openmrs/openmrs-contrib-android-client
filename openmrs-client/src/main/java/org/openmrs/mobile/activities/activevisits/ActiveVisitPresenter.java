@@ -17,8 +17,8 @@ package org.openmrs.mobile.activities.activevisits;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.models.retrofit.Visit;
-import org.openmrs.mobile.models.retrofit.Patient;
+import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.Visit;
 
 import java.util.ArrayList;
 import java.util.List;

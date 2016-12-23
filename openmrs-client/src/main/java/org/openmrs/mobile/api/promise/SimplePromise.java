@@ -14,7 +14,8 @@
 
 package org.openmrs.mobile.api.promise;
 
-import org.jdeferred.*;
+import org.jdeferred.Deferred;
+import org.jdeferred.Promise;
 
 /**
  * Promise interface to observe when some action has occurred on the corresponding {@link Deferred} object.

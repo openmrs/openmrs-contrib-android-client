@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.models.retrofit.Visit;
+import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.ArrayList;

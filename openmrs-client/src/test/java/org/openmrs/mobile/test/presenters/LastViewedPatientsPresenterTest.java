@@ -8,8 +8,8 @@ import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsContra
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsPresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.models.retrofit.Patient;
-import org.openmrs.mobile.models.retrofit.Results;
+import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.openmrs.mobile.test.MockErrorResponse;
 import org.openmrs.mobile.test.MockFailure;

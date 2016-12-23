@@ -74,6 +74,7 @@ public abstract class ApplicationConstants {
         public static final String FORM_NAME = "formName";
         public static final String CALCULATED_LOCALLY = "CALCULATED_LOCALLY";
         public static final String PATIENTS_AND_MATCHES = "PATIENTS_AND_MATCHES";
+        public static final String FORM_FIELDS_BUNDLE = "formFieldsBundle";
     }
 
     public abstract static class CustomIntentActions {

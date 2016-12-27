@@ -24,10 +24,10 @@ public class PersonAddress implements Serializable {
     private Boolean preferred;
     @SerializedName("address1")
     @Expose
-    private String address2;
+    private String address1;
     @SerializedName("address2")
     @Expose
-    private String address1;
+    private String address2;
     @SerializedName("cityVillage")
     @Expose
     private String cityVillage;

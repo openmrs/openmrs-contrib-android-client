@@ -36,6 +36,11 @@ public class QuestionOptions implements Serializable {
     @Expose
     private String min;
 
+    // For numeric values
+    @SerializedName("allowDecimal")
+    @Expose
+    private boolean allowDecimal;
+
     // For select radio boxes
     @SerializedName("answers")
     @Expose
@@ -91,6 +96,14 @@ public class QuestionOptions implements Serializable {
 
     public void setMin(String min) {
         this.min = min;
+    }
+
+    public boolean isAllowDecimal() {
+        return allowDecimal;
+    }
+
+    public void setAllowDecimal(boolean allowDecimal) {
+        this.allowDecimal = allowDecimal;
     }
 
     public List<Answer> getAnswers() {

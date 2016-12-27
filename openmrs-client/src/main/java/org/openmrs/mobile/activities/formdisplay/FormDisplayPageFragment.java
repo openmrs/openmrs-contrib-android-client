@@ -128,7 +128,12 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
             ed.setUpperlimit(-1.0);
         }
         ed.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
-        ed.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        if (question.getQuestionOptions().isAllowDecimal()) {
+            ed.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        }
+        else {
+            ed.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
         InputField field = new InputField(question.getQuestionOptions().getConcept());
         ed.setId(field.getId());
         InputField inputField = getInputField(field.getConcept());

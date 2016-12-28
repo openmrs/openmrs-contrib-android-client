@@ -16,4 +16,9 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="dashboard_icon_height_width">80dp</dimen>
+    <dimen name="dashboard_icon_margin">20dp</dimen>
+    <dimen name="dashboard_text_size">18sp</dimen>
+    <dimen name="dashboard_text_top_margin">10dp</dimen>
+    <dimen name="dashboard_text_bottom_margin">15dp</dimen>
 </resources>

@@ -14,6 +14,7 @@ import android.app.Fragment;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.text.InputType;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -105,14 +106,6 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        Resources r = getActivity().getResources();
-        float pxLeftMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
-        float pxTopMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
-        float pxRightMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
-        float pxBottomMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
-
-        layoutParams.setMargins(Math.round(pxLeftMargin), Math.round(pxTopMargin), Math.round(pxRightMargin), Math.round(pxBottomMargin));
-
         RangeEditText ed = new RangeEditText(getActivity());
         ed.setName(question.getLabel());
         ed.setSingleLine(true);
@@ -169,8 +162,16 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
     @Override
     public void createAndAttachSelectQuestionDropdown(Question question, LinearLayout sectionLinearLayout) {
         TextView textView = new TextView(getActivity());
+        textView.setPadding(20,0,0,0);
         textView.setText(question.getLabel());
-        Spinner spinner = new Spinner(getActivity());
+        Spinner spinner = (Spinner) getActivity().getLayoutInflater().inflate(R.layout.form_dropdown, null);
+
+        LinearLayout questionLinearLayout = new LinearLayout(getActivity());
+        LinearLayout.LayoutParams questionLinearLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        questionLinearLayout.setOrientation(LinearLayout.VERTICAL);
+        questionLinearLayoutParams.gravity = Gravity.START;
+        questionLinearLayout.setLayoutParams(questionLinearLayoutParams);
 
         List<String> answerLabels = new ArrayList<>();
         for (Answer answer : question.getQuestionOptions().getAnswers()) {
@@ -184,21 +185,13 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
         spinner.setAdapter(arrayAdapter);
 
         LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        linearLayoutParams.gravity = Gravity.START;
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        Resources r = getActivity().getResources();
-        float pxLeftMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
-        float pxTopMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
-        float pxRightMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
-        float pxBottomMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
-
-        linearLayoutParams.setMargins(Math.round(pxLeftMargin), Math.round(pxTopMargin), Math.round(pxRightMargin), Math.round(pxBottomMargin));
+        questionLinearLayout.addView(textView);
+        questionLinearLayout.addView(spinner);
 
         sectionLinearLayout.setLayoutParams(linearLayoutParams);
-
-        sectionLinearLayout.addView(textView);
-        sectionLinearLayout.addView(spinner);
+        sectionLinearLayout.addView(questionLinearLayout);
 
         SelectOneField selectOneField = getSelectOneField(spinnerField.getConcept());
         if(selectOneField != null) {
@@ -227,9 +220,12 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
     @Override
     public void createAndAttachSelectQuestionRadioButton(Question question, LinearLayout sectionLinearLayout) {
         TextView textView = new TextView(getActivity());
+        textView.setPadding(20,0,0,0);
         textView.setText(question.getLabel());
 
         RadioGroup radioGroup = new RadioGroup(getActivity());
+
+        
         for (Answer answer : question.getQuestionOptions().getAnswers()) {
             RadioButton radioButton = new RadioButton(getActivity());
             radioButton.setText(answer.getLabel());
@@ -240,17 +236,7 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
                 question.getQuestionOptions().getConcept());
 
         LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-
-        linearLayoutParams.gravity = Gravity.START;
-
-        Resources r = getActivity().getResources();
-        float pxLeftMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
-        float pxTopMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
-        float pxRightMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
-        float pxBottomMargin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, r.getDisplayMetrics());
-
-        linearLayoutParams.setMargins(Math.round(pxLeftMargin), Math.round(pxTopMargin), Math.round(pxRightMargin), Math.round(pxBottomMargin));
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         sectionLinearLayout.addView(textView);
         sectionLinearLayout.addView(radioGroup);

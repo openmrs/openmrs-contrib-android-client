@@ -88,15 +88,18 @@ public class FormListPresenter implements FormListContract.Presenter {
     public void listItemClicked(int position, String formName) {
         List<FormResource> valueRef = formResourceList.get(position).getResourceList();
         String valueRefString = null;
-        for(FormResource resource:valueRef)
-        {
-            if(resource.getName().equals("json"))
-                valueRefString=resource.getValueReference();
+        for (FormResource resource : valueRef) {
+            if (resource.getName().equals("json"))
+                valueRefString = resource.getValueReference();
         }
 
         EncounterType encType = getEncounterType(FORMS[position]);
-        String encounterType = encType.getUuid();
-        view.startFormDisplayActivity(formName, patientId, valueRefString, encounterType);
+        if (encType != null) {
+            String encounterType = encType.getUuid();
+            view.startFormDisplayActivity(formName, patientId, valueRefString, encounterType);
+        } else {
+            view.showError("There is no encounter type called " + formName);
+        }
     }
 
 }

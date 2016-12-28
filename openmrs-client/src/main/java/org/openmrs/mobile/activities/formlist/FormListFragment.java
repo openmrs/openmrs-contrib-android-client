@@ -29,6 +29,7 @@ import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 public class FormListFragment extends Fragment implements FormListContract.View {
     private ListView formList;
@@ -87,6 +88,11 @@ public class FormListFragment extends Fragment implements FormListContract.View 
         intent.putExtra(ApplicationConstants.BundleKeys.VALUEREFERENCE, valueRefString);
         intent.putExtra(ApplicationConstants.BundleKeys.ENCOUNTERTYPE, encounterType);
         startActivity(intent);
+    }
+
+    @Override
+    public void showError(String message) {
+        ToastUtil.error(message);
     }
 
 }

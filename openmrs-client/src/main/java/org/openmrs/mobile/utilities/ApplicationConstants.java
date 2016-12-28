@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.utilities;
 
+import org.openmrs.mobile.models.EncounterType;
+
 public abstract class ApplicationConstants {
     public static final String EMPTY_STRING = "";
 
@@ -92,6 +94,7 @@ public abstract class ApplicationConstants {
 
     public abstract static class EncounterTypes {
         public static final String VITALS = "67a71486-1a54-468f-ac3e-7091a9a79584";
+        public static String[] ENCOUNTER_TYPES_DISPLAYS = {EncounterType.VITALS, EncounterType.ADMISSION, EncounterType.DISCHARGE, EncounterType.VISIT_NOTE};
     }
 
 }

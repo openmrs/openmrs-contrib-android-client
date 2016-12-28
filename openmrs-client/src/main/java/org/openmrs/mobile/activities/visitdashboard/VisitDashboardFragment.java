@@ -29,10 +29,14 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.formlist.FormListActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Encounter;
+import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 public class VisitDashboardFragment extends Fragment implements VisitDashboardContract.View{
@@ -97,7 +101,19 @@ public class VisitDashboardFragment extends Fragment implements VisitDashboardCo
 
     @Override
     public void updateList(List<Encounter> visitEncounters) {
-        mExpandableListAdapter = new VisitExpandableListAdapter(this.getActivity(), visitEncounters);
+        final String[] displayableEncounterTypes = ApplicationConstants.EncounterTypes.ENCOUNTER_TYPES_DISPLAYS;
+        final HashSet<String> displayableEncounterTypesArray = new HashSet<>(Arrays.asList(displayableEncounterTypes));
+        
+        List<Encounter> displayableEncounters  = new ArrayList<>();
+
+        for (Encounter encounter : visitEncounters) {
+            String encounterTypeDisplay = encounter.getEncounterType().getDisplay();
+            if (displayableEncounterTypesArray.contains(encounterTypeDisplay)) {
+                displayableEncounters.add(encounter);
+            }
+        }
+
+        mExpandableListAdapter = new VisitExpandableListAdapter(this.getActivity(), displayableEncounters);
         mExpandableListView.setAdapter(mExpandableListAdapter);
         mExpandableListView.setGroupIndicator(null);
     }

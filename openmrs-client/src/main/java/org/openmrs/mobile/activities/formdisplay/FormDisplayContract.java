@@ -39,6 +39,8 @@ public interface FormDisplayContract {
             LinearLayout createSectionLayout(String sectionLabel);
             List<SelectOneField> getSelectOneFields();
             List<InputField> getInputFields();
+            void setInputFields(List<InputField> inputFields);
+            void setSelectOneFields(List<SelectOneField> selectOneFields);
         }
 
     }

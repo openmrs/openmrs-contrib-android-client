@@ -28,6 +28,7 @@ import org.openmrs.mobile.databases.tables.ObservationTable;
 import org.openmrs.mobile.databases.tables.PatientTable;
 import org.openmrs.mobile.databases.tables.Table;
 import org.openmrs.mobile.databases.tables.VisitTable;
+import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Observation;
@@ -225,6 +226,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindLong(4, encounter.getEncounterDatetime(), encounterStatement);
             bindString(5, encounter.getEncounterType().getDisplay(), encounterStatement);
             bindString(6, encounter.getPatientUUID(), encounterStatement);
+            bindString(7, encounter.getFormUuid(), encounterStatement);
             encounterId = encounterStatement.executeInsert();
             encounterStatement.clearBindings();
             db.setTransactionSuccessful();
@@ -266,6 +268,9 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
                 bindString(7, obs.getDiagnosisCertainty(), observationStatement);
             }
             bindString(8, obs.getDiagnosisNote(), observationStatement);
+            if(obs.getConcept() != null){
+                bindString(9, obs.getConcept().getUuid(), observationStatement);
+            }
             obsID = observationStatement.executeInsert();
             observationStatement.clearBindings();
             db.setTransactionSuccessful();

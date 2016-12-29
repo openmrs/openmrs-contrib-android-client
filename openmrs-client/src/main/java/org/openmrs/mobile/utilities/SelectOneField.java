@@ -1,11 +1,15 @@
 package org.openmrs.mobile.utilities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.openmrs.mobile.models.Answer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class SelectOneField implements Serializable{
+public class SelectOneField implements Serializable, Parcelable {
 
     private String concept = null;
     private Answer chosenAnswer = null;
@@ -41,4 +45,34 @@ public class SelectOneField implements Serializable{
         return answerList.indexOf(chosenAnswer);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.concept);
+        dest.writeSerializable(this.chosenAnswer);
+        dest.writeList(this.answerList);
+    }
+
+    protected SelectOneField(Parcel in) {
+        this.concept = in.readString();
+        this.chosenAnswer = (Answer) in.readSerializable();
+        this.answerList = new ArrayList<Answer>();
+        in.readList(this.answerList, Answer.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<SelectOneField> CREATOR = new Parcelable.Creator<SelectOneField>() {
+        @Override
+        public SelectOneField createFromParcel(Parcel source) {
+            return new SelectOneField(source);
+        }
+
+        @Override
+        public SelectOneField[] newArray(int size) {
+            return new SelectOneField[size];
+        }
+    };
 }

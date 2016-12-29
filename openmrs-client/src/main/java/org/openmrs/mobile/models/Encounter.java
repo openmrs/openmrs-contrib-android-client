@@ -331,4 +331,11 @@ public class Encounter extends Resource implements Serializable{
         this.resourceVersion = resourceVersion;
     }
 
+    public String getFormUuid(){
+        if(form != null)
+            return form.getUuid();
+        else
+            return null;
+    }
+
 }

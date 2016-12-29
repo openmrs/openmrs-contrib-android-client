@@ -73,7 +73,7 @@ public class VisitApi {
                 else {
                     ToastUtil.error(response.message());
                     if (callbackListener != null) {
-                        callbackListener.onErrorResponse();
+                        callbackListener.onErrorResponse(response.message());
                     }
                 }
             }
@@ -82,7 +82,7 @@ public class VisitApi {
             public void onFailure(Call<Results<Visit>> call, Throwable t) {
                 ToastUtil.error(t.getMessage());
                 if (callbackListener != null) {
-                    callbackListener.onErrorResponse();
+                    callbackListener.onErrorResponse(t.getMessage());
                 }
             }
 
@@ -100,13 +100,13 @@ public class VisitApi {
                     callbackListener.onGetVisitTypeResponse(response.body().getResults().get(0));
                 }
                 else {
-                    callbackListener.onErrorResponse();
+                    callbackListener.onErrorResponse(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<Results<VisitType>> call, Throwable t) {
-                callbackListener.onErrorResponse();
+                callbackListener.onErrorResponse(t.getMessage());
             }
 
         });
@@ -131,7 +131,7 @@ public class VisitApi {
                 }
                 else {
                     if (callbackListener != null) {
-                        callbackListener.onErrorResponse();
+                        callbackListener.onErrorResponse(response.message());
                     }
                 }
             }
@@ -139,7 +139,7 @@ public class VisitApi {
             @Override
             public void onFailure(Call<Results<Encounter>> call, Throwable t) {
                 if (callbackListener != null) {
-                    callbackListener.onErrorResponse();
+                    callbackListener.onErrorResponse(t.getMessage());
                 }
             }
         });
@@ -172,7 +172,7 @@ public class VisitApi {
                 else {
                     ToastUtil.error(response.message());
                     if(callbackListener != null) {
-                        callbackListener.onErrorResponse();
+                        callbackListener.onErrorResponse(response.message());
                     }
                 }
             }
@@ -180,7 +180,7 @@ public class VisitApi {
             @Override
             public void onFailure(Call<Visit> call, Throwable t) {
                 if(callbackListener != null) {
-                    callbackListener.onErrorResponse();
+                    callbackListener.onErrorResponse(t.getMessage());
                 }
                 else {
                     ToastUtil.error(t.getMessage());

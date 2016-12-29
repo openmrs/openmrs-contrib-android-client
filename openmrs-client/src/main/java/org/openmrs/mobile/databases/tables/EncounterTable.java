@@ -27,7 +27,7 @@ public class EncounterTable extends Table<Encounter> {
      *
      * @see org.openmrs.mobile.databases.tables.Table#values(int)
      */
-    private static final int INSERT_COLUMNS_COUNT = 6;
+    private static final int INSERT_COLUMNS_COUNT = 7;
 
     @Override
     public String createTableDefinition() {
@@ -38,7 +38,8 @@ public class EncounterTable extends Table<Encounter> {
                 + Column.DISPLAY + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.ENCOUNTER_DATETIME + Column.Type.DATE_TYPE_NOT_NULL
                 + Column.ENCOUNTER_TYPE + Column.Type.DATE_TYPE_WITH_COMMA
-                + Column.PATIENT_UUID + Column.Type.TEXT_TYPE
+                + Column.PATIENT_UUID + Column.Type.TEXT_TYPE + Column.COMMA
+                + Column.FORM_UUID + Column.Type.TEXT_TYPE
                 + ");";
     }
 
@@ -50,7 +51,8 @@ public class EncounterTable extends Table<Encounter> {
                 + Column.DISPLAY + Column.COMMA
                 + Column.ENCOUNTER_DATETIME + Column.COMMA
                 + Column.ENCOUNTER_TYPE + Column.COMMA
-                + Column.PATIENT_UUID + ")"
+                + Column.PATIENT_UUID + Column.COMMA
+                + Column.FORM_UUID + ")"
                 + values(INSERT_COLUMNS_COUNT);
     }
 
@@ -82,6 +84,7 @@ public class EncounterTable extends Table<Encounter> {
         public static final String ENCOUNTER_DATETIME = "encounterDatetime";
         public static final String ENCOUNTER_TYPE = "type";
         public static final String PATIENT_UUID = "patient_uuid";
+        public static final String FORM_UUID = "form_uuid";
     }
 
     @Override

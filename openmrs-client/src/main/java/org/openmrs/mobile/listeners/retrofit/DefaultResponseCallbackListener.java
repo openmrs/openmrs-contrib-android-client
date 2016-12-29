@@ -18,6 +18,6 @@ public interface DefaultResponseCallbackListener {
 
     void onResponse();
 
-    void onErrorResponse();
+    void onErrorResponse(String errorMessage);
 
 }

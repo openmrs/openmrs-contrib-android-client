@@ -17,15 +17,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Form implements Serializable {
+public class Form extends Resource implements Serializable {
 
     @SerializedName("name")
     @Expose
     private String name;
-
-    @SerializedName("uuid")
-    @Expose
-    private String uuid;
 
     @SerializedName("processor")
     @Expose
@@ -35,13 +31,15 @@ public class Form implements Serializable {
     @Expose
     private List<Page> pages = new ArrayList<Page>();
 
+    @SerializedName("valueReference")
+    @Expose
+    private String valueReference;
+
     /**
      * 
      * @return
      *     The name
      */
-
-
     public String getName() {
         return name;
     }
@@ -55,22 +53,12 @@ public class Form implements Serializable {
         this.name = name;
     }
 
-    /**
-     * 
-     * @return
-     *     The uuid
-     */
-    public String getUuid() {
-        return uuid;
+    public String getValueReference() {
+        return valueReference;
     }
 
-    /**
-     * 
-     * @param uuid
-     *     The uuid
-     */
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setValueReference(String valueReference) {
+        this.valueReference = valueReference;
     }
 
     /**

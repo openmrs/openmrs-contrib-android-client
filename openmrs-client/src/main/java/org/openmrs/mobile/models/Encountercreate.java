@@ -48,6 +48,10 @@ public class Encountercreate extends Model implements Serializable{
     @Expose
     private String encounterType;
 
+    @SerializedName("form")
+    @Expose
+    private String formUuid;
+
     @Column(name = "formname")
     private String formname;
 
@@ -60,6 +64,14 @@ public class Encountercreate extends Model implements Serializable{
 
     @Column(name = "obs")
     private String obslist;
+
+    public String getFormUuid() {
+        return formUuid;
+    }
+
+    public void setFormUuid(String formUuid) {
+        this.formUuid = formUuid;
+    }
 
     public String getVisit() {
         return visit;

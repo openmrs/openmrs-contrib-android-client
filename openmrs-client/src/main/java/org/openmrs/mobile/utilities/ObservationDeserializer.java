@@ -21,6 +21,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
+import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.Observation;
 
 import java.lang.reflect.Type;
@@ -40,7 +41,8 @@ public class ObservationDeserializer implements JsonDeserializer<Observation> {
         observation.setUuid(jsonObject.get(UUID_KEY).getAsString());
         observation.setDisplay(jsonObject.get(DISPLAY_KEY).getAsString());
 
-        if (jsonObject.get("concept") != null && "Visit Diagnoses".equals(jsonObject.get("concept").getAsJsonObject().get(DISPLAY_KEY).getAsString())) {
+        JsonElement conceptJson = jsonObject.get("concept");
+        if (conceptJson != null && "Visit Diagnoses".equals(conceptJson.getAsJsonObject().get(DISPLAY_KEY).getAsString())) {
             JsonArray diagnosisDetailJSONArray = jsonObject.get("groupMembers").getAsJsonArray();
             for (int i = 0; i < diagnosisDetailJSONArray.size(); i++) {
 
@@ -62,8 +64,13 @@ public class ObservationDeserializer implements JsonDeserializer<Observation> {
                     }
                 }
             }
-        } else if (jsonObject.get("concept") != null && "Text of encounter note".equals(jsonObject.get("concept").getAsJsonObject().get(DISPLAY_KEY).getAsString())) {
+        } else if (conceptJson != null && "Text of encounter note".equals(conceptJson.getAsJsonObject().get(DISPLAY_KEY).getAsString())) {
             observation.setDiagnosisNote(jsonObject.getAsJsonObject().get(VALUE_KEY).getAsString());
+        }
+        if (conceptJson != null) {
+            Concept concept = new Concept();
+            concept.setUuid(conceptJson.getAsJsonObject().get(UUID_KEY).getAsString());
+            observation.setConcept(concept);
         }
         return observation;
     }

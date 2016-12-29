@@ -58,6 +58,8 @@ public interface PatientDashboardContract {
     interface ViewPatientVitals extends ViewPatientMain {
         void showNoVitalsNotification();
         void showEncounterVitals(Encounter encounter);
+        void startFormDisplayActivity(Encounter lastVitalsEncounter);
+        void showErrorToast(String errorMessage);
     }
 
     /*
@@ -82,6 +84,8 @@ public interface PatientDashboardContract {
         void startVisit();
     }
 
-    interface PatientVitalsPresenter extends PatientDashboardMainPresenter {}
+    interface PatientVitalsPresenter extends PatientDashboardMainPresenter {
+        void startFormDisplayActivityWithEncounter();
+    }
 
 }

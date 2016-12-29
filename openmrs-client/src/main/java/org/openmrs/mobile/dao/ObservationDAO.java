@@ -19,6 +19,7 @@ import net.sqlcipher.Cursor;
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.tables.ObservationTable;
+import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.Observation;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class ObservationDAO {
                     int obsDiagnosisList_CI = cursor.getColumnIndex(ObservationTable.Column.DIAGNOSIS_LIST);
                     int obsDiagnosisCertainty_CI = cursor.getColumnIndex(ObservationTable.Column.DIAGNOSIS_CERTAINTY);
                     int obsDiagnosisNote_CI = cursor.getColumnIndex(ObservationTable.Column.DIAGNOSIS_NOTE);
+                    int conceptUuid_CI = cursor.getColumnIndex(ObservationTable.Column.CONCEPT_UUID);
                     Long obsID = cursor.getLong(obsID_CI);
                     String obsUUID = cursor.getString(obsUUID_CI);
                     String obsDisplay = cursor.getString(obsDisplay_CI);
@@ -66,6 +68,7 @@ public class ObservationDAO {
                     String obsDiagnosisList = cursor.getString(obsDiagnosisList_CI);
                     String obsDiagnosisCertainty = cursor.getString(obsDiagnosisCertainty_CI);
                     String obsDiagnosisNote = cursor.getString(obsDiagnosisNote_CI);
+                    String conceptUuid = cursor.getString(conceptUuid_CI);
                     Observation obs = new Observation();
                     obs.setId(obsID);
                     obs.setEncounterID(encounterID);
@@ -80,6 +83,9 @@ public class ObservationDAO {
                         obs.setDiagnosisCertanity(obsDiagnosisCertainty);
                     }
                     obs.setDiagnosisNote(obsDiagnosisNote);
+                    Concept concept = new Concept();
+                    concept.setUuid(conceptUuid);
+                    obs.setConcept(concept);
                     observationList.add(obs);
                 }
             } finally {

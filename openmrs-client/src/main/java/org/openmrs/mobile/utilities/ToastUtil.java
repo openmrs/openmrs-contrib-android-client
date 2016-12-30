@@ -74,7 +74,7 @@ public final class ToastUtil {
     }
 
     private static void showToast(Context context, ToastType type,
-                                 String text, final int duration) {
+                                  String text, final int duration) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View toastRoot = inflater.inflate(R.layout.toast, null);
 

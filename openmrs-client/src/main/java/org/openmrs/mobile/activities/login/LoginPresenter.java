@@ -32,6 +32,7 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -163,6 +164,7 @@ public class LoginPresenter implements LoginContract.Presenter{
                 } else {
                     loginView.showInvalidURLSnackbar("Failed to fetch server's locations");
                     loginView.setLocationErrorOccurred(true);
+                    loginView.initLoginForm(new ArrayList<Location>(), url);
                 }
                 loginView.hideUrlLoadingAnimation();
             }

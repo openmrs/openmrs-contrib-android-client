@@ -248,6 +248,7 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     @Override
     public void hideUrlLoadingAnimation() {
         mLocationLoadingProgressBar.setVisibility(View.INVISIBLE);
+        mSpinner.setVisibility(View.GONE);
     }
 
     @Override

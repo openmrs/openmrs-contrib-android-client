@@ -14,9 +14,12 @@
 
 package org.openmrs.mobile.utilities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
-public class InputField implements Serializable {
+public class InputField implements Serializable, Parcelable {
 
     private int id;
     private String concept;
@@ -51,4 +54,33 @@ public class InputField implements Serializable {
         return value;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.concept);
+        dest.writeDouble(this.value);
+    }
+
+    protected InputField(Parcel in) {
+        this.id = in.readInt();
+        this.concept = in.readString();
+        this.value = in.readDouble();
+    }
+
+    public static final Parcelable.Creator<InputField> CREATOR = new Parcelable.Creator<InputField>() {
+        @Override
+        public InputField createFromParcel(Parcel source) {
+            return new InputField(source);
+        }
+
+        @Override
+        public InputField[] newArray(int size) {
+            return new InputField[size];
+        }
+    };
 }

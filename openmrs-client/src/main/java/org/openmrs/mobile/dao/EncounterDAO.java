@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.dao;
 
+import com.activeandroid.query.Select;
+
 import net.sqlcipher.Cursor;
 
 import org.openmrs.mobile.databases.DBOpenHelper;
@@ -24,6 +26,7 @@ import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.utilities.DateUtils;
+import org.openmrs.mobile.utilities.FormService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,17 +89,23 @@ public class EncounterDAO {
                     int uuid_CI = cursor.getColumnIndex(EncounterTable.Column.UUID);
                     int display_CI = cursor.getColumnIndex(EncounterTable.Column.DISPLAY);
                     int datetime_CI = cursor.getColumnIndex(EncounterTable.Column.ENCOUNTER_DATETIME);
+                    int formUuid_CI = cursor.getColumnIndex(EncounterTable.Column.FORM_UUID);
+                    int patientUuid_CI = cursor.getColumnIndex(EncounterTable.Column.PATIENT_UUID);
                     Long id = cursor.getLong(id_CI);
                     String uuid = cursor.getString(uuid_CI);
                     String display = cursor.getString(display_CI);
                     Long datetime = cursor.getLong(datetime_CI);
+                    String formUuid = cursor.getString(formUuid_CI);
+                    String patientUuid = cursor.getString(patientUuid_CI);
                     encounter = new Encounter();
                     encounter.setId(id);
                     encounter.setUuid(uuid);
                     encounter.setDisplay(display);
                     encounter.setEncounterDatetime(DateUtils.convertTime(datetime,DateUtils.OPEN_MRS_REQUEST_FORMAT));
-                    encounter.setEncounterType(new EncounterType(EncounterType.VITALS));
+                    encounter.setEncounterType((EncounterType)new Select().from(EncounterType.class).where("display = ?", EncounterType.VITALS).executeSingle());
                     encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
+                    encounter.setForm(FormService.getFormByUuid(formUuid));
+                    encounter.setPatient(new PatientDAO().findPatientByUUID(patientUuid));
                 }
             } finally {
                 cursor.close();
@@ -125,10 +134,12 @@ public class EncounterDAO {
                     int display_CI = cursor.getColumnIndex(EncounterTable.Column.DISPLAY);
                     int datetime_CI = cursor.getColumnIndex(EncounterTable.Column.ENCOUNTER_DATETIME);
                     int encounterType_CI = cursor.getColumnIndex(EncounterTable.Column.ENCOUNTER_TYPE);
+                    int formUuid_CI = cursor.getColumnIndex(EncounterTable.Column.FORM_UUID);
                     Long id = cursor.getLong(id_CI);
                     String uuid = cursor.getString(uuid_CI);
                     String display = cursor.getString(display_CI);
                     Long datetime = cursor.getLong(datetime_CI);
+                    String formUuid = cursor.getString(formUuid_CI);
                     String typeDisplay = cursor.getString(encounterType_CI);
                     Encounter encounter = new Encounter();
                     encounter.setEncounterType(new EncounterType(typeDisplay));
@@ -138,6 +149,7 @@ public class EncounterDAO {
                     encounter.setDisplay(display);
                     encounter.setEncounterDatetime(DateUtils.convertTime(datetime,DateUtils.OPEN_MRS_REQUEST_FORMAT));
                     encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
+                    encounter.setForm(FormService.getFormByUuid(formUuid));
                     encounters.add(encounter);
                 }
             } finally {
@@ -164,10 +176,12 @@ public class EncounterDAO {
                     int uuid_CI = cursor.getColumnIndex(EncounterTable.Column.UUID);
                     int display_CI = cursor.getColumnIndex(EncounterTable.Column.DISPLAY);
                     int datetime_CI = cursor.getColumnIndex(EncounterTable.Column.ENCOUNTER_DATETIME);
+                    int formUuid_CI = cursor.getColumnIndex(EncounterTable.Column.FORM_UUID);
                     Long id = cursor.getLong(id_CI);
                     String uuid = cursor.getString(uuid_CI);
                     String display = cursor.getString(display_CI);
                     Long datetime = cursor.getLong(datetime_CI);
+                    String formUuid = cursor.getString(formUuid_CI);
                     Encounter encounter = new Encounter();
                     encounter.setId(id);
                     encounter.setUuid(uuid);
@@ -175,6 +189,7 @@ public class EncounterDAO {
                     encounter.setEncounterDatetime(DateUtils.convertTime(datetime,DateUtils.OPEN_MRS_REQUEST_FORMAT));
                     encounter.setEncounterType(type);
                     encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
+                    encounter.setForm(FormService.getFormByUuid(formUuid));
                     encounters.add(encounter);
                 }
             } finally {

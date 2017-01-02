@@ -27,7 +27,7 @@ public class ObservationTable extends Table<Observation> {
      *
      * @see org.openmrs.mobile.databases.tables.Table#values(int)
      */
-    private static final int INSERT_COLUMNS_COUNT = 8;
+    private static final int INSERT_COLUMNS_COUNT = 9;
 
     @Override
     public String createTableDefinition() {
@@ -40,7 +40,8 @@ public class ObservationTable extends Table<Observation> {
                 + Column.DIAGNOSIS_ORDER + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.DIAGNOSIS_LIST + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.DIAGNOSIS_CERTAINTY + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.DIAGNOSIS_NOTE + Column.Type.TEXT_TYPE
+                + Column.DIAGNOSIS_NOTE + Column.Type.TEXT_TYPE_WITH_COMMA
+                + Column.CONCEPT_UUID + Column.Type.TEXT_TYPE
                 + ");";
     }
 
@@ -54,7 +55,8 @@ public class ObservationTable extends Table<Observation> {
                 + Column.DIAGNOSIS_ORDER + Column.COMMA
                 + Column.DIAGNOSIS_LIST + Column.COMMA
                 + Column.DIAGNOSIS_CERTAINTY + Column.COMMA
-                + Column.DIAGNOSIS_NOTE + ")"
+                + Column.DIAGNOSIS_NOTE + Column.COMMA
+                + Column.CONCEPT_UUID + ")"
                 + values(INSERT_COLUMNS_COUNT);
     }
 
@@ -91,6 +93,7 @@ public class ObservationTable extends Table<Observation> {
         public static final String DIAGNOSIS_LIST = "diagnosisList";
         public static final String DIAGNOSIS_CERTAINTY = "diagnosisCertainty";
         public static final String DIAGNOSIS_NOTE = "diagnosisNote";
+        public static final String CONCEPT_UUID = "conceptUuid";
 
     }
 

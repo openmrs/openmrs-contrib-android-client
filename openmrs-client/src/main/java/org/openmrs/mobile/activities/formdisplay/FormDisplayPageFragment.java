@@ -335,6 +335,16 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
         return inputFields;
     }
 
+    @Override
+    public void setInputFields(List<InputField> inputFields) {
+        this.inputFields = inputFields;
+    }
+
+    @Override
+    public void setSelectOneFields(List<SelectOneField> selectOneFields) {
+        this.selectOneFields = selectOneFields;
+    }
+
     public boolean checkInputFields() {
         boolean allEmpty = true, valid=true;
         for (InputField field:inputFields) {

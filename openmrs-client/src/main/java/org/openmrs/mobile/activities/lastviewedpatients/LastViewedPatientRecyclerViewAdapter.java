@@ -289,7 +289,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
             }
 
             @Override
-            public void onErrorResponse() {
+            public void onErrorResponse(String errorMessage) {
                 ToastUtil.error("Failed to fetch patient data");
             }
         });

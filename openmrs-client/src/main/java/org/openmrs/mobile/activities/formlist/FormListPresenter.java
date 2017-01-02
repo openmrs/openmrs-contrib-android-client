@@ -22,6 +22,8 @@ import org.openmrs.mobile.models.FormResource;
 import java.util.Iterator;
 import java.util.List;
 
+import static org.openmrs.mobile.utilities.FormService.getFormResourceList;
+
 public class FormListPresenter implements FormListContract.Presenter {
 
     private static String[] FORMS = null;
@@ -29,12 +31,6 @@ public class FormListPresenter implements FormListContract.Presenter {
     private FormListContract.View view;
     private Long patientId;
     private List<FormResource> formResourceList;
-
-    public static List<FormResource> getFormResourceList(){
-        return new Select()
-                .from(FormResource.class)
-                .execute();
-    }
 
     public static EncounterType getEncounterType(String formname) {
         return new Select()

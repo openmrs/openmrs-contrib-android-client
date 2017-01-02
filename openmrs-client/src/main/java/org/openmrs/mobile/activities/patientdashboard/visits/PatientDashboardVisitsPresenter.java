@@ -121,7 +121,7 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
             @Override
             public void onResponse() {}
             @Override
-            public void onErrorResponse() {
+            public void onErrorResponse(String errorMessage) {
                 mPatientVisitsView.dismissStartVisitDialog();
             }
         });

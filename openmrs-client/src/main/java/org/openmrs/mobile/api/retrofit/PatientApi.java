@@ -113,7 +113,7 @@ public class PatientApi extends RetrofitApi {
                                         ToastUtil.error("Patient[" + patient.getId() + "] cannot be synced due to server error"+ response.message());
                                         deferred.reject(new RuntimeException("Patient cannot be synced due to server error: " + response.errorBody().toString()));
                                         if (callbackListener != null) {
-                                            callbackListener.onErrorResponse();
+                                            callbackListener.onErrorResponse(response.message());
                                         }
                                     }
                                 }
@@ -123,7 +123,7 @@ public class PatientApi extends RetrofitApi {
                                     ToastUtil.notify("Patient[" + patient.getId() + "] cannot be synced due to request error: " + t.toString());
                                     deferred.reject(t);
                                     if (callbackListener != null) {
-                                        callbackListener.onErrorResponse();
+                                        callbackListener.onErrorResponse(t.getMessage());
                                     }
                                 }
                             });
@@ -171,12 +171,12 @@ public class PatientApi extends RetrofitApi {
                     callbackListener.onPatientDownloaded(response.body());
                 }
                 else {
-                    callbackListener.onErrorResponse();
+                    callbackListener.onErrorResponse(response.message());
                 }
             }
             @Override
             public void onFailure(Call<Patient> call, Throwable t) {
-                callbackListener.onErrorResponse();
+                callbackListener.onErrorResponse(t.getMessage());
             }
         });
     }

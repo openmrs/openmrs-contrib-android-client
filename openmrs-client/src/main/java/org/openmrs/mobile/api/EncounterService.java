@@ -69,7 +69,7 @@ public class EncounterService extends IntentService {
                     @Override
                     public void onResponse() {}
                     @Override
-                    public void onErrorResponse() {
+                    public void onErrorResponse(String errorMessage) {
                         ToastUtil.error("Failed to start visit");
                     }
                 });

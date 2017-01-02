@@ -127,7 +127,7 @@ public class RegisterPatientPresenter implements RegisterPatientContract.Present
             }
 
             @Override
-            public void onErrorResponse() {
+            public void onErrorResponse(String errorMessage) {
                 mRegisterPatientView.setProgressBarVisibility(false);
             }
         });

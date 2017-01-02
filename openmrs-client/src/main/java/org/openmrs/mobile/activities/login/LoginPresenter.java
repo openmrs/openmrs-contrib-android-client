@@ -118,7 +118,7 @@ public class LoginPresenter implements LoginContract.Presenter{
                                 }
 
                                 @Override
-                                public void onErrorResponse() {
+                                public void onErrorResponse(String errorMessage) {
                                     loginView.showToast("Failed to fetch visit type", ToastUtil.ToastType.ERROR);
                                 }
                             });

@@ -27,6 +27,8 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.openmrs.mobile.utilities.FormService.getFormResourceByName;
+
 public class FormDisplayMainPresenter implements FormDisplayContract.Presenter.MainPresenter {
 
     private final long mPatientID;
@@ -101,6 +103,7 @@ public class FormDisplayMainPresenter implements FormDisplayContract.Presenter.M
             encountercreate.setObservations(observations);
             encountercreate.setFormname(mFormname);
             encountercreate.setPatientId(mPatientID);
+            encountercreate.setFormUuid(getFormResourceByName(mFormname).getUuid());
             encountercreate.setObslist();
             encountercreate.save();
 

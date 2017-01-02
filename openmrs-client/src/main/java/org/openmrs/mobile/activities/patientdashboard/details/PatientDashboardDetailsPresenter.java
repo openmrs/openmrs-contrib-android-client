@@ -92,7 +92,7 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
             }
 
             @Override
-            public void onErrorResponse() {
+            public void onErrorResponse(String errorMessage) {
                 mPatientDetailsView.showToast(R.string.synchronize_patient_error, true);
                 mPatientDetailsView.dismissDialog();
             }
@@ -111,7 +111,7 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
             @Override
             public void onResponse() {}
             @Override
-            public void onErrorResponse() {
+            public void onErrorResponse(String errorMessage) {
                 mPatientDetailsView.showToast(R.string.synchronize_patient_error, true);
             }
         });

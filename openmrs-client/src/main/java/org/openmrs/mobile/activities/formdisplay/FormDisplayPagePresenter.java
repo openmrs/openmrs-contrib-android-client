@@ -12,6 +12,7 @@ package org.openmrs.mobile.activities.formdisplay;
 
 import android.widget.LinearLayout;
 
+import org.openmrs.mobile.bundle.FormFieldsWrapper;
 import org.openmrs.mobile.models.Page;
 import org.openmrs.mobile.models.Question;
 import org.openmrs.mobile.models.Section;
@@ -27,6 +28,20 @@ public class FormDisplayPagePresenter implements FormDisplayContract.Presenter.P
         this.mFormDisplayPageView = mFormPageView;
         this.mPage = page;
         this.mFormDisplayPageView.setPresenter(this);
+    }
+
+    public FormDisplayPagePresenter(FormDisplayContract.View.PageView mFormPageView, Page page, FormFieldsWrapper formFieldsWrapper) {
+        this.mFormDisplayPageView = mFormPageView;
+        this.mPage = page;
+        this.mFormDisplayPageView.setPresenter(this);
+        setViewFields(formFieldsWrapper);
+    }
+
+    private void setViewFields(FormFieldsWrapper formFieldsWrapper) {
+        if(formFieldsWrapper != null){
+            mFormDisplayPageView.setInputFields(formFieldsWrapper.getInputFields());
+            mFormDisplayPageView.setSelectOneFields(formFieldsWrapper.getSelectOneFields());
+        }
     }
 
     @Override

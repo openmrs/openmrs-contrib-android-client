@@ -26,11 +26,13 @@ import android.widget.LinearLayout;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.bundle.FormFieldsWrapper;
 import org.openmrs.mobile.models.Form;
 import org.openmrs.mobile.models.Page;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FormService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FormDisplayActivity extends ACBaseActivity implements FormDisplayContract.View.MainView {
@@ -88,13 +90,19 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
         if (fragment instanceof FormDisplayPageFragment) {
             Bundle bundle = getIntent().getExtras();
             String valueRef = null;
+            ArrayList<FormFieldsWrapper> formFieldsWrappers = null;
             if(bundle!=null) {
                 valueRef = (String)bundle.get(ApplicationConstants.BundleKeys.VALUEREFERENCE);
+                formFieldsWrappers = bundle.getParcelableArrayList(ApplicationConstants.BundleKeys.FORM_FIELDS_LIST_BUNDLE);
             }
             Form form = FormService.getForm(valueRef);
             List<Page> pageList = form.getPages();
             for (Page page : pageList) {
-                new FormDisplayPagePresenter((FormDisplayPageFragment) fragment, page);
+                if(formFieldsWrappers != null){
+                    new FormDisplayPagePresenter((FormDisplayPageFragment) fragment, page, formFieldsWrappers.get(pageList.indexOf(page)));
+                } else {
+                    new FormDisplayPagePresenter((FormDisplayPageFragment) fragment, page);
+                }
             }
         }
     }

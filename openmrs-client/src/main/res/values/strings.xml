@@ -103,18 +103,14 @@
     <!-- End Visit dialog -->
     <string name="end_visit_dialog_title">End Visit</string>
     <string name="end_visit_dialog_message">Are you sure you want to end this visit?</string>
-    <!-- Check visit dialog -->
-    <string name="check_visit_dialog_title">Checking Visits</string>
-    <!-- Check visit success dialog -->
-    <string name="check_visit_success_dialog_title">"Successfully checked Visits"</string>
     <!-- Start visit dialog -->
     <string name="start_visit_dialog_title">Start Visit</string>
     <string name="start_visit_dialog_message">Are you sure you want to start visit for %1$s now?</string>
     <!-- Start visit dialog unsuccessful-->
-    <string name="start_visit_unsuccessful_dialog_title">Starting Visit was unsuccessful</string>
+    <string name="start_visit_unsuccessful_dialog_title">Visit didn\'t start.</string>
     <string name="start_visit_unsuccessful_dialog_message">There are already active visits of %1$s. Try synchronizing patient or closing previous visits</string>
     <!-- Progress dialog -->
-    <string name="progress_dialog_message">Please wait\85</string>
+    <string name="progress_dialog_message">Please wait</string>
     <!-- Capture vitals no visit dialog -->
     <string name="no_visit_dialog_title">Start new visit</string>
     <string name="no_visit_dialog_message">This user has no active visit. Would you like to start one now?</string>
@@ -124,7 +120,6 @@
     <string name="delete_patient_dialog_message">Are you sure you want to delete this patient?</string>
 
     <!-- Buttons -->
-    <string name="dialog_button_done">Done</string>
     <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_button_ok">OK</string>
     <string name="dialog_button_confirm">Confirm</string>
@@ -132,13 +127,6 @@
     <!-- Settings activity -->
     <string name="settings_logs">Logs</string>
     <string name="settings_about">About</string>
-    <string name="settings_logout">Logout</string>
-    <string name="settings_downloadForms">Download forms</string>
-    <string name="settings_forms_download_server_error_404">The server does not support xforms. Please contact the system administrator.</string>
-    <string name="settings_forms_downloading">Downloading forms\85</string>
-    <string name="settings_forms_downloaded_successful">Successfully downloaded forms.</string>
-    <string name="settings_forms_downloaded_error">An error occurred while downloading forms.</string>
-    <string name="settings_forms_download_no_connection">No internet connection available</string>
     <!-- FindPatients activity -->
     <string name="action_find_patients">Find Patients</string>
     <string name="action_synced_patients">Synced Patients</string>
@@ -147,28 +135,17 @@
     <string name="search_patient_hint">Patient name</string>
     <string name="search_patient_no_results">No patients exist in database</string>
     <string name="search_patient_no_result_for_query">No results found for query \"%1$s\"</string>
-    <string name="find_patient_no_last_viewed">No last viewed patients</string>
-    <string name="find_patient_no_connection">No internet connection available</string>
-    <string name="find_patient_tab_downloaded_label">Downloaded</string>
-    <string name="find_patient_tab_last_viewed_label">Last viewed</string>
-    <string name="save_patient_data_dialog">Saving patient data</string>
     <string name="select_all_downloadable_data">Select all</string>
     <string name="download_selected_patient_data">Download Patient Data</string>
-    <string name="patient_already_exists">Patient already exists locally</string>
     <string name="download_multiple">Download Multiple</string>
     <!-- Dashboard Activity -->
     <string name="dashboard_search_icon_label">Find Patients</string>
     <string name="dashboard_registry_icon_label">Register Patient</string>
-    <string name="dashboard_logged_as">logged as %1$s</string>
     <string name="dashboard_visits_icon_label">Active Visits</string>
-    <string name="dashboard_vitals_icon_label">Capture Vitals</string>
     <string name="dashboard_forms_icon_label">Form Entry</string>
 
     <!-- find_synced_patients_row layout-->
     <string name="find_patients_row_checkbox_download_label">Download</string>
-    <string name="find_patients_row_checkbox_available_offline_label">Available offline</string>
-    <string name="find_patients_row_toast_patient_saved">Patient is now available locally</string>
-    <string name="find_patients_row_toast_patient_save_error">An error occurred. Try synchronizing patient data.</string>
     <!-- Patient Dashboard Activity -->
     <string name="action_synchronize_patients">Synchronizing patient</string>
     <string name="synchronize_patient_successful">Successfully synchronized patient data.</string>
@@ -176,8 +153,6 @@
     <string name="synchronize_patient_network_error">Cannot synchronize in offline mode</string>
     <string name="get_patient_from_database_error">Failed to fetch patient from database</string>
     <string name="action_start_visit">Start visit</string>
-    <string name="start_visit_successful">Successfully started new visit</string>
-    <string name="start_visit_error">Starting new visit was unsuccessful</string>
     <string name="patient_scroll_tab_details_label">Details</string>
     <string name="patient_scroll_tab_diagnosis_label">Diagnosis</string>
     <string name="patient_scroll_tab_visits_label">Visits</string>
@@ -208,7 +183,6 @@
     <string name="last_vitals_none_label">None</string>
     <!-- fragment_patient_diagnosis layout -->
     <string name="empty_diagnoses_list">Patient has no diagnoses yet.</string>
-    <string name="diagnosis_none_label">Diagnoses are not available yet</string>
     <string name="diagnosis_note_label">Text of encounter note</string>
     <!-- Visit dashboard activity -->
     <string name="action_end_visit">End Visit</string>
@@ -218,14 +192,12 @@
     <string name="list_item_encounter_no_notes">No notes for this encounter.</string>
     <string name="visit_exp_list_empty">Visit has no encounters yet.</string>
     <!-- Capture Vitals activity -->
-    <string name="action_capture_vitals">Capture Vitals</string>
     <string name="action_delete_patient">Delete Patient</string>
     <string name="action_register_patient">Register Patient</string>
     <string name="failed_to_open_vitals_form">An error occurred. Invalid or corrupted form file.</string>
     <string name="active_visit_label_capture_vitals">On Visit</string>
     <!-- Form Entry Activity -->
     <string name="save_upload_button">Save and Send Vitals</string>
-    <string name="forms_sent_successfully">Form has been sent successfully.</string>
     <string name="empty_visits_list">Patient has no visits yet.</string>
     <string name="title_activity_form_create">FormCreateActivity</string>
     <string name="page_format">Hello World from section: %1$d</string>

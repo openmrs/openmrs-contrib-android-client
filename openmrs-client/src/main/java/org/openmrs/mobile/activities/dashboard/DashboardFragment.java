@@ -23,7 +23,6 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -31,7 +30,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity;
 import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity;
-import org.openmrs.mobile.activities.registerpatient.RegisterPatientActivity;
+import org.openmrs.mobile.activities.patientinfo.PatientInfoActivity;
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
@@ -180,7 +179,7 @@ public class DashboardFragment extends Fragment implements DashboardContract.Vie
                 startNewActivity(SyncedPatientsActivity.class);
                 break;
             case R.id.registryPatientView:
-                startNewActivity(RegisterPatientActivity.class);
+                startNewActivity(PatientInfoActivity.class);
                 break;
             case R.id.captureVitalsView:
                 startNewActivity(FormEntryPatientListActivity.class);

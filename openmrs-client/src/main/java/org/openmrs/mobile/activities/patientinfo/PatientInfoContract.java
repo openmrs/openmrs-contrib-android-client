@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.registerpatient;
+package org.openmrs.mobile.activities.patientinfo;
 
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.activities.BaseView;
@@ -20,13 +20,13 @@ import org.openmrs.mobile.models.Patient;
 
 import java.util.List;
 
-public interface RegisterPatientContract {
+public interface PatientInfoContract {
 
     interface View extends BaseView<Presenter> {
 
         boolean isActive();
 
-        void finishRegisterActivity();
+        void finishPatientInfoActivity();
 
         void setErrorsVisibility(boolean givenNameError,
                                  boolean familyNameError,
@@ -50,11 +50,17 @@ public interface RegisterPatientContract {
 
     interface Presenter extends BasePresenter {
 
-        void confirm(Patient patient);
+        Patient getPatientToUpdate();
 
-        void finishRegisterActivity();
+        void confirmRegister(Patient patient);
+
+        void confirmUpdate(Patient patient);
+
+        void finishPatientInfoActivity();
 
         void registerPatient();
+
+        void updatePatient(Patient patient);
     }
 
 }

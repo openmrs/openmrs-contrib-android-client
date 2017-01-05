@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.registerpatient;
+package org.openmrs.mobile.activities.patientinfo;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -20,19 +20,19 @@ import android.view.Menu;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class RegisterPatientActivity extends ACBaseActivity {
+public class PatientInfoActivity extends ACBaseActivity {
 
-    public RegisterPatientContract.Presenter mPresenter;
+    public PatientInfoContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_register_patient);
+        this.setContentView(R.layout.activity_patient_info);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -42,19 +42,31 @@ public class RegisterPatientActivity extends ACBaseActivity {
         }
 
         // Create fragment
-        RegisterPatientFragment registerPatientFragment =
-                (RegisterPatientFragment) getSupportFragmentManager().findFragmentById(R.id.registerPatientContentFrame);
-        if (registerPatientFragment == null) {
-            registerPatientFragment = RegisterPatientFragment.newInstance();
+        PatientInfoFragment patientInfoFragment =
+                (PatientInfoFragment) getSupportFragmentManager().findFragmentById(R.id.patientInfoContentFrame);
+        if (patientInfoFragment == null) {
+            patientInfoFragment = PatientInfoFragment.newInstance();
         }
-        if (!registerPatientFragment.isActive()) {
+        if (!patientInfoFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    registerPatientFragment, R.id.registerPatientContentFrame);
+                    patientInfoFragment, R.id.patientInfoContentFrame);
+        }
+
+        //Check if bundle includes patient ID
+        Bundle patientBundle = savedInstanceState;
+        if (patientBundle != null) {
+            patientBundle.getString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE);
+        } else {
+            patientBundle = getIntent().getExtras();
+        }
+        String patientID = "";
+        if (patientBundle != null) {
+            patientID = patientBundle.getString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE);
         }
 
         List<String> countries = Arrays.asList(getResources().getStringArray(R.array.countries_array));
         // Create the mPresenter
-        mPresenter = new RegisterPatientPresenter(registerPatientFragment, countries);
+        mPresenter = new PatientInfoPresenter(patientInfoFragment, countries, patientID);
     }
 
     @Override

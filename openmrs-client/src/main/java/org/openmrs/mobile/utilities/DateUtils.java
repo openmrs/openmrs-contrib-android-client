@@ -14,6 +14,9 @@
 
 package org.openmrs.mobile.utilities;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.openmrs.mobile.application.OpenMRS;
 
 import java.text.DateFormat;
@@ -73,6 +76,15 @@ public final class DateUtils {
             }
         }
         return time;
+    }
+
+    public static DateTime convertTimeString(String dateAsString) {
+        DateTime date = null;
+        if (StringUtils.notNull(dateAsString)) {
+            DateTimeFormatter originalFormat = DateTimeFormat.forPattern(DateUtils.OPEN_MRS_REQUEST_FORMAT);
+            date = originalFormat.parseDateTime(dateAsString);
+        }
+        return date;
     }
 
     public static String convertTime1(String dateAsString, String dateFormat) {

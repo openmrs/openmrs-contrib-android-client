@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.patientdashboard.details;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,7 +31,9 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
+import org.openmrs.mobile.activities.patientinfo.PatientInfoActivity;
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.StringUtils;
@@ -75,6 +78,8 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
             case R.id.actionSynchronize:
                 mPresenter.synchronizePatient();
                 break;
+            case R.id.actionUpdatePatient:
+                startPatientUpdateActivity(mPresenter.getPatientId());
         }
         return super.onOptionsItemSelected(item);
     }
@@ -148,5 +153,13 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     @Override
     public void setPresenter(PatientDashboardContract.PatientDashboardMainPresenter presenter) {
         this.mPresenter = ((PatientDashboardContract.PatientDetailsPresenter) presenter);
+    }
+
+    @Override
+    public void startPatientUpdateActivity(long patientId) {
+        Intent updatePatient = new Intent(this.getActivity(), PatientInfoActivity.class);
+        updatePatient.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE,
+                String.valueOf(patientId));
+        startActivity(updatePatient);
     }
 }

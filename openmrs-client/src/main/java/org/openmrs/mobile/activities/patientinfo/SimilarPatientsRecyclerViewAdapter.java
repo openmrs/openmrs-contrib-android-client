@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.registerpatient;
+package org.openmrs.mobile.activities.patientinfo;
 
 import android.app.Activity;
 import android.content.Intent;

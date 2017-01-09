@@ -31,7 +31,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
-import org.openmrs.mobile.activities.patientinfo.PatientInfoActivity;
+import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
@@ -157,7 +157,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
     @Override
     public void startPatientUpdateActivity(long patientId) {
-        Intent updatePatient = new Intent(this.getActivity(), PatientInfoActivity.class);
+        Intent updatePatient = new Intent(this.getActivity(), AddEditPatientActivity.class);
         updatePatient.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE,
                 String.valueOf(patientId));
         startActivity(updatePatient);

@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.patientinfo;
+package org.openmrs.mobile.activities.addeditpatient;
 
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.activities.BaseView;
@@ -20,7 +20,7 @@ import org.openmrs.mobile.models.Patient;
 
 import java.util.List;
 
-public interface PatientInfoContract {
+public interface AddEditPatientContract {
 
     interface View extends BaseView<Presenter> {
 

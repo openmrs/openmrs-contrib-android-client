@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.patientinfo;
+package org.openmrs.mobile.activities.addeditpatient;
 
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -35,17 +35,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PatientInfoPresenter implements PatientInfoContract.Presenter {
+public class AddEditPatientPresenter implements AddEditPatientContract.Presenter {
 
-    private final PatientInfoContract.View mPatientInfoView;
+    private final AddEditPatientContract.View mPatientInfoView;
 
     private Patient mPatient;
     private String patientToUpdateId;
     private List<String> mCountries;
 
-    public PatientInfoPresenter(PatientInfoContract.View mPatientInfoView,
-                                List<String> countries,
-                                String patientToUpdateId) {
+    public AddEditPatientPresenter(AddEditPatientContract.View mPatientInfoView,
+                                   List<String> countries,
+                                   String patientToUpdateId) {
         this.mPatientInfoView = mPatientInfoView;
         this.mPatientInfoView.setPresenter(this);
         this.mCountries = countries;

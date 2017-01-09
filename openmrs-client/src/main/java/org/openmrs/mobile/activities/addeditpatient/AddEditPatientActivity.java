@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.patientinfo;
+package org.openmrs.mobile.activities.addeditpatient;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -25,9 +25,9 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import java.util.Arrays;
 import java.util.List;
 
-public class PatientInfoActivity extends ACBaseActivity {
+public class AddEditPatientActivity extends ACBaseActivity {
 
-    public PatientInfoContract.Presenter mPresenter;
+    public AddEditPatientContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,14 +42,14 @@ public class PatientInfoActivity extends ACBaseActivity {
         }
 
         // Create fragment
-        PatientInfoFragment patientInfoFragment =
-                (PatientInfoFragment) getSupportFragmentManager().findFragmentById(R.id.patientInfoContentFrame);
-        if (patientInfoFragment == null) {
-            patientInfoFragment = PatientInfoFragment.newInstance();
+        AddEditPatientFragment addEditPatientFragment =
+                (AddEditPatientFragment) getSupportFragmentManager().findFragmentById(R.id.patientInfoContentFrame);
+        if (addEditPatientFragment == null) {
+            addEditPatientFragment = AddEditPatientFragment.newInstance();
         }
-        if (!patientInfoFragment.isActive()) {
+        if (!addEditPatientFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    patientInfoFragment, R.id.patientInfoContentFrame);
+                    addEditPatientFragment, R.id.patientInfoContentFrame);
         }
 
         //Check if bundle includes patient ID
@@ -66,7 +66,7 @@ public class PatientInfoActivity extends ACBaseActivity {
 
         List<String> countries = Arrays.asList(getResources().getStringArray(R.array.countries_array));
         // Create the mPresenter
-        mPresenter = new PatientInfoPresenter(patientInfoFragment, countries, patientID);
+        mPresenter = new AddEditPatientPresenter(addEditPatientFragment, countries, patientID);
     }
 
     @Override

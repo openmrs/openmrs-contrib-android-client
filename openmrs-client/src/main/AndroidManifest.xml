@@ -163,16 +163,16 @@
                 android:value=".activities.dashboard.DashboardActivity" />
         </activity>
         <activity
-            android:name=".activities.patientinfo.PatientInfoActivity"
+            android:name=".activities.addeditpatient.AddEditPatientActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/action_register_patient"
-            android:parentActivityName=".activities.patientinfo.PatientInfoActivity"
+            android:parentActivityName=".activities.addeditpatient.AddEditPatientActivity"
             android:theme="@style/AppTheme">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.patientinfo.PatientInfoActivity" />
+                android:value=".activities.addeditpatient.AddEditPatientActivity" />
         </activity>
 
         <service

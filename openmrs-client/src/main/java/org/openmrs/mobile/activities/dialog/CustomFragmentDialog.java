@@ -47,8 +47,8 @@ import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.activities.login.LoginFragment;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.visits.PatientVisitsFragment;
-import org.openmrs.mobile.activities.patientinfo.PatientInfoActivity;
-import org.openmrs.mobile.activities.patientinfo.SimilarPatientsRecyclerViewAdapter;
+import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
+import org.openmrs.mobile.activities.addeditpatient.SimilarPatientsRecyclerViewAdapter;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
@@ -363,11 +363,11 @@ public class CustomFragmentDialog extends DialogFragment {
                         dismiss();
                         break;
                     case REGISTER_PATIENT:
-                        ((PatientInfoActivity) getActivity()).mPresenter.registerPatient();
+                        ((AddEditPatientActivity) getActivity()).mPresenter.registerPatient();
                         dismiss();
                         break;
                     case CANCEL_REGISTERING:
-                        ((PatientInfoActivity) getActivity()).mPresenter.finishPatientInfoActivity();
+                        ((AddEditPatientActivity) getActivity()).mPresenter.finishPatientInfoActivity();
                         dismiss();
                         break;
                     case DELETE_PATIENT:

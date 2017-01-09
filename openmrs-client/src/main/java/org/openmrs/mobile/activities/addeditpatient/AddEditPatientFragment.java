@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.patientinfo;
+package org.openmrs.mobile.activities.addeditpatient;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -55,9 +55,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class PatientInfoFragment extends Fragment implements PatientInfoContract.View {
+public class AddEditPatientFragment extends Fragment implements AddEditPatientContract.View {
 
-    PatientInfoContract.Presenter mPresenter;
+    AddEditPatientContract.Presenter mPresenter;
 
     LocalDate birthdate;
     DateTime bdt;
@@ -99,7 +99,7 @@ public class PatientInfoFragment extends Fragment implements PatientInfoContract
     }
 
     @Override
-    public void setPresenter(PatientInfoContract.Presenter presenter) {
+    public void setPresenter(AddEditPatientContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
 
@@ -316,7 +316,7 @@ public class PatientInfoFragment extends Fragment implements PatientInfoContract
         similarPatientsDialog.setLeftButtonAction(CustomFragmentDialog.OnClickAction.CANCEL_REGISTERING);
         similarPatientsDialog.setPatientsList(patients);
         similarPatientsDialog.setNewPatient(newPatient);
-        ((PatientInfoActivity) this.getActivity()).createAndShowDialog(similarPatientsDialog, ApplicationConstants.DialogTAG.SIMILAR_PATIENTS_TAG);
+        ((AddEditPatientActivity) this.getActivity()).createAndShowDialog(similarPatientsDialog, ApplicationConstants.DialogTAG.SIMILAR_PATIENTS_TAG);
     }
 
     @Override
@@ -331,8 +331,8 @@ public class PatientInfoFragment extends Fragment implements PatientInfoContract
         ToastUtil.notifyLong(getResources().getString(R.string.registration_core_info));
     }
 
-    public static PatientInfoFragment newInstance() {
-        return new PatientInfoFragment();
+    public static AddEditPatientFragment newInstance() {
+        return new AddEditPatientFragment();
     }
 
     private void resolveViews(View v) {
@@ -437,7 +437,7 @@ public class PatientInfoFragment extends Fragment implements PatientInfoContract
                     edyr.getText().clear();
 
 
-                    DatePickerDialog mDatePicker=new DatePickerDialog(PatientInfoFragment.this.getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    DatePickerDialog mDatePicker=new DatePickerDialog(AddEditPatientFragment.this.getActivity(), new DatePickerDialog.OnDateSetListener() {
                         public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                             selectedmonth++;
                             eddob.setText(selectedday+"/"+selectedmonth+"/"+selectedyear);

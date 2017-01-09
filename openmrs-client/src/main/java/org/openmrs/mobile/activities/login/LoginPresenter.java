@@ -202,6 +202,7 @@ public class LoginPresenter implements LoginContract.Presenter{
                 public void onFailure(Call<Results<Location>> call, Throwable t) {
                     loginView.hideUrlLoadingAnimation();
                     loginView.showInvalidURLSnackbar(t.getMessage());
+                    loginView.initLoginForm(new ArrayList<Location>(), url);
                     loginView.setLocationErrorOccurred(true);
                 }
             });

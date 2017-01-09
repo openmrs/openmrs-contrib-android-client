@@ -148,6 +148,7 @@
     <string name="find_patients_row_checkbox_download_label">Download</string>
     <!-- Patient Dashboard Activity -->
     <string name="action_synchronize_patients">Synchronizing patient</string>
+    <string name="action_update_patient_data">Update Patient</string>
     <string name="synchronize_patient_successful">Successfully synchronized patient data.</string>
     <string name="synchronize_patient_error">Synchronizing patient data was unsuccessful</string>
     <string name="synchronize_patient_network_error">Cannot synchronize in offline mode</string>

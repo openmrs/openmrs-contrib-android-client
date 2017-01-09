@@ -28,7 +28,7 @@
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <FrameLayout
-        android:id="@+id/registerPatientContentFrame"
+        android:id="@+id/patientInfoContentFrame"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

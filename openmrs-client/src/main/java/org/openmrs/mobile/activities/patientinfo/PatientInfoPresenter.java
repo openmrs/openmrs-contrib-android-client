@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.registerpatient;
+package org.openmrs.mobile.activities.patientinfo;
 
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -29,50 +29,70 @@ import org.openmrs.mobile.utilities.PatientComparator;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RegisterPatientPresenter implements RegisterPatientContract.Presenter {
+public class PatientInfoPresenter implements PatientInfoContract.Presenter {
 
-    private final RegisterPatientContract.View mRegisterPatientView;
+    private final PatientInfoContract.View mPatientInfoView;
 
     private Patient mPatient;
+    private String patientToUpdateId;
     private List<String> mCountries;
 
-    public RegisterPatientPresenter(RegisterPatientContract.View mRegisterPatientView, List<String> countries) {
-        this.mRegisterPatientView = mRegisterPatientView;
-        this.mRegisterPatientView.setPresenter(this);
+    public PatientInfoPresenter(PatientInfoContract.View mPatientInfoView,
+                                List<String> countries,
+                                String patientToUpdateId) {
+        this.mPatientInfoView = mPatientInfoView;
+        this.mPatientInfoView.setPresenter(this);
         this.mCountries = countries;
+        this.patientToUpdateId = patientToUpdateId;
     }
     
     @Override
     public void start(){}
 
     @Override
-    public void confirm(Patient patient) {
+    public Patient getPatientToUpdate() {
+        Patient patientToUpdate = new PatientDAO().findPatientByID(patientToUpdateId);
+        return patientToUpdate;
+    }
+
+    @Override
+    public void confirmRegister(Patient patient) {
         if(validate(patient)) {
-            mRegisterPatientView.setProgressBarVisibility(true);
-            mRegisterPatientView.hideSoftKeys();
+            mPatientInfoView.setProgressBarVisibility(true);
+            mPatientInfoView.hideSoftKeys();
             findSimilarPatients(patient);
         }
         else {
-            mRegisterPatientView.scrollToTop();
+            mPatientInfoView.scrollToTop();
         }
     }
 
     @Override
-    public void finishRegisterActivity() {
-        mRegisterPatientView.finishRegisterActivity();
+    public void confirmUpdate(Patient patient) {
+        if (validate(patient)) {
+            mPatientInfoView.setProgressBarVisibility(true);
+            mPatientInfoView.hideSoftKeys();
+            updatePatient(patient);
+        } else {
+            mPatientInfoView.scrollToTop();
+        }
+    }
+
+    @Override
+    public void finishPatientInfoActivity() {
+        mPatientInfoView.finishPatientInfoActivity();
     }
 
     private boolean validate(Patient patient) {
 
         boolean ferr=false, lerr=false, doberr=false, gerr=false, adderr=false, countryerr=false;
-        mRegisterPatientView.setErrorsVisibility(ferr, lerr, doberr, gerr, adderr, countryerr);
+        mPatientInfoView.setErrorsVisibility(ferr, lerr, doberr, gerr, adderr, countryerr);
 
         // Validate names
         if(StringUtils.isBlank(patient.getPerson().getName().getGivenName())) {
@@ -112,7 +132,7 @@ public class RegisterPatientPresenter implements RegisterPatientContract.Present
             return true;
         }
         else {
-            mRegisterPatientView.setErrorsVisibility(ferr, lerr, doberr, adderr, countryerr, gerr);
+            mPatientInfoView.setErrorsVisibility(ferr, lerr, doberr, adderr, countryerr, gerr);
             return false;
         }
     }
@@ -122,13 +142,28 @@ public class RegisterPatientPresenter implements RegisterPatientContract.Present
         new PatientApi().registerPatient(mPatient, new DefaultResponseCallbackListener() {
             @Override
             public void onResponse() {
-                mRegisterPatientView.startPatientDashbordActivity(mPatient);
-                mRegisterPatientView.finishRegisterActivity();
+                mPatientInfoView.startPatientDashbordActivity(mPatient);
+                mPatientInfoView.finishPatientInfoActivity();
             }
 
             @Override
             public void onErrorResponse(String errorMessage) {
-                mRegisterPatientView.setProgressBarVisibility(false);
+                mPatientInfoView.setProgressBarVisibility(false);
+            }
+        });
+    }
+
+    @Override
+    public void updatePatient(Patient patient) {
+        new PatientApi().updatePatient(patient, new DefaultResponseCallbackListener() {
+            @Override
+            public void onResponse() {
+                mPatientInfoView.finishPatientInfoActivity();
+            }
+
+            @Override
+            public void onErrorResponse(String errorMessage) {
+                mPatientInfoView.setProgressBarVisibility(false);
             }
         });
     }
@@ -153,14 +188,14 @@ public class RegisterPatientPresenter implements RegisterPatientContract.Present
 
                 @Override
                 public void onFailure(Call<Results<Module>> call, Throwable t) {
-                    mRegisterPatientView.setProgressBarVisibility(false);
+                    mPatientInfoView.setProgressBarVisibility(false);
                     ToastUtil.error(t.getMessage());
                 }
             });
         } else {
             List<Patient> similarPatient = new PatientComparator().findSimilarPatient(new PatientDAO().getAllPatients(), patient);
             if(!similarPatient.isEmpty()){
-                mRegisterPatientView.showSimilarPatientDialog(similarPatient, patient);
+                mPatientInfoView.showSimilarPatientDialog(similarPatient, patient);
             } else {
                 registerPatient();
             }
@@ -178,21 +213,21 @@ public class RegisterPatientPresenter implements RegisterPatientContract.Present
                     if(!patientList.isEmpty()){
                         List<Patient> similarPatient = new PatientComparator().findSimilarPatient(patientList, patient);
                         if (!similarPatient.isEmpty()) {
-                            mRegisterPatientView.showSimilarPatientDialog(similarPatient, patient);
-                            mRegisterPatientView.showUpgradeRegistrationModuleInfo();
+                            mPatientInfoView.showSimilarPatientDialog(similarPatient, patient);
+                            mPatientInfoView.showUpgradeRegistrationModuleInfo();
                         }
                     } else {
                         registerPatient();
                     }
                 } else {
-                    mRegisterPatientView.setProgressBarVisibility(false);
+                    mPatientInfoView.setProgressBarVisibility(false);
                     ToastUtil.error(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<Results<Patient>> call, Throwable t) {
-                mRegisterPatientView.setProgressBarVisibility(false);
+                mPatientInfoView.setProgressBarVisibility(false);
                 ToastUtil.error(t.getMessage());
             }
         });
@@ -207,19 +242,19 @@ public class RegisterPatientPresenter implements RegisterPatientContract.Present
                 if(response.isSuccessful()){
                     List<Patient> similarPatients = response.body().getResults();
                     if(!similarPatients.isEmpty()){
-                        mRegisterPatientView.showSimilarPatientDialog(similarPatients, patient);
+                        mPatientInfoView.showSimilarPatientDialog(similarPatients, patient);
                     } else {
                         registerPatient();
                     }
                 } else {
-                    mRegisterPatientView.setProgressBarVisibility(false);
+                    mPatientInfoView.setProgressBarVisibility(false);
                     ToastUtil.error(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<Results<Patient>> call, Throwable t) {
-                mRegisterPatientView.setProgressBarVisibility(false);
+                mPatientInfoView.setProgressBarVisibility(false);
                 ToastUtil.error(t.getMessage());
             }
         });

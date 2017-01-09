@@ -13,5 +13,10 @@ public abstract class PatientDashboardMainPresenterImpl implements PatientDashbo
     }
 
     @Override
+    public long getPatientId() {
+        return mPatient.getId();
+    }
+
+    @Override
     public void start() {}
 }

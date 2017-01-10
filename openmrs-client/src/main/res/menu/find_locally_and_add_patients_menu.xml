@@ -20,7 +20,7 @@
     <item android:id="@+id/actionAddPatients"
         android:title="@string/action_add_patients"
         android:icon="@drawable/ic_add"
-        app:showAsAction="ifRoom|collapseActionView"/>
+        app:showAsAction="always"/>
 
     <item android:id="@+id/actionSearchLocal"
         android:title="@string/action_find_patients"

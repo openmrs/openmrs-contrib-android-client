@@ -18,6 +18,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.preference.PreferenceManager;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Configuration;
@@ -202,6 +203,18 @@ public class OpenMRS extends Application {
     public String getSecretKey() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.SECRET_KEY, ApplicationConstants.EMPTY_STRING);
+    }
+
+    public boolean getSyncState() {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        return prefs.getBoolean("sync", true);
+    }
+
+    public void setSyncState(boolean enabled) {
+        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("sync", enabled);
+        editor.apply();
     }
 
     public void setDefaultFormLoadID(String xFormName, String xFormID) {

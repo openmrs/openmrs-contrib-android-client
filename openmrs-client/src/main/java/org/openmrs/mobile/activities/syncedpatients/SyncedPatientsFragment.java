@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.syncedpatients;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,11 +22,16 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.StringUtils;
@@ -43,6 +49,9 @@ public class SyncedPatientsFragment extends Fragment implements SyncedPatientsCo
     // Fragment components
     private TextView mEmptyList;
     private RecyclerView mSyncedPatientRecyclerView;
+
+    //Menu Items
+    private MenuItem mAddPatientMenuItem;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,6 +75,8 @@ public class SyncedPatientsFragment extends Fragment implements SyncedPatientsCo
         // Font config
         FontsUtil.setFont((ViewGroup) this.getActivity().findViewById(android.R.id.content));
 
+        setHasOptionsMenu(true);
+
         return root;
     }
 
@@ -73,6 +84,21 @@ public class SyncedPatientsFragment extends Fragment implements SyncedPatientsCo
     public void onResume() {
         super.onResume();
         mPresenter.start();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.syncbutton:
+                enableAddPatient(OpenMRS.getInstance().getSyncState());
+                break;
+            case R.id.actionAddPatients:
+                Intent intent = new Intent(getActivity(), LastViewedPatientsActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -129,6 +155,21 @@ public class SyncedPatientsFragment extends Fragment implements SyncedPatientsCo
             mEmptyList.setText(getString(emptyListTextStringId, replacementWord));
         }
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        super.onCreateOptionsMenu(menu, menuInflater);
+        mAddPatientMenuItem = menu.findItem(R.id.actionAddPatients);
+        enableAddPatient(OpenMRS.getInstance().getSyncState());
+    }
+
+    @Override
+    public void enableAddPatient(boolean enabled) {
+        int resId = enabled ? R.drawable.ic_add : R.drawable.ic_add_disabled;
+        mAddPatientMenuItem.setEnabled(enabled);
+        mAddPatientMenuItem.setIcon(resId);
+    }
+
 
     /**
      * @return New instance of SyncedPatientsFragment

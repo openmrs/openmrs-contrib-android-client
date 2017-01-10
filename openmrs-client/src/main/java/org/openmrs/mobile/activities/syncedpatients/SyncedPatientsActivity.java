@@ -88,22 +88,6 @@ public class SyncedPatientsActivity extends ACBaseActivity {
             }
         });
 
-        // Add new patient
-        MenuItem addPatientMenuItem = menu.findItem(R.id.actionAddPatients);
-        // Disable add new patient icon when there is no internet connection
-        if (!NetworkUtils.isOnline()) {
-            addPatientMenuItem.setEnabled(false);
-            addPatientMenuItem.setIcon(R.drawable.ic_add_disabled);
-        }
-        addPatientMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem menuItem) {
-                Intent intent = new Intent(SyncedPatientsActivity.this, LastViewedPatientsActivity.class);
-                startActivity(intent);
-                return true;
-            }
-        });
-
         return true;
     }
 

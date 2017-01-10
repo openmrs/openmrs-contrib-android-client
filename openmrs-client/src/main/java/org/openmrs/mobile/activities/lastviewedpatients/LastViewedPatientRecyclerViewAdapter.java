@@ -49,6 +49,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
     private Set<Integer> selectedPatientPositions;
     private boolean isAllSelected = false;
     private boolean isLongClicked = false;
+    private boolean enableDownload = true;
     private ActionMode actionMode;
 
     LastViewedPatientRecyclerViewAdapter(Activity context, List<Patient> items) {
@@ -142,6 +143,8 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
 
         private void setSelected(boolean select) {
             if(select){
+                if (!enableDownload)
+                    toggleDownloadButton();
                 selectedPatientPositions.add(getAdapterPosition());
                 this.mRowLayout.setSelected(true);
             } else {
@@ -174,6 +177,8 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
             }
         }
         selectedPatientPositions = newSet;
+        if (selectedPatientPositions.size() == 0 && isLongClicked && enableDownload)
+                toggleDownloadButton();
     }
 
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
@@ -305,5 +310,20 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
         holder.mAvailableOfflineCheckbox.setChecked(true);
         holder.mAvailableOfflineCheckbox.setClickable(false);
         holder.mAvailableOfflineCheckbox.setButtonDrawable(R.drawable.ic_offline);
+    }
+
+    private void toggleDownloadButton() {
+        if (actionMode != null) {
+            MenuItem item = actionMode.getMenu().findItem(R.id.action_download);
+            if (item.isEnabled()) {
+                enableDownload = false;
+                item.setEnabled(false);
+                item.getIcon().setAlpha(128);
+            } else {
+                enableDownload = true;
+                item.setEnabled(true);
+                item.getIcon().setAlpha(255);
+            }
+        }
     }
 }

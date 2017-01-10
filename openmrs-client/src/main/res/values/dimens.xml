@@ -21,4 +21,5 @@
     <dimen name="dashboard_text_size">18sp</dimen>
     <dimen name="dashboard_text_top_margin">10dp</dimen>
     <dimen name="dashboard_text_bottom_margin">15dp</dimen>
+    <dimen name="visit_dashboard_encounter_type_icon_margin">10dp</dimen>
 </resources>

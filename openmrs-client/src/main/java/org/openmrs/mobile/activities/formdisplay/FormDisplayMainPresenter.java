@@ -16,6 +16,7 @@ import android.os.Bundle;
 import org.joda.time.LocalDateTime;
 import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.Obscreate;
 import org.openmrs.mobile.models.Patient;
@@ -55,6 +56,8 @@ public class FormDisplayMainPresenter implements FormDisplayContract.Presenter.M
     public void createEncounter() {
         List<InputField> inputFields = new ArrayList<>();
         List<SelectOneField> radioGroupFields = new ArrayList<>();
+
+        mFormDisplayView.enableSubmitButton(false);
 
         Encountercreate encountercreate=new Encountercreate();
         encountercreate.setPatient(mPatient.getUuid());
@@ -112,12 +115,30 @@ public class FormDisplayMainPresenter implements FormDisplayContract.Presenter.M
                 new PatientDAO().updatePatient(mPatient.getId(),mPatient);
                 ToastUtil.error("Patient not yet registered. Form data is saved locally " +
                         "and will sync when internet connection is restored. ");
+                mFormDisplayView.enableSubmitButton(true);
             }
-            else
-                new EncounterService().addEncounter(encountercreate);
-            mFormDisplayView.quitFormEntry();
+            else {
+                new EncounterService().addEncounter(encountercreate, new DefaultResponseCallbackListener() {
+                    @Override
+                    public void onResponse() {
+                        mFormDisplayView.enableSubmitButton(true);
+                    }
+                    @Override
+                    public void onErrorResponse(String errorMessage) {
+                        mFormDisplayView.showToast(errorMessage);
+                        mFormDisplayView.enableSubmitButton(true);
+                    }
+                });
+                mFormDisplayView.quitFormEntry();
+            }
+        }
+        else {
+            mFormDisplayView.enableSubmitButton(true);
         }
     }
+
+
+
 
     @Override
     public void addFragment(Fragment fragment) {

@@ -101,27 +101,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
             final Boolean syncState = prefs.getBoolean("sync", true);
             setSyncButtonState(syncState);
-            mSyncbutton.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem menuItem) {
-                    final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
-                    final Boolean syncState = prefs.getBoolean("sync", true);
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putBoolean("sync", !syncState);
-                    editor.apply();
-                    setSyncButtonState(!syncState);
-                    if (syncState) {
-
-                        ToastUtil.notify("Sync OFF");
-                    }
-                    else {
-                        Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
-                        getApplicationContext().sendBroadcast(intent);
-                        ToastUtil.notify("Sync ON");
-                    }
-                    return true;
-                }
-            });
         }
         return true;
     }
@@ -149,6 +128,19 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 return true;
             case R.id.actionLogout:
                 this.showLogoutDialog();
+                return true;
+            case R.id.syncbutton:
+                boolean syncState = OpenMRS.getInstance().getSyncState();
+                OpenMRS.getInstance().setSyncState(!syncState);
+                setSyncButtonState(!syncState);
+                if (syncState) {
+                    ToastUtil.notify("Sync OFF");
+                }
+                else {
+                    Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
+                    getApplicationContext().sendBroadcast(intent);
+                    ToastUtil.notify("Sync ON");
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }

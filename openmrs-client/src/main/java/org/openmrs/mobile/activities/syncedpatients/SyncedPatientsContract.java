@@ -33,6 +33,8 @@ public interface SyncedPatientsContract {
         void updateAdapter(List<Patient> patientList);
 
         void updateListVisibility(boolean isVisible, int emptyListTextStringId, String replacementWord);
+
+        void enableAddPatient(boolean enabled);
     }
 
     interface Presenter extends BasePresenter{

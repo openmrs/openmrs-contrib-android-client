@@ -81,6 +81,12 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
     }
 
     @Override
+    public void enableSwipeRefresh(boolean enabled) {
+        mSwipeRefreshLayout.setRefreshing(!enabled);
+        mSwipeRefreshLayout.setEnabled(enabled);
+    }
+
+    @Override
     public void setSpinnerVisibility(boolean visibility) {
         mSpinner.setVisibility(visibility ? View.VISIBLE : View.GONE);
     }

@@ -30,6 +30,8 @@ public interface LastViewedPatientsContract {
 
         void setPresenter(@NonNull Presenter presenter);
 
+        void enableSwipeRefresh(boolean enabled);
+
         void setSpinnerVisibility(boolean visibility);
 
         void setEmptyListVisibility(boolean visibility);

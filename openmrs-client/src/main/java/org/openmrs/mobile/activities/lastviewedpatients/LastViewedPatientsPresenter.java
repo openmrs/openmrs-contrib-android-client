@@ -67,6 +67,7 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
         if (!mLastViewedPatientsView.isRefreshing()) {
             mLastViewedPatientsView.setSpinnerVisibility(true);
         }
+        mLastViewedPatientsView.enableSwipeRefresh(false);
         mLastViewedPatientsView.setEmptyListVisibility(false);
         mLastViewedPatientsView.setListVisibility(false);
 
@@ -86,6 +87,7 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
                     mLastViewedPatientsView.setEmptyListVisibility(true);
                 }
                 mLastViewedPatientsView.stopRefreshing();
+                mLastViewedPatientsView.enableSwipeRefresh(true);
             }
 
             @Override
@@ -94,6 +96,7 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
                 mLastViewedPatientsView.setSpinnerVisibility(false);
                 mLastViewedPatientsView.setListVisibility(false);
                 mLastViewedPatientsView.stopRefreshing();
+                mLastViewedPatientsView.enableSwipeRefresh(true);
             }
         });
 

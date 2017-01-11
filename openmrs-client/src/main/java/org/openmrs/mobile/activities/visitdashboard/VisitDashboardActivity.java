@@ -25,11 +25,12 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.StringUtils;
 
 public class VisitDashboardActivity extends ACBaseActivity {
 
     public VisitDashboardPresenter mPresenter;
+
+    public Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,16 +60,14 @@ public class VisitDashboardActivity extends ACBaseActivity {
 
         // Create the presenter
         mPresenter = new VisitDashboardPresenter(visitDashboardFragment, intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0));
-
+        mPresenter.updatePatientName();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        if (StringUtils.isBlank(mPresenter.visitStopDate)) {
-            getMenuInflater().inflate(R.menu.active_visit_menu, menu);
-        }
-        getSupportActionBar().setSubtitle(mPresenter.mPatientName);
+        this.menu = menu;
+        mPresenter.checkIfVisitActive();
         return true;
     }
 

@@ -3,9 +3,11 @@ buildscript {
     System.properties['com.android.build.gradle.overrideVersionCheck']='true'
     repositories {
         jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'me.tatarka:gradle-retrolambda:3.2.3'
     }
 }
 

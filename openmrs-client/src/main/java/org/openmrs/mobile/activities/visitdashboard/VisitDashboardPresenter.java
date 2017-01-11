@@ -16,12 +16,12 @@ package org.openmrs.mobile.activities.visitdashboard;
 
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
-import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.DateUtils;
+import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
@@ -29,26 +29,20 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class VisitDashboardPresenter implements VisitDashboardContract.Presenter {
 
-    public String visitStopDate;
-    public String mPatientName;
-
-    private List<Encounter> mVisitEncounters;
-    private Visit mVisit;
-    private Patient mPatient;
+    private VisitDAO visitDAO;
+    private Long visitId;
 
     private VisitDashboardContract.View mVisitDashboardView;
 
     public VisitDashboardPresenter(VisitDashboardContract.View mVisitDashboardView, Long id) {
         this.mVisitDashboardView = mVisitDashboardView;
+        this.visitDAO = new VisitDAO();
+        this.visitId = id;
         mVisitDashboardView.setPresenter(this);
-        mVisit = new VisitDAO().getVisitsByID(id);
-        mPatient = new PatientDAO().findPatientByID(String.valueOf(mVisit.getPatient().getId()));
-        mPatientName = mPatient.getPerson().getName().getNameString();
-        mVisitEncounters = mVisit.getEncounters();
-        visitStopDate = mVisit.getStopDatetime();
     }
 
     public void endVisitByUUID(final Visit visit) {
@@ -63,13 +57,15 @@ public class VisitDashboardPresenter implements VisitDashboardContract.Presenter
         call.enqueue(new Callback<Visit>() {
             @Override
             public void onResponse(Call<Visit> call, Response<Visit> response) {
-
                 if (response.isSuccessful()) {
-                    VisitDAO visitDAO = new VisitDAO();
-                    Visit newVisit = visitDAO.getVisitsByID(visit.getId());
-                    newVisit.setStopDatetime(response.body().getStopDatetime());
-                    visitDAO.updateVisit(newVisit, newVisit.getId(), newVisit.getPatient().getId());
-                    moveToPatientDashboard();
+                    visitDAO.getVisitByID(visit.getId())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(vis -> {
+                                vis.setStopDatetime(response.body().getStopDatetime());
+                                visitDAO.saveOrUpdate(vis, vis.getPatient().getId())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(id -> moveToPatientDashboard());
+                            });
                 }
                 else {
                     ToastUtil.error(response.message());
@@ -84,30 +80,52 @@ public class VisitDashboardPresenter implements VisitDashboardContract.Presenter
     }
 
     public void endVisit() {
-        endVisitByUUID(mVisit);
-    }
-
-    private void startCaptureVitals() {
-        mVisitDashboardView.startCaptureVitals(mPatient.getId());
+        visitDAO.getVisitByID(visitId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::endVisitByUUID);
     }
 
     @Override
     public void start() {
-        mVisitEncounters = new VisitDAO().getVisitsByID(mVisit.getId()).getEncounters();
-        if (!mVisitEncounters.isEmpty()) {
-            mVisitDashboardView.setEmptyListVisibility(false);
-        }
-        mVisitDashboardView.updateList(mVisitEncounters);
+        visitDAO.getVisitByID(visitId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(visit -> {
+                    List<Encounter> encounters = visit.getEncounters();
+                    if (!encounters.isEmpty()) {
+                        mVisitDashboardView.setEmptyListVisibility(false);
+                    }
+                    mVisitDashboardView.updateList(encounters);
+                });
+
     }
 
     @Override
     public void fillForm() {
-        if(mPatient.getUuid()!=null)
-        {
-            startCaptureVitals();
-        }
-        else
-            ToastUtil.error("Patient not yet registered, cannot create encounter.");
+        visitDAO.getVisitByID(visitId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(visit -> {
+                    Patient patient = visit.getPatient();
+                    if(patient.getUuid() != null) {
+                        mVisitDashboardView.startCaptureVitals(patient.getId());
+                    } else
+                        ToastUtil.error("Patient not yet registered, cannot create encounter.");
+                });
+
+    }
+
+    @Override
+    public void updatePatientName() {
+        visitDAO.getVisitByID(visitId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(visit -> mVisitDashboardView.setActionBarTitle(visit.getPatient().getPerson().getName().getNameString()));
+    }
+
+    @Override
+    public void checkIfVisitActive() {
+        visitDAO.getVisitByID(visitId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .filter(visit -> StringUtils.isBlank(visit.getStopDatetime()))
+                .subscribe(visit -> mVisitDashboardView.setActiveVisitMenu());
     }
 
     public void moveToPatientDashboard() {

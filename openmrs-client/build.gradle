@@ -13,6 +13,7 @@ buildscript {
 }
 
 apply plugin: 'com.github.triplet.play'
+apply plugin: 'me.tatarka.retrolambda'
 
 def version = "2.5.0-beta"
 
@@ -70,6 +71,11 @@ android {
         exclude 'META-INF/NOTICE.txt'
 
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 repositories {
@@ -110,6 +116,8 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.2.0'
     compile 'joda-time:joda-time:2.0'
     compile 'net.sf.kxml:kxml2:2.3.0'
+    compile 'io.reactivex:rxjava:1.1.6'
+    compile 'io.reactivex:rxandroid:1.2.1'
 
     testCompile(
         'org.mockito:mockito-core:1.10.19',

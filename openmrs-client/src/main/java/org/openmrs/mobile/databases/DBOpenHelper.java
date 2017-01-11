@@ -34,6 +34,11 @@ import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
 
+import java.util.concurrent.Callable;
+
+import rx.Observable;
+import rx.schedulers.Schedulers;
+
 public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     private static int DATABASE_VERSION = OpenMRS.getInstance().
             getResources().getInteger(R.integer.dbversion);
@@ -326,5 +331,10 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             locationStatement.close();
         }
         return locID;
+    }
+
+    public static <T> Observable<T> createObservableIO(final Callable<T> func) {
+        return Observable.fromCallable(func)
+                .subscribeOn(Schedulers.io());
     }
 }

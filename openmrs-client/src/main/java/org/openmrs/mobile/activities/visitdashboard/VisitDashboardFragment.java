@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
@@ -54,7 +55,7 @@ public class VisitDashboardFragment extends Fragment implements VisitDashboardCo
         FontsUtil.setFont(mEmptyListView, FontsUtil.OpenFonts.OPEN_SANS_BOLD);
         mExpandableListView = (ExpandableListView) root.findViewById(R.id.visitDashboardExpList);
         mExpandableListView.setEmptyView(mEmptyListView);
-
+        setEmptyListVisibility(false);
         return root;
     }
 
@@ -124,6 +125,17 @@ public class VisitDashboardFragment extends Fragment implements VisitDashboardCo
         else {
             mEmptyListView.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void setActionBarTitle(String name) {
+        ((VisitDashboardActivity)getActivity()).getSupportActionBar().setTitle(name);
+    }
+
+    @Override
+    public void setActiveVisitMenu() {
+        Menu menu = ((VisitDashboardActivity) getActivity()).menu;
+        (getActivity()).getMenuInflater().inflate(R.menu.active_visit_menu, menu);
     }
 
 }

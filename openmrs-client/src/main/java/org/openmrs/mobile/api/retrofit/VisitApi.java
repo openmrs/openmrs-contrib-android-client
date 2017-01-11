@@ -40,6 +40,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class VisitApi {
 
@@ -58,13 +59,9 @@ public class VisitApi {
                     List<Visit> visits = response.body().getResults();
                     VisitDAO visitDAO = new VisitDAO();
                     for (Visit visit : visits) {
-                        long visitId = visitDAO.getVisitsIDByUUID(visit.getUuid());
-
-                        if (visitId > 0) {
-                            visitDAO.updateVisit(visit, visitId, patient.getId());
-                        } else  {
-                            visitDAO.saveVisit(visit, patient.getId());
-                        }
+                        visitDAO.saveOrUpdate(visit, patient.getId())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe();
                     }
                     if (callbackListener != null) {
                         callbackListener.onResponse();
@@ -164,10 +161,14 @@ public class VisitApi {
             @Override
             public void onResponse(Call<Visit> call, Response<Visit> response) {
                 if (response.isSuccessful()) {
-                    long id = new VisitDAO().saveVisit(response.body(), patient.getId());
-                    if(callbackListener != null) {
-                        callbackListener.onStartVisitResponse(id);
-                    }
+                    Visit newVisit = response.body();
+                    new VisitDAO().saveOrUpdate(newVisit, patient.getId())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(id -> {
+                                if(callbackListener != null) {
+                                    callbackListener.onStartVisitResponse(id);
+                                }
+                            });
                 }
                 else {
                     ToastUtil.error(response.message());

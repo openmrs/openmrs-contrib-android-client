@@ -29,6 +29,8 @@ public interface LoginContract {
 
         boolean isActive();
 
+        void hideSoftKeys();
+
         void setPresenter(@NonNull Presenter presenter);
 
         void showWarningDialog();

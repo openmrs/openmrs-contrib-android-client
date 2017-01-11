@@ -56,6 +56,10 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
         this.selectedPatientPositions = new HashSet<>();
     }
 
+    public List<Patient> getmItems() {
+        return mItems;
+    }
+
     @Override
     public LastViewedPatientRecyclerViewAdapter.PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_last_viewed_patients_row, parent, false);

@@ -30,18 +30,19 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ToastUtil;
 
+import java.io.Serializable;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class LastViewedPatientsFragment extends Fragment implements LastViewedPatientsContract.View {
 
+    private static final String PATIENT_LIST = "patient_list";
     private TextView mEmptyList;
     private ProgressBar mSpinner;
     private RecyclerView mPatientsRecyclerView;
     private LastViewedPatientRecyclerViewAdapter mAdapter;
     public SwipeRefreshLayout mSwipeRefreshLayout;
-
     private LastViewedPatientsContract.Presenter mPresenter;
 
     @Override
@@ -61,14 +62,19 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
                 mAdapter.finishActionMode();
             }
         });
+        if (savedInstanceState != null) {
+            List<Patient> patientList = (List<Patient>) savedInstanceState.getSerializable(PATIENT_LIST);
+            if (patientList == null) {
+                mPresenter.start();
+            } else {
+                updateList(patientList);
+            }
+        } else {
+            mPresenter.start();
+        }
         return root;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
-    }
 
     @Override
     public boolean isActive() {
@@ -127,4 +133,15 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
     public void showErrorToast(String message) {
         ToastUtil.error(message);
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mAdapter != null) {
+            List<Patient> patientList = mAdapter.getmItems();
+            outState.putSerializable(PATIENT_LIST, (Serializable) patientList);
+        }
+    }
+
+
 }

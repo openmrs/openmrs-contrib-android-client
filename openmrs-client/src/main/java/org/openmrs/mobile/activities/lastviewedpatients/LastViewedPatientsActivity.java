@@ -20,6 +20,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
@@ -93,6 +94,19 @@ public class LastViewedPatientsActivity extends ACBaseActivity {
                 return true;
             }
         });
+
+        findPatientView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+            @Override
+            public void onViewAttachedToWindow(View view) {
+                // nothing to do
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(View view) {
+                ((LastViewedPatientsPresenter) mPresenter).setLastQueryEmpty();
+            }
+        });
+
         return true;
     }
 

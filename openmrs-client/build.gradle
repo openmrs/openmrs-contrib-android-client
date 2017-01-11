@@ -33,7 +33,7 @@ android {
         versionName buildVersionName
         versionCode buildNumber
 
-        minSdkVersion 13
+        minSdkVersion 16
         targetSdkVersion 23
 
         testApplicationId "org.openmrs.mobile.test"
@@ -59,7 +59,6 @@ android {
 
     lintOptions {
         warning 'InvalidPackage'
-        warning 'NewApi' // This can be removed when API is >13
     }
 
     packagingOptions {

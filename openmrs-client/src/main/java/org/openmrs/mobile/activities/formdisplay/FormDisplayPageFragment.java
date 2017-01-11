@@ -14,7 +14,6 @@ import android.app.Fragment;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.text.InputType;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -33,9 +32,9 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.bundle.FormFieldsWrapper;
 import org.openmrs.mobile.models.Answer;
 import org.openmrs.mobile.models.Question;
-import org.openmrs.mobile.bundle.FormFieldsWrapper;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.InputField;
 import org.openmrs.mobile.utilities.RangeEditText;
@@ -64,14 +63,9 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         mParent = (LinearLayout) root.findViewById(R.id.sectionContainer);
+        mPresenter.start();
 
         return root;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
     }
 
     @Override

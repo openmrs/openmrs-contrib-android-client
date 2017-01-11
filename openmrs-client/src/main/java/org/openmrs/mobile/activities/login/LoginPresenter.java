@@ -63,6 +63,7 @@ public class LoginPresenter implements LoginContract.Presenter{
     @Override
     public void login(String username, String password, String url, String oldUrl) {
         if (validateLoginFields(username, password, url)) {
+            loginView.hideSoftKeys();
             if ((!mOpenMRS.getUsername().equals(ApplicationConstants.EMPTY_STRING) &&
                     !mOpenMRS.getUsername().equals(username)) ||
                     ((!mOpenMRS.getServerUrl().equals(ApplicationConstants.EMPTY_STRING) &&

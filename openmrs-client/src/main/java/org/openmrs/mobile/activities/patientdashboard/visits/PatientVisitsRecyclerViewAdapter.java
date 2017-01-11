@@ -49,8 +49,8 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
 
     @Override
     public void onBindViewHolder(VisitViewHolder visitViewHolder, final int position) {
-        Visit visit = mVisits.get(position);
-
+        final int adapterPos = visitViewHolder.getAdapterPosition();
+        Visit visit = mVisits.get(adapterPos);
         visitViewHolder.mVisitStart.setText(DateUtils.convertTime1(visit.getStartDatetime(), DateUtils.DATE_WITH_TIME_FORMAT));
         if (DateUtils.convertTime(visit.getStopDatetime()) != null) {
             visitViewHolder.mVisitEnd.setVisibility(View.VISIBLE);
@@ -74,7 +74,7 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
         visitViewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.goToVisitDashboard(mVisits.get(position).getId());
+                mContext.goToVisitDashboard(mVisits.get(adapterPos).getId());
             }
         });
     }

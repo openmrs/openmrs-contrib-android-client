@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -87,7 +88,7 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
                     if (selectedPosition == -1) {
                         selectedPosition = getAdapterPosition();
                         mPresenter.setSelectedPatient(patientList.get(selectedPosition));
-                        cardView.setCardBackgroundColor(v.getResources().getColor(R.color.patient_selected_highlight));
+                        cardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.patient_selected_highlight));
                     } else if(selectedPosition == getAdapterPosition()){
                         selectedPosition = -1;
                         mPresenter.removeSelectedPatient();

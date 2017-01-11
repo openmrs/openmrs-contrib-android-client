@@ -52,13 +52,15 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
 
     @Override
     public void onBindViewHolder(VisitViewHolder visitViewHolder, final int position) {
-        Visit visit = mVisits.get(position);
+        final int adapterPos = visitViewHolder.getAdapterPosition();
+        Visit visit = mVisits.get(adapterPos);
         Patient patient = new PatientDAO().findPatientByID(visit.getPatient().getId().toString());
 
         visitViewHolder.mVisitPlace.setText(mContext.getString(R.string.visit_in, visit.getLocation().getDisplay()));
 
         if (null != visit.getPatient().getId()) {
-            visitViewHolder.mIdentifier.setText("#" + patient.getIdentifier().getIdentifier());
+            final String display = "#" + patient.getIdentifier().getIdentifier();
+            visitViewHolder.mIdentifier.setText(display);
         }
         if (null != patient.getPerson().getName()) {
             visitViewHolder.mDisplayName.setText(patient.getPerson().getName().getNameString());
@@ -78,7 +80,7 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, VisitDashboardActivity.class);
-                intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, mVisits.get(position).getId());
+                intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, mVisits.get(adapterPos).getId());
                 mContext.startActivity(intent);
             }
         });

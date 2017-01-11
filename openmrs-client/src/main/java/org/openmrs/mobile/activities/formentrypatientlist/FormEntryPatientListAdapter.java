@@ -49,7 +49,8 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
 
     @Override
     public void onBindViewHolder(PatientViewHolder holder, final int position) {
-        final Patient patient = mItems.get(position);
+        final int adapterPos = holder.getAdapterPosition();
+        final Patient patient = mItems.get(adapterPos);
         if (new VisitDAO().isPatientNowOnVisit(patient.getId())) {
             holder.mVisitStatusIcon.setImageBitmap(
                     ImageUtils.decodeBitmapFromResource(mContext.getResources(), R.drawable.active_visit_dot,
@@ -57,7 +58,8 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
             holder.mVisitStatus.setText(mContext.getString(R.string.active_visit_label_capture_vitals));
         }
         if (null != patient.getIdentifier()) {
-            holder.mIdentifier.setText("#" + patient.getIdentifier().getIdentifier());
+            final String display = "#" + patient.getIdentifier().getIdentifier();
+            holder.mIdentifier.setText(display);
         }
         if (null != patient.getPerson().getName()) {
             holder.mDisplayName.setText(patient.getPerson().getName().getNameString());
@@ -69,7 +71,7 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
         holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.startEncounterForPatient(mItems.get(position).getId());
+                mContext.startEncounterForPatient(mItems.get(adapterPos).getId());
             }
         });
 

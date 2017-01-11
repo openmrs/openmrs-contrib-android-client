@@ -57,6 +57,11 @@ android {
         }
     }
 
+    lintOptions {
+        warning 'InvalidPackage'
+        warning 'NewApi' // This can be removed when API is >13
+    }
+
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE.txt'

@@ -127,7 +127,7 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
         if (inputField != null){
             inputField.setId(field.getId());
             Double value = inputField.getValue();
-            if (!(-1.0 == value)) ed.setText(value.toString());
+            if (-1.0 != value) ed.setText(value.toString());
         } else {
             field.setConcept(question.getQuestionOptions().getConcept());
             inputFields.add(field);

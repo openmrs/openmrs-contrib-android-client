@@ -11,7 +11,7 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 
 public class PatientDashboardFragment extends Fragment implements PatientDashboardContract.ViewPatientMain {
 
-    private PatientDashboardContract.PatientDashboardMainPresenter mPresenter;
+    PatientDashboardContract.PatientDashboardMainPresenter mPresenter;
 
     @Override
     public void setPresenter(PatientDashboardContract.PatientDashboardMainPresenter presenter) {

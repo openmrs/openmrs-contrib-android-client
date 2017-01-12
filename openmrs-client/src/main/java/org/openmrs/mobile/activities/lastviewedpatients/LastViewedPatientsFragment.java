@@ -42,7 +42,7 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
     private LastViewedPatientRecyclerViewAdapter mAdapter;
     public SwipeRefreshLayout mSwipeRefreshLayout;
 
-    LastViewedPatientsContract.Presenter mPresenter;
+    private LastViewedPatientsContract.Presenter mPresenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

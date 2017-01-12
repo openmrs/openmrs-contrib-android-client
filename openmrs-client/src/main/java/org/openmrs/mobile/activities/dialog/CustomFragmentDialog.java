@@ -83,9 +83,6 @@ public class CustomFragmentDialog extends DialogFragment {
 
     private CustomDialogBundle mCustomDialogBundle;
 
-    public CustomFragmentDialog() {
-    }
-
     public static CustomFragmentDialog newInstance(CustomDialogBundle customDialogBundle) {
         CustomFragmentDialog dialog = new CustomFragmentDialog();
         dialog.setRetainInstance(true);

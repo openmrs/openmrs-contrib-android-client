@@ -27,4 +27,28 @@ public class Concept extends Resource{
     @Expose
     private ConceptClass conceptClass;
 
+    public Datatype getDatatype() {
+        return datatype;
+    }
+
+    public void setDatatype(Datatype datatype) {
+        this.datatype = datatype;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ConceptClass getConceptClass() {
+        return conceptClass;
+    }
+
+    public void setConceptClass(ConceptClass conceptClass) {
+        this.conceptClass = conceptClass;
+    }
+
 }

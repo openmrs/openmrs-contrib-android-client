@@ -105,7 +105,7 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
 
     @Override
     public void applyChanges() {
-        SettingsRecyclerViewAdapter adapter = new SettingsRecyclerViewAdapter(this.getActivity(), mListItem);
+        SettingsRecyclerViewAdapter adapter = new SettingsRecyclerViewAdapter(mListItem);
         settingsRecyclerView.setAdapter(adapter);
     }
 

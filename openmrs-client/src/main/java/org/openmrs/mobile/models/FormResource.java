@@ -63,11 +63,6 @@ public class FormResource extends Model implements Serializable{
     @Expose
     private List<Link> links = new ArrayList<Link>();
 
-    public FormResource()
-    {
-        super();
-    }
-
     public String getUuid() {
         return uuid;
     }

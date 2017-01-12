@@ -73,8 +73,6 @@ public class FormListService extends IntentService {
                 }
             });
 
-
-
             Call<Results<EncounterType>> call2 = apiService.getEncounterTypes();
             call2.enqueue(new Callback<Results<EncounterType>>() {
                 @Override
@@ -94,12 +92,8 @@ public class FormListService extends IntentService {
 
                 }
             });
-
-
-
-        } else {
-            //ToastUtil.notify("No internet connection. Showing previously downloaded forms");
         }
+
     }
 
 }

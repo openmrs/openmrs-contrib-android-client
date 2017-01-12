@@ -36,8 +36,7 @@ public class PatientDiagnosisFragment extends PatientDashboardFragment implement
 
     PatientDashboardContract.PatientDiagnosisPresenter mPresenter;
 
-    private ListView diagnosisList;
-    private TextView emptyList;
+    private ListView mDiagnosisList;
 
     public static PatientDiagnosisFragment newInstance() {
         return new PatientDiagnosisFragment();
@@ -53,9 +52,9 @@ public class PatientDiagnosisFragment extends PatientDashboardFragment implement
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragmentLayout = inflater.inflate(R.layout.fragment_patient_diagnosis, null, false);
-        diagnosisList = (ListView) fragmentLayout.findViewById(R.id.patientDiagnosisList);
-        emptyList = (TextView) fragmentLayout.findViewById(R.id.emptyDiagnosisListView);
-        diagnosisList.setEmptyView(emptyList);
+        mDiagnosisList = (ListView) fragmentLayout.findViewById(R.id.patientDiagnosisList);
+        TextView emptyList = (TextView) fragmentLayout.findViewById(R.id.emptyDiagnosisListView);
+        mDiagnosisList.setEmptyView(emptyList);
         FontsUtil.setFont(fragmentLayout, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);
         return fragmentLayout;
     }
@@ -73,7 +72,7 @@ public class PatientDiagnosisFragment extends PatientDashboardFragment implement
     public void setDiagnosesToDisplay(List<String> encounters) {
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, encounters);
-        diagnosisList.setAdapter(adapter);
+        mDiagnosisList.setAdapter(adapter);
     }
 
     @Override

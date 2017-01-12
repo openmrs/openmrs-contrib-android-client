@@ -85,7 +85,6 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
 
     @Test
     public void shouldUpdateLastViewedPatientList_ServerError(){
-        List<Patient> patientList = Arrays.asList(firstPatient, secondPatient);
         when(restApi.getLastViewedPatients()).thenReturn(mockErrorCall(401));
         lastViewedPatientsPresenter.updateLastViewedList();
         verify(restApi).getLastViewedPatients();

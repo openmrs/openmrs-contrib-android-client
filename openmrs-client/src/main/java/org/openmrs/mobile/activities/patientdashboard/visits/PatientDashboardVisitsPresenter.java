@@ -37,8 +37,6 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
 
     private PatientDashboardContract.ViewPatientVisits mPatientVisitsView;
 
-    private List<Visit> mPatientVisits;
-
     public PatientDashboardVisitsPresenter(String id, PatientDashboardContract.ViewPatientVisits mPatientVisitsView) {
         this.mPatient = new PatientDAO().findPatientByID(id);
         this.mPatientVisitsView = mPatientVisitsView;
@@ -47,13 +45,13 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
 
     @Override
     public void start() {
-        mPatientVisits = new VisitDAO().getVisitsByPatientID(mPatient.getId());
-        if (mPatientVisits!=null && mPatientVisits.isEmpty()) {
+        List<Visit> patientVisits = new VisitDAO().getVisitsByPatientID(mPatient.getId());
+        if (patientVisits !=null && patientVisits.isEmpty()) {
             mPatientVisitsView.toggleRecyclerListVisibility(false);
         }
         else {
             mPatientVisitsView.toggleRecyclerListVisibility(true);
-            mPatientVisitsView.setVisitsToDisplay(mPatientVisits);
+            mPatientVisitsView.setVisitsToDisplay(patientVisits);
         }
     }
 

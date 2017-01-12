@@ -71,7 +71,6 @@ public class MatchingPatientsPresenter implements MachingPatientsContract.Presen
             public void onResponse(Call<Patient> call, Response<Patient> response) {
                 if(response.isSuccessful()){
                     PatientDAO patientDAO = new PatientDAO();
-                    patient.setSynced(true);
                     if(patientDAO.isUserAlreadySaved(patient.getUuid())){
                         Long id = patientDAO.findPatientByUUID(patient.getUuid()).getId();
                         patientDAO.updatePatient(id, patient);

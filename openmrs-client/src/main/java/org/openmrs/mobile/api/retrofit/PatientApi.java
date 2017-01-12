@@ -96,7 +96,6 @@ public class PatientApi extends RetrofitApi {
                                     if (response.isSuccessful()) {
                                         Patient newPatient = response.body();
 
-                                        patient.setSynced(true);
                                         patient.setUuid(newPatient.getUuid());
 
                                         new PatientDAO().updatePatient(patient.getId(), patient);
@@ -148,7 +147,6 @@ public class PatientApi extends RetrofitApi {
     }
 
     public SimplePromise<Patient> registerPatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
-        patient.setSynced(false);
         patientDao.savePatient(patient);
         if (callbackListener != null) {
             return syncPatient(patient, callbackListener);
@@ -174,7 +172,6 @@ public class PatientApi extends RetrofitApi {
                     if (response.isSuccessful()) {
                         ToastUtil.success("Patient " + patient.getPerson().getName().getNameString()
                                 + " updated");
-                        patient.setSynced(true);
                         if (callbackListener != null) {
                             callbackListener.onResponse();
                         }

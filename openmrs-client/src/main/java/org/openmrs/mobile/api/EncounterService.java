@@ -12,12 +12,14 @@ package org.openmrs.mobile.api;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 
 import com.activeandroid.query.Select;
 
 import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.listeners.retrofit.StartVisitResponseListenerCallback;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
@@ -40,14 +42,18 @@ public class EncounterService extends IntentService {
         super("Save Encounter");
     }
 
-    public void addEncounter(final Encountercreate encountercreate) {
+    public void addEncounter(final Encountercreate encountercreate, @Nullable DefaultResponseCallbackListener callbackListener) {
 
         if(NetworkUtils.isOnline()) {
-
             if (new VisitDAO().isPatientNowOnVisit(encountercreate.getPatientId())) {
                 Visit visit = new VisitDAO().getPatientCurrentVisit(encountercreate.getPatientId());
                 encountercreate.setVisit(visit.getUuid());
-                syncEncounter(encountercreate);
+                if (callbackListener != null) {
+                    syncEncounter(encountercreate, callbackListener);
+                }
+                else {
+                    syncEncounter(encountercreate);
+                }
             }
             else {
                 startNewVisitForEncounter(encountercreate);
@@ -58,24 +64,37 @@ public class EncounterService extends IntentService {
                     "and will sync when internet connection is restored. ");
     }
 
-    private void startNewVisitForEncounter(final Encountercreate encountercreate) {
+    public void addEncounter(final Encountercreate encountercreate) {
+        addEncounter(encountercreate, null);
+    }
+
+        private void startNewVisitForEncounter(final Encountercreate encountercreate, @Nullable final DefaultResponseCallbackListener callbackListener) {
         new VisitApi().startVisit(new PatientDAO().findPatientByUUID(encountercreate.getPatient()),
                 new StartVisitResponseListenerCallback() {
                     @Override
                     public void onStartVisitResponse(long id) {
                         encountercreate.setVisit(new VisitDAO().getVisitsByID(id).getUuid());
-                        syncEncounter(encountercreate);
+                        if (callbackListener != null) {
+                            syncEncounter(encountercreate, callbackListener);
+                        }
+                        else {
+                            syncEncounter(encountercreate);
+                        }
                     }
                     @Override
                     public void onResponse() {}
                     @Override
                     public void onErrorResponse(String errorMessage) {
-                        ToastUtil.error("Failed to start visit");
+                        ToastUtil.error(errorMessage);
                     }
                 });
     }
 
-    public void syncEncounter(final Encountercreate encountercreate) {
+    public void startNewVisitForEncounter(final Encountercreate encountercreate) {
+        startNewVisitForEncounter(encountercreate, null);
+    }
+
+    public void syncEncounter(final Encountercreate encountercreate, @Nullable final DefaultResponseCallbackListener callbackListener) {
 
         if (NetworkUtils.isOnline()) {
 
@@ -90,15 +109,21 @@ public class EncounterService extends IntentService {
                         encountercreate.setSynced(true);
                         encountercreate.save();
                         new VisitApi().syncLastVitals(encountercreate.getPatient());
+                        if (callbackListener != null) {
+                            callbackListener.onResponse();
+                        }
                     } else {
-                        ToastUtil.error("Could not save encounter");
+                        if (callbackListener != null) {
+                            callbackListener.onErrorResponse(response.errorBody().toString());
+                        }
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Encounter> call, Throwable t) {
-                    ToastUtil.error(t.getLocalizedMessage());
-
+                    if (callbackListener != null) {
+                        callbackListener.onErrorResponse(t.getLocalizedMessage());
+                    }
                 }
             });
 
@@ -108,6 +133,9 @@ public class EncounterService extends IntentService {
 
     }
 
+    public void syncEncounter(final Encountercreate encountercreate) {
+        syncEncounter(encountercreate, null);
+    }
 
     void linkvisit(Long patientid, String formname, Encounter encounter, Encountercreate encountercreate)
     {

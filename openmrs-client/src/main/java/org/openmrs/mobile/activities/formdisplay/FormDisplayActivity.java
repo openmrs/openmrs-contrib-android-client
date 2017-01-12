@@ -31,6 +31,7 @@ import org.openmrs.mobile.models.Form;
 import org.openmrs.mobile.models.Page;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FormService;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -181,6 +182,16 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
             mBtnNext.setVisibility(View.GONE);
             mBtnFinish.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void enableSubmitButton(boolean enabled) {
+        mBtnFinish.setEnabled(enabled);
+    }
+
+    @Override
+    public void showToast(String errorMessage) {
+        ToastUtil.error(errorMessage);
     }
 
     private int getFragmentNumber(Fragment fragment) {

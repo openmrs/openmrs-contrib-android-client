@@ -27,6 +27,8 @@ public interface FormDisplayContract {
 
         interface MainView extends View {
             void quitFormEntry();
+            void enableSubmitButton(boolean enabled);
+            void showToast(String errorMessage);
         }
 
         interface PageView extends View {

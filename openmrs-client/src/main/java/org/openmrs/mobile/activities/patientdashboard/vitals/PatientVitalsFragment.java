@@ -44,10 +44,8 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
 
     private LinearLayout mContent;
     private LinearLayout mFormHeader;
-    private TextView mLastVitalsLabel;
     private TextView mEmptyList;
     private TextView mLastVitalsDate;
-    private ImageButton mFormEditIcon;
 
     private LayoutInflater mInflater;
 
@@ -65,13 +63,14 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_patient_vitals, null, false);
         mContent = (LinearLayout) root.findViewById(R.id.vitalsDetailsContent);
-        mLastVitalsLabel = (TextView) root.findViewById(R.id.lastVitalsLabel);
         mEmptyList = (TextView) root.findViewById(R.id.lastVitalsNoneLabel);
         mLastVitalsDate = (TextView) root.findViewById(R.id.lastVitalsDate);
-        mFormEditIcon = (ImageButton) root.findViewById(R.id.form_edit_icon);
         mFormHeader = (LinearLayout) root.findViewById(R.id.lastVitalsLayout);
 
-        mFormEditIcon.setOnClickListener(new View.OnClickListener() {
+        TextView lastVitalsLabel = (TextView) root.findViewById(R.id.lastVitalsLabel);
+        ImageButton formEditIcon = (ImageButton) root.findViewById(R.id.form_edit_icon);
+
+        formEditIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mPresenter.startFormDisplayActivityWithEncounter();
@@ -81,7 +80,7 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
         this.mInflater = inflater;
 
         FontsUtil.setFont(mEmptyList, FontsUtil.OpenFonts.OPEN_SANS_EXTRA_BOLD);
-        FontsUtil.setFont(mLastVitalsLabel, FontsUtil.OpenFonts.OPEN_SANS_EXTRA_BOLD);
+        FontsUtil.setFont(lastVitalsLabel, FontsUtil.OpenFonts.OPEN_SANS_EXTRA_BOLD);
         FontsUtil.setFont(mLastVitalsDate, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);
 
         return root;

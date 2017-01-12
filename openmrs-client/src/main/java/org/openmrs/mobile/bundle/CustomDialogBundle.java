@@ -35,10 +35,6 @@ public class CustomDialogBundle implements Serializable {
     private boolean loadingBar;
     private boolean progressDialog;
 
-    public CustomDialogBundle() {
-
-    }
-
     public boolean hasProgressDialog() {
         return progressDialog;
     }

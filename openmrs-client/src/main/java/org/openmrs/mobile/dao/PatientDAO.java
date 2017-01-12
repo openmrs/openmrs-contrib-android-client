@@ -71,8 +71,6 @@ public class PatientDAO {
         Patient patient = new Patient();
         Person person = new Person();
 
-        patient.setSynced(Boolean.parseBoolean(PatientTable.Column.SYNCED));
-
         patient.setId(cursor.getLong(cursor.getColumnIndex(PatientTable.Column.ID)));
         patient.setDisplay(cursor.getString(cursor.getColumnIndex(PatientTable.Column.DISPLAY)));
         patient.setUuid(cursor.getString(cursor.getColumnIndex(PatientTable.Column.UUID)));

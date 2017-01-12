@@ -29,7 +29,6 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.formlist.FormListActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -44,7 +43,6 @@ public class VisitDashboardFragment extends Fragment implements VisitDashboardCo
     VisitDashboardContract.Presenter mPresenter;
 
     private ExpandableListView mExpandableListView;
-    private VisitExpandableListAdapter mExpandableListAdapter;
     private TextView mEmptyListView;
 
     @Override
@@ -113,8 +111,8 @@ public class VisitDashboardFragment extends Fragment implements VisitDashboardCo
             }
         }
 
-        mExpandableListAdapter = new VisitExpandableListAdapter(this.getActivity(), displayableEncounters);
-        mExpandableListView.setAdapter(mExpandableListAdapter);
+        VisitExpandableListAdapter expandableListAdapter = new VisitExpandableListAdapter(this.getActivity(), displayableEncounters);
+        mExpandableListView.setAdapter(expandableListAdapter);
         mExpandableListView.setGroupIndicator(null);
     }
 

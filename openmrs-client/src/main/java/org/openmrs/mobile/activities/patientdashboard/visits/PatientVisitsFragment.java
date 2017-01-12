@@ -47,9 +47,6 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
 
     public static final int REQUEST_CODE_FOR_VISIT = 1;
 
-    public PatientVisitsFragment() {
-    }
-
     public static PatientVisitsFragment newInstance() {
         return new PatientVisitsFragment();
     }

@@ -23,10 +23,8 @@ import java.util.Map;
 
 public class Patient extends Resource implements Serializable{
 
-    private boolean synced=false;
-
     private Long id;
-    private String encounters="";
+    private String encounters = "";
 
     @SerializedName("identifiers")
     @Expose
@@ -136,11 +134,6 @@ public class Patient extends Resource implements Serializable{
     {
         return !StringUtils.isBlank(getUuid());
         //Keeping it this way until the synced flag can be made to work
-    }
-
-    public void setSynced(boolean synced)
-    {
-        this.synced=synced;
     }
 
     public String getEncounters() {

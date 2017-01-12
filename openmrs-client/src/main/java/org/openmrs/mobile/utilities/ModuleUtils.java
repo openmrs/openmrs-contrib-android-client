@@ -19,7 +19,7 @@ public class ModuleUtils {
     }
 
     private static int parseVersion(String version) {
-        String result = null;
+        String result = version;
         if(version.contains("-SNAPSHOT")){
             result = version.replace("-SNAPSHOT", "");
         }

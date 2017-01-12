@@ -22,12 +22,12 @@ public class PatientBirthdateValidatorWatcher implements TextWatcher{
 
     @Override
     public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+        // This method is intentionally empty
     }
 
     @Override
     public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+        // This method is intentionally empty
     }
 
     @Override

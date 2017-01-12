@@ -291,6 +291,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
 
             @Override
             public void onResponse() {
+                // This method is intentionally empty
             }
 
             @Override

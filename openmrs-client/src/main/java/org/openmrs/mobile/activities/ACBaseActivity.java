@@ -71,10 +71,8 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         invalidateOptionsMenu();
-        if (!(this instanceof LoginActivity || this instanceof DialogActivity)) {
-            if (!mAuthorizationManager.isUserLoggedIn()) {
-                mAuthorizationManager.moveToLoginActivity();
-            }
+        if (!(this instanceof LoginActivity || this instanceof DialogActivity) && !mAuthorizationManager.isUserLoggedIn()) {
+            mAuthorizationManager.moveToLoginActivity();
         }
     }
 

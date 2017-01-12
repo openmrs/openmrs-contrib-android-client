@@ -58,7 +58,9 @@ public class LoginPresenter implements LoginContract.Presenter{
     }
 
     @Override
-    public void start() {}
+    public void start() {
+        // This method is intentionally empty
+    }
 
     @Override
     public void login(String username, String password, String url, String oldUrl) {

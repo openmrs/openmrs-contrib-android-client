@@ -82,7 +82,9 @@ public class EncounterService extends IntentService {
                         }
                     }
                     @Override
-                    public void onResponse() {}
+                    public void onResponse() {
+                        // This method is intentionally empty
+                    }
                     @Override
                     public void onErrorResponse(String errorMessage) {
                         ToastUtil.error(errorMessage);

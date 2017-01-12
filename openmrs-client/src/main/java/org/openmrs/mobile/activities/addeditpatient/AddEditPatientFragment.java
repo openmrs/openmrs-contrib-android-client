@@ -421,7 +421,10 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
 
                 @Override
                 public void onClick(View v) {
-                    int cYear, cMonth, cDay;
+                    int cYear;
+                    int cMonth;
+                    int cDay;
+
                     if (bdt == null) {
                         Calendar currentDate = Calendar.getInstance();
                         cYear = currentDate.get(Calendar.YEAR);

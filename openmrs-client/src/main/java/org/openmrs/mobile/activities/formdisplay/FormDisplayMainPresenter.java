@@ -50,7 +50,9 @@ public class FormDisplayMainPresenter implements FormDisplayContract.Presenter.M
     }
 
     @Override
-    public void start() {}
+    public void start() {
+        // This method is intentionally empty
+    }
 
     @Override
     public void createEncounter() {
@@ -149,10 +151,8 @@ public class FormDisplayMainPresenter implements FormDisplayContract.Presenter.M
         ArrayList<Fragment> ret = new ArrayList<>();
 
         for(Fragment f : mFragList) {
-            if(f != null) {
-                if(f.isVisible()) {
-                    ret.add(f);
-                }
+            if(f != null && f.isVisible()) {
+                ret.add(f);
             }
         }
         return ret;

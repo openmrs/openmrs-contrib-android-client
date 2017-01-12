@@ -161,19 +161,17 @@ public class CustomFragmentDialog extends DialogFragment {
         getDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    if (getActivity().getClass().equals(LoginActivity.class)) {
-                        if (OpenMRS.getInstance().getServerUrl().equals(ApplicationConstants.EMPTY_STRING)) {
-                            OpenMRS.getInstance().getOpenMRSLogger().d("Exit application");
-                            getActivity().onBackPressed();
-                            dismiss();
-                        } else {
-                            ((LoginFragment) getActivity()
-                                    .getSupportFragmentManager()
-                                    .findFragmentById(R.id.loginContentFrame))
-                                    .hideURLDialog();
-                            dismiss();
-                        }
+                if (keyCode == KeyEvent.KEYCODE_BACK && getActivity().getClass().equals(LoginActivity.class)) {
+                    if (OpenMRS.getInstance().getServerUrl().equals(ApplicationConstants.EMPTY_STRING)) {
+                        OpenMRS.getInstance().getOpenMRSLogger().d("Exit application");
+                        getActivity().onBackPressed();
+                        dismiss();
+                    } else {
+                        ((LoginFragment) getActivity()
+                                .getSupportFragmentManager()
+                                .findFragmentById(R.id.loginContentFrame))
+                                .hideURLDialog();
+                        dismiss();
                     }
                 }
                 return false;

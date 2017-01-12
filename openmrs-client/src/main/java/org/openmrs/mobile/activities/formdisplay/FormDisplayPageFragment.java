@@ -348,13 +348,11 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
                 allEmpty = false;
                 if (ed.getText().toString().charAt(0) != '.') {
                     Double inp = Double.parseDouble(ed.getText().toString());
-                    if (ed.getUpperlimit() != -1.0 && ed.getUpperlimit() != -1.0) {
-                        if (ed.getUpperlimit() < inp || ed.getLowerlimit() > inp) {
-                            ToastUtil.error("Value for " + ed.getName() + " is out of range. Value should be between " +
-                                    ed.getLowerlimit() + " and " + ed.getUpperlimit());
-                            ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
-                            valid = false;
-                        }
+                    if (ed.getUpperlimit() != -1.0 && ed.getUpperlimit() != -1.0 && (ed.getUpperlimit() < inp || ed.getLowerlimit() > inp)) {
+                        ToastUtil.error("Value for " + ed.getName() + " is out of range. Value should be between " +
+                                ed.getLowerlimit() + " and " + ed.getUpperlimit());
+                        ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
+                        valid = false;
                     }
                 }
                 else {

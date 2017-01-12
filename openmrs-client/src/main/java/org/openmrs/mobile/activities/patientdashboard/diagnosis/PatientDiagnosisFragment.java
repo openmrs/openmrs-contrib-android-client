@@ -66,7 +66,9 @@ public class PatientDiagnosisFragment extends PatientDashboardFragment implement
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {}
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // This method is intentionally empty
+    }
 
     @Override
     public void setDiagnosesToDisplay(List<String> encounters) {

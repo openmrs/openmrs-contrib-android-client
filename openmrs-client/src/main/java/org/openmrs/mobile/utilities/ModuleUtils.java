@@ -10,11 +10,8 @@ public class ModuleUtils {
         for (Module module : modules) {
             if ("org.openmrs.module.registrationcore".equals(module.getPackageName())) {
                 String[] versions = module.getVersion().split("\\.");
-                if (versions.length >= 2 && Integer.valueOf(versions[0]) >= 1) {
-                    if (parseVersion(versions[1]) >= 7) {
-                        return true;
-
-                    }
+                if (versions.length >= 2 && Integer.valueOf(versions[0]) >= 1 && parseVersion(versions[1]) >= 7) {
+                    return true;
                 }
             }
         }

@@ -87,7 +87,9 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {}
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // This method is intentionally empty
+    }
 
     @Override
     public void setPresenter(PatientDashboardContract.PatientDashboardMainPresenter presenter) {

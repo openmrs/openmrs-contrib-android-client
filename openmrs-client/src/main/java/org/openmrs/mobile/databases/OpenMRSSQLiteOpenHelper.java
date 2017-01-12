@@ -93,7 +93,7 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
 
         @Override
         public void postKey(SQLiteDatabase sqLiteDatabase) {
-
+            // This method is intentionally empty
         }
 
     }

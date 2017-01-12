@@ -96,7 +96,9 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {}
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        // This method is intentionally empty
+    }
 
     private boolean isAllDataValid() {
 

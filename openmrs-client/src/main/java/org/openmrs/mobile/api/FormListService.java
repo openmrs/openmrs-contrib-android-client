@@ -29,8 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FormListService extends IntentService {
-    final RestApi apiService =
-            RestServiceBuilder.createService(RestApi.class);
+    private final RestApi apiService = RestServiceBuilder.createService(RestApi.class);
     private List<FormResource> formresourcelist;
 
     public FormListService() {

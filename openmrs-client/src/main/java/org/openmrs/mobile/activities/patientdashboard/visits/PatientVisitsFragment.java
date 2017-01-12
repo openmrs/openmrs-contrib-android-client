@@ -43,7 +43,7 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
     private RecyclerView visitRecyclerView;
     private TextView emptyList;
 
-    PatientDashboardContract.PatientVisitsPresenter mPresenter;
+    private PatientDashboardContract.PatientVisitsPresenter mPresenter;
 
     public static final int REQUEST_CODE_FOR_VISIT = 1;
 
@@ -69,6 +69,9 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
         switch (id) {
             case R.id.actionStartVisit:
                 mPresenter.syncVisits();
+                break;
+            default:
+                // Do nothing
                 break;
         }
         return super.onOptionsItemSelected(item);

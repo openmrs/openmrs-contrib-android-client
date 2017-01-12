@@ -33,7 +33,7 @@ import java.util.List;
 
 public class SettingsFragment extends Fragment implements SettingsContract.View {
 
-    SettingsContract.Presenter mPresenter;
+    private SettingsContract.Presenter mPresenter;
     private List<SettingsListItemDTO> mListItem = new ArrayList<>();
 
     private RecyclerView settingsRecyclerView;

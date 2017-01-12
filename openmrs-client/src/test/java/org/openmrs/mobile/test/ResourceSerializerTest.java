@@ -43,7 +43,7 @@ import static org.mockito.Mockito.when;
 public class ResourceSerializerTest {
 
     @Mock
-    JsonSerializationContext context;
+    private JsonSerializationContext context;
 
     @Test
     public void shouldSerializeResourceFieldAsFullWhenNoUuidPresent(){

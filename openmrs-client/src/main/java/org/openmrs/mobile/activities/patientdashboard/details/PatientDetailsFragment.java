@@ -80,6 +80,10 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
                 break;
             case R.id.actionUpdatePatient:
                 startPatientUpdateActivity(mPresenter.getPatientId());
+                break;
+            default:
+                // Do nothing
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

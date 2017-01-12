@@ -40,7 +40,7 @@ public class ActiveVisitPresenter implements ActiveVisitsContract.Presenter{
 
     private List<Visit> getPatientsFilteredByQuery(List<Visit> visitList, String query) {
         List<Visit> filteredList = new ArrayList<>();
-        query = query.toLowerCase();
+        String queryLowerCase = query.toLowerCase();
 
         for (Visit visit : visitList) {
             Patient patient = new PatientDAO().findPatientByID(visit.getPatient().getId().toString());
@@ -51,13 +51,13 @@ public class ActiveVisitPresenter implements ActiveVisitsContract.Presenter{
             String patientSurname = patient.getPerson().getNames().get(0).getFamilyName().toLowerCase();
             String patientIdentifier = patient.getIdentifier().getIdentifier().toLowerCase();
 
-            boolean isVisitPlaceFitQuery = visitPlace.length() >= query.length() && visitPlace.substring(0, query.length()).equals(query);
-            boolean isVisitTypeFitQuery = visitType.length() >= query.length() && visitType.substring(0, query.length()).equals(query);
-            boolean isPatientNameFitQuery = patientName.length() >= query.length() && patientName.substring(0, query.length()).equals(query);
-            boolean isPatientSurnameFitQuery = patientSurname.length() >= query.length() && patientSurname.substring(0, query.length()).equals(query);
+            boolean isVisitPlaceFitQuery = visitPlace.length() >= queryLowerCase.length() && visitPlace.substring(0, queryLowerCase.length()).equals(queryLowerCase);
+            boolean isVisitTypeFitQuery = visitType.length() >= queryLowerCase.length() && visitType.substring(0, queryLowerCase.length()).equals(queryLowerCase);
+            boolean isPatientNameFitQuery = patientName.length() >= queryLowerCase.length() && patientName.substring(0, queryLowerCase.length()).equals(queryLowerCase);
+            boolean isPatientSurnameFitQuery = patientSurname.length() >= queryLowerCase.length() && patientSurname.substring(0, queryLowerCase.length()).equals(queryLowerCase);
             boolean isPatientIdentifierFitQuery = false;
             if (patientIdentifier != null) {
-                isPatientIdentifierFitQuery = patientIdentifier.length() >= query.length() && patientIdentifier.substring(0, query.length()).equals(query);
+                isPatientIdentifierFitQuery = patientIdentifier.length() >= queryLowerCase.length() && patientIdentifier.substring(0, queryLowerCase.length()).equals(queryLowerCase);
             }
             if (isPatientNameFitQuery || isPatientSurnameFitQuery || isPatientIdentifierFitQuery || isVisitPlaceFitQuery || isVisitTypeFitQuery) {
                 filteredList.add(visit);

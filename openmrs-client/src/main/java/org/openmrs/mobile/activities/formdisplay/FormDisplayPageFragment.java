@@ -46,8 +46,8 @@ import java.util.List;
 
 public class FormDisplayPageFragment extends Fragment implements FormDisplayContract.View.PageView {
 
-    List<InputField> inputFields =new ArrayList<>();
-    List<SelectOneField> selectOneFields = new ArrayList<>();
+    private List<InputField> inputFields =new ArrayList<>();
+    private List<SelectOneField> selectOneFields = new ArrayList<>();
     private FormDisplayContract.Presenter.PagePresenter mPresenter;
     private LinearLayout mParent;
 

@@ -43,12 +43,12 @@ public class ObservationDeserializerTest {
     private static final String DIAGNOSIS_ORDER = "Primary";
 
     @Mock
-    JsonDeserializationContext context;
+    private JsonDeserializationContext context;
 
     private JsonObject jsonObject;
 
     @Before
-    public void setup() throws Exception {
+    public void setUp() throws Exception {
         File jsonResponseFile = new File("src/test/java/org/openmrs/mobile/test/retrofitMocks/", "obsWithDiagnosisDataExampleResponse.json");
         String response = getMockResponseFromFile(jsonResponseFile);
         JsonParser jsonParser = new JsonParser();

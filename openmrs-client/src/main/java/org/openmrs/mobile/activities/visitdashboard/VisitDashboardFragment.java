@@ -40,7 +40,7 @@ import java.util.List;
 
 public class VisitDashboardFragment extends Fragment implements VisitDashboardContract.View{
 
-    VisitDashboardContract.Presenter mPresenter;
+    private VisitDashboardContract.Presenter mPresenter;
 
     private ExpandableListView mExpandableListView;
     private TextView mEmptyListView;

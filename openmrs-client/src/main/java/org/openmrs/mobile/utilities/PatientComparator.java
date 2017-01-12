@@ -61,6 +61,7 @@ public class PatientComparator {
                     break;
                 default:
                     score += 0;
+                    break;
             }
         }
         return score;

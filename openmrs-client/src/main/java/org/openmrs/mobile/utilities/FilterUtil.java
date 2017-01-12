@@ -30,7 +30,7 @@ public class FilterUtil {
      */
     public static List<Patient> getPatientsFilteredByQuery(List<Patient> patientList, String query) {
         List<Patient> filteredList = new ArrayList<>();
-        query = query.toLowerCase();
+        String queryLowerCase = query.toLowerCase();
 
         for (Patient patient : patientList) {
 
@@ -38,11 +38,11 @@ public class FilterUtil {
             String patientSurname = patient.getPerson().getNames().get(0).getFamilyName().toLowerCase();
             String patientIdentifier = patient.getIdentifier().getIdentifier();
 
-            boolean isPatientNameFitQuery = patientName.length() >= query.length() && patientName.substring(0,query.length()).equals(query);
-            boolean isPatientSurnameFitQuery = patientSurname.length() >= query.length() && patientSurname.substring(0,query.length()).equals(query);
+            boolean isPatientNameFitQuery = patientName.length() >= queryLowerCase.length() && patientName.substring(0,queryLowerCase.length()).equals(queryLowerCase);
+            boolean isPatientSurnameFitQuery = patientSurname.length() >= queryLowerCase.length() && patientSurname.substring(0,queryLowerCase.length()).equals(queryLowerCase);
             boolean isPatientIdentifierFitQuery = false;
             if (patientIdentifier != null) {
-                isPatientIdentifierFitQuery = patientIdentifier.length() >= query.length() && patientIdentifier.substring(0,query.length()).toLowerCase().equals(query);
+                isPatientIdentifierFitQuery = patientIdentifier.length() >= queryLowerCase.length() && patientIdentifier.substring(0,queryLowerCase.length()).toLowerCase().equals(queryLowerCase);
             }
             if (isPatientNameFitQuery || isPatientSurnameFitQuery || isPatientIdentifierFitQuery) {
                 filteredList.add(patient);

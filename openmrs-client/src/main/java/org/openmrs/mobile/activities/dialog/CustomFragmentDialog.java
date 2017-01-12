@@ -370,7 +370,7 @@ public class CustomFragmentDialog extends DialogFragment {
                         activity.mPresenter.deletePatient();
                         dismiss();
                         activity.finish();
-
+                        break;
                     default:
                         break;
                 }

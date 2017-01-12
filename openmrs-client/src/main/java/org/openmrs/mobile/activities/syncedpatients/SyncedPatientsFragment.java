@@ -97,6 +97,9 @@ public class SyncedPatientsFragment extends Fragment implements SyncedPatientsCo
                 Intent intent = new Intent(getActivity(), LastViewedPatientsActivity.class);
                 startActivity(intent);
                 break;
+            default:
+                // Do nothing
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

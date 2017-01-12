@@ -27,9 +27,6 @@ import java.util.List;
 @Table(name = "formresource")
 public class FormResource extends Model implements Serializable{
 
-    Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-    Type formresourcelistType = new TypeToken<List<FormResource>>(){}.getType();
-
     @Column(name="name")
     @SerializedName("name")
     @Expose
@@ -47,7 +44,6 @@ public class FormResource extends Model implements Serializable{
     @Expose
     private String valueReference;
 
-
     @Column(name = "uuid")
     @SerializedName("uuid")
     @Expose
@@ -62,6 +58,9 @@ public class FormResource extends Model implements Serializable{
     @SerializedName("links")
     @Expose
     private List<Link> links = new ArrayList<Link>();
+
+    private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+    private Type formResourceListType = new TypeToken<List<FormResource>>(){}.getType();
 
     public String getUuid() {
         return uuid;
@@ -115,12 +114,12 @@ public class FormResource extends Model implements Serializable{
 
     public void setResourcelist()
     {
-        this.resourcelist=gson.toJson(resources,formresourcelistType);
+        this.resourcelist=gson.toJson(resources, formResourceListType);
     }
 
     public List<FormResource> getResourceList() {
 
-        List<FormResource> resourceList=gson.fromJson(this.resourcelist,formresourcelistType);
+        List<FormResource> resourceList=gson.fromJson(this.resourcelist, formResourceListType);
         return resourceList;
     }
 

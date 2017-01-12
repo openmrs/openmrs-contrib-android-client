@@ -34,7 +34,7 @@ import java.util.List;
 
 public class PatientDiagnosisFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDiagnosis {
 
-    PatientDashboardContract.PatientDiagnosisPresenter mPresenter;
+    private PatientDashboardContract.PatientDiagnosisPresenter mPresenter;
 
     private ListView mDiagnosisList;
 

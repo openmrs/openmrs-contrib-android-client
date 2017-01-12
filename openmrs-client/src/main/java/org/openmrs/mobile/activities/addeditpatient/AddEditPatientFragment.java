@@ -57,35 +57,35 @@ import java.util.List;
 
 public class AddEditPatientFragment extends Fragment implements AddEditPatientContract.View {
 
-    AddEditPatientContract.Presenter mPresenter;
+    private AddEditPatientContract.Presenter mPresenter;
 
-    LocalDate birthdate;
-    DateTime bdt;
+    private LocalDate birthdate;
+    private DateTime bdt;
 
-    EditText edfname;
-    EditText edmname;
-    EditText edlname;
-    EditText eddob;
-    EditText edyr;
-    EditText edmonth;
-    EditText edaddr1;
-    EditText edaddr2;
-    EditText edcity;
-    EditText edstate;
-    AutoCompleteTextView edcountry;
-    EditText edpostal;
+    private EditText edfname;
+    private EditText edmname;
+    private EditText edlname;
+    private EditText eddob;
+    private EditText edyr;
+    private EditText edmonth;
+    private EditText edaddr1;
+    private EditText edaddr2;
+    private EditText edcity;
+    private EditText edstate;
+    private AutoCompleteTextView edcountry;
+    private EditText edpostal;
 
-    RadioGroup gen;
-    ProgressBar progressBar;
+    private RadioGroup gen;
+    private ProgressBar progressBar;
 
-    TextView fnameerror;
-    TextView lnameerror;
-    TextView doberror;
-    TextView gendererror;
-    TextView addrerror;
-    TextView countryerror;
+    private TextView fnameerror;
+    private TextView lnameerror;
+    private TextView doberror;
+    private TextView gendererror;
+    private TextView addrerror;
+    private TextView countryerror;
 
-    Button submitConfirm;
+    private Button submitConfirm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -442,9 +442,9 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
 
                     DatePickerDialog mDatePicker=new DatePickerDialog(AddEditPatientFragment.this.getActivity(), new DatePickerDialog.OnDateSetListener() {
                         public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                            selectedmonth++;
-                            eddob.setText(selectedday+"/"+selectedmonth+"/"+selectedyear);
-                            birthdate = new LocalDate(selectedyear, selectedmonth, selectedday);
+                            int adjustedMonth = selectedmonth + 1;
+                            eddob.setText(selectedday+"/"+adjustedMonth+"/"+selectedyear);
+                            birthdate = new LocalDate(selectedyear, adjustedMonth, selectedday);
                             bdt=birthdate.toDateTimeAtStartOfDay().toDateTime();
                         }
                     }, cYear, cMonth, cDay);

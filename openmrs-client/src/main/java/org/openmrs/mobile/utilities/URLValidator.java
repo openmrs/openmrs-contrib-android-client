@@ -27,10 +27,10 @@ public final class URLValidator {
 
     public static ValidationResult validate(String url) {
         ValidationResult result;
-        url = ensureProtocol(url);
+        String ensuredUrl = ensureProtocol(url);
         Pattern urlPattern = Pattern.compile(URL_PATTERN);
-        Matcher matcher = urlPattern.matcher(trimLastSpace(url));
-        String validURL = trimLastSpace(url);
+        Matcher matcher = urlPattern.matcher(trimLastSpace(ensuredUrl));
+        String validURL = trimLastSpace(ensuredUrl);
         if (matcher.matches()) {
             validURL = trimLastSlash(validURL);
             validURL = toLowerCase(validURL);

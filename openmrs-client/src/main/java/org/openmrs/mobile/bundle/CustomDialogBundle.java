@@ -121,10 +121,7 @@ public class CustomDialogBundle implements Serializable {
     }
 
     public boolean hasPatientList(){
-        if(patientsList != null){
-            return true;
-        }
-        return false;
+        return patientsList != null;
     }
 
     public void setPatientsList(List<Patient> patientsList) {

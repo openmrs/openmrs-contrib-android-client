@@ -15,8 +15,9 @@ import android.widget.EditText;
 
 public class RangeEditText extends EditText {
 
-    Double upperlimit,lowerlimit;
-    String name;
+    private Double upperlimit;
+    private Double lowerlimit;
+    private String name;
 
     public RangeEditText(Context context) {
         super(context);

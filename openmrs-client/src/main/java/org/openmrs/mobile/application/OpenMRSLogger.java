@@ -31,26 +31,24 @@ public class OpenMRSLogger {
     private static final boolean IS_DEBUGGING_ON = true;
     private static final String LOG_FILENAME = "OpenMRS.log";
     private static final int MAX_SIZE = 64 * 1024; // 64kB;
-    private static Process mLoggerProcess;
-    private static File mLogFile;
-    private static File mFolder;
+    private static File mLogFile = null;
+    private static File mFolder = null;
     private static boolean mSaveToFileEnable = true;
     private static int mErrorCountSaveToFile = 2;
     private static boolean mIsRotating;
     private static OpenMRS mOpenMRS = OpenMRS.getInstance();
-    private static OpenMRSLogger logger;
+    private static OpenMRSLogger logger = null;
     private Thread.UncaughtExceptionHandler androidDefaultUEH;
-
-    private Thread.UncaughtExceptionHandler handler = new Thread.UncaughtExceptionHandler() {
-        public void uncaughtException(Thread thread, Throwable ex) {
-            logger.e("Uncaught exception is: ", ex);
-            androidDefaultUEH.uncaughtException(thread, ex);
-        }
-    };
 
     public OpenMRSLogger() {
         logger = this;
         androidDefaultUEH = Thread.getDefaultUncaughtExceptionHandler();
+        Thread.UncaughtExceptionHandler handler = new Thread.UncaughtExceptionHandler() {
+            public void uncaughtException(Thread thread, Throwable ex) {
+                logger.e("Uncaught exception is: ", ex);
+                androidDefaultUEH.uncaughtException(thread, ex);
+            }
+        };
         Thread.setDefaultUncaughtExceptionHandler(handler);
 
         mFolder = new File(mOpenMRS.getOpenMRSDir());
@@ -93,10 +91,9 @@ public class OpenMRSLogger {
         if (isFolderExist() && isSaveToFileEnable()) {
             String command = "logcat -d -v time -s " + mTAG;
             try {
-                mLoggerProcess = Runtime.getRuntime().exec(command);
-
+                Process mLoggerProcess = Runtime.getRuntime().exec(command);
                 BufferedReader in = new BufferedReader(new InputStreamReader(mLoggerProcess.getInputStream()));
-                String line = null;
+                String line;
 
                 FileWriter writer = new FileWriter(mLogFile, true);
                 while ((line = in.readLine()) != null) {

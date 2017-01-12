@@ -35,8 +35,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class EncounterService extends IntentService {
-    final RestApi apiService =
-            RestServiceBuilder.createService(RestApi.class);
+
+    private final RestApi apiService = RestServiceBuilder.createService(RestApi.class);
 
     public EncounterService() {
         super("Save Encounter");
@@ -139,7 +139,7 @@ public class EncounterService extends IntentService {
         syncEncounter(encountercreate, null);
     }
 
-    void linkvisit(Long patientid, String formname, Encounter encounter, Encountercreate encountercreate)
+    private void linkvisit(Long patientid, String formname, Encounter encounter, Encountercreate encountercreate)
     {
         Long visitid=new VisitDAO().getVisitsIDByUUID(encounter.getVisit().getUuid());
         Visit visit=new VisitDAO().getVisitsByID(visitid);

@@ -37,7 +37,7 @@ import java.util.List;
 
 public class FormEntryPatientListFragment extends Fragment implements  FormEntryPatientListContract.View {
 
-    FormEntryPatientListContract.Presenter mPresenter;
+    private FormEntryPatientListContract.Presenter mPresenter;
     private RecyclerView mPatientRecyclerView;
     private TextView mEmptyList;
 

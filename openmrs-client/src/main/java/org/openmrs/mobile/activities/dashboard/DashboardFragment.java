@@ -187,6 +187,9 @@ public class DashboardFragment extends Fragment implements DashboardContract.Vie
             case R.id.activeVisitsView:
                 startNewActivity(ActiveVisitsActivity.class);
                 break;
+            default:
+                // Do nothing
+                break;
         }
     }
 }

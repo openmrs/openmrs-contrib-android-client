@@ -122,6 +122,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
             case R.id.actionSettings:
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivity(i);
+                return true;
             case R.id.actionSearchLocal:
                 return true;
             case R.id.actionLogout:
@@ -139,6 +140,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     getApplicationContext().sendBroadcast(intent);
                     ToastUtil.notify("Sync ON");
                 }
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

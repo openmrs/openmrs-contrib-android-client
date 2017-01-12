@@ -29,7 +29,7 @@ import org.openmrs.mobile.application.OpenMRS;
 
 public class LastViewedPatientsActivity extends ACBaseActivity {
 
-    LastViewedPatientsContract.Presenter mPresenter;
+    private LastViewedPatientsContract.Presenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -23,15 +23,15 @@ import java.util.List;
 
 public class FormService {
 
-    public static Form getForm(String valuereference) {
-        valuereference = StringUtils.unescapeJavaString(valuereference);
+    public static Form getForm(String valueReference) {
+        String unescapedValueReference = StringUtils.unescapeJavaString(valueReference);
 
         GsonBuilder builder = new GsonBuilder();
         builder.excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC);
         builder.excludeFieldsWithoutExposeAnnotation();
         Gson gson = builder.create();
 
-        return gson.fromJson(valuereference, Form.class);
+        return gson.fromJson(unescapedValueReference, Form.class);
     }
 
     public static Form getFormByUuid(String uuid) {

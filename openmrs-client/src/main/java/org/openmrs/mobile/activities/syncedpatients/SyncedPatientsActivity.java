@@ -15,7 +15,6 @@
 package org.openmrs.mobile.activities.syncedpatients;
 
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -26,13 +25,11 @@ import android.view.MenuItem;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.utilities.NetworkUtils;
 
 public class SyncedPatientsActivity extends ACBaseActivity {
 
-    SyncedPatientsPresenter mPresenter;
+    private SyncedPatientsPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -11,7 +11,7 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 
 public class PatientDashboardFragment extends Fragment implements PatientDashboardContract.ViewPatientMain {
 
-    PatientDashboardContract.PatientDashboardMainPresenter mPresenter;
+    private PatientDashboardContract.PatientDashboardMainPresenter mPresenter;
 
     @Override
     public void setPresenter(PatientDashboardContract.PatientDashboardMainPresenter presenter) {
@@ -35,6 +35,9 @@ public class PatientDashboardFragment extends Fragment implements PatientDashboa
         switch (id) {
             case R.id.actionDelete:
                 ((ACBaseActivity) this.getActivity()).showDeletePatientDialog();
+                break;
+            default:
+                // Do nothing
                 break;
         }
         return super.onOptionsItemSelected(item);

@@ -33,14 +33,14 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
     @Mock
     private RestApi restApi;
     @Mock
-    LastViewedPatientsContract.View view;
+    private LastViewedPatientsContract.View view;
 
     private LastViewedPatientsPresenter lastViewedPatientsPresenter;
     private Patient firstPatient;
     private Patient secondPatient;
 
     @Before
-    public void setup(){
+    public void setUp(){
         lastViewedPatientsPresenter = new LastViewedPatientsPresenter(
                 view,
                 restApi,

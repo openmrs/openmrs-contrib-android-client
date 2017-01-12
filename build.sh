@@ -26,6 +26,6 @@ echo $KEYSTORE_GPG_PASSPHRASE | gpg --passphrase-fd 0 google_play.json.gpg
 
 else
 
-./gradlew assembleDebug
+./gradlew assembleDebug lint
 
 fi

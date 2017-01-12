@@ -25,6 +25,7 @@ import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
@@ -52,10 +53,14 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
         final int adapterPos = holder.getAdapterPosition();
         final Patient patient = mItems.get(adapterPos);
         if (new VisitDAO().isPatientNowOnVisit(patient.getId())) {
+            holder.mVisitStatusIcon.setVisibility(View.VISIBLE);
             holder.mVisitStatusIcon.setImageBitmap(
                     ImageUtils.decodeBitmapFromResource(mContext.getResources(), R.drawable.active_visit_dot,
                             holder.mVisitStatusIcon.getLayoutParams().width, holder.mVisitStatusIcon.getLayoutParams().height));
             holder.mVisitStatus.setText(mContext.getString(R.string.active_visit_label_capture_vitals));
+        } else {
+            holder.mVisitStatusIcon.setVisibility(View.GONE);
+            holder.mVisitStatus.setText(ApplicationConstants.EMPTY_STRING);
         }
         if (null != patient.getIdentifier()) {
             final String display = "#" + patient.getIdentifier().getIdentifier();

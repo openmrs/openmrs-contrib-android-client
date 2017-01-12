@@ -160,6 +160,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
                 }
                 isLongClicked = true;
                 setSelected(true);
+                notifyDataSetChanged();
             }
             return true;
         }
@@ -257,19 +258,23 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
     }
 
     public void setUpCheckBoxLogic(final PatientViewHolder holder, final Patient patient) {
-        holder.mAvailableOfflineCheckbox.setChecked(false);
-        holder.mAvailableOfflineCheckbox.setVisibility(View.VISIBLE);
-        holder.mAvailableOfflineCheckbox.setButtonDrawable(R.drawable.ic_download);
-        holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_download_label));
-        holder.mAvailableOfflineCheckbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isLongClicked && ((CheckBox) v).isChecked()) {
-                    downloadPatient(patient);
-                    disableCheckBox(holder);
+        if (isLongClicked) {
+            holder.mAvailableOfflineCheckbox.setVisibility(View.INVISIBLE);
+        } else {
+            holder.mAvailableOfflineCheckbox.setChecked(false);
+            holder.mAvailableOfflineCheckbox.setVisibility(View.VISIBLE);
+            holder.mAvailableOfflineCheckbox.setButtonDrawable(R.drawable.ic_download);
+            holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_download_label));
+            holder.mAvailableOfflineCheckbox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!isLongClicked && ((CheckBox) v).isChecked()) {
+                        downloadPatient(patient);
+                        disableCheckBox(holder);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private void downloadPatient(final Patient patient) {

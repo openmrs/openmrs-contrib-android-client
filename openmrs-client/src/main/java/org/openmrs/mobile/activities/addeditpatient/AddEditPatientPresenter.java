@@ -215,6 +215,8 @@ public class AddEditPatientPresenter implements AddEditPatientContract.Presenter
                         if (!similarPatient.isEmpty()) {
                             mPatientInfoView.showSimilarPatientDialog(similarPatient, patient);
                             mPatientInfoView.showUpgradeRegistrationModuleInfo();
+                        } else {
+                            registerPatient();
                         }
                     } else {
                         registerPatient();

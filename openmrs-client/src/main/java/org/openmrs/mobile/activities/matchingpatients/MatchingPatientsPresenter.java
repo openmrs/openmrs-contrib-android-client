@@ -1,4 +1,4 @@
-package org.openmrs.mobile.activities.matchingPatients;
+package org.openmrs.mobile.activities.matchingpatients;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;

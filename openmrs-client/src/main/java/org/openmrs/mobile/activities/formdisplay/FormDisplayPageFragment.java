@@ -340,7 +340,8 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
     }
 
     public boolean checkInputFields() {
-        boolean allEmpty = true, valid=true;
+        boolean allEmpty = true;
+        boolean valid=true;
         for (InputField field:inputFields) {
             RangeEditText ed = (RangeEditText) getActivity().findViewById(field.getId());
             if (!isEmpty(ed)) {

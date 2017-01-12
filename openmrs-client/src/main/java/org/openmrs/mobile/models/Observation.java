@@ -58,6 +58,16 @@ public class Observation extends Resource implements Serializable {
     @Expose
     private String resourceVersion;
 
+    private Long id;
+    private Long encounterID;
+    private String displayValue;
+
+    private String diagnosisList;
+    private String diagnosisCertainty;
+    private String diagnosisOrder;
+
+    private String diagnosisNote;
+
     /**
      *
      * @return
@@ -291,16 +301,6 @@ public class Observation extends Resource implements Serializable {
     public void setResourceVersion(String resourceVersion) {
         this.resourceVersion = resourceVersion;
     }
-
-    private Long id;
-    private Long encounterID;
-    private String displayValue;
-
-    private String diagnosisList;
-    private String diagnosisCertainty;
-    private String diagnosisOrder;
-
-    private String diagnosisNote;
 
     public Long getId() {
         return id;

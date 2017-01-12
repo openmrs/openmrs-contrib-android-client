@@ -17,12 +17,8 @@ package org.openmrs.mobile.utilities;
 import org.openmrs.mobile.models.EncounterType;
 
 public abstract class ApplicationConstants {
+
     public static final String EMPTY_STRING = "";
-
-    public abstract static class OpenMRSSharedPreferenceNames {
-        public static final String SHARED_PREFERENCES_NAME = "shared_preferences";
-    }
-
     public static final String SERVER_URL = "server_url";
     public static final String SESSION_TOKEN = "session_id";
     public static final String AUTHORIZATION_TOKEN = "authorisation";
@@ -31,12 +27,16 @@ public abstract class ApplicationConstants {
     public static final String VISIT_TYPE_UUID = "visit_type_uuid";
     public static final String LAST_SESSION_TOKEN = "last_session_id";
     public static final String LAST_LOGIN_SERVER_URL = "last_login_server_url";
+    public static final String DEFAULT_OPEN_MRS_URL = "http://devtest04.openmrs.org:8080/openmrs";
+
+    public abstract static class OpenMRSSharedPreferenceNames {
+        public static final String SHARED_PREFERENCES_NAME = "shared_preferences";
+    }
 
     public abstract static class API {
         public static final String REST_ENDPOINT = "/ws/rest/v1/";
         public static final String FULL = "full";
     }
-
 
     public abstract static class UserKeys {
         public static final String USER_NAME = "username";
@@ -93,8 +93,6 @@ public abstract class ApplicationConstants {
         public static final String ACTION_SOCKET_EXCEPTION_BROADCAST = "org.openmrs.mobile.intent.action.SOCKET_EXCEPTION_BROADCAST";
         public static final String ACTION_SERVER_NOT_SUPPORTED_BROADCAST = "org.openmrs.mobile.intent.action.SERVER_NOT_SUPPORTED_BROADCAST";
     }
-
-    public static final String DEFAULT_OPEN_MRS_URL = "http://devtest04.openmrs.org:8080/openmrs";
 
     public abstract static class EncounterTypes {
         public static final String VITALS = "67a71486-1a54-468f-ac3e-7091a9a79584";

@@ -37,7 +37,7 @@ public class MockSuccessResponse<T> implements Call<T>{
 
     @Override
     public void cancel() {
-
+        // This method is intentionally empty
     }
 
     @Override

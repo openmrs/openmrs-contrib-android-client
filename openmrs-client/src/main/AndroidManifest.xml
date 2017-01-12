@@ -213,7 +213,7 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.matchingPatients.MatchingPatientsActivity"></activity>
+        <activity android:name=".activities.matchingpatients.MatchingPatientsActivity"></activity>
     </application>
 
 </manifest>

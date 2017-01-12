@@ -14,7 +14,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
-import org.openmrs.mobile.activities.matchingPatients.MatchingPatientsActivity;
+import org.openmrs.mobile.activities.matchingpatients.MatchingPatientsActivity;
 import org.openmrs.mobile.api.retrofit.PatientApi;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Module;

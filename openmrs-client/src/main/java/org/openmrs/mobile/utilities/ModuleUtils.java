@@ -7,14 +7,13 @@ import java.util.List;
 public class ModuleUtils {
 
     public static boolean isRegistrationCore1_7orAbove(List<Module> modules) {
-        for(Module module: modules){
-            if("org.openmrs.module.registrationcore".equals(module.getPackageName())){
+        for (Module module : modules) {
+            if ("org.openmrs.module.registrationcore".equals(module.getPackageName())) {
                 String[] versions = module.getVersion().split("\\.");
-                if(versions.length >= 2){
-                   if (Integer.valueOf(versions[0]) >= 1) {
-                        if(parseVersion(versions[1]) >= 7){
-                            return true;
-                        }
+                if (versions.length >= 2 && Integer.valueOf(versions[0]) >= 1) {
+                    if (parseVersion(versions[1]) >= 7) {
+                        return true;
+
                     }
                 }
             }

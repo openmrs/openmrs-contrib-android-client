@@ -1,4 +1,4 @@
-package org.openmrs.mobile.activities.matchingPatients;
+package org.openmrs.mobile.activities.matchingpatients;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -38,7 +38,7 @@ public class MatchingPatientsFragment extends Fragment implements MachingPatient
     private View view;
 
 
-    MachingPatientsContract.Presenter mPresenter;
+    private MachingPatientsContract.Presenter mPresenter;
 
     public static MatchingPatientsFragment newInstance(){
         return new MatchingPatientsFragment();

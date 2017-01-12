@@ -110,7 +110,9 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
                 updatePatientData(patient);
             }
             @Override
-            public void onResponse() {}
+            public void onResponse() {
+                // This method is intentionally empty
+            }
             @Override
             public void onErrorResponse(String errorMessage) {
                 mPatientDetailsView.showToast(R.string.synchronize_patient_error, true);

@@ -49,10 +49,14 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
     }
 
     @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        // This method is intentionally empty
+    }
 
     @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        // This method is intentionally empty
+    }
 
     @Override
     public void afterTextChanged(Editable editable) {

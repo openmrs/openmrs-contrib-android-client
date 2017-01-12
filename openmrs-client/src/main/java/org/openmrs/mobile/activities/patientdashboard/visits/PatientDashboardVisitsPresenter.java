@@ -16,22 +16,16 @@ package org.openmrs.mobile.activities.patientdashboard.visits;
 
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.listeners.retrofit.StartVisitResponseListenerCallback;
-import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientVisitsPresenter {
 
@@ -72,38 +66,16 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
 
     @Override
     public void syncVisits() {
-
-        RestApi restApi = RestServiceBuilder.createService(RestApi.class);
-        Call<Results<Visit>> call = restApi.findVisitsByPatientUUID(mPatient.getUuid(), "full");
-        call.enqueue(new Callback<Results<Visit>>() {
+        new VisitApi().syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
             @Override
-            public void onResponse(Call<Results<Visit>> call, Response<Results<Visit>> response) {
-                if (response.isSuccessful()) {
-                    List<Visit> visits = response.body().getResults();
-                    VisitDAO visitDAO = new VisitDAO();
-                    for (Visit visit : visits) {
-
-                        long visitId = visitDAO.getVisitsIDByUUID(visit.getUuid());
-
-                        if (visitId > 0) {
-                            visitDAO.updateVisit(visit, visitId, mPatient.getId());
-                        } else {
-                            visitDAO.saveVisit(visit, mPatient.getId());
-                        }
-                        mPatientVisitsView.setVisitsToDisplay(visitDAO.getVisitsByPatientID(mPatient.getId()));
-                    }
-                    showStartVisitDialog();
-                }
-                else {
-                    ToastUtil.error(response.message());
-                }
-                mPatientVisitsView.dismissStartVisitDialog();
+            public void onResponse() {
+                VisitDAO visitDAO = new VisitDAO();
+                mPatientVisitsView.setVisitsToDisplay(visitDAO.getVisitsByPatientID(mPatient.getId()));
+                showStartVisitDialog();
             }
-
             @Override
-            public void onFailure(Call<Results<Visit>> call, Throwable t) {
-                ToastUtil.error(t.getMessage());
-                mPatientVisitsView.dismissStartVisitDialog();
+            public void onErrorResponse(String errorMessage) {
+                ToastUtil.error(errorMessage);
             }
         });
     }

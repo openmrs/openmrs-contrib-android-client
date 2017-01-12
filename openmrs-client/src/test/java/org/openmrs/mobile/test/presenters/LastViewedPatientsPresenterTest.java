@@ -102,7 +102,7 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
         verify(restApi).getLastViewedPatients();
         verify(view).setSpinnerVisibility(false);
         verify(view, atLeast(2)).setListVisibility(false);
-        verify(view).showErrorToast(anyString());
+        verify(view).setEmptyListText(anyString());
         verify(view).stopRefreshing();
     }
 
@@ -123,8 +123,7 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
         lastViewedPatientsPresenter.findPatients("query");
         verify(restApi).getPatients("query", "full");
         verify(view).setSpinnerVisibility(false);
-        verify(view).setListVisibility(false);
-        verify(view).showErrorToast(anyString());
+        verify(view).setEmptyListText(anyString());
         verify(view).stopRefreshing();
     }
 }

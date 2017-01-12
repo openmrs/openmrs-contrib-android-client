@@ -173,7 +173,7 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
         }
     }
 
-    private Patient createPatient() {
+    private Person createPerson() {
         Person person = new Person();
 
         // Add address
@@ -226,74 +226,20 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
         else {
             birthdate = dateTimeFormatter.print(bdt);
         }
-
-
-
         person.setBirthdate(birthdate);
 
+        return person;
+    }
+
+    private Patient createPatient() {
         final Patient patient = new Patient();
-        patient.setPerson(person);
+        patient.setPerson(createPerson());
         patient.setUuid(" ");
         return patient;
     }
 
     private Patient updatePatient(Patient patient) {
-        Person person = new Person();
-
-        // Add address
-        PersonAddress address = new PersonAddress();
-        address.setAddress1(ViewUtils.getInput(edaddr1));
-        address.setAddress2(ViewUtils.getInput(edaddr2));
-        address.setCityVillage(ViewUtils.getInput(edcity));
-        address.setPostalCode(ViewUtils.getInput(edpostal));
-        address.setCountry(ViewUtils.getInput(edcountry));
-        address.setStateProvince(ViewUtils.getInput(edstate));
-        address.setPreferred(true);
-
-        List<PersonAddress> addresses = new ArrayList<>();
-        addresses.add(address);
-        person.setAddresses(addresses);
-
-        // Add names
-        PersonName name = new PersonName();
-        name.setFamilyName(ViewUtils.getInput(edlname));
-        name.setGivenName(ViewUtils.getInput(edfname));
-        name.setMiddleName(ViewUtils.getInput(edmname));
-
-        List<PersonName> names = new ArrayList<>();
-        names.add(name);
-        person.setNames(names);
-
-        // Add gender
-        String[] genderChoices = {"M","F"};
-        int index = gen.indexOfChild(getActivity().findViewById(gen.getCheckedRadioButtonId()));
-        if (index != -1) {
-            person.setGender(genderChoices[index]);
-        }
-        else {
-            person.setGender(null);
-        }
-
-        // Add birthdate
-        String birthdate = null;
-        if(ViewUtils.isEmpty(eddob)) {
-            if (!StringUtils.isBlank(ViewUtils.getInput(edyr)) || !StringUtils.isBlank(ViewUtils.getInput(edmonth))) {
-                int yeardiff = ViewUtils.isEmpty(edyr)? 0 : Integer.parseInt(edyr.getText().toString());
-                int mondiff = ViewUtils.isEmpty(edmonth)? 0 : Integer.parseInt(edmonth.getText().toString());
-                LocalDate now = new LocalDate();
-                bdt = now.toDateTimeAtStartOfDay().toDateTime();
-                bdt = bdt.minusYears(yeardiff);
-                bdt = bdt.minusMonths(mondiff);
-                person.setBirthdateEstimated(true);
-                birthdate = dateTimeFormatter.print(bdt);
-            }
-        }
-        else {
-            birthdate = dateTimeFormatter.print(bdt);
-        }
-        person.setBirthdate(birthdate);
-
-        patient.setPerson(person);
+        patient.setPerson(createPerson());
         return patient;
     }
 

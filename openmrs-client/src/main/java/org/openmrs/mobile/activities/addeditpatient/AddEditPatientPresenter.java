@@ -42,6 +42,7 @@ public class AddEditPatientPresenter implements AddEditPatientContract.Presenter
     private Patient mPatient;
     private String patientToUpdateId;
     private List<String> mCountries;
+    private boolean registeringPatient = false;
 
     public AddEditPatientPresenter(AddEditPatientContract.View mPatientInfoView,
                                    List<String> countries,
@@ -63,9 +64,10 @@ public class AddEditPatientPresenter implements AddEditPatientContract.Presenter
 
     @Override
     public void confirmRegister(Patient patient) {
-        if(validate(patient)) {
+        if(!registeringPatient && validate(patient)) {
             mPatientInfoView.setProgressBarVisibility(true);
             mPatientInfoView.hideSoftKeys();
+            registeringPatient = true;
             findSimilarPatients(patient);
         }
         else {
@@ -75,9 +77,10 @@ public class AddEditPatientPresenter implements AddEditPatientContract.Presenter
 
     @Override
     public void confirmUpdate(Patient patient) {
-        if (validate(patient)) {
+        if (!registeringPatient && validate(patient)) {
             mPatientInfoView.setProgressBarVisibility(true);
             mPatientInfoView.hideSoftKeys();
+            registeringPatient = true;
             updatePatient(patient);
         } else {
             mPatientInfoView.scrollToTop();
@@ -148,6 +151,7 @@ public class AddEditPatientPresenter implements AddEditPatientContract.Presenter
 
             @Override
             public void onErrorResponse(String errorMessage) {
+                registeringPatient = false;
                 mPatientInfoView.setProgressBarVisibility(false);
             }
         });
@@ -163,6 +167,7 @@ public class AddEditPatientPresenter implements AddEditPatientContract.Presenter
 
             @Override
             public void onErrorResponse(String errorMessage) {
+                registeringPatient = false;
                 mPatientInfoView.setProgressBarVisibility(false);
             }
         });
@@ -180,7 +185,7 @@ public class AddEditPatientPresenter implements AddEditPatientContract.Presenter
                             fetchSimilarPatientsFromServer(patient);
                         } else {
                             fetchSimilarPatientAndCalculateLocally(patient);
-                                                    }
+                        }
                     } else {
                         fetchSimilarPatientAndCalculateLocally(patient);
                     }
@@ -188,6 +193,7 @@ public class AddEditPatientPresenter implements AddEditPatientContract.Presenter
 
                 @Override
                 public void onFailure(Call<Results<Module>> call, Throwable t) {
+                    registeringPatient = false;
                     mPatientInfoView.setProgressBarVisibility(false);
                     ToastUtil.error(t.getMessage());
                 }
@@ -208,6 +214,7 @@ public class AddEditPatientPresenter implements AddEditPatientContract.Presenter
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
             public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
+                registeringPatient = false;
                 if(response.isSuccessful()){
                     List<Patient> patientList = response.body().getResults();
                     if(!patientList.isEmpty()){
@@ -229,6 +236,7 @@ public class AddEditPatientPresenter implements AddEditPatientContract.Presenter
 
             @Override
             public void onFailure(Call<Results<Patient>> call, Throwable t) {
+                registeringPatient = false;
                 mPatientInfoView.setProgressBarVisibility(false);
                 ToastUtil.error(t.getMessage());
             }
@@ -241,6 +249,7 @@ public class AddEditPatientPresenter implements AddEditPatientContract.Presenter
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
             public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
+                registeringPatient = false;
                 if(response.isSuccessful()){
                     List<Patient> similarPatients = response.body().getResults();
                     if(!similarPatients.isEmpty()){
@@ -256,10 +265,16 @@ public class AddEditPatientPresenter implements AddEditPatientContract.Presenter
 
             @Override
             public void onFailure(Call<Results<Patient>> call, Throwable t) {
+                registeringPatient = false;
                 mPatientInfoView.setProgressBarVisibility(false);
                 ToastUtil.error(t.getMessage());
             }
         });
+    }
+
+    @Override
+    public boolean isRegisteringPatient() {
+        return registeringPatient;
     }
 
 }

@@ -52,6 +52,8 @@ public interface AddEditPatientContract {
 
         Patient getPatientToUpdate();
 
+        boolean isRegisteringPatient();
+
         void confirmRegister(Patient patient);
 
         void confirmUpdate(Patient patient);

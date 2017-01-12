@@ -1,4 +1,4 @@
-package org.openmrs.mobile.activities.matchingPatients;
+package org.openmrs.mobile.activities.matchingpatients;
 
 import android.app.Activity;
 import android.graphics.Color;

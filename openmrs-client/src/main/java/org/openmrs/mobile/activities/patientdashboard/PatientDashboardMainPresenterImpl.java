@@ -18,5 +18,5 @@ public abstract class PatientDashboardMainPresenterImpl implements PatientDashbo
     }
 
     @Override
-    public void start() {}
+    public abstract void start();
 }

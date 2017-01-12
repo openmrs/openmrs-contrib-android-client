@@ -116,6 +116,7 @@ public class LoginPresenter implements LoginContract.Presenter{
 
                                 @Override
                                 public void onResponse() {
+                                    // This method is intentionally empty
                                 }
 
                                 @Override

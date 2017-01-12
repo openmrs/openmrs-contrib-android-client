@@ -158,9 +158,13 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
                 }
             }
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                // This method is intentionally empty
+            }
             @Override
-            public void onPageScrollStateChanged(int state) {}
+            public void onPageScrollStateChanged(int state) {
+                // This method is intentionally empty
+            }
         });
 
         // Set page indicators:

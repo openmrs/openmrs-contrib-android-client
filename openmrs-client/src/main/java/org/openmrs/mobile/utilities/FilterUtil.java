@@ -42,7 +42,7 @@ public class FilterUtil {
             boolean isPatientSurnameFitQuery = patientSurname.length() >= queryLowerCase.length() && patientSurname.substring(0,queryLowerCase.length()).equals(queryLowerCase);
             boolean isPatientIdentifierFitQuery = false;
             if (patientIdentifier != null) {
-                isPatientIdentifierFitQuery = patientIdentifier.length() >= queryLowerCase.length() && patientIdentifier.substring(0,queryLowerCase.length()).toLowerCase().equals(queryLowerCase);
+                isPatientIdentifierFitQuery = patientIdentifier.length() >= queryLowerCase.length() && patientIdentifier.substring(0,queryLowerCase.length()).equalsIgnoreCase(queryLowerCase);
             }
             if (isPatientNameFitQuery || isPatientSurnameFitQuery || isPatientIdentifierFitQuery) {
                 filteredList.add(patient);

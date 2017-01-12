@@ -75,4 +75,10 @@ public class AddEditPatientActivity extends ACBaseActivity {
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        if (!mPresenter.isRegisteringPatient()) {
+            super.onBackPressed();
+        }
+    }
 }

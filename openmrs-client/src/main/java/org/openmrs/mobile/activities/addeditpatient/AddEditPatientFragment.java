@@ -285,10 +285,11 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
                 bdt = bdt.minusYears(yeardiff);
                 bdt = bdt.minusMonths(mondiff);
                 person.setBirthdateEstimated(true);
-                birthdate = bdt.toString();
+                birthdate = dateTimeFormatter.print(bdt);
             }
-        } else {
-            birthdate = bdt.toString();
+        }
+        else {
+            birthdate = dateTimeFormatter.print(bdt);
         }
         person.setBirthdate(birthdate);
 

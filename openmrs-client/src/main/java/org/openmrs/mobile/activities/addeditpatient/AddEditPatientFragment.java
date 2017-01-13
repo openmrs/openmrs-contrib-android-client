@@ -36,6 +36,8 @@ import android.widget.TextView;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
@@ -61,6 +63,7 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
 
     private LocalDate birthdate;
     private DateTime bdt;
+    private DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd");
 
     private EditText edfname;
     private EditText edmname;
@@ -86,6 +89,7 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
     private TextView countryerror;
 
     private Button submitConfirm;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -216,12 +220,14 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
                 bdt = bdt.minusYears(yeardiff);
                 bdt = bdt.minusMonths(mondiff);
                 person.setBirthdateEstimated(true);
-                birthdate = bdt.toString();
+                birthdate = dateTimeFormatter.print(bdt);
             }
         }
         else {
-            birthdate = bdt.toString();
+            birthdate = dateTimeFormatter.print(bdt);
         }
+
+
 
         person.setBirthdate(birthdate);
 

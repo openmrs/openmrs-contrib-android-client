@@ -14,11 +14,12 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:padding="10dp"
-              android:background="@drawable/card">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@drawable/card">
+
     <RelativeLayout
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
@@ -26,28 +27,30 @@
         android:id="@+id/syncedTopRow"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        >
+        android:gravity="center_vertical">
 
-        <TextView android:id="@+id/syncedPatientIdentifier"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textSize="20sp"
-                  android:textStyle="bold"
-                  android:layout_alignTop="@+id/syncedPatientDisplayName"
-                  android:layout_alignParentLeft="true"
-                  android:layout_alignParentStart="true"/>
+        <TextView
+            android:id="@+id/syncedPatientIdentifier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_alignTop="@+id/syncedPatientDisplayName"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
 
-        <TextView android:id="@+id/syncedPatientDisplayName"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textSize="18sp"
+        <TextView
+            android:id="@+id/syncedPatientDisplayName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_toRightOf="@+id/syncedPatientIdentifier"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="right"/>
 
-                  android:layout_toRightOf="@+id/syncedPatientIdentifier"
-                  android:layout_alignParentRight="true"
-                  android:layout_alignParentEnd="true"
-                  android:gravity="right"/>
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/syncedBottomRow"
         android:layout_marginBottom="5dp"
@@ -55,44 +58,46 @@
         android:layout_marginRight="5dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        >
+        android:gravity="center_vertical">
 
-        <TextView android:id="@+id/syncedPatientGender"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textSize="12sp"
-            />
+        <TextView
+            android:id="@+id/syncedPatientGender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp" />
 
-        <TextView android:id="@+id/syncedPatientAge"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textSize="12sp"
-                  android:layout_marginLeft="15dp"
-                  android:layout_toRightOf="@id/syncedPatientGender"
-            />
+        <TextView
+            android:id="@+id/syncedPatientAge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/syncedPatientGender" />
 
-        <TextView android:id="@+id/syncedPatientBirthDate"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textSize="12sp"
-                  android:layout_marginLeft="15dp"
-                  android:layout_toRightOf="@id/syncedPatientAge"
-            />
+        <TextView
+            android:id="@+id/syncedPatientBirthDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@id/syncedPatientAge" />
 
-        <TextView android:id="@+id/visitStatusLabel"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textSize="14sp"
-                  android:textStyle="bold"
-                  android:layout_alignParentRight="true"
-            />
+        <TextView
+            android:id="@+id/visitStatusLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_alignParentRight="true" />
 
-        <ImageView android:id="@+id/visitStatusIcon"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_toLeftOf="@id/visitStatusLabel"
-                   android:layout_marginRight="3dp"
-                   android:layout_marginTop="7dp"/>
+        <ImageView
+            android:id="@+id/visitStatusIcon"
+            android:contentDescription="@string/visit_status_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/visitStatusLabel"
+            android:layout_marginRight="3dp"
+            android:layout_marginTop="7dp"/>
     </RelativeLayout>
+
 </LinearLayout>

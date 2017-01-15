@@ -54,6 +54,7 @@
 
         <ImageView
             android:id="@+id/visitStatusIcon"
+            android:contentDescription="@string/visit_status_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

@@ -14,13 +14,15 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:background="@drawable/toast_border">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/toast_border">
 
-    <ImageView android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:id="@+id/toastImage"/>
+    <ImageView
+        android:contentDescription="@string/toast_with_black_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/toastImage"/>
 
     <TextView
         android:id="@+id/toastText"

@@ -14,14 +14,14 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="55dp"
-              android:orientation="horizontal"
-              android:longClickable="false"
-              android:paddingLeft="5dp"
-              android:paddingRight="0dp"
-              android:weightSum="2"
-              android:background="@drawable/card">
+    android:layout_width="fill_parent"
+    android:layout_height="55dp"
+    android:orientation="horizontal"
+    android:longClickable="false"
+    android:paddingLeft="5dp"
+    android:paddingRight="0dp"
+    android:weightSum="2"
+    android:background="@drawable/card">
 
     <LinearLayout
         android:gravity="center_vertical"
@@ -30,42 +30,50 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:layout_gravity="center">
-        <ImageView android:id="@+id/listVisitGroupEncounterIcon"
-                   android:layout_gravity="center_vertical"
-                   android:layout_width="55dp"
-                   android:layout_height="55dp"
-            />
 
-        <TextView android:id="@+id/listVisitGroupEncounterName"
-                  android:layout_width="match_parent"
-                  android:layout_height="55dp"
-                  android:textSize="26sp"
-                  android:paddingRight="3dp"
-                  android:paddingLeft="3dp"
-                  android:layout_gravity="center_vertical"
-                  android:gravity="center_vertical|left"
-                  android:singleLine="false"/>
+        <ImageView
+            android:id="@+id/listVisitGroupEncounterIcon"
+            android:contentDescription="@string/visit_encounter_icon"
+            android:layout_gravity="center_vertical"
+            android:layout_width="55dp"
+            android:layout_height="55dp" />
+
+        <TextView
+            android:id="@+id/listVisitGroupEncounterName"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:textSize="26sp"
+            android:paddingRight="3dp"
+            android:paddingLeft="3dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical|left"
+            android:singleLine="false"/>
+
     </LinearLayout>
+
     <View style="@style/Divider.Horizontal.DarkGray" />
+
     <LinearLayout
         android:gravity="center_vertical"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
-        <TextView  android:id="@+id/listVisitGroupDetailsSelector"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:textSize="24sp"
-                   android:paddingLeft="15dp"
-                   android:paddingRight="10dp"
-            />
 
-        <ImageView android:id="@+id/listVisitGroupDetailsIcon"
-                   android:layout_gravity="center_vertical"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-            />
+        <TextView
+            android:id="@+id/listVisitGroupDetailsSelector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp" />
+
+        <ImageView
+            android:id="@+id/listVisitGroupDetailsIcon"
+            android:contentDescription="@string/show_or_hide_visit_details"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </LinearLayout>

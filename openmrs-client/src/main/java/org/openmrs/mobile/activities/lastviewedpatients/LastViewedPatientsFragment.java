@@ -31,6 +31,7 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -40,6 +41,7 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
     private ProgressBar mSpinner;
     private RecyclerView mPatientsRecyclerView;
     private LastViewedPatientRecyclerViewAdapter mAdapter;
+    private Set<Integer> selectedPatientPositions;
     public SwipeRefreshLayout mSwipeRefreshLayout;
 
     private LastViewedPatientsContract.Presenter mPresenter;
@@ -68,6 +70,12 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
     public void onResume() {
         super.onResume();
         mPresenter.start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        selectedPatientPositions = mAdapter.getSelectedPatientPositions();
     }
 
     @Override
@@ -112,6 +120,7 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
 
     public void updateList(List<Patient> patientList) {
         mAdapter = new LastViewedPatientRecyclerViewAdapter(this.getActivity(), patientList);
+        if (selectedPatientPositions!= null) mAdapter.setSelectedPatientPositions(selectedPatientPositions);
         mPatientsRecyclerView.setAdapter(mAdapter);
     }
 

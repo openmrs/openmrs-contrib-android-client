@@ -15,12 +15,10 @@
 package org.openmrs.mobile.activities.activevisits;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
+import org.openmrs.mobile.utilities.FilterUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ActiveVisitPresenter implements ActiveVisitsContract.Presenter{
@@ -37,35 +35,6 @@ public class ActiveVisitPresenter implements ActiveVisitsContract.Presenter{
         updateVisitsInDatabaseList();
     }
 
-
-    private List<Visit> getPatientsFilteredByQuery(List<Visit> visitList, String query) {
-        List<Visit> filteredList = new ArrayList<>();
-        String queryLowerCase = query.toLowerCase();
-
-        for (Visit visit : visitList) {
-            Patient patient = new PatientDAO().findPatientByID(visit.getPatient().getId().toString());
-
-            String visitPlace = visit.getLocation().getDisplay().toLowerCase();
-            String visitType = visit.getVisitType().getDisplay().toLowerCase();
-            String patientName = patient.getPerson().getNames().get(0).getGivenName().toLowerCase();
-            String patientSurname = patient.getPerson().getNames().get(0).getFamilyName().toLowerCase();
-            String patientIdentifier = patient.getIdentifier().getIdentifier().toLowerCase();
-
-            boolean isVisitPlaceFitQuery = visitPlace.length() >= queryLowerCase.length() && visitPlace.substring(0, queryLowerCase.length()).equals(queryLowerCase);
-            boolean isVisitTypeFitQuery = visitType.length() >= queryLowerCase.length() && visitType.substring(0, queryLowerCase.length()).equals(queryLowerCase);
-            boolean isPatientNameFitQuery = patientName.length() >= queryLowerCase.length() && patientName.substring(0, queryLowerCase.length()).equals(queryLowerCase);
-            boolean isPatientSurnameFitQuery = patientSurname.length() >= queryLowerCase.length() && patientSurname.substring(0, queryLowerCase.length()).equals(queryLowerCase);
-            boolean isPatientIdentifierFitQuery = false;
-            if (patientIdentifier != null) {
-                isPatientIdentifierFitQuery = patientIdentifier.length() >= queryLowerCase.length() && patientIdentifier.substring(0, queryLowerCase.length()).equals(queryLowerCase);
-            }
-            if (isPatientNameFitQuery || isPatientSurnameFitQuery || isPatientIdentifierFitQuery || isVisitPlaceFitQuery || isVisitTypeFitQuery) {
-                filteredList.add(visit);
-            }
-        }
-        return filteredList;
-    }
-
     @Override
     public void updateVisitsInDatabaseList() {
         mActiveVisitsView.setEmptyListText(R.string.search_visits_no_results);
@@ -75,7 +44,7 @@ public class ActiveVisitPresenter implements ActiveVisitsContract.Presenter{
 
     public void updateVisitsInDatabaseList(String query) {
         mActiveVisitsView.setEmptyListText(R.string.search_patient_no_result_for_query, query);
-        List<Visit> visits = getPatientsFilteredByQuery(new VisitDAO().getAllActiveVisits(), query);
+        List<Visit> visits = FilterUtil.getPatientsWithActiveVisitsFilteredByQuery(new VisitDAO().getAllActiveVisits(), query);
         mActiveVisitsView.updateListVisibility(visits);
     }
 }

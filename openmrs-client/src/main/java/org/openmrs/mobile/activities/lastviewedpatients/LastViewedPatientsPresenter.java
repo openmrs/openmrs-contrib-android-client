@@ -64,42 +64,75 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
     }
 
     public void updateLastViewedList() {
+        setViewBeforePatientDownload();
+        Call<Results<Patient>> call = restApi.getLastViewedPatients();
+        call.enqueue(new Callback<Results<Patient>>() {
+            @Override
+            public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
+                if (response.isSuccessful()) {
+                    mLastViewedPatientsView.updateList(filterNotDownloadedPatients(response.body().getResults()));
+                    setViewAfterPatientDownloadSuccess();
+                    mLastViewedPatientsView.enableSwipeRefresh(true);
+                }
+                else {
+                    setViewAfterPatientDownloadError(response.message());
+                    mLastViewedPatientsView.enableSwipeRefresh(true);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Results<Patient>> call, Throwable t) {
+                setViewAfterPatientDownloadError(t.getMessage());
+                mLastViewedPatientsView.enableSwipeRefresh(true);
+            }
+        });
+
+    }
+
+    public void findPatients(String query) {
+        setViewBeforePatientDownload();
+        mLastQuery = query;
+        Call<Results<Patient>> call = restApi.getPatients(query, ApplicationConstants.API.FULL);
+        call.enqueue(new Callback<Results<Patient>>() {
+            @Override
+            public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
+                if (response.isSuccessful()) {
+                    mLastViewedPatientsView.updateList(filterNotDownloadedPatients(response.body().getResults()));
+                    setViewAfterPatientDownloadSuccess();
+                }
+                else {
+                    setViewAfterPatientDownloadError(response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<Results<Patient>> call, Throwable t) {
+                setViewAfterPatientDownloadError(t.getMessage());
+            }
+        });
+    }
+
+    private void setViewBeforePatientDownload() {
         if (!mLastViewedPatientsView.isRefreshing()) {
             mLastViewedPatientsView.setSpinnerVisibility(true);
         }
         mLastViewedPatientsView.enableSwipeRefresh(false);
         mLastViewedPatientsView.setEmptyListVisibility(false);
         mLastViewedPatientsView.setListVisibility(false);
+    }
 
-        Call<Results<Patient>> call = restApi.getLastViewedPatients();
-        call.enqueue(new Callback<Results<Patient>>() {
-            @Override
-            public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
-                mLastViewedPatientsView.setSpinnerVisibility(false);
-                if (response.isSuccessful()) {
-                    mLastViewedPatientsView.updateList(filterNotDownloadedPatients(response.body().getResults()));
-                    mLastViewedPatientsView.setListVisibility(true);
-                    mLastViewedPatientsView.setEmptyListVisibility(false);
-                }
-                else {
-                    mLastViewedPatientsView.setListVisibility(false);
-                    mLastViewedPatientsView.setEmptyListText(response.message());
-                    mLastViewedPatientsView.setEmptyListVisibility(true);
-                }
-                mLastViewedPatientsView.stopRefreshing();
-                mLastViewedPatientsView.enableSwipeRefresh(true);
-            }
+    private void setViewAfterPatientDownloadError(String errorMessage) {
+        mLastViewedPatientsView.setSpinnerVisibility(false);
+        mLastViewedPatientsView.setListVisibility(false);
+        mLastViewedPatientsView.setEmptyListText(errorMessage);
+        mLastViewedPatientsView.setEmptyListVisibility(true);
+        mLastViewedPatientsView.stopRefreshing();
+    }
 
-            @Override
-            public void onFailure(Call<Results<Patient>> call, Throwable t) {
-                mLastViewedPatientsView.showErrorToast(t.getMessage());
-                mLastViewedPatientsView.setSpinnerVisibility(false);
-                mLastViewedPatientsView.setListVisibility(false);
-                mLastViewedPatientsView.stopRefreshing();
-                mLastViewedPatientsView.enableSwipeRefresh(true);
-            }
-        });
-
+    private void setViewAfterPatientDownloadSuccess() {
+        mLastViewedPatientsView.setSpinnerVisibility(false);
+        mLastViewedPatientsView.setListVisibility(true);
+        mLastViewedPatientsView.setEmptyListVisibility(false);
+        mLastViewedPatientsView.stopRefreshing();
     }
 
     private List<Patient> filterNotDownloadedPatients(List<Patient> patients) {
@@ -117,40 +150,6 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
         if (query.isEmpty() && !mLastQuery.isEmpty()) {
             updateLastViewedList();
         }
-    }
-
-    public void findPatients(String query) {
-        if (!mLastViewedPatientsView.isRefreshing()) {
-            mLastViewedPatientsView.setSpinnerVisibility(true);
-        }
-        mLastViewedPatientsView.setEmptyListVisibility(false);
-        mLastQuery = query;
-
-        Call<Results<Patient>> call = restApi.getPatients(query, ApplicationConstants.API.FULL);
-        call.enqueue(new Callback<Results<Patient>>() {
-            @Override
-            public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
-                mLastViewedPatientsView.setSpinnerVisibility(false);
-                if (response.isSuccessful()) {
-                    mLastViewedPatientsView.updateList(filterNotDownloadedPatients(response.body().getResults()));
-                    mLastViewedPatientsView.setListVisibility(true);
-                    mLastViewedPatientsView.setEmptyListVisibility(false);
-                }
-                else {
-                    mLastViewedPatientsView.setListVisibility(false);
-                    mLastViewedPatientsView.setEmptyListText(response.message());
-                    mLastViewedPatientsView.setEmptyListVisibility(true);
-                }
-                mLastViewedPatientsView.stopRefreshing();
-            }
-            @Override
-            public void onFailure(Call<Results<Patient>> call, Throwable t) {
-                mLastViewedPatientsView.showErrorToast(t.getMessage());
-                mLastViewedPatientsView.setSpinnerVisibility(false);
-                mLastViewedPatientsView.setListVisibility(false);
-                mLastViewedPatientsView.stopRefreshing();
-            }
-        });
     }
 
     @Override

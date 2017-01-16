@@ -15,6 +15,7 @@
 package org.openmrs.mobile.utilities;
 
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.Visit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,25 +31,71 @@ public class FilterUtil {
      */
     public static List<Patient> getPatientsFilteredByQuery(List<Patient> patientList, String query) {
         List<Patient> filteredList = new ArrayList<>();
-        String queryLowerCase = query.toLowerCase();
 
         for (Patient patient : patientList) {
 
-            String patientName = patient.getPerson().getNames().get(0).getGivenName().toLowerCase();
-            String patientSurname = patient.getPerson().getNames().get(0).getFamilyName().toLowerCase();
-            String patientIdentifier = patient.getIdentifier().getIdentifier();
+            List<String> searchableWords = getPatientSearchableWords(patient);
 
-            boolean isPatientNameFitQuery = patientName.length() >= queryLowerCase.length() && patientName.substring(0,queryLowerCase.length()).equals(queryLowerCase);
-            boolean isPatientSurnameFitQuery = patientSurname.length() >= queryLowerCase.length() && patientSurname.substring(0,queryLowerCase.length()).equals(queryLowerCase);
-            boolean isPatientIdentifierFitQuery = false;
-            if (patientIdentifier != null) {
-                isPatientIdentifierFitQuery = patientIdentifier.length() >= queryLowerCase.length() && patientIdentifier.substring(0,queryLowerCase.length()).equalsIgnoreCase(queryLowerCase);
-            }
-            if (isPatientNameFitQuery || isPatientSurnameFitQuery || isPatientIdentifierFitQuery) {
+            if (doesAnySearchableWordFitQuery(searchableWords, query)) {
                 filteredList.add(patient);
+            }
+
+        }
+        return filteredList;
+    }
+
+    public static List<Visit> getPatientsWithActiveVisitsFilteredByQuery(List<Visit> visitList, String query) {
+        List<Visit> filteredList = new ArrayList<>();
+
+        for (Visit visit : visitList) {
+            Patient patient = visit.getPatient();
+            List<String> patientsWithActiveVisitsSearchableWords = new ArrayList<>();
+            patientsWithActiveVisitsSearchableWords.addAll(getVisitSearchableWords(visit));
+            patientsWithActiveVisitsSearchableWords.addAll(getPatientSearchableWords(patient));
+
+            if (doesAnySearchableWordFitQuery(patientsWithActiveVisitsSearchableWords, query)) {
+                filteredList.add(visit);
             }
         }
         return filteredList;
+    }
+
+    private static List<String> getPatientSearchableWords(Patient patient) {
+        String patientName = patient.getPerson().getNames().get(0).getGivenName();
+        String patientMiddleName = patient.getPerson().getNames().get(0).getMiddleName();
+        String patientSurname = patient.getPerson().getNames().get(0).getFamilyName();
+        String patientIdentifier = patient.getIdentifier().getIdentifier();
+
+        List<String> searchableWords = new ArrayList<>();
+        searchableWords.add(patientName);
+        searchableWords.add(patientMiddleName);
+        searchableWords.add(patientSurname);
+        searchableWords.add(patientIdentifier);
+
+        return searchableWords;
+    }
+
+    private static List<String> getVisitSearchableWords(Visit visit) {
+        String visitPlace = visit.getLocation().getDisplay();
+        String visitType = visit.getVisitType().getDisplay();
+
+        List<String> searchableWords = new ArrayList<>();
+        searchableWords.add(visitPlace);
+        searchableWords.add(visitType);
+
+        return searchableWords;
+    }
+
+    private static boolean doesAnySearchableWordFitQuery(List<String> searchableWords, String query) {
+        for (String searchableWord : searchableWords) {
+            if (searchableWord != null) {
+                boolean fits = searchableWord.length() >= query.length() && searchableWord.substring(0, query.length()).equalsIgnoreCase(query);
+                if (fits) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

@@ -14,9 +14,7 @@
 
 package org.openmrs.mobile.activities.lastviewedpatients;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -195,7 +193,6 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
             return false;
         }
 
-        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {

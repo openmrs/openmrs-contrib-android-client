@@ -14,8 +14,6 @@
 
 package org.openmrs.mobile.activities.syncedpatients;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
@@ -56,7 +54,6 @@ public class SyncedPatientsActivity extends ACBaseActivity {
         mPresenter = new SyncedPatientsPresenter(syncedPatientsFragment);
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);

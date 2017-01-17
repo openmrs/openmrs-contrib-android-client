@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.lastviewedpatients;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -62,6 +63,21 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
                 mAdapter.finishActionMode();
             }
         });
+        return root;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mAdapter != null) {
+            List<Patient> patientList = mAdapter.getmItems();
+            outState.putSerializable(PATIENT_LIST, (Serializable) patientList);
+        }
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
         if (savedInstanceState != null) {
             List<Patient> patientList = (List<Patient>) savedInstanceState.getSerializable(PATIENT_LIST);
             if (patientList == null) {
@@ -72,9 +88,7 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
         } else {
             mPresenter.start();
         }
-        return root;
     }
-
 
     @Override
     public boolean isActive() {
@@ -88,7 +102,6 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
 
     @Override
     public void enableSwipeRefresh(boolean enabled) {
-        mSwipeRefreshLayout.setRefreshing(!enabled);
         mSwipeRefreshLayout.setEnabled(enabled);
     }
 
@@ -133,15 +146,4 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
     public void showErrorToast(String message) {
         ToastUtil.error(message);
     }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (mAdapter != null) {
-            List<Patient> patientList = mAdapter.getmItems();
-            outState.putSerializable(PATIENT_LIST, (Serializable) patientList);
-        }
-    }
-
-
 }

@@ -27,7 +27,7 @@ public final class StringUtils {
     }
 
     public static boolean notEmpty(String string) {
-        return !string.isEmpty();
+        return string != null && !string.isEmpty();
     }
 
     public static String unescapeJavaString(String st) {

@@ -24,10 +24,14 @@ import android.view.MenuItem;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.StringUtils;
 
 public class SyncedPatientsActivity extends ACBaseActivity {
 
     private SyncedPatientsPresenter mPresenter;
+    private SearchView searchView;
+    private String query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +54,19 @@ public class SyncedPatientsActivity extends ACBaseActivity {
                     syncedPatientsFragment, R.id.syncedPatientsContentFrame);
         }
 
-        // Create the presenter
-        mPresenter = new SyncedPatientsPresenter(syncedPatientsFragment);
+        if(savedInstanceState != null){
+            query = savedInstanceState.getString(ApplicationConstants.BundleKeys.PATIENT_QUERY_BUNDLE, "");
+            mPresenter = new SyncedPatientsPresenter(syncedPatientsFragment, query);
+        } else {
+            mPresenter = new SyncedPatientsPresenter(syncedPatientsFragment);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String query = searchView.getQuery().toString();
+        outState.putString(ApplicationConstants.BundleKeys.PATIENT_QUERY_BUNDLE, query);
     }
 
     @Override
@@ -61,11 +76,15 @@ public class SyncedPatientsActivity extends ACBaseActivity {
 
         // Search function
         MenuItem searchMenuItem = menu.findItem(R.id.actionSearchLocal);
-        final SearchView searchView;
         if (OpenMRS.getInstance().isRunningHoneycombVersionOrHigher()) {
             searchView = (SearchView) searchMenuItem.getActionView();
         } else {
             searchView = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
+        }
+        if(StringUtils.notEmpty(query)){
+            searchMenuItem.expandActionView();
+            searchView.setQuery(query, true);
+            searchView.clearFocus();
         }
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

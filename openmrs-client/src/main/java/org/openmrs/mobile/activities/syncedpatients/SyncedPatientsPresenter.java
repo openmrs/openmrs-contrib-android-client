@@ -29,15 +29,21 @@ public class SyncedPatientsPresenter implements SyncedPatientsContract.Presenter
 
     // View
     @NonNull
-    private final SyncedPatientsContract.View mSyncedPatientsView;
+    private final SyncedPatientsContract.View syncedPatientsView;
 
     // Query for data filtering
     @Nullable
     private String mQuery;
 
+    public SyncedPatientsPresenter(@NonNull SyncedPatientsContract.View syncedPatientsView, String mQuery) {
+        this.syncedPatientsView = syncedPatientsView;
+        this.syncedPatientsView.setPresenter(this);
+        this.mQuery = mQuery;
+    }
+
     public SyncedPatientsPresenter(@NonNull SyncedPatientsContract.View syncedPatientsView) {
-        mSyncedPatientsView = syncedPatientsView;
-        mSyncedPatientsView.setPresenter(this);
+        this.syncedPatientsView = syncedPatientsView;
+        this.syncedPatientsView.setPresenter(this);
     }
 
     /**
@@ -69,21 +75,21 @@ public class SyncedPatientsPresenter implements SyncedPatientsContract.Presenter
         if (isFiltering) {
             patientList = FilterUtil.getPatientsFilteredByQuery(patientList, mQuery);
             if (patientList.isEmpty()) {
-                mSyncedPatientsView.updateListVisibility(false, R.string.search_patient_no_result_for_query, mQuery);
+                syncedPatientsView.updateListVisibility(false, R.string.search_patient_no_result_for_query, mQuery);
             }
             else {
-                mSyncedPatientsView.updateListVisibility(true, NO_STRING_ID, null);
+                syncedPatientsView.updateListVisibility(true, NO_STRING_ID, null);
             }
         }
         else {
             if (patientList.isEmpty()) {
-                mSyncedPatientsView.updateListVisibility(false, R.string.search_patient_no_results, null);
+                syncedPatientsView.updateListVisibility(false, R.string.search_patient_no_results, null);
             }
             else {
-                mSyncedPatientsView.updateListVisibility(true, NO_STRING_ID, null);
+                syncedPatientsView.updateListVisibility(true, NO_STRING_ID, null);
             }
         }
-        mSyncedPatientsView.updateAdapter(patientList);
+        syncedPatientsView.updateAdapter(patientList);
     }
 
 }

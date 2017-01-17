@@ -401,6 +401,7 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
                             bdt=birthdate.toDateTimeAtStartOfDay().toDateTime();
                         }
                     }, cYear, cMonth, cDay);
+                    mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
                     mDatePicker.setTitle("Select Date");
                     mDatePicker.show();  }
             });

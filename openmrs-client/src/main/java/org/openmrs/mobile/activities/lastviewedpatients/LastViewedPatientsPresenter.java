@@ -41,7 +41,7 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
     private RestApi restApi;
 
     private String mQuery;
-    private String mLastQuery = "QUERY";
+    private String lastQuery = "";
 
     public LastViewedPatientsPresenter(@NonNull LastViewedPatientsContract.View mLastViewedPatientsView) {
         this.mLastViewedPatientsView = mLastViewedPatientsView;
@@ -91,7 +91,7 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
 
     public void findPatients(String query) {
         setViewBeforePatientDownload();
-        mLastQuery = query;
+        lastQuery = query;
         Call<Results<Patient>> call = restApi.getPatients(query, ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
@@ -147,7 +147,7 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
 
     public void updateLastViewedList(String query) {
         mQuery = query;
-        if (query.isEmpty() && !mLastQuery.isEmpty()) {
+        if (query.isEmpty() && !lastQuery.isEmpty()) {
             updateLastViewedList();
         }
     }
@@ -160,6 +160,10 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
         else {
             updateLastViewedList();
         }
+    }
+
+    public void setLastQueryEmpty() {
+        lastQuery = "";
     }
 
 }

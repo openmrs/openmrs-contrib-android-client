@@ -63,7 +63,6 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
 
     private LocalDate birthdate;
     private DateTime bdt;
-    private DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd");
 
     private EditText edfname;
     private EditText edmname;
@@ -211,6 +210,7 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
 
         // Add birthdate
         String birthdate = null;
+        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT);
         if(ViewUtils.isEmpty(eddob)) {
             if (!StringUtils.isBlank(ViewUtils.getInput(edyr)) || !StringUtils.isBlank(ViewUtils.getInput(edmonth))) {
                 int yeardiff = ViewUtils.isEmpty(edyr)? 0 : Integer.parseInt(edyr.getText().toString());

@@ -31,6 +31,7 @@ public final class DateUtils {
 
     private static final String OPEN_MRS_RESPONSE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     public static final String OPEN_MRS_REQUEST_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+    public static final String OPEN_MRS_REQUEST_PATIENT_FORMAT = "yyyy-MM-dd";
 
     public static final Long ZERO = 0L;
 
@@ -67,15 +68,28 @@ public final class DateUtils {
             DateFormat format = new SimpleDateFormat(dateFormat);
             Date formattedDate;
             try {
-                formattedDate = format.parse(dateAsString);
+                formattedDate = parseString(dateAsString, format);
                 time = formattedDate.getTime();
             } catch (ParseException e) {
-                OpenMRS.getInstance().getOpenMRSLogger().w("Failed to parse date :" + dateAsString + " caused by " + e.toString());
-            } catch (NullPointerException e) {
-                OpenMRS.getInstance().getOpenMRSLogger().w("Failed to parse date :" + dateAsString + " caused by " + e.toString());
+                try {
+                    formattedDate = parseString(dateAsString, new SimpleDateFormat(OPEN_MRS_REQUEST_PATIENT_FORMAT));
+                    time = formattedDate.getTime();
+                } catch (ParseException e1) {
+                    OpenMRS.getInstance().getOpenMRSLogger().w("Failed to parse date :" + dateAsString + " caused by " + e.toString());
+                }
             }
         }
         return time;
+    }
+
+    private static Date parseString(String dateAsString, DateFormat format) throws ParseException {
+        Date formattedDate = null;
+        try {
+            formattedDate = format.parse(dateAsString);
+        } catch (NullPointerException e) {
+            OpenMRS.getInstance().getOpenMRSLogger().w("Failed to parse date :" + dateAsString + " caused by " + e.toString());
+        }
+        return formattedDate;
     }
 
     public static DateTime convertTimeString(String dateAsString) {

@@ -54,6 +54,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.ViewUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -88,6 +89,8 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
     private TextView countryerror;
 
     private Button submitConfirm;
+
+    private String[] countries;
 
 
     @Override
@@ -354,7 +357,7 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
     }
 
     private void addSuggestionsToAutoCompleTextView() {
-        String[] countries = getContext().getResources().getStringArray(R.array.countries_array);
+        countries = getContext().getResources().getStringArray(R.array.countries_array);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_dropdown_item_1line, countries);
         edcountry.setAdapter(adapter);
@@ -369,6 +372,18 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
             }
         });
 
+        edcountry.setThreshold(2);
+        edcountry.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (edcountry.getText().length() >= edcountry.getThreshold()) {
+                    edcountry.showDropDown();
+                }
+                if (Arrays.asList(countries).contains(edcountry.getText().toString())) {
+                    edcountry.dismissDropDown();
+                }
+            }
+        });
         if (eddob != null) {
             eddob.setOnClickListener(new View.OnClickListener() {
 

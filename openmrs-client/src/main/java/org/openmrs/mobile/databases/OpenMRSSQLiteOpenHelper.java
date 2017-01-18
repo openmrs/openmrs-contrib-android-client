@@ -138,4 +138,18 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
             statement.bindDouble(columnIndex, columnValue);
         }
     }
+
+    /**
+     * Null safe wrapper method for
+     * @see net.sqlcipher.database.SQLiteStatement#bindBlob(int, byte[])
+     *
+     * @param columnIndex
+     * @param columnValue
+     * @param statement
+     */
+    public void bindBlob(int columnIndex, byte[] columnValue, SQLiteStatement statement) {
+        if (null != columnValue) {
+            statement.bindBlob(columnIndex, columnValue);
+        }
+    }
 }

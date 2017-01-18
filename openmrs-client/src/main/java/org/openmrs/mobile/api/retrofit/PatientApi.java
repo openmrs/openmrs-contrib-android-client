@@ -15,6 +15,8 @@
 package org.openmrs.mobile.api.retrofit;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,6 +32,7 @@ import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.promise.SimplePromise;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
@@ -39,12 +42,16 @@ import org.openmrs.mobile.models.IdentifierType;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientIdentifier;
+import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.ToastUtil;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,7 +61,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PatientApi extends RetrofitApi {
 
     public static final String FULL_REPRESENTATION = "full";
-
+    private OpenMRSLogger logger = new OpenMRSLogger();
     private PatientDAO patientDao = new PatientDAO();
 
     /**
@@ -68,9 +75,9 @@ public class PatientApi extends RetrofitApi {
         final SimpleDeferredObject<Patient> deferred = new SimpleDeferredObject<>();
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
-        Boolean syncstate = prefs.getBoolean("sync", true);
+        Boolean syncState = prefs.getBoolean("sync", true);
 
-        if (syncstate) {
+        if (syncState) {
             AndroidDeferredManager dm = new AndroidDeferredManager();
             dm.when(new LocationApi().getLocationUuid(), getIdGenPatientIdentifier(), getPatientIdentifierTypeUuid())
                     .done(new DoneCallback<MultipleResults>() {
@@ -97,6 +104,9 @@ public class PatientApi extends RetrofitApi {
                                         Patient newPatient = response.body();
 
                                         patient.setUuid(newPatient.getUuid());
+                                        patient.getPerson().setUuid(newPatient.getUuid());
+                                        if (patient.getPerson().getPhoto() != null)
+                                            uploadPatientPhoto(patient);
 
                                         new PatientDAO().updatePatient(patient.getId(), patient);
                                         if(!patient.getEncounters().equals(""))
@@ -139,6 +149,28 @@ public class PatientApi extends RetrofitApi {
         return deferred.promise();
     }
 
+    private void uploadPatientPhoto(final Patient patient) {
+        RestApi apiService = RestServiceBuilder.createService(RestApi.class);
+        PatientPhoto patientPhoto = new PatientPhoto();
+        patientPhoto.setPhoto(patient.getPerson().getPhoto());
+        patientPhoto.setPerson(patient.getPerson());
+        Call<PatientPhoto> personPhotoCall =
+                apiService.uploadPatientPhoto(patient.getUuid(), patientPhoto);
+        personPhotoCall.enqueue(new Callback<PatientPhoto>() {
+            @Override
+            public void onResponse(Call<PatientPhoto> call, Response<PatientPhoto> response) {
+                logger.i(response.message());
+                if (!response.isSuccessful()) {
+                    ToastUtil.error("Patient photo cannot be synced due to server error: "+ response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<PatientPhoto> call, Throwable t) {
+                ToastUtil.notify("Patient photo cannot be synced due to error: " + t.toString() );
+            }
+        });
+    }
+
     /**
      * Register Patient
      */
@@ -162,7 +194,6 @@ public class PatientApi extends RetrofitApi {
     public void updatePatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
         Boolean syncstate = prefs.getBoolean("sync", true);
-        new PatientDAO().updatePatient(patient.getId(), patient);
         if (syncstate) {
             RestApi restApi = RestServiceBuilder.createService(RestApi.class);
             Call<Patient> call = restApi.updatePatient(patient, patient.getUuid(), "full");
@@ -170,6 +201,12 @@ public class PatientApi extends RetrofitApi {
                 @Override
                 public void onResponse(Call<Patient> call, Response<Patient> response) {
                     if (response.isSuccessful()) {
+                        patient.getPerson().setUuid(patient.getUuid());
+                        if (patient.getPerson().getPhoto() != null)
+                            uploadPatientPhoto(patient);
+
+                        new PatientDAO().updatePatient(patient.getId(), patient);
+
                         ToastUtil.success("Patient " + patient.getPerson().getName().getNameString()
                                 + " updated");
                         if (callbackListener != null) {
@@ -212,7 +249,18 @@ public class PatientApi extends RetrofitApi {
             @Override
             public void onResponse(Call<Patient> call, Response<Patient> response) {
                 if (response.isSuccessful()) {
-                    callbackListener.onPatientDownloaded(response.body());
+                    final Patient newPatient = response.body();
+                    AndroidDeferredManager dm = new AndroidDeferredManager();
+                    dm.when(downloadPatientPhotoByUuid(newPatient.getUuid())).done(new DoneCallback<Bitmap>() {
+                        @Override
+                        public void onDone(Bitmap result) {
+                            if (result != null) {
+                                newPatient.getPerson().setPhoto(result);
+                                callbackListener.onPatientPhotoDownloaded(newPatient);
+                            }
+                        }
+                    });
+                    callbackListener.onPatientDownloaded(newPatient);
                 }
                 else {
                     callbackListener.onErrorResponse(response.message());
@@ -224,7 +272,36 @@ public class PatientApi extends RetrofitApi {
             }
         });
     }
-
+    
+    public SimplePromise<Bitmap> downloadPatientPhotoByUuid(String  uuid) {
+        final SimpleDeferredObject<Bitmap> deferredObject = new SimpleDeferredObject<>();
+        RestApi restApi = RestServiceBuilder.createService(RestApi.class);
+        Call<ResponseBody> call = restApi.downloadPatientPhoto(uuid);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                InputStream inputStream;
+                if (response.isSuccessful()) {
+                    inputStream = response.body().byteStream();
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        logger.e(e.getMessage());
+                    }
+                    deferredObject.resolve(bitmap);
+                } else {
+                    Throwable throwable = new Throwable(response.message());
+                    deferredObject.reject(throwable);
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                deferredObject.reject(t);
+            }
+        });
+        return deferredObject.promise();
+    }
 
     private void addEncounters(Patient patient) {
         String enc=patient.getEncounters();

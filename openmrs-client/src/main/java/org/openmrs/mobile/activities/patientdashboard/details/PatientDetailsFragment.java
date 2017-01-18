@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.patientdashboard.details;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
@@ -38,6 +40,8 @@ import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
+
+import java.io.ByteArrayOutputStream;
 
 public class PatientDetailsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDetails {
 
@@ -96,12 +100,27 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     }
 
     @Override
-    public void resolvePatientDataDisplay(Patient patient) {
+    public void resolvePatientDataDisplay(final Patient patient) {
         if (("M").equals(patient.getPerson().getGender())) {
             ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText("Male");
         } else {
             ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText("Female");
         }
+        ImageView patientImageView = (ImageView) rootView.findViewById(R.id.patientPhoto);
+
+        if (patient.getPerson().getPhoto() != null) {
+            final Bitmap photo = patient.getPerson().getPhoto();
+            final String patientName = patient.getPerson().getName().getNameString();
+            patientImageView.setImageBitmap(photo);
+            patientImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showPatientPhoto(photo, patientName);
+                }
+            });
+        }
+
+        ((TextView) rootView.findViewById(R.id.patientDetailsName)).setText(patient.getPerson().getName().getNameString());
 
         Long longTime = DateUtils.convertTime(patient.getPerson().getBirthdate());
         
@@ -165,5 +184,14 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
         updatePatient.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE,
                 String.valueOf(patientId));
         startActivity(updatePatient);
+    }
+
+    public void showPatientPhoto(Bitmap photo, String patientName) {
+        Intent intent = new Intent(getContext(), PatientPhotoActivity.class);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        intent.putExtra("photo", byteArrayOutputStream.toByteArray());
+        intent.putExtra("name", patientName);
+        startActivity(intent);
     }
 }

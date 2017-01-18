@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="dbversion">7</integer>
+    <integer name="dbversion">8</integer>
     <integer name="aadbversion">1</integer>
 
 </resources>

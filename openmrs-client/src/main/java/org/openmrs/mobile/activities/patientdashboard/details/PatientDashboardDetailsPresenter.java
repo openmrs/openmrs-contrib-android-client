@@ -109,6 +109,12 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
             public void onPatientDownloaded(Patient patient) {
                 updatePatientData(patient);
             }
+
+            @Override
+            public void onPatientPhotoDownloaded(Patient patient) {
+                updatePatientData(patient);
+            }
+
             @Override
             public void onResponse() {
                 // This method is intentionally empty

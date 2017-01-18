@@ -43,6 +43,14 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
     private String mQuery;
     private String lastQuery = "";
 
+    public LastViewedPatientsPresenter(@NonNull LastViewedPatientsContract.View mLastViewedPatientsView, String lastQuery) {
+        this.mLastViewedPatientsView = mLastViewedPatientsView;
+        this.mLastViewedPatientsView.setPresenter(this);
+        this.restApi = RestServiceBuilder.createService(RestApi.class);
+        this.patientDAO = new PatientDAO();
+        this.lastQuery = lastQuery;
+    }
+
     public LastViewedPatientsPresenter(@NonNull LastViewedPatientsContract.View mLastViewedPatientsView) {
         this.mLastViewedPatientsView = mLastViewedPatientsView;
         this.mLastViewedPatientsView.setPresenter(this);

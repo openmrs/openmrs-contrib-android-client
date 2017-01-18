@@ -81,6 +81,7 @@ public abstract class ApplicationConstants {
         public static final String PATIENTS_AND_MATCHES = "PATIENTS_AND_MATCHES";
         public static final String FORM_FIELDS_BUNDLE = "formFieldsBundle";
         public static final String FORM_FIELDS_LIST_BUNDLE = "formFieldsListBundle";
+        public static final String PATIENT_QUERY_BUNDLE = "patientQuery";
     }
 
     public abstract static class CustomIntentActions {

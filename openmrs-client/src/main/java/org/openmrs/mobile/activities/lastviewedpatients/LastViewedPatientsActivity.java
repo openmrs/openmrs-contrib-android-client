@@ -25,10 +25,14 @@ import android.view.View;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.StringUtils;
 
 public class LastViewedPatientsActivity extends ACBaseActivity {
 
     private LastViewedPatientsContract.Presenter mPresenter;
+    private SearchView findPatientView;
+    private String query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +55,19 @@ public class LastViewedPatientsActivity extends ACBaseActivity {
                     lastViewedPatientsFragment, R.id.lastPatientsContentFrame);
         }
 
-        // Create the presenter
-        mPresenter = new LastViewedPatientsPresenter(lastViewedPatientsFragment);
+        if(savedInstanceState != null){
+            query = savedInstanceState.getString(ApplicationConstants.BundleKeys.PATIENT_QUERY_BUNDLE, "");
+            mPresenter = new LastViewedPatientsPresenter(lastViewedPatientsFragment, query);
+        } else {
+            mPresenter = new LastViewedPatientsPresenter(lastViewedPatientsFragment);
+        }
+    }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String query = findPatientView.getQuery().toString();
+        outState.putString(ApplicationConstants.BundleKeys.PATIENT_QUERY_BUNDLE, query);
     }
 
     @Override
@@ -71,12 +85,17 @@ public class LastViewedPatientsActivity extends ACBaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.find_patients_remote_menu, menu);
-        final SearchView findPatientView;
         MenuItem mFindPatientMenuItem = menu.findItem(R.id.actionSearchRemote);
         if (OpenMRS.getInstance().isRunningHoneycombVersionOrHigher()) {
             findPatientView = (SearchView) mFindPatientMenuItem.getActionView();
         } else {
             findPatientView = (SearchView) MenuItemCompat.getActionView(mFindPatientMenuItem);
+        }
+
+        if(StringUtils.notEmpty(query)){
+            mFindPatientMenuItem.expandActionView();
+            findPatientView.setQuery(query, true);
+            findPatientView.clearFocus();
         }
 
         // Search function

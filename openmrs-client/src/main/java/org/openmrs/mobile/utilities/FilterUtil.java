@@ -61,16 +61,15 @@ public class FilterUtil {
     }
 
     private static List<String> getPatientSearchableWords(Patient patient) {
-        String patientName = patient.getPerson().getNames().get(0).getGivenName();
-        String patientMiddleName = patient.getPerson().getNames().get(0).getMiddleName();
-        String patientSurname = patient.getPerson().getNames().get(0).getFamilyName();
         String patientIdentifier = patient.getIdentifier().getIdentifier();
+        String fullName = patient.getPerson().getName().getNameString();
+        String givenFamilyName = patient.getPerson().getName().getGivenName() + " "
+                + patient.getPerson().getName().getFamilyName();
 
         List<String> searchableWords = new ArrayList<>();
-        searchableWords.add(patientName);
-        searchableWords.add(patientMiddleName);
-        searchableWords.add(patientSurname);
         searchableWords.add(patientIdentifier);
+        searchableWords.add(fullName);
+        searchableWords.add(givenFamilyName);
 
         return searchableWords;
     }
@@ -89,7 +88,10 @@ public class FilterUtil {
     private static boolean doesAnySearchableWordFitQuery(List<String> searchableWords, String query) {
         for (String searchableWord : searchableWords) {
             if (searchableWord != null) {
-                boolean fits = searchableWord.length() >= query.length() && searchableWord.substring(0, query.length()).equalsIgnoreCase(query);
+                int queryLength = query.trim().length();
+                searchableWord = searchableWord.toLowerCase();
+                query = query.toLowerCase().trim();
+                boolean fits = searchableWord.length() >= queryLength && searchableWord.contains(query);
                 if (fits) {
                     return true;
                 }

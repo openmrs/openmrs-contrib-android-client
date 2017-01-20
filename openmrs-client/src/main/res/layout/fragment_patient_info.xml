@@ -387,7 +387,7 @@
                                 android:focusable="true"
                                 android:imeOptions="actionNext"
                                 android:hint="@string/patient_country_label"
-                                android:inputType="text"
+                                android:inputType="textCapSentences"
                                 android:maxLines="1"
                                 android:textSize="14sp" />
 

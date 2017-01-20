@@ -81,6 +81,12 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
         if (savedInstanceState != null) {
             FormFieldsWrapper formFieldsWrapper = (FormFieldsWrapper) savedInstanceState.getSerializable(ApplicationConstants.BundleKeys.FORM_FIELDS_BUNDLE);
             inputFields = formFieldsWrapper.getInputFields();
+            for(InputField field:inputFields){
+                if(field.getIsRed()==1){
+                    RangeEditText ed = (RangeEditText) getActivity().findViewById(field.getId());
+                    ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
+                }
+            }
             selectOneFields = formFieldsWrapper.getSelectOneFields();
         }
     }
@@ -103,6 +109,7 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
         RangeEditText ed = new RangeEditText(getActivity());
         ed.setName(question.getLabel());
         ed.setSingleLine(true);
+
         if (question.getQuestionOptions().getMax()!=null)
         {   ed.setHint(question.getLabel()+" ["+question.getQuestionOptions().getMin()+"-"+
                 question.getQuestionOptions().getMax()+"]");
@@ -315,10 +322,14 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
     public List<InputField> getInputFields() {
         for (InputField field:inputFields) {
             RangeEditText ed=(RangeEditText) getActivity().findViewById(field.getId());
-            if(!isEmpty(ed))
+            if(!isEmpty(ed)){
                 field.setValue(Double.parseDouble(ed.getText().toString()));
-            else
+                int isRed=(ed.getCurrentTextColor()==ContextCompat.getColor(OpenMRS.getInstance(), R.color.red))?1:0 ;
+                field.setIsRed(isRed);
+            }
+            else{
                 field.setValue(-1.0);
+            }
         }
         return inputFields;
     }

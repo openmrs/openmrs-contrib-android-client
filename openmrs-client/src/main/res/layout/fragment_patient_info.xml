@@ -345,19 +345,19 @@
                             android:layout_marginTop="20dp"
                             android:weightSum="2">
 
-                            <EditText
-                                android:id="@+id/city"
+                            <AutoCompleteTextView
+                                android:id="@+id/country"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:focusable="true"
                                 android:imeOptions="actionNext"
-                                android:hint="@string/patient_city_label"
-                                android:inputType="text"
+                                android:hint="@string/patient_country_label"
+                                android:inputType="textCapSentences"
                                 android:maxLines="1"
                                 android:textSize="14sp" />
 
-                            <EditText
+                            <AutoCompleteTextView
                                 android:id="@+id/state"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -379,15 +379,15 @@
                             android:layout_marginTop="20dp"
                             android:weightSum="2">
 
-                            <AutoCompleteTextView
-                                android:id="@+id/country"
+                            <EditText
+                                android:id="@+id/city"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:focusable="true"
                                 android:imeOptions="actionNext"
-                                android:hint="@string/patient_country_label"
-                                android:inputType="textCapSentences"
+                                android:hint="@string/patient_city_label"
+                                android:inputType="text"
                                 android:maxLines="1"
                                 android:textSize="14sp" />
 

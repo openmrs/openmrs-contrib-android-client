@@ -47,6 +47,8 @@ public interface LastViewedPatientsContract {
         void stopRefreshing();
 
         void showErrorToast(String message);
+
+        void showOpenPatientSnackbar(Long patientId);
     }
 
     interface Presenter extends BasePresenter {

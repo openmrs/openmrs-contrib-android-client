@@ -14,9 +14,12 @@
 
 package org.openmrs.mobile.activities.lastviewedpatients;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,11 +27,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.Serializable;
@@ -130,7 +136,7 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
     }
 
     public void updateList(List<Patient> patientList) {
-        mAdapter = new LastViewedPatientRecyclerViewAdapter(this.getActivity(), patientList);
+        mAdapter = new LastViewedPatientRecyclerViewAdapter(this.getActivity(), patientList, this);
         mPatientsRecyclerView.setAdapter(mAdapter);
     }
 
@@ -145,5 +151,28 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
     @Override
     public void showErrorToast(String message) {
         ToastUtil.error(message);
+    }
+
+    @Override
+    public void showOpenPatientSnackbar(final Long patientId) {
+        FrameLayout frameLayout = (FrameLayout) mSwipeRefreshLayout.findViewById(R.id.swipe_container);
+        Snackbar snackbar = Snackbar.make(frameLayout, getResources().getString(R.string.snackbar_info_patient_downloaded), Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(Color.WHITE);
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.setAction(getResources().getString(R.string.snackbar_action_open), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPatientDashboardActivity(patientId);
+            }
+        });
+        snackbar.show();
+    }
+
+    private void openPatientDashboardActivity(Long patientId) {
+        Intent intent = new Intent(this.getContext(), PatientDashboardActivity.class);
+        intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patientId);
+        this.getContext().startActivity(intent);
     }
 }

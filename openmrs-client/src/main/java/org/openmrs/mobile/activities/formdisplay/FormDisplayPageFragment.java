@@ -103,28 +103,26 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
         RangeEditText ed = new RangeEditText(getActivity());
         ed.setName(question.getLabel());
         ed.setSingleLine(true);
-        if (question.getQuestionOptions().getMax()!=null)
-        {   ed.setHint(question.getLabel()+" ["+question.getQuestionOptions().getMin()+"-"+
-                question.getQuestionOptions().getMax()+"]");
+        if (question.getQuestionOptions().getMax() != null) {
+            ed.setHint(" [" + question.getQuestionOptions().getMin() + "-" +
+                    question.getQuestionOptions().getMax() + "]");
             ed.setUpperlimit(Double.parseDouble(question.getQuestionOptions().getMax()));
             ed.setLowerlimit(Double.parseDouble(question.getQuestionOptions().getMin()));
-        }
-        else {
+        } else {
             ed.setHint(question.getLabel());
             ed.setLowerlimit(-1.0);
             ed.setUpperlimit(-1.0);
         }
-        ed.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
+        ed.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
         if (question.getQuestionOptions().isAllowDecimal()) {
             ed.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        }
-        else {
+        } else {
             ed.setInputType(InputType.TYPE_CLASS_NUMBER);
         }
         InputField field = new InputField(question.getQuestionOptions().getConcept());
         ed.setId(field.getId());
         InputField inputField = getInputField(field.getConcept());
-        if (inputField != null){
+        if (inputField != null) {
             inputField.setId(field.getId());
             Double value = inputField.getValue();
             if (-1.0 != value) ed.setText(value.toString());
@@ -132,7 +130,18 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
             field.setConcept(question.getQuestionOptions().getConcept());
             inputFields.add(field);
         }
-        sectionLinearLayout.addView(ed,layoutParams);
+        sectionLinearLayout.addView(generateTextView(question.getLabel()));
+        sectionLinearLayout.addView(ed, layoutParams);
+    }
+
+    private View generateTextView(String text) {
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.setMargins(10,0,0,0);
+        TextView textView = new TextView(getActivity());
+        textView.setText(text);
+        textView.setLayoutParams(layoutParams);
+        return textView;
     }
 
     public InputField getInputField(String concept){

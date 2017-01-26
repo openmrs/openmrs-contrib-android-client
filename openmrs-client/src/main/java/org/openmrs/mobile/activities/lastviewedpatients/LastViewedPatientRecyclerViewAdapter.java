@@ -49,11 +49,13 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
     private boolean isLongClicked = false;
     private boolean enableDownload = true;
     private ActionMode actionMode;
+    private LastViewedPatientsContract.View view;
 
-    LastViewedPatientRecyclerViewAdapter(Activity context, List<Patient> items) {
+    LastViewedPatientRecyclerViewAdapter(Activity context, List<Patient> items, LastViewedPatientsContract.View view) {
         this.mContext = context;
         this.mItems = items;
         this.selectedPatientPositions = new HashSet<>();
+        this.view = view;
     }
 
     public List<Patient> getmItems() {
@@ -258,7 +260,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
     public void downloadSelectedPatients() {
         ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE, R.string.download_started);
         for (Integer selectedPatientPosition : selectedPatientPositions) {
-            downloadPatient(mItems.get(selectedPatientPosition));
+            downloadPatient(mItems.get(selectedPatientPosition), false);
         }
         notifyDataSetChanged();
     }
@@ -275,7 +277,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
                 @Override
                 public void onClick(View v) {
                     if (!isLongClicked && ((CheckBox) v).isChecked()) {
-                        downloadPatient(patient);
+                        downloadPatient(patient, true);
                         disableCheckBox(holder);
                     }
                 }
@@ -283,7 +285,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
         }
     }
 
-    private void downloadPatient(final Patient patient) {
+    private void downloadPatient(final Patient patient, final Boolean showSnackBar) {
         new PatientApi().downloadPatientByUuid(patient.getUuid(), new DownloadPatientCallbackListener() {
             @Override
             public void onPatientDownloaded(Patient newPatient) {
@@ -293,6 +295,9 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
                 new VisitApi().syncLastVitals(newPatient.getUuid());
                 mItems.remove(patient);
                 notifyDataSetChanged();
+                if (showSnackBar) {
+                    view.showOpenPatientSnackbar(newPatient.getId());
+                }
             }
 
             @Override

@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.utilities;
 
+import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -24,6 +25,7 @@ public class InputField implements Serializable, Parcelable {
     private int id;
     private String concept;
     private double value = -1.0;
+    private int isRed = 0;
 
     public InputField(String concept) {
         this.concept = concept;
@@ -54,6 +56,10 @@ public class InputField implements Serializable, Parcelable {
         return value;
     }
 
+    public void setIsRed(int isRed) {this.isRed=isRed; }
+
+    public int getIsRed() {return isRed; }
+
     @Override
     public int describeContents() {
         return 0;
@@ -64,12 +70,14 @@ public class InputField implements Serializable, Parcelable {
         dest.writeInt(this.id);
         dest.writeString(this.concept);
         dest.writeDouble(this.value);
+        dest.writeInt(this.isRed);
     }
 
     protected InputField(Parcel in) {
         this.id = in.readInt();
         this.concept = in.readString();
         this.value = in.readDouble();
+        this.isRed=in.readInt();
     }
 
     public static final Parcelable.Creator<InputField> CREATOR = new Parcelable.Creator<InputField>() {

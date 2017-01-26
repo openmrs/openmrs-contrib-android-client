@@ -101,7 +101,6 @@ public class PatientDashboardActivity extends ACBaseActivity {
             @Override
             public void onTabSelected(int position) {
                 viewPager.setCurrentItem(position);
-                viewPager.getAdapter().notifyDataSetChanged();
             }
         });
     }

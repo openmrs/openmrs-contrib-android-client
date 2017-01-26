@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.utilities;
 
+import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -25,6 +26,7 @@ public class InputField implements Serializable, Parcelable {
     private String concept;
     private double value = -1.0;
     private boolean isRed = false;
+
 
     public InputField(String concept) {
         this.concept = concept;

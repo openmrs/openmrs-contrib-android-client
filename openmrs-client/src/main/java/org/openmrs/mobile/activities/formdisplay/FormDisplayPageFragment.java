@@ -83,6 +83,7 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
             inputFields = formFieldsWrapper.getInputFields();
             for(InputField field:inputFields){
                 if(field.getIsRed()==true){
+
                     RangeEditText ed = (RangeEditText) getActivity().findViewById(field.getId());
                     ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
                 }

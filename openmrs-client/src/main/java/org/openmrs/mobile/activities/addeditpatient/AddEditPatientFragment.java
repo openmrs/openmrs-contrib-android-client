@@ -58,6 +58,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+
+
 public class AddEditPatientFragment extends Fragment implements AddEditPatientContract.View {
 
     private AddEditPatientContract.Presenter mPresenter;
@@ -74,7 +76,7 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
     private EditText edaddr1;
     private EditText edaddr2;
     private EditText edcity;
-    private EditText edstate;
+    private AutoCompleteTextView edstate;
     private AutoCompleteTextView edcountry;
     private EditText edpostal;
 
@@ -301,7 +303,7 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
         edaddr1=(EditText)v.findViewById(R.id.addr1);
         edaddr2=(EditText)v.findViewById(R.id.addr2);
         edcity=(EditText)v.findViewById(R.id.city);
-        edstate=(EditText)v.findViewById(R.id.state);
+        edstate=(AutoCompleteTextView) v.findViewById(R.id.state);
         edcountry=(AutoCompleteTextView) v.findViewById(R.id.country);
         edpostal=(EditText)v.findViewById(R.id.postal);
 
@@ -356,11 +358,31 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
         }
     }
 
+
+
     private void addSuggestionsToAutoCompleTextView() {
         countries = getContext().getResources().getStringArray(R.array.countries_array);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_dropdown_item_1line, countries);
         edcountry.setAdapter(adapter);
+
+    }
+    private void addSuggestionsToCities(){
+        String country_name = edcountry.getText().toString() ;
+        country_name = country_name.replace("(","");
+        country_name = country_name.replace(")","");
+        country_name = country_name.replace(" ","");
+        country_name = country_name.replace("-","_");
+        country_name = country_name.replace(".","");
+        country_name = country_name.replace("'","");
+        int resourceId = this.getResources().getIdentifier(country_name.toLowerCase(),"array",getContext().getPackageName());
+        if ( resourceId != 0 ) {
+            System.out.println("Hello");
+            String[] states =  getContext().getResources().getStringArray(resourceId);
+            ArrayAdapter<String> state_adapter = new ArrayAdapter<>(getContext(),
+                    android.R.layout.simple_dropdown_item_1line, states);
+            edstate.setAdapter(state_adapter);
+        }
     }
 
     private void addListeners() {
@@ -382,6 +404,12 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
                 if (Arrays.asList(countries).contains(edcountry.getText().toString())) {
                     edcountry.dismissDropDown();
                 }
+            }
+        });
+        edstate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                addSuggestionsToCities();
             }
         });
         if (eddob != null) {

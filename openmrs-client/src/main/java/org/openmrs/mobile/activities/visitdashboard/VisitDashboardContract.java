@@ -37,12 +37,19 @@ public interface VisitDashboardContract {
         void updateList(List<Encounter> visitEncounters);
 
         void setEmptyListVisibility(boolean visibility);
+
+        void setActionBarTitle(String name);
+
+        void setActiveVisitMenu();
     }
 
     interface Presenter extends BasePresenter {
         
         void fillForm();
 
+        void updatePatientName();
+
+        void checkIfVisitActive();
     }
 
 }

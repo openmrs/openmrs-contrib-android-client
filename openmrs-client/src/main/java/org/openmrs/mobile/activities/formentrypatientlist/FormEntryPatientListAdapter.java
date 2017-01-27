@@ -32,6 +32,8 @@ import org.openmrs.mobile.utilities.ImageUtils;
 
 import java.util.List;
 
+import rx.android.schedulers.AndroidSchedulers;
+
 public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryPatientListAdapter.PatientViewHolder> {
     private FormEntryPatientListFragment mContext;
     private List<Patient> mItems;
@@ -52,16 +54,20 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
     public void onBindViewHolder(PatientViewHolder holder, final int position) {
         final int adapterPos = holder.getAdapterPosition();
         final Patient patient = mItems.get(adapterPos);
-        if (new VisitDAO().isPatientNowOnVisit(patient.getId())) {
-            holder.mVisitStatusIcon.setVisibility(View.VISIBLE);
-            holder.mVisitStatusIcon.setImageBitmap(
-                    ImageUtils.decodeBitmapFromResource(mContext.getResources(), R.drawable.active_visit_dot,
-                            holder.mVisitStatusIcon.getLayoutParams().width, holder.mVisitStatusIcon.getLayoutParams().height));
-            holder.mVisitStatus.setText(mContext.getString(R.string.active_visit_label_capture_vitals));
-        } else {
-            holder.mVisitStatusIcon.setVisibility(View.GONE);
-            holder.mVisitStatus.setText(ApplicationConstants.EMPTY_STRING);
-        }
+        new VisitDAO().getActiveVisitByPatientId(patient.getId())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(visit -> {
+                    if (visit != null) {
+                        holder.mVisitStatusIcon.setVisibility(View.VISIBLE);
+                        holder.mVisitStatusIcon.setImageBitmap(
+                                ImageUtils.decodeBitmapFromResource(mContext.getResources(), R.drawable.active_visit_dot,
+                                        holder.mVisitStatusIcon.getLayoutParams().width, holder.mVisitStatusIcon.getLayoutParams().height));
+                        holder.mVisitStatus.setText(mContext.getString(R.string.active_visit_label_capture_vitals));
+                    } else {
+                        holder.mVisitStatusIcon.setVisibility(View.GONE);
+                        holder.mVisitStatus.setText(ApplicationConstants.EMPTY_STRING);
+                    }
+                });
         if (null != patient.getIdentifier()) {
             final String display = "#" + patient.getIdentifier().getIdentifier();
             holder.mIdentifier.setText(display);
@@ -73,12 +79,8 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
             holder.mGender.setText(patient.getPerson().getGender());
         }
 
-        holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mContext.startEncounterForPatient(mItems.get(adapterPos).getId());
-            }
-        });
+        holder.mRowLayout.setOnClickListener(v ->
+                mContext.startEncounterForPatient(mItems.get(adapterPos).getId()));
 
         holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
     }

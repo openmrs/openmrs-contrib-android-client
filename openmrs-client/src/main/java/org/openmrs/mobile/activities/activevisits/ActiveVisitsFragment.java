@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
@@ -37,6 +38,7 @@ public class ActiveVisitsFragment extends Fragment implements ActiveVisitsContra
 
     private RecyclerView visitsRecyclerView;
     private TextView emptyList;
+    private ProgressBar progressBar;
 
     public static ActiveVisitsFragment newInstance(){
         return new ActiveVisitsFragment();
@@ -47,6 +49,7 @@ public class ActiveVisitsFragment extends Fragment implements ActiveVisitsContra
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_active_visits, container, false);
 
+        progressBar = (ProgressBar)root.findViewById(R.id.progressBar);
         visitsRecyclerView = (RecyclerView) root.findViewById(R.id.visitsRecyclerView);
         visitsRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
@@ -58,7 +61,6 @@ public class ActiveVisitsFragment extends Fragment implements ActiveVisitsContra
         emptyList.setText(getString(R.string.search_visits_no_results));
         emptyList.setVisibility(View.INVISIBLE);
 
-        mPresenter.updateVisitsInDatabaseList();
 
         FontsUtil.setFont((ViewGroup) this.getActivity().findViewById(android.R.id.content));
 
@@ -66,7 +68,15 @@ public class ActiveVisitsFragment extends Fragment implements ActiveVisitsContra
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mPresenter.updateVisitsInDatabaseList();
+
+    }
+
+    @Override
     public void updateListVisibility(List<Visit> visits) {
+        progressBar.setVisibility(View.GONE);
         if (visits.isEmpty()) {
             visitsRecyclerView.setVisibility(View.GONE);
             emptyList.setVisibility(View.VISIBLE);

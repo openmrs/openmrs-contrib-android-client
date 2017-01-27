@@ -21,13 +21,17 @@ import org.openmrs.mobile.utilities.FilterUtil;
 
 import java.util.List;
 
+import rx.android.schedulers.AndroidSchedulers;
+
 public class ActiveVisitPresenter implements ActiveVisitsContract.Presenter{
 
     private ActiveVisitsContract.View mActiveVisitsView;
+    private VisitDAO visitDAO;
 
     public ActiveVisitPresenter(ActiveVisitsContract.View mActiveVisitsView) {
         this.mActiveVisitsView = mActiveVisitsView;
         this.mActiveVisitsView.setPresenter(this);
+        this.visitDAO = new VisitDAO();
     }
 
     @Override
@@ -38,13 +42,20 @@ public class ActiveVisitPresenter implements ActiveVisitsContract.Presenter{
     @Override
     public void updateVisitsInDatabaseList() {
         mActiveVisitsView.setEmptyListText(R.string.search_visits_no_results);
-        List<Visit> visits = new VisitDAO().getAllActiveVisits();
-        mActiveVisitsView.updateListVisibility(visits);
+        visitDAO.getActiveVisits()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(visits -> {
+                    mActiveVisitsView.updateListVisibility(visits);
+                });
     }
 
-    public void updateVisitsInDatabaseList(String query) {
+    public void updateVisitsInDatabaseList(final String query) {
         mActiveVisitsView.setEmptyListText(R.string.search_patient_no_result_for_query, query);
-        List<Visit> visits = FilterUtil.getPatientsWithActiveVisitsFilteredByQuery(new VisitDAO().getAllActiveVisits(), query);
-        mActiveVisitsView.updateListVisibility(visits);
+        visitDAO.getActiveVisits()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(visits -> {
+                    visits = FilterUtil.getPatientsWithActiveVisitsFilteredByQuery(visits, query);
+                    mActiveVisitsView.updateListVisibility(visits);
+                });
     }
 }

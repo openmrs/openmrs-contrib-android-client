@@ -45,6 +45,7 @@
             android:gravity="center"
             android:background="@drawable/button_cancel"
             android:textColor="@color/white"
+            style="@style/Widget.AppCompat.Button.Borderless"
             />
         <Button
             android:id="@+id/dialogFormButtonsSubmitButton"
@@ -57,6 +58,7 @@
             android:gravity="center"
             android:background="@drawable/button_apply"
             android:textColor="@color/white"
+            style="@style/Widget.AppCompat.Button.Borderless"
             />
     </LinearLayout>
 </RelativeLayout>

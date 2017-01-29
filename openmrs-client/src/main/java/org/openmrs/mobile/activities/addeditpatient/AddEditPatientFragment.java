@@ -377,7 +377,6 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
         country_name = country_name.replace("'","");
         int resourceId = this.getResources().getIdentifier(country_name.toLowerCase(),"array",getContext().getPackageName());
         if ( resourceId != 0 ) {
-            System.out.println("Hello");
             String[] states =  getContext().getResources().getStringArray(resourceId);
             ArrayAdapter<String> state_adapter = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_dropdown_item_1line, states);

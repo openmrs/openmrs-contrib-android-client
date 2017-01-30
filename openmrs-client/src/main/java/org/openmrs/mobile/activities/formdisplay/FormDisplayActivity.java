@@ -65,7 +65,6 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
             String formName = (String) bundle.get(ApplicationConstants.BundleKeys.FORM_NAME);
             getSupportActionBar().setTitle(formName + " Form");
         }
-        mPresenter = new FormDisplayMainPresenter(this, bundle);
 
         initViewComponents(valuereference);
     }
@@ -84,9 +83,8 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
 
     @Override
     public void onAttachFragment (Fragment fragment) {
-        mPresenter = new FormDisplayMainPresenter(this, getIntent().getExtras());
-        mPresenter.addFragment(fragment);
         attachPresenterToFragment(fragment);
+        super.onAttachFragment(fragment);
     }
 
     private void attachPresenterToFragment(Fragment fragment) {
@@ -168,6 +166,8 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
                 // This method is intentionally empty
             }
         });
+
+        mPresenter = new FormDisplayMainPresenter(this, getIntent().getExtras(), (FormPageAdapter) mViewPager.getAdapter());
 
         // Set page indicators:
         mDotsCount = formPageAdapter.getCount();

@@ -10,7 +10,6 @@
 
 package org.openmrs.mobile.activities.formdisplay;
 
-import android.app.Fragment;
 import android.widget.LinearLayout;
 
 import org.openmrs.mobile.activities.BasePresenter;
@@ -51,7 +50,6 @@ public interface FormDisplayContract {
 
         interface MainPresenter extends Presenter {
             void createEncounter();
-            void addFragment(Fragment fragment);
         }
 
         interface PagePresenter extends Presenter{}

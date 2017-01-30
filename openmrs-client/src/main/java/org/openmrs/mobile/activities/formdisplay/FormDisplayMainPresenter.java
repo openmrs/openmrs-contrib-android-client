@@ -12,6 +12,7 @@ package org.openmrs.mobile.activities.formdisplay;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.SparseArray;
 
 import org.joda.time.LocalDateTime;
 import org.openmrs.mobile.api.EncounterService;
@@ -37,15 +38,15 @@ public class FormDisplayMainPresenter implements FormDisplayContract.Presenter.M
     private final String mFormname;
     private FormDisplayContract.View.MainView mFormDisplayView;
     private Patient mPatient;
-    private List<Fragment> mFragList = new ArrayList<>();
+    private FormPageAdapter mPageAdapter;
 
-    public FormDisplayMainPresenter(FormDisplayContract.View.MainView mFormDisplayView, Bundle bundle) {
+    public FormDisplayMainPresenter(FormDisplayContract.View.MainView mFormDisplayView, Bundle bundle, FormPageAdapter mPageAdapter) {
         this.mFormDisplayView = mFormDisplayView;
         this.mPatientID =(long) bundle.get(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE);
         this.mPatient =new PatientDAO().findPatientByID(Long.toString(mPatientID));
         this.mEncountertype =(String)bundle.get(ApplicationConstants.BundleKeys.ENCOUNTERTYPE);
         this.mFormname = (String) bundle.get(ApplicationConstants.BundleKeys.FORM_NAME);
-
+        this.mPageAdapter = mPageAdapter;
         mFormDisplayView.setPresenter(this);
     }
 
@@ -67,10 +68,10 @@ public class FormDisplayMainPresenter implements FormDisplayContract.Presenter.M
 
         List<Obscreate> observations=new ArrayList<>();
 
-        List<Fragment> activefrag=getActiveFragments();
+        SparseArray<Fragment> activefrag = mPageAdapter.getRegisteredFragments();
         boolean valid=true;
-        for (Fragment f:activefrag) {
-            FormDisplayPageFragment formPageFragment=(FormDisplayPageFragment)f;
+        for (int i = 0;i < activefrag.size();i++) {
+            FormDisplayPageFragment formPageFragment=(FormDisplayPageFragment)activefrag.get(i);
             if(!formPageFragment.checkInputFields()) {
                 valid=false;
                 break;
@@ -137,24 +138,5 @@ public class FormDisplayMainPresenter implements FormDisplayContract.Presenter.M
         else {
             mFormDisplayView.enableSubmitButton(true);
         }
-    }
-
-
-
-
-    @Override
-    public void addFragment(Fragment fragment) {
-        mFragList.add(fragment);
-    }
-
-    private List<Fragment> getActiveFragments() {
-        ArrayList<Fragment> ret = new ArrayList<>();
-
-        for(Fragment f : mFragList) {
-            if(f != null && f.isVisible()) {
-                ret.add(f);
-            }
-        }
-        return ret;
     }
 }

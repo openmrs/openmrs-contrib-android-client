@@ -20,4 +20,5 @@ public interface DownloadPatientCallbackListener extends DefaultResponseCallback
 
     void onPatientDownloaded(Patient patient);
 
+    void onPatientPhotoDownloaded(Patient patient);
 }

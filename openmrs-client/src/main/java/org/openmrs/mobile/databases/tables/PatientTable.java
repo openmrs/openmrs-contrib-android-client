@@ -26,7 +26,7 @@ public class PatientTable extends Table<Patient> {
      *
      * @see org.openmrs.mobile.databases.tables.Table#values(int)
      */
-    private static final int INSERT_COLUMNS_COUNT = 19;
+    private static final int INSERT_COLUMNS_COUNT = 20;
 
     @Override
     public String createTableDefinition() {
@@ -44,6 +44,7 @@ public class PatientTable extends Table<Patient> {
                 + Column.DEATH_DATE + Column.Type.DATE_TYPE_WITH_COMMA
                 + Column.CAUSE_OF_DEATH + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.AGE + Column.Type.TEXT_TYPE_WITH_COMMA
+                + Column.PHOTO + Column.Type.BLOB_TYPE_WITH_COMMA
                 + Column.ADDRESS_1 + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.ADDRESS_2 + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.POSTAL_CODE + Column.Type.TEXT_TYPE_WITH_COMMA
@@ -68,7 +69,8 @@ public class PatientTable extends Table<Patient> {
                 + Column.BIRTH_DATE + Column.COMMA
                 + Column.DEATH_DATE + Column.COMMA 
                 + Column.CAUSE_OF_DEATH + Column.COMMA
-                + Column.AGE + Column.COMMA 
+                + Column.AGE + Column.COMMA
+                + Column.PHOTO + Column.COMMA
                 + Column.ADDRESS_1 + Column.COMMA  
                 + Column.ADDRESS_2 + Column.COMMA
                 + Column.POSTAL_CODE + Column.COMMA 
@@ -113,6 +115,7 @@ public class PatientTable extends Table<Patient> {
         public static final String DEATH_DATE = "deathDate";
         public static final String CAUSE_OF_DEATH = "causeOfDeath";
         public static final String AGE = "age";
+        public static final String PHOTO = "photo";
         public static final String ADDRESS_1 = "address1";
         public static final String ADDRESS_2 = "address2";
         public static final String POSTAL_CODE = "postalCode";

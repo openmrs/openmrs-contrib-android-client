@@ -15,6 +15,9 @@
 package org.openmrs.mobile.dao;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import net.sqlcipher.Cursor;
 
 import org.openmrs.mobile.application.OpenMRS;
@@ -27,6 +30,7 @@ import org.openmrs.mobile.models.Person;
 import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
 
+import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -89,6 +93,9 @@ public class PatientDAO {
 
         person.setGender(cursor.getString(cursor.getColumnIndex(PatientTable.Column.GENDER)));
         person.setBirthdate(cursor.getString(cursor.getColumnIndex(PatientTable.Column.BIRTH_DATE)));
+        byte[] photoByteArray = cursor.getBlob(cursor.getColumnIndex(PatientTable.Column.PHOTO));
+        if (photoByteArray != null)
+            person.setPhoto(byteArrayToBitmap(photoByteArray));
         person.getAddresses().add(cursorToAddress(cursor));
 
         patient.setPerson(person);
@@ -197,4 +204,10 @@ public class PatientDAO {
 
         return personAddress;
     }
+
+    private Bitmap byteArrayToBitmap(byte[] imageByteArray) {
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(imageByteArray);
+        return BitmapFactory.decodeStream(inputStream);
+    }
+
 }

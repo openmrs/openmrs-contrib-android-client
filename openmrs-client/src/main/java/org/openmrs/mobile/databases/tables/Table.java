@@ -97,6 +97,10 @@ public abstract class Table<T> {
             public static final String INT_TYPE = " integer";
             public static final String INT_TYPE_WITH_COMMA = INT_TYPE + COMMA;
             public static final String INT_TYPE_NOT_NULL = " integer not null,";
+            public static final String BLOB_TYPE = " blob";
+            public static final String BLOB_TYPE_WITH_COMMA = BLOB_TYPE + COMMA;
+            public static final String BLOB_TYPE_NOT_NULL = " blob not null,";
+
         }
     }
 }

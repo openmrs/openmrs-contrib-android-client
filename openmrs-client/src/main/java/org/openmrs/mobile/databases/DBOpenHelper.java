@@ -16,6 +16,7 @@ package org.openmrs.mobile.databases;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteStatement;
@@ -33,9 +34,9 @@ import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
+import java.io.ByteArrayOutputStream;
 
 import java.util.concurrent.Callable;
-
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -119,16 +120,19 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindLong(10, null, patientStatement);
             bindString(11, null, patientStatement);
             bindString(12, null, patientStatement);
-            if (null != patient.getPerson().getAddress()) {
-                bindString(13, patient.getPerson().getAddress().getAddress1(), patientStatement);
-                bindString(14, patient.getPerson().getAddress().getAddress2(), patientStatement);
-                bindString(15, patient.getPerson().getAddress().getPostalCode(), patientStatement);
-                bindString(16, patient.getPerson().getAddress().getCountry(), patientStatement);
-                bindString(17, patient.getPerson().getAddress().getStateProvince(), patientStatement);
-                bindString(18, patient.getPerson().getAddress().getCityVillage(), patientStatement);
+            if (null != patient.getPerson().getPhoto()) {
+                bindBlob(13, bitmapToByteArray(patient.getPerson().getPhoto()), patientStatement);
             }
-            bindString(19, patient.getEncounters(), patientStatement);
-            bindString(20, null, patientStatement);
+            if (null != patient.getPerson().getAddress()) {
+                bindString(14, patient.getPerson().getAddress().getAddress1(), patientStatement);
+                bindString(15, patient.getPerson().getAddress().getAddress2(), patientStatement);
+                bindString(16, patient.getPerson().getAddress().getPostalCode(), patientStatement);
+                bindString(17, patient.getPerson().getAddress().getCountry(), patientStatement);
+                bindString(18, patient.getPerson().getAddress().getStateProvince(), patientStatement);
+                bindString(19, patient.getPerson().getAddress().getCityVillage(), patientStatement);
+            }
+            bindString(20, patient.getEncounters(), patientStatement);
+            bindString(21, null, patientStatement);
             patientId = patientStatement.executeInsert();
             patientStatement.clearBindings();
             db.setTransactionSuccessful();
@@ -159,6 +163,10 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         newValues.put(PatientTable.Column.DEATH_DATE, (Long) null);
         newValues.put(PatientTable.Column.CAUSE_OF_DEATH, (String) null);
         newValues.put(PatientTable.Column.AGE, (String) null);
+        if (null != patient.getPerson().getPhoto()) {
+            mLogger.i("inserting into db");
+            newValues.put(PatientTable.Column.PHOTO, bitmapToByteArray(patient.getPerson().getPhoto()));
+        }
 
         if (null != patient.getPerson().getAddress()) {
             newValues.put(PatientTable.Column.ADDRESS_1, patient.getPerson().getAddress().getAddress1());
@@ -336,5 +344,10 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     public static <T> Observable<T> createObservableIO(final Callable<T> func) {
         return Observable.fromCallable(func)
                 .subscribeOn(Schedulers.io());
+    }
+    private byte[] bitmapToByteArray(Bitmap image) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+        return outputStream.toByteArray();
     }
 }

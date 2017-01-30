@@ -16,10 +16,7 @@ package org.openmrs.mobile.activities.activevisits;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.FilterUtil;
-
-import java.util.List;
 
 import rx.android.schedulers.AndroidSchedulers;
 

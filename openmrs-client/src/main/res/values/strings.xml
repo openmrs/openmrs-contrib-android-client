@@ -50,16 +50,15 @@
     <string name="atleastone">Fill at least one field</string>
     <string name="incorrect_country">Country name is incorrect</string>
 
-
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="dob_hint">Date of Birth</string>
     <string name="estyr">Estimated Years</string>
     <string name="estmonth">Estimated Months</string>
-    
+    <string name="capture_photo">Capture photo</string>
+
     <!-- Offline Mode -->
     <string name="offline_mode_unsupported_in_first_login">Offline mode is not supported during first login.Enable online mode and then try again.</string>
-
 
     <!-- Connection Timeout dialog -->
     <string name="conn_timeout_dialog_title">Connection Failed</string>
@@ -160,6 +159,8 @@
     <string name="patient_scroll_tab_vitals_label">Vitals</string>
     <string name="download_started">"Downloading..."</string>
     <!-- fragment_patient_details layout -->
+    <string name="patient_details_full_name_label">Full Name</string>
+    <string name="patient_details_photo_label">Photo</string>
     <string name="patient_details_gender_label">Gender</string>
     <string name="patient_details_birth_date_label">Birth date</string>
     <string name="patient_details_phone_label">Phone number</string>
@@ -170,6 +171,7 @@
     <string name="patient_postal_label">Postal Code</string>
     <string name="patient_state_label">State</string>
     <string name="patient_country_label">Country</string>
+    <string name="patient_photo_edit">Update photo</string>
     <!-- Find Active visit activity -->
     <string name="action_active_visits">Active Visits</string>
     <string name="action_form_entry">Form Entry</string>
@@ -220,6 +222,7 @@
     <string name="openmrs_logo">OpenMRS logo</string>
     <string name="toast_with_black_background">Toast with black background</string>
     <string name="edit_form">Edit form</string>
+    <string name="patient_photo">Patient Photo</string>
     <string name="visit_encounter_icon">Visit encounter Icon</string>
     <string name="visit_status_icon">Status of visit</string>
     <string name="show_or_hide_visit_details">Show/Hide visit details</string>

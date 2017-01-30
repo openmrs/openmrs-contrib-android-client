@@ -10,6 +10,8 @@
 
 package org.openmrs.mobile.models;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -37,6 +39,8 @@ public class Person extends Resource implements Serializable {
     @SerializedName("attributes")
     @Expose
     private List<PersonAttribute> attributes = new ArrayList<PersonAttribute>();
+
+    private Bitmap photo;
 
     /**
      * 
@@ -164,4 +168,11 @@ public class Person extends Resource implements Serializable {
     }
 
 
+    public Bitmap getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Bitmap patientPhoto) {
+        this.photo = patientPhoto;
+    }
 }

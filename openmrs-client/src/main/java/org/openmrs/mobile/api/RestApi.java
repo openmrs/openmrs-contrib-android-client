@@ -21,6 +21,7 @@ import org.openmrs.mobile.models.Module;
 import org.openmrs.mobile.models.Obscreate;
 import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.models.Session;
 import org.openmrs.mobile.models.User;
@@ -29,6 +30,7 @@ import org.openmrs.mobile.models.VisitType;
 
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -74,6 +76,13 @@ public interface RestApi {
     @GET("patient")
     Call<Results<Patient>> getPatients(@Query("q") String searchQuery,
                                        @Query("v") String representation);
+
+    @POST("personimage/{uuid}")
+    Call<PatientPhoto> uploadPatientPhoto(@Path("uuid") String uuid,
+                                          @Body PatientPhoto patientPhoto);
+
+    @GET("personimage/{uuid}")
+    Call<ResponseBody> downloadPatientPhoto(@Path("uuid") String uuid);
 
     @GET("patient?matchSimilar=true&v=full")
     Call<Results<Patient>> getSimilarPatients(@QueryMap Map<String, String> patientData);

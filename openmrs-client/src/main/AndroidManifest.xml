@@ -24,6 +24,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
 
     <application
         android:name=".application.OpenMRS"
@@ -213,7 +217,16 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.matchingpatients.MatchingPatientsActivity"></activity>
+
+        <activity android:name=".activities.matchingpatients.MatchingPatientsActivity"/>
+        <activity
+            android:name=".activities.patientdashboard.details.PatientPhotoActivity"
+            android:parentActivityName=".activities.patientdashboard.PatientDashboardActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity" />
+        </activity>
     </application>
 
 </manifest>

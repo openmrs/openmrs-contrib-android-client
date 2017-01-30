@@ -14,7 +14,8 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,6 +34,54 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/card"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="20dp"
+                            android:text="Photo"
+                            android:textColor="@color/primary"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                            <RelativeLayout
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <ImageView
+                                    android:id="@+id/patientPhoto"
+                                    android:contentDescription="@string/patient_photo"
+                                    android:src="@drawable/ic_person_grey_500_48dp"
+                                    android:scaleType="fitXY"
+                                    android:layout_centerInParent="true"
+                                    android:background="@color/card_shadow_1"
+                                    android:layout_width="200dp"
+                                    android:layout_height="200dp" />
+
+                                <android.support.design.widget.FloatingActionButton
+                                    android:id="@+id/capture_photo"
+                                    android:src="@drawable/ic_photo_camera_white_48dp"
+                                    android:layout_marginRight="-25dp"
+                                    android:layout_marginEnd="-25dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:layout_below="@id/patientPhoto"
+                                    android:layout_alignEnd="@id/patientPhoto"
+                                    android:layout_alignRight="@id/patientPhoto"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                            </RelativeLayout>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"

@@ -39,12 +39,14 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class LastViewedPatientsFragment extends Fragment implements LastViewedPatientsContract.View {
 
     private static final String PATIENT_LIST = "patient_list";
+    private static final String SELECTED_PATIENT_POSITIONS = "selected_patient_positions";
     private TextView mEmptyList;
     private ProgressBar mSpinner;
     private RecyclerView mPatientsRecyclerView;
@@ -78,6 +80,7 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
         if (mAdapter != null) {
             List<Patient> patientList = mAdapter.getmItems();
             outState.putSerializable(PATIENT_LIST, (Serializable) patientList);
+            outState.putSerializable(SELECTED_PATIENT_POSITIONS, (Serializable) mAdapter.getSelectedPatientPositions());
         }
     }
 
@@ -90,6 +93,11 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
                 mPresenter.start();
             } else {
                 updateList(patientList);
+                Set<Integer> selectedPatientPositions = (Set<Integer>) savedInstanceState.getSerializable(SELECTED_PATIENT_POSITIONS);
+                if (selectedPatientPositions != null && !selectedPatientPositions.isEmpty()) {
+                    mAdapter.startActionMode();
+                    mAdapter.setSelectedPatiPositions(selectedPatientPositions);
+                }
             }
         } else {
             mPresenter.start();

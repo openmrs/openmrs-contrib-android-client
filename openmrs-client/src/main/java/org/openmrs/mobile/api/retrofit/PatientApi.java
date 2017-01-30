@@ -201,6 +201,9 @@ public class PatientApi extends RetrofitApi {
                 @Override
                 public void onResponse(Call<Patient> call, Response<Patient> response) {
                     if (response.isSuccessful()) {
+                        Patient updatedPatient = response.body();
+                        patient.getPerson().setBirthdate(updatedPatient.getPerson().getBirthdate());
+
                         patient.getPerson().setUuid(patient.getUuid());
                         if (patient.getPerson().getPhoto() != null)
                             uploadPatientPhoto(patient);

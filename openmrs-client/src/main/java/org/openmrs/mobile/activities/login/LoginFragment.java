@@ -126,8 +126,9 @@ public class LoginFragment extends Fragment implements LoginContract.View {
                 if (StringUtils.notEmpty(mUrl.getText().toString())
                         && !view.isFocused() 
                         && loginValidatorWatcher.isUrlChanged()
-                        || (loginValidatorWatcher.isUrlChanged()
-                        && loginValidatorWatcher.isLocationErrorOccurred())) {
+                        || (loginValidatorWatcher.isUrlChanged() && !view.isFocused()
+                        && loginValidatorWatcher.isLocationErrorOccurred())
+                        || (!loginValidatorWatcher.isUrlChanged()  && !view.isFocused())) {
                     ((LoginFragment) getActivity()
                             .getSupportFragmentManager()
                             .findFragmentById(R.id.loginContentFrame))

@@ -25,12 +25,15 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
+import android.text.InputType;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -66,6 +69,7 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     private EditText mUrl;
     private EditText mUsername;
     private EditText mPassword;
+    private CheckBox mShowPassword;
     private Button mLoginButton;
     private ProgressBar mSpinner;
     private Spinner mDropdownLocation;
@@ -154,6 +158,18 @@ public class LoginFragment extends Fragment implements LoginContract.View {
                 forgotPassword();
             }
         });
+
+        mShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    mPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                }
+                else {
+                    mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                }
+            }
+        });
     }
 
     private void initViewFields(View root) {
@@ -161,6 +177,7 @@ public class LoginFragment extends Fragment implements LoginContract.View {
         mUsername = (EditText) root.findViewById(R.id.loginUsernameField);
         mUsername.setText(OpenMRS.getInstance().getUsername());
         mPassword = (EditText) root.findViewById(R.id.loginPasswordField);
+        mShowPassword = (CheckBox) root.findViewById(R.id.checkboxShowPassword);
         mLoginButton = (Button) root.findViewById(R.id.loginButton);
         mSpinner = (ProgressBar) root.findViewById(R.id.loginLoading);
         mLoginFormView = (LinearLayout) root.findViewById(R.id.loginFormView);

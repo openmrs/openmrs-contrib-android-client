@@ -87,7 +87,9 @@
                     android:hint="@string/login_username_hint"
                     android:inputType="text"
                     android:singleLine="true" />
-
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
                 <EditText
                     android:id="@+id/loginPasswordField"
                     android:layout_width="fill_parent"
@@ -99,7 +101,17 @@
                     android:inputType="textPassword|text"
                     android:password="true"
                     android:singleLine="true" />
-
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/checkboxShowPassword"
+                    android:layout_alignRight="@id/loginPasswordField"
+                    android:paddingRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="bottom"
+                    android:button="@drawable/showpassword_button_selector"
+                    />
+                </RelativeLayout>
                     <Spinner
                         android:id="@+id/locationSpinner"
                         android:layout_width="fill_parent"

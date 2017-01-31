@@ -62,6 +62,14 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
         return mItems;
     }
 
+    public Set<Integer> getSelectedPatientPositions() {
+        return selectedPatientPositions;
+    }
+
+    public void setSelectedPatiPositions(Set<Integer> selectedPatientPositions) {
+        this.selectedPatientPositions = selectedPatientPositions;
+    }
+
     @Override
     public LastViewedPatientRecyclerViewAdapter.PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_last_viewed_patients_row, parent, false);
@@ -163,7 +171,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
                 setSelected(false);
             } else {
                 if (!isLongClicked) {
-                    actionMode = mContext.startActionMode(mActionModeCallback);
+                    startActionMode();
                 }
                 isLongClicked = true;
                 setSelected(true);
@@ -234,6 +242,11 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
             isLongClicked = false;
         }
     };
+
+    public void startActionMode() {
+        actionMode = mContext.startActionMode(mActionModeCallback);
+        isLongClicked = true;
+    }
 
     public void finishActionMode(){
         if (actionMode != null) {

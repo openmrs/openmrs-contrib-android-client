@@ -18,17 +18,22 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -114,7 +119,10 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
     private Bitmap patientPhoto = null;
     private String patientName;
     private File output = null;
+
     private final static int IMAGE_REQUEST = 1;
+    private final static int IMAGE_PERMISSION_REQUEST = 2;
+
     private OpenMRSLogger logger = new OpenMRSLogger();
 
     @Override
@@ -401,6 +409,18 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
         edcountry.setAdapter(adapter);
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (ActivityCompat.checkSelfPermission(getActivity(), permissions[0]) == PackageManager.PERMISSION_GRANTED) {
+            switch (requestCode) {
+                case IMAGE_PERMISSION_REQUEST:
+                    capturePhoto();
+            }
+        }
+    }
+
     private void addSuggestionsToCities(){
         String country_name = edcountry.getText().toString() ;
         country_name = country_name.replace("(","");
@@ -482,12 +502,12 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
         capturePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
-                    File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-                    output = new File(dir, getUniqueImageFileName());
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
-                    startActivityForResult(takePictureIntent, IMAGE_REQUEST);
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                    capturePhoto();
+                } else if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{android.Manifest.permission.CAMERA}, IMAGE_PERMISSION_REQUEST);
+                } else {
+                    capturePhoto();
                 }
             }
         });
@@ -529,6 +549,16 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
             Bitmap bitmap = ThumbnailUtils.extractThumbnail(patientPhoto, patientImageView.getWidth(), patientImageView.getHeight());
             patientImageView.setImageBitmap(bitmap);
             patientImageView.invalidate();
+        }
+    }
+
+    private void capturePhoto() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
+            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+            output = new File(dir, getUniqueImageFileName());
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
+            startActivityForResult(takePictureIntent, IMAGE_REQUEST);
         }
     }
 

@@ -16,6 +16,7 @@ package org.openmrs.mobile.dao;
 
 import net.sqlcipher.Cursor;
 
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.tables.VisitTable;
@@ -303,6 +304,16 @@ public class VisitDAO {
                 }
             }
             return visit;
+        });
+    }
+
+    public Observable<Boolean> deleteVisitsByPatientId(Long id) {
+        return createObservableIO(() -> {
+            OpenMRS.getInstance().getOpenMRSLogger().w("Visits deleted with patient_id: " + id);
+            DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+            openHelper.getReadableDatabase().delete(VisitTable.TABLE_NAME, VisitTable.Column.PATIENT_KEY_ID
+                    + " = " + id, null);
+            return true;
         });
     }
 }

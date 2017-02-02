@@ -231,4 +231,12 @@
     <!--Snackbar strings-->
     <string name="snackbar_action_open">Open</string>
     <string name="snackbar_info_patient_downloaded">Patient downloaded</string>
+
+
+    <!--permissions-->
+    <string name="permission_camera_rationale">Camera permission is needed to capture photo.</string>
+    <string name="permission_camera_denied">Camera permission was denied. Please consider granting it in order to access the camera</string>
+    <string name="permission_camera_neverask">Camera permission was denied with never ask again</string>
+    <string name="button_allow">Allow</string>
+    <string name="button_deny">Deny</string>
 </resources>

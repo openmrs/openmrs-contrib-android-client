@@ -14,12 +14,14 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.media.ThumbnailUtils;
@@ -27,8 +29,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +47,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -76,9 +82,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.OnNeverAskAgain;
+import permissions.dispatcher.OnPermissionDenied;
+import permissions.dispatcher.OnShowRationale;
+import permissions.dispatcher.PermissionRequest;
+import permissions.dispatcher.RuntimePermissions;
+
+
+@RuntimePermissions
 public class AddEditPatientFragment extends Fragment implements AddEditPatientContract.View {
     private AddEditPatientContract.Presenter mPresenter;
 
+    private RelativeLayout relativeLayout;
     private LocalDate birthdate;
     private DateTime bdt;
 
@@ -319,6 +335,7 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
     }
 
     private void resolveViews(View v) {
+        relativeLayout = (RelativeLayout)v.findViewById(R.id.addEditRelativeLayout);
         edfname = (EditText) v.findViewById(R.id.firstname);
         edmname = (EditText) v.findViewById(R.id.middlename);
         edlname = (EditText) v.findViewById(R.id.surname);
@@ -418,6 +435,12 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        AddEditPatientFragmentPermissionsDispatcher.onRequestPermissionsResult(this, requestCode, grantResults);
+    }
+
     private void addListeners() {
         gen.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             public void onCheckedChanged(RadioGroup rGroup, int checkedId) {
@@ -482,15 +505,11 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
         capturePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
-                    File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-                    output = new File(dir, getUniqueImageFileName());
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
-                    startActivityForResult(takePictureIntent, IMAGE_REQUEST);
-                }
+                AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
             }
         });
+
+
 
         submitConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -520,6 +539,46 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
         TextWatcher textWatcher = new PatientBirthdateValidatorWatcher(eddob, edmonth, edyr);
         edmonth.addTextChangedListener(textWatcher);
         edyr.addTextChangedListener(textWatcher);
+    }
+
+    @NeedsPermission({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    public void capturePhoto() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
+            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+            output = new File(dir, getUniqueImageFileName());
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
+            startActivityForResult(takePictureIntent, IMAGE_REQUEST);
+        }
+    }
+
+    @OnShowRationale({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    public void showRationaleForCamera(final PermissionRequest request) {
+        new AlertDialog.Builder(getActivity())
+                .setMessage(R.string.permission_camera_rationale)
+                .setPositiveButton(R.string.button_allow, (dialog, which) -> request.proceed())
+                .setNegativeButton(R.string.button_deny, (dialog, button) -> request.cancel())
+                .show();
+    }
+
+    @OnPermissionDenied({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    public void showDeniedForCamera() {
+        createSnackbarLong(R.string.permission_camera_denied)
+                .show();
+    }
+
+    @OnNeverAskAgain({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    public void showNeverAskForCamera() {
+        createSnackbarLong(R.string.permission_camera_neverask)
+                .show();
+    }
+
+    private Snackbar createSnackbarLong(int stringId){
+        Snackbar snackbar = Snackbar.make(relativeLayout, stringId, Snackbar.LENGTH_LONG);
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        return snackbar;
     }
 
     @Override

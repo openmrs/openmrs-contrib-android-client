@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
@@ -41,9 +42,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastViewedPatientRecyclerViewAdapter.PatientViewHolder> {
+class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private final int VIEW_TYPE_ITEM = 0;
+    private final int VIEW_TYPE_LOADING = 1;
+
     private Activity mContext;
-    private List<Patient> mItems;
+    private List<Patient> patients;
     private Set<Integer> selectedPatientPositions;
     private boolean isAllSelected = false;
     private boolean isLongClicked = false;
@@ -53,52 +58,77 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
 
     LastViewedPatientRecyclerViewAdapter(Activity context, List<Patient> items, LastViewedPatientsContract.View view) {
         this.mContext = context;
-        this.mItems = items;
+        this.patients = items;
         this.selectedPatientPositions = new HashSet<>();
         this.view = view;
     }
 
-    public List<Patient> getmItems() {
-        return mItems;
+    public List<Patient> getPatients() {
+        return patients;
     }
 
     public Set<Integer> getSelectedPatientPositions() {
         return selectedPatientPositions;
     }
 
-    public void setSelectedPatiPositions(Set<Integer> selectedPatientPositions) {
+    public void setSelectedPatientPositions(Set<Integer> selectedPatientPositions) {
         this.selectedPatientPositions = selectedPatientPositions;
     }
 
-    @Override
-    public LastViewedPatientRecyclerViewAdapter.PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_last_viewed_patients_row, parent, false);
-        FontsUtil.setFont((ViewGroup) itemView);
-        return new PatientViewHolder(itemView);
+    public void addPatients(List<Patient> patients){
+        this.patients.addAll(patients);
+        notifyDataSetChanged();
+    }
+
+    public void deleteLastItem(){
+        patients.remove(getItemCount()-1);
+        notifyItemRemoved(getItemCount());
     }
 
     @Override
-    public void onBindViewHolder(LastViewedPatientRecyclerViewAdapter.PatientViewHolder holder, int position) {
-        final Patient patient = mItems.get(position);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if( viewType == VIEW_TYPE_ITEM ) {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_last_viewed_patients_row, parent, false);
+            FontsUtil.setFont((ViewGroup) itemView);
+            return new PatientViewHolder(itemView);
+        } else {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.progressbar_item, parent, false);
+            FontsUtil.setFont((ViewGroup) itemView);
+            return new ProgressBarViewHolder(itemView);
+        }
+    }
 
-        holder.setSelected(isPatientSelected(position));
-        if (null != patient.getIdentifier()) {
-            holder.mIdentifier.setText("#" + patient.getIdentifier().getIdentifier());
-        }
-        if (null != patient.getPerson().getName()) {
-            holder.mDisplayName.setText(patient.getPerson().getName().getNameString());
-        }
-        if (null != patient.getPerson().getGender()) {
-            holder.mGender.setText(patient.getPerson().getGender());
-        }
-        try {
-            holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
-        } catch (Exception e) {
-            holder.mBirthDate.setText(" ");
-        }
+    @Override
+    public int getItemViewType(int position) {
+        return patients.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
+    }
 
-        if (null != holder.mAvailableOfflineCheckbox) {
-            setUpCheckBoxLogic(holder, patient);
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof PatientViewHolder) {
+            final Patient patient = patients.get(position);
+
+            ((PatientViewHolder) holder).setSelected(isPatientSelected(position));
+            if (null != patient.getIdentifier()) {
+                ((PatientViewHolder) holder).mIdentifier.setText("#" + patient.getIdentifier().getIdentifier());
+            }
+            if (null != patient.getPerson().getName()) {
+                ((PatientViewHolder) holder).mDisplayName.setText(patient.getPerson().getName().getNameString());
+            }
+            if (null != patient.getPerson().getGender()) {
+                ((PatientViewHolder) holder).mGender.setText(patient.getPerson().getGender());
+            }
+            try {
+                ((PatientViewHolder) holder).mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
+            } catch (Exception e) {
+                ((PatientViewHolder) holder).mBirthDate.setText(" ");
+            }
+
+            if (null !=  ((PatientViewHolder) holder).mAvailableOfflineCheckbox) {
+                setUpCheckBoxLogic( ((PatientViewHolder) holder), patient);
+            }
+        } else {
+            ((ProgressBarViewHolder) holder).progressBar.setIndeterminate(true);
         }
     }
 
@@ -112,14 +142,16 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
     }
 
     @Override
-    public void onViewDetachedFromWindow(PatientViewHolder holder) {
-        holder.clearAnimation();
+    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+        if (holder instanceof PatientViewHolder) {
+            ((PatientViewHolder) holder).clearAnimation();
+        }
     }
 
 
     @Override
     public int getItemCount() {
-        return mItems.size();
+        return patients == null ? 0 : patients.size();
     }
 
     class PatientViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener{
@@ -178,6 +210,16 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
                 notifyDataSetChanged();
             }
             return true;
+        }
+    }
+
+    class ProgressBarViewHolder extends RecyclerView.ViewHolder {
+
+        private ProgressBar progressBar;
+
+        public ProgressBarViewHolder(View itemView) {
+            super(itemView);
+            progressBar = (ProgressBar)itemView.findViewById(R.id.recycleviewProgressbar);
         }
     }
 
@@ -256,7 +298,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
     }
 
     public void selectAll() {
-        for(int i = 0; i < mItems.size(); i++){
+        for(int i = 0; i < patients.size(); i++){
             selectedPatientPositions.add(i);
         }
         isAllSelected = true;
@@ -273,7 +315,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
     public void downloadSelectedPatients() {
         ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE, R.string.download_started);
         for (Integer selectedPatientPosition : selectedPatientPositions) {
-            downloadPatient(mItems.get(selectedPatientPosition), false);
+            downloadPatient(patients.get(selectedPatientPosition), false);
         }
         notifyDataSetChanged();
     }
@@ -306,7 +348,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<LastView
                 new PatientApi().syncPatient(newPatient);
                 new VisitApi().syncVisitsData(newPatient);
                 new VisitApi().syncLastVitals(newPatient.getUuid());
-                mItems.remove(patient);
+                patients.remove(patient);
                 notifyDataSetChanged();
                 if (showSnackBar) {
                     view.showOpenPatientSnackbar(newPatient.getId());

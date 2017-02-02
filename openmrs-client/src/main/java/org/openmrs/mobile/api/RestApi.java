@@ -67,7 +67,8 @@ public interface RestApi {
                                    @Query("v") String representation);
 
     @GET("patient?lastviewed&v=full")
-    Call<Results<Patient>> getLastViewedPatients();
+    Call<Results<Patient>> getLastViewedPatients(@Query("limit") Integer limit,
+                                                 @Query("startIndex") Integer startIndex);
 
     @POST("patient")
     Call<Patient> createPatient(

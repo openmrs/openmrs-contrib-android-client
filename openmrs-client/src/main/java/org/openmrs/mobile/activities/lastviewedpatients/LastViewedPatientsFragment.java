@@ -38,6 +38,7 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -48,20 +49,22 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
     private static final String PATIENT_LIST = "patient_list";
     private static final String SELECTED_PATIENT_POSITIONS = "selected_patient_positions";
     private TextView mEmptyList;
-    private ProgressBar mSpinner;
+    private ProgressBar progressBar;
     private RecyclerView mPatientsRecyclerView;
+    private LinearLayoutManager linearLayoutManager;
     private LastViewedPatientRecyclerViewAdapter mAdapter;
     public SwipeRefreshLayout mSwipeRefreshLayout;
     private LastViewedPatientsContract.Presenter mPresenter;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_last_viewed_patients, container, false);
         mPatientsRecyclerView = ((RecyclerView) root.findViewById(R.id.lastViewedPatientRecyclerView));
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
+        linearLayoutManager = new LinearLayoutManager(this.getActivity());
         mPatientsRecyclerView.setLayoutManager(linearLayoutManager);
-        mSpinner = (ProgressBar) root.findViewById(R.id.patientRecyclerViewLoading);
+        progressBar = (ProgressBar) root.findViewById(R.id.patientRecyclerViewLoading);
         mEmptyList = (TextView) root.findViewById(R.id.emptyLastViewedPatientList);
         mSwipeRefreshLayout = ((SwipeRefreshLayout) root.findViewById(R.id.swiperefreshLastPatients));
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -71,6 +74,16 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
                 mAdapter.finishActionMode();
             }
         });
+
+        mPatientsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (!recyclerView.canScrollVertically(1)) {
+                    mPresenter.loadMorePatients();
+                }
+            }
+        });
         return root;
     }
 
@@ -78,7 +91,8 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (mAdapter != null) {
-            List<Patient> patientList = mAdapter.getmItems();
+            mPresenter.onSaveInstanceState(outState);
+            List<Patient> patientList = mAdapter.getPatients();
             outState.putSerializable(PATIENT_LIST, (Serializable) patientList);
             outState.putSerializable(SELECTED_PATIENT_POSITIONS, (Serializable) mAdapter.getSelectedPatientPositions());
         }
@@ -93,10 +107,11 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
                 mPresenter.start();
             } else {
                 updateList(patientList);
+                mPresenter.setStartIndex(savedInstanceState.getInt(ApplicationConstants.BundleKeys.PATIENTS_START_INDEX, 0));
                 Set<Integer> selectedPatientPositions = (Set<Integer>) savedInstanceState.getSerializable(SELECTED_PATIENT_POSITIONS);
                 if (selectedPatientPositions != null && !selectedPatientPositions.isEmpty()) {
                     mAdapter.startActionMode();
-                    mAdapter.setSelectedPatiPositions(selectedPatientPositions);
+                    mAdapter.setSelectedPatientPositions(selectedPatientPositions);
                 }
             }
         } else {
@@ -120,8 +135,8 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
     }
 
     @Override
-    public void setSpinnerVisibility(boolean visibility) {
-        mSpinner.setVisibility(visibility ? View.VISIBLE : View.GONE);
+    public void setProgressBarVisibility(boolean visibility) {
+        progressBar.setVisibility(visibility ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -176,6 +191,21 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
             }
         });
         snackbar.show();
+    }
+
+    @Override
+    public void addPatientsToList(List<Patient> patients) {
+        mAdapter.addPatients(patients);
+    }
+
+    @Override
+    public void showRecycleViewProgressBar(boolean visibility) {
+        if (visibility) {
+            mAdapter.addPatients(Collections.singletonList(null));
+            mAdapter.notifyItemInserted(mAdapter.getItemCount() - 1);
+        } else {
+            mAdapter.deleteLastItem();
+        }
     }
 
     private void openPatientDashboardActivity(Long patientId) {

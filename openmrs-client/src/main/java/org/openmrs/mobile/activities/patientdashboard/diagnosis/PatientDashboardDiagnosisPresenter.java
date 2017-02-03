@@ -26,6 +26,8 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.android.schedulers.AndroidSchedulers;
+
 public class PatientDashboardDiagnosisPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientDiagnosisPresenter {
 
     private PatientDashboardContract.ViewPatientDiagnosis mPatientDiagnosisView;
@@ -60,8 +62,13 @@ public class PatientDashboardDiagnosisPresenter extends PatientDashboardMainPres
 
     @Override
     public void loadDiagnosis() {
-        List<Encounter> mVisitNoteEncounters = new EncounterDAO().getAllEncountersByType(mPatient.getId(),
-                new EncounterType(EncounterType.VISIT_NOTE));
-        mPatientDiagnosisView.setDiagnosesToDisplay(getAllDiagnosis(mVisitNoteEncounters));
+
+        addSubscription(new EncounterDAO().
+                getAllEncountersByType(mPatient.getId(), new EncounterType(EncounterType.VISIT_NOTE))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(encounters -> {
+                    mPatientDiagnosisView.setDiagnosesToDisplay(getAllDiagnosis(encounters));
+                }));
     }
+
 }

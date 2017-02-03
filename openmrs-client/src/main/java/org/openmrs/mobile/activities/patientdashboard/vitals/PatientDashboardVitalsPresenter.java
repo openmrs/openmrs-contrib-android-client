@@ -20,8 +20,9 @@ import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
-import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.utilities.NetworkUtils;
+
+import rx.android.schedulers.AndroidSchedulers;
 
 public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientVitalsPresenter {
 
@@ -58,18 +59,23 @@ public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresent
     }
 
     private void loadVitalsFromDB() {
-        Encounter mVitalsEncounter = encounterDAO.getLastVitalsEncounter(mPatient.getUuid());
-        if (mVitalsEncounter != null) {
-            mPatientVitalsView.showEncounterVitals(mVitalsEncounter);
-        }
-        else {
-            mPatientVitalsView.showNoVitalsNotification();
-        }
+        addSubscription(encounterDAO.getLastVitalsEncounter(mPatient.getUuid())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(encounter -> {
+                    if (encounter != null) {
+                        mPatientVitalsView.showEncounterVitals(encounter);
+                    } else {
+                        mPatientVitalsView.showNoVitalsNotification();
+                    }
+                }));
     }
 
     @Override
     public void startFormDisplayActivityWithEncounter() {
-        Encounter lastVitalsEncounter = encounterDAO.getLastVitalsEncounter(mPatient.getUuid());
-        mPatientVitalsView.startFormDisplayActivity(lastVitalsEncounter);
+        addSubscription(encounterDAO.getLastVitalsEncounter(mPatient.getUuid())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(encounter -> {
+                    mPatientVitalsView.startFormDisplayActivity(encounter);
+                }));
     }
 }

@@ -31,6 +31,10 @@ import org.openmrs.mobile.utilities.FormService;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
+
+import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
+
 public class EncounterDAO {
 
     public long saveEncounter(Encounter encounter, Long visitID) {
@@ -75,43 +79,45 @@ public class EncounterDAO {
         return encounterID;
     }
 
-    public Encounter getLastVitalsEncounter(String patientUUID) {
-        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        Encounter encounter = null;
+    public Observable<Encounter> getLastVitalsEncounter(String patientUUID) {
+        return createObservableIO(() -> {
+            DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+            Encounter encounter = null;
 
-        String where = String.format("%s = ? AND %s = ? ORDER BY %s DESC LIMIT 1", EncounterTable.Column.PATIENT_UUID, EncounterTable.Column.ENCOUNTER_TYPE, EncounterTable.Column.ENCOUNTER_DATETIME);
-        String[] whereArgs = new String[]{patientUUID, EncounterType.VITALS};
-        final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
-        if (null != cursor) {
-            try {
-                if (cursor.moveToFirst()) {
-                    int id_CI = cursor.getColumnIndex(EncounterTable.Column.ID);
-                    int uuid_CI = cursor.getColumnIndex(EncounterTable.Column.UUID);
-                    int display_CI = cursor.getColumnIndex(EncounterTable.Column.DISPLAY);
-                    int datetime_CI = cursor.getColumnIndex(EncounterTable.Column.ENCOUNTER_DATETIME);
-                    int formUuid_CI = cursor.getColumnIndex(EncounterTable.Column.FORM_UUID);
-                    int patientUuid_CI = cursor.getColumnIndex(EncounterTable.Column.PATIENT_UUID);
-                    Long id = cursor.getLong(id_CI);
-                    String uuid = cursor.getString(uuid_CI);
-                    String display = cursor.getString(display_CI);
-                    Long datetime = cursor.getLong(datetime_CI);
-                    String formUuid = cursor.getString(formUuid_CI);
-                    String patientUuid = cursor.getString(patientUuid_CI);
-                    encounter = new Encounter();
-                    encounter.setId(id);
-                    encounter.setUuid(uuid);
-                    encounter.setDisplay(display);
-                    encounter.setEncounterDatetime(DateUtils.convertTime(datetime,DateUtils.OPEN_MRS_REQUEST_FORMAT));
-                    encounter.setEncounterType((EncounterType)new Select().from(EncounterType.class).where("display = ?", EncounterType.VITALS).executeSingle());
-                    encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
-                    encounter.setForm(FormService.getFormByUuid(formUuid));
-                    encounter.setPatient(new PatientDAO().findPatientByUUID(patientUuid));
+            String where = String.format("%s = ? AND %s = ? ORDER BY %s DESC LIMIT 1", EncounterTable.Column.PATIENT_UUID, EncounterTable.Column.ENCOUNTER_TYPE, EncounterTable.Column.ENCOUNTER_DATETIME);
+            String[] whereArgs = new String[]{patientUUID, EncounterType.VITALS};
+            final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+            if (null != cursor) {
+                try {
+                    if (cursor.moveToFirst()) {
+                        int id_CI = cursor.getColumnIndex(EncounterTable.Column.ID);
+                        int uuid_CI = cursor.getColumnIndex(EncounterTable.Column.UUID);
+                        int display_CI = cursor.getColumnIndex(EncounterTable.Column.DISPLAY);
+                        int datetime_CI = cursor.getColumnIndex(EncounterTable.Column.ENCOUNTER_DATETIME);
+                        int formUuid_CI = cursor.getColumnIndex(EncounterTable.Column.FORM_UUID);
+                        int patientUuid_CI = cursor.getColumnIndex(EncounterTable.Column.PATIENT_UUID);
+                        Long id = cursor.getLong(id_CI);
+                        String uuid = cursor.getString(uuid_CI);
+                        String display = cursor.getString(display_CI);
+                        Long datetime = cursor.getLong(datetime_CI);
+                        String formUuid = cursor.getString(formUuid_CI);
+                        String patientUuid = cursor.getString(patientUuid_CI);
+                        encounter = new Encounter();
+                        encounter.setId(id);
+                        encounter.setUuid(uuid);
+                        encounter.setDisplay(display);
+                        encounter.setEncounterDatetime(DateUtils.convertTime(datetime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
+                        encounter.setEncounterType((EncounterType) new Select().from(EncounterType.class).where("display = ?", EncounterType.VITALS).executeSingle());
+                        encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
+                        encounter.setForm(FormService.getFormByUuid(formUuid));
+                        encounter.setPatient(new PatientDAO().findPatientByUUID(patientUuid));
+                    }
+                } finally {
+                    cursor.close();
                 }
-            } finally {
-                cursor.close();
             }
-        }
-        return encounter;
+            return encounter;
+        });
     }
 
     public boolean updateEncounter(long encounterID, Encounter encounter, long visitID) {
@@ -147,7 +153,7 @@ public class EncounterDAO {
                     encounter.setVisitID(visitID);
                     encounter.setUuid(uuid);
                     encounter.setDisplay(display);
-                    encounter.setEncounterDatetime(DateUtils.convertTime(datetime,DateUtils.OPEN_MRS_REQUEST_FORMAT));
+                    encounter.setEncounterDatetime(DateUtils.convertTime(datetime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
                     encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
                     encounter.setForm(FormService.getFormByUuid(formUuid));
                     encounters.add(encounter);
@@ -160,43 +166,45 @@ public class EncounterDAO {
         return encounters;
     }
 
-    public List<Encounter> getAllEncountersByType(Long patientID, EncounterType type) {
-        List<Encounter> encounters = new ArrayList<Encounter>();
-        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        String query = "SELECT e.* FROM observations AS o JOIN encounters AS e ON o.encounter_id = e._id " +
-                "JOIN visits AS v on e.visit_id = v._id WHERE v.patient_id = ? AND e.type = ? ORDER BY e.encounterDatetime DESC";
-        String type1 = type.getDisplay();
-        String[] whereArgs = new String[]{patientID.toString(), type1};
-        final Cursor cursor = helper.getReadableDatabase().rawQuery(query, whereArgs);
+    public Observable<List<Encounter>> getAllEncountersByType(Long patientID, EncounterType type) {
+        return createObservableIO(() -> {
+            List<Encounter> encounters = new ArrayList<Encounter>();
+            DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+            String query = "SELECT e.* FROM observations AS o JOIN encounters AS e ON o.encounter_id = e._id " +
+                    "JOIN visits AS v on e.visit_id = v._id WHERE v.patient_id = ? AND e.type = ? ORDER BY e.encounterDatetime DESC";
+            String type1 = type.getDisplay();
+            String[] whereArgs = new String[]{patientID.toString(), type1};
+            final Cursor cursor = helper.getReadableDatabase().rawQuery(query, whereArgs);
 
-        if (null != cursor) {
-            try {
-                while (cursor.moveToNext()) {
-                    int id_CI = cursor.getColumnIndex(EncounterTable.Column.ID);
-                    int uuid_CI = cursor.getColumnIndex(EncounterTable.Column.UUID);
-                    int display_CI = cursor.getColumnIndex(EncounterTable.Column.DISPLAY);
-                    int datetime_CI = cursor.getColumnIndex(EncounterTable.Column.ENCOUNTER_DATETIME);
-                    int formUuid_CI = cursor.getColumnIndex(EncounterTable.Column.FORM_UUID);
-                    Long id = cursor.getLong(id_CI);
-                    String uuid = cursor.getString(uuid_CI);
-                    String display = cursor.getString(display_CI);
-                    Long datetime = cursor.getLong(datetime_CI);
-                    String formUuid = cursor.getString(formUuid_CI);
-                    Encounter encounter = new Encounter();
-                    encounter.setId(id);
-                    encounter.setUuid(uuid);
-                    encounter.setDisplay(display);
-                    encounter.setEncounterDatetime(DateUtils.convertTime(datetime,DateUtils.OPEN_MRS_REQUEST_FORMAT));
-                    encounter.setEncounterType(type);
-                    encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
-                    encounter.setForm(FormService.getFormByUuid(formUuid));
-                    encounters.add(encounter);
+            if (null != cursor) {
+                try {
+                    while (cursor.moveToNext()) {
+                        int id_CI = cursor.getColumnIndex(EncounterTable.Column.ID);
+                        int uuid_CI = cursor.getColumnIndex(EncounterTable.Column.UUID);
+                        int display_CI = cursor.getColumnIndex(EncounterTable.Column.DISPLAY);
+                        int datetime_CI = cursor.getColumnIndex(EncounterTable.Column.ENCOUNTER_DATETIME);
+                        int formUuid_CI = cursor.getColumnIndex(EncounterTable.Column.FORM_UUID);
+                        Long id = cursor.getLong(id_CI);
+                        String uuid = cursor.getString(uuid_CI);
+                        String display = cursor.getString(display_CI);
+                        Long datetime = cursor.getLong(datetime_CI);
+                        String formUuid = cursor.getString(formUuid_CI);
+                        Encounter encounter = new Encounter();
+                        encounter.setId(id);
+                        encounter.setUuid(uuid);
+                        encounter.setDisplay(display);
+                        encounter.setEncounterDatetime(DateUtils.convertTime(datetime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
+                        encounter.setEncounterType(type);
+                        encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
+                        encounter.setForm(FormService.getFormByUuid(formUuid));
+                        encounters.add(encounter);
+                    }
+                } finally {
+                    cursor.close();
                 }
-            } finally {
-                cursor.close();
             }
-        }
-        return encounters;
+            return encounters;
+        });
     }
 
     public long getEncounterByUUID(final String encounterUUID) {

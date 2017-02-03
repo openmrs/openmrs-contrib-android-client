@@ -6,7 +6,7 @@ import org.openmrs.mobile.models.Patient;
 
 import java.util.List;
 
-public interface MachingPatientsContract {
+public interface MatchingPatientsContract {
 
     interface View extends BaseView<Presenter>{
 
@@ -21,6 +21,8 @@ public interface MachingPatientsContract {
         void notifyUser(int no_patient_selected);
 
         void finishActivity();
+
+        void showErrorToast(String message);
     }
 
     interface Presenter extends BasePresenter{

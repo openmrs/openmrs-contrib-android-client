@@ -19,7 +19,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
-public class MatchingPatientsFragment extends Fragment implements MachingPatientsContract.View{
+public class MatchingPatientsFragment extends Fragment implements MatchingPatientsContract.View{
 
     private Button registerNewPatientButton;
     private Button mergePatientsButton;
@@ -38,7 +38,7 @@ public class MatchingPatientsFragment extends Fragment implements MachingPatient
     private View view;
 
 
-    private MachingPatientsContract.Presenter mPresenter;
+    private MatchingPatientsContract.Presenter mPresenter;
 
     public static MatchingPatientsFragment newInstance(){
         return new MatchingPatientsFragment();
@@ -123,6 +123,11 @@ public class MatchingPatientsFragment extends Fragment implements MachingPatient
         getActivity().finish();
     }
 
+    @Override
+    public void showErrorToast(String message) {
+        ToastUtil.error(message);
+    }
+
     private void setMatchingPatients(Patient patient, List<Patient> matchingPatients) {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(new MergePatientsRecycleViewAdapter((getActivity()), mPresenter,  matchingPatients, patient));
@@ -183,7 +188,7 @@ public class MatchingPatientsFragment extends Fragment implements MachingPatient
     }
 
     @Override
-    public void setPresenter(MachingPatientsContract.Presenter presenter) {
+    public void setPresenter(MatchingPatientsContract.Presenter presenter) {
         this.mPresenter = presenter;
     }
 }

@@ -1,5 +1,6 @@
 package org.openmrs.mobile.test;
 
+import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.models.Results;
 
 import java.io.IOException;
@@ -18,6 +19,10 @@ public class MockSuccessResponse<T> implements Call<T>{
         Results results = new Results<>();
         results.setResults(resultList);
         response = Response.success(results);
+    }
+
+    public MockSuccessResponse(Resource resource) {
+        response = Response.success(resource);
     }
 
     @Override

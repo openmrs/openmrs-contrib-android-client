@@ -9,7 +9,6 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.PatientAndMatchingPatients;
 import org.openmrs.mobile.utilities.PatientMerger;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.Queue;
 
@@ -17,15 +16,31 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MatchingPatientsPresenter implements MachingPatientsContract.Presenter{
+public class MatchingPatientsPresenter implements MatchingPatientsContract.Presenter{
 
-    private MachingPatientsContract.View view;
+    private RestApi restApi;
+    private PatientDAO patientDAO;
+    private PatientApi patientApi;
+    private MatchingPatientsContract.View view;
     private Queue<PatientAndMatchingPatients> matchingPatientsList;
     private Patient selectedPatient;
 
-    public MatchingPatientsPresenter(MachingPatientsContract.View view, Queue<PatientAndMatchingPatients> matchingPatientsList) {
+    public MatchingPatientsPresenter(MatchingPatientsContract.View view, Queue<PatientAndMatchingPatients> matchingPatientsList) {
         this.view = view;
         this.matchingPatientsList = matchingPatientsList;
+        this.restApi = RestServiceBuilder.createService(RestApi.class);
+        this.patientDAO = new PatientDAO();
+        this.patientApi = new PatientApi();
+        this.view.setPresenter(this);
+    }
+
+    public MatchingPatientsPresenter(MatchingPatientsContract.View view, Queue<PatientAndMatchingPatients> matchingPatientsList,
+                                     RestApi restApi, PatientDAO patientDAO, PatientApi patientApi) {
+        this.view = view;
+        this.matchingPatientsList = matchingPatientsList;
+        this.restApi = restApi;
+        this.patientDAO = patientDAO;
+        this.patientApi = patientApi;
         this.view.setPresenter(this);
     }
 
@@ -64,13 +79,11 @@ public class MatchingPatientsPresenter implements MachingPatientsContract.Presen
 
     private void updatePatient(final Patient patient) {
         patient.getPerson().setUuid(null);
-        RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<Patient> call = restApi.updatePatient(patient, patient.getUuid(), ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Patient>() {
             @Override
             public void onResponse(Call<Patient> call, Response<Patient> response) {
                 if(response.isSuccessful()){
-                    PatientDAO patientDAO = new PatientDAO();
                     if(patientDAO.isUserAlreadySaved(patient.getUuid())){
                         Long id = patientDAO.findPatientByUUID(patient.getUuid()).getId();
                         patientDAO.updatePatient(id, patient);
@@ -78,16 +91,14 @@ public class MatchingPatientsPresenter implements MachingPatientsContract.Presen
                     } else {
                         patientDAO.updatePatient(patient.getId(), patient);
                     }
-                    ToastUtil.success("Patient " +patient.getPerson().getName().getNameString()
-                            +" merged successfully");
                 } else {
-                    ToastUtil.error(response.message());
+                    view.showErrorToast(response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<Patient> call, Throwable t) {
-                ToastUtil.error(t.getMessage());
+                view.showErrorToast(t.getMessage());
             }
         });
     }
@@ -95,7 +106,7 @@ public class MatchingPatientsPresenter implements MachingPatientsContract.Presen
     @Override
     public void registerNewPatient() {
         final Patient patient = matchingPatientsList.poll().getPatient();
-        new PatientApi().syncPatient(patient);
+        patientApi.syncPatient(patient);
         removeSelectedPatient();
         if (matchingPatientsList.peek() != null) {
             start();

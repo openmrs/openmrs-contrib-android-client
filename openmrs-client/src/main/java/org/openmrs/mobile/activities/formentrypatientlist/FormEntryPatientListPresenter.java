@@ -25,12 +25,19 @@ import rx.android.schedulers.AndroidSchedulers;
 public class FormEntryPatientListPresenter extends BasePresenter implements FormEntryPatientListContract.Presenter {
 
     private final FormEntryPatientListContract.View mFormEntryPatientListView;
-
+    private PatientDAO patientDAO;
     private String mQuery;
 
     public FormEntryPatientListPresenter(FormEntryPatientListContract.View view) {
         this.mFormEntryPatientListView = view;
         this.mFormEntryPatientListView.setPresenter(this);
+        this.patientDAO = new PatientDAO();
+    }
+
+    public FormEntryPatientListPresenter(FormEntryPatientListContract.View view, PatientDAO patientDAO) {
+        this.mFormEntryPatientListView = view;
+        this.mFormEntryPatientListView.setPresenter(this);
+        this.patientDAO = patientDAO;
     }
 
     @Override
@@ -52,7 +59,7 @@ public class FormEntryPatientListPresenter extends BasePresenter implements Form
      */
     @Override
     public void updatePatientsList() {
-        addSubscription(new PatientDAO().getAllPatients()
+        addSubscription(patientDAO.getAllPatients()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(patientList -> {
                     final int NO_STRING_ID = R.string.last_vitals_none_label;

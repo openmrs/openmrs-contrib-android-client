@@ -29,6 +29,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.jakewharton.rxbinding.widget.RxTextView;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.application.OpenMRS;
@@ -104,6 +106,30 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         RangeEditText ed = new RangeEditText(getActivity());
+
+        String maxValue = question.getQuestionOptions().getMax();
+        String minValue = question.getQuestionOptions().getMin();
+
+        RxTextView.textChangeEvents(ed)
+                .subscribe(e -> {
+                    String value = e.text().toString();
+                    if (!isInRange(value, maxValue, minValue, false)) {
+                        showNumericFieldError(maxValue, minValue, ed);
+                    } else {
+                        ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.black));
+                    }
+                });
+
+        // Checks if user typed too small value and changed focus
+        ed.setOnFocusChangeListener((view, hasFocus) -> {
+            String value = ((RangeEditText) view).getText().toString();
+            if (!isInRange(value, maxValue, minValue, true)) {
+                showNumericFieldError(maxValue, minValue, ed);
+            } else {
+                ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.black));
+            }
+        });
+
         ed.setName(question.getLabel());
         ed.setSingleLine(true);
         if (question.getQuestionOptions().getMax() != null) {
@@ -360,14 +386,11 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
                 if (ed.getText().toString().charAt(0) != '.') {
                     Double inp = Double.parseDouble(ed.getText().toString());
                     if (ed.getUpperlimit() != -1.0 && ed.getUpperlimit() != -1.0 && (ed.getUpperlimit() < inp || ed.getLowerlimit() > inp)) {
-                        ToastUtil.error("Value for " + ed.getName() + " is out of range. Value should be between " +
-                                ed.getLowerlimit() + " and " + ed.getUpperlimit());
                         ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
                         valid = false;
                     }
                 }
                 else {
-                    ToastUtil.error("Comma cannot be first character of " +  ed.getName() + " value.");
                     ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
                     valid = false;
                 }
@@ -390,4 +413,44 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
     }
+
+    private boolean isInRange(String value, String maxValue, String minValue, boolean validateMin) {
+        if (!value.isEmpty()) {
+            double valueNum = Double.parseDouble(value);
+            if (maxValue != null) {
+                double maxValueNum = Double.parseDouble(maxValue);
+                if (valueNum > maxValueNum) {
+                    return false;
+                }
+            }
+            if (minValue != null && validateMin) {
+                double minValueNum = Double.parseDouble(minValue);
+                if (valueNum < minValueNum) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        else {
+            return true;
+        }
+    }
+
+    private void showNumericFieldError(String maxValue, String minValue, EditText editText) {
+        editText.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
+
+        if (maxValue == null && minValue != null) {
+            editText.setError("Value must be bigger than " + minValue);
+        }
+
+        if ((minValue == null || minValue.equals("0")) && maxValue != null) {
+            editText.setError("Value cannot be bigger than " + maxValue);
+        }
+
+        if (minValue != null && !minValue.equals("0") && maxValue != null) {
+            editText.setError("Value must be between " + minValue + " and " + maxValue);
+        }
+
+    }
+
 }

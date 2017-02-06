@@ -3,23 +3,16 @@ package org.openmrs.mobile.test.presenters;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsContract;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsPresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.test.ACUnitTestBase;
-import org.openmrs.mobile.test.MockErrorResponse;
-import org.openmrs.mobile.test.MockFailure;
-import org.openmrs.mobile.test.MockSuccessResponse;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
-import retrofit2.Call;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.atLeast;
@@ -49,26 +42,6 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
         secondPatient = createPatient(2l);
         when(patientDAO.isUserAlreadySaved(firstPatient.getUuid())).thenReturn(true);
         when(patientDAO.isUserAlreadySaved(secondPatient.getUuid())).thenReturn(false);
-    }
-
-    private Call<Results<Patient>> mockSuccessCall(List<Patient> patientList) {
-        return new MockSuccessResponse<>(patientList);
-    }
-
-    private Call<Results<Patient>> mockErrorCall(int code){
-        return new MockErrorResponse<>(code);
-    }
-
-    private Call<Results<Patient>> mockFailureCall() {
-        Throwable throwable = Mockito.mock(Throwable.class);
-        return new MockFailure<>(throwable);
-    }
-
-    private Patient createPatient(Long id) {
-        Patient patient = new Patient();
-        patient.setId(id);
-        patient.setUuid("patient_one_uuid"+id);
-        return patient;
     }
 
     @Test

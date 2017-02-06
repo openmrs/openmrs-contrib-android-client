@@ -27,10 +27,10 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
     private List<Patient> patientList;
     private Patient newPatient;
     private Activity mContext;
-    private MachingPatientsContract.Presenter mPresenter;
+    private MatchingPatientsContract.Presenter mPresenter;
     private int selectedPosition = -1;
 
-    public MergePatientsRecycleViewAdapter(Activity mContext, MachingPatientsContract.Presenter presenter, List<Patient> patientList, Patient patient) {
+    public MergePatientsRecycleViewAdapter(Activity mContext, MatchingPatientsContract.Presenter presenter, List<Patient> patientList, Patient patient) {
         this.newPatient = patient;
         this.patientList = patientList;
         this.mContext = mContext;

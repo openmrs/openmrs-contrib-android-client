@@ -403,8 +403,7 @@
             android:id="@+id/registerNewPatientButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/Widget.AppCompat.Button.Borderless"/>
+            android:layout_weight="1"/>
         <Button
             android:text="Merge"
             android:backgroundTint="@color/primary"
@@ -412,8 +411,7 @@
             android:id="@+id/mergePatientsButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            style="@style/Widget.AppCompat.Button.Borderless"/>
+            android:layout_weight="1"/>
     </LinearLayout>
 
 </RelativeLayout>

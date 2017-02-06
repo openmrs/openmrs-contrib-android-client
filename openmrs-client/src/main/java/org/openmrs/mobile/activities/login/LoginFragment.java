@@ -42,6 +42,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.dashboard.DashboardActivity;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.application.OpenMRS;
@@ -84,6 +85,8 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     private static String mLastCorrectURL = "";
     private static List<Location> mLocationsList;
     final private String initialUrl = OpenMRS.getInstance().getServerUrl();
+
+    protected OpenMRS mOpenMRS = OpenMRS.getInstance();
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -330,6 +333,9 @@ public class LoginFragment extends Fragment implements LoginContract.View {
 
     @Override
     public void userAuthenticated() {
+        Intent intent = new Intent(mOpenMRS.getApplicationContext(), DashboardActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mOpenMRS.getApplicationContext().startActivity(intent);
         mPresenter.saveLocationsToDatabase(mLocationsList, mDropdownLocation.getSelectedItem().toString());
     }
 

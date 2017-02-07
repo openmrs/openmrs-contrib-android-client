@@ -138,4 +138,14 @@ public class VisitDashboardFragment extends Fragment implements VisitDashboardCo
         (getActivity()).getMenuInflater().inflate(R.menu.active_visit_menu, menu);
     }
 
+    @Override
+    public void showErrorToast(String message) {
+        ToastUtil.error(message);
+    }
+
+    @Override
+    public void showErrorToast(int messageId) {
+        ToastUtil.error(getString(messageId));
+    }
+
 }

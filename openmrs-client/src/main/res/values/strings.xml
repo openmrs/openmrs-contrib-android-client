@@ -239,4 +239,5 @@
     <string name="permission_camera_neverask">Camera permission was denied with never ask again</string>
     <string name="button_allow">Allow</string>
     <string name="button_deny">Deny</string>
+    <string name="patient_not_yet_registered">Patient not yet registered, cannot create encounter.</string>
 </resources>

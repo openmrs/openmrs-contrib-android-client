@@ -6,6 +6,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.PatientIdentifier;
 import org.openmrs.mobile.models.Person;
 import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
@@ -35,6 +36,9 @@ public abstract class ACUnitTestBase {
         PersonAddress personAddress = new PersonAddress();
         person.setAddresses(Collections.singletonList(personAddress));
         patient.setPerson(person);
+        PatientIdentifier identifier = new PatientIdentifier();
+        identifier.setIdentifier("some_identifier");
+        patient.setIdentifiers(Collections.singletonList(identifier));
         return patient;
     }
 

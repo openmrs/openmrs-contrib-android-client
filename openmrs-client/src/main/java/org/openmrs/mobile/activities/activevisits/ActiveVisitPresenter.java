@@ -31,6 +31,12 @@ public class ActiveVisitPresenter implements ActiveVisitsContract.Presenter{
         this.visitDAO = new VisitDAO();
     }
 
+    public ActiveVisitPresenter(ActiveVisitsContract.View mActiveVisitsView, VisitDAO visitDAO) {
+        this.mActiveVisitsView = mActiveVisitsView;
+        this.visitDAO = visitDAO;
+        this.mActiveVisitsView.setPresenter(this);
+    }
+
     @Override
     public void start() {
         updateVisitsInDatabaseList();
@@ -41,18 +47,22 @@ public class ActiveVisitPresenter implements ActiveVisitsContract.Presenter{
         mActiveVisitsView.setEmptyListText(R.string.search_visits_no_results);
         visitDAO.getActiveVisits()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(visits -> {
-                    mActiveVisitsView.updateListVisibility(visits);
-                });
+                .subscribe(
+                        visits -> mActiveVisitsView.updateListVisibility(visits),
+                        error -> mActiveVisitsView.setEmptyListText(R.string.search_visits_no_results)
+                );
     }
 
     public void updateVisitsInDatabaseList(final String query) {
         mActiveVisitsView.setEmptyListText(R.string.search_patient_no_result_for_query, query);
         visitDAO.getActiveVisits()
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(visits -> {
-                    visits = FilterUtil.getPatientsWithActiveVisitsFilteredByQuery(visits, query);
-                    mActiveVisitsView.updateListVisibility(visits);
-                });
+                .subscribe(
+                        visits -> {
+                            visits = FilterUtil.getPatientsWithActiveVisitsFilteredByQuery(visits, query);
+                            mActiveVisitsView.updateListVisibility(visits);
+                        },
+                        error -> mActiveVisitsView.setEmptyListText(R.string.search_patient_no_result_for_query, query)
+                );
     }
 }

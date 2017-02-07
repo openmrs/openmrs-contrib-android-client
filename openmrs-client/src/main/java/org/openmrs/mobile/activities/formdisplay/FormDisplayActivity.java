@@ -13,8 +13,8 @@ http://www.androprogrammer.com/2015/06/view-pager-with-circular-indicator.html*/
 
 package org.openmrs.mobile.activities.formdisplay;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -78,7 +78,13 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
+        mPresenter.subscribe();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mPresenter.unsubscribe();
     }
 
     @Override
@@ -114,12 +120,12 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
     }
 
     @Override
-    public void setPresenter(FormDisplayContract.Presenter presenter) {
-        this.mPresenter = ((FormDisplayContract.Presenter.MainPresenter) presenter);
+    public void setPresenter(FormDisplayContract.Presenter.MainPresenter presenter) {
+        this.mPresenter = presenter;
     }
 
     private void initViewComponents(String valueRef) {
-        FormPageAdapter formPageAdapter = new FormPageAdapter(getFragmentManager(), valueRef);
+        FormPageAdapter formPageAdapter = new FormPageAdapter(getSupportFragmentManager(), valueRef);
         LinearLayout pagerIndicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
 
         mBtnNext = (Button) findViewById(R.id.btn_next);

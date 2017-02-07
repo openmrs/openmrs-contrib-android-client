@@ -16,7 +16,6 @@ package org.openmrs.mobile.activities.activevisits;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,15 +25,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActiveVisitsFragment extends Fragment implements ActiveVisitsContract.View{
-
-    private ActiveVisitsContract.Presenter mPresenter;
+public class ActiveVisitsFragment extends ACBaseFragment<ActiveVisitsContract.Presenter> implements ActiveVisitsContract.View {
 
     private RecyclerView visitsRecyclerView;
     private TextView emptyList;
@@ -68,13 +66,6 @@ public class ActiveVisitsFragment extends Fragment implements ActiveVisitsContra
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mPresenter.updateVisitsInDatabaseList();
-
-    }
-
-    @Override
     public void updateListVisibility(List<Visit> visits) {
         progressBar.setVisibility(View.GONE);
         if (visits.isEmpty()) {
@@ -95,15 +86,5 @@ public class ActiveVisitsFragment extends Fragment implements ActiveVisitsContra
     @Override
     public void setEmptyListText(int stringId, String query) {
         emptyList.setText(getString(stringId, query));
-    }
-
-    @Override
-    public boolean isActive() {
-        return isAdded();
-    }
-
-    @Override
-    public void setPresenter(ActiveVisitsContract.Presenter presenter) {
-        this.mPresenter = presenter;
     }
 }

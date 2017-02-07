@@ -17,8 +17,6 @@ package org.openmrs.mobile.activities.dashboard;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,19 +26,15 @@ import android.widget.RelativeLayout;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity;
-import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
+import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity;
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
-public class DashboardFragment extends Fragment implements DashboardContract.View, View.OnClickListener {
-
-    // Presenter
-    private DashboardContract.Presenter mPresenter;
+public class DashboardFragment extends ACBaseFragment<DashboardContract.Presenter> implements DashboardContract.View, View.OnClickListener {
 
     // ImageView Buttons
     private ImageView mFindPatientButton;
@@ -85,12 +79,6 @@ public class DashboardFragment extends Fragment implements DashboardContract.Vie
         mRegistryPatientView.setOnClickListener(this);
         mFindPatientView.setOnClickListener(this);
         mCaptureVitalsView.setOnClickListener(this);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
     }
 
     @Override
@@ -142,24 +130,8 @@ public class DashboardFragment extends Fragment implements DashboardContract.Vie
     }
 
     /**
-     * @return state of fragment
+     * Starts new Activity depending on which ImageView triggered it
      */
-    @Override
-    public boolean isActive() {
-        return isAdded();
-    }
-
-    /**
-     * Sets presenter for this view
-     */
-    @Override
-    public void setPresenter(@NonNull DashboardContract.Presenter presenter) {
-        mPresenter = checkNotNull(presenter);
-    }
-
-        /**
-         * Starts new Activity depending on which ImageView triggered it
-         */
     private void startNewActivity(Class<? extends ACBaseActivity> clazz){
         Intent intent = new Intent(getActivity(), clazz);
         startActivity(intent);

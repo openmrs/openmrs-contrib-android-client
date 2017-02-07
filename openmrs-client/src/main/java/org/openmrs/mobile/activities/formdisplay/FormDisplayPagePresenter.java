@@ -12,6 +12,7 @@ package org.openmrs.mobile.activities.formdisplay;
 
 import android.widget.LinearLayout;
 
+import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.bundle.FormFieldsWrapper;
 import org.openmrs.mobile.models.Page;
 import org.openmrs.mobile.models.Question;
@@ -19,7 +20,7 @@ import org.openmrs.mobile.models.Section;
 
 import java.util.List;
 
-public class FormDisplayPagePresenter implements FormDisplayContract.Presenter.PagePresenter {
+public class FormDisplayPagePresenter extends BasePresenter implements FormDisplayContract.Presenter.PagePresenter {
 
     private FormDisplayContract.View.PageView mFormDisplayPageView;
     private Page mPage;
@@ -45,7 +46,7 @@ public class FormDisplayPagePresenter implements FormDisplayContract.Presenter.P
     }
 
     @Override
-    public void start() {
+    public void subscribe() {
         List<Section> sectionList = mPage.getSections();
         for (Section section:sectionList) {
             addSection(section);

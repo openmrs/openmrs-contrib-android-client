@@ -43,8 +43,6 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
     private RecyclerView visitRecyclerView;
     private TextView emptyList;
 
-    private PatientDashboardContract.PatientVisitsPresenter mPresenter;
-
     public static final int REQUEST_CODE_FOR_VISIT = 1;
 
     public static PatientVisitsFragment newInstance() {
@@ -68,19 +66,13 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
         int id = item.getItemId();
         switch (id) {
             case R.id.actionStartVisit:
-                mPresenter.syncVisits();
+                ((PatientDashboardVisitsPresenter) mPresenter).syncVisits();
                 break;
             default:
                 // Do nothing
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
     }
 
     @Override
@@ -104,8 +96,8 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
 
     public void startVisit() {
         showStartVisitDialog();
-        mPresenter.startVisit();
-        }
+        ((PatientDashboardVisitsPresenter) mPresenter).startVisit();
+    }
 
     @Override
     public void showStartVisitDialog() {
@@ -155,10 +147,5 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
                 activity.showStartVisitImpossibleDialog(activity.getSupportActionBar().getTitle());
             }
         }
-    }
-
-    @Override
-    public void setPresenter(PatientDashboardContract.PatientDashboardMainPresenter presenter) {
-        this.mPresenter = ((PatientDashboardVisitsPresenter) presenter);
     }
 }

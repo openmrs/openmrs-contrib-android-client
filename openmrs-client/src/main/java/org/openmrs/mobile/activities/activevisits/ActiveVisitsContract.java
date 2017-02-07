@@ -14,7 +14,7 @@
 
 package org.openmrs.mobile.activities.activevisits;
 
-import org.openmrs.mobile.activities.BasePresenter;
+import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Visit;
 
@@ -24,8 +24,6 @@ public interface ActiveVisitsContract {
 
     interface View extends BaseView<Presenter> {
 
-        boolean isActive();
-
         void updateListVisibility(List<Visit> visitList);
 
         void setEmptyListText(int stringId);
@@ -33,7 +31,7 @@ public interface ActiveVisitsContract {
         void setEmptyListText(int stringId, String query);
     }
 
-    interface Presenter extends BasePresenter{
+    interface Presenter extends BasePresenterContract{
 
         void updateVisitsInDatabaseList();
 

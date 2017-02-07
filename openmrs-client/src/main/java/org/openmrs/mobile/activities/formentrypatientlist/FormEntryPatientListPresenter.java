@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.formentrypatientlist;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.FilterUtil;
@@ -22,7 +23,7 @@ import org.openmrs.mobile.utilities.StringUtils;
 
 import java.util.List;
 
-public class FormEntryPatientListPresenter implements FormEntryPatientListContract.Presenter {
+public class FormEntryPatientListPresenter extends BasePresenter implements FormEntryPatientListContract.Presenter {
 
     private final FormEntryPatientListContract.View mFormEntryPatientListView;
 
@@ -34,7 +35,7 @@ public class FormEntryPatientListPresenter implements FormEntryPatientListContra
     }
 
     @Override
-    public void start() {
+    public void subscribe() {
         updatePatientsList();
     }
 

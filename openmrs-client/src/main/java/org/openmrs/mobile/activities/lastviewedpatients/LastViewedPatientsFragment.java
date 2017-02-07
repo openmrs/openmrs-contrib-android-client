@@ -17,10 +17,8 @@ package org.openmrs.mobile.activities.lastviewedpatients;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +30,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -42,9 +41,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
-public class LastViewedPatientsFragment extends Fragment implements LastViewedPatientsContract.View {
+public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatientsContract.Presenter> implements LastViewedPatientsContract.View {
 
     private static final String PATIENT_LIST = "patient_list";
     private static final String SELECTED_PATIENT_POSITIONS = "selected_patient_positions";
@@ -54,7 +51,6 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
     private LinearLayoutManager linearLayoutManager;
     private LastViewedPatientRecyclerViewAdapter mAdapter;
     public SwipeRefreshLayout mSwipeRefreshLayout;
-    private LastViewedPatientsContract.Presenter mPresenter;
 
 
     @Override
@@ -104,7 +100,7 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
         if (savedInstanceState != null) {
             List<Patient> patientList = (List<Patient>) savedInstanceState.getSerializable(PATIENT_LIST);
             if (patientList == null) {
-                mPresenter.start();
+                mPresenter.subscribe();
             } else {
                 updateList(patientList);
                 mPresenter.setStartIndex(savedInstanceState.getInt(ApplicationConstants.BundleKeys.PATIENTS_START_INDEX, 0));
@@ -115,18 +111,8 @@ public class LastViewedPatientsFragment extends Fragment implements LastViewedPa
                 }
             }
         } else {
-            mPresenter.start();
+            mPresenter.subscribe();
         }
-    }
-
-    @Override
-    public boolean isActive() {
-        return isAdded();
-    }
-
-    @Override
-    public void setPresenter(@NonNull LastViewedPatientsContract.Presenter presenter) {
-        mPresenter = checkNotNull(presenter);
     }
 
     @Override

@@ -39,8 +39,8 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
     }
 
     @Override
-    public void start() {
-        visitDAO.getVisitsByPatientID(mPatient.getId())
+    public void subscribe() {
+        addSubscription(visitDAO.getVisitsByPatientID(mPatient.getId())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(patientVisits -> {
                     if (patientVisits !=null && patientVisits.isEmpty()) {
@@ -50,12 +50,12 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
                         mPatientVisitsView.toggleRecyclerListVisibility(true);
                         mPatientVisitsView.setVisitsToDisplay(patientVisits);
                     }
-                });
+                }));
     }
 
     @Override
     public void showStartVisitDialog() {
-        new VisitDAO().getActiveVisitByPatientId(mPatient.getId())
+        addSubscription(new VisitDAO().getActiveVisitByPatientId(mPatient.getId())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(visit -> {
                     if(visit != null){
@@ -68,7 +68,7 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
                     else {
                         mPatientVisitsView.showStartVisitDialog(true);
                     }
-                });
+                }));
     }
 
     @Override
@@ -77,12 +77,12 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
             @Override
             public void onResponse() {
                 VisitDAO visitDAO = new VisitDAO();
-                visitDAO.getVisitsByPatientID(mPatient.getId())
+                addSubscription(visitDAO.getVisitsByPatientID(mPatient.getId())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(visList -> {
                             mPatientVisitsView.setVisitsToDisplay(visList);
                             showStartVisitDialog();
-                        });
+                        }));
             }
             @Override
             public void onErrorResponse(String errorMessage) {

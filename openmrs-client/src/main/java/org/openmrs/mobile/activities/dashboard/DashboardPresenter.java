@@ -16,7 +16,9 @@ package org.openmrs.mobile.activities.dashboard;
 
 import android.support.annotation.NonNull;
 
-public class DashboardPresenter implements DashboardContract.Presenter {
+import org.openmrs.mobile.activities.BasePresenter;
+
+public class DashboardPresenter extends BasePresenter implements DashboardContract.Presenter {
 
     // View
     @NonNull
@@ -28,7 +30,7 @@ public class DashboardPresenter implements DashboardContract.Presenter {
     }
 
     @Override
-    public void start() {
+    public void subscribe() {
         mDashboardView.bindDrawableResources();
     }
 

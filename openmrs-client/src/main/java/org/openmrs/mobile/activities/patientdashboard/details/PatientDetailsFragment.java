@@ -47,8 +47,6 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
     private View rootView;
 
-    private PatientDashboardContract.PatientDetailsPresenter mPresenter;
-
     public static PatientDetailsFragment newInstance() {
         return new PatientDetailsFragment();
     }
@@ -80,7 +78,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
         int id = item.getItemId();
         switch (id) {
             case R.id.actionSynchronize:
-                mPresenter.synchronizePatient();
+                ((PatientDashboardDetailsPresenter) mPresenter).synchronizePatient();
                 break;
             case R.id.actionUpdatePatient:
                 startPatientUpdateActivity(mPresenter.getPatientId());
@@ -151,12 +149,6 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
-    }
-
-    @Override
     public void dismissDialog() {
         ((PatientDashboardActivity) this.getActivity()).dismissCustomFragmentDialog();
     }
@@ -171,11 +163,6 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     public void setMenuTitle(String nameString, String identifier) {
         ((PatientDashboardActivity) this.getActivity()).getSupportActionBar().setTitle(nameString);
         ((PatientDashboardActivity) this.getActivity()).getSupportActionBar().setSubtitle("#" + identifier);
-    }
-
-    @Override
-    public void setPresenter(PatientDashboardContract.PatientDashboardMainPresenter presenter) {
-        this.mPresenter = ((PatientDashboardContract.PatientDetailsPresenter) presenter);
     }
 
     @Override

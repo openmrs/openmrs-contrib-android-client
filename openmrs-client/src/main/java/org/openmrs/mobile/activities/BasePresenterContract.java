@@ -12,20 +12,11 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.dashboard;
+package org.openmrs.mobile.activities;
 
-import org.openmrs.mobile.activities.BasePresenterContract;
-import org.openmrs.mobile.activities.BaseView;
+public interface BasePresenterContract {
 
-public interface DashboardContract {
+    void subscribe();
 
-    interface View extends BaseView<Presenter> {
-
-        void bindDrawableResources();
-    }
-
-    interface Presenter extends BasePresenterContract {
-
-    }
-
+    void unsubscribe();
 }

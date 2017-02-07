@@ -14,9 +14,7 @@
 
 package org.openmrs.mobile.activities.syncedpatients;
 
-import android.support.annotation.NonNull;
-
-import org.openmrs.mobile.activities.BasePresenter;
+import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Patient;
 
@@ -26,10 +24,6 @@ public interface SyncedPatientsContract {
 
     interface View extends BaseView<Presenter> {
 
-        boolean isActive();
-
-        void setPresenter(@NonNull Presenter presenter);
-
         void updateAdapter(List<Patient> patientList);
 
         void updateListVisibility(boolean isVisible, int emptyListTextStringId, String replacementWord);
@@ -37,7 +31,7 @@ public interface SyncedPatientsContract {
         void enableAddPatient(boolean enabled);
     }
 
-    interface Presenter extends BasePresenter{
+    interface Presenter extends BasePresenterContract {
 
         void setQuery(String query);
 

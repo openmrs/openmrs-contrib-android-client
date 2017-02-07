@@ -18,7 +18,6 @@ package org.openmrs.mobile.activities.settings;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,14 +25,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.models.SettingsListItemDTO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SettingsFragment extends Fragment implements SettingsContract.View {
+public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter> implements SettingsContract.View {
 
-    private SettingsContract.Presenter mPresenter;
     private List<SettingsListItemDTO> mListItem = new ArrayList<>();
 
     private RecyclerView settingsRecyclerView;
@@ -52,25 +51,9 @@ public class SettingsFragment extends Fragment implements SettingsContract.View 
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
-    }
-
-    @Override
     public void onPause() {
-        super.onStop();
+        super.onPause();
         mListItem = new ArrayList<>();
-    }
-
-    @Override
-    public void setPresenter(SettingsContract.Presenter presenter) {
-        this.mPresenter = presenter;
-    }
-
-    @Override
-    public boolean isActive() {
-        return isAdded();
     }
 
     @Override

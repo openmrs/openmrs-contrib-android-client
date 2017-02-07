@@ -14,7 +14,7 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
-import org.openmrs.mobile.activities.BasePresenter;
+import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Patient;
 
@@ -23,8 +23,6 @@ import java.util.List;
 public interface AddEditPatientContract {
 
     interface View extends BaseView<Presenter> {
-
-        boolean isActive();
 
         void finishPatientInfoActivity();
 
@@ -48,7 +46,7 @@ public interface AddEditPatientContract {
         void showUpgradeRegistrationModuleInfo();
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenterContract {
 
         Patient getPatientToUpdate();
 

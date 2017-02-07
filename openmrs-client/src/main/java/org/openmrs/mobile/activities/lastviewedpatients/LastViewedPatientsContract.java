@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.lastviewedpatients;
 
+import org.openmrs.mobile.activities.BasePresenterContract;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
@@ -26,10 +27,6 @@ import java.util.List;
 public interface LastViewedPatientsContract {
 
     interface View extends BaseView<Presenter> {
-
-        boolean isActive();
-
-        void setPresenter(@NonNull Presenter presenter);
 
         void enableSwipeRefresh(boolean enabled);
 
@@ -56,7 +53,7 @@ public interface LastViewedPatientsContract {
         void showRecycleViewProgressBar(boolean visibility);
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenterContract {
 
         void refresh();
 

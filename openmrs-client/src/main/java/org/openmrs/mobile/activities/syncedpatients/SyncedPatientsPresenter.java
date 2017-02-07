@@ -18,6 +18,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.FilterUtil;
@@ -25,7 +26,7 @@ import org.openmrs.mobile.utilities.StringUtils;
 
 import java.util.List;
 
-public class SyncedPatientsPresenter implements SyncedPatientsContract.Presenter {
+public class SyncedPatientsPresenter extends BasePresenter implements SyncedPatientsContract.Presenter {
 
     // View
     @NonNull
@@ -50,7 +51,7 @@ public class SyncedPatientsPresenter implements SyncedPatientsContract.Presenter
      * Used to display initial data on activity trigger
      */
     @Override
-    public void start() {
+    public void subscribe() {
         updateLocalPatientsList();
     }
 

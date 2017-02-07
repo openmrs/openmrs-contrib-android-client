@@ -65,7 +65,7 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
     }
 
     @Override
-    public void start() {
+    public void subscribe() {
         mPatient = new PatientDAO().findPatientByID(mPatient.getId().toString());
         mPatientDetailsView.setMenuTitle(mPatient.getPerson().getName().getNameString(), mPatient.getIdentifier().getIdentifier());
         mPatientDetailsView.resolvePatientDataDisplay(new PatientDAO().findPatientByID(mPatient.getId().toString()));

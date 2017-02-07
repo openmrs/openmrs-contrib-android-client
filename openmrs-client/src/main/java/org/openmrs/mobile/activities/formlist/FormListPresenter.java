@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.formlist;
 
 import com.activeandroid.query.Select;
 
+import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.FormResource;
 
@@ -24,7 +25,7 @@ import java.util.List;
 
 import static org.openmrs.mobile.utilities.FormService.getFormResourceList;
 
-public class FormListPresenter implements FormListContract.Presenter {
+public class FormListPresenter extends BasePresenter implements FormListContract.Presenter {
 
     private static String[] FORMS = null;
 
@@ -46,7 +47,7 @@ public class FormListPresenter implements FormListContract.Presenter {
     }
 
     @Override
-    public void start() {
+    public void subscribe() {
         loadFormResourceList();
     }
 

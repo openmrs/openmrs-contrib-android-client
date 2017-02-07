@@ -1,6 +1,7 @@
 package org.openmrs.mobile.activities.matchingpatients;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.retrofit.PatientApi;
@@ -16,7 +17,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MatchingPatientsPresenter implements MatchingPatientsContract.Presenter{
+import static com.google.common.collect.ComparisonChain.start;
+
+public class MatchingPatientsPresenter extends BasePresenter implements MatchingPatientsContract.Presenter{
 
     private RestApi restApi;
     private PatientDAO patientDAO;
@@ -45,7 +48,7 @@ public class MatchingPatientsPresenter implements MatchingPatientsContract.Prese
     }
 
     @Override
-    public void start() {
+    public void subscribe() {
         view.showPatientsData(matchingPatientsList.peek().getPatient(), matchingPatientsList.peek().getMatchingPatientList());
         setSelectedIfOnlyOneMatching();
     }
@@ -109,7 +112,7 @@ public class MatchingPatientsPresenter implements MatchingPatientsContract.Prese
         patientApi.syncPatient(patient);
         removeSelectedPatient();
         if (matchingPatientsList.peek() != null) {
-            start();
+            subscribe();
         } else {
             view.finishActivity();
         }

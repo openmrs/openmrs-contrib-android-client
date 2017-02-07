@@ -1,22 +1,15 @@
 package org.openmrs.mobile.activities.patientdashboard;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.activities.ACBaseFragment;
 
-public class PatientDashboardFragment extends Fragment implements PatientDashboardContract.ViewPatientMain {
-
-    PatientDashboardContract.PatientDashboardMainPresenter mPresenter;
-
-    @Override
-    public void setPresenter(PatientDashboardContract.PatientDashboardMainPresenter presenter) {
-        this.mPresenter = presenter;
-    }
+public class PatientDashboardFragment extends ACBaseFragment<PatientDashboardContract.PatientDashboardMainPresenter> implements PatientDashboardContract.ViewPatientMain {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

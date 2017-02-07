@@ -10,7 +10,6 @@
 
 package org.openmrs.mobile.activities.formdisplay;
 
-import android.app.Fragment;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -31,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.FormFieldsWrapper;
 import org.openmrs.mobile.models.Answer;
@@ -44,11 +44,10 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FormDisplayPageFragment extends Fragment implements FormDisplayContract.View.PageView {
+public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.Presenter.PagePresenter> implements FormDisplayContract.View.PageView {
 
     private List<InputField> inputFields =new ArrayList<>();
     private List<SelectOneField> selectOneFields = new ArrayList<>();
-    private FormDisplayContract.Presenter.PagePresenter mPresenter;
     private LinearLayout mParent;
 
     public static FormDisplayPageFragment newInstance() {
@@ -63,8 +62,6 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         mParent = (LinearLayout) root.findViewById(R.id.sectionContainer);
-        mPresenter.start();
-
         return root;
     }
 
@@ -391,10 +388,5 @@ public class FormDisplayPageFragment extends Fragment implements FormDisplayCont
 
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
-    }
-
-    @Override
-    public void setPresenter(FormDisplayContract.Presenter presenter) {
-        this.mPresenter = (FormDisplayContract.Presenter.PagePresenter) presenter;
     }
 }

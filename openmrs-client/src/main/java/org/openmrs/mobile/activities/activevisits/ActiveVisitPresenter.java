@@ -15,12 +15,13 @@
 package org.openmrs.mobile.activities.activevisits;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.utilities.FilterUtil;
 
 import rx.android.schedulers.AndroidSchedulers;
 
-public class ActiveVisitPresenter implements ActiveVisitsContract.Presenter{
+public class ActiveVisitPresenter extends BasePresenter implements ActiveVisitsContract.Presenter{
 
     private ActiveVisitsContract.View mActiveVisitsView;
     private VisitDAO visitDAO;
@@ -38,24 +39,24 @@ public class ActiveVisitPresenter implements ActiveVisitsContract.Presenter{
     }
 
     @Override
-    public void start() {
+    public void subscribe() {
         updateVisitsInDatabaseList();
     }
 
     @Override
     public void updateVisitsInDatabaseList() {
         mActiveVisitsView.setEmptyListText(R.string.search_visits_no_results);
-        visitDAO.getActiveVisits()
+        addSubscription(visitDAO.getActiveVisits()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         visits -> mActiveVisitsView.updateListVisibility(visits),
                         error -> mActiveVisitsView.setEmptyListText(R.string.search_visits_no_results)
-                );
+                ));
     }
 
     public void updateVisitsInDatabaseList(final String query) {
         mActiveVisitsView.setEmptyListText(R.string.search_patient_no_result_for_query, query);
-        visitDAO.getActiveVisits()
+        addSubscription(visitDAO.getActiveVisits()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         visits -> {
@@ -63,6 +64,7 @@ public class ActiveVisitPresenter implements ActiveVisitsContract.Presenter{
                             mActiveVisitsView.updateListVisibility(visits);
                         },
                         error -> mActiveVisitsView.setEmptyListText(R.string.search_patient_no_result_for_query, query)
-                );
+
+                ));
     }
 }

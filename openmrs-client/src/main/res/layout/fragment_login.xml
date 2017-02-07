@@ -70,7 +70,7 @@
                     android:layout_marginBottom="20dp"
                     android:gravity="center"
                     android:textAlignment="center"
-                    android:textSize="14dp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
                     android:focusable="true"
                     android:hint="@string/login_url_hint"

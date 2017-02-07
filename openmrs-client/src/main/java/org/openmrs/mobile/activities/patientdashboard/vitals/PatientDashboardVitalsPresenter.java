@@ -36,7 +36,7 @@ public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresent
     }
 
     @Override
-    public void start() {
+    public void subscribe() {
         loadVitalsFromDB();
         loadVitalsFromServer();
     }

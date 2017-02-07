@@ -20,10 +20,8 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.InputType;
 import android.util.SparseArray;
@@ -42,7 +40,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.dashboard.DashboardActivity;
+import org.openmrs.mobile.activities.ACBaseFragment;
+import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.application.OpenMRS;
@@ -59,11 +60,7 @@ import org.openmrs.mobile.utilities.URLValidator;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
-public class LoginFragment extends Fragment implements LoginContract.View {
-
-    private LoginContract.Presenter mPresenter;
+public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> implements LoginContract.View {
 
     private View mRootView;
     private TextView mForgotPass;
@@ -200,7 +197,6 @@ public class LoginFragment extends Fragment implements LoginContract.View {
         setSyncButtonState(syncState);
         hideUrlLoadingAnimation();
 
-        mPresenter.start();
         bindDrawableResources();
     }
 
@@ -211,11 +207,6 @@ public class LoginFragment extends Fragment implements LoginContract.View {
     }
 
     @Override
-    public boolean isActive() {
-        return isAdded();
-    }
-
-    @Override
     public void hideSoftKeys(){
         View view = this.getActivity().getCurrentFocus();
         if (view == null) {
@@ -223,11 +214,6 @@ public class LoginFragment extends Fragment implements LoginContract.View {
         }
         InputMethodManager inputMethodManager = (InputMethodManager)this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-    @Override
-    public void setPresenter(@NonNull LoginContract.Presenter presenter) {
-        this.mPresenter = checkNotNull(presenter);
     }
 
     private void setSyncButtonState(boolean syncEnabled) {

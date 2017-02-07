@@ -17,6 +17,7 @@ package org.openmrs.mobile.activities.lastviewedpatients;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
+import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.dao.PatientDAO;
@@ -35,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LastViewedPatientsPresenter implements LastViewedPatientsContract.Presenter{
+public class LastViewedPatientsPresenter extends BasePresenter implements LastViewedPatientsContract.Presenter{
 
     private static final int MIN_NUMBER_OF_PATIENTS_TO_SHOW = 7;
     // View
@@ -75,7 +76,7 @@ public class LastViewedPatientsPresenter implements LastViewedPatientsContract.P
     }
 
     @Override
-    public void start() {
+    public void subscribe() {
         updateLastViewedList();
     }
 

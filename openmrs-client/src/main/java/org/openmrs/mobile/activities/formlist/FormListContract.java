@@ -14,14 +14,12 @@
 
 package org.openmrs.mobile.activities.formlist;
 
-import org.openmrs.mobile.activities.BasePresenter;
+import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 
 public interface FormListContract {
 
     interface View extends BaseView<Presenter>{
-
-        boolean isActive();
 
         void showFormList(String[] forms);
 
@@ -30,7 +28,7 @@ public interface FormListContract {
         void showError(String message);
     }
 
-    interface Presenter extends BasePresenter{
+    interface Presenter extends BasePresenterContract {
 
         void loadFormResourceList();
 

@@ -41,6 +41,10 @@ public interface VisitDashboardContract {
         void setActionBarTitle(String name);
 
         void setActiveVisitMenu();
+
+        void showErrorToast(String message);
+
+        void showErrorToast(int messageId);
     }
 
     interface Presenter extends BasePresenter {

@@ -54,7 +54,7 @@ public class PatientDashboardDiagnosisPresenter extends PatientDashboardMainPres
     }
 
     @Override
-    public void start() {
+    public void subscribe() {
         loadDiagnosis();
     }
 

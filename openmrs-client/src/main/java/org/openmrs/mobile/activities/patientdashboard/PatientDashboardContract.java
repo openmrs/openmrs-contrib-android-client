@@ -14,7 +14,7 @@
 
 package org.openmrs.mobile.activities.patientdashboard;
 
-import org.openmrs.mobile.activities.BasePresenter;
+import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Patient;
@@ -66,7 +66,7 @@ public interface PatientDashboardContract {
     /*
     * Presenters
     */
-    interface PatientDashboardMainPresenter extends BasePresenter {
+    interface PatientDashboardMainPresenter extends BasePresenterContract {
         void deletePatient();
         long getPatientId();
     }

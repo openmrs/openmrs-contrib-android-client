@@ -17,7 +17,6 @@ package org.openmrs.mobile.activities.formlist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,19 +26,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-public class FormListFragment extends Fragment implements FormListContract.View {
-    private ListView formList;
+public class FormListFragment extends ACBaseFragment<FormListContract.Presenter> implements FormListContract.View {
 
-    private FormListContract.Presenter mPresenter;
+    private ListView formList;
 
     public static FormListFragment newInstance() {
 
         return new FormListFragment();
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -54,22 +54,6 @@ public class FormListFragment extends Fragment implements FormListContract.View 
         });
 
         return root;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
-    }
-
-    @Override
-    public void setPresenter(FormListContract.Presenter presenter) {
-        this.mPresenter = presenter;
-    }
-
-    @Override
-    public boolean isActive() {
-        return isAdded();
     }
 
     @Override

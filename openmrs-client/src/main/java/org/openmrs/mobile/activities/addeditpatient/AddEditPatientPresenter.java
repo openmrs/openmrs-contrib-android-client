@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
+import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.retrofit.PatientApi;
@@ -35,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddEditPatientPresenter implements AddEditPatientContract.Presenter {
+public class AddEditPatientPresenter extends BasePresenter implements AddEditPatientContract.Presenter {
 
     private final AddEditPatientContract.View mPatientInfoView;
 
@@ -54,7 +55,7 @@ public class AddEditPatientPresenter implements AddEditPatientContract.Presenter
     }
     
     @Override
-    public void start(){
+    public void subscribe(){
         // This method is intentionally empty
     }
 

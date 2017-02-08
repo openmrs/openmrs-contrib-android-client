@@ -49,8 +49,6 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
 
     private LayoutInflater mInflater;
 
-    private PatientDashboardContract.PatientVitalsPresenter mPresenter;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +71,7 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
         formEditIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPresenter.startFormDisplayActivityWithEncounter();
+                ((PatientDashboardVitalsPresenter) mPresenter).startFormDisplayActivityWithEncounter();
             }
         });
 
@@ -89,17 +87,6 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // This method is intentionally empty
-    }
-
-    @Override
-    public void setPresenter(PatientDashboardContract.PatientDashboardMainPresenter presenter) {
-        this.mPresenter = ((PatientDashboardContract.PatientVitalsPresenter) presenter);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
     }
 
     @Override

@@ -34,8 +34,6 @@ import java.util.List;
 
 public class PatientDiagnosisFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDiagnosis {
 
-    private PatientDashboardContract.PatientDiagnosisPresenter mPresenter;
-
     private ListView mDiagnosisList;
 
     public static PatientDiagnosisFragment newInstance() {
@@ -60,12 +58,6 @@ public class PatientDiagnosisFragment extends PatientDashboardFragment implement
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
-    }
-
-    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // This method is intentionally empty
     }
@@ -75,10 +67,5 @@ public class PatientDiagnosisFragment extends PatientDashboardFragment implement
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, encounters);
         mDiagnosisList.setAdapter(adapter);
-    }
-
-    @Override
-    public void setPresenter(PatientDashboardContract.PatientDashboardMainPresenter presenter) {
-        this.mPresenter = ((PatientDashboardDiagnosisPresenter) presenter);
     }
 }

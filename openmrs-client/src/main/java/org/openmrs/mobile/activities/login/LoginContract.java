@@ -16,7 +16,7 @@ package org.openmrs.mobile.activities.login;
 
 import android.support.annotation.NonNull;
 
-import org.openmrs.mobile.activities.BasePresenter;
+import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -26,8 +26,6 @@ import java.util.List;
 public interface LoginContract {
 
     interface View extends BaseView<Presenter>{
-
-        boolean isActive();
 
         void hideSoftKeys();
 
@@ -63,7 +61,7 @@ public interface LoginContract {
 
     }
 
-    interface  Presenter extends BasePresenter{
+    interface  Presenter extends BasePresenterContract {
 
         void authenticateUser(final String username, final String password, final String url);
 

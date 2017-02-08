@@ -16,9 +16,7 @@ package org.openmrs.mobile.activities.formentrypatientlist;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.formlist.FormListActivity;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -35,9 +34,8 @@ import org.openmrs.mobile.utilities.StringUtils;
 
 import java.util.List;
 
-public class FormEntryPatientListFragment extends Fragment implements  FormEntryPatientListContract.View {
+public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatientListContract.Presenter> implements  FormEntryPatientListContract.View {
 
-    private FormEntryPatientListContract.Presenter mPresenter;
     private RecyclerView mPatientRecyclerView;
     private TextView mEmptyList;
 
@@ -57,22 +55,6 @@ public class FormEntryPatientListFragment extends Fragment implements  FormEntry
         // Font config
         FontsUtil.setFont((ViewGroup) this.getActivity().findViewById(android.R.id.content));
         return root;
-    }
-
-    @Override
-    public boolean isActive() {
-        return isAdded();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
-    }
-
-    @Override
-    public void setPresenter(@NonNull FormEntryPatientListContract.Presenter presenter) {
-        this.mPresenter = presenter;
     }
 
     @Override

@@ -14,9 +14,7 @@
 
 package org.openmrs.mobile.activities.visitdashboard;
 
-import android.support.annotation.NonNull;
-
-import org.openmrs.mobile.activities.BasePresenter;
+import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Encounter;
 
@@ -25,10 +23,6 @@ import java.util.List;
 public interface VisitDashboardContract {
 
     interface View extends BaseView<Presenter> {
-
-        boolean isActive();
-
-        void setPresenter(@NonNull Presenter presenter);
 
         void startCaptureVitals(long patientId);
 
@@ -47,7 +41,7 @@ public interface VisitDashboardContract {
         void showErrorToast(int messageId);
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenterContract {
         
         void fillForm();
 

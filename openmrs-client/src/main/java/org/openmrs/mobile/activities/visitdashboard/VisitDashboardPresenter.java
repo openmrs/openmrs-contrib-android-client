@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.visitdashboard;
 
+import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -31,7 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class VisitDashboardPresenter implements VisitDashboardContract.Presenter {
+public class VisitDashboardPresenter extends BasePresenter implements VisitDashboardContract.Presenter {
 
     private RestApi restApi;
     private VisitDAO visitDAO;
@@ -67,14 +68,14 @@ public class VisitDashboardPresenter implements VisitDashboardContract.Presenter
             @Override
             public void onResponse(Call<Visit> call, Response<Visit> response) {
                 if (response.isSuccessful()) {
-                    visitDAO.getVisitByID(visit.getId())
+                    addSubscription(visitDAO.getVisitByID(visit.getId())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(vis -> {
                                 vis.setStopDatetime(response.body().getStopDatetime());
                                 visitDAO.saveOrUpdate(vis, vis.getPatient().getId())
                                         .observeOn(AndroidSchedulers.mainThread())
                                         .subscribe(id -> moveToPatientDashboard());
-                            });
+                            }));
                 }
                 else {
                     mVisitDashboardView.showErrorToast(response.message());
@@ -89,14 +90,14 @@ public class VisitDashboardPresenter implements VisitDashboardContract.Presenter
     }
 
     public void endVisit() {
-        visitDAO.getVisitByID(visitId)
+        addSubscription(visitDAO.getVisitByID(visitId)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::endVisitByUUID);
+                .subscribe(this::endVisitByUUID));
     }
 
     @Override
-    public void start() {
-        visitDAO.getVisitByID(visitId)
+    public void subscribe() {
+        addSubscription(visitDAO.getVisitByID(visitId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(visit -> {
                     List<Encounter> encounters = visit.getEncounters();
@@ -104,13 +105,13 @@ public class VisitDashboardPresenter implements VisitDashboardContract.Presenter
                         mVisitDashboardView.setEmptyListVisibility(false);
                     }
                     mVisitDashboardView.updateList(encounters);
-                });
+                }));
 
     }
 
     @Override
     public void fillForm() {
-        visitDAO.getVisitByID(visitId)
+        addSubscription(visitDAO.getVisitByID(visitId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(visit -> {
                     Patient patient = visit.getPatient();
@@ -119,23 +120,23 @@ public class VisitDashboardPresenter implements VisitDashboardContract.Presenter
                     } else {
                         mVisitDashboardView.showErrorToast(R.string.patient_not_yet_registered);
                     }
-                });
+                }));
 
     }
 
     @Override
     public void updatePatientName() {
-        visitDAO.getVisitByID(visitId)
+        addSubscription(visitDAO.getVisitByID(visitId)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(visit -> mVisitDashboardView.setActionBarTitle(visit.getPatient().getPerson().getName().getNameString()));
+                .subscribe(visit -> mVisitDashboardView.setActionBarTitle(visit.getPatient().getPerson().getName().getNameString())));
     }
 
     @Override
     public void checkIfVisitActive() {
-        visitDAO.getVisitByID(visitId)
+        addSubscription(visitDAO.getVisitByID(visitId)
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter(visit -> StringUtils.isBlank(visit.getStopDatetime()))
-                .subscribe(visit -> mVisitDashboardView.setActiveVisitMenu());
+                .subscribe(visit -> mVisitDashboardView.setActiveVisitMenu()));
     }
 
     public void moveToPatientDashboard() {

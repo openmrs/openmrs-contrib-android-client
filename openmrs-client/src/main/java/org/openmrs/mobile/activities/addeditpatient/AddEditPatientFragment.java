@@ -56,6 +56,7 @@ import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientPhotoActivity;
@@ -91,8 +92,7 @@ import permissions.dispatcher.RuntimePermissions;
 
 
 @RuntimePermissions
-public class AddEditPatientFragment extends Fragment implements AddEditPatientContract.View {
-    private AddEditPatientContract.Presenter mPresenter;
+public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContract.Presenter> implements AddEditPatientContract.View {
 
     private RelativeLayout relativeLayout;
     private LocalDate birthdate;
@@ -142,16 +142,6 @@ public class AddEditPatientFragment extends Fragment implements AddEditPatientCo
         addListeners();
         fillFields(mPresenter.getPatientToUpdate());
         return root;
-    }
-
-    @Override
-    public void setPresenter(AddEditPatientContract.Presenter presenter) {
-        this.mPresenter = presenter;
-    }
-
-    @Override
-    public boolean isActive() {
-        return isAdded();
     }
 
     @Override

@@ -2,7 +2,6 @@ package org.openmrs.mobile.activities.matchingpatients;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -19,7 +19,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
-public class MatchingPatientsFragment extends Fragment implements MatchingPatientsContract.View{
+public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsContract.Presenter> implements MatchingPatientsContract.View{
 
     private Button registerNewPatientButton;
     private Button mergePatientsButton;
@@ -37,9 +37,6 @@ public class MatchingPatientsFragment extends Fragment implements MatchingPatien
     private RecyclerView mRecyclerView;
     private View view;
 
-
-    private MatchingPatientsContract.Presenter mPresenter;
-
     public static MatchingPatientsFragment newInstance(){
         return new MatchingPatientsFragment();
     }
@@ -52,12 +49,6 @@ public class MatchingPatientsFragment extends Fragment implements MatchingPatien
         setListeners();
         FontsUtil.setFont((ViewGroup) this.getActivity().findViewById(android.R.id.content));
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
     }
 
     private void setListeners() {
@@ -90,11 +81,6 @@ public class MatchingPatientsFragment extends Fragment implements MatchingPatien
         country = (TextView) root.findViewById(R.id.country);
         postalCode = (TextView) root.findViewById(R.id.postalCode);
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
-    }
-
-    @Override
-    public boolean isActive() {
-        return isAdded();
     }
 
     @Override
@@ -185,10 +171,5 @@ public class MatchingPatientsFragment extends Fragment implements MatchingPatien
             view.findViewById(R.id.postalCodeSeparator).setVisibility(View.GONE);
             view.findViewById(R.id.postalCodeHint).setVisibility(View.GONE);
         }
-    }
-
-    @Override
-    public void setPresenter(MatchingPatientsContract.Presenter presenter) {
-        this.mPresenter = presenter;
     }
 }

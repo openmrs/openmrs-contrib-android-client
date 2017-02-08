@@ -16,9 +16,7 @@ package org.openmrs.mobile.activities.syncedpatients;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,6 +28,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
@@ -39,12 +38,7 @@ import org.openmrs.mobile.utilities.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
-public class SyncedPatientsFragment extends Fragment implements SyncedPatientsContract.View {
-
-    // Presenter
-    private SyncedPatientsContract.Presenter mPresenter;
+public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContract.Presenter> implements SyncedPatientsContract.View {
 
     // Fragment components
     private TextView mEmptyList;
@@ -81,12 +75,6 @@ public class SyncedPatientsFragment extends Fragment implements SyncedPatientsCo
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
@@ -102,22 +90,6 @@ public class SyncedPatientsFragment extends Fragment implements SyncedPatientsCo
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * @return state of fragment
-     */
-    @Override
-    public boolean isActive() {
-        return isAdded();
-    }
-
-    /**
-     * Sets presenter for this view
-     */
-    @Override
-    public void setPresenter(@NonNull SyncedPatientsContract.Presenter presenter) {
-        mPresenter = checkNotNull(presenter);
     }
 
     /**

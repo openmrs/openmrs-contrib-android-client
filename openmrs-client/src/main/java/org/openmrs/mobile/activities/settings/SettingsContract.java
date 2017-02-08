@@ -14,14 +14,12 @@
 
 package org.openmrs.mobile.activities.settings;
 
-import org.openmrs.mobile.activities.BasePresenter;
+import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 
 public interface SettingsContract {
 
     interface View extends BaseView<Presenter> {
-
-        boolean isActive();
 
         void addLogsInfo(long logSize, String logFilename);
 
@@ -31,7 +29,7 @@ public interface SettingsContract {
 
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenterContract {
 
         void logException(String exception);
 

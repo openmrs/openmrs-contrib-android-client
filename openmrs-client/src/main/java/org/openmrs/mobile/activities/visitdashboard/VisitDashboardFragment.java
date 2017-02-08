@@ -17,8 +17,6 @@ package org.openmrs.mobile.activities.visitdashboard;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -27,6 +25,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.formlist.FormListActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Encounter;
@@ -39,9 +38,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-public class VisitDashboardFragment extends Fragment implements VisitDashboardContract.View{
-
-    private VisitDashboardContract.Presenter mPresenter;
+public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContract.Presenter> implements VisitDashboardContract.View{
 
     private ExpandableListView mExpandableListView;
     private TextView mEmptyListView;
@@ -57,22 +54,6 @@ public class VisitDashboardFragment extends Fragment implements VisitDashboardCo
         mExpandableListView.setEmptyView(mEmptyListView);
         setEmptyListVisibility(false);
         return root;
-    }
-
-    @Override
-    public boolean isActive() {
-        return isAdded();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mPresenter.start();
-    }
-
-    @Override
-    public void setPresenter(@NonNull VisitDashboardContract.Presenter presenter) {
-        this.mPresenter = presenter;
     }
 
     @Override

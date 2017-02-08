@@ -45,7 +45,7 @@ public class SettingsPresenterTest extends ACUnitTestBase {
         String logFileName = "logfile";
         when(openMRS.getOpenMRSDir()).thenReturn(directory);
         when(logger.getLogFilename()).thenReturn(logFileName);
-        settingsPresenter.start();
+        settingsPresenter.subscribe();
         verify(view).addLogsInfo(0, directory + File.separator + logFileName);
         verify(view).addBuildVersionInfo();
         verify(view).applyChanges();

@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.login;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.UserService;
@@ -41,7 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginPresenter implements LoginContract.Presenter{
+public class LoginPresenter extends BasePresenter implements LoginContract.Presenter{
 
     private LoginContract.View loginView;
     private OpenMRS mOpenMRS;
@@ -58,7 +59,7 @@ public class LoginPresenter implements LoginContract.Presenter{
     }
 
     @Override
-    public void start() {
+    public void subscribe() {
         // This method is intentionally empty
     }
 

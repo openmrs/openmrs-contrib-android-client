@@ -1,6 +1,6 @@
 package org.openmrs.mobile.activities.matchingpatients;
 
-import org.openmrs.mobile.activities.BasePresenter;
+import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Patient;
 
@@ -9,8 +9,6 @@ import java.util.List;
 public interface MatchingPatientsContract {
 
     interface View extends BaseView<Presenter>{
-
-        boolean isActive();
 
         void showPatientsData(Patient patient, List<Patient> matchingPatients);
 
@@ -25,7 +23,7 @@ public interface MatchingPatientsContract {
         void showErrorToast(String message);
     }
 
-    interface Presenter extends BasePresenter{
+    interface Presenter extends BasePresenterContract {
 
         void setSelectedPatient(Patient patient);
 

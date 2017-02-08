@@ -22,6 +22,18 @@ public class Results<T> implements Serializable {
     @Expose
     private List<T> results = new ArrayList<T>();
 
+    @SerializedName("links")
+    @Expose
+    private List<Link> links = new ArrayList<>();
+
+    public List<Link> getLinks() {
+        return links;
+    }
+
+    public void setLinks(List<Link> links) {
+        this.links = links;
+    }
+
     public List<T> getResults() {
         return results;
     }

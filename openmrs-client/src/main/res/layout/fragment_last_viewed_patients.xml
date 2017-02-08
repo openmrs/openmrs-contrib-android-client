@@ -47,8 +47,7 @@
 
             <android.support.v7.widget.RecyclerView android:id="@+id/lastViewedPatientRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="left|bottom" />
+                android:layout_height="match_parent"/>
 
         </RelativeLayout>
 

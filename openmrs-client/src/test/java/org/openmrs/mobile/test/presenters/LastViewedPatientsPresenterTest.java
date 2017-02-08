@@ -31,6 +31,8 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
     private LastViewedPatientsPresenter lastViewedPatientsPresenter;
     private Patient firstPatient;
     private Patient secondPatient;
+    private int limit = 15;
+    private int startIndex = 0;
 
     @Before
     public void setUp(){
@@ -47,9 +49,9 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
     @Test
     public void shouldUpdateLastViewedPatientList_allOK(){
         List<Patient> patientList = Arrays.asList(firstPatient, secondPatient);
-        when(restApi.getLastViewedPatients()).thenReturn(mockSuccessCall(patientList));
+        when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockSuccessCall(patientList));
         lastViewedPatientsPresenter.updateLastViewedList();
-        verify(restApi).getLastViewedPatients();
+        verify(restApi).getLastViewedPatients(limit, startIndex);
         verify(view).updateList(Collections.singletonList(secondPatient));
         verify(view).setListVisibility(true);
         verify(view, atLeast(2)).setEmptyListVisibility(false);
@@ -58,9 +60,9 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
 
     @Test
     public void shouldUpdateLastViewedPatientList_ServerError(){
-        when(restApi.getLastViewedPatients()).thenReturn(mockErrorCall(401));
+        when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockErrorCall(401));
         lastViewedPatientsPresenter.updateLastViewedList();
-        verify(restApi).getLastViewedPatients();
+        verify(restApi).getLastViewedPatients(limit, startIndex);
         verify(view, atLeast(2)).setListVisibility(false);
         verify(view).setEmptyListVisibility(false);
         verify(view).setEmptyListVisibility(true);
@@ -70,10 +72,10 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
 
     @Test
     public void shouldUpdateLastViewedPatientList_Error(){
-        when(restApi.getLastViewedPatients()).thenReturn(mockFailureCall());
+        when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockFailureCall());
         lastViewedPatientsPresenter.updateLastViewedList();
-        verify(restApi).getLastViewedPatients();
-        verify(view).setSpinnerVisibility(false);
+        verify(restApi).getLastViewedPatients(limit, startIndex);
+        verify(view).setProgressBarVisibility(false);
         verify(view, atLeast(2)).setListVisibility(false);
         verify(view).setEmptyListText(anyString());
         verify(view).stopRefreshing();
@@ -95,7 +97,7 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
         when(restApi.getPatients("query", "full")).thenReturn(mockFailureCall());
         lastViewedPatientsPresenter.findPatients("query");
         verify(restApi).getPatients("query", "full");
-        verify(view).setSpinnerVisibility(false);
+        verify(view).setProgressBarVisibility(false);
         verify(view).setEmptyListText(anyString());
         verify(view).stopRefreshing();
     }

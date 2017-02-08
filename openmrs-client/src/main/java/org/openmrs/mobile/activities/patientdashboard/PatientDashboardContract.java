@@ -73,6 +73,7 @@ public interface PatientDashboardContract {
 
     interface PatientDetailsPresenter extends PatientDashboardMainPresenter  {
         void synchronizePatient();
+        void updatePatientDataFromServer();
         void reloadPatientData(Patient patient);
     }
 

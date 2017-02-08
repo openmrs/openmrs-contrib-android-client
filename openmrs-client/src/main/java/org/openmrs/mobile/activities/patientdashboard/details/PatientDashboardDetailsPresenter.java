@@ -67,6 +67,14 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
         }
       }
 
+    public void updatePatientDataFromServer(){
+        if(NetworkUtils.isOnline()) {
+            syncDetailsData();
+            syncVisitsData();
+            syncVitalsData();
+        }
+    }
+
     private void updatePatientData(final Patient patient) {
         if (patientDAO.updatePatient(mPatient.getId(), patient)) {
             mPatient = patientDAO.findPatientByUUID(patient.getUuid());
@@ -83,12 +91,14 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
 
     @Override
     public void subscribe() {
+        updatePatientDataFromServer();
         mPatient = patientDAO.findPatientByID(mPatient.getId().toString());
         mPatientDetailsView.setMenuTitle(mPatient.getPerson().getName().getNameString(), mPatient.getIdentifier().getIdentifier());
         mPatientDetailsView.resolvePatientDataDisplay(patientDAO.findPatientByID(mPatient.getId().toString()));
         if (!NetworkUtils.isOnline()) {
             mPatientDetailsView.attachSnackbarToActivity();
         }
+
     }
 
     /*

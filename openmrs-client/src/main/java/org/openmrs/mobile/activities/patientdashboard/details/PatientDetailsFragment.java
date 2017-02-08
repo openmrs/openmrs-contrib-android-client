@@ -181,4 +181,6 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
         intent.putExtra("name", patientName);
         startActivity(intent);
     }
+
+
 }

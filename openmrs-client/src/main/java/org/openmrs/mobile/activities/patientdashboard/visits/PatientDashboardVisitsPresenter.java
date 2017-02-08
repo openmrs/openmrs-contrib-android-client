@@ -23,7 +23,6 @@ import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.listeners.retrofit.StartVisitResponseListenerCallback;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.NetworkUtils;
-
 import rx.android.schedulers.AndroidSchedulers;
 
 public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientVisitsPresenter {
@@ -64,8 +63,41 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
                         mPatientVisitsView.setVisitsToDisplay(patientVisits);
                     }
                 }));
+        getVisitFromDB();
+        getVisitFromServer();
     }
 
+
+    public void getVisitFromDB(){
+        visitDAO.getVisitsByPatientID(mPatient.getId())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(patientVisits -> {
+                    if (patientVisits !=null && patientVisits.isEmpty()) {
+                        mPatientVisitsView.toggleRecyclerListVisibility(false);
+                    }
+                    else {
+                        mPatientVisitsView.toggleRecyclerListVisibility(true);
+                        mPatientVisitsView.setVisitsToDisplay(patientVisits);
+                    }
+                });
+    }
+
+    public void getVisitFromServer(){
+        if (NetworkUtils.isOnline()) {
+            new VisitApi().syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
+                @Override
+                public void onResponse() {
+                    getVisitFromDB();
+                }
+
+                @Override
+                public void onErrorResponse(String errorMessage) {
+                    mPatientVisitsView.showErrorToast(errorMessage);
+                }
+            });
+        }
+
+    }
     @Override
     public void showStartVisitDialog() {
         addSubscription(visitDAO.getActiveVisitByPatientId(mPatient.getId())

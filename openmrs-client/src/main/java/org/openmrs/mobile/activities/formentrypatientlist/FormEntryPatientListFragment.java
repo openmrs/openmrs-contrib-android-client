@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
@@ -38,6 +39,7 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
 
     private RecyclerView mPatientRecyclerView;
     private TextView mEmptyList;
+    private ProgressBar mProgressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,7 +52,7 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
         mPatientRecyclerView.setLayoutManager(linearLayoutManager);
 
         mEmptyList = (TextView) root.findViewById(R.id.emptyPatientList);
-        mEmptyList.setText(getString(R.string.search_patient_no_results));
+        mProgressBar = (ProgressBar) root.findViewById(R.id.formEntryListInitialProgressBar);
 
         // Font config
         FontsUtil.setFont((ViewGroup) this.getActivity().findViewById(android.R.id.content));
@@ -66,6 +68,7 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
 
     @Override
     public void updateListVisibility(boolean isVisible, int emptyListTextStringId, @Nullable String replacementWord) {
+        mProgressBar.setVisibility(View.GONE);
         if (isVisible) {
             mPatientRecyclerView.setVisibility(View.VISIBLE);
             mEmptyList.setVisibility(View.GONE);

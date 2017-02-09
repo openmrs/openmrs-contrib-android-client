@@ -17,11 +17,10 @@ package org.openmrs.mobile.activities.formentrypatientlist;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.FilterUtil;
 import org.openmrs.mobile.utilities.StringUtils;
 
-import java.util.List;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class FormEntryPatientListPresenter extends BasePresenter implements FormEntryPatientListContract.Presenter {
 
@@ -53,27 +52,27 @@ public class FormEntryPatientListPresenter extends BasePresenter implements Form
      */
     @Override
     public void updatePatientsList() {
-        List<Patient> patientList = new PatientDAO().getAllPatients();
-        final int NO_STRING_ID = R.string.last_vitals_none_label;
-        boolean isFiltering = StringUtils.notNull(mQuery);
+        addSubscription(new PatientDAO().getAllPatients()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(patientList -> {
+                    final int NO_STRING_ID = R.string.last_vitals_none_label;
+                    boolean isFiltering = StringUtils.notNull(mQuery);
 
-        if (isFiltering) {
-            patientList = FilterUtil.getPatientsFilteredByQuery(patientList, mQuery);
-            if (patientList.isEmpty()) {
-                mFormEntryPatientListView.updateListVisibility(false, R.string.search_patient_no_result_for_query, mQuery);
-            }
-            else {
-                mFormEntryPatientListView.updateListVisibility(true, NO_STRING_ID, null);
-            }
-        }
-        else {
-            if (patientList.isEmpty()) {
-                mFormEntryPatientListView.updateListVisibility(false, R.string.search_patient_no_results, null);
-            }
-            else {
-                mFormEntryPatientListView.updateListVisibility(true, NO_STRING_ID, null);
-            }
-        }
-        mFormEntryPatientListView.updateAdapter(patientList);
+                    if (isFiltering) {
+                        patientList = FilterUtil.getPatientsFilteredByQuery(patientList, mQuery);
+                        if (patientList.isEmpty()) {
+                            mFormEntryPatientListView.updateListVisibility(false, R.string.search_patient_no_result_for_query, mQuery);
+                        } else {
+                            mFormEntryPatientListView.updateListVisibility(true, NO_STRING_ID, null);
+                        }
+                    } else {
+                        if (patientList.isEmpty()) {
+                            mFormEntryPatientListView.updateListVisibility(false, R.string.search_patient_no_results, null);
+                        } else {
+                            mFormEntryPatientListView.updateListVisibility(true, NO_STRING_ID, null);
+                        }
+                    }
+                    mFormEntryPatientListView.updateAdapter(patientList);
+                }));
     }
 }

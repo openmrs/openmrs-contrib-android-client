@@ -39,6 +39,8 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
+import rx.android.schedulers.AndroidSchedulers;
+
 public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<SimilarPatientsRecyclerViewAdapter.PatientViewHolder>{
 
     private List<Patient> patientList;
@@ -119,10 +121,13 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
     }
     private void downloadPatient(Patient patient) {
         ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE, R.string.download_started);
-        new PatientDAO().savePatient(patient);
-        new VisitApi().syncVisitsData(patient);
-        new VisitApi().syncLastVitals(patient.getUuid());
-        ToastUtil.success("Patient with UUID " + patient.getUuid() + " is now available locally");
+        new PatientDAO().savePatient(patient)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(id -> {
+                    new VisitApi().syncVisitsData(patient);
+                    new VisitApi().syncLastVitals(patient.getUuid());
+                    ToastUtil.success("Patient with UUID " + patient.getUuid() + " is now available locally");
+                });
     }
 
     private void setBirthdate(PatientViewHolder holder, Patient patient) {

@@ -57,6 +57,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class PatientApi extends RetrofitApi {
 
@@ -174,18 +175,20 @@ public class PatientApi extends RetrofitApi {
     /**
      * Register Patient
      */
-    public SimplePromise<Patient> registerPatient(final Patient patient) {
-        return registerPatient(patient, null);
+    public void registerPatient(final Patient patient) {
+        registerPatient(patient, null);
     }
 
-    public SimplePromise<Patient> registerPatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
-        patientDao.savePatient(patient);
-        if (callbackListener != null) {
-            return syncPatient(patient, callbackListener);
-        }
-        else {
-            return syncPatient(patient);
-        }
+    public void registerPatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
+        patientDao.savePatient(patient)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(id -> {
+                    if (callbackListener != null) {
+                        syncPatient(patient, callbackListener);
+                    } else {
+                        syncPatient(patient);
+                    }
+                });
     }
 
     /**

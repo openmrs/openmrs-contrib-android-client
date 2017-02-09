@@ -39,9 +39,9 @@ public class VisitDAO {
         return createObservableIO(() -> {
             Long visitId = visit.getId();
             if(visitId == null)
-                 visitId = getVisitsIDByUUID(visit.getUuid()).toBlocking().first();
+                visitId = getVisitsIDByUUID(visit.getUuid()).toBlocking().first();
             if (visitId > 0) {
-               updateVisit(visit, visitId, patientId);
+                updateVisit(visit, visitId, patientId);
             } else {
                 visitId = saveVisit(visit, patientId);
             }

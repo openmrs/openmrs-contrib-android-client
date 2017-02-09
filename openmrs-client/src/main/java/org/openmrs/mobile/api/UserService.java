@@ -49,7 +49,7 @@ public class UserService {
         });
     }
 
-    public void fetchFullUserInformation(String uuid) {
+    private void fetchFullUserInformation(String uuid) {
         RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<User> call = restApi.getFullUserInfo(uuid);
         call.enqueue(new Callback<User>() {

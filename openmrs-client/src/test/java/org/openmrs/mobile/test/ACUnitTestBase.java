@@ -47,7 +47,7 @@ public abstract class ACUnitTestBase {
     }
 
 
-    protected  <T extends Resource> Call<T> mockSuccessCall(T object) {
+    protected  <T> Call<T> mockSuccessCall(T object) {
         return new MockSuccessResponse<>(object);
     }
 

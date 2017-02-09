@@ -16,7 +16,7 @@ package org.openmrs.mobile.activities.syncedpatients;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,7 +34,6 @@ import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivi
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.FontsUtil;
-import org.openmrs.mobile.utilities.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,15 +106,8 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         mSyncedPatientRecyclerView.setAdapter(adapter);
     }
 
-    /**
-     * Method used to switch visibility of empty list notification and RecyclerView list
-     * This method is also able to set empty list notification message
-     * @param isVisible describes visibility of RecyclerView
-     * @param emptyListTextStringId id for getString() to get specified message from project resources
-     * @param replacementWord Optional and Nullable replacement word for overloaded getString() method
-     */
     @Override
-    public void updateListVisibility(boolean isVisible, int emptyListTextStringId, @Nullable String replacementWord) {
+    public void updateListVisibility(boolean isVisible) {
         mProgressBar.setVisibility(View.GONE);
         if (isVisible) {
             mSyncedPatientRecyclerView.setVisibility(View.VISIBLE);
@@ -124,15 +116,23 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         else {
             mSyncedPatientRecyclerView.setVisibility(View.GONE);
             mEmptyList.setVisibility(View.VISIBLE);
-        }
-
-        if (StringUtils.isBlank(replacementWord)) {
-            mEmptyList.setText(getString(emptyListTextStringId));
-        }
-        else {
-            mEmptyList.setText(getString(emptyListTextStringId, replacementWord));
+            mEmptyList.setText(getString(R.string.search_patient_no_results));
         }
     }
+
+    @Override
+    public void updateListVisibility(boolean isVisible, @NonNull String replacementWord) {
+        if (isVisible) {
+            mSyncedPatientRecyclerView.setVisibility(View.VISIBLE);
+            mEmptyList.setVisibility(View.GONE);
+        }
+        else {
+            mSyncedPatientRecyclerView.setVisibility(View.GONE);
+            mEmptyList.setVisibility(View.VISIBLE);
+            mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, replacementWord));
+        }
+    }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
@@ -141,8 +141,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         enableAddPatient(OpenMRS.getInstance().getSyncState());
     }
 
-    @Override
-    public void enableAddPatient(boolean enabled) {
+    private void enableAddPatient(boolean enabled) {
         int resId = enabled ? R.drawable.ic_add : R.drawable.ic_add_disabled;
         mAddPatientMenuItem.setEnabled(enabled);
         mAddPatientMenuItem.setIcon(resId);

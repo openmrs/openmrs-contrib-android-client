@@ -10,7 +10,6 @@ import org.openmrs.mobile.models.PatientIdentifier;
 import org.openmrs.mobile.models.Person;
 import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
-import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.models.Results;
 
 import java.util.Collections;
@@ -32,6 +31,9 @@ public abstract class ACUnitTestBase {
         patient.setUuid("patient_one_uuid"+id);
         Person person = new Person();
         PersonName personName = new PersonName();
+        personName.setGivenName("given_name_" + id);
+        personName.setMiddleName("middle_name_" + id);
+        personName.setFamilyName("family_name_" + id);
         person.setNames(Collections.singletonList(personName));
         PersonAddress personAddress = new PersonAddress();
         person.setAddresses(Collections.singletonList(personAddress));

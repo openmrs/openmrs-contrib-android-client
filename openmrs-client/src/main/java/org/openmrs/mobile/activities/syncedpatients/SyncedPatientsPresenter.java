@@ -30,6 +30,7 @@ public class SyncedPatientsPresenter extends BasePresenter implements SyncedPati
     // View
     @NonNull
     private final SyncedPatientsContract.View syncedPatientsView;
+    private PatientDAO patientDAO;
 
     // Query for data filtering
     @Nullable
@@ -39,11 +40,13 @@ public class SyncedPatientsPresenter extends BasePresenter implements SyncedPati
         this.syncedPatientsView = syncedPatientsView;
         this.syncedPatientsView.setPresenter(this);
         this.mQuery = mQuery;
+        this.patientDAO = new PatientDAO();
     }
 
     public SyncedPatientsPresenter(@NonNull SyncedPatientsContract.View syncedPatientsView) {
         this.syncedPatientsView = syncedPatientsView;
         this.syncedPatientsView.setPresenter(this);
+        this.patientDAO = new PatientDAO();
     }
 
     /**
@@ -68,29 +71,28 @@ public class SyncedPatientsPresenter extends BasePresenter implements SyncedPati
      */
     @Override
     public void updateLocalPatientsList() {
-        addSubscription(new PatientDAO().getAllPatients().observeOn(AndroidSchedulers.mainThread()).subscribe(patientList -> {
-            final int NO_STRING_ID = R.string.last_vitals_none_label;
-            boolean isFiltering = StringUtils.notNull(mQuery) && !mQuery.isEmpty();
+        addSubscription(patientDAO.getAllPatients()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(patientList -> {
+                    final int NO_STRING_ID = R.string.last_vitals_none_label;
+                    boolean isFiltering = StringUtils.notNull(mQuery) && !mQuery.isEmpty();
 
-            if (isFiltering) {
-                patientList = FilterUtil.getPatientsFilteredByQuery(patientList, mQuery);
-                if (patientList.isEmpty()) {
-                    syncedPatientsView.updateListVisibility(false, R.string.search_patient_no_result_for_query, mQuery);
-                }
-                else {
-                    syncedPatientsView.updateListVisibility(true, NO_STRING_ID, null);
-                }
-            }
-            else {
-                if (patientList.isEmpty()) {
-                    syncedPatientsView.updateListVisibility(false, R.string.search_patient_no_results, null);
-                }
-                else {
-                    syncedPatientsView.updateListVisibility(true, NO_STRING_ID, null);
-                }
-            }
-            syncedPatientsView.updateAdapter(patientList);
-        }));
+                    if (isFiltering) {
+                        patientList = FilterUtil.getPatientsFilteredByQuery(patientList, mQuery);
+                        if (patientList.isEmpty()) {
+                            syncedPatientsView.updateListVisibility(false, R.string.search_patient_no_result_for_query, mQuery);
+                        } else {
+                            syncedPatientsView.updateListVisibility(true, NO_STRING_ID, null);
+                        }
+                    } else {
+                        if (patientList.isEmpty()) {
+                            syncedPatientsView.updateListVisibility(false, R.string.search_patient_no_results, null);
+                        } else {
+                            syncedPatientsView.updateListVisibility(true, NO_STRING_ID, null);
+                        }
+                    }
+                    syncedPatientsView.updateAdapter(patientList);
+                }));
     }
 
 }

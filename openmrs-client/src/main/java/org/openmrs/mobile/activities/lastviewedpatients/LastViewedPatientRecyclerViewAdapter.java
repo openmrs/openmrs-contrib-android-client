@@ -42,6 +42,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import rx.android.schedulers.AndroidSchedulers;
+
 class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int VIEW_TYPE_ITEM = 0;
@@ -344,15 +346,17 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         new PatientApi().downloadPatientByUuid(patient.getUuid(), new DownloadPatientCallbackListener() {
             @Override
             public void onPatientDownloaded(Patient newPatient) {
-                new PatientDAO().savePatient(newPatient);
-                new PatientApi().syncPatient(newPatient);
-                new VisitApi().syncVisitsData(newPatient);
-                new VisitApi().syncLastVitals(newPatient.getUuid());
-                patients.remove(patient);
-                notifyDataSetChanged();
-                if (showSnackBar) {
-                    view.showOpenPatientSnackbar(newPatient.getId());
-                }
+                new PatientDAO().savePatient(newPatient)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(id -> {
+                            new VisitApi().syncVisitsData(newPatient);
+                            new VisitApi().syncLastVitals(newPatient.getUuid());
+                            patients.remove(patient);
+                            notifyDataSetChanged();
+                            if (showSnackBar) {
+                                view.showOpenPatientSnackbar(newPatient.getId());
+                            }
+                        });
             }
 
             @Override

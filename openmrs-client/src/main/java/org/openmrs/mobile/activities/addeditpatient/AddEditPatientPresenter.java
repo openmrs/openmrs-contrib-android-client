@@ -208,7 +208,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
                 }
             });
         } else {
-            List<Patient> similarPatient = new PatientComparator().findSimilarPatient(new PatientDAO().getAllPatients(), patient);
+            List<Patient> similarPatient = new PatientComparator().findSimilarPatient(new PatientDAO().getAllPatients().toBlocking().first(), patient);
             if(!similarPatient.isEmpty()){
                 mPatientInfoView.showSimilarPatientDialog(similarPatient, patient);
             } else {

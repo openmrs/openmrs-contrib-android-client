@@ -25,6 +25,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
@@ -47,6 +48,9 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
     //Menu Items
     private MenuItem mAddPatientMenuItem;
 
+    //Initialization Progress bar
+    private ProgressBar mProgressBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -61,10 +65,8 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
         mSyncedPatientRecyclerView.setLayoutManager(linearLayoutManager);
 
-        // Empty list notification config
         mEmptyList = (TextView) root.findViewById(R.id.emptySyncedPatientList);
-        mEmptyList.setText(getString(R.string.search_patient_no_results));
-        mEmptyList.setVisibility(View.VISIBLE);
+        mProgressBar = (ProgressBar) root.findViewById(R.id.syncedPatientsInitialProgressBar);
 
         // Font config
         FontsUtil.setFont((ViewGroup) this.getActivity().findViewById(android.R.id.content));
@@ -114,6 +116,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
      */
     @Override
     public void updateListVisibility(boolean isVisible, int emptyListTextStringId, @Nullable String replacementWord) {
+        mProgressBar.setVisibility(View.GONE);
         if (isVisible) {
             mSyncedPatientRecyclerView.setVisibility(View.VISIBLE);
             mEmptyList.setVisibility(View.GONE);

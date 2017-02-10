@@ -35,10 +35,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import rx.Observable;
+
+import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
+
 public class PatientDAO {
 
-    public long savePatient(Patient patient) {
-        return new PatientTable().insert(patient);
+    public Observable<Long> savePatient(Patient patient) {
+        return createObservableIO(() -> new PatientTable().insert(patient));
     }
 
     public boolean updatePatient(long patientID, Patient patient) {
@@ -52,23 +56,25 @@ public class PatientDAO {
                 + " = " + id, null);
     }
 
-    public List<Patient> getAllPatients() {
-        List<Patient> patients = new ArrayList<Patient>();
-        DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        Cursor cursor = openHelper.getReadableDatabase().query(PatientTable.TABLE_NAME,
-                null, null, null, null, null, null);
+    public Observable<List<Patient>> getAllPatients() {
+        return createObservableIO(() -> {
+            List<Patient> patients = new ArrayList<Patient>();
+            DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+            Cursor cursor = openHelper.getReadableDatabase().query(PatientTable.TABLE_NAME,
+                    null, null, null, null, null, null);
 
-        if (null != cursor) {
-            try {
-                while (cursor.moveToNext()) {
-                    Patient patient = cursorToPatient(cursor);
-                    patients.add(patient);
+            if (null != cursor) {
+                try {
+                    while (cursor.moveToNext()) {
+                        Patient patient = cursorToPatient(cursor);
+                        patients.add(patient);
+                    }
+                } finally {
+                    cursor.close();
                 }
-            } finally {
-                cursor.close();
             }
-        }
-        return patients;
+            return patients;
+        });
     }
 
     private Patient cursorToPatient(Cursor cursor) {

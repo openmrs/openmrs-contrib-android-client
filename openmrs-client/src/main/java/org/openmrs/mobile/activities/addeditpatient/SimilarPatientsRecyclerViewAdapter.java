@@ -120,13 +120,11 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
 
     }
     private void downloadPatient(Patient patient) {
-        ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE, R.string.download_started);
         new PatientDAO().savePatient(patient)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(id -> {
                     new VisitApi().syncVisitsData(patient);
                     new VisitApi().syncLastVitals(patient.getUuid());
-                    ToastUtil.success("Patient with UUID " + patient.getUuid() + " is now available locally");
                 });
     }
 

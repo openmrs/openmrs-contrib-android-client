@@ -17,6 +17,7 @@ package org.openmrs.mobile.utilities;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 
 public final class ImageUtils {
 
@@ -58,5 +59,24 @@ public final class ImageUtils {
         }
 
         return inSampleSize;
+    }
+
+    public static Bitmap resizePhoto(Bitmap photo) {
+        double HEIGHT = 500;
+        double WIDTH = 500;
+        int height = photo.getHeight();
+        int width = photo.getWidth();
+        double aspectRatio = Math.min(HEIGHT/height, WIDTH/width);
+
+        if (0 < aspectRatio && aspectRatio < 1) {
+            return Bitmap.createScaledBitmap(photo, (int)(aspectRatio*width), (int)(aspectRatio*height), true);
+        }
+        return photo;
+    }
+
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
     }
 }

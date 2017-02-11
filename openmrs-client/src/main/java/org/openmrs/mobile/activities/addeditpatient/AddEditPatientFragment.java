@@ -22,7 +22,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
@@ -47,7 +46,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -69,6 +67,7 @@ import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
+import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.ViewUtils;
@@ -126,8 +125,9 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private String[] countries;
     private ImageView patientImageView;
 
-    private FloatingActionButton capturePhoto;
+    private FloatingActionButton capturePhotoBtn;
     private Bitmap patientPhoto = null;
+    private Bitmap resizedPatientPhoto = null;
     private String patientName;
     private File output = null;
     private final static int IMAGE_REQUEST = 1;
@@ -350,7 +350,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         countryerror = (TextView)v.findViewById(R.id.countryerror);
 
         submitConfirm = (Button) v.findViewById(R.id.submitConfirm);
-        capturePhoto = (FloatingActionButton) v.findViewById(R.id.capture_photo);
+        capturePhotoBtn = (FloatingActionButton) v.findViewById(R.id.capture_photo);
         patientImageView = (ImageView) v.findViewById(R.id.patientPhoto);
     }
 
@@ -395,7 +395,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
             if (patient.getPerson().getPhoto() != null) {
                 patientPhoto = patient.getPerson().getPhoto();
-                patientImageView.setImageBitmap(patient.getPerson().getPhoto());
+                resizedPatientPhoto = patient.getPerson().getResizedPhoto();
+                patientImageView.setImageBitmap(resizedPatientPhoto);
             }
         }
     }
@@ -489,11 +490,12 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                     }, cYear, cMonth, cDay);
                     mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
                     mDatePicker.setTitle("Select Date");
-                    mDatePicker.show();  }
+                    mDatePicker.show();
+                }
             });
         }
 
-        capturePhoto.setOnClickListener(new View.OnClickListener() {
+        capturePhotoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
@@ -519,7 +521,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 } else if (patientPhoto != null) {
                     Intent intent = new Intent(getContext(), PatientPhotoActivity.class);
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    patientPhoto.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                    patientPhoto.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
                     intent.putExtra("photo", byteArrayOutputStream.toByteArray());
                     intent.putExtra("name", patientName);
                     startActivity(intent);
@@ -575,12 +577,12 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == IMAGE_REQUEST){
-            if(resultCode == Activity.RESULT_OK) {
-                patientPhoto = getPortraitImage(output.getPath());
+            if (resultCode == Activity.RESULT_OK) {
+                patientPhoto = getResizedPortraitImage(output.getPath());
                 Bitmap bitmap = ThumbnailUtils.extractThumbnail(patientPhoto, patientImageView.getWidth(), patientImageView.getHeight());
                 patientImageView.setImageBitmap(bitmap);
                 patientImageView.invalidate();
-            }else {
+            } else {
                 output = null;
             }
         }
@@ -592,7 +594,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         return timeStamp + "_" + ".jpg";
     }
 
-    private Bitmap getPortraitImage(String imagePath) {
+    private Bitmap getResizedPortraitImage(String imagePath) {
+        Bitmap portraitImg;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inSampleSize = 4;
         Bitmap photo = BitmapFactory.decodeFile(output.getPath(), options);
@@ -614,16 +617,12 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                     rotateAngle = 0;
                     break;
             }
-            return rotateImage(photo, rotateAngle);
+            portraitImg = ImageUtils.rotateImage(photo, rotateAngle);
         } catch (IOException e) {
             logger.e(e.getMessage());
-            return photo;
+            portraitImg = photo;
         }
+        return ImageUtils.resizePhoto(portraitImg);
     }
 
-    public static Bitmap rotateImage(Bitmap source, float angle) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
-    }
 }

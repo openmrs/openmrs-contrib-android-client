@@ -107,7 +107,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
         ImageView patientImageView = (ImageView) rootView.findViewById(R.id.patientPhoto);
 
         if (patient.getPerson().getPhoto() != null) {
-            final Bitmap photo = patient.getPerson().getPhoto();
+            final Bitmap photo = patient.getPerson().getResizedPhoto();
             final String patientName = patient.getPerson().getName().getNameString();
             patientImageView.setImageBitmap(photo);
             patientImageView.setOnClickListener(new View.OnClickListener() {
@@ -176,7 +176,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     public void showPatientPhoto(Bitmap photo, String patientName) {
         Intent intent = new Intent(getContext(), PatientPhotoActivity.class);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        photo.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        photo.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
         intent.putExtra("photo", byteArrayOutputStream.toByteArray());
         intent.putExtra("name", patientName);
         startActivity(intent);

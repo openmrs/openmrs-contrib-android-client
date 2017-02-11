@@ -15,7 +15,6 @@
 package org.openmrs.mobile.activities.settings;
 
 import android.support.annotation.NonNull;
-import android.widget.TextView;
 
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.application.OpenMRS;

@@ -19,7 +19,7 @@
     tools:context="org.openmrs.mobile.activities.ACBaseActivity">
     <item
         android:id="@+id/syncbutton"
-        android:title="Sync"
+        android:title="@string/sync"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_sync_off"/>
     <item

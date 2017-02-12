@@ -14,11 +14,12 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp"
-                android:background="@drawable/last_viewed_patient_list_row_selector">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="@drawable/last_viewed_patient_list_row_selector">
+
     <RelativeLayout
         android:id="@+id/lastViewedTopRow"
         android:layout_marginTop="5dp"
@@ -28,63 +29,71 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
 
-        <TextView android:id="@+id/lastViewedPatientIdentifier"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textSize="22sp"
-                  android:textStyle="bold"
-                  android:layout_alignTop="@+id/lastViewedPatientDisplayName"
-                  android:layout_alignParentLeft="true"
-                  android:layout_alignParentStart="true"/>
+        <TextView
+            android:id="@+id/lastViewedPatientIdentifier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_alignTop="@+id/lastViewedPatientDisplayName"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
 
-        <TextView android:id="@+id/lastViewedPatientDisplayName"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textSize="22sp"
+        <TextView
+            android:id="@+id/lastViewedPatientDisplayName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:layout_toEndOf="@+id/lastViewedPatientIdentifier"
+            android:layout_toRightOf="@+id/lastViewedPatientIdentifier"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="end"/>
 
-                  android:layout_toRightOf="@+id/lastViewedPatientIdentifier"
-                  android:layout_alignParentRight="true"
-                  android:layout_alignParentEnd="true"
-                  android:gravity="right"/>
     </RelativeLayout>
-    <RelativeLayout
+
+    <LinearLayout
         android:id="@+id/lastViewedBottomRow"
+        android:orientation="horizontal"
         android:layout_marginLeft="5dp"
+        android:weightSum="6"
         android:layout_marginRight="5dp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <TextView android:id="@+id/lastViewedPatientGender"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="5dp"
-                  android:textSize="16sp"/>
+        <TextView
+            android:id="@+id/lastViewedPatientGender"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="16sp"/>
 
-        <TextView android:id="@+id/lastViewedPatientAge"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textSize="16sp"
-                  android:layout_marginLeft="15dp"
-                  android:layout_marginTop="5dp"
-                  android:layout_toRightOf="@id/lastViewedPatientGender"/>
+        <TextView
+            android:id="@+id/lastViewedPatientAge"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="5dp" />
 
-        <TextView android:id="@+id/lastViewedPatientBirthDate"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:textSize="16sp"
-                  android:layout_marginLeft="15dp"
-                  android:layout_marginTop="5dp"
-                  android:layout_toRightOf="@id/lastViewedPatientAge"/>
+        <TextView
+            android:id="@+id/lastViewedPatientBirthDate"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="5dp" />
 
-        <CheckBox android:id="@+id/offlineCheckbox"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginLeft="50dp"
-                  android:singleLine="true"
-                  android:layout_alignParentRight="true"
-                  android:layout_alignParentEnd="true"
-                  android:button="@drawable/checkbox"
-                  android:textColor="@color/dark_purple"/>
-    </RelativeLayout>
+        <CheckBox
+            android:id="@+id/offlineCheckbox"
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:button="@drawable/checkbox"
+            android:textColor="@color/dark_purple"
+            android:maxLines="1" />
+
+    </LinearLayout>
 </LinearLayout>

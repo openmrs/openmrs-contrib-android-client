@@ -100,9 +100,9 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     @Override
     public void resolvePatientDataDisplay(final Patient patient) {
         if (("M").equals(patient.getPerson().getGender())) {
-            ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText("Male");
+            ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.male));
         } else {
-            ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText("Female");
+            ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.female));
         }
         ImageView patientImageView = (ImageView) rootView.findViewById(R.id.patientPhoto);
 

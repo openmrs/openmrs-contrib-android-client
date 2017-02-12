@@ -128,7 +128,8 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
         if (inputField != null) {
             inputField.setId(field.getId());
             Double value = inputField.getValue();
-            if (-1.0 != value) ed.setText(value.toString());
+            if (-1.0 != value)
+                ed.setText(String.valueOf(value));
         } else {
             field.setConcept(question.getQuestionOptions().getConcept());
             inputFields.add(field);

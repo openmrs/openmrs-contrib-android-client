@@ -56,14 +56,14 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/primary"
                     android:textColor="@color/white"
-                    android:text="Next"/>
+                    android:text="@string/action_next"/>
                 <Button
                     android:id="@+id/btn_finish"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/primary"
                     android:textColor="@color/white"
-                    android:text="Submit"
+                    android:text="@string/action_submit"
                     android:visibility="gone"/>
             </RelativeLayout>
 

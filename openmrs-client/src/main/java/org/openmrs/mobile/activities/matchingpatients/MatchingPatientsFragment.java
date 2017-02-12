@@ -124,9 +124,9 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
         middleName.setText(patient.getPerson().getName().getMiddleName());
         familyName.setText(patient.getPerson().getName().getFamilyName());
         if (("M").equals(patient.getPerson().getGender())) {
-            gender.setText("Male");
+            gender.setText(getString(R.string.male));
         } else {
-            gender.setText("Female");
+            gender.setText(getString(R.string.female));
         }
         birthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
         if (patient.getPerson().getAddress().getAddress1() != null) {

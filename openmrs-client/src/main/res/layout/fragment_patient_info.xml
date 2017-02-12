@@ -48,7 +48,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="20dp"
-                            android:text="Photo"
+                            android:text="@string/patient_details_photo_label"
                             android:textColor="@color/primary"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -96,7 +96,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="20dp"
-                            android:text="Demographics"
+                            android:text="@string/demographics"
                             android:textColor="@color/primary"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -268,7 +268,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="20dp"
-                            android:text="or"
+                            android:text="@string/label_or"
                             android:textColor="#777"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -320,7 +320,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="20dp"
-                            android:text="Contact Info"
+                            android:text="@string/patient_contact_info_label"
                             android:textColor="@color/primary"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -486,7 +486,7 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
                         android:backgroundTint="@color/primary"
-                        android:text="Register Patient"
+                        android:text="@string/action_register_patient"
                         android:textColor="@color/white" />
 
                 </LinearLayout>

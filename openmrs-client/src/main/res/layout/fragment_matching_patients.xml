@@ -397,7 +397,7 @@
         android:layout_height="wrap_content"
         android:weightSum="2">
         <Button
-            android:text="Register as new"
+            android:text="@string/dialog_button_register_new"
             android:backgroundTint="@color/light_red"
             android:textColor="@color/white"
             android:id="@+id/registerNewPatientButton"
@@ -405,7 +405,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
         <Button
-            android:text="Merge"
+            android:text="@string/dialog_button_merge"
             android:backgroundTint="@color/primary"
             android:textColor="@color/white"
             android:id="@+id/mergePatientsButton"

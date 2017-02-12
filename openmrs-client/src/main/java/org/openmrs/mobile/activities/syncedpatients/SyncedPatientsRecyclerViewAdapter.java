@@ -52,7 +52,9 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
         final Patient patient = mItems.get(position);
 
         if (null != patient.getIdentifier()) {
-            holder.mIdentifier.setText("#" + patient.getIdentifier().getIdentifier());
+            String patientIdentifier = String.format(mContext.getResources().getString(R.string.patient_identifier),
+                    patient.getIdentifier().getIdentifier());
+            holder.mIdentifier.setText(patientIdentifier);
         }
         if (null != patient.getPerson().getName()) {
             holder.mDisplayName.setText(patient.getPerson().getName().getNameString());

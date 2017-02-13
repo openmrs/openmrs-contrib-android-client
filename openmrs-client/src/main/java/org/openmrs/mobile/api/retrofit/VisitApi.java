@@ -70,10 +70,11 @@ public class VisitApi {
                     for (Visit visit : visits) {
                         visitDAO.saveOrUpdate(visit, patient.getId())
                                 .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe();
-                    }
-                    if (callbackListener != null) {
-                        callbackListener.onResponse();
+                                .subscribe(id -> {
+                                    if (callbackListener != null) {
+                                        callbackListener.onResponse();
+                                    }
+                                });
                     }
                 }
                 else {

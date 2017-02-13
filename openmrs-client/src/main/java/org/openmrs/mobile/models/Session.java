@@ -58,4 +58,9 @@ public class Session {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return user.toString() + "\tsessionId: " + sessionId + "\tauthenticated: " + authenticated;
+    }
 }

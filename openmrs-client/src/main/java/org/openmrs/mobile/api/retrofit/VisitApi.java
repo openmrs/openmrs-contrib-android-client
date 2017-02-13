@@ -39,6 +39,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class VisitApi {
@@ -67,14 +68,14 @@ public class VisitApi {
             public void onResponse(Call<Results<Visit>> call, Response<Results<Visit>> response) {
                 if (response.isSuccessful()) {
                     List<Visit> visits = response.body().getResults();
-                    for (Visit visit : visits) {
-                        visitDAO.saveOrUpdate(visit, patient.getId())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(id -> {
-                                    if (callbackListener != null) {
-                                        callbackListener.onResponse();
-                                    }
-                                });
+                    Observable.just(visits)
+                            .flatMap(Observable::from)
+                            .forEach(visit ->
+                                    visitDAO.saveOrUpdate(visit, patient.getId())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe());
+                    if (callbackListener != null) {
+                        callbackListener.onResponse();
                     }
                 }
                 else {

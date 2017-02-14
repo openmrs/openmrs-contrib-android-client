@@ -45,6 +45,9 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class LoginPresenter extends BasePresenter implements LoginContract.Presenter {
 
+    private RestApi restApi;
+    private VisitApi visitApi;
+    private UserService userService;
     private LoginContract.View loginView;
     private OpenMRS mOpenMRS;
     private OpenMRSLogger mLogger;
@@ -59,6 +62,23 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         this.loginView.setPresenter(this);
         this.authorizationManager = new AuthorizationManager();
         this.locationDAO = new LocationDAO();
+        this.restApi = RestServiceBuilder.createService(RestApi.class);
+        this.visitApi = new VisitApi();
+        this.userService = new UserService();
+    }
+
+    public LoginPresenter(RestApi restApi, VisitApi visitApi, LocationDAO locationDAO,
+                          UserService userService, LoginContract.View loginView, OpenMRS mOpenMRS,
+                          OpenMRSLogger mLogger, AuthorizationManager authorizationManager) {
+        this.restApi = restApi;
+        this.visitApi = visitApi;
+        this.locationDAO = locationDAO;
+        this.userService = userService;
+        this.loginView = loginView;
+        this.mOpenMRS = mOpenMRS;
+        this.mLogger = mLogger;
+        this.authorizationManager = authorizationManager;
+        this.loginView.setPresenter(this);
     }
 
     @Override
@@ -77,7 +97,6 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                     mWipeRequired) {
                 loginView.showWarningDialog();
             } else {
-                loginView.showLoadingAnimation();
                 authenticateUser(username, password, url);
             }
         }
@@ -91,7 +110,6 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
     @Override
     public void authenticateUser(final String username, final String password, final String url, final boolean wipeDatabase) {
         loginView.showLoadingAnimation();
-
         if (NetworkUtils.isOnline()) {
             mWipeRequired = wipeDatabase;
             RestApi restApi = RestServiceBuilder.createService(RestApi.class, username, password);
@@ -99,8 +117,8 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
             call.enqueue(new Callback<Session>() {
                 @Override
                 public void onResponse(Call<Session> call, Response<Session> response) {
-                    mLogger.d(response.body().toString());
                     if (response.isSuccessful()) {
+                        mLogger.d(response.body().toString());
                         Session session = response.body();
                         if (session.isAuthenticated()) {
                             if (wipeDatabase) {
@@ -114,7 +132,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                                 mOpenMRS.setSessionToken(session.getSessionId());
                             }
 
-                            new VisitApi().getVisitType(new GetVisitTypeCallbackListener() {
+                            visitApi.getVisitType(new GetVisitTypeCallbackListener() {
                                 @Override
                                 public void onGetVisitTypeResponse(VisitType visitType) {
                                     OpenMRS.getInstance().setVisitTypeUUID(visitType.getUuid());
@@ -127,16 +145,18 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
 
                                 @Override
                                 public void onErrorResponse(String errorMessage) {
-                                    loginView.showToast("Failed to fetch visit type", ToastUtil.ToastType.ERROR);
+                                    loginView.showToast("Failed to fetch visit type",
+                                            ToastUtil.ToastType.ERROR);
                                 }
                             });
                             setLogin(true, url);
-                            new UserService().updateUserInformation(username);
+                            userService.updateUserInformation(username);
 
                             loginView.userAuthenticated();
                             loginView.finishLoginActivity();
                         } else {
-                            loginView.sendIntentBroadcast(ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST);
+                            loginView.sendIntentBroadcast(
+                                    ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST);
                         }
                     } else {
                         loginView.hideLoadingAnimation();
@@ -159,13 +179,16 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                     loginView.finishLoginActivity();
                 } else {
                     loginView.hideLoadingAnimation();
-                    loginView.showToast(R.string.auth_failed_dialog_message, ToastUtil.ToastType.ERROR);
+                    loginView.showToast(R.string.auth_failed_dialog_message,
+                            ToastUtil.ToastType.ERROR);
                 }
             } else if (NetworkUtils.hasNetwork()) {
-                loginView.showToast(R.string.offline_mode_unsupported_in_first_login, ToastUtil.ToastType.ERROR);
+                loginView.showToast(R.string.offline_mode_unsupported_in_first_login,
+                        ToastUtil.ToastType.ERROR);
                 loginView.hideLoadingAnimation();
             } else {
-                loginView.showToast(R.string.no_internet_conn_dialog_message, ToastUtil.ToastType.ERROR);
+                loginView.showToast(R.string.no_internet_conn_dialog_message,
+                        ToastUtil.ToastType.ERROR);
                 loginView.hideLoadingAnimation();
             }
         }
@@ -187,8 +210,8 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
 
         if (NetworkUtils.hasNetwork()) {
             String locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "location";
-            RestApi restApi = RestServiceBuilder.createService(RestApi.class);
-            Call<Results<Location>> call = restApi.getLocations(locationEndPoint, "Login Location", "full");
+            Call<Results<Location>> call =
+                    restApi.getLocations(locationEndPoint, "Login Location", "full");
             call.enqueue(new Callback<Results<Location>>() {
                 @Override
                 public void onResponse(Call<Results<Location>> call, Response<Results<Location>> response) {

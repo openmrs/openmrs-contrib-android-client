@@ -41,13 +41,15 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
 
-public class LoginPresenter extends BasePresenter implements LoginContract.Presenter{
+public class LoginPresenter extends BasePresenter implements LoginContract.Presenter {
 
     private LoginContract.View loginView;
     private OpenMRS mOpenMRS;
     private OpenMRSLogger mLogger;
     private AuthorizationManager authorizationManager;
+    private LocationDAO locationDAO;
     private boolean mWipeRequired;
 
     public LoginPresenter(LoginContract.View loginView, OpenMRS openMRS) {
@@ -56,6 +58,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         this.mLogger = openMRS.getOpenMRSLogger();
         this.loginView.setPresenter(this);
         this.authorizationManager = new AuthorizationManager();
+        this.locationDAO = new LocationDAO();
     }
 
     @Override
@@ -172,9 +175,9 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
     @Override
     public void saveLocationsToDatabase(List<Location> locationList, String selectedLocation) {
         mOpenMRS.setLocation(selectedLocation);
-        new LocationDAO().deleteAllLocations();
+        locationDAO.deleteAllLocations();
         for (int i = 0; i < locationList.size(); i++) {
-            new LocationDAO().saveLocation(locationList.get(i));
+            locationDAO.saveLocation(locationList.get(i));
         }
     }
 
@@ -212,15 +215,18 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                 }
             });
         } else {
-            List<Location> locations = LocationDAO.getLocations();
-            if (locations.size() > 0) {
-                loginView.initLoginForm(locations, url);
-                loginView.setLocationErrorOccurred(false);
-            } else {
-                loginView.showToast("Network not available.", ToastUtil.ToastType.ERROR);
-                loginView.setLocationErrorOccurred(true);
-            }
-            loginView.hideLoadingAnimation();
+            addSubscription(locationDAO.getLocations()
+                     .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(locations -> {
+                        if (locations.size() > 0) {
+                            loginView.initLoginForm(locations, url);
+                            loginView.setLocationErrorOccurred(false);
+                        } else {
+                            loginView.showToast("Network not available.", ToastUtil.ToastType.ERROR);
+                            loginView.setLocationErrorOccurred(true);
+                        }
+                        loginView.hideLoadingAnimation();
+                    }));
         }
 
     }

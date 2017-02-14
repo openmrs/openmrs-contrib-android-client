@@ -46,15 +46,18 @@ public class VisitApi {
 
     private RestApi restApi;
     private VisitDAO visitDAO;
+    private LocationDAO locationDAO;
 
-    public VisitApi(){
+    public VisitApi() {
         restApi = RestServiceBuilder.createService(RestApi.class);
         visitDAO = new VisitDAO();
+        locationDAO = new LocationDAO();
     }
 
-    public VisitApi(RestApi restApi, VisitDAO visitDAO) {
+    public VisitApi(RestApi restApi, VisitDAO visitDAO, LocationDAO locationDAO) {
         this.restApi = restApi;
         this.visitDAO = visitDAO;
+        this.locationDAO = locationDAO;
     }
 
     public void syncVisitsData(@NonNull Patient patient) {
@@ -159,7 +162,8 @@ public class VisitApi {
         final Visit visit = new Visit();
         visit.setStartDatetime(DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
         visit.setPatient(patient);
-        visit.setLocation(LocationDAO.findLocationByName(OpenMRS.getInstance().getLocation()));
+        visit.setLocation(locationDAO.findLocationByName(OpenMRS.getInstance().getLocation()));
+
         visit.setVisitType(new VisitType(null, OpenMRS.getInstance().getVisitTypeUUID()));
 
         Call<Visit> call = restApi.startVisit(visit);

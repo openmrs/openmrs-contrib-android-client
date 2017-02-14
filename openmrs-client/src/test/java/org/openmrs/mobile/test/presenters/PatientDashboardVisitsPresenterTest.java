@@ -33,13 +33,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({NetworkUtils.class, OpenMRS.class, LocationDAO.class})
+@PrepareForTest({NetworkUtils.class, OpenMRS.class})
 public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
 
     @Mock
     private PatientDashboardContract.ViewPatientVisits view;
     @Mock
     private VisitDAO visitDAO;
+    @Mock
+    private LocationDAO locationDAO;
     @Mock
     private RestApi restApi;
     @Mock
@@ -52,11 +54,10 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     public void setUp(){
         super.setUp();
         patient = createPatient(1L);
-        VisitApi visitApi = new VisitApi(restApi, visitDAO);
+        VisitApi visitApi = new VisitApi(restApi, visitDAO, locationDAO);
         presenter = new PatientDashboardVisitsPresenter(patient, view, visitDAO, visitApi);
         PowerMockito.mockStatic(NetworkUtils.class);
         PowerMockito.mockStatic(OpenMRS.class);
-        PowerMockito.mockStatic(LocationDAO.class);
     }
 
     @Test
@@ -158,7 +159,8 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
 
     private void createMocksForStartVisit() {
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
-        PowerMockito.when(LocationDAO.findLocationByName(anyString())).thenReturn(new Location());
+        PowerMockito.when(locationDAO.findLocationByName(anyString())).thenReturn(new Location());
+
         when(openMRS.getLocation()).thenReturn("location");
         when(openMRS.getVisitTypeUUID()).thenReturn("visitTypeUuid");
     }

@@ -28,11 +28,28 @@ import org.openmrs.mobile.utilities.NetworkUtils;
 public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientDetailsPresenter {
 
     private PatientDashboardContract.ViewPatientDetails mPatientDetailsView;
+    private VisitApi visitApi;
+    private PatientApi patientApi;
+    private PatientDAO patientDAO;
 
     public PatientDashboardDetailsPresenter(String id,
                                             PatientDashboardContract.ViewPatientDetails mPatientDetailsView) {
-        this.mPatient = new PatientDAO().findPatientByID(id);
         this.mPatientDetailsView = mPatientDetailsView;
+        this.visitApi = new VisitApi();
+        this.patientApi = new PatientApi();
+        this.patientDAO = new PatientDAO();
+        this.mPatient = patientDAO.findPatientByID(id);
+        this.mPatientDetailsView.setPresenter(this);
+    }
+
+    public PatientDashboardDetailsPresenter(Patient mPatient, PatientDAO patientDAO,
+                                            PatientDashboardContract.ViewPatientDetails mPatientDetailsView,
+                                            VisitApi visitApi, PatientApi patientApi) {
+        this.mPatientDetailsView = mPatientDetailsView;
+        this.visitApi = visitApi;
+        this.patientApi = patientApi;
+        this.patientDAO = patientDAO;
+        this.mPatient = mPatient;
         this.mPatientDetailsView.setPresenter(this);
     }
 
@@ -51,8 +68,8 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
       }
 
     private void updatePatientData(final Patient patient) {
-        if (new PatientDAO().updatePatient(mPatient.getId(), patient)) {
-            mPatient = new PatientDAO().findPatientByUUID(patient.getUuid());
+        if (patientDAO.updatePatient(mPatient.getId(), patient)) {
+            mPatient = patientDAO.findPatientByUUID(patient.getUuid());
             reloadPatientData(mPatient);
         } else {
             mPatientDetailsView.showToast(R.string.get_patient_from_database_error, true);
@@ -66,9 +83,9 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
 
     @Override
     public void subscribe() {
-        mPatient = new PatientDAO().findPatientByID(mPatient.getId().toString());
+        mPatient = patientDAO.findPatientByID(mPatient.getId().toString());
         mPatientDetailsView.setMenuTitle(mPatient.getPerson().getName().getNameString(), mPatient.getIdentifier().getIdentifier());
-        mPatientDetailsView.resolvePatientDataDisplay(new PatientDAO().findPatientByID(mPatient.getId().toString()));
+        mPatientDetailsView.resolvePatientDataDisplay(patientDAO.findPatientByID(mPatient.getId().toString()));
         if (!NetworkUtils.isOnline()) {
             mPatientDetailsView.attachSnackbarToActivity();
         }
@@ -78,14 +95,14 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
     * Sync Vitals
     */
     private void syncVitalsData() {
-        new VisitApi().syncLastVitals(mPatient.getUuid());
+        visitApi.syncLastVitals(mPatient.getUuid());
     }
 
     /*
     * Sync Visits
     */
     private void syncVisitsData() {
-        new VisitApi().syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
+        visitApi.syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
             @Override
             public void onResponse() {
                 mPatientDetailsView.showToast(R.string.synchronize_patient_successful, false);
@@ -104,7 +121,7 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
     * Download Patient
     */
     private void syncDetailsData() {
-        new PatientApi().downloadPatientByUuid(mPatient.getUuid(), new DownloadPatientCallbackListener() {
+        patientApi.downloadPatientByUuid(mPatient.getUuid(), new DownloadPatientCallbackListener() {
             @Override
             public void onPatientDownloaded(Patient patient) {
                 updatePatientData(patient);

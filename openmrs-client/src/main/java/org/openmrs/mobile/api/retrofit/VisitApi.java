@@ -47,17 +47,20 @@ public class VisitApi {
     private RestApi restApi;
     private VisitDAO visitDAO;
     private LocationDAO locationDAO;
+    private EncounterDAO encounterDAO;
 
     public VisitApi() {
         restApi = RestServiceBuilder.createService(RestApi.class);
         visitDAO = new VisitDAO();
         locationDAO = new LocationDAO();
+        encounterDAO = new EncounterDAO();
     }
 
-    public VisitApi(RestApi restApi, VisitDAO visitDAO, LocationDAO locationDAO) {
+    public VisitApi(RestApi restApi, VisitDAO visitDAO, LocationDAO locationDAO, EncounterDAO encounterDAO) {
         this.restApi = restApi;
         this.visitDAO = visitDAO;
         this.locationDAO = locationDAO;
+        this.encounterDAO = encounterDAO;
     }
 
     public void syncVisitsData(@NonNull Patient patient) {
@@ -131,7 +134,7 @@ public class VisitApi {
             public void onResponse(Call<Results<Encounter>> call, Response<Results<Encounter>> response) {
                 if (response.isSuccessful()) {
                     if (!response.body().getResults().isEmpty()) {
-                        new EncounterDAO().saveLastVitalsEncounter(response.body().getResults().get(0), patientUuid);
+                        encounterDAO.saveLastVitalsEncounter(response.body().getResults().get(0), patientUuid);
                     }
                     if (callbackListener != null) {
                         callbackListener.onResponse();

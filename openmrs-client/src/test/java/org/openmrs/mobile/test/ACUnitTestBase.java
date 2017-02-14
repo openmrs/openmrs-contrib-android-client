@@ -41,6 +41,13 @@ public abstract class ACUnitTestBase {
         patient.setIdentifiers(Collections.singletonList(identifier));
         return patient;
     }
+    protected Patient createPatient(Long id, String identifier) {
+        Patient patient = createPatient(id);
+        PatientIdentifier patientIdentifier = new PatientIdentifier();
+        patientIdentifier.setIdentifier(identifier);
+        patient.setIdentifiers(Collections.singletonList(patientIdentifier));
+        return patient;
+    }
 
     protected <T> Call<Results<T>> mockSuccessCall(List<T> list) {
         return new MockSuccessResponse<>(list);

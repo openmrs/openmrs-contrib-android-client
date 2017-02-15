@@ -40,6 +40,8 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     private final AddEditPatientContract.View mPatientInfoView;
 
+    private PatientApi patientApi;
+    private RestApi restApi;
     private Patient mPatient;
     private String patientToUpdateId;
     private List<String> mCountries;
@@ -52,8 +54,22 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         this.mPatientInfoView.setPresenter(this);
         this.mCountries = countries;
         this.patientToUpdateId = patientToUpdateId;
+        this.patientApi = new PatientApi();
+        this.restApi = RestServiceBuilder.createService(RestApi.class);
     }
-    
+
+    public AddEditPatientPresenter(AddEditPatientContract.View mPatientInfoView, PatientApi patientApi,
+                                   Patient mPatient, String patientToUpdateId,
+                                   List<String> mCountries, RestApi restApi) {
+        this.mPatientInfoView = mPatientInfoView;
+        this.patientApi = patientApi;
+        this.mPatient = mPatient;
+        this.patientToUpdateId = patientToUpdateId;
+        this.mCountries = mCountries;
+        this.restApi = restApi;
+        this.mPatientInfoView.setPresenter(this);
+    }
+
     @Override
     public void subscribe(){
         // This method is intentionally empty
@@ -151,7 +167,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     @Override
     public void registerPatient() {
-        new PatientApi().registerPatient(mPatient, new DefaultResponseCallbackListener() {
+        patientApi.registerPatient(mPatient, new DefaultResponseCallbackListener() {
             @Override
             public void onResponse() {
                 mPatientInfoView.startPatientDashbordActivity(mPatient);
@@ -168,7 +184,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     @Override
     public void updatePatient(Patient patient) {
-        new PatientApi().updatePatient(patient, new DefaultResponseCallbackListener() {
+        patientApi.updatePatient(patient, new DefaultResponseCallbackListener() {
             @Override
             public void onResponse() {
                 mPatientInfoView.finishPatientInfoActivity();
@@ -184,8 +200,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     public void findSimilarPatients(final Patient patient){
         if (NetworkUtils.isOnline()) {
-            RestApi apiService = RestServiceBuilder.createService(RestApi.class);
-            Call<Results<Module>> moduleCall = apiService.getModules(ApplicationConstants.API.FULL);
+            Call<Results<Module>> moduleCall = restApi.getModules(ApplicationConstants.API.FULL);
             moduleCall.enqueue(new Callback<Results<Module>>() {
                 @Override
                 public void onResponse(Call<Results<Module>> call, Response<Results<Module>> response) {
@@ -218,8 +233,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     }
 
     private void fetchSimilarPatientAndCalculateLocally(final Patient patient) {
-        RestApi apiService = RestServiceBuilder.createService(RestApi.class);
-        Call<Results<Patient>> call = apiService.getPatients(patient.getPerson().getName().getGivenName(), ApplicationConstants.API.FULL);
+        Call<Results<Patient>> call = restApi.getPatients(patient.getPerson().getName().getGivenName(), ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
             public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
@@ -253,8 +267,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     }
 
     private void fetchSimilarPatientsFromServer(final Patient patient) {
-        RestApi apiService = RestServiceBuilder.createService(RestApi.class);
-        Call<Results<Patient>> call = apiService.getSimilarPatients(patient.toMap());
+        Call<Results<Patient>> call = restApi.getSimilarPatients(patient.toMap());
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
             public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {

@@ -61,6 +61,6 @@ public class Session {
 
     @Override
     public String toString() {
-        return user.toString() + "\tsessionId: " + sessionId + "\tauthenticated: " + authenticated;
+        return "\tsessionId: " + sessionId + "\tauthenticated: " + authenticated;
     }
 }

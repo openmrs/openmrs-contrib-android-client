@@ -29,20 +29,45 @@ public abstract class ACUnitTestBase {
         Patient patient = new Patient();
         patient.setId(id);
         patient.setUuid("patient_one_uuid"+id);
+        patient.setPerson(createPerson(id));
+        patient.setIdentifiers(Collections.singletonList(createIdentifier(id)));
+        return patient;
+    }
+
+    protected PatientIdentifier createIdentifier(Long id) {
+        PatientIdentifier identifier = new PatientIdentifier();
+        identifier.setIdentifier("some_identifier_" + id);
+        return identifier;
+    }
+
+    protected Person createPerson(Long id) {
         Person person = new Person();
+        person.setNames(Collections.singletonList(createPersonName(id)));
+        person.setAddresses(Collections.singletonList(createPersonAddress(id)));
+        person.setGender("M");
+        person.setBirthdate("25-02-2016");
+        return person;
+    }
+
+    protected PersonAddress createPersonAddress(Long id) {
+        PersonAddress personAddress = new PersonAddress();
+        personAddress.setAddress1("address_1_" + id);
+        personAddress.setAddress2("address_2_" + id);
+        personAddress.setCityVillage("city_" + id);
+        personAddress.setStateProvince("state_" + id);
+        personAddress.setCountry("country_" + id);
+        personAddress.setPostalCode("postal_code_" + id);
+        return personAddress;
+    }
+
+    protected PersonName createPersonName(Long id) {
         PersonName personName = new PersonName();
         personName.setGivenName("given_name_" + id);
         personName.setMiddleName("middle_name_" + id);
         personName.setFamilyName("family_name_" + id);
-        person.setNames(Collections.singletonList(personName));
-        PersonAddress personAddress = new PersonAddress();
-        person.setAddresses(Collections.singletonList(personAddress));
-        patient.setPerson(person);
-        PatientIdentifier identifier = new PatientIdentifier();
-        identifier.setIdentifier("some_identifier");
-        patient.setIdentifiers(Collections.singletonList(identifier));
-        return patient;
+        return personName;
     }
+
     protected Patient createPatient(Long id, String identifier) {
         Patient patient = createPatient(id);
         PatientIdentifier patientIdentifier = new PatientIdentifier();

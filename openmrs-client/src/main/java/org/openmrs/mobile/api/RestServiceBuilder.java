@@ -96,6 +96,14 @@ public class RestServiceBuilder {
         return GsonConverterFactory.create(myGson);
     }
 
+    public static <S> S createServiceForPatientIdentifier(Class<S> clazz){
+        return new Retrofit.Builder()
+                .baseUrl(mOpenMRS.getServerUrl() + '/')
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(clazz);
+    }
+
     public static void changeBaseUrl(String newServerUrl){
         API_BASE_URL = newServerUrl + ApplicationConstants.API.REST_ENDPOINT;
 

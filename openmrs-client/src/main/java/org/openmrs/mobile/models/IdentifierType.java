@@ -10,4 +10,11 @@
 package org.openmrs.mobile.models;
 
 public class IdentifierType extends Resource{
+
+    public IdentifierType() {
+    }
+
+    public IdentifierType(String display) {
+        this.display = display;
+    }
 }

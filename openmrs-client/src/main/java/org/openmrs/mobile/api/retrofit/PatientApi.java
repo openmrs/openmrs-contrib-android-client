@@ -14,10 +14,8 @@
 
 package org.openmrs.mobile.api.retrofit;
 
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -44,6 +42,7 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientIdentifier;
 import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.models.Results;
+import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.IOException;
@@ -55,15 +54,29 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class PatientApi extends RetrofitApi {
+public class PatientApi extends RetrofitApi{
 
-    public static final String FULL_REPRESENTATION = "full";
-    private OpenMRSLogger logger = new OpenMRSLogger();
-    private PatientDAO patientDao = new PatientDAO();
+    private OpenMRSLogger logger;
+    private PatientDAO patientDao;
+    private LocationApi locationApi;
+    private RestApi restApi;
+
+    public PatientApi(){
+        this.logger = new OpenMRSLogger();
+        this.patientDao = new PatientDAO();
+        this.locationApi = new LocationApi();
+        this.restApi = RestServiceBuilder.createService(RestApi.class);
+    }
+
+    public PatientApi(OpenMRS openMRS, OpenMRSLogger logger, PatientDAO patientDao, RestApi restApi, LocationApi locationApi) {
+        this.logger = logger;
+        this.patientDao = patientDao;
+        this.restApi = restApi;
+        this.locationApi = locationApi;
+        this.openMrs = openMRS;
+    }
 
     /**
      * Sync Patient
@@ -75,12 +88,9 @@ public class PatientApi extends RetrofitApi {
     public SimplePromise<Patient> syncPatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
         final SimpleDeferredObject<Patient> deferred = new SimpleDeferredObject<>();
 
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
-        Boolean syncState = prefs.getBoolean("sync", true);
-
-        if (syncState) {
+        if (NetworkUtils.isOnline()) {
             AndroidDeferredManager dm = new AndroidDeferredManager();
-            dm.when(new LocationApi().getLocationUuid(), getIdGenPatientIdentifier(), getPatientIdentifierTypeUuid())
+            dm.when(locationApi.getLocationUuid(), getIdGenPatientIdentifier(), getPatientIdentifierTypeUuid())
                     .done(new DoneCallback<MultipleResults>() {
                         @Override
                         public void onDone(final MultipleResults results) {
@@ -95,9 +105,7 @@ public class PatientApi extends RetrofitApi {
                             patient.setIdentifiers(identifiers);
                             patient.setUuid(null);
 
-                            final RestApi apiService =
-                                    RestServiceBuilder.createService(RestApi.class);
-                            Call<Patient> call = apiService.createPatient(patient);
+                            Call<Patient> call = restApi.createPatient(patient);
                             call.enqueue(new Callback<Patient>() {
                                 @Override
                                 public void onResponse(Call<Patient> call, Response<Patient> response) {
@@ -151,12 +159,11 @@ public class PatientApi extends RetrofitApi {
     }
 
     private void uploadPatientPhoto(final Patient patient) {
-        RestApi apiService = RestServiceBuilder.createService(RestApi.class);
         PatientPhoto patientPhoto = new PatientPhoto();
         patientPhoto.setPhoto(patient.getPerson().getPhoto());
         patientPhoto.setPerson(patient.getPerson());
         Call<PatientPhoto> personPhotoCall =
-                apiService.uploadPatientPhoto(patient.getUuid(), patientPhoto);
+                restApi.uploadPatientPhoto(patient.getUuid(), patientPhoto);
         personPhotoCall.enqueue(new Callback<PatientPhoto>() {
             @Override
             public void onResponse(Call<PatientPhoto> call, Response<PatientPhoto> response) {
@@ -195,10 +202,7 @@ public class PatientApi extends RetrofitApi {
      * Update Patient
      */
     public void updatePatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
-        final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
-        Boolean syncstate = prefs.getBoolean("sync", true);
-        if (syncstate) {
-            RestApi restApi = RestServiceBuilder.createService(RestApi.class);
+        if (NetworkUtils.isOnline()) {
             Call<Patient> call = restApi.updatePatient(patient, patient.getUuid(), "full");
             call.enqueue(new Callback<Patient>() {
                 @Override
@@ -211,7 +215,7 @@ public class PatientApi extends RetrofitApi {
                         if (patient.getPerson().getPhoto() != null)
                             uploadPatientPhoto(patient);
 
-                        new PatientDAO().updatePatient(patient.getId(), patient);
+                        patientDao.updatePatient(patient.getId(), patient);
 
                         ToastUtil.success("Patient " + patient.getPerson().getName().getNameString()
                                 + " updated");
@@ -249,7 +253,6 @@ public class PatientApi extends RetrofitApi {
      * Download Patient by UUID
      */
     public void downloadPatientByUuid(@NonNull final String uuid, @NonNull final DownloadPatientCallbackListener callbackListener) {
-        RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<Patient> call = restApi.getPatientByUUID(uuid, "full");
         call.enqueue(new Callback<Patient>() {
             @Override
@@ -281,7 +284,6 @@ public class PatientApi extends RetrofitApi {
     
     public SimplePromise<Bitmap> downloadPatientPhotoByUuid(String  uuid) {
         final SimpleDeferredObject<Bitmap> deferredObject = new SimpleDeferredObject<>();
-        RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<ResponseBody> call = restApi.downloadPatientPhoto(uuid);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -331,13 +333,7 @@ public class PatientApi extends RetrofitApi {
     private SimplePromise<String> getIdGenPatientIdentifier() {
         final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(openMrs.getServerUrl() + '/')
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        RestApi apiService =
-                retrofit.create(RestApi.class);
+        RestApi apiService = RestServiceBuilder.createServiceForPatientIdentifier(RestApi.class);
         Call<IdGenPatientIdentifiers> call = apiService.getPatientIdentifiers(openMrs.getUsername(), openMrs.getPassword());
         call.enqueue(new Callback<IdGenPatientIdentifiers>() {
             @Override
@@ -360,9 +356,7 @@ public class PatientApi extends RetrofitApi {
     private SimplePromise<IdentifierType> getPatientIdentifierTypeUuid() {
         final SimpleDeferredObject<IdentifierType> deferred = new SimpleDeferredObject<>();
 
-        RestApi apiService =
-                RestServiceBuilder.createService(RestApi.class);
-        Call<Results<IdentifierType>> call = apiService.getIdentifierTypes();
+        Call<Results<IdentifierType>> call = restApi.getIdentifierTypes();
         call.enqueue(new Callback<Results<IdentifierType>>() {
             @Override
             public void onResponse(Call<Results<IdentifierType>> call, Response<Results<IdentifierType>> response) {

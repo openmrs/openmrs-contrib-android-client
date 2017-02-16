@@ -150,7 +150,7 @@
             style="@style/TextLabel.Bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/patient_address_info_label" />
+            android:text="@string/patient_contact_info_label" />
 
         <View
             style="@style/Divider.Vertical.NoStickyEdges"

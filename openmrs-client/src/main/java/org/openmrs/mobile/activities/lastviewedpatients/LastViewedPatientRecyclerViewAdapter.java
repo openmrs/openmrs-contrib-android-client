@@ -112,7 +112,9 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
             ((PatientViewHolder) holder).setSelected(isPatientSelected(position));
             if (null != patient.getIdentifier()) {
-                ((PatientViewHolder) holder).mIdentifier.setText("#" + patient.getIdentifier().getIdentifier());
+                String patientIdentifier = String.format(mContext.getResources().getString(R.string.patient_identifier),
+                        patient.getIdentifier().getIdentifier());
+                ((PatientViewHolder) holder).mIdentifier.setText(patientIdentifier);
             }
             if (null != patient.getPerson().getName()) {
                 ((PatientViewHolder) holder).mDisplayName.setText(patient.getPerson().getName().getNameString());

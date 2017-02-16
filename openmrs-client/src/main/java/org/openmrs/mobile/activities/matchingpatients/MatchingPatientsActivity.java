@@ -23,7 +23,7 @@ public class MatchingPatientsActivity extends ACBaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         if (toolbar != null) {
-            toolbar.setTitle(getString(R.string.matching_patients_toolbar_tittle));
+            toolbar.setTitle(getString(R.string.matching_patients_toolbar_title));
             setSupportActionBar(toolbar);
         }
 

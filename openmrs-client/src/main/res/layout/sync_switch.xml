@@ -21,6 +21,5 @@
         android:theme="@style/ToggleSwitchTheme"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:textOn="Sync on"
-        android:textOff="Sync off"
-        />
+        android:textOn="@string/sync_on"
+        android:textOff="@string/sync_off" />

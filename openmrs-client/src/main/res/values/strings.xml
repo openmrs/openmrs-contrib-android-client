@@ -43,6 +43,7 @@
     <string name="reg_ques_name">What\'s the patient\'s name?</string>
     <string name="reg_ques_gender">What\'s the patient\'s gender?</string>
     <string name="reg_ques_dob">What\'s the patient\'s birth date?</string>
+    <string name="label_or">Or</string>
     <string name="reg_ques_phno">Phone number</string>
     <string name="reg_ques_address">Address</string>
     <string name="addr1_hint">Address</string>
@@ -123,9 +124,15 @@
     <string name="dialog_button_ok">OK</string>
     <string name="dialog_button_confirm">Confirm</string>
     <string name="dialog_button_register_new">Register new</string>
+    <string name="dialog_button_merge">Merge</string>
+    <string name="action_next">Next</string>
+    <string name="action_submit">Submit</string>
+    <string name="action_register">Register Patient</string>
+
     <!-- Settings activity -->
     <string name="settings_logs">Logs</string>
     <string name="settings_about">About</string>
+
     <!-- FindPatients activity -->
     <string name="action_find_patients">Find Patients</string>
     <string name="action_synced_patients">Synced Patients</string>
@@ -137,6 +144,7 @@
     <string name="select_all_downloadable_data">Select all</string>
     <string name="download_selected_patient_data">Download Patient Data</string>
     <string name="download_multiple">Download Multiple</string>
+
     <!-- Dashboard Activity -->
     <string name="dashboard_search_icon_label">Find Patients</string>
     <string name="dashboard_registry_icon_label">Register Patient</string>
@@ -145,6 +153,7 @@
 
     <!-- find_synced_patients_row layout-->
     <string name="find_patients_row_checkbox_download_label">Download</string>
+
     <!-- Patient Dashboard Activity -->
     <string name="action_synchronize_patients">Synchronizing patient</string>
     <string name="action_update_patient_data">Update Patient</string>
@@ -157,14 +166,16 @@
     <string name="patient_scroll_tab_diagnosis_label">Diagnosis</string>
     <string name="patient_scroll_tab_visits_label">Visits</string>
     <string name="patient_scroll_tab_vitals_label">Vitals</string>
-    <string name="download_started">"Downloading..."</string>
+    <string name="download_started">"Downloading…"</string>
+
     <!-- fragment_patient_details layout -->
+    <string name="patient_identifier"># %1$s</string>
     <string name="patient_details_full_name_label">Full Name</string>
     <string name="patient_details_photo_label">Photo</string>
     <string name="patient_details_gender_label">Gender</string>
     <string name="patient_details_birth_date_label">Birth date</string>
     <string name="patient_details_phone_label">Phone number</string>
-    <string name="patient_address_info_label">Contact Information</string>
+    <string name="patient_contact_info_label">Contact Information</string>
     <string name="patient_information_label">Patient Information</string>
     <string name="patient_address_label">Address</string>
     <string name="patient_city_label">City</string>
@@ -172,21 +183,26 @@
     <string name="patient_state_label">State</string>
     <string name="patient_country_label">Country</string>
     <string name="patient_photo_edit">Update photo</string>
+
     <!-- Find Active visit activity -->
     <string name="action_active_visits">Active Visits</string>
     <string name="action_form_entry">Form Entry</string>
     <string name="action_find_visits">Find Active Visits</string>
     <string name="search_visits_no_results">No visits in database</string>
+
     <!-- fragment_patient_visits layout -->
     <string name="active_visit_label">Active visit</string>
     <string name="past_visit_label">Past visit</string>
     <string name="visit_in">in %1$s</string>
+
     <!-- fragment_patient_vitals layout -->
     <string name="last_vitals_label">Last Vitals: </string>
     <string name="last_vitals_none_label">None</string>
+
     <!-- fragment_patient_diagnosis layout -->
     <string name="empty_diagnoses_list">Patient has no diagnoses yet.</string>
     <string name="diagnosis_note_label">Text of encounter note</string>
+
     <!-- Visit dashboard activity -->
     <string name="action_end_visit">End Visit</string>
     <string name="visit_dashboard_label">Encounters</string>
@@ -194,17 +210,20 @@
     <string name="list_visit_selector_hide">hide details</string>
     <string name="list_item_encounter_no_notes">No notes for this encounter.</string>
     <string name="visit_exp_list_empty">Visit has no encounters yet.</string>
+
     <!-- Capture Vitals activity -->
     <string name="action_delete_patient">Delete Patient</string>
     <string name="action_register_patient">Register Patient</string>
     <string name="failed_to_open_vitals_form">An error occurred. Invalid or corrupted form file.</string>
     <string name="active_visit_label_capture_vitals">On Visit</string>
+
     <!-- Form Entry Activity -->
     <string name="save_upload_button">Save and Send Vitals</string>
     <string name="empty_visits_list">Patient has no visits yet.</string>
     <string name="title_activity_form_create">FormCreateActivity</string>
     <string name="page_format">Hello World from section: %1$d</string>
     <string name="save_form_as">Name this form</string>
+
     <!--Similar patient card strings-->
     <string name="gender_hint">gender:</string>
     <string name="birthdate_hint">birthdate:</string>
@@ -212,8 +231,9 @@
     <string name="demographics">Demographics</string>
     <string name="unable_to_login">Unable to login?</string>
     <string name="no_patient_selected">No patient selected</string>
+
     <!--Matching Patient Activity-->
-    <string name="matching_patients_toolbar_tittle">Merge Patients</string>
+    <string name="matching_patients_toolbar_title">Merge Patients</string>
     <string name="patient_registered_locally">Patient registered locally</string>
     <string name="similar_patients_on_server">Similar patients exist on server</string>
     <string name="registration_core_info">To use faster and more accurate similar patient resolution, upgrade the Registration Core Module to 1.7 or higher</string>
@@ -240,4 +260,9 @@
     <string name="button_allow">Allow</string>
     <string name="button_deny">Deny</string>
     <string name="patient_not_yet_registered">Patient not yet registered, cannot create encounter.</string>
+
+    <!-- Layout strings -->
+    <string name="sync">Sync</string>
+    <string name="sync_on">Sync on</string>
+    <string name="sync_off">Sync off</string>
 </resources>

@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
+import rx.schedulers.Schedulers;
 
 import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 
@@ -58,7 +59,9 @@ public class VisitDAO {
             for (Encounter encounter : visit.getEncounters()) {
                 long encounterID = encounterDAO.saveEncounter(encounter, visitID);
                 for (Observation obs : encounter.getObservations()) {
-                    observationDAO.saveObservation(obs, encounterID);
+                    observationDAO.saveObservation(obs, encounterID)
+                            .observeOn(Schedulers.io())
+                            .subscribe();
                 }
             }
         }
@@ -85,7 +88,9 @@ public class VisitDAO {
                 }
 
                 for (Observation obs : encounter.getObservations()) {
-                    observationDAO.saveObservation(obs, encounterID);
+                    observationDAO.saveObservation(obs, encounterID)
+                            .observeOn(Schedulers.io())
+                            .subscribe();
                 }
             }
         }

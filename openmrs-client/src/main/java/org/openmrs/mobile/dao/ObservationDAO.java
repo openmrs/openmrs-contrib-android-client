@@ -25,16 +25,23 @@ import org.openmrs.mobile.models.Observation;
 import java.util.ArrayList;
 import java.util.List;
 
+import rx.Observable;
+
+import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 public class ObservationDAO {
 
-    public void saveObservation(Observation observation, long encounterID) {
-        observation.setEncounterID(encounterID);
-        new ObservationTable().insert(observation);
+    public Observable<Long> saveObservation(Observation observation, long encounterID) {
+        return createObservableIO(() -> {
+            observation.setEncounterID(encounterID);
+            return new ObservationTable().insert(observation);
+        });
     }
 
-    public boolean updateObservation(long observationID, Observation observation, long encounterID) {
-        observation.setEncounterID(encounterID);
-        return new ObservationTable().update(observationID, observation) > 0;
+    public Observable<Boolean> updateObservation(long observationID, Observation observation, long encounterID) {
+        return createObservableIO(() -> {
+            observation.setEncounterID(encounterID);
+            return new ObservationTable().update(observationID, observation) > 0;
+        });
     }
 
     public void deleteObservation(long observationID) {

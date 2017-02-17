@@ -2,7 +2,6 @@ package org.openmrs.mobile.test.presenters;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.openmrs.mobile.activities.login.LoginContract;
 import org.openmrs.mobile.activities.login.LoginPresenter;
@@ -26,7 +25,6 @@ import org.openmrs.mobile.utilities.StringUtils;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +38,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(PowerMockRunner.class)
 @PrepareForTest({OpenMRS.class, NetworkUtils.class, LocationDAO.class, RestServiceBuilder.class,
         StringUtils.class})
 @PowerMockIgnore("javax.net.ssl.*")

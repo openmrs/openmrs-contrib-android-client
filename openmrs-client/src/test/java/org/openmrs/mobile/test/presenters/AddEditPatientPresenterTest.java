@@ -2,7 +2,6 @@ package org.openmrs.mobile.test.presenters;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientContract;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientPresenter;
@@ -22,7 +21,6 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.Collections;
 
@@ -31,7 +29,6 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(PowerMockRunner.class)
 @PrepareForTest({OpenMRS.class, NetworkUtils.class, RestServiceBuilder.class, ToastUtil.class})
 @PowerMockIgnore("javax.net.ssl.*")
 public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {

@@ -42,6 +42,13 @@ public class EncounterDAO {
         return new EncounterTable().insert(encounter);
     }
 
+    public EncounterType getEncounterTypeByFormName(String formname) {
+        return new Select()
+                .from(EncounterType.class)
+                .where("display = ?", formname)
+                .executeSingle();
+    }
+
     public void saveLastVitalsEncounter(Encounter encounter, String patientUUID) {
         if (null != encounter) {
             encounter.setPatientUUID(patientUUID);

@@ -1,5 +1,7 @@
 package org.openmrs.mobile.test.presenters;
 
+import android.widget.TextView;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,9 +34,10 @@ public class SettingsPresenterTest extends ACUnitTestBase {
 
     private SettingsPresenter settingsPresenter;
 
+    private TextView logsTV;
     @Before
     public void setUp() {
-        settingsPresenter = new SettingsPresenter(view, logger);
+        settingsPresenter = new SettingsPresenter(view, logger,logsTV);
         PowerMockito.mockStatic(OpenMRS.class);
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
     }
@@ -46,7 +49,7 @@ public class SettingsPresenterTest extends ACUnitTestBase {
         when(openMRS.getOpenMRSDir()).thenReturn(directory);
         when(logger.getLogFilename()).thenReturn(logFileName);
         settingsPresenter.subscribe();
-        verify(view).addLogsInfo(0, directory + File.separator + logFileName);
+        verify(view).addLogsInfo(0, directory + File.separator + logFileName, logsTV);
         verify(view).addBuildVersionInfo();
         verify(view).applyChanges();
     }

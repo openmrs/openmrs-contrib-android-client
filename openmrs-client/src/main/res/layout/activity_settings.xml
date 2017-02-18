@@ -19,10 +19,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/settingsContentFrame"/>
+        android:layout_height="match_parent">
 
-    </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/settingsContentFrame"/>
+         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:visibility="gone"
+            android:textIsSelectable="true"
+            android:id="@+id/logsTextView" />
+    </RelativeLayout>
+</LinearLayout>

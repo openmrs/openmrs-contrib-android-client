@@ -20,6 +20,7 @@ import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
+import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.NetworkUtils;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -27,6 +28,7 @@ import rx.android.schedulers.AndroidSchedulers;
 public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientVitalsPresenter {
 
     private EncounterDAO encounterDAO;
+    private VisitApi visitApi;
     private PatientDashboardContract.ViewPatientVitals mPatientVitalsView;
 
     public PatientDashboardVitalsPresenter(String id, PatientDashboardContract.ViewPatientVitals mPatientVitalsView) {
@@ -34,6 +36,16 @@ public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresent
         this.mPatientVitalsView = mPatientVitalsView;
         this.mPatientVitalsView.setPresenter(this);
         this.encounterDAO = new EncounterDAO();
+        this.visitApi = new VisitApi();
+    }
+
+    public PatientDashboardVitalsPresenter(Patient patient, PatientDashboardContract.ViewPatientVitals mPatientVitalsView,
+                                           EncounterDAO encounterDAO, VisitApi visitApi) {
+        this.mPatient = patient;
+        this.mPatientVitalsView = mPatientVitalsView;
+        this.mPatientVitalsView.setPresenter(this);
+        this.encounterDAO = encounterDAO;
+        this.visitApi = visitApi;
     }
 
     @Override
@@ -44,7 +56,7 @@ public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresent
 
     private void loadVitalsFromServer() {
         if (NetworkUtils.isOnline()) {
-            new VisitApi().syncLastVitals(mPatient.getUuid(), new DefaultResponseCallbackListener() {
+            visitApi.syncLastVitals(mPatient.getUuid(), new DefaultResponseCallbackListener() {
                 @Override
                 public void onResponse() {
                     loadVitalsFromDB();

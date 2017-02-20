@@ -14,11 +14,9 @@
 
 package org.openmrs.mobile.activities.lastviewedpatients;
 
-import org.openmrs.mobile.activities.BasePresenterContract;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 
-import org.openmrs.mobile.activities.BasePresenter;
+import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Patient;
 

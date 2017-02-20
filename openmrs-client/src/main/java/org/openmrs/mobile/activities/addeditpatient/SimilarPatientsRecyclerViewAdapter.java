@@ -35,7 +35,6 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 

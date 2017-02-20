@@ -18,16 +18,19 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 public class SettingsActivity extends ACBaseActivity {
+    private TextView logsTV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
+        logsTV = (TextView) findViewById(R.id.logsTextView);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setElevation(0);
@@ -46,7 +49,7 @@ public class SettingsActivity extends ACBaseActivity {
         }
 
         // Create the presenter
-        new SettingsPresenter(settingsFragment, mOpenMRSLogger);
+        new SettingsPresenter(settingsFragment, mOpenMRSLogger,logsTV);
 
     }
 
@@ -69,5 +72,14 @@ public class SettingsActivity extends ACBaseActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+        @Override
+        public void onBackPressed() {
+                if (logsTV.getVisibility() == View.VISIBLE){
+                        logsTV.setVisibility(View.GONE);
+                    }
+                else {
+                        super.onBackPressed();
+                    }
+            }
 
 }

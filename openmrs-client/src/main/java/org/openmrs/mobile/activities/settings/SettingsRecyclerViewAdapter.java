@@ -30,9 +30,11 @@ import java.util.List;
 public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRecyclerViewAdapter.SettingsViewHolder> {
 
     private List<SettingsListItemDTO> mItems;
+    private TextView mLogsView;
 
-    public SettingsRecyclerViewAdapter(List<SettingsListItemDTO> items) {
+    public SettingsRecyclerViewAdapter(List<SettingsListItemDTO> items,TextView mlogs) {
         this.mItems = items;
+        mLogsView = mlogs;
     }
 
     @Override
@@ -45,6 +47,15 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
     @Override
     public void onBindViewHolder(SettingsViewHolder holder, int position) {
         holder.mTitle.setText(mItems.get(position).getTitle());
+
+        if (position==0){
+            holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                            mLogsView.setVisibility(View.VISIBLE);
+                        }
+                });
+        }
 
         if (mItems.get(position).getDesc1() != null) {
             holder.mDesc1.setText(mItems.get(position).getDesc1());

@@ -14,8 +14,8 @@
 
 package org.openmrs.mobile.activities.visitdashboard;
 
-import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.dao.VisitDAO;

@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.openmrs.mobile.activities.settings.SettingsContract;
 import org.openmrs.mobile.activities.settings.SettingsPresenter;
@@ -27,7 +26,6 @@ import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
 
@@ -35,7 +33,6 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@RunWith(PowerMockRunner.class)
 @PrepareForTest(OpenMRS.class)
 public class SettingsPresenterTest extends ACUnitTestBase {
 

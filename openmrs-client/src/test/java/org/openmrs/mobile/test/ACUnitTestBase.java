@@ -14,29 +14,78 @@
 
 package org.openmrs.mobile.test;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.ContentObserver;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+
+import com.activeandroid.Cache;
+import com.activeandroid.TableInfo;
+import com.activeandroid.content.ContentProvider;
+
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientIdentifier;
 import org.openmrs.mobile.models.Person;
 import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
 import org.openmrs.mobile.models.Results;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
+import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.doNothing;
+import static org.powermock.api.mockito.PowerMockito.when;
+
+@PrepareForTest({ Cache.class, TableInfo.class, Context.class,
+        ContentResolver.class, ContentProvider.class, ContentValues.class })
+@RunWith(PowerMockRunner.class)
+@SuppressStaticInitializationFor("com.activeandroid.content.ContentProvider")
 public abstract class ACUnitTestBase {
 
     @Before
     public void initMocks() {
         MockitoAnnotations.initMocks(this);
+    }
+
+    protected void mockActiveAndroidContext() {
+        PowerMockito.mockStatic(Cache.class);
+        PowerMockito.mockStatic(ContentProvider.class);
+        TableInfo tableInfo = PowerMockito.mock(TableInfo.class);
+        Context context = PowerMockito.mock(Context.class);
+        ContentResolver resolver = PowerMockito.mock(ContentResolver.class);
+        SQLiteDatabase sqliteDb = PowerMockito.mock(SQLiteDatabase.class);
+        ContentValues vals = PowerMockito.mock(ContentValues.class);
+
+        try {
+            PowerMockito.whenNew(ContentValues.class).withNoArguments().thenReturn(vals);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        when(Cache.openDatabase()).thenReturn(sqliteDb);
+        when(context.getContentResolver()).thenReturn(resolver);
+        doNothing().when(resolver).notifyChange(any(Uri.class), any(ContentObserver.class));
+        when(tableInfo.getFields()).thenReturn(new ArrayList<>());
+        when(tableInfo.getTableName()).thenReturn("TestTable");
+        when(Cache.getTableInfo(any(Class.class))).thenReturn(tableInfo);
+        when(Cache.getContext()).thenReturn(context);
+        when(ContentProvider.createUri(anyObject(), anyLong())).thenReturn(null);
     }
 
     protected Patient createPatient(Long id) {

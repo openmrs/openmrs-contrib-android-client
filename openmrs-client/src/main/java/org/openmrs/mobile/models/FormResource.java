@@ -112,15 +112,12 @@ public class FormResource extends Model implements Serializable{
         this.resources = resources;
     }
 
-    public void setResourcelist()
-    {
-        this.resourcelist=gson.toJson(resources, formResourceListType);
+    public void setResourcelist() {
+        this.resourcelist = gson.toJson(resources, formResourceListType);
     }
 
     public List<FormResource> getResourceList() {
-
-        List<FormResource> resourceList=gson.fromJson(this.resourcelist, formResourceListType);
-        return resourceList;
+        return gson.fromJson(this.resourcelist, formResourceListType);
     }
 
 }

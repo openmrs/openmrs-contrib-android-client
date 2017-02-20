@@ -34,9 +34,10 @@ import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
-import java.io.ByteArrayOutputStream;
 
+import java.io.ByteArrayOutputStream;
 import java.util.concurrent.Callable;
+
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -78,14 +79,14 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int currentVersion, int newVersion) {
-        mLogger.w("Upgrading database from version " + currentVersion + " to "
-                + newVersion + ", which will destroy all old data");
-        sqLiteDatabase.execSQL(mPatientTable.dropTableDefinition());
-        sqLiteDatabase.execSQL(mVisitTable.dropTableDefinition());
-        sqLiteDatabase.execSQL(mEncounterTable.dropTableDefinition());
-        sqLiteDatabase.execSQL(mObservationTable.dropTableDefinition());
-        sqLiteDatabase.execSQL(mLocationTable.dropTableDefinition());
-        onCreate(sqLiteDatabase);
+        switch (currentVersion) {
+            case 8:
+                //upgrade from version 8 to 9
+                //db.execSQL("ALTER TABLE " + %tableName% + " ADD COLUMN " + %columnName + " %columnType%;");
+
+                //and so on.. do not add breaks so that switch will
+                //start at oldVersion, and run straight through to the latest
+        }
     }
 
     private void logOnCreate(String tableToString) {

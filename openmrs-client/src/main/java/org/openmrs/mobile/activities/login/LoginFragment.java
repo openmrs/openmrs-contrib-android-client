@@ -274,11 +274,6 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         getActivity().finish();
     }
 
-    @Override
-    public void sendIntentBroadcast(String message) {
-        getActivity().sendBroadcast(new Intent(message));
-    }
-
     private void bindDrawableResources() {
         mBitmapCache = new SparseArray<>();
         ImageView openMrsLogoImage = (ImageView) getActivity().findViewById(R.id.openmrsLogo);
@@ -331,16 +326,28 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
     @Override
     public void showInvalidURLSnackbar(String message) {
-        Snackbar snackbar = Snackbar
-                .make(mRootView, message, Snackbar.LENGTH_LONG)
-                .setAction("EDIT", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mUrl.requestFocus();
-                        mUrl.selectAll();
-                    }
-                });
-        snackbar.show();
+        createSnackbar(message)
+                .setAction(getResources().getString(R.string.snackbar_edit), view -> {
+                    mUrl.requestFocus();
+                    mUrl.selectAll();
+                })
+                .show();
+    }
+
+    @Override
+    public void showInvalidLoginOrPasswordSnackbar() {
+        String message = getResources().getString(R.string.invalid_login_or_password_message);
+        createSnackbar(message)
+                .setAction(getResources().getString(R.string.snackbar_edit), view -> {
+                    mPassword.requestFocus();
+                    mPassword.selectAll();
+                })
+                .show();
+    }
+
+    private Snackbar createSnackbar(String message) {
+        return Snackbar
+                .make(mRootView, message, Snackbar.LENGTH_LONG);
     }
 
     @Override

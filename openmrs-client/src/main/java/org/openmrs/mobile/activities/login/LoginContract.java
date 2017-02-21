@@ -45,13 +45,13 @@ public interface LoginContract {
 
         void showInvalidURLSnackbar(String message);
 
+        void showInvalidLoginOrPasswordSnackbar();
+
         void setLocationErrorOccurred(boolean errorOccurred);
 
         void showToast(String message, ToastUtil.ToastType toastType);
 
         void showToast(int textId, ToastUtil.ToastType toastType);
-
-        void sendIntentBroadcast(String message);
 
         void initLoginForm(List<Location> locationList, String url);
 

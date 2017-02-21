@@ -23,12 +23,14 @@ import net.sqlcipher.database.SQLiteStatement;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.databases.tables.ConceptTable;
 import org.openmrs.mobile.databases.tables.EncounterTable;
 import org.openmrs.mobile.databases.tables.LocationTable;
 import org.openmrs.mobile.databases.tables.ObservationTable;
 import org.openmrs.mobile.databases.tables.PatientTable;
 import org.openmrs.mobile.databases.tables.Table;
 import org.openmrs.mobile.databases.tables.VisitTable;
+import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Observation;
@@ -47,6 +49,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     private static final String WHERE_ID_CLAUSE = String.format("%s = ?", Table.MasterColumn.ID);
 
     private PatientTable mPatientTable;
+    private ConceptTable mConceptTable;
     private VisitTable mVisitTable;
     private EncounterTable mEncounterTable;
     private ObservationTable mObservationTable;
@@ -55,6 +58,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     public DBOpenHelper(Context context) {
         super(context, null, DATABASE_VERSION);
         this.mPatientTable = new PatientTable();
+        this.mConceptTable = new ConceptTable();
         this.mVisitTable = new VisitTable();
         this.mEncounterTable = new EncounterTable();
         this.mObservationTable = new ObservationTable();
@@ -64,9 +68,10 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         mLogger.d("Database creating...");
-
         sqLiteDatabase.execSQL(mPatientTable.createTableDefinition());
         logOnCreate(mPatientTable.toString());
+        sqLiteDatabase.execSQL(mConceptTable.createTableDefinition());
+        logOnCreate(mConceptTable.toString());
         sqLiteDatabase.execSQL(mVisitTable.createTableDefinition());
         logOnCreate(mVisitTable.toString());
         sqLiteDatabase.execSQL(mEncounterTable.createTableDefinition());
@@ -81,7 +86,9 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int currentVersion, int newVersion) {
         switch (currentVersion) {
             case 8:
-                //upgrade from version 8 to 9
+                sqLiteDatabase.execSQL(new ConceptTable().createTableDefinition());
+            case 9:
+                //upgrade from version 8 to 10
                 //db.execSQL("ALTER TABLE " + %tableName% + " ADD COLUMN " + %columnName + " %columnType%;");
 
                 //and so on.. do not add breaks so that switch will
@@ -183,6 +190,33 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         String[] whereArgs = new String[]{String.valueOf(patientID)};
 
         return db.update(PatientTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);
+    }
+
+    public long insertConcept (SQLiteDatabase db, Concept concept) {
+        long conceptId;
+        SQLiteStatement statement = db.compileStatement(mConceptTable.insertIntoTableDefinition());
+        try {
+            db.beginTransaction();
+            bindString(1, concept.getUuid(), statement);
+            bindString(2, concept.getDisplay(), statement);
+            conceptId = statement.executeInsert();
+            statement.clearBindings();
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+            statement.close();
+        }
+        return conceptId;
+    }
+
+    public int updateConcept (SQLiteDatabase db, long conceptId, Concept concept) {
+        ContentValues newValues = new ContentValues();
+        newValues.put(ConceptTable.Column.UUID, concept.getUuid());
+        newValues.put(ConceptTable.Column.DISPLAY, concept.getDisplay());
+
+        String[] whereArgs = new String[]{String.valueOf(conceptId)};
+
+        return db.update(ConceptTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);
     }
 
     public long insertVisit(SQLiteDatabase db, Visit visit) {

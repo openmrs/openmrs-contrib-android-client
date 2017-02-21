@@ -10,6 +10,7 @@
 
 package org.openmrs.mobile.api;
 
+import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Encountercreate;
@@ -24,6 +25,7 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.models.Session;
+import org.openmrs.mobile.models.SystemSetting;
 import org.openmrs.mobile.models.User;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.VisitType;
@@ -132,5 +134,12 @@ public interface RestApi {
 
     @GET("user/{uuid}")
     Call<User> getFullUserInfo(@Path("uuid") String uuid);
+
+    @GET("concept")
+    Call<Results<Concept>> getConcepts(@Query("limit") int limit, @Query("startIndex") int startIndex);
+
+    @GET("systemsetting")
+    Call<Results<SystemSetting>> getSystemSettingsByQuery(@Query("q") String query,
+                                                          @Query("v") String representation);
 
 }

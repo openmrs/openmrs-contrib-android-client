@@ -21,6 +21,7 @@ import org.openmrs.mobile.activities.settings.SettingsContract;
 import org.openmrs.mobile.activities.settings.SettingsPresenter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
+import org.openmrs.mobile.dao.ConceptDAO;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -40,12 +41,14 @@ public class SettingsPresenterTest extends ACUnitTestBase {
     private OpenMRSLogger logger;
     @Mock
     private OpenMRS openMRS;
+    @Mock
+    private ConceptDAO conceptDAO;
 
     private SettingsPresenter settingsPresenter;
 
     @Before
     public void setUp() {
-        settingsPresenter = new SettingsPresenter(view, logger);
+        settingsPresenter = new SettingsPresenter(view, logger, conceptDAO);
         PowerMockito.mockStatic(OpenMRS.class);
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
     }
@@ -66,5 +69,13 @@ public class SettingsPresenterTest extends ACUnitTestBase {
     public void shouldPrintLogException_allOk() {
         settingsPresenter.logException(anyString());
         verify(logger).e(anyString());
+    }
+
+    @Test
+    public void shouldUpdateConceptsInDBTextView_allOk() {
+        final long conceptsInDB = 2137L;
+        when(conceptDAO.getConceptsCount()).thenReturn(conceptsInDB);
+        settingsPresenter.updateConceptsInDBTextView();
+        verify(view).setConceptsInDbText(String.valueOf(conceptsInDB));
     }
 }

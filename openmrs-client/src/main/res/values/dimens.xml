@@ -23,4 +23,10 @@
     <dimen name="dashboard_text_bottom_margin">15dp</dimen>
     <dimen name="visit_dashboard_encounter_type_icon_margin">10dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="settings_list_separator_margin">5dp</dimen>
+    <dimen name="settings_list_separator_width">1dp</dimen>
+    <dimen name="settings_list_padding">6dp</dimen>
+    <dimen name="settings_download_button_height">40dp</dimen>
+    <dimen name="settings_list_text_detail_size">12sp</dimen>
+    <dimen name="settings_list_text_title_size">16sp</dimen>
 </resources>

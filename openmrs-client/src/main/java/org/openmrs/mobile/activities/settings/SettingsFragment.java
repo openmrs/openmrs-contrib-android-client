@@ -15,19 +15,27 @@
 
 package org.openmrs.mobile.activities.settings;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.models.SettingsListItemDTO;
+import org.openmrs.mobile.services.ConceptDownloadService;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -43,15 +51,37 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
     private List<SettingsListItemDTO> mListItem = new ArrayList<>();
     private RecyclerView settingsRecyclerView;
 
+    private BroadcastReceiver bReceiver;
+
+    private TextView conceptsInDbTextView;
+    private ImageButton downloadConceptsButton;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
 
+        bReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                mPresenter.updateConceptsInDBTextView();
+            }
+        };
+
         settingsRecyclerView = (RecyclerView) root.findViewById(R.id.settingsRecyclerView);
         settingsRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         settingsRecyclerView.setLayoutManager(linearLayoutManager);
+
+        conceptsInDbTextView = ((TextView) root.findViewById(R.id.conceptsInDbTextView));
+        downloadConceptsButton = ((ImageButton) root.findViewById(R.id.downloadConceptsButton));
+
+        downloadConceptsButton.setOnClickListener(view -> {
+            downloadConceptsButton.setEnabled(false);
+            Intent startIntent = new Intent(getActivity(), ConceptDownloadService.class);
+            startIntent.setAction(ApplicationConstants.ServiceActions.START_CONCEPT_DOWNLOAD_ACTION);
+            getActivity().startService(startIntent);
+        });
 
         return root;
     }
@@ -60,6 +90,19 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
     public void onPause() {
         super.onPause();
         mListItem = new ArrayList<>();
+        LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(bReceiver);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.updateConceptsInDBTextView();
+        LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(bReceiver, new IntentFilter(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID));
+    }
+
+    @Override
+    public void setConceptsInDbText(String text) {
+        conceptsInDbTextView.setText(text);
     }
 
     @Override

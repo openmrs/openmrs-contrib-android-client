@@ -32,9 +32,7 @@ public class FormListPresenterTest extends ACUnitTestBase {
     private EncounterDAO encounterDAO;
 
     private FormListPresenter presenter;
-
     private final int patientId = 1;
-
 
     @Before
     public void setUp() {

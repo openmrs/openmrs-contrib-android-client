@@ -56,7 +56,8 @@
         android:id="@+id/lastViewedBottomRow"
         android:orientation="horizontal"
         android:layout_marginLeft="5dp"
-        android:weightSum="6"
+        android:layout_marginTop="5dp"
+        android:weightSum="9"
         android:layout_marginRight="5dp"
         android:gravity="center_vertical"
         android:layout_width="match_parent"
@@ -67,7 +68,6 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:textSize="16sp"/>
 
         <TextView
@@ -75,25 +75,33 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_marginTop="5dp" />
+            android:textSize="16sp"/>
 
         <TextView
             android:id="@+id/lastViewedPatientBirthDate"
             android:layout_width="0dp"
-            android:layout_weight="2"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_marginTop="5dp" />
-
-        <CheckBox
-            android:id="@+id/offlineCheckbox"
             android:layout_weight="3"
-            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:button="@drawable/checkbox"
-            android:textColor="@color/dark_purple"
-            android:maxLines="1" />
+            android:textSize="16sp"/>
+
+        <LinearLayout
+            android:gravity="end"
+            android:layout_weight="4"
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/offlineCheckbox"
+                android:paddingRight="10dp"
+                android:paddingEnd="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox"
+                android:textColor="@color/dark_purple"
+                android:maxLines="1" />
+
+        </LinearLayout>
 
     </LinearLayout>
 </LinearLayout>

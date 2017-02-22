@@ -48,20 +48,11 @@ public abstract class ApplicationConstants {
 
     public abstract static class DialogTAG {
         public static final String AUTH_FAILED_DIALOG_TAG = "authFailedDialog";
-        public static final String CONN_TIMEOUT_DIALOG_TAG = "connectionTimeoutDialog";
-        public static final String NO_INTERNET_CONN_DIALOG_TAG = "noInternetConnectionDialog";
-        public static final String SERVER_UNAVAILABLE_DIALOG_TAG = "serverUnavailableDialog";
-        public static final String INVALID_URL_DIALOG_TAG = "invalidURLDialog";
         public static final String LOGOUT_DIALOG_TAG = "logoutDialog";
         public static final String END_VISIT_DIALOG_TAG = "endVisitDialogTag";
-        public static final String UNAUTHORIZED_DIALOG_TAG = "unauthorizedDialog";
-        public static final String SERVER_ERROR_DIALOG_TAG = "serverErrorDialog";
-        public static final String SOCKET_EXCEPTION_DIALOG_TAG = "socketExceptionDialog";
-        public static final String SERVER_NOT_SUPPORTED_DIALOG_TAG = "serverNotSupportedDialog";
         public static final String START_VISIT_DIALOG_TAG = "startVisitDialog";
         public static final String START_VISIT_IMPOSSIBLE_DIALOG_TAG = "startVisitImpossibleDialog";
         public static final String WARNING_LOST_DATA_DIALOG_TAG = "warningLostDataDialog";
-        public static final String NO_VISIT_DIALOG_TAG = "noVisitDialogTag";
         public static final String SIMILAR_PATIENTS_TAG = "similarPatientsDialogTag";
         public static final String DELET_PATIENT_DIALOG_TAG = "deletePatientDialogTag";
     }
@@ -87,13 +78,6 @@ public abstract class ApplicationConstants {
 
     public abstract static class CustomIntentActions {
         public static final String ACTION_AUTH_FAILED_BROADCAST = "org.openmrs.mobile.intent.action.AUTH_FAILED_BROADCAST";
-        public static final String ACTION_UNAUTHORIZED_BROADCAST = "org.openmrs.mobile.intent.action.UNAUTHORIZED_BROADCAST";
-        public static final String ACTION_CONN_TIMEOUT_BROADCAST = "org.openmrs.mobile.intent.action.CONN_TIMEOUT_BROADCAST";
-        public static final String ACTION_NO_INTERNET_CONNECTION_BROADCAST = "org.openmrs.mobile.intent.action.NO_INTERNET_CONNECTION_BROADCAST";
-        public static final String ACTION_SERVER_UNAVAILABLE_BROADCAST = "org.openmrs.mobile.intent.action.SERVER_UNAVAILABLE_BROADCAST";
-        public static final String ACTION_SERVER_ERROR_BROADCAST = "org.openmrs.mobile.intent.action.SERVER_ERROR_BROADCAST";
-        public static final String ACTION_SOCKET_EXCEPTION_BROADCAST = "org.openmrs.mobile.intent.action.SOCKET_EXCEPTION_BROADCAST";
-        public static final String ACTION_SERVER_NOT_SUPPORTED_BROADCAST = "org.openmrs.mobile.intent.action.SERVER_NOT_SUPPORTED_BROADCAST";
     }
 
     public abstract static class EncounterTypes {

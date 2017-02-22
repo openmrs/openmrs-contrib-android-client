@@ -46,7 +46,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     protected FragmentManager mFragmentManager;
     protected final OpenMRS mOpenMRS = OpenMRS.getInstance();
     protected final OpenMRSLogger mOpenMRSLogger = mOpenMRS.getOpenMRSLogger();
-    private CustomFragmentDialog mCurrentDialog;
     protected AuthorizationManager mAuthorizationManager;
     protected CustomFragmentDialog mCustomFragmentDialog;
     private MenuItem mSyncbutton;
@@ -56,15 +55,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mFragmentManager = getSupportFragmentManager();
         mAuthorizationManager = new AuthorizationManager();
-
-
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mCurrentDialog = null;
     }
 
     @Override
@@ -163,15 +153,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.LOGOUT_DIALOG_TAG);
     }
 
-    protected void showConnectionTimeoutDialog() {
-        CustomDialogBundle bundle = new CustomDialogBundle();
-        bundle.setTitleViewMessage(getString(R.string.conn_timeout_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.conn_timeout_dialog_message));
-        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
-        bundle.setRightButtonText(getString(R.string.dialog_button_cancel));
-        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.CONN_TIMEOUT_DIALOG_TAG);
-    }
-
     protected void showAuthenticationFailedDialog() {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.auth_failed_dialog_title));
@@ -179,64 +160,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         bundle.setRightButtonText(getString(R.string.dialog_button_ok));
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.AUTH_FAILED_DIALOG_TAG);
-    }
-
-    public void showNoInternetConnectionDialog() {
-        CustomDialogBundle bundle = new CustomDialogBundle();
-        bundle.setTitleViewMessage(getString(R.string.no_internet_conn_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.no_internet_conn_dialog_message));
-        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.FINISH);
-        bundle.setLeftButtonText(getString(R.string.no_internet_exit));
-        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.INTERNET);
-        bundle.setRightButtonText(getString(R.string.no_internet_open_settings));
-        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.NO_INTERNET_CONN_DIALOG_TAG);
-    }
-
-    protected void showServerUnavailableDialog() {
-        CustomDialogBundle bundle = new CustomDialogBundle();
-        bundle.setTitleViewMessage(getString(R.string.server_unavailable_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.server_unavailable_dialog_message));
-        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
-        bundle.setRightButtonText(getString(R.string.dialog_button_ok));
-        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.SERVER_UNAVAILABLE_DIALOG_TAG);
-    }
-
-    protected void showUnauthorizedDialog() {
-        CustomDialogBundle bundle = new CustomDialogBundle();
-        bundle.setTitleViewMessage(getString(R.string.unauthorized_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.unauthorized_dialog_message));
-        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.UNAUTHORIZED);
-        bundle.setRightButtonText(getString(R.string.dialog_button_ok));
-        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.UNAUTHORIZED_DIALOG_TAG);
-    }
-
-    protected void showServerErrorDialog() {
-        CustomDialogBundle bundle = new CustomDialogBundle();
-        bundle.setTitleViewMessage(getString(R.string.server_error_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.server_error_dialog_message));
-        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
-        bundle.setRightButtonText(getString(R.string.dialog_button_ok));
-        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.SERVER_ERROR_DIALOG_TAG);
-    }
-
-    protected void showSocketExceptionErrorDialog() {
-        CustomDialogBundle bundle = new CustomDialogBundle();
-        bundle.setTitleViewMessage(getString(R.string.socket_exception_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.socket_exception_dialog_message));
-        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
-        bundle.setRightButtonText(getString(R.string.dialog_button_ok));
-        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.SOCKET_EXCEPTION_DIALOG_TAG);
-    }
-
-    public void showNoVisitDialog() {
-        CustomDialogBundle bundle = new CustomDialogBundle();
-        bundle.setTitleViewMessage(getString(R.string.no_visit_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.no_visit_dialog_message));
-        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.START_VISIT);
-        bundle.setRightButtonText(getString(R.string.no_visit_dialog_button_accept));
-        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
-        bundle.setLeftButtonText(getString(R.string.no_visit_dialog_button_cancel));
-        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.NO_VISIT_DIALOG_TAG);
     }
 
     public void showStartVisitImpossibleDialog(CharSequence title) {
@@ -273,19 +196,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     public void createAndShowDialog(CustomDialogBundle bundle, String tag) {
         CustomFragmentDialog instance = CustomFragmentDialog.newInstance(bundle);
         instance.show(mFragmentManager, tag);
-        mCurrentDialog = instance;
-    }
-
-    public String getDialogEditTextValue() {
-        String value = "";
-        if (mCurrentDialog!=null){
-            value = mCurrentDialog.getEditTextValue();
-        }
-        return value;
-    }
-
-    public synchronized CustomFragmentDialog getCurrentDialog() {
-        return mCurrentDialog;
     }
 
     public void moveUnauthorizedUserToLoginScreen() {
@@ -315,35 +225,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         mCustomFragmentDialog.setCancelable(false);
         mCustomFragmentDialog.setRetainInstance(true);
         mCustomFragmentDialog.show(mFragmentManager, dialogMessage);
-    }
-
-    public void dismissProgressDialog(boolean errorOccurred, Integer successMessageId, Integer errorMessageId) {
-        mCustomFragmentDialog.dismiss();
-
-        if (!errorOccurred && successMessageId != null) {
-            ToastUtil.showShortToast(this,
-                    ToastUtil.ToastType.SUCCESS,
-                    successMessageId);
-        } else if (errorMessageId != null) {
-            ToastUtil.showShortToast(this,
-                    ToastUtil.ToastType.ERROR,
-                    errorMessageId);
-        }
-    }
-
-    public void showShortToast(boolean errorOccurred, Integer successMessageId, Integer errorMessageId) {
-        if (!errorOccurred && successMessageId != null) {
-            ToastUtil.showShortToast(this,
-                    ToastUtil.ToastType.SUCCESS,
-                    successMessageId);
-        } else if (errorMessageId != null) {
-            ToastUtil.showShortToast(this,
-                    ToastUtil.ToastType.ERROR,
-                    errorMessageId);
-        }
-    }
-    public AuthorizationManager getAuthorizationManager() {
-        return mAuthorizationManager;
     }
 
     public void addFragmentToActivity (@NonNull FragmentManager fragmentManager,

@@ -48,13 +48,6 @@
         <receiver android:name=".application.OpenMRSBroadcastReceiver">
             <intent-filter>
                 <action android:name="org.openmrs.mobile.intent.action.AUTH_FAILED_BROADCAST" />
-                <action android:name="org.openmrs.mobile.intent.action.UNAUTHORIZED_BROADCAST" />
-                <action android:name="org.openmrs.mobile.intent.action.CONN_TIMEOUT_BROADCAST" />
-                <action android:name="org.openmrs.mobile.intent.action.NO_INTERNET_CONNECTION_BROADCAST" />
-                <action android:name="org.openmrs.mobile.intent.action.SERVER_UNAVAILABLE_BROADCAST" />
-                <action android:name="org.openmrs.mobile.intent.action.SERVER_ERROR_BROADCAST" />
-                <action android:name="org.openmrs.mobile.intent.action.SOCKET_EXCEPTION_BROADCAST" />
-                <action android:name="org.openmrs.mobile.intent.action.SERVER_NOT_SUPPORTED_BROADCAST" />
             </intent-filter>
         </receiver>
         <receiver android:name=".api.SyncStateReceiver">

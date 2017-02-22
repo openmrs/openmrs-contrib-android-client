@@ -95,18 +95,11 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
     }
 
     public void startVisit() {
-        showStartVisitDialog();
         ((PatientDashboardVisitsPresenter) mPresenter).startVisit();
     }
 
     @Override
-    public void showStartVisitDialog() {
-        ((PatientDashboardActivity) getActivity())
-                .showProgressDialog(R.string.action_start_visit);
-    }
-
-    @Override
-    public void dismissStartVisitDialog() {
+    public void dismissCurrentDialog() {
         ((PatientDashboardActivity) getActivity()).dismissCustomFragmentDialog();
     }
 
@@ -147,5 +140,10 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
                 activity.showStartVisitImpossibleDialog(activity.getSupportActionBar().getTitle());
             }
         }
+    }
+
+    @Override
+    public void showStartVisitProgressDialog() {
+        ((PatientDashboardActivity) getActivity()).showProgressDialog(R.string.action_starting_visit);
     }
 }

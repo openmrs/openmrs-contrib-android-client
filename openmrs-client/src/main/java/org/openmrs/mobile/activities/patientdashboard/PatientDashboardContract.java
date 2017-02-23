@@ -48,12 +48,12 @@ public interface PatientDashboardContract {
 
     interface ViewPatientVisits extends ViewPatientMain {
         void showErrorToast(String message);
-        void showStartVisitDialog();
-        void dismissStartVisitDialog();
+        void dismissCurrentDialog();
         void toggleRecyclerListVisibility(boolean isVisible);
         void setVisitsToDisplay(List<Visit> visits);
         void goToVisitDashboard(Long visitID);
         void showStartVisitDialog(boolean isVisitPossible);
+        void showStartVisitProgressDialog();
     }
 
     interface ViewPatientVitals extends ViewPatientMain {

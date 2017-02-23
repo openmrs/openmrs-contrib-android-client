@@ -145,7 +145,7 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
         when(restApi.startVisit(any())).thenReturn(mockSuccessCall(new Visit()));
         presenter.startVisit();
         verify(view).goToVisitDashboard(1L);
-        verify(view).dismissStartVisitDialog();
+        verify(view).dismissCurrentDialog();
     }
 
     @Test
@@ -155,7 +155,7 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
         when(restApi.startVisit(any())).thenReturn(mockErrorCall(401));
         presenter.startVisit();
         verify(view).showErrorToast(anyString());
-        verify(view).dismissStartVisitDialog();
+        verify(view).dismissCurrentDialog();
     }
 
     @Test
@@ -165,7 +165,7 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
         when(restApi.startVisit(any())).thenReturn(mockFailureCall());
         presenter.startVisit();
         verify(view).showErrorToast(anyString());
-        verify(view).dismissStartVisitDialog();
+        verify(view).dismissCurrentDialog();
     }
 
 

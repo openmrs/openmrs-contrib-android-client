@@ -167,6 +167,7 @@
     <string name="patient_scroll_tab_visits_label">Visits</string>
     <string name="patient_scroll_tab_vitals_label">Vitals</string>
     <string name="download_started">"Downloading…"</string>
+    <string name="action_starting_visit">"Starting Visit"</string>
 
     <!-- fragment_patient_details layout -->
     <string name="patient_identifier"># %1$s</string>

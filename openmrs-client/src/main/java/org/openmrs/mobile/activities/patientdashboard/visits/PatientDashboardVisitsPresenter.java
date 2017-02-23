@@ -85,18 +85,21 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
 
     @Override
     public void syncVisits() {
+        mPatientVisitsView.showStartVisitProgressDialog();
         visitApi.syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
             @Override
             public void onResponse() {
                 addSubscription(visitDAO.getVisitsByPatientID(mPatient.getId())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(visList -> {
+                            mPatientVisitsView.dismissCurrentDialog();
                             mPatientVisitsView.setVisitsToDisplay(visList);
                             showStartVisitDialog();
                         }));
             }
             @Override
             public void onErrorResponse(String errorMessage) {
+                mPatientVisitsView.dismissCurrentDialog();
                 mPatientVisitsView.showErrorToast(errorMessage);
             }
         });
@@ -104,11 +107,12 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
 
     @Override
     public void startVisit() {
+        mPatientVisitsView.showStartVisitProgressDialog();
         visitApi.startVisit(mPatient, new StartVisitResponseListenerCallback() {
             @Override
             public void onStartVisitResponse(long id) {
                 mPatientVisitsView.goToVisitDashboard(id);
-                mPatientVisitsView.dismissStartVisitDialog();
+                mPatientVisitsView.dismissCurrentDialog();
             }
             @Override
             public void onResponse() {
@@ -117,7 +121,7 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
             @Override
             public void onErrorResponse(String errorMessage) {
                 mPatientVisitsView.showErrorToast(errorMessage);
-                mPatientVisitsView.dismissStartVisitDialog();
+                mPatientVisitsView.dismissCurrentDialog();
             }
         });
     }

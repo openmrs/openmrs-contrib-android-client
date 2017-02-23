@@ -15,16 +15,18 @@
 package org.openmrs.mobile.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
@@ -37,7 +39,7 @@ import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.ToastUtil;
+import org.openmrs.mobile.utilities.NetworkUtils;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -56,6 +58,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         mFragmentManager = getSupportFragmentManager();
         mAuthorizationManager = new AuthorizationManager();
     }
+
 
     @Override
     protected void onResume() {
@@ -86,8 +89,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
             logoutMenuItem.setTitle(getString(R.string.action_logout) + " " + mOpenMRS.getUsername());
         }
         if(mSyncbutton !=null) {
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
-            final Boolean syncState = prefs.getBoolean("sync", true);
+            final Boolean syncState = NetworkUtils.isOnline();
             setSyncButtonState(syncState);
         }
         return true;
@@ -120,20 +122,30 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 return true;
             case R.id.syncbutton:
                 boolean syncState = OpenMRS.getInstance().getSyncState();
-                OpenMRS.getInstance().setSyncState(!syncState);
-                setSyncButtonState(!syncState);
                 if (syncState) {
-                    ToastUtil.notify("Sync OFF");
-                }
-                else {
+                    OpenMRS.getInstance().setSyncState(false);
+                    setSyncButtonState(false);
+                } else if(NetworkUtils.hasNetwork()){
+                    OpenMRS.getInstance().setSyncState(true);
+                    setSyncButtonState(true);
                     Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
                     getApplicationContext().sendBroadcast(intent);
-                    ToastUtil.notify("Sync ON");
+                } else {
+                    showNoInternetConnectionSnackbar();
                 }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showNoInternetConnectionSnackbar() {
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
+                "No internet connection", Snackbar.LENGTH_SHORT);
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 
     public void logout() {

@@ -1,0 +1,29 @@
+environment:
+  ANDROID_HOME: "C:\\android-sdk-windows"
+  JAVA_HOME: "C:\\Program Files\\Java\\jdk1.8.0"
+
+clone_folder: "C:\\projects\\openmrs-contrib-android-client"
+
+init:
+  - cd \
+  - appveyor DownloadFile http://dl.google.com/android/android-sdk_r24.4.1-windows.zip
+  - 7z x android-sdk_r24.4.1-windows.zip > nul
+  - cd C:\projects\openmrs-contrib-android-client
+
+install:
+  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t tools
+  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t platform-tools
+  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t build-tools-23.0.2
+  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t android-23
+  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t extra-google-m2repository
+  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t extra-android-m2repository
+
+build_script:
+  - gradlew.bat clean assembleDebug lint -Dscan --configure-on-demand --parallel --stacktrace
+
+artifacts:
+  - path: "build\\reports\\"
+
+cache:
+  - "%USERPROFILE%\\.m2"
+  - "%USERPROFILE%\\.gradle"

@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.settings;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.logs.LogsActivity;
 import org.openmrs.mobile.models.SettingsListItemDTO;
 import org.openmrs.mobile.utilities.FontsUtil;
 
@@ -30,11 +32,9 @@ import java.util.List;
 public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRecyclerViewAdapter.SettingsViewHolder> {
 
     private List<SettingsListItemDTO> mItems;
-    private TextView mLogsView;
 
-    public SettingsRecyclerViewAdapter(List<SettingsListItemDTO> items,TextView mlogs) {
+    public SettingsRecyclerViewAdapter(List<SettingsListItemDTO> items) {
         this.mItems = items;
-        mLogsView = mlogs;
     }
 
     @Override
@@ -52,7 +52,8 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
             holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                            mLogsView.setVisibility(View.VISIBLE);
+                        Intent i = new Intent(v.getContext() , LogsActivity.class);
+                        v.getContext().startActivity(i);
                         }
                 });
         }

@@ -268,4 +268,7 @@
     <string name="sync_on">Sync on</string>
     <string name="sync_off">Sync off</string>
     <string name="snackbar_edit">EDIT</string>
+
+    <!--Activity Logs-->
+    <string name="title_activity_logs">Logs</string>
 </resources>

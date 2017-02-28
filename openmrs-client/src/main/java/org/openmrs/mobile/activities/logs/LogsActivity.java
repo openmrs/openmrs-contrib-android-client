@@ -12,24 +12,26 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.settings;
+
+package org.openmrs.mobile.activities.logs;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-public class SettingsActivity extends ACBaseActivity {
+
+
+public class LogsActivity extends ACBaseActivity {
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_logs);
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setElevation(0);
@@ -37,18 +39,18 @@ public class SettingsActivity extends ACBaseActivity {
         }
 
         // Create fragment
-        SettingsFragment settingsFragment =
-                (SettingsFragment) getSupportFragmentManager().findFragmentById(R.id.settingsContentFrame);
-        if (settingsFragment == null) {
-            settingsFragment = SettingsFragment.newInstance();
+        LogsFragment logsFragment =
+                (LogsFragment) getSupportFragmentManager().findFragmentById(R.id.logsContentFragment);
+        if (logsFragment == null) {
+            logsFragment = LogsFragment.newInstance();
         }
-        if (!settingsFragment.isActive()) {
+        if (!logsFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    settingsFragment, R.id.settingsContentFrame);
+                    logsFragment, R.id.logsContentFragment);
         }
 
         // Create the presenter
-        new SettingsPresenter(settingsFragment, mOpenMRSLogger);
+        new LogsPresenter(logsFragment, mOpenMRSLogger);
 
     }
 
@@ -60,17 +62,4 @@ public class SettingsActivity extends ACBaseActivity {
         settingsItem.setVisible(false);
         return true;
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-
 }

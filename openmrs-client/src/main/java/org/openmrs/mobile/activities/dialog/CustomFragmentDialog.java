@@ -150,9 +150,6 @@ public class CustomFragmentDialog extends DialogFragment {
         if (getDialog() != null && getRetainInstance()) {
             getDialog().setDismissMessage(null);
         }
-        if (getActivity().getClass().equals(DialogActivity.class)) {
-            getActivity().finish();
-        }
         super.onDestroyView();
 
     }

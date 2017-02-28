@@ -156,8 +156,8 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                             loginView.userAuthenticated();
                             loginView.finishLoginActivity();
                         } else {
-                            loginView.sendIntentBroadcast(
-                                    ApplicationConstants.CustomIntentActions.ACTION_AUTH_FAILED_BROADCAST);
+                            loginView.hideLoadingAnimation();
+                            loginView.showInvalidLoginOrPasswordSnackbar();
                         }
                     } else {
                         loginView.hideLoadingAnimation();

@@ -47,7 +47,6 @@ public abstract class ApplicationConstants {
     }
 
     public abstract static class DialogTAG {
-        public static final String AUTH_FAILED_DIALOG_TAG = "authFailedDialog";
         public static final String LOGOUT_DIALOG_TAG = "logoutDialog";
         public static final String END_VISIT_DIALOG_TAG = "endVisitDialogTag";
         public static final String START_VISIT_DIALOG_TAG = "startVisitDialog";
@@ -74,10 +73,6 @@ public abstract class ApplicationConstants {
         public static final String FORM_FIELDS_LIST_BUNDLE = "formFieldsListBundle";
         public static final String PATIENT_QUERY_BUNDLE = "patientQuery";
         public static final String PATIENTS_START_INDEX = "patientsStartIndex";
-    }
-
-    public abstract static class CustomIntentActions {
-        public static final String ACTION_AUTH_FAILED_BROADCAST = "org.openmrs.mobile.intent.action.AUTH_FAILED_BROADCAST";
     }
 
     public abstract static class EncounterTypes {

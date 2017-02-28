@@ -139,7 +139,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         presenter.login(user, password, url, url);
 
         verify(view).showLoadingAnimation();
-        verify(view).sendIntentBroadcast(anyString());
+        verify(view).showInvalidLoginOrPasswordSnackbar();
     }
 
     @Test

@@ -45,11 +45,6 @@
             android:name="buildVersion"
             android:value="0" />
 
-        <receiver android:name=".application.OpenMRSBroadcastReceiver">
-            <intent-filter>
-                <action android:name="org.openmrs.mobile.intent.action.AUTH_FAILED_BROADCAST" />
-            </intent-filter>
-        </receiver>
         <receiver android:name=".api.SyncStateReceiver">
             <intent-filter>
                 <action android:name="org.openmrs.mobile.intent.action.SYNC_PATIENTS" />

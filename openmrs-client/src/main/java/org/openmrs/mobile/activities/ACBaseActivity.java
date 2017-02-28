@@ -30,7 +30,6 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
-import org.openmrs.mobile.activities.dialog.DialogActivity;
 import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
 import org.openmrs.mobile.application.OpenMRS;
@@ -64,7 +63,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         invalidateOptionsMenu();
-        if (!(this instanceof LoginActivity || this instanceof DialogActivity) && !mAuthorizationManager.isUserLoggedIn()) {
+        if (!(this instanceof LoginActivity) && !mAuthorizationManager.isUserLoggedIn()) {
             mAuthorizationManager.moveToLoginActivity();
         }
     }
@@ -163,15 +162,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.LOGOUT_DIALOG_TAG);
-    }
-
-    protected void showAuthenticationFailedDialog() {
-        CustomDialogBundle bundle = new CustomDialogBundle();
-        bundle.setTitleViewMessage(getString(R.string.auth_failed_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.auth_failed_dialog_message));
-        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
-        bundle.setRightButtonText(getString(R.string.dialog_button_ok));
-        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.AUTH_FAILED_DIALOG_TAG);
     }
 
     public void showStartVisitImpossibleDialog(CharSequence title) {

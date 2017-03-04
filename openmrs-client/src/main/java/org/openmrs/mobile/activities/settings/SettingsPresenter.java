@@ -26,7 +26,6 @@ import java.io.File;
 public class SettingsPresenter extends BasePresenter implements SettingsContract.Presenter {
 
     private static final int ONE_KB = 1024;
-    private TextView mlogsTV;
 
     @NonNull
     private final SettingsContract.View mSettingsView;
@@ -34,10 +33,9 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
     @NonNull
     private final OpenMRSLogger mOpenMRSLogger;
 
-    public SettingsPresenter(@NonNull SettingsContract.View view, @NonNull OpenMRSLogger logger ,TextView logsView) {
+    public SettingsPresenter(@NonNull SettingsContract.View view, @NonNull OpenMRSLogger logger ) {
         mSettingsView = view;
         mOpenMRSLogger = logger;
-        mlogsTV = logsView;
         view.setPresenter(this);
     }
 
@@ -59,7 +57,7 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
             mOpenMRSLogger.w("File not found");
         }
 
-        mSettingsView.addLogsInfo(size, filename,mlogsTV);
+        mSettingsView.addLogsInfo(size, filename);
         mSettingsView.addBuildVersionInfo();
         mSettingsView.applyChanges();
     }

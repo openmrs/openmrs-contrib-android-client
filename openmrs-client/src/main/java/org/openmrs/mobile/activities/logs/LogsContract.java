@@ -12,28 +12,22 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.settings;
 
-import android.widget.TextView;
+package org.openmrs.mobile.activities.logs;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 
-public interface SettingsContract {
 
-    interface View extends BaseView<Presenter> {
+public interface LogsContract {
 
-        void addLogsInfo(long logSize, String logFilename);
-
-        void addBuildVersionInfo();
-
-        void applyChanges();
-
+    interface View extends BaseView<Presenter>{
+        void attachLogsToTextView(String logs);
+        void fabCopyAll(String textLogs);
     }
 
     interface Presenter extends BasePresenterContract {
-
-        void logException(String exception);
+       String getLogs();
 
     }
 

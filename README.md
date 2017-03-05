@@ -42,7 +42,7 @@ For more information on the client, visit https://wiki.openmrs.org/display/proje
 
 # GSoC 2017
 
-The project has been selected as a candidate for Google Summer of Code 2017. Please visit the [Project Wiki Page](https://wiki.openmrs.org/display/projects/OpenMRS+Android+Client+Feature+Parity+and+Improvements) for more details.
+The project has been selected as a candidate for Google Summer of Code 2017. Please visit the [Project Wiki Page](https://wiki.openmrs.org/display/projects/OpenMRS+Android+Client+Feature+Parity+and+Improvements+-+GSoC+2017) for more details.
 
 The project was also a part of GSoC 2016, the details of which can be seen in the [GSoC_2016.md](GSoC_2016.md) file.
 

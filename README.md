@@ -9,7 +9,7 @@ OpenMRS Android Client
 * [Description](#description)
 	* [Key Features](#key-features)
 * [Screenshots](#screenshots)
-* [GSoC 2016](#gsoc-2016)
+* [GSoC 2017](#gsoc-2017)
 * [Development](#development)
 	* [Code Style](#code-style)
 	* [Model Pattern](#model-pattern)
@@ -40,11 +40,11 @@ For more information on the client, visit https://wiki.openmrs.org/display/proje
 # Screenshots
 ![Login](http://i.imgur.com/zinrnCK.png) ![Dashboard](http://i.imgur.com/TLIwMoy.png) ![Register Patient](http://i.imgur.com/n7LaeKS.png)
 
-# GSoC 2016
+# GSoC 2017
 
-The project has been selected as a candidate for Google Summer of Code 2016. Please visit the project's page for more details: https://wiki.openmrs.org/display/projects/OpenMRS+Android+Client+-+GSoC+2016
+The project has been selected as a candidate for Google Summer of Code 2017. Please visit the [https://wiki.openmrs.org/display/projects/OpenMRS+Android+Client+Feature+Parity+and+Improvements](Project Wiki Page) for more details.
 
-For a detailed description of all work done during GSoC 2016, please checkout the [GSoC_2016.md](GSoC_2016.md) file.
+The project was also a part of GSoC 2016, the details of which can be seen in the [GSoC_2016.md](GSoC_2016.md) file.
 
 # Development
 We use JIRA to track issues and monitor project development. Refer to this link to view all issues and project summary: [Android Client JIRA](https://issues.openmrs.org/browse/AC)

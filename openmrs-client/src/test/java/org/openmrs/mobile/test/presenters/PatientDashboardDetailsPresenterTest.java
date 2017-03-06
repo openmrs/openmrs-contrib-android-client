@@ -34,7 +34,9 @@ import org.openmrs.mobile.utilities.NetworkUtils;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import rx.Observable;
 
@@ -117,7 +119,28 @@ public class PatientDashboardDetailsPresenterTest extends ACUnitTestBaseRx {
     public void shouldShowPatientOnStartup_onlineMode(){
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
         when(patientDAO.findPatientByID(patient.getId().toString())).thenReturn(patient);
+        when(restApi.findVisitsByPatientUUID(anyString(), anyString()))
+                .thenReturn(mockSuccessCall(Collections.singletonList(new Visit())));
+        when(visitDAO.saveOrUpdate(any(), anyInt())).thenReturn(Observable.just(1L));
+        when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString()))
+                .thenReturn(mockSuccessCall(Collections.singletonList(new Encounter())));
         presenter.subscribe();
+        verify(view).setMenuTitle(anyString(), anyString());
+        verify(view).resolvePatientDataDisplay(any());
+        verify(view, never()).attachSnackbarToActivity();
+    }
+
+    @Test
+    public void shouldShowPatientOnStartup_onlineMode_errorCalls(){
+        PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
+        when(restApi.findVisitsByPatientUUID(anyString(), anyString()))
+                .thenReturn(mockErrorCall(401));
+        when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString()))
+                .thenReturn(mockErrorCall(401));
+        when(patientDAO.findPatientByID(anyString())).thenReturn(patient);
+        presenter.subscribe();
+        verify(view).showToast(anyInt(), eq(true));
+        verify(view).dismissDialog();
         verify(view).setMenuTitle(anyString(), anyString());
         verify(view).resolvePatientDataDisplay(any());
         verify(view, never()).attachSnackbarToActivity();

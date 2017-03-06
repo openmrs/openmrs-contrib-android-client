@@ -42,6 +42,7 @@ import rx.Observable;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -77,15 +78,15 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
         List<Visit> visitsList = createVisitsList();
         when(visitDAO.getVisitsByPatientID(patient.getId())).thenReturn(Observable.just(visitsList));
         presenter.subscribe();
-        verify(view).toggleRecyclerListVisibility(true);
-        verify(view).setVisitsToDisplay(visitsList);
+        verify(view, atLeast(1)).toggleRecyclerListVisibility(true);
+        verify(view, atLeast(1)).setVisitsToDisplay(visitsList);
     }
 
     @Test
     public void shouldShowPatientsVisitsOnStartUp_noVisits(){
         when(visitDAO.getVisitsByPatientID(patient.getId())).thenReturn(Observable.just(Arrays.asList()));
         presenter.subscribe();
-        verify(view).toggleRecyclerListVisibility(false);
+        verify(view, atLeast(1)).toggleRecyclerListVisibility(false);
     }
 
 

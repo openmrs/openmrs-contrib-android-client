@@ -22,6 +22,7 @@ public interface DashboardContract {
     interface View extends BaseView<Presenter> {
 
         void bindDrawableResources();
+
     }
 
     interface Presenter extends BasePresenterContract {

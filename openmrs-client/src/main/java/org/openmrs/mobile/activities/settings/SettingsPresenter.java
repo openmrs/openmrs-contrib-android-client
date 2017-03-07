@@ -20,12 +20,14 @@ import android.widget.TextView;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
+import org.openmrs.mobile.dao.ConceptDAO;
 
 import java.io.File;
 
 public class SettingsPresenter extends BasePresenter implements SettingsContract.Presenter {
 
     private static final int ONE_KB = 1024;
+    private ConceptDAO conceptDAO;
 
     @NonNull
     private final SettingsContract.View mSettingsView;
@@ -36,12 +38,21 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
     public SettingsPresenter(@NonNull SettingsContract.View view, @NonNull OpenMRSLogger logger ) {
         mSettingsView = view;
         mOpenMRSLogger = logger;
+        conceptDAO = new ConceptDAO();
+        view.setPresenter(this);
+    }
+
+    public SettingsPresenter(@NonNull SettingsContract.View view, @NonNull OpenMRSLogger logger, ConceptDAO conceptDAO) {
+        mSettingsView = view;
+        mOpenMRSLogger = logger;
+        this.conceptDAO = conceptDAO;
         view.setPresenter(this);
     }
 
     @Override
     public void subscribe() {
         fillList();
+        mSettingsView.setConceptsInDbText(String.valueOf(conceptDAO.getConceptsCount()));
     }
 
     private void fillList() {
@@ -65,6 +76,11 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
     @Override
     public void logException(String exception) {
         mOpenMRSLogger.e(exception);
+    }
+
+    @Override
+    public void updateConceptsInDBTextView() {
+        mSettingsView.setConceptsInDbText(String.valueOf(conceptDAO.getConceptsCount()));
     }
 
 }

@@ -15,14 +15,96 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.settings.SettingsActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/settingsRecyclerView"
-        android:scrollbars="vertical"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/card">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/settings_application_info"
+            android:textSize="@dimen/dashboard_text_size"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/settingsRecyclerView"
+            android:scrollbars="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/card">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/settings_concepts_info"
+            android:textSize="@dimen/dashboard_text_size"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/settings_list_separator_width"
+            android:layout_marginTop="@dimen/settings_list_separator_margin"
+            android:layout_marginRight="@dimen/settings_list_separator_margin"
+            android:layout_marginEnd="@dimen/settings_list_separator_margin"
+            android:layout_marginLeft="@dimen/settings_list_separator_margin"
+            android:layout_marginStart="@dimen/settings_list_separator_margin"
+            android:background="@color/card_detailing"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/settings_list_padding"
+            android:paddingStart="@dimen/settings_list_padding"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/settings_list_text_title_size"
+                    android:textStyle="bold"
+                    android:text="@string/settings_concepts_in_db"/>
+
+                <TextView
+                    android:id="@+id/conceptsInDbTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/settings_list_text_detail_size"/>
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/downloadConceptsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/settings_download_button_height"
+                android:src="@drawable/ic_download"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
 </LinearLayout>

@@ -45,9 +45,10 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:layout_toRightOf="@+id/syncedPatientIdentifier"
+            android:layout_toEndOf="@+id/syncedPatientIdentifier"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:gravity="right"/>
+            android:gravity="end"/>
 
     </RelativeLayout>
 

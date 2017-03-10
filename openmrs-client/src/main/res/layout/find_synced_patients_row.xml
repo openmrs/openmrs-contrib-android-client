@@ -44,9 +44,10 @@
                   android:textSize="22sp"
 
                   android:layout_toRightOf="@+id/syncedPatientIdentifier"
+                  android:layout_toEndOf="@+id/syncedPatientIdentifier"
                   android:layout_alignParentRight="true"
                   android:layout_alignParentEnd="true"
-                  android:gravity="right"/>
+                  android:gravity="end"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/syncedBottomRow"
@@ -69,7 +70,9 @@
                   android:layout_height="wrap_content"
                   android:textSize="16sp"
                   android:layout_marginLeft="15dp"
+                  android:layout_marginStart="15dp"
                   android:layout_toRightOf="@id/syncedPatientGender"
+                  android:layout_toEndOf="@id/syncedPatientGender"
             />
 
         <TextView android:id="@+id/syncedPatientBirthDate"
@@ -77,7 +80,9 @@
                   android:layout_height="wrap_content"
                   android:textSize="16sp"
                   android:layout_marginLeft="15dp"
+                  android:layout_marginStart="15dp"
                   android:layout_toRightOf="@id/syncedPatientAge"
+                  android:layout_toEndOf="@id/syncedPatientAge"
             />
     </RelativeLayout>
 </LinearLayout>

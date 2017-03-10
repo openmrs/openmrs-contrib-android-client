@@ -69,7 +69,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/settings_list_padding"
+            android:paddingRight="@dimen/settings_list_padding"
             android:paddingStart="@dimen/settings_list_padding"
+            android:paddingEnd="@dimen/settings_list_padding"
             android:gravity="center_vertical">
 
             <LinearLayout

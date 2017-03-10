@@ -23,10 +23,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/toastImage"/>
-
     <TextView
         android:id="@+id/toastText"
         android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:textColor="#ffffff"
         android:textStyle="bold"
         android:layout_width="wrap_content"

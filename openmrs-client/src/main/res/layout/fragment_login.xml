@@ -106,6 +106,8 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/checkboxShowPassword"
                     android:layout_alignRight="@id/loginPasswordField"
+                    android:layout_alignEnd="@id/loginPasswordField"
+                    android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:layout_marginTop="10dp"
                     android:gravity="bottom"
@@ -136,7 +138,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/login_offline"
-                            android:layout_marginRight="10dp"/>
+                            android:layout_marginRight="10dp"
+                            android:layout_marginEnd="10dp"/>
 
                         <android.support.v7.widget.AppCompatImageView
                             android:id="@+id/loginSyncButton"

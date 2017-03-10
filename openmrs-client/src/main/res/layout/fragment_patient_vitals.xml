@@ -72,6 +72,7 @@
                     android:id="@+id/form_edit_icon"
                     android:contentDescription="@string/edit_form"
                     android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:background="@drawable/ico_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />

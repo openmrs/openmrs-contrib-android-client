@@ -19,7 +19,9 @@
     android:orientation="horizontal"
     android:longClickable="false"
     android:paddingLeft="5dp"
+    android:paddingStart="5dp"
     android:paddingRight="0dp"
+    android:paddingEnd="0dp"
     android:weightSum="2"
     android:background="@drawable/card">
 
@@ -46,7 +48,7 @@
             android:paddingRight="3dp"
             android:paddingLeft="3dp"
             android:layout_gravity="center_vertical"
-            android:gravity="center_vertical|left"
+            android:gravity="center_vertical|start"
             android:singleLine="false"/>
 
     </LinearLayout>
@@ -66,7 +68,9 @@
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:paddingLeft="15dp"
-            android:paddingRight="10dp" />
+            android:paddingStart="15dp"
+            android:paddingRight="10dp"
+            android:paddingEnd="10dp"/>
 
         <ImageView
             android:id="@+id/listVisitGroupDetailsIcon"

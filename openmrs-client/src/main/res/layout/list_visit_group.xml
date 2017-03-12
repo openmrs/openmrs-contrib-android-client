@@ -19,7 +19,9 @@
     android:longClickable="false"
     android:orientation="horizontal"
     android:paddingLeft="5dp"
+    android:paddingStart="5dp"
     android:paddingRight="0dp"
+    android:paddingEnd="0dp"
     android:weightSum="2">
 
     <LinearLayout
@@ -46,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_gravity="center_vertical"
-            android:gravity="center_vertical|left"
+            android:gravity="center_vertical|start"
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
             android:singleLine="false"
@@ -67,7 +69,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="15dp"
+            android:paddingStart="15dp"
             android:paddingRight="10dp"
+            android:paddingEnd="10dp"
             android:textSize="20sp" />
 
         <ImageView

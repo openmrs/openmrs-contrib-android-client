@@ -64,6 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/patientDetailInformationLabel"
             android:layout_marginLeft="7dp"
+            android:layout_marginStart="7dp"
             android:paddingBottom="7dp"
             android:paddingTop="7dp">
 
@@ -93,7 +94,8 @@
                         style="@style/AddressFields"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="7dp" />
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginStart="7dp"/>
 
                 </LinearLayout>
 
@@ -116,7 +118,8 @@
                         style="@style/AddressFields"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="7dp" />
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginStart="7dp"/>
 
                 </LinearLayout>
 
@@ -139,7 +142,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/patientDetailsBirthDateLabel"
-                        android:layout_marginLeft="7dp" />
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginStart="7dp"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -162,6 +166,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/patientDetailsAddressLayoutLabel"
             android:layout_marginLeft="7dp"
+            android:layout_marginStart="7dp"
             android:paddingBottom="7dp"
             android:paddingTop="7dp">
 
@@ -290,7 +295,8 @@
                         style="@style/AddressFields"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="7dp" />
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginStart="7dp"/>
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>

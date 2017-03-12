@@ -82,7 +82,9 @@
             android:layout_above="@id/viewPagerIndicator"
             android:layout_below="@+id/toolbar"
             android:layout_alignLeft="@+id/toolbar"
+            android:layout_alignStart="@+id/toolbar"
             android:layout_alignRight="@+id/toolbar"
+            android:layout_alignEnd="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:orientation="horizontal">

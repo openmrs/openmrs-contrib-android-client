@@ -36,6 +36,7 @@
         android:gravity="center">
         <Button
             android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
             android:id="@+id/dialogFormButtonsCancelButton"
             android:visibility="gone"
             android:layout_width="130dp"
@@ -50,6 +51,7 @@
         <Button
             android:id="@+id/dialogFormButtonsSubmitButton"
             android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:visibility="gone"
             android:layout_width="130dp"
             android:layout_height="40dp"

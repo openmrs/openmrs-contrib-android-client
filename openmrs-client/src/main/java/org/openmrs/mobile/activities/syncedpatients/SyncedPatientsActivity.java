@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.syncedpatients;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
@@ -23,6 +24,7 @@ import android.view.MenuItem;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
@@ -32,6 +34,9 @@ public class SyncedPatientsActivity extends ACBaseActivity {
     private SyncedPatientsPresenter mPresenter;
     private SearchView searchView;
     private String query;
+
+    //Menu Items
+    private MenuItem mAddPatientMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +75,31 @@ public class SyncedPatientsActivity extends ACBaseActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.syncbutton:
+                enableAddPatient(OpenMRS.getInstance().getSyncState());
+                break;
+            case R.id.actionAddPatients:
+                Intent intent = new Intent(this, LastViewedPatientsActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+        return true;
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.find_locally_and_add_patients_menu, menu);
+
+        mAddPatientMenuItem = menu.findItem(R.id.actionAddPatients);
+        enableAddPatient(OpenMRS.getInstance().getSyncState());
 
         // Search function
         MenuItem searchMenuItem = menu.findItem(R.id.actionSearchLocal);
@@ -102,6 +129,12 @@ public class SyncedPatientsActivity extends ACBaseActivity {
         });
 
         return true;
+    }
+
+    private void enableAddPatient(boolean enabled) {
+        int resId = enabled ? R.drawable.ic_add : R.drawable.ic_add_disabled;
+        mAddPatientMenuItem.setEnabled(enabled);
+        mAddPatientMenuItem.setIcon(resId);
     }
 
 }

@@ -33,20 +33,13 @@
         android:orientation="horizontal"
         android:layout_gravity="center">
 
-        <ImageView
-            android:id="@+id/listVisitGroupEncounterIcon"
-            android:contentDescription="@string/visit_encounter_icon"
-            android:layout_gravity="center_vertical"
-            android:layout_width="55dp"
-            android:layout_height="55dp" />
-
         <TextView
             android:id="@+id/listVisitGroupEncounterName"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:textSize="26sp"
-            android:paddingRight="3dp"
-            android:paddingLeft="3dp"
+            android:paddingRight="10dp"
+            android:paddingLeft="10dp"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical|start"
             android:singleLine="false"/>
@@ -71,13 +64,6 @@
             android:paddingStart="15dp"
             android:paddingRight="10dp"
             android:paddingEnd="10dp"/>
-
-        <ImageView
-            android:id="@+id/listVisitGroupDetailsIcon"
-            android:contentDescription="@string/show_or_hide_visit_details"
-            android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </LinearLayout>

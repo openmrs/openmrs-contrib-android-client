@@ -126,29 +126,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:layout_margin="5dp">
+                    android:layout_margin="5dp"
+                    android:gravity="center">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/syncLabel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center">
+                        android:text="@string/login_offline"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginEnd="10dp"/>
 
-                        <TextView
-                            android:id="@+id/syncLabel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/login_offline"
-                            android:layout_marginRight="10dp"
-                            android:layout_marginEnd="10dp"/>
-
-                        <android.support.v7.widget.AppCompatImageView
-                            android:id="@+id/loginSyncButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/sync_button_selector"
-                            android:tint="@color/cardview_dark_background"/>
-
-                    </LinearLayout>
+                    <android.support.v7.widget.AppCompatImageView
+                        android:id="@+id/loginSyncButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/sync_button_selector"
+                        android:tint="@color/cardview_dark_background"/>
 
                 </LinearLayout>
 

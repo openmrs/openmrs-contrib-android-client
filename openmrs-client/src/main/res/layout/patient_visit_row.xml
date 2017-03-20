@@ -52,12 +52,6 @@
         android:gravity="center"
         android:orientation="horizontal" >
 
-        <ImageView
-            android:id="@+id/visitStatusIcon"
-            android:contentDescription="@string/visit_status_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
         <TextView
             android:id="@+id/visitStatusLabel"
             android:layout_width="wrap_content"

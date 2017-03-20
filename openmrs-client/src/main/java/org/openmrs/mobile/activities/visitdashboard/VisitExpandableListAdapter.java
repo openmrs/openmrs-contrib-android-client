@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.visitdashboard;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
+
+    private static final int LEFT = 0;
+    private static final int RIGHT = 1;
 
     private Context mContext;
     private List<Encounter> mEncounters;
@@ -132,31 +136,29 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
             rowView = inflater.inflate(R.layout.list_visit_group, null);
         }
 
-        final ImageView encounterIcon = (ImageView) rowView.findViewById(R.id.listVisitGroupEncounterIcon);
         final TextView encounterName = (TextView) rowView.findViewById(R.id.listVisitGroupEncounterName);
         final TextView detailsSelector = (TextView) rowView.findViewById(R.id.listVisitGroupDetailsSelector);
-        final ImageView detailsSelectorIcon = (ImageView) rowView.findViewById(R.id.listVisitGroupDetailsIcon);
         final Encounter encounter = mEncounters.get(groupPosition);
         encounterName.setText(encounter.getEncounterType().getDisplay());
         if (isExpanded) {
             detailsSelector.setText(mContext.getString(R.string.list_visit_selector_hide));
-            bindDrawableResources(R.drawable.exp_list_hide_details, detailsSelectorIcon);
+            bindDrawableResources(R.drawable.exp_list_hide_details, detailsSelector, RIGHT);
         } else {
             detailsSelector.setText(mContext.getString(R.string.list_visit_selector_show));
-            bindDrawableResources(R.drawable.exp_list_show_details, detailsSelectorIcon);
+            bindDrawableResources(R.drawable.exp_list_show_details, detailsSelector, RIGHT);
         }
         switch (encounter.getEncounterType().getDisplay()) {
             case EncounterType.VITALS:
-                bindDrawableResources(R.drawable.ico_vitals_small, encounterIcon);
+                bindDrawableResources(R.drawable.ico_vitals_small, encounterName, LEFT);
                 break;
             case EncounterType.VISIT_NOTE:
-                bindDrawableResources(R.drawable.visit_note, encounterIcon);
+                bindDrawableResources(R.drawable.visit_note, encounterName, LEFT);
                 break;
             case EncounterType.DISCHARGE:
-                bindDrawableResources(R.drawable.discharge, encounterIcon);
+                bindDrawableResources(R.drawable.discharge, encounterName, LEFT);
                 break;
             case EncounterType.ADMISSION:
-                bindDrawableResources(R.drawable.admission, encounterIcon);
+                bindDrawableResources(R.drawable.admission, encounterName, LEFT);
                 break;
             default:
                 break;
@@ -185,9 +187,18 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
         super.notifyDataSetChanged();
     }
 
-    private void bindDrawableResources(int drawableID, ImageView imageView) {
-        createImageBitmap(drawableID, imageView.getLayoutParams());
-        imageView.setImageBitmap(mBitmapCache.get(drawableID));
+    private void bindDrawableResources(int drawableID, TextView textView, int direction) {
+        final float scale = mContext.getResources().getDisplayMetrics().density;
+        Drawable image = mContext.getResources().getDrawable(drawableID);
+        if(direction == LEFT) {
+            image.setBounds(0, 0, (int)(40 * scale + 0.5f), (int)(40 * scale + 0.5f));
+            textView.setCompoundDrawablePadding((int)(13 * scale + 0.5f));
+            textView.setCompoundDrawables(image, null, null, null);
+        }else {
+            image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
+            textView.setCompoundDrawablePadding((int)(10 * scale + 0.5f));
+            textView.setCompoundDrawables(null, null, image, null);
+        }
     }
 
     private void createImageBitmap(Integer key, ViewGroup.LayoutParams layoutParams) {

@@ -215,7 +215,7 @@
         <activity
             android:name=".activities.patientdashboard.details.PatientPhotoActivity"
             android:parentActivityName=".activities.patientdashboard.PatientDashboardActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/PatientPhotoDisplayTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity" />

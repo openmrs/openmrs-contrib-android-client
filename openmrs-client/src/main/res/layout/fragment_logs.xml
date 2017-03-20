@@ -18,7 +18,6 @@
     android:layout_height="match_parent">
 
     <ScrollView
-        android:id="@+id/svLogs"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:fillViewport="true"

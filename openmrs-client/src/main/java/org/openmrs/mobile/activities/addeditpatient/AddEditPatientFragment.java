@@ -44,9 +44,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -93,7 +93,7 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions
 public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContract.Presenter> implements AddEditPatientContract.View {
 
-    private RelativeLayout relativeLayout;
+    private LinearLayout linearLayout;
     private LocalDate birthdate;
     private DateTime bdt;
 
@@ -324,7 +324,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private void resolveViews(View v) {
-        relativeLayout = (RelativeLayout)v.findViewById(R.id.addEditRelativeLayout);
+        linearLayout = (LinearLayout) v.findViewById(R.id.addEditLinearLayout);
         edfname = (EditText) v.findViewById(R.id.firstname);
         edmname = (EditText) v.findViewById(R.id.middlename);
         edlname = (EditText) v.findViewById(R.id.surname);
@@ -564,7 +564,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private Snackbar createSnackbarLong(int stringId){
-        Snackbar snackbar = Snackbar.make(relativeLayout, stringId, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(linearLayout, stringId, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);

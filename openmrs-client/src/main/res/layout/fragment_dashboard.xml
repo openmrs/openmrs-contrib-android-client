@@ -15,7 +15,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EEE">
+    style="@style/BackgroundThemeEEE">
 
     <TableLayout
         android:layout_width="fill_parent"
@@ -42,7 +42,6 @@
                     android:contentDescription="@string/dashboard_search_icon_label" />
 
                 <TextView
-                    android:id="@+id/findPatientLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/findPatientButton"
@@ -72,7 +71,6 @@
                     android:contentDescription="@string/dashboard_visits_icon_label" />
 
                 <TextView
-                    android:id="@+id/activeVisitsLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/activeVisitsButton"
@@ -105,7 +103,6 @@
                     android:contentDescription="@string/dashboard_registry_icon_label" />
 
                 <TextView
-                    android:id="@+id/registryLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/registryPatientButton"
@@ -135,7 +132,6 @@
                     android:contentDescription="@string/dashboard_registry_icon_label" />
 
                 <TextView
-                    android:id="@+id/FormsLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/captureVitalsButton"

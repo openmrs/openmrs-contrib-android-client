@@ -26,12 +26,7 @@
     <color name="dark_teal">#00463f</color>
     <color name="primary">#00463f</color>
     <color name="primary_dark">#01302b</color>
-    <color name="orange">#F26522</color>
-    <color name="purple">#5B57A6</color>
     <color name="dark_purple">#363463</color>
-    <color name="yellow">#EEA616</color>
-    <color name="grey">#dddddd</color>
-    <color name="muted">#aaa</color>
     <color name="dark_grey">#231F20</color>
     <color name="light_green">#a1d030</color>
     <color name="green">#88af28</color>
@@ -39,5 +34,4 @@
     <color name="red">#ff3d3d</color>
     <color name="switchcolor">#03de95</color>
     <color name="patient_selected_highlight">#3a00ff2a</color>
-    <color name="fragment_background">#EEEEEEEE</color>
 </resources>

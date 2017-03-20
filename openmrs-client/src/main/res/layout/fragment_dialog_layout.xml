@@ -14,19 +14,18 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/dialogRelativeForm"
-                android:orientation="vertical"
-                android:background="@color/card_detailing"
+    android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/dialogForm"
         android:orientation="vertical"
+        android:background="@color/card_detailing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <LinearLayout
-        android:id="@+id/dialogFormButtons"
+        android:background="@color/card_detailing"
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

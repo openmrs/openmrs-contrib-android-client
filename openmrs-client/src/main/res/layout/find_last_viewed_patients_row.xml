@@ -21,7 +21,6 @@
     android:background="@drawable/last_viewed_patient_list_row_selector">
 
     <RelativeLayout
-        android:id="@+id/lastViewedTopRow"
         android:layout_marginTop="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
@@ -53,7 +52,6 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/lastViewedBottomRow"
         android:orientation="horizontal"
         android:layout_marginLeft="5dp"
         android:weightSum="6"
@@ -71,7 +69,6 @@
             android:textSize="16sp"/>
 
         <TextView
-            android:id="@+id/lastViewedPatientAge"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

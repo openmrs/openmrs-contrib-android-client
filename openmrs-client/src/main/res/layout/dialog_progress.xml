@@ -19,9 +19,6 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
         <ProgressBar
             android:id="@+id/progressBarDialog"
@@ -32,7 +29,6 @@
             android:layout_marginTop="30dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_centerVertical="true"
             android:layout_gravity="center_horizontal"
             android:indeterminate="true"
             android:visibility="visible" />
@@ -41,11 +37,7 @@
             android:id="@+id/progressTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/progressBarDialog"
-            android:layout_centerVertical="true"
             android:layout_gravity="center_horizontal"
-            android:layout_toEndOf="@+id/progressBarDialog"
             android:textSize="20sp" />
 
-    </RelativeLayout>
 </FrameLayout>

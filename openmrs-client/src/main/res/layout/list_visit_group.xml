@@ -18,10 +18,10 @@
     android:background="@drawable/card"
     android:longClickable="false"
     android:orientation="horizontal"
-    android:paddingLeft="5dp"
-    android:paddingStart="5dp"
-    android:paddingRight="0dp"
     android:paddingEnd="0dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="0dp"
+    android:paddingStart="5dp"
     android:weightSum="2">
 
     <LinearLayout
@@ -32,26 +32,15 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/listVisitGroupEncounterIcon"
-            android:contentDescription="@string/visit_encounter_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="@dimen/visit_dashboard_encounter_type_icon_margin"
-            android:layout_marginLeft="@dimen/visit_dashboard_encounter_type_icon_margin"
-            android:layout_marginEnd="@dimen/visit_dashboard_encounter_type_icon_margin"
-            android:layout_marginRight="@dimen/visit_dashboard_encounter_type_icon_margin"
-            android:layout_gravity="center_vertical"/>
-
         <TextView
             android:id="@+id/listVisitGroupEncounterName"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical|start"
+            android:drawablePadding="@dimen/visit_dashboard_encounter_type_icon_margin"
             android:paddingLeft="3dp"
             android:paddingRight="3dp"
-            android:singleLine="false"
             android:textSize="22sp" />
     </LinearLayout>
 
@@ -68,18 +57,12 @@
             android:id="@+id/listVisitGroupDetailsSelector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingStart="15dp"
-            android:paddingRight="10dp"
+            android:drawablePadding="10dp"
             android:paddingEnd="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingStart="15dp"
             android:textSize="20sp" />
-
-        <ImageView
-            android:id="@+id/listVisitGroupDetailsIcon"
-            android:contentDescription="@string/show_or_hide_visit_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" />
 
     </LinearLayout>
 </LinearLayout>

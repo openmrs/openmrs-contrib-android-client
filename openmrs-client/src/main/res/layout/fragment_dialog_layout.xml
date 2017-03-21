@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
   ~ compliance with the License. You may obtain a copy of the License at
@@ -14,53 +13,53 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/dialogRelativeForm"
-                android:orientation="vertical"
-                android:background="@color/card_detailing"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    android:id="@+id/dialogRelativeForm"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/dialogForm"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
 
     <LinearLayout
         android:id="@+id/dialogFormButtons"
-        android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/dialogForm"
+        android:gravity="center"
+        android:orientation="horizontal"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:gravity="center">
+        android:paddingRight="10dp">
+
         <Button
-            android:layout_marginRight="5dp"
-            android:layout_marginEnd="5dp"
             android:id="@+id/dialogFormButtonsCancelButton"
-            android:visibility="gone"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="130dp"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:gravity="center"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/button_cancel"
+            android:gravity="center"
             android:textColor="@color/white"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            />
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/dialogFormButtonsSubmitButton"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
-            android:visibility="gone"
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="130dp"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/button_apply"
+            android:gravity="center"
             android:textColor="@color/white"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            />
+            android:visibility="gone" />
     </LinearLayout>
 </RelativeLayout>

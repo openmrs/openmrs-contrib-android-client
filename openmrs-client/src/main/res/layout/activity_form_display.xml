@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
   ~ compliance with the License. You may obtain a copy of the License at
@@ -13,58 +12,58 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<ScrollView
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="#EEE"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/formMainContainer"
-        android:orientation="vertical"
-        android:background="#EEE"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#EEE"
+        android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 
         <RelativeLayout
             android:id="@+id/viewPagerIndicator"
-            android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
             android:gravity="bottom"
             android:orientation="horizontal">
 
             <RelativeLayout
+                android:id="@+id/buttonContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:id="@+id/buttonContainer">
+                android:layout_marginTop="10dp">
+
                 <Button
                     android:id="@+id/btn_next"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/primary"
-                    android:textColor="@color/white"
-                    android:text="@string/action_next"/>
+                    android:text="@string/action_next"
+                    android:textColor="@color/white" />
+
                 <Button
                     android:id="@+id/btn_finish"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/primary"
-                    android:textColor="@color/white"
                     android:text="@string/action_submit"
-                    android:visibility="gone"/>
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <LinearLayout
@@ -79,15 +78,16 @@
 
         <LinearLayout
             android:id="@+id/pagerContainer"
-            android:layout_above="@id/viewPagerIndicator"
-            android:layout_below="@+id/toolbar"
-            android:layout_alignLeft="@+id/toolbar"
-            android:layout_alignStart="@+id/toolbar"
-            android:layout_alignRight="@+id/toolbar"
-            android:layout_alignEnd="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
+            android:layout_above="@id/viewPagerIndicator"
+            android:layout_alignEnd="@+id/toolbar"
+            android:layout_alignLeft="@+id/toolbar"
+            android:layout_alignRight="@+id/toolbar"
+            android:layout_alignStart="@+id/toolbar"
+            android:layout_below="@+id/toolbar"
             android:orientation="horizontal">
+
             <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/container"

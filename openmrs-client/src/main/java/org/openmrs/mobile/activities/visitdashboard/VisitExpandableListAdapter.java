@@ -101,7 +101,7 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return  1;
+        return 1;
     }
 
     @Override
@@ -132,31 +132,29 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
             rowView = inflater.inflate(R.layout.list_visit_group, null);
         }
 
-        final ImageView encounterIcon = (ImageView) rowView.findViewById(R.id.listVisitGroupEncounterIcon);
         final TextView encounterName = (TextView) rowView.findViewById(R.id.listVisitGroupEncounterName);
         final TextView detailsSelector = (TextView) rowView.findViewById(R.id.listVisitGroupDetailsSelector);
-        final ImageView detailsSelectorIcon = (ImageView) rowView.findViewById(R.id.listVisitGroupDetailsIcon);
         final Encounter encounter = mEncounters.get(groupPosition);
         encounterName.setText(encounter.getEncounterType().getDisplay());
         if (isExpanded) {
             detailsSelector.setText(mContext.getString(R.string.list_visit_selector_hide));
-            bindDrawableResources(R.drawable.exp_list_hide_details, detailsSelectorIcon);
+            bindCompoundDrawable(R.drawable.exp_list_hide_details, detailsSelector, 2);
         } else {
             detailsSelector.setText(mContext.getString(R.string.list_visit_selector_show));
-            bindDrawableResources(R.drawable.exp_list_show_details, detailsSelectorIcon);
+            bindCompoundDrawable(R.drawable.exp_list_show_details, detailsSelector, 2);
         }
         switch (encounter.getEncounterType().getDisplay()) {
             case EncounterType.VITALS:
-                bindDrawableResources(R.drawable.ico_vitals_small, encounterIcon);
+                bindCompoundDrawable(R.drawable.ico_vitals_small, encounterName, 0);
                 break;
             case EncounterType.VISIT_NOTE:
-                bindDrawableResources(R.drawable.visit_note, encounterIcon);
+                bindCompoundDrawable(R.drawable.visit_note, encounterName, 0);
                 break;
             case EncounterType.DISCHARGE:
-                bindDrawableResources(R.drawable.discharge, encounterIcon);
+                bindCompoundDrawable(R.drawable.discharge, encounterName, 0);
                 break;
             case EncounterType.ADMISSION:
-                bindDrawableResources(R.drawable.admission, encounterIcon);
+                bindCompoundDrawable(R.drawable.admission, encounterName, 0);
                 break;
             default:
                 break;
@@ -185,9 +183,11 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
         super.notifyDataSetChanged();
     }
 
-    private void bindDrawableResources(int drawableID, ImageView imageView) {
-        createImageBitmap(drawableID, imageView.getLayoutParams());
-        imageView.setImageBitmap(mBitmapCache.get(drawableID));
+    private void bindCompoundDrawable(int drawableID, TextView textView, int pos) {
+        int compoundDrawable[] = {0, 0, 0, 0};
+        compoundDrawable[pos] = drawableID;
+        textView.setCompoundDrawablesWithIntrinsicBounds(compoundDrawable[0], compoundDrawable[1],
+                compoundDrawable[2], compoundDrawable[3]);
     }
 
     private void createImageBitmap(Integer key, ViewGroup.LayoutParams layoutParams) {

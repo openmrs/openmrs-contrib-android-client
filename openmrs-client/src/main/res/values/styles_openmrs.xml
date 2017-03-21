@@ -23,12 +23,12 @@
         <item name="actionDropDownStyle">@style/DropDownNav.Openmrs</item>
         <item name="actionBarStyle">@style/ActionBar.Solid.Openmrs</item>
         <item name="actionModeBackground">@drawable/cab_background_top_openmrs</item>
-        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_openmrs</item>
+        <item name="actionModeSplitBackground">@color/fragment_background</item>
         <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Openmrs</item>
         <item name="android:textColor">@color/dark_purple</item>
         <item name="android:itemTextAppearance">@style/menuTextApearance</item>
 
-                <!-- Light.DarkActionBar specific -->
+        <!-- Light.DarkActionBar specific -->
         <item name="actionBarWidgetTheme">@style/Theme.Openmrs.Widget</item>
 
     </style>
@@ -44,11 +44,11 @@
         <item name="background">@drawable/ab_transparent_openmrs</item>
         <item name="progressBarStyle">@style/ProgressBar.Openmrs</item>
     </style>
-	
+
     <style name="PopupMenu.Openmrs" parent="Widget.AppCompat.PopupMenu">
         <item name="android:popupBackground">@color/primary</item>
     </style>
-	
+
     <style name="DropDownListView.Openmrs" parent="Widget.AppCompat.ListView.DropDown">
         <item name="android:listSelector">@drawable/selectable_background_openmrs</item>
     </style>
@@ -57,21 +57,21 @@
         <item name="android:background">@drawable/tab_indicator_ab_openmrs</item>
         <item name="android:textColor">@color/white</item>
     </style>
-	
+
     <style name="DropDownNav.Openmrs" parent="Widget.AppCompat.Spinner.DropDown.ActionBar">
         <item name="android:background">@drawable/spinner_background_ab_openmrs</item>
         <item name="android:popupBackground">@drawable/menu_dropdown_panel_openmrs</item>
         <item name="android:dropDownSelector">@drawable/selectable_background_openmrs</item>
     </style>
-    
+
     <style name="ProgressBar.Openmrs" parent="Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_openmrs</item>
     </style>
-    
+
     <style name="ActionButton.CloseMode.Openmrs" parent="Widget.AppCompat.ActionButton.CloseMode">
         <item name="android:background">@drawable/btn_cab_done_openmrs</item>
     </style>
-    
+
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
     <style name="Theme.Openmrs.Widget" parent="Theme.AppCompat">
         <item name="dropDownListViewStyle">@style/DropDownListView.Openmrs</item>

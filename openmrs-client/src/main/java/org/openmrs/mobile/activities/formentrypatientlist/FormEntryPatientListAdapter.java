@@ -58,14 +58,12 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(visit -> {
                     if (visit != null) {
-                        holder.mVisitStatusIcon.setVisibility(View.VISIBLE);
-                        holder.mVisitStatusIcon.setImageBitmap(
-                                ImageUtils.decodeBitmapFromResource(mContext.getResources(), R.drawable.active_visit_dot,
-                                        holder.mVisitStatusIcon.getLayoutParams().width, holder.mVisitStatusIcon.getLayoutParams().height));
+                        holder.mVisitStatus.setVisibility(View.VISIBLE);
+                        holder.mVisitStatus.setCompoundDrawablesWithIntrinsicBounds(
+                                R.drawable.active_visit_dot, 0, 0, 0);
                         holder.mVisitStatus.setText(mContext.getString(R.string.active_visit_label_capture_vitals));
                     } else {
-                        holder.mVisitStatusIcon.setVisibility(View.GONE);
-                        holder.mVisitStatus.setText(ApplicationConstants.EMPTY_STRING);
+                        holder.mVisitStatus.setVisibility(View.GONE);
                     }
                 });
         if (null != patient.getIdentifier()) {
@@ -95,19 +93,17 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
         return mItems.size();
     }
 
-    class PatientViewHolder extends RecyclerView.ViewHolder{
+    class PatientViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout mRowLayout;
         private TextView mIdentifier;
         private TextView mDisplayName;
         private TextView mGender;
         private TextView mAge;
         private TextView mBirthDate;
-        private ImageView mVisitStatusIcon;
         private TextView mVisitStatus;
 
         public PatientViewHolder(View itemView) {
             super(itemView);
-            mVisitStatusIcon = (ImageView) itemView.findViewById(R.id.visitStatusIcon);
             mVisitStatus = (TextView) itemView.findViewById(R.id.visitStatusLabel);
             mRowLayout = (LinearLayout) itemView;
             mIdentifier = (TextView) itemView.findViewById(R.id.syncedPatientIdentifier);

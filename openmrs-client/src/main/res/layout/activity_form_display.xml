@@ -17,13 +17,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="#EEE"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
     <RelativeLayout
-        android:id="@+id/formMainContainer"
         android:orientation="vertical"
         android:background="#EEE"
         android:layout_width="match_parent"
@@ -48,8 +46,7 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:id="@+id/buttonContainer">
+                android:layout_marginTop="10dp">
                 <Button
                     android:id="@+id/btn_next"
                     android:layout_width="match_parent"
@@ -78,7 +75,6 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/pagerContainer"
             android:layout_above="@id/viewPagerIndicator"
             android:layout_below="@+id/toolbar"
             android:layout_alignLeft="@+id/toolbar"

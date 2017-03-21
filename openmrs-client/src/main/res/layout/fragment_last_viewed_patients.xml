@@ -29,7 +29,6 @@
         tools:context=".activities.lastviewedpatients.LastViewedPatientsActivity">
 
         <RelativeLayout
-            android:id="@+id/lastViewedBottomComponents"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -53,7 +52,6 @@
 
         <RelativeLayout
             android:clickable="false"
-            android:id="@+id/lastViewedTopComponents"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"

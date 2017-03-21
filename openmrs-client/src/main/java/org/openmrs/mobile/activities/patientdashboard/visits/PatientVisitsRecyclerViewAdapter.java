@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.patientdashboard.visits;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,15 +57,11 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
             visitViewHolder.mVisitEnd.setVisibility(View.VISIBLE);
             visitViewHolder.mVisitEnd.setText(DateUtils.convertTime1((visit.getStopDatetime()), DateUtils.DATE_WITH_TIME_FORMAT));
 
-            visitViewHolder.mVisitStatusIcon.setImageBitmap(
-                    ImageUtils.decodeBitmapFromResource(mContext.getResources(), R.drawable.past_visit_dot,
-                            visitViewHolder.mVisitStatusIcon.getLayoutParams().width, visitViewHolder.mVisitStatusIcon.getLayoutParams().height));
+            bindDrawableResources(R.drawable.past_visit_dot, visitViewHolder.mVisitStatus);
             visitViewHolder.mVisitStatus.setText(mContext.getString(R.string.past_visit_label));
         } else {
             visitViewHolder.mVisitEnd.setVisibility(View.INVISIBLE);
-            visitViewHolder.mVisitStatusIcon.setImageBitmap(
-                    ImageUtils.decodeBitmapFromResource(mContext.getResources(), R.drawable.active_visit_dot,
-                            visitViewHolder.mVisitStatusIcon.getLayoutParams().width, visitViewHolder.mVisitStatusIcon.getLayoutParams().height));
+            bindDrawableResources(R.drawable.active_visit_dot, visitViewHolder.mVisitStatus);
             visitViewHolder.mVisitStatus.setText(mContext.getString(R.string.active_visit_label));
         }
         if (visit.getLocation() != null) {
@@ -87,6 +84,12 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
     @Override
     public int getItemCount() {
         return mVisits.size();
+    }
+
+    private void bindDrawableResources(int drawableID, TextView textView) {
+        Drawable image = mContext.getResources().getDrawable(drawableID);
+        image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
+        textView.setCompoundDrawables(image, null, null, null);
     }
 
     class VisitViewHolder extends RecyclerView.ViewHolder{

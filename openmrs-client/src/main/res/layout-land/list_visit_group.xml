@@ -33,17 +33,6 @@
         android:orientation="horizontal"
         android:layout_gravity="center">
 
-        <ImageView
-            android:id="@+id/listVisitGroupEncounterIcon"
-            android:contentDescription="@string/visit_encounter_icon"
-            android:layout_gravity="center_vertical"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="@dimen/visit_dashboard_encounter_type_icon_margin"
-            android:layout_marginLeft="@dimen/visit_dashboard_encounter_type_icon_margin"
-            android:layout_marginEnd="@dimen/visit_dashboard_encounter_type_icon_margin"
-            android:layout_marginRight="@dimen/visit_dashboard_encounter_type_icon_margin"/>
-
         <TextView
             android:id="@+id/listVisitGroupEncounterName"
             android:layout_width="match_parent"
@@ -75,13 +64,6 @@
             android:paddingStart="15dp"
             android:paddingRight="10dp"
             android:paddingEnd="10dp"/>
-
-        <ImageView
-            android:id="@+id/listVisitGroupDetailsIcon"
-            android:contentDescription="@string/show_or_hide_visit_details"
-            android:layout_gravity="center_vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </LinearLayout>

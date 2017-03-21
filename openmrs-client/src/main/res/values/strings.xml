@@ -39,12 +39,10 @@
     <string name="reg_firstname_hint">Given Name</string>
     <string name="reg_midname_hint">Middle Name</string>
     <string name="reg_surname_hint">Family Name</string>
-    <string name="phone_hint">Phone Number</string>
     <string name="reg_ques_name">What\'s the patient\'s name?</string>
     <string name="reg_ques_gender">What\'s the patient\'s gender?</string>
     <string name="reg_ques_dob">What\'s the patient\'s birth date?</string>
     <string name="label_or">Or</string>
-    <string name="reg_ques_phno">Phone number</string>
     <string name="reg_ques_address">Address</string>
     <string name="addr1_hint">Address</string>
     <string name="addr2_hint">Address 2</string>
@@ -56,50 +54,30 @@
     <string name="dob_hint">Date of Birth</string>
     <string name="estyr">Estimated Years</string>
     <string name="estmonth">Estimated Months</string>
-    <string name="capture_photo">Capture photo</string>
 
     <!-- Offline Mode -->
     <string name="offline_mode_unsupported_in_first_login">Offline mode is not supported during first login.Enable online mode and then try again.</string>
 
     <!-- Connection Timeout dialog -->
-    <string name="conn_timeout_dialog_title">Connection Failed</string>
-    <string name="conn_timeout_dialog_message">A network error has occurred - Connection Timeout.\nPlease try again in a few seconds.</string>
     <!-- Authentication Failed dialog -->
-    <string name="auth_failed_dialog_title">Authentication Failed</string>
     <string name="auth_failed_dialog_message">Incorrect username or password entered. Please try again.</string>
     <!-- No internet dialog -->
-    <string name="no_internet_conn_dialog_title">No internet connection</string>
     <string name="no_internet_conn_dialog_message">You have no internet connection.\nPlease check phone or Wi-Fi connection and signal strength and try again.</string>
-    <string name="no_internet_exit">Exit</string>
-    <string name="no_internet_open_settings">Open Settings</string>
 
     <!-- SimilarPatients dialog -->
     <string name="similar_patients_dialog_title">Similar patients found</string>
-    <string name="similar_patients_dialog_message">Choose existing patients or create a new one</string>
 
     <!-- Socket Exception dialog -->
-    <string name="socket_exception_dialog_title">Connection Failed</string>
-    <string name="socket_exception_dialog_message">A connection error has occurred .\nPlease try again in a few seconds.</string>
 
     <!-- Invalid URL dialog -->
-    <string name="invalid_url_dialog_title">Cannot find server</string>
-    <string name="invalid_url_dialog_message">Cannot find server. Please check the URL and try again.</string>
     <!-- Server unavailable dialog -->
-    <string name="server_unavailable_dialog_title">Server Unavailable</string>
-    <string name="server_unavailable_dialog_message">Cannot connect with server.\nPlease check the URL or internet connection and try again.</string>
     <!-- Server error dialog -->
-    <string name="server_error_dialog_title">Server Error</string>
-    <string name="server_error_dialog_message">Server error occurred.\nPlease check the URL or internet connection and try again.</string>
     <!-- Logout dialog -->
     <string name="logout_dialog_title">Logging out</string>
     <string name="logout_dialog_message">Are you sure you want to logout from OpenMRS client?</string>
     <string name="logout_dialog_button">Logout</string>
     <!-- Unauthorized dialog -->
-    <string name="unauthorized_dialog_title">Unauthorized</string>
-    <string name="unauthorized_dialog_message">Session expired. Please log in again.</string>
     <!-- Server not supported dialog -->
-    <string name="server_not_supported_dialog_title">Server Not Supported</string>
-    <string name="server_not_supported_dialog_message">Server could not be supported. Change the URL.</string>
     <!-- End Visit dialog -->
     <string name="end_visit_dialog_title">End Visit</string>
     <string name="end_visit_dialog_message">Are you sure you want to end this visit?</string>
@@ -112,10 +90,6 @@
     <!-- Progress dialog -->
     <string name="progress_dialog_message">Please wait</string>
     <!-- Capture vitals no visit dialog -->
-    <string name="no_visit_dialog_title">Start new visit</string>
-    <string name="no_visit_dialog_message">This user has no active visit. Would you like to start one now?</string>
-    <string name="no_visit_dialog_button_accept">Yes</string>
-    <string name="no_visit_dialog_button_cancel">Cancel</string>
     <!-- Delete patient dialog message -->
     <string name="delete_patient_dialog_message">Are you sure you want to delete this patient?</string>
 
@@ -127,7 +101,6 @@
     <string name="dialog_button_merge">Merge</string>
     <string name="action_next">Next</string>
     <string name="action_submit">Submit</string>
-    <string name="action_register">Register Patient</string>
 
     <!-- Settings activity -->
     <string name="settings_logs">Logs</string>
@@ -186,7 +159,6 @@
     <string name="patient_postal_label">Postal Code</string>
     <string name="patient_state_label">State</string>
     <string name="patient_country_label">Country</string>
-    <string name="patient_photo_edit">Update photo</string>
 
     <!-- Find Active visit activity -->
     <string name="action_active_visits">Active Visits</string>
@@ -222,11 +194,8 @@
     <string name="active_visit_label_capture_vitals">On Visit</string>
 
     <!-- Form Entry Activity -->
-    <string name="save_upload_button">Save and Send Vitals</string>
     <string name="empty_visits_list">Patient has no visits yet.</string>
     <string name="title_activity_form_create">FormCreateActivity</string>
-    <string name="page_format">Hello World from section: %1$d</string>
-    <string name="save_form_as">Name this form</string>
 
     <!--Similar patient card strings-->
     <string name="gender_hint">gender:</string>
@@ -268,8 +237,6 @@
 
     <!-- Layout strings -->
     <string name="sync">Sync</string>
-    <string name="sync_on">Sync on</string>
-    <string name="sync_off">Sync off</string>
     <string name="snackbar_edit">EDIT</string>
 
     <!--Activity Logs-->

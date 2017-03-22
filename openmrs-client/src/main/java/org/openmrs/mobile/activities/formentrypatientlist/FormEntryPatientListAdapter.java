@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.formentrypatientlist;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,13 +59,11 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(visit -> {
                     if (visit != null) {
-                        holder.mVisitStatusIcon.setVisibility(View.VISIBLE);
-                        holder.mVisitStatusIcon.setImageBitmap(
-                                ImageUtils.decodeBitmapFromResource(mContext.getResources(), R.drawable.active_visit_dot,
-                                        holder.mVisitStatusIcon.getLayoutParams().width, holder.mVisitStatusIcon.getLayoutParams().height));
+                        Drawable icon = mContext.getResources().getDrawable(R.drawable.active_visit_dot);
+                        icon.setBounds(0, 0, icon.getIntrinsicHeight(), icon.getIntrinsicWidth());
+                        holder.mVisitStatus.setCompoundDrawables(icon, null, null, null);
                         holder.mVisitStatus.setText(mContext.getString(R.string.active_visit_label_capture_vitals));
                     } else {
-                        holder.mVisitStatusIcon.setVisibility(View.GONE);
                         holder.mVisitStatus.setText(ApplicationConstants.EMPTY_STRING);
                     }
                 });
@@ -102,12 +101,10 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
         private TextView mGender;
         private TextView mAge;
         private TextView mBirthDate;
-        private ImageView mVisitStatusIcon;
         private TextView mVisitStatus;
 
         public PatientViewHolder(View itemView) {
             super(itemView);
-            mVisitStatusIcon = (ImageView) itemView.findViewById(R.id.visitStatusIcon);
             mVisitStatus = (TextView) itemView.findViewById(R.id.visitStatusLabel);
             mRowLayout = (LinearLayout) itemView;
             mIdentifier = (TextView) itemView.findViewById(R.id.syncedPatientIdentifier);

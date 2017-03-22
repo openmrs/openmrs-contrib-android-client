@@ -39,12 +39,10 @@
     <string name="reg_firstname_hint">Given Name</string>
     <string name="reg_midname_hint">Middle Name</string>
     <string name="reg_surname_hint">Family Name</string>
-    <string name="phone_hint">Phone Number</string>
     <string name="reg_ques_name">What\'s the patient\'s name?</string>
     <string name="reg_ques_gender">What\'s the patient\'s gender?</string>
     <string name="reg_ques_dob">What\'s the patient\'s birth date?</string>
     <string name="label_or">Or</string>
-    <string name="reg_ques_phno">Phone number</string>
     <string name="reg_ques_address">Address</string>
     <string name="addr1_hint">Address</string>
     <string name="addr2_hint">Address 2</string>
@@ -75,7 +73,6 @@
 
     <!-- SimilarPatients dialog -->
     <string name="similar_patients_dialog_title">Similar patients found</string>
-    <string name="similar_patients_dialog_message">Choose existing patients or create a new one</string>
 
     <!-- Socket Exception dialog -->
     <string name="socket_exception_dialog_title">Connection Failed</string>
@@ -222,11 +219,8 @@
     <string name="active_visit_label_capture_vitals">On Visit</string>
 
     <!-- Form Entry Activity -->
-    <string name="save_upload_button">Save and Send Vitals</string>
     <string name="empty_visits_list">Patient has no visits yet.</string>
     <string name="title_activity_form_create">FormCreateActivity</string>
-    <string name="page_format">Hello World from section: %1$d</string>
-    <string name="save_form_as">Name this form</string>
 
     <!--Similar patient card strings-->
     <string name="gender_hint">gender:</string>

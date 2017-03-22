@@ -19,8 +19,7 @@
               style="@style/DialogLabelBorderless"
               android:layout_width="fill_parent"
               android:layout_height="50dp"
-              android:orientation="horizontal"
-              android:background="@color/dark_teal">
+              android:orientation="horizontal">
 
     <TextView
         android:id="@+id/openmrsTitleView"

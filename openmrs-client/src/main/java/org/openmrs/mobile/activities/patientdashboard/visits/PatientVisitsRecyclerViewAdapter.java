@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.patientdashboard.visits;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,15 +57,15 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
             visitViewHolder.mVisitEnd.setVisibility(View.VISIBLE);
             visitViewHolder.mVisitEnd.setText(DateUtils.convertTime1((visit.getStopDatetime()), DateUtils.DATE_WITH_TIME_FORMAT));
 
-            visitViewHolder.mVisitStatusIcon.setImageBitmap(
-                    ImageUtils.decodeBitmapFromResource(mContext.getResources(), R.drawable.past_visit_dot,
-                            visitViewHolder.mVisitStatusIcon.getLayoutParams().width, visitViewHolder.mVisitStatusIcon.getLayoutParams().height));
+            Drawable icon = mContext.getResources().getDrawable(R.drawable.past_visit_dot);
+            icon.setBounds(0, 0, icon.getIntrinsicHeight(), icon.getIntrinsicWidth());
+            visitViewHolder.mVisitStatus.setCompoundDrawables(icon, null, null, null);
             visitViewHolder.mVisitStatus.setText(mContext.getString(R.string.past_visit_label));
         } else {
             visitViewHolder.mVisitEnd.setVisibility(View.INVISIBLE);
-            visitViewHolder.mVisitStatusIcon.setImageBitmap(
-                    ImageUtils.decodeBitmapFromResource(mContext.getResources(), R.drawable.active_visit_dot,
-                            visitViewHolder.mVisitStatusIcon.getLayoutParams().width, visitViewHolder.mVisitStatusIcon.getLayoutParams().height));
+            Drawable icon = mContext.getResources().getDrawable(R.drawable.active_visit_dot);
+            icon.setBounds(0, 0, icon.getIntrinsicHeight(), icon.getIntrinsicWidth());
+            visitViewHolder.mVisitStatus.setCompoundDrawables(icon, null, null, null);
             visitViewHolder.mVisitStatus.setText(mContext.getString(R.string.active_visit_label));
         }
         if (visit.getLocation() != null) {
@@ -95,7 +96,6 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
         private TextView mVisitEnd;
         private TextView mVisitStatus;
         private RelativeLayout mRelativeLayout;
-        private ImageView mVisitStatusIcon;
 
         public VisitViewHolder(View itemView) {
             super(itemView);
@@ -103,7 +103,6 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
             mVisitStart = (TextView) itemView.findViewById(R.id.patientVisitStartDate);
             mVisitEnd = (TextView) itemView.findViewById(R.id.patientVisitEndDate);
             mVisitPlace = (TextView) itemView.findViewById(R.id.patientVisitPlace);
-            mVisitStatusIcon = (ImageView) itemView.findViewById(R.id.visitStatusIcon);
             mVisitStatus = (TextView) itemView.findViewById(R.id.visitStatusLabel);
         }
         public void clearAnimation() {

@@ -15,8 +15,10 @@
 package org.openmrs.mobile.activities.syncedpatients;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -34,6 +36,8 @@ import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivi
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.FontsUtil;
+import org.openmrs.mobile.utilities.NetworkUtils;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,14 +87,28 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
                 enableAddPatient(OpenMRS.getInstance().getSyncState());
                 break;
             case R.id.actionAddPatients:
-                Intent intent = new Intent(getActivity(), LastViewedPatientsActivity.class);
-                startActivity(intent);
+                if(NetworkUtils.hasNetwork()){
+                    Intent intent = new Intent(getActivity(), LastViewedPatientsActivity.class);
+                    startActivity(intent);
+                }else {
+                    enableAddPatient(false);
+                    showNoInternetConnectionSnackbar();
+                }
                 break;
             default:
                 // Do nothing
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showNoInternetConnectionSnackbar() {
+        Snackbar snackbar = Snackbar.make(getActivity().findViewById(android.R.id.content),
+                "No internet connection", Snackbar.LENGTH_SHORT);
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
     }
 
     /**

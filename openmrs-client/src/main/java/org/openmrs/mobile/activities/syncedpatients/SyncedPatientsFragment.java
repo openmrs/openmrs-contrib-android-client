@@ -14,11 +14,17 @@
 
 package org.openmrs.mobile.activities.syncedpatients;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -26,8 +32,11 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
+import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.FontsUtil;
+import org.openmrs.mobile.utilities.NetworkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +49,8 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
 
     //Initialization Progress bar
     private ProgressBar mProgressBar;
+
+    private MenuItem mAddPatientMenuItem;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,15 +75,38 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         return root;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.syncbutton:
+                enableAddPatient(OpenMRS.getInstance().getSyncState());
+                break;
+            case R.id.actionAddPatients:
+                if (NetworkUtils.hasNetwork()) {
+                    Intent intent = new Intent(getActivity(), LastViewedPatientsActivity.class);
+                    startActivity(intent);
+                }else {
+                    NoInternetConnectionSnackbar();
+                }
+                break;
+            default:
+                // Do nothing
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     /**
      * This method is used to update data in SyncedPatientRecyclerView.
      * It creates SyncedPatientsRecyclerViewAdapter and fills it with fresh data.
      * Then new instance of SyncedPatientsRecyclerViewAdapter is set to its SyncedPatientRecyclerView.
+     *
      * @param patientList new set of data
      */
     @Override
     public void updateAdapter(List<Patient> patientList) {
-        SyncedPatientsRecyclerViewAdapter adapter = new SyncedPatientsRecyclerViewAdapter(this,patientList);
+        SyncedPatientsRecyclerViewAdapter adapter = new SyncedPatientsRecyclerViewAdapter(this, patientList);
         adapter.notifyDataSetChanged();
         mSyncedPatientRecyclerView.setAdapter(adapter);
     }
@@ -83,8 +117,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         if (isVisible) {
             mSyncedPatientRecyclerView.setVisibility(View.VISIBLE);
             mEmptyList.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             mSyncedPatientRecyclerView.setVisibility(View.GONE);
             mEmptyList.setVisibility(View.VISIBLE);
             mEmptyList.setText(getString(R.string.search_patient_no_results));
@@ -96,12 +129,32 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         if (isVisible) {
             mSyncedPatientRecyclerView.setVisibility(View.VISIBLE);
             mEmptyList.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             mSyncedPatientRecyclerView.setVisibility(View.GONE);
             mEmptyList.setVisibility(View.VISIBLE);
             mEmptyList.setText(getString(R.string.search_patient_no_result_for_query, replacementWord));
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        super.onCreateOptionsMenu(menu, menuInflater);
+        mAddPatientMenuItem = menu.findItem(R.id.actionAddPatients);
+        enableAddPatient(OpenMRS.getInstance().getSyncState());
+    }
+
+    private void enableAddPatient(boolean enabled) {
+        int resId = enabled ? R.drawable.ic_add : R.drawable.ic_add_disabled;
+        mAddPatientMenuItem.setEnabled(enabled);
+        mAddPatientMenuItem.setIcon(resId);
+    }
+    private void NoInternetConnectionSnackbar() {
+        Snackbar mSnackbar = Snackbar.make(getActivity().findViewById(android.R.id.content),
+                R.string.snackbar_no_internet_connection, Snackbar.LENGTH_SHORT);
+        View sbView = mSnackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        mSnackbar.show();
     }
 
     /**

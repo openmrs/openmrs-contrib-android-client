@@ -250,7 +250,7 @@
     <string name="snackbar_action_open">Open</string>
     <string name="snackbar_info_patient_downloaded">Patient downloaded</string>
     <string name="invalid_login_or_password_message">Invalid login or password, please try again.</string>
-
+    <string name="snackbar_no_internet_connection">No internet connection</string>
 
     <!--permissions-->
     <string name="permission_camera_rationale">Camera permission is needed to capture photo.</string>

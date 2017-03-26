@@ -41,8 +41,7 @@
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
             android:layout_gravity="center_vertical"
-            android:gravity="center_vertical|start"
-            android:singleLine="false"/>
+            android:gravity="center_vertical|start" />
 
     </LinearLayout>
 

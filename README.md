@@ -91,6 +91,16 @@ If you want to release a new major or minor version, please be sure to update th
 
 # Release Notes
 
+<a name="version 2.6"></a>
+### Version 2.6
+### Summary:
+1. Add patient picture 
+2. More user friendly register form
+3. Filter patients by given/middle/family names at same time
+4. Get data from DB in background task
+5. Lint check to GitHub Pull Requests
+6. Fixed bugs
+
 <a name="version 2.5"></a>
 ### Version 2.5
 ### Summary:
@@ -109,12 +119,14 @@ If you want to release a new major or minor version, please be sure to update th
 
 # Objectives
 
-<a name="version 2.6"></a>
-### Version 2.6 (next release)
+<a name="version 2.7"></a>
+### Version 2.7 (next release)
 ### Goals: 
-1. Add/Edit/View Patient Photo
-2. Lint Code Review Integration
-3. Asynchronous Data Synchronization
+1. Users can see and copy logs
+2. Unsubscription in presenters
+3. Infinite scrollability for last viewed patients activity
+4. Visualize progress dialog on a new visit
+
 
 # User Manual
 Check this link for the manual: [Version 2.x](https://wiki.openmrs.org/download/attachments/74252444/User%20Manual%202.0.pdf?version=1&modificationDate=1414759790000&api=v2)

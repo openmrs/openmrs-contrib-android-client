@@ -574,11 +574,15 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
-            patientPhoto = getPortraitImage(output.getPath());
-            Bitmap bitmap = ThumbnailUtils.extractThumbnail(patientPhoto, patientImageView.getWidth(), patientImageView.getHeight());
-            patientImageView.setImageBitmap(bitmap);
-            patientImageView.invalidate();
+        if (requestCode == IMAGE_REQUEST){
+            if(resultCode == Activity.RESULT_OK) {
+                patientPhoto = getPortraitImage(output.getPath());
+                Bitmap bitmap = ThumbnailUtils.extractThumbnail(patientPhoto, patientImageView.getWidth(), patientImageView.getHeight());
+                patientImageView.setImageBitmap(bitmap);
+                patientImageView.invalidate();
+            }else {
+                output = null;
+            }
         }
     }
 

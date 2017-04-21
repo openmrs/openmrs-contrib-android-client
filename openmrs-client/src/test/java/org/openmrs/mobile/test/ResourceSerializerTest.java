@@ -51,6 +51,7 @@ public class ResourceSerializerTest {
         Patient patient = generatePatient(false);
         JsonElement serialize = new ResourceSerializer().serialize(patient, Patient.class, context);
         assertThat(serialize.toString(), containsString("\"fullObject\":\"true\""));
+        assertThat("THIS STRING DOESNT", containsString("LIKE THIS ONE"));
     }
 
     @Test

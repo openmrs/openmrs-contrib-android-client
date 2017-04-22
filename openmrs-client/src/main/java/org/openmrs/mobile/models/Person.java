@@ -15,6 +15,8 @@ import android.graphics.Bitmap;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.openmrs.mobile.utilities.ImageUtils;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -170,6 +172,10 @@ public class Person extends Resource implements Serializable {
 
     public Bitmap getPhoto() {
         return photo;
+    }
+
+    public Bitmap getResizedPhoto() {
+        return ImageUtils.resizePhoto(this.photo);
     }
 
     public void setPhoto(Bitmap patientPhoto) {

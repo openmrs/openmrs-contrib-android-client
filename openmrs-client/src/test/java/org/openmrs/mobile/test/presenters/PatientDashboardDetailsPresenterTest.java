@@ -34,9 +34,7 @@ import org.openmrs.mobile.utilities.NetworkUtils;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
-
 import java.util.Collections;
-
 
 import rx.Observable;
 

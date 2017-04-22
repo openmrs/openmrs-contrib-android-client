@@ -75,7 +75,7 @@
                     android:focusable="true"
                     android:hint="@string/login_url_hint"
                     android:inputType="textUri"
-                    android:singleLine="true"/>
+                    android:maxLines="1" />
 
                 <EditText
                     android:id="@+id/loginUsernameField"
@@ -86,7 +86,7 @@
                     android:focusable="true"
                     android:hint="@string/login_username_hint"
                     android:inputType="text"
-                    android:singleLine="true" />
+                    android:maxLines="1" />
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -99,8 +99,7 @@
                     android:focusable="true"
                     android:hint="@string/login_password_hint"
                     android:inputType="textPassword|text"
-                    android:password="true"
-                    android:singleLine="true" />
+                    android:maxLines="1" />
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

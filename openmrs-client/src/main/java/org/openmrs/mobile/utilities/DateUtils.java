@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.utilities;
 
+import android.annotation.SuppressLint;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -41,7 +43,7 @@ public final class DateUtils {
 
     public static String convertTime(long time, String dateFormat, TimeZone timeZone) {
         Date date = new Date(time);
-        SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat(dateFormat);
         format.setTimeZone(timeZone);
         return format.format(date);
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string-array name="afghanistan">
         <item>Badakhshan</item>
         <item>Badgis</item>
@@ -743,7 +743,7 @@
         <item>Antofagasta</item>
         <item>Araucania</item>
         <item>Atacama</item>
-        <item>Bio Bio</item>
+        <item tools:ignore="Typos">Bio Bio</item>
         <item>Coquimbo</item>
         <item>Libertador General Bernardo O\'</item>
         <item>Los Lagos</item>
@@ -2543,7 +2543,7 @@
         <item>Terengganu</item>
     </string-array>
     <string-array name="maldives">
-        <item>Alif Alif</item>
+        <item tools:ignore="Typos">Alif Alif</item>
         <item>Alif Dhaal</item>
         <item>Baa</item>
         <item>Dhaal</item>

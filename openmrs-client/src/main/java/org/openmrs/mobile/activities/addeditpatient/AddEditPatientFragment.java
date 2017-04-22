@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.addeditpatient;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -588,7 +589,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     private String getUniqueImageFileName() {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         return timeStamp + "_" + ".jpg";
     }
 

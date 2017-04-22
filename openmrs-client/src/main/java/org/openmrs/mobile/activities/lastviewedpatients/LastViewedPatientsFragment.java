@@ -34,6 +34,7 @@ import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.Serializable;
@@ -66,8 +67,13 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.refresh();
-                mAdapter.finishActionMode();
+                if (NetworkUtils.hasNetwork()) {
+                    mPresenter.refresh();
+                    mAdapter.finishActionMode();
+                }else {
+                    ToastUtil.error("No Internet Connection");
+                    getActivity().finish();
+                }
             }
         });
 

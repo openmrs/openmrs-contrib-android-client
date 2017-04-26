@@ -244,7 +244,7 @@
     <string name="visit_encounter_icon">Visit encounter Icon</string>
     <string name="visit_status_icon">Status of visit</string>
     <string name="show_or_hide_visit_details">Show/Hide visit details</string>
-
+    <string name="download_concepts">Download concepts</string>
 
     <!--Snackbar strings-->
     <string name="snackbar_action_open">Open</string>

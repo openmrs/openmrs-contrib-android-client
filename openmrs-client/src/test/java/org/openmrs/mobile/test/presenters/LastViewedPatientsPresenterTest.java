@@ -60,8 +60,11 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
         when(patientDAO.isUserAlreadySaved(secondPatient.getUuid())).thenReturn(false);
     }
 
+    //Test the App when all possible details are perfectly correct for the patients
+    // Then the output will be checked with known correct output
     @Test
     public void shouldUpdateLastViewedPatientList_allOK(){
+        // Creating Patient list with firstPatient and secondPatient
         List<Patient> patientList = Arrays.asList(firstPatient, secondPatient);
         when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockSuccessCall(patientList));
         lastViewedPatientsPresenter.updateLastViewedList();
@@ -72,6 +75,7 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
         verify(view).stopRefreshing();
     }
 
+    // Test the app when the server respond some errors
     @Test
     public void shouldUpdateLastViewedPatientList_ServerError(){
         when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockErrorCall(401));
@@ -84,6 +88,7 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
         verify(view).stopRefreshing();
     }
 
+    //Test the app when the patient list details contanins some erros.
     @Test
     public void shouldUpdateLastViewedPatientList_Error(){
         when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockFailureCall());
@@ -95,6 +100,9 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
         verify(view).stopRefreshing();
     }
 
+
+    // Test the app when the query contains correct details while patient searching. 
+    // Then the output will be checked with known correct output
     @Test
     public void shouldFindPatientsWithQuery_allOK(){
         List<Patient> patientList = Arrays.asList(firstPatient, secondPatient);
@@ -106,6 +114,8 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
         verify(view).stopRefreshing();
     }
 
+    // Test the app when the query contains some error while patient searching
+    // Then the output will be checked for the errors
     @Test
     public void shouldFindPatientsWithQuery_Error(){
         when(restApi.getPatients("query", "full")).thenReturn(mockFailureCall());

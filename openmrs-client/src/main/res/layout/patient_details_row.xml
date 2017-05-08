@@ -90,6 +90,8 @@
             android:orientation="horizontal"
             android:paddingRight="10dp"
             android:paddingEnd="10dp"
+            android:paddingLeft="0dp"
+            android:paddingStart="0dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content">
 

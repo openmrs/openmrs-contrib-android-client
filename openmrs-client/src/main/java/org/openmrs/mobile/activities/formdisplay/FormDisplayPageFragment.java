@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -137,6 +138,22 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
                     question.getQuestionOptions().getMax() + "]");
             ed.setUpperlimit(Double.parseDouble(question.getQuestionOptions().getMax()));
             ed.setLowerlimit(Double.parseDouble(question.getQuestionOptions().getMin()));
+            ed.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    double max = Double.parseDouble(question.getQuestionOptions().getMax());
+                    double min = Double.parseDouble(question.getQuestionOptions().getMin());
+                    double value= -1;
+
+                    if(!ed.getText().toString().trim().equals("")){
+                        value =Double.parseDouble(ed.getText().toString().trim());
+                    }
+                    if(value != -1 && (value < min || value > max)){
+                        ed.setError("Value must be between " + min + " and " + max);
+                    }
+                    return false;
+                }
+            });
         } else {
             ed.setHint(question.getLabel());
             ed.setLowerlimit(-1.0);

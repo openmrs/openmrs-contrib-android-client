@@ -268,4 +268,12 @@
 
     <!--Activity Logs-->
     <string name="title_activity_logs">Logs</string>
+
+    <!--App Crash Dialog-->
+    <string name="crash_dialog_title">Error occurred</string>
+    <string name="crash_dialog_message">Sorry ! An Unknown error has occurred. Please report the details to developers so that it can be resolved as soon as possible.</string>
+    <string name="crash_dialog_positive_button">Restart</string>
+    <string name="crash_dialog_negative_button">Close</string>
+    <string name="crash_dialog_neutral_button">Send report and restart</string>
+
 </resources>

@@ -24,7 +24,6 @@ import org.openmrs.mobile.application.OpenMRS;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -133,9 +132,11 @@ public final class DateUtils {
         return formattedDate;
     }
 
-    public static int getCurrentYear(){
-        Calendar c = Calendar.getInstance();
-        return c.YEAR;
+    public static String getCurrentDateTime(){
+        DateFormat dateFormat = new SimpleDateFormat(OPEN_MRS_RESPONSE_FORMAT);
+        Date date = new Date();
+        return dateFormat.format(date);
     }
+
 
 }

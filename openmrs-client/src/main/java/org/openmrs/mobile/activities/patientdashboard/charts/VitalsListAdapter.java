@@ -16,8 +16,6 @@ package org.openmrs.mobile.activities.patientdashboard.charts;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.graphics.Bitmap;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +28,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.common.collect.Lists;
 
 import org.json.JSONArray;
@@ -40,7 +39,8 @@ import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.DayAxisValueFormatter;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -52,13 +52,11 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
     private Context mContext;
     private List<ViewGroup> mChildLayouts;
     private JSONObject mObservationList;
-    private SparseArray<Bitmap> mBitmapCache;
     private List<String> mVitalNameList;
 
     public VitalsListAdapter(Context context, JSONObject observationList) {
         this.mContext = context;
         this.mObservationList = observationList;
-        this.mBitmapCache = new SparseArray<Bitmap>();
         Iterator<String> keys = mObservationList.keys();
         this.mVitalNameList = Lists.newArrayList(keys);
         this.mChildLayouts = generateChildLayouts();
@@ -74,20 +72,33 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
             try {
                 JSONObject chartData = mObservationList.getJSONObject(vitalName);
                 Iterator<String> dates = chartData.keys();
-                List<String> dateList = Lists.newArrayList(dates);
-                for (String date : dateList) {
-                    JSONArray dataArray = chartData.getJSONArray(date);
+                ArrayList<String> dateList = Lists.newArrayList(dates);
+                //Sorting the date
+                Collections.sort(dateList, new Comparator<String>() {
+                    @Override
+                    public int compare(String lhs, String rhs) {
+                        if (DateUtils.getDateFromString(lhs).getTime() < DateUtils.getDateFromString(rhs).getTime())
+                            return -1;
+                        else if (DateUtils.getDateFromString(lhs).getTime() == DateUtils.getDateFromString(rhs).getTime())
+                            return 0;
+                        else
+                            return 1;
+                    }
+                });
+                for (Integer j = 0; j < dateList.size(); j++) {
+                    JSONArray dataArray = chartData.getJSONArray(dateList.get(j));
                     LineChart chart = (LineChart) convertView.findViewById(R.id.linechart);
                     List<Entry> entries = new ArrayList<Entry>();
-
                     for (Integer i = 0; i < dataArray.length(); i++) {
-                        Date vitalDate = DateUtils.getDateFromString(date);
-                        entries.add(new Entry(vitalDate.getDate(), Float.parseFloat((String) dataArray.get(i))));
+                        entries.add(new Entry(j, Float.parseFloat((String) dataArray.get(i))));
                     }
                     LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
                     dataSet.setCircleColor(R.color.green);
                     dataSet.setValueTextSize(12);
-                    LineData lineData = new LineData(dataSet);
+                    List<ILineDataSet> ILdataSet = new ArrayList<ILineDataSet>();
+                    ILdataSet.add(dataSet);
+                    dateList.add(DateUtils.getCurrentDateTime());
+                    LineData lineData = new LineData(ILdataSet);
                     chart.setData(lineData);
                     //Styling the graph
                     chart.getLegend().setEnabled(false);
@@ -97,8 +108,8 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
                     xAxis.setDrawAxisLine(true);
                     xAxis.setGranularity(1);
                     xAxis.setAxisMinimum(0);
-                    xAxis.setAxisMaximum(31);
-                    xAxis.setValueFormatter(new DayAxisValueFormatter(chart));
+                    xAxis.setAxisMaximum(dateList.size() -1);
+                    xAxis.setValueFormatter(new DayAxisValueFormatter(dateList));
 
                     YAxis rightAxis = chart.getAxisRight();
                     rightAxis.setEnabled(false);

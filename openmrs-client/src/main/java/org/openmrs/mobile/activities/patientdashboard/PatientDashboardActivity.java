@@ -24,6 +24,8 @@ import net.yanzm.mth.MaterialTabHost;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.activities.patientdashboard.charts.PatientChartsFragment;
+import org.openmrs.mobile.activities.patientdashboard.charts.PatientDashboardChartsPresenter;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientDashboardDetailsPresenter;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientDetailsFragment;
 import org.openmrs.mobile.activities.patientdashboard.diagnosis.PatientDashboardDiagnosisPresenter;
@@ -111,6 +113,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
         tabNames.add(getString(R.string.patient_scroll_tab_diagnosis_label));
         tabNames.add(getString(R.string.patient_scroll_tab_visits_label));
         tabNames.add(getString(R.string.patient_scroll_tab_vitals_label));
+        tabNames.add(getString(R.string.patient_scroll_tab_charts_label));
         return tabNames;
     }
 
@@ -128,6 +131,9 @@ public class PatientDashboardActivity extends ACBaseActivity {
         }
         else if (fragment instanceof PatientVitalsFragment){
             mPresenter = new PatientDashboardVitalsPresenter(id, ((PatientVitalsFragment) fragment));
+        }
+        else if (fragment instanceof PatientChartsFragment){
+            mPresenter = new PatientDashboardChartsPresenter(id,((PatientChartsFragment) fragment));
         }
     }
 

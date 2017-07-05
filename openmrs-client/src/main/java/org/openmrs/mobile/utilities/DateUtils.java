@@ -81,6 +81,7 @@ public final class DateUtils {
                 }
             }
         }
+
         return time;
     }
 
@@ -109,5 +110,33 @@ public final class DateUtils {
         }
         return dateAsString;
     }
+
+    public static Date getDateFromString(String dateAsString) {
+        return getDateFromString(dateAsString, DEFAULT_DATE_FORMAT);
+    }
+
+    public static Date getDateFromString(String dateAsString, String dateFormat) {
+        Date formattedDate = null;
+        if (StringUtils.notNull(dateAsString)) {
+            DateFormat format = new SimpleDateFormat(dateFormat);
+            try {
+                formattedDate = parseString(dateAsString, format);
+            } catch (ParseException e) {
+                try {
+                    formattedDate = parseString(dateAsString, new SimpleDateFormat(OPEN_MRS_REQUEST_PATIENT_FORMAT));
+                } catch (ParseException e1) {
+                    OpenMRS.getInstance().getOpenMRSLogger().w("Failed to parse date :" + dateAsString + " caused by " + e.toString());
+                }
+            }
+        }
+        return formattedDate;
+    }
+
+    public static String getCurrentDateTime(){
+        DateFormat dateFormat = new SimpleDateFormat(OPEN_MRS_RESPONSE_FORMAT);
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
 
 }

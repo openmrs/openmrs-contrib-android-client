@@ -20,6 +20,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
+import org.openmrs.mobile.activities.patientdashboard.charts.PatientChartsFragment;
+import org.openmrs.mobile.activities.patientdashboard.charts.PatientDashboardChartsPresenter;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientDashboardDetailsPresenter;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientDetailsFragment;
 import org.openmrs.mobile.activities.patientdashboard.diagnosis.PatientDashboardDiagnosisPresenter;
@@ -31,12 +33,13 @@ import org.openmrs.mobile.activities.patientdashboard.vitals.PatientVitalsFragme
 
 class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
 
-    private static final int TAB_COUNT = 4;
+    private static final int TAB_COUNT = 5;
 
     private static final int DETAILS_TAB_POS = 0;
     private static final int DIAGNOSIS_TAB_POS = 1;
     private static final int VISITS_TAB_POS = 2;
     private static final int VITALS_TAB_POS = 3;
+    private static final int CHARTS_TAB_POS = 4;
 
     private SparseArray<Fragment> registeredFragments = new SparseArray<>();
 
@@ -49,7 +52,6 @@ class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-
         switch (i) {
             case DETAILS_TAB_POS:
                 PatientDetailsFragment patientDetailsFragment = PatientDetailsFragment.newInstance();
@@ -67,6 +69,10 @@ class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
                 PatientVitalsFragment patientVitalsFragment = PatientVitalsFragment.newInstance();
                 new PatientDashboardVitalsPresenter(mPatientId, patientVitalsFragment);
                 return patientVitalsFragment;
+            case CHARTS_TAB_POS:
+                PatientChartsFragment patientChartsFragment = PatientChartsFragment.newInstance();
+                new PatientDashboardChartsPresenter(mPatientId, patientChartsFragment);
+                return patientChartsFragment;
             default:
                 return null;
         }

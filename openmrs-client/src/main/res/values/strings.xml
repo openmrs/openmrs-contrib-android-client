@@ -280,5 +280,5 @@
     <string name="crash_dialog_positive_button">Restart</string>
     <string name="crash_dialog_negative_button">Close</string>
     <string name="crash_dialog_neutral_button">Send report and restart</string>
-
+    
 </resources>

@@ -1,0 +1,5 @@
+{
+  "name": "json",
+  "valueReference": "{ \"name\":\"Capture Vitals\", \"uuid\":\"60df0617-c18e-4609-8bdf-6f8de1b5b0cc\", \"processor\":\"EncounterFormProcessor\", \"pages\":[ { \"label\":\"\", \"sections\":[ { \"label\":\"Vitals\", \"questions\":[ { \"type\":\"obsGroup\", \"label\":\"NUMERIC\", \"questionOptions\":{ \"rendering\":\"group\", \"concept\":\"a899e6d8-1350-11df-a1f1-0026b9348838\" }, \"questions\":[ { \"label\":\"BP:Systolic - allowDecimal = false:\", \"questionOptions\":{ \"rendering\":\"number\", \"concept\":\"5085AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\", \"max\":\"250\", \"min\":\"0\" }, \"type\":\"obs\", \"validators\":[ ] }, { \"label\":\"BP:Diastolic - allowDecimal = true:\", \"questionOptions\":{ \"rendering\":\"number\", \"allowDecimal\":true, \"concept\":\"5086AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\", \"max\":\"150\", \"min\":\"0\" }, \"type\":\"obs\", \"validators\":[ ] } ] } ] } ] } ] }",
+  "dataType": "org.openmrs.customdatatype.datatype.FreeTextDatatype"
+}

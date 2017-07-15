@@ -25,15 +25,29 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayActivity;
+import org.openmrs.mobile.api.RestApi;
+import org.openmrs.mobile.api.RestServiceBuilder;
+import org.openmrs.mobile.models.FormCreate;
+import org.openmrs.mobile.models.FormData;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FormListFragment extends ACBaseFragment<FormListContract.Presenter> implements FormListContract.View {
 
     private ListView formList;
+    private static Boolean formCreateFlag;
 
     public static FormListFragment newInstance() {
 
@@ -49,7 +63,7 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
         formList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mPresenter.listItemClicked(position, ((TextView)view).getText().toString());
+                mPresenter.listItemClicked(position, ((TextView) view).getText().toString());
             }
         });
 
@@ -72,6 +86,106 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
         intent.putExtra(ApplicationConstants.BundleKeys.VALUEREFERENCE, valueRefString);
         intent.putExtra(ApplicationConstants.BundleKeys.ENCOUNTERTYPE, encounterType);
         startActivity(intent);
+    }
+
+    public Boolean formCreate(String uuid, String formName) {
+        formCreateFlag = false;
+        RestApi apiService = RestServiceBuilder.createService(RestApi.class);
+
+        if (formName.contains("admission")) {
+            FormData obj = loadJSONFromAsset("admission.json");
+            Call<FormCreate> call2 = apiService.formCreate(uuid, obj);
+            call2.enqueue(new Callback<FormCreate>() {
+                @Override
+                public void onResponse(Call<FormCreate> call, Response<FormCreate> response) {
+                    if (response.isSuccessful() && (response.body().getName().equals("json"))) {
+                        formCreateFlag = true;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<FormCreate> call, Throwable t) {
+                    //This method is lef blank intentionally
+                }
+            });
+        } else if (formName.contains("vitals")) {
+            FormData obj = loadJSONFromAsset("vitals1.json");
+            FormData obj2 = loadJSONFromAsset("vitals2.json");
+            Call<FormCreate> call2 = apiService.formCreate(uuid, obj);
+            call2.enqueue(new Callback<FormCreate>() {
+                @Override
+                public void onResponse(Call<FormCreate> call, Response<FormCreate> response) {
+                    if (response.isSuccessful() && (response.body().getName().equals("json"))) {
+                        formCreateFlag = true;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<FormCreate> call, Throwable t) {
+                    //This method is lef blank intentionally
+                }
+            });
+            Call<FormCreate> call = apiService.formCreate(uuid, obj2);
+            call.enqueue(new Callback<FormCreate>() {
+                @Override
+                public void onResponse(Call<FormCreate> call, Response<FormCreate> response) {
+                    if (response.isSuccessful() && (response.body().getName().equals("json"))) {
+                        formCreateFlag = true;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<FormCreate> call, Throwable t) {
+                    //This method is lef blank intentionally
+                }
+            });
+        } else if (formName.contains("visit note")) {
+            FormData obj = loadJSONFromAsset("visit_note.json");
+            Call<FormCreate> call2 = apiService.formCreate(uuid, obj);
+            call2.enqueue(new Callback<FormCreate>() {
+                @Override
+                public void onResponse(Call<FormCreate> call, Response<FormCreate> response) {
+                    if (response.isSuccessful() && (response.body().getName().equals("json"))) {
+                        formCreateFlag = true;
+                        }
+                }
+
+                @Override
+                public void onFailure(Call<FormCreate> call, Throwable t) {
+                    //This method is lef blank intentionally
+                }
+            });
+
+
+        }
+        return formCreateFlag;
+    }
+
+    private FormData loadJSONFromAsset(String filename) {
+        String json = null;
+        try {
+            InputStream is = getActivity().getAssets().open("forms/" + filename);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        JSONObject obj = null;
+        try {
+            obj = new JSONObject(json);
+            FormData data = new FormData();
+            data.setName(obj.getString("name"));
+            data.setDataType(obj.getString("dataType"));
+            data.setValueReference(obj.getString("valueReference"));
+            return data;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override

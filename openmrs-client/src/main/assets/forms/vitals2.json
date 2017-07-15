@@ -1,0 +1,5 @@
+{
+  "name": "json",
+  "valueReference": "{ \"name\":\"Capture Vitals\", \"uuid\":\"60df0617-c18e-4609-8bdf-6f8de1b5b0cc\",\"processor\":\"EncounterFormProcessor\",\"pages\":[{\"label\":\"\",\"sections\":[{\"label\":\"Vitals\",\"questions\":[{\"label\":\"Pulse(Rate/Min):\",\"questionOptions\":{\"rendering\":\"number\",\"concept\":\"5085AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\"max\":\"230\",\"min\":\"0\"},\"type\":\"obs\",\"validators\":[]},{\"type\":\"obsGroup\",\"label\":\"Select\",\"questionOptions\":{\"rendering\":\"group\",\"concept\":\"a899e6d8-1350-11df-a1f1-0026b9318838\"},\"questions\":[{\"label\":\"Is the patient HIV positive?\",\"questionOptions\":{\"rendering\":\"radio\",\"concept\":\"a8af49d8-1350-11df-a1f1-6026b9348838\",\"answers\":[{\"concept\":\"a899b35c-1350-11df-a1f1-002649348838\",\"label\":\"Yes\"},{\"concept\":\"a899b42e-1350-11df-a1f1-002629348838\",\"label\":\"No\"},{\"concept\":\"a899b50a-1350-11df-a1f1-002619348838\",\"label\":\"Unknown\"}]},\"type\":\"obs\",\"validators\":[]}]}]}]}]}",
+  "dataType": "org.openmrs.customdatatype.datatype.FreeTextDatatype"
+}

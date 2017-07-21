@@ -129,7 +129,9 @@ public class Encounter extends Resource implements Serializable{
         return DateUtils.convertTime(encounterDatetime);
     }
 
-
+    public String getEncounterDate(){
+        return encounterDatetime;
+    }
     /**
      *
      * @param encounterDatetime

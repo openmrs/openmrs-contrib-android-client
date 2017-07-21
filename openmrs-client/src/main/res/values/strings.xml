@@ -166,6 +166,7 @@
     <string name="patient_scroll_tab_diagnosis_label">Diagnosis</string>
     <string name="patient_scroll_tab_visits_label">Visits</string>
     <string name="patient_scroll_tab_vitals_label">Vitals</string>
+    <string name="patient_scroll_tab_charts_label">Charts</string>
     <string name="download_started">"Downloading…"</string>
     <string name="action_starting_visit">"Starting Visit"</string>
 
@@ -203,6 +204,10 @@
     <!-- fragment_patient_diagnosis layout -->
     <string name="empty_diagnoses_list">Patient has no diagnoses yet.</string>
     <string name="diagnosis_note_label">Text of encounter note</string>
+
+    <!--fragment_vitals_charts_layout-->
+    <string name="list_vital_selector_show">show chart</string>
+    <string name="list_vital_selector_hide">hide chart</string>
 
     <!-- Visit dashboard activity -->
     <string name="action_end_visit">End Visit</string>
@@ -268,4 +273,12 @@
 
     <!--Activity Logs-->
     <string name="title_activity_logs">Logs</string>
+
+    <!--App Crash Dialog-->
+    <string name="crash_dialog_title">Error occurred</string>
+    <string name="crash_dialog_message">Sorry ! An Unknown error has occurred. Please report the details to developers so that it can be resolved as soon as possible.</string>
+    <string name="crash_dialog_positive_button">Restart</string>
+    <string name="crash_dialog_negative_button">Close</string>
+    <string name="crash_dialog_neutral_button">Send report and restart</string>
+
 </resources>

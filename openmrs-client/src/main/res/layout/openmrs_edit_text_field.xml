@@ -17,6 +17,12 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayoutEditText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_weight="1">
     <EditText
         android:id="@+id/openmrsEditText"
         android:layout_width="fill_parent"
@@ -29,5 +35,6 @@
         android:layout_marginTop="10dp"
         android:textSize="22sp"
         />
+    </android.support.design.widget.TextInputLayout>
 
 </LinearLayout>

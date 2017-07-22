@@ -29,8 +29,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.jakewharton.rxbinding.widget.RxTextView;
-
+import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.application.OpenMRS;
@@ -106,62 +105,39 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         RangeEditText ed = new RangeEditText(getActivity());
-
-        String maxValue = question.getQuestionOptions().getMax();
-        String minValue = question.getQuestionOptions().getMin();
-
-        RxTextView.textChangeEvents(ed)
-                .subscribe(e -> {
-                    String value = e.text().toString();
-                    if (!isInRange(value, maxValue, minValue, false)) {
-                        showNumericFieldError(maxValue, minValue, ed);
-                    } else {
-                        ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.black));
-                    }
-                });
-
-        // Checks if user typed too small value and changed focus
-        ed.setOnFocusChangeListener((view, hasFocus) -> {
-            String value = ((RangeEditText) view).getText().toString();
-            if (!isInRange(value, maxValue, minValue, true)) {
-                showNumericFieldError(maxValue, minValue, ed);
-            } else {
-                ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.black));
-            }
-        });
-
-        ed.setName(question.getLabel());
-        ed.setSingleLine(true);
-        if (question.getQuestionOptions().getMax() != null) {
-            ed.setHint(" [" + question.getQuestionOptions().getMin() + "-" +
-                    question.getQuestionOptions().getMax() + "]");
-            ed.setUpperlimit(Double.parseDouble(question.getQuestionOptions().getMax()));
-            ed.setLowerlimit(Double.parseDouble(question.getQuestionOptions().getMin()));
-        } else {
-            ed.setHint(question.getLabel());
-            ed.setLowerlimit(-1.0);
-            ed.setUpperlimit(-1.0);
-        }
-        ed.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-        if (question.getQuestionOptions().isAllowDecimal()) {
-            ed.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        } else {
-            ed.setInputType(InputType.TYPE_CLASS_NUMBER);
-        }
+        DiscreteSeekBar dsb = new DiscreteSeekBar(getActivity());
         InputField field = new InputField(question.getQuestionOptions().getConcept());
-        ed.setId(field.getId());
         InputField inputField = getInputField(field.getConcept());
         if (inputField != null) {
             inputField.setId(field.getId());
-            Double value = inputField.getValue();
-            if (-1.0 != value)
-                ed.setText(String.valueOf(value));
         } else {
             field.setConcept(question.getQuestionOptions().getConcept());
             inputFields.add(field);
         }
         sectionLinearLayout.addView(generateTextView(question.getLabel()));
-        sectionLinearLayout.addView(ed, layoutParams);
+
+        if ((question.getQuestionOptions().getMax() != null) && (!(question.getQuestionOptions().isAllowDecimal())) ){
+            dsb.setMax((int) Double.parseDouble(question.getQuestionOptions().getMax()));
+            dsb.setMin((int) Double.parseDouble(question.getQuestionOptions().getMin()));
+            dsb.setId(field.getId());
+            sectionLinearLayout.addView(dsb,layoutParams);
+        }
+        else {
+            ed.setName(question.getLabel());
+            ed.setSingleLine(true);
+            ed.setHint(question.getLabel());
+            ed.setLowerlimit(-1.0);
+            ed.setUpperlimit(-1.0);
+            ed.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            if (question.getQuestionOptions().isAllowDecimal()) {
+                ed.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            } else {
+                ed.setInputType(InputType.TYPE_CLASS_NUMBER);
+            }
+            ed.setId(field.getId());
+            sectionLinearLayout.addView(ed, layoutParams);
+        }
+
     }
 
     private View generateTextView(String text) {
@@ -353,6 +329,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
     @Override
     public List<InputField> getInputFields() {
         for (InputField field:inputFields) {
+            try{
             RangeEditText ed=(RangeEditText) getActivity().findViewById(field.getId());
             if(!isEmpty(ed)){
                 field.setValue(Double.parseDouble(ed.getText().toString()));
@@ -363,6 +340,12 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
                 field.setValue(-1.0);
             }
         }
+            catch (ClassCastException e ) {
+                DiscreteSeekBar dsb = (DiscreteSeekBar) getActivity().findViewById(field.getId());
+                field.setValue((double) dsb.getProgress());
+            }
+        }
+
         return inputFields;
     }
 
@@ -380,6 +363,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
         boolean allEmpty = true;
         boolean valid=true;
         for (InputField field:inputFields) {
+            try {
             RangeEditText ed = (RangeEditText) getActivity().findViewById(field.getId());
             if (!isEmpty(ed)) {
                 allEmpty = false;
@@ -393,6 +377,12 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
                 else {
                     ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
                     valid = false;
+                }
+            }}
+            catch (ClassCastException e){
+                DiscreteSeekBar dsb = (DiscreteSeekBar) getActivity().findViewById(field.getId());
+                if (dsb.getProgress() > dsb.getMin()) {
+                    allEmpty = false;
                 }
             }
         }
@@ -412,45 +402,6 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
 
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
-    }
-
-    private boolean isInRange(String value, String maxValue, String minValue, boolean validateMin) {
-        if (!value.isEmpty()) {
-            double valueNum = Double.parseDouble(value);
-            if (maxValue != null) {
-                double maxValueNum = Double.parseDouble(maxValue);
-                if (valueNum > maxValueNum) {
-                    return false;
-                }
-            }
-            if (minValue != null && validateMin) {
-                double minValueNum = Double.parseDouble(minValue);
-                if (valueNum < minValueNum) {
-                    return false;
-                }
-            }
-            return true;
-        }
-        else {
-            return true;
-        }
-    }
-
-    private void showNumericFieldError(String maxValue, String minValue, EditText editText) {
-        editText.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
-
-        if (maxValue == null && minValue != null) {
-            editText.setError("Value must be bigger than " + minValue);
-        }
-
-        if ((minValue == null || minValue.equals("0")) && maxValue != null) {
-            editText.setError("Value cannot be bigger than " + maxValue);
-        }
-
-        if (minValue != null && !minValue.equals("0") && maxValue != null) {
-            editText.setError("Value must be between " + minValue + " and " + maxValue);
-        }
-
     }
 
 }

@@ -110,4 +110,32 @@
     <style name="BackgroundThemeEEEF3F3F3">
         <item name="android:background">#FFF3F3F3</item>
     </style>
+
+    <!--Showcase view styles -->
+    <style name="CustomShowcaseTheme" parent="ShowcaseView">
+        <item name="sv_backgroundColor">#d200463f</item>
+        <item name="sv_showcaseColor">#0D9556</item>
+        <item name="sv_buttonText">Next</item>
+        <item name="sv_titleTextAppearance">@style/CustomTitle</item>
+        <item name="sv_detailTextAppearance">@style/CustomText</item>
+    </style>
+
+    <style name="CustomShowcaseThemeExit" parent="ShowcaseView">
+        <item name="sv_backgroundColor">#d200463f</item>
+        <item name="sv_showcaseColor">#0D9556</item>
+        <item name="sv_buttonText">Close</item>
+        <item name="sv_tintButtonColor">true</item>
+        <item name="sv_titleTextAppearance">@style/CustomTitle</item>
+        <item name="sv_detailTextAppearance">@style/CustomText</item>
+    </style>
+
+    <style name="CustomTitle" parent="TextAppearance.ShowcaseView.Title.Light">
+        <item name="android:textColor">#deffffff</item>
+    </style>
+
+    <style name="CustomText" parent="TextAppearance.ShowcaseView.Detail.Light">
+        <item name="android:textColor">#8affffff</item>
+    </style>
+
+
 </resources>

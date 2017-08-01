@@ -26,6 +26,8 @@ public interface FormListContract {
         void startFormDisplayActivity(String formName, Long patientId, String valueRefString, String encounterType);
 
         void showError(String message);
+
+        Boolean formCreate(String uuid,String formName);
     }
 
     interface Presenter extends BasePresenterContract {

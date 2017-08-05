@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.formlist;
 
+
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.models.EncounterType;
@@ -56,27 +57,29 @@ public class FormListPresenter extends BasePresenter implements FormListContract
     public void loadFormResourceList() {
         formResourceList = new ArrayList<>();
         List<FormResource> allFormResourcesList = FormService.getFormResourceList();
-
         for (FormResource formResource : allFormResourcesList) {
-
             List<FormResource> valueRef = formResource.getResourceList();
             String valueRefString = null;
 
-            for(FormResource resource : valueRef) {
-                if(resource.getName().equals("json")) {
+            for (FormResource resource : valueRef) {
+                if (resource.getName().equals("json")) {
                     valueRefString = resource.getValueReference();
                 }
             }
-
-            if(!StringUtils.isBlank(valueRefString)) {
+            if (!StringUtils.isBlank(valueRefString)) {
                 formResourceList.add(formResource);
+            } else {
+                if (view.formCreate(formResource.getUuid(), formResource.getName().toLowerCase())) {
+                    formResourceList.add(formResource);
+                }
             }
+
         }
 
         int size = formResourceList.size();
-        formsStringArray = new String [size];
-        for (int i=0; i<size; i++) {
-            formsStringArray[i]= formResourceList.get(i).getName();
+        formsStringArray = new String[size];
+        for (int i = 0; i < size; i++) {
+            formsStringArray[i] = formResourceList.get(i).getName();
         }
         view.showFormList(formsStringArray);
     }

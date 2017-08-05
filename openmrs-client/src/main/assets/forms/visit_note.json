@@ -1,0 +1,5 @@
+{
+  "name": "json",
+  "valueReference": "{ \"name\":\"Coded Form\", \"uuid\":\"77174d67-954f-45c4-a782-d157e70d59f4\", \"processor\":\"EncounterFormProcessor\", \"pages\":[ { \"label\":\"\", \"sections\":[ { \"label\":\"Simple coded form\", \"questions\":[ { \"type\":\"obsGroup\", \"label\":\"Select\", \"questionOptions\":{ \"rendering\":\"group\", \"concept\":\"138405AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\" }, \"questions\":[ { \"label\":\"Is the patient HIV positive?\", \"questionOptions\":{ \"rendering\":\"radio\", \"concept\":\"138405AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\", \"answers\":[ { \"concept\":\"1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\", \"label\":\"Yes\" }, { \"concept\":\"1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\", \"label\":\"No\" }, { \"concept\":\"1067AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\", \"label\":\"Unknown\" } ] }, \"type\":\"obs\", \"validators\":[ ] } ] } ] } ] } ] }",
+  "dataType": "org.openmrs.customdatatype.datatype.FreeTextDatatype"
+}

@@ -19,6 +19,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,6 +29,7 @@ import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -57,6 +59,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
+import org.openmrs.mobile.activities.dialog.CameraOrGalleryPickerDialog;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientPhotoActivity;
 import org.openmrs.mobile.application.OpenMRSLogger;
@@ -75,6 +78,7 @@ import org.openmrs.mobile.utilities.ViewUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -132,6 +136,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private String patientName;
     private File output = null;
     private final static int IMAGE_REQUEST = 1;
+    private final static int GALLERY_IMAGE_REQUEST = 2;
     private OpenMRSLogger logger = new OpenMRSLogger();
 
     @Override
@@ -499,7 +504,27 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         capturePhotoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
+
+                CameraOrGalleryPickerDialog dialog = CameraOrGalleryPickerDialog.getInstance(
+                        new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        if (which == 0)
+                            AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
+                        else {
+                            Intent i;
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
+                                i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                            else
+                                i = new Intent(Intent.ACTION_GET_CONTENT);
+                            i.addCategory(Intent.CATEGORY_OPENABLE);
+                            i.setType("image/*");
+                            startActivityForResult(i, GALLERY_IMAGE_REQUEST);
+                        }
+                    }
+                });
+                dialog.show(getChildFragmentManager(), null);
             }
         });
 
@@ -585,6 +610,22 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 patientImageView.invalidate();
             } else {
                 output = null;
+            }
+        } else if (requestCode == GALLERY_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+
+            try {
+                ParcelFileDescriptor parcelFileDescriptor =
+                        getActivity().getContentResolver().openFileDescriptor(data.getData(), "r");
+                FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+                Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+                parcelFileDescriptor.close();
+
+                patientPhoto = image;
+                Bitmap bitmap = ThumbnailUtils.extractThumbnail(patientPhoto, patientImageView.getWidth(), patientImageView.getHeight());
+                patientImageView.setImageBitmap(bitmap);
+                patientImageView.invalidate();
+            } catch (Exception e) {
+                logger.e("Error getting image from gallery.", e);
             }
         }
     }

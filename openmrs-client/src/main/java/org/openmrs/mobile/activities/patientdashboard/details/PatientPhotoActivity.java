@@ -20,6 +20,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import org.openmrs.mobile.R;
@@ -44,7 +45,18 @@ public class PatientPhotoActivity extends AppCompatActivity {
             String patientName = getIntent().getStringExtra("name");
             setSupportActionBar(toolbar);
             getSupportActionBar().setTitle(patientName);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

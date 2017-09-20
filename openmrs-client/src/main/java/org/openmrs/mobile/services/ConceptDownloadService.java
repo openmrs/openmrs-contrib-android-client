@@ -88,7 +88,7 @@ public class ConceptDownloadService extends Service {
                 .setContentTitle("Downloading Concepts")
                 .setTicker("OpenMRS Android Client")
                 .setContentText(String.valueOf(downloadedConcepts))
-                .setSmallIcon(R.drawable.ic_download)
+                .setSmallIcon(R.drawable.ic_stat_notify_download)
                 .setLargeIcon(
                         Bitmap.createScaledBitmap(icon, 128, 128, false))
                 .setContentIntent(pendingIntent)

@@ -204,6 +204,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         unbindDrawableResources();
     }
 
+
     @Override
     public void hideSoftKeys(){
         View view = this.getActivity().getCurrentFocus();
@@ -353,7 +354,8 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     @Override
     public void setLocationErrorOccurred(boolean errorOccurred) {
         this.loginValidatorWatcher.setLocationErrorOccurred(errorOccurred);
-        mLoginButton.setEnabled(!errorOccurred);
+//        mLoginButton.setEnabled(!errorOccurred);
+        mDropdownLocation.setVisibility(View.GONE);
     }
 
     @Override

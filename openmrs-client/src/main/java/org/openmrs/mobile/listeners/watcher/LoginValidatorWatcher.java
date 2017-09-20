@@ -17,6 +17,7 @@ package org.openmrs.mobile.listeners.watcher;
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -116,17 +117,20 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
 
     private boolean isAllDataValid() {
 
-        boolean result = validateNotEmpty(mUsername) && validateNotEmpty(mPassword) && validateNotEmpty(mLocation) && !urlChanged;
+        boolean result = validateNotEmpty(mUsername) && validateNotEmpty(mPassword) && !urlChanged;
 
         if (locationErrorOccurred && urlChanged) {
             mLocation.setEnabled(false);
+            mLocation.setVisibility(View.GONE);
         }
         else {
             mLocation.setEnabled(true);
+            mLocation.setVisibility(View.VISIBLE);
         }
 
         if (!result && (!locationErrorOccurred && urlChanged)) {
             mLocation.setEnabled(false);
+            mLocation.setVisibility(View.GONE);
         }
 
         return result;

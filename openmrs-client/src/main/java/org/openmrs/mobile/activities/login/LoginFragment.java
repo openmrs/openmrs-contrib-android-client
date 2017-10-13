@@ -308,6 +308,13 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mLoginButton.setEnabled(false);
         mSpinner.setVisibility(View.GONE);
         mLoginFormView.setVisibility(View.VISIBLE);
+        if (locationsList.isEmpty()) {
+            mDropdownLocation.setVisibility(View.GONE);
+            mLoginButton.setEnabled(true);
+        }else {
+            mDropdownLocation.setVisibility(View.VISIBLE);
+            mLoginButton.setEnabled(false);
+        }
     }
 
     @Override
@@ -353,6 +360,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     @Override
     public void setLocationErrorOccurred(boolean errorOccurred) {
         this.loginValidatorWatcher.setLocationErrorOccurred(errorOccurred);
+        mDropdownLocation.setVisibility(View.GONE);
         mLoginButton.setEnabled(!errorOccurred);
     }
 

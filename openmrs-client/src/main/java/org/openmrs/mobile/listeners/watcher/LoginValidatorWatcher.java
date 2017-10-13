@@ -116,17 +116,20 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
 
     private boolean isAllDataValid() {
 
-        boolean result = validateNotEmpty(mUsername) && validateNotEmpty(mPassword) && validateNotEmpty(mLocation) && !urlChanged;
+        boolean result = validateNotEmpty(mUsername) && validateNotEmpty(mPassword) && !urlChanged;
 
         if (locationErrorOccurred && urlChanged) {
             mLocation.setEnabled(false);
+            mLocation.setVisibility(View.GONE);
         }
         else {
             mLocation.setEnabled(true);
+            mLocation.setVisibility(View.VISIBLE);
         }
 
         if (!result && (!locationErrorOccurred && urlChanged)) {
             mLocation.setEnabled(false);
+            mLocation.setVisibility(View.GONE);
         }
 
         return result;
@@ -134,10 +137,6 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
 
     private boolean validateNotEmpty(EditText editText) {
         return StringUtils.notEmpty(editText.getText().toString());
-    }
-
-    private boolean validateNotEmpty(Spinner spinner) {
-        return spinner.getSelectedItemPosition() >= 0 && spinner.getItemIdAtPosition(spinner.getSelectedItemPosition()) >= 1;
     }
 
     public void setLocationErrorOccurred(boolean locationErrorOccurred) {

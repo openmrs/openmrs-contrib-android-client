@@ -36,8 +36,8 @@
         android:allowBackup="false"
         android:icon="@drawable/ic_openmrs"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Openmrs"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Openmrs">
         <meta-data
             android:name="AA_DB_NAME"
             android:value="@string/aadbname" />
@@ -132,6 +132,75 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activities.appointmentscheduling.AppointmentSchedulingActivity"
+            android:configChanges="keyboardHidden|screenSize"
+            android:label="@string/action_appointment_scheduling"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeOrig">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.dashboard.DashboardActivity" />
+        </activity>
+        <activity
+            android:name=".activities.manageservice.ManageServiceActivity"
+            android:configChanges="keyboardHidden|screenSize"
+            android:label="@string/action_manage_service"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeOrig">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.appointmentscheduling.AppointmentSchedulingActivity" />
+        </activity>
+        <activity
+            android:name=".activities.dailyappointments.DailyAppointmentsActivity"
+            android:configChanges="keyboardHidden|screenSize"
+            android:label="@string/action_daily_appointments"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeOrig">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.appointmentscheduling.AppointmentSchedulingActivity" />
+        </activity>
+        <activity
+            android:name=".activities.appointmentrequests.AppointmentRequestsActivity"
+            android:configChanges="keyboardHidden|screenSize"
+            android:label="@string/action_appointment_requests"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeOrig">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.appointmentscheduling.AppointmentSchedulingActivity" />
+        </activity>
+        <activity
+            android:name=".activities.manageappointmentblocks.ManageAppointmentBlocksActivity"
+            android:configChanges="keyboardHidden|screenSize"
+            android:label="@string/action_manage_appointment_blocks"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeOrig">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.appointmentscheduling.AppointmentSchedulingActivity" />
+        </activity>
+        <activity
+            android:name=".activities.manageappointment.ManageAppointmentActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/action_manage_appointments"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.appointmentscheduling.AppointmentSchedulingActivity" />
+        </activity>
+        <activity
             android:name=".activities.visitdashboard.VisitDashboardActivity"
             android:label="@string/visit_dashboard_label"
             android:launchMode="singleTop"
@@ -224,9 +293,9 @@
         </activity>
         <activity
             android:name=".activities.logs.LogsActivity"
-            android:theme="@style/AppThemeOrig"
+            android:label="@string/title_activity_logs"
             android:parentActivityName=".activities.settings.SettingsActivity"
-            android:label="@string/title_activity_logs"></activity>
+            android:theme="@style/AppThemeOrig"></activity>
     </application>
 
 </manifest>

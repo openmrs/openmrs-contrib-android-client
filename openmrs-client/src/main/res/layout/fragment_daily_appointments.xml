@@ -1,0 +1,317 @@
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/addEditLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/card"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Date"
+                    android:textColor="#555"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:weightSum="2">
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/textInputLayoutDappDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/DappDate"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:focusable="true"
+                            android:hint="Date"
+                            android:imeOptions="actionNext"
+                            android:inputType="date"
+                            android:maxLines="1"
+                            android:textSize="14sp" />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginStart="12dp"
+                    android:text="Location"
+                    android:textColor="#555"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:weightSum="2">
+
+                    <Spinner
+                        android:id="@+id/locationSpinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        />
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginStart="12dp"
+                    android:text="Provider"
+                    android:textColor="#555"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:weightSum="2">
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/textInputLayoutDappPro"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/DappPro"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:focusable="true"
+                            android:hint="Provider"
+                            android:imeOptions="actionNext"
+                            android:maxLines="1"
+                            android:textSize="14sp" />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginStart="12dp"
+                    android:text="Status"
+                    android:textColor="#777"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:weightSum="2">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/textInputLayoutDappSta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/Sta"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:focusable="true"
+                            android:hint="Status"
+                            android:imeOptions="actionNext"
+                            android:maxLines="1"
+                            android:textSize="14sp" />
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginStart="12dp"
+                    android:text="Service Types"
+                    android:textColor="#777"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:weightSum="2">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/textInputLayoutDappSrv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/Srv"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:focusable="true"
+                            android:hint="Services"
+                            android:imeOptions="actionNext"
+                            android:maxLines="1"
+                            android:textSize="14sp" />
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <TableRow>
+
+                            <TextView
+                                android:layout_weight="1"
+                                android:background="#dddddd"
+                                android:text="Identifier"
+                                android:textSize="15dp"
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/textView2"
+                                android:layout_weight="1"
+                                android:background="#dddddd"
+                                android:text="Name"
+                                android:textAlignment="center"
+                                android:textSize="15dp" />
+
+                            <TextView android:text="Time"
+                                android:layout_weight="1"
+                                android:background="#dddddd"
+                                android:textSize="15dp"
+                                android:textAlignment="center"/>
+
+                            <TextView android:text="Phone"
+                                android:layout_weight="1"
+                                android:textSize="15dp"
+                                android:background="#dddddd"
+                                android:textAlignment="center"/>
+                            <TextView android:text="Status"
+                                android:layout_weight="1"
+                                android:textSize="15dp"
+                                android:background="#dddddd"
+                                android:textAlignment="center"/>
+                        </TableRow>
+                        <TableRow>
+
+                            <TextView
+                                android:layout_weight="1"
+
+                                android:text="1003A5"
+                                android:textSize="15dp"
+                                android:textAlignment="center" />
+
+                            <TextView
+                                android:id="@+id/name"
+                                android:layout_weight="1"
+
+                                android:text="John Doe"
+                                android:textAlignment="center"
+                                android:textSize="15dp" />
+
+                            <TextView android:text=""
+                                android:layout_weight="1"
+
+                                android:textSize="15dp"
+                                android:textAlignment="center"/>
+
+                            <TextView android:text="1234567890"
+                                android:layout_weight="1"
+                                android:textSize="15dp"
+
+                                android:textAlignment="center"/>
+                            <TextView android:text="None"
+                                android:layout_weight="1"
+                                android:textSize="15dp"
+
+                                android:textAlignment="center"/>
+                        </TableRow>
+
+                    </TableLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+    </RelativeLayout>
+</LinearLayout>

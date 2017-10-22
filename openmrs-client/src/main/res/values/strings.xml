@@ -223,6 +223,13 @@
     <string name="failed_to_open_vitals_form">An error occurred. Invalid or corrupted form file.</string>
     <string name="active_visit_label_capture_vitals">On Visit</string>
 
+    <!-- Appointment Scheduling activity -->
+    <string name="action_appointment_scheduling">Appointment Scheduling</string>
+    <string name="action_manage_service">Manage Service Types</string>
+    <string name="action_manage_appointment_blocks">Manage Blocks</string>
+    <string name="action_manage_appointments">Manage Appointments</string>
+    <string name="action_daily_appointments">Daily Appointments</string>
+    <string name="action_appointment_requests">Appointment Requests</string>
     <!-- Form Entry Activity -->
     <string name="empty_visits_list">Patient has no visits yet.</string>
     <string name="title_activity_form_create">FormCreateActivity</string>

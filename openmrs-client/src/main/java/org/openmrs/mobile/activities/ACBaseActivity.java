@@ -60,7 +60,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Thread.setDefaultUncaughtExceptionHandler(new ForceClose(this));
+       // Thread.setDefaultUncaughtExceptionHandler(new ForceClose(this));
         mFragmentManager = getSupportFragmentManager();
         mAuthorizationManager = new AuthorizationManager();
         Bundle extras = getIntent().getExtras();

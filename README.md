@@ -76,7 +76,7 @@ Note:
 
 # Demo Server
 
-The demo test server dedicated for the client is (http://devtest04.openmrs.org:8080/openmrs).
+The demo test server dedicated for the client is (https://demo.openmrs.org/openmrs/).
 
 ##### Demo Username : admin
 ##### Demo Password : Admin123

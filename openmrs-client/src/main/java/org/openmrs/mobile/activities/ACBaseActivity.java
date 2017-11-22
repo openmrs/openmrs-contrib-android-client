@@ -29,6 +29,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
@@ -38,6 +39,7 @@ import org.openmrs.mobile.activities.settings.SettingsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
+import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -45,6 +47,7 @@ import org.openmrs.mobile.utilities.ForceClose;
 import org.openmrs.mobile.utilities.NetworkUtils;
 
 import java.io.File;
+import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -148,6 +151,22 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     showNoInternetConnectionSnackbar();
                 }
                 return true;
+            case R.id.actionLocation:
+
+                List<String> list = new LocationDAO().getLocationList();
+
+                new AlertDialog.Builder(this)
+                        .setSingleChoiceItems(
+                                new ArrayAdapter<>(this,
+                                        android.R.layout.simple_list_item_single_choice, list),
+                                list.indexOf(mOpenMRS.getLocation()),
+                                (dialog, which) -> {
+                                    mOpenMRS.setLocation(list.get(which));
+                                    dialog.dismiss();
+                                })
+                        .show();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -22,6 +22,12 @@
         android:title="@string/sync"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_sync_off"/>
+
+    <item
+        android:id="@+id/actionLocation"
+        android:title="@string/action_location"
+        app:showAsAction="never"/>
+
     <item
         android:id="@+id/actionSettings"
         android:orderInCategory="100"

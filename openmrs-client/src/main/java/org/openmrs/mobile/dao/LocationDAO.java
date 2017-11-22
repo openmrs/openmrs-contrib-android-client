@@ -64,6 +64,25 @@ public class LocationDAO {
         });
     }
 
+    public List<String> getLocationList() {
+
+        List<String> locations = new ArrayList<>();
+        DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        Cursor cursor = openHelper.getReadableDatabase().query(LocationTable.TABLE_NAME,
+                new String[] {LocationTable.Column.NAME}, null, null, null, null, null);
+
+        if (null != cursor) {
+            try {
+                while (cursor.moveToNext()) {
+                    locations.add(cursor.getString(0));
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return locations;
+    }
+
     public Location findLocationByName(String name) {
         if(!StringUtils.notNull(name)){
             return null;

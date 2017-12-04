@@ -38,6 +38,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
@@ -143,10 +144,13 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.login(mUsername.getText().toString(),
-                        mPassword.getText().toString(),
-                        mUrl.getText().toString(),
-                        initialUrl);
+                if (LoginValidatorWatcher.isAllDataValid())
+                    mPresenter.login(mUsername.getText().toString(),
+                            mPassword.getText().toString(),
+                            mUrl.getText().toString(),
+                            initialUrl);
+                else
+                    Toast.makeText(getContext(),"Please enter valid data to login.",Toast.LENGTH_LONG).show();
             }
         });
 

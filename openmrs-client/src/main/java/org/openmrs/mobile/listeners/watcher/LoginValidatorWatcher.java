@@ -31,15 +31,15 @@ import org.openmrs.mobile.utilities.StringUtils;
 //Class used to extract view validation logic
 public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSelectedListener {
 
-    private EditText mUrl;
-    private EditText mUsername;
-    private EditText mPassword;
-    private Spinner mLocation;
+    private static EditText mUrl;
+    private static EditText mUsername;
+    private static EditText mPassword;
+    private static Spinner mLocation;
 
     private Button mLoginButton;
 
-    private boolean urlChanged;
-    private boolean locationErrorOccurred;
+    private static boolean urlChanged;
+    private static boolean locationErrorOccurred;
 
     public LoginValidatorWatcher(EditText urlEditText, EditText usernameEditText, EditText passwordEditText, Spinner locationSpinner, Button loginButton) {
         this.mUrl = urlEditText;
@@ -114,9 +114,9 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
         // This method is intentionally empty
     }
 
-    private boolean isAllDataValid() {
+    public static boolean isAllDataValid() {
 
-        boolean result = validateNotEmpty(mUsername) && validateNotEmpty(mPassword) && !urlChanged;
+        boolean result = validateNotEmpty(mUsername) && validateNotEmpty(mPassword) && !urlChanged && validateSpinner(mLocation);
 
         if (locationErrorOccurred && urlChanged) {
             mLocation.setEnabled(false);
@@ -135,7 +135,7 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
         return result;
     }
 
-    private boolean validateNotEmpty(EditText editText) {
+    private static boolean validateNotEmpty(EditText editText) {
         return StringUtils.notEmpty(editText.getText().toString());
     }
 
@@ -145,5 +145,11 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
 
     public boolean isLocationErrorOccurred() {
         return locationErrorOccurred;
+    }
+
+    private static boolean validateSpinner(Spinner spinner) {
+        return spinner.getAdapter().getCount() == 1 ||
+                (spinner.getSelectedItemPosition() >= 0 &&
+                        spinner.getItemIdAtPosition(spinner.getSelectedItemPosition()) >= 1);
     }
 }

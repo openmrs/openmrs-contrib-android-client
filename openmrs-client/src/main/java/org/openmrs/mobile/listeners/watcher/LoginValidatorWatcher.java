@@ -16,6 +16,7 @@ package org.openmrs.mobile.listeners.watcher;
 
 import android.graphics.Color;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +25,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.login.LocationArrayAdapter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.utilities.StringUtils;
@@ -100,10 +102,11 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
                 currentText.setTextColor(Color.BLACK);
             }
         } else if (position >= 0 && id == 0) {
-            //Set Text Color to red if spinner is at start/default option
+            //If spinner is at start option, append a red * to signify requirement
             TextView currentText = (TextView) parent.getChildAt(0);
             if (currentText != null) {
-                currentText.setTextColor(Color.RED);
+                currentText.setText(Html.fromHtml(view.getContext().getString(R.string.login_location_select)
+                        + view.getContext().getString(R.string.req_star)));
             }
         }
         mLoginButton.setEnabled(isAllDataValid());

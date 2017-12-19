@@ -1,0 +1,3 @@
+To login to OpenMRS Android Cient , you need to download it from https://play.google.com/store/apps/details?id=org.openmrs.mobile&hl=en . 
+Open the app and the login page will appaer .
+For demo use enter the server url https://demo.openmrs.org/openmrs and username- admin and passoword- Admin123 , now select the session location now choose the option Online/Offline . Now tap on to the Login button.

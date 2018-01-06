@@ -138,5 +138,88 @@ public final class DateUtils {
         return dateFormat.format(date);
     }
 
+    /**
+     * Validate a date and make sure it is between the minimum and maximum date
+     * Date format is dd/MM/yyyy
+     * @param dateString    the date to check
+     * @param minDate       minimum date allowed
+     * @param maxDate       maximum date limit
+     * @return true if date is appropriate
+     */
+    public static boolean validateDate(String dateString, DateTime minDate, DateTime maxDate) {
+
+        DateTime minimumDate = minDate,
+                maximumDate = maxDate;
+        // Swap minimum and maximum dates if minDate is after maxDate
+        if (minimumDate.isAfter(maximumDate) || maximumDate.isBefore(minimumDate)) {
+            minimumDate = maxDate;
+            maximumDate = minDate;
+        }
+
+        String s = dateString.trim();
+        // length must be min d/M/yyyy and max dd/MM/yyyy
+        if (s.isEmpty() || s.length() < 8 || s.length() > 10) {
+            return false;
+        }
+        // number of slashes must be 2
+        if (!s.contains("/")) {
+            return false;
+        }
+
+        int numberOfDashes = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '/') {
+                numberOfDashes++;
+            }
+        }
+        if (numberOfDashes != 2) {
+            return false;
+        }
+        else {
+            // check day, month and year
+            String[] bundledDate = s.split("/");
+
+            int day = Integer.parseInt(bundledDate[0]),
+                    month = Integer.parseInt(bundledDate[1]),
+                    year = Integer.parseInt(bundledDate[2]);
+
+            int maxDays;
+            // Leap year on February -> 29 days
+            // Non leap year on February -> 28 days
+            // April, June, September, November -> 30 days
+            // January, March, May, July, August, October, December -> 31 days
+            if (month == 2) {
+                if (year % 4 == 0) {
+                    maxDays = 29;
+                } else {
+                    maxDays = 28;
+                }
+            } else if (day == 31 && month == 4 || month == 6 || month == 9 || month == 11) {
+                maxDays = 30;
+            } else {
+                maxDays = 31;
+            }
+
+            int maxMonths = 12;
+
+            if (day <= 0
+                    || day > maxDays
+                    || month <= 0
+                    || month > maxMonths
+                    || year <= minimumDate.getYear()
+                    || year > maximumDate.getYear()) {
+                return false;
+            } else {
+                // Now we are able to convert the string into a DateTime variable
+                DateTimeFormatter formatter = DateTimeFormat.forPattern(DateUtils.DEFAULT_DATE_FORMAT);
+
+                DateTime dob = formatter.parseDateTime(s);
+
+                // Final check to ensure dob is between the minimum and maximum date (up to the second)
+                return dob.isAfter(minimumDate.toInstant()) && dob.isBefore(maxDate.toInstant());
+            }
+
+        }
+    }
 
 }

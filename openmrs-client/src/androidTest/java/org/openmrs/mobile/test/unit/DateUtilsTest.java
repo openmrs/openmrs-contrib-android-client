@@ -16,6 +16,9 @@ package org.openmrs.mobile.test.unit;
 
 import android.test.InstrumentationTestCase;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 
 import java.util.TimeZone;
@@ -28,6 +31,11 @@ public class DateUtilsTest extends InstrumentationTestCase {
     private static final String INVALID_DATA_3;
     private static final String INVALID_DATA_4;
     private static final String EXPECTED_LONG_3;
+    private static final String EXPECTED_DATA_5;
+    private static final String INVALID_DATA_5;
+    private static final String INVALID_DATA_6;
+    private static final String INVALID_DATA_7;
+    private static final String INVALID_DATA_8;
 
     @Override
     public void setUp() throws java.lang.Exception {
@@ -44,11 +52,23 @@ public class DateUtilsTest extends InstrumentationTestCase {
         INVALID_DATA_3 = "09-07-1697T00:00";
         EXPECTED_LONG_3 = "598597200000";
         INVALID_DATA_4 = "1988/12/20";
+
+        EXPECTED_DATA_5 = "21/6/1983";
+        INVALID_DATA_5 = "2";
+        INVALID_DATA_6 = "3/11";
+        INVALID_DATA_7 = "1992-05-07";
+        INVALID_DATA_8 = "2/1/2040";
     }
 
     public void testDateUtils() {
         Long stringToLongResult;
         String longToStringResult;
+        DateTime date1900 = DateTimeFormat
+                .forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/1900");
+        DateTime date1950 = DateTimeFormat
+                .forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/1950");
+        DateTime date2000 = DateTimeFormat
+                .forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/2000");
 
         stringToLongResult = DateUtils.convertTime(INITIAL_DATA_1);
         longToStringResult = DateUtils.convertTime(stringToLongResult, TimeZone.getTimeZone("GMT+02:00"));
@@ -63,5 +83,21 @@ public class DateUtilsTest extends InstrumentationTestCase {
 
         stringToLongResult = DateUtils.convertTime(INVALID_DATA_4);
         assertNull(stringToLongResult);
+
+        assertTrue(DateUtils.validateDate(EXPECTED_DATA_1, date1900, DateTime.now()));
+        assertTrue(DateUtils.validateDate(EXPECTED_DATA_2, date1900, date2000));
+        assertTrue(DateUtils.validateDate(EXPECTED_DATA_5, date1900, DateTime.now()));
+
+        // Incorrectly formatted dates
+        assertFalse(DateUtils.validateDate(INVALID_DATA_5, date1900, DateTime.now()));
+        assertFalse(DateUtils.validateDate(INVALID_DATA_6, date1900, DateTime.now()));
+        assertFalse(DateUtils.validateDate(INVALID_DATA_7, date1900, DateTime.now()));
+        // Dates that are before minimum date
+        assertFalse(DateUtils.validateDate(INVALID_DATA_8, date1900, DateTime.now()));
+        // Check for flipped min and max dates
+        assertFalse(DateUtils.validateDate(EXPECTED_DATA_5, DateTime.now(), date2000));
+        // Dates faster the maximum date
+        assertFalse(DateUtils.validateDate(EXPECTED_DATA_1, date1900, date1950));
+        assertFalse(DateUtils.validateDate(INVALID_DATA_8, date1900, date2000));
     }
 }

@@ -175,7 +175,8 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
             if (mOpenMRS.isUserLoggedOnline() && url.equals(mOpenMRS.getLastLoginServerUrl())) {
                 if (mOpenMRS.getUsername().equals(username) && mOpenMRS.getPassword().equals(password)) {
                     mOpenMRS.setSessionToken(mOpenMRS.getLastSessionToken());
-                    loginView.showToast("LoggedIn in offline mode.", ToastUtil.ToastType.NOTICE);
+                    loginView.showToast(R.string.login_offline_toast_message,
+                            ToastUtil.ToastType.NOTICE);
                     loginView.userAuthenticated();
                     loginView.finishLoginActivity();
                 } else {

@@ -69,10 +69,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.dialog.DialogActivity"
-            android:noHistory="true"
-            android:theme="@style/NoActionBarTheme" />
-        <activity
             android:name=".activities.syncedpatients.SyncedPatientsActivity"
             android:configChanges="keyboardHidden|screenSize"
             android:label="@string/action_synced_patients"

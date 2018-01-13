@@ -148,12 +148,8 @@ public final class DateUtils {
      */
     public static boolean validateDate(String dateString, DateTime minDate, DateTime maxDate) {
 
-        DateTime minimumDate = minDate,
-                maximumDate = maxDate;
-        // Swap minimum and maximum dates if minDate is after maxDate
-        if (minimumDate.isAfter(maximumDate) || maximumDate.isBefore(minimumDate)) {
-            minimumDate = maxDate;
-            maximumDate = minDate;
+        if (minDate.isAfter(maxDate)) {
+            return false;
         }
 
         String s = dateString.trim();
@@ -206,8 +202,8 @@ public final class DateUtils {
                     || day > maxDays
                     || month <= 0
                     || month > maxMonths
-                    || year <= minimumDate.getYear()
-                    || year > maximumDate.getYear()) {
+                    || year <= minDate.getYear()
+                    || year > maxDate.getYear()) {
                 return false;
             } else {
                 // Now we are able to convert the string into a DateTime variable
@@ -216,7 +212,7 @@ public final class DateUtils {
                 DateTime dob = formatter.parseDateTime(s);
 
                 // Final check to ensure dob is between the minimum and maximum date (up to the second)
-                return dob.isAfter(minimumDate.toInstant()) && dob.isBefore(maxDate.toInstant());
+                return dob.isAfter(minDate) && dob.isBefore(maxDate);
             }
 
         }

@@ -22,6 +22,7 @@ import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.models.Module;
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.PersonName;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ModuleUtils;
@@ -29,6 +30,7 @@ import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.PatientComparator;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
+import org.openmrs.mobile.utilities.ViewUtils;
 
 import java.util.List;
 
@@ -113,21 +115,31 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     private boolean validate(Patient patient) {
 
+        boolean givenNameError = false;
         boolean familyNameError = false;
-        boolean lastNameError = false;
         boolean dateOfBirthError = false;
         boolean genderError = false;
         boolean addressError = false;
         boolean countryError = false;
 
-        mPatientInfoView.setErrorsVisibility(familyNameError, lastNameError, dateOfBirthError, genderError, addressError, countryError);
+        mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, genderError, addressError, countryError);
 
         // Validate names
-        if(StringUtils.isBlank(patient.getPerson().getName().getGivenName())) {
-            familyNameError=true;
+        PersonName currentPersonName = patient.getPerson().getName();
+        
+        if (StringUtils.isBlank(currentPersonName.getGivenName())
+                || !ViewUtils.validateText(currentPersonName.getGivenName(), ViewUtils.ILLEGAL_CHARACTERS)) {
+            givenNameError = true;
         }
-        if(StringUtils.isBlank(patient.getPerson().getName().getFamilyName())) {
-            lastNameError=true;
+
+        // Middle name can be left empty
+        if (!ViewUtils.validateText(currentPersonName.getMiddleName(), ViewUtils.ILLEGAL_CHARACTERS)) {
+            givenNameError = true;
+        }
+
+        if (StringUtils.isBlank(currentPersonName.getFamilyName())
+                || !ViewUtils.validateText(currentPersonName.getFamilyName(), ViewUtils.ILLEGAL_CHARACTERS)) {
+            familyNameError = true;
         }
 
         // Validate date of birth
@@ -136,13 +148,18 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         }
 
         // Validate address
-        if(StringUtils.isBlank(patient.getPerson().getAddress().getAddress1())
-                && StringUtils.isBlank(patient.getPerson().getAddress().getAddress2())
+        String patientAddress1 = patient.getPerson().getAddress().getAddress1();
+        String patientAddress2 = patient.getPerson().getAddress().getAddress2();
+
+        if ((StringUtils.isBlank(patientAddress1)
+                && StringUtils.isBlank(patientAddress2)
                 && StringUtils.isBlank(patient.getPerson().getAddress().getCityVillage())
                 && StringUtils.isBlank(patient.getPerson().getAddress().getStateProvince())
                 && StringUtils.isBlank(patient.getPerson().getAddress().getCountry())
-                && StringUtils.isBlank(patient.getPerson().getAddress().getPostalCode())) {
-            addressError=true;
+                && StringUtils.isBlank(patient.getPerson().getAddress().getPostalCode()))
+                || !ViewUtils.validateText(patientAddress1, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
+                || !ViewUtils.validateText(patientAddress2, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)) {
+            addressError = true;
         }
 
         if (!StringUtils.isBlank(patient.getPerson().getAddress().getCountry()) && !mCountries.contains(patient.getPerson().getAddress().getCountry())) {
@@ -154,13 +171,13 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             genderError=true;
         }
 
-        boolean result = !familyNameError && !lastNameError && !dateOfBirthError && !addressError && !countryError && !genderError;
+        boolean result = !givenNameError && !familyNameError && !dateOfBirthError && !addressError && !countryError && !genderError;
         if (result) {
             mPatient = patient;
             return true;
         }
         else {
-            mPatientInfoView.setErrorsVisibility(familyNameError, lastNameError, dateOfBirthError, addressError, countryError, genderError);
+            mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, addressError, countryError, genderError);
             return false;
         }
     }

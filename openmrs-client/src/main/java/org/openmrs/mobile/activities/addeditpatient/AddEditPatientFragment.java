@@ -226,6 +226,23 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private Person createPerson() {
         Person person = new Person();
 
+        String emptyError = getString(R.string.emptyerror);
+
+        // Validate address
+        if (ViewUtils.isEmpty(edaddr1)
+                && ViewUtils.isEmpty(edaddr2)
+                && ViewUtils.isEmpty(edcity)
+                && ViewUtils.isEmpty(edpostal)
+                && ViewUtils.isEmpty(edcountry)
+                && ViewUtils.isEmpty(edstate)) {
+
+            addrerror.setText(R.string.atleastone);
+        } else if (!ViewUtils.validateText(ViewUtils.getInput(edaddr1), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
+                || !ViewUtils.validateText(ViewUtils.getInput(edaddr2), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)) {
+
+            addrerror.setText(getString(R.string.addr_invalid_error));
+        }
+
         // Add address
         PersonAddress address = new PersonAddress();
         address.setAddress1(ViewUtils.getInput(edaddr1));
@@ -239,6 +256,59 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         List<PersonAddress> addresses = new ArrayList<>();
         addresses.add(address);
         person.setAddresses(addresses);
+
+        // Validate names
+        String givenNameEmpty = getString(R.string.fname_empty_error);
+        // Invalid characters for both the given name and middle name
+        String givenAndMiddleNameError = getString(R.string.fmname_invalid_error);
+        // Invalid characters for given name only
+        String givenNameError = getString(R.string.fname_invalid_error);
+        // Invalid characters for the middle name
+        String middleNameError = getString(R.string.midname_invalid_error);
+        // Given name empty and invalid characters for the middle name
+        String givenEmptyMiddleNameError = givenNameEmpty + '\n' + middleNameError;
+        // Invalid family name
+        String familyNameError = getString(R.string.lname_invalid_error);
+
+        // Given and middle name validation
+        if (!ViewUtils.isEmpty(edfname) && !ViewUtils.isEmpty(edmname)) {
+
+            if (!ViewUtils.validateText(ViewUtils.getInput(edfname), ViewUtils.ILLEGAL_CHARACTERS)
+                    && !ViewUtils.validateText(ViewUtils.getInput(edmname), ViewUtils.ILLEGAL_CHARACTERS)) {
+                // Both given and middle name are invalid
+                fnameerror.setText(givenAndMiddleNameError);
+            } else if (!ViewUtils.validateText(ViewUtils.getInput(edfname), ViewUtils.ILLEGAL_CHARACTERS)) {
+                // Only given name is invalid
+                fnameerror.setText(givenNameError);
+            } else if (!ViewUtils.validateText(ViewUtils.getInput(edmname), ViewUtils.ILLEGAL_CHARACTERS)) {
+                // Only middle name is invalid
+                fnameerror.setText(middleNameError);
+            }
+        } else if (ViewUtils.isEmpty(edfname)) {
+            // Given name is empty
+            if (!ViewUtils.validateText(ViewUtils.getInput(edmname), ViewUtils.ILLEGAL_CHARACTERS)) {
+                // Given name empty, middle name invalid
+                fnameerror.setText(givenEmptyMiddleNameError);
+            } else {
+                fnameerror.setText(givenNameEmpty);
+            }
+        } else if (ViewUtils.isEmpty(edmname)) {
+            // Middle name is empty
+            if (!ViewUtils.validateText(ViewUtils.getInput(edfname), ViewUtils.ILLEGAL_CHARACTERS)) {
+                // Given name invalid
+                fnameerror.setText(givenNameError);
+            }
+        } else {
+            // Both given and middle name is invalid
+            fnameerror.setText(givenNameEmpty);
+        }
+
+        // Family name validation
+        if (ViewUtils.isEmpty(edlname)) {
+            lnameerror.setText(emptyError);
+        } else if (!ViewUtils.validateText(ViewUtils.getInput(edlname), ViewUtils.ILLEGAL_CHARACTERS)) {
+            lnameerror.setText(familyNameError);
+        }
 
         // Add names
         PersonName name = new PersonName();
@@ -285,6 +355,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             if (DateUtils.validateDate(unvalidatedDate, minDateOfBirth, maxDateOfBirth)) {
                 dateTimeFormatter = DateTimeFormat.forPattern(DateUtils.DEFAULT_DATE_FORMAT);
                 bdt = dateTimeFormatter.parseDateTime(unvalidatedDate);
+
+                dateTimeFormatter = DateTimeFormat.forPattern(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT);
                 birthdate = dateTimeFormatter.print(bdt);
             }
         }

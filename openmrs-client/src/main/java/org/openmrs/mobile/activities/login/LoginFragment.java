@@ -131,11 +131,11 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
                 if (StringUtils.notEmpty(mUrl.getText().toString())
-                        && !view.isFocused() 
+                        && !view.isFocused()
                         && loginValidatorWatcher.isUrlChanged()
                         || (loginValidatorWatcher.isUrlChanged() && !view.isFocused()
                         && loginValidatorWatcher.isLocationErrorOccurred())
-                        || (!loginValidatorWatcher.isUrlChanged()  && !view.isFocused())) {
+                        || (!loginValidatorWatcher.isUrlChanged() && !view.isFocused())) {
                     ((LoginFragment) getActivity()
                             .getSupportFragmentManager()
                             .findFragmentById(R.id.loginContentFrame))
@@ -199,10 +199,9 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     mPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                }
-                else {
+                } else {
                     mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 }
             }
@@ -264,20 +263,19 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     }
 
     @Override
-    public void hideSoftKeys(){
+    public void hideSoftKeys() {
         View view = this.getActivity().getCurrentFocus();
         if (view == null) {
             view = new View(this.getActivity());
         }
-        InputMethodManager inputMethodManager = (InputMethodManager)this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     private void setSyncButtonState(boolean syncEnabled) {
         if (syncEnabled) {
             mSyncStateLabel.setText(getString(R.string.login_online));
-        }
-        else {
+        } else {
             mSyncStateLabel.setText(getString(R.string.login_offline));
         }
         mLoginSyncButton.setSelected(syncEnabled);
@@ -370,7 +368,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         if (locationsList.isEmpty()) {
             mDropdownLocation.setVisibility(View.GONE);
             mLoginButton.setEnabled(true);
-        }else {
+        } else {
             mDropdownLocation.setVisibility(View.VISIBLE);
             mLoginButton.setEnabled(false);
         }
@@ -425,12 +423,16 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
     @Override
     public void showToast(String message, ToastUtil.ToastType toastType) {
-        ToastUtil.showShortToast(getContext(), toastType, message);
+        if (getActivity() != null) {
+            ToastUtil.showShortToast(getActivity(), toastType, message);
+        }
     }
 
     @Override
     public void showToast(int textId, ToastUtil.ToastType toastType) {
-        ToastUtil.showShortToast(getContext(), toastType, getResources().getString(textId));
+        if (getActivity() != null) {
+            ToastUtil.showShortToast(getActivity(), toastType, getResources().getString(textId));
+        }
     }
 
 

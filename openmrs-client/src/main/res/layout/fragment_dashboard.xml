@@ -13,9 +13,9 @@
   -->
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/BackgroundThemeEEE"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    style="@style/BackgroundThemeEEE">
+    android:layout_height="match_parent">
 
     <TableLayout
         android:layout_width="fill_parent"
@@ -146,6 +146,48 @@
                     android:text="@string/dashboard_forms_icon_label"
                     android:textSize="@dimen/dashboard_text_size" />
             </RelativeLayout>
+        </TableRow>
+
+        <TableRow>
+
+            <RelativeLayout
+                android:id="@+id/appointmentSchedulingView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:background="@drawable/card">
+
+                <ImageView
+                    android:id="@+id/appointmentSchedulingButton"
+                    android:layout_width="@dimen/dashboard_icon_height_width"
+                    android:layout_height="@dimen/dashboard_icon_height_width"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="@dimen/dashboard_icon_margin"
+                    android:contentDescription="@string/dashboard_registry_icon_label" />
+
+                <TextView
+                    android:id="@+id/appointmentSchedulingLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/appointmentSchedulingButton"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/dashboard_text_bottom_margin"
+                    android:layout_marginTop="@dimen/dashboard_text_top_margin"
+                    android:text="@string/action_appointment_scheduling"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/dashboard_text_size" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/futureAddition"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:background="@drawable/card"></RelativeLayout>
         </TableRow>
 
     </TableLayout>

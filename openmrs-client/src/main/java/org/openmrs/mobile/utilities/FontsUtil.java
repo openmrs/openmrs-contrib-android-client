@@ -44,7 +44,7 @@ public final class FontsUtil {
 
         private final String font;
 
-        private OpenFonts(String font) {
+        OpenFonts(String font) {
             this.font = font;
         }
 

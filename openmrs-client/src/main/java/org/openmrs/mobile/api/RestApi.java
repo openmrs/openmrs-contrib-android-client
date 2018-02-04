@@ -29,12 +29,18 @@ import org.openmrs.mobile.models.SystemSetting;
 import org.openmrs.mobile.models.User;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.VisitType;
+import org.openmrs.mobile.models.appointment.Appointment;
+import org.openmrs.mobile.models.appointmentblocksmodel.AppointmentBlocks;
+import org.openmrs.mobile.models.appointmentrequestmodel.AppointmentRequest;
+import org.openmrs.mobile.models.servicestypemodel.Services;
+import org.openmrs.mobile.models.timeblocks.TimeBlocks;
 
 import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -51,6 +57,11 @@ public interface RestApi {
     @GET("location?tag=Login%20Location")
     Call<Results<Location>> getLocations(@Query("v") String representation);
 
+    @GET("location?v=default")
+    Call<Results<Location>> getLocationsDefault();
+
+    @GET("provider?v=default")
+    Call<org.openmrs.mobile.models.provider.Provider> getProvider();
 
     @GET()
     Call<Results<Location>> getLocations(@Url String url,
@@ -60,9 +71,48 @@ public interface RestApi {
     @GET("patientidentifiertype")
     Call<Results<IdentifierType>> getIdentifierTypes();
 
+    @GET("appointmentscheduling/appointmenttype?v=full")
+    Call<Results<Services>> getServiceTypes();
+
+    @GET("appointmentscheduling/appointmentblock?v=default")
+    Call<AppointmentBlocks> getAppointmentBlocks();
+
+    @GET("appointmentscheduling/appointmentrequest?v=default")
+    Call<AppointmentRequest> getAppointmentRequests();
+
+    @GET("appointmentscheduling/timeslot?v=default")
+    Call<TimeBlocks> getTimeSlots();
+
+    @GET("appointmentscheduling/appointment?v=default")
+    Call<Appointment> getAppointments();
+
+
     @GET("module/idgen/generateIdentifier.form?source=1")
     Call<IdGenPatientIdentifiers> getPatientIdentifiers(@Query("username") String username,
                                                         @Query("password") String password);
+
+    @DELETE("appointmentscheduling/appointmenttype/{uuid}")
+    Call<Services> deleteServiceTypes(@Path("uuid") String uuid,
+                                                        @Query("purge") Boolean purge);
+    @DELETE("appointmentscheduling/appointmentblock/{uuid}")
+    Call<AppointmentBlocks> deleteAppointmentBlocks(@Path("uuid") String uuid,
+                                      @Query("purge") Boolean purge);
+
+    @DELETE("appointmentscheduling/appointmentrequest/{uuid}")
+    Call<AppointmentRequest> deleteAppointmentRequest(@Path("uuid") String uuid,
+                                      @Query("purge") Boolean purge);
+
+    @POST("appointmentscheduling/appointment/{uuid}")
+    Call<Appointment> setAppointmentStatus(@Path("uuid") String uuid,@Body Appointment appointment);
+
+    @POST("appointmentscheduling/appointmenttype/{uuid}")
+    Call<Services> editServiceTypes(@Path("uuid") String uuid,@Body Services services);
+
+    @POST("appointmentscheduling/appointmentblock")
+    Call<AppointmentBlocks> newAppointmentBlocks(@Body AppointmentBlocks block);
+
+    @POST("appointmentscheduling/appointmenttype")
+    Call<Services> newServiceTypes(@Body Services services);
 
     @GET("patient/{uuid}")
     Call<Patient> getPatientByUUID(@Path("uuid") String uuid,
@@ -142,4 +192,12 @@ public interface RestApi {
     Call<Results<SystemSetting>> getSystemSettingsByQuery(@Query("q") String query,
                                                           @Query("v") String representation);
 
+<<<<<<< HEAD
 }
+=======
+    @POST("form/{uuid}/resource")
+    Call<FormCreate> formCreate(@Path("uuid") String uuid,
+                                         @Body FormData obj);
+
+   }
+>>>>>>> ac1b4db8... AC 405:Appointment Scheduling

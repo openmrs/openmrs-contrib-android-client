@@ -44,8 +44,8 @@ public class SyncedPatientsActivity extends ACBaseActivity {
         setContentView(R.layout.activity_find_patients);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            getSupportActionBar().setElevation(0);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            actionBar.setElevation(0);
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
         // Create fragment

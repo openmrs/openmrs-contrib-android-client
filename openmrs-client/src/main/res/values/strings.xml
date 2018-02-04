@@ -27,6 +27,8 @@
     <string name="login_username_hint">Username</string>
     <string name="login_password_hint">Password</string>
     <string name="login_location_select">Session Location</string>
+    <string name="login_required">Required</string>
+    <string name="req_star"><![CDATA[<font color=\'#cc0029\'> * </font>]]></string>
     <string name="warning_dialog_title">Warning</string>
     <string name="warning_lost_data_dialog">Changing the URL or username will erase all the data. Are you sure?</string>
     <string name="forgot_dialog_title">Unable to login?</string>
@@ -36,6 +38,7 @@
     <string name="login_online">Online</string>
 
     <string name="emptyerror">Required</string>
+    <string name="dob_error">Date should be between %1$s and %2$s</string>
     <string name="reg_firstname_hint">Given Name</string>
     <string name="reg_midname_hint">Middle Name</string>
     <string name="reg_surname_hint">Family Name</string>
@@ -51,13 +54,14 @@
 
     <string name="male">Male</string>
     <string name="female">Female</string>
-    <string name="dob_hint">Date of Birth</string>
+    <string name="dob_hint">Date of Birth (format: dd/MM/yyyy)</string>
     <string name="estyr">Estimated Years</string>
     <string name="estmonth">Estimated Months</string>
     <string name="capture_photo">Capture photo</string>
 
     <!-- Offline Mode -->
     <string name="offline_mode_unsupported_in_first_login">Offline mode is not supported during first login.Enable online mode and then try again.</string>
+    <string name="login_offline_toast_message">You are now in offline mode.</string>
 
     <!-- Connection Timeout dialog -->
     <string name="conn_timeout_dialog_title">Connection Failed</string>
@@ -217,6 +221,13 @@
     <string name="action_register_patient">Register Patient</string>
     <string name="failed_to_open_vitals_form">An error occurred. Invalid or corrupted form file.</string>
     <string name="active_visit_label_capture_vitals">On Visit</string>
+    <!-- Appointment Scheduling activity -->
+    <string name="action_appointment_scheduling">Appointment Scheduling</string>
+    <string name="action_manage_service">Manage Service Types</string>
+    <string name="action_manage_appointment_blocks">Manage Blocks</string>
+    <string name="action_manage_appointments">Manage Appointments</string>
+    <string name="action_daily_appointments">Daily Appointments</string>
+    <string name="action_appointment_requests">Appointment Requests</string>
 
     <!-- Form Entry Activity -->
     <string name="empty_visits_list">Patient has no visits yet.</string>

@@ -13,7 +13,7 @@ package org.openmrs.mobile.utilities;
 import android.content.Context;
 import android.widget.EditText;
 
-public class RangeEditText extends EditText {
+public class RangeEditText extends android.support.v7.widget.AppCompatEditText {
 
     private Double upperlimit;
     private Double lowerlimit;

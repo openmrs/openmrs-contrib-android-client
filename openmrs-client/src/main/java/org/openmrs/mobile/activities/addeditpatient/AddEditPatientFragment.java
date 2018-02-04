@@ -33,6 +33,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +57,10 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
+<<<<<<< HEAD
+=======
+import org.openmrs.mobile.activities.dialog.CameraOrGalleryPickerDialog;
+>>>>>>> ac1b4db8... AC 405:Appointment Scheduling
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientPhotoActivity;
@@ -122,6 +127,9 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private TextView countryerror;
 
     private Button submitConfirm;
+    private Button datePicker;
+
+    private DateTimeFormatter dateTimeFormatter;
 
     private String[] countries;
     private ImageView patientImageView;
@@ -179,6 +187,14 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
         if (dayOfBirthError) {
             doberror.setVisibility(View.VISIBLE);
+
+            dateTimeFormatter = DateTimeFormat.forPattern(DateUtils.DEFAULT_DATE_FORMAT);
+            String minimumDate = DateTime.now().minusYears(
+                    ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE)
+                    .toString(dateTimeFormatter);
+            String maximumDate = DateTime.now().toString(dateTimeFormatter);
+
+            doberror.setText(getString(R.string.dob_error, minimumDate, maximumDate));
         }
         else {
             doberror.setVisibility(View.GONE);
@@ -244,9 +260,10 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
         // Add birthdate
         String birthdate = null;
-        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT);
         if(ViewUtils.isEmpty(eddob)) {
             if (!StringUtils.isBlank(ViewUtils.getInput(edyr)) || !StringUtils.isBlank(ViewUtils.getInput(edmonth))) {
+                dateTimeFormatter = DateTimeFormat.forPattern(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT);
+
                 int yeardiff = ViewUtils.isEmpty(edyr)? 0 : Integer.parseInt(edyr.getText().toString());
                 int mondiff = ViewUtils.isEmpty(edmonth)? 0 : Integer.parseInt(edmonth.getText().toString());
                 LocalDate now = new LocalDate();
@@ -258,7 +275,17 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             }
         }
         else {
-            birthdate = dateTimeFormatter.print(bdt);
+            String unvalidatedDate = eddob.getText().toString().trim();
+
+            DateTime minDateOfBirth = DateTime.now().minusYears(
+                    ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE);
+            DateTime maxDateOfBirth = DateTime.now();
+
+            if (DateUtils.validateDate(unvalidatedDate, minDateOfBirth, maxDateOfBirth)) {
+                dateTimeFormatter = DateTimeFormat.forPattern(DateUtils.DEFAULT_DATE_FORMAT);
+                bdt = dateTimeFormatter.parseDateTime(unvalidatedDate);
+                birthdate = dateTimeFormatter.print(bdt);
+            }
         }
         person.setBirthdate(birthdate);
 
@@ -350,6 +377,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         addrerror = (TextView)v.findViewById(R.id.addrerror);
         countryerror = (TextView)v.findViewById(R.id.countryerror);
 
+        datePicker = (Button) v.findViewById(R.id.btn_datepicker);
         submitConfirm = (Button) v.findViewById(R.id.submitConfirm);
         capturePhotoBtn = (FloatingActionButton) v.findViewById(R.id.capture_photo);
         patientImageView = (ImageView) v.findViewById(R.id.patientPhoto);
@@ -459,42 +487,59 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 addSuggestionsToCities();
             }
         });
-        if (eddob != null) {
-            eddob.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int cYear;
-                    int cMonth;
-                    int cDay;
 
-                    if (bdt == null) {
-                        Calendar currentDate = Calendar.getInstance();
-                        cYear = currentDate.get(Calendar.YEAR);
-                        cMonth = currentDate.get(Calendar.MONTH);
-                        cDay = currentDate.get(Calendar.DAY_OF_MONTH);
-                    } else {
-                        cYear = bdt.getYear();
-                        cMonth = bdt.getMonthOfYear() - 1;
-                        cDay = bdt.getDayOfMonth();
-                    }
+        eddob.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Only needs afterTextChanged method from TextWacher
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Only needs afterTextChanged method from TextWacher
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // If a considerable amount of text is filled in eddob, then remove 'Estimated age' fields.
+                if (s.length() >= 8) {
                     edmonth.getText().clear();
                     edyr.getText().clear();
-
-                    DatePickerDialog mDatePicker = new DatePickerDialog(AddEditPatientFragment.this.getActivity(), new DatePickerDialog.OnDateSetListener() {
-                        public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                            int adjustedMonth = selectedmonth + 1;
-                            eddob.setText(selectedday+"/"+adjustedMonth+"/"+selectedyear);
-                            birthdate = new LocalDate(selectedyear, adjustedMonth, selectedday);
-                            bdt = birthdate.toDateTimeAtStartOfDay().toDateTime();
-                        }
-                    }, cYear, cMonth, cDay);
-                    mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
-                    mDatePicker.setTitle("Select Date");
-                    mDatePicker.show();
                 }
-            });
-        }
+            }
+        });
+
+        datePicker.setOnClickListener(v -> {
+            int cYear;
+            int cMonth;
+            int cDay;
+
+            if (bdt == null) {
+                Calendar currentDate = Calendar.getInstance();
+                cYear = currentDate.get(Calendar.YEAR);
+                cMonth = currentDate.get(Calendar.MONTH);
+                cDay = currentDate.get(Calendar.DAY_OF_MONTH);
+            } else {
+                cYear = bdt.getYear();
+                cMonth = bdt.getMonthOfYear() - 1;
+                cDay = bdt.getDayOfMonth();
+            }
+
+            edmonth.getText().clear();
+            edyr.getText().clear();
+
+            DatePickerDialog mDatePicker = new DatePickerDialog(AddEditPatientFragment.this.getActivity(), new DatePickerDialog.OnDateSetListener() {
+                public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                    int adjustedMonth = selectedmonth + 1;
+                    eddob.setText(selectedday + "/" + adjustedMonth + "/" + selectedyear);
+                    birthdate = new LocalDate(selectedyear, adjustedMonth, selectedday);
+                    bdt = birthdate.toDateTimeAtStartOfDay().toDateTime();
+                }
+            }, cYear, cMonth, cDay);
+            mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
+            mDatePicker.setTitle("Select Date of Birth");
+            mDatePicker.show();
+        });
 
         capturePhotoBtn.setOnClickListener(new View.OnClickListener() {
             @Override

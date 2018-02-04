@@ -6,17 +6,13 @@ clone_folder: "C:\\projects\\openmrs-contrib-android-client"
 
 init:
   - cd \
-  - appveyor DownloadFile http://dl.google.com/android/android-sdk_r24.4.1-windows.zip
-  - 7z x android-sdk_r24.4.1-windows.zip > nul
+  - mkdir android-sdk-windows
+  - appveyor DownloadFile https://dl.google.com/android/repository/sdk-tools-windows-3859397.zip
+  - 7z x sdk-tools-windows-3859397.zip -oc:\android-sdk-windows
   - cd C:\projects\openmrs-contrib-android-client
 
 install:
-  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t tools
-  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t platform-tools
-  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t build-tools-23.0.2
-  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t android-23
-  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t extra-google-m2repository
-  - echo y | "%ANDROID_HOME%\tools\android.bat" update sdk -u -a -t extra-android-m2repository
+  - yes | "%ANDROID_HOME%\tools\bin\sdkmanager.bat" "platform-tools" "platforms;android-27" "build-tools;27.0.2" "extras;android;m2repository" "extras;google;m2repository"
 
 build_script:
   - gradlew.bat clean assembleDebug lint -Dscan --configure-on-demand --parallel --stacktrace

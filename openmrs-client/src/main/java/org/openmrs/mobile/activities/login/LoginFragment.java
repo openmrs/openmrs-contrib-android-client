@@ -22,7 +22,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.AppCompatImageView;
+import android.text.Html;
 import android.text.InputType;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -65,6 +67,9 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     private EditText mUrl;
     private EditText mUsername;
     private EditText mPassword;
+    private TextInputLayout mUrlInput;
+    private TextInputLayout mUsernameInput;
+    private TextInputLayout mPasswordInput;
     private CheckBox mShowPassword;
     private Button mLoginButton;
     private ProgressBar mSpinner;
@@ -124,7 +129,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
         mUrl.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View view, boolean b) {
+            public void onFocusChange(View view, boolean hasFocus) {
                 if (StringUtils.notEmpty(mUrl.getText().toString())
                         && !view.isFocused() 
                         && loginValidatorWatcher.isUrlChanged()
@@ -136,6 +141,40 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
                             .findFragmentById(R.id.loginContentFrame))
                             .setUrl(mUrl.getText().toString());
                     loginValidatorWatcher.setUrlChanged(false);
+                }
+
+                if (hasFocus) {
+                    mUrl.setHint("");
+                    mUrlInput.setHint(Html.fromHtml(getString(R.string.login_url_hint)));
+                } else if (mUrl.getText().toString().equals("")) {
+                    mUrl.setHint(Html.fromHtml(getString(R.string.login_url_hint) + getString(R.string.req_star)));
+                    mUrlInput.setHint("");
+                }
+            }
+        });
+
+        mUsername.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    mUsername.setHint("");
+                    mUsernameInput.setHint(Html.fromHtml(getString(R.string.login_username_hint)));
+                } else if (mUsername.getText().toString().equals("")) {
+                    mUsername.setHint(Html.fromHtml(getString(R.string.login_username_hint) + getString(R.string.req_star)));
+                    mUsernameInput.setHint("");
+                }
+            }
+        });
+
+        mPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    mPassword.setHint("");
+                    mPasswordInput.setHint(Html.fromHtml(getString(R.string.login_password_hint)));
+                } else if (mPassword.getText().toString().equals("")) {
+                    mPassword.setHint(Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star)));
+                    mPasswordInput.setHint("");
                 }
             }
         });
@@ -172,9 +211,29 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
     private void initViewFields(View root) {
         mUrl = (EditText) root.findViewById(R.id.loginUrlField);
+        mUrl.setHint(Html.fromHtml(getString(R.string.login_url_hint)));
+        mUrlInput = (TextInputLayout) root.findViewById(R.id.textInputLayoutLoginURL);
+        mUrlInput.setHint(Html.fromHtml(getString(R.string.login_url_hint)));
+
         mUsername = (EditText) root.findViewById(R.id.loginUsernameField);
         mUsername.setText(OpenMRS.getInstance().getUsername());
+        mUsernameInput = (TextInputLayout) root.findViewById(R.id.textInputLayoutUsername);
+
+        // If we have no cached username from previous sessions, we want the hint to be set
+        // directly at the EditText. Otherwise, we set it on the TextInputLayout which will
+        // be floating above the saved entry for the username.
+        if (mUsername.getText().toString().equals(""))
+            mUsername.setHint(Html.fromHtml(getString(R.string.login_username_hint) + getString(R.string.req_star)));
+        else
+            mUsernameInput.setHint(Html.fromHtml(getString(R.string.login_username_hint)));
+
         mPassword = (EditText) root.findViewById(R.id.loginPasswordField);
+        mPassword.setHint(Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star)));
+        mPasswordInput = (TextInputLayout) root.findViewById(R.id.textInputLayoutPassword);
+
+        TextView mRequired = (TextView) root.findViewById(R.id.loginRequiredLabel);
+        mRequired.setText(Html.fromHtml(getString(R.string.req_star) + getString(R.string.login_required)));
+
         mShowPassword = (CheckBox) root.findViewById(R.id.checkboxShowPassword);
         mLoginButton = (Button) root.findViewById(R.id.loginButton);
         mSpinner = (ProgressBar) root.findViewById(R.id.loginLoading);
@@ -308,6 +367,13 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mLoginButton.setEnabled(false);
         mSpinner.setVisibility(View.GONE);
         mLoginFormView.setVisibility(View.VISIBLE);
+        if (locationsList.isEmpty()) {
+            mDropdownLocation.setVisibility(View.GONE);
+            mLoginButton.setEnabled(true);
+        }else {
+            mDropdownLocation.setVisibility(View.VISIBLE);
+            mLoginButton.setEnabled(false);
+        }
     }
 
     @Override
@@ -353,6 +419,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     @Override
     public void setLocationErrorOccurred(boolean errorOccurred) {
         this.loginValidatorWatcher.setLocationErrorOccurred(errorOccurred);
+        mDropdownLocation.setVisibility(View.GONE);
         mLoginButton.setEnabled(!errorOccurred);
     }
 

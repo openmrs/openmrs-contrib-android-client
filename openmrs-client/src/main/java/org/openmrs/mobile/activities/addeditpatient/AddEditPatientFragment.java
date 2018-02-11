@@ -538,7 +538,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 }
             }, cYear, cMonth, cDay);
             mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
-            mDatePicker.setTitle("Select Date of Birth");
+            mDatePicker.setTitle(getString(R.string.date_picker_title));
             mDatePicker.show();
         });
 

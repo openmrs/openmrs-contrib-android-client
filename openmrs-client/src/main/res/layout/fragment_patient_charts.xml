@@ -32,6 +32,6 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textSize="18sp"
-        android:text="No vitals recorded"/>
+        android:text="@string/no_vitals_recorded"/>
 
 </LinearLayout>

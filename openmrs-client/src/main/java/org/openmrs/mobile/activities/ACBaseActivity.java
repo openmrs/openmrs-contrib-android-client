@@ -155,7 +155,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
     private void showNoInternetConnectionSnackbar() {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
-                "No internet connection", Snackbar.LENGTH_SHORT);
+                getString(R.string.no_internet_connection_message), Snackbar.LENGTH_SHORT);
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
@@ -277,13 +277,13 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                         String filename = OpenMRS.getInstance().getOpenMRSDir()
                                 + File.separator + mOpenMRSLogger.getLogFilename();
                         Intent email = new Intent(Intent.ACTION_SEND);
-                        email.putExtra(Intent.EXTRA_SUBJECT, "OpenMRS android client crashed");
+                        email.putExtra(Intent.EXTRA_SUBJECT, R.string.error_email_subject_app_crashed);
                         email.putExtra(Intent.EXTRA_TEXT, error);
                         email.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + filename));
                         //need this to prompts email client only
                         email.setType("message/rfc822");
 
-                        startActivity(Intent.createChooser(email, "Choose an Email client :"));
+                        startActivity(Intent.createChooser(email, getString(R.string.choose_a_email_client)));
                     }
                 });
 

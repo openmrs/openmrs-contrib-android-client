@@ -14,6 +14,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.matchingpatients.MatchingPatientsActivity;
 import org.openmrs.mobile.api.retrofit.PatientApi;
 import org.openmrs.mobile.dao.PatientDAO;
@@ -62,8 +63,8 @@ public class PatientService extends IntentService {
                 startActivity(intent1);
             }
         } else {
-            ToastUtil.error("No internet connection. Patient Registration data is saved locally " +
-                    "and will sync when internet connection is restored. ");
+            ToastUtil.error(getString(R.string.activity_no_internet_connection) +
+                    getString(R.string.activity_sync_after_connection));
         }
     }
     private void fetchSimilarPatients(final Patient patient, final PatientAndMatchesWrapper patientAndMatchesWrapper) {

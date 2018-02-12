@@ -45,7 +45,9 @@ public class LoginActivity extends ACBaseActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {}
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 
     @Override
     public void onBackPressed() {

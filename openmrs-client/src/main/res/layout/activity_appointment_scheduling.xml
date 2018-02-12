@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="0dp"></android.support.design.widget.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/appointmentSchedulingContentFrame"
+        style="@style/BackgroundThemeEEE"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:stretchColumns="1">
+
+                <TableRow>
+
+                    <RelativeLayout
+                        android:id="@+id/manageServiceView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@drawable/card">
+
+                        <ImageView
+                            android:id="@+id/manageServiceButton"
+                            android:layout_width="@dimen/dashboard_icon_height_width"
+                            android:layout_height="@dimen/dashboard_icon_height_width"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            android:layout_margin="@dimen/dashboard_icon_margin"
+                            android:contentDescription="@string/dashboard_search_icon_label" />
+
+                        <TextView
+                            android:id="@+id/manageServiceLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/manageServiceButton"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="@dimen/dashboard_text_bottom_margin"
+                            android:layout_marginTop="@dimen/dashboard_text_top_margin"
+                            android:gravity="center"
+                            android:text="@string/action_manage_service"
+                            android:textSize="@dimen/dashboard_text_size" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/manageAppointmentBlocksView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@drawable/card">
+
+                        <ImageView
+                            android:id="@+id/manageAppointmentBlocksButton"
+                            android:layout_width="@dimen/dashboard_icon_height_width"
+                            android:layout_height="@dimen/dashboard_icon_height_width"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            android:layout_margin="@dimen/dashboard_icon_margin"
+                            android:contentDescription="@string/dashboard_visits_icon_label" />
+
+                        <TextView
+                            android:id="@+id/manageAppointmentBlocksLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/manageAppointmentBlocksButton"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="@dimen/dashboard_text_bottom_margin"
+                            android:layout_marginTop="@dimen/dashboard_text_top_margin"
+                            android:gravity="center"
+                            android:text="@string/action_manage_appointment_blocks"
+                            android:textSize="@dimen/dashboard_text_size" />
+                    </RelativeLayout>
+                </TableRow>
+
+                <TableRow>
+
+                    <RelativeLayout
+                        android:id="@+id/manageAppointmentView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@drawable/card">
+
+                        <ImageView
+                            android:id="@+id/manageAppointmentButton"
+                            android:layout_width="@dimen/dashboard_icon_height_width"
+                            android:layout_height="@dimen/dashboard_icon_height_width"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            android:layout_margin="@dimen/dashboard_icon_margin"
+                            android:contentDescription="@string/dashboard_registry_icon_label" />
+
+                        <TextView
+                            android:id="@+id/manageAppointmentLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/manageAppointmentButton"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="@dimen/dashboard_text_bottom_margin"
+                            android:layout_marginTop="@dimen/dashboard_text_top_margin"
+                            android:gravity="center"
+                            android:text="@string/action_manage_appointments"
+                            android:textSize="@dimen/dashboard_text_size" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/appointmentRequestsView"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@drawable/card">
+
+                        <ImageView
+                            android:id="@+id/appointmentRequestsButton"
+                            android:layout_width="@dimen/dashboard_icon_height_width"
+                            android:layout_height="@dimen/dashboard_icon_height_width"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerInParent="true"
+                            android:layout_margin="@dimen/dashboard_icon_margin"
+                            android:contentDescription="@string/dashboard_registry_icon_label" />
+
+                        <TextView
+                            android:id="@+id/appointmentRequestsLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/appointmentRequestsButton"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="@dimen/dashboard_text_bottom_margin"
+                            android:layout_marginTop="@dimen/dashboard_text_top_margin"
+                            android:gravity="center"
+                            android:text="@string/action_appointment_requests"
+                            android:textSize="@dimen/dashboard_text_size" />
+                    </RelativeLayout>
+
+
+                </TableRow>
+
+                <TableRow>
+
+
+                        <RelativeLayout
+                            android:id="@+id/dailyAppointmentsView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="1"
+                            android:background="@drawable/card">
+
+                            <ImageView
+                                android:id="@+id/dailyAppointmentsButton"
+                                android:layout_width="@dimen/dashboard_icon_height_width"
+                                android:layout_height="@dimen/dashboard_icon_height_width"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerInParent="true"
+                                android:layout_margin="@dimen/dashboard_icon_margin"
+                                android:contentDescription="@string/dashboard_registry_icon_label" />
+
+                            <TextView
+                                android:id="@+id/dailyAppointmetsLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/dailyAppointmentsButton"
+                                android:layout_centerHorizontal="true"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="@dimen/dashboard_text_bottom_margin"
+                                android:layout_marginTop="@dimen/dashboard_text_top_margin"
+                                android:gravity="center"
+                                android:text="@string/action_daily_appointments"
+                                android:textSize="@dimen/dashboard_text_size" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/empty"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="1"
+                            android:background="@drawable/card">
+
+                            </RelativeLayout>
+
+
+
+                </TableRow>
+            </TableLayout>
+        </ScrollView>
+    </FrameLayout>
+</LinearLayout>

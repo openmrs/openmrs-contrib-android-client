@@ -59,6 +59,8 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
+import org.openmrs.mobile.activities.dialog.CameraOrGalleryPickerDialog;
+
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.dialog.CameraOrGalleryPickerDialog;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
@@ -509,7 +511,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 }
             }
         });
-
         datePicker.setOnClickListener(v -> {
             int cYear;
             int cMonth;

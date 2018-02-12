@@ -111,6 +111,7 @@ public final class DateUtils {
         return dateAsString;
     }
 
+
     public static Date getDateFromString(String dateAsString) {
         return getDateFromString(dateAsString, DEFAULT_DATE_FORMAT);
     }
@@ -217,5 +218,6 @@ public final class DateUtils {
 
         }
     }
+
 
 }

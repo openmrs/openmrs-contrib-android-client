@@ -37,6 +37,7 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
+import org.openmrs.mobile.activities.appointmentscheduling.AppointmentSchedulingActivity;
 import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity;
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -53,7 +54,8 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
     private RelativeLayout mRegistryPatientView;
     private RelativeLayout mActiveVisitsView;
     private RelativeLayout mCaptureVitalsView;
-
+    private RelativeLayout mAppointmentSchedulingView;
+    private ImageView mAppointmentSchedulingButton;
     private SparseArray<Bitmap> mBitmapCache;
 
 
@@ -226,12 +228,15 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
         mFindPatientView = (RelativeLayout) root.findViewById(R.id.findPatientView);
         mRegistryPatientView = (RelativeLayout) root.findViewById(R.id.registryPatientView);
         mCaptureVitalsView = (RelativeLayout) root.findViewById(R.id.captureVitalsView);
+        mAppointmentSchedulingView = (RelativeLayout) root.findViewById(R.id.appointmentSchedulingView);
         mActiveVisitsView = (RelativeLayout) root.findViewById(R.id.activeVisitsView);
+        mAppointmentSchedulingButton = (ImageView) root.findViewById(R.id.appointmentSchedulingButton);
     }
 
     private void setListeners() {
         mActiveVisitsView.setOnClickListener(this);
         mRegistryPatientView.setOnClickListener(this);
+        mAppointmentSchedulingView.setOnClickListener(this);
         mFindPatientView.setOnClickListener(this);
         mCaptureVitalsView.setOnClickListener(this);
     }
@@ -249,6 +254,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
     @Override
     public void bindDrawableResources() {
         bindDrawableResource(mFindPatientButton, R.drawable.ico_search);
+        bindDrawableResource(mAppointmentSchedulingButton, R.drawable.ico_visits);
         bindDrawableResource(mRegistryPatientButton, R.drawable.ico_registry);
         bindDrawableResource(mActiveVisitsButton, R.drawable.ico_visits);
         bindDrawableResource(mCaptureVitalsButton, R.drawable.ico_vitals);
@@ -316,6 +322,9 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
                 break;
             case R.id.activeVisitsView:
                 startNewActivity(ActiveVisitsActivity.class);
+                break;
+            case R.id.appointmentSchedulingView:
+                startNewActivity(AppointmentSchedulingActivity.class);
                 break;
             default:
                 // Do nothing

@@ -14,6 +14,8 @@ import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Encountercreate;
+import org.openmrs.mobile.models.FormCreate;
+import org.openmrs.mobile.models.FormData;
 import org.openmrs.mobile.models.FormResource;
 import org.openmrs.mobile.models.IdGenPatientIdentifiers;
 import org.openmrs.mobile.models.IdentifierType;
@@ -192,12 +194,8 @@ public interface RestApi {
     Call<Results<SystemSetting>> getSystemSettingsByQuery(@Query("q") String query,
                                                           @Query("v") String representation);
 
-<<<<<<< HEAD
-}
-=======
     @POST("form/{uuid}/resource")
     Call<FormCreate> formCreate(@Path("uuid") String uuid,
                                          @Body FormData obj);
 
-   }
->>>>>>> ac1b4db8... AC 405:Appointment Scheduling
+}

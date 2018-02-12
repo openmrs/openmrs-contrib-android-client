@@ -30,6 +30,7 @@
     <color name="dark_grey">#231F20</color>
     <color name="light_green">#a1d030</color>
     <color name="green">#88af28</color>
+    <color name="translucent_green">#d200463f</color>
     <color name="light_red">#ff6666</color>
     <color name="red">#ff3d3d</color>
     <color name="switchcolor">#03de95</color>

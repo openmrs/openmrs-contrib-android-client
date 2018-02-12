@@ -170,6 +170,7 @@
     <string name="patient_scroll_tab_diagnosis_label">Diagnosis</string>
     <string name="patient_scroll_tab_visits_label">Visits</string>
     <string name="patient_scroll_tab_vitals_label">Vitals</string>
+    <string name="patient_scroll_tab_charts_label">Charts</string>
     <string name="download_started">"Downloading…"</string>
     <string name="action_starting_visit">"Starting Visit"</string>
 
@@ -188,12 +189,29 @@
     <string name="patient_state_label">State</string>
     <string name="patient_country_label">Country</string>
     <string name="patient_photo_edit">Update photo</string>
+    <string name="date_picker_title">Select Date of Birth</string>
 
     <!-- Find Active visit activity -->
     <string name="action_active_visits">Active Visits</string>
     <string name="action_form_entry">Form Entry</string>
     <string name="action_find_visits">Find Active Visits</string>
     <string name="search_visits_no_results">No visits in database</string>
+
+    <!-- ACBase activity -->
+    <string name="error_email_subject_app_crashed">OpenMRS android client crashed</string>
+    <string name="choose_a_email_client">Choose an Email client :</string>
+    <string name="no_internet_connection_message">No internet connection</string>
+
+    <!-- Patient Service Activity-->
+    <string name="activity_no_internet_connection">No internet connection. Patient Registration data is saved locally </string>
+    <string name="activity_sync_after_connection">and will sync when internet connection is restored. </string>
+
+    <!-- Patients Vitals Fragment -->
+    <string name="form_error">This form is not supported</string>
+
+    <!-- Patient Details Fragment-->
+    <string name="Snackbar_offline_mode">Offline mode. Patient data may not be up to date.</string>
+
 
     <!-- fragment_patient_visits layout -->
     <string name="active_visit_label">Active visit</string>
@@ -207,6 +225,13 @@
     <!-- fragment_patient_diagnosis layout -->
     <string name="empty_diagnoses_list">Patient has no diagnoses yet.</string>
     <string name="diagnosis_note_label">Text of encounter note</string>
+
+    <!--fragment_vitals_charts_layout-->
+    <string name="list_vital_selector_show">show chart</string>
+    <string name="list_vital_selector_hide">hide chart</string>
+
+    <!--fragment_patient_charts layout-->
+    <string name="no_vitals_recorded">No vitals recorded</string>
 
     <!-- Visit dashboard activity -->
     <string name="action_end_visit">End Visit</string>
@@ -255,7 +280,8 @@
     <string name="visit_encounter_icon">Visit encounter Icon</string>
     <string name="visit_status_icon">Status of visit</string>
     <string name="show_or_hide_visit_details">Show/Hide visit details</string>
-
+    <string name="download_concepts">Download concepts</string>
+    <string name="take_a_photo">Take a photo</string>
 
     <!--Snackbar strings-->
     <string name="snackbar_action_open">Open</string>
@@ -279,4 +305,19 @@
 
     <!--Activity Logs-->
     <string name="title_activity_logs">Logs</string>
+
+    <!--App Crash Dialog-->
+    <string name="crash_dialog_title">Error occurred</string>
+    <string name="crash_dialog_message">Sorry ! An Unknown error has occurred. Please report the details to developers so that it can be resolved as soon as possible.</string>
+    <string name="crash_dialog_positive_button">Restart</string>
+    <string name="crash_dialog_negative_button">Close</string>
+    <string name="crash_dialog_neutral_button">Send report and restart</string>
+
+    <!--App demo-->
+    <string name="app_demo_find_patient">Click here to search through all the patients</string>
+    <string name="app_demo_active_visits">Click here to get the list of all the currently active visits</string>
+    <string name="app_demo_register_patient">Click here to register a new patient</string>
+    <string name="app_demo_form_entry">Click here to capture vitals for a patient on a visit</string>
+    <string name="app_demo_next">Next</string>
+    <string name="app_demo_close">Close</string>
 </resources>

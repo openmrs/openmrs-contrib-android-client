@@ -54,7 +54,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     @Override
     public void attachSnackbarToActivity() {
         Snackbar snackbar = Snackbar
-                .make(getActivity().findViewById(R.id.patientDashboardContentFrame), "Offline mode. Patient data may not be up to date.", Snackbar.LENGTH_INDEFINITE);
+                .make(getActivity().findViewById(R.id.patientDashboardContentFrame), getString(R.string.snackbar_no_internet_connection), Snackbar.LENGTH_INDEFINITE);
         View view = snackbar.getView();
         TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(Color.WHITE);

@@ -184,7 +184,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         when(openMRS.getLastLoginServerUrl()).thenReturn(url);
         presenter.login(user, password, url, url);
 
-        verify(view).showToast(anyString(), any());
+        verify(view).showToast(anyInt(), any());
         verify(view).userAuthenticated();
         verify(view).finishLoginActivity();
     }

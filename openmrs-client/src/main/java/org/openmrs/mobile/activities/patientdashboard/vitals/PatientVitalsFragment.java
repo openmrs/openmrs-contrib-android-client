@@ -119,7 +119,7 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
             intent.putParcelableArrayListExtra(ApplicationConstants.BundleKeys.FORM_FIELDS_LIST_BUNDLE, FormFieldsWrapper.create(encounter));
             startActivity(intent);
         } else {
-            ToastUtil.notify("This form is not supported");
+            ToastUtil.notify(getString(R.string.form_error));
         }
 
     }

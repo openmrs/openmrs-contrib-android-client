@@ -63,6 +63,12 @@ public interface PatientDashboardContract {
         void showErrorToast(String errorMessage);
     }
 
+    interface ViewPatientCharts extends ViewPatientMain{
+        void populateList(List<Visit> visits);
+        void setEmptyListVisibility(boolean visibility);
+
+    }
+
     /*
     * Presenters
     */
@@ -91,4 +97,7 @@ public interface PatientDashboardContract {
         void startFormDisplayActivityWithEncounter();
     }
 
+    interface PatientChartsPresenter extends PatientDashboardMainPresenter {
+
+    }
 }

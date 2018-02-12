@@ -81,6 +81,7 @@ public final class DateUtils {
                 }
             }
         }
+
         return time;
     }
 
@@ -110,8 +111,7 @@ public final class DateUtils {
         return dateAsString;
     }
 
-<<<<<<< HEAD
-=======
+
     public static Date getDateFromString(String dateAsString) {
         return getDateFromString(dateAsString, DEFAULT_DATE_FORMAT);
     }
@@ -219,5 +219,5 @@ public final class DateUtils {
         }
     }
 
->>>>>>> ac1b4db8... AC 405:Appointment Scheduling
+
 }

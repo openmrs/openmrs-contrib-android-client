@@ -24,7 +24,7 @@ public class InputField implements Serializable, Parcelable {
     private int id;
     private String concept;
     private double value = -1.0;
-    private boolean isRed;
+    private boolean isRed = false;
 
 
     public InputField(String concept) {

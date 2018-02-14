@@ -38,6 +38,11 @@
     <string name="login_online">Online</string>
 
     <string name="emptyerror">Required</string>
+    <string name="fname_empty_error">Given name required</string>
+    <string name="fmname_invalid_error">Given and middle name cannot contain invalid characters</string>
+    <string name="fname_invalid_error">Given name cannot contain invalid characters</string>
+    <string name="midname_invalid_error">Middle name cannot contain invalid characters</string>
+    <string name="lname_invalid_error">Family name cannot contain invalid characters</string>
     <string name="dob_error">Date should be between %1$s and %2$s</string>
     <string name="reg_firstname_hint">Given Name</string>
     <string name="reg_midname_hint">Middle Name</string>
@@ -49,6 +54,7 @@
     <string name="reg_ques_address">Address</string>
     <string name="addr1_hint">Address</string>
     <string name="addr2_hint">Address 2</string>
+    <string name="addr_invalid_error">Address cannot contain invalid characters</string>
     <string name="atleastone">Fill at least one field</string>
     <string name="incorrect_country">Country name is incorrect</string>
 

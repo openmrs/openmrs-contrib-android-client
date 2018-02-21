@@ -35,6 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.DayAxisValueFormatter;
 
@@ -119,7 +120,9 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
                     layouts.add(convertView);
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
+                OpenMRS.getInstance().getOpenMRSLogger().e(e.toString());
+            } catch (NumberFormatException e) {
+                OpenMRS.getInstance().getOpenMRSLogger().e(e.toString());
             }
 
         }

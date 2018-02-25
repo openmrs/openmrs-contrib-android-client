@@ -79,8 +79,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     @Override
     public Patient getPatientToUpdate() {
-        Patient patientToUpdate = new PatientDAO().findPatientByID(patientToUpdateId);
-        return patientToUpdate;
+        return new PatientDAO().findPatientByID(patientToUpdateId);
     }
 
     @Override

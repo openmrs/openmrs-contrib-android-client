@@ -61,7 +61,11 @@ public final class DateUtils {
     }
 
     public static Long convertTime(String dateAsString) {
-        return convertTime(dateAsString, OPEN_MRS_RESPONSE_FORMAT);
+        if (isValidFormat(DEFAULT_DATE_FORMAT, dateAsString)) {
+            return convertTime(dateAsString, DEFAULT_DATE_FORMAT);
+        } else {
+            return convertTime(dateAsString, OPEN_MRS_RESPONSE_FORMAT);
+        }
     }
 
     public static Long convertTime(String dateAsString, String dateFormat) {
@@ -132,7 +136,7 @@ public final class DateUtils {
         return formattedDate;
     }
 
-    public static String getCurrentDateTime(){
+    public static String getCurrentDateTime() {
         DateFormat dateFormat = new SimpleDateFormat(OPEN_MRS_RESPONSE_FORMAT);
         Date date = new Date();
         return dateFormat.format(date);
@@ -141,9 +145,10 @@ public final class DateUtils {
     /**
      * Validate a date and make sure it is between the minimum and maximum date
      * Date format is dd/MM/yyyy
-     * @param dateString    the date to check
-     * @param minDate       minimum date allowed
-     * @param maxDate       maximum date limit
+     *
+     * @param dateString the date to check
+     * @param minDate    minimum date allowed
+     * @param maxDate    maximum date limit
      * @return true if date is appropriate
      */
     public static boolean validateDate(String dateString, DateTime minDate, DateTime maxDate) {
@@ -170,8 +175,7 @@ public final class DateUtils {
         }
         if (numberOfDashes != 2) {
             return false;
-        }
-        else {
+        } else {
             // check day, month and year
             String[] bundledDate = s.split("/");
 
@@ -218,4 +222,24 @@ public final class DateUtils {
         }
     }
 
+    /**
+     * Validates a date against a given format
+     *
+     * @param format the format to check against
+     * @param dateAsString the value of raw date
+     * @return true if the given date matches the given format
+     */
+    public static boolean isValidFormat(String format, String dateAsString) {
+        Date date = null;
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+            date = simpleDateFormat.parse(dateAsString);
+            if (!dateAsString.equals(simpleDateFormat.format(date))) {
+                date = null;
+            }
+        } catch (ParseException exception) {
+            OpenMRS.getInstance().getOpenMRSLogger().w("Failed to validate date format :" + dateAsString + " caused by " + exception.toString());
+        }
+        return date != null;
+    }
 }

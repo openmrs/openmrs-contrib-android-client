@@ -61,11 +61,7 @@ public class ActiveVisitsActivity extends ACBaseActivity {
         getMenuInflater().inflate(R.menu.find_visits_menu, menu);
         final SearchView findVisitView;
         MenuItem mFindVisitItem = menu.findItem(R.id.actionSearchLocalVisits);
-        if (OpenMRS.getInstance().isRunningHoneycombVersionOrHigher()) {
-            findVisitView = (SearchView) mFindVisitItem.getActionView();
-        } else {
-            findVisitView = (SearchView) MenuItemCompat.getActionView(mFindVisitItem);
-        }
+        findVisitView = (SearchView) mFindVisitItem.getActionView();
 
         findVisitView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

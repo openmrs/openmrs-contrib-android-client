@@ -106,11 +106,8 @@ public class SyncedPatientsActivity extends ACBaseActivity {
 
         // Search function
         MenuItem searchMenuItem = menu.findItem(R.id.actionSearchLocal);
-        if (OpenMRS.getInstance().isRunningHoneycombVersionOrHigher()) {
-            searchView = (SearchView) searchMenuItem.getActionView();
-        } else {
-            searchView = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
-        }
+        searchView = (SearchView) searchMenuItem.getActionView();
+
         if(StringUtils.notEmpty(query)){
             searchMenuItem.expandActionView();
             searchView.setQuery(query, true);

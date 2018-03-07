@@ -16,7 +16,7 @@
     <string name="app_name">OpenMRS Client</string>
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
-
+    <string name="action_location">Location</string>
     <string name="dbname">openmrs.db</string>
     <string name="aadbname">aaopenmrs.db</string>
 

@@ -29,6 +29,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
@@ -38,13 +39,22 @@ import org.openmrs.mobile.activities.settings.SettingsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
+import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
+import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ForceClose;
 import org.openmrs.mobile.utilities.NetworkUtils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -56,6 +66,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     protected AuthorizationManager mAuthorizationManager;
     protected CustomFragmentDialog mCustomFragmentDialog;
     private MenuItem mSyncbutton;
+    private List<String> locationList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +74,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         Thread.setDefaultUncaughtExceptionHandler(new ForceClose(this));
         mFragmentManager = getSupportFragmentManager();
         mAuthorizationManager = new AuthorizationManager();
+        locationList = new ArrayList<>();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             Boolean flag = extras.getBoolean("flag");
@@ -148,9 +160,48 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     showNoInternetConnectionSnackbar();
                 }
                 return true;
+
+            case R.id.actionLocation:
+                if (!locationList.isEmpty()) {
+                    locationList.clear();
+                }
+                Observable<List<Location>> observableList = new LocationDAO().getLocations();
+                observableList.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(getLocationList());
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private Observer<List<Location>> getLocationList() {
+        return new Observer<List<Location>>() {
+            @Override
+            public void onCompleted() {
+                new AlertDialog.Builder(ACBaseActivity.this)
+                        .setSingleChoiceItems(
+                                new ArrayAdapter<>(ACBaseActivity.this,
+                                        android.R.layout.simple_list_item_single_choice, locationList),
+                                locationList.indexOf(mOpenMRS.getLocation()),
+                                (dialog, which) -> {
+                                    mOpenMRS.setLocation(locationList.get(which));
+                                    dialog.dismiss();
+                                })
+                        .show();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(List<Location> locations) {
+                for (Location locationItem : locations) {
+                    locationList.add(locationItem.getName());
+                }
+
+            }
+        };
     }
 
     private void showNoInternetConnectionSnackbar() {

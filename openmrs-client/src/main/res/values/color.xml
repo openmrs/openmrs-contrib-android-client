@@ -36,4 +36,5 @@
     <color name="switchcolor">#03de95</color>
     <color name="patient_selected_highlight">#3a00ff2a</color>
     <color name="fragment_background">#EEEEEEEE</color>
+    <color name="grey">#D5D5D5</color>
 </resources>

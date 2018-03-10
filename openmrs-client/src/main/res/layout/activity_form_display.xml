@@ -54,14 +54,14 @@
                     android:id="@+id/btn_next"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/primary"
+                    android:background="@drawable/btn_submit_selector"
                     android:textColor="@color/white"
                     android:text="@string/action_next"/>
                 <Button
                     android:id="@+id/btn_finish"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/primary"
+                    android:background="@drawable/btn_submit_selector"
                     android:textColor="@color/white"
                     android:text="@string/action_submit"
                     android:visibility="gone"/>

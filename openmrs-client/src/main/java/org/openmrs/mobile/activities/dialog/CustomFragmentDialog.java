@@ -35,9 +35,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -55,6 +58,7 @@ import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
@@ -66,12 +70,13 @@ public class CustomFragmentDialog extends DialogFragment {
 
     public enum OnClickAction {
         SET_URL, SHOW_URL_DIALOG, DISMISS_URL_DIALOG, DISMISS, LOGOUT, FINISH, INTERNET, UNAUTHORIZED, END_VISIT,
-        START_VISIT, LOGIN, REGISTER_PATIENT, CANCEL_REGISTERING, DELETE_PATIENT
+        START_VISIT, LOGIN, REGISTER_PATIENT, CANCEL_REGISTERING, DELETE_PATIENT,SELECT_LOCATION
     }
 
     protected LayoutInflater mInflater;
     protected LinearLayout mFieldsLayout;
     protected RecyclerView mRecyclerView;
+    protected ListView locationListView;
 
     protected TextView mTextView;
     protected TextView mTitleTextView;
@@ -82,6 +87,8 @@ public class CustomFragmentDialog extends DialogFragment {
     protected EditText mEditText;
 
     private CustomDialogBundle mCustomDialogBundle;
+
+    protected final OpenMRS mOpenMRS = OpenMRS.getInstance();
 
     public static CustomFragmentDialog newInstance(CustomDialogBundle customDialogBundle) {
         CustomFragmentDialog dialog = new CustomFragmentDialog();
@@ -220,6 +227,9 @@ public class CustomFragmentDialog extends DialogFragment {
         if(null != mCustomDialogBundle.getPatientsList()){
             mRecyclerView = addRecycleView(mCustomDialogBundle.getPatientsList(), mCustomDialogBundle.getNewPatient());
         }
+        if(null != mCustomDialogBundle.getLocationList()){
+          addSingleChoiceItemsListView(mCustomDialogBundle.getLocationList());
+        }
     }
 
     private RecyclerView addRecycleView(List<Patient> patientsList, Patient newPatient) {
@@ -230,6 +240,15 @@ public class CustomFragmentDialog extends DialogFragment {
         mFieldsLayout.addView(field);
         recyclerView.setHasFixedSize(true);
         return recyclerView;
+    }
+
+    private void addSingleChoiceItemsListView(List<String>locationList) {
+        LinearLayout field = (LinearLayout) mInflater.inflate(R.layout.openmrs_single_choice_list_view, null);
+         locationListView = (ListView) field.findViewById(R.id.singleChoiceListView);
+        locationListView.setAdapter(new ArrayAdapter<>(getActivity(),
+                android.R.layout.simple_list_item_single_choice, locationList));
+        mFieldsLayout.addView(field);
+
     }
 
     public EditText addEditTextField(String defaultMessage) {
@@ -248,6 +267,9 @@ public class CustomFragmentDialog extends DialogFragment {
         textView.setText(message);
         textView.setSingleLine(false);
         FontsUtil.setFont(textView, FontsUtil.OpenFonts.OPEN_SANS_ITALIC);
+        if(null != mCustomDialogBundle.getLocationList()){
+            textView.setTextSize(18);
+        }
         mFieldsLayout.addView(field, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         return textView;
     }
@@ -367,6 +389,16 @@ public class CustomFragmentDialog extends DialogFragment {
                         activity.mPresenter.deletePatient();
                         dismiss();
                         activity.finish();
+                        break;
+                    case SELECT_LOCATION:
+                        if(AdapterView.INVALID_POSITION!=locationListView.getCheckedItemPosition()){
+                            mOpenMRS.setLocation(locationListView.getAdapter().getItem(locationListView.getCheckedItemPosition()).toString());
+                            dismiss();
+                        } else{
+                            ToastUtil.error("You haven't selected any Location! ");
+                        }
+
+
                         break;
                     default:
                         break;

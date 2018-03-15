@@ -29,7 +29,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
@@ -177,16 +176,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         return new Observer<List<Location>>() {
             @Override
             public void onCompleted() {
-                new AlertDialog.Builder(ACBaseActivity.this)
-                        .setSingleChoiceItems(
-                                new ArrayAdapter<>(ACBaseActivity.this,
-                                        android.R.layout.simple_list_item_single_choice, locationList),
-                                locationList.indexOf(mOpenMRS.getLocation()),
-                                (dialog, which) -> {
-                                    mOpenMRS.setLocation(locationList.get(which));
-                                    dialog.dismiss();
-                                })
-                        .show();
+                showLocationDialog(locationList);
             }
 
             @Override
@@ -259,6 +249,18 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.DELET_PATIENT_DIALOG_TAG);
+    }
+
+    private void showLocationDialog(List<String>locationList) {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.location_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.location_dialog_current_location)+mOpenMRS.getLocation());
+        bundle.setLocationList(locationList);
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.SELECT_LOCATION);
+        bundle.setRightButtonText(getString(R.string.dialog_button_select_location));
+        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.LOCATION_DIALOG_TAG);
     }
 
     public void createAndShowDialog(CustomDialogBundle bundle, String tag) {

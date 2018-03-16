@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.patientdashboard.details;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -46,6 +47,7 @@ import java.io.ByteArrayOutputStream;
 public class PatientDetailsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDetails {
 
     private View rootView;
+    private PatientDashboardActivity mPatientDashboardActivity;
 
     public static PatientDetailsFragment newInstance() {
         return new PatientDetailsFragment();
@@ -54,11 +56,17 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     @Override
     public void attachSnackbarToActivity() {
         Snackbar snackbar = Snackbar
-                .make(getActivity().findViewById(R.id.patientDashboardContentFrame), getString(R.string.snackbar_no_internet_connection), Snackbar.LENGTH_INDEFINITE);
+                .make(mPatientDashboardActivity.findViewById(R.id.patientDashboardContentFrame), getString(R.string.snackbar_no_internet_connection), Snackbar.LENGTH_INDEFINITE);
         View view = snackbar.getView();
         TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(Color.WHITE);
         snackbar.show();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mPatientDashboardActivity = (PatientDashboardActivity) context;
     }
 
     @Override
@@ -99,10 +107,12 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
     @Override
     public void resolvePatientDataDisplay(final Patient patient) {
-        if (("M").equals(patient.getPerson().getGender())) {
-            ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.male));
-        } else {
-            ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.female));
+        if(isAdded()) {
+            if (("M").equals(patient.getPerson().getGender())) {
+                ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.male));
+            } else {
+                ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.female));
+            }
         }
         ImageView patientImageView = (ImageView) rootView.findViewById(R.id.patientPhoto);
 
@@ -121,7 +131,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
         ((TextView) rootView.findViewById(R.id.patientDetailsName)).setText(patient.getPerson().getName().getNameString());
 
         Long longTime = DateUtils.convertTime(patient.getPerson().getBirthdate());
-        
+
         if (longTime != null) {
             ((TextView) rootView.findViewById(R.id.patientDetailsBirthDate)).setText(DateUtils.convertTime(longTime));
         }
@@ -137,7 +147,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
     @Override
     public void showDialog(int resId) {
-        ((PatientDashboardActivity) this.getActivity()).showProgressDialog(resId);
+        mPatientDashboardActivity.showProgressDialog(resId);
     }
 
     private void showAddressDetailsViewElement(View detailsLayout, int detailsViewId, String detailsText) {
@@ -150,24 +160,24 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
     @Override
     public void dismissDialog() {
-        ((PatientDashboardActivity) this.getActivity()).dismissCustomFragmentDialog();
+        mPatientDashboardActivity.dismissCustomFragmentDialog();
     }
 
     @Override
     public void showToast(int stringRes, boolean error) {
         ToastUtil.ToastType toastType = error ? ToastUtil.ToastType.ERROR : ToastUtil.ToastType.SUCCESS;
-        ToastUtil.showShortToast(this.getActivity() ,toastType ,stringRes);
+        ToastUtil.showShortToast(mPatientDashboardActivity, toastType, stringRes);
     }
 
     @Override
     public void setMenuTitle(String nameString, String identifier) {
-        ((PatientDashboardActivity) this.getActivity()).getSupportActionBar().setTitle(nameString);
-        ((PatientDashboardActivity) this.getActivity()).getSupportActionBar().setSubtitle("#" + identifier);
+        mPatientDashboardActivity.getSupportActionBar().setTitle(nameString);
+        mPatientDashboardActivity.getSupportActionBar().setSubtitle("#" + identifier);
     }
 
     @Override
     public void startPatientUpdateActivity(long patientId) {
-        Intent updatePatient = new Intent(this.getActivity(), AddEditPatientActivity.class);
+        Intent updatePatient = new Intent(mPatientDashboardActivity, AddEditPatientActivity.class);
         updatePatient.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE,
                 String.valueOf(patientId));
         startActivity(updatePatient);

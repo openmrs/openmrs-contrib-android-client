@@ -16,11 +16,12 @@ package org.openmrs.mobile.activities.patientdashboard;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 
-import net.yanzm.mth.MaterialTabHost;
+
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
@@ -37,7 +38,7 @@ import org.openmrs.mobile.activities.patientdashboard.vitals.PatientVitalsFragme
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.TabUtil;
 
-import java.util.ArrayList;
+
 
 public class PatientDashboardActivity extends ACBaseActivity {
 
@@ -90,31 +91,13 @@ public class PatientDashboardActivity extends ACBaseActivity {
         return true;
     }
 
-    private void initViewPager(PatientDashboardPagerAdapter adapter) {
-        MaterialTabHost tabHost = (MaterialTabHost) findViewById(R.id.tabhost);
-        tabHost.setType(MaterialTabHost.Type.FullScreenWidth);
-        for (int i = 0; i < adapter.getCount(); i++) {
-            tabHost.addTab(getTabNames().get(i).toUpperCase());
-        }
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(adapter);
-        viewPager.addOnPageChangeListener(tabHost);
-        tabHost.setOnTabChangeListener(new MaterialTabHost.OnTabChangeListener() {
-            @Override
-            public void onTabSelected(int position) {
-                viewPager.setCurrentItem(position);
-            }
-        });
-    }
 
-    private ArrayList<String> getTabNames() {
-        ArrayList<String> tabNames = new ArrayList<>();
-        tabNames.add(getString(R.string.patient_scroll_tab_details_label));
-        tabNames.add(getString(R.string.patient_scroll_tab_diagnosis_label));
-        tabNames.add(getString(R.string.patient_scroll_tab_visits_label));
-        tabNames.add(getString(R.string.patient_scroll_tab_vitals_label));
-        tabNames.add(getString(R.string.patient_scroll_tab_charts_label));
-        return tabNames;
+    private void initViewPager(PatientDashboardPagerAdapter adapter) {
+        TabLayout tabHost = findViewById(R.id.tabhost);
+        ViewPager viewPager = findViewById(R.id.pager);
+        tabHost.setTabMode(TabLayout.MODE_SCROLLABLE);
+        viewPager.setAdapter(adapter);
+        tabHost.setupWithViewPager(viewPager);
     }
 
     private void attachPresenterToFragment(Fragment fragment) {

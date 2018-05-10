@@ -590,9 +590,7 @@
                 android:id="@+id/submitConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:backgroundTint="@color/primary"
+                android:background="@drawable/btn_submit_selector"
                 android:text="@string/action_register_patient"
                 android:textColor="@color/white" />
 

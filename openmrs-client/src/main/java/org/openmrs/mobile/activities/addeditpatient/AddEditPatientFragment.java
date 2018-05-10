@@ -393,6 +393,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     @Override
     public void setProgressBarVisibility(boolean visibility) {
+        submitConfirm.setEnabled(!visibility);
         progressBar.setVisibility(visibility ? View.VISIBLE : View.GONE);
     }
 

@@ -19,9 +19,15 @@
     tools:context="org.openmrs.mobile.activities.ACBaseActivity">
     <item
         android:id="@+id/syncbutton"
+        android:icon="@drawable/ic_sync_off"
         android:title="@string/sync"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_sync_off"/>
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/actionLocation"
+        android:icon="@drawable/ic_location"
+        android:title="@string/action_location"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/actionSettings"
         android:orderInCategory="100"

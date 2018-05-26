@@ -38,13 +38,22 @@ import org.openmrs.mobile.activities.settings.SettingsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
+import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
+import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ForceClose;
 import org.openmrs.mobile.utilities.NetworkUtils;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -56,6 +65,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     protected AuthorizationManager mAuthorizationManager;
     protected CustomFragmentDialog mCustomFragmentDialog;
     private MenuItem mSyncbutton;
+    private List<String> locationList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +73,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         Thread.setDefaultUncaughtExceptionHandler(new ForceClose(this));
         mFragmentManager = getSupportFragmentManager();
         mAuthorizationManager = new AuthorizationManager();
+        locationList = new ArrayList<>();
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             Boolean flag = extras.getBoolean("flag");
@@ -148,9 +159,39 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     showNoInternetConnectionSnackbar();
                 }
                 return true;
+
+            case R.id.actionLocation:
+                if (!locationList.isEmpty()) {
+                    locationList.clear();
+                }
+                Observable<List<Location>> observableList = new LocationDAO().getLocations();
+                observableList.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(getLocationList());
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private Observer<List<Location>> getLocationList() {
+        return new Observer<List<Location>>() {
+            @Override
+            public void onCompleted() {
+                showLocationDialog(locationList);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+               mOpenMRSLogger.e(e.getMessage());
+            }
+
+            @Override
+            public void onNext(List<Location> locations) {
+                for (Location locationItem : locations) {
+                    locationList.add(locationItem.getName());
+                }
+
+            }
+        };
     }
 
     private void showNoInternetConnectionSnackbar() {
@@ -208,6 +249,18 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.DELET_PATIENT_DIALOG_TAG);
+    }
+
+    private void showLocationDialog(List<String>locationList) {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.location_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.location_dialog_current_location)+mOpenMRS.getLocation());
+        bundle.setLocationList(locationList);
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.SELECT_LOCATION);
+        bundle.setRightButtonText(getString(R.string.dialog_button_select_location));
+        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.LOCATION_DIALOG_TAG);
     }
 
     public void createAndShowDialog(CustomDialogBundle bundle, String tag) {

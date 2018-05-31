@@ -26,6 +26,7 @@ public class ForceClose implements java.lang.Thread.UncaughtExceptionHandler{
         }
 
         public void uncaughtException(Thread thread, Throwable exception) {
+            exception.printStackTrace();
             StringWriter stackTrace = new StringWriter();
             exception.printStackTrace(new PrintWriter(stackTrace));
             StringBuilder errorReport = new StringBuilder();

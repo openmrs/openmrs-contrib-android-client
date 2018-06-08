@@ -220,9 +220,17 @@
         </activity>
         <activity
             android:name=".activities.logs.LogsActivity"
-            android:theme="@style/AppThemeOrig"
+            android:label="@string/title_activity_logs"
             android:parentActivityName=".activities.settings.SettingsActivity"
-            android:label="@string/title_activity_logs"></activity>
+            android:theme="@style/AppThemeOrig" />
+
+        <activity android:name=".activities.providermanager.ProviderManagementActivity"
+            android:configChanges="keyboardHidden|screenSize"
+            android:label="@string/provider_manager"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeOrig"/>
+
+        <activity android:name=".activities.providerdashboard.ProviderDashboardActivity"></activity>
     </application>
 
 </manifest>

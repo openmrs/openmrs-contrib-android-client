@@ -275,6 +275,9 @@
     <string name="similar_patients_on_server">Similar patients exist on server</string>
     <string name="registration_core_info">To use faster and more accurate similar patient resolution, upgrade the Registration Core Module to 1.7 or higher</string>
 
+    <!--ChartsView Activity-->
+    <string name="charts_view_toolbar_title">Charts View</string>
+
     <!-- Image content description strings -->
     <string name="openmrs_logo">OpenMRS logo</string>
     <string name="toast_with_black_background">Toast with black background</string>

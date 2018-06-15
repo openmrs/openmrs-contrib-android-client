@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.patientdashboard.charts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -21,7 +22,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListView;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -43,8 +45,10 @@ import java.util.List;
 
 public class PatientChartsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientCharts {
 
-    private ExpandableListView mExpandableListView;
+    private ListView mListView;
     private TextView mEmptyListView;
+    private JSONObject observationList;
+    private PatientChartsListAdapter chartsListAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,9 +63,25 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
 
         mEmptyListView = (TextView) root.findViewById(R.id.vitalEmpty);
         FontsUtil.setFont(mEmptyListView, FontsUtil.OpenFonts.OPEN_SANS_BOLD);
-        mExpandableListView = (ExpandableListView) root.findViewById(R.id.vitalExpList);
-        mExpandableListView.setEmptyView(mEmptyListView);
+        mListView = root.findViewById(R.id.vitalList);
+        mListView.setEmptyView(mEmptyListView);
         setEmptyListVisibility(false);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), ChartsViewActivity.class);
+                Bundle mBundle = new Bundle();
+                String vitalName = chartsListAdapter.getItem(position);
+                try {
+                    mBundle.putString("vitalName", observationList.getJSONObject(vitalName).toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                intent.putExtra("bundle", mBundle);
+                startActivity(intent);
+            }
+        });
         return root;
     }
 
@@ -88,7 +108,7 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
     public void populateList(List<Visit> visits) {
         final String[] displayableEncounterTypes = ApplicationConstants.EncounterTypes.ENCOUNTER_TYPES_DISPLAYS;
         final HashSet<String> displayableEncounterTypesArray = new HashSet<>(Arrays.asList(displayableEncounterTypes));
-        JSONObject observationList = new JSONObject();
+        observationList = new JSONObject();
 
         for (Visit visit : visits) {
             List<Encounter> encounters = visit.getEncounters();
@@ -153,11 +173,8 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
                     }
                 }
             }
-
-
-            VitalsListAdapter vitalsListAdapter = new VitalsListAdapter(this.getActivity(), observationList);
-            mExpandableListView.setAdapter(vitalsListAdapter);
-            mExpandableListView.setGroupIndicator(null);
+            chartsListAdapter = new PatientChartsListAdapter(this.getActivity(), observationList);
+            mListView.setAdapter(chartsListAdapter);
         }
 
 

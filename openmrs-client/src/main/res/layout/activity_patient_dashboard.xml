@@ -19,16 +19,21 @@
     android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="0dp">
+
+    <android.support.design.widget.TabLayout
         android:layout_height="wrap_content"
-        android:elevation="0dp">
+        android:layout_width="match_parent"
+        android:id="@+id/tabhost"
+        app:colorTabIndicator="#fff"
+        app:tabTextColor="@color/white"
+        >
 
 
-        <net.yanzm.mth.MaterialTabHost
-            android:id="@+id/tabhost"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:colorTabIndicator="#fff" />
+    </android.support.design.widget.TabLayout>
+
     </android.support.design.widget.AppBarLayout>
 
     <FrameLayout

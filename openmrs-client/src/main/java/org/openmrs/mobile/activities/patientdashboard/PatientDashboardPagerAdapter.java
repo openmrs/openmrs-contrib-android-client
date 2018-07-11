@@ -20,6 +20,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
+
 import org.openmrs.mobile.activities.patientdashboard.charts.PatientChartsFragment;
 import org.openmrs.mobile.activities.patientdashboard.charts.PatientDashboardChartsPresenter;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientDashboardDetailsPresenter;
@@ -31,6 +32,10 @@ import org.openmrs.mobile.activities.patientdashboard.visits.PatientVisitsFragme
 import org.openmrs.mobile.activities.patientdashboard.vitals.PatientDashboardVitalsPresenter;
 import org.openmrs.mobile.activities.patientdashboard.vitals.PatientVitalsFragment;
 
+
+import java.util.Arrays;
+import java.util.List;
+
 class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
 
     private static final int TAB_COUNT = 5;
@@ -41,14 +46,23 @@ class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
     private static final int VITALS_TAB_POS = 3;
     private static final int CHARTS_TAB_POS = 4;
 
+
+
     private SparseArray<Fragment> registeredFragments = new SparseArray<>();
 
     private String mPatientId;
+
+    private List<String> tabNames = Arrays.asList("DETAILS","DIAGNOSIS","VISITS","VITALS","CHARTS");
+
+
+
 
     PatientDashboardPagerAdapter(FragmentManager fm, String id) {
         super(fm);
         this.mPatientId = id;
     }
+
+
 
     @Override
     public Fragment getItem(int i) {
@@ -76,6 +90,26 @@ class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
             default:
                 return null;
         }
+    }
+
+    @Override
+    public CharSequence getPageTitle(int i) {
+        // Generate title based on item position
+        switch (i) {
+            case DETAILS_TAB_POS:
+                return tabNames.get(i);
+            case DIAGNOSIS_TAB_POS:
+                return tabNames.get(i);
+            case VISITS_TAB_POS:
+                return tabNames.get(i);
+            case VITALS_TAB_POS:
+                return tabNames.get(i);
+            case CHARTS_TAB_POS:
+                return tabNames.get(i);
+            default:
+                return null;
+        }
+
     }
 
     @Override

@@ -46,7 +46,7 @@ public class FormListService extends IntentService {
                 @Override
                 public void onResponse(Call<Results<FormResource>> call, Response<Results<FormResource>> response) {
                     if (response.isSuccessful()) {
-                        new Delete().from(FormResource.class).execute();
+                       new Delete().from(FormResource.class).execute();
                         formresourcelist=response.body().getResults();
                         int size=formresourcelist.size();
                         ActiveAndroid.beginTransaction();

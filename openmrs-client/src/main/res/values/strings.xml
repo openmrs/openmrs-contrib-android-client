@@ -222,6 +222,13 @@
     <!-- Patient Details Fragment-->
     <string name="Snackbar_offline_mode">Offline mode. Patient data may not be up to date.</string>
 
+    <!-- Appointment Scheduling activity -->
+    <string name="action_appointment_scheduling">Appointment Scheduling</string>
+    <string name="action_manage_service">Manage Service Types</string>
+    <string name="action_manage_appointment_blocks">Manage Blocks</string>
+    <string name="action_manage_appointments">Manage Appointments</string>
+    <string name="action_daily_appointments">Daily Appointments</string>
+    <string name="action_appointment_requests">Appointment Requests</string>
 
     <!-- fragment_patient_visits layout -->
     <string name="active_visit_label">Active visit</string>

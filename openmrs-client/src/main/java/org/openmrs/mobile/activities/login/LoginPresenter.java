@@ -103,6 +103,10 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         }
     }
 
+    private void generateKey() {
+        OpenMRS.getInstance().generateKey();
+    }
+
     @Override
     public void authenticateUser(final String username, final String password, final String url) {
         authenticateUser(username, password, url, mWipeRequired);
@@ -152,6 +156,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                             });
                             setLogin(true, url);
                             userService.updateUserInformation(username);
+                            generateKey();
 
                             loginView.userAuthenticated();
                             loginView.finishLoginActivity();

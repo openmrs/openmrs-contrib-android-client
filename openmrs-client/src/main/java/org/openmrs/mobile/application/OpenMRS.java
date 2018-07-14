@@ -57,7 +57,6 @@ public class OpenMRS extends Application {
             mExternalDirectoryPath = this.getExternalFilesDir(null).toString();
         }
         mLogger = new OpenMRSLogger();
-        generateKey();
         OpenMRSDBOpenHelper.init();
         initializeDB();
 
@@ -190,7 +189,7 @@ public class OpenMRS extends Application {
         return prefs.getString(ApplicationConstants.VISIT_TYPE_UUID, ApplicationConstants.EMPTY_STRING);
     }
 
-    private void generateKey() {
+    public void generateKey() {
         // create database key only if not exist
         if (ApplicationConstants.EMPTY_STRING.equals(getSecretKey())) {
             SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();

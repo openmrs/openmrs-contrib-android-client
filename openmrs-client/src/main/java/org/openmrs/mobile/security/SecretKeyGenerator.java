@@ -15,13 +15,13 @@
 package org.openmrs.mobile.security;
 
 
+import android.util.Log;
+
 import org.openmrs.mobile.application.OpenMRS;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
 
 public final class SecretKeyGenerator {
 
@@ -29,20 +29,32 @@ public final class SecretKeyGenerator {
     }
 
     public static String generateKey() {
-        // Generate a 256-bit key
-        final int outputKeyLength = 256;
-        KeyGenerator keyGenerator = null;
-        SecureRandom secureRandom = null;
+        String usernamePasswordStr = OpenMRS.getInstance().getUsername() + OpenMRS.getInstance().getPassword();
+        String timeStampStr = String.valueOf(System.currentTimeMillis());
+        return sha256(timeStampStr + usernamePasswordStr);
+    }
+
+    public static String digest(String s, String algorithm) {
+        MessageDigest m = null;
         try {
-            secureRandom = SecureRandom.getInstance("SHA1PRNG");
-            // Do *not* seed secureRandom! Automatically seeded from system entropy.
-            keyGenerator = KeyGenerator.getInstance("AES");
+            m = MessageDigest.getInstance(algorithm);
         } catch (NoSuchAlgorithmException e) {
-            OpenMRS.getInstance().getOpenMRSLogger().d("Failed to generate DB secret key" + e.toString());
+            e.printStackTrace();
+            return s;
         }
-        keyGenerator.init(outputKeyLength, secureRandom);
-        SecretKey key = keyGenerator.generateKey();
-        return bytesToHex(key.getEncoded());
+
+        try {
+            m.update(s.getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            m.update(s.getBytes());
+        }
+        return bytesToHex(m.digest());
+    }
+
+    public static String sha256(String s) {
+        Log.e("HASH: ", digest(s, "SHA-256"));
+        return digest(s, "SHA-256");
     }
 
     private static String bytesToHex(byte[] data) {

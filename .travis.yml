@@ -3,7 +3,7 @@ language: android
 jdk: oraclejdk8
 
 before_install:
-  - yes | sdkmanager "platform-tools" "tools" "platforms;android-27" "build-tools;27.0.2" "extras;android;m2repository"
+  - yes | sdkmanager "platform-tools" "tools" "platforms;android-27" "extras;android;m2repository"
 
 script:
 - ./build.sh

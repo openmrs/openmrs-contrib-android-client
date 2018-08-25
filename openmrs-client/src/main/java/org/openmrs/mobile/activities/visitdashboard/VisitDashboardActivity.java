@@ -14,17 +14,17 @@
 
 package org.openmrs.mobile.activities.visitdashboard;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class VisitDashboardActivity extends ACBaseActivity {
 
@@ -39,7 +39,6 @@ public class VisitDashboardActivity extends ACBaseActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -48,18 +47,18 @@ public class VisitDashboardActivity extends ACBaseActivity {
         Intent intent = getIntent();
 
         // Create fragment
-        VisitDashboardFragment visitDashboardFragment =
-                (VisitDashboardFragment) getSupportFragmentManager().findFragmentById(R.id.visitDashboardContentFrame);
+        VisitDashboardFragment visitDashboardFragment = (VisitDashboardFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.visitDashboardContentFrame);
         if (visitDashboardFragment == null) {
             visitDashboardFragment = VisitDashboardFragment.newInstance();
         }
         if (!visitDashboardFragment.isActive()) {
-            addFragmentToActivity(getSupportFragmentManager(),
-                    visitDashboardFragment, R.id.visitDashboardContentFrame);
+            addFragmentToActivity(getSupportFragmentManager(), visitDashboardFragment, R.id.visitDashboardContentFrame);
         }
 
         // Create the presenter
-        mPresenter = new VisitDashboardPresenter(visitDashboardFragment, intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0));
+        mPresenter = new VisitDashboardPresenter(visitDashboardFragment,
+                intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0));
         mPresenter.updatePatientName();
     }
 

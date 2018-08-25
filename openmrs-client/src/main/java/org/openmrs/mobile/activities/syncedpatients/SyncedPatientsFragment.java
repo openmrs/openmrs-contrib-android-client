@@ -14,6 +14,17 @@
 
 package org.openmrs.mobile.activities.syncedpatients;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseFragment;
+import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
+import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.utilities.FontsUtil;
+import org.openmrs.mobile.utilities.NetworkUtils;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -30,17 +41,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseFragment;
-import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.utilities.FontsUtil;
-import org.openmrs.mobile.utilities.NetworkUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContract.Presenter> implements SyncedPatientsContract.View {
 
     // Fragment components
@@ -52,16 +52,21 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
 
     private MenuItem mAddPatientMenuItem;
 
+    /**
+     * @return New instance of SyncedPatientsFragment
+     */
+    public static SyncedPatientsFragment newInstance() {
+        return new SyncedPatientsFragment();
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_synced_patients, container, false);
 
         // Patient list config
         mSyncedPatientRecyclerView = (RecyclerView) root.findViewById(R.id.syncedPatientRecyclerView);
         mSyncedPatientRecyclerView.setHasFixedSize(true);
-        mSyncedPatientRecyclerView.setAdapter(new SyncedPatientsRecyclerViewAdapter(this,
-                new ArrayList<Patient>()));
+        mSyncedPatientRecyclerView.setAdapter(new SyncedPatientsRecyclerViewAdapter(this, new ArrayList<>()));
         mSyncedPatientRecyclerView.setVisibility(View.GONE);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
         mSyncedPatientRecyclerView.setLayoutManager(linearLayoutManager);
@@ -86,7 +91,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
                 if (NetworkUtils.hasNetwork()) {
                     Intent intent = new Intent(getActivity(), LastViewedPatientsActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     NoInternetConnectionSnackbar();
                 }
                 break;
@@ -98,9 +103,9 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
     }
 
     /**
-     * This method is used to update data in SyncedPatientRecyclerView.
-     * It creates SyncedPatientsRecyclerViewAdapter and fills it with fresh data.
-     * Then new instance of SyncedPatientsRecyclerViewAdapter is set to its SyncedPatientRecyclerView.
+     * This method is used to update data in SyncedPatientRecyclerView. It creates
+     * SyncedPatientsRecyclerViewAdapter and fills it with fresh data. Then new instance of
+     * SyncedPatientsRecyclerViewAdapter is set to its SyncedPatientRecyclerView.
      *
      * @param patientList new set of data
      */
@@ -148,20 +153,14 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         mAddPatientMenuItem.setEnabled(enabled);
         mAddPatientMenuItem.setIcon(resId);
     }
+
     private void NoInternetConnectionSnackbar() {
         Snackbar mSnackbar = Snackbar.make(getActivity().findViewById(android.R.id.content),
-                R.string.snackbar_no_internet_connection, Snackbar.LENGTH_SHORT);
+            R.string.snackbar_no_internet_connection, Snackbar.LENGTH_SHORT);
         View sbView = mSnackbar.getView();
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         mSnackbar.show();
-    }
-
-    /**
-     * @return New instance of SyncedPatientsFragment
-     */
-    public static SyncedPatientsFragment newInstance() {
-        return new SyncedPatientsFragment();
     }
 
 }

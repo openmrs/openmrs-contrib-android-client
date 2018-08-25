@@ -12,12 +12,14 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-
 package org.openmrs.mobile.activities.logs;
 
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseFragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,54 +27,48 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseFragment;
-
-
-
-public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> implements LogsContract.View{
+public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> implements LogsContract.View {
 
     private TextView tvLogs;
     private FloatingActionButton fab;
 
+    public static LogsFragment newInstance() {
+        return new LogsFragment();
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_logs, container, false);
 
         tvLogs = (TextView) root.findViewById(R.id.tvLogs);
         fab = (FloatingActionButton) root.findViewById(R.id.fab);
         return root;
     }
+
     public void attachLogsToTextView(String logs) {
         tvLogs.setText(logs);
     }
-    public void fabCopyAll(String textLogs){
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setClipboard(getContext() , textLogs);
-                Toast.makeText(getContext() , "Logs copied to clipboard",
-                        Toast.LENGTH_SHORT).show();
-            }
+    public void fabCopyAll(String textLogs) {
+
+        fab.setOnClickListener(v -> {
+            setClipboard(getContext(), textLogs);
+            Toast.makeText(getContext(), "Logs copied to clipboard", Toast.LENGTH_SHORT).show();
         });
     }
 
     @SuppressWarnings("deprecation")
     private void setClipboard(Context context, String text) {
-        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context
+                    .getSystemService(Context.CLIPBOARD_SERVICE);
             clipboard.setText(text);
         } else {
-            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context
+                    .getSystemService(Context.CLIPBOARD_SERVICE);
             android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
             clipboard.setPrimaryClip(clip);
         }
-    }
-
-    public static LogsFragment newInstance() {
-        return new LogsFragment();
     }
 
 }

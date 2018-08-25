@@ -40,10 +40,8 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
         this.visitApi = new VisitApi();
     }
 
-    public PatientDashboardVisitsPresenter(Patient patient,
-                                           PatientDashboardContract.ViewPatientVisits mPatientVisitsView,
-                                           VisitDAO visitDAO,
-                                           VisitApi visitApi) {
+    public PatientDashboardVisitsPresenter(Patient patient, PatientDashboardContract.ViewPatientVisits mPatientVisitsView,
+        VisitDAO visitDAO, VisitApi visitApi) {
         this.mPatient = patient;
         this.mPatientVisitsView = mPatientVisitsView;
         this.visitApi = visitApi;
@@ -53,13 +51,11 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
 
     @Override
     public void subscribe() {
-        addSubscription(visitDAO.getVisitsByPatientID(mPatient.getId())
-                .observeOn(AndroidSchedulers.mainThread())
+        addSubscription(visitDAO.getVisitsByPatientID(mPatient.getId()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(patientVisits -> {
-                    if (patientVisits !=null && patientVisits.isEmpty()) {
+                    if (patientVisits != null && patientVisits.isEmpty()) {
                         mPatientVisitsView.toggleRecyclerListVisibility(false);
-                    }
-                    else {
+                    } else {
                         mPatientVisitsView.toggleRecyclerListVisibility(true);
                         mPatientVisitsView.setVisitsToDisplay(patientVisits);
                     }
@@ -68,24 +64,22 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
         getVisitFromServer();
     }
 
-
-    public void getVisitFromDB(){
-        visitDAO.getVisitsByPatientID(mPatient.getId())
-                .observeOn(AndroidSchedulers.mainThread())
+    public void getVisitFromDB() {
+        visitDAO.getVisitsByPatientID(mPatient.getId()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(patientVisits -> {
-                    if (patientVisits !=null && patientVisits.isEmpty()) {
+                    if (patientVisits != null && patientVisits.isEmpty()) {
                         mPatientVisitsView.toggleRecyclerListVisibility(false);
-                    }
-                    else {
+                    } else {
                         mPatientVisitsView.toggleRecyclerListVisibility(true);
                         mPatientVisitsView.setVisitsToDisplay(patientVisits);
                     }
                 });
     }
 
-    public void getVisitFromServer(){
+    public void getVisitFromServer() {
         if (NetworkUtils.isOnline()) {
             new VisitApi().syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
+
                 @Override
                 public void onResponse() {
                     getVisitFromDB();
@@ -99,17 +93,17 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
         }
 
     }
+
     @Override
     public void showStartVisitDialog() {
-        addSubscription(visitDAO.getActiveVisitByPatientId(mPatient.getId())
-                .observeOn(AndroidSchedulers.mainThread())
+        addSubscription(visitDAO.getActiveVisitByPatientId(mPatient.getId()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(visit -> {
-                    if(visit != null){
+                    if (visit != null) {
                         mPatientVisitsView.showStartVisitDialog(false);
                     } else if (!NetworkUtils.isOnline()) {
-                        mPatientVisitsView.showErrorToast("Cannot start a visit manually in offline mode." +
-                                "If you want to add encounters please do so in the Form Entry section, " +
-                                "they will be synced with an automatic new visit.");
+                        mPatientVisitsView.showErrorToast("Cannot start a visit manually in offline mode."
+                                + "If you want to add encounters please do so in the Form Entry section, "
+                                + "they will be synced with an automatic new visit.");
                     } else {
                         mPatientVisitsView.showStartVisitDialog(true);
                     }
@@ -120,16 +114,17 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
     public void syncVisits() {
         mPatientVisitsView.showStartVisitProgressDialog();
         visitApi.syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
+
             @Override
             public void onResponse() {
-                addSubscription(visitDAO.getVisitsByPatientID(mPatient.getId())
-                        .observeOn(AndroidSchedulers.mainThread())
+                addSubscription(visitDAO.getVisitsByPatientID(mPatient.getId()).observeOn(AndroidSchedulers.mainThread())
                         .subscribe(visList -> {
                             mPatientVisitsView.dismissCurrentDialog();
                             mPatientVisitsView.setVisitsToDisplay(visList);
                             showStartVisitDialog();
                         }));
             }
+
             @Override
             public void onErrorResponse(String errorMessage) {
                 mPatientVisitsView.dismissCurrentDialog();
@@ -142,15 +137,18 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
     public void startVisit() {
         mPatientVisitsView.showStartVisitProgressDialog();
         visitApi.startVisit(mPatient, new StartVisitResponseListenerCallback() {
+
             @Override
             public void onStartVisitResponse(long id) {
                 mPatientVisitsView.goToVisitDashboard(id);
                 mPatientVisitsView.dismissCurrentDialog();
             }
+
             @Override
             public void onResponse() {
                 // This method is intentionally empty
             }
+
             @Override
             public void onErrorResponse(String errorMessage) {
                 mPatientVisitsView.showErrorToast(errorMessage);

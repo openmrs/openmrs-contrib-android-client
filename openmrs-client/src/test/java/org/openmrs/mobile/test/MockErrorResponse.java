@@ -16,12 +16,14 @@ package org.openmrs.mobile.test;
 
 import java.io.IOException;
 
+import android.support.annotation.NonNull;
+
 import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MockErrorResponse<T> implements Call<T>{
+public class MockErrorResponse<T> implements Call<T> {
 
     private Response response;
 
@@ -35,7 +37,7 @@ public class MockErrorResponse<T> implements Call<T>{
     }
 
     @Override
-    public void enqueue(Callback<T> callback) {
+    public void enqueue(@NonNull Callback<T> callback) {
         callback.onResponse(this, response);
     }
 

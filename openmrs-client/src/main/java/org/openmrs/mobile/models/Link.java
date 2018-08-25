@@ -10,16 +10,16 @@
 
 package org.openmrs.mobile.models;
 
+import java.io.Serializable;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
 @Table(name = "link")
-public class Link extends Model implements Serializable{
+public class Link extends Model implements Serializable {
 
     @Column
     @SerializedName("rel")
@@ -32,36 +32,28 @@ public class Link extends Model implements Serializable{
     private String uri;
 
     /**
-     * 
-     * @return
-     *     The rel
+     * @return The rel
      */
     public String getRel() {
         return rel;
     }
 
     /**
-     * 
-     * @param rel
-     *     The rel
+     * @param rel The rel
      */
     public void setRel(String rel) {
         this.rel = rel;
     }
 
     /**
-     * 
-     * @return
-     *     The uri
+     * @return The uri
      */
     public String getUri() {
         return uri;
     }
 
     /**
-     * 
-     * @param uri
-     *     The uri
+     * @param uri The uri
      */
     public void setUri(String uri) {
         this.uri = uri;

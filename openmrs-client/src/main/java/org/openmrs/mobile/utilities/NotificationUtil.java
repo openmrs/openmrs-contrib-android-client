@@ -14,6 +14,10 @@
 
 package org.openmrs.mobile.utilities;
 
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.dashboard.DashboardActivity;
+import org.openmrs.mobile.application.OpenMRS;
+
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -23,34 +27,22 @@ import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.dashboard.DashboardActivity;
-import org.openmrs.mobile.application.OpenMRS;
-
 public class NotificationUtil {
 
-    public static void notify(String title, String message)
-    {
-        Bitmap bitmap = BitmapFactory.decodeResource( OpenMRS.getInstance().getResources(), R.drawable.ic_openmrs);
-        NotificationCompat.Builder mBuilder =
-                (NotificationCompat.Builder) new NotificationCompat.Builder(OpenMRS.getInstance())
-                        .setSmallIcon(R.drawable.ic_stat_notify_openmrs)
-                        .setLargeIcon(bitmap)
-                        .setContentTitle(title)
-                        .setContentText(message);
+    public static void notify(String title, String message) {
+        Bitmap bitmap = BitmapFactory.decodeResource(OpenMRS.getInstance().getResources(), R.drawable.ic_openmrs);
+        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(
+                OpenMRS.getInstance()).setSmallIcon(R.drawable.ic_stat_notify_openmrs).setLargeIcon(bitmap)
+                        .setContentTitle(title).setContentText(message);
         Intent resultIntent = new Intent(OpenMRS.getInstance(), DashboardActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(OpenMRS.getInstance());
         stackBuilder.addParentStack(DashboardActivity.class);
         stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(
-                        0,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(resultPendingIntent);
         mBuilder.setAutoCancel(true);
-        NotificationManager mNotificationManager =
-                (NotificationManager) OpenMRS.getInstance().getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager mNotificationManager = (NotificationManager) OpenMRS.getInstance()
+                .getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(0, mBuilder.build());
     }
 }

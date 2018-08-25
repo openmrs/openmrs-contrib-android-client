@@ -14,6 +14,14 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Collections;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -31,15 +39,7 @@ import org.openmrs.mobile.utilities.NetworkUtils;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
-import java.util.Collections;
-
 import rx.Observable;
-
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @PrepareForTest(NetworkUtils.class)
 public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
@@ -47,7 +47,7 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
     @Mock
     private PatientDashboardContract.ViewPatientVitals viewPatientVitals;
     @Mock
-    private  EncounterDAO encounterDAO;
+    private EncounterDAO encounterDAO;
     @Mock
     private RestApi restApi;
     @Mock
@@ -93,7 +93,8 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void subscribe_errorResponse() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
-        when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString())).thenReturn(mockErrorCall(401));
+        when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString()))
+                .thenReturn(mockErrorCall(401));
         Encounter encounter = new Encounter();
         when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(encounter));
         presenter.subscribe();
@@ -105,7 +106,8 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void subscribe_errorResponseNullEncounter() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
-        when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString())).thenReturn(mockErrorCall(401));
+        when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString()))
+                .thenReturn(mockErrorCall(401));
         when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(null));
         presenter.subscribe();
         verify(viewPatientVitals).showErrorToast(anyString());

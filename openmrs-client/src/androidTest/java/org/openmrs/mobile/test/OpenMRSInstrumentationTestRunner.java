@@ -14,9 +14,9 @@
 
 package org.openmrs.mobile.test;
 
-import android.os.Bundle;
-
 import java.io.File;
+
+import android.os.Bundle;
 
 import pl.polidea.instrumentation.PolideaInstrumentationTestRunner;
 

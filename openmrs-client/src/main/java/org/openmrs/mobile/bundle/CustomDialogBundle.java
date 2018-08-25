@@ -14,11 +14,11 @@
 
 package org.openmrs.mobile.bundle;
 
-import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
-import org.openmrs.mobile.models.Patient;
-
 import java.io.Serializable;
 import java.util.List;
+
+import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
+import org.openmrs.mobile.models.Patient;
 
 public class CustomDialogBundle implements Serializable {
 
@@ -43,7 +43,6 @@ public class CustomDialogBundle implements Serializable {
     public void setProgressDialog(boolean progressDialog) {
         this.progressDialog = progressDialog;
     }
-
 
     public boolean hasLoadingBar() {
         return loadingBar;
@@ -97,16 +96,16 @@ public class CustomDialogBundle implements Serializable {
         return titleViewMessage;
     }
 
-    public void setProgressViewMessage(String progressViewMessage) {
-        this.progressViewMessage = progressViewMessage;
+    public void setTitleViewMessage(String titleViewMessage) {
+        this.titleViewMessage = titleViewMessage;
     }
 
     public String getProgressViewMessage() {
         return progressViewMessage;
     }
 
-    public void setTitleViewMessage(String titleViewMessage) {
-        this.titleViewMessage = titleViewMessage;
+    public void setProgressViewMessage(String progressViewMessage) {
+        this.progressViewMessage = progressViewMessage;
     }
 
     public String getEditTextViewMessage() {
@@ -121,12 +120,12 @@ public class CustomDialogBundle implements Serializable {
         return patientsList;
     }
 
-    public boolean hasPatientList(){
-        return patientsList != null;
-    }
-
     public void setPatientsList(List<Patient> patientsList) {
         this.patientsList = patientsList;
+    }
+
+    public boolean hasPatientList() {
+        return patientsList != null;
     }
 
     public Patient getNewPatient() {

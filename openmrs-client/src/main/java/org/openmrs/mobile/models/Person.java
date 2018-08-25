@@ -10,22 +10,22 @@
 
 package org.openmrs.mobile.models;
 
-import android.graphics.Bitmap;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openmrs.mobile.utilities.ImageUtils;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import org.openmrs.mobile.utilities.ImageUtils;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import android.graphics.Bitmap;
 
 public class Person extends Resource implements Serializable {
 
     @SerializedName("names")
     @Expose
-    private List<PersonName> names = new ArrayList<PersonName>();
+    private List<PersonName> names = new ArrayList<>();
     @SerializedName("gender")
     @Expose
     private String gender;
@@ -37,20 +37,25 @@ public class Person extends Resource implements Serializable {
     private boolean birthdateEstimated;
     @SerializedName("addresses")
     @Expose
-    private List<PersonAddress> addresses = new ArrayList<PersonAddress>();
+    private List<PersonAddress> addresses = new ArrayList<>();
     @SerializedName("attributes")
     @Expose
-    private List<PersonAttribute> attributes = new ArrayList<PersonAttribute>();
+    private List<PersonAttribute> attributes = new ArrayList<>();
 
     private Bitmap photo;
 
     /**
-     * 
-     * @return
-     *     The names
+     * @return The names
      */
     public List<PersonName> getNames() {
         return names;
+    }
+
+    /**
+     * @param names The names
+     */
+    public void setNames(List<PersonName> names) {
+        this.names = names;
     }
 
     public PersonName getName() {
@@ -62,76 +67,59 @@ public class Person extends Resource implements Serializable {
     }
 
     /**
-     * 
-     * @param names
-     *     The names
-     */
-    public void setNames(List<PersonName> names) {
-        this.names = names;
-    }
-
-    /**
-     * 
-     * @return
-     *     The gender
+     * @return The gender
      */
     public String getGender() {
         return gender;
     }
 
     /**
-     * 
-     * @param gender
-     *     The gender
+     * @param gender The gender
      */
     public void setGender(String gender) {
         this.gender = gender;
     }
 
     /**
-     * 
-     * @return
-     *     The birthdate
+     * @return The birthdate
      */
     public String getBirthdate() {
         return birthdate;
     }
 
     /**
-     * 
-     * @param birthdate
-     *     The birthdate
+     * @param birthdate The birthdate
      */
     public void setBirthdate(String birthdate) {
         this.birthdate = birthdate;
     }
 
     /**
-     *
-     * @return
-     *     The birthdateEstimated
+     * @return The birthdateEstimated
      */
     public boolean getBirthdateEstimated() {
         return birthdateEstimated;
     }
 
     /**
-     *
-     * @param birthdateEstimated
-     *     The birthdate
+     * @param birthdateEstimated The birthdate
      */
     public void setBirthdateEstimated(boolean birthdateEstimated) {
         this.birthdateEstimated = birthdateEstimated;
     }
 
-
     /**
-     * 
-     * @return
-     *     The addresses
+     * @return The addresses
      */
     public List<PersonAddress> getAddresses() {
         return addresses;
+    }
+
+    /**
+     * @param addresses The addresses
+     */
+    public void setAddresses(List<PersonAddress> addresses) {
+        this.addresses = addresses;
     }
 
     public PersonAddress getAddress() {
@@ -143,42 +131,28 @@ public class Person extends Resource implements Serializable {
     }
 
     /**
-     * 
-     * @param addresses
-     *     The addresses
-     */
-    public void setAddresses(List<PersonAddress> addresses) {
-        this.addresses = addresses;
-    }
-
-    /**
-     * 
-     * @return
-     *     The attributes
+     * @return The attributes
      */
     public List<PersonAttribute> getAttributes() {
         return attributes;
     }
 
     /**
-     *
-     * @param attributes
-     *     The attributes
+     * @param attributes The attributes
      */
     public void setAttributes(List<PersonAttribute> attributes) {
         this.attributes = attributes;
     }
 
-
     public Bitmap getPhoto() {
         return photo;
     }
 
-    public Bitmap getResizedPhoto() {
-        return ImageUtils.resizePhoto(this.photo);
-    }
-
     public void setPhoto(Bitmap patientPhoto) {
         this.photo = patientPhoto;
+    }
+
+    public Bitmap getResizedPhoto() {
+        return ImageUtils.resizePhoto(this.photo);
     }
 }

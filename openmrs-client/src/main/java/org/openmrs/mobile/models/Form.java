@@ -10,12 +10,12 @@
 
 package org.openmrs.mobile.models;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Form extends Resource implements Serializable {
 
@@ -29,25 +29,21 @@ public class Form extends Resource implements Serializable {
 
     @SerializedName("pages")
     @Expose
-    private List<Page> pages = new ArrayList<Page>();
+    private List<Page> pages = new ArrayList<>();
 
     @SerializedName("valueReference")
     @Expose
     private String valueReference;
 
     /**
-     * 
-     * @return
-     *     The name
+     * @return The name
      */
     public String getName() {
         return name;
     }
 
     /**
-     * 
-     * @param name
-     *     The name
+     * @param name The name
      */
     public void setName(String name) {
         this.name = name;
@@ -62,36 +58,28 @@ public class Form extends Resource implements Serializable {
     }
 
     /**
-     * 
-     * @return
-     *     The processor
+     * @return The processor
      */
     public String getProcessor() {
         return processor;
     }
 
     /**
-     * 
-     * @param processor
-     *     The processor
+     * @param processor The processor
      */
     public void setProcessor(String processor) {
         this.processor = processor;
     }
 
     /**
-     * 
-     * @return
-     *     The pages
+     * @return The pages
      */
     public List<Page> getPages() {
         return pages;
     }
 
     /**
-     * 
-     * @param pages
-     *     The pages
+     * @param pages The pages
      */
     public void setPages(List<Page> pages) {
         this.pages = pages;

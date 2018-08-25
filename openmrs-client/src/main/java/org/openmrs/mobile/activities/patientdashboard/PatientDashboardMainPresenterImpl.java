@@ -28,9 +28,7 @@ public abstract class PatientDashboardMainPresenterImpl extends BasePresenter im
     @Override
     public void deletePatient() {
         new PatientDAO().deletePatient(mPatient.getId());
-        addSubscription(new VisitDAO().deleteVisitsByPatientId(mPatient.getId())
-                .observeOn(Schedulers.io())
-                .subscribe());
+        addSubscription(new VisitDAO().deleteVisitsByPatientId(mPatient.getId()).observeOn(Schedulers.io()).subscribe());
     }
 
     @Override

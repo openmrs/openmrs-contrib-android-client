@@ -14,6 +14,13 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Collections;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -36,17 +43,14 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
-import java.util.Collections;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-@PrepareForTest({OpenMRS.class, NetworkUtils.class, RestServiceBuilder.class, ToastUtil.class})
+@PrepareForTest({ OpenMRS.class, NetworkUtils.class, RestServiceBuilder.class, ToastUtil.class })
 @PowerMockIgnore("javax.net.ssl.*")
 public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
 
+    private final String INVALID_NAME_1 = "#James";
+    private final String INVALID_NAME_2 = "John@Doe";
+    private final String INVALID_ADDRESS_1 = "Washington street ^%123";
+    private final String INVALID_ADDRESS_2 = "Door $164";
     @Mock
     private AddEditPatientContract.View view;
     @Mock
@@ -59,15 +63,8 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     private OpenMRSLogger openMRSLogger;
     @Mock
     private OpenMRS openMRS;
-
     private AddEditPatientPresenter presenter;
     private Patient patient;
-
-    private final String INVALID_NAME_1 = "#James";
-    private final String INVALID_NAME_2 = "John@Doe";
-
-    private final String INVALID_ADDRESS_1 = "Washington street ^%123";
-    private final String INVALID_ADDRESS_2 = "Door $164";
 
     @Before
     public void setUp() {
@@ -75,54 +72,54 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
         patient = createPatient(1L);
         PatientApi patientApi = new PatientApi(openMRS, openMRSLogger, patientDAO, restApi, locationApi);
         presenter = new AddEditPatientPresenter(view, patientApi, patient, patient.getId().toString(),
-                Collections.singletonList("country_"+patient.getId()), restApi);
+                Collections.singletonList("country_" + patient.getId()), restApi);
         mockStaticMethods();
     }
 
     @Test
-    public void shouldNotPassValidation_noGivenName(){
+    public void shouldNotPassValidation_noGivenName() {
         patient.getPerson().getName().setGivenName(null);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
 
     @Test
-    public void shouldNotPassValidation_invalidGivenName(){
+    public void shouldNotPassValidation_invalidGivenName() {
         patient.getPerson().getName().setGivenName(INVALID_NAME_1);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
 
     @Test
-    public void shouldNotPassValidation_noFamilyName(){
+    public void shouldNotPassValidation_noFamilyName() {
         patient.getPerson().getName().setFamilyName(null);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
 
     @Test
-    public void shouldNotPassValidation_invalidFamilyName(){
+    public void shouldNotPassValidation_invalidFamilyName() {
         patient.getPerson().getName().setFamilyName(INVALID_NAME_2);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
 
     @Test
-    public void shouldNotPassValidation_noBirthDate(){
+    public void shouldNotPassValidation_noBirthDate() {
         patient.getPerson().setBirthdate(null);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
 
     @Test
-    public void shouldNotPassValidation_notFullAddress(){
+    public void shouldNotPassValidation_notFullAddress() {
         patient.getPerson().setAddresses(Collections.singletonList(new PersonAddress()));
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
 
     @Test
-    public void shouldNotPassValidation_invalidAddress1(){
+    public void shouldNotPassValidation_invalidAddress1() {
         PersonAddress invalidAddress = new PersonAddress();
 
         invalidAddress.setAddress1(INVALID_ADDRESS_1);
@@ -133,7 +130,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldNotPassValidation_invalidAddress2(){
+    public void shouldNotPassValidation_invalidAddress2() {
         PersonAddress invalidAddress = new PersonAddress();
 
         invalidAddress.setAddress2(INVALID_ADDRESS_2);
@@ -144,26 +141,24 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldNotPassValidation_notValidCountry(){
+    public void shouldNotPassValidation_notValidCountry() {
         patient.getPerson().getAddress().setCountry("United States Of Poland");
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
 
     @Test
-    public void shouldNotPassValidation_noGender(){
+    public void shouldNotPassValidation_noGender() {
         patient.getPerson().setGender(null);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
 
     @Test
-    public void shouldUpdatePatient_allOk(){
+    public void shouldUpdatePatient_allOk() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
-        when(restApi.updatePatient(any(), anyString(), anyString()))
-                .thenReturn(mockSuccessCall(patient));
-        when(restApi.uploadPatientPhoto(anyString(), any()))
-                .thenReturn(mockSuccessCall(new PatientPhoto()));
+        when(restApi.updatePatient(any(), anyString(), anyString())).thenReturn(mockSuccessCall(patient));
+        when(restApi.uploadPatientPhoto(anyString(), any())).thenReturn(mockSuccessCall(new PatientPhoto()));
 
         presenter.confirmUpdate(patient);
         verify(view).setErrorsVisibility(false, false, false, false, false, false);
@@ -173,12 +168,10 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldUpdatePatient_errorResponse(){
+    public void shouldUpdatePatient_errorResponse() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
-        when(restApi.updatePatient(any(), anyString(), anyString()))
-                .thenReturn(mockErrorCall(401));
-        when(restApi.uploadPatientPhoto(anyString(), any()))
-                .thenReturn(mockSuccessCall(new PatientPhoto()));
+        when(restApi.updatePatient(any(), anyString(), anyString())).thenReturn(mockErrorCall(401));
+        when(restApi.uploadPatientPhoto(anyString(), any())).thenReturn(mockSuccessCall(new PatientPhoto()));
 
         presenter.confirmUpdate(patient);
         verify(view).setErrorsVisibility(false, false, false, false, false, false);
@@ -186,7 +179,6 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
         verify(view).hideSoftKeys();
         verify(view).setProgressBarVisibility(false);
     }
-
 
     private void mockStaticMethods() {
         PowerMockito.mockStatic(NetworkUtils.class);

@@ -14,48 +14,43 @@
 
 package org.openmrs.mobile.utilities;
 
+import org.openmrs.mobile.application.OpenMRS;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 
-import org.openmrs.mobile.application.OpenMRS;
-
-
 public final class NetworkUtils {
 
-
-    public static boolean hasNetwork(){
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) OpenMRS.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
+    public static boolean hasNetwork() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) OpenMRS.getInstance()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
-
     public static boolean isOnline() {
 
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
-        boolean toggle=prefs.getBoolean("sync", true);
+        boolean toggle = prefs.getBoolean("sync", true);
 
-        if(toggle) {
-            ConnectivityManager connectivityManager
-                    = (ConnectivityManager) OpenMRS.getInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (toggle) {
+            ConnectivityManager connectivityManager = (ConnectivityManager) OpenMRS.getInstance()
+                    .getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
             boolean isConnected = activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
-            if(isConnected)
+            if (isConnected)
                 return true;
-            else
-            {
+            else {
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putBoolean("sync", false);
-                editor.commit();
+                editor.apply();
                 return false;
             }
 
-        }
-        else
+        } else
             return false;
 
     }

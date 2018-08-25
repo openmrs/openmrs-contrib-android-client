@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.activities.dialog;
 
+import org.openmrs.mobile.R;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,12 +32,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.openmrs.mobile.R;
-
 public class CameraOrGalleryPickerDialog extends DialogFragment {
 
     private DialogInterface.OnClickListener listener;
-
 
     public static CameraOrGalleryPickerDialog getInstance(DialogInterface.OnClickListener listener) {
         CameraOrGalleryPickerDialog dialog = new CameraOrGalleryPickerDialog();
@@ -47,32 +46,30 @@ public class CameraOrGalleryPickerDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-
-        String[] textResources = {"Take a photo", "Choose another"};
-        int[] imageResources = {R.drawable.ic_photo_camera, R.drawable.ic_photo_library};
-
+        String[] textResources = { "Take a photo", "Choose another" };
+        int[] imageResources = { R.drawable.ic_photo_camera, R.drawable.ic_photo_library };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setAdapter(new GalleryOrCameraPickerListAdapter(getActivity(),
-                R.layout.list_gallery_or_camera_item, R.id.textView, R.id.imageView,
-                textResources, imageResources), listener);
+        builder.setAdapter(new GalleryOrCameraPickerListAdapter(getActivity(), R.layout.list_gallery_or_camera_item,
+                R.id.textView, R.id.imageView, textResources, imageResources),
+            listener);
 
         return builder.create();
     }
 
     private class GalleryOrCameraPickerListAdapter extends ArrayAdapter<String> {
 
-        @IdRes private int textViewResourceId;
+        @IdRes
+        private int textViewResourceId;
 
-        @IdRes private int imageViewResourceId;
+        @IdRes
+        private int imageViewResourceId;
 
         private String[] textResources;
         private int[] imageResources;
 
-
         public GalleryOrCameraPickerListAdapter(@NonNull Context context, @LayoutRes int resource,
-                                                @IdRes int textViewResourceId, @IdRes int imageViewResourceId,
-                                                String[] textResources, int[] imageResources) {
+            @IdRes int textViewResourceId, @IdRes int imageViewResourceId, String[] textResources, int[] imageResources) {
             super(context, resource, textViewResourceId, textResources);
             this.textResources = textResources;
             this.imageResources = imageResources;
@@ -89,7 +86,7 @@ public class CameraOrGalleryPickerDialog extends DialogFragment {
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-            View v =  super.getView(position, convertView, parent);
+            View v = super.getView(position, convertView, parent);
 
             ((ImageView) v.findViewById(imageViewResourceId)).setImageResource(imageResources[position]);
             ((TextView) v.findViewById(textViewResourceId)).setText(textResources[position]);

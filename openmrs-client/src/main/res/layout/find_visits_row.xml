@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
   ~ compliance with the License. You may obtain a copy of the License at
@@ -14,72 +13,79 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:orientation="vertical"
-android:padding="10dp"
-android:background="@drawable/card">
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/card"
+    android:orientation="vertical"
+    android:padding="10dp">
+
     <RelativeLayout
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
         android:gravity="center_vertical">
 
-        <TextView android:id="@+id/findVisitsIdentifier"
+        <TextView
+            android:id="@+id/findVisitsIdentifier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_alignTop="@+id/findVisitsDisplayName"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/findVisitsDisplayName"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
-        <TextView android:id="@+id/findVisitsDisplayName"
+        <TextView
+            android:id="@+id/findVisitsDisplayName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:layout_toRightOf="@+id/findVisitsIdentifier"
-            android:layout_toEndOf="@+id/findVisitsIdentifier"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:gravity="end"/>
+            android:layout_alignParentRight="true"
+            android:layout_toEndOf="@+id/findVisitsIdentifier"
+            android:layout_toRightOf="@+id/findVisitsIdentifier"
+            android:gravity="end"
+            android:textSize="22sp" />
     </RelativeLayout>
 
     <LinearLayout
-        android:weightSum="10"
-        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
-        <TextView android:id="@+id/findVisitsPatientGender"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/findVisitsPatientGender"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="16sp" />
 
-        <TextView android:id="@+id/findVisitsPatientAge"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/findVisitsPatientAge"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:textSize="16sp" />
 
-        <TextView android:id="@+id/findVisitsPatientBirthDate"
+        <TextView
+            android:id="@+id/findVisitsPatientBirthDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:textSize="16sp" />
 
-        <TextView android:id="@+id/findVisitsPlace"
-            android:gravity="end"
-            android:layout_weight="5"
+        <TextView
+            android:id="@+id/findVisitsPlace"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="5"
+            android:gravity="end" />
 
     </LinearLayout>
 </LinearLayout>

@@ -177,6 +177,7 @@
 
                 <Button
                     android:id="@+id/loginButton"
+                    style="@style/loginButtonStyle"
                     android:layout_width="130dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical|center_horizontal|center"
@@ -185,8 +186,7 @@
                     android:background="@drawable/button_apply"
                     android:enabled="false"
                     android:gravity="center_vertical|center_horizontal"
-                    android:text="@string/login_button"
-                    style="@style/loginButtonStyle"/>
+                    android:text="@string/login_button" />
 
 
                 <TextView

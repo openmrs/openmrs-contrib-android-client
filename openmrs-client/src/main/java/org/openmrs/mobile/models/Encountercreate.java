@@ -10,6 +10,11 @@
 
 package org.openmrs.mobile.models;
 
+import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -19,16 +24,11 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.Serializable;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-
 @Table(name = "encountercreate")
-public class Encountercreate extends Model implements Serializable{
+public class Encountercreate extends Model implements Serializable {
 
-    private Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-    private Type obscreatetype = new TypeToken<List<Obscreate>>(){}.getType();
+    private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+    private Type obscreatetype = new TypeToken<List<Obscreate>>() {}.getType();
 
     @Column(name = "visit")
     @SerializedName("visit")
@@ -56,7 +56,7 @@ public class Encountercreate extends Model implements Serializable{
     private String formname;
 
     @Column(name = "synced")
-    private boolean synced=false;
+    private boolean synced = false;
 
     @SerializedName("obs")
     @Expose
@@ -80,7 +80,6 @@ public class Encountercreate extends Model implements Serializable{
     public void setVisit(String visit) {
         this.visit = visit;
     }
-
 
     public Long getPatientId() {
         return patientId;
@@ -130,16 +129,12 @@ public class Encountercreate extends Model implements Serializable{
         this.observations = observations;
     }
 
-
-    public void setObslist()
-    {
-        this.obslist = gson.toJson(observations,obscreatetype);
+    public void setObslist() {
+        this.obslist = gson.toJson(observations, obscreatetype);
     }
 
     public void pullObslist() {
-        this.observations = gson.fromJson(this.obslist,obscreatetype);
+        this.observations = gson.fromJson(this.obslist, obscreatetype);
     }
-
-
 
 }

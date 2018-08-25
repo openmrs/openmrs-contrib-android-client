@@ -14,6 +14,13 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -23,14 +30,7 @@ import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import rx.Observable;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class SyncedPatientsPresenterTest extends ACUnitTestBaseRx {
 

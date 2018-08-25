@@ -14,13 +14,13 @@
 
 package org.openmrs.mobile.activities.patientdashboard;
 
+import java.util.List;
+
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
-
-import java.util.List;
 
 public interface PatientDashboardContract {
 
@@ -33,38 +33,59 @@ public interface PatientDashboardContract {
     }
 
     interface ViewPatientDetails extends ViewPatientMain {
+
         void attachSnackbarToActivity();
+
         void resolvePatientDataDisplay(Patient patient);
+
         void showDialog(int resId);
+
         void dismissDialog();
+
         void showToast(int stringRes, boolean error);
+
         void setMenuTitle(String nameString, String identifier);
+
         void startPatientUpdateActivity(long patientId);
     }
 
     interface ViewPatientDiagnosis extends ViewPatientMain {
+
         void setDiagnosesToDisplay(List<String> encounters);
     }
 
     interface ViewPatientVisits extends ViewPatientMain {
+
         void showErrorToast(String message);
+
         void dismissCurrentDialog();
+
         void toggleRecyclerListVisibility(boolean isVisible);
+
         void setVisitsToDisplay(List<Visit> visits);
+
         void goToVisitDashboard(Long visitID);
+
         void showStartVisitDialog(boolean isVisitPossible);
+
         void showStartVisitProgressDialog();
     }
 
     interface ViewPatientVitals extends ViewPatientMain {
+
         void showNoVitalsNotification();
+
         void showEncounterVitals(Encounter encounter);
+
         void startFormDisplayActivity(Encounter lastVitalsEncounter);
+
         void showErrorToast(String errorMessage);
     }
 
-    interface ViewPatientCharts extends ViewPatientMain{
+    interface ViewPatientCharts extends ViewPatientMain {
+
         void populateList(List<Visit> visits);
+
         void setEmptyListVisibility(boolean visibility);
 
     }
@@ -73,27 +94,37 @@ public interface PatientDashboardContract {
     * Presenters
     */
     interface PatientDashboardMainPresenter extends BasePresenterContract {
+
         void deletePatient();
+
         long getPatientId();
     }
 
-    interface PatientDetailsPresenter extends PatientDashboardMainPresenter  {
+    interface PatientDetailsPresenter extends PatientDashboardMainPresenter {
+
         void synchronizePatient();
+
         void updatePatientDataFromServer();
+
         void reloadPatientData(Patient patient);
     }
 
-    interface PatientDiagnosisPresenter extends PatientDashboardMainPresenter  {
+    interface PatientDiagnosisPresenter extends PatientDashboardMainPresenter {
+
         void loadDiagnosis();
     }
 
     interface PatientVisitsPresenter extends PatientDashboardMainPresenter {
+
         void showStartVisitDialog();
+
         void syncVisits();
+
         void startVisit();
     }
 
     interface PatientVitalsPresenter extends PatientDashboardMainPresenter {
+
         void startFormDisplayActivityWithEncounter();
     }
 

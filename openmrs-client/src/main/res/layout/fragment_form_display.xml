@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ the contents of this file are subject to the openmrs public license
   ~ version 1.0 (the "license"); you may not use this file except in
   ~ compliance with the license. you may obtain a copy of the license at
@@ -15,13 +14,14 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scrollView"
-    android:background="@drawable/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/card"
     android:isScrollContainer="false">
+
     <LinearLayout
         android:id="@+id/sectionContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"/>
+        android:orientation="vertical" />
 </ScrollView>

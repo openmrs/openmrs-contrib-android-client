@@ -10,11 +10,11 @@
 
 package org.openmrs.mobile.models;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.List;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class QuestionOptions implements Serializable {
 
@@ -47,36 +47,28 @@ public class QuestionOptions implements Serializable {
     private List<Answer> answers;
 
     /**
-     * 
-     * @return
-     *     The rendering
+     * @return The rendering
      */
     public String getRendering() {
         return rendering;
     }
 
     /**
-     * 
-     * @param rendering
-     *     The rendering
+     * @param rendering The rendering
      */
     public void setRendering(String rendering) {
         this.rendering = rendering;
     }
 
     /**
-     * 
-     * @return
-     *     The concept
+     * @return The concept
      */
     public String getConcept() {
         return concept;
     }
 
     /**
-     * 
-     * @param concept
-     *     The concept
+     * @param concept The concept
      */
     public void setConcept(String concept) {
         this.concept = concept;

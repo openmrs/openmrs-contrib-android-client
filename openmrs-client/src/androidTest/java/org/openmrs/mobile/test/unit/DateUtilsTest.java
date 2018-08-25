@@ -14,15 +14,16 @@
 
 package org.openmrs.mobile.test.unit;
 
-import android.test.InstrumentationTestCase;
+import java.util.TimeZone;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.openmrs.mobile.utilities.DateUtils;
 
-import java.util.TimeZone;
+import android.test.InstrumentationTestCase;
 
 public class DateUtilsTest extends InstrumentationTestCase {
+
     private static final String INITIAL_DATA_1;
     private static final String INITIAL_DATA_2;
     private static final String EXPECTED_DATA_1;
@@ -35,12 +36,6 @@ public class DateUtilsTest extends InstrumentationTestCase {
     private static final String INVALID_DATA_6;
     private static final String INVALID_DATA_7;
     private static final String INVALID_DATA_8;
-
-    @Override
-    public void setUp() throws java.lang.Exception {
-        super.setUp();
-        getInstrumentation().waitForIdleSync();
-    }
 
     static {
         INITIAL_DATA_1 = "1967-03-26T00:00:00.000+0200";
@@ -57,6 +52,12 @@ public class DateUtilsTest extends InstrumentationTestCase {
         INVALID_DATA_6 = "3/11";
         INVALID_DATA_7 = "1992-05-07";
         INVALID_DATA_8 = "2/1/2040";
+    }
+
+    @Override
+    public void setUp() throws java.lang.Exception {
+        super.setUp();
+        getInstrumentation().waitForIdleSync();
     }
 
     public void testTimeConversion() {
@@ -79,12 +80,9 @@ public class DateUtilsTest extends InstrumentationTestCase {
     }
 
     public void testDateValidation() {
-        DateTime date1900 = DateTimeFormat
-                .forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/1900");
-        DateTime date1950 = DateTimeFormat
-                .forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/1950");
-        DateTime date2000 = DateTimeFormat
-                .forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/2000");
+        DateTime date1900 = DateTimeFormat.forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/1900");
+        DateTime date1950 = DateTimeFormat.forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/1950");
+        DateTime date2000 = DateTimeFormat.forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/2000");
 
         assertTrue(DateUtils.validateDate(EXPECTED_DATA_1, date1900, DateTime.now()));
         assertTrue(DateUtils.validateDate(EXPECTED_DATA_2, date1900, date2000));

@@ -14,6 +14,11 @@
 
 package org.openmrs.mobile.databases;
 
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.application.OpenMRSLogger;
+import org.openmrs.mobile.utilities.StringUtils;
+
 import android.content.Context;
 
 import net.sqlcipher.database.SQLiteDatabase;
@@ -22,20 +27,14 @@ import net.sqlcipher.database.SQLiteException;
 import net.sqlcipher.database.SQLiteOpenHelper;
 import net.sqlcipher.database.SQLiteStatement;
 
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
-import org.openmrs.mobile.utilities.StringUtils;
-
 public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
+
+    public static final String DATABASE_NAME = OpenMRS.getInstance().getResources().getString(R.string.dbname);
     protected OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
-
-    public static final String DATABASE_NAME = OpenMRS.getInstance().
-            getResources().getString(R.string.dbname);
-
     private String mSecretKey;
 
-    public OpenMRSSQLiteOpenHelper(Context context, SQLiteDatabase.CursorFactory factory, int version, SQLiteDatabaseHook hook) {
+    public OpenMRSSQLiteOpenHelper(Context context, SQLiteDatabase.CursorFactory factory, int version,
+        SQLiteDatabaseHook hook) {
         super(context, DATABASE_NAME, factory, version, hook);
     }
 
@@ -56,7 +55,8 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db;
         try {
             db = getWritableDatabase(getSecretKey());
-        } catch (SQLiteException e) {
+        }
+        catch (SQLiteException e) {
             db = openDatabaseWithoutSecretKey(true);
         }
         return db;
@@ -66,7 +66,8 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db;
         try {
             db = getReadableDatabase(getSecretKey());
-        } catch (SQLiteException e) {
+        }
+        catch (SQLiteException e) {
             db = openDatabaseWithoutSecretKey(false);
         }
         return db;
@@ -84,24 +85,10 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
         return db;
     }
 
-    public static class OpenMRSDefaultDBHook implements SQLiteDatabaseHook {
-
-        @Override
-        public void preKey(SQLiteDatabase sqLiteDatabase) {
-            sqLiteDatabase.execSQL("PRAGMA cipher_default_kdf_iter = '4000'");
-        }
-
-        @Override
-        public void postKey(SQLiteDatabase sqLiteDatabase) {
-            // This method is intentionally empty
-        }
-
-    }
-
     /**
      * Null safe wrapper method for
-     * @see net.sqlcipher.database.SQLiteStatement#bindString(int, String)
      *
+     * @see net.sqlcipher.database.SQLiteStatement#bindString(int, String)
      * @param columnIndex
      * @param columnValue
      * @param statement
@@ -114,8 +101,8 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Null safe wrapper method for
-     * @see net.sqlcipher.database.SQLiteStatement#bindLong(int, long)
      *
+     * @see net.sqlcipher.database.SQLiteStatement#bindLong(int, long)
      * @param columnIndex
      * @param columnValue
      * @param statement
@@ -125,10 +112,11 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
             statement.bindLong(columnIndex, columnValue);
         }
     }
+
     /**
      * Null safe wrapper method for
-     * @see net.sqlcipher.database.SQLiteStatement#bindDouble(int, double)
      *
+     * @see net.sqlcipher.database.SQLiteStatement#bindDouble(int, double)
      * @param columnIndex
      * @param columnValue
      * @param statement
@@ -141,8 +129,8 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Null safe wrapper method for
-     * @see net.sqlcipher.database.SQLiteStatement#bindBlob(int, byte[])
      *
+     * @see net.sqlcipher.database.SQLiteStatement#bindBlob(int, byte[])
      * @param columnIndex
      * @param columnValue
      * @param statement
@@ -151,5 +139,19 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
         if (null != columnValue) {
             statement.bindBlob(columnIndex, columnValue);
         }
+    }
+
+    public static class OpenMRSDefaultDBHook implements SQLiteDatabaseHook {
+
+        @Override
+        public void preKey(SQLiteDatabase sqLiteDatabase) {
+            sqLiteDatabase.execSQL("PRAGMA cipher_default_kdf_iter = '4000'");
+        }
+
+        @Override
+        public void postKey(SQLiteDatabase sqLiteDatabase) {
+            // This method is intentionally empty
+        }
+
     }
 }

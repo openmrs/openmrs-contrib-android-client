@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.activities.formlist;
 
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.dao.EncounterDAO;
@@ -21,9 +23,6 @@ import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.FormResource;
 import org.openmrs.mobile.utilities.FormService;
 import org.openmrs.mobile.utilities.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FormListPresenter extends BasePresenter implements FormListContract.Presenter {
 

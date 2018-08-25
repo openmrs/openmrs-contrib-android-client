@@ -14,16 +14,7 @@
 
 package org.openmrs.mobile.activities.formentrypatientlist;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import java.util.List;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
@@ -33,17 +24,30 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.StringUtils;
 
-import java.util.List;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
-public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatientListContract.Presenter> implements  FormEntryPatientListContract.View {
+public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatientListContract.Presenter> implements FormEntryPatientListContract.View {
 
     private RecyclerView mPatientRecyclerView;
     private TextView mEmptyList;
     private ProgressBar mProgressBar;
 
+    public static FormEntryPatientListFragment newInstance() {
+        return new FormEntryPatientListFragment();
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_form_entry_patient_list, container, false);
 
         mPatientRecyclerView = (RecyclerView) root.findViewById(R.id.patientRecyclerView);
@@ -61,7 +65,7 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
 
     @Override
     public void updateAdapter(List<Patient> patientList) {
-        FormEntryPatientListAdapter adapter = new FormEntryPatientListAdapter(this,patientList);
+        FormEntryPatientListAdapter adapter = new FormEntryPatientListAdapter(this, patientList);
         adapter.notifyDataSetChanged();
         mPatientRecyclerView.setAdapter(adapter);
     }
@@ -72,16 +76,14 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
         if (isVisible) {
             mPatientRecyclerView.setVisibility(View.VISIBLE);
             mEmptyList.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             mPatientRecyclerView.setVisibility(View.GONE);
             mEmptyList.setVisibility(View.VISIBLE);
         }
 
         if (StringUtils.isBlank(replacementWord)) {
             mEmptyList.setText(getString(emptyListTextStringId));
-        }
-        else {
+        } else {
             mEmptyList.setText(getString(emptyListTextStringId, replacementWord));
         }
     }
@@ -91,10 +93,6 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
         Intent intent = new Intent(this.getActivity(), FormListActivity.class);
         intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, selectedPatientID);
         startActivity(intent);
-    }
-
-    public static FormEntryPatientListFragment newInstance() {
-        return new FormEntryPatientListFragment();
     }
 
 }

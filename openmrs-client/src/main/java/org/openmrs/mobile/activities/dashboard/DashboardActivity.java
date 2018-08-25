@@ -14,11 +14,11 @@
 
 package org.openmrs.mobile.activities.dashboard;
 
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 
 public class DashboardActivity extends ACBaseActivity {
 
@@ -57,14 +57,13 @@ public class DashboardActivity extends ACBaseActivity {
         }
 
         // Create fragment
-        DashboardFragment dashboardFragment =
-                (DashboardFragment) getSupportFragmentManager().findFragmentById(R.id.dashboardContentFrame);
+        DashboardFragment dashboardFragment = (DashboardFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.dashboardContentFrame);
         if (dashboardFragment == null) {
             dashboardFragment = DashboardFragment.newInstance();
         }
         if (!dashboardFragment.isActive()) {
-            addFragmentToActivity(getSupportFragmentManager(),
-                    dashboardFragment, R.id.dashboardContentFrame);
+            addFragmentToActivity(getSupportFragmentManager(), dashboardFragment, R.id.dashboardContentFrame);
         }
 
         // Create the presenter
@@ -82,7 +81,7 @@ public class DashboardActivity extends ACBaseActivity {
                     super.onCreate(currinstantstate);
                     setContentView(R.layout.activity_dashboard);
                     FontsUtil.setFont((ViewGroup) findViewById(android.R.id.content));
-
+    
                 } else {
                     // Permission Denied
                     Toast.makeText(DashboardActivity.this, "Permission Denied, Exiting", Toast.LENGTH_SHORT)

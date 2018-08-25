@@ -1,7 +1,7 @@
 /*Circular Viewpager indicator code obtained from:
 http://www.androprogrammer.com/2015/06/view-pager-with-circular-indicator.html*/
 
-/**
+/*
  * This Source Code Form is subject to the terms of the Mozilla Public License,
  * v. 2.0. If a copy of the MPL was not distributed with this file, You can
  * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
@@ -12,6 +12,18 @@ http://www.androprogrammer.com/2015/06/view-pager-with-circular-indicator.html*/
  */
 
 package org.openmrs.mobile.activities.formdisplay;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.bundle.FormFieldsWrapper;
+import org.openmrs.mobile.models.Form;
+import org.openmrs.mobile.models.Page;
+import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.FormService;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,18 +36,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.bundle.FormFieldsWrapper;
-import org.openmrs.mobile.models.Form;
-import org.openmrs.mobile.models.Page;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.FormService;
-import org.openmrs.mobile.utilities.ToastUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FormDisplayActivity extends ACBaseActivity implements FormDisplayContract.View.MainView {
 
@@ -60,8 +60,8 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
 
         Bundle bundle = getIntent().getExtras();
         String valuereference = null;
-        if(bundle!=null) {
-            valuereference = (String)bundle.get(ApplicationConstants.BundleKeys.VALUEREFERENCE);
+        if (bundle != null) {
+            valuereference = (String) bundle.get(ApplicationConstants.BundleKeys.VALUEREFERENCE);
             String formName = (String) bundle.get(ApplicationConstants.BundleKeys.FORM_NAME);
             getSupportActionBar().setTitle(formName + " Form");
         }
@@ -88,7 +88,7 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
     }
 
     @Override
-    public void onAttachFragment (Fragment fragment) {
+    public void onAttachFragment(Fragment fragment) {
         attachPresenterToFragment(fragment);
         super.onAttachFragment(fragment);
     }
@@ -98,17 +98,19 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
             Bundle bundle = getIntent().getExtras();
             String valueRef = null;
             ArrayList<FormFieldsWrapper> formFieldsWrappers = null;
-            if(bundle!=null) {
-                valueRef = (String)bundle.get(ApplicationConstants.BundleKeys.VALUEREFERENCE);
+            if (bundle != null) {
+                valueRef = (String) bundle.get(ApplicationConstants.BundleKeys.VALUEREFERENCE);
                 formFieldsWrappers = bundle.getParcelableArrayList(ApplicationConstants.BundleKeys.FORM_FIELDS_LIST_BUNDLE);
             }
             Form form = FormService.getForm(valueRef);
             List<Page> pageList = form.getPages();
             for (Page page : pageList) {
-                if(formFieldsWrappers != null){
-                    new FormDisplayPagePresenter((FormDisplayPageFragment) fragment, page, formFieldsWrappers.get(pageList.indexOf(page)));
+                if (formFieldsWrappers != null) {
+                    new FormDisplayPagePresenter((FormDisplayPageFragment) fragment, page,
+                            formFieldsWrappers.get(pageList.indexOf(page)));
                 } else {
-                    new FormDisplayPagePresenter((FormDisplayPageFragment) fragment, pageList.get(getFragmentNumber(fragment)));
+                    new FormDisplayPagePresenter((FormDisplayPageFragment) fragment,
+                            pageList.get(getFragmentNumber(fragment)));
                 }
             }
         }
@@ -131,29 +133,20 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
         mBtnNext = (Button) findViewById(R.id.btn_next);
         mBtnFinish = (Button) findViewById(R.id.btn_finish);
 
-        mBtnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1);
-            }
-        });
-        mBtnFinish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.createEncounter();
-            }
-        });
+        mBtnNext.setOnClickListener(view -> mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1));
+        mBtnFinish.setOnClickListener(view -> mPresenter.createEncounter());
         mViewPager = (ViewPager) findViewById(R.id.container);
 
         mViewPager.setAdapter(formPageAdapter);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
             @Override
             public void onPageSelected(int position) {
                 for (int i = 0; i < mDotsCount; i++) {
-                    mDots[i].setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.nonselecteditem_dot));
+                    mDots[i].setImageDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.nonselecteditem_dot));
                 }
-                mDots[position].setImageDrawable(ContextCompat.getDrawable(getBaseContext(),R.drawable.selecteditem_dot));
+                mDots[position].setImageDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.selecteditem_dot));
 
                 if (position + 1 == mDotsCount) {
                     mBtnNext.setVisibility(View.GONE);
@@ -163,10 +156,12 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
                     mBtnFinish.setVisibility(View.GONE);
                 }
             }
+
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 // This method is intentionally empty
             }
+
             @Override
             public void onPageScrollStateChanged(int state) {
                 // This method is intentionally empty
@@ -182,15 +177,13 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
             mDots[i] = new ImageView(this);
             mDots[i].setImageDrawable(ContextCompat.getDrawable(this, R.drawable.nonselecteditem_dot));
 
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-            );
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
 
             pagerIndicator.addView(mDots[i], params);
         }
         mDots[0].setImageDrawable(ContextCompat.getDrawable(this, R.drawable.selecteditem_dot));
-        if(mDotsCount ==1) {
+        if (mDotsCount == 1) {
             mBtnNext.setVisibility(View.GONE);
             mBtnFinish.setVisibility(View.VISIBLE);
         }

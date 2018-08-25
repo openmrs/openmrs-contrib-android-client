@@ -14,9 +14,23 @@
 
 package org.openmrs.mobile.activities.lastviewedpatients;
 
+import java.io.Serializable;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
+
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseFragment;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
+import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.NetworkUtils;
+import org.openmrs.mobile.utilities.ToastUtil;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -29,34 +43,23 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseFragment;
-import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.NetworkUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
-
-import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-
 public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatientsContract.Presenter> implements LastViewedPatientsContract.View {
 
     private static final String PATIENT_LIST = "patient_list";
     private static final String SELECTED_PATIENT_POSITIONS = "selected_patient_positions";
+    public SwipeRefreshLayout mSwipeRefreshLayout;
     private TextView mEmptyList;
     private ProgressBar progressBar;
     private RecyclerView mPatientsRecyclerView;
     private LinearLayoutManager linearLayoutManager;
     private LastViewedPatientRecyclerViewAdapter mAdapter;
-    public SwipeRefreshLayout mSwipeRefreshLayout;
 
+    public static LastViewedPatientsFragment newInstance() {
+        return new LastViewedPatientsFragment();
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_last_viewed_patients, container, false);
         mPatientsRecyclerView = ((RecyclerView) root.findViewById(R.id.lastViewedPatientRecyclerView));
         linearLayoutManager = new LinearLayoutManager(this.getActivity());
@@ -64,20 +67,18 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
         progressBar = (ProgressBar) root.findViewById(R.id.patientRecyclerViewLoading);
         mEmptyList = (TextView) root.findViewById(R.id.emptyLastViewedPatientList);
         mSwipeRefreshLayout = ((SwipeRefreshLayout) root.findViewById(R.id.swiperefreshLastPatients));
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (NetworkUtils.hasNetwork()) {
-                    mPresenter.refresh();
-                    mAdapter.finishActionMode();
-                }else {
-                    ToastUtil.error("No Internet Connection");
-                    getActivity().finish();
-                }
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            if (NetworkUtils.hasNetwork()) {
+                mPresenter.refresh();
+                mAdapter.finishActionMode();
+            } else {
+                ToastUtil.error("No Internet Connection");
+                getActivity().finish();
             }
         });
 
         mPatientsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -90,7 +91,7 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         if (mAdapter != null) {
             mPresenter.onSaveInstanceState(outState);
@@ -110,7 +111,8 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
             } else {
                 updateList(patientList);
                 mPresenter.setStartIndex(savedInstanceState.getInt(ApplicationConstants.BundleKeys.PATIENTS_START_INDEX, 0));
-                Set<Integer> selectedPatientPositions = (Set<Integer>) savedInstanceState.getSerializable(SELECTED_PATIENT_POSITIONS);
+                Set<Integer> selectedPatientPositions = (Set<Integer>) savedInstanceState
+                        .getSerializable(SELECTED_PATIENT_POSITIONS);
                 if (selectedPatientPositions != null && !selectedPatientPositions.isEmpty()) {
                     mAdapter.startActionMode();
                     mAdapter.setSelectedPatientPositions(selectedPatientPositions);
@@ -146,10 +148,6 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
         mEmptyList.setText(text);
     }
 
-    public static LastViewedPatientsFragment newInstance() {
-        return new LastViewedPatientsFragment();
-    }
-
     public void updateList(List<Patient> patientList) {
         mAdapter = new LastViewedPatientRecyclerViewAdapter(this.getActivity(), patientList, this);
         mPatientsRecyclerView.setAdapter(mAdapter);
@@ -171,17 +169,14 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
     @Override
     public void showOpenPatientSnackbar(final Long patientId) {
         FrameLayout frameLayout = (FrameLayout) mSwipeRefreshLayout.findViewById(R.id.swipe_container);
-        Snackbar snackbar = Snackbar.make(frameLayout, getResources().getString(R.string.snackbar_info_patient_downloaded), Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(frameLayout, getResources().getString(R.string.snackbar_info_patient_downloaded),
+            Snackbar.LENGTH_LONG);
         snackbar.setActionTextColor(Color.WHITE);
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
-        snackbar.setAction(getResources().getString(R.string.snackbar_action_open), new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPatientDashboardActivity(patientId);
-            }
-        });
+        snackbar.setAction(getResources().getString(R.string.snackbar_action_open),
+            v -> openPatientDashboardActivity(patientId));
         snackbar.show();
     }
 

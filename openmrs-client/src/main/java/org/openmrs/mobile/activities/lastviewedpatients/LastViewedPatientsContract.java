@@ -14,13 +14,13 @@
 
 package org.openmrs.mobile.activities.lastviewedpatients;
 
-import android.os.Bundle;
+import java.util.List;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Patient;
 
-import java.util.List;
+import android.os.Bundle;
 
 public interface LastViewedPatientsContract {
 

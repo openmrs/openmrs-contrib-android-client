@@ -14,11 +14,12 @@
 
 package org.openmrs.mobile.dao;
 
+import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-import net.sqlcipher.Cursor;
+import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.DBOpenHelper;
@@ -30,14 +31,12 @@ import org.openmrs.mobile.models.Person;
 import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
 
-import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import net.sqlcipher.Cursor;
 
 import rx.Observable;
-
-import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 
 public class PatientDAO {
 
@@ -52,16 +51,15 @@ public class PatientDAO {
     public void deletePatient(long id) {
         OpenMRS.getInstance().getOpenMRSLogger().w("Patient deleted with id: " + id);
         DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        openHelper.getReadableDatabase().delete(PatientTable.TABLE_NAME, PatientTable.Column.ID
-                + " = " + id, null);
+        openHelper.getReadableDatabase().delete(PatientTable.TABLE_NAME, PatientTable.Column.ID + " = " + id, null);
     }
 
     public Observable<List<Patient>> getAllPatients() {
         return createObservableIO(() -> {
-            List<Patient> patients = new ArrayList<Patient>();
+            List<Patient> patients = new ArrayList<>();
             DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-            Cursor cursor = openHelper.getReadableDatabase().query(PatientTable.TABLE_NAME,
-                    null, null, null, null, null, null);
+            Cursor cursor = openHelper.getReadableDatabase().query(PatientTable.TABLE_NAME, null, null, null, null, null,
+                null);
 
             if (null != cursor) {
                 try {
@@ -69,7 +67,8 @@ public class PatientDAO {
                         Patient patient = cursorToPatient(cursor);
                         patients.add(patient);
                     }
-                } finally {
+                }
+                finally {
                     cursor.close();
                 }
             }
@@ -85,7 +84,6 @@ public class PatientDAO {
         patient.setDisplay(cursor.getString(cursor.getColumnIndex(PatientTable.Column.DISPLAY)));
         patient.setUuid(cursor.getString(cursor.getColumnIndex(PatientTable.Column.UUID)));
         patient.setEncounters(cursor.getString(cursor.getColumnIndex(PatientTable.Column.ENCOUNTERS)));
-
 
         PatientIdentifier patientIdentifier = new PatientIdentifier();
         patientIdentifier.setIdentifier(cursor.getString(cursor.getColumnIndex(PatientTable.Column.IDENTIFIER)));
@@ -110,10 +108,11 @@ public class PatientDAO {
 
     public boolean isUserAlreadySaved(String uuid) {
         String where = String.format("%s = ?", PatientTable.Column.UUID);
-        String[] whereArgs = new String[]{uuid};
+        String[] whereArgs = new String[] { uuid };
 
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        final Cursor cursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        final Cursor cursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null, where, whereArgs, null, null,
+            null);
         String patientUUID = "";
         if (null != cursor) {
             try {
@@ -121,7 +120,8 @@ public class PatientDAO {
                     int uuidColumnIndex = cursor.getColumnIndex(PatientTable.Column.UUID);
                     patientUUID = cursor.getString(uuidColumnIndex);
                 }
-            } finally {
+            }
+            finally {
                 cursor.close();
             }
         }
@@ -135,38 +135,42 @@ public class PatientDAO {
     public Patient findPatientByUUID(String uuid) {
         Patient patient = new Patient();
         String where = String.format("%s = ?", PatientTable.Column.UUID);
-        String[] whereArgs = new String[]{uuid};
+        String[] whereArgs = new String[] { uuid };
 
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        final Cursor cursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        final Cursor cursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null, where, whereArgs, null, null,
+            null);
         if (null != cursor) {
             try {
                 if (cursor.moveToFirst()) {
                     patient = cursorToPatient(cursor);
                 }
-            } finally {
+            }
+            finally {
                 cursor.close();
             }
         }
         return patient;
     }
 
-    public List<Patient> getUnsyncedPatients(){
+    public List<Patient> getUnsyncedPatients() {
         List<Patient> patientList = new LinkedList<>();
         String where = String.format("%s = ?", PatientTable.Column.SYNCED);
-        String[] whereArgs = new String[]{"false"};
+        String[] whereArgs = new String[] { "false" };
 
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        final Cursor cursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null , where, whereArgs, null, null, null);
+        final Cursor cursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null, where, whereArgs, null, null,
+            null);
         if (null != cursor) {
             try {
                 while (cursor.moveToNext()) {
                     Patient patient = cursorToPatient(cursor);
-                    if(!patient.isSynced()){
+                    if (!patient.isSynced()) {
                         patientList.add(patient);
                     }
                 }
-            } finally {
+            }
+            finally {
                 cursor.close();
             }
         }
@@ -176,16 +180,18 @@ public class PatientDAO {
     public Patient findPatientByID(String id) {
         Patient patient = new Patient();
         String where = String.format("%s = ?", PatientTable.Column.ID);
-        String[] whereArgs = new String[]{id};
+        String[] whereArgs = new String[] { id };
 
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        final Cursor cursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        final Cursor cursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null, where, whereArgs, null, null,
+            null);
         if (null != cursor) {
             try {
                 if (cursor.moveToFirst()) {
                     patient = cursorToPatient(cursor);
                 }
-            } finally {
+            }
+            finally {
                 cursor.close();
             }
         }
@@ -204,7 +210,7 @@ public class PatientDAO {
         personAddress.setAddress1(cursor.getString(address1ColumnIndex));
         personAddress.setAddress2(cursor.getString(address2ColumnIndex));
         personAddress.setPostalCode(cursor.getString(postalColumnIndex));
-        personAddress.setCountry( cursor.getString(countryColumnIndex));
+        personAddress.setCountry(cursor.getString(countryColumnIndex));
         personAddress.setStateProvince(cursor.getString(stateColumnIndex));
         personAddress.setCityVillage(cursor.getString(cityColumnIndex));
 

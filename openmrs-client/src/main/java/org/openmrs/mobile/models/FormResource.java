@@ -10,6 +10,11 @@
 
 package org.openmrs.mobile.models;
 
+import java.io.Serializable;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -19,22 +24,17 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.Serializable;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-
 @Table(name = "formresource")
-public class FormResource extends Model implements Serializable{
+public class FormResource extends Model implements Serializable {
 
-    @Column(name="name")
+    @Column(name = "name")
     @SerializedName("name")
     @Expose
     private String name;
 
     @SerializedName("resources")
     @Expose
-    private List<FormResource> resources = new ArrayList<FormResource>();
+    private List<FormResource> resources = new ArrayList<>();
 
     @Column(name = "resources")
     private String resourcelist;
@@ -57,10 +57,10 @@ public class FormResource extends Model implements Serializable{
     @Column(name = "links")
     @SerializedName("links")
     @Expose
-    private List<Link> links = new ArrayList<Link>();
+    private List<Link> links = new ArrayList<>();
 
     private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-    private Type formResourceListType = new TypeToken<List<FormResource>>(){}.getType();
+    private Type formResourceListType = new TypeToken<List<FormResource>>() {}.getType();
 
     public String getUuid() {
         return uuid;
@@ -70,11 +70,9 @@ public class FormResource extends Model implements Serializable{
         this.uuid = uuid;
     }
 
-
     public String getDisplay() {
         return display;
     }
-
 
     public void setDisplay(String display) {
         this.display = display;

@@ -14,15 +14,13 @@
 
 package org.openmrs.mobile.utilities;
 
-
-
-import org.openmrs.mobile.application.OpenMRS;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.openmrs.mobile.application.OpenMRS;
 
 public final class FileUtils {
 
@@ -40,17 +38,21 @@ public final class FileUtils {
             while ((read = ios.read(buffer)) != -1) {
                 out.write(buffer, 0, read);
             }
-        } catch (FileNotFoundException e) {
+        }
+        catch (FileNotFoundException e) {
             OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
-        } finally {
+        }
+        finally {
             try {
                 if (ios != null) {
                     ios.close();
                 }
                 out.close();
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
             }
         }

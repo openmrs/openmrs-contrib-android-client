@@ -14,24 +14,6 @@
 
 package org.openmrs.mobile.activities.dashboard;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.util.SparseArray;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-
-import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
-import com.github.amlcurran.showcaseview.ShowcaseView;
-import com.github.amlcurran.showcaseview.targets.Target;
-import com.github.amlcurran.showcaseview.targets.ViewTarget;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.ACBaseFragment;
@@ -41,6 +23,25 @@ import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListAc
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
+
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.util.SparseArray;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class DashboardFragment extends ACBaseFragment<DashboardContract.Presenter> implements DashboardContract.View, View.OnClickListener {
 
@@ -56,6 +57,12 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
 
     private SparseArray<Bitmap> mBitmapCache;
 
+    /**
+     * @return New instance of SyncedPatientsFragment
+     */
+    public static DashboardFragment newInstance() {
+        return new DashboardFragment();
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -67,19 +74,16 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
 
         if (settings2.getBoolean("my_first_time", true)) {
             showOverlayTutorialOne();
-            settings2.edit().putBoolean("my_first_time", false).commit();
+            settings2.edit().putBoolean("my_first_time", false).apply();
         }
     }
 
     private void showOverlayTutorialOne() {
         Target viewTarget = new ViewTarget(R.id.findPatientView, this.getActivity());
-        new ShowcaseView.Builder(this.getActivity())
-                .setTarget(viewTarget)
-                .setContentTitle("Find Patients")
-                .setContentText("Click here to search through all the patients")
-                .hideOnTouchOutside()
-                .setStyle(R.style.CustomShowcaseTheme)
-                .setShowcaseEventListener(new OnShowcaseEventListener() {
+        new ShowcaseView.Builder(this.getActivity()).setTarget(viewTarget).setContentTitle("Find Patients")
+                .setContentText("Click here to search through all the patients").hideOnTouchOutside()
+                .setStyle(R.style.CustomShowcaseTheme).setShowcaseEventListener(new OnShowcaseEventListener() {
+
                     @Override
                     public void onShowcaseViewHide(ShowcaseView showcaseView) {
                         showOverlayTutorialTwo();
@@ -101,19 +105,15 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
                         //This method is intentionally left blank
 
                     }
-                })
-                .build();
+                }).build();
     }
 
     private void showOverlayTutorialTwo() {
         Target viewTarget = new ViewTarget(R.id.activeVisitsView, this.getActivity());
-        new ShowcaseView.Builder(this.getActivity())
-                .setTarget(viewTarget)
-                .setContentTitle("Active Visits")
-                .setContentText("Click here to get the list of all the currently active visits")
-                .hideOnTouchOutside()
-                .setStyle(R.style.CustomShowcaseTheme)
-                .setShowcaseEventListener(new OnShowcaseEventListener() {
+        new ShowcaseView.Builder(this.getActivity()).setTarget(viewTarget).setContentTitle("Active Visits")
+                .setContentText("Click here to get the list of all the currently active visits").hideOnTouchOutside()
+                .setStyle(R.style.CustomShowcaseTheme).setShowcaseEventListener(new OnShowcaseEventListener() {
+
                     @Override
                     public void onShowcaseViewHide(ShowcaseView showcaseView) {
                         showOverlayTutorialThree();
@@ -134,19 +134,15 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
                     public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
                         //This method is intentionally left blank
                     }
-                })
-                .build();
+                }).build();
     }
 
     private void showOverlayTutorialThree() {
         Target viewTarget = new ViewTarget(R.id.registryPatientView, this.getActivity());
-        new ShowcaseView.Builder(this.getActivity())
-                .setTarget(viewTarget)
-                .setContentTitle("Register Patient")
-                .setContentText("Click here to register a new patient")
-                .hideOnTouchOutside()
-                .setStyle(R.style.CustomShowcaseTheme)
-                .setShowcaseEventListener(new OnShowcaseEventListener() {
+        new ShowcaseView.Builder(this.getActivity()).setTarget(viewTarget).setContentTitle("Register Patient")
+                .setContentText("Click here to register a new patient").hideOnTouchOutside()
+                .setStyle(R.style.CustomShowcaseTheme).setShowcaseEventListener(new OnShowcaseEventListener() {
+
                     @Override
                     public void onShowcaseViewHide(ShowcaseView showcaseView) {
                         showOverlayTutorialFour();
@@ -167,19 +163,15 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
                     public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
                         //This method is intentionally left blank
                     }
-                })
-                .build();
+                }).build();
     }
 
     private void showOverlayTutorialFour() {
         Target viewTarget = new ViewTarget(R.id.captureVitalsView, this.getActivity());
-        new ShowcaseView.Builder(this.getActivity())
-                .setTarget(viewTarget)
-                .setContentTitle("Form Entry")
-                .setContentText("Click here to capture vitals for a patient on a visit")
-                .hideOnTouchOutside()
-                .setStyle(R.style.CustomShowcaseThemeExit)
-                .setShowcaseEventListener(new OnShowcaseEventListener() {
+        new ShowcaseView.Builder(this.getActivity()).setTarget(viewTarget).setContentTitle("Form Entry")
+                .setContentText("Click here to capture vitals for a patient on a visit").hideOnTouchOutside()
+                .setStyle(R.style.CustomShowcaseThemeExit).setShowcaseEventListener(new OnShowcaseEventListener() {
+
                     @Override
                     public void onShowcaseViewHide(ShowcaseView showcaseView) {
                         showcaseView.setVisibility(View.GONE);
@@ -199,13 +191,11 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
                     public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
                         //This method is intentionally left blank
                     }
-                })
-                .build();
+                }).build();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         if (root != null) {
@@ -243,8 +233,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
     }
 
     /**
-     * Binds drawable resources to all dashboard buttons
-     * Initially called by this view's presenter
+     * Binds drawable resources to all dashboard buttons Initially called by this view's presenter
      */
     @Override
     public void bindDrawableResources() {
@@ -257,7 +246,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
     /**
      * Binds drawable resource to ImageView
      *
-     * @param imageView  ImageView to bind resource to
+     * @param imageView ImageView to bind resource to
      * @param drawableId id of drawable resource (for example R.id.somePicture);
      */
     private void bindDrawableResource(ImageView imageView, int drawableId) {
@@ -282,8 +271,8 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
 
     private void createImageBitmap(Integer key, ViewGroup.LayoutParams layoutParams) {
         if (mBitmapCache.get(key) == null) {
-            mBitmapCache.put(key, ImageUtils.decodeBitmapFromResource(getResources(), key,
-                    layoutParams.width, layoutParams.height));
+            mBitmapCache.put(key,
+                ImageUtils.decodeBitmapFromResource(getResources(), key, layoutParams.width, layoutParams.height));
         }
     }
 
@@ -293,13 +282,6 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
     private void startNewActivity(Class<? extends ACBaseActivity> clazz) {
         Intent intent = new Intent(getActivity(), clazz);
         startActivity(intent);
-    }
-
-    /**
-     * @return New instance of SyncedPatientsFragment
-     */
-    public static DashboardFragment newInstance() {
-        return new DashboardFragment();
     }
 
     @Override

@@ -18,6 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class URLValidator {
+
     private static final String URL_PATTERN = "^((https|http)?://)([\\da-z.-]*)\\.([a-z.]*)([\\w .-]*)*(:([0-9]{2,5}))?((/(\\w*(-\\w+)?))*?)/*$";
     private static final String SLASH = "/";
     private static final String SPACE = " ";
@@ -49,7 +50,7 @@ public final class URLValidator {
         return trimmedUrl;
     }
 
-    public static String toLowerCase(String url){
+    public static String toLowerCase(String url) {
         return url.toLowerCase();
     }
 
@@ -61,16 +62,15 @@ public final class URLValidator {
         return validUrl;
     }
 
-    public static String ensureProtocol(String url)
-    {
-        if (!url.matches("\\w+:.*"))
-        {
+    public static String ensureProtocol(String url) {
+        if (!url.matches("\\w+:.*")) {
             return "http://" + url;
         }
         return url;
     }
 
     public static class ValidationResult {
+
         private final boolean isURLValid;
         private final String url;
 

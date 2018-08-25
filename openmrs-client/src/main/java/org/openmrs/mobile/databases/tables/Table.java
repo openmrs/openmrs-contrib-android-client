@@ -15,11 +15,25 @@
 package org.openmrs.mobile.databases.tables;
 
 public abstract class Table<T> {
+
     public static final String PRIMARY_KEY = " integer primary key autoincrement,";
 
     public static final String CREATE_TABLE = "CREATE TABLE ";
     public static final String INSERT_INTO = "INSERT INTO ";
     public static final String DROP_TABLE_IF_EXISTS = "DROP TABLE IF EXISTS ";
+
+    public static String values(int numberOfColumns) {
+        StringBuilder builder = new StringBuilder("VALUES(");
+        for (int i = 1; i <= numberOfColumns; i++) {
+            if (i < numberOfColumns) {
+                builder.append("?,");
+            } else if (i == numberOfColumns) {
+                builder.append("?");
+            }
+        }
+        builder.append(");");
+        return builder.toString();
+    }
 
     /**
      * @return Appended String which is representation of create table definition
@@ -60,23 +74,11 @@ public abstract class Table<T> {
      */
     public abstract void delete(long tableObjectID);
 
-    public static String values(int numberOfColumns) {
-        StringBuilder builder = new StringBuilder("VALUES(");
-        for (int i = 1; i <= numberOfColumns; i++) {
-            if (i < numberOfColumns) {
-                builder.append("?,");
-            } else if (i == numberOfColumns) {
-                builder.append("?");
-            }
-        }
-        builder.append(");");
-        return builder.toString();
-    }
-
     /**
      * Class contains common parts of columns types and definitions
      */
     public abstract class MasterColumn {
+
         public static final String ID = "_id";
         public static final String UUID = "uuid";
         public static final String DISPLAY = "display";
@@ -87,6 +89,7 @@ public abstract class Table<T> {
          * Contains columns type definitions
          */
         public abstract class Type {
+
             public static final String TEXT_TYPE = " text";
             public static final String TEXT_TYPE_WITH_COMMA = TEXT_TYPE + COMMA;
             public static final String TEXT_TYPE_NOT_NULL = " text not null,";

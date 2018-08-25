@@ -14,11 +14,11 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
+import java.util.List;
+
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Patient;
-
-import java.util.List;
 
 public interface AddEditPatientContract {
 
@@ -26,12 +26,8 @@ public interface AddEditPatientContract {
 
         void finishPatientInfoActivity();
 
-        void setErrorsVisibility(boolean givenNameError,
-                                 boolean familyNameError,
-                                 boolean dayOfBirthError,
-                                 boolean addressError,
-                                 boolean countryError,
-                                 boolean genderError);
+        void setErrorsVisibility(boolean givenNameError, boolean familyNameError, boolean dayOfBirthError,
+                boolean addressError, boolean countryError, boolean genderError);
 
         void scrollToTop();
 

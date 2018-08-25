@@ -111,8 +111,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:weightSum="2"
-                    android:baselineAligned="false">
+                    android:baselineAligned="false"
+                    android:weightSum="2">
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/textInputLayoutFirstName"
@@ -294,7 +294,7 @@
                             android:inputType="datetime"
                             android:maxLines="1"
                             android:nextFocusDown="@+id/estyr"
-                            android:textSize="14sp"/>
+                            android:textSize="14sp" />
                     </android.support.design.widget.TextInputLayout>
 
                     <Button
@@ -304,10 +304,10 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginTop="14dp"
                         android:layout_marginEnd="24dp"
                         android:layout_marginRight="24dp"
-                        android:background="@drawable/btn_date_picker"/>
+                        android:layout_marginTop="14dp"
+                        android:background="@drawable/btn_date_picker" />
                 </RelativeLayout>
 
                 <TextView
@@ -598,11 +598,11 @@
     </ScrollView>
 
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone" />
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
 </RelativeLayout>

@@ -14,10 +14,10 @@
 
 package org.openmrs.mobile.utilities;
 
-import org.openmrs.mobile.models.Patient;
-
 import java.io.Serializable;
 import java.util.List;
+
+import org.openmrs.mobile.models.Patient;
 
 public class PatientAndMatchingPatients implements Serializable {
 

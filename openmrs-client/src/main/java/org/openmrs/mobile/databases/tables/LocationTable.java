@@ -19,11 +19,11 @@ import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.models.Location;
 
 public class LocationTable extends Table<Location> {
+
     public static final String TABLE_NAME = "locations";
 
     /**
-     * Number of columns without ID column
-     * use as a param to
+     * Number of columns without ID column use as a param to
      *
      * @see Table#values(int)
      */
@@ -31,37 +31,21 @@ public class LocationTable extends Table<Location> {
 
     @Override
     public String createTableDefinition() {
-        return CREATE_TABLE + TABLE_NAME + "("
-                + Column.ID + PRIMARY_KEY
-                + Column.UUID + Column.Type.TEXT_TYPE_NOT_NULL
-                + Column.DISPLAY + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.NAME + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.DESCRIPTION + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.ADDRESS_1 + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.ADDRESS_2 + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.CITY + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.STATE + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.COUNTRY + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.POSTAL_CODE + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.PARENT_LOCATION_UUID + Column.Type.TEXT_TYPE
+        return CREATE_TABLE + TABLE_NAME + "(" + Column.ID + PRIMARY_KEY + Column.UUID + Column.Type.TEXT_TYPE_NOT_NULL
+                + Column.DISPLAY + Column.Type.TEXT_TYPE_WITH_COMMA + Column.NAME + Column.Type.TEXT_TYPE_WITH_COMMA
+                + Column.DESCRIPTION + Column.Type.TEXT_TYPE_WITH_COMMA + Column.ADDRESS_1 + Column.Type.TEXT_TYPE_WITH_COMMA
+                + Column.ADDRESS_2 + Column.Type.TEXT_TYPE_WITH_COMMA + Column.CITY + Column.Type.TEXT_TYPE_WITH_COMMA
+                + Column.STATE + Column.Type.TEXT_TYPE_WITH_COMMA + Column.COUNTRY + Column.Type.TEXT_TYPE_WITH_COMMA
+                + Column.POSTAL_CODE + Column.Type.TEXT_TYPE_WITH_COMMA + Column.PARENT_LOCATION_UUID + Column.Type.TEXT_TYPE
                 + ");";
     }
 
     @Override
     public String insertIntoTableDefinition() {
-        return INSERT_INTO + TABLE_NAME + "("
-                + Column.UUID + Column.COMMA
-                + Column.DISPLAY + Column.COMMA
-                + Column.NAME + Column.COMMA
-                + Column.DESCRIPTION + Column.COMMA
-                + Column.ADDRESS_1 + Column.COMMA  
-                + Column.ADDRESS_2 + Column.COMMA
-                + Column.CITY + Column.COMMA
-                + Column.STATE + Column.COMMA
-                + Column.COUNTRY + Column.COMMA
-                + Column.POSTAL_CODE + Column.COMMA
-                + Column.PARENT_LOCATION_UUID + ")"
-                + values(INSERT_COLUMNS_COUNT);
+        return INSERT_INTO + TABLE_NAME + "(" + Column.UUID + Column.COMMA + Column.DISPLAY + Column.COMMA + Column.NAME
+                + Column.COMMA + Column.DESCRIPTION + Column.COMMA + Column.ADDRESS_1 + Column.COMMA + Column.ADDRESS_2
+                + Column.COMMA + Column.CITY + Column.COMMA + Column.STATE + Column.COMMA + Column.COUNTRY + Column.COMMA
+                + Column.POSTAL_CODE + Column.COMMA + Column.PARENT_LOCATION_UUID + ")" + values(INSERT_COLUMNS_COUNT);
     }
 
     @Override
@@ -86,7 +70,13 @@ public class LocationTable extends Table<Location> {
         openHelper.getWritableDatabase().delete(TABLE_NAME, MasterColumn.ID + MasterColumn.EQUALS + tableObjectID, null);
     }
 
+    @Override
+    public String toString() {
+        return TABLE_NAME + createTableDefinition();
+    }
+
     public class Column extends MasterColumn {
+
         public static final String NAME = "name";
         public static final String DESCRIPTION = "description";
         public static final String ADDRESS_1 = "address1";
@@ -96,10 +86,5 @@ public class LocationTable extends Table<Location> {
         public static final String STATE = "state";
         public static final String CITY = "city";
         public static final String PARENT_LOCATION_UUID = "parentLocationUuid";
-    }
-
-    @Override
-    public String toString() {
-        return TABLE_NAME + createTableDefinition();
     }
 }

@@ -14,17 +14,18 @@
 
 package org.openmrs.mobile.utilities;
 
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.Visit;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.Visit;
 
 public class FilterUtil {
 
     /**
-     * Used to filter list by specified query
-     * Its possible to filter patients by: Name, Surname (Family Name) or ID.
+     * Used to filter list by specified query Its possible to filter patients by: Name, Surname (Family
+     * Name) or ID.
+     * 
      * @param patientList list of patients to filter
      * @param query query that needs to be contained in Name, Surname or ID.
      * @return patient list filtered by query

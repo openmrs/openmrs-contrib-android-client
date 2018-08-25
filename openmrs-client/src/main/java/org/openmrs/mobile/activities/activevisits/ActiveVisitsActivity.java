@@ -14,21 +14,18 @@
 
 package org.openmrs.mobile.activities.activevisits;
 
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseActivity;
+
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.application.OpenMRS;
-
 public class ActiveVisitsActivity extends ACBaseActivity {
 
     private ActiveVisitsContract.Presenter mPresenter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +38,13 @@ public class ActiveVisitsActivity extends ACBaseActivity {
         }
 
         // Create fragment
-        ActiveVisitsFragment activeVisitsFragment =
-                (ActiveVisitsFragment) getSupportFragmentManager().findFragmentById(R.id.activeVisitContentFrame);
+        ActiveVisitsFragment activeVisitsFragment = (ActiveVisitsFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.activeVisitContentFrame);
         if (activeVisitsFragment == null) {
             activeVisitsFragment = ActiveVisitsFragment.newInstance();
         }
         if (!activeVisitsFragment.isActive()) {
-            addFragmentToActivity(getSupportFragmentManager(),
-                    activeVisitsFragment, R.id.activeVisitContentFrame);
+            addFragmentToActivity(getSupportFragmentManager(), activeVisitsFragment, R.id.activeVisitContentFrame);
         }
 
         // Create the presenter
@@ -64,6 +60,7 @@ public class ActiveVisitsActivity extends ACBaseActivity {
         findVisitView = (SearchView) mFindVisitItem.getActionView();
 
         findVisitView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String query) {
                 findVisitView.clearFocus();
@@ -74,8 +71,7 @@ public class ActiveVisitsActivity extends ACBaseActivity {
             public boolean onQueryTextChange(String query) {
                 if (!query.isEmpty()) {
                     mPresenter.updateVisitsInDatabaseList(query);
-                }
-                else {
+                } else {
                     mPresenter.updateVisitsInDatabaseList();
                 }
                 return true;
@@ -83,6 +79,5 @@ public class ActiveVisitsActivity extends ACBaseActivity {
         });
         return true;
     }
-
 
 }

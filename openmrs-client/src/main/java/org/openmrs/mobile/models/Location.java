@@ -17,6 +17,7 @@ package org.openmrs.mobile.models;
 import com.google.gson.annotations.Expose;
 
 public class Location extends Resource {
+
     @Expose
     private Long id;
     @Expose
@@ -38,24 +39,28 @@ public class Location extends Resource {
     @Expose
     private String postalCode;
 
-
-    public Location() {}
+    public Location() {
+    }
 
     public Location(String display) {
         this.display = display;
     }
 
-    public Location(Long id, String name, String parentLocationUuid, String description, String address2, String address1, String cityVillage, String stateProvince, String country, String postalCode) {
+    public Location(Long id,
+                    String name,
+                    String parentLocationUuid,
+                    String description,
+                    PersonAddress address) {
         this.id = id;
         this.name = name;
         this.parentLocationUuid = parentLocationUuid;
         this.description = description;
-        this.address2 = address2;
-        this.address1 = address1;
-        this.cityVillage = cityVillage;
-        this.stateProvince = stateProvince;
-        this.country = country;
-        this.postalCode = postalCode;
+        this.address2 = address.getAddress2();
+        this.address1 = address.getAddress1();
+        this.cityVillage = address.getCityVillage();
+        this.stateProvince = address.getStateProvince();
+        this.country = address.getCountry();
+        this.postalCode = address.getPostalCode();
     }
 
     public Long getId() {

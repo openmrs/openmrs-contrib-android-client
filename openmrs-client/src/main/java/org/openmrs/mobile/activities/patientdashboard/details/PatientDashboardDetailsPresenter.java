@@ -32,8 +32,7 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
     private PatientApi patientApi;
     private PatientDAO patientDAO;
 
-    public PatientDashboardDetailsPresenter(String id,
-                                            PatientDashboardContract.ViewPatientDetails mPatientDetailsView) {
+    public PatientDashboardDetailsPresenter(String id, PatientDashboardContract.ViewPatientDetails mPatientDetailsView) {
         this.mPatientDetailsView = mPatientDetailsView;
         this.visitApi = new VisitApi();
         this.patientApi = new PatientApi();
@@ -43,8 +42,7 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
     }
 
     public PatientDashboardDetailsPresenter(Patient mPatient, PatientDAO patientDAO,
-                                            PatientDashboardContract.ViewPatientDetails mPatientDetailsView,
-                                            VisitApi visitApi, PatientApi patientApi) {
+        PatientDashboardContract.ViewPatientDetails mPatientDetailsView, VisitApi visitApi, PatientApi patientApi) {
         this.mPatientDetailsView = mPatientDetailsView;
         this.visitApi = visitApi;
         this.patientApi = patientApi;
@@ -55,20 +53,19 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
 
     @Override
     public void synchronizePatient() {
-        if(NetworkUtils.isOnline()) {
+        if (NetworkUtils.isOnline()) {
             mPatientDetailsView.showDialog(R.string.action_synchronize_patients);
             syncDetailsData();
             syncVisitsData();
             syncVitalsData();
-        }
-        else {
+        } else {
             reloadPatientData(mPatient);
             mPatientDetailsView.showToast(R.string.synchronize_patient_network_error, true);
         }
-      }
+    }
 
-    public void updatePatientDataFromServer(){
-        if(NetworkUtils.isOnline()) {
+    public void updatePatientDataFromServer() {
+        if (NetworkUtils.isOnline()) {
             syncDetailsData();
             syncVisitsData();
             syncVitalsData();
@@ -93,7 +90,8 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
     public void subscribe() {
         updatePatientDataFromServer();
         mPatient = patientDAO.findPatientByID(mPatient.getId().toString());
-        mPatientDetailsView.setMenuTitle(mPatient.getPerson().getName().getNameString(), mPatient.getIdentifier().getIdentifier());
+        mPatientDetailsView.setMenuTitle(mPatient.getPerson().getName().getNameString(),
+            mPatient.getIdentifier().getIdentifier());
         mPatientDetailsView.resolvePatientDataDisplay(patientDAO.findPatientByID(mPatient.getId().toString()));
         if (!NetworkUtils.isOnline()) {
             mPatientDetailsView.attachSnackbarToActivity();
@@ -113,6 +111,7 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
     */
     private void syncVisitsData() {
         visitApi.syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
+
             @Override
             public void onResponse() {
                 mPatientDetailsView.showToast(R.string.synchronize_patient_successful, false);
@@ -132,6 +131,7 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
     */
     private void syncDetailsData() {
         patientApi.downloadPatientByUuid(mPatient.getUuid(), new DownloadPatientCallbackListener() {
+
             @Override
             public void onPatientDownloaded(Patient patient) {
                 updatePatientData(patient);
@@ -146,6 +146,7 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
             public void onResponse() {
                 // This method is intentionally empty
             }
+
             @Override
             public void onErrorResponse(String errorMessage) {
                 mPatientDetailsView.showToast(R.string.synchronize_patient_error, true);

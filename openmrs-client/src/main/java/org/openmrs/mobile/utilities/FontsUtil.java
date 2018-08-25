@@ -14,6 +14,10 @@
 
 package org.openmrs.mobile.utilities;
 
+import java.util.HashMap;
+
+import org.openmrs.mobile.application.OpenMRS;
+
 import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,36 +25,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.openmrs.mobile.application.OpenMRS;
-
-import java.util.HashMap;
-
 public final class FontsUtil {
 
     private static final String OPEN_FONTS_PATH = "fonts/OpenSans/";
     private static HashMap<OpenFonts, Typeface> typefacesForFonts;
 
-    public enum OpenFonts {
-        OPEN_SANS_BOLD("OpenSans-Bold.ttf"),
-        OPEN_SANS_BOLD_ITALIC("OpenSans-BoldItalic.ttf"),
-        OPEN_SANS_EXTRA_BOLD("OpenSans-ExtraBold.ttf"),
-        OPEN_SANS_EXTRA_BOLD_ITALIC("OpenSans-ExtraBoldItalic.ttf"),
-        OPEN_SANS_ITALIC("OpenSans-Italic.ttf"),
-        OPEN_SANS_LIGHT("OpenSans-Light.ttf"),
-        OPEN_SANS_LIGHT_ITALIC("OpenSans-LightItalic.ttf"),
-        OPEN_SANS_REGULAR("OpenSans-Regular.ttf"),
-        OPEN_SANS_SEMIBOLD("OpenSans-Semibold.ttf"),
-        OPEN_SANS_SEMIBOLD_ITALIC("OpenSans-SemiboldItalic.ttf");
-
-        private final String font;
-
-        private OpenFonts(String font) {
-            this.font = font;
-        }
-
-        public String getFontName() {
-            return font;
-        }
+    static {
+        typefacesForFonts = new HashMap<>(OpenFonts.values().length);
     }
 
     private FontsUtil() {
@@ -79,7 +60,7 @@ public final class FontsUtil {
 
         if (openTypeFace == null) {
             openTypeFace = Typeface.createFromAsset(OpenMRS.getInstance().getAssets(),
-                    OPEN_FONTS_PATH + openFont.getFontName());
+                OPEN_FONTS_PATH + openFont.getFontName());
             typefacesForFonts.put(openFont, openTypeFace);
         }
         return openTypeFace;
@@ -97,8 +78,7 @@ public final class FontsUtil {
 
     private static void setTypeface(TextView textView) {
         if (textView != null) {
-            if (textView.getTypeface() != null && textView.getTypeface().isBold()
-                                              && textView.getTypeface().isItalic()) {
+            if (textView.getTypeface() != null && textView.getTypeface().isBold() && textView.getTypeface().isItalic()) {
                 textView.setTypeface(getOpenTypeface(OpenFonts.OPEN_SANS_BOLD_ITALIC));
             } else if (textView.getTypeface() != null && textView.getTypeface().isItalic()) {
                 textView.setTypeface(getOpenTypeface(OpenFonts.OPEN_SANS_ITALIC));
@@ -110,7 +90,26 @@ public final class FontsUtil {
         }
     }
 
-    static {
-        typefacesForFonts = new HashMap<OpenFonts, Typeface>(OpenFonts.values().length);
+    public enum OpenFonts {
+        OPEN_SANS_BOLD("OpenSans-Bold.ttf"),
+        OPEN_SANS_BOLD_ITALIC("OpenSans-BoldItalic.ttf"),
+        OPEN_SANS_EXTRA_BOLD("OpenSans-ExtraBold.ttf"),
+        OPEN_SANS_EXTRA_BOLD_ITALIC("OpenSans-ExtraBoldItalic.ttf"),
+        OPEN_SANS_ITALIC("OpenSans-Italic.ttf"),
+        OPEN_SANS_LIGHT("OpenSans-Light.ttf"),
+        OPEN_SANS_LIGHT_ITALIC("OpenSans-LightItalic.ttf"),
+        OPEN_SANS_REGULAR("OpenSans-Regular.ttf"),
+        OPEN_SANS_SEMIBOLD("OpenSans-Semibold.ttf"),
+        OPEN_SANS_SEMIBOLD_ITALIC("OpenSans-SemiboldItalic.ttf");
+
+        private final String font;
+
+        private OpenFonts(String font) {
+            this.font = font;
+        }
+
+        public String getFontName() {
+            return font;
+        }
     }
 }

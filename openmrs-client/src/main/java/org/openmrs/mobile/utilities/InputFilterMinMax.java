@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.utilities;
 
+import org.openmrs.mobile.application.OpenMRS;
+
 import android.text.InputFilter;
 import android.text.Spanned;
 
@@ -41,7 +43,10 @@ public class InputFilterMinMax implements InputFilter {
             int input = Integer.parseInt(newVal);
             if (isInRange(min, max, input))
                 return null;
-        } catch (NumberFormatException nfe) { }
+        }
+        catch (NumberFormatException nfe) {
+            OpenMRS.getInstance().getOpenMRSLogger().e(nfe.getMessage());
+        }
         return "";
     }
 

@@ -14,21 +14,7 @@
 
 package org.openmrs.mobile.activities.patientdashboard.details;
 
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import java.io.ByteArrayOutputStream;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
@@ -42,7 +28,22 @@ import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-import java.io.ByteArrayOutputStream;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class PatientDetailsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDetails {
 
@@ -55,8 +56,8 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
     @Override
     public void attachSnackbarToActivity() {
-        Snackbar snackbar = Snackbar
-                .make(mPatientDashboardActivity.findViewById(R.id.patientDashboardContentFrame), getString(R.string.snackbar_no_internet_connection), Snackbar.LENGTH_INDEFINITE);
+        Snackbar snackbar = Snackbar.make(mPatientDashboardActivity.findViewById(R.id.patientDashboardContentFrame),
+            getString(R.string.snackbar_no_internet_connection), Snackbar.LENGTH_INDEFINITE);
         View view = snackbar.getView();
         TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
         tv.setTextColor(Color.WHITE);
@@ -99,7 +100,8 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_patient_details, null, false);
         FontsUtil.setFont((ViewGroup) rootView);
         return rootView;
@@ -107,7 +109,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
     @Override
     public void resolvePatientDataDisplay(final Patient patient) {
-        if(isAdded()) {
+        if (isAdded()) {
             if (("M").equals(patient.getPerson().getGender())) {
                 ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.male));
             } else {
@@ -120,12 +122,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
             final Bitmap photo = patient.getPerson().getResizedPhoto();
             final String patientName = patient.getPerson().getName().getNameString();
             patientImageView.setImageBitmap(photo);
-            patientImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showPatientPhoto(photo, patientName);
-                }
-            });
+            patientImageView.setOnClickListener(view -> showPatientPhoto(photo, patientName));
         }
 
         ((TextView) rootView.findViewById(R.id.patientDetailsName)).setText(patient.getPerson().getName().getNameString());
@@ -137,11 +134,16 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
         }
 
         if (null != patient.getPerson().getAddress()) {
-            showAddressDetailsViewElement(rootView.findViewById(R.id.addressLayout), R.id.addressDetailsStreet, patient.getPerson().getAddress().getAddressString());
-            showAddressDetailsViewElement(rootView.findViewById(R.id.stateLayout), R.id.addressDetailsState, patient.getPerson().getAddress().getStateProvince());
-            showAddressDetailsViewElement(rootView.findViewById(R.id.countryLayout), R.id.addressDetailsCountry, patient.getPerson().getAddress().getCountry());
-            showAddressDetailsViewElement(rootView.findViewById(R.id.postalCodeLayout), R.id.addressDetailsPostalCode, patient.getPerson().getAddress().getPostalCode());
-            showAddressDetailsViewElement(rootView.findViewById(R.id.cityLayout), R.id.addressDetailsCity, patient.getPerson().getAddress().getCityVillage());
+            showAddressDetailsViewElement(rootView.findViewById(R.id.addressLayout), R.id.addressDetailsStreet,
+                patient.getPerson().getAddress().getAddressString());
+            showAddressDetailsViewElement(rootView.findViewById(R.id.stateLayout), R.id.addressDetailsState,
+                patient.getPerson().getAddress().getStateProvince());
+            showAddressDetailsViewElement(rootView.findViewById(R.id.countryLayout), R.id.addressDetailsCountry,
+                patient.getPerson().getAddress().getCountry());
+            showAddressDetailsViewElement(rootView.findViewById(R.id.postalCodeLayout), R.id.addressDetailsPostalCode,
+                patient.getPerson().getAddress().getPostalCode());
+            showAddressDetailsViewElement(rootView.findViewById(R.id.cityLayout), R.id.addressDetailsCity,
+                patient.getPerson().getAddress().getCityVillage());
         }
     }
 
@@ -178,8 +180,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     @Override
     public void startPatientUpdateActivity(long patientId) {
         Intent updatePatient = new Intent(mPatientDashboardActivity, AddEditPatientActivity.class);
-        updatePatient.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE,
-                String.valueOf(patientId));
+        updatePatient.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, String.valueOf(patientId));
         startActivity(updatePatient);
     }
 
@@ -191,6 +192,5 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
         intent.putExtra("name", patientName);
         startActivity(intent);
     }
-
 
 }

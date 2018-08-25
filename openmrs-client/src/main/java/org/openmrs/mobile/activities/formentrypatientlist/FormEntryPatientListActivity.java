@@ -14,16 +14,14 @@
 
 package org.openmrs.mobile.activities.formentrypatientlist;
 
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseActivity;
+
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.application.OpenMRS;
 
 public class FormEntryPatientListActivity extends ACBaseActivity {
 
@@ -40,18 +38,18 @@ public class FormEntryPatientListActivity extends ACBaseActivity {
         }
 
         // Create fragment
-        FormEntryPatientListFragment formEntryPatientListFragment =
-                (FormEntryPatientListFragment) getSupportFragmentManager().findFragmentById(R.id.formEntryPatientListContentFrame);
+        FormEntryPatientListFragment formEntryPatientListFragment = (FormEntryPatientListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.formEntryPatientListContentFrame);
         if (formEntryPatientListFragment == null) {
             formEntryPatientListFragment = FormEntryPatientListFragment.newInstance();
         }
         if (!formEntryPatientListFragment.isActive()) {
-            addFragmentToActivity(getSupportFragmentManager(),
-                    formEntryPatientListFragment, R.id.formEntryPatientListContentFrame);
+            addFragmentToActivity(getSupportFragmentManager(), formEntryPatientListFragment,
+                R.id.formEntryPatientListContentFrame);
         }
 
         // Create the presenter
-        mPresenter = new FormEntryPatientListPresenter (formEntryPatientListFragment);
+        mPresenter = new FormEntryPatientListPresenter(formEntryPatientListFragment);
     }
 
     @Override
@@ -64,6 +62,7 @@ public class FormEntryPatientListActivity extends ACBaseActivity {
 
         // Search function
         findPatientView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String query) {
                 findPatientView.clearFocus();

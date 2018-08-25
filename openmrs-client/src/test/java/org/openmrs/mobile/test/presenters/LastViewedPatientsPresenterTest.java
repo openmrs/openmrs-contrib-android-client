@@ -14,6 +14,15 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -23,15 +32,6 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.test.ACUnitTestBase;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
 
@@ -49,19 +49,16 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
     private int startIndex = 0;
 
     @Before
-    public void setUp(){
-        lastViewedPatientsPresenter = new LastViewedPatientsPresenter(
-                view,
-                restApi,
-                patientDAO);
-        firstPatient = createPatient(1l);
-        secondPatient = createPatient(2l);
+    public void setUp() {
+        lastViewedPatientsPresenter = new LastViewedPatientsPresenter(view, restApi, patientDAO);
+        firstPatient = createPatient(1L);
+        secondPatient = createPatient(2L);
         when(patientDAO.isUserAlreadySaved(firstPatient.getUuid())).thenReturn(true);
         when(patientDAO.isUserAlreadySaved(secondPatient.getUuid())).thenReturn(false);
     }
 
     @Test
-    public void shouldUpdateLastViewedPatientList_allOK(){
+    public void shouldUpdateLastViewedPatientList_allOK() {
         List<Patient> patientList = Arrays.asList(firstPatient, secondPatient);
         when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockSuccessCall(patientList));
         lastViewedPatientsPresenter.updateLastViewedList();
@@ -73,7 +70,7 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
     }
 
     @Test
-    public void shouldUpdateLastViewedPatientList_ServerError(){
+    public void shouldUpdateLastViewedPatientList_ServerError() {
         when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockErrorCall(401));
         lastViewedPatientsPresenter.updateLastViewedList();
         verify(restApi).getLastViewedPatients(limit, startIndex);
@@ -85,7 +82,7 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
     }
 
     @Test
-    public void shouldUpdateLastViewedPatientList_Error(){
+    public void shouldUpdateLastViewedPatientList_Error() {
         when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockFailureCall());
         lastViewedPatientsPresenter.updateLastViewedList();
         verify(restApi).getLastViewedPatients(limit, startIndex);
@@ -96,7 +93,7 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
     }
 
     @Test
-    public void shouldFindPatientsWithQuery_allOK(){
+    public void shouldFindPatientsWithQuery_allOK() {
         List<Patient> patientList = Arrays.asList(firstPatient, secondPatient);
         when(restApi.getPatients("query", "full")).thenReturn(mockSuccessCall(patientList));
         lastViewedPatientsPresenter.findPatients("query");
@@ -107,7 +104,7 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
     }
 
     @Test
-    public void shouldFindPatientsWithQuery_Error(){
+    public void shouldFindPatientsWithQuery_Error() {
         when(restApi.getPatients("query", "full")).thenReturn(mockFailureCall());
         lastViewedPatientsPresenter.findPatients("query");
         verify(restApi).getPatients("query", "full");

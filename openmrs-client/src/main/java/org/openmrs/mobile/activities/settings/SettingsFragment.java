@@ -12,8 +12,16 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-
 package org.openmrs.mobile.activities.settings;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseFragment;
+import org.openmrs.mobile.models.SettingsListItemDTO;
+import org.openmrs.mobile.services.ConceptDownloadService;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -22,6 +30,7 @@ import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,15 +39,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseFragment;
-import org.openmrs.mobile.models.SettingsListItemDTO;
-import org.openmrs.mobile.services.ConceptDownloadService;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter> implements SettingsContract.View {
 
@@ -50,12 +50,16 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
     private TextView conceptsInDbTextView;
     private ImageButton downloadConceptsButton;
 
+    public static SettingsFragment newInstance() {
+        return new SettingsFragment();
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
 
         bReceiver = new BroadcastReceiver() {
+
             @Override
             public void onReceive(Context context, Intent intent) {
                 mPresenter.updateConceptsInDBTextView();
@@ -91,7 +95,8 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
     public void onResume() {
         super.onResume();
         mPresenter.updateConceptsInDBTextView();
-        LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(bReceiver, new IntentFilter(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID));
+        LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(bReceiver,
+            new IntentFilter(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID));
     }
 
     @Override
@@ -102,9 +107,7 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
     @Override
     public void addLogsInfo(long logSize, String logFilename) {
 
-
-        mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_logs),
-                logFilename,
+        mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_logs), logFilename,
                 "Size: " + logSize + "kB"));
     }
 
@@ -120,25 +123,22 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
             versionName = packageManager.getPackageInfo(packageName, 0).versionName;
             ApplicationInfo ai = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
             buildVersion = ai.metaData.getInt("buildVersion");
-        } catch (PackageManager.NameNotFoundException e) {
+        }
+        catch (PackageManager.NameNotFoundException e) {
             mPresenter.logException("Failed to load meta-data, NameNotFound: " + e.getMessage());
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e) {
             mPresenter.logException("Failed to load meta-data, NullPointer: " + e.getMessage());
         }
 
         mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_about),
-                getResources().getString(R.string.app_name),
-                versionName + " Build: " + buildVersion));
+                getResources().getString(R.string.app_name), versionName + " Build: " + buildVersion));
     }
 
     @Override
     public void applyChanges() {
         SettingsRecyclerViewAdapter adapter = new SettingsRecyclerViewAdapter(mListItem);
         settingsRecyclerView.setAdapter(adapter);
-    }
-
-    public static SettingsFragment newInstance() {
-        return new SettingsFragment();
     }
 
 }

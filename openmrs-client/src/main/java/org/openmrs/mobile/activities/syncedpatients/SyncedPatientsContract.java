@@ -14,13 +14,13 @@
 
 package org.openmrs.mobile.activities.syncedpatients;
 
-import android.support.annotation.NonNull;
+import java.util.List;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Patient;
 
-import java.util.List;
+import android.support.annotation.NonNull;
 
 public interface SyncedPatientsContract {
 

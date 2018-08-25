@@ -14,7 +14,10 @@
 
 package org.openmrs.mobile.dao;
 
-import net.sqlcipher.Cursor;
+import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.DBOpenHelper;
@@ -26,20 +29,17 @@ import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.VisitType;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.sqlcipher.Cursor;
 
 import rx.Observable;
 import rx.schedulers.Schedulers;
-
-import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 
 public class VisitDAO {
 
     public Observable<Long> saveOrUpdate(Visit visit, long patientId) {
         return createObservableIO(() -> {
             Long visitId = visit.getId();
-            if(visitId == null)
+            if (visitId == null)
                 visitId = getVisitsIDByUUID(visit.getUuid()).toBlocking().first();
             if (visitId > 0) {
                 updateVisit(visit, visitId, patientId);
@@ -59,9 +59,7 @@ public class VisitDAO {
             for (Encounter encounter : visit.getEncounters()) {
                 long encounterID = encounterDAO.saveEncounter(encounter, visitID);
                 for (Observation obs : encounter.getObservations()) {
-                    observationDAO.saveObservation(obs, encounterID)
-                            .observeOn(Schedulers.io())
-                            .subscribe();
+                    observationDAO.saveObservation(obs, encounterID).observeOn(Schedulers.io()).subscribe();
                 }
             }
         }
@@ -88,9 +86,7 @@ public class VisitDAO {
                 }
 
                 for (Observation obs : encounter.getObservations()) {
-                    observationDAO.saveObservation(obs, encounterID)
-                            .observeOn(Schedulers.io())
-                            .subscribe();
+                    observationDAO.saveObservation(obs, encounterID).observeOn(Schedulers.io()).subscribe();
                 }
             }
         }
@@ -102,10 +98,12 @@ public class VisitDAO {
             List<Visit> visits = new ArrayList<>();
             DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
 
-            String visitWhere = String.format("%s IS NULL OR %s = ''", VisitTable.Column.STOP_DATE, VisitTable.Column.STOP_DATE);
+            String visitWhere = String.format("%s IS NULL OR %s = ''", VisitTable.Column.STOP_DATE,
+                VisitTable.Column.STOP_DATE);
             String orderBy = VisitTable.Column.START_DATE + " DESC";
 
-            final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, visitWhere, null, null, null, orderBy);
+            final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, visitWhere, null, null,
+                null, orderBy);
             if (null != cursor) {
                 try {
                     while (cursor.moveToNext()) {
@@ -124,10 +122,12 @@ public class VisitDAO {
                         visit.setStartDatetime(cursor.getString(visitStart_CI));
                         visit.setStopDatetime(cursor.getString(visitStop_CI));
                         visit.setEncounters(new EncounterDAO().findEncountersByVisitID(visit.getId()));
-                        visit.setPatient(new PatientDAO().findPatientByID(String.valueOf(cursor.getLong(visitPatientID_CI))));
+                        visit.setPatient(
+                            new PatientDAO().findPatientByID(String.valueOf(cursor.getLong(visitPatientID_CI))));
                         visits.add(visit);
                     }
-                } finally {
+                }
+                finally {
                     cursor.close();
                 }
             }
@@ -141,10 +141,11 @@ public class VisitDAO {
             DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
 
             String where = String.format("%s = ?", VisitTable.Column.PATIENT_KEY_ID);
-            String[] whereArgs = new String[]{patientID.toString()};
+            String[] whereArgs = new String[] { patientID.toString() };
             String orderBy = VisitTable.Column.START_DATE + " DESC";
 
-            final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null, null, orderBy);
+            final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null,
+                null, orderBy);
             if (null != cursor) {
                 try {
                     while (cursor.moveToNext()) {
@@ -163,10 +164,12 @@ public class VisitDAO {
                         visit.setStartDatetime(cursor.getString(visitStart_CI));
                         visit.setStopDatetime(cursor.getString(visitStop_CI));
                         visit.setEncounters(new EncounterDAO().findEncountersByVisitID(visit.getId()));
-                        visit.setPatient(new PatientDAO().findPatientByID(String.valueOf(cursor.getLong(visitPatientID_CI))));
+                        visit.setPatient(
+                            new PatientDAO().findPatientByID(String.valueOf(cursor.getLong(visitPatientID_CI))));
                         visits.add(visit);
                     }
-                } finally {
+                }
+                finally {
                     cursor.close();
                 }
             }
@@ -174,18 +177,18 @@ public class VisitDAO {
         });
     }
 
-    public Observable<Visit> getActiveVisitByPatientId(Long patientId){
+    public Observable<Visit> getActiveVisitByPatientId(Long patientId) {
         return createObservableIO(() -> {
             LocationDAO locationDAO = new LocationDAO();
             Visit activeVisit = null;
             DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
 
-            String where = String.format("%s = ? AND (%s is null OR %s = '')",
-                    VisitTable.Column.PATIENT_KEY_ID, VisitTable.Column.STOP_DATE,
-                    VisitTable.Column.STOP_DATE);
-            String[] whereArgs = new String[]{patientId.toString()};
+            String where = String.format("%s = ? AND (%s is null OR %s = '')", VisitTable.Column.PATIENT_KEY_ID,
+                VisitTable.Column.STOP_DATE, VisitTable.Column.STOP_DATE);
+            String[] whereArgs = new String[] { patientId.toString() };
             String orderBy = VisitTable.Column.START_DATE + " DESC";
-            final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null, null, orderBy);
+            final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null,
+                null, orderBy);
             if (null != cursor) {
                 try {
                     if (cursor.moveToFirst()) {
@@ -204,10 +207,12 @@ public class VisitDAO {
                         visit.setStartDatetime(cursor.getString(visitStart_CI));
                         visit.setStopDatetime(cursor.getString(visitStop_CI));
                         visit.setEncounters(new EncounterDAO().findEncountersByVisitID(visit.getId()));
-                        visit.setPatient(new PatientDAO().findPatientByID(String.valueOf(cursor.getLong(visitPatientID_CI))));
+                        visit.setPatient(
+                            new PatientDAO().findPatientByID(String.valueOf(cursor.getLong(visitPatientID_CI))));
                         activeVisit = visit;
                     }
-                } finally {
+                }
+                finally {
                     cursor.close();
                 }
             }
@@ -222,10 +227,11 @@ public class VisitDAO {
             LocationDAO locationDAO = new LocationDAO();
 
             String where = String.format("%s = ?", VisitTable.Column.ID);
-            String[] whereArgs = new String[]{visitID.toString()};
+            String[] whereArgs = new String[] { visitID.toString() };
             String orderBy = VisitTable.Column.START_DATE + " DESC";
 
-            final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null, null, orderBy);
+            final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null,
+                null, orderBy);
             if (null != cursor) {
                 try {
                     if (cursor.moveToFirst()) {
@@ -244,10 +250,12 @@ public class VisitDAO {
                         patientVisit.setStartDatetime(cursor.getString(visitStart_CI));
                         patientVisit.setStopDatetime(cursor.getString(visitStop_CI));
                         patientVisit.setEncounters(new EncounterDAO().findEncountersByVisitID(visitID));
-                        patientVisit.setPatient(new PatientDAO().findPatientByID(String.valueOf(cursor.getLong(visitPatientID_CI))));
+                        patientVisit.setPatient(
+                            new PatientDAO().findPatientByID(String.valueOf(cursor.getLong(visitPatientID_CI))));
                         visit = patientVisit;
                     }
-                } finally {
+                }
+                finally {
                     cursor.close();
                 }
             }
@@ -260,16 +268,18 @@ public class VisitDAO {
             DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
 
             String where = String.format("%s = ?", VisitTable.Column.UUID);
-            String[] whereArgs = new String[]{visitUUID};
+            String[] whereArgs = new String[] { visitUUID };
             long visitID = 0;
-            final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+            final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null,
+                null, null);
             if (null != cursor) {
                 try {
                     if (cursor.moveToFirst()) {
                         int visitID_CI = cursor.getColumnIndex(VisitTable.Column.ID);
                         visitID = cursor.getLong(visitID_CI);
                     }
-                } finally {
+                }
+                finally {
                     cursor.close();
                 }
             }
@@ -284,10 +294,11 @@ public class VisitDAO {
             LocationDAO locationDAO = new LocationDAO();
 
             String where = String.format("%s = ?", VisitTable.Column.UUID);
-            String[] whereArgs = new String[]{uuid};
+            String[] whereArgs = new String[] { uuid };
             String orderBy = VisitTable.Column.START_DATE + " DESC";
 
-            final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null, null, orderBy);
+            final Cursor cursor = helper.getReadableDatabase().query(VisitTable.TABLE_NAME, null, where, whereArgs, null,
+                null, orderBy);
             if (null != cursor) {
                 try {
                     if (cursor.moveToFirst()) {
@@ -306,10 +317,12 @@ public class VisitDAO {
                         patientVisit.setStartDatetime(cursor.getString(visitStart_CI));
                         patientVisit.setStopDatetime(cursor.getString(visitStop_CI));
                         patientVisit.setEncounters(new EncounterDAO().findEncountersByVisitID(patientVisit.getId()));
-                        patientVisit.setPatient(new PatientDAO().findPatientByID(String.valueOf(cursor.getLong(visitPatientID_CI))));
+                        patientVisit.setPatient(
+                            new PatientDAO().findPatientByID(String.valueOf(cursor.getLong(visitPatientID_CI))));
                         visit = patientVisit;
                     }
-                } finally {
+                }
+                finally {
                     cursor.close();
                 }
             }
@@ -321,8 +334,8 @@ public class VisitDAO {
         return createObservableIO(() -> {
             OpenMRS.getInstance().getOpenMRSLogger().w("Visits deleted with patient_id: " + id);
             DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-            openHelper.getReadableDatabase().delete(VisitTable.TABLE_NAME, VisitTable.Column.PATIENT_KEY_ID
-                    + " = " + id, null);
+            openHelper.getReadableDatabase().delete(VisitTable.TABLE_NAME, VisitTable.Column.PATIENT_KEY_ID + " = " + id,
+                null);
             return true;
         });
     }

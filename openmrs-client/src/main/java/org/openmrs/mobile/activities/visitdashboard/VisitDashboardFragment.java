@@ -14,15 +14,10 @@
 
 package org.openmrs.mobile.activities.visitdashboard;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ExpandableListView;
-import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
@@ -33,19 +28,28 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ExpandableListView;
+import android.widget.TextView;
 
-public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContract.Presenter> implements VisitDashboardContract.View{
+public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContract.Presenter> implements VisitDashboardContract.View {
 
     private ExpandableListView mExpandableListView;
     private TextView mEmptyListView;
 
+    public static VisitDashboardFragment newInstance() {
+        return new VisitDashboardFragment();
+    }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_visit_dashboard, container, false);
 
         mEmptyListView = (TextView) root.findViewById(R.id.visitDashboardEmpty);
@@ -62,14 +66,11 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
             Intent intent = new Intent(this.getActivity(), FormListActivity.class);
             intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patientId);
             startActivity(intent);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             ToastUtil.showLongToast(this.getActivity(), ToastUtil.ToastType.ERROR, R.string.failed_to_open_vitals_form);
             OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
         }
-    }
-
-    public static VisitDashboardFragment newInstance() {
-        return new VisitDashboardFragment();
     }
 
     @Override
@@ -83,8 +84,8 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
     public void updateList(List<Encounter> visitEncounters) {
         final String[] displayableEncounterTypes = ApplicationConstants.EncounterTypes.ENCOUNTER_TYPES_DISPLAYS;
         final HashSet<String> displayableEncounterTypesArray = new HashSet<>(Arrays.asList(displayableEncounterTypes));
-        
-        List<Encounter> displayableEncounters  = new ArrayList<>();
+
+        List<Encounter> displayableEncounters = new ArrayList<>();
 
         for (Encounter encounter : visitEncounters) {
             String encounterTypeDisplay = encounter.getEncounterType().getDisplay();
@@ -93,7 +94,8 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
             }
         }
 
-        VisitExpandableListAdapter expandableListAdapter = new VisitExpandableListAdapter(this.getActivity(), displayableEncounters);
+        VisitExpandableListAdapter expandableListAdapter = new VisitExpandableListAdapter(this.getActivity(),
+                displayableEncounters);
         mExpandableListView.setAdapter(expandableListAdapter);
         mExpandableListView.setGroupIndicator(null);
     }
@@ -102,15 +104,14 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
     public void setEmptyListVisibility(boolean visibility) {
         if (visibility) {
             mEmptyListView.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             mEmptyListView.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void setActionBarTitle(String name) {
-        ((VisitDashboardActivity)getActivity()).getSupportActionBar().setTitle(name);
+        ((VisitDashboardActivity) getActivity()).getSupportActionBar().setTitle(name);
     }
 
     @Override

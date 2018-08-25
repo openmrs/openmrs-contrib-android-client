@@ -14,9 +14,14 @@
 
 package org.openmrs.mobile.test;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,14 +31,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.utilities.ObservationDeserializer;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ObservationDeserializerTest {
@@ -49,7 +49,8 @@ public class ObservationDeserializerTest {
 
     @Before
     public void setUp() throws Exception {
-        File jsonResponseFile = new File("src/test/java/org/openmrs/mobile/test/retrofitMocks/", "obsWithDiagnosisDataExampleResponse.json");
+        File jsonResponseFile = new File("src/test/java/org/openmrs/mobile/test/retrofitMocks/",
+                "obsWithDiagnosisDataExampleResponse.json");
         String response = getMockResponseFromFile(jsonResponseFile);
         JsonParser jsonParser = new JsonParser();
         jsonObject = jsonParser.parse(response).getAsJsonObject();

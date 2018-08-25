@@ -14,14 +14,13 @@
 
 package org.openmrs.mobile.utilities;
 
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
 public class DayAxisValueFormatter implements IAxisValueFormatter {
 
@@ -39,6 +38,6 @@ public class DayAxisValueFormatter implements IAxisValueFormatter {
         Date vitalDate = DateUtils.getDateFromString(dates.get(Math.abs(intValue)));
         DateFormat dateFormat = new SimpleDateFormat("MMM d, ''yy");
         return dateFormat.format(vitalDate);
-//        return vitalDate.getDate() + "/" + vitalDate.getMonth() + "/" + vitalDate.getYear();
+        //        return vitalDate.getDate() + "/" + vitalDate.getMonth() + "/" + vitalDate.getYear();
     }
-  }
+}

@@ -14,13 +14,14 @@
 
 package org.openmrs.mobile.activities.login;
 
+import java.util.List;
+
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
-import java.util.List;
 
 public class LocationArrayAdapter extends ArrayAdapter<String> {
 
@@ -35,15 +36,14 @@ public class LocationArrayAdapter extends ArrayAdapter<String> {
     }
 
     @Override
-    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+    public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
         View v;
         if (position == 0) {
             TextView tv = new TextView(getContext());
             tv.setHeight(0);
             tv.setVisibility(View.GONE);
             v = tv;
-        }
-        else {
+        } else {
             v = super.getDropDownView(position, null, parent);
         }
         parent.setVerticalScrollBarEnabled(false);

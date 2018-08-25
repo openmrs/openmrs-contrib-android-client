@@ -14,9 +14,10 @@
 
 package org.openmrs.mobile.dao;
 
-import com.activeandroid.query.Select;
+import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 
-import net.sqlcipher.Cursor;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
@@ -28,13 +29,12 @@ import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FormService;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.activeandroid.query.Select;
+
+import net.sqlcipher.Cursor;
 
 import rx.Observable;
 import rx.schedulers.Schedulers;
-
-import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 
 public class EncounterDAO {
 
@@ -44,10 +44,7 @@ public class EncounterDAO {
     }
 
     public EncounterType getEncounterTypeByFormName(String formname) {
-        return new Select()
-                .from(EncounterType.class)
-                .where("display = ?", formname)
-                .executeSingle();
+        return new Select().from(EncounterType.class).where("display = ?", formname).executeSingle();
     }
 
     public void saveLastVitalsEncounter(Encounter encounter, String patientUUID) {
@@ -55,7 +52,7 @@ public class EncounterDAO {
             encounter.setPatientUUID(patientUUID);
             long oldLastVitalsEncounterID = getLastVitalsEncounterID(patientUUID);
             if (0 != oldLastVitalsEncounterID) {
-                for (Observation obs: new ObservationDAO().findObservationByEncounterID(oldLastVitalsEncounterID)) {
+                for (Observation obs : new ObservationDAO().findObservationByEncounterID(oldLastVitalsEncounterID)) {
                     new ObservationTable().delete(obs.getId());
                 }
                 new EncounterTable().delete(oldLastVitalsEncounterID);
@@ -63,9 +60,7 @@ public class EncounterDAO {
             ObservationDAO observationDAO = new ObservationDAO();
             long encounterID = saveEncounter(encounter, null);
             for (Observation obs : encounter.getObservations()) {
-                observationDAO.saveObservation(obs, encounterID)
-                        .observeOn(Schedulers.io())
-                        .subscribe();
+                observationDAO.saveObservation(obs, encounterID).observeOn(Schedulers.io()).subscribe();
             }
         }
     }
@@ -73,16 +68,19 @@ public class EncounterDAO {
     public long getLastVitalsEncounterID(String patientUUID) {
         long encounterID = 0;
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        String where = String.format("%s is NULL AND %s = ?", EncounterTable.Column.VISIT_KEY_ID, EncounterTable.Column.PATIENT_UUID);
-        String[] whereArgs = new String[]{patientUUID};
-        final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        String where = String.format("%s is NULL AND %s = ?", EncounterTable.Column.VISIT_KEY_ID,
+            EncounterTable.Column.PATIENT_UUID);
+        String[] whereArgs = new String[] { patientUUID };
+        final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null,
+            null, null);
         if (null != cursor) {
             try {
                 if (cursor.moveToFirst()) {
                     int id_CI = cursor.getColumnIndex(EncounterTable.Column.ID);
                     encounterID = cursor.getLong(id_CI);
                 }
-            } finally {
+            }
+            finally {
                 cursor.close();
             }
         }
@@ -94,9 +92,11 @@ public class EncounterDAO {
             DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
             Encounter encounter = null;
 
-            String where = String.format("%s = ? AND %s = ? ORDER BY %s DESC LIMIT 1", EncounterTable.Column.PATIENT_UUID, EncounterTable.Column.ENCOUNTER_TYPE, EncounterTable.Column.ENCOUNTER_DATETIME);
-            String[] whereArgs = new String[]{patientUUID, EncounterType.VITALS};
-            final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+            String where = String.format("%s = ? AND %s = ? ORDER BY %s DESC LIMIT 1", EncounterTable.Column.PATIENT_UUID,
+                EncounterTable.Column.ENCOUNTER_TYPE, EncounterTable.Column.ENCOUNTER_DATETIME);
+            String[] whereArgs = new String[] { patientUUID, EncounterType.VITALS };
+            final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null,
+                null, null);
             if (null != cursor) {
                 try {
                     if (cursor.moveToFirst()) {
@@ -117,12 +117,14 @@ public class EncounterDAO {
                         encounter.setUuid(uuid);
                         encounter.setDisplay(display);
                         encounter.setEncounterDatetime(DateUtils.convertTime(datetime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
-                        encounter.setEncounterType((EncounterType) new Select().from(EncounterType.class).where("display = ?", EncounterType.VITALS).executeSingle());
+                        encounter.setEncounterType((EncounterType) new Select().from(EncounterType.class)
+                                .where("display = ?", EncounterType.VITALS).executeSingle());
                         encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
                         encounter.setForm(FormService.getFormByUuid(formUuid));
                         encounter.setPatient(new PatientDAO().findPatientByUUID(patientUuid));
                     }
-                } finally {
+                }
+                finally {
                     cursor.close();
                 }
             }
@@ -137,11 +139,12 @@ public class EncounterDAO {
 
     public List<Encounter> findEncountersByVisitID(Long visitID) {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        List<Encounter> encounters = new ArrayList<Encounter>();
+        List<Encounter> encounters = new ArrayList<>();
 
         String where = String.format("%s = ?", EncounterTable.Column.VISIT_KEY_ID);
-        String[] whereArgs = new String[]{visitID.toString()};
-        final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        String[] whereArgs = new String[] { visitID.toString() };
+        final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null,
+            null, null);
         if (null != cursor) {
             try {
                 while (cursor.moveToNext()) {
@@ -168,7 +171,8 @@ public class EncounterDAO {
                     encounter.setForm(FormService.getFormByUuid(formUuid));
                     encounters.add(encounter);
                 }
-            } finally {
+            }
+            finally {
                 cursor.close();
             }
         }
@@ -178,12 +182,12 @@ public class EncounterDAO {
 
     public Observable<List<Encounter>> getAllEncountersByType(Long patientID, EncounterType type) {
         return createObservableIO(() -> {
-            List<Encounter> encounters = new ArrayList<Encounter>();
+            List<Encounter> encounters = new ArrayList<>();
             DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-            String query = "SELECT e.* FROM observations AS o JOIN encounters AS e ON o.encounter_id = e._id " +
-                    "JOIN visits AS v on e.visit_id = v._id WHERE v.patient_id = ? AND e.type = ? ORDER BY e.encounterDatetime DESC";
+            String query = "SELECT e.* FROM observations AS o JOIN encounters AS e ON o.encounter_id = e._id "
+                    + "JOIN visits AS v on e.visit_id = v._id WHERE v.patient_id = ? AND e.type = ? ORDER BY e.encounterDatetime DESC";
             String type1 = type.getDisplay();
-            String[] whereArgs = new String[]{patientID.toString(), type1};
+            String[] whereArgs = new String[] { patientID.toString(), type1 };
             final Cursor cursor = helper.getReadableDatabase().rawQuery(query, whereArgs);
 
             if (null != cursor) {
@@ -209,7 +213,8 @@ public class EncounterDAO {
                         encounter.setForm(FormService.getFormByUuid(formUuid));
                         encounters.add(encounter);
                     }
-                } finally {
+                }
+                finally {
                     cursor.close();
                 }
             }
@@ -221,16 +226,18 @@ public class EncounterDAO {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
 
         String where = String.format("%s = ?", EncounterTable.Column.UUID);
-        String[] whereArgs = new String[]{encounterUUID};
+        String[] whereArgs = new String[] { encounterUUID };
         long encounterID = 0;
-        final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        final Cursor cursor = helper.getReadableDatabase().query(EncounterTable.TABLE_NAME, null, where, whereArgs, null,
+            null, null);
         if (null != cursor) {
             try {
                 if (cursor.moveToFirst()) {
                     int encounterID_CI = cursor.getColumnIndex(EncounterTable.Column.ID);
                     encounterID = cursor.getLong(encounterID_CI);
                 }
-            } finally {
+            }
+            finally {
                 cursor.close();
             }
         }

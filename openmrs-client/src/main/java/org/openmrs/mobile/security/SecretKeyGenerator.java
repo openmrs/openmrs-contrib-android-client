@@ -14,14 +14,13 @@
 
 package org.openmrs.mobile.security;
 
-
-import org.openmrs.mobile.application.OpenMRS;
-
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
+
+import org.openmrs.mobile.application.OpenMRS;
 
 public final class SecretKeyGenerator {
 
@@ -37,7 +36,8 @@ public final class SecretKeyGenerator {
             secureRandom = SecureRandom.getInstance("SHA1PRNG");
             // Do *not* seed secureRandom! Automatically seeded from system entropy.
             keyGenerator = KeyGenerator.getInstance("AES");
-        } catch (NoSuchAlgorithmException e) {
+        }
+        catch (NoSuchAlgorithmException e) {
             OpenMRS.getInstance().getOpenMRSLogger().d("Failed to generate DB secret key" + e.toString());
         }
         keyGenerator.init(outputKeyLength, secureRandom);
@@ -51,14 +51,14 @@ public final class SecretKeyGenerator {
         }
 
         int len = data.length;
-        String str = "";
-        for (int i = 0; i < len; i++) {
-            if ((data[i] & 0xFF) < 16) {
-                str = str + "0" + java.lang.Integer.toHexString(data[i] & 0xFF);
+        StringBuilder str = new StringBuilder();
+        for (byte aData : data) {
+            if ((aData & 0xFF) < 16) {
+                str.append("0").append(Integer.toHexString(aData & 0xFF));
             } else {
-                str = str + java.lang.Integer.toHexString(data[i] & 0xFF);
+                str.append(Integer.toHexString(aData & 0xFF));
             }
         }
-        return str;
+        return str.toString();
     }
 }

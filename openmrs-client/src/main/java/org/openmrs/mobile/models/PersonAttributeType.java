@@ -10,5 +10,4 @@
 
 package org.openmrs.mobile.models;
 
-public class PersonAttributeType extends Resource {
-}
+public class PersonAttributeType extends Resource {}

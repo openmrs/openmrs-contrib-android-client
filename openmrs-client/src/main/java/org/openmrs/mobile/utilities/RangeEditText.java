@@ -11,7 +11,6 @@
 package org.openmrs.mobile.utilities;
 
 import android.content.Context;
-import android.widget.EditText;
 
 public class RangeEditText extends android.support.v7.widget.AppCompatEditText {
 
@@ -23,33 +22,27 @@ public class RangeEditText extends android.support.v7.widget.AppCompatEditText {
         super(context);
     }
 
-    public void setUpperlimit(Double upperlimit)
-    {
-        this.upperlimit=upperlimit;
-    }
-
-    public double getUpperlimit()
-    {
+    public double getUpperlimit() {
         return upperlimit;
     }
 
-    public void setLowerlimit(Double lowerlimit)
-    {
-        this.lowerlimit=lowerlimit;
+    public void setUpperlimit(Double upperlimit) {
+        this.upperlimit = upperlimit;
     }
 
-    public double getLowerlimit()
-    {
+    public double getLowerlimit() {
         return lowerlimit;
     }
 
-    public void setName(String name)
-    {
-        this.name=name;
+    public void setLowerlimit(Double lowerlimit) {
+        this.lowerlimit = lowerlimit;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -14,6 +14,13 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -27,14 +34,7 @@ import org.openmrs.mobile.utilities.StringUtils;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import rx.Observable;
-
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @PrepareForTest(StringUtils.class)
 public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
@@ -54,12 +54,12 @@ public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
         super.setUp();
         presenter = new FormEntryPatientListPresenter(view, patientDAO);
         PowerMockito.mockStatic(StringUtils.class);
-        patientList = new ArrayList<Patient>();
+        patientList = new ArrayList<>();
     }
 
     @Test
     public void shouldUpdatePatientList_allOk() {
-        Patient patient = createPatient(1l, mQuery);
+        Patient patient = createPatient(1L, mQuery);
         patientList.add(patient);
 
         when(StringUtils.notNull(anyString())).thenReturn(true);
@@ -85,10 +85,9 @@ public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
         verify(view).updateAdapter(patientList);
     }
 
-
     @Test
     public void shouldUpdatePatientList_nullQuery() {
-        Patient patient = createPatient(1l);
+        Patient patient = createPatient(1L);
         patientList.add(patient);
 
         when(StringUtils.notNull(anyString())).thenReturn(false);

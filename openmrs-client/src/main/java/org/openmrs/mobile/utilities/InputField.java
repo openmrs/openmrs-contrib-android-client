@@ -14,50 +14,68 @@
 
 package org.openmrs.mobile.utilities;
 
+import java.io.Serializable;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 public class InputField implements Serializable, Parcelable {
 
+    public static final Parcelable.Creator<InputField> CREATOR = new Parcelable.Creator<InputField>() {
+
+        @Override
+        public InputField createFromParcel(Parcel source) {
+            return new InputField(source);
+        }
+
+        @Override
+        public InputField[] newArray(int size) {
+            return new InputField[size];
+        }
+    };
     private int id;
     private String concept;
     private double value = -1.0;
     private boolean isRed = false;
-
 
     public InputField(String concept) {
         this.concept = concept;
         this.id = Math.abs(concept.hashCode());
     }
 
-    public void setId(int id) {
-        this.id = id;
+    protected InputField(Parcel in) {
+        this.id = in.readInt();
+        this.concept = in.readString();
+        this.value = in.readDouble();
+        this.isRed = (in.readInt() == 1);
     }
 
     public int getId() {
         return id;
     }
 
-    public void setConcept(String concept) {
-        this.concept = concept;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getConcept() {
         return concept;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
+    public void setConcept(String concept) {
+        this.concept = concept;
     }
 
     public Double getValue() {
         return value;
     }
 
+    public void setValue(Double value) {
+        this.value = value;
+    }
+
     public void setIsRed(boolean isRed) {
-        this.isRed=isRed;
+        this.isRed = isRed;
     }
 
     public boolean isRed() {
@@ -74,25 +92,6 @@ public class InputField implements Serializable, Parcelable {
         dest.writeInt(this.id);
         dest.writeString(this.concept);
         dest.writeDouble(this.value);
-        dest.writeInt(this.isRed?1:0);
+        dest.writeInt(this.isRed ? 1 : 0);
     }
-
-    protected InputField(Parcel in) {
-        this.id = in.readInt();
-        this.concept = in.readString();
-        this.value = in.readDouble();
-        this.isRed = (in.readInt()==1);
-    }
-
-    public static final Parcelable.Creator<InputField> CREATOR = new Parcelable.Creator<InputField>() {
-        @Override
-        public InputField createFromParcel(Parcel source) {
-            return new InputField(source);
-        }
-
-        @Override
-        public InputField[] newArray(int size) {
-            return new InputField[size];
-        }
-    };
 }

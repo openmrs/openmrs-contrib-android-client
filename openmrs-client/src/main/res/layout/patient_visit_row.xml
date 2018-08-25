@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
   ~ compliance with the License. You may obtain a copy of the License at
@@ -16,8 +15,8 @@
     android:id="@+id/visitRow"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp"
-    android:background="@drawable/card">
+    android:background="@drawable/card"
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/patientVisitStartDate"
@@ -50,7 +49,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/patientVisitStartDate"
         android:gravity="center"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/visitStatusLabel"

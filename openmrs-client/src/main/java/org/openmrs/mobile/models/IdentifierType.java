@@ -9,7 +9,7 @@
  */
 package org.openmrs.mobile.models;
 
-public class IdentifierType extends Resource{
+public class IdentifierType extends Resource {
 
     public IdentifierType() {
     }

@@ -13,9 +13,9 @@
   -->
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/BackgroundThemeEEE"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    style="@style/BackgroundThemeEEE">
+    android:layout_height="match_parent">
 
     <TableLayout
         android:layout_width="fill_parent"

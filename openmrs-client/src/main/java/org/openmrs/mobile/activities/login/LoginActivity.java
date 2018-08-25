@@ -14,12 +14,12 @@
 
 package org.openmrs.mobile.activities.login;
 
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseActivity;
 
 public class LoginActivity extends ACBaseActivity {
 
@@ -31,14 +31,12 @@ public class LoginActivity extends ACBaseActivity {
         setContentView(R.layout.activity_login);
 
         // Create fragment
-        LoginFragment loginFragment =
-                (LoginFragment) getSupportFragmentManager().findFragmentById(R.id.loginContentFrame);
+        LoginFragment loginFragment = (LoginFragment) getSupportFragmentManager().findFragmentById(R.id.loginContentFrame);
         if (loginFragment == null) {
             loginFragment = LoginFragment.newInstance();
         }
         if (!loginFragment.isActive()) {
-            addFragmentToActivity(getSupportFragmentManager(),
-                    loginFragment, R.id.loginContentFrame);
+            addFragmentToActivity(getSupportFragmentManager(), loginFragment, R.id.loginContentFrame);
         }
 
         mPresenter = new LoginPresenter(loginFragment, mOpenMRS);

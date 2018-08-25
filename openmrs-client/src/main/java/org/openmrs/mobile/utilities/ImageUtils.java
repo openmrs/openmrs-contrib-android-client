@@ -39,8 +39,7 @@ public final class ImageUtils {
         return BitmapFactory.decodeResource(res, resId, options);
     }
 
-    public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
@@ -66,10 +65,10 @@ public final class ImageUtils {
         double WIDTH = 500;
         int height = photo.getHeight();
         int width = photo.getWidth();
-        double aspectRatio = Math.min(HEIGHT/height, WIDTH/width);
+        double aspectRatio = Math.min(HEIGHT / height, WIDTH / width);
 
         if (0 < aspectRatio && aspectRatio < 1) {
-            return Bitmap.createScaledBitmap(photo, (int)(aspectRatio*width), (int)(aspectRatio*height), true);
+            return Bitmap.createScaledBitmap(photo, (int) (aspectRatio * width), (int) (aspectRatio * height), true);
         }
         return photo;
     }

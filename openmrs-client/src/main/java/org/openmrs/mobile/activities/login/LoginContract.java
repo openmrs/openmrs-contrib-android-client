@@ -14,18 +14,18 @@
 
 package org.openmrs.mobile.activities.login;
 
-import android.support.annotation.NonNull;
+import java.util.List;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-import java.util.List;
+import android.support.annotation.NonNull;
 
 public interface LoginContract {
 
-    interface View extends BaseView<Presenter>{
+    interface View extends BaseView<Presenter> {
 
         void hideSoftKeys();
 
@@ -61,7 +61,7 @@ public interface LoginContract {
 
     }
 
-    interface  Presenter extends BasePresenterContract {
+    interface Presenter extends BasePresenterContract {
 
         void authenticateUser(final String username, final String password, final String url);
 

@@ -12,20 +12,17 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-
 package org.openmrs.mobile.activities.logs;
+
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseActivity;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseActivity;
-
-
 public class LogsActivity extends ACBaseActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +36,12 @@ public class LogsActivity extends ACBaseActivity {
         }
 
         // Create fragment
-        LogsFragment logsFragment =
-                (LogsFragment) getSupportFragmentManager().findFragmentById(R.id.logsContentFragment);
+        LogsFragment logsFragment = (LogsFragment) getSupportFragmentManager().findFragmentById(R.id.logsContentFragment);
         if (logsFragment == null) {
             logsFragment = LogsFragment.newInstance();
         }
         if (!logsFragment.isActive()) {
-            addFragmentToActivity(getSupportFragmentManager(),
-                    logsFragment, R.id.logsContentFragment);
+            addFragmentToActivity(getSupportFragmentManager(), logsFragment, R.id.logsContentFragment);
         }
 
         // Create the presenter

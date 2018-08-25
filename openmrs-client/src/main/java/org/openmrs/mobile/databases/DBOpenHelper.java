@@ -14,12 +14,8 @@
 
 package org.openmrs.mobile.databases;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.graphics.Bitmap;
-
-import net.sqlcipher.database.SQLiteDatabase;
-import net.sqlcipher.database.SQLiteStatement;
+import java.io.ByteArrayOutputStream;
+import java.util.concurrent.Callable;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRS;
@@ -37,17 +33,20 @@ import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
 
-import java.io.ByteArrayOutputStream;
-import java.util.concurrent.Callable;
+import android.content.ContentValues;
+import android.content.Context;
+import android.graphics.Bitmap;
+
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SQLiteStatement;
 
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
 public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
-    private static int DATABASE_VERSION = OpenMRS.getInstance().
-            getResources().getInteger(R.integer.dbversion);
-    private static final String WHERE_ID_CLAUSE = String.format("%s = ?", Table.MasterColumn.ID);
 
+    private static final String WHERE_ID_CLAUSE = String.format("%s = ?", Table.MasterColumn.ID);
+    private static int DATABASE_VERSION = OpenMRS.getInstance().getResources().getInteger(R.integer.dbversion);
     private PatientTable mPatientTable;
     private ConceptTable mConceptTable;
     private VisitTable mVisitTable;
@@ -63,6 +62,10 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         this.mEncounterTable = new EncounterTable();
         this.mObservationTable = new ObservationTable();
         this.mLocationTable = new LocationTable();
+    }
+
+    public static <T> Observable<T> createObservableIO(final Callable<T> func) {
+        return Observable.fromCallable(func).subscribeOn(Schedulers.io());
     }
 
     @Override
@@ -108,14 +111,14 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         try {
             db.beginTransaction();
             bindString(1, patient.getPerson().getName().getNameString(), patientStatement);
-            bindString(2, Boolean.toString(patient.isSynced()),patientStatement);
+            bindString(2, Boolean.toString(patient.isSynced()), patientStatement);
 
-            if(patient.getUuid()!=null)
+            if (patient.getUuid() != null)
                 bindString(3, patient.getUuid(), patientStatement);
             else
                 bindString(3, null, patientStatement);
 
-            if(patient.getIdentifier()!=null)
+            if (patient.getIdentifier() != null)
                 bindString(4, patient.getIdentifier().getIdentifier(), patientStatement);
             else
                 bindString(4, null, patientStatement);
@@ -144,7 +147,8 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             patientId = patientStatement.executeInsert();
             patientStatement.clearBindings();
             db.setTransactionSuccessful();
-        } finally {
+        }
+        finally {
             db.endTransaction();
             patientStatement.close();
         }
@@ -187,12 +191,12 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         }
         newValues.put(PatientTable.Column.ENCOUNTERS, patient.getEncounters());
 
-        String[] whereArgs = new String[]{String.valueOf(patientID)};
+        String[] whereArgs = new String[] { String.valueOf(patientID) };
 
         return db.update(PatientTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);
     }
 
-    public long insertConcept (SQLiteDatabase db, Concept concept) {
+    public long insertConcept(SQLiteDatabase db, Concept concept) {
         long conceptId;
         SQLiteStatement statement = db.compileStatement(mConceptTable.insertIntoTableDefinition());
         try {
@@ -202,19 +206,20 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             conceptId = statement.executeInsert();
             statement.clearBindings();
             db.setTransactionSuccessful();
-        } finally {
+        }
+        finally {
             db.endTransaction();
             statement.close();
         }
         return conceptId;
     }
 
-    public int updateConcept (SQLiteDatabase db, long conceptId, Concept concept) {
+    public int updateConcept(SQLiteDatabase db, long conceptId, Concept concept) {
         ContentValues newValues = new ContentValues();
         newValues.put(ConceptTable.Column.UUID, concept.getUuid());
         newValues.put(ConceptTable.Column.DISPLAY, concept.getDisplay());
 
-        String[] whereArgs = new String[]{String.valueOf(conceptId)};
+        String[] whereArgs = new String[] { String.valueOf(conceptId) };
 
         return db.update(ConceptTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);
     }
@@ -237,7 +242,8 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             visitId = visitStatement.executeInsert();
             visitStatement.clearBindings();
             db.setTransactionSuccessful();
-        } finally {
+        }
+        finally {
             db.endTransaction();
             visitStatement.close();
         }
@@ -255,7 +261,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         newValues.put(VisitTable.Column.START_DATE, visit.getStartDatetime());
         newValues.put(VisitTable.Column.STOP_DATE, visit.getStopDatetime());
 
-        String[] whereArgs = new String[]{String.valueOf(visitID)};
+        String[] whereArgs = new String[] { String.valueOf(visitID) };
 
         return db.update(VisitTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);
     }
@@ -277,7 +283,8 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             encounterId = encounterStatement.executeInsert();
             encounterStatement.clearBindings();
             db.setTransactionSuccessful();
-        } finally {
+        }
+        finally {
             db.endTransaction();
             encounterStatement.close();
         }
@@ -292,7 +299,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         newValues.put(EncounterTable.Column.ENCOUNTER_DATETIME, encounter.getEncounterDatetime());
         newValues.put(EncounterTable.Column.ENCOUNTER_TYPE, encounter.getEncounterType().getDisplay());
 
-        String[] whereArgs = new String[]{String.valueOf(encounterID)};
+        String[] whereArgs = new String[] { String.valueOf(encounterID) };
 
         return db.update(EncounterTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);
     }
@@ -315,13 +322,14 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
                 bindString(7, obs.getDiagnosisCertainty(), observationStatement);
             }
             bindString(8, obs.getDiagnosisNote(), observationStatement);
-            if(obs.getConcept() != null){
+            if (obs.getConcept() != null) {
                 bindString(9, obs.getConcept().getUuid(), observationStatement);
             }
             obsID = observationStatement.executeInsert();
             observationStatement.clearBindings();
             db.setTransactionSuccessful();
-        } finally {
+        }
+        finally {
             db.endTransaction();
             observationStatement.close();
         }
@@ -343,7 +351,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         }
         newValues.put(ObservationTable.Column.DIAGNOSIS_NOTE, observation.getDiagnosisNote());
 
-        String[] whereArgs = new String[]{String.valueOf(observationID)};
+        String[] whereArgs = new String[] { String.valueOf(observationID) };
 
         return db.update(ObservationTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);
     }
@@ -369,17 +377,14 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             locID = locationStatement.executeInsert();
             locationStatement.clearBindings();
             db.setTransactionSuccessful();
-        } finally {
+        }
+        finally {
             db.endTransaction();
             locationStatement.close();
         }
         return locID;
     }
 
-    public static <T> Observable<T> createObservableIO(final Callable<T> func) {
-        return Observable.fromCallable(func)
-                .subscribeOn(Schedulers.io());
-    }
     private byte[] bitmapToByteArray(Bitmap image) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 0, outputStream);

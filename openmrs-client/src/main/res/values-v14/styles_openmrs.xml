@@ -23,11 +23,12 @@
         <item name="android:actionDropDownStyle">@style/DropDownNav.Openmrs</item>
         <item name="android:actionBarStyle">@style/ActionBar.Solid.Openmrs</item>
         <item name="android:actionModeBackground">@drawable/cab_background_top_openmrs</item>
-        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_openmrs</item>
+        <item name="android:actionModeSplitBackground">@drawable/cab_background_bottom_openmrs
+        </item>
         <item name="android:actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Openmrs</item>
         <item name="android:itemTextAppearance">@style/menuTextApearance</item>
 
-                <!-- Light.DarkActionBar specific -->
+        <!-- Light.DarkActionBar specific -->
         <item name="android:actionBarWidgetTheme">@style/Theme.Openmrs.Widget</item>
 
     </style>
@@ -43,7 +44,7 @@
         <item name="android:background">@drawable/ab_transparent_openmrs</item>
         <item name="android:progressBarStyle">@style/ProgressBar.Openmrs</item>
     </style>
-    
+
     <!-- this style is only referenced in a Light.DarkActionBar based theme -->
     <style name="Theme.Openmrs.Widget" parent="Theme.AppCompat">
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Openmrs</item>

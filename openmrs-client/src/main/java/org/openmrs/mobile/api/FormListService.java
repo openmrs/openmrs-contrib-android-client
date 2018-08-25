@@ -10,11 +10,7 @@
 
 package org.openmrs.mobile.api;
 
-import android.app.IntentService;
-import android.content.Intent;
-
-import com.activeandroid.ActiveAndroid;
-import com.activeandroid.query.Delete;
+import java.util.List;
 
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.FormResource;
@@ -22,13 +18,19 @@ import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-import java.util.List;
+import com.activeandroid.ActiveAndroid;
+import com.activeandroid.query.Delete;
+
+import android.app.IntentService;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FormListService extends IntentService {
+
     private final RestApi apiService = RestServiceBuilder.createService(RestApi.class);
     private List<FormResource> formresourcelist;
 
@@ -38,21 +40,21 @@ public class FormListService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(NetworkUtils.isOnline()) {
+        if (NetworkUtils.isOnline()) {
 
             Call<Results<FormResource>> call = apiService.getForms();
             call.enqueue(new Callback<Results<FormResource>>() {
 
                 @Override
-                public void onResponse(Call<Results<FormResource>> call, Response<Results<FormResource>> response) {
+                public void onResponse(@NonNull Call<Results<FormResource>> call,
+                        @NonNull Response<Results<FormResource>> response) {
                     if (response.isSuccessful()) {
                         new Delete().from(FormResource.class).execute();
-                        formresourcelist=response.body().getResults();
-                        int size=formresourcelist.size();
+                        formresourcelist = response.body().getResults();
+                        int size = formresourcelist.size();
                         ActiveAndroid.beginTransaction();
                         try {
-                            for (int i = 0; i < size; i++)
-                            {
+                            for (int i = 0; i < size; i++) {
                                 formresourcelist.get(i).setResourcelist();
                                 formresourcelist.get(i).save();
                             }
@@ -67,26 +69,28 @@ public class FormListService extends IntentService {
                 }
 
                 @Override
-                public void onFailure(Call<Results<FormResource>> call, Throwable t) {
+                public void onFailure(@NonNull Call<Results<FormResource>> call, @NonNull Throwable t) {
                     ToastUtil.error(t.getMessage());
                 }
             });
 
             Call<Results<EncounterType>> call2 = apiService.getEncounterTypes();
             call2.enqueue(new Callback<Results<EncounterType>>() {
+
                 @Override
-                public void onResponse(Call<Results<EncounterType>> call, Response<Results<EncounterType>> response) {
+                public void onResponse(@NonNull Call<Results<EncounterType>> call,
+                        @NonNull Response<Results<EncounterType>> response) {
                     if (response.isSuccessful()) {
                         new Delete().from(EncounterType.class).execute();
                         Results<EncounterType> encountertypelist = response.body();
-                            for (EncounterType enctype : encountertypelist.getResults())
-                                enctype.save();
+                        for (EncounterType enctype : encountertypelist.getResults())
+                            enctype.save();
                     }
 
                 }
 
                 @Override
-                public void onFailure(Call<Results<EncounterType>> call, Throwable t) {
+                public void onFailure(@NonNull Call<Results<EncounterType>> call, @NonNull Throwable t) {
                     ToastUtil.error(t.getMessage());
 
                 }

@@ -14,13 +14,13 @@
 
 package org.openmrs.mobile.activities.syncedpatients;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.utilities.FilterUtil;
 import org.openmrs.mobile.utilities.StringUtils;
+
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -35,7 +35,7 @@ public class SyncedPatientsPresenter extends BasePresenter implements SyncedPati
     @Nullable
     private String mQuery;
 
-    public SyncedPatientsPresenter(@NonNull SyncedPatientsContract.View syncedPatientsView, String mQuery) {
+    public SyncedPatientsPresenter(@NonNull SyncedPatientsContract.View syncedPatientsView, @Nullable String mQuery) {
         this.syncedPatientsView = syncedPatientsView;
         this.syncedPatientsView.setPresenter(this);
         this.mQuery = mQuery;
@@ -49,7 +49,7 @@ public class SyncedPatientsPresenter extends BasePresenter implements SyncedPati
     }
 
     public SyncedPatientsPresenter(@NonNull SyncedPatientsContract.View syncedPatientsView, PatientDAO patientDAO) {
-        this.patientDAO= patientDAO;
+        this.patientDAO = patientDAO;
         this.syncedPatientsView = syncedPatientsView;
         this.syncedPatientsView.setPresenter(this);
     }
@@ -71,32 +71,29 @@ public class SyncedPatientsPresenter extends BasePresenter implements SyncedPati
     }
 
     /**
-     * Used to update local patients list
-     * It handles search events and replaces View's data to display
+     * Used to update local patients list It handles search events and replaces View's data to display
      */
     @Override
     public void updateLocalPatientsList() {
-        addSubscription(patientDAO.getAllPatients()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(patientList -> {
-                    boolean isFiltering = StringUtils.notNull(mQuery) && !mQuery.isEmpty();
+        addSubscription(patientDAO.getAllPatients().observeOn(AndroidSchedulers.mainThread()).subscribe(patientList -> {
+            boolean isFiltering = StringUtils.notNull(mQuery) && !mQuery.isEmpty();
 
-                    if (isFiltering) {
-                        patientList = FilterUtil.getPatientsFilteredByQuery(patientList, mQuery);
-                        if (patientList.isEmpty()) {
-                            syncedPatientsView.updateListVisibility(false, mQuery);
-                        } else {
-                            syncedPatientsView.updateListVisibility(true);
-                        }
-                    } else {
-                        if (patientList.isEmpty()) {
-                            syncedPatientsView.updateListVisibility(false);
-                        } else {
-                            syncedPatientsView.updateListVisibility(true);
-                        }
-                    }
-                    syncedPatientsView.updateAdapter(patientList);
-                }));
+            if (isFiltering) {
+                patientList = FilterUtil.getPatientsFilteredByQuery(patientList, mQuery);
+                if (patientList.isEmpty()) {
+                    syncedPatientsView.updateListVisibility(false, mQuery);
+                } else {
+                    syncedPatientsView.updateListVisibility(true);
+                }
+            } else {
+                if (patientList.isEmpty()) {
+                    syncedPatientsView.updateListVisibility(false);
+                } else {
+                    syncedPatientsView.updateListVisibility(true);
+                }
+            }
+            syncedPatientsView.updateAdapter(patientList);
+        }));
 
     }
 

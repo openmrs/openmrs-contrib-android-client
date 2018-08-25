@@ -14,9 +14,9 @@
 
 package org.openmrs.mobile.utilities;
 
-import org.openmrs.mobile.models.Module;
-
 import java.util.List;
+
+import org.openmrs.mobile.models.Module;
 
 public class ModuleUtils {
 
@@ -34,7 +34,7 @@ public class ModuleUtils {
 
     private static int parseVersion(String version) {
         String result = version;
-        if(version.contains("-SNAPSHOT")){
+        if (version.contains("-SNAPSHOT")) {
             result = version.replace("-SNAPSHOT", "");
         }
         return Integer.valueOf(result);

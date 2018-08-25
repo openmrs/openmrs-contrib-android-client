@@ -28,9 +28,10 @@ import rx.schedulers.Schedulers;
 public abstract class ACUnitTestBaseRx extends ACUnitTestBase {
 
     @Before
-    public void setUp(){
+    public void setUp() {
         super.initMocks();
         RxAndroidPlugins.getInstance().registerSchedulersHook(new RxAndroidSchedulersHook() {
+
             @Override
             public Scheduler getMainThreadScheduler() {
                 return Schedulers.immediate();

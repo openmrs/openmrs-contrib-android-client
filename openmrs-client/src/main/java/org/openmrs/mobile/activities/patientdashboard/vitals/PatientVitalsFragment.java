@@ -14,18 +14,6 @@
 
 package org.openmrs.mobile.activities.patientdashboard.vitals;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
@@ -40,6 +28,19 @@ import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 public class PatientVitalsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientVitals {
 
     private LinearLayout mContent;
@@ -48,6 +49,10 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
     private TextView mLastVitalsDate;
 
     private LayoutInflater mInflater;
+
+    public static PatientVitalsFragment newInstance() {
+        return new PatientVitalsFragment();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +63,8 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_patient_vitals, null, false);
         mContent = (LinearLayout) root.findViewById(R.id.vitalsDetailsContent);
         mEmptyList = (TextView) root.findViewById(R.id.lastVitalsNoneLabel);
@@ -68,12 +74,8 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
         TextView lastVitalsLabel = (TextView) root.findViewById(R.id.lastVitalsLabel);
         ImageButton formEditIcon = (ImageButton) root.findViewById(R.id.form_edit_icon);
 
-        formEditIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((PatientDashboardVitalsPresenter) mPresenter).startFormDisplayActivityWithEncounter();
-            }
-        });
+        formEditIcon.setOnClickListener(
+            view -> ((PatientDashboardVitalsPresenter) mPresenter).startFormDisplayActivityWithEncounter());
 
         this.mInflater = inflater;
 
@@ -110,13 +112,14 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
     @Override
     public void startFormDisplayActivity(Encounter encounter) {
         Form form = encounter.getForm();
-        if(form != null){
+        if (form != null) {
             Intent intent = new Intent(getContext(), FormDisplayActivity.class);
             intent.putExtra(ApplicationConstants.BundleKeys.FORM_NAME, form.getName());
             intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, encounter.getPatient().getId());
             intent.putExtra(ApplicationConstants.BundleKeys.VALUEREFERENCE, form.getValueReference());
             intent.putExtra(ApplicationConstants.BundleKeys.ENCOUNTERTYPE, encounter.getEncounterType().getUuid());
-            intent.putParcelableArrayListExtra(ApplicationConstants.BundleKeys.FORM_FIELDS_LIST_BUNDLE, FormFieldsWrapper.create(encounter));
+            intent.putParcelableArrayListExtra(ApplicationConstants.BundleKeys.FORM_FIELDS_LIST_BUNDLE,
+                FormFieldsWrapper.create(encounter));
             startActivity(intent);
         } else {
             ToastUtil.notify(getString(R.string.form_error));
@@ -127,9 +130,5 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
     @Override
     public void showErrorToast(String errorMessage) {
         ToastUtil.error(errorMessage);
-    }
-
-    public static PatientVitalsFragment newInstance() {
-        return new PatientVitalsFragment();
     }
 }

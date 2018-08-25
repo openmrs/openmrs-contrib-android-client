@@ -25,56 +25,43 @@ public class PatientIdentifier extends Resource {
     @Expose
     private Location location;
 
-
     /**
-     * 
-     * @return
-     *     The identifierType
+     * @return The identifierType
      */
     public IdentifierType getIdentifierType() {
         return identifierType;
     }
 
     /**
-     * 
-     * @param identifierType
-     *     The identifierType
+     * @param identifierType The identifierType
      */
     public void setIdentifierType(IdentifierType identifierType) {
         this.identifierType = identifierType;
     }
 
     /**
-     * 
-     * @return
-     *     The identifier
+     * @return The identifier
      */
     public String getIdentifier() {
         return identifier;
     }
 
     /**
-     * 
-     * @param identifier
-     *     The identifier
+     * @param identifier The identifier
      */
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
     }
 
     /**
-     * 
-     * @return
-     *     The location
+     * @return The location
      */
     public Location getLocation() {
         return location;
     }
 
     /**
-     * 
-     * @param location
-     *     The location
+     * @param location The location
      */
     public void setLocation(Location location) {
         this.location = location;

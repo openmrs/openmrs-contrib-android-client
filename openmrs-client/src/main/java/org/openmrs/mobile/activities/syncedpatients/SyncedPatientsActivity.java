@@ -14,20 +14,19 @@
 
 package org.openmrs.mobile.activities.syncedpatients;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.SearchView;
-import android.view.Menu;
-import android.view.MenuItem;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class SyncedPatientsActivity extends ACBaseActivity {
 
@@ -49,17 +48,16 @@ public class SyncedPatientsActivity extends ACBaseActivity {
         }
 
         // Create fragment
-        SyncedPatientsFragment syncedPatientsFragment =
-                (SyncedPatientsFragment) getSupportFragmentManager().findFragmentById(R.id.syncedPatientsContentFrame);
+        SyncedPatientsFragment syncedPatientsFragment = (SyncedPatientsFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.syncedPatientsContentFrame);
         if (syncedPatientsFragment == null) {
             syncedPatientsFragment = SyncedPatientsFragment.newInstance();
         }
         if (!syncedPatientsFragment.isActive()) {
-            addFragmentToActivity(getSupportFragmentManager(),
-                    syncedPatientsFragment, R.id.syncedPatientsContentFrame);
+            addFragmentToActivity(getSupportFragmentManager(), syncedPatientsFragment, R.id.syncedPatientsContentFrame);
         }
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             query = savedInstanceState.getString(ApplicationConstants.BundleKeys.PATIENT_QUERY_BUNDLE, "");
             mPresenter = new SyncedPatientsPresenter(syncedPatientsFragment, query);
         } else {
@@ -108,12 +106,13 @@ public class SyncedPatientsActivity extends ACBaseActivity {
         MenuItem searchMenuItem = menu.findItem(R.id.actionSearchLocal);
         searchView = (SearchView) searchMenuItem.getActionView();
 
-        if(StringUtils.notEmpty(query)){
+        if (StringUtils.notEmpty(query)) {
             searchMenuItem.expandActionView();
             searchView.setQuery(query, true);
             searchView.clearFocus();
         }
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchView.clearFocus();

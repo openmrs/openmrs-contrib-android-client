@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
   ~ compliance with the License. You may obtain a copy of the License at
@@ -16,16 +15,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity" >
-    <item android:id="@+id/actionAddPatients"
-        android:title="@string/action_add_patients"
+    tools:context="org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity">
+    <item
+        android:id="@+id/actionAddPatients"
         android:icon="@drawable/ic_add"
-        app:showAsAction="always"/>
+        android:title="@string/action_add_patients"
+        app:showAsAction="always" />
 
-    <item android:id="@+id/actionSearchLocal"
-        android:title="@string/action_find_patients"
+    <item
+        android:id="@+id/actionSearchLocal"
         android:icon="@drawable/ic_search"
-        app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="android.support.v7.widget.SearchView"/>
+        android:title="@string/action_find_patients"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
 
 </menu>

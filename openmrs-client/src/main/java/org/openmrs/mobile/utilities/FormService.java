@@ -10,16 +10,15 @@
 
 package org.openmrs.mobile.utilities;
 
-
-import com.activeandroid.query.Select;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import java.lang.reflect.Modifier;
+import java.util.List;
 
 import org.openmrs.mobile.models.Form;
 import org.openmrs.mobile.models.FormResource;
 
-import java.lang.reflect.Modifier;
-import java.util.List;
+import com.activeandroid.query.Select;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class FormService {
 
@@ -35,15 +34,12 @@ public class FormService {
     }
 
     public static Form getFormByUuid(String uuid) {
-        if(!StringUtils.isBlank(uuid)){
-            FormResource formResource = new Select()
-                    .from(FormResource.class)
-                    .where("uuid = ?", uuid)
-                    .executeSingle();
-            if(formResource != null){
+        if (!StringUtils.isBlank(uuid)) {
+            FormResource formResource = new Select().from(FormResource.class).where("uuid = ?", uuid).executeSingle();
+            if (formResource != null) {
                 List<FormResource> resourceList = formResource.getResourceList();
                 for (FormResource resource : resourceList) {
-                    if("json".equals(resource.getName())){
+                    if ("json".equals(resource.getName())) {
                         String valueRefString = resource.getValueReference();
                         Form form = FormService.getForm(valueRefString);
                         form.setValueReference(valueRefString);
@@ -57,16 +53,11 @@ public class FormService {
     }
 
     public static FormResource getFormResourceByName(String name) {
-        return new Select()
-                .from(FormResource.class)
-                .where("name = ?", name)
-                .executeSingle();
+        return new Select().from(FormResource.class).where("name = ?", name).executeSingle();
     }
 
-    public static List<FormResource> getFormResourceList(){
-        return new Select()
-                .from(FormResource.class)
-                .execute();
+    public static List<FormResource> getFormResourceList() {
+        return new Select().from(FormResource.class).execute();
     }
 
 }

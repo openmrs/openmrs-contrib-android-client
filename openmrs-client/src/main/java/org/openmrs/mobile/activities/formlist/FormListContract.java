@@ -19,7 +19,7 @@ import org.openmrs.mobile.activities.BaseView;
 
 public interface FormListContract {
 
-    interface View extends BaseView<Presenter>{
+    interface View extends BaseView<Presenter> {
 
         void showFormList(String[] forms);
 
@@ -27,7 +27,7 @@ public interface FormListContract {
 
         void showError(String message);
 
-        Boolean formCreate(String uuid,String formName);
+        Boolean formCreate(String uuid, String formName);
     }
 
     interface Presenter extends BasePresenterContract {

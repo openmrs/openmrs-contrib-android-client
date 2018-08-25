@@ -14,17 +14,16 @@
 
 package org.openmrs.mobile.application;
 
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.utilities.FontsUtil;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.utilities.FontsUtil;
-
-
 public class OpenMRSInflater {
+
     private LayoutInflater mInflater;
 
     public OpenMRSInflater(LayoutInflater inflater) {

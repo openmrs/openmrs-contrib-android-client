@@ -14,13 +14,7 @@
 
 package org.openmrs.mobile.activities.formentrypatientlist;
 
-import android.graphics.drawable.Drawable;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import java.util.List;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.dao.VisitDAO;
@@ -29,11 +23,19 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 
-import java.util.List;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import rx.android.schedulers.AndroidSchedulers;
 
 public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryPatientListAdapter.PatientViewHolder> {
+
     private FormEntryPatientListFragment mContext;
     private List<Patient> mItems;
 
@@ -42,19 +44,19 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
         this.mItems = items;
     }
 
+    @NonNull
     @Override
-    public PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_details_row, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(PatientViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull PatientViewHolder holder, final int position) {
         final int adapterPos = holder.getAdapterPosition();
         final Patient patient = mItems.get(adapterPos);
-        new VisitDAO().getActiveVisitByPatientId(patient.getId())
-                .observeOn(AndroidSchedulers.mainThread())
+        new VisitDAO().getActiveVisitByPatientId(patient.getId()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(visit -> {
                     if (visit != null) {
                         Drawable icon = mContext.getResources().getDrawable(R.drawable.active_visit_dot);
@@ -76,14 +78,13 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
             holder.mGender.setText(patient.getPerson().getGender());
         }
 
-        holder.mRowLayout.setOnClickListener(v ->
-                mContext.startEncounterForPatient(mItems.get(adapterPos).getId()));
+        holder.mRowLayout.setOnClickListener(v -> mContext.startEncounterForPatient(mItems.get(adapterPos).getId()));
 
         holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
     }
 
     @Override
-    public void onViewDetachedFromWindow(PatientViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull PatientViewHolder holder) {
         holder.clearAnimation();
     }
 
@@ -92,7 +93,8 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
         return mItems.size();
     }
 
-    class PatientViewHolder extends RecyclerView.ViewHolder{
+    class PatientViewHolder extends RecyclerView.ViewHolder {
+
         private LinearLayout mRowLayout;
         private TextView mIdentifier;
         private TextView mDisplayName;

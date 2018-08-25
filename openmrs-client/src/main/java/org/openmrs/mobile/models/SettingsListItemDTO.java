@@ -15,6 +15,7 @@
 package org.openmrs.mobile.models;
 
 public class SettingsListItemDTO {
+
     private String title;
     private String desc1;
     private String desc2;

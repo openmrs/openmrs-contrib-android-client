@@ -14,13 +14,13 @@
 
 package org.openmrs.mobile.activities.formentrypatientlist;
 
-import android.support.annotation.Nullable;
+import java.util.List;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Patient;
 
-import java.util.List;
+import android.support.annotation.Nullable;
 
 public interface FormEntryPatientListContract {
 

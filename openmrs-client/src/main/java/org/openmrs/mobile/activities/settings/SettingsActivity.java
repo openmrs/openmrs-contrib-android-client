@@ -14,15 +14,15 @@
 
 package org.openmrs.mobile.activities.settings;
 
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseActivity;
+
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseActivity;
 public class SettingsActivity extends ACBaseActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +35,13 @@ public class SettingsActivity extends ACBaseActivity {
         }
 
         // Create fragment
-        SettingsFragment settingsFragment =
-                (SettingsFragment) getSupportFragmentManager().findFragmentById(R.id.settingsContentFrame);
+        SettingsFragment settingsFragment = (SettingsFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.settingsContentFrame);
         if (settingsFragment == null) {
             settingsFragment = SettingsFragment.newInstance();
         }
         if (!settingsFragment.isActive()) {
-            addFragmentToActivity(getSupportFragmentManager(),
-                    settingsFragment, R.id.settingsContentFrame);
+            addFragmentToActivity(getSupportFragmentManager(), settingsFragment, R.id.settingsContentFrame);
         }
 
         // Create the presenter
@@ -69,6 +68,5 @@ public class SettingsActivity extends ACBaseActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
 }

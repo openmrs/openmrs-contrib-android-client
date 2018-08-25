@@ -14,17 +14,18 @@
 
 package org.openmrs.mobile.utilities;
 
-import android.util.DisplayMetrics;
-import android.view.WindowManager;
-
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.application.OpenMRSLogger;
+
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
+
 public final class TabUtil {
+
     public static final int MIN_SCREEN_WIDTH_FOR_FINDPATIENTSACTIVITY = 480;
     public static final int MIN_SCREEN_WIDTH_FOR_PATIENTDASHBOARDACTIVITY = 960;
     private static OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
@@ -57,26 +58,33 @@ public final class TabUtil {
             actionBarField.setAccessible(true);
             inActionBar2 = actionBarField.get(inActionBar);
             actionBarClass = inActionBar2.getClass();
-        } catch (IllegalAccessException e) {
+        }
+        catch (IllegalAccessException e) {
             mLogger.d(e.toString());
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             mLogger.d(e.toString());
-        } catch (NoSuchFieldException e) {
+        }
+        catch (NoSuchFieldException e) {
             inActionBar2 = inActionBar;
             mLogger.d(e.toString());
         }
 
         try {
-            final Method method = actionBarClass.getDeclaredMethod("setHasEmbeddedTabs", new Class[]{Boolean.TYPE});
+            final Method method = actionBarClass.getDeclaredMethod("setHasEmbeddedTabs", new Class[] { Boolean.TYPE });
             method.setAccessible(true);
-            method.invoke(inActionBar2, new Object[]{inHasEmbeddedTabs});
-        } catch (NoSuchMethodException e) {
+            method.invoke(inActionBar2, new Object[] { inHasEmbeddedTabs });
+        }
+        catch (NoSuchMethodException e) {
             mLogger.d(e.toString());
-        } catch (InvocationTargetException e) {
+        }
+        catch (InvocationTargetException e) {
             mLogger.d(e.toString());
-        } catch (IllegalAccessException e) {
+        }
+        catch (IllegalAccessException e) {
             mLogger.d(e.toString());
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             mLogger.d(e.toString());
         }
     }

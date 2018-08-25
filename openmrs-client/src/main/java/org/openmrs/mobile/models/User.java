@@ -16,7 +16,7 @@ package org.openmrs.mobile.models;
 
 import com.google.gson.annotations.Expose;
 
-public class User extends Resource{
+public class User extends Resource {
 
     @Expose
     private String username;

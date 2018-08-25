@@ -14,7 +14,11 @@
 
 package org.openmrs.mobile.utilities;
 
-import android.support.annotation.NonNull;
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.util.Collection;
+
+import org.openmrs.mobile.models.Resource;
 
 import com.activeandroid.util.Log;
 import com.google.gson.Gson;
@@ -27,11 +31,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.annotations.Expose;
 
-import org.openmrs.mobile.models.Resource;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Type;
-import java.util.Collection;
+import android.support.annotation.NonNull;
 
 public class ResourceSerializer implements JsonSerializer<Resource> {
 
@@ -51,7 +51,8 @@ public class ResourceSerializer implements JsonSerializer<Resource> {
                         if (field.get(src) != null) {
                             srcJson.add(field.getName(), serializeField((Resource) field.get(src), context));
                         }
-                    } catch (IllegalAccessException e) {
+                    }
+                    catch (IllegalAccessException e) {
                         Log.e(RESOURCE_SERIALIZER, EXCEPTION, e);
                     }
                 } else if (Collection.class.isAssignableFrom(field.getType())) {
@@ -72,13 +73,15 @@ public class ResourceSerializer implements JsonSerializer<Resource> {
                                 srcJson.add(field.getName(), jsonArray);
                             }
                         }
-                    } catch (IllegalAccessException e) {
+                    }
+                    catch (IllegalAccessException e) {
                         Log.e(RESOURCE_SERIALIZER, EXCEPTION, e);
                     }
                 } else {
                     try {
                         srcJson.add(field.getName(), myGson.toJsonTree(field.get(src)));
-                    } catch (IllegalAccessException e) {
+                    }
+                    catch (IllegalAccessException e) {
                         Log.e(RESOURCE_SERIALIZER, EXCEPTION, e);
                     }
                 }
@@ -90,9 +93,7 @@ public class ResourceSerializer implements JsonSerializer<Resource> {
     @NonNull
     private Gson getGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        return gsonBuilder
-                .excludeFieldsWithoutExposeAnnotation()
-                .create();
+        return gsonBuilder.excludeFieldsWithoutExposeAnnotation().create();
     }
 
     private JsonElement serializeField(Resource src, JsonSerializationContext context) {
@@ -102,7 +103,6 @@ public class ResourceSerializer implements JsonSerializer<Resource> {
             return context.serialize(src);
         }
     }
-
 
     private boolean isResourceCollection(Collection collection) {
         return Resource.class.isAssignableFrom(collection.toArray()[0].getClass());

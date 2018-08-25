@@ -1,5 +1,13 @@
 package org.openmrs.mobile.activities.patientdashboard.charts;
 
+import java.util.Iterator;
+import java.util.List;
+
+import org.json.JSONObject;
+import org.openmrs.mobile.R;
+
+import com.google.common.collect.Lists;
+
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -8,19 +16,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.google.common.collect.Lists;
-
-import org.json.JSONObject;
-import org.openmrs.mobile.R;
-
-import java.util.Iterator;
-import java.util.List;
-
 /**
  * Created by Chathuranga on 15/06/2018.
  */
 
 public class PatientChartsListAdapter extends BaseAdapter {
+
     private static final int LEFT = 0;
     private static final int RIGHT = 1;
 
@@ -69,17 +70,10 @@ public class PatientChartsListAdapter extends BaseAdapter {
         String vitalLabel = String.valueOf(mVitalNameList.get(i));
         holder.vitalName.setText(vitalLabel);
 
-
         holder.detailsSelector.setText(mContext.getString(R.string.list_vital_selector_show));
         bindDrawableResources(R.drawable.exp_list_show_details, holder.detailsSelector, RIGHT);
 
         return rowView;
-    }
-
-
-    private static class ViewHolder {
-        private TextView vitalName, detailsSelector;
-
     }
 
     private void bindDrawableResources(int drawableID, TextView textView, int direction) {
@@ -94,5 +88,11 @@ public class PatientChartsListAdapter extends BaseAdapter {
             textView.setCompoundDrawablePadding((int) (10 * scale + 0.5f));
             textView.setCompoundDrawables(null, null, image, null);
         }
+    }
+
+    private static class ViewHolder {
+
+        private TextView vitalName, detailsSelector;
+
     }
 }

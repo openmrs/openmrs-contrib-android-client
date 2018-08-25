@@ -21,7 +21,7 @@ import org.openmrs.mobile.models.PersonName;
 
 public class PatientMerger {
 
-    public Patient mergePatient(Patient oldPatient, Patient newPatient){
+    public Patient mergePatient(Patient oldPatient, Patient newPatient) {
         mergePatientsPerson(oldPatient.getPerson(), newPatient.getPerson());
         oldPatient.setId(newPatient.getId());
         return oldPatient;
@@ -49,8 +49,8 @@ public class PatientMerger {
         oldName.setFamilyName(getNewValueIfOldIsNull(oldName.getFamilyName(), newName.getFamilyName()));
     }
 
-    private String getNewValueIfOldIsNull(String oldValue, String newValue){
-        if(!StringUtils.notNull(oldValue)){
+    private String getNewValueIfOldIsNull(String oldValue, String newValue) {
+        if (!StringUtils.notNull(oldValue)) {
             return newValue;
         }
         return oldValue;

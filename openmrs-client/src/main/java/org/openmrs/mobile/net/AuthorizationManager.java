@@ -14,11 +14,11 @@
 
 package org.openmrs.mobile.net;
 
-import android.content.Intent;
-
 import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+
+import android.content.Intent;
 
 public class AuthorizationManager {
 
@@ -26,8 +26,8 @@ public class AuthorizationManager {
 
     public boolean isUserNameOrServerEmpty() {
         boolean result = false;
-        if (mOpenMRS.getUsername().equals(ApplicationConstants.EMPTY_STRING) ||
-                (mOpenMRS.getServerUrl().equals(ApplicationConstants.EMPTY_STRING))) {
+        if (mOpenMRS.getUsername().equals(ApplicationConstants.EMPTY_STRING)
+                || (mOpenMRS.getServerUrl().equals(ApplicationConstants.EMPTY_STRING))) {
             result = true;
         }
         return result;

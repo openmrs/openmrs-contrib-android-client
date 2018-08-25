@@ -18,7 +18,7 @@ import java.io.Serializable;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-public class PatientAndMatchesWrapper implements Serializable{
+public class PatientAndMatchesWrapper implements Serializable {
 
     private Queue<PatientAndMatchingPatients> matchingPatients;
 
@@ -30,11 +30,11 @@ public class PatientAndMatchesWrapper implements Serializable{
         this.matchingPatients = matchingPatients;
     }
 
-    public void addToList(PatientAndMatchingPatients element){
+    public void addToList(PatientAndMatchingPatients element) {
         matchingPatients.add(element);
     }
 
-    public void remove(PatientAndMatchingPatients element){
+    public void remove(PatientAndMatchingPatients element) {
         matchingPatients.remove(element);
     }
 

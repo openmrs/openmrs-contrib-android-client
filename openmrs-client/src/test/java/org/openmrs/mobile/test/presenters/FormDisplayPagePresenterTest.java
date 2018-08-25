@@ -14,9 +14,11 @@
 
 package org.openmrs.mobile.test.presenters;
 
-import android.widget.LinearLayout;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import com.activeandroid.Cache;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,11 +31,9 @@ import org.openmrs.mobile.models.QuestionOptions;
 import org.openmrs.mobile.models.Section;
 import org.openmrs.mobile.test.ACUnitTestBase;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.activeandroid.Cache;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import android.widget.LinearLayout;
 
 public class FormDisplayPagePresenterTest extends ACUnitTestBase {
 
@@ -52,7 +52,7 @@ public class FormDisplayPagePresenterTest extends ACUnitTestBase {
     }
 
     @Test
-    public  void subscribe_renderGroup() {
+    public void subscribe_renderGroup() {
         List<Section> sectionList = getSectionList(sectionLabel, questionLabel, "group");
         when(mPage.getSections()).thenReturn(sectionList);
 
@@ -69,7 +69,7 @@ public class FormDisplayPagePresenterTest extends ACUnitTestBase {
     }
 
     @Test
-    public  void subscribe_renderNumber() {
+    public void subscribe_renderNumber() {
         List<Section> sectionList = getSectionList(sectionLabel, questionLabel, "number");
         when(mPage.getSections()).thenReturn(sectionList);
 
@@ -87,7 +87,7 @@ public class FormDisplayPagePresenterTest extends ACUnitTestBase {
     }
 
     @Test
-    public  void subscribe_renderSelect() {
+    public void subscribe_renderSelect() {
         List<Section> sectionList = getSectionList(sectionLabel, questionLabel, "select");
         when(mPage.getSections()).thenReturn(sectionList);
 
@@ -105,7 +105,7 @@ public class FormDisplayPagePresenterTest extends ACUnitTestBase {
     }
 
     @Test
-    public  void subscribe_renderRadio() {
+    public void subscribe_renderRadio() {
         List<Section> sectionList = getSectionList(sectionLabel, questionLabel, "radio");
         when(mPage.getSections()).thenReturn(sectionList);
 

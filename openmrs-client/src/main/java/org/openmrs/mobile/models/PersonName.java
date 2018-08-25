@@ -10,10 +10,10 @@
 
 package org.openmrs.mobile.models;
 
+import java.io.Serializable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 
 public class PersonName implements Serializable {
 
@@ -28,65 +28,51 @@ public class PersonName implements Serializable {
     private String familyName;
 
     /**
-     * 
-     * @return
-     *     The givenName
+     * @return The givenName
      */
     public String getGivenName() {
         return givenName;
     }
 
     /**
-     * 
-     * @param givenName
-     *     The givenName
+     * @param givenName The givenName
      */
     public void setGivenName(String givenName) {
         this.givenName = givenName;
     }
 
     /**
-     * 
-     * @return
-     *     The familyName
+     * @return The familyName
      */
     public String getFamilyName() {
         return familyName;
     }
 
     /**
-     * 
-     * @param familyName
-     *     The familyName
+     * @param familyName The familyName
      */
     public void setFamilyName(String familyName) {
         this.familyName = familyName;
     }
 
     /**
-     *
-     * @return
-     *     The middleName
+     * @return The middleName
      */
     public String getMiddleName() {
         return middleName;
     }
 
     /**
-     *
-     * @param middleName
-     *     The middleName
+     * @param middleName The middleName
      */
     public void setMiddleName(String middleName) {
         this.middleName = middleName;
     }
 
-
-    public String getNameString()
-    {
-        if (middleName==null || middleName.equals("null"))
-            return givenName+" "+familyName;
+    public String getNameString() {
+        if (middleName == null || middleName.equals("null"))
+            return givenName + " " + familyName;
         else
-            return givenName+" "+middleName+" "+familyName;
+            return givenName + " " + middleName + " " + familyName;
     }
 }

@@ -9,18 +9,18 @@
  */
 package org.openmrs.mobile.models;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Results<T> implements Serializable {
 
     @SerializedName("results")
     @Expose
-    private List<T> results = new ArrayList<T>();
+    private List<T> results = new ArrayList<>();
 
     @SerializedName("links")
     @Expose

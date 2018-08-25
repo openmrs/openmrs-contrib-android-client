@@ -14,6 +14,12 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.io.File;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -25,12 +31,6 @@ import org.openmrs.mobile.dao.ConceptDAO;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-
-import java.io.File;
-
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @PrepareForTest(OpenMRS.class)
 public class SettingsPresenterTest extends ACUnitTestBase {

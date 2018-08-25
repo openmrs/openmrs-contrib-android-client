@@ -14,11 +14,11 @@
 
 package org.openmrs.mobile.activities.visitdashboard;
 
+import java.util.List;
+
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Encounter;
-
-import java.util.List;
 
 public interface VisitDashboardContract {
 
@@ -42,7 +42,7 @@ public interface VisitDashboardContract {
     }
 
     interface Presenter extends BasePresenterContract {
-        
+
         void fillForm();
 
         void updatePatientName();

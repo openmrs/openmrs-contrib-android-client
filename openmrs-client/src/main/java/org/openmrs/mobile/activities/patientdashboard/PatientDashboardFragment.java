@@ -14,16 +14,20 @@
 
 package org.openmrs.mobile.activities.patientdashboard;
 
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.activities.ACBaseFragment;
+
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.ACBaseFragment;
-
 public class PatientDashboardFragment extends ACBaseFragment<PatientDashboardContract.PatientDashboardMainPresenter> implements PatientDashboardContract.ViewPatientMain {
+
+    public static PatientDashboardFragment newInstance() {
+        return new PatientDashboardFragment();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,9 +52,5 @@ public class PatientDashboardFragment extends ACBaseFragment<PatientDashboardCon
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public static PatientDashboardFragment newInstance() {
-        return new PatientDashboardFragment();
     }
 }

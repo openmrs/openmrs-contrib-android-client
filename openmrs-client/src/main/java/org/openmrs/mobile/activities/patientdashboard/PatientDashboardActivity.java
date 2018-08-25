@@ -14,13 +14,6 @@
 
 package org.openmrs.mobile.activities.patientdashboard;
 
-import android.content.res.Configuration;
-import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.view.Menu;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.patientdashboard.charts.PatientChartsFragment;
@@ -36,13 +29,17 @@ import org.openmrs.mobile.activities.patientdashboard.vitals.PatientVitalsFragme
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.TabUtil;
 
-import java.util.ArrayList;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.view.Menu;
 
 public class PatientDashboardActivity extends ACBaseActivity {
 
-    private String mId;
-
     public PatientDashboardContract.PatientDashboardMainPresenter mPresenter;
+    private String mId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +70,8 @@ public class PatientDashboardActivity extends ACBaseActivity {
     @Override
     public void onConfigurationChanged(final Configuration config) {
         super.onConfigurationChanged(config);
-        TabUtil.setHasEmbeddedTabs(getSupportActionBar(), getWindowManager(), TabUtil.MIN_SCREEN_WIDTH_FOR_PATIENTDASHBOARDACTIVITY);
+        TabUtil.setHasEmbeddedTabs(getSupportActionBar(), getWindowManager(),
+            TabUtil.MIN_SCREEN_WIDTH_FOR_PATIENTDASHBOARDACTIVITY);
     }
 
     @Override
@@ -102,18 +100,14 @@ public class PatientDashboardActivity extends ACBaseActivity {
         String id = String.valueOf(patientBundle.get(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE));
         if (fragment instanceof PatientDetailsFragment) {
             mPresenter = new PatientDashboardDetailsPresenter(id, ((PatientDetailsFragment) fragment));
-        }
-        else if (fragment instanceof PatientDiagnosisFragment) {
+        } else if (fragment instanceof PatientDiagnosisFragment) {
             mPresenter = new PatientDashboardDiagnosisPresenter(id, ((PatientDiagnosisFragment) fragment));
-        }
-        else if (fragment instanceof PatientVisitsFragment) {
+        } else if (fragment instanceof PatientVisitsFragment) {
             mPresenter = new PatientDashboardVisitsPresenter(id, ((PatientVisitsFragment) fragment));
-        }
-        else if (fragment instanceof PatientVitalsFragment){
+        } else if (fragment instanceof PatientVitalsFragment) {
             mPresenter = new PatientDashboardVitalsPresenter(id, ((PatientVitalsFragment) fragment));
-        }
-        else if (fragment instanceof PatientChartsFragment){
-            mPresenter = new PatientDashboardChartsPresenter(id,((PatientChartsFragment) fragment));
+        } else if (fragment instanceof PatientChartsFragment) {
+            mPresenter = new PatientDashboardChartsPresenter(id, ((PatientChartsFragment) fragment));
         }
     }
 

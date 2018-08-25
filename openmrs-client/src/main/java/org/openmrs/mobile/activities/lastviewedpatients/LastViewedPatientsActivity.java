@@ -14,19 +14,17 @@
 
 package org.openmrs.mobile.activities.lastviewedpatients;
 
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.StringUtils;
+
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.StringUtils;
 
 public class LastViewedPatientsActivity extends ACBaseActivity {
 
@@ -45,17 +43,16 @@ public class LastViewedPatientsActivity extends ACBaseActivity {
         }
 
         // Create fragment
-        LastViewedPatientsFragment lastViewedPatientsFragment =
-                (LastViewedPatientsFragment) getSupportFragmentManager().findFragmentById(R.id.lastPatientsContentFrame);
+        LastViewedPatientsFragment lastViewedPatientsFragment = (LastViewedPatientsFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.lastPatientsContentFrame);
         if (lastViewedPatientsFragment == null) {
             lastViewedPatientsFragment = LastViewedPatientsFragment.newInstance();
         }
         if (!lastViewedPatientsFragment.isActive()) {
-            addFragmentToActivity(getSupportFragmentManager(),
-                    lastViewedPatientsFragment, R.id.lastPatientsContentFrame);
+            addFragmentToActivity(getSupportFragmentManager(), lastViewedPatientsFragment, R.id.lastPatientsContentFrame);
         }
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             query = savedInstanceState.getString(ApplicationConstants.BundleKeys.PATIENT_QUERY_BUNDLE, "");
             mPresenter = new LastViewedPatientsPresenter(lastViewedPatientsFragment, query);
         } else {
@@ -88,7 +85,7 @@ public class LastViewedPatientsActivity extends ACBaseActivity {
         MenuItem mFindPatientMenuItem = menu.findItem(R.id.actionSearchRemote);
         findPatientView = (SearchView) mFindPatientMenuItem.getActionView();
 
-        if(StringUtils.notEmpty(query)){
+        if (StringUtils.notEmpty(query)) {
             mFindPatientMenuItem.expandActionView();
             findPatientView.setQuery(query, true);
             findPatientView.clearFocus();
@@ -96,6 +93,7 @@ public class LastViewedPatientsActivity extends ACBaseActivity {
 
         // Search function
         findPatientView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String query) {
                 mPresenter.findPatients(query);
@@ -111,6 +109,7 @@ public class LastViewedPatientsActivity extends ACBaseActivity {
         });
 
         findPatientView.addOnAttachStateChangeListener(new View.OnAttachStateChangeListener() {
+
             @Override
             public void onViewAttachedToWindow(View view) {
                 // nothing to do

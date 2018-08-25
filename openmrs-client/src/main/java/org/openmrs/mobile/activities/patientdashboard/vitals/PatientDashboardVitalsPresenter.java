@@ -40,7 +40,7 @@ public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresent
     }
 
     public PatientDashboardVitalsPresenter(Patient patient, PatientDashboardContract.ViewPatientVitals mPatientVitalsView,
-                                           EncounterDAO encounterDAO, VisitApi visitApi) {
+        EncounterDAO encounterDAO, VisitApi visitApi) {
         this.mPatient = patient;
         this.mPatientVitalsView = mPatientVitalsView;
         this.mPatientVitalsView.setPresenter(this);
@@ -57,6 +57,7 @@ public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresent
     private void loadVitalsFromServer() {
         if (NetworkUtils.isOnline()) {
             visitApi.syncLastVitals(mPatient.getUuid(), new DefaultResponseCallbackListener() {
+
                 @Override
                 public void onResponse() {
                     loadVitalsFromDB();
@@ -71,8 +72,7 @@ public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresent
     }
 
     private void loadVitalsFromDB() {
-        addSubscription(encounterDAO.getLastVitalsEncounter(mPatient.getUuid())
-                .observeOn(AndroidSchedulers.mainThread())
+        addSubscription(encounterDAO.getLastVitalsEncounter(mPatient.getUuid()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe(encounter -> {
                     if (encounter != null) {
                         mPatientVitalsView.showEncounterVitals(encounter);
@@ -84,10 +84,7 @@ public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresent
 
     @Override
     public void startFormDisplayActivityWithEncounter() {
-        addSubscription(encounterDAO.getLastVitalsEncounter(mPatient.getUuid())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(encounter -> {
-                    mPatientVitalsView.startFormDisplayActivity(encounter);
-                }));
+        addSubscription(encounterDAO.getLastVitalsEncounter(mPatient.getUuid()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(encounter -> mPatientVitalsView.startFormDisplayActivity(encounter)));
     }
 }

@@ -14,7 +14,17 @@
 
 package org.openmrs.mobile.activities.matchingpatients;
 
+import java.util.List;
+
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseFragment;
+import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.utilities.DateUtils;
+import org.openmrs.mobile.utilities.FontsUtil;
+import org.openmrs.mobile.utilities.ToastUtil;
+
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,16 +34,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseFragment;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.utilities.DateUtils;
-import org.openmrs.mobile.utilities.FontsUtil;
-import org.openmrs.mobile.utilities.ToastUtil;
-
-import java.util.List;
-
-public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsContract.Presenter> implements MatchingPatientsContract.View{
+public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsContract.Presenter> implements MatchingPatientsContract.View {
 
     private Button registerNewPatientButton;
     private Button mergePatientsButton;
@@ -51,13 +52,14 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
     private RecyclerView mRecyclerView;
     private View view;
 
-    public static MatchingPatientsFragment newInstance(){
+    public static MatchingPatientsFragment newInstance() {
         return new MatchingPatientsFragment();
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_matching_patients, container, false);
         initFragmentFields(view);
         setListeners();
@@ -66,18 +68,8 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
     }
 
     private void setListeners() {
-        registerNewPatientButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.registerNewPatient();
-            }
-        });
-        mergePatientsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.mergePatients();
-            }
-        });
+        registerNewPatientButton.setOnClickListener(v -> mPresenter.registerNewPatient());
+        mergePatientsButton.setOnClickListener(v -> mPresenter.mergePatients());
     }
 
     private void initFragmentFields(View root) {
@@ -130,7 +122,8 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
 
     private void setMatchingPatients(Patient patient, List<Patient> matchingPatients) {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(new MergePatientsRecycleViewAdapter((getActivity()), mPresenter,  matchingPatients, patient));
+        mRecyclerView
+                .setAdapter(new MergePatientsRecycleViewAdapter((getActivity()), mPresenter, matchingPatients, patient));
     }
 
     private void setPatientInfo(Patient patient) {

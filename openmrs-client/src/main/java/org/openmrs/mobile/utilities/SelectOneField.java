@@ -14,17 +14,29 @@
 
 package org.openmrs.mobile.utilities;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import org.openmrs.mobile.models.Answer;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.openmrs.mobile.models.Answer;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
 public class SelectOneField implements Serializable, Parcelable {
 
+    public static final Parcelable.Creator<SelectOneField> CREATOR = new Parcelable.Creator<SelectOneField>() {
+
+        @Override
+        public SelectOneField createFromParcel(Parcel source) {
+            return new SelectOneField(source);
+        }
+
+        @Override
+        public SelectOneField[] newArray(int size) {
+            return new SelectOneField[size];
+        }
+    };
     private String concept = null;
     private Answer chosenAnswer = null;
     private List<Answer> answerList;
@@ -32,6 +44,13 @@ public class SelectOneField implements Serializable, Parcelable {
     public SelectOneField(List<Answer> answerList, String concept) {
         this.answerList = answerList;
         this.concept = concept;
+    }
+
+    protected SelectOneField(Parcel in) {
+        this.concept = in.readString();
+        this.chosenAnswer = (Answer) in.readSerializable();
+        this.answerList = new ArrayList<>();
+        in.readList(this.answerList, Answer.class.getClassLoader());
     }
 
     public void setAnswer(int answerPosition) {
@@ -43,12 +62,12 @@ public class SelectOneField implements Serializable, Parcelable {
         }
     }
 
-    public void setChosenAnswer(Answer chosenAnswer) {
-        this.chosenAnswer = chosenAnswer;
-    }
-
     public Answer getChosenAnswer() {
         return chosenAnswer;
+    }
+
+    public void setChosenAnswer(Answer chosenAnswer) {
+        this.chosenAnswer = chosenAnswer;
     }
 
     public String getConcept() {
@@ -70,23 +89,4 @@ public class SelectOneField implements Serializable, Parcelable {
         dest.writeSerializable(this.chosenAnswer);
         dest.writeList(this.answerList);
     }
-
-    protected SelectOneField(Parcel in) {
-        this.concept = in.readString();
-        this.chosenAnswer = (Answer) in.readSerializable();
-        this.answerList = new ArrayList<Answer>();
-        in.readList(this.answerList, Answer.class.getClassLoader());
-    }
-
-    public static final Parcelable.Creator<SelectOneField> CREATOR = new Parcelable.Creator<SelectOneField>() {
-        @Override
-        public SelectOneField createFromParcel(Parcel source) {
-            return new SelectOneField(source);
-        }
-
-        @Override
-        public SelectOneField[] newArray(int size) {
-            return new SelectOneField[size];
-        }
-    };
 }

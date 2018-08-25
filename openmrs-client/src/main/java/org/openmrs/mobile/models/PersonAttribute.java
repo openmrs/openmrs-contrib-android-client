@@ -10,10 +10,10 @@
 
 package org.openmrs.mobile.models;
 
+import java.io.Serializable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 
 public class PersonAttribute implements Serializable {
 
@@ -25,36 +25,28 @@ public class PersonAttribute implements Serializable {
     private String value;
 
     /**
-     * 
-     * @return
-     *     The attributeType
+     * @return The attributeType
      */
     public PersonAttributeType getAttributeType() {
         return attributeType;
     }
 
     /**
-     * 
-     * @param attributeType
-     *     The attributeType
+     * @param attributeType The attributeType
      */
     public void setAttributeType(PersonAttributeType attributeType) {
         this.attributeType = attributeType;
     }
 
     /**
-     * 
-     * @return
-     *     The value
+     * @return The value
      */
     public String getValue() {
         return value;
     }
 
     /**
-     * 
-     * @param value
-     *     The value
+     * @param value The value
      */
     public void setValue(String value) {
         this.value = value;

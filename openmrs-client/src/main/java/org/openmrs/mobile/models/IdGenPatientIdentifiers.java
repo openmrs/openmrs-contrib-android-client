@@ -10,35 +10,30 @@
 
 package org.openmrs.mobile.models;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class IdGenPatientIdentifiers {
 
     @SerializedName("identifiers")
     @Expose
-    private List<String> identifiers = new ArrayList<String>();
+    private List<String> identifiers = new ArrayList<>();
 
     /**
-     *
-     * @return
-     * The identifiers
+     * @return The identifiers
      */
     public List<String> getIdentifiers() {
         return identifiers;
     }
 
     /**
-     *
-     * @param identifiers
-     * The identifiers
+     * @param identifiers The identifiers
      */
     public void setIdentifiers(List<String> identifiers) {
         this.identifiers = identifiers;
     }
 
 }
-

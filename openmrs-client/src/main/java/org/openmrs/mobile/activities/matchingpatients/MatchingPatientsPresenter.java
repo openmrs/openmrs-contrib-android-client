@@ -14,6 +14,10 @@
 
 package org.openmrs.mobile.activities.matchingpatients;
 
+import static com.google.common.collect.ComparisonChain.start;
+
+import java.util.Queue;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
@@ -25,15 +29,13 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.PatientAndMatchingPatients;
 import org.openmrs.mobile.utilities.PatientMerger;
 
-import java.util.Queue;
+import android.support.annotation.NonNull;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.google.common.collect.ComparisonChain.start;
-
-public class MatchingPatientsPresenter extends BasePresenter implements MatchingPatientsContract.Presenter{
+public class MatchingPatientsPresenter extends BasePresenter implements MatchingPatientsContract.Presenter {
 
     private RestApi restApi;
     private PatientDAO patientDAO;
@@ -42,7 +44,8 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
     private Queue<PatientAndMatchingPatients> matchingPatientsList;
     private Patient selectedPatient;
 
-    public MatchingPatientsPresenter(MatchingPatientsContract.View view, Queue<PatientAndMatchingPatients> matchingPatientsList) {
+    public MatchingPatientsPresenter(MatchingPatientsContract.View view,
+        Queue<PatientAndMatchingPatients> matchingPatientsList) {
         this.view = view;
         this.matchingPatientsList = matchingPatientsList;
         this.restApi = RestServiceBuilder.createService(RestApi.class);
@@ -51,8 +54,9 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
         this.view.setPresenter(this);
     }
 
-    public MatchingPatientsPresenter(MatchingPatientsContract.View view, Queue<PatientAndMatchingPatients> matchingPatientsList,
-                                     RestApi restApi, PatientDAO patientDAO, PatientApi patientApi) {
+    public MatchingPatientsPresenter(MatchingPatientsContract.View view,
+        Queue<PatientAndMatchingPatients> matchingPatientsList, RestApi restApi, PatientDAO patientDAO,
+        PatientApi patientApi) {
         this.view = view;
         this.matchingPatientsList = matchingPatientsList;
         this.restApi = restApi;
@@ -63,7 +67,8 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
 
     @Override
     public void subscribe() {
-        view.showPatientsData(matchingPatientsList.peek().getPatient(), matchingPatientsList.peek().getMatchingPatientList());
+        view.showPatientsData(matchingPatientsList.peek().getPatient(),
+            matchingPatientsList.peek().getMatchingPatientList());
         setSelectedIfOnlyOneMatching();
     }
 
@@ -85,7 +90,7 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
             updatePatient(mergedPatient);
             removeSelectedPatient();
             if (matchingPatientsList.peek() != null) {
-               start();
+                start();
             } else {
                 view.finishActivity();
             }
@@ -98,10 +103,11 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
         patient.getPerson().setUuid(null);
         Call<Patient> call = restApi.updatePatient(patient, patient.getUuid(), ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Patient>() {
+
             @Override
-            public void onResponse(Call<Patient> call, Response<Patient> response) {
-                if(response.isSuccessful()){
-                    if(patientDAO.isUserAlreadySaved(patient.getUuid())){
+            public void onResponse(@NonNull Call<Patient> call, @NonNull Response<Patient> response) {
+                if (response.isSuccessful()) {
+                    if (patientDAO.isUserAlreadySaved(patient.getUuid())) {
                         Long id = patientDAO.findPatientByUUID(patient.getUuid()).getId();
                         patientDAO.updatePatient(id, patient);
                         patientDAO.deletePatient(patient.getId());
@@ -114,7 +120,7 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
             }
 
             @Override
-            public void onFailure(Call<Patient> call, Throwable t) {
+            public void onFailure(@NonNull Call<Patient> call, @NonNull Throwable t) {
                 view.showErrorToast(t.getMessage());
             }
         });
@@ -133,7 +139,7 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
     }
 
     private void setSelectedIfOnlyOneMatching() {
-        if(matchingPatientsList.peek().getMatchingPatientList().size() == 1){
+        if (matchingPatientsList.peek().getMatchingPatientList().size() == 1) {
             selectedPatient = matchingPatientsList.peek().getMatchingPatientList().get(0);
         }
     }

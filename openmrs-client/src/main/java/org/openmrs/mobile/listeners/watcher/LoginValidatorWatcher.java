@@ -14,6 +14,11 @@
 
 package org.openmrs.mobile.listeners.watcher;
 
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.login.LocationArrayAdapter;
+import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.utilities.StringUtils;
+
 import android.graphics.Color;
 import android.text.Editable;
 import android.text.Html;
@@ -24,11 +29,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.login.LocationArrayAdapter;
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.utilities.StringUtils;
 
 //Class used to extract view validation logic
 public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSelectedListener {
@@ -43,7 +43,8 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
     private boolean urlChanged;
     private boolean locationErrorOccurred;
 
-    public LoginValidatorWatcher(EditText urlEditText, EditText usernameEditText, EditText passwordEditText, Spinner locationSpinner, Button loginButton) {
+    public LoginValidatorWatcher(EditText urlEditText, EditText usernameEditText, EditText passwordEditText,
+        Spinner locationSpinner, Button loginButton) {
         this.mUrl = urlEditText;
         this.mUsername = usernameEditText;
         this.mPassword = passwordEditText;
@@ -84,10 +85,10 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
     }
 
     private void urlChanged(Editable editable) {
-        if ((!OpenMRS.getInstance().getServerUrl().equals(editable.toString())) && StringUtils.notEmpty(editable.toString())) {
+        if ((!OpenMRS.getInstance().getServerUrl().equals(editable.toString()))
+                && StringUtils.notEmpty(editable.toString())) {
             setUrlChanged(true);
-        }
-        else if (OpenMRS.getInstance().getServerUrl().equals(editable.toString())) {
+        } else if (OpenMRS.getInstance().getServerUrl().equals(editable.toString())) {
             setUrlChanged(false);
         }
     }
@@ -124,8 +125,7 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
         if (locationErrorOccurred && urlChanged) {
             mLocation.setEnabled(false);
             mLocation.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             mLocation.setEnabled(true);
             mLocation.setVisibility(View.VISIBLE);
         }
@@ -142,11 +142,11 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
         return StringUtils.notEmpty(editText.getText().toString());
     }
 
-    public void setLocationErrorOccurred(boolean locationErrorOccurred) {
-        this.locationErrorOccurred = locationErrorOccurred;
-    }
-
     public boolean isLocationErrorOccurred() {
         return locationErrorOccurred;
+    }
+
+    public void setLocationErrorOccurred(boolean locationErrorOccurred) {
+        this.locationErrorOccurred = locationErrorOccurred;
     }
 }

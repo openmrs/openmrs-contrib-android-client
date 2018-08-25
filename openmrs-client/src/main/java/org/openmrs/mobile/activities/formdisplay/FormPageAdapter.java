@@ -14,17 +14,18 @@
 
 package org.openmrs.mobile.activities.formdisplay;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.util.SparseArray;
-import android.view.ViewGroup;
+import java.util.List;
 
 import org.openmrs.mobile.models.Form;
 import org.openmrs.mobile.models.Page;
 import org.openmrs.mobile.utilities.FormService;
 
-import java.util.List;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.util.SparseArray;
+import android.view.ViewGroup;
 
 class FormPageAdapter extends FragmentPagerAdapter {
 
@@ -44,6 +45,7 @@ class FormPageAdapter extends FragmentPagerAdapter {
         return fragment;
     }
 
+    @NonNull
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         Fragment fragment = (Fragment) super.instantiateItem(container, position);

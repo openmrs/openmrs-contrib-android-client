@@ -14,8 +14,6 @@
 
 package org.openmrs.mobile.application;
 
-import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -25,12 +23,14 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.PrintWriter;
 
+import android.util.Log;
+
 public class OpenMRSLogger {
 
-    private static String mTAG = "OpenMRS";
     private static final boolean IS_DEBUGGING_ON = true;
     private static final String LOG_FILENAME = "OpenMRS.log";
     private static final int MAX_SIZE = 64 * 1024; // 64kB;
+    private static String mTAG = "OpenMRS";
     private static File mLogFile = null;
     private static File mFolder = null;
     private static boolean mSaveToFileEnable = true;
@@ -43,11 +43,9 @@ public class OpenMRSLogger {
     public OpenMRSLogger() {
         logger = this;
         androidDefaultUEH = Thread.getDefaultUncaughtExceptionHandler();
-        Thread.UncaughtExceptionHandler handler = new Thread.UncaughtExceptionHandler() {
-            public void uncaughtException(Thread thread, Throwable ex) {
-                logger.e("Uncaught exception is: ", ex);
-                androidDefaultUEH.uncaughtException(thread, ex);
-            }
+        Thread.UncaughtExceptionHandler handler = (thread, ex) -> {
+            logger.e("Uncaught exception is: ", ex);
+            androidDefaultUEH.uncaughtException(thread, ex);
         };
         Thread.setDefaultUncaughtExceptionHandler(handler);
 
@@ -62,7 +60,8 @@ public class OpenMRSLogger {
                 mLogFile.createNewFile();
             }
             logger.d("Start logging to file");
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             logger.e("Error during create file", e);
         }
     }
@@ -107,18 +106,77 @@ public class OpenMRSLogger {
                 mLoggerProcess = Runtime.getRuntime().exec("logcat -c");
                 mLoggerProcess.waitFor();
 
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 setErrorCount();
                 if (isSaveToFileEnable()) {
                     logger.e("Error during save log to file", e);
                 }
-            } catch (InterruptedException e) {
+            }
+            catch (InterruptedException e) {
                 setErrorCount();
                 if (isSaveToFileEnable()) {
                     logger.e("Error during waitng for \"logcat -c\" process", e);
                 }
             }
             rotateLogFile();
+        }
+    }
+
+    private static String getMessage(String msg) {
+        final String fullClassName = Thread.currentThread().getStackTrace()[4].getClassName();
+        final String className = fullClassName.substring(fullClassName.lastIndexOf('.') + 1);
+        final String methodName = Thread.currentThread().getStackTrace()[4].getMethodName();
+        final int lineNumber = Thread.currentThread().getStackTrace()[4].getLineNumber();
+
+        return "#" + lineNumber + " " + className + "." + methodName + "() : " + msg;
+    }
+
+    private static void rotateLogFile() {
+        if (mLogFile.length() > MAX_SIZE && !mIsRotating) {
+            mIsRotating = true;
+            logger.i("Log file size is too big. Start rotating log file");
+            new Thread() {
+
+                @Override
+                public void run() {
+                    try {
+                        LineNumberReader r = new LineNumberReader(new FileReader(mLogFile));
+
+                        while (r.readLine() != null) {
+                            continue;
+                        }
+                        r.close();
+
+                        int remove = Math.round(r.getLineNumber() * 0.3f);
+                        if (remove > 0) {
+                            r = new LineNumberReader(new FileReader(mLogFile));
+
+                            while (r.readLine() != null && r.getLineNumber() < remove) {
+                                continue;
+                            }
+
+                            File newFile = new File(mLogFile.getAbsolutePath() + ".new");
+                            PrintWriter pw = new PrintWriter(new FileWriter(newFile));
+                            String line;
+                            while ((line = r.readLine()) != null) {
+                                pw.println(line);
+                            }
+
+                            pw.close();
+                            r.close();
+
+                            if (newFile.renameTo(mLogFile)) {
+                                logger.i("Log file rotated");
+                            }
+                            mIsRotating = false;
+                        }
+                    }
+                    catch (IOException e) {
+                        logger.e("Error rotating log file. Rotating disable. ", e);
+                    }
+                }
+            }.start();
         }
     }
 
@@ -176,62 +234,7 @@ public class OpenMRSLogger {
         saveToFile();
     }
 
-    private static String getMessage(String msg) {
-        final String fullClassName = Thread.currentThread().getStackTrace()[4].getClassName();
-        final String className = fullClassName.substring(fullClassName.lastIndexOf('.') + 1);
-        final String methodName = Thread.currentThread().getStackTrace()[4].getMethodName();
-        final int lineNumber = Thread.currentThread().getStackTrace()[4].getLineNumber();
-
-        return "#" + lineNumber + " " + className + "." + methodName + "() : " + msg;
-    }
-
     public String getLogFilename() {
         return LOG_FILENAME;
-    }
-
-    private static void rotateLogFile() {
-        if (mLogFile.length() > MAX_SIZE && !mIsRotating) {
-            mIsRotating = true;
-            logger.i("Log file size is too big. Start rotating log file");
-            new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        LineNumberReader r = new LineNumberReader(new FileReader(mLogFile));
-
-                        while (r.readLine() != null) {
-                            continue;
-                        }
-                        r.close();
-
-                        int remove = Math.round(r.getLineNumber() * 0.3f);
-                        if (remove > 0) {
-                            r = new LineNumberReader(new FileReader(mLogFile));
-
-                            while (r.readLine() != null && r.getLineNumber() < remove) {
-                                continue;
-                            }
-
-                            File newFile = new File(mLogFile.getAbsolutePath() + ".new");
-                            PrintWriter pw = new PrintWriter(new FileWriter(newFile));
-                            String line;
-                            while ((line = r.readLine()) != null) {
-                                pw.println(line);
-                            }
-
-                            pw.close();
-                            r.close();
-
-                            if (newFile.renameTo(mLogFile)) {
-                                logger.i("Log file rotated");
-                            }
-                            mIsRotating = false;
-                        }
-                    } catch (IOException e) {
-                        logger.e("Error rotating log file. Rotating disable. ", e);
-                    }
-                }
-            } .start();
-        }
     }
 }

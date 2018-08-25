@@ -35,12 +35,7 @@ public class PatientDashboardChartsPresenter extends PatientDashboardMainPresent
 
     @Override
     public void subscribe() {
-        addSubscription(visitDAO.getVisitsByPatientID(mPatient.getId())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(visits -> {
-                            mPatientChartsView.populateList(visits);
-                        }
-                ));
-
+        addSubscription(visitDAO.getVisitsByPatientID(mPatient.getId()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(visits -> mPatientChartsView.populateList(visits)));
     }
 }

@@ -10,12 +10,12 @@
 
 package org.openmrs.mobile.models;
 
+import java.io.Serializable;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.io.Serializable;
 
 @Table(name = "obscreate")
 public class Obscreate extends Model implements Serializable {

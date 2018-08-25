@@ -14,16 +14,15 @@
 
 package org.openmrs.mobile.test;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.ContentObserver;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.doNothing;
+import static org.powermock.api.mockito.PowerMockito.when;
 
-import com.activeandroid.Cache;
-import com.activeandroid.TableInfo;
-import com.activeandroid.content.ContentProvider;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -40,20 +39,21 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.activeandroid.Cache;
+import com.activeandroid.TableInfo;
+import com.activeandroid.content.ContentProvider;
+
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.ContentObserver;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 
 import retrofit2.Call;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.doNothing;
-import static org.powermock.api.mockito.PowerMockito.when;
-
-@PrepareForTest({ Cache.class, TableInfo.class, Context.class,
-        ContentResolver.class, ContentProvider.class, ContentValues.class })
+@PrepareForTest({ Cache.class, TableInfo.class, Context.class, ContentResolver.class, ContentProvider.class,
+        ContentValues.class })
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor("com.activeandroid.content.ContentProvider")
 public abstract class ACUnitTestBase {
@@ -74,7 +74,8 @@ public abstract class ACUnitTestBase {
 
         try {
             PowerMockito.whenNew(ContentValues.class).withNoArguments().thenReturn(vals);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -91,7 +92,7 @@ public abstract class ACUnitTestBase {
     protected Patient createPatient(Long id) {
         Patient patient = new Patient();
         patient.setId(id);
-        patient.setUuid("patient_one_uuid"+id);
+        patient.setUuid("patient_one_uuid" + id);
         patient.setPerson(createPerson(id));
         patient.setIdentifiers(Collections.singletonList(createIdentifier(id)));
         return patient;
@@ -143,12 +144,11 @@ public abstract class ACUnitTestBase {
         return new MockSuccessResponse<>(list);
     }
 
-
-    protected  <T> Call<T> mockSuccessCall(T object) {
+    protected <T> Call<T> mockSuccessCall(T object) {
         return new MockSuccessResponse<>(object);
     }
 
-    protected <T> Call<T> mockErrorCall(int code){
+    protected <T> Call<T> mockErrorCall(int code) {
         return new MockErrorResponse<>(code);
     }
 

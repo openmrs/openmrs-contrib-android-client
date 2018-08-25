@@ -14,22 +14,11 @@
 
 package org.openmrs.mobile.activities;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
@@ -46,22 +35,32 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ForceClose;
 import org.openmrs.mobile.utilities.NetworkUtils;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 public abstract class ACBaseActivity extends AppCompatActivity {
 
-    protected FragmentManager mFragmentManager;
     protected final OpenMRS mOpenMRS = OpenMRS.getInstance();
     protected final OpenMRSLogger mOpenMRSLogger = mOpenMRS.getOpenMRSLogger();
+    protected FragmentManager mFragmentManager;
     protected AuthorizationManager mAuthorizationManager;
     protected CustomFragmentDialog mCustomFragmentDialog;
     private MenuItem mSyncbutton;
@@ -83,7 +82,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
             }
         }
     }
-
 
     @Override
     protected void onResume() {
@@ -113,7 +111,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         if (logoutMenuItem != null) {
             logoutMenuItem.setTitle(getString(R.string.action_logout) + " " + mOpenMRS.getUsername());
         }
-        if(mSyncbutton !=null) {
+        if (mSyncbutton != null) {
             final Boolean syncState = NetworkUtils.isOnline();
             setSyncButtonState(syncState);
         }
@@ -123,8 +121,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     private void setSyncButtonState(boolean syncState) {
         if (syncState) {
             mSyncbutton.setIcon(R.drawable.ic_sync_on);
-        }
-        else {
+        } else {
             mSyncbutton.setIcon(R.drawable.ic_sync_off);
         }
     }
@@ -150,7 +147,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 if (syncState) {
                     OpenMRS.getInstance().setSyncState(false);
                     setSyncButtonState(false);
-                } else if(NetworkUtils.hasNetwork()){
+                } else if (NetworkUtils.hasNetwork()) {
                     OpenMRS.getInstance().setSyncState(true);
                     setSyncButtonState(true);
                     Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
@@ -165,7 +162,8 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     locationList.clear();
                 }
                 Observable<List<Location>> observableList = new LocationDAO().getLocations();
-                observableList.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(getLocationList());
+                observableList.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(getLocationList());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -174,6 +172,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
     private Observer<List<Location>> getLocationList() {
         return new Observer<List<Location>>() {
+
             @Override
             public void onCompleted() {
                 showLocationDialog(locationList);
@@ -181,7 +180,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable e) {
-               mOpenMRSLogger.e(e.getMessage());
+                mOpenMRSLogger.e(e.getMessage());
             }
 
             @Override
@@ -196,7 +195,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
     private void showNoInternetConnectionSnackbar() {
         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
-                getString(R.string.no_internet_connection_message), Snackbar.LENGTH_SHORT);
+            getString(R.string.no_internet_connection_message), Snackbar.LENGTH_SHORT);
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
@@ -251,10 +250,10 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.DELET_PATIENT_DIALOG_TAG);
     }
 
-    private void showLocationDialog(List<String>locationList) {
+    private void showLocationDialog(List<String> locationList) {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.location_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.location_dialog_current_location)+mOpenMRS.getLocation());
+        bundle.setTextViewMessage(getString(R.string.location_dialog_current_location) + mOpenMRS.getLocation());
         bundle.setLocationList(locationList);
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.SELECT_LOCATION);
         bundle.setRightButtonText(getString(R.string.dialog_button_select_location));
@@ -297,8 +296,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         mCustomFragmentDialog.show(mFragmentManager, dialogMessage);
     }
 
-    public void addFragmentToActivity (@NonNull FragmentManager fragmentManager,
-                                       @NonNull Fragment fragment, int frameId) {
+    public void addFragmentToActivity(@NonNull FragmentManager fragmentManager, @NonNull Fragment fragment, int frameId) {
         checkNotNull(fragmentManager);
         checkNotNull(fragment);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -307,37 +305,23 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
 
     public void showAppCrashDialog(String error) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle(R.string.crash_dialog_title);
         // set dialog message
-        alertDialogBuilder
-                .setMessage(R.string.crash_dialog_message)
-                .setCancelable(false)
-                .setPositiveButton(R.string.crash_dialog_positive_button, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                })
-                .setNegativeButton(R.string.crash_dialog_negative_button, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finishAffinity();
-                    }
-                })
-                .setNeutralButton(R.string.crash_dialog_neutral_button, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String filename = OpenMRS.getInstance().getOpenMRSDir()
-                                + File.separator + mOpenMRSLogger.getLogFilename();
-                        Intent email = new Intent(Intent.ACTION_SEND);
-                        email.putExtra(Intent.EXTRA_SUBJECT, R.string.error_email_subject_app_crashed);
-                        email.putExtra(Intent.EXTRA_TEXT, error);
-                        email.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + filename));
-                        //need this to prompts email client only
-                        email.setType("message/rfc822");
+        alertDialogBuilder.setMessage(R.string.crash_dialog_message).setCancelable(false)
+                .setPositiveButton(R.string.crash_dialog_positive_button, (dialog, id) -> dialog.cancel())
+                .setNegativeButton(R.string.crash_dialog_negative_button, (dialog, id) -> finishAffinity())
+                .setNeutralButton(R.string.crash_dialog_neutral_button, (dialogInterface, i) -> {
+                    String filename = OpenMRS.getInstance().getOpenMRSDir() + File.separator
+                            + mOpenMRSLogger.getLogFilename();
+                    Intent email = new Intent(Intent.ACTION_SEND);
+                    email.putExtra(Intent.EXTRA_SUBJECT, R.string.error_email_subject_app_crashed);
+                    email.putExtra(Intent.EXTRA_TEXT, error);
+                    email.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + filename));
+                    //need this to prompts email client only
+                    email.setType("message/rfc822");
 
-                        startActivity(Intent.createChooser(email, getString(R.string.choose_a_email_client)));
-                    }
+                    startActivity(Intent.createChooser(email, getString(R.string.choose_a_email_client)));
                 });
 
         AlertDialog alertDialog = alertDialogBuilder.create();
@@ -345,4 +329,3 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
 
 }
-

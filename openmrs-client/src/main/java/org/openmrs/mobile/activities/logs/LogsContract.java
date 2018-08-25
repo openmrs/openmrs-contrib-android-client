@@ -12,22 +12,23 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-
 package org.openmrs.mobile.activities.logs;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 
-
 public interface LogsContract {
 
-    interface View extends BaseView<Presenter>{
+    interface View extends BaseView<Presenter> {
+
         void attachLogsToTextView(String logs);
+
         void fabCopyAll(String textLogs);
     }
 
     interface Presenter extends BasePresenterContract {
-       String getLogs();
+
+        String getLogs();
 
     }
 

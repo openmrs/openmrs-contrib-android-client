@@ -14,17 +14,17 @@
 
 package org.openmrs.mobile.models;
 
-
-import android.graphics.Bitmap;
-import android.util.Base64;
+import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.ByteArrayOutputStream;
-import java.io.Serializable;
+import android.graphics.Bitmap;
+import android.util.Base64;
 
 public class PatientPhoto extends Resource implements Serializable {
+
     @SerializedName("person")
     @Expose
     private Person person;

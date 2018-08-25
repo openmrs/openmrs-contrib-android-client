@@ -14,24 +14,42 @@
 
 package org.openmrs.mobile.models;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 public class Answer implements Serializable, Parcelable {
 
+    public static final Parcelable.Creator<Answer> CREATOR = new Parcelable.Creator<Answer>() {
+
+        @Override
+        public Answer createFromParcel(Parcel source) {
+            return new Answer(source);
+        }
+
+        @Override
+        public Answer[] newArray(int size) {
+            return new Answer[size];
+        }
+    };
     @SerializedName("concept")
     @Expose
     private String concept;
-
     @SerializedName("label")
     @Expose
     private String label;
 
+    public Answer() {
+    }
+
+    protected Answer(Parcel in) {
+        this.concept = in.readString();
+        this.label = in.readString();
+    }
 
     public String getConcept() {
         return concept;
@@ -59,24 +77,4 @@ public class Answer implements Serializable, Parcelable {
         dest.writeString(this.concept);
         dest.writeString(this.label);
     }
-
-    public Answer() {
-    }
-
-    protected Answer(Parcel in) {
-        this.concept = in.readString();
-        this.label = in.readString();
-    }
-
-    public static final Parcelable.Creator<Answer> CREATOR = new Parcelable.Creator<Answer>() {
-        @Override
-        public Answer createFromParcel(Parcel source) {
-            return new Answer(source);
-        }
-
-        @Override
-        public Answer[] newArray(int size) {
-            return new Answer[size];
-        }
-    };
 }

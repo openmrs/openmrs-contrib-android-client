@@ -14,28 +14,27 @@
 
 package org.openmrs.mobile.utilities;
 
-import android.annotation.SuppressLint;
-
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.openmrs.mobile.application.OpenMRS;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.openmrs.mobile.application.OpenMRS;
+
+import android.annotation.SuppressLint;
+
 public final class DateUtils {
+
     public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
     public static final String DATE_WITH_TIME_FORMAT = "dd/MM/yyyy HH:mm";
-
-    private static final String OPEN_MRS_RESPONSE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     public static final String OPEN_MRS_REQUEST_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     public static final String OPEN_MRS_REQUEST_PATIENT_FORMAT = "yyyy-MM-dd";
-
     public static final Long ZERO = 0L;
+    private static final String OPEN_MRS_RESPONSE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
     private DateUtils() {
 
@@ -43,7 +42,8 @@ public final class DateUtils {
 
     public static String convertTime(long time, String dateFormat, TimeZone timeZone) {
         Date date = new Date(time);
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat format = new SimpleDateFormat(dateFormat);
         format.setTimeZone(timeZone);
         return format.format(date);
     }
@@ -76,12 +76,15 @@ public final class DateUtils {
             try {
                 formattedDate = parseString(dateAsString, format);
                 time = formattedDate.getTime();
-            } catch (ParseException e) {
+            }
+            catch (ParseException e) {
                 try {
                     formattedDate = parseString(dateAsString, new SimpleDateFormat(OPEN_MRS_REQUEST_PATIENT_FORMAT));
                     time = formattedDate.getTime();
-                } catch (ParseException e1) {
-                    OpenMRS.getInstance().getOpenMRSLogger().w("Failed to parse date :" + dateAsString + " caused by " + e.toString());
+                }
+                catch (ParseException e1) {
+                    OpenMRS.getInstance().getOpenMRSLogger()
+                            .w("Failed to parse date :" + dateAsString + " caused by " + e.toString());
                 }
             }
         }
@@ -93,8 +96,10 @@ public final class DateUtils {
         Date formattedDate = null;
         try {
             formattedDate = format.parse(dateAsString);
-        } catch (NullPointerException e) {
-            OpenMRS.getInstance().getOpenMRSLogger().w("Failed to parse date :" + dateAsString + " caused by " + e.toString());
+        }
+        catch (NullPointerException e) {
+            OpenMRS.getInstance().getOpenMRSLogger()
+                    .w("Failed to parse date :" + dateAsString + " caused by " + e.toString());
         }
         return formattedDate;
     }
@@ -125,11 +130,14 @@ public final class DateUtils {
             DateFormat format = new SimpleDateFormat(dateFormat);
             try {
                 formattedDate = parseString(dateAsString, format);
-            } catch (ParseException e) {
+            }
+            catch (ParseException e) {
                 try {
                     formattedDate = parseString(dateAsString, new SimpleDateFormat(OPEN_MRS_REQUEST_PATIENT_FORMAT));
-                } catch (ParseException e1) {
-                    OpenMRS.getInstance().getOpenMRSLogger().w("Failed to parse date :" + dateAsString + " caused by " + e.toString());
+                }
+                catch (ParseException e1) {
+                    OpenMRS.getInstance().getOpenMRSLogger()
+                            .w("Failed to parse date :" + dateAsString + " caused by " + e.toString());
                 }
             }
         }
@@ -143,12 +151,12 @@ public final class DateUtils {
     }
 
     /**
-     * Validate a date and make sure it is between the minimum and maximum date
-     * Date format is dd/MM/yyyy
+     * Validate a date and make sure it is between the minimum and maximum date Date format is
+     * dd/MM/yyyy
      *
      * @param dateString the date to check
-     * @param minDate    minimum date allowed
-     * @param maxDate    maximum date limit
+     * @param minDate minimum date allowed
+     * @param maxDate maximum date limit
      * @return true if date is appropriate
      */
     public static boolean validateDate(String dateString, DateTime minDate, DateTime maxDate) {
@@ -179,9 +187,9 @@ public final class DateUtils {
             // check day, month and year
             String[] bundledDate = s.split("/");
 
-            int day = Integer.parseInt(bundledDate[0]),
-                    month = Integer.parseInt(bundledDate[1]),
-                    year = Integer.parseInt(bundledDate[2]);
+            int day = Integer.parseInt(bundledDate[0]);
+            int month = Integer.parseInt(bundledDate[1]);
+            int year = Integer.parseInt(bundledDate[2]);
 
             int maxDays;
             // Leap year on February -> 29 days
@@ -202,11 +210,7 @@ public final class DateUtils {
 
             int maxMonths = 12;
 
-            if (day <= 0
-                    || day > maxDays
-                    || month <= 0
-                    || month > maxMonths
-                    || year <= minDate.getYear()
+            if (day <= 0 || day > maxDays || month <= 0 || month > maxMonths || year <= minDate.getYear()
                     || year > maxDate.getYear()) {
                 return false;
             } else {
@@ -237,8 +241,10 @@ public final class DateUtils {
             if (!dateAsString.equals(simpleDateFormat.format(date))) {
                 date = null;
             }
-        } catch (ParseException exception) {
-            OpenMRS.getInstance().getOpenMRSLogger().w("Failed to validate date format :" + dateAsString + " caused by " + exception.toString());
+        }
+        catch (ParseException exception) {
+            OpenMRS.getInstance().getOpenMRSLogger()
+                    .w("Failed to validate date format :" + dateAsString + " caused by " + exception.toString());
         }
         return date != null;
     }

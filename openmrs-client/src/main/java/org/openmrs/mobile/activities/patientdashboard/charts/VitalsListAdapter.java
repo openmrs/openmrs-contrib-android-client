@@ -14,13 +14,18 @@
 
 package org.openmrs.mobile.activities.patientdashboard.charts;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.TextView;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.utilities.DateUtils;
+import org.openmrs.mobile.utilities.DayAxisValueFormatter;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -31,19 +36,13 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.google.common.collect.Lists;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.utilities.DateUtils;
-import org.openmrs.mobile.utilities.DayAxisValueFormatter;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
+import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.TextView;
 
 public class VitalsListAdapter extends BaseExpandableListAdapter {
 
@@ -63,9 +62,8 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
         this.mChildLayouts = generateChildLayouts();
     }
 
-
     private List<ViewGroup> generateChildLayouts() {
-        List<ViewGroup> layouts = new ArrayList<ViewGroup>();
+        List<ViewGroup> layouts = new ArrayList<>();
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
         for (String vitalName : this.mVitalNameList) {
@@ -75,28 +73,25 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
                 Iterator<String> dates = chartData.keys();
                 ArrayList<String> dateList = Lists.newArrayList(dates);
                 //Sorting the date
-                Collections.sort(dateList, new Comparator<String>() {
-                    @Override
-                    public int compare(String lhs, String rhs) {
-                        if (DateUtils.getDateFromString(lhs).getTime() < DateUtils.getDateFromString(rhs).getTime())
-                            return -1;
-                        else if (DateUtils.getDateFromString(lhs).getTime() == DateUtils.getDateFromString(rhs).getTime())
-                            return 0;
-                        else
-                            return 1;
-                    }
+                Collections.sort(dateList, (lhs, rhs) -> {
+                    if (DateUtils.getDateFromString(lhs).getTime() < DateUtils.getDateFromString(rhs).getTime())
+                        return -1;
+                    else if (DateUtils.getDateFromString(lhs).getTime() == DateUtils.getDateFromString(rhs).getTime())
+                        return 0;
+                    else
+                        return 1;
                 });
                 for (Integer j = 0; j < dateList.size(); j++) {
                     JSONArray dataArray = chartData.getJSONArray(dateList.get(j));
                     LineChart chart = (LineChart) convertView.findViewById(R.id.linechart);
-                    List<Entry> entries = new ArrayList<Entry>();
+                    List<Entry> entries = new ArrayList<>();
                     for (Integer i = 0; i < dataArray.length(); i++) {
                         entries.add(new Entry(j, Float.parseFloat((String) dataArray.get(i))));
                     }
                     LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
                     dataSet.setCircleColor(R.color.green);
                     dataSet.setValueTextSize(12);
-                    List<ILineDataSet> ILdataSet = new ArrayList<ILineDataSet>();
+                    List<ILineDataSet> ILdataSet = new ArrayList<>();
                     ILdataSet.add(dataSet);
                     dateList.add(DateUtils.getCurrentDateTime());
                     LineData lineData = new LineData(ILdataSet);
@@ -109,19 +104,20 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
                     xAxis.setDrawAxisLine(true);
                     xAxis.setGranularity(1);
                     xAxis.setAxisMinimum(0);
-                    xAxis.setAxisMaximum(dateList.size() -1);
+                    xAxis.setAxisMaximum(dateList.size() - 1);
                     xAxis.setValueFormatter(new DayAxisValueFormatter(dateList));
 
                     YAxis rightAxis = chart.getAxisRight();
                     rightAxis.setEnabled(false);
 
-
                     chart.invalidate();
                     layouts.add(convertView);
                 }
-            } catch (JSONException e) {
+            }
+            catch (JSONException e) {
                 OpenMRS.getInstance().getOpenMRSLogger().e(e.toString());
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e) {
                 OpenMRS.getInstance().getOpenMRSLogger().e(e.toString());
             }
 
@@ -129,7 +125,6 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
 
         return layouts;
     }
-
 
     @Override
     public int getGroupCount() {
@@ -160,7 +155,6 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
     }
-
 
     @Override
     public boolean hasStableIds() {

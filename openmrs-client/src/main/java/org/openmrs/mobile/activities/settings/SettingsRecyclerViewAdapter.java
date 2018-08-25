@@ -14,20 +14,21 @@
 
 package org.openmrs.mobile.activities.settings;
 
-import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import java.util.List;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.logs.LogsActivity;
 import org.openmrs.mobile.models.SettingsListItemDTO;
 import org.openmrs.mobile.utilities.FontsUtil;
 
-import java.util.List;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRecyclerViewAdapter.SettingsViewHolder> {
 
@@ -37,25 +38,23 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
         this.mItems = items;
     }
 
+    @NonNull
     @Override
-    public SettingsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SettingsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_settings_row, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new SettingsViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(SettingsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SettingsViewHolder holder, int position) {
         holder.mTitle.setText(mItems.get(position).getTitle());
 
-        if (position==0){
-            holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(v.getContext() , LogsActivity.class);
-                        v.getContext().startActivity(i);
-                        }
-                });
+        if (position == 0) {
+            holder.mRowLayout.setOnClickListener(v -> {
+                Intent i = new Intent(v.getContext(), LogsActivity.class);
+                v.getContext().startActivity(i);
+            });
         }
 
         if (mItems.get(position).getDesc1() != null) {
@@ -67,15 +66,14 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
         }
 
         if (mItems.get(position).getDesc1() == null && mItems.get(position).getDesc2() == null) {
-            RelativeLayout.LayoutParams layoutParams =
-                    (RelativeLayout.LayoutParams) holder.mTitle.getLayoutParams();
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) holder.mTitle.getLayoutParams();
             layoutParams.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
             holder.mTitle.setLayoutParams(layoutParams);
         }
     }
 
     @Override
-    public void onViewDetachedFromWindow(SettingsViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull SettingsViewHolder holder) {
         holder.clearAnimation();
     }
 
@@ -84,7 +82,8 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
         return mItems.size();
     }
 
-    class SettingsViewHolder extends RecyclerView.ViewHolder{
+    class SettingsViewHolder extends RecyclerView.ViewHolder {
+
         private RelativeLayout mRowLayout;
         private TextView mTitle;
         private TextView mDesc1;
@@ -102,6 +101,5 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
             mRowLayout.clearAnimation();
         }
     }
-
 
 }

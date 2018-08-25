@@ -14,13 +14,13 @@
 
 package org.openmrs.mobile.activities.formlist;
 
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 
 public class FormListActivity extends ACBaseActivity {
 
@@ -37,20 +37,18 @@ public class FormListActivity extends ACBaseActivity {
         }
 
         // Create fragment
-        FormListFragment formListFragment =
-                (FormListFragment) getSupportFragmentManager().findFragmentById(R.id.formListContentFrame);
+        FormListFragment formListFragment = (FormListFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.formListContentFrame);
         if (formListFragment == null) {
             formListFragment = FormListFragment.newInstance();
         }
         if (!formListFragment.isActive()) {
-            addFragmentToActivity(getSupportFragmentManager(),
-                    formListFragment, R.id.formListContentFrame);
+            addFragmentToActivity(getSupportFragmentManager(), formListFragment, R.id.formListContentFrame);
         }
 
         Bundle bundle = getIntent().getExtras();
         Long mPatientID = null;
-        if(bundle != null)
-        {
+        if (bundle != null) {
             mPatientID = bundle.getLong(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE);
         }
 

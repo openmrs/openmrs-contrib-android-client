@@ -14,16 +14,9 @@
 
 package org.openmrs.mobile.application;
 
-import android.app.Application;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Build;
-import android.preference.PreferenceManager;
-
-import com.activeandroid.ActiveAndroid;
-import com.activeandroid.Configuration;
-
-import net.sqlcipher.database.SQLiteDatabase;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
@@ -35,9 +28,16 @@ import org.openmrs.mobile.models.Obscreate;
 import org.openmrs.mobile.security.SecretKeyGenerator;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import com.activeandroid.ActiveAndroid;
+import com.activeandroid.Configuration;
+
+import android.app.Application;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.preference.PreferenceManager;
+
+import net.sqlcipher.database.SQLiteDatabase;
 
 public class OpenMRS extends Application {
 
@@ -47,6 +47,10 @@ public class OpenMRS extends Application {
 
     private static OpenMRS instance;
     private OpenMRSLogger mLogger;
+
+    public static OpenMRS getInstance() {
+        return instance;
+    }
 
     @Override
     public void onCreate() {
@@ -61,7 +65,7 @@ public class OpenMRS extends Application {
         OpenMRSDBOpenHelper.init();
         initializeDB();
 
-        Intent i=new Intent(this,FormListService.class);
+        Intent i = new Intent(this, FormListService.class);
         startService(i);
     }
 
@@ -73,71 +77,11 @@ public class OpenMRS extends Application {
         configurationBuilder.addModelClasses(Encountercreate.class);
         configurationBuilder.addModelClasses(Obscreate.class);
 
-
         ActiveAndroid.initialize(configurationBuilder.create());
     }
 
-    public static OpenMRS getInstance() {
-        return instance;
-    }
-
     public SharedPreferences getOpenMRSSharedPreferences() {
-        return getSharedPreferences(ApplicationConstants.OpenMRSSharedPreferenceNames.SHARED_PREFERENCES_NAME,
-                MODE_PRIVATE);
-    }
-
-    public void setUserLoggedOnline(boolean firstLogin) {
-        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
-        editor.putBoolean(ApplicationConstants.UserKeys.LOGIN, firstLogin);
-        editor.commit();
-    }
-
-    public void setUsername(String username) {
-        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
-        editor.putString(ApplicationConstants.UserKeys.USER_NAME, username);
-        editor.commit();
-    }
-
-    public void setPassword(String password) {
-        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
-        editor.putString(ApplicationConstants.UserKeys.PASSWORD, password);
-        editor.commit();
-    }
-
-    public void setServerUrl(String serverUrl) {
-        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
-        editor.putString(ApplicationConstants.SERVER_URL, serverUrl);
-        editor.commit();
-    }
-
-    public void setLastLoginServerUrl(String url) {
-        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
-        editor.putString(ApplicationConstants.LAST_LOGIN_SERVER_URL, url);
-        editor.commit();
-    }
-
-    public void setSessionToken(String serverUrl) {
-        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
-        editor.putString(ApplicationConstants.SESSION_TOKEN, serverUrl);
-        editor.commit();
-    }
-
-    public void setAuthorizationToken(String authorization) {
-        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
-        editor.putString(ApplicationConstants.AUTHORIZATION_TOKEN, authorization);
-        editor.commit();
-    }
-
-    public void setLocation(String location) {
-        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
-        editor.putString(ApplicationConstants.LOCATION, location);
-        editor.commit();
-    }
-
-    public void setVisitTypeUUID(String visitTypeUUID) {
-        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
-        editor.putString(ApplicationConstants.VISIT_TYPE_UUID, visitTypeUUID);
-        editor.commit();
+        return getSharedPreferences(ApplicationConstants.OpenMRSSharedPreferenceNames.SHARED_PREFERENCES_NAME, MODE_PRIVATE);
     }
 
     public boolean isUserLoggedOnline() {
@@ -145,9 +89,21 @@ public class OpenMRS extends Application {
         return prefs.getBoolean(ApplicationConstants.UserKeys.LOGIN, false);
     }
 
+    public void setUserLoggedOnline(boolean firstLogin) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putBoolean(ApplicationConstants.UserKeys.LOGIN, firstLogin);
+        editor.apply();
+    }
+
     public String getUsername() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.UserKeys.USER_NAME, ApplicationConstants.EMPTY_STRING);
+    }
+
+    public void setUsername(String username) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.UserKeys.USER_NAME, username);
+        editor.apply();
     }
 
     public String getPassword() {
@@ -155,9 +111,21 @@ public class OpenMRS extends Application {
         return prefs.getString(ApplicationConstants.UserKeys.PASSWORD, ApplicationConstants.EMPTY_STRING);
     }
 
+    public void setPassword(String password) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.UserKeys.PASSWORD, password);
+        editor.apply();
+    }
+
     public String getServerUrl() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.SERVER_URL, ApplicationConstants.DEFAULT_OPEN_MRS_URL);
+    }
+
+    public void setServerUrl(String serverUrl) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.SERVER_URL, serverUrl);
+        editor.apply();
     }
 
     public String getLastLoginServerUrl() {
@@ -165,9 +133,21 @@ public class OpenMRS extends Application {
         return prefs.getString(ApplicationConstants.LAST_LOGIN_SERVER_URL, ApplicationConstants.EMPTY_STRING);
     }
 
+    public void setLastLoginServerUrl(String url) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.LAST_LOGIN_SERVER_URL, url);
+        editor.apply();
+    }
+
     public String getSessionToken() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.SESSION_TOKEN, ApplicationConstants.EMPTY_STRING);
+    }
+
+    public void setSessionToken(String serverUrl) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.SESSION_TOKEN, serverUrl);
+        editor.apply();
     }
 
     public String getLastSessionToken() {
@@ -180,14 +160,32 @@ public class OpenMRS extends Application {
         return prefs.getString(ApplicationConstants.AUTHORIZATION_TOKEN, ApplicationConstants.EMPTY_STRING);
     }
 
+    public void setAuthorizationToken(String authorization) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.AUTHORIZATION_TOKEN, authorization);
+        editor.apply();
+    }
+
     public String getLocation() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.LOCATION, ApplicationConstants.EMPTY_STRING);
     }
 
+    public void setLocation(String location) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.LOCATION, location);
+        editor.apply();
+    }
+
     public String getVisitTypeUUID() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.VISIT_TYPE_UUID, ApplicationConstants.EMPTY_STRING);
+    }
+
+    public void setVisitTypeUUID(String visitTypeUUID) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.VISIT_TYPE_UUID, visitTypeUUID);
+        editor.apply();
     }
 
     private void generateKey() {
@@ -196,7 +194,7 @@ public class OpenMRS extends Application {
             SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
             String key = SecretKeyGenerator.generateKey();
             editor.putString(ApplicationConstants.SECRET_KEY, key);
-            editor.commit();
+            editor.apply();
         }
     }
 
@@ -220,7 +218,7 @@ public class OpenMRS extends Application {
     public void setDefaultFormLoadID(String xFormName, String xFormID) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(xFormName, xFormID);
-        editor.commit();
+        editor.apply();
     }
 
     public String getDefaultFormLoadID(String xFormName) {
@@ -233,14 +231,16 @@ public class OpenMRS extends Application {
         for (Map.Entry<String, String> entry : userInformation.entrySet()) {
             editor.putString(entry.getKey(), entry.getValue());
         }
-        editor.commit();
+        editor.apply();
     }
 
     public Map<String, String> getCurrentLoggedInUserInfo() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
-        Map<String, String> infoMap = new HashMap<String, String>();
-        infoMap.put(ApplicationConstants.UserKeys.USER_PERSON_NAME, prefs.getString(ApplicationConstants.UserKeys.USER_PERSON_NAME, ApplicationConstants.EMPTY_STRING));
-        infoMap.put(ApplicationConstants.UserKeys.USER_UUID, prefs.getString(ApplicationConstants.UserKeys.USER_UUID, ApplicationConstants.EMPTY_STRING));
+        Map<String, String> infoMap = new HashMap<>();
+        infoMap.put(ApplicationConstants.UserKeys.USER_PERSON_NAME,
+            prefs.getString(ApplicationConstants.UserKeys.USER_PERSON_NAME, ApplicationConstants.EMPTY_STRING));
+        infoMap.put(ApplicationConstants.UserKeys.USER_UUID,
+            prefs.getString(ApplicationConstants.UserKeys.USER_UUID, ApplicationConstants.EMPTY_STRING));
         return infoMap;
     }
 
@@ -276,12 +276,11 @@ public class OpenMRS extends Application {
         SharedPreferences prefs = OpenMRS.getInstance().getOpenMRSSharedPreferences();
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(ApplicationConstants.LAST_SESSION_TOKEN,
-                prefs.getString(ApplicationConstants.SESSION_TOKEN, ApplicationConstants.EMPTY_STRING));
+            prefs.getString(ApplicationConstants.SESSION_TOKEN, ApplicationConstants.EMPTY_STRING));
         editor.remove(ApplicationConstants.SESSION_TOKEN);
         editor.remove(ApplicationConstants.AUTHORIZATION_TOKEN);
         clearCurrentLoggedInUserInfo();
-        editor.commit();
+        editor.apply();
     }
-
 
 }

@@ -19,6 +19,7 @@ import okhttp3.ResponseBody;
 import okio.BufferedSource;
 
 public class MockResponseBody extends ResponseBody {
+
     @Override
     public MediaType contentType() {
         return null;

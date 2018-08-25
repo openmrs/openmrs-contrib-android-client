@@ -14,27 +14,25 @@
 
 package org.openmrs.mobile.activities.settings;
 
-import android.support.annotation.NonNull;
+import java.io.File;
 
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.ConceptDAO;
 
-import java.io.File;
+import android.support.annotation.NonNull;
 
 public class SettingsPresenter extends BasePresenter implements SettingsContract.Presenter {
 
     private static final int ONE_KB = 1024;
-    private ConceptDAO conceptDAO;
-
     @NonNull
     private final SettingsContract.View mSettingsView;
-
     @NonNull
     private final OpenMRSLogger mOpenMRSLogger;
+    private ConceptDAO conceptDAO;
 
-    public SettingsPresenter(@NonNull SettingsContract.View view, @NonNull OpenMRSLogger logger ) {
+    public SettingsPresenter(@NonNull SettingsContract.View view, @NonNull OpenMRSLogger logger) {
         mSettingsView = view;
         mOpenMRSLogger = logger;
         conceptDAO = new ConceptDAO();
@@ -56,14 +54,14 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
 
     private void fillList() {
         long size = 0;
-        String filename = OpenMRS.getInstance().getOpenMRSDir()
-                + File.separator + mOpenMRSLogger.getLogFilename();
+        String filename = OpenMRS.getInstance().getOpenMRSDir() + File.separator + mOpenMRSLogger.getLogFilename();
         try {
             File file = new File(filename);
             size = file.length();
             size = size / ONE_KB;
             mOpenMRSLogger.i("File Path : " + file.getPath() + ", File size: " + size + " KB");
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             mOpenMRSLogger.w("File not found");
         }
 

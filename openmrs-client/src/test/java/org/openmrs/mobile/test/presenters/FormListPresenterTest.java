@@ -1,6 +1,11 @@
 package org.openmrs.mobile.test.presenters;
 
-import com.google.gson.Gson;
+import static org.mockito.Matchers.contains;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,24 +20,17 @@ import org.openmrs.mobile.utilities.FormService;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.mockito.Matchers.contains;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import com.google.gson.Gson;
 
 @PrepareForTest(FormService.class)
 public class FormListPresenterTest extends ACUnitTestBase {
 
+    private final int patientId = 1;
     @Mock
     private FormListContract.View view;
-
     @Mock
     private EncounterDAO encounterDAO;
-
     private FormListPresenter presenter;
-    private final int patientId = 1;
 
     @Before
     public void setUp() {
@@ -53,7 +51,7 @@ public class FormListPresenterTest extends ACUnitTestBase {
 
         presenter.loadFormResourceList();
 
-        String jsonForms[] = {"thirdForm"};
+        String jsonForms[] = { "thirdForm" };
         verify(view).showFormList(jsonForms);
     }
 
@@ -143,15 +141,9 @@ public class FormListPresenterTest extends ACUnitTestBase {
     }
 
     private String getExampleFormResourceJson(String name) {
-        return  "{" +
-                "\"display\":\"json\"," +
-                "\"name\":\"" + name + "\"," +
-                "\"valueReference\":\"" +
-                    "{" +
-                    "\\\"name\\\":\\\"Some Form\\\"," +
-                    "\\\"uuid\\\":\\\"77174d67-954f-45c4-a782-d157e70d59f4\\\"" +
-                    "}\"" +
-                "}";
+        return "{" + "\"display\":\"json\"," + "\"name\":\"" + name + "\"," + "\"valueReference\":\"" + "{"
+                + "\\\"name\\\":\\\"Some Form\\\"," + "\\\"uuid\\\":\\\"77174d67-954f-45c4-a782-d157e70d59f4\\\"" + "}\""
+                + "}";
     }
 
 }

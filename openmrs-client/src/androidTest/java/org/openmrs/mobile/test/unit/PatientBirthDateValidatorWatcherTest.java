@@ -14,12 +14,12 @@
 
 package org.openmrs.mobile.test.unit;
 
+import org.openmrs.mobile.listeners.watcher.PatientBirthdateValidatorWatcher;
+import org.openmrs.mobile.utilities.ApplicationConstants;
+
 import android.test.InstrumentationTestCase;
 import android.text.TextWatcher;
 import android.widget.EditText;
-
-import org.openmrs.mobile.listeners.watcher.PatientBirthdateValidatorWatcher;
-import org.openmrs.mobile.utilities.ApplicationConstants;
 
 public class PatientBirthDateValidatorWatcherTest extends InstrumentationTestCase {
 
@@ -48,8 +48,10 @@ public class PatientBirthDateValidatorWatcherTest extends InstrumentationTestCas
     }
 
     public void test_shouldWipeYearsAndMonthInputWhenYearInputWasTooBig() {
-        final String yearsLessThanMaxAllowed = String.valueOf(ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE / 2);
-        final String yearsMoreThanMaxAllowed = String.valueOf(ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE * 2);
+        final String yearsLessThanMaxAllowed = String
+                .valueOf(ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE / 2);
+        final String yearsMoreThanMaxAllowed = String
+                .valueOf(ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE * 2);
 
         mYearEditText.setText(yearsLessThanMaxAllowed);
         assertEquals(mYearEditText.getText().toString(), yearsLessThanMaxAllowed);

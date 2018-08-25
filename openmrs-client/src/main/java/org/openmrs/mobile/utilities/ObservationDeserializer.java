@@ -14,17 +14,17 @@
 
 package org.openmrs.mobile.utilities;
 
+import java.lang.reflect.Type;
+
+import org.openmrs.mobile.models.Concept;
+import org.openmrs.mobile.models.Observation;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-
-import org.openmrs.mobile.models.Concept;
-import org.openmrs.mobile.models.Observation;
-
-import java.lang.reflect.Type;
 
 public class ObservationDeserializer implements JsonDeserializer<Observation> {
 
@@ -33,7 +33,8 @@ public class ObservationDeserializer implements JsonDeserializer<Observation> {
     private static final String VALUE_KEY = "value";
 
     @Override
-    public Observation deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public Observation deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+            throws JsonParseException {
 
         JsonObject jsonObject = json.getAsJsonObject();
 
@@ -51,20 +52,22 @@ public class ObservationDeserializer implements JsonDeserializer<Observation> {
 
                 if ("Diagnosis order".equals(diagnosisDetail)) {
                     observation.setDiagnosisOrder(
-                            diagnosisDetails.getAsJsonObject().get(VALUE_KEY).getAsJsonObject().get(DISPLAY_KEY).getAsString());
+                        diagnosisDetails.getAsJsonObject().get(VALUE_KEY).getAsJsonObject().get(DISPLAY_KEY).getAsString());
                 } else if ("Diagnosis certainty".equals(diagnosisDetail)) {
                     observation.setDiagnosisCertanity(
-                            diagnosisDetails.getAsJsonObject().get(VALUE_KEY).getAsJsonObject().get(DISPLAY_KEY).getAsString());
+                        diagnosisDetails.getAsJsonObject().get(VALUE_KEY).getAsJsonObject().get(DISPLAY_KEY).getAsString());
                 } else {
                     try {
-                        observation.setDiagnosisList(diagnosisDetails.getAsJsonObject().get(VALUE_KEY).getAsJsonObject().get(DISPLAY_KEY).getAsString());
+                        observation.setDiagnosisList(diagnosisDetails.getAsJsonObject().get(VALUE_KEY).getAsJsonObject()
+                                .get(DISPLAY_KEY).getAsString());
                     }
                     catch (IllegalStateException e) {
                         observation.setDiagnosisList(diagnosisDetails.getAsJsonObject().get(VALUE_KEY).getAsString());
                     }
                 }
             }
-        } else if (conceptJson != null && "Text of encounter note".equals(conceptJson.getAsJsonObject().get(DISPLAY_KEY).getAsString())) {
+        } else if (conceptJson != null
+                && "Text of encounter note".equals(conceptJson.getAsJsonObject().get(DISPLAY_KEY).getAsString())) {
             observation.setDiagnosisNote(jsonObject.getAsJsonObject().get(VALUE_KEY).getAsString());
         }
         if (conceptJson != null) {

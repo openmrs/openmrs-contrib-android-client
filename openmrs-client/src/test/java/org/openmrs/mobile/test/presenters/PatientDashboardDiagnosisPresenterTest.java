@@ -14,6 +14,15 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -25,16 +34,7 @@ import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import rx.Observable;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class PatientDashboardDiagnosisPresenterTest extends ACUnitTestBaseRx {
 
@@ -47,7 +47,7 @@ public class PatientDashboardDiagnosisPresenterTest extends ACUnitTestBaseRx {
     private Patient patient;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         super.setUp();
         patient = createPatient(1L);
         presenter = new PatientDashboardDiagnosisPresenter(patient, view, encounterDAO);
@@ -55,7 +55,7 @@ public class PatientDashboardDiagnosisPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldLoadDiagnosisFromDB(){
+    public void shouldLoadDiagnosisFromDB() {
         when(encounterDAO.getAllEncountersByType(eq(patient.getId()), any()))
                 .thenReturn(Observable.just(createEncounters(false)));
         presenter.loadDiagnosis();
@@ -63,17 +63,17 @@ public class PatientDashboardDiagnosisPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldLoadDiagnosisFromDB_shouldNotShowDuplicates(){
+    public void shouldLoadDiagnosisFromDB_shouldNotShowDuplicates() {
         when(encounterDAO.getAllEncountersByType(eq(patient.getId()), any()))
                 .thenReturn(Observable.just(createEncounters(true)));
         presenter.loadDiagnosis();
         verify(view).setDiagnosesToDisplay(createDiagnosisList(2));
     }
 
-    private List<Encounter> createEncounters(boolean withDuplicates){
+    private List<Encounter> createEncounters(boolean withDuplicates) {
         Encounter encounter = new Encounter();
         List<Observation> observations = createObservations();
-        if (withDuplicates){
+        if (withDuplicates) {
             observations.addAll(createObservations());
         }
         encounter.setObservations(observations);
@@ -93,11 +93,10 @@ public class PatientDashboardDiagnosisPresenterTest extends ACUnitTestBaseRx {
 
     private List<String> createDiagnosisList(int diagnosisCount) {
         List<String> diagnosisList = new ArrayList<>();
-        for(int i=0; i < diagnosisCount; i++){
-            diagnosisList.add("diag"+i);
+        for (int i = 0; i < diagnosisCount; i++) {
+            diagnosisList.add("diag" + i);
         }
         return diagnosisList;
     }
-
 
 }

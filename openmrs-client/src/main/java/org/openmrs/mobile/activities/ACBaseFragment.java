@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities;
 
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 public abstract class ACBaseFragment<T extends BasePresenterContract> extends Fragment implements BaseView<T> {
@@ -21,7 +22,7 @@ public abstract class ACBaseFragment<T extends BasePresenterContract> extends Fr
     protected T mPresenter;
 
     @Override
-    public void setPresenter(T presenter) {
+    public void setPresenter(@NonNull T presenter) {
         mPresenter = presenter;
     }
 

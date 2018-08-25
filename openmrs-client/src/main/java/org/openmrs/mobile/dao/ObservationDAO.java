@@ -14,7 +14,10 @@
 
 package org.openmrs.mobile.dao;
 
-import net.sqlcipher.Cursor;
+import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
@@ -22,12 +25,10 @@ import org.openmrs.mobile.databases.tables.ObservationTable;
 import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.Observation;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.sqlcipher.Cursor;
 
 import rx.Observable;
 
-import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 public class ObservationDAO {
 
     public Observable<Long> saveObservation(Observation observation, long encounterID) {
@@ -45,16 +46,17 @@ public class ObservationDAO {
     }
 
     public void deleteObservation(long observationID) {
-       new ObservationTable().delete(observationID);
+        new ObservationTable().delete(observationID);
     }
 
     public List<Observation> findObservationByEncounterID(Long encounterID) {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        List<Observation> observationList = new ArrayList<Observation>();
+        List<Observation> observationList = new ArrayList<>();
 
         String where = String.format("%s = ?", ObservationTable.Column.ENCOUNTER_KEY_ID);
-        String[] whereArgs = new String[]{encounterID.toString()};
-        final Cursor cursor = helper.getReadableDatabase().query(ObservationTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        String[] whereArgs = new String[] { encounterID.toString() };
+        final Cursor cursor = helper.getReadableDatabase().query(ObservationTable.TABLE_NAME, null, where, whereArgs, null,
+            null, null);
         if (null != cursor) {
             try {
                 while (cursor.moveToNext()) {
@@ -95,7 +97,8 @@ public class ObservationDAO {
                     obs.setConcept(concept);
                     observationList.add(obs);
                 }
-            } finally {
+            }
+            finally {
                 cursor.close();
             }
         }
@@ -106,9 +109,10 @@ public class ObservationDAO {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
 
         String where = String.format("%s = ?", ObservationTable.Column.UUID);
-        String[] whereArgs = new String[]{observationUUID};
+        String[] whereArgs = new String[] { observationUUID };
         Observation obs = new Observation();
-        final Cursor cursor = helper.getReadableDatabase().query(ObservationTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        final Cursor cursor = helper.getReadableDatabase().query(ObservationTable.TABLE_NAME, null, where, whereArgs, null,
+            null, null);
         if (null != cursor) {
             try {
                 if (cursor.moveToFirst()) {
@@ -119,7 +123,8 @@ public class ObservationDAO {
                     obs.setId(obsID);
                     obs.setEncounterID(encounterID);
                 }
-            } finally {
+            }
+            finally {
                 cursor.close();
             }
         }

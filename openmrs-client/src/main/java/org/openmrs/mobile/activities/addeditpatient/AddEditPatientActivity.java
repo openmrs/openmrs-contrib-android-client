@@ -14,16 +14,16 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import java.util.Arrays;
+import java.util.List;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
-import java.util.Arrays;
-import java.util.List;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 
 public class AddEditPatientActivity extends ACBaseActivity {
 
@@ -42,14 +42,13 @@ public class AddEditPatientActivity extends ACBaseActivity {
         }
 
         // Create fragment
-        AddEditPatientFragment addEditPatientFragment =
-                (AddEditPatientFragment) getSupportFragmentManager().findFragmentById(R.id.patientInfoContentFrame);
+        AddEditPatientFragment addEditPatientFragment = (AddEditPatientFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.patientInfoContentFrame);
         if (addEditPatientFragment == null) {
             addEditPatientFragment = AddEditPatientFragment.newInstance();
         }
         if (!addEditPatientFragment.isActive()) {
-            addFragmentToActivity(getSupportFragmentManager(),
-                    addEditPatientFragment, R.id.patientInfoContentFrame);
+            addFragmentToActivity(getSupportFragmentManager(), addEditPatientFragment, R.id.patientInfoContentFrame);
         }
 
         //Check if bundle includes patient ID

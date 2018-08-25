@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ the contents of this file are subject to the openmrs public license
   ~ version 1.0 (the "license"); you may not use this file except in
   ~ compliance with the license. you may obtain a copy of the license at
@@ -14,7 +13,6 @@
   -->
 
 <Spinner xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.AppCompat.Spinner.Underlined"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    style="@style/Widget.AppCompat.Spinner.Underlined">
-</Spinner>
+    android:layout_height="wrap_content" />

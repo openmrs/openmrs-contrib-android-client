@@ -14,9 +14,9 @@
 
 package org.openmrs.mobile.models;
 
-import com.google.gson.annotations.Expose;
-
 import java.util.List;
+
+import com.google.gson.annotations.Expose;
 
 public class Visit extends Resource {
 

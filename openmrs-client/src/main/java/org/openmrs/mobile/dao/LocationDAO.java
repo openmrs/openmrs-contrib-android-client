@@ -14,8 +14,10 @@
 
 package org.openmrs.mobile.dao;
 
+import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 
-import net.sqlcipher.Cursor;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.DBOpenHelper;
@@ -24,14 +26,12 @@ import org.openmrs.mobile.databases.tables.LocationTable;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.utilities.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.sqlcipher.Cursor;
 
 import rx.Observable;
 
-import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
-
 public class LocationDAO {
+
     public Observable<Long> saveLocation(Location location) {
         return createObservableIO(() -> new LocationTable().insert(location));
     }
@@ -45,10 +45,10 @@ public class LocationDAO {
 
     public Observable<List<Location>> getLocations() {
         return createObservableIO(() -> {
-            List<Location> locations = new ArrayList<Location>();
+            List<Location> locations = new ArrayList<>();
             DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-            Cursor cursor = openHelper.getReadableDatabase().query(LocationTable.TABLE_NAME,
-                    null, null, null, null, null, null);
+            Cursor cursor = openHelper.getReadableDatabase().query(LocationTable.TABLE_NAME, null, null, null, null, null,
+                null);
 
             if (null != cursor) {
                 try {
@@ -56,7 +56,8 @@ public class LocationDAO {
                         Location location = cursorToLocation(cursor);
                         locations.add(location);
                     }
-                } finally {
+                }
+                finally {
                     cursor.close();
                 }
             }
@@ -65,21 +66,23 @@ public class LocationDAO {
     }
 
     public Location findLocationByName(String name) {
-        if(!StringUtils.notNull(name)){
+        if (!StringUtils.notNull(name)) {
             return null;
         }
         Location location = new Location();
         String where = String.format("%s = ?", LocationTable.Column.DISPLAY);
-        String[] whereArgs = new String[]{name};
+        String[] whereArgs = new String[] { name };
 
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        final Cursor cursor = helper.getReadableDatabase().query(LocationTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        final Cursor cursor = helper.getReadableDatabase().query(LocationTable.TABLE_NAME, null, where, whereArgs, null,
+            null, null);
         if (null != cursor) {
             try {
                 if (cursor.moveToFirst()) {
                     location = cursorToLocation(cursor);
                 }
-            } finally {
+            }
+            finally {
                 cursor.close();
             }
         }

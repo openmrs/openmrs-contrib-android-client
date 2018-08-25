@@ -14,13 +14,7 @@
 
 package org.openmrs.mobile.activities.syncedpatients;
 
-import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import java.util.List;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
@@ -29,31 +23,40 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 
-import java.util.List;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<SyncedPatientsRecyclerViewAdapter.PatientViewHolder> {
+
     private SyncedPatientsFragment mContext;
     private List<Patient> mItems;
 
-    public SyncedPatientsRecyclerViewAdapter(SyncedPatientsFragment context, List<Patient> items){
+    public SyncedPatientsRecyclerViewAdapter(SyncedPatientsFragment context, List<Patient> items) {
         this.mContext = context;
         this.mItems = items;
     }
 
+    @NonNull
     @Override
-    public SyncedPatientsRecyclerViewAdapter.PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SyncedPatientsRecyclerViewAdapter.PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_synced_patients_row, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(SyncedPatientsRecyclerViewAdapter.PatientViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull SyncedPatientsRecyclerViewAdapter.PatientViewHolder holder, final int position) {
         final Patient patient = mItems.get(position);
 
         if (null != patient.getIdentifier()) {
             String patientIdentifier = String.format(mContext.getResources().getString(R.string.patient_identifier),
-                    patient.getIdentifier().getIdentifier());
+                patient.getIdentifier().getIdentifier());
             holder.mIdentifier.setText(patientIdentifier);
         }
         if (null != patient.getPerson().getName()) {
@@ -62,21 +65,17 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
         if (null != patient.getPerson().getGender()) {
             holder.mGender.setText(patient.getPerson().getGender());
         }
-        try{
+        try {
             holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             holder.mBirthDate.setText("");
         }
 
-        holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext.getActivity(), PatientDashboardActivity.class);
-                intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getId());
-                mContext.startActivity(intent);
-            }
+        holder.mRowLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext.getActivity(), PatientDashboardActivity.class);
+            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getId());
+            mContext.startActivity(intent);
         });
     }
 
@@ -86,6 +85,7 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
     }
 
     class PatientViewHolder extends RecyclerView.ViewHolder {
+
         private LinearLayout mRowLayout;
         private TextView mIdentifier;
         private TextView mDisplayName;

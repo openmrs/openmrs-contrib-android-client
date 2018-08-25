@@ -14,11 +14,11 @@
 
 package org.openmrs.mobile.activities.activevisits;
 
+import java.util.List;
+
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Visit;
-
-import java.util.List;
 
 public interface ActiveVisitsContract {
 
@@ -31,7 +31,7 @@ public interface ActiveVisitsContract {
         void setEmptyListText(int stringId, String query);
     }
 
-    interface Presenter extends BasePresenterContract{
+    interface Presenter extends BasePresenterContract {
 
         void updateVisitsInDatabaseList();
 

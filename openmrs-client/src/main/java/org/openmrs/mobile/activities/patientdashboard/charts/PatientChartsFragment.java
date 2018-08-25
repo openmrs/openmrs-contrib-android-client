@@ -14,17 +14,9 @@
 
 package org.openmrs.mobile.activities.patientdashboard.charts;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,10 +30,17 @@ import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class PatientChartsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientCharts {
 
@@ -49,6 +48,10 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
     private TextView mEmptyListView;
     private JSONObject observationList;
     private PatientChartsListAdapter chartsListAdapter;
+
+    public static PatientChartsFragment newInstance() {
+        return new PatientChartsFragment();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,8 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_patient_charts, null, false);
 
         mEmptyListView = (TextView) root.findViewById(R.id.vitalEmpty);
@@ -67,32 +71,25 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
         mListView.setEmptyView(mEmptyListView);
         setEmptyListVisibility(false);
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), ChartsViewActivity.class);
-                Bundle mBundle = new Bundle();
-                String vitalName = chartsListAdapter.getItem(position);
-                try {
-                    mBundle.putString("vitalName", observationList.getJSONObject(vitalName).toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                intent.putExtra("bundle", mBundle);
-                startActivity(intent);
+        mListView.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(getActivity(), ChartsViewActivity.class);
+            Bundle mBundle = new Bundle();
+            String vitalName = chartsListAdapter.getItem(position);
+            try {
+                mBundle.putString("vitalName", observationList.getJSONObject(vitalName).toString());
             }
+            catch (JSONException e) {
+                e.printStackTrace();
+            }
+            intent.putExtra("bundle", mBundle);
+            startActivity(intent);
         });
         return root;
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // This method is intentionally empty
-    }
-
-    public static PatientChartsFragment newInstance() {
-        return new PatientChartsFragment();
     }
 
     @Override
@@ -127,20 +124,23 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
                                 JSONObject chartData = null;
                                 try {
                                     chartData = observationList.getJSONObject(observationLabel);
-                                } catch (JSONException e) {
+                                }
+                                catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                                 if (chartData.has(datetime)) {
                                     JSONArray obsValue = null;
                                     try {
                                         obsValue = chartData.getJSONArray(datetime);
-                                    } catch (JSONException e) {
+                                    }
+                                    catch (JSONException e) {
                                         e.printStackTrace();
                                     }
                                     obsValue.put(obs.getDisplayValue());
                                     try {
                                         chartData.put(datetime, obsValue);
-                                    } catch (JSONException e) {
+                                    }
+                                    catch (JSONException e) {
                                         e.printStackTrace();
                                     }
                                 } else {
@@ -148,7 +148,8 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
                                     obsValue.put(obs.getDisplayValue());
                                     try {
                                         chartData.put(datetime, obsValue);
-                                    } catch (JSONException e) {
+                                    }
+                                    catch (JSONException e) {
                                         e.printStackTrace();
                                     }
                                 }
@@ -159,12 +160,14 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
                                 obsValue.put(obs.getDisplayValue());
                                 try {
                                     chartData.put(datetime, obsValue);
-                                } catch (JSONException e) {
+                                }
+                                catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                                 try {
                                     observationList.put(observationLabel, chartData);
-                                } catch (JSONException e) {
+                                }
+                                catch (JSONException e) {
                                     e.printStackTrace();
                                 }
 
@@ -176,7 +179,6 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
             chartsListAdapter = new PatientChartsListAdapter(this.getActivity(), observationList);
             mListView.setAdapter(chartsListAdapter);
         }
-
 
     }
 

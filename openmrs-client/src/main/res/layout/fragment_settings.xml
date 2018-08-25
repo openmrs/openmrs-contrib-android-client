@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
   ~ compliance with the License. You may obtain a copy of the License at
@@ -15,64 +14,63 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activities.settings.SettingsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/card">
+        android:background="@drawable/card"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="@string/settings_application_info"
-            android:textSize="@dimen/dashboard_text_size"/>
+            android:textSize="@dimen/dashboard_text_size" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/settingsRecyclerView"
-            android:scrollbars="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
+            android:scrollbars="vertical" />
     </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/card">
+        android:background="@drawable/card"
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:text="@string/settings_concepts_info"
-            android:textSize="@dimen/dashboard_text_size"/>
+            android:textSize="@dimen/dashboard_text_size" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/settings_list_separator_width"
-            android:layout_marginTop="@dimen/settings_list_separator_margin"
-            android:layout_marginRight="@dimen/settings_list_separator_margin"
             android:layout_marginEnd="@dimen/settings_list_separator_margin"
             android:layout_marginLeft="@dimen/settings_list_separator_margin"
+            android:layout_marginRight="@dimen/settings_list_separator_margin"
             android:layout_marginStart="@dimen/settings_list_separator_margin"
-            android:background="@color/card_detailing"/>
+            android:layout_marginTop="@dimen/settings_list_separator_margin"
+            android:background="@color/card_detailing" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/settings_list_padding"
             android:paddingLeft="@dimen/settings_list_padding"
             android:paddingRight="@dimen/settings_list_padding"
-            android:paddingStart="@dimen/settings_list_padding"
-            android:paddingEnd="@dimen/settings_list_padding"
-            android:gravity="center_vertical">
+            android:paddingStart="@dimen/settings_list_padding">
 
             <LinearLayout
                 android:id="@+id/conceptInDbLinearLayout"
@@ -85,29 +83,29 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/settings_concepts_in_db"
                     android:textSize="@dimen/settings_list_text_title_size"
-                    android:textStyle="bold"
-                    android:text="@string/settings_concepts_in_db"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/conceptsInDbTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:textSize="@dimen/settings_list_text_detail_size"/>
+                    android:textSize="@dimen/settings_list_text_detail_size" />
 
             </LinearLayout>
 
             <ImageButton
                 android:id="@+id/downloadConceptsButton"
-                android:layout_alignRight="@id/conceptInDbLinearLayout"
-                android:layout_alignEnd="@+id/conceptInDbLinearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/settings_download_button_height"
-                android:src="@drawable/ic_download"
-                android:contentDescription="@string/download_concepts"
+                android:layout_alignEnd="@+id/conceptInDbLinearLayout"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"/>
+                android:layout_alignRight="@id/conceptInDbLinearLayout"
+                android:contentDescription="@string/download_concepts"
+                android:src="@drawable/ic_download" />
 
         </RelativeLayout>
 

@@ -18,10 +18,10 @@
     android:background="@drawable/card"
     android:longClickable="false"
     android:orientation="horizontal"
-    android:paddingLeft="5dp"
-    android:paddingStart="5dp"
-    android:paddingRight="0dp"
     android:paddingEnd="0dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="0dp"
+    android:paddingStart="5dp"
     android:weightSum="2">
 
     <LinearLayout
@@ -56,10 +56,10 @@
             android:id="@+id/listVisitGroupDetailsSelector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="15dp"
-            android:paddingStart="15dp"
-            android:paddingRight="10dp"
             android:paddingEnd="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
+            android:paddingStart="15dp"
             android:textSize="20sp" />
 
     </LinearLayout>

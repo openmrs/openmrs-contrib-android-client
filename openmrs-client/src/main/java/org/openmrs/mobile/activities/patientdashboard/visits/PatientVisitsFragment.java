@@ -14,8 +14,20 @@
 
 package org.openmrs.mobile.activities.patientdashboard.visits;
 
+import java.util.List;
+
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
+import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
+import org.openmrs.mobile.models.Visit;
+import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.ToastUtil;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,23 +39,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
-import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
-import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
-import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
-import org.openmrs.mobile.models.Visit;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.ToastUtil;
-
-import java.util.List;
-
 public class PatientVisitsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientVisits {
 
+    public static final int REQUEST_CODE_FOR_VISIT = 1;
     private RecyclerView visitRecyclerView;
     private TextView emptyList;
-
-    public static final int REQUEST_CODE_FOR_VISIT = 1;
 
     public static PatientVisitsFragment newInstance() {
         return new PatientVisitsFragment();
@@ -81,7 +81,8 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_patient_visit, null, false);
         visitRecyclerView = (RecyclerView) root.findViewById(R.id.patientVisitRecyclerView);
@@ -108,8 +109,7 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
         if (isVisible) {
             visitRecyclerView.setVisibility(View.VISIBLE);
             emptyList.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             visitRecyclerView.setVisibility(View.GONE);
             emptyList.setVisibility(View.VISIBLE);
         }
@@ -135,8 +135,7 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
         if (activity.getSupportActionBar() != null) {
             if (isVisitPossible) {
                 activity.showStartVisitDialog(activity.getSupportActionBar().getTitle());
-            }
-            else {
+            } else {
                 activity.showStartVisitImpossibleDialog(activity.getSupportActionBar().getTitle());
             }
         }

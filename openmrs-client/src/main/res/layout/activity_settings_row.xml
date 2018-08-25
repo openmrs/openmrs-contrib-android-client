@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
   ~ compliance with the License. You may obtain a copy of the License at
@@ -16,29 +15,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:padding="6dp"
-    android:background="@drawable/list_item_selector">
+    android:background="@drawable/list_item_selector"
+    android:padding="6dp">
 
-    <TextView android:id="@+id/settingsTitle"
+    <TextView
+        android:id="@+id/settingsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
         android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"/>
+        android:textStyle="bold" />
 
-    <TextView android:id="@+id/settingsDesc1"
-        android:textSize="12sp"
+    <TextView
+        android:id="@+id/settingsDesc1"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_below="@id/settingsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"/>
+        android:textSize="12sp" />
 
-    <TextView android:id="@+id/settingsDesc2"
-        android:typeface="sans"
-        android:textSize="12sp"
-        android:layout_below="@id/settingsDesc1"
+    <TextView
+        android:id="@+id/settingsDesc2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/settingsDesc1"
+        android:textSize="12sp"
+        android:typeface="sans" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#ECEFF1"/>
+        android:background="#ECEFF1" />
 </RelativeLayout>

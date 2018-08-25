@@ -13,16 +13,17 @@
  */
 
 package org.openmrs.mobile.databases.tables;
+
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.models.Patient;
 
 public class PatientTable extends Table<Patient> {
+
     public static final String TABLE_NAME = "patients";
 
     /**
-     * Number of columns without ID column
-     * use as a param to
+     * Number of columns without ID column use as a param to
      *
      * @see org.openmrs.mobile.databases.tables.Table#values(int)
      */
@@ -30,55 +31,28 @@ public class PatientTable extends Table<Patient> {
 
     @Override
     public String createTableDefinition() {
-        return CREATE_TABLE + TABLE_NAME + "("
-                + Column.ID + PRIMARY_KEY
-                + Column.SYNCED + Column.Type.BOOLEAN
-                + Column.DISPLAY + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.UUID + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.IDENTIFIER + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.GIVEN_NAME + Column.Type.TEXT_TYPE_NOT_NULL
-                + Column.MIDDLE_NAME + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.FAMILY_NAME + Column.Type.TEXT_TYPE_NOT_NULL
-                + Column.GENDER + Column.Type.TEXT_TYPE_NOT_NULL
-                + Column.BIRTH_DATE + Column.Type.DATE_TYPE_NOT_NULL
-                + Column.DEATH_DATE + Column.Type.DATE_TYPE_WITH_COMMA
-                + Column.CAUSE_OF_DEATH + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.AGE + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.PHOTO + Column.Type.BLOB_TYPE_WITH_COMMA
-                + Column.ADDRESS_1 + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.ADDRESS_2 + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.POSTAL_CODE + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.COUNTRY + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.STATE + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.CITY + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.ENCOUNTERS + Column.Type.TEXT_TYPE
-                + ");";
+        return CREATE_TABLE + TABLE_NAME + "(" + Column.ID + PRIMARY_KEY + Column.SYNCED + Column.Type.BOOLEAN
+                + Column.DISPLAY + Column.Type.TEXT_TYPE_WITH_COMMA + Column.UUID + Column.Type.TEXT_TYPE_WITH_COMMA
+                + Column.IDENTIFIER + Column.Type.TEXT_TYPE_WITH_COMMA + Column.GIVEN_NAME + Column.Type.TEXT_TYPE_NOT_NULL
+                + Column.MIDDLE_NAME + Column.Type.TEXT_TYPE_WITH_COMMA + Column.FAMILY_NAME + Column.Type.TEXT_TYPE_NOT_NULL
+                + Column.GENDER + Column.Type.TEXT_TYPE_NOT_NULL + Column.BIRTH_DATE + Column.Type.DATE_TYPE_NOT_NULL
+                + Column.DEATH_DATE + Column.Type.DATE_TYPE_WITH_COMMA + Column.CAUSE_OF_DEATH
+                + Column.Type.TEXT_TYPE_WITH_COMMA + Column.AGE + Column.Type.TEXT_TYPE_WITH_COMMA + Column.PHOTO
+                + Column.Type.BLOB_TYPE_WITH_COMMA + Column.ADDRESS_1 + Column.Type.TEXT_TYPE_WITH_COMMA + Column.ADDRESS_2
+                + Column.Type.TEXT_TYPE_WITH_COMMA + Column.POSTAL_CODE + Column.Type.TEXT_TYPE_WITH_COMMA + Column.COUNTRY
+                + Column.Type.TEXT_TYPE_WITH_COMMA + Column.STATE + Column.Type.TEXT_TYPE_WITH_COMMA + Column.CITY
+                + Column.Type.TEXT_TYPE_WITH_COMMA + Column.ENCOUNTERS + Column.Type.TEXT_TYPE + ");";
     }
 
     @Override
     public String insertIntoTableDefinition() {
-        return INSERT_INTO + TABLE_NAME + "("
-                + Column.DISPLAY + Column.COMMA
-                + Column.SYNCED+ Column.COMMA
-                + Column.UUID + Column.COMMA
-                + Column.IDENTIFIER + Column.COMMA 
-                + Column.GIVEN_NAME + Column.COMMA
-                + Column.MIDDLE_NAME + Column.COMMA 
-                + Column.FAMILY_NAME + Column.COMMA
-                + Column.GENDER + Column.COMMA 
-                + Column.BIRTH_DATE + Column.COMMA
-                + Column.DEATH_DATE + Column.COMMA 
-                + Column.CAUSE_OF_DEATH + Column.COMMA
-                + Column.AGE + Column.COMMA
-                + Column.PHOTO + Column.COMMA
-                + Column.ADDRESS_1 + Column.COMMA  
-                + Column.ADDRESS_2 + Column.COMMA
-                + Column.POSTAL_CODE + Column.COMMA 
-                + Column.COUNTRY + Column.COMMA
-                + Column.STATE + Column.COMMA 
-                + Column.CITY  + Column.COMMA
-                + Column.ENCOUNTERS+ ")"
-                + values(INSERT_COLUMNS_COUNT);
+        return INSERT_INTO + TABLE_NAME + "(" + Column.DISPLAY + Column.COMMA + Column.SYNCED + Column.COMMA + Column.UUID
+                + Column.COMMA + Column.IDENTIFIER + Column.COMMA + Column.GIVEN_NAME + Column.COMMA + Column.MIDDLE_NAME
+                + Column.COMMA + Column.FAMILY_NAME + Column.COMMA + Column.GENDER + Column.COMMA + Column.BIRTH_DATE
+                + Column.COMMA + Column.DEATH_DATE + Column.COMMA + Column.CAUSE_OF_DEATH + Column.COMMA + Column.AGE
+                + Column.COMMA + Column.PHOTO + Column.COMMA + Column.ADDRESS_1 + Column.COMMA + Column.ADDRESS_2
+                + Column.COMMA + Column.POSTAL_CODE + Column.COMMA + Column.COUNTRY + Column.COMMA + Column.STATE
+                + Column.COMMA + Column.CITY + Column.COMMA + Column.ENCOUNTERS + ")" + values(INSERT_COLUMNS_COUNT);
     }
 
     @Override
@@ -104,7 +78,13 @@ public class PatientTable extends Table<Patient> {
         openHelper.getWritableDatabase().delete(TABLE_NAME, MasterColumn.ID + MasterColumn.EQUALS + tableObjectID, null);
     }
 
+    @Override
+    public String toString() {
+        return TABLE_NAME + createTableDefinition();
+    }
+
     public class Column extends MasterColumn {
+
         public static final String IDENTIFIER = "identifier";
         public static final String SYNCED = "synced";
         public static final String GIVEN_NAME = "givenName";
@@ -124,10 +104,5 @@ public class PatientTable extends Table<Patient> {
         public static final String CITY = "city";
         public static final String ENCOUNTERS = "encounters";
 
-    }
-
-    @Override
-    public String toString() {
-        return TABLE_NAME + createTableDefinition();
     }
 }

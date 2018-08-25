@@ -1,16 +1,16 @@
 package org.openmrs.mobile.dao;
 
-import net.sqlcipher.Cursor;
-import net.sqlcipher.DatabaseUtils;
-import net.sqlcipher.database.SQLiteDatabase;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.tables.ConceptTable;
 import org.openmrs.mobile.models.Concept;
 
-import java.util.ArrayList;
-import java.util.List;
+import net.sqlcipher.Cursor;
+import net.sqlcipher.DatabaseUtils;
+import net.sqlcipher.database.SQLiteDatabase;
 
 public class ConceptDAO {
 
@@ -19,8 +19,7 @@ public class ConceptDAO {
         if (foundConcept != null) {
             updateConcept(foundConcept.getId(), concept);
             return foundConcept.getId();
-        }
-        else {
+        } else {
             return saveConcept(concept);
         }
     }
@@ -36,17 +35,19 @@ public class ConceptDAO {
     public List<Concept> findConceptsByName(String name) {
         List<Concept> result = new ArrayList<>();
         String where = String.format("%s like ?", ConceptTable.Column.DISPLAY);
-        String[] whereArgs = new String[]{name + "%"};
+        String[] whereArgs = new String[] { name + "%" };
 
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        final Cursor cursor = helper.getReadableDatabase().query(ConceptTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        final Cursor cursor = helper.getReadableDatabase().query(ConceptTable.TABLE_NAME, null, where, whereArgs, null, null,
+            null);
         if (null != cursor) {
             try {
 
                 while (cursor.moveToNext()) {
                     result.add(cursorToConcept(cursor));
                 }
-            } finally {
+            }
+            finally {
                 cursor.close();
             }
         }
@@ -55,16 +56,18 @@ public class ConceptDAO {
 
     public Concept findConceptsByUUID(String uuid) {
         String where = String.format("%s = ?", ConceptTable.Column.UUID);
-        String[] whereArgs = new String[]{uuid};
+        String[] whereArgs = new String[] { uuid };
 
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        final Cursor cursor = helper.getReadableDatabase().query(ConceptTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        final Cursor cursor = helper.getReadableDatabase().query(ConceptTable.TABLE_NAME, null, where, whereArgs, null, null,
+            null);
         if (null != cursor) {
             try {
                 if (cursor.moveToFirst()) {
                     return cursorToConcept(cursor);
                 }
-            } finally {
+            }
+            finally {
                 cursor.close();
             }
         }
@@ -72,10 +75,10 @@ public class ConceptDAO {
     }
 
     public long getConceptsCount() {
-            SQLiteDatabase db = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper().getReadableDatabase();
-            long cnt  = DatabaseUtils.queryNumEntries(db, ConceptTable.TABLE_NAME);
-            db.close();
-            return cnt;
+        SQLiteDatabase db = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper().getReadableDatabase();
+        long cnt = DatabaseUtils.queryNumEntries(db, ConceptTable.TABLE_NAME);
+        db.close();
+        return cnt;
     }
 
     private Concept cursorToConcept(Cursor cursor) {

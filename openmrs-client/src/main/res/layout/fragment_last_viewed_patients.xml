@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
   ~ compliance with the License. You may obtain a copy of the License at
@@ -13,18 +12,16 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<android.support.v4.widget.SwipeRefreshLayout
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/swiperefreshLastPatients"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent">
 
-    <FrameLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/swipe_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/swipe_container"
         android:background="#fff3f3f3"
         tools:context=".activities.lastviewedpatients.LastViewedPatientsActivity">
 
@@ -35,36 +32,38 @@
 
             <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
-                android:elevation="0dp"
-                android:layout_height="wrap_content">
-            </android.support.design.widget.AppBarLayout>
+                android:layout_height="wrap_content"
+                android:elevation="0dp" />
 
-            <TextView android:id="@+id/emptyLastViewedPatientList"
+            <TextView
+                android:id="@+id/emptyLastViewedPatientList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:visibility="gone" />
 
-            <android.support.v7.widget.RecyclerView android:id="@+id/lastViewedPatientRecyclerView"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/lastViewedPatientRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:clickable="false"
             android:id="@+id/lastViewedTopComponents"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:clickable="false">
 
-            <ProgressBar android:id="@+id/patientRecyclerViewLoading"
+            <ProgressBar
+                android:id="@+id/patientRecyclerViewLoading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_centerHorizontal="true"
-                android:visibility="gone"/>
+                android:layout_marginTop="5dp"
+                android:visibility="gone" />
 
         </RelativeLayout>
     </FrameLayout>

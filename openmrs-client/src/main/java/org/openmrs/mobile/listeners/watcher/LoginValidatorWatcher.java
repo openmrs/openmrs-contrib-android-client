@@ -119,7 +119,7 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
 
     private boolean isAllDataValid() {
 
-        boolean result = validateNotEmpty(mUsername) && validateNotEmpty(mPassword) && !urlChanged;
+        boolean result = validateNotEmpty(mUsername) && validateNotEmpty(mPassword) && !urlChanged && mLocation.getSelectedItemId() != 0;
 
         if (locationErrorOccurred && urlChanged) {
             mLocation.setEnabled(false);

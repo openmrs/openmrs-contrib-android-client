@@ -115,4 +115,13 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
         verify(view).setEmptyListText(anyString());
         verify(view).stopRefreshing();
     }
+
+    @Test
+    public void shouldLoadMorePatients_allOK(){
+        List<Patient> patientList = Arrays.asList(firstPatient, secondPatient);
+        when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockSuccessCall(patientList));
+        lastViewedPatientsPresenter.loadMorePatients();
+        verify(view).showRecycleViewProgressBar(false);
+        verify(view).addPatientsToList(lastViewedPatientsPresenter.filterNotDownloadedPatients(patientList));
+    }
 }

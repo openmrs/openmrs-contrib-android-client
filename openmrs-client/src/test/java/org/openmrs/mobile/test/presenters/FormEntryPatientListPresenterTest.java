@@ -66,7 +66,7 @@ public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
         when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
 
         presenter.setQuery(mQuery);
-        presenter.updatePatientsList();
+        presenter.subscribe();
 
         verify(view).updateListVisibility(true, NO_STRING_ID, null);
         verify(view).updateAdapter(patientList);
@@ -78,7 +78,7 @@ public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
         when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
 
         presenter.setQuery(mQuery);
-        presenter.updatePatientsList();
+        presenter.subscribe();
 
         int NO_RESULT_FOR_QUERY_STRING_ID = R.string.search_patient_no_result_for_query;
         verify(view).updateListVisibility(false, NO_RESULT_FOR_QUERY_STRING_ID, mQuery);
@@ -95,7 +95,7 @@ public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
         when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
 
         presenter.setQuery(null);
-        presenter.updatePatientsList();
+        presenter.subscribe();
 
         verify(view).updateListVisibility(true, NO_STRING_ID, null);
         verify(view).updateAdapter(patientList);
@@ -107,7 +107,7 @@ public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
         when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
 
         presenter.setQuery(null);
-        presenter.updatePatientsList();
+        presenter.subscribe();
 
         int NO_RESULT_STRING_ID = R.string.search_patient_no_results;
         verify(view).updateListVisibility(false, NO_RESULT_STRING_ID, null);

@@ -65,6 +65,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
 
     private final String INVALID_NAME_1 = "#James";
     private final String INVALID_NAME_2 = "John@Doe";
+    private final String INVALID_NAME_3 = "Em*%ile";
 
     private final String INVALID_ADDRESS_1 = "Washington street ^%123";
     private final String INVALID_ADDRESS_2 = "Door $164";
@@ -103,6 +104,13 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldNotPassValidation_invalidFamilyName(){
         patient.getPerson().getName().setFamilyName(INVALID_NAME_2);
+        presenter.confirmUpdate(patient);
+        verify(view).scrollToTop();
+    }
+
+    @Test
+    public void shouldNotPassValidation_invalidMiddleName(){
+        patient.getPerson().getName().setMiddleName(INVALID_NAME_3);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
@@ -152,6 +160,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldNotPassValidation_noGender(){
+        presenter.subscribe();
         patient.getPerson().setGender(null);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
@@ -165,6 +174,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
         when(restApi.uploadPatientPhoto(anyString(), any()))
                 .thenReturn(mockSuccessCall(new PatientPhoto()));
 
+        presenter.subscribe();
         presenter.confirmUpdate(patient);
         verify(view).setErrorsVisibility(false, false, false, false, false, false);
         verify(view).setProgressBarVisibility(true);
@@ -187,6 +197,11 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
         verify(view).setProgressBarVisibility(false);
     }
 
+    @Test
+    public void shouldFinishPatientInfoActivity(){
+        presenter.finishPatientInfoActivity();
+        verify(view).finishPatientInfoActivity();
+    }
 
     private void mockStaticMethods() {
         PowerMockito.mockStatic(NetworkUtils.class);

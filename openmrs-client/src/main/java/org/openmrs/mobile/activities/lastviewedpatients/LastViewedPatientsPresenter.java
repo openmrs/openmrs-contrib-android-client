@@ -220,7 +220,7 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
         mLastViewedPatientsView.stopRefreshing();
     }
 
-    private List<Patient> filterNotDownloadedPatients(List<Patient> patients) {
+    public List<Patient> filterNotDownloadedPatients(List<Patient> patients) {
         List<Patient> newPatientList = new LinkedList<>();
         for (Patient patient: patients){
             if(!patientDAO.isUserAlreadySaved(patient.getUuid())){

@@ -60,7 +60,7 @@ public class ActiveVisitPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void updateVisitsFromDB_allOK(){
         when(visitDAO.getActiveVisits()).thenReturn(Observable.just(visitList));
-        presenter.updateVisitsInDatabaseList();
+        presenter.subscribe();
         verify(view).setEmptyListText(anyInt());
         verify(view).updateListVisibility(visitList);
     }
@@ -68,7 +68,7 @@ public class ActiveVisitPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void updateVisitsFromDB_error(){
         when(visitDAO.getActiveVisits()).thenReturn(Observable.error(new Throwable("error")));
-        presenter.updateVisitsInDatabaseList();
+        presenter.subscribe();
         verify(view, atLeast(2)).setEmptyListText(anyInt());
     }
 

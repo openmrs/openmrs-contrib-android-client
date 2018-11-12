@@ -120,7 +120,7 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
     private boolean isAllDataValid() {
 
         boolean result = validateNotEmpty(mUsername) && validateNotEmpty(mPassword) && !urlChanged && validateLocation();
-        
+
         if (locationErrorOccurred && urlChanged) {
             mLocation.setEnabled(false);
             mLocation.setVisibility(View.GONE);
@@ -142,8 +142,11 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
         return StringUtils.notEmpty(editText.getText().toString());
     }
 
+    /**
+     * Get length of mLocation and check whatever it's empty or not.
+     * @return True if a location is selected or no location needed for the OpenMRS instance used.
+     */
     private boolean validateLocation(){
-        //If Session Locations are available check if any is selected
         if(mLocation.getAdapter().getCount() > 0){
             return mLocation.getSelectedItemId() != 0;
         }

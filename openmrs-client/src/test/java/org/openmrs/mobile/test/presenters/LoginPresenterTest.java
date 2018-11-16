@@ -16,6 +16,7 @@ package org.openmrs.mobile.test.presenters;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mindrot.jbcrypt.BCrypt;
 import org.mockito.Mock;
 import org.openmrs.mobile.activities.login.LoginContract;
 import org.openmrs.mobile.activities.login.LoginPresenter;
@@ -34,6 +35,7 @@ import org.openmrs.mobile.models.User;
 import org.openmrs.mobile.models.VisitType;
 import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.powermock.api.mockito.PowerMockito;
@@ -190,7 +192,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldLoginUserInOfflineMode_userLoggedBefore_wrongCredentials(){
+    public void shouldShowWipingDBWarningDialogUserInOfflineMode_userLoggedBefore_wrongCredentials(){
         String user = "user";
         String url = "url";
         String password = "pass";
@@ -201,8 +203,8 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         when(openMRS.getLastLoginServerUrl()).thenReturn(url);
         presenter.login(user, password, url, url);
 
-        verify(view).showToast(anyInt(), any());
-        verify(view).hideLoadingAnimation();
+        verify(view).hideSoftKeys();
+        verify(view).showWarningDialog();
     }
 
     @Test
@@ -279,6 +281,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         when(openMRS.getUsername()).thenReturn(user);
         when(openMRS.getServerUrl()).thenReturn(url);
         when(openMRS.getPassword()).thenReturn(password);
+        when(openMRS.getHashedPassword()).thenReturn(BCrypt.hashpw(password, BCrypt.gensalt(ApplicationConstants.DEFAULT_BCRYPT_ROUND)));
     }
 
     private void mockStaticMethods() {
@@ -287,6 +290,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         PowerMockito.mockStatic(StringUtils.class);
         PowerMockito.mockStatic(NetworkUtils.class);
         when(openMRS.getServerUrl()).thenReturn("http://www.some_server_url.com");
+        when(openMRS.getHashedPassword()).thenReturn(ApplicationConstants.EMPTY_STRING);
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
         PowerMockito.mockStatic(RestServiceBuilder.class);
         PowerMockito.when(RestServiceBuilder.createService(any(), any(), any())).thenReturn(restApi);

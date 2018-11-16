@@ -25,6 +25,7 @@ import com.activeandroid.Configuration;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.models.EncounterType;
@@ -32,7 +33,6 @@ import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.FormResource;
 import org.openmrs.mobile.models.Link;
 import org.openmrs.mobile.models.Obscreate;
-import org.openmrs.mobile.security.SecretKeyGenerator;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.io.File;
@@ -47,6 +47,7 @@ public class OpenMRS extends Application {
 
     private static OpenMRS instance;
     private OpenMRSLogger mLogger;
+    private String secretKey;
 
     @Override
     public void onCreate() {
@@ -57,7 +58,6 @@ public class OpenMRS extends Application {
             mExternalDirectoryPath = this.getExternalFilesDir(null).toString();
         }
         mLogger = new OpenMRSLogger();
-        generateKey();
         OpenMRSDBOpenHelper.init();
         initializeDB();
 
@@ -102,6 +102,21 @@ public class OpenMRS extends Application {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(ApplicationConstants.UserKeys.PASSWORD, password);
         editor.commit();
+    }
+
+    public void setHashedPassword(String hashedPassword) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putString(ApplicationConstants.UserKeys.HASHED_PASSWORD, hashedPassword);
+        editor.apply();
+    }
+
+    public void setPasswordAndHashedPassword(String password) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        String salt = BCrypt.gensalt(ApplicationConstants.DEFAULT_BCRYPT_ROUND);
+        String hashedPassword = BCrypt.hashpw(password, salt);
+        editor.putString(ApplicationConstants.UserKeys.PASSWORD, password);
+        editor.putString(ApplicationConstants.UserKeys.HASHED_PASSWORD, hashedPassword);
+        editor.apply();
     }
 
     public void setServerUrl(String serverUrl) {
@@ -155,6 +170,11 @@ public class OpenMRS extends Application {
         return prefs.getString(ApplicationConstants.UserKeys.PASSWORD, ApplicationConstants.EMPTY_STRING);
     }
 
+    public String getHashedPassword() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        return prefs.getString(ApplicationConstants.UserKeys.HASHED_PASSWORD, ApplicationConstants.EMPTY_STRING);
+    }
+
     public String getServerUrl() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getString(ApplicationConstants.SERVER_URL, ApplicationConstants.DEFAULT_OPEN_MRS_URL);
@@ -190,19 +210,19 @@ public class OpenMRS extends Application {
         return prefs.getString(ApplicationConstants.VISIT_TYPE_UUID, ApplicationConstants.EMPTY_STRING);
     }
 
-    private void generateKey() {
-        // create database key only if not exist
-        if (ApplicationConstants.EMPTY_STRING.equals(getSecretKey())) {
-            SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
-            String key = SecretKeyGenerator.generateKey();
-            editor.putString(ApplicationConstants.SECRET_KEY, key);
-            editor.commit();
-        }
+    private void createSecretKey() {
+        secretKey = BCrypt.hashpw(getUsername() + ApplicationConstants.DB_PASSWORD_LITERAL_PEPPER + getPassword(), ApplicationConstants.DB_PASSWORD_BCRYPT_PEPPER);
     }
 
     public String getSecretKey() {
-        SharedPreferences prefs = getOpenMRSSharedPreferences();
-        return prefs.getString(ApplicationConstants.SECRET_KEY, ApplicationConstants.EMPTY_STRING);
+        if (secretKey == null) {
+            createSecretKey();
+        }
+        return secretKey;
+    }
+
+    public void deleteSecretKey() {
+        secretKey = null;
     }
 
     public boolean getSyncState() {
@@ -280,6 +300,8 @@ public class OpenMRS extends Application {
         editor.remove(ApplicationConstants.SESSION_TOKEN);
         editor.remove(ApplicationConstants.AUTHORIZATION_TOKEN);
         clearCurrentLoggedInUserInfo();
+        editor.remove(ApplicationConstants.UserKeys.PASSWORD);
+        deleteSecretKey();
         editor.commit();
     }
 

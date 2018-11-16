@@ -28,6 +28,9 @@ public abstract class ApplicationConstants {
     public static final String LAST_SESSION_TOKEN = "last_session_id";
     public static final String LAST_LOGIN_SERVER_URL = "last_login_server_url";
     public static final String DEFAULT_OPEN_MRS_URL = "https://demo.openmrs.org/openmrs";
+    public static final String DB_PASSWORD_BCRYPT_PEPPER = "$2a$08$iUp3M1VapYpjcAXQBNX6uu";
+    public static final String DB_PASSWORD_LITERAL_PEPPER = "Open Sesame";
+    public static final int DEFAULT_BCRYPT_ROUND = 8;
 
     public abstract static class OpenMRSSharedPreferenceNames {
         public static final String SHARED_PREFERENCES_NAME = "shared_preferences";
@@ -41,6 +44,7 @@ public abstract class ApplicationConstants {
     public abstract static class UserKeys {
         public static final String USER_NAME = "username";
         public static final String PASSWORD = "password";
+        public static final String HASHED_PASSWORD = "hashedPassword";
         public static final String USER_PERSON_NAME = "userDisplay";
         public static final String USER_UUID = "userUUID";
         public static final String LOGIN = "login";

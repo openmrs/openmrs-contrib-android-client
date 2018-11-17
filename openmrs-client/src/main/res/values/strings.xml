@@ -30,7 +30,7 @@
     <string name="login_required">Required</string>
     <string name="req_star"><![CDATA[<font color=\'#cc0029\'> * </font>]]></string>
     <string name="warning_dialog_title">Warning</string>
-    <string name="warning_lost_data_dialog">Changing the URL or username will erase all the data. Are you sure?</string>
+    <string name="warning_lost_data_dialog">Changing the URL, username or password will erase all the data. Are you sure?</string>
     <string name="forgot_dialog_title">Unable to login?</string>
     <string name="forgot_dialog_message">Please contact the system administrator</string>
     <string name="forgot_button_ok">Dismiss</string>

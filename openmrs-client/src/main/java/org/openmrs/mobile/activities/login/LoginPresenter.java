@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.login;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
@@ -92,10 +93,12 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         if (validateLoginFields(username, password, url)) {
             loginView.hideSoftKeys();
             if ((!mOpenMRS.getUsername().equals(ApplicationConstants.EMPTY_STRING) &&
-                    !mOpenMRS.getUsername().equals(username)) ||
-                    ((!mOpenMRS.getServerUrl().equals(ApplicationConstants.EMPTY_STRING) &&
-                            !mOpenMRS.getServerUrl().equals(oldUrl))) ||
-                    mWipeRequired) {
+                 !mOpenMRS.getUsername().equals(username)) ||
+               ((!mOpenMRS.getServerUrl().equals(ApplicationConstants.EMPTY_STRING) &&
+                 !mOpenMRS.getServerUrl().equals(oldUrl))) ||
+               (!mOpenMRS.getHashedPassword().equals(ApplicationConstants.EMPTY_STRING) &&
+                 !BCrypt.checkpw(password, mOpenMRS.getHashedPassword())) ||
+               mWipeRequired) {
                 loginView.showWarningDialog();
             } else {
                 authenticateUser(username, password, url);
@@ -122,6 +125,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                         mLogger.d(response.body().toString());
                         Session session = response.body();
                         if (session.isAuthenticated()) {
+                            mOpenMRS.deleteSecretKey();
                             if (wipeDatabase) {
                                 mOpenMRS.deleteDatabase(OpenMRSSQLiteOpenHelper.DATABASE_NAME);
                                 setData(session.getSessionId(), url, username, password);
@@ -131,6 +135,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                                 setData(session.getSessionId(), url, username, password);
                             } else {
                                 mOpenMRS.setSessionToken(session.getSessionId());
+                                mOpenMRS.setPasswordAndHashedPassword(password);
                             }
 
                             visitApi.getVisitType(new GetVisitTypeCallbackListener() {
@@ -173,7 +178,9 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
             });
         } else {
             if (mOpenMRS.isUserLoggedOnline() && url.equals(mOpenMRS.getLastLoginServerUrl())) {
-                if (mOpenMRS.getUsername().equals(username) && mOpenMRS.getPassword().equals(password)) {
+                if (mOpenMRS.getUsername().equals(username) && BCrypt.checkpw(password, mOpenMRS.getHashedPassword())) {
+                    mOpenMRS.deleteSecretKey();
+                    mOpenMRS.setPasswordAndHashedPassword(password);
                     mOpenMRS.setSessionToken(mOpenMRS.getLastSessionToken());
                     loginView.showToast(R.string.login_offline_toast_message,
                             ToastUtil.ToastType.NOTICE);
@@ -266,7 +273,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         mOpenMRS.setSessionToken(sessionToken);
         mOpenMRS.setServerUrl(url);
         mOpenMRS.setUsername(username);
-        mOpenMRS.setPassword(password);
+        mOpenMRS.setPasswordAndHashedPassword(password);
     }
 
     private void setLogin(boolean isLogin, String serverUrl) {

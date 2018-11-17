@@ -89,19 +89,19 @@ public class OpenMRS extends Application {
     public void setUserLoggedOnline(boolean firstLogin) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putBoolean(ApplicationConstants.UserKeys.LOGIN, firstLogin);
-        editor.commit();
+        editor.apply();
     }
 
     public void setUsername(String username) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(ApplicationConstants.UserKeys.USER_NAME, username);
-        editor.commit();
+        editor.apply();
     }
 
     public void setPassword(String password) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(ApplicationConstants.UserKeys.PASSWORD, password);
-        editor.commit();
+        editor.apply();
     }
 
     public void setHashedPassword(String hashedPassword) {
@@ -122,37 +122,37 @@ public class OpenMRS extends Application {
     public void setServerUrl(String serverUrl) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(ApplicationConstants.SERVER_URL, serverUrl);
-        editor.commit();
+        editor.apply();
     }
 
     public void setLastLoginServerUrl(String url) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(ApplicationConstants.LAST_LOGIN_SERVER_URL, url);
-        editor.commit();
+        editor.apply();
     }
 
     public void setSessionToken(String serverUrl) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(ApplicationConstants.SESSION_TOKEN, serverUrl);
-        editor.commit();
+        editor.apply();
     }
 
     public void setAuthorizationToken(String authorization) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(ApplicationConstants.AUTHORIZATION_TOKEN, authorization);
-        editor.commit();
+        editor.apply();
     }
 
     public void setLocation(String location) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(ApplicationConstants.LOCATION, location);
-        editor.commit();
+        editor.apply();
     }
 
     public void setVisitTypeUUID(String visitTypeUUID) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(ApplicationConstants.VISIT_TYPE_UUID, visitTypeUUID);
-        editor.commit();
+        editor.apply();
     }
 
     public boolean isUserLoggedOnline() {
@@ -240,7 +240,7 @@ public class OpenMRS extends Application {
     public void setDefaultFormLoadID(String xFormName, String xFormID) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putString(xFormName, xFormID);
-        editor.commit();
+        editor.apply();
     }
 
     public String getDefaultFormLoadID(String xFormName) {
@@ -253,7 +253,7 @@ public class OpenMRS extends Application {
         for (Map.Entry<String, String> entry : userInformation.entrySet()) {
             editor.putString(entry.getKey(), entry.getValue());
         }
-        editor.commit();
+        editor.apply();
     }
 
     public Map<String, String> getCurrentLoggedInUserInfo() {
@@ -302,7 +302,7 @@ public class OpenMRS extends Application {
         clearCurrentLoggedInUserInfo();
         editor.remove(ApplicationConstants.UserKeys.PASSWORD);
         deleteSecretKey();
-        editor.commit();
+        editor.apply();
     }
 
 

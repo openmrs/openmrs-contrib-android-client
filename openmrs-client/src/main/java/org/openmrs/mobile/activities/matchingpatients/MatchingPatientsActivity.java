@@ -77,7 +77,7 @@ public class MatchingPatientsActivity extends ACBaseActivity {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("sync", false);
-        editor.commit();
+        editor.apply();
     }
 
 }

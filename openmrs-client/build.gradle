@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'net.saliman.cobertura'
+apply plugin: 'com.github.kt3k.coveralls'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
@@ -12,10 +14,14 @@ buildscript {
     dependencies {
         classpath 'com.github.triplet.gradle:play-publisher:1.1.5'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath "net.saliman:gradle-cobertura-plugin:2.5.4"
+        classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2"
     }
 }
 
 apply plugin: 'com.github.triplet.play'
+
+cobertura.coverageFormats = ['html', 'xml'] // coveralls plugin depends on xml format report
 
 def version = "2.6.1-beta"
 

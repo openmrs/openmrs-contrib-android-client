@@ -67,7 +67,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
 
         if (settings2.getBoolean("my_first_time", true)) {
             showOverlayTutorialOne();
-            settings2.edit().putBoolean("my_first_time", false).commit();
+            settings2.edit().putBoolean("my_first_time", false).apply();
         }
     }
 

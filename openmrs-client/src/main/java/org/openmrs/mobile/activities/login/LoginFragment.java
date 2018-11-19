@@ -120,7 +120,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
                 boolean syncState = prefs.getBoolean("sync", true);
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance()).edit();
                 editor.putBoolean("sync", !syncState);
-                editor.commit();
+                editor.apply();
                 setSyncButtonState(!syncState);
             }
         });

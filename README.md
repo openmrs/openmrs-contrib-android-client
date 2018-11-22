@@ -76,10 +76,10 @@ Note:
 
 # Demo Server
 
-The demo test server dedicated for the client is (https://demo.openmrs.org/openmrs/).
+The demo test server dedicated to the client is (https://demo.openmrs.org/openmrs/).
 
-##### Demo Username : admin
-##### Demo Password : Admin123
+##### Demo Username: admin
+##### Demo Password: Admin123
 
 # Releasing
 
@@ -95,8 +95,8 @@ If you want to release a new major or minor version, please be sure to update th
 ### Version 2.6
 ### Summary:
 1. Add patient picture 
-2. More user friendly register form
-3. Filter patients by given/middle/family names at same time
+2. More user-friendly register form
+3. Filter patients by given/middle/family names at the same time
 4. Get data from DB in background task
 5. Lint check to GitHub Pull Requests
 6. Fixed bugs

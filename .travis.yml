@@ -1,15 +1,43 @@
 sudo: required
 language: android
 jdk: oraclejdk8
+env:
+  global:
+  - ANDROID_TARGET=android-27
+  - ANDROID_ABI=armeabi-v7a
 
-before_install:
-  - yes | sdkmanager "platform-tools" "tools" "platforms;android-27" "extras;android;m2repository"
+android:
+  components:
+  - tools
+  - platform-tools
+  - build-tools-27.0.3
+  - android-27
+  - extra-android-m2repository
+  - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
+  licenses:
+  - 'android-sdk-preview-license-52d11cd2'
+  - 'android-sdk-license-.+'
+  - 'google-gdk-license-.+'
 
-after_success:
-- ./gradlew connectedAndroidTest coveralls
+before_cache:
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
+  - $HOME/.android/build-cache
+
+before_script:
+- echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+- emulator -avd test -no-audio -no-window &
+- android-wait-for-emulator
+- adb shell input keyevent 82 &
 
 script:
 - ./build.sh
+- ./gradlew connectedCheck coveralls
 
 deploy:
   provider: releases

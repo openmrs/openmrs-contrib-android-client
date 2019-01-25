@@ -13,12 +13,12 @@
   -->
 
 <resources>
-    <string name="app_name">OpenMRS Client</string>
+    <string name="app_name" translatable="false">OpenMRS Client</string>
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
     <string name="action_location">Location</string>
-    <string name="dbname">openmrs.db</string>
-    <string name="aadbname">aaopenmrs.db</string>
+    <string name="dbname" translatable="false">openmrs.db</string>
+    <string name="aadbname" translatable="false">aaopenmrs.db</string>
 
 
     <!-- Login view -->
@@ -28,7 +28,7 @@
     <string name="login_password_hint">Password</string>
     <string name="login_location_select">Session Location</string>
     <string name="login_required">Required</string>
-    <string name="req_star"><![CDATA[<font color=\'#cc0029\'> * </font>]]></string>
+    <string name="req_star" translatable="false"><![CDATA[<font color=\'#cc0029\'> * </font>]]></string>
     <string name="warning_dialog_title">Warning</string>
     <string name="warning_lost_data_dialog">Changing the URL, username or password will erase all the data. Are you sure?</string>
     <string name="forgot_dialog_title">Unable to login?</string>
@@ -109,13 +109,12 @@
     <string name="server_not_supported_dialog_message">Server could not be supported. Change the URL.</string>
     <!-- End Visit dialog -->
     <string name="end_visit_dialog_title">End Visit</string>
-    <string name="end_visit_dialog_message">Are you sure you want to end this visit?</string>
     <!-- Start visit dialog -->
     <string name="start_visit_dialog_title">Start Visit</string>
-    <string name="start_visit_dialog_message">Are you sure you want to start visit for %1$s now?</string>
+    <string name="start_visit_dialog_message" formatted="true">Are you sure you want to start visit for %1$s now?</string>
     <!-- Start visit dialog unsuccessful-->
     <string name="start_visit_unsuccessful_dialog_title">Visit didn\'t start.</string>
-    <string name="start_visit_unsuccessful_dialog_message">There are already active visits of %1$s. Try synchronizing patient or closing previous visits</string>
+    <string name="start_visit_unsuccessful_dialog_message" formatted="true">There are already active visits of %1$s. Try synchronizing patient or closing previous visits</string>
     <!-- Progress dialog -->
     <string name="progress_dialog_message">Please wait</string>
     <!-- Capture vitals no visit dialog -->
@@ -170,7 +169,6 @@
 
     <!-- Patient Dashboard Activity -->
     <string name="action_synchronize_patients">Synchronizing patient</string>
-    <string name="action_update_patient_data">Update Patient</string>
     <string name="synchronize_patient_successful">Successfully synchronized patient data.</string>
     <string name="synchronize_patient_error">Synchronizing patient data was unsuccessful</string>
     <string name="synchronize_patient_network_error">Cannot synchronize in offline mode</string>
@@ -226,7 +224,7 @@
     <!-- fragment_patient_visits layout -->
     <string name="active_visit_label">Active visit</string>
     <string name="past_visit_label">Past visit</string>
-    <string name="visit_in">in %1$s</string>
+    <string name="visit_in" formatted="true">in %1$s</string>
 
     <!-- fragment_patient_vitals layout -->
     <string name="last_vitals_label">Last Vitals: </string>
@@ -326,4 +324,6 @@
     <string name="app_demo_form_entry">Click here to capture vitals for a patient on a visit</string>
     <string name="app_demo_next">Next</string>
     <string name="app_demo_close">Close</string>
+    <string name="end_visit_dialog_message">end_visit_dialog_message</string>
+    <string name="action_update_patient_data">Update Patient</string>
 </resources>

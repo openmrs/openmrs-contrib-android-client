@@ -35,6 +35,8 @@ import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
+import static org.openmrs.mobile.R.string.visit_in;
+
 public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<ActiveVisitsRecyclerViewAdapter.VisitViewHolder> {
     private Context mContext;
     private List<Visit> mVisits;
@@ -58,7 +60,7 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
         final int adapterPos = visitViewHolder.getAdapterPosition();
         Visit visit = mVisits.get(adapterPos);
         Patient patient = new PatientDAO().findPatientByID(visit.getPatient().getId().toString());
-        visitViewHolder.mVisitPlace.setText(mContext.getString(R.string.visit_in, visit.getLocation().getDisplay()));
+        visitViewHolder.mVisitPlace.setText(mContext.getString(visit_in, visit.getLocation().getDisplay()));
         if (null != visit.getPatient().getId()) {
             final String display = "#" + patient.getIdentifier().getIdentifier();
             visitViewHolder.mIdentifier.setText(display);

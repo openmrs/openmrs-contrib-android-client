@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -220,6 +221,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.LOGOUT_DIALOG_TAG);
     }
 
+    @SuppressLint("StringFormatInvalid")
     public void showStartVisitImpossibleDialog(CharSequence title) {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.start_visit_unsuccessful_dialog_title));
@@ -229,6 +231,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.START_VISIT_IMPOSSIBLE_DIALOG_TAG);
     }
 
+    @SuppressLint("StringFormatInvalid")
     public void showStartVisitDialog(CharSequence title) {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.start_visit_dialog_title));

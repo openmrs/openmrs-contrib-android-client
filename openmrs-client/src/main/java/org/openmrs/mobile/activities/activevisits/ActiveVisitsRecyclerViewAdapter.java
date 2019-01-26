@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.activevisits;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -50,14 +51,14 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
         return new VisitViewHolder(itemView);
     }
 
+
+    @SuppressLint("StringFormatInvalid")
     @Override
     public void onBindViewHolder(VisitViewHolder visitViewHolder, final int position) {
         final int adapterPos = visitViewHolder.getAdapterPosition();
         Visit visit = mVisits.get(adapterPos);
         Patient patient = new PatientDAO().findPatientByID(visit.getPatient().getId().toString());
-
         visitViewHolder.mVisitPlace.setText(mContext.getString(R.string.visit_in, visit.getLocation().getDisplay()));
-
         if (null != visit.getPatient().getId()) {
             final String display = "#" + patient.getIdentifier().getIdentifier();
             visitViewHolder.mIdentifier.setText(display);

@@ -232,7 +232,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     public void showStartVisitDialog(CharSequence title) {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.start_visit_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.start_visit_dialog_message, title));
+        bundle.setTextViewMessage(String.format(getString(R.string.start_visit_dialog_message), title));
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.START_VISIT);
         bundle.setRightButtonText(getString(R.string.dialog_button_confirm));
         bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);

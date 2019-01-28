@@ -219,5 +219,4 @@
     <string name="search_patient_no_result_for_query">क्वेरी% 1 $ s के लिए कोई परिणाम नहीं मिला</string>
     <string name="visit_in">% 1 $ s में</string>
     <string name="app_name">OpenMRS Client</string>
-    <string name="patient_identifier"># %1$s</string>
 </resources>

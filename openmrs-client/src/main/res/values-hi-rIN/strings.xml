@@ -178,7 +178,6 @@
     <string name="registration_core_info">पंजीकरण कोर जानकारी</string>
     <string name="charts_view_toolbar_title">चार्ट उपकरण पट्टी शीर्षक देखें</string>
     <string name="toast_with_black_background">काली पृष्ठभूमि के साथ टोस्ट</string>
-    <string name="edit_form">प्रपत्र संपादित करें</string>
     <string name="visit_encounter_icon">मुठभेड़ आइकन पर जाएं</string>
     <string name="visit_status_icon">स्थिति आइकन पर जाएं</string>
     <string name="show_or_hide_visit_details">यात्रा विवरण दिखाएं या छिपाएँ</string>
@@ -219,4 +218,5 @@
     <string name="search_patient_no_result_for_query">क्वेरी% 1 $ s के लिए कोई परिणाम नहीं मिला</string>
     <string name="visit_in">% 1 $ s में</string>
     <string name="app_name">OpenMRS Client</string>
+    <string name="edit_form">प्रपत्र संपादित करें</string>
 </resources>

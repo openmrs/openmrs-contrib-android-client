@@ -42,6 +42,8 @@ android {
 
         testApplicationId "org.openmrs.mobile.test"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+        multiDexEnabled true
     }
 
     configurations.all {
@@ -110,9 +112,13 @@ dependencies {
             'com.google.dexmaker:dexmaker-mockito:1.2',
             'com.google.dexmaker:dexmaker:1.2',
             'com.jayway.android.robotium:robotium-solo:4.2'
+
     )
 
     androidTestImplementation files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
+
+
+    implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.google.guava:guava:23.0'
     implementation "com.android.support:appcompat-v7:$support_version"
     implementation "com.android.support:gridlayout-v7:$support_version"

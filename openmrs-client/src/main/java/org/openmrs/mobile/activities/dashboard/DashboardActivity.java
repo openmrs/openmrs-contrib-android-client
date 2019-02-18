@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.dashboard;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
@@ -70,6 +71,21 @@ public class DashboardActivity extends ACBaseActivity {
         // Create the presenter
         new DashboardPresenter(dashboardFragment);
 
+    }
+    private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
+    private long mBackPressed;
+
+    @Override
+    public void onBackPressed()
+    {
+        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis())
+        {
+            super.onBackPressed();
+            return;
+        }
+        else { Toast.makeText(getBaseContext(), "Tap back button in order to exit", Toast.LENGTH_SHORT).show(); }
+
+        mBackPressed = System.currentTimeMillis();
     }
 
     /*TODO: Permission handling to be coded later, moving to SDK 22 for now.

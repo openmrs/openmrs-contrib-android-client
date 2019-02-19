@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.github.kt3k.coveralls'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'jacoco'
 
 buildscript {
 
@@ -86,6 +86,13 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    testOptions {
+        unitTests {
+            returnDefaultValues = true
+            includeAndroidResources = true
+        }
+    }
 }
 
 repositories {
@@ -159,11 +166,26 @@ play {
     jsonFile = rootProject.file('google_play.json')
 }
 
-coveralls {
-    jacocoReportPath = "${buildDir}/reports/coverage/debug/report.xml"
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
 }
 
-tasks.coveralls {
-    dependsOn 'connectedAndroidTest'
-    onlyIf { System.env.'CI' }
+// Our merge report task. Refer to https://gist.github.com/f4ww4z/81a0a227af78b3137e05957826b84883
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def debugTree = fileTree(dir: "$project.buildDir/intermediates/classes/debug", excludes: fileFilter)
+    def mainSrc = "$project.projectDir/src/main/java"
+
+    sourceDirectories = files([mainSrc])
+    classDirectories = files([debugTree])
+    executionData = fileTree(dir: project.buildDir, includes: [
+            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
+    ])
 }

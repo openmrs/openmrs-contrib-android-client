@@ -5,11 +5,12 @@ jdk: oraclejdk8
 before_install:
   - yes | sdkmanager "platform-tools" "tools" "platforms;android-27" "extras;android;m2repository"
 
-after_success:
-- ./gradlew connectedAndroidTest coveralls
-
 script:
 - ./build.sh
+- ./gradlew test
+
+after_success:
+- ./gradlew jacocoTestReport
 
 deploy:
   provider: releases

@@ -40,8 +40,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 27
 
-        testApplicationId "org.openmrs.mobile.test"
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     configurations.all {
@@ -96,7 +95,6 @@ android {
 }
 
 repositories {
-    maven { url 'http://yanzm.github.io/MaterialTabHost/repository' }
     mavenCentral()
     jcenter()
     google()
@@ -110,13 +108,10 @@ dependencies {
     androidTestImplementation(
             'junit:junit:4.12',
             'androidx.test.ext:junit:1.0.0',
+            'androidx.test:rules:1.1.0',
+            'androidx.test:runner:1.1.0',
             'androidx.test.espresso:espresso-core:3.1.0',
-            'com.android.support.test:rules:1.0.2',
-            'com.android.support.test:runner:1.0.2',
-            'org.mockito:mockito-core:1.10.19',
-            'com.google.dexmaker:dexmaker-mockito:1.2',
-            'com.google.dexmaker:dexmaker:1.2',
-            'com.jayway.android.robotium:robotium-solo:4.2'
+            'org.mockito:mockito-core:1.10.19'
     )
 
     androidTestImplementation files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')

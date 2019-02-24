@@ -49,7 +49,7 @@ public class CameraOrGalleryPickerDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
 
-        String[] textResources = {"Take a photo", "Choose another"};
+        String[] textResources = {getString(R.string.photo), getString(R.string.another)};
         int[] imageResources = {R.drawable.ic_photo_camera, R.drawable.ic_photo_library};
 
 

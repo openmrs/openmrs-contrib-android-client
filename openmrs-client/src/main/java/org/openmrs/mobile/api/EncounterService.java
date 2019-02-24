@@ -15,6 +15,7 @@ import android.content.Intent;
 
 import com.activeandroid.query.Select;
 
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.retrofit.VisitApi;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
@@ -63,8 +64,8 @@ public class EncounterService extends IntentService {
                     });
         }
         else
-            ToastUtil.error("No internet connection. Form data is saved locally " +
-                    "and will sync when internet connection is restored. ");
+            ToastUtil.error(getString(R.string.form) +
+                    getString(R.string.net));
     }
 
     public void addEncounter(final Encountercreate encountercreate) {
@@ -137,7 +138,7 @@ public class EncounterService extends IntentService {
             });
 
         } else {
-            ToastUtil.error("Sync is off. Turn on sync to save form data.");
+            ToastUtil.error(getString(R.string.syn));
         }
 
     }
@@ -163,7 +164,7 @@ public class EncounterService extends IntentService {
                     visitDAO.saveOrUpdate(visit, patientid)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(id ->
-                                    ToastUtil.success(formname+" data saved successfully"));
+                                    ToastUtil.success(formname+getString(R.string.data)));
                 });
     }
 
@@ -196,8 +197,8 @@ public class EncounterService extends IntentService {
 
 
         } else {
-            ToastUtil.error("No internet connection. Form data is saved locally " +
-                    "and will sync when internet connection is restored. ");
+            ToastUtil.error(getString(R.string.save) +
+                    getString(R.string.connect));
         }
     }
 

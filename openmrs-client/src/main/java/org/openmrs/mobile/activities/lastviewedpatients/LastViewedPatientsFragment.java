@@ -73,7 +73,7 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
                     mPresenter.refresh();
                     mAdapter.finishActionMode();
                 }else {
-                    ToastUtil.error("No Internet Connection");
+                    ToastUtil.error(getString(R.string.no));
                     getActivity().finish();
                 }
             }

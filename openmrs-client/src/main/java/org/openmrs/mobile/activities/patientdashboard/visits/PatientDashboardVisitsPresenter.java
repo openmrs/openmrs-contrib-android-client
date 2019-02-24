@@ -14,6 +14,9 @@
 
 package org.openmrs.mobile.activities.patientdashboard.visits;
 
+import android.content.res.Resources;
+
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
 import org.openmrs.mobile.api.retrofit.VisitApi;
@@ -107,9 +110,9 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
                     if(visit != null){
                         mPatientVisitsView.showStartVisitDialog(false);
                     } else if (!NetworkUtils.isOnline()) {
-                        mPatientVisitsView.showErrorToast("Cannot start a visit manually in offline mode." +
-                                "If you want to add encounters please do so in the Form Entry section, " +
-                                "they will be synced with an automatic new visit.");
+                        mPatientVisitsView.showErrorToast(Resources.getSystem().getString(R.string.manual) + Resources.getSystem()
+                                .getString(R.string.string) +
+                                Resources.getSystem().getString(R.string.with));
                     } else {
                         mPatientVisitsView.showStartVisitDialog(true);
                     }

@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.activities.login;
 
+import android.content.res.Resources;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
@@ -233,7 +235,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                         loginView.startFormListService();
                         loginView.setLocationErrorOccurred(false);
                     } else {
-                        loginView.showInvalidURLSnackbar("Failed to fetch server's locations");
+                        loginView.showInvalidURLSnackbar(Resources.getSystem().getString(R.string.fetch));
                         loginView.setLocationErrorOccurred(true);
                         loginView.initLoginForm(new ArrayList<Location>(), url);
                     }

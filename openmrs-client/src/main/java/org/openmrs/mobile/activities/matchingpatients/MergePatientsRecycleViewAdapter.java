@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.matchingpatients;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -109,7 +110,7 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
                         mPresenter.removeSelectedPatient();
                         cardView.setCardBackgroundColor(Color.WHITE);
                     } else {
-                        ToastUtil.notify("You can select only one similar patient");
+                        ToastUtil.notify(Resources.getSystem().getString(R.string.toast));
                     }
                 }
             });

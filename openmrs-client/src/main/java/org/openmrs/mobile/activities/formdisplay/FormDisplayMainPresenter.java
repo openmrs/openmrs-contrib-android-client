@@ -10,10 +10,12 @@
 
 package org.openmrs.mobile.activities.formdisplay;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.SparseArray;
 
 import org.joda.time.LocalDateTime;
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.dao.PatientDAO;
@@ -118,8 +120,8 @@ public class FormDisplayMainPresenter extends BasePresenter implements FormDispl
             if(!mPatient.isSynced()) {
                 mPatient.addEncounters(encountercreate.getId());
                 new PatientDAO().updatePatient(mPatient.getId(),mPatient);
-                ToastUtil.error("Patient not yet registered. Form data is saved locally " +
-                        "and will sync when internet connection is restored. ");
+                ToastUtil.error(Resources.getSystem().getString(R.string.t) +
+                        Resources.getSystem().getString(R.string.connection));
                 mFormDisplayView.enableSubmitButton(true);
             }
             else {

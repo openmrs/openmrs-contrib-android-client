@@ -12,25 +12,19 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.test.unit;
+package org.openmrs.mobile.utilities;
 
-import android.test.InstrumentationTestCase;
+import org.junit.Test;
 
-import org.openmrs.mobile.utilities.URLValidator;
+import static org.junit.Assert.assertEquals;
 
-public class URLValidatorTest extends InstrumentationTestCase {
+public class URLValidatorTest {
     private static final String INVALID_URL_1;
     private static final String INVALID_URL_2;
     private static final String VALID_URL_1;
     private static final String VALID_URL_1_TRIMMED;
     private static final String VALID_URL_2;
     private static final String VALID_URL_3;
-
-    @Override
-    public void setUp() throws java.lang.Exception {
-        super.setUp();
-        getInstrumentation().waitForIdleSync();
-    }
 
     static {
         INVALID_URL_1 = "http://";
@@ -41,6 +35,7 @@ public class URLValidatorTest extends InstrumentationTestCase {
         VALID_URL_3 = "http://demo.openmrs.org/openmrs/ ";
     }
 
+    @Test
     public void testURLValidator() {
         URLValidator.ValidationResult result;
         URLValidator.ValidationResult expected;

@@ -15,16 +15,14 @@
 package org.openmrs.mobile.listeners.watcher;
 
 import android.content.Context;
-import android.test.suitebuilder.annotation.LargeTest;
 import android.text.TextWatcher;
 import android.widget.EditText;
-
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.LargeTest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-
-import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.junit.Assert.assertEquals;

@@ -30,6 +30,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
@@ -150,16 +151,17 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 if (syncState) {
                     OpenMRS.getInstance().setSyncState(false);
                     setSyncButtonState(false);
+                    Toast.makeText(getApplicationContext(), "Disconnecting from server...", 1000).show();
                 } else if(NetworkUtils.hasNetwork()){
                     OpenMRS.getInstance().setSyncState(true);
                     setSyncButtonState(true);
                     Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
                     getApplicationContext().sendBroadcast(intent);
+                    Toast.makeText(getApplicationContext(), "Reconnecting to server...", 1000).show();
                 } else {
                     showNoInternetConnectionSnackbar();
                 }
                 return true;
-
             case R.id.actionLocation:
                 if (!locationList.isEmpty()) {
                     locationList.clear();

@@ -23,7 +23,8 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:elevation="0dp"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        tools:targetApi="lollipop" />
 
     <FrameLayout
         android:id="@+id/syncedPatientsContentFrame"

@@ -63,8 +63,7 @@
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/textInputLayoutLoginURL"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true">
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/loginUrlField"
@@ -79,14 +78,14 @@
                         android:maxLines="1"
                         android:textAlignment="center"
                         android:textSize="14sp"
+                        android:autofillHints="@string/login_url_hint"
                         android:textStyle="bold" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/textInputLayoutUsername"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true">
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/loginUsernameField"
@@ -117,6 +116,7 @@
                             android:layout_marginRight="20dp"
                             android:focusable="true"
                             android:inputType="textPassword|text"
+                            android:autofillHints="@string/password_hint"
                             android:maxLines="1" />
                     </android.support.design.widget.TextInputLayout>
 

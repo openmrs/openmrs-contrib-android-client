@@ -30,7 +30,7 @@ import retrofit2.Response;
 
 public class FormListService extends IntentService {
     private final RestApi apiService = RestServiceBuilder.createService(RestApi.class);
-    private List<FormResource> formresourcelist;
+    private List<FormResource> formResourceList;
 
     public FormListService() {
         super("Sync Form List");
@@ -47,14 +47,14 @@ public class FormListService extends IntentService {
                 public void onResponse(Call<Results<FormResource>> call, Response<Results<FormResource>> response) {
                     if (response.isSuccessful()) {
                         new Delete().from(FormResource.class).execute();
-                        formresourcelist=response.body().getResults();
-                        int size=formresourcelist.size();
+                        formResourceList = response.body().getResults();
+                        int size = formResourceList.size();
                         ActiveAndroid.beginTransaction();
                         try {
                             for (int i = 0; i < size; i++)
                             {
-                                formresourcelist.get(i).setResourcelist();
-                                formresourcelist.get(i).save();
+                                formResourceList.get(i).setResourcelist();
+                                formResourceList.get(i).save();
                             }
                             ActiveAndroid.setTransactionSuccessful();
                         }

@@ -22,7 +22,7 @@ apply plugin: 'com.github.triplet.play'
 def version = "2.6.1-beta"
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     useLibrary 'org.apache.http.legacy'
 
     def travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
@@ -36,9 +36,10 @@ android {
         applicationId "org.openmrs.mobile"
         versionName buildVersionName
         versionCode buildNumber
+        multiDexEnabled true
 
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 28
 
         testApplicationId "org.openmrs.mobile.test"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -104,9 +105,9 @@ repositories {
 }
 
 dependencies {
-    def support_version = "27.1.1"
+    def support_version = "28.0.0"
 
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.google.code.gson:gson:2.8.5'
     androidTestImplementation(
             'junit:junit:4.12',
             'androidx.test.ext:junit:1.0.0',
@@ -120,14 +121,14 @@ dependencies {
     )
 
     androidTestImplementation files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
-    implementation 'com.google.guava:guava:23.0'
+    implementation 'com.google.guava:guava:24.1-jre'
     implementation "com.android.support:appcompat-v7:$support_version"
     implementation "com.android.support:gridlayout-v7:$support_version"
     implementation "com.android.support:recyclerview-v7:$support_version"
     implementation "com.android.support:cardview-v7:$support_version"
     implementation "com.android.support:design:$support_version"
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'commons-codec:commons-codec:1.10'
     implementation 'net.zetetic:android-database-sqlcipher:3.5.1@aar'
     implementation 'org.jdeferred:jdeferred-android-aar:1.2.4'
@@ -151,6 +152,7 @@ dependencies {
             'org.powermock:powermock-api-mockito:1.6.6',
             'org.powermock:powermock-module-junit4:1.6.6'
     )
+    implementation 'androidx.exifinterface:exifinterface:1.0.0'
 }
 
 play {

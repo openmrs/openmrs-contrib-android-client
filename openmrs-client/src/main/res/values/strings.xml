@@ -327,4 +327,5 @@
     <string name="app_demo_next">Next</string>
     <string name="app_demo_close">Close</string>
     <string name="add_profile_picture_icon">add profile picture icon</string>
+    <string name="password_hint">Password</string>
 </resources>

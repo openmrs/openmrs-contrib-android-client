@@ -28,7 +28,8 @@
         android:layout_height="50dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        tools:src="@drawable/ic_photo_camera"/>
+        android:contentDescription="@string/add_profile_picture_icon"
+        tools:src="@drawable/ic_photo_camera" />
 
     <TextView
         android:id="@+id/textView"

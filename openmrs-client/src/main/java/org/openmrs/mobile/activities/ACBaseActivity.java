@@ -45,6 +45,7 @@ import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ForceClose;
 import org.openmrs.mobile.utilities.NetworkUtils;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -150,11 +151,13 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 if (syncState) {
                     OpenMRS.getInstance().setSyncState(false);
                     setSyncButtonState(false);
+                    ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.disconn_server);
                 } else if(NetworkUtils.hasNetwork()){
                     OpenMRS.getInstance().setSyncState(true);
                     setSyncButtonState(true);
                     Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
                     getApplicationContext().sendBroadcast(intent);
+                    ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.reconn_server);
                 } else {
                     showNoInternetConnectionSnackbar();
                 }
@@ -343,6 +346,5 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-
+    
 }
-

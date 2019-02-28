@@ -326,4 +326,8 @@
     <string name="app_demo_form_entry">Click here to capture vitals for a patient on a visit</string>
     <string name="app_demo_next">Next</string>
     <string name="app_demo_close">Close</string>
+
+    <!-- Syncbutton toasts -->
+    <string name="disconn_server">Disconnecting from server</string>
+    <string name="reconn_server">Reconnecting to server</string>
 </resources>

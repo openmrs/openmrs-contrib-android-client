@@ -22,6 +22,10 @@ import java.util.List;
 
 public interface AddEditPatientContract {
 
+    interface ParentView{
+        void showWarningDialog();
+    }
+
     interface View extends BaseView<Presenter> {
 
         void finishPatientInfoActivity();
@@ -61,6 +65,8 @@ public interface AddEditPatientContract {
         void registerPatient();
 
         void updatePatient(Patient patient);
+
+        void onBackPressed();
     }
 
 }

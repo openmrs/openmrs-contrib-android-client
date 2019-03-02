@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -25,7 +27,7 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import java.util.Arrays;
 import java.util.List;
 
-public class AddEditPatientActivity extends ACBaseActivity {
+public class AddEditPatientActivity extends ACBaseActivity implements AddEditPatientContract.ParentView {
 
     public AddEditPatientContract.Presenter mPresenter;
 
@@ -66,7 +68,7 @@ public class AddEditPatientActivity extends ACBaseActivity {
 
         List<String> countries = Arrays.asList(getResources().getStringArray(R.array.countries_array));
         // Create the mPresenter
-        mPresenter = new AddEditPatientPresenter(addEditPatientFragment, countries, patientID);
+        mPresenter = new AddEditPatientPresenter(this,addEditPatientFragment, countries, patientID);
     }
 
     @Override
@@ -77,8 +79,28 @@ public class AddEditPatientActivity extends ACBaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (!mPresenter.isRegisteringPatient()) {
-            super.onBackPressed();
-        }
+        mPresenter.onBackPressed();
     }
+
+    @Override
+    public void showWarningDialog() {
+        AlertDialog.Builder warningDialogBuilder = new AlertDialog.Builder(this);
+        warningDialogBuilder.setTitle("Warning");
+        warningDialogBuilder.setMessage("Are you Sure you want to exit? All unsaved data will be lost.");
+        warningDialogBuilder.setPositiveButton(R.string.dialog_button_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                AddEditPatientActivity.super.onBackPressed();
+            }
+        });
+
+        warningDialogBuilder.setNegativeButton(R.string.dialog_button_cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        warningDialogBuilder.show();
+    }
+
 }

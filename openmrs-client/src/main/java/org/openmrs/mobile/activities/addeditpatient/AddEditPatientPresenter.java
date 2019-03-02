@@ -40,6 +40,7 @@ import retrofit2.Response;
 
 public class AddEditPatientPresenter extends BasePresenter implements AddEditPatientContract.Presenter {
 
+    private AddEditPatientContract.ParentView parentView;
     private final AddEditPatientContract.View mPatientInfoView;
 
     private PatientApi patientApi;
@@ -49,9 +50,11 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     private List<String> mCountries;
     private boolean registeringPatient = false;
 
-    public AddEditPatientPresenter(AddEditPatientContract.View mPatientInfoView,
+    public AddEditPatientPresenter(AddEditPatientContract.ParentView parentView,
+                                   AddEditPatientContract.View mPatientInfoView,
                                    List<String> countries,
                                    String patientToUpdateId) {
+        this.parentView = parentView;
         this.mPatientInfoView = mPatientInfoView;
         this.mPatientInfoView.setPresenter(this);
         this.mCountries = countries;
@@ -60,9 +63,11 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         this.restApi = RestServiceBuilder.createService(RestApi.class);
     }
 
-    public AddEditPatientPresenter(AddEditPatientContract.View mPatientInfoView, PatientApi patientApi,
+    public AddEditPatientPresenter(AddEditPatientContract.View mPatientInfoView,
+                                   AddEditPatientContract.ParentView parentView, PatientApi patientApi,
                                    Patient mPatient, String patientToUpdateId,
                                    List<String> mCountries, RestApi restApi) {
+        this.parentView = parentView;
         this.mPatientInfoView = mPatientInfoView;
         this.patientApi = patientApi;
         this.mPatient = mPatient;
@@ -73,7 +78,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     }
 
     @Override
-    public void subscribe(){
+    public void subscribe() {
         // This method is intentionally empty
     }
 
@@ -84,13 +89,12 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     @Override
     public void confirmRegister(Patient patient) {
-        if(!registeringPatient && validate(patient)) {
+        if (!registeringPatient && validate(patient)) {
             mPatientInfoView.setProgressBarVisibility(true);
             mPatientInfoView.hideSoftKeys();
             registeringPatient = true;
             findSimilarPatients(patient);
-        }
-        else {
+        } else {
             mPatientInfoView.scrollToTop();
         }
     }
@@ -125,7 +129,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
         // Validate names
         PersonName currentPersonName = patient.getPerson().getName();
-        
+
         if (StringUtils.isBlank(currentPersonName.getGivenName())
                 || !ViewUtils.validateText(currentPersonName.getGivenName(), ViewUtils.ILLEGAL_CHARACTERS)) {
             givenNameError = true;
@@ -142,7 +146,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         }
 
         // Validate date of birth
-        if(StringUtils.isBlank(patient.getPerson().getBirthdate())) {
+        if (StringUtils.isBlank(patient.getPerson().getBirthdate())) {
             dateOfBirthError = true;
         }
 
@@ -167,15 +171,14 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
         // Validate gender
         if (StringUtils.isBlank(patient.getPerson().getGender())) {
-            genderError=true;
+            genderError = true;
         }
 
         boolean result = !givenNameError && !familyNameError && !dateOfBirthError && !addressError && !countryError && !genderError;
         if (result) {
             mPatient = patient;
             return true;
-        }
-        else {
+        } else {
             mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, addressError, countryError, genderError);
             return false;
         }
@@ -214,14 +217,21 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         });
     }
 
-    public void findSimilarPatients(final Patient patient){
+    @Override
+    public void onBackPressed() {
+        if (!registeringPatient) {
+            this.parentView.showWarningDialog();
+        }
+    }
+
+    public void findSimilarPatients(final Patient patient) {
         if (NetworkUtils.isOnline()) {
             Call<Results<Module>> moduleCall = restApi.getModules(ApplicationConstants.API.FULL);
             moduleCall.enqueue(new Callback<Results<Module>>() {
                 @Override
                 public void onResponse(Call<Results<Module>> call, Response<Results<Module>> response) {
-                    if(response.isSuccessful()){
-                        if(ModuleUtils.isRegistrationCore1_7orAbove(response.body().getResults())){
+                    if (response.isSuccessful()) {
+                        if (ModuleUtils.isRegistrationCore1_7orAbove(response.body().getResults())) {
                             fetchSimilarPatientsFromServer(patient);
                         } else {
                             fetchSimilarPatientAndCalculateLocally(patient);
@@ -240,7 +250,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             });
         } else {
             List<Patient> similarPatient = new PatientComparator().findSimilarPatient(new PatientDAO().getAllPatients().toBlocking().first(), patient);
-            if(!similarPatient.isEmpty()){
+            if (!similarPatient.isEmpty()) {
                 mPatientInfoView.showSimilarPatientDialog(similarPatient, patient);
             } else {
                 registerPatient();
@@ -254,9 +264,9 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             @Override
             public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
                 registeringPatient = false;
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<Patient> patientList = response.body().getResults();
-                    if(!patientList.isEmpty()){
+                    if (!patientList.isEmpty()) {
                         List<Patient> similarPatient = new PatientComparator().findSimilarPatient(patientList, patient);
                         if (!similarPatient.isEmpty()) {
                             mPatientInfoView.showSimilarPatientDialog(similarPatient, patient);
@@ -288,9 +298,9 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             @Override
             public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
                 registeringPatient = false;
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<Patient> similarPatients = response.body().getResults();
-                    if(!similarPatients.isEmpty()){
+                    if (!similarPatients.isEmpty()) {
                         mPatientInfoView.showSimilarPatientDialog(similarPatients, patient);
                     } else {
                         registerPatient();
@@ -309,6 +319,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             }
         });
     }
+
 
     @Override
     public boolean isRegisteringPatient() {

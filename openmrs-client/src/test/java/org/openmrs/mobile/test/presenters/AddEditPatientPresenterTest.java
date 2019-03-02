@@ -40,6 +40,8 @@ import java.util.Collections;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -47,6 +49,8 @@ import static org.mockito.Mockito.when;
 @PowerMockIgnore("javax.net.ssl.*")
 public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
 
+    @Mock
+    private AddEditPatientContract.ParentView parentView;
     @Mock
     private AddEditPatientContract.View view;
     @Mock
@@ -75,7 +79,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
         super.setUp();
         patient = createPatient(1L);
         PatientApi patientApi = new PatientApi(openMRS, openMRSLogger, patientDAO, restApi, locationApi);
-        presenter = new AddEditPatientPresenter(view, patientApi, patient, patient.getId().toString(),
+        presenter = new AddEditPatientPresenter(view, parentView, patientApi, patient, patient.getId().toString(),
                 Collections.singletonList("country_"+patient.getId()), restApi);
         mockStaticMethods();
     }
@@ -180,6 +184,19 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
         verify(view).setProgressBarVisibility(true);
         verify(view).hideSoftKeys();
         verify(view).finishPatientInfoActivity();
+    }
+
+    @Test
+    public void shouldNotShowWarningDialogOnParentViewWhenPatientUpdateCallIsOnProgress() {
+        presenter.confirmUpdate(patient);
+        presenter.onBackPressed();
+        verify(parentView, never()).showWarningDialog();
+    }
+
+    @Test
+    public void shouldShowWarningDialogOnParentView() {
+        presenter.onBackPressed();
+        verify(parentView, times(1)).showWarningDialog();
     }
 
     @Test

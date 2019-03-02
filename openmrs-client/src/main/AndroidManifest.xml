@@ -42,6 +42,10 @@
             android:name="AA_DB_VERSION"
             android:value="@integer/aadbversion" />
         <meta-data
+            android:name="AA_MODELS"
+            android:value="org.openmrs.mobile.models.Link, org.openmrs.mobile.models.FormResource, org.openmrs.mobile.models.EncounterType,
+             org.openmrs.mobile.models.Encountercreate, org.openmrs.mobile.models.Obscreate" />
+        <meta-data
             android:name="buildVersion"
             android:value="0" />
 
@@ -223,6 +227,11 @@
         <activity
             android:name=".activities.patientdashboard.charts.ChartsViewActivity"
             android:parentActivityName=".activities.patientdashboard.PatientDashboardActivity" />
+
+        <provider
+            android:name="com.activeandroid.content.ContentProvider"
+            android:authorities="org.openmrs.mobile"
+            android:exported="false" />
     </application>
 
 </manifest>

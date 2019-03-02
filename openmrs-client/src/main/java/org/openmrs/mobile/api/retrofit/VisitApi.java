@@ -102,6 +102,7 @@ public class VisitApi {
     }
 
     public void getVisitType(final GetVisitTypeCallbackListener callbackListener) {
+        RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<Results<VisitType>> call = restApi.getVisitType();
         call.enqueue(new Callback<Results<VisitType>>() {
 

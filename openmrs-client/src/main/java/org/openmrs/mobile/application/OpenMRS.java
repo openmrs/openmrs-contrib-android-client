@@ -22,6 +22,7 @@ import android.preference.PreferenceManager;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Configuration;
+import com.prateekj.snooper.AndroidSnooper;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
@@ -59,6 +60,8 @@ public class OpenMRS extends Application {
         }
         mLogger = new OpenMRSLogger();
         OpenMRSDBOpenHelper.init();
+
+        AndroidSnooper.init(this);
         initializeDB();
 
         Intent i=new Intent(this,FormListService.class);

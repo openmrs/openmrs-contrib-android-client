@@ -14,6 +14,7 @@ import android.util.Base64;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.prateekj.snooper.okhttp.SnooperInterceptor;
 
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Observation;
@@ -72,6 +73,7 @@ public class RestServiceBuilder {
             });
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+            httpClient.addInterceptor(new SnooperInterceptor());
             httpClient.addInterceptor(logging);
         }
         OkHttpClient client = httpClient.build();

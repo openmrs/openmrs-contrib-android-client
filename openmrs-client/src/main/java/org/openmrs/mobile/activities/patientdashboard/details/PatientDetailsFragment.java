@@ -48,6 +48,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
     private View rootView;
     private PatientDashboardActivity mPatientDashboardActivity;
+    public static Snackbar snackbar;
 
     public static PatientDetailsFragment newInstance() {
         return new PatientDetailsFragment();
@@ -55,7 +56,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
     @Override
     public void attachSnackbarToActivity() {
-        Snackbar snackbar = Snackbar
+        snackbar = Snackbar
                 .make(mPatientDashboardActivity.findViewById(R.id.patientDashboardContentFrame), getString(R.string.snackbar_no_internet_connection), Snackbar.LENGTH_INDEFINITE);
         View view = snackbar.getView();
         TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
@@ -107,7 +108,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
     @Override
     public void resolvePatientDataDisplay(final Patient patient) {
-        if(isAdded()) {
+        if (isAdded()) {
             if (("M").equals(patient.getPerson().getGender())) {
                 ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.male));
             } else {

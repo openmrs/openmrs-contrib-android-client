@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 public class ViewUtils {
 
-    public static final String ILLEGAL_CHARACTERS = "[$&+:;=\\\\?@#|/'<>^*()%!]";
+    public static final String ILLEGAL_CHARACTERS = "[$&+:;=\\\\?@#|/'<>^*()%!1234567890]";
 
     public static final String ILLEGAL_ADDRESS_CHARACTERS = "[$&+:;=\\\\?@|<>^%!]";
 

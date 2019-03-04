@@ -18,8 +18,12 @@ import com.google.gson.annotations.Expose;
 
 import java.util.List;
 
-public class Visit extends Resource {
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity
+public class Visit extends Resource {
+@PrimaryKey
     private Long id;
 
     @Expose

@@ -16,7 +16,12 @@ package org.openmrs.mobile.models;
 
 import com.google.gson.annotations.Expose;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Location extends Resource {
+    @PrimaryKey
     @Expose
     private Long id;
     @Expose

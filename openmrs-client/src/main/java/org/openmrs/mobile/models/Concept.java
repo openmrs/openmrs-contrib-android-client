@@ -13,8 +13,12 @@ package org.openmrs.mobile.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Concept extends Resource{
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity
+public class Concept extends Resource{
+@PrimaryKey
     private Long id;
 
     @SerializedName("datatype")

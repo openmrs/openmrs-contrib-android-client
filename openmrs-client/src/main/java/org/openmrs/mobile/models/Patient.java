@@ -21,8 +21,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Patient extends Resource implements Serializable{
 
+    @PrimaryKey
     private Long id;
     private String encounters = "";
 

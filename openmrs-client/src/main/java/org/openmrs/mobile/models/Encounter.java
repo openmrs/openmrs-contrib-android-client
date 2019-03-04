@@ -19,8 +19,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Encounter extends Resource implements Serializable{
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+@Entity
+public class Encounter extends Resource implements Serializable{
+    @PrimaryKey
     private Long id;
 
     @SerializedName("encounterDatetime")

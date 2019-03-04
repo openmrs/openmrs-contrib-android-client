@@ -176,7 +176,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
 
         presenter.subscribe();
         presenter.confirmUpdate(patient);
-        verify(view).setErrorsVisibility(false, false, false, false, false, false);
+        verify(view).setErrorsVisibility(false, false, false, false, false, false,false,false,false,false);
         verify(view).setProgressBarVisibility(true);
         verify(view).hideSoftKeys();
         verify(view).finishPatientInfoActivity();
@@ -191,7 +191,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
                 .thenReturn(mockSuccessCall(new PatientPhoto()));
 
         presenter.confirmUpdate(patient);
-        verify(view).setErrorsVisibility(false, false, false, false, false, false);
+        verify(view).setErrorsVisibility(false, false, false, false, false, false,false,false,false,false);
         verify(view).setProgressBarVisibility(true);
         verify(view).hideSoftKeys();
         verify(view).setProgressBarVisibility(false);

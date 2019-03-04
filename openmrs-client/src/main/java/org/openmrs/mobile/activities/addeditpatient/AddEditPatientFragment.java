@@ -77,6 +77,7 @@ import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.ViewUtils;
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -126,6 +127,10 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private TextView gendererror;
     private TextView addrerror;
     private TextView countryerror;
+    private TextView stateerror;
+    private TextView cityerror;
+    private TextView postalerror;
+    private TextView countrynull;
 
     private Button submitConfirm;
     private Button datePicker;
@@ -172,7 +177,11 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                                     boolean dayOfBirthError,
                                     boolean addressError,
                                     boolean countryError,
-                                    boolean genderError) {
+                                    boolean genderError,
+                                    boolean countryNull,
+                                    boolean stateError,
+                                    boolean cityError,
+                                    boolean postalError) {
         if (givenNameError) {
             fnameerror.setVisibility(View.VISIBLE);
         }
@@ -221,6 +230,30 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         }
         else {
             gendererror.setVisibility(View.GONE);
+        }
+        if (countryNull) {
+            countrynull.setVisibility(View.VISIBLE);
+        }
+        else {
+            countrynull.setVisibility(View.GONE);
+        }
+        if (stateError) {
+            stateerror.setVisibility(View.VISIBLE);
+        }
+        else {
+            stateerror.setVisibility(View.GONE);
+        }
+        if (cityError) {
+            cityerror.setVisibility(View.VISIBLE);
+        }
+        else {
+            cityerror.setVisibility(View.GONE);
+        }
+        if (postalError) {
+            postalerror.setVisibility(View.VISIBLE);
+        }
+        else {
+            postalerror.setVisibility(View.GONE);
         }
     }
 
@@ -428,6 +461,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private void resolveViews(View v) {
+
         relativeLayout = (RelativeLayout) v.findViewById(R.id.addEditRelativeLayout);
         edfname = (EditText) v.findViewById(R.id.firstname);
         edmname = (EditText) v.findViewById(R.id.middlename);
@@ -451,6 +485,11 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         gendererror = (TextView)v.findViewById(R.id.gendererror);
         addrerror = (TextView)v.findViewById(R.id.addrerror);
         countryerror = (TextView)v.findViewById(R.id.countryerror);
+        stateerror=(TextView)v.findViewById(R.id.stateerror);
+        cityerror=(TextView)v.findViewById(R.id.cityerror);
+        countrynull=(TextView)v.findViewById(R.id.countrynull);
+        postalerror=(TextView)v.findViewById(R.id.postal_error);
+
 
         datePicker = (Button) v.findViewById(R.id.btn_datepicker);
         submitConfirm = (Button) v.findViewById(R.id.submitConfirm);

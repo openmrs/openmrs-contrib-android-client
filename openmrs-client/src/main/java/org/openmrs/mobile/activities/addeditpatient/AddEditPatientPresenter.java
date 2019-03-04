@@ -120,8 +120,12 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         boolean genderError = false;
         boolean addressError = false;
         boolean countryError = false;
+        boolean countryNull = false;
+        boolean stateError = false;
+        boolean cityError = false;
+        boolean postalError = false;
 
-        mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, genderError, addressError, countryError);
+        mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, genderError, addressError, countryError,countryNull,stateError,cityError,postalError);
 
         // Validate names
         PersonName currentPersonName = patient.getPerson().getName();
@@ -152,12 +156,8 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
         if ((StringUtils.isBlank(patientAddress1)
                 && StringUtils.isBlank(patientAddress2)
-                && StringUtils.isBlank(patient.getPerson().getAddress().getCityVillage())
-                && StringUtils.isBlank(patient.getPerson().getAddress().getStateProvince())
-                && StringUtils.isBlank(patient.getPerson().getAddress().getCountry())
-                && StringUtils.isBlank(patient.getPerson().getAddress().getPostalCode()))
                 || !ViewUtils.validateText(patientAddress1, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
-                || !ViewUtils.validateText(patientAddress2, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)) {
+                || !ViewUtils.validateText(patientAddress2, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS))) {
             addressError = true;
         }
 
@@ -169,6 +169,18 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         if (StringUtils.isBlank(patient.getPerson().getGender())) {
             genderError=true;
         }
+        if(StringUtils.isBlank(patient.getPerson().getAddress().getCountry())){
+            countryNull=true;
+        }
+        if(StringUtils.isBlank(patient.getPerson().getAddress().getStateProvince())){
+            stateError=true;
+        }
+        if(StringUtils.isBlank(patient.getPerson().getAddress().getCityVillage())){
+            cityError=true;
+        }
+        if(StringUtils.isBlank(patient.getPerson().getAddress().getPostalCode())){
+            postalError=true;
+        }
 
         boolean result = !givenNameError && !familyNameError && !dateOfBirthError && !addressError && !countryError && !genderError;
         if (result) {
@@ -176,7 +188,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             return true;
         }
         else {
-            mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, addressError, countryError, genderError);
+            mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, addressError, countryError, genderError,countryNull,stateError,cityError,postalError);
             return false;
         }
     }

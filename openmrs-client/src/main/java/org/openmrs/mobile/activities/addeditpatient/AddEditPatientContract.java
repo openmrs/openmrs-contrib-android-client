@@ -31,7 +31,11 @@ public interface AddEditPatientContract {
                                  boolean dayOfBirthError,
                                  boolean addressError,
                                  boolean countryError,
-                                 boolean genderError);
+                                 boolean genderError,
+                                 boolean countryNull,
+                                 boolean stateError,
+                                 boolean cityError,
+                                 boolean postalError);
 
         void scrollToTop();
 

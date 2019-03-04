@@ -55,8 +55,12 @@
     <string name="addr1_hint">Address</string>
     <string name="addr2_hint">Address 2</string>
     <string name="addr_invalid_error">Address cannot contain invalid characters</string>
-    <string name="atleastone">Fill at least one field</string>
-    <string name="incorrect_country">Country name is incorrect</string>
+    <string name="atleastone">Fill at least one address field</string>
+    <string name="incorrect_country">Country name incorrect</string>
+    <string name="req_state">State name required</string>
+    <string name="req_country">Country name required</string>
+    <string name="req_city">City name required</string>
+    <string name="req_postal">Postal code required</string>
 
     <string name="male">Male</string>
     <string name="female">Female</string>

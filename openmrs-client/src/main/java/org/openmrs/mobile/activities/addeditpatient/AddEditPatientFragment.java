@@ -456,6 +456,21 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         ToastUtil.notifyLong(getResources().getString(R.string.registration_core_info));
     }
 
+    @Override
+    public boolean areFieldsNotEmpty() {
+        return (!ViewUtils.isEmpty(edfname) ||
+                (!ViewUtils.isEmpty(edmname)) ||
+                (!ViewUtils.isEmpty(edlname)) ||
+                (!ViewUtils.isEmpty(eddob)) ||
+                (!ViewUtils.isEmpty(edyr)) ||
+                (!ViewUtils.isEmpty(edaddr1)) ||
+                (!ViewUtils.isEmpty(edaddr2)) ||
+                (!ViewUtils.isEmpty(edcity)) ||
+                (!ViewUtils.isEmpty(edstate)) ||
+                (!ViewUtils.isEmpty(edcountry)) ||
+                (!ViewUtils.isEmpty(edpostal)));
+    }
+
     public static AddEditPatientFragment newInstance() {
         return new AddEditPatientFragment();
     }

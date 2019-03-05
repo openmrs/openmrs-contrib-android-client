@@ -14,12 +14,15 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.activities.dashboard.DashboardActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.Arrays;
@@ -28,6 +31,7 @@ import java.util.List;
 public class AddEditPatientActivity extends ACBaseActivity {
 
     public AddEditPatientContract.Presenter mPresenter;
+    public AddEditPatientFragment addEditPatientFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,7 @@ public class AddEditPatientActivity extends ACBaseActivity {
         }
 
         // Create fragment
-        AddEditPatientFragment addEditPatientFragment =
+        addEditPatientFragment =
                 (AddEditPatientFragment) getSupportFragmentManager().findFragmentById(R.id.patientInfoContentFrame);
         if (addEditPatientFragment == null) {
             addEditPatientFragment = AddEditPatientFragment.newInstance();
@@ -78,7 +82,35 @@ public class AddEditPatientActivity extends ACBaseActivity {
     @Override
     public void onBackPressed() {
         if (!mPresenter.isRegisteringPatient()) {
+            boolean createDialog = addEditPatientFragment.areFieldsNotEmpty();
             super.onBackPressed();
+            if (createDialog) {
+                showInfoLostDialog();
+            } else {
+                if (!mPresenter.isRegisteringPatient()) {
+                    super.onBackPressed();
+                }
+            }
         }
+    }
+
+    /**
+     * The method creates a warning dialog when the user presses back button while registering a patient
+     */
+    private void showInfoLostDialog() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+        alertDialogBuilder.setTitle(R.string.dialog_title_are_you_sure);
+        // set dialog message
+        alertDialogBuilder
+                .setMessage(R.string.dialog_message_data_lost)
+                .setCancelable(false)
+                .setPositiveButton(R.string.dialog_button_stay, (dialog, id) -> dialog.cancel())
+                .setNegativeButton(R.string.dialog_button_leave, (dialog, id) -> {
+                    Intent intent = new Intent(AddEditPatientActivity.this, DashboardActivity.class);
+                    startActivity(intent);
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

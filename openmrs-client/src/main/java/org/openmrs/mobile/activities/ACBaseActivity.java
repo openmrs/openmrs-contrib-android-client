@@ -34,6 +34,7 @@ import android.widget.TextView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.login.LoginActivity;
+import org.openmrs.mobile.activities.patientdashboard.details.PatientDetailsFragment;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
@@ -67,6 +68,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     protected CustomFragmentDialog mCustomFragmentDialog;
     private MenuItem mSyncbutton;
     private List<String> locationList;
+    private Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +116,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         if (logoutMenuItem != null) {
             logoutMenuItem.setTitle(getString(R.string.action_logout) + " " + mOpenMRS.getUsername());
         }
-        if(mSyncbutton !=null) {
+        if (mSyncbutton != null) {
             final Boolean syncState = NetworkUtils.isOnline();
             setSyncButtonState(syncState);
         }
@@ -124,8 +126,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     private void setSyncButtonState(boolean syncState) {
         if (syncState) {
             mSyncbutton.setIcon(R.drawable.ic_sync_on);
-        }
-        else {
+        } else {
             mSyncbutton.setIcon(R.drawable.ic_sync_off);
         }
     }
@@ -151,13 +152,18 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 if (syncState) {
                     OpenMRS.getInstance().setSyncState(false);
                     setSyncButtonState(false);
+                    showNoInternetConnectionSnackbar();
                     ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.disconn_server);
-                } else if(NetworkUtils.hasNetwork()){
+                } else if (NetworkUtils.hasNetwork()) {
                     OpenMRS.getInstance().setSyncState(true);
                     setSyncButtonState(true);
                     Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
                     getApplicationContext().sendBroadcast(intent);
                     ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.reconn_server);
+                    if (PatientDetailsFragment.snackbar != null)
+                        PatientDetailsFragment.snackbar.dismiss();
+                    if (snackbar != null)
+                        snackbar.dismiss();
                 } else {
                     showNoInternetConnectionSnackbar();
                 }
@@ -184,7 +190,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable e) {
-               mOpenMRSLogger.e(e.getMessage());
+                mOpenMRSLogger.e(e.getMessage());
             }
 
             @Override
@@ -198,8 +204,8 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
 
     private void showNoInternetConnectionSnackbar() {
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
-                getString(R.string.no_internet_connection_message), Snackbar.LENGTH_SHORT);
+        snackbar = Snackbar.make(findViewById(android.R.id.content),
+                getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
@@ -254,10 +260,10 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.DELET_PATIENT_DIALOG_TAG);
     }
 
-    private void showLocationDialog(List<String>locationList) {
+    private void showLocationDialog(List<String> locationList) {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.location_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.location_dialog_current_location)+mOpenMRS.getLocation());
+        bundle.setTextViewMessage(getString(R.string.location_dialog_current_location) + mOpenMRS.getLocation());
         bundle.setLocationList(locationList);
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.SELECT_LOCATION);
         bundle.setRightButtonText(getString(R.string.dialog_button_select_location));
@@ -300,8 +306,8 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         mCustomFragmentDialog.show(mFragmentManager, dialogMessage);
     }
 
-    public void addFragmentToActivity (@NonNull FragmentManager fragmentManager,
-                                       @NonNull Fragment fragment, int frameId) {
+    public void addFragmentToActivity(@NonNull FragmentManager fragmentManager,
+                                      @NonNull Fragment fragment, int frameId) {
         checkNotNull(fragmentManager);
         checkNotNull(fragment);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -346,5 +352,5 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
-    
+
 }

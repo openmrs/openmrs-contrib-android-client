@@ -18,14 +18,15 @@ package org.openmrs.mobile.activities.patientdashboard.details;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
 import org.openmrs.mobile.R;
 
 import java.io.ByteArrayInputStream;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class PatientPhotoActivity extends AppCompatActivity {
 

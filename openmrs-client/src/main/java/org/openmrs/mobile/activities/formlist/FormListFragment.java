@@ -16,7 +16,6 @@ package org.openmrs.mobile.activities.formlist;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +39,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
+import androidx.annotation.Nullable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

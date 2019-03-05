@@ -14,9 +14,6 @@
 
 package org.openmrs.mobile.api.retrofit;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
@@ -36,6 +33,8 @@ import org.openmrs.mobile.utilities.DateUtils;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -11,7 +11,6 @@
 package org.openmrs.mobile.activities.formdisplay;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.SparseArray;
 
 import org.joda.time.LocalDateTime;
@@ -29,6 +28,8 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.fragment.app.Fragment;
 
 import static org.openmrs.mobile.utilities.FormService.getFormResourceByName;
 

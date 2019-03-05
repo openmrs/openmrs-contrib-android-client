@@ -60,7 +60,7 @@
                 android:orientation="vertical"
                 android:visibility="gone">
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutLoginURL"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -80,9 +80,9 @@
                         android:textAlignment="center"
                         android:textSize="14sp"
                         android:textStyle="bold" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutUsername"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -97,13 +97,13 @@
                         android:focusable="true"
                         android:inputType="text"
                         android:maxLines="1" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutPassword"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -118,7 +118,7 @@
                             android:focusable="true"
                             android:inputType="textPassword|text"
                             android:maxLines="1" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <CheckBox
                         android:id="@+id/checkboxShowPassword"
@@ -166,7 +166,7 @@
                         android:layout_marginRight="10dp"
                         android:text="@string/login_offline" />
 
-                    <android.support.v7.widget.AppCompatImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/loginSyncButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

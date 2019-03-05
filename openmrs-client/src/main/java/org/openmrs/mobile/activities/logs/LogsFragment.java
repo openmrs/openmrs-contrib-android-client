@@ -18,19 +18,19 @@ package org.openmrs.mobile.activities.logs;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 
 
-
-public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> implements LogsContract.View{
+public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> implements LogsContract.View {
 
     private TextView tvLogs;
     private FloatingActionButton fab;
@@ -44,16 +44,18 @@ public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> impleme
         fab = (FloatingActionButton) root.findViewById(R.id.fab);
         return root;
     }
+
     public void attachLogsToTextView(String logs) {
         tvLogs.setText(logs);
     }
-    public void fabCopyAll(String textLogs){
+
+    public void fabCopyAll(String textLogs) {
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setClipboard(getContext() , textLogs);
-                Toast.makeText(getContext() , "Logs copied to clipboard",
+                setClipboard(getContext(), textLogs);
+                Toast.makeText(getContext(), "Logs copied to clipboard",
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -61,7 +63,7 @@ public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> impleme
 
     @SuppressWarnings("deprecation")
     private void setClipboard(Context context, String text) {
-        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             clipboard.setText(text);
         } else {

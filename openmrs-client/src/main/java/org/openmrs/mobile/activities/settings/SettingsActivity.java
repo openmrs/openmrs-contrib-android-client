@@ -15,12 +15,14 @@
 package org.openmrs.mobile.activities.settings;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+
+import androidx.appcompat.app.ActionBar;
+
 public class SettingsActivity extends ACBaseActivity {
 
 

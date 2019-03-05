@@ -102,10 +102,16 @@ public final class DateUtils {
     public static DateTime convertTimeString(String dateAsString) {
         DateTime date = null;
         if (StringUtils.notNull(dateAsString)) {
-            DateTimeFormatter originalFormat = DateTimeFormat.forPattern(DateUtils.OPEN_MRS_REQUEST_FORMAT);
+            DateTimeFormatter originalFormat;
+            if (dateAsString.length() == OPEN_MRS_REQUEST_PATIENT_FORMAT.length()){
+                originalFormat = DateTimeFormat.forPattern(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT);
+            } else {
+                originalFormat = DateTimeFormat.forPattern(DateUtils.OPEN_MRS_REQUEST_FORMAT);
+            }
             date = originalFormat.parseDateTime(dateAsString);
         }
         return date;
+
     }
 
     public static String convertTime1(String dateAsString, String dateFormat) {

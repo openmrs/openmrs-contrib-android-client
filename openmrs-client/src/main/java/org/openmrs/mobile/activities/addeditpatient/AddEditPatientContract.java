@@ -44,6 +44,8 @@ public interface AddEditPatientContract {
         void startPatientDashbordActivity(Patient patient);
 
         void showUpgradeRegistrationModuleInfo();
+
+        boolean areFieldsNotEmpty();
     }
 
     interface Presenter extends BasePresenterContract {

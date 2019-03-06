@@ -62,7 +62,7 @@
                         android:scaleType="fitXY"
                         android:src="@drawable/ic_person_grey_500_48dp" />
 
-                    <android.support.design.widget.FloatingActionButton
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/capture_photo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
                     android:weightSum="2"
                     android:baselineAligned="false">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutFirstName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -131,9 +131,9 @@
                             android:inputType="textPersonName|textCapWords"
                             android:maxLines="1"
                             android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutMiddlename"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -150,7 +150,7 @@
                             android:inputType="textPersonName|textCapWords"
                             android:maxLines="1"
                             android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
@@ -169,7 +169,7 @@
                     android:textStyle="bold"
                     android:visibility="gone" />
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutSurname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -187,7 +187,7 @@
                         android:inputType="textPersonName|textCapWords"
                         android:maxLines="1"
                         android:textSize="14sp" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
                     android:id="@+id/lnameerror"
@@ -275,7 +275,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutDOB"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -295,7 +295,7 @@
                             android:maxLines="1"
                             android:nextFocusDown="@+id/estyr"
                             android:textSize="14sp"/>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <Button
                         android:id="@+id/btn_datepicker"
@@ -328,7 +328,7 @@
                     android:layout_marginRight="20dp"
                     android:weightSum="2">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutEstyr"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -345,9 +345,9 @@
                             android:inputType="number"
                             android:maxLines="1"
                             android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutEstmonth"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -364,7 +364,7 @@
                             android:inputType="number"
                             android:maxLines="1"
                             android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
             </LinearLayout>
@@ -424,7 +424,7 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -443,9 +443,9 @@
                         android:inputType="textCapWords"
                         android:maxLines="1"
                         android:textSize="14sp" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutAddess2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -464,7 +464,7 @@
                         android:inputType="textCapWords"
                         android:maxLines="1"
                         android:textSize="14sp" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -475,7 +475,7 @@
                     android:orientation="horizontal"
                     android:weightSum="2">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutCountry"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -492,9 +492,9 @@
                             android:inputType="textCapSentences"
                             android:maxLines="1"
                             android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutState"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -511,7 +511,7 @@
                             android:inputType="text"
                             android:maxLines="1"
                             android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
                 <LinearLayout
@@ -522,7 +522,7 @@
                     android:layout_marginTop="20dp"
                     android:weightSum="2">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutCity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -539,9 +539,9 @@
                             android:inputType="text"
                             android:maxLines="1"
                             android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutPostal"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -559,7 +559,7 @@
                             android:inputType="text"
                             android:maxLines="1"
                             android:textSize="14sp" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
                 <!--<TextView-->

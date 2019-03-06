@@ -15,10 +15,11 @@
 package org.openmrs.mobile.activities.dashboard;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+
+import androidx.appcompat.widget.Toolbar;
 
 public class DashboardActivity extends ACBaseActivity {
 

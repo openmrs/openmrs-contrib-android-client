@@ -14,9 +14,6 @@
 
 package org.openmrs.mobile.activities.formdisplay;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
@@ -25,6 +22,10 @@ import org.openmrs.mobile.models.Page;
 import org.openmrs.mobile.utilities.FormService;
 
 import java.util.List;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 class FormPageAdapter extends FragmentPagerAdapter {
 

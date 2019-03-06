@@ -22,7 +22,6 @@ tests/out/*
 out/*
 /openmrs-client/build
 /odkcollect/build
-gradle.properties
 
 *.DS_Store
 

@@ -15,7 +15,6 @@
 package org.openmrs.mobile.activities.settings;
 
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +27,8 @@ import org.openmrs.mobile.models.SettingsListItemDTO;
 import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRecyclerViewAdapter.SettingsViewHolder> {
 

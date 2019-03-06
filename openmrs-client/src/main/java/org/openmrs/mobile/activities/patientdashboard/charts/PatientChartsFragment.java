@@ -16,7 +16,6 @@ package org.openmrs.mobile.activities.patientdashboard.charts;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,6 +40,8 @@ import org.openmrs.mobile.utilities.FontsUtil;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+
+import androidx.annotation.Nullable;
 
 
 public class PatientChartsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientCharts {

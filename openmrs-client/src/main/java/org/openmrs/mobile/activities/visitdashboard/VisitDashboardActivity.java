@@ -16,7 +16,6 @@ package org.openmrs.mobile.activities.visitdashboard;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -25,6 +24,8 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+
+import androidx.appcompat.widget.Toolbar;
 
 public class VisitDashboardActivity extends ACBaseActivity {
 

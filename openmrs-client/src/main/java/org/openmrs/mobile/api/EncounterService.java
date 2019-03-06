@@ -12,7 +12,6 @@ package org.openmrs.mobile.api;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 
 import com.activeandroid.query.Select;
 
@@ -29,6 +28,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

@@ -14,14 +14,13 @@
 
 package org.openmrs.mobile.activities.syncedpatients;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.utilities.FilterUtil;
 import org.openmrs.mobile.utilities.StringUtils;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class SyncedPatientsPresenter extends BasePresenter implements SyncedPatientsContract.Presenter {

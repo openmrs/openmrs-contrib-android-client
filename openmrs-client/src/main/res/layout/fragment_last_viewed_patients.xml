@@ -13,7 +13,7 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<android.support.v4.widget.SwipeRefreshLayout
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
     android:id="@+id/swiperefreshLastPatients"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -33,11 +33,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.design.widget.AppBarLayout
+            <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:elevation="0dp"
                 android:layout_height="wrap_content">
-            </android.support.design.widget.AppBarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
 
             <TextView android:id="@+id/emptyLastViewedPatientList"
                 android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                 android:gravity="center"
                 android:visibility="gone" />
 
-            <android.support.v7.widget.RecyclerView android:id="@+id/lastViewedPatientRecyclerView"
+            <androidx.recyclerview.widget.RecyclerView android:id="@+id/lastViewedPatientRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
@@ -68,4 +68,4 @@
 
         </RelativeLayout>
     </FrameLayout>
-</android.support.v4.widget.SwipeRefreshLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

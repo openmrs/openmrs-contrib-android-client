@@ -16,7 +16,6 @@ package org.openmrs.mobile.activities.activevisits;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +32,8 @@ import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<ActiveVisitsRecyclerViewAdapter.VisitViewHolder> {
     private Context mContext;

@@ -17,7 +17,6 @@ package org.openmrs.mobile.activities.matchingpatients;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 import org.openmrs.mobile.R;
@@ -26,6 +25,8 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.PatientAndMatchesWrapper;
 import org.openmrs.mobile.utilities.ToastUtil;
+
+import androidx.appcompat.widget.Toolbar;
 
 public class MatchingPatientsActivity extends ACBaseActivity {
 

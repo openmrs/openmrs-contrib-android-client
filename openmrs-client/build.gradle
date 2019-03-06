@@ -22,7 +22,7 @@ apply plugin: 'com.github.triplet.play'
 def version = "2.6.1-beta"
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     useLibrary 'org.apache.http.legacy'
 
     def travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
@@ -105,15 +105,15 @@ repositories {
 }
 
 dependencies {
-    def support_version = "27.1.1"
+    def support_version = '1.0.0-beta01'
 
     implementation 'com.google.code.gson:gson:2.8.2'
     androidTestImplementation(
             'junit:junit:4.12',
             'androidx.test.ext:junit:1.0.0',
             'androidx.test.espresso:espresso-core:3.1.0',
-            'com.android.support.test:rules:1.0.2',
-            'com.android.support.test:runner:1.0.2',
+            'androidx.test:rules:1.1.0-alpha4',
+            'androidx.test:runner:1.1.0-alpha4',
             'org.mockito:mockito-core:1.10.19',
             'com.google.dexmaker:dexmaker-mockito:1.2',
             'com.google.dexmaker:dexmaker:1.2',
@@ -122,20 +122,20 @@ dependencies {
 
     androidTestImplementation files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
     implementation 'com.google.guava:guava:23.0'
-    implementation "com.android.support:appcompat-v7:$support_version"
-    implementation "com.android.support:gridlayout-v7:$support_version"
-    implementation "com.android.support:recyclerview-v7:$support_version"
-    implementation "com.android.support:cardview-v7:$support_version"
-    implementation "com.android.support:design:$support_version"
+    implementation "androidx.appcompat:appcompat:$support_version"
+    implementation "androidx.gridlayout:gridlayout:$support_version"
+    implementation "androidx.recyclerview:recyclerview:$support_version"
+    implementation "androidx.cardview:cardview:$support_version"
+    implementation "com.google.android.material:material:$support_version"
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'commons-codec:commons-codec:1.10'
     implementation 'net.zetetic:android-database-sqlcipher:3.5.1@aar'
     implementation 'org.jdeferred:jdeferred-android-aar:1.2.4'
-    implementation "com.android.support:support-v13:$support_version"
+    implementation "androidx.legacy:legacy-support-v13:$support_version"
     implementation 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.0'
     implementation 'joda-time:joda-time:2.0'
     implementation 'net.sf.kxml:kxml2:2.3.0'
     implementation 'io.reactivex:rxjava:1.3.4'

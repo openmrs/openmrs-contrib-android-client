@@ -7,9 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
@@ -24,6 +21,9 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,7 +50,7 @@ public class ConceptDownloadService extends Service {
 
     private void startDownload() {
         RestApi service = RestServiceBuilder.createService(RestApi.class);
-        Call<Results<SystemSetting>>  call = service.getSystemSettingsByQuery(
+        Call<Results<SystemSetting>> call = service.getSystemSettingsByQuery(
                 ApplicationConstants.SystemSettingKeys.WS_REST_MAX_RESULTS_ABSOLUTE,
                 ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<SystemSetting>>() {
@@ -137,8 +137,8 @@ public class ConceptDownloadService extends Service {
         });
     }
 
-    private void sendProgressBroadcast (){
-        Intent intent = new Intent (ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID);
+    private void sendProgressBroadcast() {
+        Intent intent = new Intent(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

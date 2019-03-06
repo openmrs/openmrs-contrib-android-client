@@ -15,11 +15,6 @@
 package org.openmrs.mobile.activities.patientdashboard;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
@@ -34,6 +29,12 @@ import org.openmrs.mobile.activities.patientdashboard.visits.PatientDashboardVis
 import org.openmrs.mobile.activities.patientdashboard.visits.PatientVisitsFragment;
 import org.openmrs.mobile.activities.patientdashboard.vitals.PatientDashboardVitalsPresenter;
 import org.openmrs.mobile.activities.patientdashboard.vitals.PatientVitalsFragment;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
 

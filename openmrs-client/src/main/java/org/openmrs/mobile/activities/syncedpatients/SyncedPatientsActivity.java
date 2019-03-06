@@ -16,9 +16,6 @@ package org.openmrs.mobile.activities.syncedpatients;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -28,6 +25,9 @@ import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivi
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.SearchView;
 
 public class SyncedPatientsActivity extends ACBaseActivity {
 

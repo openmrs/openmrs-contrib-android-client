@@ -16,8 +16,6 @@
 package org.openmrs.mobile.activities.logs;
 
 
-import android.support.annotation.NonNull;
-
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
@@ -28,6 +26,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import androidx.annotation.NonNull;
 
 public class LogsPresenter extends BasePresenter implements LogsContract.Presenter {
 

@@ -14,7 +14,6 @@
 
 package org.openmrs.mobile.test.presenters;
 
-import android.support.annotation.NonNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -31,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import rx.Observable;
 
 import static org.mockito.Matchers.anyInt;

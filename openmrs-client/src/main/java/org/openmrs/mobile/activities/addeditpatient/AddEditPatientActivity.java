@@ -17,7 +17,6 @@ package org.openmrs.mobile.activities.addeditpatient;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
 import org.openmrs.mobile.R;
@@ -27,6 +26,8 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.appcompat.widget.Toolbar;
 
 public class AddEditPatientActivity extends ACBaseActivity {
 

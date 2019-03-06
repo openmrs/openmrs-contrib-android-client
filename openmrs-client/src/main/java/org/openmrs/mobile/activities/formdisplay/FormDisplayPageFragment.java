@@ -12,7 +12,6 @@ package org.openmrs.mobile.activities.formdisplay;
 
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.text.InputType;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -44,6 +43,8 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.core.content.ContextCompat;
 
 public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.Presenter.PagePresenter> implements FormDisplayContract.View.PageView {
 

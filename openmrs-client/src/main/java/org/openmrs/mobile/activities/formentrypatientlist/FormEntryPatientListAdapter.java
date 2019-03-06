@@ -15,7 +15,6 @@
 package org.openmrs.mobile.activities.formentrypatientlist;
 
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +30,7 @@ import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.RecyclerView;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryPatientListAdapter.PatientViewHolder> {

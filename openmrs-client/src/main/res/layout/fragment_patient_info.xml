@@ -22,8 +22,8 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true">
 
         <LinearLayout
@@ -41,8 +41,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/patient_details_photo_label"
                     android:textColor="@color/primary"
@@ -69,12 +69,12 @@
                         android:id="@+id/capture_photo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/patientPhoto"
                         android:layout_alignEnd="@id/patientPhoto"
                         android:layout_alignRight="@id/patientPhoto"
-                        android:layout_below="@id/patientPhoto"
-                        android:layout_marginBottom="10dp"
                         android:layout_marginEnd="-25dp"
                         android:layout_marginRight="-25dp"
+                        android:layout_marginBottom="10dp"
                         android:src="@drawable/ic_photo_camera_white_48dp" />
                 </RelativeLayout>
 
@@ -90,8 +90,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/demographics"
                     android:textColor="@color/primary"
@@ -101,8 +101,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
                     android:layout_marginStart="12dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/reg_ques_name"
                     android:textColor="#555"
@@ -114,8 +114,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:weightSum="2"
-                    android:baselineAligned="false">
+                    android:baselineAligned="false"
+                    android:weightSum="2">
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/textInputLayoutFirstName"
@@ -162,8 +162,8 @@
                     android:id="@+id/fnameerror"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:padding="2dp"
                     android:text="@string/emptyerror"
@@ -196,8 +196,8 @@
                     android:id="@+id/lnameerror"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:gravity="end"
                     android:padding="2dp"
@@ -210,8 +210,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
                     android:layout_marginStart="12dp"
+                    android:layout_marginLeft="12dp"
                     android:text="@string/reg_ques_gender"
                     android:textColor="#555"
                     android:textSize="18sp"
@@ -221,8 +221,8 @@
                     android:id="@+id/gendererror"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
                     android:layout_marginStart="12dp"
+                    android:layout_marginLeft="12dp"
                     android:padding="2dp"
                     android:text="@string/emptyerror"
                     android:textColor="@color/red"
@@ -234,8 +234,8 @@
                     android:id="@+id/gender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginStart="20dp">
+                    android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp">
 
                     <RadioButton
                         android:id="@+id/male"
@@ -254,8 +254,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
                     android:layout_marginStart="12dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/reg_ques_dob"
                     android:textColor="#555"
@@ -266,8 +266,8 @@
                     android:id="@+id/doberror"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
                     android:layout_marginStart="12dp"
+                    android:layout_marginLeft="12dp"
                     android:padding="2dp"
                     android:textColor="@color/red"
                     android:textSize="14sp"
@@ -288,10 +288,10 @@
                             android:id="@+id/dob"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
                             android:layout_marginStart="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginRight="20dp"
                             android:hint="@string/dob_hint"
                             android:imeOptions="actionNext"
                             android:inputType="datetime"
@@ -304,20 +304,20 @@
                         android:id="@+id/btn_datepicker"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="14dp"
                         android:layout_marginEnd="24dp"
                         android:layout_marginRight="24dp"
-                        android:layout_marginTop="14dp"
                         android:background="@drawable/btn_date_picker" />
                 </RelativeLayout>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
                     android:text="@string/label_or"
                     android:textColor="#777"
                     android:textSize="18sp"
@@ -326,9 +326,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
                     android:weightSum="2">
 
                     <android.support.design.widget.TextInputLayout
@@ -382,8 +382,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/patient_contact_info_label"
                     android:textColor="@color/primary"
@@ -391,23 +391,23 @@
                     android:textStyle="bold" />
 
 
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
                     android:layout_marginStart="12dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_marginTop="20dp"
                     android:text="@string/reg_ques_address"
                     android:textColor="#555"
                     android:textSize="18sp"
                     android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/addrerror"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
                     android:layout_marginStart="12dp"
+                    android:layout_marginLeft="12dp"
                     android:padding="2dp"
                     android:text="@string/atleastone"
                     android:textColor="@color/red"
@@ -426,8 +426,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
                         android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
                         android:focusable="true"
                         android:hint="@string/addr1_hint"
                         android:imeOptions="actionNext"
@@ -447,8 +447,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
                         android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
                         android:focusable="true"
                         android:hint="@string/addr2_hint"
                         android:imeOptions="actionNext"
@@ -461,8 +461,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
                     android:orientation="horizontal"
                     android:weightSum="2">
 
@@ -488,8 +488,8 @@
                             android:id="@+id/countryerror"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="3dp"
                             android:layout_marginStart="3dp"
+                            android:layout_marginLeft="3dp"
                             android:padding="2dp"
                             android:text="@string/incorrect_country"
                             android:textColor="@color/red"
@@ -501,8 +501,8 @@
                             android:id="@+id/countrynull"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="3dp"
                             android:layout_marginStart="3dp"
+                            android:layout_marginLeft="3dp"
                             android:padding="2dp"
                             android:text="@string/req_country"
                             android:textColor="@color/red"
@@ -533,8 +533,8 @@
                             android:id="@+id/stateerror"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="3dp"
                             android:layout_marginStart="3dp"
+                            android:layout_marginLeft="3dp"
                             android:padding="2dp"
                             android:text="@string/req_state"
                             android:textColor="@color/red"
@@ -548,8 +548,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
                     android:weightSum="2">
 
                     <android.support.design.widget.TextInputLayout
@@ -574,13 +574,13 @@
                             android:id="@+id/cityerror"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="3dp"
                             android:layout_marginStart="3dp"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginBottom="4dp"
                             android:padding="2dp"
                             android:text="@string/req_city"
                             android:textColor="@color/red"
                             android:textSize="14sp"
-                            android:layout_marginBottom="4dp"
                             android:textStyle="bold"
                             android:visibility="gone" />
                     </android.support.design.widget.TextInputLayout>
@@ -608,14 +608,14 @@
                             android:id="@+id/postal_error"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="3dp"
                             android:layout_marginStart="3dp"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginBottom="4dp"
                             android:padding="2dp"
                             android:text="@string/req_postal"
                             android:textColor="@color/red"
                             android:textSize="14sp"
                             android:textStyle="bold"
-                            android:layout_marginBottom="4dp"
                             android:visibility="gone" />
                     </android.support.design.widget.TextInputLayout>
 
@@ -656,11 +656,11 @@
     </ScrollView>
 
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone" />
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
 </RelativeLayout>

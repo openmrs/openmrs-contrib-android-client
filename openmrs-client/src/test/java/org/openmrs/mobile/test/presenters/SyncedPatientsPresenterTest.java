@@ -66,7 +66,7 @@ public class SyncedPatientsPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldShowListWhenFoundPatientsByQuery() {
-        final String query = "given_name_3";
+        final String query = "given_name_c";
         when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
         syncedPatientsPresenter.setQuery(query);
         syncedPatientsPresenter.updateLocalPatientsList();

@@ -51,7 +51,6 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputLayout;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -105,11 +104,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private LocalDate birthdate;
     private DateTime bdt;
 
-    private TextInputLayout firstNameTIL;
-    private TextInputLayout lastNameTIL;
-    private TextInputLayout address1TIL;
-    private TextInputLayout countryTIL;
-
     private EditText edfname;
     private EditText edmname;
     private EditText edlname;
@@ -153,8 +147,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         View root = inflater.inflate(R.layout.fragment_patient_info, container, false);
         resolveViews(root);
         addSuggestionsToAutoCompleTextView();
@@ -182,19 +174,17 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                                     boolean countryError,
                                     boolean genderError) {
         if (givenNameError) {
-            firstNameTIL.setErrorEnabled(true);
-            firstNameTIL.setError("*Required");
+            fnameerror.setVisibility(View.VISIBLE);
         }
         else {
-            firstNameTIL.setErrorEnabled(false);
+            fnameerror.setVisibility(View.INVISIBLE);
         }
 
         if (familyNameError) {
-            lastNameTIL.setErrorEnabled(true);
-            lastNameTIL.setError("*Required");
+            lnameerror.setVisibility(View.VISIBLE);
         }
         else {
-            lastNameTIL.setErrorEnabled(false);
+            lnameerror.setVisibility(View.INVISIBLE);
         }
 
         if (dayOfBirthError) {
@@ -213,19 +203,17 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         }
 
         if (addressError) {
-            address1TIL.setErrorEnabled(true);
-            address1TIL.setError("*Required");
+            addrerror.setVisibility(View.VISIBLE);
         }
         else {
-            address1TIL.setErrorEnabled(false);
+            addrerror.setVisibility(View.GONE);
         }
 
         if (countryError) {
-            countryTIL.setErrorEnabled(true);
-            countryTIL.setError("Invalid Country Name");
+            countryerror.setVisibility(View.VISIBLE);
         }
         else {
-            countryTIL.setErrorEnabled(false);
+            countryerror.setVisibility(View.GONE);
         }
 
         if (genderError) {
@@ -483,11 +471,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         submitConfirm = (Button) v.findViewById(R.id.submitConfirm);
         capturePhotoBtn = (FloatingActionButton) v.findViewById(R.id.capture_photo);
         patientImageView = (ImageView) v.findViewById(R.id.patientPhoto);
-
-        firstNameTIL = v.findViewById(R.id.textInputLayoutFirstName);
-        lastNameTIL = v.findViewById(R.id.textInputLayoutSurname);
-        address1TIL = v.findViewById(R.id.textInputLayoutAddress);
-        countryTIL = v.findViewById(R.id.textInputLayoutCountry);
     }
 
     private void fillFields(final Patient patient) {

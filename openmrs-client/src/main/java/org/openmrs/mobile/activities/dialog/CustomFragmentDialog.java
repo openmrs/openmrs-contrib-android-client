@@ -18,12 +18,14 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +57,7 @@ import org.openmrs.mobile.utilities.FontsUtil;
 import java.util.List;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -138,7 +141,11 @@ public class CustomFragmentDialog extends DialogFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (isDialogAvailable()) {
-            this.setBorderless();
+            if(mCustomDialogBundle.hasLoadingBar()||mCustomDialogBundle.hasProgressDialog())
+                this.setProgressDialogWidth();
+            else{
+                this.setBorderless();
+            }
             this.setOnBackListener();
         }
     }
@@ -196,6 +203,22 @@ public class CustomFragmentDialog extends DialogFragment {
 
         getDialog().getWindow().setAttributes(params);
     }
+
+    public final void setProgressDialogWidth() {
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        int marginWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, TYPED_DIMENSION_VALUE,
+                OpenMRS.getInstance().getResources().getDisplayMetrics());
+
+        DisplayMetrics display = this.getResources().getDisplayMetrics();
+        int width = display.widthPixels;
+
+        WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
+        params.width = (width * 5 / 6) - (2 * marginWidth);
+
+        getDialog().getWindow().setAttributes(params);
+    }
+
 
     private void buildDialog() {
         if (null != mCustomDialogBundle.getTitleViewMessage()) {
@@ -277,9 +300,20 @@ public class CustomFragmentDialog extends DialogFragment {
     public TextView addTitleBar(String title) {
         LinearLayout field = (LinearLayout) mInflater.inflate(R.layout.openmrs_title_view_field, null);
         TextView textView = (TextView) field.findViewById(R.id.openmrsTitleView);
+        if (mCustomDialogBundle.hasProgressDialog() || mCustomDialogBundle.hasLoadingBar()) {
+            mFieldsLayout.setOrientation(LinearLayout.HORIZONTAL);
+            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
+            p.weight = 2;
+            field.setLayoutParams(p);
+            field.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+            textView.setGravity(Gravity.CENTER);
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
+            textView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+            textView.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
+        }
         textView.setText(title);
         textView.setSingleLine(true);
-        mFieldsLayout.addView(field, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        mFieldsLayout.addView(field);
         return textView;
     }
 
@@ -311,9 +345,11 @@ public class CustomFragmentDialog extends DialogFragment {
 
     public void addProgressBar(String message) {
         RelativeLayout progressBarLayout = (RelativeLayout) mInflater.inflate(R.layout.dialog_progress, null);
-        TextView textView = (TextView) progressBarLayout.findViewById(R.id.progressTextView);
-        textView.setText(message);
-        mFieldsLayout.addView(progressBarLayout, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        mFieldsLayout.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, dp2px(getResources(),100));
+        p.weight = 1;
+        progressBarLayout.setLayoutParams(p);
+        mFieldsLayout.addView(progressBarLayout);
     }
 
     public String getEditTextValue() {
@@ -418,5 +454,9 @@ public class CustomFragmentDialog extends DialogFragment {
                 fragment.startVisit();
             }
         }
+    }
+
+    public static int dp2px(Resources resource, int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,   dp,resource.getDisplayMetrics());
     }
 }

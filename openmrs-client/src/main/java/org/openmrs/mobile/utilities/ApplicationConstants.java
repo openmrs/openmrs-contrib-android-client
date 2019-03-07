@@ -32,6 +32,8 @@ public abstract class ApplicationConstants {
     public static final String DB_PASSWORD_LITERAL_PEPPER = "Open Sesame";
     public static final int DEFAULT_BCRYPT_ROUND = 8;
 
+    // todo will change something
+
     public abstract static class OpenMRSSharedPreferenceNames {
         public static final String SHARED_PREFERENCES_NAME = "shared_preferences";
     }

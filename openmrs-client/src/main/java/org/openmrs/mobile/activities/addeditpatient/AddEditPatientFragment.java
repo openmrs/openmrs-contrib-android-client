@@ -51,6 +51,7 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -103,6 +104,11 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private RelativeLayout relativeLayout;
     private LocalDate birthdate;
     private DateTime bdt;
+
+    private TextInputLayout firstNameTIL;
+    private TextInputLayout lastNameTIL;
+    private TextInputLayout address1TIL;
+    private TextInputLayout countryTIL;
 
     private EditText edfname;
     private EditText edmname;
@@ -173,18 +179,21 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                                     boolean addressError,
                                     boolean countryError,
                                     boolean genderError) {
+        String emptyError = getString(R.string.emptyerror);
         if (givenNameError) {
-            fnameerror.setVisibility(View.VISIBLE);
+            firstNameTIL.setErrorEnabled(true);
+            firstNameTIL.setError(emptyError);
         }
         else {
-            fnameerror.setVisibility(View.INVISIBLE);
+            firstNameTIL.setErrorEnabled(false);
         }
 
         if (familyNameError) {
-            lnameerror.setVisibility(View.VISIBLE);
+            lastNameTIL.setErrorEnabled(true);
+            lastNameTIL.setError(emptyError);
         }
         else {
-            lnameerror.setVisibility(View.INVISIBLE);
+            lastNameTIL.setErrorEnabled(false);
         }
 
         if (dayOfBirthError) {
@@ -203,17 +212,19 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         }
 
         if (addressError) {
-            addrerror.setVisibility(View.VISIBLE);
+            address1TIL.setErrorEnabled(true);
+            address1TIL.setError(emptyError);
         }
         else {
-            addrerror.setVisibility(View.GONE);
+            address1TIL.setErrorEnabled(false);
         }
 
         if (countryError) {
-            countryerror.setVisibility(View.VISIBLE);
+            countryTIL.setErrorEnabled(true);
+            countryTIL.setError(getString(R.string.incorrect_country));
         }
         else {
-            countryerror.setVisibility(View.GONE);
+            countryTIL.setErrorEnabled(false);
         }
 
         if (genderError) {
@@ -471,6 +482,11 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         submitConfirm = (Button) v.findViewById(R.id.submitConfirm);
         capturePhotoBtn = (FloatingActionButton) v.findViewById(R.id.capture_photo);
         patientImageView = (ImageView) v.findViewById(R.id.patientPhoto);
+
+        firstNameTIL = v.findViewById(R.id.textInputLayoutFirstName);
+        lastNameTIL = v.findViewById(R.id.textInputLayoutSurname);
+        address1TIL = v.findViewById(R.id.textInputLayoutAddress);
+        countryTIL = v.findViewById(R.id.textInputLayoutCountry);
     }
 
     private void fillFields(final Patient patient) {
@@ -520,8 +536,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         }
     }
 
-
-
     private void addSuggestionsToAutoCompleTextView() {
         countries = getContext().getResources().getStringArray(R.array.countries_array);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
@@ -529,6 +543,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         edcountry.setAdapter(adapter);
 
     }
+
     private void addSuggestionsToCities(){
         String country_name = edcountry.getText().toString() ;
         country_name = country_name.replace("(","");
@@ -637,28 +652,26 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
                 CameraOrGalleryPickerDialog dialog = CameraOrGalleryPickerDialog.getInstance(
                         new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                        if (which == 0)
-                            AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
-                        else {
-                            Intent i;
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
-                                i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                            else
-                                i = new Intent(Intent.ACTION_GET_CONTENT);
-                            i.addCategory(Intent.CATEGORY_OPENABLE);
-                            i.setType("image/*");
-                            startActivityForResult(i, GALLERY_IMAGE_REQUEST);
-                        }
-                    }
-                });
+                                if (which == 0)
+                                    AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
+                                else {
+                                    Intent i;
+                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
+                                        i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                                    else
+                                        i = new Intent(Intent.ACTION_GET_CONTENT);
+                                    i.addCategory(Intent.CATEGORY_OPENABLE);
+                                    i.setType("image/*");
+                                    startActivityForResult(i, GALLERY_IMAGE_REQUEST);
+                                }
+                            }
+                        });
                 dialog.show(getChildFragmentManager(), null);
             }
         });
-
-
 
         submitConfirm.setOnClickListener(new View.OnClickListener() {
             @Override

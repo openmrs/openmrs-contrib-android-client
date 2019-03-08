@@ -13,6 +13,7 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/addEditRelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -101,6 +102,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginBottom="8dp"
                     android:text="@string/reg_ques_name"
                     android:textColor="#555"
                     android:textSize="18sp"
@@ -109,8 +111,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_marginRight="20dp"
+                    android:layout_marginBottom="8dp"
                     android:weightSum="2"
                     android:baselineAligned="false">
 
@@ -118,8 +121,10 @@
                         android:id="@+id/textInputLayoutFirstName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        app:helperText="*Required"
+                        app:errorEnabled="true"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                         <EditText
                             android:id="@+id/firstname"
@@ -137,7 +142,9 @@
                         android:id="@+id/textInputLayoutMiddlename"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="8dp"
+                        android:paddingBottom="8dp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_weight="1">
 
                         <EditText
@@ -173,14 +180,16 @@
                     android:id="@+id/textInputLayoutSurname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true">
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginBottom="8dp"
+                    app:helperText="*Required"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <EditText
                         android:id="@+id/surname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
                         android:focusable="true"
                         android:hint="@string/reg_surname_hint"
                         android:imeOptions="actionNext"
@@ -202,7 +211,7 @@
                     android:textColor="@color/red"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:visibility="invisible" />
+                    android:visibility="gone" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -229,20 +238,20 @@
 
                 <RadioGroup
                     android:id="@+id/gender"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp">
 
                     <RadioButton
                         android:id="@+id/male"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/male" />
 
                     <RadioButton
                         android:id="@+id/female"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/female" />
 
@@ -279,16 +288,16 @@
                         android:id="@+id/textInputLayoutDOB"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true">
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="20dp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                         <EditText
                             android:id="@+id/dob"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:layout_marginStart="20dp"
                             android:hint="@string/dob_hint"
                             android:imeOptions="actionNext"
                             android:inputType="datetime"
@@ -313,7 +322,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_marginStart="20dp"
                     android:text="@string/label_or"
                     android:textColor="#777"
@@ -324,15 +333,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_marginRight="20dp"
+                    android:layout_marginTop="8dp"
                     android:weightSum="2">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutEstyr"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_weight="1">
 
                         <EditText
@@ -351,8 +361,9 @@
                         android:id="@+id/textInputLayoutEstmonth"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_weight="1">
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="8dp">
 
                         <EditText
                             android:id="@+id/estmonth"
@@ -428,15 +439,16 @@
                     android:id="@+id/textInputLayoutAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true">
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="12dp"
+                    app:helperText="*Required"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <EditText
                         android:id="@+id/addr1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="20dp"
                         android:focusable="true"
                         android:hint="@string/addr1_hint"
                         android:imeOptions="actionNext"
@@ -449,15 +461,15 @@
                     android:id="@+id/textInputLayoutAddess2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true">
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="12dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <EditText
                         android:id="@+id/addr2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="20dp"
                         android:focusable="true"
                         android:hint="@string/addr2_hint"
                         android:imeOptions="actionNext"
@@ -469,7 +481,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
                     android:orientation="horizontal"
@@ -479,13 +491,15 @@
                         android:id="@+id/textInputLayoutCountry"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
+                        app:errorEnabled="true"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_weight="1">
 
                         <AutoCompleteTextView
                             android:id="@+id/country"
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="48dp"
+                            android:layout_marginLeft="4dp"
                             android:focusable="true"
                             android:hint="@string/patient_country_label"
                             android:imeOptions="actionNext"
@@ -498,13 +512,15 @@
                         android:id="@+id/textInputLayoutState"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="8dp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_weight="1">
 
                         <AutoCompleteTextView
                             android:id="@+id/state"
                             android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="48dp"
+                            android:layout_marginLeft="4dp"
                             android:focusable="true"
                             android:hint="@string/patient_state_label"
                             android:imeOptions="actionNext"
@@ -517,7 +533,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="12dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
                     android:weightSum="2">
@@ -526,7 +542,7 @@
                         android:id="@+id/textInputLayoutCity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_weight="1">
 
                         <EditText
@@ -545,7 +561,8 @@
                         android:id="@+id/textInputLayoutPostal"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="8dp"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_weight="1">
 
                         <EditText
@@ -598,11 +615,11 @@
     </ScrollView>
 
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:visibility="gone" />
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
 </RelativeLayout>

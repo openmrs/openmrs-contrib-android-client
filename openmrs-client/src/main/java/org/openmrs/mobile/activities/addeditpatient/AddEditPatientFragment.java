@@ -147,6 +147,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // TODO change layout to fragment_patient_info.xml if error
         View root = inflater.inflate(R.layout.fragment_patient_info, container, false);
         resolveViews(root);
         addSuggestionsToAutoCompleTextView();

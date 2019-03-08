@@ -153,8 +153,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         View root = inflater.inflate(R.layout.fragment_patient_info, container, false);
         resolveViews(root);
         addSuggestionsToAutoCompleTextView();
@@ -181,9 +179,10 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                                     boolean addressError,
                                     boolean countryError,
                                     boolean genderError) {
+        String emptyError = getString(R.string.emptyerror);
         if (givenNameError) {
             firstNameTIL.setErrorEnabled(true);
-            firstNameTIL.setError("*Required");
+            firstNameTIL.setError(emptyError);
         }
         else {
             firstNameTIL.setErrorEnabled(false);
@@ -191,7 +190,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
         if (familyNameError) {
             lastNameTIL.setErrorEnabled(true);
-            lastNameTIL.setError("*Required");
+            lastNameTIL.setError(emptyError);
         }
         else {
             lastNameTIL.setErrorEnabled(false);
@@ -214,7 +213,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
         if (addressError) {
             address1TIL.setErrorEnabled(true);
-            address1TIL.setError("*Required");
+            address1TIL.setError(emptyError);
         }
         else {
             address1TIL.setErrorEnabled(false);
@@ -222,7 +221,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
         if (countryError) {
             countryTIL.setErrorEnabled(true);
-            countryTIL.setError("Invalid Country Name");
+            countryTIL.setError(getString(R.string.incorrect_country));
         }
         else {
             countryTIL.setErrorEnabled(false);
@@ -537,8 +536,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         }
     }
 
-
-
     private void addSuggestionsToAutoCompleTextView() {
         countries = getContext().getResources().getStringArray(R.array.countries_array);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
@@ -546,6 +543,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         edcountry.setAdapter(adapter);
 
     }
+
     private void addSuggestionsToCities(){
         String country_name = edcountry.getText().toString() ;
         country_name = country_name.replace("(","");
@@ -674,8 +672,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 dialog.show(getChildFragmentManager(), null);
             }
         });
-
-
 
         submitConfirm.setOnClickListener(new View.OnClickListener() {
             @Override

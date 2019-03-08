@@ -109,7 +109,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:weightSum="2"
                     android:baselineAligned="false">
@@ -118,8 +118,8 @@
                         android:id="@+id/textInputLayoutFirstName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                        android:layout_alignParentTop="true"
+                        android:layout_weight="1">
 
                         <EditText
                             android:id="@+id/firstname"
@@ -137,8 +137,7 @@
                         android:id="@+id/textInputLayoutMiddlename"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_alignParentTop="true"
                         android:layout_weight="1">
 
                         <EditText
@@ -174,14 +173,14 @@
                     android:id="@+id/textInputLayoutSurname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginLeft="12dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    android:layout_alignParentTop="true">
 
                     <EditText
                         android:id="@+id/surname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:focusable="true"
                         android:hint="@string/reg_surname_hint"
                         android:imeOptions="actionNext"
@@ -230,20 +229,20 @@
 
                 <RadioGroup
                     android:id="@+id/gender"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp">
 
                     <RadioButton
                         android:id="@+id/male"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/male" />
 
                     <RadioButton
                         android:id="@+id/female"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/female" />
 
@@ -280,15 +279,16 @@
                         android:id="@+id/textInputLayoutDOB"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="20dp"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                        android:layout_alignParentTop="true">
 
                         <EditText
                             android:id="@+id/dob"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginStart="20dp"
                             android:hint="@string/dob_hint"
                             android:imeOptions="actionNext"
                             android:inputType="datetime"
@@ -313,7 +313,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp"
                     android:text="@string/label_or"
                     android:textColor="#777"
@@ -324,7 +324,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="12dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:weightSum="2">
 
@@ -332,7 +332,7 @@
                         android:id="@+id/textInputLayoutEstyr"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_alignParentTop="true"
                         android:layout_weight="1">
 
                         <EditText
@@ -351,9 +351,8 @@
                         android:id="@+id/textInputLayoutEstmonth"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_weight="1"
-                        android:layout_marginLeft="8dp">
+                        android:layout_alignParentTop="true"
+                        android:layout_weight="1">
 
                         <EditText
                             android:id="@+id/estmonth"
@@ -429,15 +428,15 @@
                     android:id="@+id/textInputLayoutAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="20dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    android:layout_alignParentTop="true">
 
                     <EditText
                         android:id="@+id/addr1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="20dp"
                         android:focusable="true"
                         android:hint="@string/addr1_hint"
                         android:imeOptions="actionNext"
@@ -450,15 +449,15 @@
                     android:id="@+id/textInputLayoutAddess2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="20dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    android:layout_alignParentTop="true">
 
                     <EditText
                         android:id="@+id/addr2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginTop="20dp"
                         android:focusable="true"
                         android:hint="@string/addr2_hint"
                         android:imeOptions="actionNext"
@@ -470,7 +469,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
                     android:orientation="horizontal"
@@ -480,7 +479,7 @@
                         android:id="@+id/textInputLayoutCountry"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_alignParentTop="true"
                         android:layout_weight="1">
 
                         <AutoCompleteTextView
@@ -499,8 +498,7 @@
                         android:id="@+id/textInputLayoutState"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_alignParentTop="true"
                         android:layout_weight="1">
 
                         <AutoCompleteTextView
@@ -519,7 +517,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="20dp"
                     android:weightSum="2">
@@ -528,7 +526,7 @@
                         android:id="@+id/textInputLayoutCity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_alignParentTop="true"
                         android:layout_weight="1">
 
                         <EditText
@@ -547,8 +545,7 @@
                         android:id="@+id/textInputLayoutPostal"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_alignParentTop="true"
                         android:layout_weight="1">
 
                         <EditText
@@ -601,11 +598,11 @@
     </ScrollView>
 
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
 
 </RelativeLayout>

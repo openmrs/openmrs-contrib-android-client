@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.formentrypatientlist;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ import java.util.List;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.snackbar.Snackbar;
 
 public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatientListContract.Presenter> implements  FormEntryPatientListContract.View {
 
@@ -98,4 +100,11 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
         return new FormEntryPatientListFragment();
     }
 
+    public void showSnackbarInactivePatients(View v) {
+        Snackbar snackbar = Snackbar.make(v, R.string.snackbar_nonvisitting_patients, Snackbar.LENGTH_LONG);
+        View view = snackbar.getView();
+        TextView tv = view.findViewById(R.id.snackbar_text);
+        tv.setTextColor(Color.WHITE);
+        snackbar.show();
+    }
 }

@@ -199,7 +199,6 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
-                    android:gravity="end"
                     android:padding="2dp"
                     android:text="@string/emptyerror"
                     android:textColor="@color/red"

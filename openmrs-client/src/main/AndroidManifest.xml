@@ -102,6 +102,7 @@
             android:theme="@style/AppThemeOrig" />
         <activity
             android:name=".activities.patientdashboard.PatientDashboardActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppThemeOrig">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->

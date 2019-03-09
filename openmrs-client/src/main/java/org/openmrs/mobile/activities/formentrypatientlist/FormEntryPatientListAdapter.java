@@ -61,8 +61,14 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
                         icon.setBounds(0, 0, icon.getIntrinsicHeight(), icon.getIntrinsicWidth());
                         holder.mVisitStatus.setCompoundDrawables(icon, null, null, null);
                         holder.mVisitStatus.setText(mContext.getString(R.string.active_visit_label_capture_vitals));
+
+                        holder.mRowLayout.setOnClickListener(v ->
+                                mContext.startEncounterForPatient(mItems.get(adapterPos).getId()));
                     } else {
                         holder.mVisitStatus.setText(ApplicationConstants.EMPTY_STRING);
+
+                        holder.mRowLayout.setOnClickListener(v ->
+                                mContext.showSnackbarInactivePatients(v));
                     }
                 });
         if (null != patient.getIdentifier()) {
@@ -75,9 +81,6 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
         if (null != patient.getPerson().getGender()) {
             holder.mGender.setText(patient.getPerson().getGender());
         }
-
-        holder.mRowLayout.setOnClickListener(v ->
-                mContext.startEncounterForPatient(mItems.get(adapterPos).getId()));
 
         holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
     }

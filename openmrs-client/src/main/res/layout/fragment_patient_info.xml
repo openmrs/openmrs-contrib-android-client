@@ -121,7 +121,6 @@
                         android:id="@+id/textInputLayoutFirstName"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
                         android:layout_weight="1">
 
                         <EditText
@@ -140,7 +139,6 @@
                         android:id="@+id/textInputLayoutMiddlename"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
                         android:layout_weight="1">
 
                         <EditText
@@ -175,8 +173,7 @@
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/textInputLayoutSurname"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true">
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/surname"
@@ -328,13 +325,13 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
-                    android:weightSum="2">
+                    android:weightSum="2"
+                    android:baselineAligned="false">
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/textInputLayoutEstyr"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
                         android:layout_weight="1">
 
                         <EditText
@@ -353,7 +350,6 @@
                         android:id="@+id/textInputLayoutEstmonth"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
                         android:layout_weight="1">
 
                         <EditText
@@ -417,8 +413,7 @@
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/textInputLayoutAddress"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true">
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/addr1"
@@ -438,8 +433,7 @@
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/textInputLayoutAddess2"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true">
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/addr2"
@@ -463,13 +457,13 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="2"
+                    android:baselineAligned="false">
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/textInputLayoutCountry"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
                         android:layout_weight="1">
 
                         <AutoCompleteTextView
@@ -514,7 +508,6 @@
                         android:id="@+id/textInputLayoutState"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
                         android:layout_weight="1">
 
                         <AutoCompleteTextView
@@ -549,13 +542,13 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
-                    android:weightSum="2">
+                    android:weightSum="2"
+                    android:baselineAligned="false">
 
                     <android.support.design.widget.TextInputLayout
                         android:id="@+id/textInputLayoutCity"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
                         android:layout_weight="1">
 
                         <EditText
@@ -589,7 +582,6 @@
                         android:id="@+id/textInputLayoutPostal"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
                         android:layout_weight="1">
 
                         <EditText

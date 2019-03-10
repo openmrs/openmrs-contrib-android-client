@@ -8,6 +8,7 @@ before_install:
 script:
 - ./build.sh
 - ./gradlew test
+- chmod +x ./gradlew
 
 after_success:
 - ./gradlew jacocoTestReport

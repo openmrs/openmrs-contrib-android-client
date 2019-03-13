@@ -220,7 +220,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
     private void showInternetConnectionSnackbar() {
         snackbar = Snackbar.make(findViewById(android.R.id.content),
-                ("Connected to server successfully"), Snackbar.LENGTH_SHORT);
+                (getString(R.string.connected_successfully)), Snackbar.LENGTH_SHORT);
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);

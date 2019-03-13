@@ -129,6 +129,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
             mSyncbutton.setIcon(R.drawable.ic_sync_on);
         } else {
             mSyncbutton.setIcon(R.drawable.ic_sync_off);
+
         }
     }
 
@@ -161,10 +162,14 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
                     getApplicationContext().sendBroadcast(intent);
                     ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.reconn_server);
-                    if (PatientDetailsFragment.snackbar != null)
+                    if (PatientDetailsFragment.snackbar != null) {
                         PatientDetailsFragment.snackbar.dismiss();
-                    if (snackbar != null)
+                        showInternetConnectionSnackbar();
+                    }
+                    if (snackbar != null) {
                         snackbar.dismiss();
+                        showInternetConnectionSnackbar();
+                    }
                 } else {
                     showNoInternetConnectionSnackbar();
                 }
@@ -207,6 +212,15 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     private void showNoInternetConnectionSnackbar() {
         snackbar = Snackbar.make(findViewById(android.R.id.content),
                 getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snackbar.show();
+    }
+
+    private void showInternetConnectionSnackbar() {
+        snackbar = Snackbar.make(findViewById(android.R.id.content),
+                ("Connected to server successfully"), Snackbar.LENGTH_SHORT);
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);

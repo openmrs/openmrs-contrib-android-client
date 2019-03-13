@@ -209,18 +209,19 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         };
     }
 
-    private void showNoInternetConnectionSnackbar() {
+
+    private void showInternetConnectionSnackbar() {
         snackbar = Snackbar.make(findViewById(android.R.id.content),
-                getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
+                (getString(R.string.connected_successfully_message)), Snackbar.LENGTH_SHORT);
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
     }
 
-    private void showInternetConnectionSnackbar() {
+    private void showNoInternetConnectionSnackbar() {
         snackbar = Snackbar.make(findViewById(android.R.id.content),
-                (getString(R.string.connected_successfully_message)), Snackbar.LENGTH_SHORT);
+                getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);

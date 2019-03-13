@@ -151,6 +151,8 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
 
                                 @Override
                                 public void onErrorResponse(String errorMessage) {
+
+                                    OpenMRS.getInstance().setVisitTypeUUID(ApplicationConstants.DEFAULT_VISIT_TYPE_UUID);
                                     loginView.showToast("Failed to fetch visit type",
                                             ToastUtil.ToastType.ERROR);
                                 }

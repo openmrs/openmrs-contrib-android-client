@@ -237,15 +237,18 @@ public final class DateUtils {
      */
     public static boolean isValidFormat(String format, String dateAsString) {
         Date date = null;
-        try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
-            date = simpleDateFormat.parse(dateAsString);
-            if (!dateAsString.equals(simpleDateFormat.format(date))) {
-                date = null;
+        if (dateAsString != null) {
+            try {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+                date = simpleDateFormat.parse(dateAsString);
+                if (!dateAsString.equals(simpleDateFormat.format(date))) {
+                    date = null;
+                }
+            } catch (ParseException exception) {
+                OpenMRS.getInstance().getOpenMRSLogger().w("Failed to validate date format :" + dateAsString + " caused by " + exception.toString());
             }
-        } catch (ParseException exception) {
-            OpenMRS.getInstance().getOpenMRSLogger().w("Failed to validate date format :" + dateAsString + " caused by " + exception.toString());
+            return date != null;
         }
-        return date != null;
+        return false;
     }
 }

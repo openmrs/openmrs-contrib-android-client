@@ -16,7 +16,6 @@ package org.openmrs.mobile.api.retrofit;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import com.activeandroid.query.Select;
 

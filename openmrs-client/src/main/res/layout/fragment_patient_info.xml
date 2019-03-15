@@ -577,6 +577,7 @@
                             android:focusable="true"
                             android:hint="@string/patient_postal_label"
                             android:imeOptions="actionDone"
+                            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
                             android:inputType="text"
                             android:maxLines="1"
                             android:textSize="14sp" />

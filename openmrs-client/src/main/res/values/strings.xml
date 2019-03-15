@@ -20,6 +20,7 @@
     <string name="dbname">openmrs.db</string>
     <string name="aadbname">aaopenmrs.db</string>
 
+    <string name="alphanumeric_postal_code">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789</string>
 
     <!-- Login view -->
     <string name="login_button">Login</string>

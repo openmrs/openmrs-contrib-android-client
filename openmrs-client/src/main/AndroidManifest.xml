@@ -182,6 +182,8 @@
         <service
             android:name=".api.FormListService"
             android:enabled="true" />
+        <service android:name=".services.AuthenticateCheckService"
+            android:enabled="true"/>
 
         <activity
             android:name=".activities.formdisplay.FormDisplayActivity"

@@ -105,6 +105,9 @@
     <string name="logout_dialog_title">Logging out</string>
     <string name="logout_dialog_message">Are you sure you want to logout from OpenMRS client?</string>
     <string name="logout_dialog_button">Logout</string>
+    <!--Credentials Changed dialog-->
+    <string name="credentials_changed_dialog_title">Credentials changed</string>
+    <string name="credentials_changed_dialog_message">Your credentials have been changed in the web app. You are logged out automatically.</string>
     <!-- Unauthorized dialog -->
     <string name="unauthorized_dialog_title">Unauthorized</string>
     <string name="unauthorized_dialog_message">Session expired. Please log in again.</string>

@@ -32,7 +32,7 @@ public abstract class ApplicationConstants {
     public static final String DB_PASSWORD_LITERAL_PEPPER = "Open Sesame";
     public static final String DEFAULT_VISIT_TYPE_UUID = "7b0f5697-27e3-40c4-8bae-f4049abfb4ed";
     public static final int DEFAULT_BCRYPT_ROUND = 8;
-    
+
     public abstract static class OpenMRSSharedPreferenceNames {
         public static final String SHARED_PREFERENCES_NAME = "shared_preferences";
     }
@@ -60,6 +60,7 @@ public abstract class ApplicationConstants {
         public static final String SIMILAR_PATIENTS_TAG = "similarPatientsDialogTag";
         public static final String DELET_PATIENT_DIALOG_TAG = "deletePatientDialogTag";
         public static final String LOCATION_DIALOG_TAG = "locationDialogTag";
+        public static final String CREDENTIAL_CHANGED_DIALOG_TAG = "locationDialogTag";
     }
 
     public abstract static class RegisterPatientRequirements {
@@ -89,6 +90,7 @@ public abstract class ApplicationConstants {
     public abstract static class BroadcastActions {
         public static final String CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID = "com.openmrs.mobile.services.conceptdownloadservice.action.broadcastintent";
         public static final String CONCEPT_DOWNLOAD_BROADCAST_INTENT_KEY_COUNT = "com.openmrs.mobile.services.conceptdownloadservice.broadcastintent.key.count";
+        public static final String AUTHENTICATION_CHECK_BROADCAST_ACTION="org.openmrs.mobile.services.AuthenticateCheckService";
     }
 
     public abstract static class ServiceNotificationId {

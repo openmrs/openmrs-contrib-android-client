@@ -80,7 +80,13 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
         if (savedInstanceState != null) {
             FormFieldsWrapper formFieldsWrapper = (FormFieldsWrapper) savedInstanceState.getSerializable(ApplicationConstants.BundleKeys.FORM_FIELDS_BUNDLE);
             inputFields = formFieldsWrapper.getInputFields();
+
             for(InputField field:inputFields){
+                View v = getActivity().findViewById(field.getId());
+                if(v != null && v instanceof DiscreteSeekBar) {
+                    DiscreteSeekBar sb = (DiscreteSeekBar) v;
+                    sb.setProgress(field.getValue().intValue());
+                }
                 if(field.isRed()){
                     RangeEditText ed = (RangeEditText) getActivity().findViewById(field.getId());
                     ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));

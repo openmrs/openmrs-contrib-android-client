@@ -19,7 +19,7 @@
     <string name="action_location">Location</string>
     <string name="dbname">openmrs.db</string>
     <string name="aadbname">aaopenmrs.db</string>
-
+    <string name="connected_successfully_message">Connected to server successfully</string>
     <string name="alphanumeric_postal_code">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 </string>
 
     <!-- Login view -->

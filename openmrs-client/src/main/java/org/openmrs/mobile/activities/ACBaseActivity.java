@@ -14,11 +14,15 @@
 
 package org.openmrs.mobile.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -70,6 +74,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     private MenuItem mSyncbutton;
     private List<String> locationList;
     private Snackbar snackbar;
+    private IntentFilter mIntentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +91,16 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 showAppCrashDialog(errorReport);
             }
         }
+        mIntentFilter = new IntentFilter();
+        mIntentFilter.addAction(ApplicationConstants.BroadcastActions.AUTHENTICATION_CHECK_BROADCAST_ACTION);
     }
 
+    private BroadcastReceiver mPasswordChangedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            showCredentialChangedDialog();
+        }
+    };
 
     @Override
     protected void onResume() {
@@ -96,10 +109,12 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         if (!(this instanceof LoginActivity) && !mAuthorizationManager.isUserLoggedIn()) {
             mAuthorizationManager.moveToLoginActivity();
         }
+        registerReceiver(mPasswordChangedReceiver, mIntentFilter);
     }
 
     @Override
     protected void onPause() {
+        unregisterReceiver(mPasswordChangedReceiver);
         super.onPause();
     }
 
@@ -217,6 +232,18 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         mOpenMRS.clearUserPreferencesData();
         mAuthorizationManager.moveToLoginActivity();
         OpenMRSDBOpenHelper.getInstance().closeDatabases();
+    }
+
+    private void showCredentialChangedDialog() {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.credentials_changed_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.credentials_changed_dialog_message));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.LOGOUT);
+        bundle.setRightButtonText(getString(R.string.ok));
+        mCustomFragmentDialog = CustomFragmentDialog.newInstance(bundle);
+        mCustomFragmentDialog.setCancelable(false);
+        mCustomFragmentDialog.setRetainInstance(true);
+        mCustomFragmentDialog.show(mFragmentManager, ApplicationConstants.DialogTAG.CREDENTIAL_CHANGED_DIALOG_TAG);
     }
 
     private void showLogoutDialog() {

@@ -92,7 +92,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
     private void initViewPager(PatientDashboardPagerAdapter adapter) {
         final ViewPager viewPager = findViewById(R.id.pager);
         TabLayout tabHost = findViewById(R.id.tabhost);
-
+        viewPager.setOffscreenPageLimit(adapter.getCount()-1);
         viewPager.setAdapter(adapter);
         tabHost.setupWithViewPager(viewPager);
     }

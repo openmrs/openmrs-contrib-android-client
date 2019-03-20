@@ -33,6 +33,7 @@ import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.FormResource;
 import org.openmrs.mobile.models.Link;
 import org.openmrs.mobile.models.Obscreate;
+import org.openmrs.mobile.services.AuthenticateCheckService;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.io.File;
@@ -61,8 +62,10 @@ public class OpenMRS extends Application {
         OpenMRSDBOpenHelper.init();
         initializeDB();
 
-        Intent i=new Intent(this,FormListService.class);
+        Intent i = new Intent(this, FormListService.class);
         startService(i);
+        Intent intent = new Intent(this, AuthenticateCheckService.class);
+        startService(intent);
     }
 
     protected void initializeDB() {
@@ -264,7 +267,7 @@ public class OpenMRS extends Application {
         return infoMap;
     }
 
-    private void clearCurrentLoggedInUserInfo() {
+    public void clearCurrentLoggedInUserInfo() {
         SharedPreferences prefs = OpenMRS.getInstance().getOpenMRSSharedPreferences();
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove(ApplicationConstants.UserKeys.USER_PERSON_NAME);

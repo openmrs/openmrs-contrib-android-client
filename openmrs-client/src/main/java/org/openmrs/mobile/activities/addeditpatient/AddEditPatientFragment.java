@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.ParcelFileDescriptor;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -51,6 +52,7 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -75,7 +77,6 @@ import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.ViewUtils;
-import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -105,6 +106,12 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private LocalDate birthdate;
     private DateTime bdt;
 
+    private TextInputLayout firstNameTIL;
+    private TextInputLayout middleNameTIL;
+    private TextInputLayout lastNameTIL;
+    private TextInputLayout address1TIL;
+    private TextInputLayout countryTIL;
+
     private EditText edfname;
     private EditText edmname;
     private EditText edlname;
@@ -127,10 +134,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private TextView gendererror;
     private TextView addrerror;
     private TextView countryerror;
-    private TextView stateerror;
-    private TextView cityerror;
-    private TextView postalerror;
-    private TextView countrynull;
 
     private Button submitConfirm;
     private Button datePicker;
@@ -166,12 +169,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     @Override
-    public void scrollToTop() {
-        ScrollView scrollView = (ScrollView) this.getActivity().findViewById(R.id.scrollView);
-        scrollView.smoothScrollTo(0, scrollView.getPaddingTop());
-    }
-
-    @Override
     public void setErrorsVisibility(boolean givenNameError,
                                     boolean familyNameError,
                                     boolean dayOfBirthError,
@@ -182,19 +179,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                                     boolean stateError,
                                     boolean cityError,
                                     boolean postalError) {
-
-
-        setVisibility(fnameerror, givenNameError);
-        setVisibility(lnameerror, familyNameError);
-        setVisibility(addrerror, addressError);
-        setVisibility(countryerror, countryError);
-        setVisibility(gendererror, genderError);
-        setVisibility(countrynull, countryNull);
-        setVisibility(stateerror, stateError);
-        setVisibility(cityerror, cityError);
-        setVisibility(stateerror, stateError);
-        setVisibility(postalerror, postalError);
-
+        // Only two dedicated text views will be visible for error messages.
+        // Rest error messages will be displayed in dedicated TextInputLayouts.
         if (dayOfBirthError) {
             doberror.setVisibility(View.VISIBLE);
 
@@ -209,19 +195,22 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             doberror.setVisibility(View.GONE);
         }
 
-    }
-
-    public void setVisibility(TextView textView, boolean status) {
-        if (status) {
-            textView.setVisibility(View.VISIBLE);
+        if (genderError) {
+            gendererror.setVisibility(View.VISIBLE);
         } else {
-            textView.setVisibility(View.GONE);
+            gendererror.setVisibility(View.GONE);
         }
     }
 
+    @Override
+    public void scrollToTop() {
+        ScrollView scrollView = (ScrollView) this.getActivity().findViewById(R.id.scrollView);
+        scrollView.smoothScrollTo(0, scrollView.getPaddingTop());
+    }
+
+
     private Person createPerson() {
         Person person = new Person();
-
         String emptyError = getString(R.string.emptyerror);
 
         // Validate address
@@ -233,10 +222,16 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 && ViewUtils.isEmpty(edstate)) {
 
             addrerror.setText(R.string.atleastone);
+            address1TIL.setErrorEnabled(true);
+            address1TIL.setError(getString(R.string.atleastone));
         } else if (!ViewUtils.validateText(ViewUtils.getInput(edaddr1), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
                 || !ViewUtils.validateText(ViewUtils.getInput(edaddr2), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)) {
 
             addrerror.setText(getString(R.string.addr_invalid_error));
+            address1TIL.setErrorEnabled(true);
+            address1TIL.setError(getString(R.string.addr_invalid_error));
+        } else {
+            address1TIL.setErrorEnabled(false);
         }
 
         // Add address
@@ -255,55 +250,46 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
         // Validate names
         String givenNameEmpty = getString(R.string.fname_empty_error);
-        // Invalid characters for both the given name and middle name
-        String givenAndMiddleNameError = getString(R.string.fmname_invalid_error);
         // Invalid characters for given name only
         String givenNameError = getString(R.string.fname_invalid_error);
         // Invalid characters for the middle name
         String middleNameError = getString(R.string.midname_invalid_error);
-        // Given name empty and invalid characters for the middle name
-        String givenEmptyMiddleNameError = givenNameEmpty + '\n' + middleNameError;
         // Invalid family name
         String familyNameError = getString(R.string.lname_invalid_error);
 
-        // Given and middle name validation
-        if (!ViewUtils.isEmpty(edfname) && !ViewUtils.isEmpty(edmname)) {
-
-            if (!ViewUtils.validateText(ViewUtils.getInput(edfname), ViewUtils.ILLEGAL_CHARACTERS)
-                    && !ViewUtils.validateText(ViewUtils.getInput(edmname), ViewUtils.ILLEGAL_CHARACTERS)) {
-                // Both given and middle name are invalid
-                fnameerror.setText(givenAndMiddleNameError);
-            } else if (!ViewUtils.validateText(ViewUtils.getInput(edfname), ViewUtils.ILLEGAL_CHARACTERS)) {
-                // Only given name is invalid
-                fnameerror.setText(givenNameError);
-            } else if (!ViewUtils.validateText(ViewUtils.getInput(edmname), ViewUtils.ILLEGAL_CHARACTERS)) {
-                // Only middle name is invalid
-                fnameerror.setText(middleNameError);
-            }
-        } else if (ViewUtils.isEmpty(edfname)) {
-            // Given name is empty
-            if (!ViewUtils.validateText(ViewUtils.getInput(edmname), ViewUtils.ILLEGAL_CHARACTERS)) {
-                // Given name empty, middle name invalid
-                fnameerror.setText(givenEmptyMiddleNameError);
-            } else {
-                fnameerror.setText(givenNameEmpty);
-            }
-        } else if (ViewUtils.isEmpty(edmname)) {
-            // Middle name is empty
-            if (!ViewUtils.validateText(ViewUtils.getInput(edfname), ViewUtils.ILLEGAL_CHARACTERS)) {
-                // Given name invalid
-                fnameerror.setText(givenNameError);
-            }
+        // First name validation
+        if (ViewUtils.isEmpty(edfname)) {
+            fnameerror.setText(emptyError);
+            firstNameTIL.setErrorEnabled(true);
+            firstNameTIL.setError(emptyError);
+        } else if (!ViewUtils.validateText(ViewUtils.getInput(edfname), ViewUtils.ILLEGAL_CHARACTERS)) {
+            lnameerror.setText(familyNameError);
+            firstNameTIL.setErrorEnabled(true);
+            firstNameTIL.setError(givenNameError);
         } else {
-            // Both given and middle name is invalid
-            fnameerror.setText(givenNameEmpty);
+            firstNameTIL.setErrorEnabled(false);
+        }
+
+        // Middle name validation (can be empty)
+        if (!ViewUtils.validateText(ViewUtils.getInput(edmname), ViewUtils.ILLEGAL_CHARACTERS)) {
+            lnameerror.setText(familyNameError);
+            middleNameTIL.setErrorEnabled(true);
+            middleNameTIL.setError(middleNameError);
+        } else {
+            middleNameTIL.setErrorEnabled(false);
         }
 
         // Family name validation
         if (ViewUtils.isEmpty(edlname)) {
             lnameerror.setText(emptyError);
+            lastNameTIL.setErrorEnabled(true);
+            lastNameTIL.setError(emptyError);
         } else if (!ViewUtils.validateText(ViewUtils.getInput(edlname), ViewUtils.ILLEGAL_CHARACTERS)) {
             lnameerror.setText(familyNameError);
+            lastNameTIL.setErrorEnabled(true);
+            lastNameTIL.setError(familyNameError);
+        } else {
+            lastNameTIL.setErrorEnabled(false);
         }
 
         // Add names
@@ -437,7 +423,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private void resolveViews(View v) {
-
         relativeLayout = (RelativeLayout) v.findViewById(R.id.addEditRelativeLayout);
         edfname = (EditText) v.findViewById(R.id.firstname);
         edmname = (EditText) v.findViewById(R.id.middlename);
@@ -461,16 +446,17 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         gendererror = (TextView) v.findViewById(R.id.gendererror);
         addrerror = (TextView) v.findViewById(R.id.addrerror);
         countryerror = (TextView) v.findViewById(R.id.countryerror);
-        stateerror = (TextView) v.findViewById(R.id.stateerror);
-        cityerror = (TextView) v.findViewById(R.id.cityerror);
-        countrynull = (TextView) v.findViewById(R.id.countrynull);
-        postalerror = (TextView) v.findViewById(R.id.postal_error);
-
 
         datePicker = (Button) v.findViewById(R.id.btn_datepicker);
         submitConfirm = (Button) v.findViewById(R.id.submitConfirm);
         capturePhotoBtn = (FloatingActionButton) v.findViewById(R.id.capture_photo);
         patientImageView = (ImageView) v.findViewById(R.id.patientPhoto);
+
+        firstNameTIL = v.findViewById(R.id.textInputLayoutFirstName);
+        middleNameTIL = v.findViewById(R.id.textInputLayoutMiddlename);
+        lastNameTIL = v.findViewById(R.id.textInputLayoutSurname);
+        address1TIL = v.findViewById(R.id.textInputLayoutAddress);
+        countryTIL = v.findViewById(R.id.textInputLayoutCountry);
     }
 
     private void fillFields(final Patient patient) {
@@ -519,7 +505,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             }
         }
     }
-
 
     private void addSuggestionsToAutoCompleTextView() {
         countries = getContext().getResources().getStringArray(R.array.countries_array);
@@ -640,8 +625,11 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
-                                if (which == 0)
+                                if (which == 0) {
+                                    StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                                    StrictMode.setVmPolicy(builder.build());
                                     AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
+                                }
                                 else {
                                     Intent i;
                                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
@@ -657,7 +645,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 dialog.show(getChildFragmentManager(), null);
             }
         });
-
 
         submitConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -795,5 +782,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         }
         return ImageUtils.resizePhoto(portraitImg);
     }
+
 
 }

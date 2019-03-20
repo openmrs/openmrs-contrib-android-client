@@ -96,6 +96,7 @@
             android:theme="@style/AppThemeOrig" />
         <activity
             android:name=".activities.patientdashboard.PatientDashboardActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppThemeOrig">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
@@ -175,6 +176,8 @@
         <service
             android:name=".api.FormListService"
             android:enabled="true" />
+        <service android:name=".services.AuthenticateCheckService"
+            android:enabled="true"/>
 
         <activity
             android:name=".activities.formdisplay.FormDisplayActivity"

@@ -63,8 +63,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutLoginURL"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true">
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/loginUrlField"
@@ -85,8 +84,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputLayoutUsername"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true">
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/loginUsernameField"

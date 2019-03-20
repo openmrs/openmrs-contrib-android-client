@@ -29,4 +29,13 @@
     <dimen name="settings_download_button_height">40dp</dimen>
     <dimen name="settings_list_text_detail_size">12sp</dimen>
     <dimen name="settings_list_text_title_size">16sp</dimen>
+    <dimen name="dots_height">30dp</dimen>
+    <dimen name="dots_margin_bottom">20dp</dimen>
+    <dimen name="img_width_height">160dp</dimen>
+    <dimen name="slide_title">40dp</dimen>
+    <dimen name="slide_desc">24dp</dimen>
+    <dimen name="desc_padding">40dp</dimen>
+    <dimen name="img_slide1_height">220dp</dimen>
+    <dimen name="margin_slide_top">16dp</dimen>
+    <dimen name="margin_slide_desc">20dp</dimen>
 </resources>

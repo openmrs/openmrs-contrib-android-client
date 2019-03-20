@@ -37,4 +37,37 @@
     <color name="patient_selected_highlight">#3a00ff2a</color>
     <color name="fragment_background">#EEEEEEEE</color>
     <color name="grey">#D5D5D5</color>
+
+    <!-- introslider background colors-->
+
+    <color name="bg_screen1">#f26522</color>
+    <color name="bg_screen2">#009285</color>
+    <color name="bg_screen3">#eea616</color>
+    <color name="bg_screen4">#5b56a6</color>
+
+    <!-- dots inactive colors -->
+    <color name="dot_dark_screen1">#F57456</color>
+    <color name="dot_dark_screen2">#04CCBA</color>
+    <color name="dot_dark_screen3">#F3BC4F</color>
+    <color name="dot_dark_screen4">#8D88F1</color>
+
+    <!-- dots active colors -->
+    <color name="dot_light_screen1">#F89E89</color>
+    <color name="dot_light_screen2">#25FAE5</color>
+    <color name="dot_light_screen3">#FFD37F</color>
+    <color name="dot_light_screen4">#B2AEFF</color>
+
+    <array name="array_dot_active">
+        <item>@color/dot_light_screen1</item>
+        <item>@color/dot_light_screen2</item>
+        <item>@color/dot_light_screen3</item>
+        <item>@color/dot_light_screen4</item>
+    </array>
+
+    <array name="array_dot_inactive">
+        <item>@color/dot_dark_screen1</item>
+        <item>@color/dot_dark_screen2</item>
+        <item>@color/dot_dark_screen3</item>
+        <item>@color/dot_dark_screen4</item>
+    </array>
 </resources>

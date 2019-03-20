@@ -232,10 +232,8 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mPassword = (EditText) root.findViewById(R.id.loginPasswordField);
         mPassword.setHint(Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star)));
         mPasswordInput = (TextInputLayout) root.findViewById(R.id.textInputLayoutPassword);
-
         TextView mRequired = (TextView) root.findViewById(R.id.loginRequiredLabel);
         mRequired.setText(Html.fromHtml(getString(R.string.req_star) + getString(R.string.login_required)));
-
         mShowPassword = (CheckBox) root.findViewById(R.id.checkboxShowPassword);
         mLoginButton = (Button) root.findViewById(R.id.loginButton);
         mSpinner = (ProgressBar) root.findViewById(R.id.loginLoading);
@@ -250,12 +248,10 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     @Override
     public void onResume() {
         super.onResume();
-
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
         boolean syncState = prefs.getBoolean("sync", true);
         setSyncButtonState(syncState);
         hideUrlLoadingAnimation();
-
         bindDrawableResources();
     }
 

@@ -339,4 +339,22 @@
     <string name="dialog_message_data_lost">All patient information entered will be lost.</string>
     <string name="dialog_button_stay">Stay</string>
     <string name="dialog_button_leave">Leave</string>
+
+    <!-- Intro Slider -->
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">Patient Registration</string>
+    <string name="slide_1_desc">Clinicians can Manage Patient’s Database</string>
+
+    <string name="slide_4_title">Find Patient</string>
+    <string name="slide_4_desc">Find registered patients with a click</string>
+
+    <string name="slide_3_title">Active Visits</string>
+    <string name="slide_3_desc">Clerks can keep record of visit’s</string>
+
+    <string name="slide_2_title">Patient Status</string>
+    <string name="slide_2_desc">Outpatient vs Inpatient statuses</string>
+
 </resources>

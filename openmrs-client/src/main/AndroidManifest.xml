@@ -1,16 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ The contents of this file are subject to the OpenMRS Public License
-  ~ Version 1.0 (the "License"); you may not use this file except in
-  ~ compliance with the License. You may obtain a copy of the License at
-  ~ http://license.openmrs.org
-  ~
-  ~ Software distributed under the License is distributed on an "AS IS"
-  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
-  ~ License for the specific language governing rights and limitations
-  ~ under the License.
-  ~
-  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
--->
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.openmrs.mobile">
 
@@ -35,6 +23,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Openmrs">
+        <activity android:name=".activities.introslider.Splash"
+            android:theme="@style/Theme.Openmrs">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.introslider.introslider">
+
+        </activity>
+
         <meta-data
             android:name="AA_DB_NAME"
             android:value="@string/aadbname" />
@@ -43,8 +44,7 @@
             android:value="@integer/aadbversion" />
         <meta-data
             android:name="AA_MODELS"
-            android:value="org.openmrs.mobile.models.Link, org.openmrs.mobile.models.FormResource, org.openmrs.mobile.models.EncounterType,
-             org.openmrs.mobile.models.Encountercreate, org.openmrs.mobile.models.Obscreate" />
+            android:value="org.openmrs.mobile.models.Link, org.openmrs.mobile.models.FormResource, org.openmrs.mobile.models.EncounterType,              org.openmrs.mobile.models.Encountercreate, org.openmrs.mobile.models.Obscreate" />
         <meta-data
             android:name="buildVersion"
             android:value="0" />
@@ -62,13 +62,7 @@
         <activity
             android:name=".activities.dashboard.DashboardActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".activities.syncedpatients.SyncedPatientsActivity"
             android:configChanges="keyboardHidden|screenSize"

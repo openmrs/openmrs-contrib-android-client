@@ -341,4 +341,5 @@
     <string name="dialog_button_stay">Stay</string>
     <string name="dialog_button_leave">Leave</string>
     <string name="snackbar_nonvisitting_patients">Vitals can only be captured for patients currently in a visit.</string>
+    <string name="connected_to_server_message">Connected to the server Successfully</string>
 </resources>

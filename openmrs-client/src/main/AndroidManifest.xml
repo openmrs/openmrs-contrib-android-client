@@ -195,6 +195,7 @@
             android:name=".activities.formdisplay.FormDisplayActivity"
             android:label="@string/title_activity_form_create"
             android:parentActivityName=".activities.formlist.FormListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

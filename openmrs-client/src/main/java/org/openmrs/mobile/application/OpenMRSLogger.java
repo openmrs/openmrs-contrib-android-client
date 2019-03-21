@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.application;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -87,11 +88,36 @@ public class OpenMRSLogger {
         }
     }
 
+    // this will write all the messages in log file asynchronously
     private static void saveToFile() {
+        SaveAsyncToFile asyncTask = new SaveAsyncToFile();
+        // doesn't need any parameter
+        asyncTask.execute();
+    }
+
+    /*
+    This will write custom messages to the logging file
+    The messages will not appear in the logcat window
+    For displaying messages in logcat window, already Log.i,d,w ,etc are defined
+    This can be used for formatting the log file as where necessary and adding important data for analytics
+     */
+    public static void saveMsgToFile(String msg){
+        WriteMsgToFile asyncTask = new WriteMsgToFile();
+        // pass the custom message for execution
+        asyncTask.execute(msg);
+    }
+
+    /*
+    This function writes logs to file
+    The input parameter is empty
+     */
+    private static void saveToFileAsync(){
         if (isFolderExist() && isSaveToFileEnable()) {
+            // Command for generating log
             String command = "logcat -d -v time -s " + mTAG;
             try {
                 Process mLoggerProcess = Runtime.getRuntime().exec(command);
+                // will read the outputs from the command line after running the above command
                 BufferedReader in = new BufferedReader(new InputStreamReader(mLoggerProcess.getInputStream()));
                 String line;
 
@@ -115,7 +141,46 @@ public class OpenMRSLogger {
             } catch (InterruptedException e) {
                 setErrorCount();
                 if (isSaveToFileEnable()) {
-                    logger.e("Error during waitng for \"logcat -c\" process", e);
+                    logger.e("Error during waiting for \"logcat -c\" process", e);
+                }
+            }
+            rotateLogFile();
+        }
+    }
+
+    private static  class SaveAsyncToFile extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            saveToFileAsync();
+            return null;
+        }
+    }
+
+    private static class WriteMsgToFile extends AsyncTask<String,Void,Void>{
+        @Override
+        // custom message as string parameter
+        protected Void doInBackground(String... strings) {
+            String msg = strings[0];
+            writeMsgToFileAsync(msg);
+            return null;
+        }
+    }
+
+    private static void writeMsgToFileAsync(String msg){
+        if (isFolderExist() && isSaveToFileEnable()) {
+
+            try {
+                FileWriter writer = new FileWriter(mLogFile, true);
+                writer.write(msg + "\n");
+
+                writer.flush();
+                writer.close();
+
+            } catch (IOException e) {
+                setErrorCount();
+                if (isSaveToFileEnable()) {
+                    logger.e("Error during save log to file", e);
                 }
             }
             rotateLogFile();

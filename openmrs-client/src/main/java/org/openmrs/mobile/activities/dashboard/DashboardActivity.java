@@ -23,8 +23,6 @@ import androidx.appcompat.widget.Toolbar;
 
 public class DashboardActivity extends ACBaseActivity {
 
-
-
     /*TODO: Permission handling to be coded later, moving to SDK 22 for now.
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     Bundle currinstantstate;
@@ -48,8 +46,6 @@ public class DashboardActivity extends ACBaseActivity {
             // Pre-Marshmallow
         }
         */
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 

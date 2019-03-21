@@ -252,6 +252,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         boolean syncState = prefs.getBoolean("sync", true);
         setSyncButtonState(syncState);
         hideUrlLoadingAnimation();
+        
         bindDrawableResources();
     }
 

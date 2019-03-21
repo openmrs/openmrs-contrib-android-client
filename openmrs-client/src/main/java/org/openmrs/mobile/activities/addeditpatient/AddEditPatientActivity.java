@@ -15,13 +15,12 @@
 package org.openmrs.mobile.activities.addeditpatient;
 
 import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.dashboard.DashboardActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.Arrays;
@@ -33,6 +32,7 @@ public class AddEditPatientActivity extends ACBaseActivity {
 
     public AddEditPatientContract.Presenter mPresenter;
     public AddEditPatientFragment addEditPatientFragment;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +81,19 @@ public class AddEditPatientActivity extends ACBaseActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onBackPressed() {
         if (!mPresenter.isRegisteringPatient()) {
             boolean createDialog = addEditPatientFragment.areFieldsNotEmpty();
-            super.onBackPressed();
             if (createDialog) {
                 showInfoLostDialog();
             } else {
@@ -108,10 +117,22 @@ public class AddEditPatientActivity extends ACBaseActivity {
                 .setCancelable(false)
                 .setPositiveButton(R.string.dialog_button_stay, (dialog, id) -> dialog.cancel())
                 .setNegativeButton(R.string.dialog_button_leave, (dialog, id) -> {
-                    Intent intent = new Intent(AddEditPatientActivity.this, DashboardActivity.class);
-                    startActivity(intent);
+                    // Finish the activity
+                    super.onBackPressed();
+                    finish();
                 });
-        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+
+    }
+
+    @Override
+    protected void onPause() {
+        if (alertDialog != null) {
+            // Dismiss and clear the dialog to prevent Window leaks
+            alertDialog.dismiss();
+            alertDialog = null;
+        }
+        super.onPause();
     }
 }

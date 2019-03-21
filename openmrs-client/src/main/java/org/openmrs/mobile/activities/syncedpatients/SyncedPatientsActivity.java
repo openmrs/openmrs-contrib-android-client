@@ -31,7 +31,7 @@ import androidx.appcompat.widget.SearchView;
 
 public class SyncedPatientsActivity extends ACBaseActivity {
 
-    private SyncedPatientsPresenter mPresenter;
+    public SyncedPatientsPresenter mPresenter;
     private SearchView searchView;
     private String query;
 

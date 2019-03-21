@@ -358,7 +358,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
 
     private void showConnectedToInternetToastMessage() {
-        ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.connected_to_server_message);
+        ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.connected_to_server_message);
 
     }
 }

@@ -58,8 +58,6 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static com.google.android.material.snackbar.Snackbar.LENGTH_INDEFINITE;
-import static com.google.android.material.snackbar.Snackbar.make;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class ACBaseActivity extends AppCompatActivity {
@@ -167,7 +165,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                         PatientDetailsFragment.snackbar.dismiss();
                     if (snackbar != null) {
                         snackbar.dismiss();
-                        showConnectedToInternetToastMessage();
+                        ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.connected_to_server_message);
                     }
                 } else {
                     showNoInternetConnectionSnackbar();
@@ -209,8 +207,8 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
 
     private void showNoInternetConnectionSnackbar() {
-        snackbar = make(findViewById(android.R.id.content),
-                getString(R.string.no_internet_connection_message), LENGTH_INDEFINITE);
+        snackbar = Snackbar.make(findViewById(android.R.id.content),
+                getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
         View sbView = snackbar.getView();
         TextView textView = sbView.findViewById(R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
@@ -357,8 +355,5 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private void showConnectedToInternetToastMessage() {
-        ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.connected_to_server_message);
 
-    }
 }

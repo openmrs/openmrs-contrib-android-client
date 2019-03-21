@@ -143,19 +143,6 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
         {
             holder.mBirthDate.setText("");
         }
-
-        /*holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!multiSelect) {
-                    Intent intent = new Intent(mContext.getActivity(), PatientDashboardActivity.class);
-                    intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getId());
-                    mContext.startActivity(intent);
-                } else{
-
-                }
-            }
-        });*/
     }
 
     @Override

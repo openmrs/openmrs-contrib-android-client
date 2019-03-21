@@ -19,7 +19,6 @@
     <string name="action_location">Location</string>
     <string name="dbname">openmrs.db</string>
     <string name="aadbname">aaopenmrs.db</string>
-
     <string name="alphanumeric_postal_code">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 </string>
 
     <!-- Login view -->
@@ -335,6 +334,7 @@
     <!-- Syncbutton toasts -->
     <string name="disconn_server">Disconnecting from server</string>
     <string name="reconn_server">Reconnecting to server</string>
+    <string name="connected_to_server_message">Connected to the server Successfully</string>
 
     <string name="dialog_title_are_you_sure">Are you sure?</string>
     <string name="dialog_message_data_lost">All patient information entered will be lost.</string>

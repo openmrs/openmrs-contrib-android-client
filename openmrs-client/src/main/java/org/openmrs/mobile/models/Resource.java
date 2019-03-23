@@ -18,74 +18,89 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 public class Resource implements Serializable {
 
     @SerializedName("uuid")
+    @NonNull
+    @ColumnInfo(name = "uuid")
     @Expose
     protected String uuid;
 
+    @ColumnInfo(name = "display")
     @SerializedName("display")
     @Expose
     protected String display;
 
+    @Ignore
     @SerializedName("links")
     @Expose
     protected List<Link> links = new ArrayList<Link>();
 
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @ColumnInfo(name = "_id")
+    private Long id;
+
     /**
-     *
-     * @return
-     *     The uuid
+     * @return id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * @param id The id
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * @return The uuid
      */
     public String getUuid() {
         return uuid;
     }
 
     /**
-     *
-     * @param uuid
-     *     The uuid
+     * @param uuid The uuid
      */
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
     /**
-     *
-     * @return
-     *     The display
+     * @return The display
      */
     public String getDisplay() {
         return display;
     }
 
     /**
-     *
-     * @param display
-     *     The display
+     * @param display The display
      */
     public void setDisplay(String display) {
         this.display = display;
     }
 
     /**
-     *
-     * @return
-     *     The links
+     * @return The links
      */
     public List<Link> getLinks() {
         return links;
     }
 
     /**
-     *
-     * @param links
-     *     The links
+     * @param links The links
      */
     public void setLinks(List<Link> links) {
         this.links = links;
     }
-
 
 
 }

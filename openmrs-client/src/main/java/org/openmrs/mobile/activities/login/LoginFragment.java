@@ -207,6 +207,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
                 } else {
                     mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 }
+                mPassword.setSelection(mPassword.length());
             }
         });
     }

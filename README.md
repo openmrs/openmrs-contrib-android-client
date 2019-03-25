@@ -66,7 +66,7 @@ As of February 2016, this project has been migrated to gradle to work successful
 2. From the Android Studio menu select File > New > Import Project. Alternatively, from the Welcome screen, select Import project.
 3. Navigate to the folder where you have cloned this repo and select the build.gradle file inside. Select "Import".
 4. Done! Wait for dependencies to load and download from Maven, then you're ready to go! 
-5. Make sure that you have the latest SDK and build tools downloaded, as we always build against the latest release.
+5. Make sure that you have the latest SDK and build tools downloaded, as we always build against the latest release.(If needed, change the Seperate Annotation Processing value to 'false' to avoid any issue during the project build).
 
 [In-depth tutorial](https://github.com/codepath/android_guides/wiki/Getting-Started-with-Gradle)
 

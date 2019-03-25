@@ -180,6 +180,8 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                         PatientDetailsFragment.snackbar.dismiss();
                     if (snackbar != null)
                         snackbar.dismiss();
+                        ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.connected_to_server_message);
+
                 } else {
                     showNoInternetConnectionSnackbar();
                 }

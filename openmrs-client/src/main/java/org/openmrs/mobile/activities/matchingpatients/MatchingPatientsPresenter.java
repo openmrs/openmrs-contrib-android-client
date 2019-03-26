@@ -27,6 +27,7 @@ import org.openmrs.mobile.utilities.PatientMerger;
 
 import java.util.Queue;
 
+import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -99,7 +100,7 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
         Call<Patient> call = restApi.updatePatient(patient, patient.getUuid(), ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Patient>() {
             @Override
-            public void onResponse(Call<Patient> call, Response<Patient> response) {
+            public void onResponse(@NonNull Call<Patient> call, @NonNull Response<Patient> response) {
                 if(response.isSuccessful()){
                     if(patientDAO.isUserAlreadySaved(patient.getUuid())){
                         Long id = patientDAO.findPatientByUUID(patient.getUuid()).getId();
@@ -114,7 +115,7 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
             }
 
             @Override
-            public void onFailure(Call<Patient> call, Throwable t) {
+            public void onFailure(@NonNull Call<Patient> call, @NonNull Throwable t) {
                 view.showErrorToast(t.getMessage());
             }
         });

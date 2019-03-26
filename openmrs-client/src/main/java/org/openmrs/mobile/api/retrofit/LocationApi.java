@@ -22,6 +22,7 @@ import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.ToastUtil;
 
+import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,7 +38,7 @@ public class LocationApi extends RetrofitApi{
         Call<Results<Location>> call = apiService.getLocations(null);
         call.enqueue(new Callback<Results<Location>>() {
             @Override
-            public void onResponse(Call<Results<Location>> call, Response<Results<Location>> response) {
+            public void onResponse(@NonNull Call<Results<Location>> call, @NonNull Response<Results<Location>> response) {
                 Results<Location> locationList = response.body();
                 for (Location result : locationList.getResults()) {
                     if ((result.getDisplay().trim()).equalsIgnoreCase((openMrs.getLocation().trim()))) {
@@ -47,7 +48,7 @@ public class LocationApi extends RetrofitApi{
             }
 
             @Override
-            public void onFailure(Call<Results<Location>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Results<Location>> call, @NonNull Throwable t) {
                 ToastUtil.notify(t.toString());
                 deferred.reject(t);
             }

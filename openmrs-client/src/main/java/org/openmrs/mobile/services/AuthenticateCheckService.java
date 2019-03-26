@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -93,7 +94,7 @@ public class AuthenticateCheckService extends Service {
             Call<Session> call = restApi.getSession();
             call.enqueue(new Callback<Session>() {
                 @Override
-                public void onResponse(Call<Session> call, Response<Session> response) {
+                public void onResponse(@NonNull Call<Session> call, @NonNull Response<Session> response) {
                     if (response.isSuccessful()) {
                         Session session = response.body();
                         if (session.isAuthenticated()) {
@@ -116,7 +117,7 @@ public class AuthenticateCheckService extends Service {
                 }
 
                 @Override
-                public void onFailure(Call<Session> call, Throwable t) {
+                public void onFailure(@NonNull Call<Session> call, @NonNull Throwable t) {
                     ToastUtil.error("Error in AuthenticateCheckService");
                 }
             });

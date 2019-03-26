@@ -39,6 +39,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.io.IOException;
 import java.io.InputStream;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -56,7 +57,7 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_form_list, container, false);
 
         formList = (ListView) root.findViewById(R.id.formlist);
@@ -97,14 +98,14 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
             Call<FormCreate> call2 = apiService.formCreate(uuid, obj);
             call2.enqueue(new Callback<FormCreate>() {
                 @Override
-                public void onResponse(Call<FormCreate> call, Response<FormCreate> response) {
+                public void onResponse(@NonNull Call<FormCreate> call, @NonNull Response<FormCreate> response) {
                     if (response.isSuccessful() && (response.body().getName().equals("json"))) {
                         formCreateFlag = true;
                     }
                 }
 
                 @Override
-                public void onFailure(Call<FormCreate> call, Throwable t) {
+                public void onFailure(@NonNull Call<FormCreate> call, @NonNull Throwable t) {
                     //This method is lef blank intentionally
                 }
             });
@@ -114,28 +115,28 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
             Call<FormCreate> call2 = apiService.formCreate(uuid, obj);
             call2.enqueue(new Callback<FormCreate>() {
                 @Override
-                public void onResponse(Call<FormCreate> call, Response<FormCreate> response) {
+                public void onResponse(@NonNull Call<FormCreate> call, @NonNull Response<FormCreate> response) {
                     if (response.isSuccessful() && (response.body().getName().equals("json"))) {
                         formCreateFlag = true;
                     }
                 }
 
                 @Override
-                public void onFailure(Call<FormCreate> call, Throwable t) {
+                public void onFailure(@NonNull Call<FormCreate> call, @NonNull Throwable t) {
                     //This method is lef blank intentionally
                 }
             });
             Call<FormCreate> call = apiService.formCreate(uuid, obj2);
             call.enqueue(new Callback<FormCreate>() {
                 @Override
-                public void onResponse(Call<FormCreate> call, Response<FormCreate> response) {
+                public void onResponse(@NonNull Call<FormCreate> call, @NonNull Response<FormCreate> response) {
                     if (response.isSuccessful() && (response.body().getName().equals("json"))) {
                         formCreateFlag = true;
                     }
                 }
 
                 @Override
-                public void onFailure(Call<FormCreate> call, Throwable t) {
+                public void onFailure(@NonNull Call<FormCreate> call, @NonNull Throwable t) {
                     //This method is lef blank intentionally
                 }
             });
@@ -144,14 +145,14 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
             Call<FormCreate> call2 = apiService.formCreate(uuid, obj);
             call2.enqueue(new Callback<FormCreate>() {
                 @Override
-                public void onResponse(Call<FormCreate> call, Response<FormCreate> response) {
+                public void onResponse(@NonNull Call<FormCreate> call, @NonNull Response<FormCreate> response) {
                     if (response.isSuccessful() && (response.body().getName().equals("json"))) {
                         formCreateFlag = true;
                         }
                 }
 
                 @Override
-                public void onFailure(Call<FormCreate> call, Throwable t) {
+                public void onFailure(@NonNull Call<FormCreate> call, @NonNull Throwable t) {
                     //This method is lef blank intentionally
                 }
             });

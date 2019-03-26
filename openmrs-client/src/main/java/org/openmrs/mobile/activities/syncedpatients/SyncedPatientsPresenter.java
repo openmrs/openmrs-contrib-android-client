@@ -34,7 +34,7 @@ public class SyncedPatientsPresenter extends BasePresenter implements SyncedPati
     @Nullable
     private String mQuery;
 
-    public SyncedPatientsPresenter(@NonNull SyncedPatientsContract.View syncedPatientsView, String mQuery) {
+    public SyncedPatientsPresenter(@NonNull SyncedPatientsContract.View syncedPatientsView, @org.jetbrains.annotations.Nullable String mQuery) {
         this.syncedPatientsView = syncedPatientsView;
         this.syncedPatientsView.setPresenter(this);
         this.mQuery = mQuery;

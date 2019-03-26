@@ -37,6 +37,7 @@ import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -52,15 +53,16 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
         this.mContext = mContext;
     }
 
+    @NonNull
     @Override
-    public PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.similar_patient_row, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(PatientViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PatientViewHolder holder, int position) {
         final Patient patient = patientList.get(position);
 
         setPatientName(holder, patient);

@@ -153,7 +153,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private OpenMRSLogger logger = new OpenMRSLogger();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_patient_info, container, false);
         resolveViews(root);

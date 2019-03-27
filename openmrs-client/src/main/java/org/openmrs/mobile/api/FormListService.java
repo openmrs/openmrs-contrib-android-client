@@ -24,6 +24,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,7 +45,7 @@ public class FormListService extends IntentService {
             call.enqueue(new Callback<Results<FormResource>>() {
 
                 @Override
-                public void onResponse(Call<Results<FormResource>> call, Response<Results<FormResource>> response) {
+                public void onResponse(@NonNull Call<Results<FormResource>> call, @NonNull Response<Results<FormResource>> response) {
                     if (response.isSuccessful()) {
                         new Delete().from(FormResource.class).execute();
                         formresourcelist=response.body().getResults();
@@ -67,7 +68,7 @@ public class FormListService extends IntentService {
                 }
 
                 @Override
-                public void onFailure(Call<Results<FormResource>> call, Throwable t) {
+                public void onFailure(@NonNull Call<Results<FormResource>> call, @NonNull Throwable t) {
                     ToastUtil.error(t.getMessage());
                 }
             });
@@ -75,7 +76,7 @@ public class FormListService extends IntentService {
             Call<Results<EncounterType>> call2 = apiService.getEncounterTypes();
             call2.enqueue(new Callback<Results<EncounterType>>() {
                 @Override
-                public void onResponse(Call<Results<EncounterType>> call, Response<Results<EncounterType>> response) {
+                public void onResponse(@NonNull Call<Results<EncounterType>> call, @NonNull Response<Results<EncounterType>> response) {
                     if (response.isSuccessful()) {
                         new Delete().from(EncounterType.class).execute();
                         Results<EncounterType> encountertypelist = response.body();
@@ -86,7 +87,7 @@ public class FormListService extends IntentService {
                 }
 
                 @Override
-                public void onFailure(Call<Results<EncounterType>> call, Throwable t) {
+                public void onFailure(@NonNull Call<Results<EncounterType>> call, @NonNull Throwable t) {
                     ToastUtil.error(t.getMessage());
 
                 }

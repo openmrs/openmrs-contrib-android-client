@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -35,7 +36,7 @@ public class UserService {
         Call<Results<User>> call = restApi.getUserInfo(username);
         call.enqueue(new Callback<Results<User>>() {
             @Override
-            public void onResponse(Call<Results<User>> call, Response<Results<User>> response) {
+            public void onResponse(@NonNull Call<Results<User>> call, @NonNull Response<Results<User>> response) {
                 if (response.isSuccessful()) {
                     List<User> resultList = response.body().getResults();
                     boolean matchFound = false;
@@ -57,7 +58,7 @@ public class UserService {
             }
 
             @Override
-            public void onFailure(Call<Results<User>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Results<User>> call, @NonNull Throwable t) {
                 ToastUtil.error(t.getMessage());
             }
         });
@@ -68,7 +69,7 @@ public class UserService {
         Call<User> call = restApi.getFullUserInfo(uuid);
         call.enqueue(new Callback<User>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                 if (response.isSuccessful()) {
                     Map<String, String> userInfo = new HashMap<>();
                     userInfo.put(ApplicationConstants.UserKeys.USER_PERSON_NAME, response.body().getPerson().getDisplay());
@@ -81,7 +82,7 @@ public class UserService {
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 ToastUtil.error(t.getMessage());
             }
         });

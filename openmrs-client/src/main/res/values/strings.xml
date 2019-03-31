@@ -18,8 +18,9 @@
     <string name="action_logout">Logout</string>
     <string name="action_location">Location</string>
     <string name="dbname">openmrs.db</string>
-    <string name="aadbname">aaopenmrs.db</strin
+    <string name="aadbname">aaopenmrs.db</string>
   
+   <!-- Login view -->
     <string name="action_change_password">Change Password</string>
     <string name="new_password">New Password</string>
     <string name="old_password">Old Password</string>

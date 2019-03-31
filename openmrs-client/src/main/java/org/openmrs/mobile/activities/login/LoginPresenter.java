@@ -39,6 +39,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -120,7 +121,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
             Call<Session> call = restApi.getSession();
             call.enqueue(new Callback<Session>() {
                 @Override
-                public void onResponse(Call<Session> call, Response<Session> response) {
+                public void onResponse(@NonNull Call<Session> call, @NonNull Response<Session> response) {
                     if (response.isSuccessful()) {
                         mLogger.d(response.body().toString());
                         Session session = response.body();
@@ -151,6 +152,8 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
 
                                 @Override
                                 public void onErrorResponse(String errorMessage) {
+
+                                    OpenMRS.getInstance().setVisitTypeUUID(ApplicationConstants.DEFAULT_VISIT_TYPE_UUID);
                                     loginView.showToast("Failed to fetch visit type",
                                             ToastUtil.ToastType.ERROR);
                                 }
@@ -171,7 +174,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                 }
 
                 @Override
-                public void onFailure(Call<Session> call, Throwable t) {
+                public void onFailure(@NonNull Call<Session> call, @NonNull Throwable t) {
                     loginView.hideLoadingAnimation();
                     loginView.showToast(t.getMessage(), ToastUtil.ToastType.ERROR);
                 }
@@ -225,7 +228,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                     restApi.getLocations(locationEndPoint, "Login Location", "full");
             call.enqueue(new Callback<Results<Location>>() {
                 @Override
-                public void onResponse(Call<Results<Location>> call, Response<Results<Location>> response) {
+                public void onResponse(@NonNull Call<Results<Location>> call, @NonNull Response<Results<Location>> response) {
                     if (response.isSuccessful()) {
                         RestServiceBuilder.changeBaseUrl(url.trim());
                         mOpenMRS.setServerUrl(url);
@@ -241,7 +244,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                 }
 
                 @Override
-                public void onFailure(Call<Results<Location>> call, Throwable t) {
+                public void onFailure(@NonNull Call<Results<Location>> call, @NonNull Throwable t) {
                     loginView.hideUrlLoadingAnimation();
                     loginView.showInvalidURLSnackbar(t.getMessage());
                     loginView.initLoginForm(new ArrayList<Location>(), url);

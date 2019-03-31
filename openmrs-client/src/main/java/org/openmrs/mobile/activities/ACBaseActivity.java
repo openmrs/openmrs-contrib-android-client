@@ -14,26 +14,26 @@
 
 package org.openmrs.mobile.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.login.LoginActivity;
+import org.openmrs.mobile.activities.patientdashboard.details.PatientDetailsFragment;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
@@ -45,11 +45,18 @@ import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ForceClose;
 import org.openmrs.mobile.utilities.NetworkUtils;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -66,6 +73,8 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     protected CustomFragmentDialog mCustomFragmentDialog;
     private MenuItem mSyncbutton;
     private List<String> locationList;
+    private Snackbar snackbar;
+    private IntentFilter mIntentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +91,16 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 showAppCrashDialog(errorReport);
             }
         }
+        mIntentFilter = new IntentFilter();
+        mIntentFilter.addAction(ApplicationConstants.BroadcastActions.AUTHENTICATION_CHECK_BROADCAST_ACTION);
     }
 
+    private BroadcastReceiver mPasswordChangedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            showCredentialChangedDialog();
+        }
+    };
 
     @Override
     protected void onResume() {
@@ -92,10 +109,12 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         if (!(this instanceof LoginActivity) && !mAuthorizationManager.isUserLoggedIn()) {
             mAuthorizationManager.moveToLoginActivity();
         }
+        registerReceiver(mPasswordChangedReceiver, mIntentFilter);
     }
 
     @Override
     protected void onPause() {
+        unregisterReceiver(mPasswordChangedReceiver);
         super.onPause();
     }
 
@@ -113,7 +132,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         if (logoutMenuItem != null) {
             logoutMenuItem.setTitle(getString(R.string.action_logout) + " " + mOpenMRS.getUsername());
         }
-        if(mSyncbutton !=null) {
+        if (mSyncbutton != null) {
             final Boolean syncState = NetworkUtils.isOnline();
             setSyncButtonState(syncState);
         }
@@ -123,8 +142,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     private void setSyncButtonState(boolean syncState) {
         if (syncState) {
             mSyncbutton.setIcon(R.drawable.ic_sync_on);
-        }
-        else {
+        } else {
             mSyncbutton.setIcon(R.drawable.ic_sync_off);
         }
     }
@@ -150,11 +168,18 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 if (syncState) {
                     OpenMRS.getInstance().setSyncState(false);
                     setSyncButtonState(false);
-                } else if(NetworkUtils.hasNetwork()){
+                    showNoInternetConnectionSnackbar();
+                    ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.disconn_server);
+                } else if (NetworkUtils.hasNetwork()) {
                     OpenMRS.getInstance().setSyncState(true);
                     setSyncButtonState(true);
                     Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
                     getApplicationContext().sendBroadcast(intent);
+                    ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.reconn_server);
+                    if (PatientDetailsFragment.snackbar != null)
+                        PatientDetailsFragment.snackbar.dismiss();
+                    if (snackbar != null)
+                        snackbar.dismiss();
                 } else {
                     showNoInternetConnectionSnackbar();
                 }
@@ -181,7 +206,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable e) {
-               mOpenMRSLogger.e(e.getMessage());
+                mOpenMRSLogger.e(e.getMessage());
             }
 
             @Override
@@ -195,10 +220,10 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
 
     private void showNoInternetConnectionSnackbar() {
-        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),
-                getString(R.string.no_internet_connection_message), Snackbar.LENGTH_SHORT);
+        snackbar = Snackbar.make(findViewById(android.R.id.content),
+                getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
         View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
     }
@@ -207,6 +232,18 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         mOpenMRS.clearUserPreferencesData();
         mAuthorizationManager.moveToLoginActivity();
         OpenMRSDBOpenHelper.getInstance().closeDatabases();
+    }
+
+    private void showCredentialChangedDialog() {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.credentials_changed_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.credentials_changed_dialog_message));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.LOGOUT);
+        bundle.setRightButtonText(getString(R.string.ok));
+        mCustomFragmentDialog = CustomFragmentDialog.newInstance(bundle);
+        mCustomFragmentDialog.setCancelable(false);
+        mCustomFragmentDialog.setRetainInstance(true);
+        mCustomFragmentDialog.show(mFragmentManager, ApplicationConstants.DialogTAG.CREDENTIAL_CHANGED_DIALOG_TAG);
     }
 
     private void showLogoutDialog() {
@@ -251,10 +288,10 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.DELET_PATIENT_DIALOG_TAG);
     }
 
-    private void showLocationDialog(List<String>locationList) {
+    private void showLocationDialog(List<String> locationList) {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.location_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.location_dialog_current_location)+mOpenMRS.getLocation());
+        bundle.setTextViewMessage(getString(R.string.location_dialog_current_location) + mOpenMRS.getLocation());
         bundle.setLocationList(locationList);
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.SELECT_LOCATION);
         bundle.setRightButtonText(getString(R.string.dialog_button_select_location));
@@ -288,7 +325,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
     protected void showProgressDialog(String dialogMessage) {
         CustomDialogBundle bundle = new CustomDialogBundle();
-        bundle.setProgressViewMessage(getString(R.string.progress_dialog_message));
         bundle.setProgressDialog(true);
         bundle.setTitleViewMessage(dialogMessage);
         mCustomFragmentDialog = CustomFragmentDialog.newInstance(bundle);
@@ -297,8 +333,8 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         mCustomFragmentDialog.show(mFragmentManager, dialogMessage);
     }
 
-    public void addFragmentToActivity (@NonNull FragmentManager fragmentManager,
-                                       @NonNull Fragment fragment, int frameId) {
+    public void addFragmentToActivity(@NonNull FragmentManager fragmentManager,
+                                      @NonNull Fragment fragment, int frameId) {
         checkNotNull(fragmentManager);
         checkNotNull(fragment);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -345,4 +381,3 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
 
 }
-

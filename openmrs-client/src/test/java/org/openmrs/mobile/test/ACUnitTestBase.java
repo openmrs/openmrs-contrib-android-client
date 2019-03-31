@@ -125,9 +125,10 @@ public abstract class ACUnitTestBase {
 
     protected PersonName createPersonName(Long id) {
         PersonName personName = new PersonName();
-        personName.setGivenName("given_name_" + id);
-        personName.setMiddleName("middle_name_" + id);
-        personName.setFamilyName("family_name_" + id);
+        char alphabetic_id = (char) (id.intValue() + 'a' - 1);
+        personName.setGivenName("given_name_" + alphabetic_id);
+        personName.setMiddleName("middle_name_" + alphabetic_id);
+        personName.setFamilyName("family_name_" + alphabetic_id);
         return personName;
     }
 

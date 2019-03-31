@@ -15,7 +15,6 @@
 package org.openmrs.mobile.activities.patientdashboard.diagnosis;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,6 +30,9 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class PatientDiagnosisFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDiagnosis {
 
@@ -48,7 +50,7 @@ public class PatientDiagnosisFragment extends PatientDashboardFragment implement
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragmentLayout = inflater.inflate(R.layout.fragment_patient_diagnosis, null, false);
         mDiagnosisList = (ListView) fragmentLayout.findViewById(R.id.patientDiagnosisList);
         TextView emptyList = (TextView) fragmentLayout.findViewById(R.id.emptyDiagnosisListView);

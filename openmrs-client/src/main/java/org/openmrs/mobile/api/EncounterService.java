@@ -12,7 +12,6 @@ package org.openmrs.mobile.api;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 
 import com.activeandroid.query.Select;
 
@@ -29,6 +28,8 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -111,7 +112,7 @@ public class EncounterService extends IntentService {
             Call<Encounter> call = apiService.createEncounter(encountercreate);
             call.enqueue(new Callback<Encounter>() {
                 @Override
-                public void onResponse(Call<Encounter> call, Response<Encounter> response) {
+                public void onResponse(@NonNull Call<Encounter> call, @NonNull Response<Encounter> response) {
                     if (response.isSuccessful()) {
                         Encounter encounter = response.body();
                         linkvisit(encountercreate.getPatientId(),encountercreate.getFormname(), encounter, encountercreate);
@@ -129,7 +130,7 @@ public class EncounterService extends IntentService {
                 }
 
                 @Override
-                public void onFailure(Call<Encounter> call, Throwable t) {
+                public void onFailure(@NonNull Call<Encounter> call, @NonNull Throwable t) {
                     if (callbackListener != null) {
                         callbackListener.onErrorResponse(t.getLocalizedMessage());
                     }

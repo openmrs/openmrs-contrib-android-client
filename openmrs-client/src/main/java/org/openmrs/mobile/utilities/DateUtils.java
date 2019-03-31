@@ -102,10 +102,16 @@ public final class DateUtils {
     public static DateTime convertTimeString(String dateAsString) {
         DateTime date = null;
         if (StringUtils.notNull(dateAsString)) {
-            DateTimeFormatter originalFormat = DateTimeFormat.forPattern(DateUtils.OPEN_MRS_REQUEST_FORMAT);
+            DateTimeFormatter originalFormat;
+            if (dateAsString.length() == OPEN_MRS_REQUEST_PATIENT_FORMAT.length()){
+                originalFormat = DateTimeFormat.forPattern(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT);
+            } else {
+                originalFormat = DateTimeFormat.forPattern(DateUtils.OPEN_MRS_REQUEST_FORMAT);
+            }
             date = originalFormat.parseDateTime(dateAsString);
         }
         return date;
+
     }
 
     public static String convertTime1(String dateAsString, String dateFormat) {
@@ -231,15 +237,18 @@ public final class DateUtils {
      */
     public static boolean isValidFormat(String format, String dateAsString) {
         Date date = null;
-        try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
-            date = simpleDateFormat.parse(dateAsString);
-            if (!dateAsString.equals(simpleDateFormat.format(date))) {
-                date = null;
+        if (dateAsString != null) {
+            try {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+                date = simpleDateFormat.parse(dateAsString);
+                if (!dateAsString.equals(simpleDateFormat.format(date))) {
+                    date = null;
+                }
+            } catch (ParseException exception) {
+                OpenMRS.getInstance().getOpenMRSLogger().w("Failed to validate date format :" + dateAsString + " caused by " + exception.toString());
             }
-        } catch (ParseException exception) {
-            OpenMRS.getInstance().getOpenMRSLogger().w("Failed to validate date format :" + dateAsString + " caused by " + exception.toString());
+            return date != null;
         }
-        return date != null;
+        return false;
     }
 }

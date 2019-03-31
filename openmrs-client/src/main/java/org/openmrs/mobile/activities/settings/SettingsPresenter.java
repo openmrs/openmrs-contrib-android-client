@@ -14,14 +14,14 @@
 
 package org.openmrs.mobile.activities.settings;
 
-import android.support.annotation.NonNull;
-
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.ConceptDAO;
 
 import java.io.File;
+
+import androidx.annotation.NonNull;
 
 public class SettingsPresenter extends BasePresenter implements SettingsContract.Presenter {
 

@@ -15,18 +15,17 @@
 package org.openmrs.mobile.activities.lastviewedpatients;
 
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.SearchView;
 
 public class LastViewedPatientsActivity extends ACBaseActivity {
 

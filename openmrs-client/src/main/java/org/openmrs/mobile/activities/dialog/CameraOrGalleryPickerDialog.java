@@ -18,12 +18,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -31,6 +25,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
+
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 
 public class CameraOrGalleryPickerDialog extends DialogFragment {
 
@@ -62,7 +63,8 @@ public class CameraOrGalleryPickerDialog extends DialogFragment {
 
     private class GalleryOrCameraPickerListAdapter extends ArrayAdapter<String> {
 
-        @IdRes private int textViewResourceId;
+        @IdRes
+        private int textViewResourceId;
 
         @IdRes private int imageViewResourceId;
 

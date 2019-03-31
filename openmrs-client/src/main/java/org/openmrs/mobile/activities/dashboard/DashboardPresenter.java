@@ -14,9 +14,10 @@
 
 package org.openmrs.mobile.activities.dashboard;
 
-import android.support.annotation.NonNull;
 
 import org.openmrs.mobile.activities.BasePresenter;
+
+import androidx.annotation.NonNull;
 
 public class DashboardPresenter extends BasePresenter implements DashboardContract.Presenter {
 

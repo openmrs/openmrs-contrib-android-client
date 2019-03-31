@@ -18,9 +18,6 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +32,11 @@ import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergePatientsRecycleViewAdapter.PatientViewHolder>{
 
@@ -51,15 +53,16 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
         this.mPresenter = presenter;
     }
 
+    @NonNull
     @Override
-    public PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.similar_patient_row, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(PatientViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PatientViewHolder holder, int position) {
         final Patient patient = patientList.get(position);
 
         setPatientName(holder, patient);

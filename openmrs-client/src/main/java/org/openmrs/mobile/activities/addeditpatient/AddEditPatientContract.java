@@ -31,7 +31,11 @@ public interface AddEditPatientContract {
                                  boolean dayOfBirthError,
                                  boolean addressError,
                                  boolean countryError,
-                                 boolean genderError);
+                                 boolean genderError,
+                                 boolean countryNull,
+                                 boolean stateError,
+                                 boolean cityError,
+                                 boolean postalError);
 
         void scrollToTop();
 
@@ -44,6 +48,8 @@ public interface AddEditPatientContract {
         void startPatientDashbordActivity(Patient patient);
 
         void showUpgradeRegistrationModuleInfo();
+
+        boolean areFieldsNotEmpty();
     }
 
     interface Presenter extends BasePresenterContract {

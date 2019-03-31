@@ -7,9 +7,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
@@ -24,6 +21,10 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -50,12 +51,12 @@ public class ConceptDownloadService extends Service {
 
     private void startDownload() {
         RestApi service = RestServiceBuilder.createService(RestApi.class);
-        Call<Results<SystemSetting>>  call = service.getSystemSettingsByQuery(
+        Call<Results<SystemSetting>> call = service.getSystemSettingsByQuery(
                 ApplicationConstants.SystemSettingKeys.WS_REST_MAX_RESULTS_ABSOLUTE,
                 ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<SystemSetting>>() {
             @Override
-            public void onResponse(Call<Results<SystemSetting>> call, Response<Results<SystemSetting>> response) {
+            public void onResponse(@NonNull Call<Results<SystemSetting>> call, @NonNull Response<Results<SystemSetting>> response) {
                 if (response.isSuccessful()) {
                     List<SystemSetting> results = response.body().getResults();
                     if (results.size() >= 1) {
@@ -69,7 +70,7 @@ public class ConceptDownloadService extends Service {
             }
 
             @Override
-            public void onFailure(Call<Results<SystemSetting>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Results<SystemSetting>> call, @NonNull Throwable t) {
                 downloadConcepts(0);
             }
         });
@@ -103,7 +104,7 @@ public class ConceptDownloadService extends Service {
         Call<Results<Concept>> call = service.getConcepts(maxConceptsInOneQuery, startIndex);
         call.enqueue(new Callback<Results<Concept>>() {
             @Override
-            public void onResponse(Call<Results<Concept>> call, Response<Results<Concept>> response) {
+            public void onResponse(@NonNull Call<Results<Concept>> call, @NonNull Response<Results<Concept>> response) {
                 if (response.isSuccessful()) {
                     ConceptDAO conceptDAO = new ConceptDAO();
                     for (Concept concept : response.body().getResults()) {
@@ -131,14 +132,14 @@ public class ConceptDownloadService extends Service {
             }
 
             @Override
-            public void onFailure(Call<Results<Concept>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Results<Concept>> call, @NonNull Throwable t) {
                 stopSelf();
             }
         });
     }
 
-    private void sendProgressBroadcast (){
-        Intent intent = new Intent (ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID);
+    private void sendProgressBroadcast() {
+        Intent intent = new Intent(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

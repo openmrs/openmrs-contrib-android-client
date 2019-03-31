@@ -14,9 +14,6 @@
 
 package org.openmrs.mobile.activities.formdisplay;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
@@ -25,6 +22,11 @@ import org.openmrs.mobile.models.Page;
 import org.openmrs.mobile.utilities.FormService;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 class FormPageAdapter extends FragmentPagerAdapter {
 
@@ -44,8 +46,9 @@ class FormPageAdapter extends FragmentPagerAdapter {
         return fragment;
     }
 
+    @NonNull
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         Fragment fragment = (Fragment) super.instantiateItem(container, position);
         mRegisteredFragments.put(position, fragment);
         return fragment;
@@ -62,7 +65,7 @@ class FormPageAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         mRegisteredFragments.remove(position);
         super.destroyItem(container, position, object);
     }

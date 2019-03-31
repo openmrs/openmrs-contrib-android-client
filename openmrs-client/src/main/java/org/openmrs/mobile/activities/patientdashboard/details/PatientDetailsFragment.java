@@ -19,8 +19,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +27,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
@@ -44,10 +44,14 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.ByteArrayOutputStream;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 public class PatientDetailsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDetails {
 
     private View rootView;
     private PatientDashboardActivity mPatientDashboardActivity;
+    public static Snackbar snackbar;
 
     public static PatientDetailsFragment newInstance() {
         return new PatientDetailsFragment();
@@ -55,10 +59,10 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
     @Override
     public void attachSnackbarToActivity() {
-        Snackbar snackbar = Snackbar
+        snackbar = Snackbar
                 .make(mPatientDashboardActivity.findViewById(R.id.patientDashboardContentFrame), getString(R.string.snackbar_no_internet_connection), Snackbar.LENGTH_INDEFINITE);
         View view = snackbar.getView();
-        TextView tv = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        TextView tv = (TextView) view.findViewById(com.google.android.material.R.id.snackbar_text);
         tv.setTextColor(Color.WHITE);
         snackbar.show();
     }
@@ -99,7 +103,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_patient_details, null, false);
         FontsUtil.setFont((ViewGroup) rootView);
         return rootView;
@@ -107,7 +111,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
     @Override
     public void resolvePatientDataDisplay(final Patient patient) {
-        if(isAdded()) {
+        if (isAdded()) {
             if (("M").equals(patient.getPerson().getGender())) {
                 ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.male));
             } else {

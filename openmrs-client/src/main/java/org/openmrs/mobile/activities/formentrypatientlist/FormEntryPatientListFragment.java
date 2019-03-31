@@ -15,10 +15,8 @@
 package org.openmrs.mobile.activities.formentrypatientlist;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +33,12 @@ import org.openmrs.mobile.utilities.StringUtils;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.snackbar.Snackbar;
+
 public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatientListContract.Presenter> implements  FormEntryPatientListContract.View {
 
     private RecyclerView mPatientRecyclerView;
@@ -42,7 +46,7 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
     private ProgressBar mProgressBar;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_form_entry_patient_list, container, false);
 
@@ -97,4 +101,11 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
         return new FormEntryPatientListFragment();
     }
 
+    public void showSnackbarInactivePatients(View v) {
+        Snackbar snackbar = Snackbar.make(v, R.string.snackbar_nonvisitting_patients, Snackbar.LENGTH_LONG);
+        View view = snackbar.getView();
+        TextView tv = view.findViewById(R.id.snackbar_text);
+        tv.setTextColor(Color.WHITE);
+        snackbar.show();
+    }
 }

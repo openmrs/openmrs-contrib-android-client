@@ -16,7 +16,6 @@ package org.openmrs.mobile.activities.activevisits;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,9 @@ import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<ActiveVisitsRecyclerViewAdapter.VisitViewHolder> {
     private Context mContext;
     private List<Visit> mVisits;
@@ -43,15 +45,16 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
         this.mVisits = items;
     }
 
+    @NonNull
     @Override
-    public VisitViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VisitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_visits_row, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new VisitViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(VisitViewHolder visitViewHolder, final int position) {
+    public void onBindViewHolder(@NonNull VisitViewHolder visitViewHolder, final int position) {
         final int adapterPos = visitViewHolder.getAdapterPosition();
         Visit visit = mVisits.get(adapterPos);
         Patient patient = new PatientDAO().findPatientByID(visit.getPatient().getId().toString());
@@ -87,7 +90,7 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
     }
 
     @Override
-    public void onViewDetachedFromWindow(VisitViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull VisitViewHolder holder) {
         holder.clearAnimation();
     }
 

@@ -14,10 +14,6 @@ http://www.androprogrammer.com/2015/06/view-pager-with-circular-indicator.html*/
 package org.openmrs.mobile.activities.formdisplay;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.view.WindowManager;
@@ -36,6 +32,11 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 public class FormDisplayActivity extends ACBaseActivity implements FormDisplayContract.View.MainView {
 

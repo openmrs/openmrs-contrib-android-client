@@ -16,7 +16,6 @@ package org.openmrs.mobile.activities.patientdashboard.vitals;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,6 +39,9 @@ import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 public class PatientVitalsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientVitals {
 
     private LinearLayout mContent;
@@ -58,7 +60,7 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_patient_vitals, null, false);
         mContent = (LinearLayout) root.findViewById(R.id.vitalsDetailsContent);
         mEmptyList = (TextView) root.findViewById(R.id.lastVitalsNoneLabel);

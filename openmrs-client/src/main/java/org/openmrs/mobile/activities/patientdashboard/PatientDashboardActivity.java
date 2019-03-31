@@ -16,10 +16,9 @@ package org.openmrs.mobile.activities.patientdashboard;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.Menu;
+
+import com.google.android.material.tabs.TabLayout;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
@@ -36,7 +35,8 @@ import org.openmrs.mobile.activities.patientdashboard.vitals.PatientVitalsFragme
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.TabUtil;
 
-import java.util.ArrayList;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 public class PatientDashboardActivity extends ACBaseActivity {
 
@@ -92,7 +92,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
     private void initViewPager(PatientDashboardPagerAdapter adapter) {
         final ViewPager viewPager = findViewById(R.id.pager);
         TabLayout tabHost = findViewById(R.id.tabhost);
-
+        viewPager.setOffscreenPageLimit(adapter.getCount()-1);
         viewPager.setAdapter(adapter);
         tabHost.setupWithViewPager(viewPager);
     }

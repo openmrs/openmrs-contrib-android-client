@@ -1,7 +1,6 @@
 package org.openmrs.mobile.activities.patientdashboard.charts;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -28,6 +27,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+
+import androidx.appcompat.widget.Toolbar;
 
 public class ChartsViewActivity extends ACBaseActivity {
 

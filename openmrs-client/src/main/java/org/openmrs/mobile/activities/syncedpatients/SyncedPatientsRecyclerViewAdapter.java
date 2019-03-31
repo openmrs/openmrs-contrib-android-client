@@ -15,7 +15,6 @@
 package org.openmrs.mobile.activities.syncedpatients;
 
 import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +30,9 @@ import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<SyncedPatientsRecyclerViewAdapter.PatientViewHolder> {
     private SyncedPatientsFragment mContext;
     private List<Patient> mItems;
@@ -40,15 +42,16 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
         this.mItems = items;
     }
 
+    @NonNull
     @Override
-    public SyncedPatientsRecyclerViewAdapter.PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SyncedPatientsRecyclerViewAdapter.PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_synced_patients_row, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(SyncedPatientsRecyclerViewAdapter.PatientViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull SyncedPatientsRecyclerViewAdapter.PatientViewHolder holder, final int position) {
         final Patient patient = mItems.get(position);
 
         if (null != patient.getIdentifier()) {

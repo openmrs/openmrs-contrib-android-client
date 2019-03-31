@@ -34,6 +34,7 @@ import org.openmrs.mobile.utilities.ViewUtils;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -73,7 +74,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     }
 
     @Override
-    public void subscribe(){
+    public void subscribe() {
         // This method is intentionally empty
     }
 
@@ -84,13 +85,12 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     @Override
     public void confirmRegister(Patient patient) {
-        if(!registeringPatient && validate(patient)) {
+        if (!registeringPatient && validate(patient)) {
             mPatientInfoView.setProgressBarVisibility(true);
             mPatientInfoView.hideSoftKeys();
             registeringPatient = true;
             findSimilarPatients(patient);
-        }
-        else {
+        } else {
             mPatientInfoView.scrollToTop();
         }
     }
@@ -120,12 +120,16 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         boolean genderError = false;
         boolean addressError = false;
         boolean countryError = false;
+        boolean countryNull = false;
+        boolean stateError = false;
+        boolean cityError = false;
+        boolean postalError = false;
 
-        mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, genderError, addressError, countryError);
+        mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, genderError, addressError, countryError, countryNull, stateError, cityError, postalError);
 
         // Validate names
         PersonName currentPersonName = patient.getPerson().getName();
-        
+
         if (StringUtils.isBlank(currentPersonName.getGivenName())
                 || !ViewUtils.validateText(currentPersonName.getGivenName(), ViewUtils.ILLEGAL_CHARACTERS)) {
             givenNameError = true;
@@ -142,7 +146,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         }
 
         // Validate date of birth
-        if(StringUtils.isBlank(patient.getPerson().getBirthdate())) {
+        if (StringUtils.isBlank(patient.getPerson().getBirthdate())) {
             dateOfBirthError = true;
         }
 
@@ -152,12 +156,8 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
         if ((StringUtils.isBlank(patientAddress1)
                 && StringUtils.isBlank(patientAddress2)
-                && StringUtils.isBlank(patient.getPerson().getAddress().getCityVillage())
-                && StringUtils.isBlank(patient.getPerson().getAddress().getStateProvince())
-                && StringUtils.isBlank(patient.getPerson().getAddress().getCountry())
-                && StringUtils.isBlank(patient.getPerson().getAddress().getPostalCode()))
                 || !ViewUtils.validateText(patientAddress1, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
-                || !ViewUtils.validateText(patientAddress2, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)) {
+                || !ViewUtils.validateText(patientAddress2, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS))) {
             addressError = true;
         }
 
@@ -167,16 +167,27 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
         // Validate gender
         if (StringUtils.isBlank(patient.getPerson().getGender())) {
-            genderError=true;
+            genderError = true;
+        }
+        if (StringUtils.isBlank(patient.getPerson().getAddress().getCountry())) {
+            countryNull = true;
+        }
+        if (StringUtils.isBlank(patient.getPerson().getAddress().getStateProvince())) {
+            stateError = true;
+        }
+        if (StringUtils.isBlank(patient.getPerson().getAddress().getCityVillage())) {
+            cityError = true;
+        }
+        if (StringUtils.isBlank(patient.getPerson().getAddress().getPostalCode())) {
+            postalError = true;
         }
 
         boolean result = !givenNameError && !familyNameError && !dateOfBirthError && !addressError && !countryError && !genderError;
         if (result) {
             mPatient = patient;
             return true;
-        }
-        else {
-            mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, addressError, countryError, genderError);
+        } else {
+            mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, addressError, countryError, genderError, countryNull, stateError, cityError, postalError);
             return false;
         }
     }
@@ -214,14 +225,14 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         });
     }
 
-    public void findSimilarPatients(final Patient patient){
+    public void findSimilarPatients(final Patient patient) {
         if (NetworkUtils.isOnline()) {
             Call<Results<Module>> moduleCall = restApi.getModules(ApplicationConstants.API.FULL);
             moduleCall.enqueue(new Callback<Results<Module>>() {
                 @Override
-                public void onResponse(Call<Results<Module>> call, Response<Results<Module>> response) {
-                    if(response.isSuccessful()){
-                        if(ModuleUtils.isRegistrationCore1_7orAbove(response.body().getResults())){
+                public void onResponse(@NonNull Call<Results<Module>> call, @NonNull Response<Results<Module>> response) {
+                    if (response.isSuccessful()) {
+                        if (ModuleUtils.isRegistrationCore1_7orAbove(response.body().getResults())) {
                             fetchSimilarPatientsFromServer(patient);
                         } else {
                             fetchSimilarPatientAndCalculateLocally(patient);
@@ -232,7 +243,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
                 }
 
                 @Override
-                public void onFailure(Call<Results<Module>> call, Throwable t) {
+                public void onFailure(@NonNull Call<Results<Module>> call, @NonNull Throwable t) {
                     registeringPatient = false;
                     mPatientInfoView.setProgressBarVisibility(false);
                     ToastUtil.error(t.getMessage());
@@ -240,7 +251,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             });
         } else {
             List<Patient> similarPatient = new PatientComparator().findSimilarPatient(new PatientDAO().getAllPatients().toBlocking().first(), patient);
-            if(!similarPatient.isEmpty()){
+            if (!similarPatient.isEmpty()) {
                 mPatientInfoView.showSimilarPatientDialog(similarPatient, patient);
             } else {
                 registerPatient();
@@ -252,11 +263,11 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         Call<Results<Patient>> call = restApi.getPatients(patient.getPerson().getName().getGivenName(), ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
-            public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
+            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
                 registeringPatient = false;
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<Patient> patientList = response.body().getResults();
-                    if(!patientList.isEmpty()){
+                    if (!patientList.isEmpty()) {
                         List<Patient> similarPatient = new PatientComparator().findSimilarPatient(patientList, patient);
                         if (!similarPatient.isEmpty()) {
                             mPatientInfoView.showSimilarPatientDialog(similarPatient, patient);
@@ -274,7 +285,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             }
 
             @Override
-            public void onFailure(Call<Results<Patient>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
                 registeringPatient = false;
                 mPatientInfoView.setProgressBarVisibility(false);
                 ToastUtil.error(t.getMessage());
@@ -286,11 +297,11 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         Call<Results<Patient>> call = restApi.getSimilarPatients(patient.toMap());
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
-            public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
+            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
                 registeringPatient = false;
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<Patient> similarPatients = response.body().getResults();
-                    if(!similarPatients.isEmpty()){
+                    if (!similarPatients.isEmpty()) {
                         mPatientInfoView.showSimilarPatientDialog(similarPatients, patient);
                     } else {
                         registerPatient();
@@ -302,7 +313,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             }
 
             @Override
-            public void onFailure(Call<Results<Patient>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
                 registeringPatient = false;
                 mPatientInfoView.setProgressBarVisibility(false);
                 ToastUtil.error(t.getMessage());

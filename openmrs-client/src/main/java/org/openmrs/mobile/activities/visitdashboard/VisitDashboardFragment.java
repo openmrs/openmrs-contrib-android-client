@@ -38,13 +38,15 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContract.Presenter> implements VisitDashboardContract.View{
 
     private ExpandableListView mExpandableListView;
     private TextView mEmptyListView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_visit_dashboard, container, false);
 

@@ -17,10 +17,6 @@ package org.openmrs.mobile.activities.syncedpatients;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,6 +25,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
@@ -40,6 +38,10 @@ import org.openmrs.mobile.utilities.NetworkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContract.Presenter> implements SyncedPatientsContract.View {
 
@@ -53,7 +55,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
     private MenuItem mAddPatientMenuItem;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_synced_patients, container, false);
 
@@ -152,7 +154,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         Snackbar mSnackbar = Snackbar.make(getActivity().findViewById(android.R.id.content),
                 R.string.snackbar_no_internet_connection, Snackbar.LENGTH_SHORT);
         View sbView = mSnackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         mSnackbar.show();
     }

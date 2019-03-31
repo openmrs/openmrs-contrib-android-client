@@ -27,6 +27,7 @@ import org.openmrs.mobile.utilities.StringUtils;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,7 +67,7 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
 
         call.enqueue(new Callback<Visit>() {
             @Override
-            public void onResponse(Call<Visit> call, Response<Visit> response) {
+            public void onResponse(@NonNull Call<Visit> call, @NonNull Response<Visit> response) {
                 if (response.isSuccessful()) {
                     addSubscription(visitDAO.getVisitByID(visit.getId())
                             .observeOn(AndroidSchedulers.mainThread())
@@ -83,7 +84,7 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
             }
 
             @Override
-            public void onFailure(Call<Visit> call, Throwable t) {
+            public void onFailure(@NonNull Call<Visit> call, @NonNull Throwable t) {
                 mVisitDashboardView.showErrorToast(t.getMessage());
             }
         });

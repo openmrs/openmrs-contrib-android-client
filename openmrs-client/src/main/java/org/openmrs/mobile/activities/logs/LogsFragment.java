@@ -29,6 +29,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 
+import androidx.annotation.NonNull;
+
 
 public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> implements LogsContract.View {
 
@@ -36,7 +38,7 @@ public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> impleme
     private FloatingActionButton fab;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_logs, container, false);
 

@@ -90,7 +90,7 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
         Call<Results<Patient>> call = restApi.getLastViewedPatients(limit, startIndex);
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
-            public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
+            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
                 if (response.isSuccessful()) {
                     setStartIndexIfMorePatientsAvailable(response.body().getLinks());
                     patients.addAll(filterNotDownloadedPatients(response.body().getResults()));
@@ -112,7 +112,7 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
             }
 
             @Override
-            public void onFailure(Call<Results<Patient>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
                 setViewAfterPatientDownloadError(t.getMessage());
                 mLastViewedPatientsView.enableSwipeRefresh(true);
             }
@@ -125,7 +125,7 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
         Call<Results<Patient>> call = restApi.getPatients(query, ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
-            public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
+            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
                 if (response.isSuccessful()) {
                     mLastViewedPatientsView.updateList(filterNotDownloadedPatients(response.body().getResults()));
                     setViewAfterPatientDownloadSuccess();
@@ -135,7 +135,7 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
                 }
             }
             @Override
-            public void onFailure(Call<Results<Patient>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
                 setViewAfterPatientDownloadError(t.getMessage());
             }
         });
@@ -147,7 +147,7 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
             Call<Results<Patient>> call = restApi.getLastViewedPatients(limit, startIndex);
             call.enqueue(new Callback<Results<Patient>>() {
                 @Override
-                public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
+                public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
                     if (response.isSuccessful()) {
                         List<Patient> patients = response.body().getResults();
                         mLastViewedPatientsView.showRecycleViewProgressBar(false);
@@ -164,7 +164,7 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
                 }
 
                 @Override
-                public void onFailure(Call<Results<Patient>> call, Throwable t) {
+                public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
                     ToastUtil.error(t.getMessage());
                     mLastViewedPatientsView.showRecycleViewProgressBar(false);
                 }

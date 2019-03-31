@@ -55,7 +55,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
     private MenuItem mAddPatientMenuItem;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_synced_patients, container, false);
 

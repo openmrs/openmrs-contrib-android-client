@@ -37,8 +37,10 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,7 +59,7 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_last_viewed_patients, container, false);
         mPatientsRecyclerView = ((RecyclerView) root.findViewById(R.id.lastViewedPatientRecyclerView));
@@ -74,7 +76,7 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
                     mAdapter.finishActionMode();
                 }else {
                     ToastUtil.error("No Internet Connection");
-                    getActivity().finish();
+                    Objects.requireNonNull(getActivity()).finish();
                 }
             }
         });
@@ -92,7 +94,7 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         if (mAdapter != null) {
             mPresenter.onSaveInstanceState(outState);
@@ -205,6 +207,6 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
     private void openPatientDashboardActivity(Long patientId) {
         Intent intent = new Intent(this.getContext(), PatientDashboardActivity.class);
         intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patientId);
-        this.getContext().startActivity(intent);
+        Objects.requireNonNull(this.getContext()).startActivity(intent);
     }
 }

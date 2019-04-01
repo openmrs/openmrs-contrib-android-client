@@ -44,6 +44,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.ByteArrayOutputStream;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class PatientDetailsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDetails {
@@ -102,7 +103,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_patient_details, null, false);
         FontsUtil.setFont((ViewGroup) rootView);
         return rootView;

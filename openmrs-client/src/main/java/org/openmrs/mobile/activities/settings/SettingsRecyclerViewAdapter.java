@@ -28,6 +28,7 @@ import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRecyclerViewAdapter.SettingsViewHolder> {
@@ -38,15 +39,16 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
         this.mItems = items;
     }
 
+    @NonNull
     @Override
-    public SettingsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SettingsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_settings_row, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new SettingsViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(SettingsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SettingsViewHolder holder, int position) {
         holder.mTitle.setText(mItems.get(position).getTitle());
 
         if (position==0){
@@ -76,7 +78,7 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
     }
 
     @Override
-    public void onViewDetachedFromWindow(SettingsViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull SettingsViewHolder holder) {
         holder.clearAnimation();
     }
 

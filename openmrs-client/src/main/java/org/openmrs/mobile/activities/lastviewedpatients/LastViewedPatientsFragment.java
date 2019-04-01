@@ -83,7 +83,7 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
 
         mPatientsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (!recyclerView.canScrollVertically(1)) {
                     mPresenter.loadMorePatients();

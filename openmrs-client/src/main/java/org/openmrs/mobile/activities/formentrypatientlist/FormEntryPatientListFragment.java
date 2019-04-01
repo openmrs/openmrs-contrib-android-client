@@ -33,6 +33,7 @@ import org.openmrs.mobile.utilities.StringUtils;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,7 +46,7 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
     private ProgressBar mProgressBar;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_form_entry_patient_list, container, false);
 

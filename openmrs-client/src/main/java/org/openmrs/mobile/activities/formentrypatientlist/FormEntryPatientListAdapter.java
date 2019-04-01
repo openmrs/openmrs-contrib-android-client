@@ -30,6 +30,7 @@ import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -42,15 +43,16 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
         this.mItems = items;
     }
 
+    @NonNull
     @Override
-    public PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_details_row, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(PatientViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull PatientViewHolder holder, final int position) {
         final int adapterPos = holder.getAdapterPosition();
         final Patient patient = mItems.get(adapterPos);
         new VisitDAO().getActiveVisitByPatientId(patient.getId())
@@ -86,7 +88,7 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
     }
 
     @Override
-    public void onViewDetachedFromWindow(PatientViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull PatientViewHolder holder) {
         holder.clearAnimation();
     }
 

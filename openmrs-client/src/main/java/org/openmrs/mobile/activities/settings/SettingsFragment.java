@@ -37,6 +37,7 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,7 +53,7 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
     private ImageButton downloadConceptsButton;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
 

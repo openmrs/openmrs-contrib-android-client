@@ -59,6 +59,7 @@ import org.openmrs.mobile.utilities.URLValidator;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 
@@ -96,7 +97,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_login, container, false);
 
         initViewFields(mRootView);

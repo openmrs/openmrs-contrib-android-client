@@ -26,7 +26,7 @@
     <string name="old_password">Old Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="update_password">Update</string>
-    <string name="alphanumeric_postal_code">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 </string
+    <string name="alphanumeric_postal_code">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 </string>
 
     <!-- Login view -->
     <string name="login_button">Login</string>

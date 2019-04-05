@@ -147,7 +147,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
                         android:layout_weight="1"
-                        app:errorEnabled="true">
+                        app:errorEnabled="true"
+                        android:layout_marginStart="8dp">
 
                         <EditText
                             android:id="@+id/middlename"
@@ -369,7 +370,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp">
 
                         <EditText
                             android:id="@+id/estmonth"
@@ -489,7 +491,9 @@
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="8dp"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="2"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="12dp">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutCountry"
@@ -509,7 +513,8 @@
                             android:imeOptions="actionNext"
                             android:inputType="textCapSentences"
                             android:maxLines="1"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:layout_marginStart="4dp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -518,7 +523,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp">
 
                         <AutoCompleteTextView
                             android:id="@+id/state"
@@ -530,7 +536,8 @@
                             android:imeOptions="actionNext"
                             android:inputType="text"
                             android:maxLines="1"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            android:layout_marginStart="4dp" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
 
@@ -547,7 +554,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="4dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:layout_marginEnd="4dp">
 
                         <EditText
                             android:id="@+id/city"
@@ -567,7 +575,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp">
 
                         <EditText
                             android:id="@+id/postal"

@@ -50,9 +50,9 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     private List<String> mCountries;
     private boolean registeringPatient = false;
 
-    public AddEditPatientPresenter(AddEditPatientContract.View mPatientInfoView,
-                                   List<String> countries,
-                                   String patientToUpdateId) {
+    AddEditPatientPresenter(AddEditPatientContract.View mPatientInfoView,
+                            List<String> countries,
+                            String patientToUpdateId) {
         this.mPatientInfoView = mPatientInfoView;
         this.mPatientInfoView.setPresenter(this);
         this.mCountries = countries;
@@ -225,7 +225,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         });
     }
 
-    public void findSimilarPatients(final Patient patient) {
+    private void findSimilarPatients(final Patient patient) {
         if (NetworkUtils.isOnline()) {
             Call<Results<Module>> moduleCall = restApi.getModules(ApplicationConstants.API.FULL);
             moduleCall.enqueue(new Callback<Results<Module>>() {
@@ -266,6 +266,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
                 registeringPatient = false;
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     List<Patient> patientList = response.body().getResults();
                     if (!patientList.isEmpty()) {
                         List<Patient> similarPatient = new PatientComparator().findSimilarPatient(patientList, patient);
@@ -300,6 +301,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
                 registeringPatient = false;
                 if (response.isSuccessful()) {
+                    assert response.body() != null;
                     List<Patient> similarPatients = response.body().getResults();
                     if (!similarPatients.isEmpty()) {
                         mPatientInfoView.showSimilarPatientDialog(similarPatients, patient);

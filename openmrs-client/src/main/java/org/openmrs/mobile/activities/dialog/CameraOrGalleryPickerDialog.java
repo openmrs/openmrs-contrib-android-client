@@ -26,6 +26,8 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 
+import java.util.Objects;
+
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
@@ -53,7 +55,7 @@ public class CameraOrGalleryPickerDialog extends DialogFragment {
         int[] imageResources = {R.drawable.ic_photo_camera, R.drawable.ic_photo_library};
 
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()));
         builder.setAdapter(new GalleryOrCameraPickerListAdapter(getActivity(),
                 R.layout.list_gallery_or_camera_item, R.id.textView, R.id.imageView,
                 textResources, imageResources), listener);
@@ -72,9 +74,9 @@ public class CameraOrGalleryPickerDialog extends DialogFragment {
         private int[] imageResources;
 
 
-        public GalleryOrCameraPickerListAdapter(@NonNull Context context, @LayoutRes int resource,
-                                                @IdRes int textViewResourceId, @IdRes int imageViewResourceId,
-                                                String[] textResources, int[] imageResources) {
+        GalleryOrCameraPickerListAdapter(@NonNull Context context, @LayoutRes int resource,
+                                         @IdRes int textViewResourceId, @IdRes int imageViewResourceId,
+                                         String[] textResources, int[] imageResources) {
             super(context, resource, textViewResourceId, textResources);
             this.textResources = textResources;
             this.imageResources = imageResources;

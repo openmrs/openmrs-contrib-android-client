@@ -107,7 +107,7 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
         private TextView mVisitPlace;
         private LinearLayout mRelativeLayout;
 
-        public VisitViewHolder(View itemView) {
+        VisitViewHolder(View itemView) {
             super(itemView);
             mRelativeLayout = (LinearLayout) itemView;
             mIdentifier = (TextView) itemView.findViewById(R.id.findVisitsIdentifier);
@@ -116,7 +116,7 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
             mBirthDate = (TextView) itemView.findViewById(R.id.findVisitsPatientBirthDate);
             mGender = (TextView) itemView.findViewById(R.id.findVisitsPatientGender);
         }
-        public void clearAnimation() {
+        void clearAnimation() {
             mRelativeLayout.clearAnimation();
         }
     }

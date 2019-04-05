@@ -25,7 +25,7 @@ public class DashboardPresenter extends BasePresenter implements DashboardContra
     @NonNull
     private final DashboardContract.View mDashboardView;
 
-    public DashboardPresenter(@NonNull DashboardContract.View dashboardView) {
+    DashboardPresenter(@NonNull DashboardContract.View dashboardView) {
         mDashboardView = dashboardView;
         mDashboardView.setPresenter(this);
     }

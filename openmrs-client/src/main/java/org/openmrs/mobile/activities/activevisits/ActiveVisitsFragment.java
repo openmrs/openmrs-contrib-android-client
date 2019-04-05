@@ -28,6 +28,7 @@ import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,7 +63,7 @@ public class ActiveVisitsFragment extends ACBaseFragment<ActiveVisitsContract.Pr
         emptyList.setVisibility(View.INVISIBLE);
 
 
-        FontsUtil.setFont((ViewGroup) this.getActivity().findViewById(android.R.id.content));
+        FontsUtil.setFont((ViewGroup) Objects.requireNonNull(this.getActivity()).findViewById(android.R.id.content));
 
         return root;
     }

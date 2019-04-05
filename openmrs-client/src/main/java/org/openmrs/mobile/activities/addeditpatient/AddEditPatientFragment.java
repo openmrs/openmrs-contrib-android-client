@@ -88,6 +88,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -423,34 +424,34 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private void resolveViews(View v) {
-        relativeLayout = (RelativeLayout) v.findViewById(R.id.addEditRelativeLayout);
-        edfname = (EditText) v.findViewById(R.id.firstname);
-        edmname = (EditText) v.findViewById(R.id.middlename);
-        edlname = (EditText) v.findViewById(R.id.surname);
-        eddob = (EditText) v.findViewById(R.id.dob);
-        edyr = (EditText) v.findViewById(R.id.estyr);
-        edmonth = (EditText) v.findViewById(R.id.estmonth);
-        edaddr1 = (EditText) v.findViewById(R.id.addr1);
-        edaddr2 = (EditText) v.findViewById(R.id.addr2);
-        edcity = (EditText) v.findViewById(R.id.city);
-        edstate = (AutoCompleteTextView) v.findViewById(R.id.state);
-        edcountry = (AutoCompleteTextView) v.findViewById(R.id.country);
-        edpostal = (EditText) v.findViewById(R.id.postal);
+        relativeLayout = v.findViewById(R.id.addEditRelativeLayout);
+        edfname = v.findViewById(R.id.firstname);
+        edmname = v.findViewById(R.id.middlename);
+        edlname = v.findViewById(R.id.surname);
+        eddob = v.findViewById(R.id.dob);
+        edyr = v.findViewById(R.id.estyr);
+        edmonth = v.findViewById(R.id.estmonth);
+        edaddr1 = v.findViewById(R.id.addr1);
+        edaddr2 = v.findViewById(R.id.addr2);
+        edcity = v.findViewById(R.id.city);
+        edstate = v.findViewById(R.id.state);
+        edcountry = v.findViewById(R.id.country);
+        edpostal = v.findViewById(R.id.postal);
 
-        gen = (RadioGroup) v.findViewById(R.id.gender);
-        progressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
+        gen = v.findViewById(R.id.gender);
+        progressBar = v.findViewById(R.id.progress_bar);
 
-        fnameerror = (TextView) v.findViewById(R.id.fnameerror);
-        lnameerror = (TextView) v.findViewById(R.id.lnameerror);
-        doberror = (TextView) v.findViewById(R.id.doberror);
-        gendererror = (TextView) v.findViewById(R.id.gendererror);
-        addrerror = (TextView) v.findViewById(R.id.addrerror);
-        countryerror = (TextView) v.findViewById(R.id.countryerror);
+        fnameerror = v.findViewById(R.id.fnameerror);
+        lnameerror = v.findViewById(R.id.lnameerror);
+        doberror = v.findViewById(R.id.doberror);
+        gendererror = v.findViewById(R.id.gendererror);
+        addrerror = v.findViewById(R.id.addrerror);
+        countryerror = v.findViewById(R.id.countryerror);
 
-        datePicker = (Button) v.findViewById(R.id.btn_datepicker);
-        submitConfirm = (Button) v.findViewById(R.id.submitConfirm);
-        capturePhotoBtn = (FloatingActionButton) v.findViewById(R.id.capture_photo);
-        patientImageView = (ImageView) v.findViewById(R.id.patientPhoto);
+        datePicker = v.findViewById(R.id.btn_datepicker);
+        submitConfirm = v.findViewById(R.id.submitConfirm);
+        capturePhotoBtn = v.findViewById(R.id.capture_photo);
+        patientImageView = v.findViewById(R.id.patientPhoto);
 
         firstNameTIL = v.findViewById(R.id.textInputLayoutFirstName);
         middleNameTIL = v.findViewById(R.id.textInputLayoutMiddlename);
@@ -463,7 +464,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         if (patient != null && patient.getPerson() != null) {
             //Change to Update Patient Form
             String updatePatientStr = getResources().getString(R.string.action_update_patient_data);
-            this.getActivity().setTitle(updatePatientStr);
+            Objects.requireNonNull(this.getActivity()).setTitle(updatePatientStr);
             submitConfirm.setText(updatePatientStr);
             submitConfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -507,7 +508,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private void addSuggestionsToAutoCompleTextView() {
-        countries = getContext().getResources().getStringArray(R.array.countries_array);
+        countries = Objects.requireNonNull(getContext()).getResources().getStringArray(R.array.countries_array);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
                 android.R.layout.simple_dropdown_item_1line, countries);
         edcountry.setAdapter(adapter);
@@ -538,30 +539,18 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private void addListeners() {
-        gen.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            public void onCheckedChanged(RadioGroup rGroup, int checkedId) {
-                gendererror.setVisibility(View.GONE);
-            }
-        });
+        gen.setOnCheckedChangeListener((rGroup, checkedId) -> gendererror.setVisibility(View.GONE));
 
         edcountry.setThreshold(2);
-        edcountry.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (edcountry.getText().length() >= edcountry.getThreshold()) {
-                    edcountry.showDropDown();
-                }
-                if (Arrays.asList(countries).contains(edcountry.getText().toString())) {
-                    edcountry.dismissDropDown();
-                }
+        edcountry.setOnFocusChangeListener((v, hasFocus) -> {
+            if (edcountry.getText().length() >= edcountry.getThreshold()) {
+                edcountry.showDropDown();
+            }
+            if (Arrays.asList(countries).contains(edcountry.getText().toString())) {
+                edcountry.dismissDropDown();
             }
         });
-        edstate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                addSuggestionsToCities();
-            }
-        });
+        edstate.setOnFocusChangeListener((v, hasFocus) -> addSuggestionsToCities());
 
         eddob.addTextChangedListener(new TextWatcher() {
             @Override
@@ -603,7 +592,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             edmonth.getText().clear();
             edyr.getText().clear();
 
-            DatePickerDialog mDatePicker = new DatePickerDialog(AddEditPatientFragment.this.getActivity(), new DatePickerDialog.OnDateSetListener() {
+            DatePickerDialog mDatePicker = new DatePickerDialog(Objects.requireNonNull(AddEditPatientFragment.this.getActivity()), new DatePickerDialog.OnDateSetListener() {
+                @SuppressLint("SetTextI18n")
                 public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                     int adjustedMonth = selectedmonth + 1;
                     eddob.setText(selectedday + "/" + adjustedMonth + "/" + selectedyear);
@@ -616,58 +606,44 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             mDatePicker.show();
         });
 
-        capturePhotoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        capturePhotoBtn.setOnClickListener(view -> {
 
-                CameraOrGalleryPickerDialog dialog = CameraOrGalleryPickerDialog.getInstance(
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+            CameraOrGalleryPickerDialog dialog = CameraOrGalleryPickerDialog.getInstance(
+                    (dialog1, which) -> {
 
-                                if (which == 0) {
-                                    StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-                                    StrictMode.setVmPolicy(builder.build());
-                                    AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
-                                }
-                                else {
-                                    Intent i;
-                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
-                                        i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                                    else
-                                        i = new Intent(Intent.ACTION_GET_CONTENT);
-                                    i.addCategory(Intent.CATEGORY_OPENABLE);
-                                    i.setType("image/*");
-                                    startActivityForResult(i, GALLERY_IMAGE_REQUEST);
-                                }
-                            }
-                        });
-                dialog.show(getChildFragmentManager(), null);
-            }
+                        if (which == 0) {
+                            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                            StrictMode.setVmPolicy(builder.build());
+                            AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
+                        }
+                        else {
+                            Intent i;
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
+                                i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                            else
+                                i = new Intent(Intent.ACTION_GET_CONTENT);
+                            i.addCategory(Intent.CATEGORY_OPENABLE);
+                            i.setType("image/*");
+                            startActivityForResult(i, GALLERY_IMAGE_REQUEST);
+                        }
+                    });
+            dialog.show(getChildFragmentManager(), null);
         });
 
-        submitConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.confirmRegister(createPatient());
-            }
-        });
+        submitConfirm.setOnClickListener(view -> mPresenter.confirmRegister(createPatient()));
 
-        patientImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (output != null) {
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setDataAndType(Uri.fromFile(output), "image/jpeg");
-                    startActivity(i);
-                } else if (patientPhoto != null) {
-                    Intent intent = new Intent(getContext(), PatientPhotoActivity.class);
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    patientPhoto.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
-                    intent.putExtra("photo", byteArrayOutputStream.toByteArray());
-                    intent.putExtra("name", patientName);
-                    startActivity(intent);
-                }
+        patientImageView.setOnClickListener(view -> {
+            if (output != null) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setDataAndType(Uri.fromFile(output), "image/jpeg");
+                startActivity(i);
+            } else if (patientPhoto != null) {
+                Intent intent = new Intent(getContext(), PatientPhotoActivity.class);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                patientPhoto.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
+                intent.putExtra("photo", byteArrayOutputStream.toByteArray());
+                intent.putExtra("name", patientName);
+                startActivity(intent);
             }
         });
 
@@ -677,9 +653,9 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     @NeedsPermission({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    public void capturePhoto() {
+    void capturePhoto() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getContext().getPackageManager()) != null) {
+        if (takePictureIntent.resolveActivity(Objects.requireNonNull(getContext()).getPackageManager()) != null) {
             File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
             output = new File(dir, getUniqueImageFileName());
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
@@ -688,8 +664,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     @OnShowRationale({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    public void showRationaleForCamera(final PermissionRequest request) {
-        new AlertDialog.Builder(getActivity())
+    void showRationaleForCamera(final PermissionRequest request) {
+        new AlertDialog.Builder(Objects.requireNonNull(getActivity()))
                 .setMessage(R.string.permission_camera_rationale)
                 .setPositiveButton(R.string.button_allow, (dialog, which) -> request.proceed())
                 .setNegativeButton(R.string.button_deny, (dialog, button) -> request.cancel())
@@ -697,13 +673,13 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     @OnPermissionDenied({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    public void showDeniedForCamera() {
+    void showDeniedForCamera() {
         createSnackbarLong(R.string.permission_camera_denied)
                 .show();
     }
 
     @OnNeverAskAgain({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
-    public void showNeverAskForCamera() {
+    void showNeverAskForCamera() {
         createSnackbarLong(R.string.permission_camera_neverask)
                 .show();
     }
@@ -711,7 +687,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private Snackbar createSnackbarLong(int stringId) {
         Snackbar snackbar = Snackbar.make(relativeLayout, stringId, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
+        TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         return snackbar;
     }
@@ -731,7 +707,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
             try {
                 ParcelFileDescriptor parcelFileDescriptor =
-                        getActivity().getContentResolver().openFileDescriptor(data.getData(), "r");
+                        Objects.requireNonNull(getActivity()).getContentResolver().openFileDescriptor(Objects.requireNonNull(data.getData()), "r");
+                assert parcelFileDescriptor != null;
                 FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
                 Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
                 parcelFileDescriptor.close();

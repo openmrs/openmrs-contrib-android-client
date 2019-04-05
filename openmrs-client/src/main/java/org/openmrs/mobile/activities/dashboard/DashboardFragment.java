@@ -41,6 +41,8 @@ import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -65,7 +67,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
 
         final String PREFS_NAME = "OpenMRSPrefFile";
 
-        SharedPreferences settings2 = getActivity().getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences settings2 = Objects.requireNonNull(getActivity()).getSharedPreferences(PREFS_NAME, 0);
 
         if (settings2.getBoolean("my_first_time", true)) {
             showOverlayTutorialOne();
@@ -74,7 +76,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
     }
 
     private void showOverlayTutorialOne() {
-        Target viewTarget = new ViewTarget(R.id.findPatientView, this.getActivity());
+        Target viewTarget = new ViewTarget(R.id.findPatientView, Objects.requireNonNull(this.getActivity()));
         new ShowcaseView.Builder(this.getActivity())
                 .setTarget(viewTarget)
                 .setContentTitle("Find Patients")
@@ -108,7 +110,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
     }
 
     private void showOverlayTutorialTwo() {
-        Target viewTarget = new ViewTarget(R.id.activeVisitsView, this.getActivity());
+        Target viewTarget = new ViewTarget(R.id.activeVisitsView, Objects.requireNonNull(this.getActivity()));
         new ShowcaseView.Builder(this.getActivity())
                 .setTarget(viewTarget)
                 .setContentTitle("Active Visits")
@@ -141,7 +143,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
     }
 
     private void showOverlayTutorialThree() {
-        Target viewTarget = new ViewTarget(R.id.registryPatientView, this.getActivity());
+        Target viewTarget = new ViewTarget(R.id.registryPatientView, Objects.requireNonNull(this.getActivity()));
         new ShowcaseView.Builder(this.getActivity())
                 .setTarget(viewTarget)
                 .setContentTitle("Register Patient")
@@ -174,7 +176,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
     }
 
     private void showOverlayTutorialFour() {
-        Target viewTarget = new ViewTarget(R.id.captureVitalsView, this.getActivity());
+        Target viewTarget = new ViewTarget(R.id.captureVitalsView, Objects.requireNonNull(this.getActivity()));
         new ShowcaseView.Builder(this.getActivity())
                 .setTarget(viewTarget)
                 .setContentTitle("Form Entry")
@@ -216,19 +218,19 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
         }
 
         // Font config
-        FontsUtil.setFont((ViewGroup) this.getActivity().findViewById(android.R.id.content));
+        FontsUtil.setFont(Objects.requireNonNull(this.getActivity()).findViewById(android.R.id.content));
         return root;
     }
 
     private void initFragmentFields(View root) {
-        mFindPatientButton = (ImageView) root.findViewById(R.id.findPatientButton);
-        mRegistryPatientButton = (ImageView) root.findViewById(R.id.registryPatientButton);
-        mActiveVisitsButton = (ImageView) root.findViewById(R.id.activeVisitsButton);
-        mCaptureVitalsButton = (ImageView) root.findViewById(R.id.captureVitalsButton);
-        mFindPatientView = (RelativeLayout) root.findViewById(R.id.findPatientView);
-        mRegistryPatientView = (RelativeLayout) root.findViewById(R.id.registryPatientView);
-        mCaptureVitalsView = (RelativeLayout) root.findViewById(R.id.captureVitalsView);
-        mActiveVisitsView = (RelativeLayout) root.findViewById(R.id.activeVisitsView);
+        mFindPatientButton = root.findViewById(R.id.findPatientButton);
+        mRegistryPatientButton = root.findViewById(R.id.registryPatientButton);
+        mActiveVisitsButton = root.findViewById(R.id.activeVisitsButton);
+        mCaptureVitalsButton = root.findViewById(R.id.captureVitalsButton);
+        mFindPatientView = root.findViewById(R.id.findPatientView);
+        mRegistryPatientView = root.findViewById(R.id.registryPatientView);
+        mCaptureVitalsView = root.findViewById(R.id.captureVitalsView);
+        mActiveVisitsView = root.findViewById(R.id.activeVisitsView);
     }
 
     private void setListeners() {

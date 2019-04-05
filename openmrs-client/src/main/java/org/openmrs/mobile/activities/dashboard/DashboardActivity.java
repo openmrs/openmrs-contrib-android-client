@@ -19,6 +19,8 @@ import android.os.Bundle;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 
+import java.util.Objects;
+
 import androidx.appcompat.widget.Toolbar;
 
 public class DashboardActivity extends ACBaseActivity {
@@ -53,7 +55,7 @@ public class DashboardActivity extends ACBaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
             getSupportActionBar().setIcon(R.drawable.openmrs_action_logo);
         }
 

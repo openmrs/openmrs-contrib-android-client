@@ -40,10 +40,10 @@ public class Encounter extends Resource implements Serializable{
     private EncounterType encounterType;
     @SerializedName("obs")
     @Expose
-    private List<Observation> observations = new ArrayList<Observation>();
+    private List<Observation> observations = new ArrayList<>();
     @SerializedName("orders")
     @Expose
-    private List<Object> orders = new ArrayList<Object>();
+    private List<Object> orders = new ArrayList<>();
     @SerializedName("voided")
     @Expose
     private Boolean voided;
@@ -52,7 +52,7 @@ public class Encounter extends Resource implements Serializable{
     private Visit visit;
     @SerializedName("encounterProviders")
     @Expose
-    private List<Resource> encounterProviders = new ArrayList<Resource>();
+    private List<Resource> encounterProviders = new ArrayList<>();
     @SerializedName("resourceVersion")
     @Expose
     private String resourceVersion;

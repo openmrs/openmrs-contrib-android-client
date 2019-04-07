@@ -49,12 +49,12 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
     public VisitExpandableListAdapter(Context context, List<Encounter> encounters) {
         this.mContext = context;
         this.mEncounters = encounters;
-        this.mBitmapCache = new SparseArray<Bitmap>();
+        this.mBitmapCache = new SparseArray<>();
         this.mChildLayouts = generateChildLayouts();
     }
 
     private List<ViewGroup> generateChildLayouts() {
-        List<ViewGroup> layouts = new ArrayList<ViewGroup>();
+        List<ViewGroup> layouts = new ArrayList<>();
         LayoutInflater inflater = LayoutInflater.from(mContext);
         OpenMRSInflater openMRSInflater = new OpenMRSInflater(inflater);
 

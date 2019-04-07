@@ -29,7 +29,7 @@ public class Form extends Resource implements Serializable {
 
     @SerializedName("pages")
     @Expose
-    private List<Page> pages = new ArrayList<Page>();
+    private List<Page> pages = new ArrayList<>();
 
     @SerializedName("valueReference")
     @Expose

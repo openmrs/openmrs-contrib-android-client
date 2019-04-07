@@ -45,7 +45,7 @@ public class LocationDAO {
 
     public Observable<List<Location>> getLocations() {
         return createObservableIO(() -> {
-            List<Location> locations = new ArrayList<Location>();
+            List<Location> locations = new ArrayList<>();
             DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
             Cursor cursor = openHelper.getReadableDatabase().query(LocationTable.TABLE_NAME,
                     null, null, null, null, null, null);

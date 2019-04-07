@@ -33,7 +33,7 @@ public class Question implements Serializable {
 
     @SerializedName("questions")
     @Expose
-    private List<Question> questions = new ArrayList<Question>();
+    private List<Question> questions = new ArrayList<>();
 
     /**
      * 

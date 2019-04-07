@@ -50,7 +50,7 @@ public class DashboardActivity extends ACBaseActivity {
         setContentView(R.layout.activity_dashboard);
 
         // Create toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowHomeEnabled(true);

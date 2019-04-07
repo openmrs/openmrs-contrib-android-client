@@ -507,7 +507,8 @@
                             android:focusable="true"
                             android:hint="@string/patient_country_label"
                             android:imeOptions="actionNext"
-                            android:inputType="textCapSentences"
+                            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+                            android:inputType="text|textCapWords"
                             android:maxLines="1"
                             android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>

@@ -14,7 +14,8 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
     <com.google.android.material.textfield.TextInputLayout
@@ -33,7 +34,7 @@
         android:textColor="@color/black"
         android:layout_marginTop="10dp"
         android:textSize="22sp"
-        />
+        tools:ignore="Autofill,LabelFor" />
     </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

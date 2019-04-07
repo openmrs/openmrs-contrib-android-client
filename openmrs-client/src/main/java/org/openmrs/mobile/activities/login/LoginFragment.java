@@ -205,11 +205,9 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-//                    mPassword.setTransformationMethod(new PasswordTransformationMethod());
                     mPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                     mPassword.setSelection(mPassword.getText().length());
                 } else {
-//                    mPassword.setTransformationMethod(null);
                     mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     mPassword.setSelection(mPassword.getText().length());
                 }

@@ -46,7 +46,8 @@
                     android:text="@string/patient_details_photo_label"
                     android:textColor="@color/primary"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    tools:ignore="RtlHardcoded" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -74,7 +75,8 @@
                         android:layout_marginEnd="-25dp"
                         android:layout_marginRight="-25dp"
                         android:layout_marginBottom="10dp"
-                        android:src="@drawable/ic_photo_camera_white_48dp" />
+                        android:src="@drawable/ic_photo_camera_white_48dp"
+                        tools:ignore="RtlHardcoded" />
                 </RelativeLayout>
 
             </LinearLayout>
@@ -161,9 +163,7 @@
                             android:imeOptions="actionNext"
                             android:inputType="textPersonName|textCapWords"
                             android:maxLines="1"
-                            android:textSize="14sp"
-                            android:importantForAutofill="no"
-                            tools:ignore="UnusedAttribute" />
+                            android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
@@ -202,8 +202,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="textPersonName|textCapWords"
                         android:maxLines="1"
-                        android:textSize="14sp"
-                        tools:ignore="Autofill" />
+                        android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -314,8 +313,7 @@
                             android:inputType="datetime"
                             android:maxLines="1"
                             android:nextFocusDown="@+id/estyr"
-                            android:textSize="14sp"
-                            tools:ignore="Autofill" />
+                            android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <Button
@@ -349,8 +347,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginRight="12dp"
                     android:layout_marginBottom="20dp"
-                    android:weightSum="2"
-                    tools:ignore="DisableBaselineAlignment">
+                    android:weightSum="2">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutEstyr"
@@ -368,8 +365,7 @@
                             android:imeOptions="actionNext"
                             android:inputType="number"
                             android:maxLines="1"
-                            android:textSize="14sp"
-                            tools:ignore="Autofill" />
+                            android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -378,8 +374,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
-                        tools:ignore="RtlHardcoded">
+                        android:layout_weight="1">
 
                         <EditText
                             android:id="@+id/estmonth"
@@ -470,8 +465,7 @@
                         android:imeOptions="actionNext"
                         android:inputType="textCapWords"
                         android:maxLines="1"
-                        android:textSize="14sp"
-                        tools:ignore="Autofill" />
+                        android:textSize="14sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -500,9 +494,7 @@
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="8dp"
                     android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginEnd="8dp">
+                    android:weightSum="2">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutCountry"
@@ -523,8 +515,7 @@
                             android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
                             android:inputType="text|textCapWords"
                             android:maxLines="1"
-                            android:textSize="14sp"
-                            android:layout_marginStart="4dp" />
+                            android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -562,8 +553,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="4dp"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="4dp">
+                        android:layout_weight="1">
 
                         <EditText
                             android:id="@+id/city"
@@ -583,8 +573,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
-                        android:layout_marginStart="8dp">
+                        android:layout_weight="1">
 
                         <EditText
                             android:id="@+id/postal"

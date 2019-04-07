@@ -74,7 +74,7 @@ public class SelectOneField implements Serializable, Parcelable {
     protected SelectOneField(Parcel in) {
         this.concept = in.readString();
         this.chosenAnswer = (Answer) in.readSerializable();
-        this.answerList = new ArrayList<Answer>();
+        this.answerList = new ArrayList<>();
         in.readList(this.answerList, Answer.class.getClassLoader());
     }
 

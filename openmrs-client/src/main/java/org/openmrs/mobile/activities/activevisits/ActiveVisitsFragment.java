@@ -55,7 +55,7 @@ public class ActiveVisitsFragment extends ACBaseFragment<ActiveVisitsContract.Pr
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
         visitsRecyclerView.setLayoutManager(linearLayoutManager);
         visitsRecyclerView.setAdapter(new ActiveVisitsRecyclerViewAdapter(this.getActivity(),
-                new ArrayList<Visit>()));
+                new ArrayList<>()));
 
         emptyList = (TextView) root.findViewById(R.id.emptyVisitsListViewLabel);
         emptyList.setText(getString(R.string.search_visits_no_results));

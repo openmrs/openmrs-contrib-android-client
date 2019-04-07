@@ -25,7 +25,7 @@ public class Person extends Resource implements Serializable {
 
     @SerializedName("names")
     @Expose
-    private List<PersonName> names = new ArrayList<PersonName>();
+    private List<PersonName> names = new ArrayList<>();
     @SerializedName("gender")
     @Expose
     private String gender;
@@ -37,10 +37,10 @@ public class Person extends Resource implements Serializable {
     private boolean birthdateEstimated;
     @SerializedName("addresses")
     @Expose
-    private List<PersonAddress> addresses = new ArrayList<PersonAddress>();
+    private List<PersonAddress> addresses = new ArrayList<>();
     @SerializedName("attributes")
     @Expose
-    private List<PersonAttribute> attributes = new ArrayList<PersonAttribute>();
+    private List<PersonAttribute> attributes = new ArrayList<>();
 
     private Bitmap photo;
 

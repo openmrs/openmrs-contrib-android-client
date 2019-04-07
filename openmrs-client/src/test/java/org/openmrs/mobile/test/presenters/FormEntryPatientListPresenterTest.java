@@ -54,7 +54,7 @@ public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
         super.setUp();
         presenter = new FormEntryPatientListPresenter(view, patientDAO);
         PowerMockito.mockStatic(StringUtils.class);
-        patientList = new ArrayList<Patient>();
+        patientList = new ArrayList<>();
     }
 
     @Test

@@ -75,16 +75,13 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
                 Iterator<String> dates = chartData.keys();
                 ArrayList<String> dateList = Lists.newArrayList(dates);
                 //Sorting the date
-                Collections.sort(dateList, new Comparator<String>() {
-                    @Override
-                    public int compare(String lhs, String rhs) {
-                        if (DateUtils.getDateFromString(lhs).getTime() < DateUtils.getDateFromString(rhs).getTime())
-                            return -1;
-                        else if (DateUtils.getDateFromString(lhs).getTime() == DateUtils.getDateFromString(rhs).getTime())
-                            return 0;
-                        else
-                            return 1;
-                    }
+                Collections.sort(dateList, (lhs, rhs) -> {
+                    if (DateUtils.getDateFromString(lhs).getTime() < DateUtils.getDateFromString(rhs).getTime())
+                        return -1;
+                    else if (DateUtils.getDateFromString(lhs).getTime() == DateUtils.getDateFromString(rhs).getTime())
+                        return 0;
+                    else
+                        return 1;
                 });
                 for (Integer j = 0; j < dateList.size(); j++) {
                     JSONArray dataArray = chartData.getJSONArray(dateList.get(j));

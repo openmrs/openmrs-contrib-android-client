@@ -79,13 +79,10 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
             visitViewHolder.mBirthDate.setText(" ");
         }
 
-        visitViewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, VisitDashboardActivity.class);
-                intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, mVisits.get(adapterPos).getId());
-                mContext.startActivity(intent);
-            }
+        visitViewHolder.mRelativeLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, VisitDashboardActivity.class);
+            intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, mVisits.get(adapterPos).getId());
+            mContext.startActivity(intent);
         });
     }
 

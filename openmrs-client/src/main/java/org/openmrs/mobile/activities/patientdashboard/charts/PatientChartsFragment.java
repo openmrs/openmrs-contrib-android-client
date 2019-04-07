@@ -69,20 +69,17 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
         mListView.setEmptyView(mEmptyListView);
         setEmptyListVisibility(false);
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), ChartsViewActivity.class);
-                Bundle mBundle = new Bundle();
-                String vitalName = chartsListAdapter.getItem(position);
-                try {
-                    mBundle.putString("vitalName", observationList.getJSONObject(vitalName).toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                intent.putExtra("bundle", mBundle);
-                startActivity(intent);
+        mListView.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(getActivity(), ChartsViewActivity.class);
+            Bundle mBundle = new Bundle();
+            String vitalName = chartsListAdapter.getItem(position);
+            try {
+                mBundle.putString("vitalName", observationList.getJSONObject(vitalName).toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+            intent.putExtra("bundle", mBundle);
+            startActivity(intent);
         });
         return root;
     }

@@ -117,97 +117,72 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     }
 
     private void initListeners() {
-        mLoginSyncButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
-                boolean syncState = prefs.getBoolean("sync", true);
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance()).edit();
-                editor.putBoolean("sync", !syncState);
-                editor.apply();
-                setSyncButtonState(!syncState);
-            }
+        mLoginSyncButton.setOnClickListener(view -> {
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
+            boolean syncState = prefs.getBoolean("sync", true);
+            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance()).edit();
+            editor.putBoolean("sync", !syncState);
+            editor.apply();
+            setSyncButtonState(!syncState);
         });
 
         loginValidatorWatcher = new LoginValidatorWatcher(mUrl, mUsername, mPassword, mDropdownLocation, mLoginButton);
 
-        mUrl.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (StringUtils.notEmpty(mUrl.getText().toString())
-                        && !view.isFocused()
-                        && loginValidatorWatcher.isUrlChanged()
-                        || (loginValidatorWatcher.isUrlChanged() && !view.isFocused()
-                        && loginValidatorWatcher.isLocationErrorOccurred())
-                        || (!loginValidatorWatcher.isUrlChanged() && !view.isFocused())) {
-                    ((LoginFragment) getActivity()
-                            .getSupportFragmentManager()
-                            .findFragmentById(R.id.loginContentFrame))
-                            .setUrl(mUrl.getText().toString());
-                    loginValidatorWatcher.setUrlChanged(false);
-                }
+        mUrl.setOnFocusChangeListener((view, hasFocus) -> {
+            if (StringUtils.notEmpty(mUrl.getText().toString())
+                    && !view.isFocused()
+                    && loginValidatorWatcher.isUrlChanged()
+                    || (loginValidatorWatcher.isUrlChanged() && !view.isFocused()
+                    && loginValidatorWatcher.isLocationErrorOccurred())
+                    || (!loginValidatorWatcher.isUrlChanged() && !view.isFocused())) {
+                ((LoginFragment) getActivity()
+                        .getSupportFragmentManager()
+                        .findFragmentById(R.id.loginContentFrame))
+                        .setUrl(mUrl.getText().toString());
+                loginValidatorWatcher.setUrlChanged(false);
+            }
 
-                if (hasFocus) {
-                    mUrl.setHint("");
-                    mUrlInput.setHint(Html.fromHtml(getString(R.string.login_url_hint)));
-                } else if (mUrl.getText().toString().equals("")) {
-                    mUrl.setHint(Html.fromHtml(getString(R.string.login_url_hint) + getString(R.string.req_star)));
-                    mUrlInput.setHint("");
-                }
+            if (hasFocus) {
+                mUrl.setHint("");
+                mUrlInput.setHint(Html.fromHtml(getString(R.string.login_url_hint)));
+            } else if (mUrl.getText().toString().equals("")) {
+                mUrl.setHint(Html.fromHtml(getString(R.string.login_url_hint) + getString(R.string.req_star)));
+                mUrlInput.setHint("");
             }
         });
 
-        mUsername.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    mUsername.setHint("");
-                    mUsernameInput.setHint(Html.fromHtml(getString(R.string.login_username_hint)));
-                } else if (mUsername.getText().toString().equals("")) {
-                    mUsername.setHint(Html.fromHtml(getString(R.string.login_username_hint) + getString(R.string.req_star)));
-                    mUsernameInput.setHint("");
-                }
+        mUsername.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                mUsername.setHint("");
+                mUsernameInput.setHint(Html.fromHtml(getString(R.string.login_username_hint)));
+            } else if (mUsername.getText().toString().equals("")) {
+                mUsername.setHint(Html.fromHtml(getString(R.string.login_username_hint) + getString(R.string.req_star)));
+                mUsernameInput.setHint("");
             }
         });
 
-        mPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    mPassword.setHint("");
-                    mPasswordInput.setHint(Html.fromHtml(getString(R.string.login_password_hint)));
-                } else if (mPassword.getText().toString().equals("")) {
-                    mPassword.setHint(Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star)));
-                    mPasswordInput.setHint("");
-                }
+        mPassword.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                mPassword.setHint("");
+                mPasswordInput.setHint(Html.fromHtml(getString(R.string.login_password_hint)));
+            } else if (mPassword.getText().toString().equals("")) {
+                mPassword.setHint(Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star)));
+                mPasswordInput.setHint("");
             }
         });
 
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.login(mUsername.getText().toString(),
-                        mPassword.getText().toString(),
-                        mUrl.getText().toString(),
-                        initialUrl);
-            }
-        });
+        mLoginButton.setOnClickListener(v -> mPresenter.login(mUsername.getText().toString(),
+                mPassword.getText().toString(),
+                mUrl.getText().toString(),
+                initialUrl));
 
-        mForgotPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                forgotPassword();
-            }
-        });
+        mForgotPass.setOnClickListener(v -> forgotPassword());
 
-        mShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                } else {
-                    mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                }
+        mShowPassword.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                mPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            } else {
+                mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             }
         });
     }

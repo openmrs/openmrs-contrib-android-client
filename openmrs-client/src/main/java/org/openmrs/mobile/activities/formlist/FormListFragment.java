@@ -61,12 +61,7 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
         View root = inflater.inflate(R.layout.fragment_form_list, container, false);
 
         formList = (ListView) root.findViewById(R.id.formlist);
-        formList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mPresenter.listItemClicked(position, ((TextView) view).getText().toString());
-            }
-        });
+        formList.setOnItemClickListener((parent, view, position, id) -> mPresenter.listItemClicked(position, ((TextView) view).getText().toString()));
 
         return root;
     }

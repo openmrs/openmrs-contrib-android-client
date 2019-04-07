@@ -43,11 +43,9 @@ public class OpenMRSLogger {
     public OpenMRSLogger() {
         logger = this;
         androidDefaultUEH = Thread.getDefaultUncaughtExceptionHandler();
-        Thread.UncaughtExceptionHandler handler = new Thread.UncaughtExceptionHandler() {
-            public void uncaughtException(Thread thread, Throwable ex) {
-                logger.e("Uncaught exception is: ", ex);
-                androidDefaultUEH.uncaughtException(thread, ex);
-            }
+        Thread.UncaughtExceptionHandler handler = (thread, ex) -> {
+            logger.e("Uncaught exception is: ", ex);
+            androidDefaultUEH.uncaughtException(thread, ex);
         };
         Thread.setDefaultUncaughtExceptionHandler(handler);
 

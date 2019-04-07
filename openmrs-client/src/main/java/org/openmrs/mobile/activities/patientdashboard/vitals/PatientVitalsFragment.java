@@ -70,12 +70,7 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
         TextView lastVitalsLabel = (TextView) root.findViewById(R.id.lastVitalsLabel);
         ImageButton formEditIcon = (ImageButton) root.findViewById(R.id.form_edit_icon);
 
-        formEditIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((PatientDashboardVitalsPresenter) mPresenter).startFormDisplayActivityWithEncounter();
-            }
-        });
+        formEditIcon.setOnClickListener(view -> ((PatientDashboardVitalsPresenter) mPresenter).startFormDisplayActivityWithEncounter());
 
         this.mInflater = inflater;
 

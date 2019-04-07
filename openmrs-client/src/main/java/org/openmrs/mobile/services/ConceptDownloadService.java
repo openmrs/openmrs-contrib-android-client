@@ -58,12 +58,16 @@ public class ConceptDownloadService extends Service {
             @Override
             public void onResponse(@NonNull Call<Results<SystemSetting>> call, @NonNull Response<Results<SystemSetting>> response) {
                 if (response.isSuccessful()) {
-                    List<SystemSetting> results = response.body().getResults();
-                    if (results.size() >= 1) {
-                        String value = results.get(0).getValue();
-                        if (value != null) {
-                            maxConceptsInOneQuery = Integer.parseInt(value);
+                    List<SystemSetting> results = null;
+                    if (response.body() != null) {
+                        results = response.body().getResults();
+                        if (results.size() >= 1) {
+                            String value = results.get(0).getValue();
+                            if (value != null) {
+                                maxConceptsInOneQuery = Integer.parseInt(value);
+                            }
                         }
+
                     }
                 }
                 downloadConcepts(0);
@@ -107,20 +111,24 @@ public class ConceptDownloadService extends Service {
             public void onResponse(@NonNull Call<Results<Concept>> call, @NonNull Response<Results<Concept>> response) {
                 if (response.isSuccessful()) {
                     ConceptDAO conceptDAO = new ConceptDAO();
-                    for (Concept concept : response.body().getResults()) {
-                        conceptDAO.saveOrUpdate(concept);
-                        downloadedConcepts++;
+                    if (response.body() != null) {
+                        for (Concept concept : response.body().getResults()) {
+                            conceptDAO.saveOrUpdate(concept);
+                            downloadedConcepts++;
+                        }
                     }
 
                     showNotification(downloadedConcepts);
                     sendProgressBroadcast();
 
                     boolean isNextPage = false;
-                    for (Link link : response.body().getLinks()) {
-                        if ("next".equals(link.getRel())) {
-                            isNextPage = true;
-                            downloadConcepts(startIndex + maxConceptsInOneQuery);
-                            break;
+                    if (response.body() != null) {
+                        for (Link link : response.body().getLinks()) {
+                            if ("next".equals(link.getRel())) {
+                                isNextPage = true;
+                                downloadConcepts(startIndex + maxConceptsInOneQuery);
+                                break;
+                            }
                         }
                     }
                     if (!isNextPage) {

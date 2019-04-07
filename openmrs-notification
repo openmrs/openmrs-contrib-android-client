@@ -1,0 +1,46 @@
+package openmrs.com.openmrs_notification;
+
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.os.Build;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+
+public class MainActivity extends AppCompatActivity {
+    private static final String CHANNEL_ID="Open_MRS";
+    private static final String CHANNEL_NAME="OpenMRS";
+    private static final String CHANNEL_DESC="OpenMRS Notification";
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR_0_1)
+        {
+            NotificationChannel notificationChannel=new NotificationChannel(CHANNEL_ID,CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            notificationChannel.setDescription(CHANNEL_DESC);
+            NotificationManager manager=getSystemService(NotificationManager.class);
+            manager.createNotificationChannel(notificationChannel);
+
+        }
+
+        findViewById(R.id.notification).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayNotification();
+            }
+        });
+    }
+    private void displayNotification()
+    {
+        NotificationCompat.Builder mBuilder=new NotificationCompat.Builder(this,CHANNEL_ID)
+                .setSmallIcon(R.drawable.icon)
+                .setContentTitle("OpenMRS Notification")
+                .setContentText("OpenMRS: Patient is referred to providers")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+        NotificationManagerCompat notificationManagerCompat=NotificationManagerCompat.from(this);
+        notificationManagerCompat.notify(1,mBuilder.build());
+    }
+}

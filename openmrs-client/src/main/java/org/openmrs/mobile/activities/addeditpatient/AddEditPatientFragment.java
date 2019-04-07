@@ -465,12 +465,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             String updatePatientStr = getResources().getString(R.string.action_update_patient_data);
             this.getActivity().setTitle(updatePatientStr);
             submitConfirm.setText(updatePatientStr);
-            submitConfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mPresenter.confirmUpdate(updatePatient(patient));
-                }
-            });
+            submitConfirm.setOnClickListener(view -> mPresenter.confirmUpdate(updatePatient(patient)));
 
             Person person = patient.getPerson();
             edfname.setText(person.getName().getGivenName());
@@ -538,30 +533,18 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private void addListeners() {
-        gen.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            public void onCheckedChanged(RadioGroup rGroup, int checkedId) {
-                gendererror.setVisibility(View.GONE);
-            }
-        });
+        gen.setOnCheckedChangeListener((rGroup, checkedId) -> gendererror.setVisibility(View.GONE));
 
         edcountry.setThreshold(2);
-        edcountry.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (edcountry.getText().length() >= edcountry.getThreshold()) {
-                    edcountry.showDropDown();
-                }
-                if (Arrays.asList(countries).contains(edcountry.getText().toString())) {
-                    edcountry.dismissDropDown();
-                }
+        edcountry.setOnFocusChangeListener((v, hasFocus) -> {
+            if (edcountry.getText().length() >= edcountry.getThreshold()) {
+                edcountry.showDropDown();
+            }
+            if (Arrays.asList(countries).contains(edcountry.getText().toString())) {
+                edcountry.dismissDropDown();
             }
         });
-        edstate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                addSuggestionsToCities();
-            }
-        });
+        edstate.setOnFocusChangeListener((v, hasFocus) -> addSuggestionsToCities());
 
         eddob.addTextChangedListener(new TextWatcher() {
             @Override
@@ -603,71 +586,54 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             edmonth.getText().clear();
             edyr.getText().clear();
 
-            DatePickerDialog mDatePicker = new DatePickerDialog(AddEditPatientFragment.this.getActivity(), new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                    int adjustedMonth = selectedmonth + 1;
-                    eddob.setText(selectedday + "/" + adjustedMonth + "/" + selectedyear);
-                    birthdate = new LocalDate(selectedyear, adjustedMonth, selectedday);
-                    bdt = birthdate.toDateTimeAtStartOfDay().toDateTime();
-                }
+            DatePickerDialog mDatePicker = new DatePickerDialog(AddEditPatientFragment.this.getActivity(), (datepicker, selectedyear, selectedmonth, selectedday) -> {
+                int adjustedMonth = selectedmonth + 1;
+                eddob.setText(selectedday + "/" + adjustedMonth + "/" + selectedyear);
+                birthdate = new LocalDate(selectedyear, adjustedMonth, selectedday);
+                bdt = birthdate.toDateTimeAtStartOfDay().toDateTime();
             }, cYear, cMonth, cDay);
             mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
             mDatePicker.setTitle(getString(R.string.date_picker_title));
             mDatePicker.show();
         });
 
-        capturePhotoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        capturePhotoBtn.setOnClickListener(view -> {
 
-                CameraOrGalleryPickerDialog dialog = CameraOrGalleryPickerDialog.getInstance(
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+            CameraOrGalleryPickerDialog dialog = CameraOrGalleryPickerDialog.getInstance(
+                    (dialog1, which) -> {
 
-                                if (which == 0) {
-                                    StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-                                    StrictMode.setVmPolicy(builder.build());
-                                    AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
-                                }
-                                else {
-                                    Intent i;
-                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
-                                        i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                                    else
-                                        i = new Intent(Intent.ACTION_GET_CONTENT);
-                                    i.addCategory(Intent.CATEGORY_OPENABLE);
-                                    i.setType("image/*");
-                                    startActivityForResult(i, GALLERY_IMAGE_REQUEST);
-                                }
-                            }
-                        });
-                dialog.show(getChildFragmentManager(), null);
-            }
+                        if (which == 0) {
+                            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                            StrictMode.setVmPolicy(builder.build());
+                            AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
+                        } else {
+                            Intent i;
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
+                                i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                            else
+                                i = new Intent(Intent.ACTION_GET_CONTENT);
+                            i.addCategory(Intent.CATEGORY_OPENABLE);
+                            i.setType("image/*");
+                            startActivityForResult(i, GALLERY_IMAGE_REQUEST);
+                        }
+                    });
+            dialog.show(getChildFragmentManager(), null);
         });
 
-        submitConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.confirmRegister(createPatient());
-            }
-        });
+        submitConfirm.setOnClickListener(view -> mPresenter.confirmRegister(createPatient()));
 
-        patientImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (output != null) {
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setDataAndType(Uri.fromFile(output), "image/jpeg");
-                    startActivity(i);
-                } else if (patientPhoto != null) {
-                    Intent intent = new Intent(getContext(), PatientPhotoActivity.class);
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    patientPhoto.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
-                    intent.putExtra("photo", byteArrayOutputStream.toByteArray());
-                    intent.putExtra("name", patientName);
-                    startActivity(intent);
-                }
+        patientImageView.setOnClickListener(view -> {
+            if (output != null) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setDataAndType(Uri.fromFile(output), "image/jpeg");
+                startActivity(i);
+            } else if (patientPhoto != null) {
+                Intent intent = new Intent(getContext(), PatientPhotoActivity.class);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                patientPhoto.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
+                intent.putExtra("photo", byteArrayOutputStream.toByteArray());
+                intent.putExtra("name", patientName);
+                startActivity(intent);
             }
         });
 

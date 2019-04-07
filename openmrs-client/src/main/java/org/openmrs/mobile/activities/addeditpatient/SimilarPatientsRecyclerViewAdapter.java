@@ -70,17 +70,14 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
         setBirthdate(holder, patient);
         setPatientAdres(holder, patient);
 
-        holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!(new PatientDAO().isUserAlreadySaved(patient.getUuid()))) {
-                    downloadPatient(patient);
-                }
-                Intent intent = new Intent(mContext, PatientDashboardActivity.class);
-                intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, getPatientId(patient));
-                mContext.startActivity(intent);
-                mContext.finish();
+        holder.mRowLayout.setOnClickListener(v -> {
+            if (!(new PatientDAO().isUserAlreadySaved(patient.getUuid()))) {
+                downloadPatient(patient);
             }
+            Intent intent = new Intent(mContext, PatientDashboardActivity.class);
+            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, getPatientId(patient));
+            mContext.startActivity(intent);
+            mContext.finish();
         });
     }
 

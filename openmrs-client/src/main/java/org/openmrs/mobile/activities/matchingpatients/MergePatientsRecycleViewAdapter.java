@@ -98,21 +98,18 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
             mPostalCode = (TextView) itemView.findViewById(R.id.patientPostalCode);
             mCity = (TextView) itemView.findViewById(R.id.patientCity);
             mCountry = (TextView) itemView.findViewById(R.id.patientCountry);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CardView cardView = (CardView)v.findViewById(R.id.cardView);
-                    if (selectedPosition == -1) {
-                        selectedPosition = getAdapterPosition();
-                        mPresenter.setSelectedPatient(patientList.get(selectedPosition));
-                        cardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.patient_selected_highlight));
-                    } else if(selectedPosition == getAdapterPosition()){
-                        selectedPosition = -1;
-                        mPresenter.removeSelectedPatient();
-                        cardView.setCardBackgroundColor(Color.WHITE);
-                    } else {
-                        ToastUtil.notify("You can select only one similar patient");
-                    }
+            itemView.setOnClickListener(v -> {
+                CardView cardView = (CardView)v.findViewById(R.id.cardView);
+                if (selectedPosition == -1) {
+                    selectedPosition = getAdapterPosition();
+                    mPresenter.setSelectedPatient(patientList.get(selectedPosition));
+                    cardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.patient_selected_highlight));
+                } else if(selectedPosition == getAdapterPosition()){
+                    selectedPosition = -1;
+                    mPresenter.removeSelectedPatient();
+                    cardView.setCardBackgroundColor(Color.WHITE);
+                } else {
+                    ToastUtil.notify("You can select only one similar patient");
                 }
             });
         }

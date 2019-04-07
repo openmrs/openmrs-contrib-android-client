@@ -152,7 +152,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private final static int IMAGE_REQUEST = 1;
     private final static int GALLERY_IMAGE_REQUEST = 2;
     private OpenMRSLogger logger = new OpenMRSLogger();
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

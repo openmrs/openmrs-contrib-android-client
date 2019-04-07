@@ -114,8 +114,7 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="20dp"
                             android:focusable="true"
-                            android:inputType="textPassword|text"
-                            android:maxLines="1" />
+                            android:inputType="textPassword|text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <CheckBox

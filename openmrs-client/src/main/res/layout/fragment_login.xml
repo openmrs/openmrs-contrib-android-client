@@ -175,11 +175,13 @@
 
                 <Button
                     android:id="@+id/loginButton"
-                    android:layout_width="130dp"
+                    android:layout_width="220dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center_vertical|center_horizontal|center"
                     android:layout_marginBottom="30dp"
                     android:layout_marginTop="10dp"
+                    android:elevation="10dp"
+                    android:stateListAnimator="@null"
                     android:background="@drawable/button_apply"
                     android:enabled="false"
                     android:gravity="center_vertical|center_horizontal"

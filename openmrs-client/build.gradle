@@ -33,6 +33,7 @@ android {
     def buildVersionName = (travisTag) ? travisTag : applicationVersion + "-debug." + buildNumber
 
     defaultConfig {
+        multiDexEnabled true
         applicationId "org.openmrs.mobile"
         versionName buildVersionName
         versionCode buildNumber
@@ -121,6 +122,8 @@ dependencies {
     )
 
     androidTestImplementation files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
+    debugImplementation 'com.github.jainsahab:Snooper-Okhttp:1.5.3'
+    releaseImplementation 'com.github.jainsahab:Snooper-No-Op:1.5.3'
     implementation 'com.google.guava:guava:23.0'
     implementation "androidx.appcompat:appcompat:$support_version"
     implementation "androidx.gridlayout:gridlayout:$support_version"

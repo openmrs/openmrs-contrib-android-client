@@ -13,10 +13,6 @@ buildscript {
     }
 }
 
-plugins {
-    id 'jacoco'
-}
-
 allprojects {
     repositories {
         google()

@@ -7,10 +7,6 @@ before_install:
 
 script:
 - ./build.sh
-- ./gradlew test
-
-after_success:
-- ./gradlew jacocoTestReport
 
 deploy:
   provider: releases

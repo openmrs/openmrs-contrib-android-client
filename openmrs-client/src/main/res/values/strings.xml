@@ -348,5 +348,7 @@
     <string name="url_privacy_policy">https://github.com/openmrs/openmrs-contrib-android-client/blob/master/privacy_policy.md</string>
     <string name="settings_privacy_policy">Privacy Policy</string>
     <string name="logout_success">Logged out successfully!</string>
+    <string name="url_privacy_policy">https://github.com/openmrs/openmrs-contrib-android-client/blob/master/privacy_policy.md</string>
+    <string name="settings_privacy_policy">Privacy Policy</string>
 </resources>
 >>>>>>> AC-569: Added Toast after User Logout (#513)

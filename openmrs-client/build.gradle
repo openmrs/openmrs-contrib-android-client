@@ -36,7 +36,7 @@ android {
         multiDexEnabled true
 
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 28
 
         testApplicationId "org.openmrs.mobile.test"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'

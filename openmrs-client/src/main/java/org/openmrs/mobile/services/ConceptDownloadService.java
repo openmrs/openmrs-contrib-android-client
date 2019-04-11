@@ -67,7 +67,6 @@ public class ConceptDownloadService extends Service {
                                 maxConceptsInOneQuery = Integer.parseInt(value);
                             }
                         }
-
                     }
                 }
                 downloadConcepts(0);

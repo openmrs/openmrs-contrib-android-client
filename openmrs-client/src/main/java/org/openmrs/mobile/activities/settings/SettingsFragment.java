@@ -34,6 +34,7 @@ import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.models.SettingsListItemDTO;
 import org.openmrs.mobile.services.ConceptDownloadService;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,8 +104,9 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
     public void setConceptsInDbText(String text) {
         if(text.equals("0")){
             downloadConceptsButton.setEnabled(false);
-            Toast.makeText(getActivity(), "There are no concepts in DB!",
-                    Toast.LENGTH_LONG).show();
+            ToastUtil.showLongToast(getActivity(),
+                    ToastUtil.ToastType.WARNING,
+                    R.string.settings_no_concepts_toast);
         }
         conceptsInDbTextView.setText(text);
     }

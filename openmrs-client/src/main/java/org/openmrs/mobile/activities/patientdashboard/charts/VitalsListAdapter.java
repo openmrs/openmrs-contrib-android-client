@@ -41,7 +41,6 @@ import org.openmrs.mobile.utilities.DayAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -75,20 +74,17 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
                 Iterator<String> dates = chartData.keys();
                 ArrayList<String> dateList = Lists.newArrayList(dates);
                 //Sorting the date
-                Collections.sort(dateList, new Comparator<String>() {
-                    @Override
-                    public int compare(String lhs, String rhs) {
-                        if (DateUtils.getDateFromString(lhs).getTime() < DateUtils.getDateFromString(rhs).getTime())
-                            return -1;
-                        else if (DateUtils.getDateFromString(lhs).getTime() == DateUtils.getDateFromString(rhs).getTime())
-                            return 0;
-                        else
-                            return 1;
-                    }
+                Collections.sort(dateList, (lhs, rhs) -> {
+                    if (DateUtils.getDateFromString(lhs).getTime() < DateUtils.getDateFromString(rhs).getTime())
+                        return -1;
+                    else if (DateUtils.getDateFromString(lhs).getTime() == DateUtils.getDateFromString(rhs).getTime())
+                        return 0;
+                    else
+                        return 1;
                 });
                 for (Integer j = 0; j < dateList.size(); j++) {
                     JSONArray dataArray = chartData.getJSONArray(dateList.get(j));
-                    LineChart chart = (LineChart) convertView.findViewById(R.id.linechart);
+                    LineChart chart = convertView.findViewById(R.id.linechart);
                     List<Entry> entries = new ArrayList<Entry>();
                     for (Integer i = 0; i < dataArray.length(); i++) {
                         entries.add(new Entry(j, Float.parseFloat((String) dataArray.get(i))));
@@ -174,8 +170,8 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
             LayoutInflater inflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             rowView = inflater.inflate(R.layout.list_vital_group, null);
         }
-        final TextView vitalName = (TextView) rowView.findViewById(R.id.listVisitGroupVitalName);
-        final TextView detailsSelector = (TextView) rowView.findViewById(R.id.listVisitGroupDetailsSelector);
+        final TextView vitalName = rowView.findViewById(R.id.listVisitGroupVitalName);
+        final TextView detailsSelector = rowView.findViewById(R.id.listVisitGroupDetailsSelector);
         String vitalLabel = String.valueOf(mVitalNameList.get(groupPosition));
         vitalName.setText(vitalLabel);
         if (isExpanded) {

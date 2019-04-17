@@ -62,7 +62,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
         snackbar = Snackbar
                 .make(mPatientDashboardActivity.findViewById(R.id.patientDashboardContentFrame), getString(R.string.snackbar_no_internet_connection), Snackbar.LENGTH_INDEFINITE);
         View view = snackbar.getView();
-        TextView tv = (TextView) view.findViewById(com.google.android.material.R.id.snackbar_text);
+        TextView tv = view.findViewById(com.google.android.material.R.id.snackbar_text);
         tv.setTextColor(Color.WHITE);
         snackbar.show();
     }
@@ -118,18 +118,13 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
                 ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.female));
             }
         }
-        ImageView patientImageView = (ImageView) rootView.findViewById(R.id.patientPhoto);
+        ImageView patientImageView = rootView.findViewById(R.id.patientPhoto);
 
         if (patient.getPerson().getPhoto() != null) {
             final Bitmap photo = patient.getPerson().getResizedPhoto();
             final String patientName = patient.getPerson().getName().getNameString();
             patientImageView.setImageBitmap(photo);
-            patientImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showPatientPhoto(photo, patientName);
-                }
-            });
+            patientImageView.setOnClickListener(view -> showPatientPhoto(photo, patientName));
         }
 
         ((TextView) rootView.findViewById(R.id.patientDetailsName)).setText(patient.getPerson().getName().getNameString());

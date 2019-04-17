@@ -16,13 +16,11 @@ package org.openmrs.mobile.activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -223,7 +221,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         snackbar = Snackbar.make(findViewById(android.R.id.content),
                 getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
         View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
+        TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
     }
@@ -350,30 +348,19 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         alertDialogBuilder
                 .setMessage(R.string.crash_dialog_message)
                 .setCancelable(false)
-                .setPositiveButton(R.string.crash_dialog_positive_button, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                })
-                .setNegativeButton(R.string.crash_dialog_negative_button, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finishAffinity();
-                    }
-                })
-                .setNeutralButton(R.string.crash_dialog_neutral_button, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String filename = OpenMRS.getInstance().getOpenMRSDir()
-                                + File.separator + mOpenMRSLogger.getLogFilename();
-                        Intent email = new Intent(Intent.ACTION_SEND);
-                        email.putExtra(Intent.EXTRA_SUBJECT, R.string.error_email_subject_app_crashed);
-                        email.putExtra(Intent.EXTRA_TEXT, error);
-                        email.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + filename));
-                        //need this to prompts email client only
-                        email.setType("message/rfc822");
+                .setPositiveButton(R.string.crash_dialog_positive_button, (dialog, id) -> dialog.cancel())
+                .setNegativeButton(R.string.crash_dialog_negative_button, (dialog, id) -> finishAffinity())
+                .setNeutralButton(R.string.crash_dialog_neutral_button, (dialog, id) -> {
+                    String filename = OpenMRS.getInstance().getOpenMRSDir()
+                            + File.separator + mOpenMRSLogger.getLogFilename();
+                    Intent email = new Intent(Intent.ACTION_SEND);
+                    email.putExtra(Intent.EXTRA_SUBJECT, R.string.error_email_subject_app_crashed);
+                    email.putExtra(Intent.EXTRA_TEXT, error);
+                    email.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + filename));
+                    //need this to prompts email client only
+                    email.setType("message/rfc822");
 
-                        startActivity(Intent.createChooser(email, getString(R.string.choose_a_email_client)));
-                    }
+                    startActivity(Intent.createChooser(email, getString(R.string.choose_a_email_client)));
                 });
 
         AlertDialog alertDialog = alertDialogBuilder.create();

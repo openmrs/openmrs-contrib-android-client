@@ -89,30 +89,27 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
         private TextView mCountry;
         public PatientViewHolder(View itemView) {
             super(itemView);
-            mGivenName = (TextView) itemView.findViewById(R.id.patientGivenName);
-            mMiddleName = (TextView) itemView.findViewById(R.id.patientMiddleName);
-            mFamilyName = (TextView) itemView.findViewById(R.id.patientFamilyName);
-            mGender = (TextView) itemView.findViewById(R.id.patientGender);
-            mBirthDate = (TextView) itemView.findViewById(R.id.patientBirthDate);
-            mAddres = (TextView) itemView.findViewById(R.id.patientAddres);
-            mPostalCode = (TextView) itemView.findViewById(R.id.patientPostalCode);
-            mCity = (TextView) itemView.findViewById(R.id.patientCity);
-            mCountry = (TextView) itemView.findViewById(R.id.patientCountry);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CardView cardView = (CardView)v.findViewById(R.id.cardView);
-                    if (selectedPosition == -1) {
-                        selectedPosition = getAdapterPosition();
-                        mPresenter.setSelectedPatient(patientList.get(selectedPosition));
-                        cardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.patient_selected_highlight));
-                    } else if(selectedPosition == getAdapterPosition()){
-                        selectedPosition = -1;
-                        mPresenter.removeSelectedPatient();
-                        cardView.setCardBackgroundColor(Color.WHITE);
-                    } else {
-                        ToastUtil.notify("You can select only one similar patient");
-                    }
+            mGivenName = itemView.findViewById(R.id.patientGivenName);
+            mMiddleName = itemView.findViewById(R.id.patientMiddleName);
+            mFamilyName = itemView.findViewById(R.id.patientFamilyName);
+            mGender = itemView.findViewById(R.id.patientGender);
+            mBirthDate = itemView.findViewById(R.id.patientBirthDate);
+            mAddres = itemView.findViewById(R.id.patientAddres);
+            mPostalCode = itemView.findViewById(R.id.patientPostalCode);
+            mCity = itemView.findViewById(R.id.patientCity);
+            mCountry = itemView.findViewById(R.id.patientCountry);
+            itemView.setOnClickListener(view -> {
+                CardView cardView = view.findViewById(R.id.cardView);
+                if (selectedPosition == -1) {
+                    selectedPosition = getAdapterPosition();
+                    mPresenter.setSelectedPatient(patientList.get(selectedPosition));
+                    cardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.patient_selected_highlight));
+                } else if (selectedPosition == getAdapterPosition()) {
+                    selectedPosition = -1;
+                    mPresenter.removeSelectedPatient();
+                    cardView.setCardBackgroundColor(Color.WHITE);
+                } else {
+                    ToastUtil.notify("You can select only one similar patient");
                 }
             });
         }

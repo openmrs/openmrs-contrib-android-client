@@ -86,8 +86,6 @@ public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresent
     public void startFormDisplayActivityWithEncounter() {
         addSubscription(encounterDAO.getLastVitalsEncounter(mPatient.getUuid())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(encounter -> {
-                    mPatientVitalsView.startFormDisplayActivity(encounter);
-                }));
+                .subscribe(encounter -> mPatientVitalsView.startFormDisplayActivity(encounter)));
     }
 }

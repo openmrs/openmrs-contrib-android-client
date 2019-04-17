@@ -42,8 +42,8 @@ public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> impleme
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_logs, container, false);
 
-        tvLogs = (TextView) root.findViewById(R.id.tvLogs);
-        fab = (FloatingActionButton) root.findViewById(R.id.fab);
+        tvLogs = root.findViewById(R.id.tvLogs);
+        fab = root.findViewById(R.id.fab);
         return root;
     }
 
@@ -53,13 +53,10 @@ public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> impleme
 
     public void fabCopyAll(String textLogs) {
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setClipboard(getContext(), textLogs);
-                Toast.makeText(getContext(), "Logs copied to clipboard",
-                        Toast.LENGTH_SHORT).show();
-            }
+        fab.setOnClickListener(view -> {
+            setClipboard(getContext(), textLogs);
+            Toast.makeText(getContext(), "Logs copied to clipboard",
+                    Toast.LENGTH_SHORT).show();
         });
     }
 

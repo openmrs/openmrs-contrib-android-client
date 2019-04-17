@@ -24,7 +24,6 @@ import org.openmrs.mobile.utilities.DayAxisValueFormatter;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class ChartsViewActivity extends ACBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_charts_view);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
         if (toolbar != null) {
             toolbar.setTitle(getString(R.string.charts_view_toolbar_title));
@@ -49,20 +48,17 @@ public class ChartsViewActivity extends ACBaseActivity {
             Iterator<String> dates = chartData.keys();
             ArrayList<String> dateList = Lists.newArrayList(dates);
             //Sorting the date
-            Collections.sort(dateList, new Comparator<String>() {
-                @Override
-                public int compare(String lhs, String rhs) {
-                    if (DateUtils.getDateFromString(lhs).getTime() < DateUtils.getDateFromString(rhs).getTime())
-                        return -1;
-                    else if (DateUtils.getDateFromString(lhs).getTime() == DateUtils.getDateFromString(rhs).getTime())
-                        return 0;
-                    else
-                        return 1;
-                }
+            Collections.sort(dateList, (lhs, rhs) -> {
+                if (DateUtils.getDateFromString(lhs).getTime() < DateUtils.getDateFromString(rhs).getTime())
+                    return -1;
+                else if (DateUtils.getDateFromString(lhs).getTime() == DateUtils.getDateFromString(rhs).getTime())
+                    return 0;
+                else
+                    return 1;
             });
             for (Integer j = 0; j < dateList.size(); j++) {
                 JSONArray dataArray = chartData.getJSONArray(dateList.get(j));
-                LineChart chart = (LineChart) findViewById(R.id.linechart);
+                LineChart chart = findViewById(R.id.linechart);
                 List<Entry> entries = new ArrayList<Entry>();
                 for (Integer i = 0; i < dataArray.length(); i++) {
                     entries.add(new Entry(j, Float.parseFloat((String) dataArray.get(i))));

@@ -21,7 +21,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -63,26 +62,23 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_patient_charts, null, false);
 
-        mEmptyListView = (TextView) root.findViewById(R.id.vitalEmpty);
+        mEmptyListView = root.findViewById(R.id.vitalEmpty);
         FontsUtil.setFont(mEmptyListView, FontsUtil.OpenFonts.OPEN_SANS_BOLD);
         mListView = root.findViewById(R.id.vitalList);
         mListView.setEmptyView(mEmptyListView);
         setEmptyListVisibility(false);
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), ChartsViewActivity.class);
-                Bundle mBundle = new Bundle();
-                String vitalName = chartsListAdapter.getItem(position);
-                try {
-                    mBundle.putString("vitalName", observationList.getJSONObject(vitalName).toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                intent.putExtra("bundle", mBundle);
-                startActivity(intent);
+        mListView.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(getActivity(), ChartsViewActivity.class);
+            Bundle mBundle = new Bundle();
+            String vitalName = chartsListAdapter.getItem(position);
+            try {
+                mBundle.putString("vitalName", observationList.getJSONObject(vitalName).toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+            intent.putExtra("bundle", mBundle);
+            startActivity(intent);
         });
         return root;
     }

@@ -79,13 +79,10 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
             visitViewHolder.mBirthDate.setText(" ");
         }
 
-        visitViewHolder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, VisitDashboardActivity.class);
-                intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, mVisits.get(adapterPos).getId());
-                mContext.startActivity(intent);
-            }
+        visitViewHolder.mRelativeLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(mContext, VisitDashboardActivity.class);
+            intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, mVisits.get(adapterPos).getId());
+            mContext.startActivity(intent);
         });
     }
 
@@ -110,11 +107,11 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
         public VisitViewHolder(View itemView) {
             super(itemView);
             mRelativeLayout = (LinearLayout) itemView;
-            mIdentifier = (TextView) itemView.findViewById(R.id.findVisitsIdentifier);
-            mDisplayName = (TextView) itemView.findViewById(R.id.findVisitsDisplayName);
-            mVisitPlace = (TextView) itemView.findViewById(R.id.findVisitsPlace);
-            mBirthDate = (TextView) itemView.findViewById(R.id.findVisitsPatientBirthDate);
-            mGender = (TextView) itemView.findViewById(R.id.findVisitsPatientGender);
+            mIdentifier = itemView.findViewById(R.id.findVisitsIdentifier);
+            mDisplayName = itemView.findViewById(R.id.findVisitsDisplayName);
+            mVisitPlace = itemView.findViewById(R.id.findVisitsPlace);
+            mBirthDate = itemView.findViewById(R.id.findVisitsPatientBirthDate);
+            mGender = itemView.findViewById(R.id.findVisitsPatientGender);
         }
         public void clearAnimation() {
             mRelativeLayout.clearAnimation();

@@ -64,7 +64,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
         getActivity().getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        mParent = (LinearLayout) root.findViewById(R.id.sectionContainer);
+        mParent = root.findViewById(R.id.sectionContainer);
         return root;
     }
 
@@ -89,7 +89,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
                     sb.setProgress(field.getValue().intValue());
                 }
                 if(field.isRed()){
-                    RangeEditText ed = (RangeEditText) getActivity().findViewById(field.getId());
+                    RangeEditText ed = getActivity().findViewById(field.getId());
                     ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
                 }
             }
@@ -274,13 +274,10 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
     }
 
     private void setOnCheckedChangeListener(RadioGroup radioGroup, final SelectOneField radioGroupField) {
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                View radioButton = radioGroup.findViewById(i);
-                int idx = radioGroup.indexOfChild(radioButton);
-                radioGroupField.setAnswer(idx);
-            }
+        radioGroup.setOnCheckedChangeListener((radioGroup1, i) -> {
+            View radioButton = radioGroup1.findViewById(i);
+            int idx = radioGroup1.indexOfChild(radioButton);
+            radioGroupField.setAnswer(idx);
         });
     }
 
@@ -338,7 +335,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
     public List<InputField> getInputFields() {
         for (InputField field:inputFields) {
             try{
-            RangeEditText ed=(RangeEditText) getActivity().findViewById(field.getId());
+                RangeEditText ed = getActivity().findViewById(field.getId());
             if(!isEmpty(ed)){
                 field.setValue(Double.parseDouble(ed.getText().toString()));
                 boolean isRed = (ed.getCurrentTextColor()==ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
@@ -349,7 +346,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
             }
         }
             catch (ClassCastException e ) {
-                DiscreteSeekBar dsb = (DiscreteSeekBar) getActivity().findViewById(field.getId());
+                DiscreteSeekBar dsb = getActivity().findViewById(field.getId());
                 field.setValue((double) dsb.getProgress());
             }
         }
@@ -372,7 +369,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
         boolean valid=true;
         for (InputField field:inputFields) {
             try {
-            RangeEditText ed = (RangeEditText) getActivity().findViewById(field.getId());
+                RangeEditText ed = getActivity().findViewById(field.getId());
             if (!isEmpty(ed)) {
                 allEmpty = false;
                 if (ed.getText().toString().charAt(0) != '.') {
@@ -388,7 +385,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
                 }
             }}
             catch (ClassCastException e){
-                DiscreteSeekBar dsb = (DiscreteSeekBar) getActivity().findViewById(field.getId());
+                DiscreteSeekBar dsb = getActivity().findViewById(field.getId());
                 if (dsb.getProgress() > dsb.getMin()) {
                     allEmpty = false;
                 }

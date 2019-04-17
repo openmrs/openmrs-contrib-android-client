@@ -160,6 +160,23 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         return patients == null ? 0 : patients.size();
     }
 
+    public void setUpCheckBoxLogic(final PatientViewHolder holder, final Patient patient) {
+        if (isLongClicked) {
+            holder.mAvailableOfflineCheckbox.setVisibility(View.INVISIBLE);
+        } else {
+            holder.mAvailableOfflineCheckbox.setChecked(false);
+            holder.mAvailableOfflineCheckbox.setVisibility(View.VISIBLE);
+            holder.mAvailableOfflineCheckbox.setButtonDrawable(R.drawable.ic_download);
+            holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_download_label));
+            holder.mAvailableOfflineCheckbox.setOnClickListener(view -> {
+                if (!isLongClicked && ((CheckBox) view).isChecked()) {
+                    downloadPatient(patient, true);
+                    disableCheckBox(holder);
+                }
+            });
+        }
+    }
+
     class PatientViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener{
         private LinearLayout mRowLayout;
         private TextView mIdentifier;
@@ -171,11 +188,11 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         public PatientViewHolder(View itemView) {
             super(itemView);
             mRowLayout = (LinearLayout) itemView;
-            mIdentifier = (TextView) itemView.findViewById(R.id.lastViewedPatientIdentifier);
-            mDisplayName = (TextView) itemView.findViewById(R.id.lastViewedPatientDisplayName);
-            mGender = (TextView) itemView.findViewById(R.id.lastViewedPatientGender);
-            mBirthDate = (TextView) itemView.findViewById(R.id.lastViewedPatientBirthDate);
-            mAvailableOfflineCheckbox = (CheckBox) itemView.findViewById(R.id.offlineCheckbox);
+            mIdentifier = itemView.findViewById(R.id.lastViewedPatientIdentifier);
+            mDisplayName = itemView.findViewById(R.id.lastViewedPatientDisplayName);
+            mGender = itemView.findViewById(R.id.lastViewedPatientGender);
+            mBirthDate = itemView.findViewById(R.id.lastViewedPatientBirthDate);
+            mAvailableOfflineCheckbox = itemView.findViewById(R.id.offlineCheckbox);
             mRowLayout.setOnClickListener(this);
             mRowLayout.setOnLongClickListener(this);
         }
@@ -216,16 +233,6 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                 notifyDataSetChanged();
             }
             return true;
-        }
-    }
-
-    class ProgressBarViewHolder extends RecyclerView.ViewHolder {
-
-        private ProgressBar progressBar;
-
-        public ProgressBarViewHolder(View itemView) {
-            super(itemView);
-            progressBar = (ProgressBar)itemView.findViewById(R.id.recycleviewProgressbar);
         }
     }
 
@@ -326,23 +333,13 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         notifyDataSetChanged();
     }
 
-    public void setUpCheckBoxLogic(final PatientViewHolder holder, final Patient patient) {
-        if (isLongClicked) {
-            holder.mAvailableOfflineCheckbox.setVisibility(View.INVISIBLE);
-        } else {
-            holder.mAvailableOfflineCheckbox.setChecked(false);
-            holder.mAvailableOfflineCheckbox.setVisibility(View.VISIBLE);
-            holder.mAvailableOfflineCheckbox.setButtonDrawable(R.drawable.ic_download);
-            holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_download_label));
-            holder.mAvailableOfflineCheckbox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isLongClicked && ((CheckBox) v).isChecked()) {
-                        downloadPatient(patient, true);
-                        disableCheckBox(holder);
-                    }
-                }
-            });
+    class ProgressBarViewHolder extends RecyclerView.ViewHolder {
+
+        private ProgressBar progressBar;
+
+        public ProgressBarViewHolder(View itemView) {
+            super(itemView);
+            progressBar = itemView.findViewById(R.id.recycleviewProgressbar);
         }
     }
 

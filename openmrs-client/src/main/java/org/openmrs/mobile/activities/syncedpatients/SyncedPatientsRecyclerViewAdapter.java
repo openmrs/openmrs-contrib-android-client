@@ -73,13 +73,10 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
             holder.mBirthDate.setText("");
         }
 
-        holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext.getActivity(), PatientDashboardActivity.class);
-                intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getId());
-                mContext.startActivity(intent);
-            }
+        holder.mRowLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(mContext.getActivity(), PatientDashboardActivity.class);
+            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patient.getId());
+            mContext.startActivity(intent);
         });
     }
 
@@ -99,11 +96,11 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
         public PatientViewHolder(View itemView) {
             super(itemView);
             mRowLayout = (LinearLayout) itemView;
-            mIdentifier = (TextView) itemView.findViewById(R.id.syncedPatientIdentifier);
-            mDisplayName = (TextView) itemView.findViewById(R.id.syncedPatientDisplayName);
-            mGender = (TextView) itemView.findViewById(R.id.syncedPatientGender);
-            mAge = (TextView) itemView.findViewById(R.id.syncedPatientAge);
-            mBirthDate = (TextView) itemView.findViewById(R.id.syncedPatientBirthDate);
+            mIdentifier = itemView.findViewById(R.id.syncedPatientIdentifier);
+            mDisplayName = itemView.findViewById(R.id.syncedPatientDisplayName);
+            mGender = itemView.findViewById(R.id.syncedPatientGender);
+            mAge = itemView.findViewById(R.id.syncedPatientAge);
+            mBirthDate = itemView.findViewById(R.id.syncedPatientBirthDate);
         }
     }
 }

@@ -19,7 +19,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -41,7 +40,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -204,7 +202,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     @Override
     public void scrollToTop() {
-        ScrollView scrollView = (ScrollView) this.getActivity().findViewById(R.id.scrollView);
+        ScrollView scrollView = this.getActivity().findViewById(R.id.scrollView);
         scrollView.smoothScrollTo(0, scrollView.getPaddingTop());
     }
 
@@ -423,34 +421,34 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private void resolveViews(View v) {
-        relativeLayout = (RelativeLayout) v.findViewById(R.id.addEditRelativeLayout);
-        edfname = (EditText) v.findViewById(R.id.firstname);
-        edmname = (EditText) v.findViewById(R.id.middlename);
-        edlname = (EditText) v.findViewById(R.id.surname);
-        eddob = (EditText) v.findViewById(R.id.dob);
-        edyr = (EditText) v.findViewById(R.id.estyr);
-        edmonth = (EditText) v.findViewById(R.id.estmonth);
-        edaddr1 = (EditText) v.findViewById(R.id.addr1);
-        edaddr2 = (EditText) v.findViewById(R.id.addr2);
-        edcity = (EditText) v.findViewById(R.id.city);
-        edstate = (AutoCompleteTextView) v.findViewById(R.id.state);
-        edcountry = (AutoCompleteTextView) v.findViewById(R.id.country);
-        edpostal = (EditText) v.findViewById(R.id.postal);
+        relativeLayout = v.findViewById(R.id.addEditRelativeLayout);
+        edfname = v.findViewById(R.id.firstname);
+        edmname = v.findViewById(R.id.middlename);
+        edlname = v.findViewById(R.id.surname);
+        eddob = v.findViewById(R.id.dob);
+        edyr = v.findViewById(R.id.estyr);
+        edmonth = v.findViewById(R.id.estmonth);
+        edaddr1 = v.findViewById(R.id.addr1);
+        edaddr2 = v.findViewById(R.id.addr2);
+        edcity = v.findViewById(R.id.city);
+        edstate = v.findViewById(R.id.state);
+        edcountry = v.findViewById(R.id.country);
+        edpostal = v.findViewById(R.id.postal);
 
-        gen = (RadioGroup) v.findViewById(R.id.gender);
-        progressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
+        gen = v.findViewById(R.id.gender);
+        progressBar = v.findViewById(R.id.progress_bar);
 
-        fnameerror = (TextView) v.findViewById(R.id.fnameerror);
-        lnameerror = (TextView) v.findViewById(R.id.lnameerror);
-        doberror = (TextView) v.findViewById(R.id.doberror);
-        gendererror = (TextView) v.findViewById(R.id.gendererror);
-        addrerror = (TextView) v.findViewById(R.id.addrerror);
-        countryerror = (TextView) v.findViewById(R.id.countryerror);
+        fnameerror = v.findViewById(R.id.fnameerror);
+        lnameerror = v.findViewById(R.id.lnameerror);
+        doberror = v.findViewById(R.id.doberror);
+        gendererror = v.findViewById(R.id.gendererror);
+        addrerror = v.findViewById(R.id.addrerror);
+        countryerror = v.findViewById(R.id.countryerror);
 
-        datePicker = (Button) v.findViewById(R.id.btn_datepicker);
-        submitConfirm = (Button) v.findViewById(R.id.submitConfirm);
-        capturePhotoBtn = (FloatingActionButton) v.findViewById(R.id.capture_photo);
-        patientImageView = (ImageView) v.findViewById(R.id.patientPhoto);
+        datePicker = v.findViewById(R.id.btn_datepicker);
+        submitConfirm = v.findViewById(R.id.submitConfirm);
+        capturePhotoBtn = v.findViewById(R.id.capture_photo);
+        patientImageView = v.findViewById(R.id.patientPhoto);
 
         firstNameTIL = v.findViewById(R.id.textInputLayoutFirstName);
         middleNameTIL = v.findViewById(R.id.textInputLayoutMiddlename);
@@ -465,11 +463,10 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             String updatePatientStr = getResources().getString(R.string.action_update_patient_data);
             this.getActivity().setTitle(updatePatientStr);
             submitConfirm.setText(updatePatientStr);
-            submitConfirm.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mPresenter.confirmUpdate(updatePatient(patient));
-                }
+            submitConfirm.setOnClickListener(view -> {
+                Patient patient1;
+                patient1 = updatePatient(patient);
+                mPresenter.confirmUpdate(patient1);
             });
 
             Person person = patient.getPerson();
@@ -538,30 +535,18 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private void addListeners() {
-        gen.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            public void onCheckedChanged(RadioGroup rGroup, int checkedId) {
-                gendererror.setVisibility(View.GONE);
-            }
-        });
+        gen.setOnCheckedChangeListener((radioGroup, checkedId) -> gendererror.setVisibility(View.GONE));
 
         edcountry.setThreshold(2);
-        edcountry.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (edcountry.getText().length() >= edcountry.getThreshold()) {
-                    edcountry.showDropDown();
-                }
-                if (Arrays.asList(countries).contains(edcountry.getText().toString())) {
-                    edcountry.dismissDropDown();
-                }
+        edcountry.setOnFocusChangeListener((view, hasFocus) -> {
+            if (edcountry.getText().length() >= edcountry.getThreshold()) {
+                edcountry.showDropDown();
+            }
+            if (Arrays.asList(countries).contains(edcountry.getText().toString())) {
+                edcountry.dismissDropDown();
             }
         });
-        edstate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                addSuggestionsToCities();
-            }
-        });
+        edstate.setOnFocusChangeListener((view, hasFocus) -> addSuggestionsToCities());
 
         eddob.addTextChangedListener(new TextWatcher() {
             @Override
@@ -603,71 +588,54 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             edmonth.getText().clear();
             edyr.getText().clear();
 
-            DatePickerDialog mDatePicker = new DatePickerDialog(AddEditPatientFragment.this.getActivity(), new DatePickerDialog.OnDateSetListener() {
-                public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                    int adjustedMonth = selectedmonth + 1;
-                    eddob.setText(selectedday + "/" + adjustedMonth + "/" + selectedyear);
-                    birthdate = new LocalDate(selectedyear, adjustedMonth, selectedday);
-                    bdt = birthdate.toDateTimeAtStartOfDay().toDateTime();
-                }
+            DatePickerDialog mDatePicker = new DatePickerDialog(AddEditPatientFragment.this.getActivity(), (datePicker, selectedYear, selectedMonth, selectedDay) -> {
+                int adjustedMonth = selectedMonth + 1;
+                eddob.setText(selectedDay + "/" + adjustedMonth + "/" + selectedYear);
+                birthdate = new LocalDate(selectedYear, adjustedMonth, selectedDay);
+                bdt = birthdate.toDateTimeAtStartOfDay().toDateTime();
             }, cYear, cMonth, cDay);
             mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
             mDatePicker.setTitle(getString(R.string.date_picker_title));
             mDatePicker.show();
         });
 
-        capturePhotoBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        capturePhotoBtn.setOnClickListener(view -> {
 
-                CameraOrGalleryPickerDialog dialog = CameraOrGalleryPickerDialog.getInstance(
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+            CameraOrGalleryPickerDialog dialog = CameraOrGalleryPickerDialog.getInstance(
+                    (dialog1, which) -> {
 
-                                if (which == 0) {
-                                    StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-                                    StrictMode.setVmPolicy(builder.build());
-                                    AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
-                                }
-                                else {
-                                    Intent i;
-                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
-                                        i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                                    else
-                                        i = new Intent(Intent.ACTION_GET_CONTENT);
-                                    i.addCategory(Intent.CATEGORY_OPENABLE);
-                                    i.setType("image/*");
-                                    startActivityForResult(i, GALLERY_IMAGE_REQUEST);
-                                }
-                            }
-                        });
-                dialog.show(getChildFragmentManager(), null);
-            }
+                        if (which == 0) {
+                            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                            StrictMode.setVmPolicy(builder.build());
+                            AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
+                        } else {
+                            Intent i;
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
+                                i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                            else
+                                i = new Intent(Intent.ACTION_GET_CONTENT);
+                            i.addCategory(Intent.CATEGORY_OPENABLE);
+                            i.setType("image/*");
+                            startActivityForResult(i, GALLERY_IMAGE_REQUEST);
+                        }
+                    });
+            dialog.show(getChildFragmentManager(), null);
         });
 
-        submitConfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.confirmRegister(createPatient());
-            }
-        });
+        submitConfirm.setOnClickListener(view -> mPresenter.confirmRegister(createPatient()));
 
-        patientImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (output != null) {
-                    Intent i = new Intent(Intent.ACTION_VIEW);
-                    i.setDataAndType(Uri.fromFile(output), "image/jpeg");
-                    startActivity(i);
-                } else if (patientPhoto != null) {
-                    Intent intent = new Intent(getContext(), PatientPhotoActivity.class);
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    patientPhoto.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
-                    intent.putExtra("photo", byteArrayOutputStream.toByteArray());
-                    intent.putExtra("name", patientName);
-                    startActivity(intent);
-                }
+        patientImageView.setOnClickListener(view -> {
+            if (output != null) {
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setDataAndType(Uri.fromFile(output), "image/jpeg");
+                startActivity(i);
+            } else if (patientPhoto != null) {
+                Intent intent = new Intent(getContext(), PatientPhotoActivity.class);
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                patientPhoto.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
+                intent.putExtra("photo", byteArrayOutputStream.toByteArray());
+                intent.putExtra("name", patientName);
+                startActivity(intent);
             }
         });
 
@@ -711,7 +679,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private Snackbar createSnackbarLong(int stringId) {
         Snackbar snackbar = Snackbar.make(relativeLayout, stringId, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
+        TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         return snackbar;
     }

@@ -334,13 +334,10 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             holder.mAvailableOfflineCheckbox.setVisibility(View.VISIBLE);
             holder.mAvailableOfflineCheckbox.setButtonDrawable(R.drawable.ic_download);
             holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_download_label));
-            holder.mAvailableOfflineCheckbox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isLongClicked && ((CheckBox) v).isChecked()) {
-                        downloadPatient(patient, true);
-                        disableCheckBox(holder);
-                    }
+            holder.mAvailableOfflineCheckbox.setOnClickListener(view -> {
+                if (!isLongClicked && ((CheckBox) view).isChecked()) {
+                    downloadPatient(patient, true);
+                    disableCheckBox(holder);
                 }
             });
         }

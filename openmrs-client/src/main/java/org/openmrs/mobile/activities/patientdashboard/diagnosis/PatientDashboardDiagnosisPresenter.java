@@ -76,9 +76,7 @@ public class PatientDashboardDiagnosisPresenter extends PatientDashboardMainPres
         addSubscription(
                 encounterDAO.getAllEncountersByType(mPatient.getId(), new EncounterType(EncounterType.VISIT_NOTE))
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(encounters -> {
-                            mPatientDiagnosisView.setDiagnosesToDisplay(getAllDiagnosis(encounters));
-                        }));
+                        .subscribe(encounters -> mPatientDiagnosisView.setDiagnosesToDisplay(getAllDiagnosis(encounters))));
     }
 
 }

@@ -274,13 +274,10 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
     }
 
     private void setOnCheckedChangeListener(RadioGroup radioGroup, final SelectOneField radioGroupField) {
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                View radioButton = radioGroup.findViewById(i);
-                int idx = radioGroup.indexOfChild(radioButton);
-                radioGroupField.setAnswer(idx);
-            }
+        radioGroup.setOnCheckedChangeListener((radioGroup1, i) -> {
+            View radioButton = radioGroup1.findViewById(i);
+            int idx = radioGroup1.indexOfChild(radioButton);
+            radioGroupField.setAnswer(idx);
         });
     }
 

@@ -67,16 +67,13 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
         progressBar = (ProgressBar) root.findViewById(R.id.patientRecyclerViewLoading);
         mEmptyList = (TextView) root.findViewById(R.id.emptyLastViewedPatientList);
         mSwipeRefreshLayout = ((SwipeRefreshLayout) root.findViewById(R.id.swiperefreshLastPatients));
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (NetworkUtils.hasNetwork()) {
-                    mPresenter.refresh();
-                    mAdapter.finishActionMode();
-                }else {
-                    ToastUtil.error("No Internet Connection");
-                    getActivity().finish();
-                }
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            if (NetworkUtils.hasNetwork()) {
+                mPresenter.refresh();
+                mAdapter.finishActionMode();
+            }else {
+                ToastUtil.error("No Internet Connection");
+                getActivity().finish();
             }
         });
 
@@ -179,12 +176,7 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
-        snackbar.setAction(getResources().getString(R.string.snackbar_action_open), new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPatientDashboardActivity(patientId);
-            }
-        });
+        snackbar.setAction(getResources().getString(R.string.snackbar_action_open), view -> openPatientDashboardActivity(patientId));
         snackbar.show();
     }
 

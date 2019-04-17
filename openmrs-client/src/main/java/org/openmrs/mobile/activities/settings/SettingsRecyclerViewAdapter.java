@@ -52,12 +52,9 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
         holder.mTitle.setText(mItems.get(position).getTitle());
 
         if (position==0){
-            holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(v.getContext() , LogsActivity.class);
-                        v.getContext().startActivity(i);
-                        }
+            holder.mRowLayout.setOnClickListener(view -> {
+                Intent i = new Intent(view.getContext() , LogsActivity.class);
+                view.getContext().startActivity(i);
                 });
         }
 

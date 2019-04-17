@@ -29,7 +29,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -111,116 +110,93 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         hideURLDialog();
 
         // Font config
-        FontsUtil.setFont((ViewGroup) this.getActivity().findViewById(android.R.id.content));
+        FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
 
         return mRootView;
     }
 
     private void initListeners() {
-        mLoginSyncButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
-                boolean syncState = prefs.getBoolean("sync", true);
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance()).edit();
-                editor.putBoolean("sync", !syncState);
-                editor.apply();
-                setSyncButtonState(!syncState);
-            }
+        mLoginSyncButton.setOnClickListener(view -> {
+            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
+            boolean syncState = prefs.getBoolean("sync", true);
+            SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance()).edit();
+            editor.putBoolean("sync", !syncState);
+            editor.apply();
+            setSyncButtonState(!syncState);
         });
 
         loginValidatorWatcher = new LoginValidatorWatcher(mUrl, mUsername, mPassword, mDropdownLocation, mLoginButton);
 
-        mUrl.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (StringUtils.notEmpty(mUrl.getText().toString())
-                        && !view.isFocused()
-                        && loginValidatorWatcher.isUrlChanged()
-                        || (loginValidatorWatcher.isUrlChanged() && !view.isFocused()
-                        && loginValidatorWatcher.isLocationErrorOccurred())
-                        || (!loginValidatorWatcher.isUrlChanged() && !view.isFocused())) {
-                    ((LoginFragment) getActivity()
-                            .getSupportFragmentManager()
-                            .findFragmentById(R.id.loginContentFrame))
-                            .setUrl(mUrl.getText().toString());
-                    loginValidatorWatcher.setUrlChanged(false);
-                }
+        mUrl.setOnFocusChangeListener((view, hasFocus) -> {
+            if (StringUtils.notEmpty(mUrl.getText().toString())
+                    && !view.isFocused()
+                    && loginValidatorWatcher.isUrlChanged()
+                    || (loginValidatorWatcher.isUrlChanged() && !view.isFocused()
+                    && loginValidatorWatcher.isLocationErrorOccurred())
+                    || (!loginValidatorWatcher.isUrlChanged() && !view.isFocused())) {
+                ((LoginFragment) getActivity()
+                        .getSupportFragmentManager()
+                        .findFragmentById(R.id.loginContentFrame))
+                        .setUrl(mUrl.getText().toString());
+                loginValidatorWatcher.setUrlChanged(false);
+            }
 
-                if (hasFocus) {
-                    mUrl.setHint("");
-                    mUrlInput.setHint(Html.fromHtml(getString(R.string.login_url_hint)));
-                } else if (mUrl.getText().toString().equals("")) {
-                    mUrl.setHint(Html.fromHtml(getString(R.string.login_url_hint) + getString(R.string.req_star)));
-                    mUrlInput.setHint("");
-                }
+            if (hasFocus) {
+                mUrl.setHint("");
+                mUrlInput.setHint(Html.fromHtml(getString(R.string.login_url_hint)));
+            } else if (mUrl.getText().toString().equals("")) {
+                mUrl.setHint(Html.fromHtml(getString(R.string.login_url_hint) + getString(R.string.req_star)));
+                mUrlInput.setHint("");
             }
         });
 
-        mUsername.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    mUsername.setHint("");
-                    mUsernameInput.setHint(Html.fromHtml(getString(R.string.login_username_hint)));
-                } else if (mUsername.getText().toString().equals("")) {
-                    mUsername.setHint(Html.fromHtml(getString(R.string.login_username_hint) + getString(R.string.req_star)));
-                    mUsernameInput.setHint("");
-                }
+        mUsername.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                mUsername.setHint("");
+                mUsernameInput.setHint(Html.fromHtml(getString(R.string.login_username_hint)));
+            } else if (mUsername.getText().toString().equals("")) {
+                mUsername.setHint(Html.fromHtml(getString(R.string.login_username_hint) + getString(R.string.req_star)));
+                mUsernameInput.setHint("");
             }
         });
 
-        mPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    mPassword.setHint("");
-                    mPasswordInput.setHint(Html.fromHtml(getString(R.string.login_password_hint)));
-                } else if (mPassword.getText().toString().equals("")) {
-                    mPassword.setHint(Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star)));
-                    mPasswordInput.setHint("");
-                }
+        mPassword.setOnFocusChangeListener((view, hasFocus) -> {
+            if (hasFocus) {
+                mPassword.setHint("");
+                mPasswordInput.setHint(Html.fromHtml(getString(R.string.login_password_hint)));
+            } else if (mPassword.getText().toString().equals("")) {
+                mPassword.setHint(Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star)));
+                mPasswordInput.setHint("");
             }
         });
 
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.login(mUsername.getText().toString(),
-                        mPassword.getText().toString(),
-                        mUrl.getText().toString(),
-                        initialUrl);
-            }
-        });
+        mLoginButton.setOnClickListener(view -> mPresenter.login(mUsername.getText().toString(),
+                mPassword.getText().toString(),
+                mUrl.getText().toString(),
+                initialUrl));
 
-        mForgotPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                forgotPassword();
-            }
-        });
+        mForgotPass.setOnClickListener(view -> forgotPassword());
 
-        mShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                } else {
-                    mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                }
+        mShowPassword.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            int cursorPosition = mPassword.getSelectionStart();
+            if (isChecked) {
+                mPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            } else {
+                mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             }
+            mPassword.setSelection(cursorPosition);
         });
     }
 
     private void initViewFields(View root) {
-        mUrl = (EditText) root.findViewById(R.id.loginUrlField);
+        mUrl = root.findViewById(R.id.loginUrlField);
         mUrl.setHint(Html.fromHtml(getString(R.string.login_url_hint)));
-        mUrlInput = (TextInputLayout) root.findViewById(R.id.textInputLayoutLoginURL);
+        mUrlInput = root.findViewById(R.id.textInputLayoutLoginURL);
         mUrlInput.setHint(Html.fromHtml(getString(R.string.login_url_hint)));
 
-        mUsername = (EditText) root.findViewById(R.id.loginUsernameField);
+        mUsername = root.findViewById(R.id.loginUsernameField);
         mUsername.setText(OpenMRS.getInstance().getUsername());
-        mUsernameInput = (TextInputLayout) root.findViewById(R.id.textInputLayoutUsername);
+        mUsernameInput = root.findViewById(R.id.textInputLayoutUsername);
 
         // If we have no cached username from previous sessions, we want the hint to be set
         // directly at the EditText. Otherwise, we set it on the TextInputLayout which will
@@ -230,22 +206,22 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         else
             mUsernameInput.setHint(Html.fromHtml(getString(R.string.login_username_hint)));
 
-        mPassword = (EditText) root.findViewById(R.id.loginPasswordField);
+        mPassword = root.findViewById(R.id.loginPasswordField);
         mPassword.setHint(Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star)));
-        mPasswordInput = (TextInputLayout) root.findViewById(R.id.textInputLayoutPassword);
+        mPasswordInput = root.findViewById(R.id.textInputLayoutPassword);
 
-        TextView mRequired = (TextView) root.findViewById(R.id.loginRequiredLabel);
+        TextView mRequired = root.findViewById(R.id.loginRequiredLabel);
         mRequired.setText(Html.fromHtml(getString(R.string.req_star) + getString(R.string.login_required)));
 
-        mShowPassword = (CheckBox) root.findViewById(R.id.checkboxShowPassword);
-        mLoginButton = (Button) root.findViewById(R.id.loginButton);
-        mSpinner = (ProgressBar) root.findViewById(R.id.loginLoading);
-        mLoginFormView = (LinearLayout) root.findViewById(R.id.loginFormView);
-        mLoginSyncButton = ((AppCompatImageView) root.findViewById(R.id.loginSyncButton));
-        mSyncStateLabel = ((TextView) root.findViewById(R.id.syncLabel));
-        mDropdownLocation = (Spinner) root.findViewById(R.id.locationSpinner);
-        mForgotPass = (TextView) root.findViewById(R.id.forgotPass);
-        mLocationLoadingProgressBar = (ProgressBar) root.findViewById(R.id.locationLoadingProgressBar);
+        mShowPassword = root.findViewById(R.id.checkboxShowPassword);
+        mLoginButton = root.findViewById(R.id.loginButton);
+        mSpinner = root.findViewById(R.id.loginLoading);
+        mLoginFormView = root.findViewById(R.id.loginFormView);
+        mLoginSyncButton = root.findViewById(R.id.loginSyncButton);
+        mSyncStateLabel = root.findViewById(R.id.syncLabel);
+        mDropdownLocation = root.findViewById(R.id.locationSpinner);
+        mForgotPass = root.findViewById(R.id.forgotPass);
+        mLocationLoadingProgressBar = root.findViewById(R.id.locationLoadingProgressBar);
     }
 
     @Override
@@ -337,7 +313,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
     private void bindDrawableResources() {
         mBitmapCache = new SparseArray<>();
-        ImageView openMrsLogoImage = (ImageView) getActivity().findViewById(R.id.openmrsLogo);
+        ImageView openMrsLogoImage = getActivity().findViewById(R.id.openmrsLogo);
         createImageBitmap(R.drawable.openmrs_logo, openMrsLogoImage.getLayoutParams());
         openMrsLogoImage.setImageBitmap(mBitmapCache.get(R.drawable.openmrs_logo));
     }

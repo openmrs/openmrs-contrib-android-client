@@ -25,7 +25,7 @@ public class Page implements Serializable {
 
     @SerializedName("sections")
     @Expose
-    private List<Section> sections = new ArrayList<Section>();
+    private List<Section> sections = new ArrayList<>();
 
     /**
      * 

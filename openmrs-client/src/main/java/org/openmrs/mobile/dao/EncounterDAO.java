@@ -137,7 +137,7 @@ public class EncounterDAO {
 
     public List<Encounter> findEncountersByVisitID(Long visitID) {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        List<Encounter> encounters = new ArrayList<Encounter>();
+        List<Encounter> encounters = new ArrayList<>();
 
         String where = String.format("%s = ?", EncounterTable.Column.VISIT_KEY_ID);
         String[] whereArgs = new String[]{visitID.toString()};
@@ -178,7 +178,7 @@ public class EncounterDAO {
 
     public Observable<List<Encounter>> getAllEncountersByType(Long patientID, EncounterType type) {
         return createObservableIO(() -> {
-            List<Encounter> encounters = new ArrayList<Encounter>();
+            List<Encounter> encounters = new ArrayList<>();
             DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
             String query = "SELECT e.* FROM observations AS o JOIN encounters AS e ON o.encounter_id = e._id " +
                     "JOIN visits AS v on e.visit_id = v._id WHERE v.patient_id = ? AND e.type = ? ORDER BY e.encounterDatetime DESC";

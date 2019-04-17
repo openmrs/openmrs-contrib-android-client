@@ -58,7 +58,7 @@ public class PatientDAO {
 
     public Observable<List<Patient>> getAllPatients() {
         return createObservableIO(() -> {
-            List<Patient> patients = new ArrayList<Patient>();
+            List<Patient> patients = new ArrayList<>();
             DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
             Cursor cursor = openHelper.getReadableDatabase().query(PatientTable.TABLE_NAME,
                     null, null, null, null, null, null);

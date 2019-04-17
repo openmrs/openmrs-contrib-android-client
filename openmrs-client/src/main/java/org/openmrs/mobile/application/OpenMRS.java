@@ -261,7 +261,7 @@ public class OpenMRS extends Application {
 
     public Map<String, String> getCurrentLoggedInUserInfo() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
-        Map<String, String> infoMap = new HashMap<String, String>();
+        Map<String, String> infoMap = new HashMap<>();
         infoMap.put(ApplicationConstants.UserKeys.USER_PERSON_NAME, prefs.getString(ApplicationConstants.UserKeys.USER_PERSON_NAME, ApplicationConstants.EMPTY_STRING));
         infoMap.put(ApplicationConstants.UserKeys.USER_UUID, prefs.getString(ApplicationConstants.UserKeys.USER_UUID, ApplicationConstants.EMPTY_STRING));
         return infoMap;

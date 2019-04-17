@@ -119,9 +119,9 @@ public class FormFieldsWrapper implements Serializable, Parcelable {
     }
 
     protected FormFieldsWrapper(Parcel in) {
-        this.inputFields = new ArrayList<InputField>();
+        this.inputFields = new ArrayList<>();
         in.readList(this.inputFields, InputField.class.getClassLoader());
-        this.selectOneFields = new ArrayList<SelectOneField>();
+        this.selectOneFields = new ArrayList<>();
         in.readList(this.selectOneFields, SelectOneField.class.getClassLoader());
     }
 

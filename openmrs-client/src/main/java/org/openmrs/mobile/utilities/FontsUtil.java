@@ -111,6 +111,6 @@ public final class FontsUtil {
     }
 
     static {
-        typefacesForFonts = new HashMap<OpenFonts, Typeface>(OpenFonts.values().length);
+        typefacesForFonts = new HashMap<>(OpenFonts.values().length);
     }
 }

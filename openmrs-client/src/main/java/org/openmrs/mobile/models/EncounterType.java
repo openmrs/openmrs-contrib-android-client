@@ -36,7 +36,7 @@ public class EncounterType extends Model implements Serializable {
     @Column(name = "links")
     @SerializedName("links")
     @Expose
-    private List<Link> links = new ArrayList<Link>();
+    private List<Link> links = new ArrayList<>();
 
     public static final String VITALS = "Vitals";
     public static final String VISIT_NOTE = "Visit Note";

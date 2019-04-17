@@ -204,7 +204,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     @Override
     public void scrollToTop() {
-        ScrollView scrollView = (ScrollView) this.getActivity().findViewById(R.id.scrollView);
+        ScrollView scrollView = this.getActivity().findViewById(R.id.scrollView);
         scrollView.smoothScrollTo(0, scrollView.getPaddingTop());
     }
 
@@ -423,34 +423,34 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private void resolveViews(View v) {
-        relativeLayout = (RelativeLayout) v.findViewById(R.id.addEditRelativeLayout);
-        edfname = (EditText) v.findViewById(R.id.firstname);
-        edmname = (EditText) v.findViewById(R.id.middlename);
-        edlname = (EditText) v.findViewById(R.id.surname);
-        eddob = (EditText) v.findViewById(R.id.dob);
-        edyr = (EditText) v.findViewById(R.id.estyr);
-        edmonth = (EditText) v.findViewById(R.id.estmonth);
-        edaddr1 = (EditText) v.findViewById(R.id.addr1);
-        edaddr2 = (EditText) v.findViewById(R.id.addr2);
-        edcity = (EditText) v.findViewById(R.id.city);
-        edstate = (AutoCompleteTextView) v.findViewById(R.id.state);
-        edcountry = (AutoCompleteTextView) v.findViewById(R.id.country);
-        edpostal = (EditText) v.findViewById(R.id.postal);
+        relativeLayout = v.findViewById(R.id.addEditRelativeLayout);
+        edfname = v.findViewById(R.id.firstname);
+        edmname = v.findViewById(R.id.middlename);
+        edlname = v.findViewById(R.id.surname);
+        eddob = v.findViewById(R.id.dob);
+        edyr = v.findViewById(R.id.estyr);
+        edmonth = v.findViewById(R.id.estmonth);
+        edaddr1 = v.findViewById(R.id.addr1);
+        edaddr2 = v.findViewById(R.id.addr2);
+        edcity = v.findViewById(R.id.city);
+        edstate = v.findViewById(R.id.state);
+        edcountry = v.findViewById(R.id.country);
+        edpostal = v.findViewById(R.id.postal);
 
-        gen = (RadioGroup) v.findViewById(R.id.gender);
-        progressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
+        gen = v.findViewById(R.id.gender);
+        progressBar = v.findViewById(R.id.progress_bar);
 
-        fnameerror = (TextView) v.findViewById(R.id.fnameerror);
-        lnameerror = (TextView) v.findViewById(R.id.lnameerror);
-        doberror = (TextView) v.findViewById(R.id.doberror);
-        gendererror = (TextView) v.findViewById(R.id.gendererror);
-        addrerror = (TextView) v.findViewById(R.id.addrerror);
-        countryerror = (TextView) v.findViewById(R.id.countryerror);
+        fnameerror = v.findViewById(R.id.fnameerror);
+        lnameerror = v.findViewById(R.id.lnameerror);
+        doberror = v.findViewById(R.id.doberror);
+        gendererror = v.findViewById(R.id.gendererror);
+        addrerror = v.findViewById(R.id.addrerror);
+        countryerror = v.findViewById(R.id.countryerror);
 
-        datePicker = (Button) v.findViewById(R.id.btn_datepicker);
-        submitConfirm = (Button) v.findViewById(R.id.submitConfirm);
-        capturePhotoBtn = (FloatingActionButton) v.findViewById(R.id.capture_photo);
-        patientImageView = (ImageView) v.findViewById(R.id.patientPhoto);
+        datePicker = v.findViewById(R.id.btn_datepicker);
+        submitConfirm = v.findViewById(R.id.submitConfirm);
+        capturePhotoBtn = v.findViewById(R.id.capture_photo);
+        patientImageView = v.findViewById(R.id.patientPhoto);
 
         firstNameTIL = v.findViewById(R.id.textInputLayoutFirstName);
         middleNameTIL = v.findViewById(R.id.textInputLayoutMiddlename);
@@ -615,7 +615,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             mDatePicker.setTitle(getString(R.string.date_picker_title));
             mDatePicker.show();
         });
-
+ 
         capturePhotoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -711,7 +711,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private Snackbar createSnackbarLong(int stringId) {
         Snackbar snackbar = Snackbar.make(relativeLayout, stringId, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
+        TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         return snackbar;
     }

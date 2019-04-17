@@ -30,7 +30,7 @@ public class Resource implements Serializable {
 
     @SerializedName("links")
     @Expose
-    protected List<Link> links = new ArrayList<Link>();
+    protected List<Link> links = new ArrayList<>();
 
     /**
      *

@@ -28,7 +28,7 @@ public class Patient extends Resource implements Serializable{
 
     @SerializedName("identifiers")
     @Expose
-    private List<PatientIdentifier> identifiers = new ArrayList<PatientIdentifier>();
+    private List<PatientIdentifier> identifiers = new ArrayList<>();
 
     @SerializedName("person")
     @Expose

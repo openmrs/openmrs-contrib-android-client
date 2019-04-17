@@ -91,61 +91,58 @@ public class PatientApi extends RetrofitApi{
         if (NetworkUtils.isOnline()) {
             AndroidDeferredManager dm = new AndroidDeferredManager();
             dm.when(locationApi.getLocationUuid(), getIdGenPatientIdentifier(), getPatientIdentifierTypeUuid())
-                    .done(new DoneCallback<MultipleResults>() {
-                        @Override
-                        public void onDone(final MultipleResults results) {
-                            final List<PatientIdentifier> identifiers = new ArrayList<>();
+                    .done(results -> {
+                        final List<PatientIdentifier> identifiers = new ArrayList<>();
 
-                            final PatientIdentifier identifier = new PatientIdentifier();
-                            identifier.setLocation((Location) results.get(0).getResult());
-                            identifier.setIdentifier((String) results.get(1).getResult());
-                            identifier.setIdentifierType((IdentifierType) results.get(2).getResult());
-                            identifiers.add(identifier);
+                        final PatientIdentifier identifier = new PatientIdentifier();
+                        identifier.setLocation((Location) results.get(0).getResult());
+                        identifier.setIdentifier((String) results.get(1).getResult());
+                        identifier.setIdentifierType((IdentifierType) results.get(2).getResult());
+                        identifiers.add(identifier);
 
-                            patient.setIdentifiers(identifiers);
-                            patient.setUuid(null);
+                        patient.setIdentifiers(identifiers);
+                        patient.setUuid(null);
 
-                            Call<Patient> call = restApi.createPatient(patient);
-                            call.enqueue(new Callback<Patient>() {
-                                @Override
-                                public void onResponse(@NonNull Call<Patient> call, @NonNull Response<Patient> response) {
-                                    if (response.isSuccessful()) {
-                                        Patient newPatient = response.body();
+                        Call<Patient> call = restApi.createPatient(patient);
+                        call.enqueue(new Callback<Patient>() {
+                            @Override
+                            public void onResponse(@NonNull Call<Patient> call, @NonNull Response<Patient> response) {
+                                if (response.isSuccessful()) {
+                                    Patient newPatient = response.body();
 
-                                        patient.setUuid(newPatient.getUuid());
-                                        patient.getPerson().setUuid(newPatient.getUuid());
-                                        if (patient.getPerson().getPhoto() != null)
-                                            uploadPatientPhoto(patient);
+                                    patient.setUuid(newPatient.getUuid());
+                                    patient.getPerson().setUuid(newPatient.getUuid());
+                                    if (patient.getPerson().getPhoto() != null)
+                                        uploadPatientPhoto(patient);
 
-                                        new PatientDAO().updatePatient(patient.getId(), patient);
-                                        if(!patient.getEncounters().equals(""))
-                                            addEncounters(patient);
+                                    new PatientDAO().updatePatient(patient.getId(), patient);
+                                    if(!patient.getEncounters().equals(""))
+                                        addEncounters(patient);
 
-                                        deferred.resolve(patient);
+                                    deferred.resolve(patient);
 
-                                        if (callbackListener != null) {
-                                            callbackListener.onResponse();
-                                        }
-
-                                    } else {
-                                        ToastUtil.error("Patient[" + patient.getId() + "] cannot be synced due to server error"+ response.message());
-                                        deferred.reject(new RuntimeException("Patient cannot be synced due to server error: " + response.errorBody().toString()));
-                                        if (callbackListener != null) {
-                                            callbackListener.onErrorResponse(response.message());
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(@NonNull Call<Patient> call, @NonNull Throwable t) {
-                                    ToastUtil.notify("Patient[" + patient.getId() + "] cannot be synced due to request error: " + t.toString());
-                                    deferred.reject(t);
                                     if (callbackListener != null) {
-                                        callbackListener.onErrorResponse(t.getMessage());
+                                        callbackListener.onResponse();
+                                    }
+
+                                } else {
+                                    ToastUtil.error("Patient[" + patient.getId() + "] cannot be synced due to server error"+ response.message());
+                                    deferred.reject(new RuntimeException("Patient cannot be synced due to server error: " + response.errorBody().toString()));
+                                    if (callbackListener != null) {
+                                        callbackListener.onErrorResponse(response.message());
                                     }
                                 }
-                            });
-                        }
+                            }
+
+                            @Override
+                            public void onFailure(@NonNull Call<Patient> call, @NonNull Throwable t) {
+                                ToastUtil.notify("Patient[" + patient.getId() + "] cannot be synced due to request error: " + t.toString());
+                                deferred.reject(t);
+                                if (callbackListener != null) {
+                                    callbackListener.onErrorResponse(t.getMessage());
+                                }
+                            }
+                        });
                     });
         } else {
             ToastUtil.notify("Sync is off. Patient Registration data is saved locally " +
@@ -260,13 +257,10 @@ public class PatientApi extends RetrofitApi{
                 if (response.isSuccessful()) {
                     final Patient newPatient = response.body();
                     AndroidDeferredManager dm = new AndroidDeferredManager();
-                    dm.when(downloadPatientPhotoByUuid(newPatient.getUuid())).done(new DoneCallback<Bitmap>() {
-                        @Override
-                        public void onDone(Bitmap result) {
-                            if (result != null) {
-                                newPatient.getPerson().setPhoto(result);
-                                callbackListener.onPatientPhotoDownloaded(newPatient);
-                            }
+                    dm.when(downloadPatientPhotoByUuid(newPatient.getUuid())).done(result -> {
+                        if (result != null) {
+                            newPatient.getPerson().setPhoto(result);
+                            callbackListener.onPatientPhotoDownloaded(newPatient);
                         }
                     });
                     callbackListener.onPatientDownloaded(newPatient);

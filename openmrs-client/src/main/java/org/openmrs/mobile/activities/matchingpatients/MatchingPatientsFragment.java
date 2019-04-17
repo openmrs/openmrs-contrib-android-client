@@ -68,18 +68,8 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
     }
 
     private void setListeners() {
-        registerNewPatientButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.registerNewPatient();
-            }
-        });
-        mergePatientsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mPresenter.mergePatients();
-            }
-        });
+        registerNewPatientButton.setOnClickListener(view -> mPresenter.registerNewPatient());
+        mergePatientsButton.setOnClickListener(view -> mPresenter.mergePatients());
     }
 
     private void initFragmentFields(View root) {

@@ -64,7 +64,7 @@ android {
                 variant.outputs.each { output ->
                     def relativeRootDir = output.packageApplication.outputDirectory.toPath()
                             .relativize(rootDir.toPath()).toFile()
-                    output.outputFileName = new File("$relativeRootDir/release/",output.outputFile.name)
+                    output.outputFileName = new File("$relativeRootDir/openmrs-client/release/",output.outputFile.name)
                 }
             }
         }

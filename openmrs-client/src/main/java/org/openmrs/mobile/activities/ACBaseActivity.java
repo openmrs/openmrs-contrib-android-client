@@ -110,12 +110,14 @@ public abstract class ACBaseActivity extends AppCompatActivity {
             mAuthorizationManager.moveToLoginActivity();
         }
         registerReceiver(mPasswordChangedReceiver, mIntentFilter);
+        ToastUtil.setAppVisible(true);
     }
 
     @Override
     protected void onPause() {
         unregisterReceiver(mPasswordChangedReceiver);
         super.onPause();
+        ToastUtil.setAppVisible(false);
     }
 
     @Override

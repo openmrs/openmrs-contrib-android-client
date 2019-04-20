@@ -342,7 +342,8 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginRight="12dp"
                     android:layout_marginBottom="20dp"
-                    android:weightSum="2">
+                    android:weightSum="2"
+                    android:baselineAligned="false">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutEstyr"
@@ -489,7 +490,8 @@
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="8dp"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="2"
+                    android:baselineAligned="false">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutCountry"
@@ -539,7 +541,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
-                    android:weightSum="2">
+                    android:weightSum="2"
+                    android:baselineAligned="false">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputLayoutCity"

@@ -231,6 +231,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     public void logout() {
         mOpenMRS.clearUserPreferencesData();
         mAuthorizationManager.moveToLoginActivity();
+        ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.logout_success);
         OpenMRSDBOpenHelper.getInstance().closeDatabases();
     }
 

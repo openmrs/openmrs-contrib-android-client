@@ -27,7 +27,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            style="?android:attr/buttonBarStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -614,7 +615,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_submit_selector"
                 android:text="@string/action_register_patient"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                style="?android:attr/buttonBarButtonStyle"/>
 
         </LinearLayout>
     </ScrollView>

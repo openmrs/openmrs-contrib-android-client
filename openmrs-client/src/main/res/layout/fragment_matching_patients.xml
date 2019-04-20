@@ -414,23 +414,24 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:weightSum="2">
+        android:weightSum="2"
+        style="?android:attr/buttonBarStyle">
         <Button
             android:text="@string/dialog_button_register_new"
-            android:backgroundTint="@color/light_red"
-            android:textColor="@color/white"
+            android:textColor="@color/light_red"
             android:id="@+id/registerNewPatientButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"/>
         <Button
             android:text="@string/dialog_button_merge"
-            android:backgroundTint="@color/primary"
-            android:textColor="@color/white"
+            android:textColor="@color/primary"
             android:id="@+id/mergePatientsButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"/>
     </LinearLayout>
 
 </RelativeLayout>

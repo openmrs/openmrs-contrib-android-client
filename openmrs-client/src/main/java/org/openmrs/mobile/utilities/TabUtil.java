@@ -42,13 +42,10 @@ public final class TabUtil {
         // get the ActionBar class
         Class<?> actionBarClass = inActionBar.getClass();
 
-        // if it is a Jelly Bean implementation (ActionBarImplJB), get the super class (ActionBarImplICS)
-        if (OpenMRS.getInstance().isRunningJellyBeanVersionOrHigher()) {
-            if (OpenMRS.getInstance().isRunningKitKatVersionOrHigher()) {
-                actionBarClass = actionBarClass.getSuperclass().getSuperclass();
-            } else {
-                actionBarClass = actionBarClass.getSuperclass();
-            }
+        if (OpenMRS.getInstance().isRunningKitKatVersionOrHigher()) {
+            actionBarClass = actionBarClass.getSuperclass().getSuperclass();
+        } else {
+            actionBarClass = actionBarClass.getSuperclass();
         }
 
         Object inActionBar2 = null;

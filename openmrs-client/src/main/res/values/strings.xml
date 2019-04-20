@@ -344,6 +344,9 @@
     <string name="dialog_button_stay">Stay</string>
     <string name="dialog_button_leave">Leave</string>
     <string name="snackbar_nonvisitting_patients">Vitals can only be captured for patients currently in a visit.</string>
+<<<<<<< HEAD
     <string name="url_privacy_policy">https://github.com/openmrs/openmrs-contrib-android-client/blob/master/privacy_policy.md</string>
     <string name="settings_privacy_policy">Privacy Policy</string>
+    <string name="logout_success">Logged out successfully!</string>
 </resources>
+>>>>>>> AC-569: Added Toast after User Logout (#513)

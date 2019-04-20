@@ -17,7 +17,6 @@ package org.openmrs.mobile.activities.patientdashboard.details;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,9 +27,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
@@ -51,7 +50,6 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
     private View rootView;
     private PatientDashboardActivity mPatientDashboardActivity;
-    public static Snackbar snackbar;
 
     public static PatientDetailsFragment newInstance() {
         return new PatientDetailsFragment();
@@ -59,12 +57,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
     @Override
     public void attachSnackbarToActivity() {
-        snackbar = Snackbar
-                .make(mPatientDashboardActivity.findViewById(R.id.patientDashboardContentFrame), getString(R.string.snackbar_no_internet_connection), Snackbar.LENGTH_INDEFINITE);
-        View view = snackbar.getView();
-        TextView tv = (TextView) view.findViewById(com.google.android.material.R.id.snackbar_text);
-        tv.setTextColor(Color.WHITE);
-        snackbar.show();
+        ((ACBaseActivity) getActivity()).showNoInternetConnectionSnackbar();
     }
 
     @Override

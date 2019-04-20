@@ -14,11 +14,11 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/dialogRelativeForm"
-                android:orientation="vertical"
-                style="@style/BackgroundThemeEEE"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    android:id="@+id/dialogRelativeForm"
+    android:orientation="vertical"
+    style="@style/BackgroundThemeEEE"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <LinearLayout
         android:id="@+id/dialogForm"
         android:orientation="vertical"
@@ -28,39 +28,36 @@
     <LinearLayout
         android:id="@+id/dialogFormButtons"
         android:orientation="horizontal"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/dialogForm"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:background="@color/white"
+        android:weightSum="2"
+        style="?android:attr/buttonBarStyle">
         <Button
-            android:layout_marginRight="5dp"
-            android:layout_marginEnd="5dp"
             android:id="@+id/dialogFormButtonsCancelButton"
             android:visibility="gone"
-            android:layout_width="130dp"
+            android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_weight="1"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:background="@drawable/button_cancel"
-            android:textColor="@color/white"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            />
+            android:textColor="@color/red"
+            android:background="@drawable/button_dialog_layout_background"
+            style="?android:attr/buttonBarButtonStyle"/>
         <Button
             android:id="@+id/dialogFormButtonsSubmitButton"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
             android:visibility="gone"
-            android:layout_width="130dp"
+            android:layout_width="0dp"
             android:layout_height="40dp"
+            android:layout_weight="1"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:background="@drawable/button_apply"
-            android:textColor="@color/white"
-            style="@style/Widget.AppCompat.Button.Borderless"
-            />
+            android:textColor="@color/green"
+            android:background="@drawable/button_dialog_layout_background"
+            style="?android:attr/buttonBarButtonStyle"/>
     </LinearLayout>
 </RelativeLayout>

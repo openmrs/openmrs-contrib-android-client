@@ -49,13 +49,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:id="@+id/buttonContainer">
+                android:id="@+id/buttonContainer"
+                style="?android:attr/buttonBarStyle">
                 <Button
                     android:id="@+id/btn_next"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_submit_selector"
                     android:textColor="@color/white"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:text="@string/action_next"/>
                 <Button
                     android:id="@+id/btn_finish"
@@ -64,6 +66,7 @@
                     android:background="@drawable/btn_submit_selector"
                     android:textColor="@color/white"
                     android:text="@string/action_submit"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:visibility="gone"/>
             </RelativeLayout>
 

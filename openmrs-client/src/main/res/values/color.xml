@@ -37,4 +37,5 @@
     <color name="patient_selected_highlight">#3a00ff2a</color>
     <color name="fragment_background">#EEEEEEEE</color>
     <color name="grey">#D5D5D5</color>
+    <color name="light_grey">#D3D3D3</color>
 </resources>

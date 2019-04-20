@@ -351,4 +351,10 @@
     <string name="settings_privacy_policy">Privacy Policy</string>
 
     <string name="action_submit">Submit</string>
+
+    <string name="delete_multiple_patients">Delete Patients?</string>
+    <string name="delete_multiple_patients_dialog_message">Are you sure you want to delete these patients?</string>
+    <string name="multiple_patients_deleted">Patients Deleted Successfully</string>
+    <string name="delete">delete</string>
+
 </resources>

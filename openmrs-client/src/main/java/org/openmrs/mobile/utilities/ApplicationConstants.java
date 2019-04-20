@@ -61,6 +61,7 @@ public abstract class ApplicationConstants {
         public static final String DELET_PATIENT_DIALOG_TAG = "deletePatientDialogTag";
         public static final String LOCATION_DIALOG_TAG = "locationDialogTag";
         public static final String CREDENTIAL_CHANGED_DIALOG_TAG = "locationDialogTag";
+        public static final String MULTI_DELETE_PATIENT_DIALOG_TAG = "multiDeletePatientDialogTag";
     }
 
     public abstract static class RegisterPatientRequirements {

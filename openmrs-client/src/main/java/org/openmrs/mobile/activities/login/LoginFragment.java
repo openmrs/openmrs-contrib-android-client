@@ -200,15 +200,14 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
             }
         });
 
-        mShowPassword.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                } else {
-                    mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                }
+        mShowPassword.setOnCheckedChangeListener((buttonView,isChecked) -> {
+            int cursorPosition = mPassword.getSelectionStart();
+            if (isChecked) {
+                mPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            } else {
+                mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             }
+            mPassword.setSelection(cursorPosition);
         });
     }
 

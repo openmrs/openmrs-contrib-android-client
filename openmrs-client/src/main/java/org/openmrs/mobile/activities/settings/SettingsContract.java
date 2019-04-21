@@ -27,6 +27,8 @@ public interface SettingsContract {
 
         void addBuildVersionInfo();
 
+        void addPrivacyPolicyInfo();
+
         void applyChanges();
 
     }

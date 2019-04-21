@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.settings;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,14 +52,20 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
     public void onBindViewHolder(@NonNull SettingsViewHolder holder, int position) {
         holder.mTitle.setText(mItems.get(position).getTitle());
 
-        if (position==0){
-            holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(v.getContext() , LogsActivity.class);
-                        v.getContext().startActivity(i);
-                        }
-                });
+        if (position == 0) {
+            holder.mRowLayout.setOnClickListener(view -> {
+                Intent i = new Intent(view.getContext(), LogsActivity.class);
+                view.getContext().startActivity(i);
+            });
+        }
+
+        if (position == 2) {
+            holder.mRowLayout.setOnClickListener(view -> {
+                // start browser and redirect to Privacy Policy URL
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(view.getContext().getString(R.string.url_privacy_policy)));
+                view.getContext().startActivity(i);
+            });
         }
 
         if (mItems.get(position).getDesc1() != null) {
@@ -87,7 +94,7 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
         return mItems.size();
     }
 
-    class SettingsViewHolder extends RecyclerView.ViewHolder{
+    class SettingsViewHolder extends RecyclerView.ViewHolder {
         private RelativeLayout mRowLayout;
         private TextView mTitle;
         private TextView mDesc1;

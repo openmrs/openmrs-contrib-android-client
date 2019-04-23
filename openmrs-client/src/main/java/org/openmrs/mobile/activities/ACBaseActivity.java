@@ -109,12 +109,14 @@ public abstract class ACBaseActivity extends AppCompatActivity {
             mAuthorizationManager.moveToLoginActivity();
         }
         registerReceiver(mPasswordChangedReceiver, mIntentFilter);
+        ToastUtil.setAppVisible(true);
     }
 
     @Override
     protected void onPause() {
         unregisterReceiver(mPasswordChangedReceiver);
         super.onPause();
+        ToastUtil.setAppVisible(false);
     }
 
     @Override
@@ -175,8 +177,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
                     getApplicationContext().sendBroadcast(intent);
                     ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.reconn_server);
-                    if (PatientDetailsFragment.snackbar != null)
-                        PatientDetailsFragment.snackbar.dismiss();
                     if (snackbar != null)
                         snackbar.dismiss();
                     ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.connected_to_server_message);
@@ -220,7 +220,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         };
     }
 
-    private void showNoInternetConnectionSnackbar() {
+    public void showNoInternetConnectionSnackbar() {
         snackbar = Snackbar.make(findViewById(android.R.id.content),
                 getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
         View sbView = snackbar.getView();
@@ -232,6 +232,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     public void logout() {
         mOpenMRS.clearUserPreferencesData();
         mAuthorizationManager.moveToLoginActivity();
+        ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.logout_success);
         OpenMRSDBOpenHelper.getInstance().closeDatabases();
     }
 

@@ -154,6 +154,7 @@
     <string name="settings_application_info">Application Info</string>
     <string name="settings_concepts_info">Concepts Info</string>
     <string name="settings_concepts_in_db">Concepts in DB:</string>
+    <string name="settings_no_concepts_toast">There are no concepts in DB!</string>
 
     <!-- FindPatients activity -->
     <string name="action_find_patients">Find Patients</string>

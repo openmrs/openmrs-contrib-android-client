@@ -178,12 +178,14 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
         mForgotPass.setOnClickListener(view -> forgotPassword());
 
-        mShowPassword.setOnCheckedChangeListener((buttonView, isChecked) -> {
+
+        mShowPassword.setOnCheckedChangeListener((buttonView,isChecked) -> {
             if (isChecked) {
                 mPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
             } else {
                 mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             }
+            mPassword.setSelection(cursorPosition);
         });
     }
 

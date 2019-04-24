@@ -142,6 +142,11 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
     }
 
     @Override
+    public void addPrivacyPolicyInfo() {
+        mListItem.add(new SettingsListItemDTO(getString(R.string.settings_privacy_policy)));
+    }
+
+    @Override
     public void applyChanges() {
         SettingsRecyclerViewAdapter adapter = new SettingsRecyclerViewAdapter(mListItem);
         settingsRecyclerView.setAdapter(adapter);

@@ -70,17 +70,13 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
                     break;
                 case EncounterType.VISIT_NOTE:
                     for (Observation obs : encounter.getObservations()) {
-                        //checking the type of observation, to extract the relevant data from it to add to the layout
                         if (obs.getDiagnosisNote() != null && !obs.getDiagnosisNote().equals(ApplicationConstants.EMPTY_STRING)) {
-                            //if the observation is a Diagnosis Note, i.e. it contains a value for diagnosisNote
                             convertView = openMRSInflater.addKeyValueStringView(contentLayout, mContext.getString(R.string.diagnosis_note_label), obs.getDiagnosisNote());
-                        } else if (obs.getDiagnosisOrder() != null && obs.getShortDiagnosisCertainty() != null && obs.getDiagnosisList() != null) {
-                            //if the observation is a Diagnosis Order
-                            convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDiagnosisOrder(),
-                                    "(" + obs.getShortDiagnosisCertainty() + ") " + obs.getDiagnosisList());
-                        } else if (obs.getDisplay() != null && obs.getDisplayValue() != null) {
-                            //miscellaneous, for all other cases that have a Display - Value pair
-                            convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(), obs.getDisplayValue());
+                        } else {
+                            if (obs.getDiagnosisOrder() != null && obs.getShortDiagnosisCertainty() != null && obs.getDiagnosisList() != null) {
+                                convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDiagnosisOrder(),
+                                        "(" + obs.getShortDiagnosisCertainty() + ") " + obs.getDiagnosisList());
+                            }
                         }
                     }
                     layouts.add(convertView);

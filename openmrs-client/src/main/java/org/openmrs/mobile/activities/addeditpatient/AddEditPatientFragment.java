@@ -49,6 +49,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import com.hbb20.CountryCodePicker;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -84,7 +85,6 @@ import java.io.FileDescriptor;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -102,16 +102,16 @@ import permissions.dispatcher.RuntimePermissions;
 @RuntimePermissions
 public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContract.Presenter> implements AddEditPatientContract.View {
 
+    private final static int IMAGE_REQUEST = 1;
+    private final static int GALLERY_IMAGE_REQUEST = 2;
     private RelativeLayout relativeLayout;
     private LocalDate birthdate;
     private DateTime bdt;
-
     private TextInputLayout firstNameTIL;
     private TextInputLayout middleNameTIL;
     private TextInputLayout lastNameTIL;
     private TextInputLayout address1TIL;
     private TextInputLayout countryTIL;
-
     private EditText edfname;
     private EditText edmname;
     private EditText edlname;
@@ -122,42 +122,37 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private EditText edaddr2;
     private EditText edcity;
     private AutoCompleteTextView edstate;
-    private AutoCompleteTextView edcountry;
+    private CountryCodePicker mCountryCodePicker;
     private EditText edpostal;
-
     private RadioGroup gen;
     private ProgressBar progressBar;
-
     private TextView fnameerror;
     private TextView lnameerror;
     private TextView doberror;
     private TextView gendererror;
     private TextView addrerror;
     private TextView countryerror;
-
     private Button submitConfirm;
     private Button datePicker;
-
     private DateTimeFormatter dateTimeFormatter;
-
     private String[] countries;
     private ImageView patientImageView;
-
     private FloatingActionButton capturePhotoBtn;
     private Bitmap patientPhoto = null;
     private Bitmap resizedPatientPhoto = null;
     private String patientName;
     private File output = null;
-    private final static int IMAGE_REQUEST = 1;
-    private final static int GALLERY_IMAGE_REQUEST = 2;
     private OpenMRSLogger logger = new OpenMRSLogger();
+
+    public static AddEditPatientFragment newInstance() {
+        return new AddEditPatientFragment();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_patient_info, container, false);
         resolveViews(root);
-        addSuggestionsToAutoCompleTextView();
         addListeners();
         fillFields(mPresenter.getPatientToUpdate());
         return root;
@@ -208,6 +203,9 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         scrollView.smoothScrollTo(0, scrollView.getPaddingTop());
     }
 
+    private boolean isCcpEmpty() {
+        return mCountryCodePicker.getSelectedCountryName() == null;
+    }
 
     private Person createPerson() {
         Person person = new Person();
@@ -218,9 +216,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 && ViewUtils.isEmpty(edaddr2)
                 && ViewUtils.isEmpty(edcity)
                 && ViewUtils.isEmpty(edpostal)
-                && ViewUtils.isEmpty(edcountry)
+                && isCcpEmpty()
                 && ViewUtils.isEmpty(edstate)) {
-
             addrerror.setText(R.string.atleastone);
             address1TIL.setErrorEnabled(true);
             address1TIL.setError(getString(R.string.atleastone));
@@ -240,7 +237,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         address.setAddress2(ViewUtils.getInput(edaddr2));
         address.setCityVillage(ViewUtils.getInput(edcity));
         address.setPostalCode(ViewUtils.getInput(edpostal));
-        address.setCountry(ViewUtils.getInput(edcountry));
+        address.setCountry(mCountryCodePicker.getSelectedCountryName());
         address.setStateProvince(ViewUtils.getInput(edstate));
         address.setPreferred(true);
 
@@ -414,12 +411,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 (!ViewUtils.isEmpty(edaddr2)) ||
                 (!ViewUtils.isEmpty(edcity)) ||
                 (!ViewUtils.isEmpty(edstate)) ||
-                (!ViewUtils.isEmpty(edcountry)) ||
+                (!isCcpEmpty()) ||
                 (!ViewUtils.isEmpty(edpostal)));
-    }
-
-    public static AddEditPatientFragment newInstance() {
-        return new AddEditPatientFragment();
     }
 
     private void resolveViews(View v) {
@@ -434,7 +427,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         edaddr2 = (EditText) v.findViewById(R.id.addr2);
         edcity = (EditText) v.findViewById(R.id.city);
         edstate = (AutoCompleteTextView) v.findViewById(R.id.state);
-        edcountry = (AutoCompleteTextView) v.findViewById(R.id.country);
+        mCountryCodePicker = v.findViewById(R.id.ccp);
         edpostal = (EditText) v.findViewById(R.id.postal);
 
         gen = (RadioGroup) v.findViewById(R.id.gender);
@@ -495,7 +488,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             edaddr2.setText(person.getAddress().getAddress2());
             edcity.setText(person.getAddress().getCityVillage());
             edstate.setText(person.getAddress().getStateProvince());
-            edcountry.setText(person.getAddress().getCountry());
             edpostal.setText(person.getAddress().getPostalCode());
 
             if (patient.getPerson().getPhoto() != null) {
@@ -506,16 +498,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         }
     }
 
-    private void addSuggestionsToAutoCompleTextView() {
-        countries = getContext().getResources().getStringArray(R.array.countries_array);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_dropdown_item_1line, countries);
-        edcountry.setAdapter(adapter);
-
-    }
-
     private void addSuggestionsToCities() {
-        String country_name = edcountry.getText().toString();
+        String country_name = mCountryCodePicker.getSelectedCountryName();
         country_name = country_name.replace("(", "");
         country_name = country_name.replace(")", "");
         country_name = country_name.replace(" ", "");
@@ -544,18 +528,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             }
         });
 
-        edcountry.setThreshold(2);
-        edcountry.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (edcountry.getText().length() >= edcountry.getThreshold()) {
-                    edcountry.showDropDown();
-                }
-                if (Arrays.asList(countries).contains(edcountry.getText().toString())) {
-                    edcountry.dismissDropDown();
-                }
-            }
-        });
         edstate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -629,8 +601,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                                     StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
                                     StrictMode.setVmPolicy(builder.build());
                                     AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
-                                }
-                                else {
+                                } else {
                                     Intent i;
                                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
                                         i = new Intent(Intent.ACTION_OPEN_DOCUMENT);

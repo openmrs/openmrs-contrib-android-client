@@ -154,6 +154,7 @@
     <string name="settings_application_info">Application Info</string>
     <string name="settings_concepts_info">Concepts Info</string>
     <string name="settings_concepts_in_db">Concepts in DB:</string>
+    <string name="settings_no_concepts_toast">There are no concepts in DB!</string>
 
     <!-- FindPatients activity -->
     <string name="action_find_patients">Find Patients</string>
@@ -345,4 +346,6 @@
     <string name="dialog_button_leave">Leave</string>
     <string name="snackbar_nonvisitting_patients">Vitals can only be captured for patients currently in a visit.</string>
     <string name="logout_success">Logged out successfully!</string>
+    <string name="url_privacy_policy">https://github.com/openmrs/openmrs-contrib-android-client/blob/master/privacy_policy.md</string>
+    <string name="settings_privacy_policy">Privacy Policy</string>
 </resources>

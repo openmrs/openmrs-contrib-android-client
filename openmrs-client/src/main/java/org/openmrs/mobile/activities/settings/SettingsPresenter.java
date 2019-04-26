@@ -69,6 +69,7 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
 
         mSettingsView.addLogsInfo(size, filename);
         mSettingsView.addBuildVersionInfo();
+        mSettingsView.addPrivacyPolicyInfo();
         mSettingsView.applyChanges();
     }
 

@@ -35,6 +35,9 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -63,6 +66,7 @@ import org.openmrs.mobile.activities.dialog.CameraOrGalleryPickerDialog;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientPhotoActivity;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.listeners.watcher.PatientBirthdateValidatorWatcher;
@@ -134,7 +138,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private TextView addrerror;
     private TextView countryerror;
 
-    private Button submitConfirm;
     private Button datePicker;
 
     private DateTimeFormatter dateTimeFormatter;
@@ -151,10 +154,14 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private final static int GALLERY_IMAGE_REQUEST = 2;
     private OpenMRSLogger logger = new OpenMRSLogger();
 
+    private boolean isUpdatePatient = false;
+    private Patient updatedPatient;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_patient_info, container, false);
+        setHasOptionsMenu(true);
         resolveViews(root);
         addSuggestionsToAutoCompleTextView();
         addListeners();
@@ -372,7 +379,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     @Override
     public void setProgressBarVisibility(boolean visibility) {
-        submitConfirm.setEnabled(!visibility);
         progressBar.setVisibility(visibility ? View.VISIBLE : View.GONE);
     }
 
@@ -447,7 +453,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         countryerror = (TextView) v.findViewById(R.id.countryerror);
 
         datePicker = (Button) v.findViewById(R.id.btn_datepicker);
-        submitConfirm = (Button) v.findViewById(R.id.submitConfirm);
         capturePhotoBtn = (FloatingActionButton) v.findViewById(R.id.capture_photo);
         patientImageView = (ImageView) v.findViewById(R.id.patientPhoto);
 
@@ -463,12 +468,9 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             //Change to Update Patient Form
             String updatePatientStr = getResources().getString(R.string.action_update_patient_data);
             this.getActivity().setTitle(updatePatientStr);
-            submitConfirm.setText(updatePatientStr);
-            submitConfirm.setOnClickListener(view -> {
-                Patient patient1;
-                patient1 = updatePatient(patient);
-                mPresenter.confirmUpdate(patient1);
-            });
+
+            isUpdatePatient = true;
+            updatedPatient = patient;
 
             Person person = patient.getPerson();
             edfname.setText(person.getName().getGivenName());
@@ -603,30 +605,26 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         capturePhotoBtn.setOnClickListener(view -> {
 
             CameraOrGalleryPickerDialog dialog = CameraOrGalleryPickerDialog.getInstance(
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
 
-                            if (which == 0) {
-                                StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-                                StrictMode.setVmPolicy(builder.build());
-                                AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
-                            } else {
-                                Intent i;
-                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
-                                    i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                                else
-                                    i = new Intent(Intent.ACTION_GET_CONTENT);
-                                i.addCategory(Intent.CATEGORY_OPENABLE);
-                                i.setType("image/*");
-                                startActivityForResult(i, GALLERY_IMAGE_REQUEST);
-                            }
+                    (dialog1, which) -> {
+
+                        if (which == 0) {
+                            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                            StrictMode.setVmPolicy(builder.build());
+                            AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
+                        } else {
+                            Intent i;
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
+                                i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                            else
+                                i = new Intent(Intent.ACTION_GET_CONTENT);
+                            i.addCategory(Intent.CATEGORY_OPENABLE);
+                            i.setType("image/*");
+                            startActivityForResult(i, GALLERY_IMAGE_REQUEST);
                         }
                     });
             dialog.show(getChildFragmentManager(), null);
         });
-
-        submitConfirm.setOnClickListener(view -> mPresenter.confirmRegister(createPatient()));
 
         patientImageView.setOnClickListener(view -> {
             if (output != null) {
@@ -640,6 +638,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 intent.putExtra("photo", byteArrayOutputStream.toByteArray());
                 intent.putExtra("name", patientName);
                 startActivity(intent);
+
             }
         });
 
@@ -756,4 +755,31 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.submit_done_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.actionSubmit:
+                submitAction();
+                return true;
+            default:
+                // Do nothing
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void submitAction() {
+        if (isUpdatePatient) {
+            mPresenter.confirmUpdate(updatePatient(updatedPatient));
+        } else {
+            mPresenter.confirmRegister(createPatient());
+        }
+    }
 }

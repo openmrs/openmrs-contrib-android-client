@@ -7,6 +7,10 @@ before_install:
 
 script:
 - ./build.sh
+- ./gradlew jacocoTestReport
+
+after_success:
+- bash <(curl -s https://codecov.io/bash)
 
 deploy:
   provider: releases
@@ -14,7 +18,7 @@ deploy:
   overwrite: true
   api_key:
     secure: CkKyomzGdEMvZKyNEPU6uU9sfG4zJKQ7FcDG7Vgi9SNFgrwD7v2wYrw53ABRW+eYTifxivbzSnNYOwh/Jd6ea3A7XqFdW9DpPgmDq32A9rPPSP8DEM2tDfE6m0A/Jzx2d3rIpK54KCISHQoRnnEU8QyBA9vqoTmO1qUWsBsXiWo=
-  file: openmrs-client/build/outputs/apk/openmrs-client-release.apk
+  file: openmrs-client/release/openmrs-client-release.apk
   on:
     tags: true
     repo: openmrs/openmrs-contrib-android-client

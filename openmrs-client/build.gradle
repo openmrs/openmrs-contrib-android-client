@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'jacoco-android'
 
 buildscript {
 
@@ -60,6 +61,16 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def relativeRootDir = output.packageApplication.outputDirectory.toPath()
+                            .relativize(rootDir.toPath()).toFile()
+                    output.outputFileName = new File("$relativeRootDir/openmrs-client/release/",output.outputFile.name)
+                }
+            }
+        }
+        debug {
+            testCoverageEnabled true
         }
     }
 

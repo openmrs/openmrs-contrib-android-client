@@ -351,30 +351,19 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         alertDialogBuilder
                 .setMessage(R.string.crash_dialog_message)
                 .setCancelable(false)
-                .setPositiveButton(R.string.crash_dialog_positive_button, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                })
-                .setNegativeButton(R.string.crash_dialog_negative_button, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finishAffinity();
-                    }
-                })
-                .setNeutralButton(R.string.crash_dialog_neutral_button, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String filename = OpenMRS.getInstance().getOpenMRSDir()
-                                + File.separator + mOpenMRSLogger.getLogFilename();
-                        Intent email = new Intent(Intent.ACTION_SEND);
-                        email.putExtra(Intent.EXTRA_SUBJECT, R.string.error_email_subject_app_crashed);
-                        email.putExtra(Intent.EXTRA_TEXT, error);
-                        email.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + filename));
-                        //need this to prompts email client only
-                        email.setType("message/rfc822");
+                .setPositiveButton(R.string.crash_dialog_positive_button, (dialog, id) -> dialog.cancel())
+                .setNegativeButton(R.string.crash_dialog_negative_button, (dialog, id) -> finishAffinity())
+                .setNeutralButton(R.string.crash_dialog_neutral_button, (dialog, id) -> {
+                    String filename = OpenMRS.getInstance().getOpenMRSDir()
+                            + File.separator + mOpenMRSLogger.getLogFilename();
+                    Intent email = new Intent(Intent.ACTION_SEND);
+                    email.putExtra(Intent.EXTRA_SUBJECT, R.string.error_email_subject_app_crashed);
+                    email.putExtra(Intent.EXTRA_TEXT, error);
+                    email.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + filename));
+                    //need this to prompts email client only
+                    email.setType("message/rfc822");
 
-                        startActivity(Intent.createChooser(email, getString(R.string.choose_a_email_client)));
-                    }
+                    startActivity(Intent.createChooser(email, getString(R.string.choose_a_email_client)));
                 });
 
         AlertDialog alertDialog = alertDialogBuilder.create();

@@ -53,13 +53,10 @@ public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> impleme
 
     public void fabCopyAll(String textLogs) {
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setClipboard(getContext(), textLogs);
-                Toast.makeText(getContext(), "Logs copied to clipboard",
-                        Toast.LENGTH_SHORT).show();
-            }
+        fab.setOnClickListener(view -> {
+            setClipboard(getContext(), textLogs);
+            Toast.makeText(getContext(), "Logs copied to clipboard",
+                    Toast.LENGTH_SHORT).show();
         });
     }
 

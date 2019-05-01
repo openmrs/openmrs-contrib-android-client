@@ -55,20 +55,17 @@ public class RestServiceBuilder {
             String credentials = username + ":" + password;
             final String basic =
                     "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
-            httpClient.addInterceptor(new Interceptor() {
-                @Override
-                public Response intercept(Interceptor.Chain chain) throws IOException {
-                    Request original = chain.request();
+            httpClient.addInterceptor(chain -> {
+                Request original = chain.request();
 
-                    Request.Builder requestBuilder = original.newBuilder()
-                            .header("Authorization", basic)
-                            .header("Accept", "application/json")
-                            .method(original.method(), original.body());
+                Request.Builder requestBuilder = original.newBuilder()
+                        .header("Authorization", basic)
+                        .header("Accept", "application/json")
+                        .method(original.method(), original.body());
 
 
-                    Request request = requestBuilder.build();
-                    return chain.proceed(request);
-                }
+                Request request = requestBuilder.build();
+                return chain.proceed(request);
             });
             HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
             logging.setLevel(HttpLoggingInterceptor.Level.BODY);

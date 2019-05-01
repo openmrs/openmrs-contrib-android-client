@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="@style/BackgroundThemeEEE">
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="1">
+
+        <TableRow>
+
+            <RelativeLayout
+                android:id="@+id/findPatientView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:background="@drawable/card">
+
+                <ImageView
+                    android:id="@+id/findPatientButton"
+                    android:layout_width="@dimen/dashboard_icon_height_width"
+                    android:layout_height="@dimen/dashboard_icon_height_width"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="@dimen/dashboard_icon_margin"
+                    android:contentDescription="@string/dashboard_search_icon_label" />
+
+                <TextView
+                    android:id="@+id/findPatientLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/findPatientButton"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/dashboard_text_bottom_margin"
+                    android:layout_marginTop="@dimen/dashboard_text_top_margin"
+                    android:text="@string/dashboard_search_icon_label"
+                    android:textSize="@dimen/dashboard_text_size" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/activeVisitsView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:background="@drawable/card">
+
+                <ImageView
+                    android:id="@+id/activeVisitsButton"
+                    android:layout_width="@dimen/dashboard_icon_height_width"
+                    android:layout_height="@dimen/dashboard_icon_height_width"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="@dimen/dashboard_icon_margin"
+                    android:contentDescription="@string/dashboard_visits_icon_label" />
+
+                <TextView
+                    android:id="@+id/activeVisitsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/activeVisitsButton"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/dashboard_text_bottom_margin"
+                    android:layout_marginTop="@dimen/dashboard_text_top_margin"
+                    android:text="@string/dashboard_visits_icon_label"
+                    android:textSize="@dimen/dashboard_text_size" />
+            </RelativeLayout>
+        </TableRow>
+
+        <TableRow>
+
+            <RelativeLayout
+                android:id="@+id/registryPatientView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:background="@drawable/card">
+
+                <ImageView
+                    android:id="@+id/registryPatientButton"
+                    android:layout_width="@dimen/dashboard_icon_height_width"
+                    android:layout_height="@dimen/dashboard_icon_height_width"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="@dimen/dashboard_icon_margin"
+                    android:contentDescription="@string/dashboard_registry_icon_label" />
+
+                <TextView
+                    android:id="@+id/registryLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/registryPatientButton"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/dashboard_text_bottom_margin"
+                    android:layout_marginTop="@dimen/dashboard_text_top_margin"
+                    android:text="@string/action_register_patient"
+                    android:textSize="@dimen/dashboard_text_size" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/captureVitalsView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:background="@drawable/card">
+
+                <ImageView
+                    android:id="@+id/captureVitalsButton"
+                    android:layout_width="@dimen/dashboard_icon_height_width"
+                    android:layout_height="@dimen/dashboard_icon_height_width"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="@dimen/dashboard_icon_margin"
+                    android:contentDescription="@string/dashboard_registry_icon_label" />
+
+                <TextView
+                    android:id="@+id/FormsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/captureVitalsButton"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/dashboard_text_bottom_margin"
+                    android:layout_marginTop="@dimen/dashboard_text_top_margin"
+                    android:text="@string/dashboard_forms_icon_label"
+                    android:textSize="@dimen/dashboard_text_size" />
+            </RelativeLayout>
+        </TableRow>
+
+    </TableLayout>
+
+</ScrollView>

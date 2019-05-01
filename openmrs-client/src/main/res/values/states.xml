@@ -1,0 +1,4557 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="afghanistan">
+        <item>Badakhshan</item>
+        <item>Badgis</item>
+        <item>Baglan</item>
+        <item>Balkh</item>
+        <item>Bamiyan</item>
+        <item>Farah</item>
+        <item>Faryab</item>
+        <item>Gawr</item>
+        <item>Gazni</item>
+        <item>Herat</item>
+        <item>Hilmand</item>
+        <item>Jawzjan</item>
+        <item>Kabul</item>
+        <item>Kapisa</item>
+        <item>Khawst</item>
+        <item>Kunar</item>
+        <item>Lagman</item>
+        <item>Lawghar</item>
+        <item>Nangarhar</item>
+        <item>Nimruz</item>
+        <item>Nuristan</item>
+        <item>Paktika</item>
+        <item>Paktiya</item>
+        <item>Parwan</item>
+        <item>Qandahar</item>
+        <item>Qunduz</item>
+        <item>Samangan</item>
+        <item>Sar-e Pul</item>
+        <item>Takhar</item>
+        <item>Uruzgan</item>
+        <item>Wardag</item>
+        <item>Zabul</item>
+    </string-array>
+    <string-array name="albania">
+        <item>Berat</item>
+        <item>Bulqize</item>
+        <item>Delvine</item>
+        <item>Devoll</item>
+        <item>Dibre</item>
+        <item>Durres</item>
+        <item>Elbasan</item>
+        <item>Fier</item>
+        <item>Gjirokaster</item>
+        <item>Gramsh</item>
+        <item>Has</item>
+        <item>Kavaje</item>
+        <item>Kolonje</item>
+        <item>Korce</item>
+        <item>Kruje</item>
+        <item>Kucove</item>
+        <item>Kukes</item>
+        <item>Kurbin</item>
+        <item>Lezhe</item>
+        <item>Librazhd</item>
+        <item>Lushnje</item>
+        <item>Mallakaster</item>
+        <item>Malsi e Madhe</item>
+        <item>Mat</item>
+        <item>Mirdite</item>
+        <item>Peqin</item>
+        <item>Permet</item>
+        <item>Pogradec</item>
+        <item>Puke</item>
+        <item>Sarande</item>
+        <item>Shkoder</item>
+        <item>Skrapar</item>
+        <item>Tepelene</item>
+        <item>Tirane</item>
+        <item>Tropoje</item>
+        <item>Vlore</item>
+    </string-array>
+    <string-array name="algeria">
+        <item>\'Ayn Daflah</item>
+        <item>\'Ayn Tamushanat</item>
+        <item>Adrar</item>
+        <item>Algiers</item>
+        <item>Annabah</item>
+        <item>Bashshar</item>
+        <item>Batnah</item>
+        <item>Bijayah</item>
+        <item>Biskrah</item>
+        <item>Blidah</item>
+        <item>Buirah</item>
+        <item>Bumardas</item>
+        <item>Burj Bu Arririj</item>
+        <item>Ghalizan</item>
+        <item>Ghardayah</item>
+        <item>Ilizi</item>
+        <item>Jijili</item>
+        <item>Jilfah</item>
+        <item>Khanshalah</item>
+        <item>Masilah</item>
+        <item>Midyah</item>
+        <item>Milah</item>
+        <item>Muaskar</item>
+        <item>Mustaghanam</item>
+        <item>Naama</item>
+        <item>Oran</item>
+        <item>Ouargla</item>
+        <item>Qalmah</item>
+        <item>Qustantinah</item>
+        <item>Sakikdah</item>
+        <item>Satif</item>
+        <item>Sayda\'</item>
+        <item>Sidi ban-al-\'Abbas</item>
+        <item>Suq Ahras</item>
+        <item>Tamanghasat</item>
+        <item>Tibazah</item>
+        <item>Tibissah</item>
+        <item>Tilimsan</item>
+        <item>Tinduf</item>
+        <item>Tisamsilt</item>
+        <item>Tiyarat</item>
+        <item>Tizi Wazu</item>
+        <item>Umm-al-Bawaghi</item>
+        <item>Wahran</item>
+        <item>Warqla</item>
+        <item>Wilaya d Alger</item>
+        <item>Wilaya de Bejaia</item>
+        <item>Wilaya de Constantine</item>
+        <item>al-Aghwat</item>
+        <item>al-Bayadh</item>
+        <item>al-Jaza\'ir</item>
+        <item>al-Wad</item>
+        <item>ash-Shalif</item>
+        <item>at-Tarif</item>
+    </string-array>
+    <string-array name="americansamoa">
+        <item>Manu\'a</item>
+        <item>Swains Island</item>
+    </string-array>
+    <string-array name="andorra">
+        <item>Andorra la Vella</item>
+        <item>Canillo</item>
+        <item>Encamp</item>
+        <item>La Massana</item>
+        <item>Les Escaldes</item>
+        <item>Ordino</item>
+        <item>Sant Julia de Loria</item>
+    </string-array>
+    <string-array name="angola">
+        <item>Bengo</item>
+        <item>Benguela</item>
+        <item>Bie</item>
+        <item>Cabinda</item>
+        <item>Cunene</item>
+        <item>Huambo</item>
+        <item>Huila</item>
+        <item>Kuando-Kubango</item>
+        <item>Kwanza Norte</item>
+        <item>Kwanza Sul</item>
+        <item>Luanda</item>
+        <item>Lunda Norte</item>
+        <item>Lunda Sul</item>
+        <item>Malanje</item>
+        <item>Moxico</item>
+        <item>Namibe</item>
+        <item>Uige</item>
+        <item>Zaire</item>
+    </string-array>
+    <string-array name="antarctica">
+        <item>Alyeska</item>
+        <item>Amundsen</item>
+        <item>New Swabia</item>
+        <item>Palmer Land</item>
+        <item>Polaria </item>
+    </string-array>
+    <string-array name="antiguaandbarbuda">
+        <item>Barbuda</item>
+        <item>Saint George</item>
+        <item>Saint John</item>
+        <item>Saint Mary</item>
+        <item>Saint Paul</item>
+        <item>Saint Peter</item>
+        <item>Saint Philip</item>
+    </string-array>
+    <string-array name="argentina">
+        <item>Buenos Aires</item>
+        <item>Catamarca</item>
+        <item>Chaco</item>
+        <item>Chubut</item>
+        <item>Cordoba</item>
+        <item>Corrientes</item>
+        <item>Distrito Federal</item>
+        <item>Entre Rios</item>
+        <item>Formosa</item>
+        <item>Jujuy</item>
+        <item>La Pampa</item>
+        <item>La Rioja</item>
+        <item>Mendoza</item>
+        <item>Misiones</item>
+        <item>Neuquen</item>
+        <item>Rio Negro</item>
+        <item>Salta</item>
+        <item>San Juan</item>
+        <item>San Luis</item>
+        <item>Santa Cruz</item>
+        <item>Santa Fe</item>
+        <item>Santiago del Estero</item>
+        <item>Tierra del Fuego</item>
+        <item>Tucuman</item>
+    </string-array>
+    <string-array name="armenia">
+        <item>Aragatsotn</item>
+        <item>Ararat</item>
+        <item>Armavir</item>
+        <item>Gegharkunik</item>
+        <item>Kotaik</item>
+        <item>Lori</item>
+        <item>Shirak</item>
+        <item>Stepanakert</item>
+        <item>Syunik</item>
+        <item>Tavush</item>
+        <item>Vayots Dzor</item>
+        <item>Yerevan</item>
+    </string-array>
+    <string-array name="australia">
+        <item>Auckland</item>
+        <item>Australian Capital Territory</item>
+        <item>Balgowlah</item>
+        <item>Balmain</item>
+        <item>Bankstown</item>
+        <item>Baulkham Hills</item>
+        <item>Bonnet Bay</item>
+        <item>Camberwell</item>
+        <item>Carole Park</item>
+        <item>Castle Hill</item>
+        <item>Caulfield</item>
+        <item>Chatswood</item>
+        <item>Cheltenham</item>
+        <item>Cherrybrook</item>
+        <item>Clayton</item>
+        <item>Collingwood</item>
+        <item>Frenchs Forest</item>
+        <item>Hawthorn</item>
+        <item>Jannnali</item>
+        <item>Knoxfield</item>
+        <item>Melbourne</item>
+        <item>New South Wales</item>
+        <item>Northern Territory</item>
+        <item>Perth</item>
+        <item>Queensland</item>
+        <item>South Australia</item>
+        <item>Tasmania</item>
+        <item>Templestowe</item>
+        <item>Victoria</item>
+        <item>Werribee south</item>
+        <item>Wheeler</item>
+    </string-array>
+    <string-array name="austria">
+        <item>Bundesland Salzburg</item>
+        <item>Bundesland Steiermark</item>
+        <item>Bundesland Tirol</item>
+        <item>Burgenland</item>
+        <item>Carinthia</item>
+        <item>Karnten</item>
+        <item>Liezen</item>
+        <item>Lower Austria</item>
+        <item>Niederosterreich</item>
+        <item>Oberosterreich</item>
+        <item>Salzburg</item>
+        <item>Schleswig-Holstein</item>
+        <item>Steiermark</item>
+        <item>Styria</item>
+        <item>Tirol</item>
+        <item>Upper Austria</item>
+        <item>Vorarlberg</item>
+        <item>Wien</item>
+    </string-array>
+    <string-array name="azerbaijan">
+        <item>Abseron</item>
+        <item>Baki Sahari</item>
+        <item>Ganca</item>
+        <item>Ganja</item>
+        <item>Kalbacar</item>
+        <item>Lankaran</item>
+        <item>Mil-Qarabax</item>
+        <item>Mugan-Salyan</item>
+        <item>Nagorni-Qarabax</item>
+        <item>Naxcivan</item>
+        <item>Priaraks</item>
+        <item>Qazax</item>
+        <item>Saki</item>
+        <item>Sirvan</item>
+        <item>Xacmaz</item>
+    </string-array>
+    <string-array name="bahamas">
+        <item>Abaco</item>
+        <item>Acklins Island</item>
+        <item>Andros</item>
+        <item>Berry Islands</item>
+        <item>Biminis</item>
+        <item>Cat Island</item>
+        <item>Crooked Island</item>
+        <item>Eleuthera</item>
+        <item>Exuma and Cays</item>
+        <item>Grand Bahama</item>
+        <item>Inagua Islands</item>
+        <item>Long Island</item>
+        <item>Mayaguana</item>
+        <item>New Providence</item>
+        <item>Ragged Island</item>
+        <item>Rum Cay</item>
+        <item>San Salvador</item>
+    </string-array>
+    <string-array name="bahrain">
+        <item>\'Isa</item>
+        <item>Badiyah</item>
+        <item>Hidd</item>
+        <item>Jidd Hafs</item>
+        <item>Mahama</item>
+        <item>Manama</item>
+        <item>Sitrah</item>
+        <item>Al-Manamah</item>
+        <item>Al-Muharraq</item>
+        <item>Ar-Rifa\'a</item>
+    </string-array>
+    <string-array name="bangladesh">
+        <item>Bagar Hat</item>
+        <item>Bandarban</item>
+        <item>Barguna</item>
+        <item>Barisal</item>
+        <item>Bhola</item>
+        <item>Bogora</item>
+        <item>Brahman Bariya</item>
+        <item>Chandpur</item>
+        <item>Chattagam</item>
+        <item>Chittagong Division</item>
+        <item>Chuadanga</item>
+        <item>Dhaka</item>
+        <item>Dinajpur</item>
+        <item>Faridpur</item>
+        <item>Feni</item>
+        <item>Gaybanda</item>
+        <item>Gazipur</item>
+        <item>Gopalganj</item>
+        <item>Habiganj</item>
+        <item>Jamalpur</item>
+        <item>Jessor</item>
+        <item>Jhalakati</item>
+        <item>Jhanaydah</item>
+        <item>Khagrachhari</item>
+        <item>Khulna</item>
+        <item>Kishorganj</item>
+        <item>Koks Bazar</item>
+        <item>Komilla</item>
+        <item>Kurigram</item>
+        <item>Kushtiya</item>
+        <item>Lakshmipur</item>
+        <item>Lalmanir Hat</item>
+        <item>Madaripur</item>
+        <item>Magura</item>
+        <item>Maimansingh</item>
+        <item>Manikganj</item>
+        <item>Maulvi Bazar</item>
+        <item>Meherpur</item>
+        <item>Munshiganj</item>
+        <item>Naral</item>
+        <item>Narayanganj</item>
+        <item>Narsingdi</item>
+        <item>Nator</item>
+        <item>Naugaon</item>
+        <item>Nawabganj</item>
+        <item>Netrakona</item>
+        <item>Nilphamari</item>
+        <item>Noakhali</item>
+        <item>Pabna</item>
+        <item>Panchagarh</item>
+        <item>Patuakhali</item>
+        <item>Pirojpur</item>
+        <item>Rajbari</item>
+        <item>Rajshahi</item>
+        <item>Rangamati</item>
+        <item>Rangpur</item>
+        <item>Satkhira</item>
+        <item>Shariatpur</item>
+        <item>Sherpur</item>
+        <item>Silhat</item>
+        <item>Sirajganj</item>
+        <item>Sunamganj</item>
+        <item>Tangayal</item>
+        <item>Thakurgaon</item>
+    </string-array>
+    <string-array name="barbados">
+        <item>Christ Church</item>
+        <item>Saint Andrew</item>
+        <item>Saint George</item>
+        <item>Saint James</item>
+        <item>Saint John</item>
+        <item>Saint Joseph</item>
+        <item>Saint Lucy</item>
+        <item>Saint Michael</item>
+        <item>Saint Peter</item>
+        <item>Saint Philip</item>
+        <item>Saint Thomas</item>
+    </string-array>
+    <string-array name="belarus">
+        <item>Brest</item>
+        <item>Homjel\'</item>
+        <item>Hrodna</item>
+        <item>Mahiljow</item>
+        <item>Mahilyowskaya Voblasts</item>
+        <item>Minsk</item>
+        <item>Minskaja Voblasts\'</item>
+        <item>Petrik</item>
+        <item>Vicebsk</item>
+    </string-array>
+    <string-array name="belgium">
+        <item>Antwerpen</item>
+        <item>Berchem</item>
+        <item>Brabant</item>
+        <item>Brabant Wallon</item>
+        <item>Brussel</item>
+        <item>East Flanders</item>
+        <item>Hainaut</item>
+        <item>Liege</item>
+        <item>Limburg</item>
+        <item>Luxembourg</item>
+        <item>Namur</item>
+        <item>Ontario</item>
+        <item>Oost-Vlaanderen</item>
+        <item>Provincie Brabant</item>
+        <item>Vlaams-Brabant</item>
+        <item>Wallonne</item>
+        <item>West-Vlaanderen</item>
+    </string-array>
+    <string-array name="belize">
+        <item>Belize</item>
+        <item>Cayo</item>
+        <item>Corozal</item>
+        <item>Orange Walk</item>
+        <item>Stann Creek</item>
+        <item>Toledo</item>
+    </string-array>
+    <string-array name="benin">
+        <item>Alibori</item>
+        <item>Atacora</item>
+        <item>Atlantique</item>
+        <item>Borgou</item>
+        <item>Collines</item>
+        <item>Couffo</item>
+        <item>Donga</item>
+        <item>Littoral</item>
+        <item>Mono</item>
+        <item>Oueme</item>
+        <item>Plateau</item>
+        <item>Zou</item>
+    </string-array>
+    <string-array name="bermuda">
+        <item>Hamilton</item>
+        <item>Saint George</item>
+    </string-array>
+    <string-array name="bhutan">
+        <item>Bumthang</item>
+        <item>Chhukha</item>
+        <item>Chirang</item>
+        <item>Daga</item>
+        <item>Geylegphug</item>
+        <item>Ha</item>
+        <item>Lhuntshi</item>
+        <item>Mongar</item>
+        <item>Pemagatsel</item>
+        <item>Punakha</item>
+        <item>Rinpung</item>
+        <item>Samchi</item>
+        <item>Samdrup Jongkhar</item>
+        <item>Shemgang</item>
+        <item>Tashigang</item>
+        <item>Timphu</item>
+        <item>Tongsa</item>
+        <item>Wangdiphodrang</item>
+    </string-array>
+    <string-array name="bolivia">
+        <item>Beni</item>
+        <item>Chuquisaca</item>
+        <item>Cochabamba</item>
+        <item>La Paz</item>
+        <item>Oruro</item>
+        <item>Pando</item>
+        <item>Potosi</item>
+        <item>Santa Cruz</item>
+        <item>Tarija</item>
+    </string-array>
+    <string-array name="bosniaandherzegovina">
+        <item>Federacija Bosna i Hercegovina</item>
+        <item>Republika Srpska</item>
+    </string-array>
+    <string-array name="botswana">
+        <item>Central Bobonong</item>
+        <item>Central Boteti</item>
+        <item>Central Mahalapye</item>
+        <item>Central Serowe-Palapye</item>
+        <item>Central Tutume</item>
+        <item>Chobe</item>
+        <item>Francistown</item>
+        <item>Gaborone</item>
+        <item>Ghanzi</item>
+        <item>Jwaneng</item>
+        <item>Kgalagadi North</item>
+        <item>Kgalagadi South</item>
+        <item>Kgatleng</item>
+        <item>Kweneng</item>
+        <item>Lobatse</item>
+        <item>Ngamiland</item>
+        <item>Ngwaketse</item>
+        <item>North East</item>
+        <item>Okavango</item>
+        <item>Orapa</item>
+        <item>Selibe Phikwe</item>
+        <item>South East</item>
+        <item>Sowa</item>
+    </string-array>
+    <string-array name="brazil">
+        <item>Acre</item>
+        <item>Alagoas</item>
+        <item>Amapa</item>
+        <item>Amazonas</item>
+        <item>Bahia</item>
+        <item>Ceara</item>
+        <item>Distrito Federal</item>
+        <item>Espirito Santo</item>
+        <item>Estado de Sao Paulo</item>
+        <item>Goias</item>
+        <item>Maranhao</item>
+        <item>Mato Grosso</item>
+        <item>Mato Grosso do Sul</item>
+        <item>Minas Gerais</item>
+        <item>Para</item>
+        <item>Paraiba</item>
+        <item>Parana</item>
+        <item>Pernambuco</item>
+        <item>Piaui</item>
+        <item>Rio Grande do Norte</item>
+        <item>Rio Grande do Sul</item>
+        <item>Rio de Janeiro</item>
+        <item>Rondonia</item>
+        <item>Roraima</item>
+        <item>Santa Catarina</item>
+        <item>Sao Paulo</item>
+        <item>Sergipe</item>
+        <item>Tocantins</item>
+    </string-array>
+    <string-array name="brunei">
+        <item>Belait</item>
+        <item>Brunei-Muara</item>
+        <item>Temburong</item>
+        <item>Tutong</item>
+    </string-array>
+    <string-array name="bulgaria">
+        <item>Blagoevgrad</item>
+        <item>Burgas</item>
+        <item>Dobrich</item>
+        <item>Gabrovo</item>
+        <item>Haskovo</item>
+        <item>Jambol</item>
+        <item>Kardzhali</item>
+        <item>Kjustendil</item>
+        <item>Lovech</item>
+        <item>Montana</item>
+        <item>Oblast Sofiya-Grad</item>
+        <item>Pazardzhik</item>
+        <item>Pernik</item>
+        <item>Pleven</item>
+        <item>Plovdiv</item>
+        <item>Razgrad</item>
+        <item>Ruse</item>
+        <item>Shumen</item>
+        <item>Silistra</item>
+        <item>Sliven</item>
+        <item>Smoljan</item>
+        <item>Sofija grad</item>
+        <item>Sofijska oblast</item>
+        <item>Stara Zagora</item>
+        <item>Targovishte</item>
+        <item>Varna</item>
+        <item>Veliko Tarnovo</item>
+        <item>Vidin</item>
+        <item>Vraca</item>
+        <item>Yablaniza</item>
+    </string-array>
+    <string-array name="burkinafaso">
+        <item>Bale</item>
+        <item>Bam</item>
+        <item>Bazega</item>
+        <item>Bougouriba</item>
+        <item>Boulgou</item>
+        <item>Boulkiemde</item>
+        <item>Comoe</item>
+        <item>Ganzourgou</item>
+        <item>Gnagna</item>
+        <item>Gourma</item>
+        <item>Houet</item>
+        <item>Ioba</item>
+        <item>Kadiogo</item>
+        <item>Kenedougou</item>
+        <item>Komandjari</item>
+        <item>Kompienga</item>
+        <item>Kossi</item>
+        <item>Kouritenga</item>
+        <item>Kourweogo</item>
+        <item>Leraba</item>
+        <item>Mouhoun</item>
+        <item>Nahouri</item>
+        <item>Namentenga</item>
+        <item>Noumbiel</item>
+        <item>Oubritenga</item>
+        <item>Oudalan</item>
+        <item>Passore</item>
+        <item>Poni</item>
+        <item>Sanguie</item>
+        <item>Sanmatenga</item>
+        <item>Seno</item>
+        <item>Sissili</item>
+        <item>Soum</item>
+        <item>Sourou</item>
+        <item>Tapoa</item>
+        <item>Tuy</item>
+        <item>Yatenga</item>
+        <item>Zondoma</item>
+        <item>Zoundweogo</item>
+    </string-array>
+    <string-array name="burundi">
+        <item>Bubanza</item>
+        <item>Bujumbura</item>
+        <item>Bururi</item>
+        <item>Cankuzo</item>
+        <item>Cibitoke</item>
+        <item>Gitega</item>
+        <item>Karuzi</item>
+        <item>Kayanza</item>
+        <item>Kirundo</item>
+        <item>Makamba</item>
+        <item>Muramvya</item>
+        <item>Muyinga</item>
+        <item>Ngozi</item>
+        <item>Rutana</item>
+        <item>Ruyigi</item>
+    </string-array>
+    <string-array name="cambodia">
+        <item>Banteay Mean Chey</item>
+        <item>Bat Dambang</item>
+        <item>Kampong Cham</item>
+        <item>Kampong Chhnang</item>
+        <item>Kampong Spoeu</item>
+        <item>Kampong Thum</item>
+        <item>Kampot</item>
+        <item>Kandal</item>
+        <item>Kaoh Kong</item>
+        <item>Kracheh</item>
+        <item>Krong Kaeb</item>
+        <item>Krong Pailin</item>
+        <item>Krong Preah Sihanouk</item>
+        <item>Mondol Kiri</item>
+        <item>Otdar Mean Chey</item>
+        <item>Phnum Penh</item>
+        <item>Pousat</item>
+        <item>Preah Vihear</item>
+        <item>Prey Veaeng</item>
+        <item>Rotanak Kiri</item>
+        <item>Siem Reab</item>
+        <item>Stueng Traeng</item>
+        <item>Svay Rieng</item>
+        <item>Takaev</item>
+    </string-array>
+    <string-array name="cameroon">
+        <item>Adamaoua</item>
+        <item>Centre</item>
+        <item>Est</item>
+        <item>Littoral</item>
+        <item>Nord</item>
+        <item>Nord Extreme</item>
+        <item>Nordouest</item>
+        <item>Ouest</item>
+        <item>Sud</item>
+        <item>Sudouest</item>
+    </string-array>
+    <string-array name="canada">
+        <item>Alberta</item>
+        <item>British Columbia</item>
+        <item>Manitoba</item>
+        <item>New Brunswick</item>
+        <item>Newfoundland and Labrador</item>
+        <item>Northwest Territories</item>
+        <item>Nova Scotia</item>
+        <item>Nunavut</item>
+        <item>Ontario</item>
+        <item>Prince Edward Island</item>
+        <item>Quebec</item>
+        <item>Saskatchewan</item>
+        <item>Yukon</item>
+    </string-array>
+    <string-array name="capeverde">
+        <item>Boavista</item>
+        <item>Brava</item>
+        <item>Fogo</item>
+        <item>Maio</item>
+        <item>Sal</item>
+        <item>Santo Antao</item>
+        <item>Sao Nicolau</item>
+        <item>Sao Tiago</item>
+        <item>Sao Vicente</item>
+    </string-array>
+    <string-array name="centralafricanrepublic">
+        <item>Bamingui-Bangoran</item>
+        <item>Bangui</item>
+        <item>Basse-Kotto</item>
+        <item>Haut-Mbomou</item>
+        <item>Haute-Kotto</item>
+        <item>Kemo</item>
+        <item>Lobaye</item>
+        <item>Mambere-Kadei</item>
+        <item>Mbomou</item>
+        <item>Nana-Gribizi</item>
+        <item>Nana-Mambere</item>
+        <item>Ombella Mpoko</item>
+        <item>Ouaka</item>
+        <item>Ouham</item>
+        <item>Ouham-Pende</item>
+        <item>Sangha-Mbaere</item>
+        <item>Vakaga</item>
+    </string-array>
+    <string-array name="chad">
+        <item>Batha</item>
+        <item>Biltine</item>
+        <item>Bourkou-Ennedi-Tibesti</item>
+        <item>Chari-Baguirmi</item>
+        <item>Guera</item>
+        <item>Kanem</item>
+        <item>Lac</item>
+        <item>Logone Occidental</item>
+        <item>Logone Oriental</item>
+        <item>Mayo-Kebbi</item>
+        <item>Moyen-Chari</item>
+        <item>Ouaddai</item>
+        <item>Salamat</item>
+        <item>Tandjile</item>
+    </string-array>
+    <string-array name="chile">
+        <item>Aisen</item>
+        <item>Antofagasta</item>
+        <item>Araucania</item>
+        <item>Atacama</item>
+        <item tools:ignore="Typos">Bio Bio</item>
+        <item>Coquimbo</item>
+        <item>Libertador General Bernardo O\'</item>
+        <item>Los Lagos</item>
+        <item>Magellanes</item>
+        <item>Maule</item>
+        <item>Metropolitana</item>
+        <item>Metropolitana de Santiago</item>
+        <item>Tarapaca</item>
+        <item>Valparaiso</item>
+    </string-array>
+    <string-array name="china">
+        <item>Anhui</item>
+        <item>Anhui Province</item>
+        <item>Anhui Sheng</item>
+        <item>Aomen</item>
+        <item>Beijing</item>
+        <item>Beijing Shi</item>
+        <item>Chongqing</item>
+        <item>Fujian</item>
+        <item>Fujian Sheng</item>
+        <item>Gansu</item>
+        <item>Guangdong</item>
+        <item>Guangdong Sheng</item>
+        <item>Guangxi</item>
+        <item>Guizhou</item>
+        <item>Hainan</item>
+        <item>Hebei</item>
+        <item>Heilongjiang</item>
+        <item>Henan</item>
+        <item>Hubei</item>
+        <item>Hunan</item>
+        <item>Jiangsu</item>
+        <item>Jiangsu Sheng</item>
+        <item>Jiangxi</item>
+        <item>Jilin</item>
+        <item>Liaoning</item>
+        <item>Liaoning Sheng</item>
+        <item>Nei Monggol</item>
+        <item>Ningxia Hui</item>
+        <item>Qinghai</item>
+        <item>Shaanxi</item>
+        <item>Shandong</item>
+        <item>Shandong Sheng</item>
+        <item>Shanghai</item>
+        <item>Shanxi</item>
+        <item>Sichuan</item>
+        <item>Tianjin</item>
+        <item>Xianggang</item>
+        <item>Xinjiang</item>
+        <item>Xizang</item>
+        <item>Yunnan</item>
+        <item>Zhejiang</item>
+        <item>Zhejiang Sheng</item>
+    </string-array>
+    <string-array name="colombia">
+        <item>Amazonas</item>
+        <item>Antioquia</item>
+        <item>Arauca</item>
+        <item>Atlantico</item>
+        <item>Bogota</item>
+        <item>Bolivar</item>
+        <item>Boyaca</item>
+        <item>Caldas</item>
+        <item>Caqueta</item>
+        <item>Casanare</item>
+        <item>Cauca</item>
+        <item>Cesar</item>
+        <item>Choco</item>
+        <item>Cordoba</item>
+        <item>Cundinamarca</item>
+        <item>Guainia</item>
+        <item>Guaviare</item>
+        <item>Huila</item>
+        <item>La Guajira</item>
+        <item>Magdalena</item>
+        <item>Meta</item>
+        <item>Narino</item>
+        <item>Norte de Santander</item>
+        <item>Putumayo</item>
+        <item>Quindio</item>
+        <item>Risaralda</item>
+        <item>San Andres y Providencia</item>
+        <item>Santander</item>
+        <item>Sucre</item>
+        <item>Tolima</item>
+        <item>Valle del Cauca</item>
+        <item>Vaupes</item>
+        <item>Vichada</item>
+    </string-array>
+    <string-array name="comoros">
+        <item>Mwali</item>
+        <item>Njazidja</item>
+        <item>Nzwani</item>
+    </string-array>
+    <string-array name="congo">
+        <item>Bouenza</item>
+        <item>Brazzaville</item>
+        <item>Cuvette</item>
+        <item>Kouilou</item>
+        <item>Lekoumou</item>
+        <item>Likouala</item>
+        <item>Niari</item>
+        <item>Plateaux</item>
+        <item>Pool</item>
+        <item>Sangha</item>
+    </string-array>
+    <string-array name="democraticrepublicofthecongo">
+        <item>Bandundu</item>
+        <item>Bas-Congo</item>
+        <item>Equateur</item>
+        <item>Haut-Congo</item>
+        <item>Kasai-Occidental</item>
+        <item>Kasai-Oriental</item>
+        <item>Katanga</item>
+        <item>Kinshasa</item>
+        <item>Maniema</item>
+        <item>Nord-Kivu</item>
+        <item>Sud-Kivu</item>
+    </string-array>
+    <string-array name="cookislands">
+        <item>Aitutaki</item>
+        <item>Atiu</item>
+        <item>Mangaia</item>
+        <item>Manihiki</item>
+        <item>Mauke</item>
+        <item>Mitiaro</item>
+        <item>Nassau</item>
+        <item>Pukapuka</item>
+        <item>Rakahanga</item>
+        <item>Rarotonga</item>
+        <item>Tongareva</item>
+    </string-array>
+    <string-array name="costarica">
+        <item>Alajuela</item>
+        <item>Cartago</item>
+        <item>Guanacaste</item>
+        <item>Heredia</item>
+        <item>Limon</item>
+        <item>Puntarenas</item>
+        <item>San Jose</item>
+    </string-array>
+    <string-array name="cotedivoireivorycoast">
+        <item>Abidjan</item>
+        <item>Agneby</item>
+        <item>Bafing</item>
+        <item>Denguele</item>
+        <item>Dix-huit Montagnes</item>
+        <item>Fromager</item>
+        <item>Haut-Sassandra</item>
+        <item>Lacs</item>
+        <item>Lagunes</item>
+        <item>Marahoue</item>
+        <item>Moyen-Cavally</item>
+        <item>Moyen-Comoe</item>
+        <item>N\'zi-Comoe</item>
+        <item>Sassandra</item>
+        <item>Savanes</item>
+        <item>Sud-Bandama</item>
+        <item>Sud-Comoe</item>
+        <item>Vallee du Bandama</item>
+        <item>Worodougou</item>
+        <item>Zanzan</item>
+    </string-array>
+    <string-array name="croatiahrvatska">
+        <item>Bjelovar-Bilogora</item>
+        <item>Dubrovnik-Neretva</item>
+        <item>Grad Zagreb</item>
+        <item>Istra</item>
+        <item>Karlovac</item>
+        <item>Koprivnica-Krizhevci</item>
+        <item>Krapina-Zagorje</item>
+        <item>Lika-Senj</item>
+        <item>Medhimurje</item>
+        <item>Medimurska Zupanija</item>
+        <item>Osijek-Baranja</item>
+        <item>Osjecko-Baranjska Zupanija</item>
+        <item>Pozhega-Slavonija</item>
+        <item>Primorje-Gorski Kotar</item>
+        <item>Shibenik-Knin</item>
+        <item>Sisak-Moslavina</item>
+        <item>Slavonski Brod-Posavina</item>
+        <item>Split-Dalmacija</item>
+        <item>Varazhdin</item>
+        <item>Virovitica-Podravina</item>
+        <item>Vukovar-Srijem</item>
+        <item>Zadar</item>
+        <item>Zagreb</item>
+    </string-array>
+    <string-array name="cuba">
+        <item>Camaguey</item>
+        <item>Ciego de Avila</item>
+        <item>Cienfuegos</item>
+        <item>Ciudad de la Habana</item>
+        <item>Granma</item>
+        <item>Guantanamo</item>
+        <item>Habana</item>
+        <item>Holguin</item>
+        <item>Isla de la Juventud</item>
+        <item>La Habana</item>
+        <item>Las Tunas</item>
+        <item>Matanzas</item>
+        <item>Pinar del Rio</item>
+        <item>Sancti Spiritus</item>
+        <item>Santiago de Cuba</item>
+        <item>Villa Clara</item>
+    </string-array>
+    <string-array name="cyprus">
+        <item>Government controlled area</item>
+        <item>Limassol</item>
+        <item>Nicosia District</item>
+        <item>Paphos</item>
+        <item>Turkish controlled area</item>
+    </string-array>
+    <string-array name="czechrepublic">
+        <item>Central Bohemian</item>
+        <item>Frycovice</item>
+        <item>Jihocesky Kraj</item>
+        <item>Jihochesky</item>
+        <item>Jihomoravsky</item>
+        <item>Karlovarsky</item>
+        <item>Klecany</item>
+        <item>Kralovehradecky</item>
+        <item>Liberecky</item>
+        <item>Lipov</item>
+        <item>Moravskoslezsky</item>
+        <item>Olomoucky</item>
+        <item>Olomoucky Kraj</item>
+        <item>Pardubicky</item>
+        <item>Plzensky</item>
+        <item>Praha</item>
+        <item>Rajhrad</item>
+        <item>Smirice</item>
+        <item>South Moravian</item>
+        <item>Straz nad Nisou</item>
+        <item>Stredochesky</item>
+        <item>Unicov</item>
+        <item>Ustecky</item>
+        <item>Valletta</item>
+        <item>Velesin</item>
+        <item>Vysochina</item>
+        <item>Zlinsky</item>
+    </string-array>
+    <string-array name="denmark">
+        <item>Arhus</item>
+        <item>Bornholm</item>
+        <item>Frederiksborg</item>
+        <item>Fyn</item>
+        <item>Hovedstaden</item>
+        <item>Kobenhavn</item>
+        <item>Kobenhavns Amt</item>
+        <item>Kobenhavns Kommune</item>
+        <item>Nordjylland</item>
+        <item>Ribe</item>
+        <item>Ringkobing</item>
+        <item>Roervig</item>
+        <item>Roskilde</item>
+        <item>Roslev</item>
+        <item>Sjaelland</item>
+        <item>Soeborg</item>
+        <item>Sonderjylland</item>
+        <item>Storstrom</item>
+        <item>Syddanmark</item>
+        <item>Toelloese</item>
+        <item>Vejle</item>
+        <item>Vestsjalland</item>
+        <item>Viborg</item>
+    </string-array>
+    <string-array name="djibouti">
+        <item>\'Ali Sabih</item>
+        <item>Dikhil</item>
+        <item>Jibuti</item>
+        <item>Tajurah</item>
+        <item>Ubuk</item>
+    </string-array>
+    <string-array name="dominica">
+        <item>Saint Andrew</item>
+        <item>Saint David</item>
+        <item>Saint George</item>
+        <item>Saint John</item>
+        <item>Saint Joseph</item>
+        <item>Saint Luke</item>
+        <item>Saint Mark</item>
+        <item>Saint Patrick</item>
+        <item>Saint Paul</item>
+        <item>Saint Peter</item>
+    </string-array>
+    <string-array name="dominicanrepublic">
+        <item>Azua</item>
+        <item>Bahoruco</item>
+        <item>Barahona</item>
+        <item>Dajabon</item>
+        <item>Distrito Nacional</item>
+        <item>Duarte</item>
+        <item>El Seybo</item>
+        <item>Elias Pina</item>
+        <item>Espaillat</item>
+        <item>Hato Mayor</item>
+        <item>Independencia</item>
+        <item>La Altagracia</item>
+        <item>La Romana</item>
+        <item>La Vega</item>
+        <item>Maria Trinidad Sanchez</item>
+        <item>Monsenor Nouel</item>
+        <item>Monte Cristi</item>
+        <item>Monte Plata</item>
+        <item>Pedernales</item>
+        <item>Peravia</item>
+        <item>Puerto Plata</item>
+        <item>Salcedo</item>
+        <item>Samana</item>
+        <item>San Cristobal</item>
+        <item>San Juan</item>
+        <item>San Pedro de Macoris</item>
+        <item>Sanchez Ramirez</item>
+        <item>Santiago</item>
+        <item>Santiago Rodriguez</item>
+        <item>Valverde</item>
+    </string-array>
+    <string-array name="easttimor">
+        <item>Aileu</item>
+        <item>Ainaro</item>
+        <item>Ambeno</item>
+        <item>Baucau</item>
+        <item>Bobonaro</item>
+        <item>Cova Lima</item>
+        <item>Dili</item>
+        <item>Ermera</item>
+        <item>Lautem</item>
+        <item>Liquica</item>
+        <item>Manatuto</item>
+        <item>Manufahi</item>
+        <item>Viqueque</item>
+    </string-array>
+    <string-array name="ecuador">
+        <item>Azuay</item>
+        <item>Bolivar</item>
+        <item>Canar</item>
+        <item>Carchi</item>
+        <item>Chimborazo</item>
+        <item>Cotopaxi</item>
+        <item>El Oro</item>
+        <item>Esmeraldas</item>
+        <item>Galapagos</item>
+        <item>Guayas</item>
+        <item>Imbabura</item>
+        <item>Loja</item>
+        <item>Los Rios</item>
+        <item>Manabi</item>
+        <item>Morona Santiago</item>
+        <item>Napo</item>
+        <item>Orellana</item>
+        <item>Pastaza</item>
+        <item>Pichincha</item>
+        <item>Sucumbios</item>
+        <item>Tungurahua</item>
+        <item>Zamora Chinchipe</item>
+    </string-array>
+    <string-array name="egypt">
+        <item>Aswan</item>
+        <item>Asyut</item>
+        <item>Bani Suwayf</item>
+        <item>Bur Sa\'id</item>
+        <item>Cairo</item>
+        <item>Dumyat</item>
+        <item>Kafr-ash-Shaykh</item>
+        <item>Matruh</item>
+        <item>Muhafazat ad Daqahliyah</item>
+        <item>Muhafazat al Fayyum</item>
+        <item>Muhafazat al Gharbiyah</item>
+        <item>Muhafazat al Iskandariyah</item>
+        <item>Muhafazat al Qahirah</item>
+        <item>Qina</item>
+        <item>Sawhaj</item>
+        <item>Sina al-Janubiyah</item>
+        <item>Sina ash-Shamaliyah</item>
+        <item>ad-Daqahliyah</item>
+        <item>al-Bahr-al-Ahmar</item>
+        <item>al-Buhayrah</item>
+        <item>al-Fayyum</item>
+        <item>al-Gharbiyah</item>
+        <item>al-Iskandariyah</item>
+        <item>al-Ismailiyah</item>
+        <item>al-Jizah</item>
+        <item>al-Minufiyah</item>
+        <item>al-Minya</item>
+        <item>al-Qahira</item>
+        <item>al-Qalyubiyah</item>
+        <item>al-Uqsur</item>
+        <item>al-Wadi al-Jadid</item>
+        <item>as-Suways</item>
+        <item>ash-Sharqiyah</item>
+    </string-array>
+    <string-array name="elsalvador">
+        <item>Ahuachapan</item>
+        <item>Cabanas</item>
+        <item>Chalatenango</item>
+        <item>Cuscatlan</item>
+        <item>La Libertad</item>
+        <item>La Paz</item>
+        <item>La Union</item>
+        <item>Morazan</item>
+        <item>San Miguel</item>
+        <item>San Salvador</item>
+        <item>San Vicente</item>
+        <item>Santa Ana</item>
+        <item>Sonsonate</item>
+        <item>Usulutan</item>
+    </string-array>
+    <string-array name="equatorialguinea">
+        <item>Annobon</item>
+        <item>Bioko Norte</item>
+        <item>Bioko Sur</item>
+        <item>Centro Sur</item>
+        <item>Kie-Ntem</item>
+        <item>Litoral</item>
+        <item>Wele-Nzas</item>
+    </string-array>
+    <string-array name="eritrea">
+        <item>Anseba</item>
+        <item>Debub</item>
+        <item>Debub-Keih-Bahri</item>
+        <item>Gash-Barka</item>
+        <item>Maekel</item>
+        <item>Semien-Keih-Bahri</item>
+    </string-array>
+    <string-array name="estonia">
+        <item>Harju</item>
+        <item>Hiiu</item>
+        <item>Ida-Viru</item>
+        <item>Jarva</item>
+        <item>Jogeva</item>
+        <item>Laane</item>
+        <item>Laane-Viru</item>
+        <item>Parnu</item>
+        <item>Polva</item>
+        <item>Rapla</item>
+        <item>Saare</item>
+        <item>Tartu</item>
+        <item>Valga</item>
+        <item>Viljandi</item>
+        <item>Voru</item>
+    </string-array>
+    <string-array name="ethiopia">
+        <item>Addis Abeba</item>
+        <item>Afar</item>
+        <item>Amhara</item>
+        <item>Benishangul</item>
+        <item>Diredawa</item>
+        <item>Gambella</item>
+        <item>Harar</item>
+        <item>Jigjiga</item>
+        <item>Mekele</item>
+        <item>Oromia</item>
+        <item>Somali</item>
+        <item>Southern</item>
+        <item>Tigray</item>
+    </string-array>
+    <string-array name="falklandislands">
+        <item>Falkland Islands</item>
+        <item>South Georgia</item>
+    </string-array>
+    <string-array name="faroeislands">
+        <item>Klaksvik</item>
+        <item>Nor ara Eysturoy</item>
+        <item>Nor oy</item>
+        <item>Sandoy</item>
+        <item>Streymoy</item>
+        <item>Su uroy</item>
+        <item>Sy ra Eysturoy</item>
+        <item>Torshavn</item>
+        <item>Vaga</item>
+    </string-array>
+    <string-array name="fijiislands">
+        <item>Central</item>
+        <item>Eastern</item>
+        <item>Northern</item>
+        <item>South Pacific</item>
+        <item>Western</item>
+    </string-array>
+    <string-array name="finland">
+        <item>Ahvenanmaa</item>
+        <item>Etela-Karjala</item>
+        <item>Etela-Pohjanmaa</item>
+        <item>Etela-Savo</item>
+        <item>Etela-Suomen Laani</item>
+        <item>Ita-Suomen Laani</item>
+        <item>Ita-Uusimaa</item>
+        <item>Kainuu</item>
+        <item>Kanta-Hame</item>
+        <item>Keski-Pohjanmaa</item>
+        <item>Keski-Suomi</item>
+        <item>Kymenlaakso</item>
+        <item>Lansi-Suomen Laani</item>
+        <item>Lappi</item>
+        <item>Northern Savonia</item>
+        <item>Ostrobothnia</item>
+        <item>Oulun Laani</item>
+        <item>Paijat-Hame</item>
+        <item>Pirkanmaa</item>
+        <item>Pohjanmaa</item>
+        <item>Pohjois-Karjala</item>
+        <item>Pohjois-Pohjanmaa</item>
+        <item>Pohjois-Savo</item>
+        <item>Saarijarvi</item>
+        <item>Satakunta</item>
+        <item>Southern Savonia</item>
+        <item>Tavastia Proper</item>
+        <item>Uleaborgs Lan</item>
+        <item>Uusimaa</item>
+        <item>Varsinais-Suomi</item>
+    </string-array>
+    <string-array name="france">
+        <item>Ain</item>
+        <item>Aisne</item>
+        <item>Albi Le Sequestre</item>
+        <item>Allier</item>
+        <item>Alpes-Cote dAzur</item>
+        <item>Alpes-Maritimes</item>
+        <item>Alpes-de-Haute-Provence</item>
+        <item>Alsace</item>
+        <item>Aquitaine</item>
+        <item>Ardeche</item>
+        <item>Ardennes</item>
+        <item>Ariege</item>
+        <item>Aube</item>
+        <item>Aude</item>
+        <item>Auvergne</item>
+        <item>Aveyron</item>
+        <item>Bas-Rhin</item>
+        <item>Basse-Normandie</item>
+        <item>Bouches-du-Rhone</item>
+        <item>Bourgogne</item>
+        <item>Bretagne</item>
+        <item>Brittany</item>
+        <item>Burgundy</item>
+        <item>Calvados</item>
+        <item>Cantal</item>
+        <item>Cedex</item>
+        <item>Centre</item>
+        <item>Charente</item>
+        <item>Charente-Maritime</item>
+        <item>Cher</item>
+        <item>Correze</item>
+        <item>Corse-du-Sud</item>
+        <item>Cote-d\'Or</item>
+        <item>Cotes-d\'Armor</item>
+        <item>Creuse</item>
+        <item>Crolles</item>
+        <item>Deux-Sevres</item>
+        <item>Dordogne</item>
+        <item>Doubs</item>
+        <item>Drome</item>
+        <item>Essonne</item>
+        <item>Eure</item>
+        <item>Eure-et-Loir</item>
+        <item>Feucherolles</item>
+        <item>Finistere</item>
+        <item>Franche-Comte</item>
+        <item>Gard</item>
+        <item>Gers</item>
+        <item>Gironde</item>
+        <item>Haut-Rhin</item>
+        <item>Haute-Corse</item>
+        <item>Haute-Garonne</item>
+        <item>Haute-Loire</item>
+        <item>Haute-Marne</item>
+        <item>Haute-Saone</item>
+        <item>Haute-Savoie</item>
+        <item>Haute-Vienne</item>
+        <item>Hautes-Alpes</item>
+        <item>Hautes-Pyrenees</item>
+        <item>Hauts-de-Seine</item>
+        <item>Herault</item>
+        <item>Ile-de-France</item>
+        <item>Ille-et-Vilaine</item>
+        <item>Indre</item>
+        <item>Indre-et-Loire</item>
+        <item>Isere</item>
+        <item>Jura</item>
+        <item>Klagenfurt</item>
+        <item>Landes</item>
+        <item>Languedoc-Roussillon</item>
+        <item>Larcay</item>
+        <item>Le Castellet</item>
+        <item>Le Creusot</item>
+        <item>Limousin</item>
+        <item>Loir-et-Cher</item>
+        <item>Loire</item>
+        <item>Loire-Atlantique</item>
+        <item>Loiret</item>
+        <item>Lorraine</item>
+        <item>Lot</item>
+        <item>Lot-et-Garonne</item>
+        <item>Lower Normandy</item>
+        <item>Lozere</item>
+        <item>Maine-et-Loire</item>
+        <item>Manche</item>
+        <item>Marne</item>
+        <item>Mayenne</item>
+        <item>Meurthe-et-Moselle</item>
+        <item>Meuse</item>
+        <item>Midi-Pyrenees</item>
+        <item>Morbihan</item>
+        <item>Moselle</item>
+        <item>Nievre</item>
+        <item>Nord</item>
+        <item>Nord-Pas-de-Calais</item>
+        <item>Oise</item>
+        <item>Orne</item>
+        <item>Paris</item>
+        <item>Pas-de-Calais</item>
+        <item>Pays de la Loire</item>
+        <item>Pays-de-la-Loire</item>
+        <item>Picardy</item>
+        <item>Puy-de-Dome</item>
+        <item>Pyrenees-Atlantiques</item>
+        <item>Pyrenees-Orientales</item>
+        <item>Quelmes</item>
+        <item>Rhone</item>
+        <item>Rhone-Alpes</item>
+        <item>Saint Ouen</item>
+        <item>Saint Viatre</item>
+        <item>Saone-et-Loire</item>
+        <item>Sarthe</item>
+        <item>Savoie</item>
+        <item>Seine-Maritime</item>
+        <item>Seine-Saint-Denis</item>
+        <item>Seine-et-Marne</item>
+        <item>Somme</item>
+        <item>Sophia Antipolis</item>
+        <item>Souvans</item>
+        <item>Tarn</item>
+        <item>Tarn-et-Garonne</item>
+        <item>Territoire de Belfort</item>
+        <item>Treignac</item>
+        <item>Upper Normandy</item>
+        <item>Val-d\'Oise</item>
+        <item>Val-de-Marne</item>
+        <item>Var</item>
+        <item>Vaucluse</item>
+        <item>Vellise</item>
+        <item>Vendee</item>
+        <item>Vienne</item>
+        <item>Vosges</item>
+        <item>Yonne</item>
+        <item>Yvelines</item>
+    </string-array>
+    <string-array name="frenchguiana">
+        <item>Cayenne</item>
+        <item>Saint-Laurent-du-Maroni</item>
+    </string-array>
+    <string-array name="frenchpolynesia">
+        <item>Iles du Vent</item>
+        <item>Iles sous le Vent</item>
+        <item>Marquesas</item>
+        <item>Tuamotu</item>
+        <item>Tubuai</item>
+    </string-array>
+    <string-array name="frenchsouthernterritories">
+        <item>Amsterdam</item>
+        <item>Crozet Islands</item>
+        <item>Kerguelen</item>
+    </string-array>
+    <string-array name="gabon">
+        <item>Estuaire</item>
+        <item>Haut-Ogooue</item>
+        <item>Moyen-Ogooue</item>
+        <item>Ngounie</item>
+        <item>Nyanga</item>
+        <item>Ogooue-Ivindo</item>
+        <item>Ogooue-Lolo</item>
+        <item>Ogooue-Maritime</item>
+        <item>Woleu-Ntem</item>
+    </string-array>
+    <string-array name="gambia">
+        <item>Banjul</item>
+        <item>Basse</item>
+        <item>Brikama</item>
+        <item>Janjanbureh</item>
+        <item>Kanifing</item>
+        <item>Kerewan</item>
+        <item>Kuntaur</item>
+        <item>Mansakonko</item>
+    </string-array>
+    <string-array name="georgia">
+        <item>Abhasia</item>
+        <item>Ajaria</item>
+        <item>Guria</item>
+        <item>Imereti</item>
+        <item>Kaheti</item>
+        <item>Kvemo Kartli</item>
+        <item>Mcheta-Mtianeti</item>
+        <item>Racha</item>
+        <item>Samagrelo-Zemo Svaneti</item>
+        <item>Samche-Zhavaheti</item>
+        <item>Shida Kartli</item>
+        <item>Tbilisi</item>
+    </string-array>
+    <string-array name="germany">
+        <item>Auvergne</item>
+        <item>Baden-Wurttemberg</item>
+        <item>Bavaria</item>
+        <item>Bayern</item>
+        <item>Beilstein Wurtt</item>
+        <item>Berlin</item>
+        <item>Brandenburg</item>
+        <item>Bremen</item>
+        <item>Dreisbach</item>
+        <item>Freistaat Bayern</item>
+        <item>Hamburg</item>
+        <item>Hannover</item>
+        <item>Heroldstatt</item>
+        <item>Hessen</item>
+        <item>Kortenberg</item>
+        <item>Laasdorf</item>
+        <item>Land Baden-Wurttemberg</item>
+        <item>Land Bayern</item>
+        <item>Land Brandenburg</item>
+        <item>Land Hessen</item>
+        <item>Land Mecklenburg-Vorpommern</item>
+        <item>Land Nordrhein-Westfalen</item>
+        <item>Land Rheinland-Pfalz</item>
+        <item>Land Sachsen</item>
+        <item>Land Sachsen-Anhalt</item>
+        <item>Land Thuringen</item>
+        <item>Lower Saxony</item>
+        <item>Mecklenburg-Vorpommern</item>
+        <item>Mulfingen</item>
+        <item>Munich</item>
+        <item>Neubeuern</item>
+        <item>Niedersachsen</item>
+        <item>Noord-Holland</item>
+        <item>Nordrhein-Westfalen</item>
+        <item>North Rhine-Westphalia</item>
+        <item>Osterode</item>
+        <item>Rheinland-Pfalz</item>
+        <item>Rhineland-Palatinate</item>
+        <item>Saarland</item>
+        <item>Sachsen</item>
+        <item>Sachsen-Anhalt</item>
+        <item>Saxony</item>
+        <item>Schleswig-Holstein</item>
+        <item>Thuringia</item>
+        <item>Webling</item>
+        <item>Weinstrabe</item>
+        <item>schlobborn</item>
+    </string-array>
+    <string-array name="ghana">
+        <item>Ashanti</item>
+        <item>Brong-Ahafo</item>
+        <item>Central</item>
+        <item>Eastern</item>
+        <item>Greater Accra</item>
+        <item>Northern</item>
+        <item>Upper East</item>
+        <item>Upper West</item>
+        <item>Volta</item>
+        <item>Western</item>
+    </string-array>
+    <string-array name="gibraltar">
+        <item>Gibraltar</item>
+    </string-array>
+    <string-array name="greece">
+        <item>Acharnes</item>
+        <item>Ahaia</item>
+        <item>Aitolia kai Akarnania</item>
+        <item>Argolis</item>
+        <item>Arkadia</item>
+        <item>Arta</item>
+        <item>Attica</item>
+        <item>Attiki</item>
+        <item>Ayion Oros</item>
+        <item>Crete</item>
+        <item>Dodekanisos</item>
+        <item>Drama</item>
+        <item>Evia</item>
+        <item>Evritania</item>
+        <item>Evros</item>
+        <item>Evvoia</item>
+        <item>Florina</item>
+        <item>Fokis</item>
+        <item>Fthiotis</item>
+        <item>Grevena</item>
+        <item>Halandri</item>
+        <item>Halkidiki</item>
+        <item>Hania</item>
+        <item>Heraklion</item>
+        <item>Hios</item>
+        <item>Ilia</item>
+        <item>Imathia</item>
+        <item>Ioannina</item>
+        <item>Iraklion</item>
+        <item>Karditsa</item>
+        <item>Kastoria</item>
+        <item>Kavala</item>
+        <item>Kefallinia</item>
+        <item>Kerkira</item>
+        <item>Kiklades</item>
+        <item>Kilkis</item>
+        <item>Korinthia</item>
+        <item>Kozani</item>
+        <item>Lakonia</item>
+        <item>Larisa</item>
+        <item>Lasithi</item>
+        <item>Lesvos</item>
+        <item>Levkas</item>
+        <item>Magnisia</item>
+        <item>Messinia</item>
+        <item>Nomos Attikis</item>
+        <item>Nomos Zakynthou</item>
+        <item>Pella</item>
+        <item>Pieria</item>
+        <item>Piraios</item>
+        <item>Preveza</item>
+        <item>Rethimni</item>
+        <item>Rodopi</item>
+        <item>Samos</item>
+        <item>Serrai</item>
+        <item>Thesprotia</item>
+        <item>Thessaloniki</item>
+        <item>Trikala</item>
+        <item>Voiotia</item>
+        <item>West Greece</item>
+        <item>Xanthi</item>
+        <item>Zakinthos</item>
+    </string-array>
+    <string-array name="greenland">
+        <item>Aasiaat</item>
+        <item>Ammassalik</item>
+        <item>Illoqqortoormiut</item>
+        <item>Ilulissat</item>
+        <item>Ivittuut</item>
+        <item>Kangaatsiaq</item>
+        <item>Maniitsoq</item>
+        <item>Nanortalik</item>
+        <item>Narsaq</item>
+        <item>Nuuk</item>
+        <item>Paamiut</item>
+        <item>Qaanaaq</item>
+        <item>Qaqortoq</item>
+        <item>Qasigiannguit</item>
+        <item>Qeqertarsuaq</item>
+        <item>Sisimiut</item>
+        <item>Udenfor kommunal inddeling</item>
+        <item>Upernavik</item>
+        <item>Uummannaq</item>
+    </string-array>
+    <string-array name="grenada">
+        <item>Carriacou-Petite Martinique</item>
+        <item>Saint Andrew</item>
+        <item>Saint Davids</item>
+        <item>Saint George\'s</item>
+        <item>Saint John</item>
+        <item>Saint Mark</item>
+        <item>Saint Patrick</item>
+    </string-array>
+    <string-array name="guadeloupe">
+        <item>Basse-Terre</item>
+        <item>Grande-Terre</item>
+        <item>Iles des Saintes</item>
+        <item>La Desirade</item>
+        <item>Marie-Galante</item>
+        <item>Saint Barthelemy</item>
+        <item>Saint Martin</item>
+    </string-array>
+    <string-array name="guam">
+        <item>Agana Heights</item>
+        <item>Agat</item>
+        <item>Barrigada</item>
+        <item>Chalan-Pago-Ordot</item>
+        <item>Dededo</item>
+        <item>Hagatna</item>
+        <item>Inarajan</item>
+        <item>Mangilao</item>
+        <item>Merizo</item>
+        <item>Mongmong-Toto-Maite</item>
+        <item>Santa Rita</item>
+        <item>Sinajana</item>
+        <item>Talofofo</item>
+        <item>Tamuning</item>
+        <item>Yigo</item>
+        <item>Yona</item>
+    </string-array>
+    <string-array name="guatemala">
+        <item>Alta Verapaz</item>
+        <item>Baja Verapaz</item>
+        <item>Chimaltenango</item>
+        <item>Chiquimula</item>
+        <item>El Progreso</item>
+        <item>Escuintla</item>
+        <item>Guatemala</item>
+        <item>Huehuetenango</item>
+        <item>Izabal</item>
+        <item>Jalapa</item>
+        <item>Jutiapa</item>
+        <item>Peten</item>
+        <item>Quezaltenango</item>
+        <item>Quiche</item>
+        <item>Retalhuleu</item>
+        <item>Sacatepequez</item>
+        <item>San Marcos</item>
+        <item>Santa Rosa</item>
+        <item>Solola</item>
+        <item>Suchitepequez</item>
+        <item>Totonicapan</item>
+        <item>Zacapa</item>
+    </string-array>
+    <string-array name="guernseyandalderney">
+        <item>Alderney</item>
+        <item>Castel</item>
+        <item>Forest</item>
+        <item>Saint Andrew</item>
+        <item>Saint Martin</item>
+        <item>Saint Peter Port</item>
+        <item>Saint Pierre du Bois</item>
+        <item>Saint Sampson</item>
+        <item>Saint Saviour</item>
+        <item>Sark</item>
+        <item>Torteval</item>
+        <item>Vale</item>
+    </string-array>
+    <string-array name="guinea">
+        <item>Beyla</item>
+        <item>Boffa</item>
+        <item>Boke</item>
+        <item>Conakry</item>
+        <item>Coyah</item>
+        <item>Dabola</item>
+        <item>Dalaba</item>
+        <item>Dinguiraye</item>
+        <item>Faranah</item>
+        <item>Forecariah</item>
+        <item>Fria</item>
+        <item>Gaoual</item>
+        <item>Gueckedou</item>
+        <item>Kankan</item>
+        <item>Kerouane</item>
+        <item>Kindia</item>
+        <item>Kissidougou</item>
+        <item>Koubia</item>
+        <item>Koundara</item>
+        <item>Kouroussa</item>
+        <item>Labe</item>
+        <item>Lola</item>
+        <item>Macenta</item>
+        <item>Mali</item>
+        <item>Mamou</item>
+        <item>Mandiana</item>
+        <item>Nzerekore</item>
+        <item>Pita</item>
+        <item>Siguiri</item>
+        <item>Telimele</item>
+        <item>Tougue</item>
+        <item>Yomou</item>
+    </string-array>
+    <string-array name="guinea_bissau">
+        <item>Bafata</item>
+        <item>Bissau</item>
+        <item>Bolama</item>
+        <item>Cacheu</item>
+        <item>Gabu</item>
+        <item>Oio</item>
+        <item>Quinara</item>
+        <item>Tombali</item>
+    </string-array>
+    <string-array name="guyana">
+        <item>Barima-Waini</item>
+        <item>Cuyuni-Mazaruni</item>
+        <item>Demerara-Mahaica</item>
+        <item>East Berbice-Corentyne</item>
+        <item>Essequibo Islands-West Demerar</item>
+        <item>Mahaica-Berbice</item>
+        <item>Pomeroon-Supenaam</item>
+        <item>Potaro-Siparuni</item>
+        <item>Upper Demerara-Berbice</item>
+        <item>Upper Takutu-Upper Essequibo</item>
+    </string-array>
+    <string-array name="haiti">
+        <item>Artibonite</item>
+        <item>Centre</item>
+        <item>Grand\'Anse</item>
+        <item>Nord</item>
+        <item>Nord-Est</item>
+        <item>Nord-Ouest</item>
+        <item>Ouest</item>
+        <item>Sud</item>
+        <item>Sud-Est</item>
+    </string-array>
+    <string-array name="honduras">
+        <item>Atlantida</item>
+        <item>Choluteca</item>
+        <item>Colon</item>
+        <item>Comayagua</item>
+        <item>Copan</item>
+        <item>Cortes</item>
+        <item>Distrito Central</item>
+        <item>El Paraiso</item>
+        <item>Francisco Morazan</item>
+        <item>Gracias a Dios</item>
+        <item>Intibuca</item>
+        <item>Islas de la Bahia</item>
+        <item>La Paz</item>
+        <item>Lempira</item>
+        <item>Ocotepeque</item>
+        <item>Olancho</item>
+        <item>Santa Barbara</item>
+        <item>Valle</item>
+        <item>Yoro</item>
+    </string-array>
+    <string-array name="hungary">
+        <item>Bacs-Kiskun</item>
+        <item>Baranya</item>
+        <item>Bekes</item>
+        <item>Borsod-Abauj-Zemplen</item>
+        <item>Budapest</item>
+        <item>Csongrad</item>
+        <item>Fejer</item>
+        <item>Gyor-Moson-Sopron</item>
+        <item>Hajdu-Bihar</item>
+        <item>Heves</item>
+        <item>Jasz-Nagykun-Szolnok</item>
+        <item>Komarom-Esztergom</item>
+        <item>Nograd</item>
+        <item>Pest</item>
+        <item>Somogy</item>
+        <item>Szabolcs-Szatmar-Bereg</item>
+        <item>Tolna</item>
+        <item>Vas</item>
+        <item>Veszprem</item>
+        <item>Zala</item>
+    </string-array>
+    <string-array name="iceland">
+        <item>Austurland</item>
+        <item>Gullbringusysla</item>
+        <item>Hofu borgarsva i</item>
+        <item>Nor urland eystra</item>
+        <item>Nor urland vestra</item>
+        <item>Su urland</item>
+        <item>Su urnes</item>
+        <item>Vestfir ir</item>
+        <item>Vesturland</item>
+    </string-array>
+    <string-array name="india">
+        <item>Andaman and Nicobar Islands</item>
+        <item>Andhra Pradesh</item>
+        <item>Arunachal Pradesh</item>
+        <item>Assam</item>
+        <item>Bihar</item>
+        <item>Chandigarh</item>
+        <item>Chhattisgarh</item>
+        <item>Dadra and Nagar Haveli</item>
+        <item>Daman and Diu</item>
+        <item>Delhi</item>
+        <item>Goa</item>
+        <item>Gujarat</item>
+        <item>Haryana</item>
+        <item>Himachal Pradesh</item>
+        <item>Jammu and Kashmir</item>
+        <item>Jharkhand</item>
+        <item>Karnataka</item>
+        <item>Kerala</item>
+        <item>Lakshadweep</item>
+        <item>Madhya Pradesh</item>
+        <item>Maharashtra</item>
+        <item>Manipur</item>
+        <item>Meghalaya</item>
+        <item>Mizoram</item>
+        <item>Nagaland</item>
+        <item>Odisha</item>
+        <item>Pondicherry</item>
+        <item>Punjab</item>
+        <item>Rajasthan</item>
+        <item>Sikkim</item>
+        <item>Tamil Nadu</item>
+        <item>Telangana</item>
+        <item>Tripura</item>
+        <item>Uttar Pradesh</item>
+        <item>Uttarakhand</item>
+        <item>West Bengal</item>
+    </string-array>
+    <string-array name="indonesia">
+        <item>Aceh</item>
+        <item>Bali</item>
+        <item>Bangka-Belitung</item>
+        <item>Banten</item>
+        <item>Bengkulu</item>
+        <item>Gandaria</item>
+        <item>Gorontalo</item>
+        <item>Jakarta</item>
+        <item>Jambi</item>
+        <item>Jawa Barat</item>
+        <item>Jawa Tengah</item>
+        <item>Jawa Timur</item>
+        <item>Kalimantan Barat</item>
+        <item>Kalimantan Selatan</item>
+        <item>Kalimantan Tengah</item>
+        <item>Kalimantan Timur</item>
+        <item>Kendal</item>
+        <item>Lampung</item>
+        <item>Maluku</item>
+        <item>Maluku Utara</item>
+        <item>Nusa Tenggara Barat</item>
+        <item>Nusa Tenggara Timur</item>
+        <item>Papua</item>
+        <item>Riau</item>
+        <item>Riau Kepulauan</item>
+        <item>Solo</item>
+        <item>Sulawesi Selatan</item>
+        <item>Sulawesi Tengah</item>
+        <item>Sulawesi Tenggara</item>
+        <item>Sulawesi Utara</item>
+        <item>Sumatera Barat</item>
+        <item>Sumatera Selatan</item>
+        <item>Sumatera Utara</item>
+        <item>Yogyakarta</item>
+    </string-array>
+    <string-array name="iran">
+        <item>Ardabil</item>
+        <item>Azarbayjan-e Bakhtari</item>
+        <item>Azarbayjan-e Khavari</item>
+        <item>Bushehr</item>
+        <item>Chahar Mahal-e Bakhtiari</item>
+        <item>Esfahan</item>
+        <item>Fars</item>
+        <item>Gilan</item>
+        <item>Golestan</item>
+        <item>Hamadan</item>
+        <item>Hormozgan</item>
+        <item>Ilam</item>
+        <item>Kerman</item>
+        <item>Kermanshah</item>
+        <item>Khorasan</item>
+        <item>Khuzestan</item>
+        <item>Kohgiluyeh-e Boyerahmad</item>
+        <item>Kordestan</item>
+        <item>Lorestan</item>
+        <item>Markazi</item>
+        <item>Mazandaran</item>
+        <item>Ostan-e Esfahan</item>
+        <item>Qazvin</item>
+        <item>Qom</item>
+        <item>Semnan</item>
+        <item>Sistan-e Baluchestan</item>
+        <item>Tehran</item>
+        <item>Yazd</item>
+        <item>Zanjan</item>
+    </string-array>
+    <string-array name="iraq">
+        <item>Babil</item>
+        <item>Baghdad</item>
+        <item>Dahuk</item>
+        <item>Dhi Qar</item>
+        <item>Diyala</item>
+        <item>Erbil</item>
+        <item>Irbil</item>
+        <item>Karbala</item>
+        <item>Kurdistan</item>
+        <item>Maysan</item>
+        <item>Ninawa</item>
+        <item>Salah-ad-Din</item>
+        <item>Wasit</item>
+        <item>al-Anbar</item>
+        <item>al-Basrah</item>
+        <item>al-Muthanna</item>
+        <item>al-Qadisiyah</item>
+        <item>an-Najaf</item>
+        <item>as-Sulaymaniyah</item>
+        <item>at-Ta\'mim</item>
+    </string-array>
+    <string-array name="ireland">
+        <item>Armagh</item>
+        <item>Carlow</item>
+        <item>Cavan</item>
+        <item>Clare</item>
+        <item>Cork</item>
+        <item>Donegal</item>
+        <item>Dublin</item>
+        <item>Galway</item>
+        <item>Kerry</item>
+        <item>Kildare</item>
+        <item>Kilkenny</item>
+        <item>Laois</item>
+        <item>Leinster</item>
+        <item>Leitrim</item>
+        <item>Limerick</item>
+        <item>Loch Garman</item>
+        <item>Longford</item>
+        <item>Louth</item>
+        <item>Mayo</item>
+        <item>Meath</item>
+        <item>Monaghan</item>
+        <item>Offaly</item>
+        <item>Roscommon</item>
+        <item>Sligo</item>
+        <item>Tipperary North Riding</item>
+        <item>Tipperary South Riding</item>
+        <item>Ulster</item>
+        <item>Waterford</item>
+        <item>Westmeath</item>
+        <item>Wexford</item>
+        <item>Wicklow</item>
+    </string-array>
+    <string-array name="israel">
+        <item>Beit Hanania</item>
+        <item>Ben Gurion Airport</item>
+        <item>Bethlehem</item>
+        <item>Caesarea</item>
+        <item>Centre</item>
+        <item>Gaza</item>
+        <item>Hadaron</item>
+        <item>Haifa District</item>
+        <item>Hamerkaz</item>
+        <item>Hazafon</item>
+        <item>Hebron</item>
+        <item>Jaffa</item>
+        <item>Jerusalem</item>
+        <item>Khefa</item>
+        <item>Kiryat Yam</item>
+        <item>Lower Galilee</item>
+        <item>Qalqilya</item>
+        <item>Talme Elazar</item>
+        <item>Tel Aviv</item>
+        <item>Tsafon</item>
+        <item>Umm El Fahem</item>
+        <item>Yerushalayim</item>
+    </string-array>
+    <string-array name="italy">
+        <item>Abruzzi</item>
+        <item>Abruzzo</item>
+        <item>Agrigento</item>
+        <item>Alessandria</item>
+        <item>Ancona</item>
+        <item>Arezzo</item>
+        <item>Ascoli Piceno</item>
+        <item>Asti</item>
+        <item>Avellino</item>
+        <item>Bari</item>
+        <item>Basilicata</item>
+        <item>Belluno</item>
+        <item>Benevento</item>
+        <item>Bergamo</item>
+        <item>Biella</item>
+        <item>Bologna</item>
+        <item>Bolzano</item>
+        <item>Brescia</item>
+        <item>Brindisi</item>
+        <item>Calabria</item>
+        <item>Campania</item>
+        <item>Cartoceto</item>
+        <item>Caserta</item>
+        <item>Catania</item>
+        <item>Chieti</item>
+        <item>Como</item>
+        <item>Cosenza</item>
+        <item>Cremona</item>
+        <item>Cuneo</item>
+        <item>Emilia-Romagna</item>
+        <item>Ferrara</item>
+        <item>Firenze</item>
+        <item>Florence</item>
+        <item>Forli-Cesena </item>
+        <item>Friuli-Venezia Giulia</item>
+        <item>Frosinone</item>
+        <item>Genoa</item>
+        <item>Gorizia</item>
+        <item>L\'Aquila</item>
+        <item>Lazio</item>
+        <item>Lecce</item>
+        <item>Lecco</item>
+        <item>Lecco Province</item>
+        <item>Liguria</item>
+        <item>Lodi</item>
+        <item>Lombardia</item>
+        <item>Lombardy</item>
+        <item>Macerata</item>
+        <item>Mantova</item>
+        <item>Marche</item>
+        <item>Messina</item>
+        <item>Milan</item>
+        <item>Modena</item>
+        <item>Molise</item>
+        <item>Molteno</item>
+        <item>Montenegro</item>
+        <item>Monza and Brianza</item>
+        <item>Naples</item>
+        <item>Novara</item>
+        <item>Padova</item>
+        <item>Parma</item>
+        <item>Pavia</item>
+        <item>Perugia</item>
+        <item>Pesaro-Urbino</item>
+        <item>Piacenza</item>
+        <item>Piedmont</item>
+        <item>Piemonte</item>
+        <item>Pisa</item>
+        <item>Pordenone</item>
+        <item>Potenza</item>
+        <item>Puglia</item>
+        <item>Reggio Emilia</item>
+        <item>Rimini</item>
+        <item>Roma</item>
+        <item>Salerno</item>
+        <item>Sardegna</item>
+        <item>Sassari</item>
+        <item>Savona</item>
+        <item>Sicilia</item>
+        <item>Siena</item>
+        <item>Sondrio</item>
+        <item>South Tyrol</item>
+        <item>Taranto</item>
+        <item>Teramo</item>
+        <item>Torino</item>
+        <item>Toscana</item>
+        <item>Trapani</item>
+        <item>Trentino-Alto Adige</item>
+        <item>Trento</item>
+        <item>Treviso</item>
+        <item>Udine</item>
+        <item>Umbria</item>
+        <item>Valle d\'Aosta</item>
+        <item>Varese</item>
+        <item>Veneto</item>
+        <item>Venezia</item>
+        <item>Verbano-Cusio-Ossola</item>
+        <item>Vercelli</item>
+        <item>Verona</item>
+        <item>Vicenza</item>
+        <item>Viterbo</item>
+    </string-array>
+    <string-array name="jamaica">
+        <item>Buxoro Viloyati</item>
+        <item>Clarendon</item>
+        <item>Hanover</item>
+        <item>Kingston</item>
+        <item>Manchester</item>
+        <item>Portland</item>
+        <item>Saint Andrews</item>
+        <item>Saint Ann</item>
+        <item>Saint Catherine</item>
+        <item>Saint Elizabeth</item>
+        <item>Saint James</item>
+        <item>Saint Mary</item>
+        <item>Saint Thomas</item>
+        <item>Trelawney</item>
+        <item>Westmoreland</item>
+    </string-array>
+    <string-array name="japan">
+        <item>Aichi</item>
+        <item>Akita</item>
+        <item>Aomori</item>
+        <item>Chiba</item>
+        <item>Ehime</item>
+        <item>Fukui</item>
+        <item>Fukuoka</item>
+        <item>Fukushima</item>
+        <item>Gifu</item>
+        <item>Gumma</item>
+        <item>Hiroshima</item>
+        <item>Hokkaido</item>
+        <item>Hyogo</item>
+        <item>Ibaraki</item>
+        <item>Ishikawa</item>
+        <item>Iwate</item>
+        <item>Kagawa</item>
+        <item>Kagoshima</item>
+        <item>Kanagawa</item>
+        <item>Kanto</item>
+        <item>Kochi</item>
+        <item>Kumamoto</item>
+        <item>Kyoto</item>
+        <item>Mie</item>
+        <item>Miyagi</item>
+        <item>Miyazaki</item>
+        <item>Nagano</item>
+        <item>Nagasaki</item>
+        <item>Nara</item>
+        <item>Niigata</item>
+        <item>Oita</item>
+        <item>Okayama</item>
+        <item>Okinawa</item>
+        <item>Osaka</item>
+        <item>Saga</item>
+        <item>Saitama</item>
+        <item>Shiga</item>
+        <item>Shimane</item>
+        <item>Shizuoka</item>
+        <item>Tochigi</item>
+        <item>Tokushima</item>
+        <item>Tokyo</item>
+        <item>Tottori</item>
+        <item>Toyama</item>
+        <item>Wakayama</item>
+        <item>Yamagata</item>
+        <item>Yamaguchi</item>
+        <item>Yamanashi</item>
+    </string-array>
+    <string-array name="jersey">
+        <item>Grouville</item>
+        <item>Saint Brelade</item>
+        <item>Saint Clement</item>
+        <item>Saint Helier</item>
+        <item>Saint John</item>
+        <item>Saint Lawrence</item>
+        <item>Saint Martin</item>
+        <item>Saint Mary</item>
+        <item>Saint Peter</item>
+        <item>Saint Saviour</item>
+        <item>Trinity</item>
+    </string-array>
+    <string-array name="jordan">
+        <item>\'Ajlun</item>
+        <item>Amman</item>
+        <item>Irbid</item>
+        <item>Jarash</item>
+        <item>Ma\'an</item>
+        <item>Madaba</item>
+        <item>al-\'Aqabah</item>
+        <item>al-Balqa\'</item>
+        <item>al-Karak</item>
+        <item>al-Mafraq</item>
+        <item>at-Tafilah</item>
+        <item>az-Zarqa\'</item>
+    </string-array>
+    <string-array name="kazakhstan">
+        <item>Akmecet</item>
+        <item>Akmola</item>
+        <item>Aktobe</item>
+        <item>Almati</item>
+        <item>Atirau</item>
+        <item>Batis Kazakstan</item>
+        <item>Burlinsky Region</item>
+        <item>Karagandi</item>
+        <item>Kostanay</item>
+        <item>Mankistau</item>
+        <item>Ontustik Kazakstan</item>
+        <item>Pavlodar</item>
+        <item>Sigis Kazakstan</item>
+        <item>Soltustik Kazakstan</item>
+        <item>Taraz</item>
+    </string-array>
+    <string-array name="kenya">
+        <item>Central</item>
+        <item>Coast</item>
+        <item>Eastern</item>
+        <item>Nairobi</item>
+        <item>North Eastern</item>
+        <item>Nyanza</item>
+        <item>Rift Valley</item>
+        <item>Western</item>
+    </string-array>
+    <string-array name="kiribati">
+        <item>Abaiang</item>
+        <item>Abemana</item>
+        <item>Aranuka</item>
+        <item>Arorae</item>
+        <item>Banaba</item>
+        <item>Beru</item>
+        <item>Butaritari</item>
+        <item>Kiritimati</item>
+        <item>Kuria</item>
+        <item>Maiana</item>
+        <item>Makin</item>
+        <item>Marakei</item>
+        <item>Nikunau</item>
+        <item>Nonouti</item>
+        <item>Onotoa</item>
+        <item>Phoenix Islands</item>
+        <item>Tabiteuea North</item>
+        <item>Tabiteuea South</item>
+        <item>Tabuaeran</item>
+        <item>Tamana</item>
+        <item>Tarawa North</item>
+        <item>Tarawa South</item>
+        <item>Teraina</item>
+    </string-array>
+    <string-array name="koreanorth">
+        <item>Chagangdo</item>
+        <item>Hamgyeongbukto</item>
+        <item>Hamgyeongnamdo</item>
+        <item>Hwanghaebukto</item>
+        <item>Hwanghaenamdo</item>
+        <item>Kaeseong</item>
+        <item>Kangweon</item>
+        <item>Nampo</item>
+        <item>Pyeonganbukto</item>
+        <item>Pyeongannamdo</item>
+        <item>Pyeongyang</item>
+        <item>Yanggang</item>
+    </string-array>
+    <string-array name="koreasouth">
+        <item>Busan</item>
+        <item>Cheju</item>
+        <item>Chollabuk</item>
+        <item>Chollanam</item>
+        <item>Chungbuk</item>
+        <item>Chungcheongbuk</item>
+        <item>Chungcheongnam</item>
+        <item>Chungnam</item>
+        <item>Daegu</item>
+        <item>Gangwon-do</item>
+        <item>Goyang-si</item>
+        <item>Gyeonggi-do</item>
+        <item>Gyeongsang </item>
+        <item>Gyeongsangnam-do</item>
+        <item>Incheon</item>
+        <item>Jeju-Si</item>
+        <item>Jeonbuk</item>
+        <item>Kangweon</item>
+        <item>Kwangju</item>
+        <item>Kyeonggi</item>
+        <item>Kyeongsangbuk</item>
+        <item>Kyeongsangnam</item>
+        <item>Kyonggi-do</item>
+        <item>Kyungbuk-Do</item>
+        <item>Kyunggi-Do</item>
+        <item>Kyunggi-do</item>
+        <item>Pusan</item>
+        <item>Seoul</item>
+        <item>Sudogwon</item>
+        <item>Taegu</item>
+        <item>Taejeon</item>
+        <item>Taejon-gwangyoksi</item>
+        <item>Ulsan</item>
+        <item>Wonju</item>
+        <item>gwangyoksi</item>
+    </string-array>
+    <string-array name="kuwait">
+        <item>Al Asimah</item>
+        <item>Hawalli</item>
+        <item>Mishref</item>
+        <item>Qadesiya</item>
+        <item>Safat</item>
+        <item>Salmiya</item>
+        <item>al-Ahmadi</item>
+        <item>al-Farwaniyah</item>
+        <item>al-Jahra</item>
+        <item>al-Kuwayt</item>
+    </string-array>
+    <string-array name="kyrgyzstan">
+        <item>Batken</item>
+        <item>Bishkek</item>
+        <item>Chui</item>
+        <item>Issyk-Kul</item>
+        <item>Jalal-Abad</item>
+        <item>Naryn</item>
+        <item>Osh</item>
+        <item>Talas</item>
+    </string-array>
+    <string-array name="laos">
+        <item>Attopu</item>
+        <item>Bokeo</item>
+        <item>Bolikhamsay</item>
+        <item>Champasak</item>
+        <item>Houaphanh</item>
+        <item>Khammouane</item>
+        <item>Luang Nam Tha</item>
+        <item>Luang Prabang</item>
+        <item>Oudomxay</item>
+        <item>Phongsaly</item>
+        <item>Saravan</item>
+        <item>Savannakhet</item>
+        <item>Sekong</item>
+        <item>Viangchan Prefecture</item>
+        <item>Viangchan Province</item>
+        <item>Xaignabury</item>
+        <item>Xiang Khuang</item>
+    </string-array>
+    <string-array name="latvia">
+        <item>Aizkraukles</item>
+        <item>Aluksnes</item>
+        <item>Balvu</item>
+        <item>Bauskas</item>
+        <item>Cesu</item>
+        <item>Daugavpils</item>
+        <item>Daugavpils City</item>
+        <item>Dobeles</item>
+        <item>Gulbenes</item>
+        <item>Jekabspils</item>
+        <item>Jelgava</item>
+        <item>Jelgavas</item>
+        <item>Jurmala City</item>
+        <item>Kraslavas</item>
+        <item>Kuldigas</item>
+        <item>Liepaja</item>
+        <item>Liepajas</item>
+        <item>Limbazhu</item>
+        <item>Ludzas</item>
+        <item>Madonas</item>
+        <item>Ogres</item>
+        <item>Preilu</item>
+        <item>Rezekne</item>
+        <item>Rezeknes</item>
+        <item>Riga</item>
+        <item>Rigas</item>
+        <item>Saldus</item>
+        <item>Talsu</item>
+        <item>Tukuma</item>
+        <item>Valkas</item>
+        <item>Valmieras</item>
+        <item>Ventspils</item>
+        <item>Ventspils City</item>
+    </string-array>
+    <string-array name="lebanon">
+        <item>Beirut</item>
+        <item>Jabal Lubnan</item>
+        <item>Mohafazat Liban-Nord</item>
+        <item>Mohafazat Mont-Liban</item>
+        <item>Sidon</item>
+        <item>al-Biqa</item>
+        <item>al-Janub</item>
+        <item>an-Nabatiyah</item>
+        <item>ash-Shamal</item>
+    </string-array>
+    <string-array name="lesotho">
+        <item>Berea</item>
+        <item>Butha-Buthe</item>
+        <item>Leribe</item>
+        <item>Mafeteng</item>
+        <item>Maseru</item>
+        <item>Mohale\'s Hoek</item>
+        <item>Mokhotlong</item>
+        <item>Qacha\'s Nek</item>
+        <item>Quthing</item>
+        <item>Thaba-Tseka</item>
+    </string-array>
+    <string-array name="liberia">
+        <item>Bomi</item>
+        <item>Bong</item>
+        <item>Grand Bassa</item>
+        <item>Grand Cape Mount</item>
+        <item>Grand Gedeh</item>
+        <item>Loffa</item>
+        <item>Margibi</item>
+        <item>Maryland and Grand Kru</item>
+        <item>Montserrado</item>
+        <item>Nimba</item>
+        <item>Rivercess</item>
+        <item>Sinoe</item>
+    </string-array>
+    <string-array name="libya">
+        <item>Ajdabiya</item>
+        <item>Fezzan</item>
+        <item>Banghazi</item>
+        <item>Darnah</item>
+        <item>Ghadamis</item>
+        <item>Gharyan</item>
+        <item>Misratah</item>
+        <item>Murzuq</item>
+        <item>Sabha</item>
+        <item>Sawfajjin</item>
+        <item>Surt</item>
+        <item>Tarabulus</item>
+        <item>Tarhunah</item>
+        <item>Tripolitania</item>
+        <item>Tubruq</item>
+        <item>Yafran</item>
+        <item>Zlitan</item>
+        <item>al-\'Aziziyah</item>
+        <item>al-Fatih</item>
+        <item>al-Jabal al Akhdar</item>
+        <item>al-Jufrah</item>
+        <item>al-Khums</item>
+        <item>al-Kufrah</item>
+        <item>an-Nuqat al-Khams</item>
+        <item>ash-Shati\'</item>
+        <item>az-Zawiyah</item>
+    </string-array>
+    <string-array name="liechtenstein">
+        <item>Balzers</item>
+        <item>Eschen</item>
+        <item>Gamprin</item>
+        <item>Mauren</item>
+        <item>Planken</item>
+        <item>Ruggell</item>
+        <item>Schaan</item>
+        <item>Schellenberg</item>
+        <item>Triesen</item>
+        <item>Triesenberg</item>
+        <item>Vaduz</item>
+    </string-array>
+    <string-array name="lithuania">
+        <item>Alytaus</item>
+        <item>Anyksciai</item>
+        <item>Kauno</item>
+        <item>Klaipedos</item>
+        <item>Marijampoles</item>
+        <item>Panevezhio</item>
+        <item>Panevezys</item>
+        <item>Shiauliu</item>
+        <item>Taurages</item>
+        <item>Telshiu</item>
+        <item>Telsiai</item>
+        <item>Utenos</item>
+        <item>Vilniaus</item>
+    </string-array>
+    <string-array name="luxembourg">
+        <item>Capellen</item>
+        <item>Clervaux</item>
+        <item>Diekirch</item>
+        <item>Echternach</item>
+        <item>Esch-sur-Alzette</item>
+        <item>Grevenmacher</item>
+        <item>Luxembourg</item>
+        <item>Mersch</item>
+        <item>Redange</item>
+        <item>Remich</item>
+        <item>Vianden</item>
+        <item>Wiltz</item>
+    </string-array>
+    <string-array name="macedonia">
+        <item>Berovo</item>
+        <item>Bitola</item>
+        <item>Brod</item>
+        <item>Debar</item>
+        <item>Delchevo</item>
+        <item>Demir Hisar</item>
+        <item>Gevgelija</item>
+        <item>Gostivar</item>
+        <item>Kavadarci</item>
+        <item>Kichevo</item>
+        <item>Kochani</item>
+        <item>Kratovo</item>
+        <item>Kriva Palanka</item>
+        <item>Krushevo</item>
+        <item>Kumanovo</item>
+        <item>Negotino</item>
+        <item>Ohrid</item>
+        <item>Prilep</item>
+        <item>Probishtip</item>
+        <item>Radovish</item>
+        <item>Resen</item>
+        <item>Shtip</item>
+        <item>Skopje</item>
+        <item>Struga</item>
+        <item>Strumica</item>
+        <item>Sveti Nikole</item>
+        <item>Tetovo</item>
+        <item>Valandovo</item>
+        <item>Veles</item>
+        <item>Vinica</item>
+    </string-array>
+    <string-array name="madagascar">
+        <item>Antananarivo</item>
+        <item>Antsiranana</item>
+        <item>Fianarantsoa</item>
+        <item>Mahajanga</item>
+        <item>Toamasina</item>
+        <item>Toliary</item>
+    </string-array>
+    <string-array name="malawi">
+        <item>Balaka</item>
+        <item>Blantyre City</item>
+        <item>Chikwawa</item>
+        <item>Chiradzulu</item>
+        <item>Chitipa</item>
+        <item>Dedza</item>
+        <item>Dowa</item>
+        <item>Karonga</item>
+        <item>Kasungu</item>
+        <item>Lilongwe City</item>
+        <item>Machinga</item>
+        <item>Mangochi</item>
+        <item>Mchinji</item>
+        <item>Mulanje</item>
+        <item>Mwanza</item>
+        <item>Mzimba</item>
+        <item>Mzuzu City</item>
+        <item>Nkhata Bay</item>
+        <item>Nkhotakota</item>
+        <item>Nsanje</item>
+        <item>Ntcheu</item>
+        <item>Ntchisi</item>
+        <item>Phalombe</item>
+        <item>Rumphi</item>
+        <item>Salima</item>
+        <item>Thyolo</item>
+        <item>Zomba Municipality</item>
+    </string-array>
+    <string-array name="malaysia">
+        <item>Johor</item>
+        <item>Kedah</item>
+        <item>Kelantan</item>
+        <item>Kuala Lumpur</item>
+        <item>Labuan</item>
+        <item>Melaka</item>
+        <item>Negeri Johor</item>
+        <item>Negeri Sembilan</item>
+        <item>Pahang</item>
+        <item>Penang</item>
+        <item>Perak</item>
+        <item>Perlis</item>
+        <item>Pulau Pinang</item>
+        <item>Sabah</item>
+        <item>Sarawak</item>
+        <item>Selangor</item>
+        <item>Sembilan</item>
+        <item>Terengganu</item>
+    </string-array>
+    <string-array name="maldives">
+        <item tools:ignore="Typos">Alif Alif</item>
+        <item>Alif Dhaal</item>
+        <item>Baa</item>
+        <item>Dhaal</item>
+        <item>Faaf</item>
+        <item>Gaaf Alif</item>
+        <item>Gaaf Dhaal</item>
+        <item>Ghaviyani</item>
+        <item>Haa Alif</item>
+        <item>Haa Dhaal</item>
+        <item>Kaaf</item>
+        <item>Laam</item>
+        <item>Lhaviyani</item>
+        <item>Male</item>
+        <item>Miim</item>
+        <item>Nuun</item>
+        <item>Raa</item>
+        <item>Shaviyani</item>
+        <item>Siin</item>
+        <item>Thaa</item>
+        <item>Vaav</item>
+    </string-array>
+    <string-array name="mali">
+        <item>Bamako</item>
+        <item>Gao</item>
+        <item>Kayes</item>
+        <item>Kidal</item>
+        <item>Koulikoro</item>
+        <item>Mopti</item>
+        <item>Segou</item>
+        <item>Sikasso</item>
+        <item>Tombouctou</item>
+    </string-array>
+    <string-array name="malta">
+        <item>Gozo and Comino</item>
+        <item>Inner Harbour</item>
+        <item>Northern</item>
+        <item>Outer Harbour</item>
+        <item>South Eastern</item>
+        <item>Valletta</item>
+        <item>Western</item>
+    </string-array>
+    <string-array name="manisleof">
+        <item>Castletown</item>
+        <item>Douglas</item>
+        <item>Laxey</item>
+        <item>Onchan</item>
+        <item>Peel</item>
+        <item>Port Erin</item>
+        <item>Port Saint Mary</item>
+        <item>Ramsey</item>
+    </string-array>
+    <string-array name="marshallislands">
+        <item>Ailinlaplap</item>
+        <item>Ailuk</item>
+        <item>Arno</item>
+        <item>Aur</item>
+        <item>Bikini</item>
+        <item>Ebon</item>
+        <item>Enewetak</item>
+        <item>Jabat</item>
+        <item>Jaluit</item>
+        <item>Kili</item>
+        <item>Kwajalein</item>
+        <item>Lae</item>
+        <item>Lib</item>
+        <item>Likiep</item>
+        <item>Majuro</item>
+        <item>Maloelap</item>
+        <item>Mejit</item>
+        <item>Mili</item>
+        <item>Namorik</item>
+        <item>Namu</item>
+        <item>Rongelap</item>
+        <item>Ujae</item>
+        <item>Utrik</item>
+        <item>Wotho</item>
+        <item>Wotje</item>
+    </string-array>
+    <string-array name="martinique">
+        <item>Fort-de-France</item>
+        <item>La Trinite</item>
+        <item>Le Marin</item>
+        <item>Saint-Pierre</item>
+    </string-array>
+    <string-array name="mauritania">
+        <item>Adrar</item>
+        <item>Assaba</item>
+        <item>Brakna</item>
+        <item>Dhakhlat Nawadibu</item>
+        <item>Hudh-al-Gharbi</item>
+        <item>Hudh-ash-Sharqi</item>
+        <item>Inshiri</item>
+        <item>Nawakshut</item>
+        <item>Qidimagha</item>
+        <item>Qurqul</item>
+        <item>Taqant</item>
+        <item>Tiris Zammur</item>
+        <item>Trarza</item>
+    </string-array>
+    <string-array name="mauritius">
+        <item>Black River</item>
+        <item>Eau Coulee</item>
+        <item>Flacq</item>
+        <item>Floreal</item>
+        <item>Grand Port</item>
+        <item>Moka</item>
+        <item>Pamplempousses</item>
+        <item>Plaines Wilhelm</item>
+        <item>Port Louis</item>
+        <item>Riviere du Rempart</item>
+        <item>Rodrigues</item>
+        <item>Rose Hill</item>
+        <item>Savanne</item>
+    </string-array>
+    <string-array name="mayotte">
+        <item>Mayotte</item>
+        <item>Pamanzi</item>
+    </string-array>
+    <string-array name="mexico">
+        <item>Aguascalientes</item>
+        <item>Baja California</item>
+        <item>Baja California Sur</item>
+        <item>Campeche</item>
+        <item>Chiapas</item>
+        <item>Chihuahua</item>
+        <item>Coahuila</item>
+        <item>Colima</item>
+        <item>Distrito Federal</item>
+        <item>Durango</item>
+        <item>Estado de Mexico</item>
+        <item>Guanajuato</item>
+        <item>Guerrero</item>
+        <item>Hidalgo</item>
+        <item>Jalisco</item>
+        <item>Mexico</item>
+        <item>Michoacan</item>
+        <item>Morelos</item>
+        <item>Nayarit</item>
+        <item>Nuevo Leon</item>
+        <item>Oaxaca</item>
+        <item>Puebla</item>
+        <item>Queretaro</item>
+        <item>Quintana Roo</item>
+        <item>San Luis Potosi</item>
+        <item>Sinaloa</item>
+        <item>Sonora</item>
+        <item>Tabasco</item>
+        <item>Tamaulipas</item>
+        <item>Tlaxcala</item>
+        <item>Veracruz</item>
+        <item>Yucatan</item>
+        <item>Zacatecas</item>
+    </string-array>
+    <string-array name="micronesia">
+        <item>Chuuk</item>
+        <item>Kusaie</item>
+        <item>Pohnpei</item>
+        <item>Yap</item>
+    </string-array>
+    <string-array name="moldova">
+        <item>Balti</item>
+        <item>Cahul</item>
+        <item>Chisinau</item>
+        <item>Chisinau Oras</item>
+        <item>Edinet</item>
+        <item>Gagauzia</item>
+        <item>Lapusna</item>
+        <item>Orhei</item>
+        <item>Soroca</item>
+        <item>Taraclia</item>
+        <item>Tighina</item>
+        <item>Transnistria</item>
+        <item>Ungheni</item>
+    </string-array>
+    <string-array name="monaco">
+        <item>Fontvieille</item>
+        <item>La Condamine</item>
+        <item>Monaco-Ville</item>
+        <item>Monte Carlo</item>
+    </string-array>
+    <string-array name="mongolia">
+        <item>Arhangaj</item>
+        <item>Bajan-Olgij</item>
+        <item>Bajanhongor</item>
+        <item>Bulgan</item>
+        <item>Darhan-Uul</item>
+        <item>Dornod</item>
+        <item>Dornogovi</item>
+        <item>Dundgovi</item>
+        <item>Govi-Altaj</item>
+        <item>Govisumber</item>
+        <item>Hentij</item>
+        <item>Hovd</item>
+        <item>Hovsgol</item>
+        <item>Omnogovi</item>
+        <item>Orhon</item>
+        <item>Ovorhangaj</item>
+        <item>Selenge</item>
+        <item>Suhbaatar</item>
+        <item>Tov</item>
+        <item>Ulaanbaatar</item>
+        <item>Uvs</item>
+        <item>Zavhan</item>
+    </string-array>
+    <string-array name="montserrat">
+        <item>Montserrat</item>
+    </string-array>
+    <string-array name="morocco">
+        <item>Agadir</item>
+        <item>Casablanca</item>
+        <item>Chaouia-Ouardigha</item>
+        <item>Doukkala-Abda</item>
+        <item>Fes-Boulemane</item>
+        <item>Gharb-Chrarda-Beni Hssen</item>
+        <item>Guelmim</item>
+        <item>Kenitra</item>
+        <item>Marrakech-Tensift-Al Haouz</item>
+        <item>Meknes-Tafilalet</item>
+        <item>Oriental</item>
+        <item>Oujda</item>
+        <item>Province de Tanger</item>
+        <item>Rabat-Sale-Zammour-Zaer</item>
+        <item>Sala Al Jadida</item>
+        <item>Settat</item>
+        <item>Souss Massa-Draa</item>
+        <item>Tadla-Azilal</item>
+        <item>Tangier-Tetouan</item>
+        <item>Taza-Al Hoceima-Taounate</item>
+        <item>Wilaya de Casablanca</item>
+        <item>Wilaya de Rabat-Sale</item>
+    </string-array>
+    <string-array name="mozambique">
+        <item>Cabo Delgado</item>
+        <item>Gaza</item>
+        <item>Inhambane</item>
+        <item>Manica</item>
+        <item>Maputo</item>
+        <item>Maputo Provincia</item>
+        <item>Nampula</item>
+        <item>Niassa</item>
+        <item>Sofala</item>
+        <item>Tete</item>
+        <item>Zambezia</item>
+    </string-array>
+    <string-array name="myanmar">
+        <item>Ayeyarwady</item>
+        <item>Bago</item>
+        <item>Chin</item>
+        <item>Kachin</item>
+        <item>Kayah</item>
+        <item>Kayin</item>
+        <item>Magway</item>
+        <item>Mandalay</item>
+        <item>Mon</item>
+        <item>Nay Pyi Taw</item>
+        <item>Rakhine</item>
+        <item>Sagaing</item>
+        <item>Shan</item>
+        <item>Tanintharyi</item>
+        <item>Yangon</item>
+    </string-array>
+    <string-array name="namibia">
+        <item>Caprivi</item>
+        <item>Erongo</item>
+        <item>Hardap</item>
+        <item>Karas</item>
+        <item>Kavango</item>
+        <item>Khomas</item>
+        <item>Kunene</item>
+        <item>Ohangwena</item>
+        <item>Omaheke</item>
+        <item>Omusati</item>
+        <item>Oshana</item>
+        <item>Oshikoto</item>
+        <item>Otjozondjupa</item>
+    </string-array>
+    <string-array name="nepal">
+        <item>Bagmati</item>
+        <item>Bheri</item>
+        <item>Dhawalagiri</item>
+        <item>Gandaki</item>
+        <item>Janakpur</item>
+        <item>Karnali</item>
+        <item>Koshi</item>
+        <item>Lumbini</item>
+        <item>Mahakali</item>
+        <item>Mechi</item>
+        <item>Narayani</item>
+        <item>Rapti</item>
+        <item>Sagarmatha</item>
+        <item>Seti</item>
+    </string-array>
+    <string-array name="netherlandsantilles">
+        <item>Bonaire</item>
+        <item>Curacao</item>
+        <item>Saba</item>
+        <item>Sint Eustatius</item>
+        <item>Sint Maarten</item>
+    </string-array>
+    <string-array name="netherlands">
+        <item>Amsterdam</item>
+        <item>Benelux</item>
+        <item>Drenthe</item>
+        <item>Flevoland</item>
+        <item>Friesland</item>
+        <item>Gelderland</item>
+        <item>Groningen</item>
+        <item>Limburg</item>
+        <item>Noord-Brabant</item>
+        <item>Noord-Holland</item>
+        <item>Overijssel</item>
+        <item>South Holland</item>
+        <item>Utrecht</item>
+        <item>Zeeland</item>
+        <item>Zuid-Holland</item>
+    </string-array>
+    <string-array name="newcaledonia">
+        <item>Iles</item>
+        <item>Nord</item>
+        <item>Sud</item>
+    </string-array>
+    <string-array name="newzealand">
+        <item>Area Outside Region</item>
+        <item>Auckland</item>
+        <item>Bay of Plenty</item>
+        <item>Canterbury</item>
+        <item>Christchurch</item>
+        <item>Gisborne</item>
+        <item>Hawke\'s Bay</item>
+        <item>Manawatu-Wanganui</item>
+        <item>Marlborough</item>
+        <item>Nelson</item>
+        <item>Northland</item>
+        <item>Otago</item>
+        <item>Rodney</item>
+        <item>Southland</item>
+        <item>Taranaki</item>
+        <item>Tasman</item>
+        <item>Waikato</item>
+        <item>Wellington</item>
+        <item>West Coast</item>
+    </string-array>
+    <string-array name="nicaragua">
+        <item>Atlantico Norte</item>
+        <item>Atlantico Sur</item>
+        <item>Boaco</item>
+        <item>Carazo</item>
+        <item>Chinandega</item>
+        <item>Chontales</item>
+        <item>Esteli</item>
+        <item>Granada</item>
+        <item>Jinotega</item>
+        <item>Leon</item>
+        <item>Madriz</item>
+        <item>Managua</item>
+        <item>Masaya</item>
+        <item>Matagalpa</item>
+        <item>Nueva Segovia</item>
+        <item>Rio San Juan</item>
+        <item>Rivas</item>
+    </string-array>
+    <string-array name="niger">
+        <item>Agadez</item>
+        <item>Diffa</item>
+        <item>Dosso</item>
+        <item>Maradi</item>
+        <item>Niamey</item>
+        <item>Tahoua</item>
+        <item>Tillabery</item>
+        <item>Zinder</item>
+    </string-array>
+    <string-array name="nigeria">
+        <item>Abia</item>
+        <item>Abuja Federal Capital Territor</item>
+        <item>Adamawa</item>
+        <item>Akwa Ibom</item>
+        <item>Anambra</item>
+        <item>Bauchi</item>
+        <item>Bayelsa</item>
+        <item>Benue</item>
+        <item>Borno</item>
+        <item>Cross River</item>
+        <item>Delta</item>
+        <item>Ebonyi</item>
+        <item>Edo</item>
+        <item>Ekiti</item>
+        <item>Enugu</item>
+        <item>Gombe</item>
+        <item>Imo</item>
+        <item>Jigawa</item>
+        <item>Kaduna</item>
+        <item>Kano</item>
+        <item>Katsina</item>
+        <item>Kebbi</item>
+        <item>Kogi</item>
+        <item>Kwara</item>
+        <item>Lagos</item>
+        <item>Nassarawa</item>
+        <item>Niger</item>
+        <item>Ogun</item>
+        <item>Ondo</item>
+        <item>Osun</item>
+        <item>Oyo</item>
+        <item>Plateau</item>
+        <item>Rivers</item>
+        <item>Sokoto</item>
+        <item>Taraba</item>
+        <item>Yobe</item>
+        <item>Zamfara</item>
+    </string-array>
+    <string-array name="niue">
+        <item>Niue</item>
+    </string-array>
+    <string-array name="norfolkisland">
+        <item>Norfolk Island</item>
+    </string-array>
+    <string-array name="northernmarianaislands">
+        <item>Northern Islands</item>
+        <item>Rota</item>
+        <item>Saipan</item>
+        <item>Tinian</item>
+    </string-array>
+    <string-array name="norway">
+        <item>Akershus</item>
+        <item>Aust Agder</item>
+        <item>Bergen</item>
+        <item>Buskerud</item>
+        <item>Finnmark</item>
+        <item>Hedmark</item>
+        <item>Hordaland</item>
+        <item>Moere og Romsdal</item>
+        <item>Nord Trondelag</item>
+        <item>Nordland</item>
+        <item>Oestfold</item>
+        <item>Oppland</item>
+        <item>Oslo</item>
+        <item>Rogaland</item>
+        <item>Soer Troendelag</item>
+        <item>Sogn og Fjordane</item>
+        <item>Stavern</item>
+        <item>Sykkylven</item>
+        <item>Telemark</item>
+        <item>Troms</item>
+        <item>Vest Agder</item>
+        <item>Vestfold</item>
+        <item>ÃƒÂ˜stfold</item>
+    </string-array>
+    <string-array name="oman">
+        <item>Al Buraimi</item>
+        <item>Dhufar</item>
+        <item>Masqat</item>
+        <item>Musandam</item>
+        <item>Rusayl</item>
+        <item>Wadi Kabir</item>
+        <item>ad-Dakhiliyah</item>
+        <item>adh-Dhahirah</item>
+        <item>al-Batinah</item>
+        <item>ash-Sharqiyah</item>
+    </string-array>
+    <string-array name="pakistan">
+        <item>Baluchistan</item>
+        <item>Federal Capital Area</item>
+        <item>Federally administered Tribal </item>
+        <item>North-West Frontier</item>
+        <item>Northern Areas</item>
+        <item>Punjab</item>
+        <item>Sind</item>
+    </string-array>
+    <string-array name="palau">
+        <item>Aimeliik</item>
+        <item>Airai</item>
+        <item>Angaur</item>
+        <item>Hatobohei</item>
+        <item>Kayangel</item>
+        <item>Koror</item>
+        <item>Melekeok</item>
+        <item>Ngaraard</item>
+        <item>Ngardmau</item>
+        <item>Ngaremlengui</item>
+        <item>Ngatpang</item>
+        <item>Ngchesar</item>
+        <item>Ngerchelong</item>
+        <item>Ngiwal</item>
+        <item>Peleliu</item>
+        <item>Sonsorol</item>
+    </string-array>
+    <string-array name="palestinianterritoryoccupied">
+        <item>Ariha</item>
+        <item>Bayt Lahm</item>
+        <item>Bethlehem</item>
+        <item>Dayr-al-Balah</item>
+        <item>Ghazzah</item>
+        <item>Ghazzah ash-Shamaliyah</item>
+        <item>Janin</item>
+        <item>Khan Yunis</item>
+        <item>Nabulus</item>
+        <item>Qalqilyah</item>
+        <item>Rafah</item>
+        <item>Ram Allah wal-Birah</item>
+        <item>Salfit</item>
+        <item>Tubas</item>
+        <item>Tulkarm</item>
+        <item>al-Khalil</item>
+        <item>al-Quds</item>
+    </string-array>
+    <string-array name="panama">
+        <item>Bocas del Toro</item>
+        <item>Chiriqui</item>
+        <item>Cocle</item>
+        <item>Colon</item>
+        <item>Darien</item>
+        <item>Embera</item>
+        <item>Herrera</item>
+        <item>Kuna Yala</item>
+        <item>Los Santos</item>
+        <item>Ngobe Bugle</item>
+        <item>Panama</item>
+        <item>Veraguas</item>
+    </string-array>
+    <string-array name="papuanewguinea">
+        <item>East New Britain</item>
+        <item>East Sepik</item>
+        <item>Eastern Highlands</item>
+        <item>Enga</item>
+        <item>Fly River</item>
+        <item>Gulf</item>
+        <item>Madang</item>
+        <item>Manus</item>
+        <item>Milne Bay</item>
+        <item>Morobe</item>
+        <item>National Capital District</item>
+        <item>New Ireland</item>
+        <item>North Solomons</item>
+        <item>Oro</item>
+        <item>Sandaun</item>
+        <item>Simbu</item>
+        <item>Southern Highlands</item>
+        <item>West New Britain</item>
+        <item>Western Highlands</item>
+    </string-array>
+    <string-array name="paraguay">
+        <item>Alto Paraguay</item>
+        <item>Alto Parana</item>
+        <item>Amambay</item>
+        <item>Asuncion</item>
+        <item>Boqueron</item>
+        <item>Caaguazu</item>
+        <item>Caazapa</item>
+        <item>Canendiyu</item>
+        <item>Central</item>
+        <item>Concepcion</item>
+        <item>Cordillera</item>
+        <item>Guaira</item>
+        <item>Itapua</item>
+        <item>Misiones</item>
+        <item>Neembucu</item>
+        <item>Paraguari</item>
+        <item>Presidente Hayes</item>
+        <item>San Pedro</item>
+    </string-array>
+    <string-array name="peru">
+        <item>Amazonas</item>
+        <item>Ancash</item>
+        <item>Apurimac</item>
+        <item>Arequipa</item>
+        <item>Ayacucho</item>
+        <item>Cajamarca</item>
+        <item>Cusco</item>
+        <item>Huancavelica</item>
+        <item>Huanuco</item>
+        <item>Ica</item>
+        <item>Junin</item>
+        <item>La Libertad</item>
+        <item>Lambayeque</item>
+        <item>Lima y Callao</item>
+        <item>Loreto</item>
+        <item>Madre de Dios</item>
+        <item>Moquegua</item>
+        <item>Pasco</item>
+        <item>Piura</item>
+        <item>Puno</item>
+        <item>San Martin</item>
+        <item>Tacna</item>
+        <item>Tumbes</item>
+        <item>Ucayali</item>
+    </string-array>
+    <string-array name="philippines">
+        <item>Batangas</item>
+        <item>Bicol</item>
+        <item>Bulacan</item>
+        <item>Cagayan</item>
+        <item>Caraga</item>
+        <item>Central Luzon</item>
+        <item>Central Mindanao</item>
+        <item>Central Visayas</item>
+        <item>Cordillera</item>
+        <item>Davao</item>
+        <item>Eastern Visayas</item>
+        <item>Greater Metropolitan Area</item>
+        <item>Ilocos</item>
+        <item>Laguna</item>
+        <item>Luzon</item>
+        <item>Mactan</item>
+        <item>Metropolitan Manila Area</item>
+        <item>Muslim Mindanao</item>
+        <item>Northern Mindanao</item>
+        <item>Southern Mindanao</item>
+        <item>Southern Tagalog</item>
+        <item>Western Mindanao</item>
+        <item>Western Visayas</item>
+    </string-array>
+    <string-array name="pitcairnisland">
+        <item>Pitcairn Island</item>
+    </string-array>
+    <string-array name="poland">
+        <item>Biale Blota</item>
+        <item>Dobroszyce</item>
+        <item>Dolnoslaskie</item>
+        <item>Dziekanow Lesny</item>
+        <item>Hopowo</item>
+        <item>Kartuzy</item>
+        <item>Koscian</item>
+        <item>Krakow</item>
+        <item>Kujawsko-Pomorskie</item>
+        <item>Lodzkie</item>
+        <item>Lubelskie</item>
+        <item>Lubuskie</item>
+        <item>Malomice</item>
+        <item>Malopolskie</item>
+        <item>Mazowieckie</item>
+        <item>Mirkow</item>
+        <item>Opolskie</item>
+        <item>Ostrowiec</item>
+        <item>Podkarpackie</item>
+        <item>Podlaskie</item>
+        <item>Polska</item>
+        <item>Pomorskie</item>
+        <item>Poznan</item>
+        <item>Pruszkow</item>
+        <item>Rymanowska</item>
+        <item>Rzeszow</item>
+        <item>Slaskie</item>
+        <item>Stare Pole</item>
+        <item>Swietokrzyskie</item>
+        <item>Warminsko-Mazurskie</item>
+        <item>Warsaw</item>
+        <item>Wejherowo</item>
+        <item>Wielkopolskie</item>
+        <item>Wroclaw</item>
+        <item>Zachodnio-Pomorskie</item>
+        <item>Zukowo</item>
+    </string-array>
+    <string-array name="portugal">
+        <item>Abrantes</item>
+        <item>Acores</item>
+        <item>Alentejo</item>
+        <item>Algarve</item>
+        <item>Braga</item>
+        <item>Centro</item>
+        <item>Distrito de Leiria</item>
+        <item>Distrito de Viana do Castelo</item>
+        <item>Distrito de Vila Real</item>
+        <item>Distrito do Porto</item>
+        <item>Lisboa e Vale do Tejo</item>
+        <item>Madeira</item>
+        <item>Norte</item>
+        <item>Paivas</item>
+    </string-array>
+    <string-array name="puertorico">
+        <item>Arecibo</item>
+        <item>Bayamon</item>
+        <item>Carolina</item>
+        <item>Florida</item>
+        <item>Guayama</item>
+        <item>Humacao</item>
+        <item>Mayaguez-Aguadilla</item>
+        <item>Ponce</item>
+        <item>Salinas</item>
+        <item>San Juan</item>
+    </string-array>
+    <string-array name="qatar">
+        <item>Doha</item>
+        <item>Jarian-al-Batnah</item>
+        <item>Umm Salal</item>
+        <item>ad-Dawhah</item>
+        <item>al-Ghuwayriyah</item>
+        <item>al-Jumayliyah</item>
+        <item>al-Khawr</item>
+        <item>al-Wakrah</item>
+        <item>ar-Rayyan</item>
+        <item>ash-Shamal</item>
+    </string-array>
+    <string-array name="reunion">
+        <item>Saint-Benoit</item>
+        <item>Saint-Denis</item>
+        <item>Saint-Paul</item>
+        <item>Saint-Pierre</item>
+    </string-array>
+    <string-array name="romania">
+        <item>Alba</item>
+        <item>Arad</item>
+        <item>Arges</item>
+        <item>Bacau</item>
+        <item>Bihor</item>
+        <item>Bistrita-Nasaud</item>
+        <item>Botosani</item>
+        <item>Braila</item>
+        <item>Brasov</item>
+        <item>Bucuresti</item>
+        <item>Buzau</item>
+        <item>Calarasi</item>
+        <item>Caras-Severin</item>
+        <item>Cluj</item>
+        <item>Constanta</item>
+        <item>Covasna</item>
+        <item>Dambovita</item>
+        <item>Dolj</item>
+        <item>Galati</item>
+        <item>Giurgiu</item>
+        <item>Gorj</item>
+        <item>Harghita</item>
+        <item>Hunedoara</item>
+        <item>Ialomita</item>
+        <item>Iasi</item>
+        <item>Ilfov</item>
+        <item>Maramures</item>
+        <item>Mehedinti</item>
+        <item>Mures</item>
+        <item>Neamt</item>
+        <item>Olt</item>
+        <item>Prahova</item>
+        <item>Salaj</item>
+        <item>Satu Mare</item>
+        <item>Sibiu</item>
+        <item>Sondelor</item>
+        <item>Suceava</item>
+        <item>Teleorman</item>
+        <item>Timis</item>
+        <item>Tulcea</item>
+        <item>Valcea</item>
+        <item>Vaslui</item>
+        <item>Vrancea</item>
+    </string-array>
+    <string-array name="russia">
+        <item>Adygeja</item>
+        <item>Aga</item>
+        <item>Alanija</item>
+        <item>Altaj</item>
+        <item>Amur</item>
+        <item>Arhangelsk</item>
+        <item>Astrahan</item>
+        <item>Bashkortostan</item>
+        <item>Belgorod</item>
+        <item>Brjansk</item>
+        <item>Burjatija</item>
+        <item>Chechenija</item>
+        <item>Cheljabinsk</item>
+        <item>Chita</item>
+        <item>Chukotka</item>
+        <item>Chuvashija</item>
+        <item>Dagestan</item>
+        <item>Evenkija</item>
+        <item>Gorno-Altaj</item>
+        <item>Habarovsk</item>
+        <item>Hakasija</item>
+        <item>Hanty-Mansija</item>
+        <item>Ingusetija</item>
+        <item>Irkutsk</item>
+        <item>Ivanovo</item>
+        <item>Jamalo-Nenets</item>
+        <item>Jaroslavl</item>
+        <item>Jevrej</item>
+        <item>Kabardino-Balkarija</item>
+        <item>Kaliningrad</item>
+        <item>Kalmykija</item>
+        <item>Kaluga</item>
+        <item>Kamchatka</item>
+        <item>Karachaj-Cherkessija</item>
+        <item>Karelija</item>
+        <item>Kemerovo</item>
+        <item>Khabarovskiy Kray</item>
+        <item>Kirov</item>
+        <item>Komi</item>
+        <item>Komi-Permjakija</item>
+        <item>Korjakija</item>
+        <item>Kostroma</item>
+        <item>Krasnodar</item>
+        <item>Krasnojarsk</item>
+        <item>Krasnoyarskiy Kray</item>
+        <item>Kurgan</item>
+        <item>Kursk</item>
+        <item>Leningrad</item>
+        <item>Lipeck</item>
+        <item>Magadan</item>
+        <item>Marij El</item>
+        <item>Mordovija</item>
+        <item>Moscow</item>
+        <item>Moskovskaja Oblast</item>
+        <item>Moskovskaya Oblast</item>
+        <item>Moskva</item>
+        <item>Murmansk</item>
+        <item>Nenets</item>
+        <item>Nizhnij Novgorod</item>
+        <item>Novgorod</item>
+        <item>Novokusnezk</item>
+        <item>Novosibirsk</item>
+        <item>Omsk</item>
+        <item>Orenburg</item>
+        <item>Orjol</item>
+        <item>Penza</item>
+        <item>Perm</item>
+        <item>Primorje</item>
+        <item>Pskov</item>
+        <item>Pskovskaya Oblast</item>
+        <item>Rjazan</item>
+        <item>Rostov</item>
+        <item>Saha</item>
+        <item>Sahalin</item>
+        <item>Samara</item>
+        <item>Samarskaya</item>
+        <item>Sankt-Peterburg</item>
+        <item>Saratov</item>
+        <item>Smolensk</item>
+        <item>Stavropol</item>
+        <item>Sverdlovsk</item>
+        <item>Tajmyrija</item>
+        <item>Tambov</item>
+        <item>Tatarstan</item>
+        <item>Tjumen</item>
+        <item>Tomsk</item>
+        <item>Tula</item>
+        <item>Tver</item>
+        <item>Tyva</item>
+        <item>Udmurtija</item>
+        <item>Uljanovsk</item>
+        <item>Ulyanovskaya Oblast</item>
+        <item>Ust-Orda</item>
+        <item>Vladimir</item>
+        <item>Volgograd</item>
+        <item>Vologda</item>
+        <item>Voronezh</item>
+    </string-array>
+    <string-array name="rwanda">
+        <item>Butare</item>
+        <item>Byumba</item>
+        <item>Cyangugu</item>
+        <item>Gikongoro</item>
+        <item>Gisenyi</item>
+        <item>Gitarama</item>
+        <item>Kibungo</item>
+        <item>Kibuye</item>
+        <item>Kigali-ngali</item>
+        <item>Ruhengeri</item>
+    </string-array>
+    <string-array name="sainthelena">
+        <item>Ascension</item>
+        <item>Gough Island</item>
+        <item>Saint Helena</item>
+        <item>Tristan da Cunha</item>
+    </string-array>
+    <string-array name="saintkittsandnevis">
+        <item>Christ Church Nichola Town</item>
+        <item>Saint Anne Sandy Point</item>
+        <item>Saint George Basseterre</item>
+        <item>Saint George Gingerland</item>
+        <item>Saint James Windward</item>
+        <item>Saint John Capesterre</item>
+        <item>Saint John Figtree</item>
+        <item>Saint Mary Cayon</item>
+        <item>Saint Paul Capesterre</item>
+        <item>Saint Paul Charlestown</item>
+        <item>Saint Peter Basseterre</item>
+        <item>Saint Thomas Lowland</item>
+        <item>Saint Thomas Middle Island</item>
+        <item>Trinity Palmetto Point</item>
+    </string-array>
+    <string-array name="saintlucia">
+        <item>Anse-la-Raye</item>
+        <item>Canaries</item>
+        <item>Castries</item>
+        <item>Choiseul</item>
+        <item>Dennery</item>
+        <item>Gros Inlet</item>
+        <item>Laborie</item>
+        <item>Micoud</item>
+        <item>Soufriere</item>
+        <item>Vieux Fort</item>
+    </string-array>
+    <string-array name="saintpierreandmiquelon">
+        <item>Miquelon-Langlade</item>
+        <item>Saint-Pierre</item>
+    </string-array>
+    <string-array name="saintvincentandthegrenadines">
+        <item>Charlotte</item>
+        <item>Grenadines</item>
+        <item>Saint Andrew</item>
+        <item>Saint David</item>
+        <item>Saint George</item>
+        <item>Saint Patrick</item>
+    </string-array>
+    <string-array name="samoa">
+        <item>A\'ana</item>
+        <item>Aiga-i-le-Tai</item>
+        <item>Atua</item>
+        <item>Fa\'asaleleaga</item>
+        <item>Gaga\'emauga</item>
+        <item>Gagaifomauga</item>
+        <item>Palauli</item>
+        <item>Satupa\'itea</item>
+        <item>Tuamasaga</item>
+        <item>Va\'a-o-Fonoti</item>
+        <item>Vaisigano</item>
+    </string-array>
+    <string-array name="sanmarino">
+        <item>Acquaviva</item>
+        <item>Borgo Maggiore</item>
+        <item>Chiesanuova</item>
+        <item>Domagnano</item>
+        <item>Faetano</item>
+        <item>Fiorentino</item>
+        <item>Montegiardino</item>
+        <item>San Marino</item>
+        <item>Serravalle</item>
+    </string-array>
+    <string-array name="saotomeandprincipe">
+        <item>Agua Grande</item>
+        <item>Cantagalo</item>
+        <item>Lemba</item>
+        <item>Lobata</item>
+        <item>Me-Zochi</item>
+        <item>Pague</item>
+    </string-array>
+    <string-array name="saudiarabia">
+        <item>Al Khobar</item>
+        <item>Aseer</item>
+        <item>Ash Sharqiyah</item>
+        <item>Asir</item>
+        <item>Central Province</item>
+        <item>Eastern Province</item>
+        <item>Ha\'il</item>
+        <item>Jawf</item>
+        <item>Jizan</item>
+        <item>Makkah</item>
+        <item>Najran</item>
+        <item>Qasim</item>
+        <item>Tabuk</item>
+        <item>Western Province</item>
+        <item>al-Bahah</item>
+        <item>al-Hudud-ash-Shamaliyah</item>
+        <item>al-Madinah</item>
+        <item>ar-Riyad</item>
+    </string-array>
+    <string-array name="senegal">
+        <item>Dakar</item>
+        <item>Diourbel</item>
+        <item>Fatick</item>
+        <item>Kaolack</item>
+        <item>Kolda</item>
+        <item>Louga</item>
+        <item>Saint-Louis</item>
+        <item>Tambacounda</item>
+        <item>Thies</item>
+        <item>Ziguinchor</item>
+    </string-array>
+    <string-array name="serbia">
+        <item>Central Serbia</item>
+        <item>Kosovo and Metohija</item>
+        <item>Vojvodina</item>
+    </string-array>
+    <string-array name="seychelles">
+        <item>Anse Boileau</item>
+        <item>Anse Royale</item>
+        <item>Cascade</item>
+        <item>Takamaka</item>
+        <item>Victoria</item>
+    </string-array>
+    <string-array name="sierraleone">
+        <item>Eastern</item>
+        <item>Northern</item>
+        <item>Southern</item>
+        <item>Western</item>
+    </string-array>
+    <string-array name="singapore">
+        <item>Singapore</item>
+    </string-array>
+    <string-array name="slovakia">
+        <item>Banskobystricky</item>
+        <item>Bratislavsky</item>
+        <item>Kosicky</item>
+        <item>Nitriansky</item>
+        <item>Presovsky</item>
+        <item>Trenciansky</item>
+        <item>Trnavsky</item>
+        <item>Zilinsky</item>
+    </string-array>
+    <string-array name="slovenia">
+        <item>Benedikt</item>
+        <item>Gorenjska</item>
+        <item>Gorishka</item>
+        <item>Jugovzhodna Slovenija</item>
+        <item>Koroshka</item>
+        <item>Notranjsko-krashka</item>
+        <item>Obalno-krashka</item>
+        <item>Obcina Domzale</item>
+        <item>Obcina Vitanje</item>
+        <item>Osrednjeslovenska</item>
+        <item>Podravska</item>
+        <item>Pomurska</item>
+        <item>Savinjska</item>
+        <item>Slovenian Littoral</item>
+        <item>Spodnjeposavska</item>
+        <item>Zasavska</item>
+    </string-array>
+    <string-array name="smallerterritoriesoftheuk">
+        <item>Pitcairn</item>
+    </string-array>
+    <string-array name="solomonislands">
+        <item>Central</item>
+        <item>Choiseul</item>
+        <item>Guadalcanal</item>
+        <item>Isabel</item>
+        <item>Makira and Ulawa</item>
+        <item>Malaita</item>
+        <item>Rennell and Bellona</item>
+        <item>Temotu</item>
+        <item>Western</item>
+    </string-array>
+    <string-array name="somalia">
+        <item>Awdal</item>
+        <item>Bakol</item>
+        <item>Banadir</item>
+        <item>Bari</item>
+        <item>Bay</item>
+        <item>Galgudug</item>
+        <item>Gedo</item>
+        <item>Hiran</item>
+        <item>Jubbada Hose</item>
+        <item>Jubbadha Dexe</item>
+        <item>Mudug</item>
+        <item>Nugal</item>
+        <item>Sanag</item>
+        <item>Shabellaha Dhexe</item>
+        <item>Shabellaha Hose</item>
+        <item>Togdher</item>
+        <item>Woqoyi Galbed</item>
+    </string-array>
+    <string-array name="southafrica">
+        <item>Eastern Cape</item>
+        <item>Free State</item>
+        <item>Gauteng</item>
+        <item>Kempton Park</item>
+        <item>Kramerville</item>
+        <item>KwaZulu Natal</item>
+        <item>Limpopo</item>
+        <item>Mpumalanga</item>
+        <item>North West</item>
+        <item>Northern Cape</item>
+        <item>Parow</item>
+        <item>Table View</item>
+        <item>Umtentweni</item>
+        <item>Western Cape</item>
+    </string-array>
+    <string-array name="spain">
+        <item>A Coruna</item>
+        <item>Alacant</item>
+        <item>Alava</item>
+        <item>Albacete</item>
+        <item>Almeria</item>
+        <item>Andalucia</item>
+        <item>Asturias</item>
+        <item>Avila</item>
+        <item>Badajoz</item>
+        <item>Balears</item>
+        <item>Barcelona</item>
+        <item>Bertamirans</item>
+        <item>Biscay</item>
+        <item>Burgos</item>
+        <item>Caceres</item>
+        <item>Cadiz</item>
+        <item>Cantabria</item>
+        <item>Castello</item>
+        <item>Catalunya</item>
+        <item>Ceuta</item>
+        <item>Ciudad Real</item>
+        <item>Comunidad Autonoma de Canarias</item>
+        <item>Comunidad Autonoma de Cataluna</item>
+        <item>Comunidad Autonoma de Galicia</item>
+        <item>Comunidad Autonoma de las Isla</item>
+        <item>Comunidad Autonoma del Princip</item>
+        <item>Comunidad Valenciana</item>
+        <item>Cordoba</item>
+        <item>Cuenca</item>
+        <item>Gipuzkoa</item>
+        <item>Girona</item>
+        <item>Granada</item>
+        <item>Guadalajara</item>
+        <item>Guipuzcoa</item>
+        <item>Huelva</item>
+        <item>Huesca</item>
+        <item>Jaen</item>
+        <item>La Rioja</item>
+        <item>Las Palmas</item>
+        <item>Leon</item>
+        <item>Lerida</item>
+        <item>Lleida</item>
+        <item>Lugo</item>
+        <item>Madrid</item>
+        <item>Malaga</item>
+        <item>Melilla</item>
+        <item>Murcia</item>
+        <item>Navarra</item>
+        <item>Ourense</item>
+        <item>Pais Vasco</item>
+        <item>Palencia</item>
+        <item>Pontevedra</item>
+        <item>Salamanca</item>
+        <item>Santa Cruz de Tenerife</item>
+        <item>Segovia</item>
+        <item>Sevilla</item>
+        <item>Soria</item>
+        <item>Tarragona</item>
+        <item>Tenerife</item>
+        <item>Teruel</item>
+        <item>Toledo</item>
+        <item>Valencia</item>
+        <item>Valladolid</item>
+        <item>Vizcaya</item>
+        <item>Zamora</item>
+        <item>Zaragoza</item>
+    </string-array>
+    <string-array name="srilanka">
+        <item>Amparai</item>
+        <item>Anuradhapuraya</item>
+        <item>Badulla</item>
+        <item>Boralesgamuwa</item>
+        <item>Colombo</item>
+        <item>Galla</item>
+        <item>Gampaha</item>
+        <item>Hambantota</item>
+        <item>Kalatura</item>
+        <item>Kegalla</item>
+        <item>Kilinochchi</item>
+        <item>Kurunegala</item>
+        <item>Madakalpuwa</item>
+        <item>Maha Nuwara</item>
+        <item>Malwana</item>
+        <item>Mannarama</item>
+        <item>Matale</item>
+        <item>Matara</item>
+        <item>Monaragala</item>
+        <item>Mullaitivu</item>
+        <item>North Eastern Province</item>
+        <item>North Western Province</item>
+        <item>Nuwara Eliya</item>
+        <item>Polonnaruwa</item>
+        <item>Puttalama</item>
+        <item>Ratnapuraya</item>
+        <item>Southern Province</item>
+        <item>Tirikunamalaya</item>
+        <item>Tuscany</item>
+        <item>Vavuniyawa</item>
+        <item>Western Province</item>
+        <item>Yapanaya</item>
+        <item>kadawatha</item>
+    </string-array>
+    <string-array name="sudan">
+        <item>A\'ali-an-Nil</item>
+        <item>Bahr-al-Jabal</item>
+        <item>Central Equatoria</item>
+        <item>Gharb Bahr-al-Ghazal</item>
+        <item>Gharb Darfur</item>
+        <item>Gharb Kurdufan</item>
+        <item>Gharb-al-Istiwa\'iyah</item>
+        <item>Janub Darfur</item>
+        <item>Janub Kurdufan</item>
+        <item>Junqali</item>
+        <item>Kassala</item>
+        <item>Nahr-an-Nil</item>
+        <item>Shamal Bahr-al-Ghazal</item>
+        <item>Shamal Darfur</item>
+        <item>Shamal Kurdufan</item>
+        <item>Sharq-al-Istiwa\'iyah</item>
+        <item>Sinnar</item>
+        <item>Warab</item>
+        <item>Wilayat al Khartum</item>
+        <item>al-Bahr-al-Ahmar</item>
+        <item>al-Buhayrat</item>
+        <item>al-Jazirah</item>
+        <item>al-Khartum</item>
+        <item>al-Qadarif</item>
+        <item>al-Wahdah</item>
+        <item>an-Nil-al-Abyad</item>
+        <item>an-Nil-al-Azraq</item>
+        <item>ash-Shamaliyah</item>
+    </string-array>
+    <string-array name="suriname">
+        <item>Brokopondo</item>
+        <item>Commewijne</item>
+        <item>Coronie</item>
+        <item>Marowijne</item>
+        <item>Nickerie</item>
+        <item>Para</item>
+        <item>Paramaribo</item>
+        <item>Saramacca</item>
+        <item>Wanica</item>
+    </string-array>
+    <string-array name="svalbardandjanmayenislands">
+        <item>Svalbard</item>
+    </string-array>
+    <string-array name="swaziland">
+        <item>Hhohho</item>
+        <item>Lubombo</item>
+        <item>Manzini</item>
+        <item>Shiselweni</item>
+    </string-array>
+    <string-array name="sweden">
+        <item>Alvsborgs Lan</item>
+        <item>Angermanland</item>
+        <item>Blekinge</item>
+        <item>Bohuslan</item>
+        <item>Dalarna</item>
+        <item>Gavleborg</item>
+        <item>Gaza</item>
+        <item>Gotland</item>
+        <item>Halland</item>
+        <item>Jamtland</item>
+        <item>Jonkoping</item>
+        <item>Kalmar</item>
+        <item>Kristianstads</item>
+        <item>Kronoberg</item>
+        <item>Norrbotten</item>
+        <item>Orebro</item>
+        <item>Ostergotland</item>
+        <item>Saltsjo-Boo</item>
+        <item>Skane</item>
+        <item>Smaland</item>
+        <item>Sodermanland</item>
+        <item>Stockholm</item>
+        <item>Uppsala</item>
+        <item>Varmland</item>
+        <item>Vasterbotten</item>
+        <item>Vastergotland</item>
+        <item>Vasternorrland</item>
+        <item>Vastmanland</item>
+        <item>Vastra Gotaland</item>
+    </string-array>
+    <string-array name="switzerland">
+        <item>Aargau</item>
+        <item>Appenzell Inner-Rhoden</item>
+        <item>Appenzell-Ausser Rhoden</item>
+        <item>Basel-Landschaft</item>
+        <item>Basel-Stadt</item>
+        <item>Bern</item>
+        <item>Canton Ticino</item>
+        <item>Fribourg</item>
+        <item>Geneve</item>
+        <item>Glarus</item>
+        <item>Graubunden</item>
+        <item>Heerbrugg</item>
+        <item>Jura</item>
+        <item>Kanton Aargau</item>
+        <item>Luzern</item>
+        <item>Morbio Inferiore</item>
+        <item>Muhen</item>
+        <item>Neuchatel</item>
+        <item>Nidwalden</item>
+        <item>Obwalden</item>
+        <item>Sankt Gallen</item>
+        <item>Schaffhausen</item>
+        <item>Schwyz</item>
+        <item>Solothurn</item>
+        <item>Thurgau</item>
+        <item>Ticino</item>
+        <item>Uri</item>
+        <item>Valais</item>
+        <item>Vaud</item>
+        <item>Vauffelin</item>
+        <item>Zug</item>
+        <item>Zurich</item>
+    </string-array>
+    <string-array name="syria">
+        <item>Aleppo</item>
+        <item>Dar\'a</item>
+        <item>Dayr-az-Zawr</item>
+        <item>Dimashq</item>
+        <item>Halab</item>
+        <item>Hamah</item>
+        <item>Hims</item>
+        <item>Idlib</item>
+        <item>Madinat Dimashq</item>
+        <item>Tartus</item>
+        <item>al-Hasakah</item>
+        <item>al-Ladhiqiyah</item>
+        <item>al-Qunaytirah</item>
+        <item>ar-Raqqah</item>
+        <item>as-Suwayda</item>
+    </string-array>
+    <string-array name="taiwan">
+        <item>Changhwa</item>
+        <item>Chiayi Hsien</item>
+        <item>Chiayi Shih</item>
+        <item>Eastern Taipei</item>
+        <item>Hsinchu Hsien</item>
+        <item>Hsinchu Shih</item>
+        <item>Hualien</item>
+        <item>Ilan</item>
+        <item>Kaohsiung Hsien</item>
+        <item>Kaohsiung Shih</item>
+        <item>Keelung Shih</item>
+        <item>Kinmen</item>
+        <item>Miaoli</item>
+        <item>Nantou</item>
+        <item>Northern Taiwan</item>
+        <item>Penghu</item>
+        <item>Pingtung</item>
+        <item>Taichung</item>
+        <item>Taichung Hsien</item>
+        <item>Taichung Shih</item>
+        <item>Tainan Hsien</item>
+        <item>Tainan Shih</item>
+        <item>Taipei Hsien</item>
+        <item>Taipei Shih / Taipei Hsien</item>
+        <item>Taitung</item>
+        <item>Taoyuan</item>
+        <item>Yilan</item>
+        <item>Yun-Lin Hsien</item>
+        <item>Yunlin</item>
+    </string-array>
+    <string-array name="tajikistan">
+        <item>Dushanbe</item>
+        <item>Gorno-Badakhshan</item>
+        <item>Karotegin</item>
+        <item>Khatlon</item>
+        <item>Sughd</item>
+    </string-array>
+    <string-array name="tanzania">
+        <item>Arusha</item>
+        <item>Dar es Salaam</item>
+        <item>Dodoma</item>
+        <item>Iringa</item>
+        <item>Kagera</item>
+        <item>Kigoma</item>
+        <item>Kilimanjaro</item>
+        <item>Lindi</item>
+        <item>Mara</item>
+        <item>Mbeya</item>
+        <item>Morogoro</item>
+        <item>Mtwara</item>
+        <item>Mwanza</item>
+        <item>Pwani</item>
+        <item>Rukwa</item>
+        <item>Ruvuma</item>
+        <item>Shinyanga</item>
+        <item>Singida</item>
+        <item>Tabora</item>
+        <item>Tanga</item>
+        <item>Zanzibar and Pemba</item>
+    </string-array>
+    <string-array name="thailand">
+        <item>Amnat Charoen</item>
+        <item>Ang Thong</item>
+        <item>Bangkok</item>
+        <item>Buri Ram</item>
+        <item>Chachoengsao</item>
+        <item>Chai Nat</item>
+        <item>Chaiyaphum</item>
+        <item>Changwat Chaiyaphum</item>
+        <item>Chanthaburi</item>
+        <item>Chiang Mai</item>
+        <item>Chiang Rai</item>
+        <item>Chon Buri</item>
+        <item>Chumphon</item>
+        <item>Kalasin</item>
+        <item>Kamphaeng Phet</item>
+        <item>Kanchanaburi</item>
+        <item>Khon Kaen</item>
+        <item>Krabi</item>
+        <item>Krung Thep</item>
+        <item>Lampang</item>
+        <item>Lamphun</item>
+        <item>Loei</item>
+        <item>Lop Buri</item>
+        <item>Mae Hong Son</item>
+        <item>Maha Sarakham</item>
+        <item>Mukdahan</item>
+        <item>Nakhon Nayok</item>
+        <item>Nakhon Pathom</item>
+        <item>Nakhon Phanom</item>
+        <item>Nakhon Ratchasima</item>
+        <item>Nakhon Sawan</item>
+        <item>Nakhon Si Thammarat</item>
+        <item>Nan</item>
+        <item>Narathiwat</item>
+        <item>Nong Bua Lam Phu</item>
+        <item>Nong Khai</item>
+        <item>Nonthaburi</item>
+        <item>Pathum Thani</item>
+        <item>Pattani</item>
+        <item>Phangnga</item>
+        <item>Phatthalung</item>
+        <item>Phayao</item>
+        <item>Phetchabun</item>
+        <item>Phetchaburi</item>
+        <item>Phichit</item>
+        <item>Phitsanulok</item>
+        <item>Phra Nakhon Si Ayutthaya</item>
+        <item>Phrae</item>
+        <item>Phuket</item>
+        <item>Prachin Buri</item>
+        <item>Prachuap Khiri Khan</item>
+        <item>Ranong</item>
+        <item>Ratchaburi</item>
+        <item>Rayong</item>
+        <item>Roi Et</item>
+        <item>Sa Kaeo</item>
+        <item>Sakon Nakhon</item>
+        <item>Samut Prakan</item>
+        <item>Samut Sakhon</item>
+        <item>Samut Songkhran</item>
+        <item>Saraburi</item>
+        <item>Satun</item>
+        <item>Si Sa Ket</item>
+        <item>Sing Buri</item>
+        <item>Songkhla</item>
+        <item>Sukhothai</item>
+        <item>Suphan Buri</item>
+        <item>Surat Thani</item>
+        <item>Surin</item>
+        <item>Tak</item>
+        <item>Trang</item>
+        <item>Trat</item>
+        <item>Ubon Ratchathani</item>
+        <item>Udon Thani</item>
+        <item>Uthai Thani</item>
+        <item>Uttaradit</item>
+        <item>Yala</item>
+        <item>Yasothon</item>
+    </string-array>
+    <string-array name="togo">
+        <item>Centre</item>
+        <item>Kara</item>
+        <item>Maritime</item>
+        <item>Plateaux</item>
+        <item>Savanes</item>
+    </string-array>
+    <string-array name="tokelau">
+        <item>Atafu</item>
+        <item>Fakaofo</item>
+        <item>Nukunonu</item>
+    </string-array>
+    <string-array name="tonga">
+        <item>Eua</item>
+        <item>Ha\'apai</item>
+        <item>Niuas</item>
+        <item>Tongatapu</item>
+        <item>Vava\'u</item>
+    </string-array>
+    <string-array name="trinidadandtobago">
+        <item>Arima-Tunapuna-Piarco</item>
+        <item>Caroni</item>
+        <item>Chaguanas</item>
+        <item>Couva-Tabaquite-Talparo</item>
+        <item>Diego Martin</item>
+        <item>Glencoe</item>
+        <item>Penal Debe</item>
+        <item>Point Fortin</item>
+        <item>Port of Spain</item>
+        <item>Princes Town</item>
+        <item>Saint George</item>
+        <item>San Fernando</item>
+        <item>San Juan</item>
+        <item>Sangre Grande</item>
+        <item>Siparia</item>
+        <item>Tobago</item>
+    </string-array>
+    <string-array name="tunisia">
+        <item>Aryanah</item>
+        <item>Bajah</item>
+        <item>Bin \'Arus</item>
+        <item>Binzart</item>
+        <item>Gouvernorat de Ariana</item>
+        <item>Gouvernorat de Nabeul</item>
+        <item>Gouvernorat de Sousse</item>
+        <item>Hammamet Yasmine</item>
+        <item>Jundubah</item>
+        <item>Madaniyin</item>
+        <item>Manubah</item>
+        <item>Monastir</item>
+        <item>Nabul</item>
+        <item>Qabis</item>
+        <item>Qafsah</item>
+        <item>Qibili</item>
+        <item>Safaqis</item>
+        <item>Sfax</item>
+        <item>Sidi Bu Zayd</item>
+        <item>Silyanah</item>
+        <item>Susah</item>
+        <item>Tatawin</item>
+        <item>Tawzar</item>
+        <item>Tunis</item>
+        <item>Zaghwan</item>
+        <item>al-Kaf</item>
+        <item>al-Mahdiyah</item>
+        <item>al-Munastir</item>
+        <item>al-Qasrayn</item>
+        <item>al-Qayrawan</item>
+    </string-array>
+    <string-array name="turkey">
+        <item>Adana</item>
+        <item>Adiyaman</item>
+        <item>Afyon</item>
+        <item>Agri</item>
+        <item>Aksaray</item>
+        <item>Amasya</item>
+        <item>Ankara</item>
+        <item>Antalya</item>
+        <item>Ardahan</item>
+        <item>Artvin</item>
+        <item>Aydin</item>
+        <item>Balikesir</item>
+        <item>Bartin</item>
+        <item>Batman</item>
+        <item>Bayburt</item>
+        <item>Bilecik</item>
+        <item>Bingol</item>
+        <item>Bitlis</item>
+        <item>Bolu</item>
+        <item>Burdur</item>
+        <item>Bursa</item>
+        <item>Canakkale</item>
+        <item>Cankiri</item>
+        <item>Corum</item>
+        <item>Denizli</item>
+        <item>Diyarbakir</item>
+        <item>Duzce</item>
+        <item>Edirne</item>
+        <item>Elazig</item>
+        <item>Erzincan</item>
+        <item>Erzurum</item>
+        <item>Eskisehir</item>
+        <item>Gaziantep</item>
+        <item>Giresun</item>
+        <item>Gumushane</item>
+        <item>Hakkari</item>
+        <item>Hatay</item>
+        <item>Icel</item>
+        <item>Igdir</item>
+        <item>Isparta</item>
+        <item>Istanbul</item>
+        <item>Izmir</item>
+        <item>Kahramanmaras</item>
+        <item>Karabuk</item>
+        <item>Karaman</item>
+        <item>Kars</item>
+        <item>Karsiyaka</item>
+        <item>Kastamonu</item>
+        <item>Kayseri</item>
+        <item>Kilis</item>
+        <item>Kirikkale</item>
+        <item>Kirklareli</item>
+        <item>Kirsehir</item>
+        <item>Kocaeli</item>
+        <item>Konya</item>
+        <item>Kutahya</item>
+        <item>Lefkosa</item>
+        <item>Malatya</item>
+        <item>Manisa</item>
+        <item>Mardin</item>
+        <item>Mugla</item>
+        <item>Mus</item>
+        <item>Nevsehir</item>
+        <item>Nigde</item>
+        <item>Ordu</item>
+        <item>Osmaniye</item>
+        <item>Rize</item>
+        <item>Sakarya</item>
+        <item>Samsun</item>
+        <item>Sanliurfa</item>
+        <item>Siirt</item>
+        <item>Sinop</item>
+        <item>Sirnak</item>
+        <item>Sivas</item>
+        <item>Tekirdag</item>
+        <item>Tokat</item>
+        <item>Trabzon</item>
+        <item>Tunceli</item>
+        <item>Usak</item>
+        <item>Van</item>
+        <item>Yalova</item>
+        <item>Yozgat</item>
+        <item>Zonguldak</item>
+    </string-array>
+    <string-array name="turkmenistan">
+        <item>Ahal</item>
+        <item>Asgabat</item>
+        <item>Balkan</item>
+        <item>Dasoguz</item>
+        <item>Lebap</item>
+        <item>Mari</item>
+    </string-array>
+    <string-array name="turksandcaicosislands">
+        <item>Grand Turk</item>
+        <item>South Caicos and East Caicos</item>
+    </string-array>
+    <string-array name="tuvalu">
+        <item>Funafuti</item>
+        <item>Nanumanga</item>
+        <item>Nanumea</item>
+        <item>Niutao</item>
+        <item>Nui</item>
+        <item>Nukufetau</item>
+        <item>Nukulaelae</item>
+        <item>Vaitupu</item>
+    </string-array>
+    <string-array name="uganda">
+        <item>Central</item>
+        <item>Eastern</item>
+        <item>Northern</item>
+        <item>Western</item>
+    </string-array>
+    <string-array name="ukraine">
+        <item>Cherkas\'ka</item>
+        <item>Chernihivs\'ka</item>
+        <item>Chernivets\'ka</item>
+        <item>Crimea</item>
+        <item>Dnipropetrovska</item>
+        <item>Donets\'ka</item>
+        <item>Ivano-Frankivs\'ka</item>
+        <item>Kharkiv</item>
+        <item>Kharkov</item>
+        <item>Khersonska</item>
+        <item>Khmel\'nyts\'ka</item>
+        <item>Kirovohrad</item>
+        <item>Krym</item>
+        <item>Kyyiv</item>
+        <item>Kyyivs\'ka</item>
+        <item>L\'vivs\'ka</item>
+        <item>Luhans\'ka</item>
+        <item>Mykolayivs\'ka</item>
+        <item>Odes\'ka</item>
+        <item>Odessa</item>
+        <item>Poltavs\'ka</item>
+        <item>Rivnens\'ka</item>
+        <item>Sevastopol\'</item>
+        <item>Sums\'ka</item>
+        <item>Ternopil\'s\'ka</item>
+        <item>Volyns\'ka</item>
+        <item>Vynnyts\'ka</item>
+        <item>Zakarpats\'ka</item>
+        <item>Zaporizhia</item>
+        <item>Zhytomyrs\'ka</item>
+    </string-array>
+    <string-array name="unitedarabemirates">
+        <item>Abu Zabi</item>
+        <item>Ajman</item>
+        <item>Dubai</item>
+        <item>Ras al-Khaymah</item>
+        <item>Sharjah</item>
+        <item>Sharjha</item>
+        <item>Umm al Qaywayn</item>
+        <item>al-Fujayrah</item>
+        <item>ash-Shariqah</item>
+    </string-array>
+    <string-array name="unitedkingdom">
+        <item>Aberdeen</item>
+        <item>Aberdeenshire</item>
+        <item>Argyll</item>
+        <item>Armagh</item>
+        <item>Bedfordshire</item>
+        <item>Belfast</item>
+        <item>Berkshire</item>
+        <item>Birmingham</item>
+        <item>Brechin</item>
+        <item>Bridgnorth</item>
+        <item>Bristol</item>
+        <item>Buckinghamshire</item>
+        <item>Cambridge</item>
+        <item>Cambridgeshire</item>
+        <item>Channel Islands</item>
+        <item>Cheshire</item>
+        <item>Cleveland</item>
+        <item>Co Fermanagh</item>
+        <item>Conwy</item>
+        <item>Cornwall</item>
+        <item>Coventry</item>
+        <item>Craven Arms</item>
+        <item>Cumbria</item>
+        <item>Denbighshire</item>
+        <item>Derby</item>
+        <item>Derbyshire</item>
+        <item>Devon</item>
+        <item>Dial Code Dungannon</item>
+        <item>Didcot</item>
+        <item>Dorset</item>
+        <item>Dunbartonshire</item>
+        <item>Durham</item>
+        <item>East Dunbartonshire</item>
+        <item>East Lothian</item>
+        <item>East Midlands</item>
+        <item>East Sussex</item>
+        <item>East Yorkshire</item>
+        <item>England</item>
+        <item>Essex</item>
+        <item>Fermanagh</item>
+        <item>Fife</item>
+        <item>Flintshire</item>
+        <item>Fulham</item>
+        <item>Gainsborough</item>
+        <item>Glocestershire</item>
+        <item>Gwent</item>
+        <item>Hampshire</item>
+        <item>Hants</item>
+        <item>Herefordshire</item>
+        <item>Hertfordshire</item>
+        <item>Ireland</item>
+        <item>Isle Of Man</item>
+        <item>Isle of Wight</item>
+        <item>Kenford</item>
+        <item>Kent</item>
+        <item>Kilmarnock</item>
+        <item>Lanarkshire</item>
+        <item>Lancashire</item>
+        <item>Leicestershire</item>
+        <item>Lincolnshire</item>
+        <item>Llanymynech</item>
+        <item>London</item>
+        <item>Ludlow</item>
+        <item>Manchester</item>
+        <item>Mayfair</item>
+        <item>Merseyside</item>
+        <item>Mid Glamorgan</item>
+        <item>Middlesex</item>
+        <item>Mildenhall</item>
+        <item>Monmouthshire</item>
+        <item>Newton Stewart</item>
+        <item>Norfolk</item>
+        <item>North Humberside</item>
+        <item>North Yorkshire</item>
+        <item>Northamptonshire</item>
+        <item>Northants</item>
+        <item>Northern Ireland</item>
+        <item>Northumberland</item>
+        <item>Nottinghamshire</item>
+        <item>Oxford</item>
+        <item>Powys</item>
+        <item>Roos-shire</item>
+        <item>SUSSEX</item>
+        <item>Sark</item>
+        <item>Scotland</item>
+        <item>Scottish Borders</item>
+        <item>Shropshire</item>
+        <item>Somerset</item>
+        <item>South Glamorgan</item>
+        <item>South Wales</item>
+        <item>South Yorkshire</item>
+        <item>Southwell</item>
+        <item>Staffordshire</item>
+        <item>Strabane</item>
+        <item>Suffolk</item>
+        <item>Surrey</item>
+        <item>Sussex</item>
+        <item>Twickenham</item>
+        <item>Tyne and Wear</item>
+        <item>Tyrone</item>
+        <item>Utah</item>
+        <item>Wales</item>
+        <item>Warwickshire</item>
+        <item>West Lothian</item>
+        <item>West Midlands</item>
+        <item>West Sussex</item>
+        <item>West Yorkshire</item>
+        <item>Whissendine</item>
+        <item>Wiltshire</item>
+        <item>Wokingham</item>
+        <item>Worcestershire</item>
+        <item>Wrexham</item>
+        <item>Wurttemberg</item>
+        <item>Yorkshire</item>
+    </string-array>
+    <string-array name="unitedstates">
+        <item>Alabama</item>
+        <item>Alaska</item>
+        <item>Arizona</item>
+        <item>Arkansas</item>
+        <item>Byram</item>
+        <item>California</item>
+        <item>Cokato</item>
+        <item>Colorado</item>
+        <item>Connecticut</item>
+        <item>Delaware</item>
+        <item>District of Columbia</item>
+        <item>Florida</item>
+        <item>Georgia</item>
+        <item>Hawaii</item>
+        <item>Idaho</item>
+        <item>Illinois</item>
+        <item>Indiana</item>
+        <item>Iowa</item>
+        <item>Kansas</item>
+        <item>Kentucky</item>
+        <item>Louisiana</item>
+        <item>Lowa</item>
+        <item>Maine</item>
+        <item>Maryland</item>
+        <item>Massachusetts</item>
+        <item>Medfield</item>
+        <item>Michigan</item>
+        <item>Minnesota</item>
+        <item>Mississippi</item>
+        <item>Missouri</item>
+        <item>Montana</item>
+        <item>Nebraska</item>
+        <item>Nevada</item>
+        <item>New Hampshire</item>
+        <item>New Jersey</item>
+        <item>New Jersy</item>
+        <item>New Mexico</item>
+        <item>New York</item>
+        <item>North Carolina</item>
+        <item>North Dakota</item>
+        <item>Ohio</item>
+        <item>Oklahoma</item>
+        <item>Ontario</item>
+        <item>Oregon</item>
+        <item>Pennsylvania</item>
+        <item>Ramey</item>
+        <item>Rhode Island</item>
+        <item>South Carolina</item>
+        <item>South Dakota</item>
+        <item>Sublimity</item>
+        <item>Tennessee</item>
+        <item>Texas</item>
+        <item>Trimble</item>
+        <item>Utah</item>
+        <item>Vermont</item>
+        <item>Virginia</item>
+        <item>Washington</item>
+        <item>West Virginia</item>
+        <item>Wisconsin</item>
+        <item>Wyoming</item>
+    </string-array>
+    <string-array name="unitedstatesminoroutlyingislands">
+        <item>United States Minor Outlying I</item>
+    </string-array>
+    <string-array name="uruguay">
+        <item>Artigas</item>
+        <item>Canelones</item>
+        <item>Cerro Largo</item>
+        <item>Colonia</item>
+        <item>Durazno</item>
+        <item>FLorida</item>
+        <item>Flores</item>
+        <item>Lavalleja</item>
+        <item>Maldonado</item>
+        <item>Montevideo</item>
+        <item>Paysandu</item>
+        <item>Rio Negro</item>
+        <item>Rivera</item>
+        <item>Rocha</item>
+        <item>Salto</item>
+        <item>San Jose</item>
+        <item>Soriano</item>
+        <item>Tacuarembo</item>
+        <item>Treinta y Tres</item>
+    </string-array>
+    <string-array name="uzbekistan">
+        <item>Andijon</item>
+        <item>Buhoro</item>
+        <item>Buxoro Viloyati</item>
+        <item>Cizah</item>
+        <item>Fargona</item>
+        <item>Horazm</item>
+        <item>Kaskadar</item>
+        <item>Korakalpogiston</item>
+        <item>Namangan</item>
+        <item>Navoi</item>
+        <item>Samarkand</item>
+        <item>Sirdare</item>
+        <item>Surhondar</item>
+        <item>Toskent</item>
+    </string-array>
+    <string-array name="vanuatu">
+        <item>Malampa</item>
+        <item>Penama</item>
+        <item>Sanma</item>
+        <item>Shefa</item>
+        <item>Tafea</item>
+        <item>Torba</item>
+    </string-array>
+    <string-array name="venezuela">
+        <item>Amazonas</item>
+        <item>Anzoategui</item>
+        <item>Apure</item>
+        <item>Aragua</item>
+        <item>Barinas</item>
+        <item>Bolivar</item>
+        <item>Carabobo</item>
+        <item>Cojedes</item>
+        <item>Delta Amacuro</item>
+        <item>Distrito Federal</item>
+        <item>Falcon</item>
+        <item>Guarico</item>
+        <item>Lara</item>
+        <item>Merida</item>
+        <item>Miranda</item>
+        <item>Monagas</item>
+        <item>Nueva Esparta</item>
+        <item>Portuguesa</item>
+        <item>Sucre</item>
+        <item>Tachira</item>
+        <item>Trujillo</item>
+        <item>Vargas</item>
+        <item>Yaracuy</item>
+        <item>Zulia</item>
+    </string-array>
+    <string-array name="vietnam">
+        <item>Bac Giang</item>
+        <item>Binh Dinh</item>
+        <item>Binh Duong</item>
+        <item>Da Nang</item>
+        <item>Dong Bang Song Cuu Long</item>
+        <item>Dong Bang Song Hong</item>
+        <item>Dong Nai</item>
+        <item>Dong Nam Bo</item>
+        <item>Duyen Hai Mien Trung</item>
+        <item>Hanoi</item>
+        <item>Hung Yen</item>
+        <item>Khu Bon Cu</item>
+        <item>Long An</item>
+        <item>Mien Nui Va Trung Du</item>
+        <item>Thai Nguyen</item>
+        <item>Thanh Pho Ho Chi Minh</item>
+        <item>Thu Do Ha Noi</item>
+        <item>Tinh Can Tho</item>
+        <item>Tinh Da Nang</item>
+        <item>Tinh Gia Lai</item>
+    </string-array>
+    <string-array name="virginislandsbritish">
+        <item>Anegada</item>
+        <item>Jost van Dyke</item>
+        <item>Tortola</item>
+    </string-array>
+    <string-array name="virginislandsus">
+        <item>Saint Croix</item>
+        <item>Saint John</item>
+        <item>Saint Thomas</item>
+    </string-array>
+    <string-array name="wallisandfutunaislands">
+        <item>Alo</item>
+        <item>Singave</item>
+        <item>Wallis</item>
+    </string-array>
+    <string-array name="westernsahara">
+        <item>Bu Jaydur</item>
+        <item>Wad-adh-Dhahab</item>
+        <item>al-\'Ayun</item>
+        <item>as-Samarah</item>
+    </string-array>
+    <string-array name="yemen">
+        <item>\'Adan</item>
+        <item>Abyan</item>
+        <item>Dhamar</item>
+        <item>Hadramaut</item>
+        <item>Hajjah</item>
+        <item>Hudaydah</item>
+        <item>Ibb</item>
+        <item>Lahij</item>
+        <item>Ma\'rib</item>
+        <item>Madinat San\'a</item>
+        <item>Sa\'dah</item>
+        <item>Sana</item>
+        <item>Shabwah</item>
+        <item>Ta\'izz</item>
+        <item>al-Bayda</item>
+        <item>al-Hudaydah</item>
+        <item>al-Jawf</item>
+        <item>al-Mahrah</item>
+        <item>al-Mahwit</item>
+    </string-array>
+    <string-array name="yugoslavia">
+        <item>Central Serbia</item>
+        <item>Kosovo and Metohija</item>
+        <item>Montenegro</item>
+        <item>Republic of Serbia</item>
+        <item>Serbia</item>
+        <item>Vojvodina</item>
+    </string-array>
+    <string-array name="zambia">
+        <item>Central</item>
+        <item>Copperbelt</item>
+        <item>Eastern</item>
+        <item>Luapala</item>
+        <item>Lusaka</item>
+        <item>North-Western</item>
+        <item>Northern</item>
+        <item>Southern</item>
+        <item>Western</item>
+    </string-array>
+    <string-array name="zimbabwe">
+        <item>Bulawayo</item>
+        <item>Harare</item>
+        <item>Manicaland</item>
+        <item>Mashonaland Central</item>
+        <item>Mashonaland East</item>
+        <item>Mashonaland West</item>
+        <item>Masvingo</item>
+        <item>Matabeleland North</item>
+        <item>Matabeleland South</item>
+        <item>Midlands</item>
+    </string-array>
+</resources>

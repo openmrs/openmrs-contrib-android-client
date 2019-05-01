@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+
+<resources>
+
+    <style name="Theme.Openmrs" parent="@style/AppTheme">
+        <item name="actionBarItemBackground">@drawable/selectable_background_openmrs</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.Openmrs</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.Openmrs</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.Openmrs</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Openmrs</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_openmrs</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_openmrs</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.Openmrs</item>
+        <item name="android:textColor">@color/dark_purple</item>
+        <item name="android:itemTextAppearance">@style/menuTextApearance</item>
+
+                <!-- Light.DarkActionBar specific -->
+        <item name="actionBarWidgetTheme">@style/Theme.Openmrs.Widget</item>
+
+    </style>
+
+    <style name="ActionBar.Solid.Openmrs" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/ab_solid_openmrs</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_openmrs</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_openmrs</item>
+        <item name="progressBarStyle">@style/ProgressBar.Openmrs</item>
+    </style>
+
+    <style name="ActionBar.Transparent.Openmrs" parent="Widget.AppCompat.ActionBar">
+        <item name="background">@drawable/ab_transparent_openmrs</item>
+        <item name="progressBarStyle">@style/ProgressBar.Openmrs</item>
+    </style>
+	
+    <style name="PopupMenu.Openmrs" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@color/primary</item>
+    </style>
+	
+    <style name="DropDownListView.Openmrs" parent="Widget.AppCompat.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_openmrs</item>
+    </style>
+
+    <style name="ActionBarTabStyle.Openmrs" parent="Widget.AppCompat.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_openmrs</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+	
+    <style name="DropDownNav.Openmrs" parent="Widget.AppCompat.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_openmrs</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_openmrs</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_openmrs</item>
+    </style>
+    
+    <style name="ProgressBar.Openmrs" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_openmrs</item>
+    </style>
+    
+    <style name="ActionButton.CloseMode.Openmrs" parent="Widget.AppCompat.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_openmrs</item>
+    </style>
+    
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.Openmrs.Widget" parent="Theme.AppCompat">
+        <item name="dropDownListViewStyle">@style/DropDownListView.Openmrs</item>
+    </style>
+
+    <style name="MenuTextApearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="menuTextApearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ the contents of this file are subject to the openmrs public license
+  ~ version 1.0 (the "license"); you may not use this file except in
+  ~ compliance with the license. you may obtain a copy of the license at
+  ~ http://license.openmrs.org
+  ~
+  ~ software distributed under the license is distributed on an "as is"
+  ~ basis, without warranty of any kind, either express or implied. see the
+  ~ license for the specific language governing rights and limitations
+  ~ under the license.
+  ~
+  ~ copyright (c) openmrs, llc.  all rights reserved.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/action_select_all"
+        android:title="@string/select_all_downloadable_data"
+        android:icon="@drawable/ic_select_all"/>
+
+    <item android:id="@+id/action_download"
+        android:title="@string/download_selected_patient_data"
+        android:icon="@drawable/ic_mult_down"/>
+
+    <item android:id="@+id/close_context_menu"
+        android:orderInCategory="100"
+        android:title="@android:string/cancel"
+        android:icon="@drawable/ic_close"/>
+</menu>

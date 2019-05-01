@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="dashboard_icon_height_width">80dp</dimen>
+    <dimen name="dashboard_icon_margin">20dp</dimen>
+    <dimen name="dashboard_text_size">18sp</dimen>
+    <dimen name="dashboard_text_top_margin">10dp</dimen>
+    <dimen name="dashboard_text_bottom_margin">15dp</dimen>
+    <dimen name="visit_dashboard_encounter_type_icon_margin">10dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="settings_list_separator_margin">5dp</dimen>
+    <dimen name="settings_list_separator_width">1dp</dimen>
+    <dimen name="settings_list_padding">6dp</dimen>
+    <dimen name="settings_download_button_height">40dp</dimen>
+    <dimen name="settings_list_text_detail_size">12sp</dimen>
+    <dimen name="settings_list_text_title_size">16sp</dimen>
+</resources>

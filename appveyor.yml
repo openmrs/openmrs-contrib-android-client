@@ -1,0 +1,25 @@
+environment:
+  ANDROID_HOME: "C:\\android-sdk-windows"
+  JAVA_HOME: "C:\\Program Files\\Java\\jdk1.8.0"
+
+clone_folder: "C:\\projects\\openmrs-contrib-android-client"
+
+init:
+  - cd \
+  - mkdir android-sdk-windows
+  - appveyor DownloadFile https://dl.google.com/android/repository/sdk-tools-windows-4333796.zip
+  - 7z x sdk-tools-windows-4333796.zip -oc:\android-sdk-windows
+  - cd C:\projects\openmrs-contrib-android-client
+
+install:
+  - yes | "%ANDROID_HOME%\tools\bin\sdkmanager.bat" "platform-tools" "platforms;android-27" "extras;android;m2repository" "extras;google;m2repository"
+
+build_script:
+  - gradlew.bat clean assembleDebug lint -Dscan --configure-on-demand --parallel --stacktrace
+
+artifacts:
+  - path: "build\\reports\\"
+
+cache:
+  - "%USERPROFILE%\\.m2"
+  - "%USERPROFILE%\\.gradle"

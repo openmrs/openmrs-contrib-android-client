@@ -1,0 +1,44 @@
+#gradle 
+import-summary.txt
+
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+release.properties
+
+#android project
+build/*
+*.iml
+tests/*.iml
+.gradle/
+.idea/
+local.properties
+tests/bin/*
+bin/*
+tests/gen/*
+gen/*
+tests/out/*
+out/*
+/openmrs-client/build
+/odkcollect/build
+
+*.DS_Store
+
+modules/support/appcompat/gen/*
+modules/support/appcompat/bin/*
+modules/support/appcompat/out/*
+modules/support/gridlayout/gen/*
+modules/support/gridlayout/bin/*
+modules/support/gridlayout/out/*
+modules/odk.collect/gen/*
+modules/odk.collect/bin/*
+modules/odk.collect/android/*
+
+#git patches
+*.patch
+
+# Eclipse files
+*.project
+*.classpath
+.settings/

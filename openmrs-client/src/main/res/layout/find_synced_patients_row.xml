@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:background="@drawable/card">
+    <RelativeLayout
+        android:id="@+id/syncedTopRow"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        >
+
+        <TextView android:id="@+id/syncedPatientIdentifier"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="22sp"
+                  android:textStyle="bold"
+                  android:layout_alignTop="@+id/syncedPatientDisplayName"
+                  android:layout_alignParentLeft="true"
+                  android:layout_alignParentStart="true"/>
+
+        <TextView android:id="@+id/syncedPatientDisplayName"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="22sp"
+
+                  android:layout_toRightOf="@+id/syncedPatientIdentifier"
+                  android:layout_toEndOf="@+id/syncedPatientIdentifier"
+                  android:layout_alignParentRight="true"
+                  android:layout_alignParentEnd="true"
+                  android:gravity="end"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/syncedBottomRow"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        >
+
+        <TextView android:id="@+id/syncedPatientGender"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="16sp"
+            />
+
+        <TextView android:id="@+id/syncedPatientAge"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="16sp"
+                  android:layout_marginLeft="15dp"
+                  android:layout_marginStart="15dp"
+                  android:layout_toRightOf="@id/syncedPatientGender"
+                  android:layout_toEndOf="@id/syncedPatientGender"
+            />
+
+        <TextView android:id="@+id/syncedPatientBirthDate"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textSize="16sp"
+                  android:layout_marginLeft="15dp"
+                  android:layout_marginStart="15dp"
+                  android:layout_toRightOf="@id/syncedPatientAge"
+                  android:layout_toEndOf="@id/syncedPatientAge"
+            />
+    </RelativeLayout>
+</LinearLayout>

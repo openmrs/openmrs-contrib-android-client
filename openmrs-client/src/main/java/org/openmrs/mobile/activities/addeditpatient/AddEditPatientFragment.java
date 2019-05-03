@@ -529,7 +529,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     private void addListeners() {
         gen.setOnCheckedChangeListener((radioGroup, checkedId) -> gendererror.setVisibility(View.GONE));
-      
         edstate.setOnFocusChangeListener((view, hasFocus) -> addSuggestionsToCities());
 
         eddob.addTextChangedListener(new TextWatcher() {

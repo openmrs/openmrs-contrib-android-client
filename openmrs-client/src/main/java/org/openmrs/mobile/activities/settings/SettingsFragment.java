@@ -27,15 +27,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.models.SettingsListItemDTO;
 import org.openmrs.mobile.services.ConceptDownloadService;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -70,13 +73,14 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
         settingsRecyclerView.setLayoutManager(linearLayoutManager);
 
         conceptsInDbTextView = ((TextView) root.findViewById(R.id.conceptsInDbTextView));
+
         downloadConceptsButton = ((ImageButton) root.findViewById(R.id.downloadConceptsButton));
 
         downloadConceptsButton.setOnClickListener(view -> {
             downloadConceptsButton.setEnabled(false);
             Intent startIntent = new Intent(getActivity(), ConceptDownloadService.class);
             startIntent.setAction(ApplicationConstants.ServiceActions.START_CONCEPT_DOWNLOAD_ACTION);
-            getActivity().startService(startIntent);
+            Objects.requireNonNull(getActivity()).startService(startIntent);
         });
 
         return root;
@@ -98,13 +102,17 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
 
     @Override
     public void setConceptsInDbText(String text) {
+        if(text.equals("0")){
+            downloadConceptsButton.setEnabled(false);
+            ToastUtil.showLongToast(getActivity(),
+                    ToastUtil.ToastType.WARNING,
+                    R.string.settings_no_concepts_toast);
+        }
         conceptsInDbTextView.setText(text);
     }
 
     @Override
     public void addLogsInfo(long logSize, String logFilename) {
-
-
         mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_logs),
                 logFilename,
                 "Size: " + logSize + "kB"));
@@ -131,6 +139,11 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
         mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_about),
                 getResources().getString(R.string.app_name),
                 versionName + " Build: " + buildVersion));
+    }
+
+    @Override
+    public void addPrivacyPolicyInfo() {
+        mListItem.add(new SettingsListItemDTO(getString(R.string.settings_privacy_policy)));
     }
 
     @Override

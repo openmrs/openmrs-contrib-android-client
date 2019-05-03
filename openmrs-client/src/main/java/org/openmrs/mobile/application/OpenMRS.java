@@ -283,10 +283,6 @@ public class OpenMRS extends Application {
         return mExternalDirectoryPath + OPENMRS_DIR_PATH;
     }
 
-    public boolean isRunningJellyBeanVersionOrHigher() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
-    }
-
     public boolean isRunningKitKatVersionOrHigher() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
     }

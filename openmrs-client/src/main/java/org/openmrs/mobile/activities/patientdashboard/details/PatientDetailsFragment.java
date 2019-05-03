@@ -117,12 +117,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
             final Bitmap photo = patient.getPerson().getResizedPhoto();
             final String patientName = patient.getPerson().getName().getNameString();
             patientImageView.setImageBitmap(photo);
-            patientImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showPatientPhoto(photo, patientName);
-                }
-            });
+            patientImageView.setOnClickListener(view -> showPatientPhoto(photo, patientName));
         }
 
         ((TextView) rootView.findViewById(R.id.patientDetailsName)).setText(patient.getPerson().getName().getNameString());

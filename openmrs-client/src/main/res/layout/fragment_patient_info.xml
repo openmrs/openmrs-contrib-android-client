@@ -497,21 +497,20 @@
                         android:id="@+id/textInputLayoutCountry"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         app:errorEnabled="true">
 
-                        <AutoCompleteTextView
-                            android:id="@+id/country"
-                            android:layout_width="fill_parent"
-                            android:layout_height="48dp"
-                            android:layout_marginLeft="4dp"
-                            android:focusable="true"
-                            android:hint="@string/patient_country_label"
-                            android:imeOptions="actionNext"
-                            android:inputType="textCapSentences"
-                            android:maxLines="1"
-                            android:textSize="14sp" />
+                        <com.hbb20.CountryCodePicker
+                            android:id="@+id/ccp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:ccp_showFullName="true"
+                            android:layout_marginTop="-14dp"
+                            app:ccp_showNameCode="false"
+                            app:ccp_showPhoneCode="false" />
+
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout

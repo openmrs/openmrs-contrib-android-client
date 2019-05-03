@@ -53,6 +53,7 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.hbb20.CountryCodePicker;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -84,7 +85,6 @@ import java.io.FileDescriptor;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -122,7 +122,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private EditText edaddr2;
     private EditText edcity;
     private AutoCompleteTextView edstate;
-    private AutoCompleteTextView edcountry;
+    private CountryCodePicker mCountryCodePicker;
     private EditText edpostal;
 
     private RadioGroup gen;
@@ -157,7 +157,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_patient_info, container, false);
         resolveViews(root);
-        addSuggestionsToAutoCompleTextView();
         addListeners();
         fillFields(mPresenter.getPatientToUpdate());
         return root;
@@ -208,6 +207,9 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         scrollView.smoothScrollTo(0, scrollView.getPaddingTop());
     }
 
+    private boolean isCcpEmpty() {
+        return mCountryCodePicker.getSelectedCountryName() == null;
+    }
 
     private Person createPerson() {
         Person person = new Person();
@@ -218,9 +220,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 && ViewUtils.isEmpty(edaddr2)
                 && ViewUtils.isEmpty(edcity)
                 && ViewUtils.isEmpty(edpostal)
-                && ViewUtils.isEmpty(edcountry)
+                && isCcpEmpty()
                 && ViewUtils.isEmpty(edstate)) {
-
             addrerror.setText(R.string.atleastone);
             address1TIL.setErrorEnabled(true);
             address1TIL.setError(getString(R.string.atleastone));
@@ -240,7 +241,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         address.setAddress2(ViewUtils.getInput(edaddr2));
         address.setCityVillage(ViewUtils.getInput(edcity));
         address.setPostalCode(ViewUtils.getInput(edpostal));
-        address.setCountry(ViewUtils.getInput(edcountry));
+        address.setCountry(mCountryCodePicker.getSelectedCountryName());
         address.setStateProvince(ViewUtils.getInput(edstate));
         address.setPreferred(true);
 
@@ -414,7 +415,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 (!ViewUtils.isEmpty(edaddr2)) ||
                 (!ViewUtils.isEmpty(edcity)) ||
                 (!ViewUtils.isEmpty(edstate)) ||
-                (!ViewUtils.isEmpty(edcountry)) ||
+                (!isCcpEmpty()) ||
                 (!ViewUtils.isEmpty(edpostal)));
     }
 
@@ -434,7 +435,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         edaddr2 = (EditText) v.findViewById(R.id.addr2);
         edcity = (EditText) v.findViewById(R.id.city);
         edstate = (AutoCompleteTextView) v.findViewById(R.id.state);
-        edcountry = (AutoCompleteTextView) v.findViewById(R.id.country);
+        mCountryCodePicker = v.findViewById(R.id.ccp);
         edpostal = (EditText) v.findViewById(R.id.postal);
 
         gen = (RadioGroup) v.findViewById(R.id.gender);
@@ -495,7 +496,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             edaddr2.setText(person.getAddress().getAddress2());
             edcity.setText(person.getAddress().getCityVillage());
             edstate.setText(person.getAddress().getStateProvince());
-            edcountry.setText(person.getAddress().getCountry());
             edpostal.setText(person.getAddress().getPostalCode());
 
             if (patient.getPerson().getPhoto() != null) {
@@ -506,16 +506,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         }
     }
 
-    private void addSuggestionsToAutoCompleTextView() {
-        countries = getContext().getResources().getStringArray(R.array.countries_array);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_dropdown_item_1line, countries);
-        edcountry.setAdapter(adapter);
-
-    }
-
     private void addSuggestionsToCities() {
-        String country_name = edcountry.getText().toString();
+        String country_name = mCountryCodePicker.getSelectedCountryName();
         country_name = country_name.replace("(", "");
         country_name = country_name.replace(")", "");
         country_name = country_name.replace(" ", "");
@@ -544,18 +536,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             }
         });
 
-        edcountry.setThreshold(2);
-        edcountry.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (edcountry.getText().length() >= edcountry.getThreshold()) {
-                    edcountry.showDropDown();
-                }
-                if (Arrays.asList(countries).contains(edcountry.getText().toString())) {
-                    edcountry.dismissDropDown();
-                }
-            }
-        });
         edstate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

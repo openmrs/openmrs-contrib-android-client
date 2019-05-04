@@ -144,7 +144,6 @@
     <string name="dialog_button_register_new">Register new</string>
     <string name="dialog_button_merge">Merge</string>
     <string name="action_next">Next</string>
-    <string name="action_submit">Submit</string>
     <string name="action_register">Register Patient</string>
     <string name="dialog_button_select_location">Select Location</string>
 
@@ -348,4 +347,6 @@
     <string name="logout_success">Logged out successfully!</string>
     <string name="url_privacy_policy">https://github.com/openmrs/openmrs-contrib-android-client/blob/master/privacy_policy.md</string>
     <string name="settings_privacy_policy">Privacy Policy</string>
+
+    <string name="action_submit">Submit</string>
 </resources>

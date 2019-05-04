@@ -287,7 +287,7 @@ public class CustomFragmentDialog extends DialogFragment {
         TextView textView = (TextView) field.findViewById(R.id.openmrsTextView);
         textView.setText(message);
         textView.setSingleLine(false);
-        FontsUtil.setFont(textView, FontsUtil.OpenFonts.OPEN_SANS_ITALIC);
+        
         if(null != mCustomDialogBundle.getLocationList()){
             textView.setTextSize(18);
         }

@@ -62,13 +62,13 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_patient_vitals, null, false);
-        mContent = (LinearLayout) root.findViewById(R.id.vitalsDetailsContent);
-        mEmptyList = (TextView) root.findViewById(R.id.lastVitalsNoneLabel);
-        mLastVitalsDate = (TextView) root.findViewById(R.id.lastVitalsDate);
-        mFormHeader = (LinearLayout) root.findViewById(R.id.lastVitalsLayout);
+        mContent = root.findViewById(R.id.vitalsDetailsContent);
+        mEmptyList = root.findViewById(R.id.lastVitalsNoneLabel);
+        mLastVitalsDate = root.findViewById(R.id.lastVitalsDate);
+        mFormHeader = root.findViewById(R.id.lastVitalsLayout);
 
-        TextView lastVitalsLabel = (TextView) root.findViewById(R.id.lastVitalsLabel);
-        ImageButton formEditIcon = (ImageButton) root.findViewById(R.id.form_edit_icon);
+        TextView lastVitalsLabel = root.findViewById(R.id.lastVitalsLabel);
+        ImageButton formEditIcon = root.findViewById(R.id.form_edit_icon);
 
         formEditIcon.setOnClickListener(view -> ((PatientDashboardVitalsPresenter) mPresenter).startFormDisplayActivityWithEncounter());
 

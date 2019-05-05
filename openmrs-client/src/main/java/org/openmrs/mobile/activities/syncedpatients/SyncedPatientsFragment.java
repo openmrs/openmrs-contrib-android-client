@@ -60,7 +60,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         View root = inflater.inflate(R.layout.fragment_synced_patients, container, false);
 
         // Patient list config
-        mSyncedPatientRecyclerView = (RecyclerView) root.findViewById(R.id.syncedPatientRecyclerView);
+        mSyncedPatientRecyclerView = root.findViewById(R.id.syncedPatientRecyclerView);
         mSyncedPatientRecyclerView.setHasFixedSize(true);
         mSyncedPatientRecyclerView.setAdapter(new SyncedPatientsRecyclerViewAdapter(this,
                 new ArrayList<>()));
@@ -68,11 +68,11 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
         mSyncedPatientRecyclerView.setLayoutManager(linearLayoutManager);
 
-        mEmptyList = (TextView) root.findViewById(R.id.emptySyncedPatientList);
-        mProgressBar = (ProgressBar) root.findViewById(R.id.syncedPatientsInitialProgressBar);
+        mEmptyList = root.findViewById(R.id.emptySyncedPatientList);
+        mProgressBar = root.findViewById(R.id.syncedPatientsInitialProgressBar);
 
         // Font config
-        FontsUtil.setFont((ViewGroup) this.getActivity().findViewById(android.R.id.content));
+        FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
 
         return root;
     }
@@ -154,7 +154,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         Snackbar mSnackbar = Snackbar.make(getActivity().findViewById(android.R.id.content),
                 R.string.snackbar_no_internet_connection, Snackbar.LENGTH_SHORT);
         View sbView = mSnackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
+        TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         mSnackbar.show();
     }

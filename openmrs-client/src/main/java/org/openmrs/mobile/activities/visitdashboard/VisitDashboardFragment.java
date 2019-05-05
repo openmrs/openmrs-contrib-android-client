@@ -50,9 +50,9 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_visit_dashboard, container, false);
 
-        mEmptyListView = (TextView) root.findViewById(R.id.visitDashboardEmpty);
+        mEmptyListView = root.findViewById(R.id.visitDashboardEmpty);
         FontsUtil.setFont(mEmptyListView, FontsUtil.OpenFonts.OPEN_SANS_BOLD);
-        mExpandableListView = (ExpandableListView) root.findViewById(R.id.visitDashboardExpList);
+        mExpandableListView = root.findViewById(R.id.visitDashboardExpList);
         mExpandableListView.setEmptyView(mEmptyListView);
         setEmptyListVisibility(false);
         return root;

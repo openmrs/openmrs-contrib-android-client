@@ -30,7 +30,7 @@ public class FormListActivity extends ACBaseActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_form_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);

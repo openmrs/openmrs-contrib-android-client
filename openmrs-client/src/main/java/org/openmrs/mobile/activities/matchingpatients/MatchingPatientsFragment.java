@@ -63,7 +63,7 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
         view = inflater.inflate(R.layout.fragment_matching_patients, container, false);
         initFragmentFields(view);
         setListeners();
-        FontsUtil.setFont((ViewGroup) this.getActivity().findViewById(android.R.id.content));
+        FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
         return view;
     }
 
@@ -73,20 +73,20 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
     }
 
     private void initFragmentFields(View root) {
-        registerNewPatientButton = (Button) root.findViewById(R.id.registerNewPatientButton);
-        mergePatientsButton = (Button) root.findViewById(R.id.mergePatientsButton);
-        givenName = (TextView) root.findViewById(R.id.givenName);
-        middleName = (TextView) root.findViewById(R.id.middleName);
-        familyName = (TextView) root.findViewById(R.id.familyName);
-        gender = (TextView) root.findViewById(R.id.gender);
-        birthDate = (TextView) root.findViewById(R.id.birthDate);
-        address1 = (TextView) root.findViewById(R.id.address1);
-        address2 = (TextView) root.findViewById(R.id.address2);
-        city = (TextView) root.findViewById(R.id.city);
-        state = (TextView) root.findViewById(R.id.state);
-        country = (TextView) root.findViewById(R.id.country);
-        postalCode = (TextView) root.findViewById(R.id.postalCode);
-        mRecyclerView = (RecyclerView) root.findViewById(R.id.recyclerView);
+        registerNewPatientButton = root.findViewById(R.id.registerNewPatientButton);
+        mergePatientsButton = root.findViewById(R.id.mergePatientsButton);
+        givenName = root.findViewById(R.id.givenName);
+        middleName = root.findViewById(R.id.middleName);
+        familyName = root.findViewById(R.id.familyName);
+        gender = root.findViewById(R.id.gender);
+        birthDate = root.findViewById(R.id.birthDate);
+        address1 = root.findViewById(R.id.address1);
+        address2 = root.findViewById(R.id.address2);
+        city = root.findViewById(R.id.city);
+        state = root.findViewById(R.id.state);
+        country = root.findViewById(R.id.country);
+        postalCode = root.findViewById(R.id.postalCode);
+        mRecyclerView = root.findViewById(R.id.recyclerView);
     }
 
     @Override

@@ -42,8 +42,8 @@ public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> impleme
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_logs, container, false);
 
-        tvLogs = (TextView) root.findViewById(R.id.tvLogs);
-        fab = (FloatingActionButton) root.findViewById(R.id.fab);
+        tvLogs = root.findViewById(R.id.tvLogs);
+        fab = root.findViewById(R.id.fab);
         return root;
     }
 

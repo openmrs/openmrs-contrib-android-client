@@ -15,7 +15,6 @@
 package org.openmrs.mobile.activities.dialog;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -120,7 +119,7 @@ public class CustomFragmentDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.mInflater = inflater;
         View dialogLayout = mInflater.inflate(R.layout.fragment_dialog_layout, null, false);
-        this.mFieldsLayout = (LinearLayout) dialogLayout.findViewById(R.id.dialogForm);
+        this.mFieldsLayout = dialogLayout.findViewById(R.id.dialogForm);
         this.setRightButton(dialogLayout);
         this.setLeftButton(dialogLayout);
         getDialog().setCanceledOnTouchOutside(false);
@@ -254,7 +253,7 @@ public class CustomFragmentDialog extends DialogFragment {
 
     private RecyclerView addRecycleView(List<Patient> patientsList, Patient newPatient) {
         LinearLayout field = (LinearLayout) mInflater.inflate(R.layout.openmrs_recycle_view, null);
-        RecyclerView recyclerView = (RecyclerView) field.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = field.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new SimilarPatientsRecyclerViewAdapter((getActivity()), patientsList, newPatient));
         mFieldsLayout.addView(field);
@@ -264,7 +263,7 @@ public class CustomFragmentDialog extends DialogFragment {
 
     private void addSingleChoiceItemsListView(List<String>locationList) {
         LinearLayout field = (LinearLayout) mInflater.inflate(R.layout.openmrs_single_choice_list_view, null);
-         locationListView = (ListView) field.findViewById(R.id.singleChoiceListView);
+        locationListView = field.findViewById(R.id.singleChoiceListView);
         locationListView.setAdapter(new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_list_item_single_choice, locationList));
         locationListView.setItemChecked(locationList.indexOf(mOpenMRS.getLocation()),true);
@@ -274,7 +273,7 @@ public class CustomFragmentDialog extends DialogFragment {
 
     public EditText addEditTextField(String defaultMessage) {
         LinearLayout field = (LinearLayout) mInflater.inflate(R.layout.openmrs_edit_text_field, null);
-        EditText editText = (EditText) field.findViewById(R.id.openmrsEditText);
+        EditText editText = field.findViewById(R.id.openmrsEditText);
         if (null != defaultMessage) {
             editText.setText(defaultMessage);
         }
@@ -284,7 +283,7 @@ public class CustomFragmentDialog extends DialogFragment {
 
     public TextView addTextField(String message) {
         LinearLayout field = (LinearLayout) mInflater.inflate(R.layout.openmrs_text_view_field, null);
-        TextView textView = (TextView) field.findViewById(R.id.openmrsTextView);
+        TextView textView = field.findViewById(R.id.openmrsTextView);
         textView.setText(message);
         textView.setSingleLine(false);
         
@@ -297,7 +296,7 @@ public class CustomFragmentDialog extends DialogFragment {
 
     public TextView addTitleBar(String title) {
         LinearLayout field = (LinearLayout) mInflater.inflate(R.layout.openmrs_title_view_field, null);
-        TextView textView = (TextView) field.findViewById(R.id.openmrsTitleView);
+        TextView textView = field.findViewById(R.id.openmrsTitleView);
         if (mCustomDialogBundle.hasProgressDialog() || mCustomDialogBundle.hasLoadingBar()) {
             mFieldsLayout.setOrientation(LinearLayout.HORIZONTAL);
             LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -334,11 +333,11 @@ public class CustomFragmentDialog extends DialogFragment {
     }
 
     public void setRightButton(View dialogLayout) {
-        this.mRightButton = (Button) dialogLayout.findViewById(R.id.dialogFormButtonsSubmitButton);
+        this.mRightButton = dialogLayout.findViewById(R.id.dialogFormButtonsSubmitButton);
     }
 
     public void setLeftButton(View dialogLayout) {
-        this.mLeftButton = (Button) dialogLayout.findViewById(R.id.dialogFormButtonsCancelButton);
+        this.mLeftButton = dialogLayout.findViewById(R.id.dialogFormButtonsCancelButton);
     }
 
     public void addProgressBar(String message) {

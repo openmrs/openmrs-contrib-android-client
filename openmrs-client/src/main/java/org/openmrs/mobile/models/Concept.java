@@ -25,10 +25,6 @@ public class Concept extends Resource{
     @Expose
     private String name;
 
-    @SerializedName("conceptClass")
-    @Expose
-    private ConceptClass conceptClass;
-
     public Long getId() {
         return id;
     }
@@ -51,14 +47,6 @@ public class Concept extends Resource{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public ConceptClass getConceptClass() {
-        return conceptClass;
-    }
-
-    public void setConceptClass(ConceptClass conceptClass) {
-        this.conceptClass = conceptClass;
     }
 
 }

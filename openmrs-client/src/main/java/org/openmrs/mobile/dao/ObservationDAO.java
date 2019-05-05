@@ -102,27 +102,4 @@ public class ObservationDAO {
         return observationList;
     }
 
-    public Observation getObservationByUUID(final String observationUUID) {
-        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-
-        String where = String.format("%s = ?", ObservationTable.Column.UUID);
-        String[] whereArgs = new String[]{observationUUID};
-        Observation obs = new Observation();
-        final Cursor cursor = helper.getReadableDatabase().query(ObservationTable.TABLE_NAME, null, where, whereArgs, null, null, null);
-        if (null != cursor) {
-            try {
-                if (cursor.moveToFirst()) {
-                    int observationID_CI = cursor.getColumnIndex(ObservationTable.Column.ID);
-                    int encounterID_CI = cursor.getColumnIndex(ObservationTable.Column.ENCOUNTER_KEY_ID);
-                    Long obsID = cursor.getLong(observationID_CI);
-                    Long encounterID = cursor.getLong(encounterID_CI);
-                    obs.setId(obsID);
-                    obs.setEncounterID(encounterID);
-                }
-            } finally {
-                cursor.close();
-            }
-        }
-        return obs;
-    }
 }

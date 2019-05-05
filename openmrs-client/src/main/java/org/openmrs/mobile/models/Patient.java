@@ -38,10 +38,6 @@ public class Patient extends Resource implements Serializable{
     @Expose
     private Boolean voided;
 
-    @SerializedName("resourceVersion")
-    @Expose
-    private String resourceVersion;
-
     public Long getId() {
         return id;
     }
@@ -96,38 +92,11 @@ public class Patient extends Resource implements Serializable{
 
     /**
      * 
-     * @return
-     *     The voided
-     */
-    public Boolean getVoided() {
-        return voided;
-    }
-
-    /**
-     * 
      * @param voided
      *     The voided
      */
     public void setVoided(Boolean voided) {
         this.voided = voided;
-    }
-
-    /**
-     * 
-     * @return
-     *     The resourceVersion
-     */
-    public String getResourceVersion() {
-        return resourceVersion;
-    }
-
-    /**
-     * 
-     * @param resourceVersion
-     *     The resourceVersion
-     */
-    public void setResourceVersion(String resourceVersion) {
-        this.resourceVersion = resourceVersion;
     }
 
     public boolean isSynced()

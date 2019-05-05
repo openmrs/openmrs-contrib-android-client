@@ -41,21 +41,9 @@ public class Encounter extends Resource implements Serializable{
     @SerializedName("obs")
     @Expose
     private List<Observation> observations = new ArrayList<>();
-    @SerializedName("orders")
-    @Expose
-    private List<Object> orders = new ArrayList<>();
-    @SerializedName("voided")
-    @Expose
-    private Boolean voided;
     @SerializedName("visit")
     @Expose
     private Visit visit;
-    @SerializedName("encounterProviders")
-    @Expose
-    private List<Resource> encounterProviders = new ArrayList<>();
-    @SerializedName("resourceVersion")
-    @Expose
-    private String resourceVersion;
 
     private Long visitID;
     private String patientUUID;
@@ -225,41 +213,6 @@ public class Encounter extends Resource implements Serializable{
     public void setObservations(List<Observation> observations) {
         this.observations = observations;
     }
-    /**
-     * 
-     * @return
-     *     The orders
-     */
-    public List<Object> getOrders() {
-        return orders;
-    }
-
-    /**
-     * 
-     * @param orders
-     *     The orders
-     */
-    public void setOrders(List<Object> orders) {
-        this.orders = orders;
-    }
-
-    /**
-     * 
-     * @return
-     *     The voided
-     */
-    public Boolean getVoided() {
-        return voided;
-    }
-
-    /**
-     * 
-     * @param voided
-     *     The voided
-     */
-    public void setVoided(Boolean voided) {
-        this.voided = voided;
-    }
 
     /**
      * 
@@ -280,22 +233,11 @@ public class Encounter extends Resource implements Serializable{
     }
 
     /**
-     * 
-     * @return
-     *     The encounterProviders
-     */
-    public List<Resource> getEncounterProviders() {
-        return encounterProviders;
-    }
-
-    /**
-     * 
+     *
      * @param encounterProviders
      *     The encounterProviders
      */
-    public void setEncounterProviders(List<Resource> encounterProviders) {
-        this.encounterProviders = encounterProviders;
-    }
+
 
     /**
      * 
@@ -313,24 +255,6 @@ public class Encounter extends Resource implements Serializable{
      */
     public void setLinks(List<Link> links) {
         this.links = links;
-    }
-
-    /**
-     * 
-     * @return
-     *     The resourceVersion
-     */
-    public String getResourceVersion() {
-        return resourceVersion;
-    }
-
-    /**
-     * 
-     * @param resourceVersion
-     *     The resourceVersion
-     */
-    public void setResourceVersion(String resourceVersion) {
-        this.resourceVersion = resourceVersion;
     }
 
     public String getFormUuid(){

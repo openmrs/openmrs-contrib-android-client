@@ -65,10 +65,6 @@ public class Encountercreate extends Model implements Serializable{
     @Column(name = "obs")
     private String obslist;
 
-    public String getFormUuid() {
-        return formUuid;
-    }
-
     public void setFormUuid(String formUuid) {
         this.formUuid = formUuid;
     }
@@ -96,10 +92,6 @@ public class Encountercreate extends Model implements Serializable{
 
     public void setPatient(String patient) {
         this.patient = patient;
-    }
-
-    public String getEncounterType() {
-        return encounterType;
     }
 
     public void setEncounterType(String encounterType) {

@@ -3,8 +3,6 @@ package org.openmrs.mobile.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 public class FormCreate {
 
     @SerializedName("uuid")
@@ -19,12 +17,6 @@ public class FormCreate {
     @SerializedName("display")
     @Expose
     private String display;
-    @SerializedName("links")
-    @Expose
-    private List<Link> links = null;
-    @SerializedName("resourceVersion")
-    @Expose
-    private String resourceVersion;
 
     public String getUuid() {
         return uuid;
@@ -56,22 +48,6 @@ public class FormCreate {
 
     public void setDisplay(String display) {
         this.display = display;
-    }
-
-    public List<Link> getLinks() {
-        return links;
-    }
-
-    public void setLinks(List<Link> links) {
-        this.links = links;
-    }
-
-    public String getResourceVersion() {
-        return resourceVersion;
-    }
-
-    public void setResourceVersion(String resourceVersion) {
-        this.resourceVersion = resourceVersion;
     }
 
 }

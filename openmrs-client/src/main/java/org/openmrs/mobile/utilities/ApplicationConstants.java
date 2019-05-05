@@ -22,7 +22,6 @@ public abstract class ApplicationConstants {
     public static final String SERVER_URL = "server_url";
     public static final String SESSION_TOKEN = "session_id";
     public static final String AUTHORIZATION_TOKEN = "authorisation";
-    public static final String SECRET_KEY = "secretKey";
     public static final String LOCATION = "location";
     public static final String VISIT_TYPE_UUID = "visit_type_uuid";
     public static final String LAST_SESSION_TOKEN = "last_session_id";

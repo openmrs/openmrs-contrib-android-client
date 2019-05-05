@@ -30,10 +30,6 @@ public class Results<T> implements Serializable {
         return links;
     }
 
-    public void setLinks(List<Link> links) {
-        this.links = links;
-    }
-
     public List<T> getResults() {
         return results;
     }

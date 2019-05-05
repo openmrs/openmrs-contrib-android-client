@@ -102,16 +102,8 @@ public class QuestionOptions implements Serializable {
         return allowDecimal;
     }
 
-    public void setAllowDecimal(boolean allowDecimal) {
-        this.allowDecimal = allowDecimal;
-    }
-
     public List<Answer> getAnswers() {
         return answers;
-    }
-
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
     }
 
 }

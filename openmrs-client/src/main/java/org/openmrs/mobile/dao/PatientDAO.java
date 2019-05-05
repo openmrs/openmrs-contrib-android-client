@@ -128,10 +128,6 @@ public class PatientDAO {
         return uuid.equalsIgnoreCase(patientUUID);
     }
 
-    public boolean userDoesNotExist(String uuid) {
-        return !isUserAlreadySaved(uuid);
-    }
-
     public Patient findPatientByUUID(String uuid) {
         Patient patient = new Patient();
         String where = String.format("%s = ?", PatientTable.Column.UUID);

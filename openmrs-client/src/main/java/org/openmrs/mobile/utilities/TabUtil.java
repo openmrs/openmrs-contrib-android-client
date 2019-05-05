@@ -25,7 +25,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public final class TabUtil {
-    public static final int MIN_SCREEN_WIDTH_FOR_FINDPATIENTSACTIVITY = 480;
     public static final int MIN_SCREEN_WIDTH_FOR_PATIENTDASHBOARDACTIVITY = 960;
     private static OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
 
@@ -64,9 +63,9 @@ public final class TabUtil {
         }
 
         try {
-            final Method method = actionBarClass.getDeclaredMethod("setHasEmbeddedTabs", new Class[]{Boolean.TYPE});
+            final Method method = actionBarClass.getDeclaredMethod("setHasEmbeddedTabs", Boolean.TYPE);
             method.setAccessible(true);
-            method.invoke(inActionBar2, new Object[]{inHasEmbeddedTabs});
+            method.invoke(inActionBar2, inHasEmbeddedTabs);
         } catch (NoSuchMethodException e) {
             mLogger.d(e.toString());
         } catch (InvocationTargetException e) {

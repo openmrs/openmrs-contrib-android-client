@@ -26,10 +26,6 @@ public interface MatchingPatientsContract {
 
         void showPatientsData(Patient patient, List<Patient> matchingPatients);
 
-        void enableMergeButton();
-
-        void disableMergeButton();
-
         void notifyUser(int no_patient_selected);
 
         void finishActivity();

@@ -156,10 +156,6 @@ public class VisitApi {
     }
 
 
-    public void startVisit(final Patient patient) {
-        startVisit(patient, null);
-    }
-
     public void startVisit(final Patient patient, @Nullable final StartVisitResponseListenerCallback callbackListener) {
         final Visit visit = new Visit();
         visit.setStartDatetime(DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));

@@ -216,11 +216,6 @@ public class OpenMRSLogger {
         saveToFile();
     }
 
-    public void w(final String msg, Throwable tr) {
-        Log.w(mTAG, getMessage(msg), tr);
-        saveToFile();
-    }
-
     public void e(final String msg) {
         Log.e(mTAG, getMessage(msg));
         saveToFile();

@@ -9,9 +9,6 @@ import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.tables.ConceptTable;
 import org.openmrs.mobile.models.Concept;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ConceptDAO {
 
     public long saveOrUpdate(Concept concept) {
@@ -31,26 +28,6 @@ public class ConceptDAO {
 
     public boolean updateConcept(long conceptID, Concept concept) {
         return new ConceptTable().update(conceptID, concept) > 0;
-    }
-
-    public List<Concept> findConceptsByName(String name) {
-        List<Concept> result = new ArrayList<>();
-        String where = String.format("%s like ?", ConceptTable.Column.DISPLAY);
-        String[] whereArgs = new String[]{name + "%"};
-
-        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        final Cursor cursor = helper.getReadableDatabase().query(ConceptTable.TABLE_NAME, null, where, whereArgs, null, null, null);
-        if (null != cursor) {
-            try {
-
-                while (cursor.moveToNext()) {
-                    result.add(cursorToConcept(cursor));
-                }
-            } finally {
-                cursor.close();
-            }
-        }
-        return result;
     }
 
     public Concept findConceptsByUUID(String uuid) {

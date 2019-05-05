@@ -87,8 +87,8 @@ public final class ToastUtil {
         View toastRoot = inflater.inflate(R.layout.toast, null);
 
         Bitmap bitmap;
-        ImageView toastImage = (ImageView) toastRoot.findViewById(R.id.toastImage);
-        TextView toastText = (TextView) toastRoot.findViewById(R.id.toastText);
+        ImageView toastImage = toastRoot.findViewById(R.id.toastImage);
+        TextView toastText = toastRoot.findViewById(R.id.toastText);
         toastText.setText(text);
 
         bitmap = ImageUtils.decodeBitmapFromResource(
@@ -136,11 +136,9 @@ public final class ToastUtil {
     }
 
     private static class ToastThread extends Thread {
-        private Bitmap mBitmap;
         private int mDuration;
 
         public ToastThread(Bitmap bitmap, int duration) {
-            mBitmap = bitmap;
             mDuration = duration;
         }
 

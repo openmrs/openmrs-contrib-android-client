@@ -43,15 +43,6 @@ public class PersonAddress implements Serializable {
 
     /**
      * 
-     * @return
-     *     The preferred
-     */
-    public Boolean getPreferred() {
-        return preferred;
-    }
-
-    /**
-     * 
      * @param preferred
      *     The preferred
      */

@@ -45,7 +45,4 @@ public class Module extends Resource {
         return packageName;
     }
 
-    public void setPackageName(String packageName) {
-        this.packageName = packageName;
-    }
 }

@@ -39,16 +39,8 @@ public class Session {
         return sessionId;
     }
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
     public boolean isAuthenticated() {
         return authenticated;
-    }
-
-    public void setAuthenticated(boolean authenticated) {
-        this.authenticated = authenticated;
     }
 
     public User getUser() {

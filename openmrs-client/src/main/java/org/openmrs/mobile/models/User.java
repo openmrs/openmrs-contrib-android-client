@@ -22,9 +22,6 @@ public class User extends Resource{
     private String username;
 
     @Expose
-    private String systemId;
-
-    @Expose
     private Person person;
 
     public String getUsername() {
@@ -33,14 +30,6 @@ public class User extends Resource{
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getSystemId() {
-        return systemId;
-    }
-
-    public void setSystemId(String systemId) {
-        this.systemId = systemId;
     }
 
     public Person getPerson() {

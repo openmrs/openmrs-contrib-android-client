@@ -44,10 +44,6 @@ public class Obscreate extends Model implements Serializable {
         this.person = person;
     }
 
-    public String getObsDatetime() {
-        return obsDatetime;
-    }
-
     public void setObsDatetime(String obsDatetime) {
         this.obsDatetime = obsDatetime;
     }

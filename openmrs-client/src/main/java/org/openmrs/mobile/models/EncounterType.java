@@ -17,8 +17,6 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Table(name = "encountertype")
 public class EncounterType extends Model implements Serializable {
@@ -32,11 +30,6 @@ public class EncounterType extends Model implements Serializable {
     @SerializedName("display")
     @Expose
     private String display;
-
-    @Column(name = "links")
-    @SerializedName("links")
-    @Expose
-    private List<Link> links = new ArrayList<>();
 
     public static final String VITALS = "Vitals";
     public static final String VISIT_NOTE = "Visit Note";
@@ -83,24 +76,6 @@ public class EncounterType extends Model implements Serializable {
      */
     public void setDisplay(String display) {
         this.display = display;
-    }
-
-    /**
-     *
-     * @return
-     *     The links
-     */
-    public List<Link> getLinks() {
-        return links;
-    }
-
-    /**
-     *
-     * @param links
-     *     The links
-     */
-    public void setLinks(List<Link> links) {
-        this.links = links;
     }
 
 

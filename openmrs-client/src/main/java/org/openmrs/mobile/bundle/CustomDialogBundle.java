@@ -36,6 +36,9 @@ public class CustomDialogBundle implements Serializable {
     private boolean loadingBar;
     private boolean progressDialog;
 
+    public CustomDialogBundle() {
+    }
+
     public boolean hasProgressDialog() {
         return progressDialog;
     }
@@ -47,10 +50,6 @@ public class CustomDialogBundle implements Serializable {
 
     public boolean hasLoadingBar() {
         return loadingBar;
-    }
-
-    public void setLoadingBar(boolean loadingBar) {
-        this.loadingBar = loadingBar;
     }
 
     public CustomFragmentDialog.OnClickAction getLeftButtonAction() {
@@ -97,10 +96,6 @@ public class CustomDialogBundle implements Serializable {
         return titleViewMessage;
     }
 
-    public void setProgressViewMessage(String progressViewMessage) {
-        this.progressViewMessage = progressViewMessage;
-    }
-
     public String getProgressViewMessage() {
         return progressViewMessage;
     }
@@ -111,10 +106,6 @@ public class CustomDialogBundle implements Serializable {
 
     public String getEditTextViewMessage() {
         return editTextViewMessage;
-    }
-
-    public void setEditTextViewMessage(String editTextViewMessage) {
-        this.editTextViewMessage = editTextViewMessage;
     }
 
     public List<Patient> getPatientsList() {

@@ -22,7 +22,8 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
-import org.openmrs.mobile.activities.login.LoginActivity;
+import androidx.annotation.NonNull;
+
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
@@ -36,7 +37,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,14 +45,13 @@ public class AuthenticateCheckService extends Service {
 
 
     private IBinder mBinder = new SocketServerBinder();
-    private Timer mTimer;
     private boolean mRunning = false;
     private OpenMRS mOpenMRS = OpenMRS.getInstance();
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mTimer = new Timer();
+        Timer mTimer = new Timer();
         mTimer.schedule(new TimerTask() {
             @Override
             public void run() {

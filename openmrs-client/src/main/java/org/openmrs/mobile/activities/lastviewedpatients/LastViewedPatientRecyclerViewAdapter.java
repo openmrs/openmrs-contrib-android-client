@@ -27,6 +27,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.retrofit.PatientApi;
 import org.openmrs.mobile.api.retrofit.VisitApi;
@@ -41,14 +44,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import rx.android.schedulers.AndroidSchedulers;
 
 class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final int VIEW_TYPE_ITEM = 0;
-    private final int VIEW_TYPE_LOADING = 1;
 
     private Activity mContext;
     private List<Patient> patients;
@@ -104,6 +104,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
     @Override
     public int getItemViewType(int position) {
+        int VIEW_TYPE_LOADING = 1;
         return patients.get(position) == null ? VIEW_TYPE_LOADING : VIEW_TYPE_ITEM;
     }
 
@@ -171,11 +172,11 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         public PatientViewHolder(View itemView) {
             super(itemView);
             mRowLayout = (LinearLayout) itemView;
-            mIdentifier = (TextView) itemView.findViewById(R.id.lastViewedPatientIdentifier);
-            mDisplayName = (TextView) itemView.findViewById(R.id.lastViewedPatientDisplayName);
-            mGender = (TextView) itemView.findViewById(R.id.lastViewedPatientGender);
-            mBirthDate = (TextView) itemView.findViewById(R.id.lastViewedPatientBirthDate);
-            mAvailableOfflineCheckbox = (CheckBox) itemView.findViewById(R.id.offlineCheckbox);
+            mIdentifier = itemView.findViewById(R.id.lastViewedPatientIdentifier);
+            mDisplayName = itemView.findViewById(R.id.lastViewedPatientDisplayName);
+            mGender = itemView.findViewById(R.id.lastViewedPatientGender);
+            mBirthDate = itemView.findViewById(R.id.lastViewedPatientBirthDate);
+            mAvailableOfflineCheckbox = itemView.findViewById(R.id.offlineCheckbox);
             mRowLayout.setOnClickListener(this);
             mRowLayout.setOnLongClickListener(this);
         }
@@ -225,7 +226,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
         public ProgressBarViewHolder(View itemView) {
             super(itemView);
-            progressBar = (ProgressBar)itemView.findViewById(R.id.recycleviewProgressbar);
+            progressBar = itemView.findViewById(R.id.recycleviewProgressbar);
         }
     }
 

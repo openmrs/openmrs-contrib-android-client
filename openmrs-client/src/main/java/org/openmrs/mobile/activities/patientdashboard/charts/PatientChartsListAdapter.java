@@ -25,12 +25,11 @@ public class PatientChartsListAdapter extends BaseAdapter {
     private static final int RIGHT = 1;
 
     private Context mContext;
-    private JSONObject mObservationList;
     private List<String> mVitalNameList;
 
     PatientChartsListAdapter(Context context, JSONObject observationList) {
         this.mContext = context;
-        this.mObservationList = observationList;
+        JSONObject mObservationList = observationList;
         Iterator<String> keys = mObservationList.keys();
         this.mVitalNameList = Lists.newArrayList(keys);
     }

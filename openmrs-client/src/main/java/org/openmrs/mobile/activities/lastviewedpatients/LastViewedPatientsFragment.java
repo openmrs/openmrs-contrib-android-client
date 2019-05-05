@@ -24,6 +24,12 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
@@ -39,12 +45,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatientsContract.Presenter> implements LastViewedPatientsContract.View {
 
     private static final String PATIENT_LIST = "patient_list";
@@ -52,7 +52,6 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
     private TextView mEmptyList;
     private ProgressBar progressBar;
     private RecyclerView mPatientsRecyclerView;
-    private LinearLayoutManager linearLayoutManager;
     private LastViewedPatientRecyclerViewAdapter mAdapter;
     public SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -61,12 +60,12 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_last_viewed_patients, container, false);
-        mPatientsRecyclerView = ((RecyclerView) root.findViewById(R.id.lastViewedPatientRecyclerView));
-        linearLayoutManager = new LinearLayoutManager(this.getActivity());
+        mPatientsRecyclerView = root.findViewById(R.id.lastViewedPatientRecyclerView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
         mPatientsRecyclerView.setLayoutManager(linearLayoutManager);
-        progressBar = (ProgressBar) root.findViewById(R.id.patientRecyclerViewLoading);
-        mEmptyList = (TextView) root.findViewById(R.id.emptyLastViewedPatientList);
-        mSwipeRefreshLayout = ((SwipeRefreshLayout) root.findViewById(R.id.swiperefreshLastPatients));
+        progressBar = root.findViewById(R.id.patientRecyclerViewLoading);
+        mEmptyList = root.findViewById(R.id.emptyLastViewedPatientList);
+        mSwipeRefreshLayout = root.findViewById(R.id.swiperefreshLastPatients);
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
             if (NetworkUtils.hasNetwork()) {
                 mPresenter.refresh();
@@ -170,11 +169,11 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
 
     @Override
     public void showOpenPatientSnackbar(final Long patientId) {
-        FrameLayout frameLayout = (FrameLayout) mSwipeRefreshLayout.findViewById(R.id.swipe_container);
+        FrameLayout frameLayout = mSwipeRefreshLayout.findViewById(R.id.swipe_container);
         Snackbar snackbar = Snackbar.make(frameLayout, getResources().getString(R.string.snackbar_info_patient_downloaded), Snackbar.LENGTH_LONG);
         snackbar.setActionTextColor(Color.WHITE);
         View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
+        TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.setAction(getResources().getString(R.string.snackbar_action_open), view -> openPatientDashboardActivity(patientId));
         snackbar.show();

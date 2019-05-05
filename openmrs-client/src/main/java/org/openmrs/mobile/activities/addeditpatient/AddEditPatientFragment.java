@@ -605,26 +605,31 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         capturePhotoBtn.setOnClickListener(view -> {
 
             CameraOrGalleryPickerDialog dialog = CameraOrGalleryPickerDialog.getInstance(
-
                     (dialog1, which) -> {
+                                if (which == 0) {
+                                    StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+                                    StrictMode.setVmPolicy(builder.build());
+                                    AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
+                                } else if (which == 1) {
+                                    Intent i;
+                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
+                                        i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                                    else
+                                        i = new Intent(Intent.ACTION_GET_CONTENT);
+                                    i.addCategory(Intent.CATEGORY_OPENABLE);
+                                    i.setType("image/*");
+                                    startActivityForResult(i, GALLERY_IMAGE_REQUEST);
+                                } else {
+                                    patientImageView.setImageResource(R.drawable.ic_person_grey_500_48dp);
+                                    patientImageView.invalidate();
+                                    patientPhoto = BitmapFactory.decodeResource(getResources(),R.drawable.ic_person_grey_500_48dp);;
+                                }
+                            }
+                        );
+                dialog.show(getChildFragmentManager(), null);
+            }
+        );
 
-                        if (which == 0) {
-                            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-                            StrictMode.setVmPolicy(builder.build());
-                            AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
-                        } else {
-                            Intent i;
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
-                                i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                            else
-                                i = new Intent(Intent.ACTION_GET_CONTENT);
-                            i.addCategory(Intent.CATEGORY_OPENABLE);
-                            i.setType("image/*");
-                            startActivityForResult(i, GALLERY_IMAGE_REQUEST);
-                        }
-                    });
-            dialog.show(getChildFragmentManager(), null);
-        });
 
         patientImageView.setOnClickListener(view -> {
             if (output != null) {

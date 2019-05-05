@@ -22,7 +22,6 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -180,6 +179,8 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.reconn_server);
                     if (snackbar != null)
                         snackbar.dismiss();
+                    ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.connected_to_server_message);
+
                 } else {
                     showNoInternetConnectionSnackbar();
                 }

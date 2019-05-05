@@ -417,7 +417,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
 
     private List<String> getLocationStringList(List<Location> locationList) {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         list.add(getString(R.string.login_location_select));
         for (int i = 0; i < locationList.size(); i++) {
             list.add(locationList.get(i).getDisplay());

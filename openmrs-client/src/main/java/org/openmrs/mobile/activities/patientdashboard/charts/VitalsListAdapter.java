@@ -65,7 +65,7 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
 
 
     private List<ViewGroup> generateChildLayouts() {
-        List<ViewGroup> layouts = new ArrayList<ViewGroup>();
+        List<ViewGroup> layouts = new ArrayList<>();
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
         for (String vitalName : this.mVitalNameList) {
@@ -86,14 +86,14 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
                 for (Integer j = 0; j < dateList.size(); j++) {
                     JSONArray dataArray = chartData.getJSONArray(dateList.get(j));
                     LineChart chart = (LineChart) convertView.findViewById(R.id.linechart);
-                    List<Entry> entries = new ArrayList<Entry>();
+                    List<Entry> entries = new ArrayList<>();
                     for (Integer i = 0; i < dataArray.length(); i++) {
                         entries.add(new Entry(j, Float.parseFloat((String) dataArray.get(i))));
                     }
                     LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
                     dataSet.setCircleColor(R.color.green);
                     dataSet.setValueTextSize(12);
-                    List<ILineDataSet> ILdataSet = new ArrayList<ILineDataSet>();
+                    List<ILineDataSet> ILdataSet = new ArrayList<>();
                     ILdataSet.add(dataSet);
                     dateList.add(DateUtils.getCurrentDateTime());
                     LineData lineData = new LineData(ILdataSet);

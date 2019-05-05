@@ -50,7 +50,7 @@ public class ObservationDAO {
 
     public List<Observation> findObservationByEncounterID(Long encounterID) {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        List<Observation> observationList = new ArrayList<Observation>();
+        List<Observation> observationList = new ArrayList<>();
 
         String where = String.format("%s = ?", ObservationTable.Column.ENCOUNTER_KEY_ID);
         String[] whereArgs = new String[]{encounterID.toString()};

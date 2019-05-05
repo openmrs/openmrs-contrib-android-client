@@ -52,7 +52,7 @@ public class PatientDashboardDiagnosisPresenter extends PatientDashboardMainPres
     }
 
     private List<String> getAllDiagnosis(List<Encounter> encounters) {
-        List<String> diagnosis = new ArrayList<String>();
+        List<String> diagnosis = new ArrayList<>();
 
         for (Encounter encounter : encounters) {
             for (Observation obs : encounter.getObservations()) {

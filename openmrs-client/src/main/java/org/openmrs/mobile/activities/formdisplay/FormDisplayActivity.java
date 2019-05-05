@@ -21,6 +21,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.bundle.FormFieldsWrapper;
@@ -32,11 +37,6 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
 public class FormDisplayActivity extends ACBaseActivity implements FormDisplayContract.View.MainView {
 
@@ -53,7 +53,7 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
         setContentView(R.layout.activity_form_display);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -127,14 +127,14 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
 
     private void initViewComponents(String valueRef) {
         FormPageAdapter formPageAdapter = new FormPageAdapter(getSupportFragmentManager(), valueRef);
-        LinearLayout pagerIndicator = (LinearLayout) findViewById(R.id.viewPagerCountDots);
+        LinearLayout pagerIndicator = findViewById(R.id.viewPagerCountDots);
 
-        mBtnNext = (Button) findViewById(R.id.btn_next);
-        mBtnFinish = (Button) findViewById(R.id.btn_finish);
+        mBtnNext = findViewById(R.id.btn_next);
+        mBtnFinish = findViewById(R.id.btn_finish);
 
         mBtnNext.setOnClickListener(view -> mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1));
         mBtnFinish.setOnClickListener(view -> mPresenter.createEncounter());
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager = findViewById(R.id.container);
 
         mViewPager.setAdapter(formPageAdapter);
 

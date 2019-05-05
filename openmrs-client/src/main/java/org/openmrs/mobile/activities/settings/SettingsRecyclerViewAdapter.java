@@ -21,15 +21,15 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.logs.LogsActivity;
 import org.openmrs.mobile.models.SettingsListItemDTO;
 import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRecyclerViewAdapter.SettingsViewHolder> {
 
@@ -93,9 +93,9 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
         public SettingsViewHolder(View itemView) {
             super(itemView);
             mRowLayout = (RelativeLayout) itemView;
-            mTitle = (TextView) itemView.findViewById(R.id.settingsTitle);
-            mDesc1 = (TextView) itemView.findViewById(R.id.settingsDesc1);
-            mDesc2 = (TextView) itemView.findViewById(R.id.settingsDesc2);
+            mTitle = itemView.findViewById(R.id.settingsTitle);
+            mDesc1 = itemView.findViewById(R.id.settingsDesc1);
+            mDesc2 = itemView.findViewById(R.id.settingsDesc2);
         }
 
         public void clearAnimation() {

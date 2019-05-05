@@ -60,7 +60,7 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
 
         for (Encounter encounter : this.mEncounters) {
             ViewGroup convertView = (ViewGroup) inflater.inflate(R.layout.list_visit_item, null);
-            LinearLayout contentLayout = (LinearLayout) convertView.findViewById(R.id.listVisitItemLayoutContent);
+            LinearLayout contentLayout = convertView.findViewById(R.id.listVisitItemLayoutContent);
             switch (encounter.getEncounterType().getDisplay()) {
                 case EncounterType.VITALS:
                     for (Observation obs : encounter.getObservations()) {
@@ -139,8 +139,8 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
             rowView = inflater.inflate(R.layout.list_visit_group, null);
         }
 
-        final TextView encounterName = (TextView) rowView.findViewById(R.id.listVisitGroupEncounterName);
-        final TextView detailsSelector = (TextView) rowView.findViewById(R.id.listVisitGroupDetailsSelector);
+        final TextView encounterName = rowView.findViewById(R.id.listVisitGroupEncounterName);
+        final TextView detailsSelector = rowView.findViewById(R.id.listVisitGroupDetailsSelector);
         final Encounter encounter = mEncounters.get(groupPosition);
         encounterName.setText(encounter.getEncounterType().getDisplay());
         if (isExpanded) {

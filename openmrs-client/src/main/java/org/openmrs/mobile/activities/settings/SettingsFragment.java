@@ -27,7 +27,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
@@ -39,11 +43,6 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter> implements SettingsContract.View {
 
@@ -67,14 +66,14 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
             }
         };
 
-        settingsRecyclerView = (RecyclerView) root.findViewById(R.id.settingsRecyclerView);
+        settingsRecyclerView = root.findViewById(R.id.settingsRecyclerView);
         settingsRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         settingsRecyclerView.setLayoutManager(linearLayoutManager);
 
-        conceptsInDbTextView = ((TextView) root.findViewById(R.id.conceptsInDbTextView));
+        conceptsInDbTextView = root.findViewById(R.id.conceptsInDbTextView);
 
-        downloadConceptsButton = ((ImageButton) root.findViewById(R.id.downloadConceptsButton));
+        downloadConceptsButton = root.findViewById(R.id.downloadConceptsButton);
 
         downloadConceptsButton.setOnClickListener(view -> {
             downloadConceptsButton.setEnabled(false);

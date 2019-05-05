@@ -34,7 +34,7 @@ public class NotificationUtil {
     {
         Bitmap bitmap = BitmapFactory.decodeResource( OpenMRS.getInstance().getResources(), R.drawable.ic_openmrs);
         NotificationCompat.Builder mBuilder =
-                (NotificationCompat.Builder) new NotificationCompat.Builder(OpenMRS.getInstance())
+                new NotificationCompat.Builder(OpenMRS.getInstance())
                         .setSmallIcon(R.drawable.ic_stat_notify_openmrs)
                         .setLargeIcon(bitmap)
                         .setContentTitle(title)

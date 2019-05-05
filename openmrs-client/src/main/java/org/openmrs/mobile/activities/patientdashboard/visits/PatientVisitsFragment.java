@@ -86,12 +86,12 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_patient_visit, null, false);
-        visitRecyclerView = (RecyclerView) root.findViewById(R.id.patientVisitRecyclerView);
+        visitRecyclerView = root.findViewById(R.id.patientVisitRecyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         visitRecyclerView.setHasFixedSize(true);
         visitRecyclerView.setLayoutManager(linearLayoutManager);
 
-        emptyList = (TextView) root.findViewById(R.id.emptyVisitsList);
+        emptyList = root.findViewById(R.id.emptyVisitsList);
 
         return root;
     }

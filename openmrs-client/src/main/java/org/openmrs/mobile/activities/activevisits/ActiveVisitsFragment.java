@@ -49,20 +49,20 @@ public class ActiveVisitsFragment extends ACBaseFragment<ActiveVisitsContract.Pr
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_active_visits, container, false);
 
-        progressBar = (ProgressBar)root.findViewById(R.id.progressBar);
-        visitsRecyclerView = (RecyclerView) root.findViewById(R.id.visitsRecyclerView);
+        progressBar = root.findViewById(R.id.progressBar);
+        visitsRecyclerView = root.findViewById(R.id.visitsRecyclerView);
         visitsRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
         visitsRecyclerView.setLayoutManager(linearLayoutManager);
         visitsRecyclerView.setAdapter(new ActiveVisitsRecyclerViewAdapter(this.getActivity(),
                 new ArrayList<>()));
 
-        emptyList = (TextView) root.findViewById(R.id.emptyVisitsListViewLabel);
+        emptyList = root.findViewById(R.id.emptyVisitsListViewLabel);
         emptyList.setText(getString(R.string.search_visits_no_results));
         emptyList.setVisibility(View.INVISIBLE);
 
 
-        FontsUtil.setFont((ViewGroup) this.getActivity().findViewById(android.R.id.content));
+        FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
 
         return root;
     }

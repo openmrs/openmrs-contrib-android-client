@@ -96,10 +96,10 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
         public VisitViewHolder(View itemView) {
             super(itemView);
             mRelativeLayout = (RelativeLayout) itemView;
-            mVisitStart = (TextView) itemView.findViewById(R.id.patientVisitStartDate);
-            mVisitEnd = (TextView) itemView.findViewById(R.id.patientVisitEndDate);
-            mVisitPlace = (TextView) itemView.findViewById(R.id.patientVisitPlace);
-            mVisitStatus = (TextView) itemView.findViewById(R.id.visitStatusLabel);
+            mVisitStart = itemView.findViewById(R.id.patientVisitStartDate);
+            mVisitEnd = itemView.findViewById(R.id.patientVisitEndDate);
+            mVisitPlace = itemView.findViewById(R.id.patientVisitPlace);
+            mVisitStatus = itemView.findViewById(R.id.visitStatusLabel);
         }
         public void clearAnimation() {
             mRelativeLayout.clearAnimation();

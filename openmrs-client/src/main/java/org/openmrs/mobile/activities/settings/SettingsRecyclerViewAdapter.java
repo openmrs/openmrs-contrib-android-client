@@ -93,9 +93,9 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
         public SettingsViewHolder(View itemView) {
             super(itemView);
             mRowLayout = (RelativeLayout) itemView;
-            mTitle = (TextView) itemView.findViewById(R.id.settingsTitle);
-            mDesc1 = (TextView) itemView.findViewById(R.id.settingsDesc1);
-            mDesc2 = (TextView) itemView.findViewById(R.id.settingsDesc2);
+            mTitle = itemView.findViewById(R.id.settingsTitle);
+            mDesc1 = itemView.findViewById(R.id.settingsDesc1);
+            mDesc2 = itemView.findViewById(R.id.settingsDesc2);
         }
 
         public void clearAnimation() {

@@ -38,10 +38,10 @@ public class PatientPhotoActivity extends AppCompatActivity {
 
         ByteArrayInputStream inputStream = new ByteArrayInputStream(photo);
         Bitmap patientPhoto = BitmapFactory.decodeStream(inputStream);
-        ImageView patientImageView = (ImageView) findViewById(R.id.patientPhoto);
+        ImageView patientImageView = findViewById(R.id.patientPhoto);
         patientImageView.setImageBitmap(patientPhoto);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             String patientName = getIntent().getStringExtra("name");
             setSupportActionBar(toolbar);

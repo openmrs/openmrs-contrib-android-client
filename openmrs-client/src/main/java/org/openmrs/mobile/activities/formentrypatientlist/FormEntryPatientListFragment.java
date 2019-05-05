@@ -23,6 +23,8 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.formlist.FormListActivity;
@@ -37,7 +39,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.google.android.material.snackbar.Snackbar;
 
 public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatientListContract.Presenter> implements  FormEntryPatientListContract.View {
 
@@ -50,16 +51,16 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_form_entry_patient_list, container, false);
 
-        mPatientRecyclerView = (RecyclerView) root.findViewById(R.id.patientRecyclerView);
+        mPatientRecyclerView = root.findViewById(R.id.patientRecyclerView);
         mPatientRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         mPatientRecyclerView.setLayoutManager(linearLayoutManager);
 
-        mEmptyList = (TextView) root.findViewById(R.id.emptyPatientList);
-        mProgressBar = (ProgressBar) root.findViewById(R.id.formEntryListInitialProgressBar);
+        mEmptyList = root.findViewById(R.id.emptyPatientList);
+        mProgressBar = root.findViewById(R.id.formEntryListInitialProgressBar);
 
         // Font config
-        FontsUtil.setFont((ViewGroup) this.getActivity().findViewById(android.R.id.content));
+        FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
         return root;
     }
 

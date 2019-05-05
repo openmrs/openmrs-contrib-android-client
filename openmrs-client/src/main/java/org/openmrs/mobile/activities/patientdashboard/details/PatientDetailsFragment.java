@@ -27,7 +27,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
@@ -111,7 +110,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
                 ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.female));
             }
         }
-        ImageView patientImageView = (ImageView) rootView.findViewById(R.id.patientPhoto);
+        ImageView patientImageView = rootView.findViewById(R.id.patientPhoto);
 
         if (patient.getPerson().getPhoto() != null) {
             final Bitmap photo = patient.getPerson().getResizedPhoto();

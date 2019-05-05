@@ -105,15 +105,15 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
         public PatientViewHolder(View itemView) {
             super(itemView);
             mRowLayout = (LinearLayout) itemView;
-            mGivenName = (TextView) itemView.findViewById(R.id.patientGivenName);
-            mMiddleName = (TextView) itemView.findViewById(R.id.patientMiddleName);
-            mFamilyName = (TextView) itemView.findViewById(R.id.patientFamilyName);
-            mGender = (TextView) itemView.findViewById(R.id.patientGender);
-            mBirthDate = (TextView) itemView.findViewById(R.id.patientBirthDate);
-            mAddres = (TextView) itemView.findViewById(R.id.patientAddres);
-            mPostalCode = (TextView) itemView.findViewById(R.id.patientPostalCode);
-            mCity = (TextView) itemView.findViewById(R.id.patientCity);
-            mCountry = (TextView) itemView.findViewById(R.id.patientCountry);
+            mGivenName = itemView.findViewById(R.id.patientGivenName);
+            mMiddleName = itemView.findViewById(R.id.patientMiddleName);
+            mFamilyName = itemView.findViewById(R.id.patientFamilyName);
+            mGender = itemView.findViewById(R.id.patientGender);
+            mBirthDate = itemView.findViewById(R.id.patientBirthDate);
+            mAddres = itemView.findViewById(R.id.patientAddres);
+            mPostalCode = itemView.findViewById(R.id.patientPostalCode);
+            mCity = itemView.findViewById(R.id.patientCity);
+            mCountry = itemView.findViewById(R.id.patientCountry);
         }
 
     }

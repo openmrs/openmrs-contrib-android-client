@@ -19,7 +19,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -38,6 +37,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -60,7 +60,7 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_form_list, container, false);
 
-        formList = (ListView) root.findViewById(R.id.formlist);
+        formList = root.findViewById(R.id.formlist);
         formList.setOnItemClickListener((parent, view, position, id) -> mPresenter.listItemClicked(position, ((TextView) view).getText().toString()));
 
         return root;
@@ -165,7 +165,7 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            json = new String(buffer, "UTF-8");
+            json = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;

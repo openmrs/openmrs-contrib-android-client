@@ -65,7 +65,7 @@ android {
                 variant.outputs.each { output ->
                     def relativeRootDir = output.packageApplication.outputDirectory.toPath()
                             .relativize(rootDir.toPath()).toFile()
-                    output.outputFileName = new File("$relativeRootDir/openmrs-client/release/",output.outputFile.name)
+                    output.outputFileName = new File("$relativeRootDir/openmrs-client/release/", output.outputFile.name)
                 }
             }
         }
@@ -76,6 +76,8 @@ android {
 
     lintOptions {
         warning 'InvalidPackage'
+        abortOnError false
+
     }
 
     packagingOptions {
@@ -99,6 +101,7 @@ android {
             includeAndroidResources = true
         }
     }
+  
 }
 
 repositories {

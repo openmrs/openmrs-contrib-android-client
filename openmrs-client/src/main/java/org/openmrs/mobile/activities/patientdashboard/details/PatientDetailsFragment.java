@@ -27,6 +27,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
@@ -42,9 +44,6 @@ import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.ByteArrayOutputStream;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 public class PatientDetailsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDetails {
 
@@ -111,7 +110,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
                 ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.female));
             }
         }
-        ImageView patientImageView = (ImageView) rootView.findViewById(R.id.patientPhoto);
+        ImageView patientImageView = rootView.findViewById(R.id.patientPhoto);
 
         if (patient.getPerson().getPhoto() != null) {
             final Bitmap photo = patient.getPerson().getResizedPhoto();

@@ -49,8 +49,8 @@ public class CameraOrGalleryPickerDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
 
-        String[] textResources = {"Take a photo", "Choose another"};
-        int[] imageResources = {R.drawable.ic_photo_camera, R.drawable.ic_photo_library};
+        String[] textResources = {"Take a photo", "Choose another", "Remove photo"};
+        int[] imageResources = {R.drawable.ic_photo_camera, R.drawable.ic_photo_library, R.drawable.ic_photo_delete};
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

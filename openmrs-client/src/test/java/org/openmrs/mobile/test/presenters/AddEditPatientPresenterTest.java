@@ -63,13 +63,6 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     private AddEditPatientPresenter presenter;
     private Patient patient;
 
-    private final String INVALID_NAME_1 = "#James";
-    private final String INVALID_NAME_2 = "John@Doe";
-    private final String INVALID_NAME_3 = "Em*%ile";
-
-    private final String INVALID_ADDRESS_1 = "Washington street ^%123";
-    private final String INVALID_ADDRESS_2 = "Door $164";
-
     @Before
     public void setUp() {
         super.setUp();
@@ -89,6 +82,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldNotPassValidation_invalidGivenName() {
+        String INVALID_NAME_1 = "#James";
         patient.getPerson().getName().setGivenName(INVALID_NAME_1);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
@@ -103,6 +97,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldNotPassValidation_invalidFamilyName() {
+        String INVALID_NAME_2 = "John@Doe";
         patient.getPerson().getName().setFamilyName(INVALID_NAME_2);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
@@ -110,6 +105,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldNotPassValidation_invalidMiddleName() {
+        String INVALID_NAME_3 = "Em*%ile";
         patient.getPerson().getName().setMiddleName(INVALID_NAME_3);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
@@ -133,6 +129,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     public void shouldNotPassValidation_invalidAddress1() {
         PersonAddress invalidAddress = new PersonAddress();
 
+        String INVALID_ADDRESS_1 = "Washington street ^%123";
         invalidAddress.setAddress1(INVALID_ADDRESS_1);
 
         patient.getPerson().setAddresses(Collections.singletonList(invalidAddress));
@@ -144,6 +141,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     public void shouldNotPassValidation_invalidAddress2() {
         PersonAddress invalidAddress = new PersonAddress();
 
+        String INVALID_ADDRESS_2 = "Door $164";
         invalidAddress.setAddress2(INVALID_ADDRESS_2);
 
         patient.getPerson().setAddresses(Collections.singletonList(invalidAddress));

@@ -19,9 +19,8 @@ import java.io.StringWriter;
 public class ForceClose implements java.lang.Thread.UncaughtExceptionHandler{
 
         private final Activity myContext;
-        private final String LINE_SEPARATOR = "\n";
 
-        public ForceClose(Activity context) {
+    public ForceClose(Activity context) {
             myContext = context;
         }
 
@@ -35,6 +34,7 @@ public class ForceClose implements java.lang.Thread.UncaughtExceptionHandler{
             errorReport.append("\n************ DEVICE INFORMATION ***********\n");
             errorReport.append("Brand: ");
             errorReport.append(Build.BRAND);
+            String LINE_SEPARATOR = "\n";
             errorReport.append(LINE_SEPARATOR);
             errorReport.append("Device: ");
             errorReport.append(Build.DEVICE);

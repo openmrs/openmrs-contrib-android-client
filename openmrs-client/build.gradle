@@ -154,6 +154,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
     implementation 'org.mindrot:jbcrypt:0.4'
+    implementation 'com.hbb20:ccp:2.2.7'
     testImplementation(
             'org.mockito:mockito-core:1.10.19',
             'junit:junit:4.12',

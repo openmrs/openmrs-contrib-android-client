@@ -16,6 +16,8 @@ package org.openmrs.mobile.utilities;
 
 import android.widget.EditText;
 
+import com.hbb20.CountryCodePicker;
+
 import java.util.regex.Pattern;
 
 public class ViewUtils {
@@ -36,6 +38,10 @@ public class ViewUtils {
 
     public static boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
+    }
+
+    public static boolean isCountryCodePickerEmpty(CountryCodePicker countryCodePicker) {
+        return countryCodePicker.getSelectedCountryName() == null;
     }
 
     /**

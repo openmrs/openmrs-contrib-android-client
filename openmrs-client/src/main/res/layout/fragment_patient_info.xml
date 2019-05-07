@@ -502,22 +502,18 @@
                         android:id="@+id/textInputLayoutCountry"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:gravity="center"
                         app:errorEnabled="true">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/country"
-                            android:layout_width="fill_parent"
-                            android:layout_height="48dp"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginLeft="4dp"
-                            android:focusable="true"
-                            android:hint="@string/patient_country_label"
-                            android:imeOptions="actionNext"
-                            android:inputType="textCapSentences"
-                            android:maxLines="1"
-                            android:textSize="14sp" />
+                        <com.hbb20.CountryCodePicker
+                            android:id="@+id/ccp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="-14dp"
+                            app:ccp_showFullName="true"
+                            app:ccp_showNameCode="false"
+                            app:ccp_showPhoneCode="false" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -525,21 +521,21 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
                         android:layout_weight="1">
 
                         <AutoCompleteTextView
                             android:id="@+id/state"
                             android:layout_width="match_parent"
                             android:layout_height="48dp"
+                            android:layout_marginStart="4dp"
                             android:layout_marginLeft="4dp"
                             android:focusable="true"
                             android:hint="@string/patient_state_label"
                             android:imeOptions="actionNext"
                             android:inputType="text"
                             android:maxLines="1"
-                            android:layout_marginStart="4dp"
                             android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
@@ -557,8 +553,8 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="4dp"
                         android:layout_marginEnd="4dp"
+                        android:layout_marginRight="4dp"
                         android:layout_weight="1">
 
                         <EditText
@@ -578,8 +574,8 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
                         android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
                         android:layout_weight="1">
 
                         <EditText

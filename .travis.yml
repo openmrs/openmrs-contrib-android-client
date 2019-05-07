@@ -1,7 +1,7 @@
 sudo: required
 language: android
 jdk: oraclejdk8
-dist: trusty
+dist: xenial
 
 before_install:
   - yes | sdkmanager "platform-tools" "tools" "platforms;android-27" "extras;android;m2repository"

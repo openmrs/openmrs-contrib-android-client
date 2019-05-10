@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.settings;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,14 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
                 Intent i = new Intent(view.getContext() , LogsActivity.class);
                 view.getContext().startActivity(i);
                 });
+        }
+        if (position == 2) {
+            holder.mRowLayout.setOnClickListener(view -> {
+                // start browser and redirect to Privacy Policy URL
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(view.getContext().getString(R.string.url_privacy_policy)));
+                view.getContext().startActivity(i);
+            });
         }
 
         if (mItems.get(position).getDesc1() != null) {

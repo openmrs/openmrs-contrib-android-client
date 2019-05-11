@@ -33,6 +33,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,15 +53,16 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
         this.mPresenter = presenter;
     }
 
+    @NonNull
     @Override
-    public PatientViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.similar_patient_row, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(PatientViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PatientViewHolder holder, int position) {
         final Patient patient = patientList.get(position);
 
         setPatientName(holder, patient);
@@ -96,21 +98,18 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
             mPostalCode = (TextView) itemView.findViewById(R.id.patientPostalCode);
             mCity = (TextView) itemView.findViewById(R.id.patientCity);
             mCountry = (TextView) itemView.findViewById(R.id.patientCountry);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CardView cardView = (CardView)v.findViewById(R.id.cardView);
-                    if (selectedPosition == -1) {
-                        selectedPosition = getAdapterPosition();
-                        mPresenter.setSelectedPatient(patientList.get(selectedPosition));
-                        cardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.patient_selected_highlight));
-                    } else if(selectedPosition == getAdapterPosition()){
-                        selectedPosition = -1;
-                        mPresenter.removeSelectedPatient();
-                        cardView.setCardBackgroundColor(Color.WHITE);
-                    } else {
-                        ToastUtil.notify("You can select only one similar patient");
-                    }
+            itemView.setOnClickListener(view -> {
+                CardView cardView = (CardView)view.findViewById(R.id.cardView);
+                if (selectedPosition == -1) {
+                    selectedPosition = getAdapterPosition();
+                    mPresenter.setSelectedPatient(patientList.get(selectedPosition));
+                    cardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.patient_selected_highlight));
+                } else if(selectedPosition == getAdapterPosition()){
+                    selectedPosition = -1;
+                    mPresenter.removeSelectedPatient();
+                    cardView.setCardBackgroundColor(Color.WHITE);
+                } else {
+                    ToastUtil.notify("You can select only one similar patient");
                 }
             });
         }

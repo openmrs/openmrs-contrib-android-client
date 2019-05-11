@@ -20,7 +20,7 @@ public class Results<T> implements Serializable {
 
     @SerializedName("results")
     @Expose
-    private List<T> results = new ArrayList<T>();
+    private List<T> results = new ArrayList<>();
 
     @SerializedName("links")
     @Expose

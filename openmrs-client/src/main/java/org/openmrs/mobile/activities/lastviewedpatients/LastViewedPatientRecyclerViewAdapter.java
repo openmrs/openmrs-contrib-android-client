@@ -41,6 +41,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -87,8 +88,9 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         notifyItemRemoved(getItemCount());
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if( viewType == VIEW_TYPE_ITEM ) {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_last_viewed_patients_row, parent, false);
             FontsUtil.setFont((ViewGroup) itemView);
@@ -106,7 +108,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof PatientViewHolder) {
             final Patient patient = patients.get(position);
 
@@ -146,7 +148,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     }
 
     @Override
-    public void onViewDetachedFromWindow(RecyclerView.ViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull RecyclerView.ViewHolder holder) {
         if (holder instanceof PatientViewHolder) {
             ((PatientViewHolder) holder).clearAnimation();
         }
@@ -332,13 +334,10 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             holder.mAvailableOfflineCheckbox.setVisibility(View.VISIBLE);
             holder.mAvailableOfflineCheckbox.setButtonDrawable(R.drawable.ic_download);
             holder.mAvailableOfflineCheckbox.setText(mContext.getString(R.string.find_patients_row_checkbox_download_label));
-            holder.mAvailableOfflineCheckbox.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!isLongClicked && ((CheckBox) v).isChecked()) {
-                        downloadPatient(patient, true);
-                        disableCheckBox(holder);
-                    }
+            holder.mAvailableOfflineCheckbox.setOnClickListener(view -> {
+                if (!isLongClicked && ((CheckBox) view).isChecked()) {
+                    downloadPatient(patient, true);
+                    disableCheckBox(holder);
                 }
             });
         }

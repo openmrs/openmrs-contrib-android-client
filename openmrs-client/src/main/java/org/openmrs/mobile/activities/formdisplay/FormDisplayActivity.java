@@ -132,18 +132,8 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
         mBtnNext = (Button) findViewById(R.id.btn_next);
         mBtnFinish = (Button) findViewById(R.id.btn_finish);
 
-        mBtnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1);
-            }
-        });
-        mBtnFinish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.createEncounter();
-            }
-        });
+        mBtnNext.setOnClickListener(view -> mViewPager.setCurrentItem(mViewPager.getCurrentItem()+1));
+        mBtnFinish.setOnClickListener(view -> mPresenter.createEncounter());
         mViewPager = (ViewPager) findViewById(R.id.container);
 
         mViewPager.setAdapter(formPageAdapter);
@@ -212,5 +202,5 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
         String[] parts = fragmentTag.split(":");
         return Integer.parseInt(parts[3]);
     }
-
+    
 }

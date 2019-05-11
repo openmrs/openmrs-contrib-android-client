@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.settings;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRecyclerViewAdapter.SettingsViewHolder> {
@@ -38,25 +40,31 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
         this.mItems = items;
     }
 
+    @NonNull
     @Override
-    public SettingsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SettingsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_settings_row, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new SettingsViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(SettingsViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull SettingsViewHolder holder, int position) {
         holder.mTitle.setText(mItems.get(position).getTitle());
 
         if (position==0){
-            holder.mRowLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(v.getContext() , LogsActivity.class);
-                        v.getContext().startActivity(i);
-                        }
+            holder.mRowLayout.setOnClickListener(view -> {
+                Intent i = new Intent(view.getContext() , LogsActivity.class);
+                view.getContext().startActivity(i);
                 });
+        }
+        if (position == 2) {
+            holder.mRowLayout.setOnClickListener(view -> {
+                // start browser and redirect to Privacy Policy URL
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(view.getContext().getString(R.string.url_privacy_policy)));
+                view.getContext().startActivity(i);
+            });
         }
 
         if (mItems.get(position).getDesc1() != null) {
@@ -76,7 +84,7 @@ public class SettingsRecyclerViewAdapter extends RecyclerView.Adapter<SettingsRe
     }
 
     @Override
-    public void onViewDetachedFromWindow(SettingsViewHolder holder) {
+    public void onViewDetachedFromWindow(@NonNull SettingsViewHolder holder) {
         holder.clearAnimation();
     }
 

@@ -65,7 +65,7 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
 
 
     private List<ViewGroup> generateChildLayouts() {
-        List<ViewGroup> layouts = new ArrayList<ViewGroup>();
+        List<ViewGroup> layouts = new ArrayList<>();
         LayoutInflater inflater = LayoutInflater.from(mContext);
 
         for (String vitalName : this.mVitalNameList) {
@@ -75,28 +75,25 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
                 Iterator<String> dates = chartData.keys();
                 ArrayList<String> dateList = Lists.newArrayList(dates);
                 //Sorting the date
-                Collections.sort(dateList, new Comparator<String>() {
-                    @Override
-                    public int compare(String lhs, String rhs) {
-                        if (DateUtils.getDateFromString(lhs).getTime() < DateUtils.getDateFromString(rhs).getTime())
-                            return -1;
-                        else if (DateUtils.getDateFromString(lhs).getTime() == DateUtils.getDateFromString(rhs).getTime())
-                            return 0;
-                        else
-                            return 1;
-                    }
+                Collections.sort(dateList, (lhs, rhs) -> {
+                    if (DateUtils.getDateFromString(lhs).getTime() < DateUtils.getDateFromString(rhs).getTime())
+                        return -1;
+                    else if (DateUtils.getDateFromString(lhs).getTime() == DateUtils.getDateFromString(rhs).getTime())
+                        return 0;
+                    else
+                        return 1;
                 });
                 for (Integer j = 0; j < dateList.size(); j++) {
                     JSONArray dataArray = chartData.getJSONArray(dateList.get(j));
                     LineChart chart = (LineChart) convertView.findViewById(R.id.linechart);
-                    List<Entry> entries = new ArrayList<Entry>();
+                    List<Entry> entries = new ArrayList<>();
                     for (Integer i = 0; i < dataArray.length(); i++) {
                         entries.add(new Entry(j, Float.parseFloat((String) dataArray.get(i))));
                     }
                     LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
                     dataSet.setCircleColor(R.color.green);
                     dataSet.setValueTextSize(12);
-                    List<ILineDataSet> ILdataSet = new ArrayList<ILineDataSet>();
+                    List<ILineDataSet> ILdataSet = new ArrayList<>();
                     ILdataSet.add(dataSet);
                     dateList.add(DateUtils.getCurrentDateTime());
                     LineData lineData = new LineData(ILdataSet);

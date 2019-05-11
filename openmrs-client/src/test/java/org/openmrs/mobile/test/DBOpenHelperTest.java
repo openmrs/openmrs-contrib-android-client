@@ -67,9 +67,7 @@ public class DBOpenHelperTest {
         verify(sqLiteDatabase, atLeastOnce()).execSQL(argumentCaptor.capture());
 
         List<String> executedQueries = argumentCaptor.getAllValues();
-        createTableQueries.forEach(query -> {
-            assertThat(executedQueries, hasItem(query));
-        });
+        createTableQueries.forEach(query -> assertThat(executedQueries, hasItem(query)));
     }
 
     @Test

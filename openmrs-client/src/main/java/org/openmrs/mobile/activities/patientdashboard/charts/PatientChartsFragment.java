@@ -41,6 +41,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 
@@ -59,7 +60,7 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_patient_charts, null, false);
 
         mEmptyListView = (TextView) root.findViewById(R.id.vitalEmpty);
@@ -68,20 +69,17 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
         mListView.setEmptyView(mEmptyListView);
         setEmptyListVisibility(false);
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), ChartsViewActivity.class);
-                Bundle mBundle = new Bundle();
-                String vitalName = chartsListAdapter.getItem(position);
-                try {
-                    mBundle.putString("vitalName", observationList.getJSONObject(vitalName).toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                intent.putExtra("bundle", mBundle);
-                startActivity(intent);
+        mListView.setOnItemClickListener((parent, view, position, id) -> {
+            Intent intent = new Intent(getActivity(), ChartsViewActivity.class);
+            Bundle mBundle = new Bundle();
+            String vitalName = chartsListAdapter.getItem(position);
+            try {
+                mBundle.putString("vitalName", observationList.getJSONObject(vitalName).toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+            intent.putExtra("bundle", mBundle);
+            startActivity(intent);
         });
         return root;
     }

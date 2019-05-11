@@ -14,8 +14,11 @@
 
 package org.openmrs.mobile.activities;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -70,6 +73,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     private MenuItem mSyncbutton;
     private List<String> locationList;
     private Snackbar snackbar;
+    private IntentFilter mIntentFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,8 +90,16 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 showAppCrashDialog(errorReport);
             }
         }
+        mIntentFilter = new IntentFilter();
+        mIntentFilter.addAction(ApplicationConstants.BroadcastActions.AUTHENTICATION_CHECK_BROADCAST_ACTION);
     }
 
+    private BroadcastReceiver mPasswordChangedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            showCredentialChangedDialog();
+        }
+    };
 
     @Override
     protected void onResume() {
@@ -96,11 +108,15 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         if (!(this instanceof LoginActivity) && !mAuthorizationManager.isUserLoggedIn()) {
             mAuthorizationManager.moveToLoginActivity();
         }
+        registerReceiver(mPasswordChangedReceiver, mIntentFilter);
+        ToastUtil.setAppVisible(true);
     }
 
     @Override
     protected void onPause() {
+        unregisterReceiver(mPasswordChangedReceiver);
         super.onPause();
+        ToastUtil.setAppVisible(false);
     }
 
     @Override
@@ -161,10 +177,10 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
                     getApplicationContext().sendBroadcast(intent);
                     ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.reconn_server);
-                    if (PatientDetailsFragment.snackbar != null)
-                        PatientDetailsFragment.snackbar.dismiss();
                     if (snackbar != null)
                         snackbar.dismiss();
+                    ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.connected_to_server_message);
+
                 } else {
                     showNoInternetConnectionSnackbar();
                 }
@@ -204,7 +220,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         };
     }
 
-    private void showNoInternetConnectionSnackbar() {
+    public void showNoInternetConnectionSnackbar() {
         snackbar = Snackbar.make(findViewById(android.R.id.content),
                 getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
         View sbView = snackbar.getView();
@@ -216,7 +232,20 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     public void logout() {
         mOpenMRS.clearUserPreferencesData();
         mAuthorizationManager.moveToLoginActivity();
+        ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.logout_success);
         OpenMRSDBOpenHelper.getInstance().closeDatabases();
+    }
+
+    private void showCredentialChangedDialog() {
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.credentials_changed_dialog_title));
+        bundle.setTextViewMessage(getString(R.string.credentials_changed_dialog_message));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.LOGOUT);
+        bundle.setRightButtonText(getString(R.string.ok));
+        mCustomFragmentDialog = CustomFragmentDialog.newInstance(bundle);
+        mCustomFragmentDialog.setCancelable(false);
+        mCustomFragmentDialog.setRetainInstance(true);
+        mCustomFragmentDialog.show(mFragmentManager, ApplicationConstants.DialogTAG.CREDENTIAL_CHANGED_DIALOG_TAG);
     }
 
     private void showLogoutDialog() {
@@ -323,30 +352,19 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         alertDialogBuilder
                 .setMessage(R.string.crash_dialog_message)
                 .setCancelable(false)
-                .setPositiveButton(R.string.crash_dialog_positive_button, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                })
-                .setNegativeButton(R.string.crash_dialog_negative_button, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finishAffinity();
-                    }
-                })
-                .setNeutralButton(R.string.crash_dialog_neutral_button, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        String filename = OpenMRS.getInstance().getOpenMRSDir()
-                                + File.separator + mOpenMRSLogger.getLogFilename();
-                        Intent email = new Intent(Intent.ACTION_SEND);
-                        email.putExtra(Intent.EXTRA_SUBJECT, R.string.error_email_subject_app_crashed);
-                        email.putExtra(Intent.EXTRA_TEXT, error);
-                        email.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + filename));
-                        //need this to prompts email client only
-                        email.setType("message/rfc822");
+                .setPositiveButton(R.string.crash_dialog_positive_button, (dialog, id) -> dialog.cancel())
+                .setNegativeButton(R.string.crash_dialog_negative_button, (dialog, id) -> finishAffinity())
+                .setNeutralButton(R.string.crash_dialog_neutral_button, (dialog, id) -> {
+                    String filename = OpenMRS.getInstance().getOpenMRSDir()
+                            + File.separator + mOpenMRSLogger.getLogFilename();
+                    Intent email = new Intent(Intent.ACTION_SEND);
+                    email.putExtra(Intent.EXTRA_SUBJECT, R.string.error_email_subject_app_crashed);
+                    email.putExtra(Intent.EXTRA_TEXT, error);
+                    email.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + filename));
+                    //need this to prompts email client only
+                    email.setType("message/rfc822");
 
-                        startActivity(Intent.createChooser(email, getString(R.string.choose_a_email_client)));
-                    }
+                    startActivity(Intent.createChooser(email, getString(R.string.choose_a_email_client)));
                 });
 
         AlertDialog alertDialog = alertDialogBuilder.create();

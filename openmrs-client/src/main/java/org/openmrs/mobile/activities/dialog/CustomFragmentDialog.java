@@ -56,6 +56,7 @@ import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
@@ -116,7 +117,7 @@ public class CustomFragmentDialog extends DialogFragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.mInflater = inflater;
         View dialogLayout = mInflater.inflate(R.layout.fragment_dialog_layout, null, false);
         this.mFieldsLayout = (LinearLayout) dialogLayout.findViewById(R.id.dialogForm);
@@ -168,24 +169,21 @@ public class CustomFragmentDialog extends DialogFragment {
     }
 
     public final void setOnBackListener() {
-        getDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
-            @Override
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK && getActivity().getClass().equals(LoginActivity.class)) {
-                    if (OpenMRS.getInstance().getServerUrl().equals(ApplicationConstants.EMPTY_STRING)) {
-                        OpenMRS.getInstance().getOpenMRSLogger().d("Exit application");
-                        getActivity().onBackPressed();
-                        dismiss();
-                    } else {
-                        ((LoginFragment) getActivity()
-                                .getSupportFragmentManager()
-                                .findFragmentById(R.id.loginContentFrame))
-                                .hideURLDialog();
-                        dismiss();
-                    }
+        getDialog().setOnKeyListener((dialog, keyCode, event) -> {
+            if (keyCode == KeyEvent.KEYCODE_BACK && getActivity().getClass().equals(LoginActivity.class)) {
+                if (OpenMRS.getInstance().getServerUrl().equals(ApplicationConstants.EMPTY_STRING)) {
+                    OpenMRS.getInstance().getOpenMRSLogger().d("Exit application");
+                    getActivity().onBackPressed();
+                    dismiss();
+                } else {
+                    ((LoginFragment) getActivity()
+                            .getSupportFragmentManager()
+                            .findFragmentById(R.id.loginContentFrame))
+                            .hideURLDialog();
+                    dismiss();
                 }
-                return false;
             }
+            return false;
         });
     }
 
@@ -289,7 +287,7 @@ public class CustomFragmentDialog extends DialogFragment {
         TextView textView = (TextView) field.findViewById(R.id.openmrsTextView);
         textView.setText(message);
         textView.setSingleLine(false);
-        FontsUtil.setFont(textView, FontsUtil.OpenFonts.OPEN_SANS_ITALIC);
+        
         if(null != mCustomDialogBundle.getLocationList()){
             textView.setTextSize(18);
         }
@@ -365,76 +363,73 @@ public class CustomFragmentDialog extends DialogFragment {
     }
 
     private View.OnClickListener onClickActionSolver(final OnClickAction action) {
-        return new View.OnClickListener() {
-            //CHECKSTYLE:OFF
-            @Override
-            public void onClick(View v) {
-                switch (action) {
-                    case DISMISS_URL_DIALOG:
-                        ((LoginFragment) getActivity()
-                                .getSupportFragmentManager()
-                                .findFragmentById(R.id.loginContentFrame))
-                                .hideURLDialog();
+        //CHECKSTYLE:OFF
+//CHECKSTYLE:ON
+        return view -> {
+            switch (action) {
+                case DISMISS_URL_DIALOG:
+                    ((LoginFragment) getActivity()
+                            .getSupportFragmentManager()
+                            .findFragmentById(R.id.loginContentFrame))
+                            .hideURLDialog();
+                    dismiss();
+                    break;
+                case LOGIN:
+                    ((LoginFragment) getActivity()
+                            .getSupportFragmentManager()
+                            .findFragmentById(R.id.loginContentFrame))
+                            .login(true);
+                    dismiss();
+                    break;
+                case DISMISS:
+                    dismiss();
+                    break;
+                case LOGOUT:
+                    ((ACBaseActivity) getActivity()).logout();
+                    dismiss();
+                    break;
+                case FINISH:
+                    getActivity().moveTaskToBack(true);
+                    android.os.Process.killProcess(android.os.Process.myPid());
+                    System.exit(1);
+                    break;
+                case INTERNET:
+                    getActivity().startActivity(new Intent(Settings.ACTION_SETTINGS));
+                    dismiss();
+                    break;
+                case UNAUTHORIZED:
+                    ((ACBaseActivity) getActivity()).moveUnauthorizedUserToLoginScreen();
+                    dismiss();
+                    break;
+                case END_VISIT:
+                    ((VisitDashboardActivity) getActivity()).mPresenter.endVisit();
+                    dismiss();
+                    break;
+                case START_VISIT:
+                    doStartVisitAction();
+                    dismiss();
+                    break;
+                case REGISTER_PATIENT:
+                    ((AddEditPatientActivity) getActivity()).mPresenter.registerPatient();
+                    dismiss();
+                    break;
+                case CANCEL_REGISTERING:
+                    ((AddEditPatientActivity) getActivity()).mPresenter.finishPatientInfoActivity();
+                    dismiss();
+                    break;
+                case DELETE_PATIENT:
+                    PatientDashboardActivity activity = (PatientDashboardActivity) getActivity();
+                    activity.mPresenter.deletePatient();
+                    dismiss();
+                    activity.finish();
+                    break;
+                case SELECT_LOCATION:
+                        mOpenMRS.setLocation(locationListView.getAdapter().getItem(locationListView.getCheckedItemPosition()).toString());
                         dismiss();
-                        break;
-                    case LOGIN:
-                        ((LoginFragment) getActivity()
-                                .getSupportFragmentManager()
-                                .findFragmentById(R.id.loginContentFrame))
-                                .login(true);
-                        dismiss();
-                        break;
-                    case DISMISS:
-                        dismiss();
-                        break;
-                    case LOGOUT:
-                        ((ACBaseActivity) getActivity()).logout();
-                        dismiss();
-                        break;
-                    case FINISH:
-                        getActivity().moveTaskToBack(true);
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                        System.exit(1);
-                        break;
-                    case INTERNET:
-                        getActivity().startActivity(new Intent(Settings.ACTION_SETTINGS));
-                        dismiss();
-                        break;
-                    case UNAUTHORIZED:
-                        ((ACBaseActivity) getActivity()).moveUnauthorizedUserToLoginScreen();
-                        dismiss();
-                        break;
-                    case END_VISIT:
-                        ((VisitDashboardActivity) getActivity()).mPresenter.endVisit();
-                        dismiss();
-                        break;
-                    case START_VISIT:
-                        doStartVisitAction();
-                        dismiss();
-                        break;
-                    case REGISTER_PATIENT:
-                        ((AddEditPatientActivity) getActivity()).mPresenter.registerPatient();
-                        dismiss();
-                        break;
-                    case CANCEL_REGISTERING:
-                        ((AddEditPatientActivity) getActivity()).mPresenter.finishPatientInfoActivity();
-                        dismiss();
-                        break;
-                    case DELETE_PATIENT:
-                        PatientDashboardActivity activity = (PatientDashboardActivity) getActivity();
-                        activity.mPresenter.deletePatient();
-                        dismiss();
-                        activity.finish();
-                        break;
-                    case SELECT_LOCATION:
-                            mOpenMRS.setLocation(locationListView.getAdapter().getItem(locationListView.getCheckedItemPosition()).toString());
-                            dismiss();
-                        break;
-                    default:
-                        break;
-                }
+                    break;
+                default:
+                    break;
             }
-            //CHECKSTYLE:ON
         };
     }
 

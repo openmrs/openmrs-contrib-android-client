@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-
-apply plugin: 'jacoco'
+apply plugin: 'jacoco-android'
 
 buildscript {
 
@@ -13,7 +12,6 @@ buildscript {
     dependencies {
         classpath 'com.github.triplet.gradle:play-publisher:1.1.5'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.8.2'
     }
 }
 
@@ -39,7 +37,7 @@ android {
         multiDexEnabled true
 
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 28
 
         testApplicationId "org.openmrs.mobile.test"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -59,13 +57,20 @@ android {
     }
 
     buildTypes {
-        debug {
-            testCoverageEnabled true
-        }
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             signingConfig signingConfigs.release
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def relativeRootDir = output.packageApplication.outputDirectory.toPath()
+                            .relativize(rootDir.toPath()).toFile()
+                    output.outputFileName = new File("$relativeRootDir/openmrs-client/release/",output.outputFile.name)
+                }
+            }
+        }
+        debug {
+            testCoverageEnabled true
         }
     }
 
@@ -108,7 +113,7 @@ dependencies {
     def support_version = '1.0.0-beta01'
     def room_version = "2.1.0-alpha04"
 
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.google.code.gson:gson:2.8.5'
     androidTestImplementation(
             'junit:junit:4.12',
             'androidx.test.ext:junit:1.0.0',
@@ -148,6 +153,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
     implementation 'org.mindrot:jbcrypt:0.4'
+    implementation 'com.hbb20:ccp:2.2.7'
     testImplementation(
             'org.mockito:mockito-core:1.10.19',
             'junit:junit:4.12',
@@ -170,28 +176,4 @@ play {
 
     serviceAccountEmail = System.getenv("PUBLISHER_ACCOUNT_ID")
     jsonFile = rootProject.file('google_play.json')
-}
-
-tasks.withType(Test) {
-    jacoco.includeNoLocationClasses = true
-}
-
-// Our merge report task. Refer to https://gist.github.com/f4ww4z/81a0a227af78b3137e05957826b84883
-
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
-
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-    def debugTree = fileTree(dir: "$project.buildDir/intermediates/classes/debug", excludes: fileFilter)
-    def mainSrc = "$project.projectDir/src/main/java"
-
-    sourceDirectories = files([mainSrc])
-    classDirectories = files([debugTree])
-    executionData = fileTree(dir: project.buildDir, includes: [
-            'jacoco/testDebugUnitTest.exec', 'outputs/code-coverage/connected/*coverage.ec'
-    ])
 }

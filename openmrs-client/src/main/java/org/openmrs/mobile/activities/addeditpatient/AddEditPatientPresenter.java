@@ -34,6 +34,7 @@ import org.openmrs.mobile.utilities.ViewUtils;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -229,7 +230,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             Call<Results<Module>> moduleCall = restApi.getModules(ApplicationConstants.API.FULL);
             moduleCall.enqueue(new Callback<Results<Module>>() {
                 @Override
-                public void onResponse(Call<Results<Module>> call, Response<Results<Module>> response) {
+                public void onResponse(@NonNull Call<Results<Module>> call, @NonNull Response<Results<Module>> response) {
                     if (response.isSuccessful()) {
                         if (ModuleUtils.isRegistrationCore1_7orAbove(response.body().getResults())) {
                             fetchSimilarPatientsFromServer(patient);
@@ -242,7 +243,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
                 }
 
                 @Override
-                public void onFailure(Call<Results<Module>> call, Throwable t) {
+                public void onFailure(@NonNull Call<Results<Module>> call, @NonNull Throwable t) {
                     registeringPatient = false;
                     mPatientInfoView.setProgressBarVisibility(false);
                     ToastUtil.error(t.getMessage());
@@ -262,7 +263,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         Call<Results<Patient>> call = restApi.getPatients(patient.getPerson().getName().getGivenName(), ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
-            public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
+            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
                 registeringPatient = false;
                 if (response.isSuccessful()) {
                     List<Patient> patientList = response.body().getResults();
@@ -284,7 +285,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             }
 
             @Override
-            public void onFailure(Call<Results<Patient>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
                 registeringPatient = false;
                 mPatientInfoView.setProgressBarVisibility(false);
                 ToastUtil.error(t.getMessage());
@@ -296,7 +297,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         Call<Results<Patient>> call = restApi.getSimilarPatients(patient.toMap());
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
-            public void onResponse(Call<Results<Patient>> call, Response<Results<Patient>> response) {
+            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
                 registeringPatient = false;
                 if (response.isSuccessful()) {
                     List<Patient> similarPatients = response.body().getResults();
@@ -312,7 +313,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             }
 
             @Override
-            public void onFailure(Call<Results<Patient>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
                 registeringPatient = false;
                 mPatientInfoView.setProgressBarVisibility(false);
                 ToastUtil.error(t.getMessage());

@@ -34,7 +34,7 @@ public class FormResource extends Model implements Serializable{
 
     @SerializedName("resources")
     @Expose
-    private List<FormResource> resources = new ArrayList<FormResource>();
+    private List<FormResource> resources = new ArrayList<>();
 
     @Column(name = "resources")
     private String resourcelist;
@@ -57,7 +57,7 @@ public class FormResource extends Model implements Serializable{
     @Column(name = "links")
     @SerializedName("links")
     @Expose
-    private List<Link> links = new ArrayList<Link>();
+    private List<Link> links = new ArrayList<>();
 
     private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
     private Type formResourceListType = new TypeToken<List<FormResource>>(){}.getType();

@@ -52,7 +52,7 @@ public class PatientDashboardDiagnosisPresenter extends PatientDashboardMainPres
     }
 
     private List<String> getAllDiagnosis(List<Encounter> encounters) {
-        List<String> diagnosis = new ArrayList<String>();
+        List<String> diagnosis = new ArrayList<>();
 
         for (Encounter encounter : encounters) {
             for (Observation obs : encounter.getObservations()) {
@@ -76,9 +76,7 @@ public class PatientDashboardDiagnosisPresenter extends PatientDashboardMainPres
         addSubscription(
                 encounterDAO.getAllEncountersByType(mPatient.getId(), new EncounterType(EncounterType.VISIT_NOTE))
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(encounters -> {
-                            mPatientDiagnosisView.setDiagnosesToDisplay(getAllDiagnosis(encounters));
-                        }));
+                        .subscribe(encounters -> mPatientDiagnosisView.setDiagnosesToDisplay(getAllDiagnosis(encounters))));
     }
 
 }

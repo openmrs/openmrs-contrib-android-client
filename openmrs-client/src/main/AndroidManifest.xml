@@ -17,8 +17,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
@@ -30,7 +28,7 @@
 
     <application
         android:name=".application.OpenMRS"
-        android:allowBackup="false"
+        android:allowBackup="true"
         android:icon="@drawable/ic_openmrs"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -102,6 +100,7 @@
             android:theme="@style/AppThemeOrig" />
         <activity
             android:name=".activities.patientdashboard.PatientDashboardActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppThemeOrig">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
@@ -181,11 +180,14 @@
         <service
             android:name=".api.FormListService"
             android:enabled="true" />
+        <service android:name=".services.AuthenticateCheckService"
+            android:enabled="true"/>
 
         <activity
             android:name=".activities.formdisplay.FormDisplayActivity"
             android:label="@string/title_activity_form_create"
             android:parentActivityName=".activities.formlist.FormListActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

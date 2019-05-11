@@ -33,6 +33,7 @@ import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.FormResource;
 import org.openmrs.mobile.models.Link;
 import org.openmrs.mobile.models.Obscreate;
+import org.openmrs.mobile.services.AuthenticateCheckService;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.io.File;
@@ -61,8 +62,10 @@ public class OpenMRS extends Application {
         OpenMRSDBOpenHelper.init();
         initializeDB();
 
-        Intent i=new Intent(this,FormListService.class);
+        Intent i = new Intent(this, FormListService.class);
         startService(i);
+        Intent intent = new Intent(this, AuthenticateCheckService.class);
+        startService(intent);
     }
 
     protected void initializeDB() {
@@ -258,13 +261,13 @@ public class OpenMRS extends Application {
 
     public Map<String, String> getCurrentLoggedInUserInfo() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
-        Map<String, String> infoMap = new HashMap<String, String>();
+        Map<String, String> infoMap = new HashMap<>();
         infoMap.put(ApplicationConstants.UserKeys.USER_PERSON_NAME, prefs.getString(ApplicationConstants.UserKeys.USER_PERSON_NAME, ApplicationConstants.EMPTY_STRING));
         infoMap.put(ApplicationConstants.UserKeys.USER_UUID, prefs.getString(ApplicationConstants.UserKeys.USER_UUID, ApplicationConstants.EMPTY_STRING));
         return infoMap;
     }
 
-    private void clearCurrentLoggedInUserInfo() {
+    public void clearCurrentLoggedInUserInfo() {
         SharedPreferences prefs = OpenMRS.getInstance().getOpenMRSSharedPreferences();
         SharedPreferences.Editor editor = prefs.edit();
         editor.remove(ApplicationConstants.UserKeys.USER_PERSON_NAME);
@@ -278,10 +281,6 @@ public class OpenMRS extends Application {
 
     public String getOpenMRSDir() {
         return mExternalDirectoryPath + OPENMRS_DIR_PATH;
-    }
-
-    public boolean isRunningJellyBeanVersionOrHigher() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
     }
 
     public boolean isRunningKitKatVersionOrHigher() {

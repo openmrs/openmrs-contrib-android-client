@@ -20,6 +20,7 @@
     <string name="dbname">openmrs.db</string>
     <string name="aadbname">aaopenmrs.db</string>
 
+    <string name="alphanumeric_postal_code">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 </string>
 
     <!-- Login view -->
     <string name="login_button">Login</string>
@@ -105,6 +106,9 @@
     <string name="logout_dialog_title">Logging out</string>
     <string name="logout_dialog_message">Are you sure you want to logout from OpenMRS client?</string>
     <string name="logout_dialog_button">Logout</string>
+    <!--Credentials Changed dialog-->
+    <string name="credentials_changed_dialog_title">Credentials changed</string>
+    <string name="credentials_changed_dialog_message">Your credentials have been changed in the web app. You are logged out automatically.</string>
     <!-- Unauthorized dialog -->
     <string name="unauthorized_dialog_title">Unauthorized</string>
     <string name="unauthorized_dialog_message">Session expired. Please log in again.</string>
@@ -140,7 +144,6 @@
     <string name="dialog_button_register_new">Register new</string>
     <string name="dialog_button_merge">Merge</string>
     <string name="action_next">Next</string>
-    <string name="action_submit">Submit</string>
     <string name="action_register">Register Patient</string>
     <string name="dialog_button_select_location">Select Location</string>
 
@@ -150,6 +153,7 @@
     <string name="settings_application_info">Application Info</string>
     <string name="settings_concepts_info">Concepts Info</string>
     <string name="settings_concepts_in_db">Concepts in DB:</string>
+    <string name="settings_no_concepts_toast">There are no concepts in DB!</string>
 
     <!-- FindPatients activity -->
     <string name="action_find_patients">Find Patients</string>
@@ -334,9 +338,17 @@
     <!-- Syncbutton toasts -->
     <string name="disconn_server">Disconnecting from server</string>
     <string name="reconn_server">Reconnecting to server</string>
+    <string name="connected_to_server_message">You are now connected!</string>
 
     <string name="dialog_title_are_you_sure">Are you sure?</string>
     <string name="dialog_message_data_lost">All patient information entered will be lost.</string>
     <string name="dialog_button_stay">Stay</string>
     <string name="dialog_button_leave">Leave</string>
+    <string name="snackbar_nonvisitting_patients">Vitals can only be captured for patients currently in a visit.</string>
+
+    <string name="logout_success">Logged out successfully!</string>
+    <string name="url_privacy_policy">https://github.com/openmrs/openmrs-contrib-android-client/blob/master/privacy_policy.md</string>
+    <string name="settings_privacy_policy">Privacy Policy</string>
+
+    <string name="action_submit">Submit</string>
 </resources>

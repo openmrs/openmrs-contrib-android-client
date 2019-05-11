@@ -29,6 +29,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 
+import androidx.annotation.NonNull;
+
 
 public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> implements LogsContract.View {
 
@@ -36,7 +38,7 @@ public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> impleme
     private FloatingActionButton fab;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_logs, container, false);
 
@@ -51,26 +53,17 @@ public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> impleme
 
     public void fabCopyAll(String textLogs) {
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setClipboard(getContext(), textLogs);
-                Toast.makeText(getContext(), "Logs copied to clipboard",
-                        Toast.LENGTH_SHORT).show();
-            }
+        fab.setOnClickListener(view -> {
+            setClipboard(getContext(), textLogs);
+            Toast.makeText(getContext(), "Logs copied to clipboard",
+                    Toast.LENGTH_SHORT).show();
         });
     }
 
-    @SuppressWarnings("deprecation")
     private void setClipboard(Context context, String text) {
-        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-            android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            clipboard.setText(text);
-        } else {
-            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
-            clipboard.setPrimaryClip(clip);
-        }
+        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
+        clipboard.setPrimaryClip(clip);
     }
 
     public static LogsFragment newInstance() {

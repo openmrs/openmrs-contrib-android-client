@@ -44,6 +44,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.Presenter.PagePresenter> implements FormDisplayContract.View.PageView {
@@ -57,7 +58,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_form_display, container, false);
         getActivity().getWindow().setSoftInputMode(
@@ -68,7 +69,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         FormFieldsWrapper formFieldsWrapper = new FormFieldsWrapper(getInputFields(), getSelectOneFields());
         outState.putSerializable(ApplicationConstants.BundleKeys.FORM_FIELDS_BUNDLE, formFieldsWrapper);
         super.onSaveInstanceState(outState);
@@ -80,7 +81,13 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
         if (savedInstanceState != null) {
             FormFieldsWrapper formFieldsWrapper = (FormFieldsWrapper) savedInstanceState.getSerializable(ApplicationConstants.BundleKeys.FORM_FIELDS_BUNDLE);
             inputFields = formFieldsWrapper.getInputFields();
+
             for(InputField field:inputFields){
+                View v = getActivity().findViewById(field.getId());
+                if(v != null && v instanceof DiscreteSeekBar) {
+                    DiscreteSeekBar sb = (DiscreteSeekBar) v;
+                    sb.setProgress(field.getValue().intValue());
+                }
                 if(field.isRed()){
                     RangeEditText ed = (RangeEditText) getActivity().findViewById(field.getId());
                     ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
@@ -267,13 +274,10 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
     }
 
     private void setOnCheckedChangeListener(RadioGroup radioGroup, final SelectOneField radioGroupField) {
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                View radioButton = radioGroup.findViewById(i);
-                int idx = radioGroup.indexOfChild(radioButton);
-                radioGroupField.setAnswer(idx);
-            }
+        radioGroup.setOnCheckedChangeListener((radioGroup1, i) -> {
+            View radioButton = radioGroup1.findViewById(i);
+            int idx = radioGroup1.indexOfChild(radioButton);
+            radioGroupField.setAnswer(idx);
         });
     }
 

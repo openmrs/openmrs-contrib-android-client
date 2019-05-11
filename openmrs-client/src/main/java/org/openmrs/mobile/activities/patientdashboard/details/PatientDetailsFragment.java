@@ -17,7 +17,6 @@ package org.openmrs.mobile.activities.patientdashboard.details;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,9 +27,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
@@ -44,13 +43,13 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.ByteArrayOutputStream;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class PatientDetailsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDetails {
 
     private View rootView;
     private PatientDashboardActivity mPatientDashboardActivity;
-    public static Snackbar snackbar;
 
     public static PatientDetailsFragment newInstance() {
         return new PatientDetailsFragment();
@@ -58,12 +57,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
     @Override
     public void attachSnackbarToActivity() {
-        snackbar = Snackbar
-                .make(mPatientDashboardActivity.findViewById(R.id.patientDashboardContentFrame), getString(R.string.snackbar_no_internet_connection), Snackbar.LENGTH_INDEFINITE);
-        View view = snackbar.getView();
-        TextView tv = (TextView) view.findViewById(com.google.android.material.R.id.snackbar_text);
-        tv.setTextColor(Color.WHITE);
-        snackbar.show();
+        ((ACBaseActivity) getActivity()).showNoInternetConnectionSnackbar();
     }
 
     @Override
@@ -102,7 +96,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_patient_details, null, false);
         FontsUtil.setFont((ViewGroup) rootView);
         return rootView;
@@ -123,12 +117,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
             final Bitmap photo = patient.getPerson().getResizedPhoto();
             final String patientName = patient.getPerson().getName().getNameString();
             patientImageView.setImageBitmap(photo);
-            patientImageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showPatientPhoto(photo, patientName);
-                }
-            });
+            patientImageView.setOnClickListener(view -> showPatientPhoto(photo, patientName));
         }
 
         ((TextView) rootView.findViewById(R.id.patientDetailsName)).setText(patient.getPerson().getName().getNameString());

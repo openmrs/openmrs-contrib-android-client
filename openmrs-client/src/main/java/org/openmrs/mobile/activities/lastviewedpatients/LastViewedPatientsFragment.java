@@ -39,6 +39,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,7 +58,7 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_last_viewed_patients, container, false);
         mPatientsRecyclerView = ((RecyclerView) root.findViewById(R.id.lastViewedPatientRecyclerView));
@@ -66,22 +67,19 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
         progressBar = (ProgressBar) root.findViewById(R.id.patientRecyclerViewLoading);
         mEmptyList = (TextView) root.findViewById(R.id.emptyLastViewedPatientList);
         mSwipeRefreshLayout = ((SwipeRefreshLayout) root.findViewById(R.id.swiperefreshLastPatients));
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (NetworkUtils.hasNetwork()) {
-                    mPresenter.refresh();
-                    mAdapter.finishActionMode();
-                }else {
-                    ToastUtil.error("No Internet Connection");
-                    getActivity().finish();
-                }
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            if (NetworkUtils.hasNetwork()) {
+                mPresenter.refresh();
+                mAdapter.finishActionMode();
+            }else {
+                ToastUtil.error("No Internet Connection");
+                getActivity().finish();
             }
         });
 
         mPatientsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (!recyclerView.canScrollVertically(1)) {
                     mPresenter.loadMorePatients();
@@ -92,7 +90,7 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         if (mAdapter != null) {
             mPresenter.onSaveInstanceState(outState);
@@ -178,12 +176,7 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
         View sbView = snackbar.getView();
         TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
-        snackbar.setAction(getResources().getString(R.string.snackbar_action_open), new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openPatientDashboardActivity(patientId);
-            }
-        });
+        snackbar.setAction(getResources().getString(R.string.snackbar_action_open), view -> openPatientDashboardActivity(patientId));
         snackbar.show();
     }
 

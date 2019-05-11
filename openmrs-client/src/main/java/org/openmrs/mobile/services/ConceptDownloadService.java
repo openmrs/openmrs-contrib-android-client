@@ -21,6 +21,7 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -55,13 +56,16 @@ public class ConceptDownloadService extends Service {
                 ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<SystemSetting>>() {
             @Override
-            public void onResponse(Call<Results<SystemSetting>> call, Response<Results<SystemSetting>> response) {
+            public void onResponse(@NonNull Call<Results<SystemSetting>> call, @NonNull Response<Results<SystemSetting>> response) {
                 if (response.isSuccessful()) {
-                    List<SystemSetting> results = response.body().getResults();
-                    if (results.size() >= 1) {
-                        String value = results.get(0).getValue();
-                        if (value != null) {
-                            maxConceptsInOneQuery = Integer.parseInt(value);
+                    List<SystemSetting> results = null;
+                    if (response.body() != null) {
+                        results = response.body().getResults();
+                        if (results.size() >= 1) {
+                            String value = results.get(0).getValue();
+                            if (value != null) {
+                                maxConceptsInOneQuery = Integer.parseInt(value);
+                            }
                         }
                     }
                 }
@@ -69,7 +73,7 @@ public class ConceptDownloadService extends Service {
             }
 
             @Override
-            public void onFailure(Call<Results<SystemSetting>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Results<SystemSetting>> call, @NonNull Throwable t) {
                 downloadConcepts(0);
             }
         });
@@ -103,23 +107,27 @@ public class ConceptDownloadService extends Service {
         Call<Results<Concept>> call = service.getConcepts(maxConceptsInOneQuery, startIndex);
         call.enqueue(new Callback<Results<Concept>>() {
             @Override
-            public void onResponse(Call<Results<Concept>> call, Response<Results<Concept>> response) {
+            public void onResponse(@NonNull Call<Results<Concept>> call, @NonNull Response<Results<Concept>> response) {
                 if (response.isSuccessful()) {
                     ConceptDAO conceptDAO = new ConceptDAO();
-                    for (Concept concept : response.body().getResults()) {
-                        conceptDAO.saveOrUpdate(concept);
-                        downloadedConcepts++;
+                    if (response.body() != null) {
+                        for (Concept concept : response.body().getResults()) {
+                            conceptDAO.saveOrUpdate(concept);
+                            downloadedConcepts++;
+                        }
                     }
 
                     showNotification(downloadedConcepts);
                     sendProgressBroadcast();
 
                     boolean isNextPage = false;
-                    for (Link link : response.body().getLinks()) {
-                        if ("next".equals(link.getRel())) {
-                            isNextPage = true;
-                            downloadConcepts(startIndex + maxConceptsInOneQuery);
-                            break;
+                    if (response.body() != null) {
+                        for (Link link : response.body().getLinks()) {
+                            if ("next".equals(link.getRel())) {
+                                isNextPage = true;
+                                downloadConcepts(startIndex + maxConceptsInOneQuery);
+                                break;
+                            }
                         }
                     }
                     if (!isNextPage) {
@@ -131,7 +139,7 @@ public class ConceptDownloadService extends Service {
             }
 
             @Override
-            public void onFailure(Call<Results<Concept>> call, Throwable t) {
+            public void onFailure(@NonNull Call<Results<Concept>> call, @NonNull Throwable t) {
                 stopSelf();
             }
         });

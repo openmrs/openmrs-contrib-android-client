@@ -39,7 +39,7 @@ public class Resource implements Serializable {
     @Ignore
     @SerializedName("links")
     @Expose
-    protected List<Link> links = new ArrayList<Link>();
+    protected List<Link> links = new ArrayList<>();
 
     @PrimaryKey(autoGenerate = true)
     @NonNull

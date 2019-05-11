@@ -55,7 +55,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
     private MenuItem mAddPatientMenuItem;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_synced_patients, container, false);
 
@@ -63,7 +63,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         mSyncedPatientRecyclerView = (RecyclerView) root.findViewById(R.id.syncedPatientRecyclerView);
         mSyncedPatientRecyclerView.setHasFixedSize(true);
         mSyncedPatientRecyclerView.setAdapter(new SyncedPatientsRecyclerViewAdapter(this,
-                new ArrayList<Patient>()));
+                new ArrayList<>()));
         mSyncedPatientRecyclerView.setVisibility(View.GONE);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
         mSyncedPatientRecyclerView.setLayoutManager(linearLayoutManager);

@@ -39,6 +39,7 @@ import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class PatientVitalsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientVitals {
@@ -59,7 +60,7 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_patient_vitals, null, false);
         mContent = (LinearLayout) root.findViewById(R.id.vitalsDetailsContent);
         mEmptyList = (TextView) root.findViewById(R.id.lastVitalsNoneLabel);
@@ -69,12 +70,7 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
         TextView lastVitalsLabel = (TextView) root.findViewById(R.id.lastVitalsLabel);
         ImageButton formEditIcon = (ImageButton) root.findViewById(R.id.form_edit_icon);
 
-        formEditIcon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((PatientDashboardVitalsPresenter) mPresenter).startFormDisplayActivityWithEncounter();
-            }
-        });
+        formEditIcon.setOnClickListener(view -> ((PatientDashboardVitalsPresenter) mPresenter).startFormDisplayActivityWithEncounter());
 
         this.mInflater = inflater;
 

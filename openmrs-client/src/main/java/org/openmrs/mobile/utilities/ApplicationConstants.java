@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.utilities;
 
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.models.EncounterType;
 
 public abstract class ApplicationConstants {
@@ -28,6 +29,7 @@ public abstract class ApplicationConstants {
     public static final String LAST_SESSION_TOKEN = "last_session_id";
     public static final String LAST_LOGIN_SERVER_URL = "last_login_server_url";
     public static final String DEFAULT_OPEN_MRS_URL = "https://demo.openmrs.org/openmrs";
+    public static final String DB_NAME ="openmrs.db";
     public static final String DB_PASSWORD_BCRYPT_PEPPER = "$2a$08$iUp3M1VapYpjcAXQBNX6uu";
     public static final String DB_PASSWORD_LITERAL_PEPPER = "Open Sesame";
     public static final String DEFAULT_VISIT_TYPE_UUID = "7b0f5697-27e3-40c4-8bae-f4049abfb4ed";

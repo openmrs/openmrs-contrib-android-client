@@ -16,12 +16,15 @@ package org.openmrs.mobile.activities.syncedpatients;
 
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.dao.VisitDAO;
+import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.FilterUtil;
 import org.openmrs.mobile.utilities.StringUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class SyncedPatientsPresenter extends BasePresenter implements SyncedPatientsContract.Presenter {
 
@@ -33,6 +36,13 @@ public class SyncedPatientsPresenter extends BasePresenter implements SyncedPati
     // Query for data filtering
     @Nullable
     private String mQuery;
+
+    public void deletePatient(Patient mPatient) {
+        new PatientDAO().deletePatient(mPatient.getId());
+        addSubscription(new VisitDAO().deleteVisitsByPatientId(mPatient.getId())
+                .observeOn(Schedulers.io())
+                .subscribe());
+    }
 
     public SyncedPatientsPresenter(@NonNull SyncedPatientsContract.View syncedPatientsView, String mQuery) {
         this.syncedPatientsView = syncedPatientsView;

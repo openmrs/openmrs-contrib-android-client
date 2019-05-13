@@ -47,6 +47,7 @@ import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.activities.login.LoginFragment;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.visits.PatientVisitsFragment;
+import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
@@ -54,7 +55,9 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -64,6 +67,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 /**
  * General class for creating dialog fragment instances
@@ -73,7 +77,7 @@ public class CustomFragmentDialog extends DialogFragment {
 
     public enum OnClickAction {
         SET_URL, SHOW_URL_DIALOG, DISMISS_URL_DIALOG, DISMISS, LOGOUT, FINISH, INTERNET, UNAUTHORIZED, END_VISIT,
-        START_VISIT, LOGIN, REGISTER_PATIENT, CANCEL_REGISTERING, DELETE_PATIENT,SELECT_LOCATION
+        START_VISIT, LOGIN, REGISTER_PATIENT, CANCEL_REGISTERING, DELETE_PATIENT,MULTI_DELETE_PATIENT, SELECT_LOCATION
     }
 
     protected LayoutInflater mInflater;
@@ -90,6 +94,8 @@ public class CustomFragmentDialog extends DialogFragment {
     protected EditText mEditText;
 
     private CustomDialogBundle mCustomDialogBundle;
+
+    private ArrayList<Patient> itemsToDelete = new ArrayList<>();
 
     protected final OpenMRS mOpenMRS = OpenMRS.getInstance();
 
@@ -250,6 +256,9 @@ public class CustomFragmentDialog extends DialogFragment {
         if(null != mCustomDialogBundle.getLocationList()){
           addSingleChoiceItemsListView(mCustomDialogBundle.getLocationList());
         }
+        if(null != mCustomDialogBundle.getSelectedItems()){
+            itemsToDelete = mCustomDialogBundle.getSelectedItems();
+        }
     }
 
     private RecyclerView addRecycleView(List<Patient> patientsList, Patient newPatient) {
@@ -364,7 +373,6 @@ public class CustomFragmentDialog extends DialogFragment {
 
     private View.OnClickListener onClickActionSolver(final OnClickAction action) {
         //CHECKSTYLE:OFF
-//CHECKSTYLE:ON
         return view -> {
             switch (action) {
                 case DISMISS_URL_DIALOG:
@@ -423,13 +431,25 @@ public class CustomFragmentDialog extends DialogFragment {
                     dismiss();
                     activity.finish();
                     break;
+                case MULTI_DELETE_PATIENT:
+                    SyncedPatientsActivity syncedPatientsActivity = (SyncedPatientsActivity) getActivity();
+                    for (Patient patientItem : itemsToDelete) {
+                        if (syncedPatientsActivity != null) {
+                            syncedPatientsActivity.mPresenter.deletePatient(patientItem);
+                        }
+                    }
+                    dismiss();
+                    Objects.requireNonNull(syncedPatientsActivity).finish();
+                    ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.SUCCESS, org.openmrs.mobile.R.string.multiple_patients_deleted);
+                    break;
                 case SELECT_LOCATION:
-                        mOpenMRS.setLocation(locationListView.getAdapter().getItem(locationListView.getCheckedItemPosition()).toString());
-                        dismiss();
+                    mOpenMRS.setLocation(locationListView.getAdapter().getItem(locationListView.getCheckedItemPosition()).toString());
+                    dismiss();
                     break;
                 default:
                     break;
             }
+            //CHECKSTYLE:ON
         };
     }
 

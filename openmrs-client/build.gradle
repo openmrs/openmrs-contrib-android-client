@@ -127,6 +127,7 @@ dependencies {
     )
 
     androidTestImplementation files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.guava:guava:23.0'
     implementation "androidx.appcompat:appcompat:$support_version"
     implementation "androidx.gridlayout:gridlayout:$support_version"

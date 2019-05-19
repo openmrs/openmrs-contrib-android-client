@@ -17,10 +17,15 @@ OpenMRS Android Client
 * [Demo Server](#demo-server)
 * [Releasing](#releasing)
 * [Release Notes](#release-notes)
-	* [Version 2.5](#version 2.5)
-	* [Version 2.4](#version 2.4)
+	* [Version 2.7.1](#version-2.7.1)
+	* [Version 2.7.0](#version-2.7.0)
+	* [Version 2.6.2](#version-2.6.2)
+	* [Version 2.6.1](#version-2.6.1)
+	* [Version 2.6.0](#version-2.6.0)
+	* [Version 2.5](#version-2.5)
+	* [Version 2.4](#version-2.4)
 * [Objectives](#objectives)
-	* [Version 2.6](#version 2.6)
+	* [Version 2.8](#version-2.8)
 * [User Manual](#user-manual)
 * [License](#license)
 * [Resources](#resources)
@@ -91,17 +96,58 @@ If you want to release a new major or minor version, please be sure to update th
 
 # Release Notes
 
-<a name="version 2.6"></a>
-### Version 2.6
+<a name="version-2.7.1"></a>
+### Version 2.7.1
+### Summary:
+1. Fixed bug on showing/hiding the password during login
+2. Visit Notes can now correctly show details
+3. Use Codecov as the code coverage tool
+4. Add privacy policy link to Settings page
+5. Re-developed OpenMRSLogger - faster loading times
+6. Most buttons now follow the material design guideline
+7. User is now taken back to the completed form on clicking cancel during registration
+8. Replace country selection with a country picker
+9. Setup Android Room and create entities
+10. Add Contextual Action Bar in Synced Patients to delete multiple patients at once
+
+<a name="version-2.7.0"></a>
+### Version 2.7.0
+### Summary: 
+1. Implement RxJava in DAOs and migration to AndroidX
+2. Pick patient photo when registering
+3. Login form improved and doesn't require login locations when no locations are configured
+4. Add data validation when registering patients
+5. Encrypted the database with BCrypt, derived from username and password
+6. Show toasts when toggling sync button and fixed crash when updating non-synced patient
+7. Saving user input when device is rotated, or when app instance is lost
+8. Added a Privacy Policy 
+9. Renewed GitHub API Key
+10. Set a Custom Path to look for the Release APK
+
+
+<a name="version-2.6.2"></a>
+### Version 2.6.2
 ### Summary:
 1. Add patient picture 
-2. More user-friendly register form
-3. Filter patients by given/middle/family names at the same time
-4. Get data from DB in background task
-5. Lint check to GitHub Pull Requests
-6. Fixed bugs
+2. Bug Fixes
 
-<a name="version 2.5"></a>
+<a name="version-2.6.1"></a>
+### Version 2.6.1
+### Summary:
+1. Handle camera and storage  permissions manually
+2. Bug Fixes
+
+<a name="version-2.6.0"></a>
+### Version 2.6.0
+### Summary:
+1. Fixed patient selection when changing orientation
+2. More user-friendly register form
+3. Added unit tests
+4. Filter patients by given/middle/family names at the same time
+5. Get data from DB in background task
+6. Lint check to GitHub Pull Requests
+
+<a name="version-2.5"></a>
 ### Version 2.5
 ### Summary:
 1. Log in offline
@@ -110,7 +156,7 @@ If you want to release a new major or minor version, please be sure to update th
 4. Edit patients
 5. Lots of bug fixes
 
-<a name="version 2.4"></a>
+<a name="version-2.4"></a>
 ### Version 2.4 
 ### Summary: 
 1. Added merging patients registered offline
@@ -119,13 +165,13 @@ If you want to release a new major or minor version, please be sure to update th
 
 # Objectives
 
-<a name="version 2.7"></a>
-### Version 2.7 (next release)
+<a name="version-2.8"></a>
+### Version 2.8 (next release)
 ### Goals: 
-1. Users can see and copy logs
-2. Unsubscription in presenters
-3. Infinite scrollability for last viewed patients activity
-4. Visualize progress dialog on a new visit
+1. Forgot Password
+2. Provider Module
+3. UI Improvements
+4. Analytics
 
 
 # User Manual

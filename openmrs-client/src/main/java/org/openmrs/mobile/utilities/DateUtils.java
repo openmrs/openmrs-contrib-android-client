@@ -30,6 +30,8 @@ import java.util.TimeZone;
 public final class DateUtils {
     public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
     public static final String DATE_WITH_TIME_FORMAT = "dd/MM/yyyy HH:mm";
+    public static final String FORMAT_DATE_OF_BIRTH = "d MMM yyyy";
+    public static final String FORMAT_DATE_OF_VISIT = "d MMM yyyy HH:mm";
 
     private static final String OPEN_MRS_RESPONSE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     public static final String OPEN_MRS_REQUEST_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
@@ -37,9 +39,7 @@ public final class DateUtils {
 
     public static final Long ZERO = 0L;
 
-    private DateUtils() {
-
-    }
+    private DateUtils() {}
 
     public static String convertTime(long time, String dateFormat, TimeZone timeZone) {
         Date date = new Date(time);
@@ -145,6 +145,11 @@ public final class DateUtils {
     public static String getCurrentDateTime() {
         DateFormat dateFormat = new SimpleDateFormat(OPEN_MRS_RESPONSE_FORMAT);
         Date date = new Date();
+        return dateFormat.format(date);
+    }
+
+    public static String formatString(Long date, String format) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format);
         return dateFormat.format(date);
     }
 

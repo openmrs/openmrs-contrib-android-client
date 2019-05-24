@@ -252,6 +252,7 @@
     <string name="no_vitals_recorded">No vitals recorded</string>
 
     <!-- Visit dashboard activity -->
+    <string name="action_visit_form">Open visit form</string>
     <string name="action_end_visit">End Visit</string>
     <string name="visit_dashboard_label">Encounters</string>
     <string name="list_visit_selector_show">show details</string>

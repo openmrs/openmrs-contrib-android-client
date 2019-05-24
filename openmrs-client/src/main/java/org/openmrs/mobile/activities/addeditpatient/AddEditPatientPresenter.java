@@ -17,7 +17,7 @@ package org.openmrs.mobile.activities.addeditpatient;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
-import org.openmrs.mobile.api.retrofit.PatientApi;
+import org.openmrs.mobile.api.retrofit.PatientRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.models.Module;
@@ -43,7 +43,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     private final AddEditPatientContract.View mPatientInfoView;
 
-    private PatientApi patientApi;
+    private PatientRepository patientApi;
     private RestApi restApi;
     private Patient mPatient;
     private String patientToUpdateId;
@@ -57,11 +57,11 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         this.mPatientInfoView.setPresenter(this);
         this.mCountries = countries;
         this.patientToUpdateId = patientToUpdateId;
-        this.patientApi = new PatientApi();
+        this.patientApi = new PatientRepository();
         this.restApi = RestServiceBuilder.createService(RestApi.class);
     }
 
-    public AddEditPatientPresenter(AddEditPatientContract.View mPatientInfoView, PatientApi patientApi,
+    public AddEditPatientPresenter(AddEditPatientContract.View mPatientInfoView, PatientRepository patientApi,
                                    Patient mPatient, String patientToUpdateId,
                                    List<String> mCountries, RestApi restApi) {
         this.mPatientInfoView = mPatientInfoView;

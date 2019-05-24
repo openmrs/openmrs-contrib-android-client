@@ -17,8 +17,8 @@ package org.openmrs.mobile.activities.patientdashboard.details;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
-import org.openmrs.mobile.api.retrofit.PatientApi;
-import org.openmrs.mobile.api.retrofit.VisitApi;
+import org.openmrs.mobile.api.retrofit.PatientRepository;
+import org.openmrs.mobile.api.retrofit.VisitRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
@@ -28,15 +28,15 @@ import org.openmrs.mobile.utilities.NetworkUtils;
 public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientDetailsPresenter {
 
     private PatientDashboardContract.ViewPatientDetails mPatientDetailsView;
-    private VisitApi visitApi;
-    private PatientApi patientApi;
+    private VisitRepository visitApi;
+    private PatientRepository patientApi;
     private PatientDAO patientDAO;
 
     public PatientDashboardDetailsPresenter(String id,
                                             PatientDashboardContract.ViewPatientDetails mPatientDetailsView) {
         this.mPatientDetailsView = mPatientDetailsView;
-        this.visitApi = new VisitApi();
-        this.patientApi = new PatientApi();
+        this.visitApi = new VisitRepository();
+        this.patientApi = new PatientRepository();
         this.patientDAO = new PatientDAO();
         this.mPatient = patientDAO.findPatientByID(id);
         this.mPatientDetailsView.setPresenter(this);
@@ -44,7 +44,7 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
 
     public PatientDashboardDetailsPresenter(Patient mPatient, PatientDAO patientDAO,
                                             PatientDashboardContract.ViewPatientDetails mPatientDetailsView,
-                                            VisitApi visitApi, PatientApi patientApi) {
+                                            VisitRepository visitApi, PatientRepository patientApi) {
         this.mPatientDetailsView = mPatientDetailsView;
         this.visitApi = visitApi;
         this.patientApi = patientApi;

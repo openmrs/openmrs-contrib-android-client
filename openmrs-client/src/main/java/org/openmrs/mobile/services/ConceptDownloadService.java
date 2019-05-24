@@ -104,7 +104,7 @@ public class ConceptDownloadService extends Service {
 
     private void downloadConcepts(int startIndex) {
         RestApi service = RestServiceBuilder.createService(RestApi.class);
-        Call<Results<Concept>> call = service.getConcepts(maxConceptsInOneQuery, startIndex);
+        Call<Results<Concept>> call = service.getConcepts(null, null, maxConceptsInOneQuery, startIndex);
         call.enqueue(new Callback<Results<Concept>>() {
             @Override
             public void onResponse(@NonNull Call<Results<Concept>> call, @NonNull Response<Results<Concept>> response) {

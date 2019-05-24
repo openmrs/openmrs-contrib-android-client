@@ -16,7 +16,7 @@ package org.openmrs.mobile.activities.patientdashboard.vitals;
 
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
-import org.openmrs.mobile.api.retrofit.VisitApi;
+import org.openmrs.mobile.api.retrofit.VisitRepository;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
@@ -28,7 +28,7 @@ import rx.android.schedulers.AndroidSchedulers;
 public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientVitalsPresenter {
 
     private EncounterDAO encounterDAO;
-    private VisitApi visitApi;
+    private VisitRepository visitApi;
     private PatientDashboardContract.ViewPatientVitals mPatientVitalsView;
 
     public PatientDashboardVitalsPresenter(String id, PatientDashboardContract.ViewPatientVitals mPatientVitalsView) {
@@ -36,11 +36,11 @@ public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresent
         this.mPatientVitalsView = mPatientVitalsView;
         this.mPatientVitalsView.setPresenter(this);
         this.encounterDAO = new EncounterDAO();
-        this.visitApi = new VisitApi();
+        this.visitApi = new VisitRepository();
     }
 
     public PatientDashboardVitalsPresenter(Patient patient, PatientDashboardContract.ViewPatientVitals mPatientVitalsView,
-                                           EncounterDAO encounterDAO, VisitApi visitApi) {
+                                           EncounterDAO encounterDAO, VisitRepository visitApi) {
         this.mPatient = patient;
         this.mPatientVitalsView = mPatientVitalsView;
         this.mPatientVitalsView.setPresenter(this);

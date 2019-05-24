@@ -20,7 +20,7 @@ import org.mockito.Mock;
 import org.openmrs.mobile.activities.matchingpatients.MatchingPatientsContract;
 import org.openmrs.mobile.activities.matchingpatients.MatchingPatientsPresenter;
 import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.retrofit.PatientApi;
+import org.openmrs.mobile.api.retrofit.PatientRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.test.ACUnitTestBase;
@@ -46,7 +46,7 @@ public class MatchingPatientsPresenterTest extends ACUnitTestBase {
     @Mock
     private PatientDAO patientDAO;
     @Mock
-    private PatientApi patientApi;
+    private PatientRepository patientApi;
 
     private MatchingPatientsPresenter presenter;
     private Queue<PatientAndMatchingPatients> patientAndMatchingPatientsQueue;

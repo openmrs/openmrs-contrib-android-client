@@ -28,8 +28,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.api.retrofit.PatientApi;
-import org.openmrs.mobile.api.retrofit.VisitApi;
+import org.openmrs.mobile.api.retrofit.PatientRepository;
+import org.openmrs.mobile.api.retrofit.VisitRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
 import org.openmrs.mobile.models.Patient;
@@ -344,14 +344,14 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     }
 
     private void downloadPatient(final Patient patient, final Boolean showSnackBar) {
-        new PatientApi().downloadPatientByUuid(patient.getUuid(), new DownloadPatientCallbackListener() {
+        new PatientRepository().downloadPatientByUuid(patient.getUuid(), new DownloadPatientCallbackListener() {
             @Override
             public void onPatientDownloaded(Patient newPatient) {
                 new PatientDAO().savePatient(newPatient)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(id -> {
-                            new VisitApi().syncVisitsData(newPatient);
-                            new VisitApi().syncLastVitals(newPatient.getUuid());
+                            new VisitRepository().syncVisitsData(newPatient);
+                            new VisitRepository().syncLastVitals(newPatient.getUuid());
                             patients.remove(patient);
                             notifyDataSetChanged();
                             if (showSnackBar) {

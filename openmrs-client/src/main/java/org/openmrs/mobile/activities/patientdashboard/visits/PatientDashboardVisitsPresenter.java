@@ -16,7 +16,7 @@ package org.openmrs.mobile.activities.patientdashboard.visits;
 
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
-import org.openmrs.mobile.api.retrofit.VisitApi;
+import org.openmrs.mobile.api.retrofit.VisitRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
@@ -30,20 +30,20 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
 
     private PatientDashboardContract.ViewPatientVisits mPatientVisitsView;
     private VisitDAO visitDAO;
-    private VisitApi visitApi;
+    private VisitRepository visitApi;
 
     public PatientDashboardVisitsPresenter(String id, PatientDashboardContract.ViewPatientVisits mPatientVisitsView) {
         this.mPatient = new PatientDAO().findPatientByID(id);
         this.mPatientVisitsView = mPatientVisitsView;
         this.mPatientVisitsView.setPresenter(this);
         this.visitDAO = new VisitDAO();
-        this.visitApi = new VisitApi();
+        this.visitApi = new VisitRepository();
     }
 
     public PatientDashboardVisitsPresenter(Patient patient,
                                            PatientDashboardContract.ViewPatientVisits mPatientVisitsView,
                                            VisitDAO visitDAO,
-                                           VisitApi visitApi) {
+                                           VisitRepository visitApi) {
         this.mPatient = patient;
         this.mPatientVisitsView = mPatientVisitsView;
         this.visitApi = visitApi;
@@ -85,7 +85,7 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
 
     public void getVisitFromServer(){
         if (NetworkUtils.isOnline()) {
-            new VisitApi().syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
+            new VisitRepository().syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
                 @Override
                 public void onResponse() {
                     getVisitFromDB();

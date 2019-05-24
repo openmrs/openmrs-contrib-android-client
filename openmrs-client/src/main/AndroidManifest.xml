@@ -230,6 +230,8 @@
             android:name=".activities.patientdashboard.charts.ChartsViewActivity"
             android:parentActivityName=".activities.patientdashboard.PatientDashboardActivity" />
 
+        <activity android:name=".activities.visitdashboard.visitnote.VisitNoteActivity" />
+
         <provider
             android:name="com.activeandroid.content.ContentProvider"
             android:authorities="org.openmrs.mobile"

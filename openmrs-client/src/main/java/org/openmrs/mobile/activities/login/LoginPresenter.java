@@ -20,7 +20,7 @@ import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.UserService;
-import org.openmrs.mobile.api.retrofit.VisitApi;
+import org.openmrs.mobile.api.retrofit.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.LocationDAO;
@@ -49,7 +49,7 @@ import rx.schedulers.Schedulers;
 public class LoginPresenter extends BasePresenter implements LoginContract.Presenter {
 
     private RestApi restApi;
-    private VisitApi visitApi;
+    private VisitRepository visitApi;
     private UserService userService;
     private LoginContract.View loginView;
     private OpenMRS mOpenMRS;
@@ -66,11 +66,11 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         this.authorizationManager = new AuthorizationManager();
         this.locationDAO = new LocationDAO();
         this.restApi = RestServiceBuilder.createService(RestApi.class);
-        this.visitApi = new VisitApi();
+        this.visitApi = new VisitRepository();
         this.userService = new UserService();
     }
 
-    public LoginPresenter(RestApi restApi, VisitApi visitApi, LocationDAO locationDAO,
+    public LoginPresenter(RestApi restApi, VisitRepository visitApi, LocationDAO locationDAO,
                           UserService userService, LoginContract.View loginView, OpenMRS mOpenMRS,
                           OpenMRSLogger mLogger, AuthorizationManager authorizationManager) {
         this.restApi = restApi;

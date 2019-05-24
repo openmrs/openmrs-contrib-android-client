@@ -22,7 +22,7 @@ import org.openmrs.mobile.activities.addeditpatient.AddEditPatientPresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.retrofit.LocationApi;
-import org.openmrs.mobile.api.retrofit.PatientApi;
+import org.openmrs.mobile.api.retrofit.PatientRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.PatientDAO;
@@ -74,7 +74,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     public void setUp() {
         super.setUp();
         patient = createPatient(1L);
-        PatientApi patientApi = new PatientApi(openMRS, openMRSLogger, patientDAO, restApi, locationApi);
+        PatientRepository patientApi = new PatientRepository(openMRS, openMRSLogger, patientDAO, restApi, locationApi);
         presenter = new AddEditPatientPresenter(view, patientApi, patient, patient.getId().toString(),
                 Collections.singletonList("country_" + patient.getId()), restApi);
         mockStaticMethods();

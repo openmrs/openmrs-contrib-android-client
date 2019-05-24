@@ -23,7 +23,7 @@ import org.openmrs.mobile.activities.login.LoginPresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.UserService;
-import org.openmrs.mobile.api.retrofit.VisitApi;
+import org.openmrs.mobile.api.retrofit.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.EncounterDAO;
@@ -82,7 +82,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     @Before
     public void setUp(){
         super.setUp();
-        VisitApi visitApi = new VisitApi(restApi, visitDAO, locationDAO, new EncounterDAO());
+        VisitRepository visitApi = new VisitRepository(restApi, visitDAO, locationDAO, new EncounterDAO());
         presenter = new LoginPresenter(restApi, visitApi, locationDAO, userService, view, openMRS,
                 openMRSLogger, authorizationManager);
         mockStaticMethods();

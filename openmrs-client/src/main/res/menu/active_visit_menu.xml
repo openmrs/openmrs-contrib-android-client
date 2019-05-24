@@ -17,13 +17,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activities.visitdashboard.VisitDashboardActivity">
+
     <item
         android:id="@+id/actionEndVisit"
         android:orderInCategory="100"
         app:showAsAction="never"
         android:title="@string/action_end_visit" />
+
     <item
         android:id="@+id/actionFillForm"
         android:title="@string/action_form_entry"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/actionVisitForm"
+        app:showAsAction="never"
+        android:title="@string/action_visit_form" />
+
 </menu>

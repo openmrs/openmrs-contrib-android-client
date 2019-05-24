@@ -16,7 +16,7 @@ import android.util.Log;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.matchingpatients.MatchingPatientsActivity;
-import org.openmrs.mobile.api.retrofit.PatientApi;
+import org.openmrs.mobile.api.retrofit.PatientRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Module;
 import org.openmrs.mobile.models.Patient;
@@ -96,7 +96,7 @@ public class PatientService extends IntentService {
             if(!similarPatient.isEmpty()){
                 patientAndMatchesWrapper.addToList(new PatientAndMatchingPatients(patient, similarPatient));
             } else {
-                new PatientApi().syncPatient(patient);
+                new PatientRepository().syncPatient(patient);
             }
         }
     }
@@ -111,7 +111,7 @@ public class PatientService extends IntentService {
             if (!patientList.isEmpty()) {
                 patientAndMatchesWrapper.addToList(new PatientAndMatchingPatients(patient, patientList));
             } else {
-                new PatientApi().syncPatient(patient);
+                new PatientRepository().syncPatient(patient);
             }
         }
     }

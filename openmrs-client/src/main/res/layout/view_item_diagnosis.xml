@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:background="@color/dark_purple">
+
+    <View
+        android:id="@+id/tabIndicator"
+        android:layout_width="8dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:background="@color/light_green" />
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/tabIndicator"
+        android:layout_toLeftOf="@+id/removeDiagnosis"
+        android:layout_marginLeft="16dp"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:ellipsize="end"
+        tools:text="Infection"
+        />
+
+    <ImageView
+        android:id="@+id/removeDiagnosis"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:padding="16dp"
+        android:layout_margin="8dp"
+        android:layout_alignParentRight="true"
+        android:background="@android:drawable/ic_delete"/>
+
+</RelativeLayout>

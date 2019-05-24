@@ -19,6 +19,8 @@ import org.openmrs.mobile.models.EncounterType;
 
 public abstract class ApplicationConstants {
 
+    public static final String TAG = "TAG";
+
     public static final String EMPTY_STRING = "";
     public static final String SERVER_URL = "server_url";
     public static final String SESSION_TOKEN = "session_id";

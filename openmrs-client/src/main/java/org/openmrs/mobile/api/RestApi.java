@@ -47,6 +47,7 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
+import rx.Observable;
 
 public interface RestApi {
 
@@ -85,6 +86,10 @@ public interface RestApi {
     @GET("patient")
     Call<Results<Patient>> getPatients(@Query("q") String searchQuery,
                                        @Query("v") String representation);
+
+    @GET("patient")
+    Observable<Results<Patient>> getPatientsStream(@Query("q") String searchQuery,
+                                                   @Query("v") String representation);
 
     @POST("personimage/{uuid}")
     Call<PatientPhoto> uploadPatientPhoto(@Path("uuid") String uuid,
@@ -141,8 +146,18 @@ public interface RestApi {
     @GET("user/{uuid}")
     Call<User> getFullUserInfo(@Path("uuid") String uuid);
 
+    /* concepts */
+
     @GET("concept")
-    Call<Results<Concept>> getConcepts(@Query("limit") int limit, @Query("startIndex") int startIndex);
+    Call<Results<Concept>> getConcepts(@Query("v") String representation,
+                                       @Query("q") String searchQuery,
+                                       @Query("limit") Integer limit,
+                                       @Query("startIndex") Integer startIndex);
+
+    // TODO extend to support concept search: 'call' for test, 'observer' for use case
+    @GET("conceptreferenceterm")
+    Call<Results<Concept>> getConceptRefTerm(@Query("v") String representation,
+                                             @Query("q") String searchQuery);
 
     @GET("systemsetting")
     Call<Results<SystemSetting>> getSystemSettingsByQuery(@Query("q") String query,

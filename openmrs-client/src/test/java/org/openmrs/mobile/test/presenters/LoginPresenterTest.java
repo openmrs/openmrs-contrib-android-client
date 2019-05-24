@@ -83,8 +83,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     public void setUp(){
         super.setUp();
         VisitRepository visitRepository = new VisitRepository(restApi, visitDAO, locationDAO, new EncounterDAO());
-        presenter = new LoginPresenter(restApi, visitRepository, locationDAO, userService, view, openMRS,
-                openMRSLogger, authorizationManager);
+        presenter = new LoginPresenter(restApi, visitRepository, locationDAO, userService, view, openMRS, openMRSLogger, authorizationManager);
         mockStaticMethods();
     }
 

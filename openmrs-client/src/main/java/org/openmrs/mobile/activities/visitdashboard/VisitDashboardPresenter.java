@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.visitdashboard;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
+import org.openmrs.mobile.activities.visitdashboard.visitnote.VisitNoteActivity;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.dao.VisitDAO;
@@ -142,5 +143,18 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
 
     public void moveToPatientDashboard() {
         mVisitDashboardView.moveToPatientDashboard();
+    }
+
+    public void onOpenVisitForm() {
+        addSubscription(visitDAO.getVisitByID(visitId)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(visit -> {
+                    Patient patient = visit.getPatient();
+                    if(patient.getUuid() != null) {
+                        mVisitDashboardView.startVisitForm(patient.getId());
+                    } else {
+                        mVisitDashboardView.showErrorToast(R.string.patient_not_yet_registered);
+                    }
+                }));
     }
 }

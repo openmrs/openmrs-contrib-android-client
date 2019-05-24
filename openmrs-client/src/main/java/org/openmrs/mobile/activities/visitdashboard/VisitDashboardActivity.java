@@ -91,6 +91,9 @@ public class VisitDashboardActivity extends ACBaseActivity {
                 bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
                 createAndShowDialog(bundle, ApplicationConstants.DialogTAG.END_VISIT_DIALOG_TAG);
                 break;
+            case R.id.actionVisitForm:
+                mPresenter.onOpenVisitForm();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }

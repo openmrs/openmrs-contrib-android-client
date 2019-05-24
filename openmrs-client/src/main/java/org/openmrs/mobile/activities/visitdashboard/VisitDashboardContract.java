@@ -39,6 +39,8 @@ public interface VisitDashboardContract {
         void showErrorToast(String message);
 
         void showErrorToast(int messageId);
+
+        void startVisitForm(Long id);
     }
 
     interface Presenter extends BasePresenterContract {

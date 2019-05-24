@@ -170,6 +170,10 @@ public class PatientDAO {
         return patientList;
     }
 
+    public Observable<Patient> findPatientByIdAsStream(String id) {
+        return createObservableIO(() -> findPatientByID(id));
+    }
+
     public Patient findPatientByID(String id) {
         Patient patient = new Patient();
         String where = String.format("%s = ?", PatientTable.Column.ID);

@@ -200,4 +200,7 @@ public class VisitRepository {
         });
     }
 
+    public Observable<Visit> getActiveVisitByPatientId(Long patientId) {
+        return visitDAO.getActiveVisitByPatientId(patientId);
+    }
 }

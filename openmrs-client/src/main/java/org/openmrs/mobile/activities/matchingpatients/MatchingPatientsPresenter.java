@@ -40,6 +40,7 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
     private RestApi restApi;
     private PatientDAO patientDAO;
     private PatientRepository patientRepository;
+    private PatientRepository patientApi;
     private MatchingPatientsContract.View view;
     private Queue<PatientAndMatchingPatients> matchingPatientsList;
     private Patient selectedPatient;
@@ -50,6 +51,7 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
         this.restApi = RestServiceBuilder.createService(RestApi.class);
         this.patientDAO = new PatientDAO();
         this.patientRepository = new PatientRepository();
+        this.patientApi = new PatientRepository();
         this.view.setPresenter(this);
     }
 

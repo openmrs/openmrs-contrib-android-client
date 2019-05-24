@@ -31,6 +31,7 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
     private PatientDashboardContract.ViewPatientVisits mPatientVisitsView;
     private VisitDAO visitDAO;
     private VisitRepository visitRepository;
+    private VisitRepository visitApi;
 
     public PatientDashboardVisitsPresenter(String id, PatientDashboardContract.ViewPatientVisits mPatientVisitsView) {
         this.mPatient = new PatientDAO().findPatientByID(id);
@@ -38,6 +39,7 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
         this.mPatientVisitsView.setPresenter(this);
         this.visitDAO = new VisitDAO();
         this.visitRepository = new VisitRepository();
+        this.visitApi = new VisitRepository();
     }
 
     public PatientDashboardVisitsPresenter(Patient patient,

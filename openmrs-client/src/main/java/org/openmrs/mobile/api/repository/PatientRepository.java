@@ -39,6 +39,7 @@ import org.openmrs.mobile.models.PatientDto;
 import org.openmrs.mobile.models.PatientIdentifier;
 import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.models.Results;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -53,7 +54,9 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class PatientRepository extends RetrofitRepository {
 
@@ -75,6 +78,16 @@ public class PatientRepository extends RetrofitRepository {
         this.restApi = restApi;
         this.locationRepository = locationRepository;
         this.openMrs = openMRS;
+    }
+
+    public Observable<Patient> findPatientById(String id) {
+        return patientDao.findPatientByIdAsStream(id);
+    }
+
+    public Observable<Results<Patient>> searchPatient(final String query) {
+        return restApi.getPatientsStream(query, ApplicationConstants.API.FULL)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     /**
@@ -365,6 +378,13 @@ public class PatientRepository extends RetrofitRepository {
 
         });
         return deferred.promise();
+    }
+
+
+    public Observable<Long> savePatient(Patient patient) {
+        return patientDao.savePatient(patient)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
 }

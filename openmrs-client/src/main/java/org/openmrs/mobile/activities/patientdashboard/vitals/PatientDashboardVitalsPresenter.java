@@ -29,6 +29,7 @@ public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresent
 
     private EncounterDAO encounterDAO;
     private VisitRepository visitRepository;
+    private VisitRepository visitApi;
     private PatientDashboardContract.ViewPatientVitals mPatientVitalsView;
 
     public PatientDashboardVitalsPresenter(String id, PatientDashboardContract.ViewPatientVitals mPatientVitalsView) {
@@ -41,6 +42,7 @@ public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresent
 
     public PatientDashboardVitalsPresenter(Patient patient, PatientDashboardContract.ViewPatientVitals mPatientVitalsView,
                                            EncounterDAO encounterDAO, VisitRepository visitRepository) {
+        this.visitApi = new VisitRepository();
         this.mPatient = patient;
         this.mPatientVitalsView = mPatientVitalsView;
         this.mPatientVitalsView.setPresenter(this);

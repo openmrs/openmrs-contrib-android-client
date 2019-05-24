@@ -45,6 +45,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     private final AddEditPatientContract.View mPatientInfoView;
 
     private PatientRepository patientRepository;
+    private PatientRepository patientApi;
     private RestApi restApi;
     private Patient mPatient;
     private String patientToUpdateId;
@@ -72,6 +73,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         this.mCountries = mCountries;
         this.restApi = restApi;
         this.mPatientInfoView.setPresenter(this);
+        this.patientApi = new PatientRepository();
     }
 
     @Override

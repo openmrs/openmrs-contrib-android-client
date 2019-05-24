@@ -28,7 +28,7 @@ import org.mockito.Mockito;
 import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardPresenter;
 import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardContract;
 import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.retrofit.ProviderRepository;
+import org.openmrs.mobile.api.repository.ProviderRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.models.Provider;

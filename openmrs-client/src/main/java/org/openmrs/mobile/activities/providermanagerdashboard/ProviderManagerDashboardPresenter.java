@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.CustomApiCallback;
-import org.openmrs.mobile.api.retrofit.ProviderRepository;
+import org.openmrs.mobile.api.repository.ProviderRepository;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.models.Provider;

@@ -89,7 +89,7 @@ public class PatientService extends IntentService {
     private void fetchPatientsAndCalculateLocally(Patient patient, PatientAndMatchesWrapper patientAndMatchesWrapper) throws IOException {
         calculatedLocally = true;
         RestApi restApi = RestServiceBuilder.createService(RestApi.class);
-        Call<Results<Patient>> patientCall = restApi.getPatients(patient.getPerson().getName().getGivenName(), ApplicationConstants.API.FULL);
+        Call<Results<Patient>> patientCall = restApi.getPatients(patient.getName().getGivenName(), ApplicationConstants.API.FULL);
         Response<Results<Patient>> resp = patientCall.execute();
         if(resp.isSuccessful()){
             List<Patient> similarPatient = new PatientComparator().findSimilarPatient(resp.body().getResults(), patient);

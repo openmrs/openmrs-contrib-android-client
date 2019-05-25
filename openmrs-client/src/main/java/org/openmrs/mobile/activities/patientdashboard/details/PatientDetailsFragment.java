@@ -105,7 +105,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     @Override
     public void resolvePatientDataDisplay(final Patient patient) {
         if (isAdded()) {
-            if (("M").equals(patient.getPerson().getGender())) {
+            if (("M").equals(patient.getGender())) {
                 ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.male));
             } else {
                 ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.female));
@@ -113,27 +113,27 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
         }
         ImageView patientImageView = (ImageView) rootView.findViewById(R.id.patientPhoto);
 
-        if (patient.getPerson().getPhoto() != null) {
-            final Bitmap photo = patient.getPerson().getResizedPhoto();
-            final String patientName = patient.getPerson().getName().getNameString();
+        if (patient.getPhoto() != null) {
+            final Bitmap photo = patient.getResizedPhoto();
+            final String patientName = patient.getName().getNameString();
             patientImageView.setImageBitmap(photo);
             patientImageView.setOnClickListener(view -> showPatientPhoto(photo, patientName));
         }
 
-        ((TextView) rootView.findViewById(R.id.patientDetailsName)).setText(patient.getPerson().getName().getNameString());
+        ((TextView) rootView.findViewById(R.id.patientDetailsName)).setText(patient.getName().getNameString());
 
-        Long longTime = DateUtils.convertTime(patient.getPerson().getBirthdate());
+        Long longTime = DateUtils.convertTime(patient.getBirthdate());
 
         if (longTime != null) {
             ((TextView) rootView.findViewById(R.id.patientDetailsBirthDate)).setText(DateUtils.convertTime(longTime));
         }
 
-        if (null != patient.getPerson().getAddress()) {
-            showAddressDetailsViewElement(rootView.findViewById(R.id.addressLayout), R.id.addressDetailsStreet, patient.getPerson().getAddress().getAddressString());
-            showAddressDetailsViewElement(rootView.findViewById(R.id.stateLayout), R.id.addressDetailsState, patient.getPerson().getAddress().getStateProvince());
-            showAddressDetailsViewElement(rootView.findViewById(R.id.countryLayout), R.id.addressDetailsCountry, patient.getPerson().getAddress().getCountry());
-            showAddressDetailsViewElement(rootView.findViewById(R.id.postalCodeLayout), R.id.addressDetailsPostalCode, patient.getPerson().getAddress().getPostalCode());
-            showAddressDetailsViewElement(rootView.findViewById(R.id.cityLayout), R.id.addressDetailsCity, patient.getPerson().getAddress().getCityVillage());
+        if (null != patient.getAddress()) {
+            showAddressDetailsViewElement(rootView.findViewById(R.id.addressLayout), R.id.addressDetailsStreet, patient.getAddress().getAddressString());
+            showAddressDetailsViewElement(rootView.findViewById(R.id.stateLayout), R.id.addressDetailsState, patient.getAddress().getStateProvince());
+            showAddressDetailsViewElement(rootView.findViewById(R.id.countryLayout), R.id.addressDetailsCountry, patient.getAddress().getCountry());
+            showAddressDetailsViewElement(rootView.findViewById(R.id.postalCodeLayout), R.id.addressDetailsPostalCode, patient.getAddress().getPostalCode());
+            showAddressDetailsViewElement(rootView.findViewById(R.id.cityLayout), R.id.addressDetailsCity, patient.getAddress().getCityVillage());
         }
     }
 

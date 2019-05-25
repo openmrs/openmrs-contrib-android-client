@@ -19,7 +19,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -67,12 +66,10 @@ import org.openmrs.mobile.activities.dialog.CameraOrGalleryPickerDialog;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientPhotoActivity;
-import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.listeners.watcher.PatientBirthdateValidatorWatcher;
 import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.Person;
 import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -213,8 +210,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
 
-    private Person createPerson() {
-        Person person = new Person();
+    private Patient updatePatientWithData(Patient patient) {
         String emptyError = getString(R.string.emptyerror);
 
         // Validate address
@@ -250,7 +246,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
         List<PersonAddress> addresses = new ArrayList<>();
         addresses.add(address);
-        person.setAddresses(addresses);
+        patient.setAddresses(addresses);
 
         // Validate names
         String givenNameEmpty = getString(R.string.fname_empty_error);
@@ -304,15 +300,15 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
         List<PersonName> names = new ArrayList<>();
         names.add(name);
-        person.setNames(names);
+        patient.setNames(names);
 
         // Add gender
         String[] genderChoices = {"M", "F"};
         int index = gen.indexOfChild(getActivity().findViewById(gen.getCheckedRadioButtonId()));
         if (index != -1) {
-            person.setGender(genderChoices[index]);
+            patient.setGender(genderChoices[index]);
         } else {
-            person.setGender(null);
+            patient.setGender(null);
         }
 
         // Add birthdate
@@ -327,7 +323,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 bdt = now.toDateTimeAtStartOfDay().toDateTime();
                 bdt = bdt.minusYears(yeardiff);
                 bdt = bdt.minusMonths(mondiff);
-                person.setBirthdateEstimated(true);
+                patient.setBirthdateEstimated(true);
                 birthdate = dateTimeFormatter.print(bdt);
             }
         } else {
@@ -345,24 +341,24 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 birthdate = dateTimeFormatter.print(bdt);
             }
         }
-        person.setBirthdate(birthdate);
+        patient.setBirthdate(birthdate);
 
         if (patientPhoto != null)
-            person.setPhoto(patientPhoto);
+            patient.setPhoto(patientPhoto);
 
-        return person;
+        return patient;
     }
 
+
     private Patient createPatient() {
-        final Patient patient = new Patient();
-        patient.setPerson(createPerson());
+        Patient patient = new Patient();
+        updatePatientWithData(patient);
         patient.setUuid(" ");
         return patient;
     }
 
     private Patient updatePatient(Patient patient) {
-        patient.setPerson(createPerson());
-        return patient;
+        return updatePatientWithData(patient);
     }
 
     @Override
@@ -462,7 +458,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private void fillFields(final Patient patient) {
-        if (patient != null && patient.getPerson() != null) {
+        if (patient != null) {
             //Change to Update Patient Form
             String updatePatientStr = getResources().getString(R.string.action_update_patient_data);
             this.getActivity().setTitle(updatePatientStr);
@@ -470,34 +466,33 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             isUpdatePatient = true;
             updatedPatient = patient;
 
-            Person person = patient.getPerson();
-            edfname.setText(person.getName().getGivenName());
-            edmname.setText(person.getName().getMiddleName());
-            edlname.setText(person.getName().getFamilyName());
+            edfname.setText(patient.getName().getGivenName());
+            edmname.setText(patient.getName().getMiddleName());
+            edlname.setText(patient.getName().getFamilyName());
 
-            patientName = person.getName().getNameString();
+            patientName = patient.getName().getNameString();
 
-            if (StringUtils.notNull(person.getBirthdate()) || StringUtils.notEmpty(person.getBirthdate())) {
-                bdt = DateUtils.convertTimeString(person.getBirthdate());
+            if (StringUtils.notNull(patient.getBirthdate()) || StringUtils.notEmpty(patient.getBirthdate())) {
+                bdt = DateUtils.convertTimeString(patient.getBirthdate());
                 eddob.setText(DateUtils.convertTime(DateUtils.convertTime(bdt.toString(), DateUtils.OPEN_MRS_REQUEST_FORMAT),
                         DateUtils.DEFAULT_DATE_FORMAT));
             }
 
-            if (("M").equals(person.getGender())) {
+            if (("M").equals(patient.getGender())) {
                 gen.check(R.id.male);
-            } else if (("F").equals(person.getGender())) {
+            } else if (("F").equals(patient.getGender())) {
                 gen.check(R.id.female);
             }
 
-            edaddr1.setText(person.getAddress().getAddress1());
-            edaddr2.setText(person.getAddress().getAddress2());
-            edcity.setText(person.getAddress().getCityVillage());
-            edstate.setText(person.getAddress().getStateProvince());
-            edpostal.setText(person.getAddress().getPostalCode());
+            edaddr1.setText(patient.getAddress().getAddress1());
+            edaddr2.setText(patient.getAddress().getAddress2());
+            edcity.setText(patient.getAddress().getCityVillage());
+            edstate.setText(patient.getAddress().getStateProvince());
+            edpostal.setText(patient.getAddress().getPostalCode());
 
-            if (patient.getPerson().getPhoto() != null) {
-                patientPhoto = patient.getPerson().getPhoto();
-                resizedPatientPhoto = patient.getPerson().getResizedPhoto();
+            if (patient.getPhoto() != null) {
+                patientPhoto = patient.getPhoto();
+                resizedPatientPhoto = patient.getResizedPhoto();
                 patientImageView.setImageBitmap(resizedPatientPhoto);
             }
         }
@@ -737,7 +732,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         }
         return ImageUtils.resizePhoto(portraitImg);
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

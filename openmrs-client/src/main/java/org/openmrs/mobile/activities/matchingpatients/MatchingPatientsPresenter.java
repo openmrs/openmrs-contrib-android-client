@@ -21,6 +21,7 @@ import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.retrofit.PatientApi;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.PatientDto;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.PatientAndMatchingPatients;
 import org.openmrs.mobile.utilities.PatientMerger;
@@ -96,11 +97,12 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
     }
 
     private void updatePatient(final Patient patient) {
-        patient.getPerson().setUuid(null);
-        Call<Patient> call = restApi.updatePatient(patient, patient.getUuid(), ApplicationConstants.API.FULL);
-        call.enqueue(new Callback<Patient>() {
+        PatientDto patientDto = patient.getPatientDto();
+        patient.setUuid(null);
+        Call<PatientDto> call = restApi.updatePatient(patientDto, patient.getUuid(), ApplicationConstants.API.FULL);
+        call.enqueue(new Callback<PatientDto>() {
             @Override
-            public void onResponse(@NonNull Call<Patient> call, @NonNull Response<Patient> response) {
+            public void onResponse(@NonNull Call<PatientDto> call, @NonNull Response<PatientDto> response) {
                 if(response.isSuccessful()){
                     if(patientDAO.isUserAlreadySaved(patient.getUuid())){
                         Long id = patientDAO.findPatientByUUID(patient.getUuid()).getId();
@@ -115,7 +117,7 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
             }
 
             @Override
-            public void onFailure(@NonNull Call<Patient> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
                 view.showErrorToast(t.getMessage());
             }
         });

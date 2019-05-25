@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
+import androidx.annotation.NonNull;
+
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -34,7 +36,6 @@ import org.openmrs.mobile.utilities.ViewUtils;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -128,7 +129,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, genderError, addressError, countryError, countryNull, stateError, cityError, postalError);
 
         // Validate names
-        PersonName currentPersonName = patient.getPerson().getName();
+        PersonName currentPersonName = patient.getName();
 
         if (StringUtils.isBlank(currentPersonName.getGivenName())
                 || !ViewUtils.validateText(currentPersonName.getGivenName(), ViewUtils.ILLEGAL_CHARACTERS)) {
@@ -146,13 +147,13 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         }
 
         // Validate date of birth
-        if (StringUtils.isBlank(patient.getPerson().getBirthdate())) {
+        if (StringUtils.isBlank(patient.getBirthdate())) {
             dateOfBirthError = true;
         }
 
         // Validate address
-        String patientAddress1 = patient.getPerson().getAddress().getAddress1();
-        String patientAddress2 = patient.getPerson().getAddress().getAddress2();
+        String patientAddress1 = patient.getAddress().getAddress1();
+        String patientAddress2 = patient.getAddress().getAddress2();
 
         if ((StringUtils.isBlank(patientAddress1)
                 && StringUtils.isBlank(patientAddress2)
@@ -161,24 +162,24 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             addressError = true;
         }
 
-        if (!StringUtils.isBlank(patient.getPerson().getAddress().getCountry()) && !mCountries.contains(patient.getPerson().getAddress().getCountry())) {
+        if (!StringUtils.isBlank(patient.getAddress().getCountry()) && !mCountries.contains(patient.getAddress().getCountry())) {
             countryError = true;
         }
 
         // Validate gender
-        if (StringUtils.isBlank(patient.getPerson().getGender())) {
+        if (StringUtils.isBlank(patient.getGender())) {
             genderError = true;
         }
-        if (StringUtils.isBlank(patient.getPerson().getAddress().getCountry())) {
+        if (StringUtils.isBlank(patient.getAddress().getCountry())) {
             countryNull = true;
         }
-        if (StringUtils.isBlank(patient.getPerson().getAddress().getStateProvince())) {
+        if (StringUtils.isBlank(patient.getAddress().getStateProvince())) {
             stateError = true;
         }
-        if (StringUtils.isBlank(patient.getPerson().getAddress().getCityVillage())) {
+        if (StringUtils.isBlank(patient.getAddress().getCityVillage())) {
             cityError = true;
         }
-        if (StringUtils.isBlank(patient.getPerson().getAddress().getPostalCode())) {
+        if (StringUtils.isBlank(patient.getAddress().getPostalCode())) {
             postalError = true;
         }
 
@@ -260,7 +261,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     }
 
     private void fetchSimilarPatientAndCalculateLocally(final Patient patient) {
-        Call<Results<Patient>> call = restApi.getPatients(patient.getPerson().getName().getGivenName(), ApplicationConstants.API.FULL);
+        Call<Results<Patient>> call = restApi.getPatients(patient.getName().getGivenName(), ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
             public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {

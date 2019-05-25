@@ -24,6 +24,7 @@ import org.openmrs.mobile.models.Module;
 import org.openmrs.mobile.models.Obscreate;
 import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.PatientDto;
 import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.models.Session;
@@ -67,7 +68,7 @@ public interface RestApi {
                                                         @Query("password") String password);
 
     @GET("patient/{uuid}")
-    Call<Patient> getPatientByUUID(@Path("uuid") String uuid,
+    Call<PatientDto> getPatientByUUID(@Path("uuid") String uuid,
                                    @Query("v") String representation);
 
     @GET("patient?lastviewed&v=full")
@@ -75,8 +76,8 @@ public interface RestApi {
                                                  @Query("startIndex") Integer startIndex);
 
     @POST("patient")
-    Call<Patient> createPatient(
-            @Body Patient patient);
+    Call<PatientDto> createPatient(
+            @Body PatientDto patientDto);
 
     @GET("patient")
     Call<Results<Patient>> getPatients(@Query("q") String searchQuery,
@@ -125,7 +126,7 @@ public interface RestApi {
                                   @Query("order") String order);
 
     @POST("patient/{uuid}")
-    Call<Patient> updatePatient(@Body Patient patient, @Path("uuid") String uuid,
+    Call<PatientDto> updatePatient(@Body PatientDto patientDto, @Path("uuid") String uuid,
                                 @Query("v") String representation);
 
     @GET("module")

@@ -118,14 +118,14 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                         patient.getIdentifier().getIdentifier());
                 ((PatientViewHolder) holder).mIdentifier.setText(patientIdentifier);
             }
-            if (null != patient.getPerson().getName()) {
-                ((PatientViewHolder) holder).mDisplayName.setText(patient.getPerson().getName().getNameString());
+            if (null != patient.getName()) {
+                ((PatientViewHolder) holder).mDisplayName.setText(patient.getName().getNameString());
             }
-            if (null != patient.getPerson().getGender()) {
-                ((PatientViewHolder) holder).mGender.setText(patient.getPerson().getGender());
+            if (null != patient.getGender()) {
+                ((PatientViewHolder) holder).mGender.setText(patient.getGender());
             }
             try {
-                ((PatientViewHolder) holder).mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
+                ((PatientViewHolder) holder).mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
             } catch (Exception e) {
                 ((PatientViewHolder) holder).mBirthDate.setText(" ");
             }

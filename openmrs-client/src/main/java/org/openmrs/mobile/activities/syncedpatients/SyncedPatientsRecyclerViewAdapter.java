@@ -92,14 +92,14 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
                     patient.getIdentifier().getIdentifier());
             holder.mIdentifier.setText(patientIdentifier);
         }
-        if (null != patient.getPerson().getName()) {
-            holder.mDisplayName.setText(patient.getPerson().getName().getNameString());
+        if (null != patient.getName()) {
+            holder.mDisplayName.setText(patient.getName().getNameString());
         }
-        if (null != patient.getPerson().getGender()) {
-            holder.mGender.setText(patient.getPerson().getGender());
+        if (null != patient.getGender()) {
+            holder.mGender.setText(patient.getGender());
         }
         try{
-            holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
+            holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
         }
         catch (Exception e)
         {

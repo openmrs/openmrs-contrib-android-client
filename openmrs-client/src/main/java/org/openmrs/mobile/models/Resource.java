@@ -23,6 +23,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import org.openmrs.mobile.databases.entities.LinkEntity;
+
 public class Resource implements Serializable {
 
     @SerializedName("uuid")
@@ -39,7 +41,7 @@ public class Resource implements Serializable {
     @Ignore
     @SerializedName("links")
     @Expose
-    protected List<Link> links = new ArrayList<>();
+    protected List<LinkEntity> links = new ArrayList<>();
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -91,14 +93,14 @@ public class Resource implements Serializable {
     /**
      * @return The links
      */
-    public List<Link> getLinks() {
+    public List<LinkEntity> getLinks() {
         return links;
     }
 
     /**
      * @param links The links
      */
-    public void setLinks(List<Link> links) {
+    public void setLinks(List<LinkEntity> links) {
         this.links = links;
     }
 

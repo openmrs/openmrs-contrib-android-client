@@ -1,50 +1,38 @@
-/*
- * This Source Code Form is subject to the terms of the Mozilla Public License,
- * v. 2.0. If a copy of the MPL was not distributed with this file, You can
- * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
- * the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
- *
- * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
- * graphic logo is a trademark of OpenMRS Inc.
- */
+package org.openmrs.mobile.databases.entities;
 
-package org.openmrs.mobile.models;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.Serializable;
+import org.openmrs.mobile.models.Obscreate;
+import org.openmrs.mobile.models.Resource;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-@Deprecated
-@Table(name = "encountercreate")
-public class Encountercreate extends Model implements Serializable{
+@Entity(tableName = "encounter_create")
+public class EncounterCreateEntity extends Resource {
 
-    private Gson gson=new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-    private Type obscreatetype = new TypeToken<List<Obscreate>>(){}.getType();
-
-    @Column(name = "visit")
+    @ColumnInfo(name = "visit")
     @SerializedName("visit")
     @Expose
     private String visit;
 
-    @Column(name = "patient")
+    @ColumnInfo(name = "patient")
     @SerializedName("patient")
     @Expose
     private String patient;
 
-    @Column(name = "patientid")
+    @ColumnInfo(name = "patientid")
     private Long patientId;
 
-    @Column(name = "encounterType")
+    @ColumnInfo(name = "encounterType")
     @SerializedName("encounterType")
     @Expose
     private String encounterType;
@@ -53,18 +41,16 @@ public class Encountercreate extends Model implements Serializable{
     @Expose
     private String formUuid;
 
-    @Column(name = "formname")
+    @ColumnInfo(name = "formname")
     private String formname;
 
-    @Column(name = "synced")
+    @ColumnInfo(name = "synced")
     private boolean synced=false;
 
+    @ColumnInfo(name = "obs")
     @SerializedName("obs")
     @Expose
-    private List<Obscreate> observations = new ArrayList<>();
-
-    @Column(name = "obs")
-    private String obslist;
+    private List<ObscreateEntity> observations = new ArrayList<>();
 
     public String getFormUuid() {
         return formUuid;
@@ -123,24 +109,12 @@ public class Encountercreate extends Model implements Serializable{
         this.synced = synced;
     }
 
-    public List<Obscreate> getObservations() {
+    public List<ObscreateEntity> getObservations() {
         return observations;
     }
 
-    public void setObservations(List<Obscreate> observations) {
+    public void setObservations(List<ObscreateEntity> observations) {
         this.observations = observations;
     }
-
-
-    public void setObslist()
-    {
-        this.obslist = gson.toJson(observations,obscreatetype);
-    }
-
-    public void pullObslist() {
-        this.observations = gson.fromJson(this.obslist,obscreatetype);
-    }
-
-
 
 }

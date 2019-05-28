@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.api.retrofit;
+package org.openmrs.mobile.api.repository;
 
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -27,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LocationApi extends RetrofitApi{
+public class LocationRepository extends RetrofitRepository {
 
 
     public SimplePromise<Location> getLocationUuid() {

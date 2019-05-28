@@ -17,8 +17,8 @@ package org.openmrs.mobile.activities.patientdashboard.details;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
-import org.openmrs.mobile.api.retrofit.PatientApi;
-import org.openmrs.mobile.api.retrofit.VisitApi;
+import org.openmrs.mobile.api.repository.PatientRepository;
+import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
@@ -28,15 +28,15 @@ import org.openmrs.mobile.utilities.NetworkUtils;
 public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientDetailsPresenter {
 
     private PatientDashboardContract.ViewPatientDetails mPatientDetailsView;
-    private VisitApi visitApi;
-    private PatientApi patientApi;
+    private VisitRepository visitRepository;
+    private PatientRepository patientRepository;
     private PatientDAO patientDAO;
 
     public PatientDashboardDetailsPresenter(String id,
                                             PatientDashboardContract.ViewPatientDetails mPatientDetailsView) {
         this.mPatientDetailsView = mPatientDetailsView;
-        this.visitApi = new VisitApi();
-        this.patientApi = new PatientApi();
+        this.visitRepository = new VisitRepository();
+        this.patientRepository = new PatientRepository();
         this.patientDAO = new PatientDAO();
         this.mPatient = patientDAO.findPatientByID(id);
         this.mPatientDetailsView.setPresenter(this);
@@ -44,10 +44,10 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
 
     public PatientDashboardDetailsPresenter(Patient mPatient, PatientDAO patientDAO,
                                             PatientDashboardContract.ViewPatientDetails mPatientDetailsView,
-                                            VisitApi visitApi, PatientApi patientApi) {
+                                            VisitRepository visitRepository, PatientRepository patientRepository) {
         this.mPatientDetailsView = mPatientDetailsView;
-        this.visitApi = visitApi;
-        this.patientApi = patientApi;
+        this.visitRepository = visitRepository;
+        this.patientRepository = patientRepository;
         this.patientDAO = patientDAO;
         this.mPatient = mPatient;
         this.mPatientDetailsView.setPresenter(this);
@@ -105,14 +105,14 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
     * Sync Vitals
     */
     private void syncVitalsData() {
-        visitApi.syncLastVitals(mPatient.getUuid());
+        visitRepository.syncLastVitals(mPatient.getUuid());
     }
 
     /*
     * Sync Visits
     */
     private void syncVisitsData() {
-        visitApi.syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
+        visitRepository.syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
             @Override
             public void onResponse() {
                 mPatientDetailsView.showToast(R.string.synchronize_patient_successful, false);
@@ -131,7 +131,7 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
     * Download Patient
     */
     private void syncDetailsData() {
-        patientApi.downloadPatientByUuid(mPatient.getUuid(), new DownloadPatientCallbackListener() {
+        patientRepository.downloadPatientByUuid(mPatient.getUuid(), new DownloadPatientCallbackListener() {
             @Override
             public void onPatientDownloaded(Patient patient) {
                 updatePatientData(patient);

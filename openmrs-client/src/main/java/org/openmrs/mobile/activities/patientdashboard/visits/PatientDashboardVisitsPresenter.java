@@ -16,7 +16,7 @@ package org.openmrs.mobile.activities.patientdashboard.visits;
 
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
-import org.openmrs.mobile.api.retrofit.VisitApi;
+import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
@@ -30,23 +30,23 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
 
     private PatientDashboardContract.ViewPatientVisits mPatientVisitsView;
     private VisitDAO visitDAO;
-    private VisitApi visitApi;
+    private VisitRepository visitRepository;
 
     public PatientDashboardVisitsPresenter(String id, PatientDashboardContract.ViewPatientVisits mPatientVisitsView) {
         this.mPatient = new PatientDAO().findPatientByID(id);
         this.mPatientVisitsView = mPatientVisitsView;
         this.mPatientVisitsView.setPresenter(this);
         this.visitDAO = new VisitDAO();
-        this.visitApi = new VisitApi();
+        this.visitRepository = new VisitRepository();
     }
 
     public PatientDashboardVisitsPresenter(Patient patient,
                                            PatientDashboardContract.ViewPatientVisits mPatientVisitsView,
                                            VisitDAO visitDAO,
-                                           VisitApi visitApi) {
+                                           VisitRepository visitRepository) {
         this.mPatient = patient;
         this.mPatientVisitsView = mPatientVisitsView;
-        this.visitApi = visitApi;
+        this.visitRepository = visitRepository;
         this.visitDAO = visitDAO;
         this.mPatientVisitsView.setPresenter(this);
     }
@@ -85,7 +85,7 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
 
     public void getVisitFromServer(){
         if (NetworkUtils.isOnline()) {
-            new VisitApi().syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
+            new VisitRepository().syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
                 @Override
                 public void onResponse() {
                     getVisitFromDB();
@@ -119,7 +119,7 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
     @Override
     public void syncVisits() {
         mPatientVisitsView.showStartVisitProgressDialog();
-        visitApi.syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
+        visitRepository.syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
             @Override
             public void onResponse() {
                 addSubscription(visitDAO.getVisitsByPatientID(mPatient.getId())
@@ -141,7 +141,7 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
     @Override
     public void startVisit() {
         mPatientVisitsView.showStartVisitProgressDialog();
-        visitApi.startVisit(mPatient, new StartVisitResponseListenerCallback() {
+        visitRepository.startVisit(mPatient, new StartVisitResponseListenerCallback() {
             @Override
             public void onStartVisitResponse(long id) {
                 mPatientVisitsView.goToVisitDashboard(id);

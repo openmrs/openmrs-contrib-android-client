@@ -22,8 +22,8 @@ import org.openmrs.mobile.activities.addeditpatient.AddEditPatientContract;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientPresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
-import org.openmrs.mobile.api.retrofit.LocationApi;
-import org.openmrs.mobile.api.retrofit.PatientApi;
+import org.openmrs.mobile.api.repository.LocationRepository;
+import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.PatientDAO;
@@ -54,7 +54,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     @Mock
     private PatientDAO patientDAO;
     @Mock
-    private LocationApi locationApi;
+    private LocationRepository locationRepository;
     @Mock
     private OpenMRSLogger openMRSLogger;
     @Mock
@@ -74,8 +74,8 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     public void setUp() {
         super.setUp();
         patient = createPatient(1L);
-        PatientApi patientApi = new PatientApi(openMRS, openMRSLogger, patientDAO, restApi, locationApi);
-        presenter = new AddEditPatientPresenter(view, patientApi, patient, patient.getId().toString(),
+        PatientRepository patientRepository = new PatientRepository(openMRS, openMRSLogger, patientDAO, restApi, locationRepository);
+        presenter = new AddEditPatientPresenter(view, patientRepository, patient, patient.getId().toString(),
                 Collections.singletonList("country_" + patient.getId()), restApi);
         mockStaticMethods();
     }

@@ -21,7 +21,6 @@ def version = "2.6.1-beta"
 
 android {
     compileSdkVersion 28
-    useLibrary 'org.apache.http.legacy'
 
     def travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
     def buildNumber = (travisBuildNumber) ? (travisBuildNumber as int) : 1

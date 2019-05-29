@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'com.github.triplet.play'
 
-def version = "2.6.1-beta"
+def version = "2.7.2"
 
 android {
     compileSdkVersion 28

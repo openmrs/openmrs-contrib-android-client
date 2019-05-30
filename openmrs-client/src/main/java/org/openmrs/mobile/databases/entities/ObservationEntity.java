@@ -90,4 +90,37 @@ public class ObservationEntity extends Resource {
     public String getConceptuuid() {
         return conceptuuid;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ObservationEntity)) return false;
+
+        ObservationEntity entity = (ObservationEntity) o;
+
+        if (encounterKeyID != entity.encounterKeyID) return false;
+        if (displayValue != null ? !displayValue.equals(entity.displayValue) : entity.displayValue != null)
+            return false;
+        if (diagnosisOrder != null ? !diagnosisOrder.equals(entity.diagnosisOrder) : entity.diagnosisOrder != null)
+            return false;
+        if (diagnosisList != null ? !diagnosisList.equals(entity.diagnosisList) : entity.diagnosisList != null)
+            return false;
+        if (diagnosisCertainty != null ? !diagnosisCertainty.equals(entity.diagnosisCertainty) : entity.diagnosisCertainty != null)
+            return false;
+        if (diagnosisNote != null ? !diagnosisNote.equals(entity.diagnosisNote) : entity.diagnosisNote != null)
+            return false;
+        return conceptuuid != null ? conceptuuid.equals(entity.conceptuuid) : entity.conceptuuid == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = encounterKeyID;
+        result = 31 * result + (displayValue != null ? displayValue.hashCode() : 0);
+        result = 31 * result + (diagnosisOrder != null ? diagnosisOrder.hashCode() : 0);
+        result = 31 * result + (diagnosisList != null ? diagnosisList.hashCode() : 0);
+        result = 31 * result + (diagnosisCertainty != null ? diagnosisCertainty.hashCode() : 0);
+        result = 31 * result + (diagnosisNote != null ? diagnosisNote.hashCode() : 0);
+        result = 31 * result + (conceptuuid != null ? conceptuuid.hashCode() : 0);
+        return result;
+    }
 }

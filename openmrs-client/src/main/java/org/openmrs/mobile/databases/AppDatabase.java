@@ -4,6 +4,7 @@ import android.content.Context;
 
 import org.openmrs.mobile.databases.converters.AppTypeConverter;
 import org.openmrs.mobile.databases.dao.ConceptsDao;
+import org.openmrs.mobile.databases.dao.EncounterDao;
 import org.openmrs.mobile.databases.entities.ConceptEntity;
 import org.openmrs.mobile.databases.entities.EncounterCreateEntity;
 import org.openmrs.mobile.databases.entities.EncounterEntity;
@@ -57,4 +58,6 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public abstract ConceptsDao conceptsDao();
+
+    public abstract EncounterDao encounterDao();
 }

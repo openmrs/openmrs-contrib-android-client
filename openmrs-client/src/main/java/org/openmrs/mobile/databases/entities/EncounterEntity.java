@@ -25,8 +25,7 @@ public class EncounterEntity extends Resource {
     @ColumnInfo(name = "form_uuid")
     private String formUuid;
 
-    public EncounterEntity() {
-    }
+    public EncounterEntity() {}
 
     public void setVisitKeyId(String visitKeyId) {
         this.visitKeyId = visitKeyId;
@@ -68,4 +67,17 @@ public class EncounterEntity extends Resource {
     public String getFormUuid() {
         return formUuid;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EncounterEntity)) return false;
+        EncounterEntity that = (EncounterEntity) o;
+        return visitKeyId.equals(that.visitKeyId) &&
+                encounterDateTime.equals(that.encounterDateTime) &&
+                encounterType.equals(that.encounterType) &&
+                patientUuid.equals(that.patientUuid) &&
+                formUuid.equals(formUuid);
+    }
+
 }

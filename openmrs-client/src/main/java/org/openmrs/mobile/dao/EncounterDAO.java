@@ -36,6 +36,7 @@ import rx.schedulers.Schedulers;
 
 import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 
+@Deprecated
 public class EncounterDAO {
 
     public long saveEncounter(Encounter encounter, Long visitID) {

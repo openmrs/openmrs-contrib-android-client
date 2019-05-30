@@ -39,18 +39,18 @@ public class Encounter extends Resource implements Serializable{
     @SerializedName("encounterType")
     @Expose
     private EncounterType encounterType;
-    @SerializedName("obs")
-    @Expose
-    private List<Observation> observations = new ArrayList<>();
-    @SerializedName("orders")
-    @Expose
-    private List<Object> orders = new ArrayList<>();
     @SerializedName("voided")
     @Expose
     private Boolean voided;
     @SerializedName("visit")
     @Expose
     private Visit visit;
+    @SerializedName("obs")
+    @Expose
+    private List<Observation> observations = new ArrayList<>();
+    @SerializedName("orders")
+    @Expose
+    private List<Object> orders = new ArrayList<>();
     @SerializedName("encounterProviders")
     @Expose
     private List<Resource> encounterProviders = new ArrayList<>();

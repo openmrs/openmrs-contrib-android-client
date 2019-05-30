@@ -31,6 +31,7 @@ import rx.Observable;
 
 import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 
+@Deprecated
 public class LocationDAO {
     public Observable<Long> saveLocation(Location location) {
         return createObservableIO(() -> new LocationTable().insert(location));

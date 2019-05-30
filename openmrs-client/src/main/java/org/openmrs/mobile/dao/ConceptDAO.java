@@ -12,6 +12,7 @@ import org.openmrs.mobile.models.Concept;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class ConceptDAO {
 
     public long saveOrUpdate(Concept concept) {

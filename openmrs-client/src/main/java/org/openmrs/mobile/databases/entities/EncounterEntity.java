@@ -68,4 +68,31 @@ public class EncounterEntity extends Resource {
     public String getFormUuid() {
         return formUuid;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof EncounterEntity)) return false;
+
+        EncounterEntity that = (EncounterEntity) o;
+
+        if (visitKeyId != null ? !visitKeyId.equals(that.visitKeyId) : that.visitKeyId != null)
+            return false;
+        if (!encounterDateTime.equals(that.encounterDateTime)) return false;
+        if (encounterType != null ? !encounterType.equals(that.encounterType) : that.encounterType != null)
+            return false;
+        if (patientUuid != null ? !patientUuid.equals(that.patientUuid) : that.patientUuid != null)
+            return false;
+        return formUuid != null ? formUuid.equals(that.formUuid) : that.formUuid == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = visitKeyId != null ? visitKeyId.hashCode() : 0;
+        result = 31 * result + encounterDateTime.hashCode();
+        result = 31 * result + (encounterType != null ? encounterType.hashCode() : 0);
+        result = 31 * result + (patientUuid != null ? patientUuid.hashCode() : 0);
+        result = 31 * result + (formUuid != null ? formUuid.hashCode() : 0);
+        return result;
+    }
 }

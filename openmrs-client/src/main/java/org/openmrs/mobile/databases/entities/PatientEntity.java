@@ -212,4 +212,65 @@ public class PatientEntity extends Resource {
     public EncounterEntity getEncounters() {
         return encounters;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PatientEntity)) return false;
+
+        PatientEntity entity = (PatientEntity) o;
+
+        if (synced != entity.synced) return false;
+        if (identifier != null ? !identifier.equals(entity.identifier) : entity.identifier != null)
+            return false;
+        if (givenName != null ? !givenName.equals(entity.givenName) : entity.givenName != null)
+            return false;
+        if (middleName != null ? !middleName.equals(entity.middleName) : entity.middleName != null)
+            return false;
+        if (familyName != null ? !familyName.equals(entity.familyName) : entity.familyName != null)
+            return false;
+        if (gender != null ? !gender.equals(entity.gender) : entity.gender != null) return false;
+        if (birthDate != null ? !birthDate.equals(entity.birthDate) : entity.birthDate != null)
+            return false;
+        if (deathDate != null ? !deathDate.equals(entity.deathDate) : entity.deathDate != null)
+            return false;
+        if (causeOfDeath != null ? !causeOfDeath.equals(entity.causeOfDeath) : entity.causeOfDeath != null)
+            return false;
+        if (age != null ? !age.equals(entity.age) : entity.age != null) return false;
+        if (photo != null ? !photo.equals(entity.photo) : entity.photo != null) return false;
+        if (address_1 != null ? !address_1.equals(entity.address_1) : entity.address_1 != null)
+            return false;
+        if (address_2 != null ? !address_2.equals(entity.address_2) : entity.address_2 != null)
+            return false;
+        if (city != null ? !city.equals(entity.city) : entity.city != null) return false;
+        if (state != null ? !state.equals(entity.state) : entity.state != null) return false;
+        if (country != null ? !country.equals(entity.country) : entity.country != null)
+            return false;
+        if (postalCode != null ? !postalCode.equals(entity.postalCode) : entity.postalCode != null)
+            return false;
+        return encounters != null ? encounters.equals(entity.encounters) : entity.encounters == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (synced ? 1 : 0);
+        result = 31 * result + (identifier != null ? identifier.hashCode() : 0);
+        result = 31 * result + (givenName != null ? givenName.hashCode() : 0);
+        result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
+        result = 31 * result + (familyName != null ? familyName.hashCode() : 0);
+        result = 31 * result + (gender != null ? gender.hashCode() : 0);
+        result = 31 * result + (birthDate != null ? birthDate.hashCode() : 0);
+        result = 31 * result + (deathDate != null ? deathDate.hashCode() : 0);
+        result = 31 * result + (causeOfDeath != null ? causeOfDeath.hashCode() : 0);
+        result = 31 * result + (age != null ? age.hashCode() : 0);
+        result = 31 * result + (photo != null ? photo.hashCode() : 0);
+        result = 31 * result + (address_1 != null ? address_1.hashCode() : 0);
+        result = 31 * result + (address_2 != null ? address_2.hashCode() : 0);
+        result = 31 * result + (city != null ? city.hashCode() : 0);
+        result = 31 * result + (state != null ? state.hashCode() : 0);
+        result = 31 * result + (country != null ? country.hashCode() : 0);
+        result = 31 * result + (postalCode != null ? postalCode.hashCode() : 0);
+        result = 31 * result + (encounters != null ? encounters.hashCode() : 0);
+        return result;
+    }
 }

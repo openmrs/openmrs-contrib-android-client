@@ -39,6 +39,7 @@ import rx.Observable;
 
 import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 
+@Deprecated
 public class PatientDAO {
 
     public Observable<Long> savePatient(Patient patient) {

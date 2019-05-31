@@ -34,6 +34,7 @@ import rx.schedulers.Schedulers;
 
 import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 
+@Deprecated
 public class VisitDAO {
 
     public Observable<Long> saveOrUpdate(Visit visit, long patientId) {

@@ -5,6 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.openmrs.mobile.databases.dao.ConceptsDao;
 import org.openmrs.mobile.databases.entities.ConceptEntity;
 
 import java.util.Collections;
@@ -14,7 +15,7 @@ import io.reactivex.functions.Predicate;
 
 public class ConceptsDaoTest extends DatabaseTest {
 
-    private org.openmrs.mobile.databases.dao.ConceptsDao subject;
+    private ConceptsDao subject;
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();

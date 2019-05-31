@@ -22,7 +22,7 @@ public class VisitsEntity extends Resource {
 
     @NonNull
     @ColumnInfo(name = "start_date")
-    private boolean startDate;
+    private String startDate;
 
     @ColumnInfo(name = "stop_date")
     private String stopDate;
@@ -42,7 +42,7 @@ public class VisitsEntity extends Resource {
         this.visitPlace = visitPlace;
     }
 
-    public void setStartDate(boolean startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
@@ -62,11 +62,37 @@ public class VisitsEntity extends Resource {
         return visitPlace;
     }
 
-    public boolean isStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
     public String getStopDate() {
         return stopDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof VisitsEntity)) return false;
+
+        VisitsEntity entity = (VisitsEntity) o;
+
+        if (patientKeyID != entity.patientKeyID) return false;
+        if (visitType != null ? !visitType.equals(entity.visitType) : entity.visitType != null)
+            return false;
+        if (visitPlace != null ? !visitPlace.equals(entity.visitPlace) : entity.visitPlace != null)
+            return false;
+        if (!startDate.equals(entity.startDate)) return false;
+        return stopDate != null ? stopDate.equals(entity.stopDate) : entity.stopDate == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = patientKeyID;
+        result = 31 * result + (visitType != null ? visitType.hashCode() : 0);
+        result = 31 * result + (visitPlace != null ? visitPlace.hashCode() : 0);
+        result = 31 * result + startDate.hashCode();
+        result = 31 * result + (stopDate != null ? stopDate.hashCode() : 0);
+        return result;
     }
 }

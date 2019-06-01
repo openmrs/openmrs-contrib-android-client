@@ -176,6 +176,5 @@ play {
         track = 'production'
     }
 
-    serviceAccountEmail = System.getenv("PUBLISHER_ACCOUNT_ID")
     serviceAccountCredentials = rootProject.file('google_play.json')
 }

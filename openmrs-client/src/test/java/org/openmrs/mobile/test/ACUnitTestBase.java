@@ -34,6 +34,7 @@ import org.openmrs.mobile.models.PatientIdentifier;
 import org.openmrs.mobile.models.Person;
 import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
+import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Results;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -110,6 +111,17 @@ public abstract class ACUnitTestBase {
         person.setGender("M");
         person.setBirthdate("25-02-2016");
         return person;
+    }
+
+    protected Provider createProvider(Long id, String identifier){
+        Provider provider = new Provider();
+        provider.setPerson(createPerson(id));
+        provider.setId(id);
+        provider.setUuid(id.toString());
+        provider.setRetired(false);
+        provider.setIdentifier(identifier);
+
+        return provider;
     }
 
     protected PersonAddress createPersonAddress(Long id) {

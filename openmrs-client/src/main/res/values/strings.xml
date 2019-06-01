@@ -286,6 +286,11 @@
     <!--ChartsView Activity-->
     <string name="charts_view_toolbar_title">Charts View</string>
 
+    <!--ProviderManager Activity-->
+    <string name="provider_manager">Provider manager</string>
+    <string name="action_find_providers">Find Providers</string>
+
+
     <!-- Image content description strings -->
     <string name="openmrs_logo">OpenMRS logo</string>
     <string name="toast_with_black_background">Toast with black background</string>
@@ -356,5 +361,6 @@
     <string name="delete_multiple_patients_dialog_message">Are you sure you want to delete these patients?</string>
     <string name="multiple_patients_deleted">Patients Deleted Successfully</string>
     <string name="delete">delete</string>
+    <string name="action_provider_management">Provider Management</string>
 
 </resources>

@@ -28,6 +28,7 @@ import org.openmrs.mobile.databases.tables.EncounterTable;
 import org.openmrs.mobile.databases.tables.LocationTable;
 import org.openmrs.mobile.databases.tables.ObservationTable;
 import org.openmrs.mobile.databases.tables.PatientTable;
+import org.openmrs.mobile.databases.tables.ProviderTable;
 import org.openmrs.mobile.databases.tables.Table;
 import org.openmrs.mobile.databases.tables.VisitTable;
 import org.openmrs.mobile.models.Concept;
@@ -35,6 +36,7 @@ import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Visit;
 
 import java.io.ByteArrayOutputStream;
@@ -54,6 +56,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     private EncounterTable mEncounterTable;
     private ObservationTable mObservationTable;
     private LocationTable mLocationTable;
+    private ProviderTable mProviderTable;
 
     public DBOpenHelper(Context context) {
         super(context, null, DATABASE_VERSION);
@@ -63,6 +66,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         this.mEncounterTable = new EncounterTable();
         this.mObservationTable = new ObservationTable();
         this.mLocationTable = new LocationTable();
+        this.mProviderTable = new ProviderTable();
     }
 
     @Override
@@ -80,6 +84,8 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         logOnCreate(mObservationTable.toString());
         sqLiteDatabase.execSQL(mLocationTable.createTableDefinition());
         logOnCreate(mLocationTable.toString());
+        sqLiteDatabase.execSQL(mProviderTable.createTableDefinition());
+        logOnCreate(mProviderTable.toString());
     }
 
     @Override
@@ -108,14 +114,14 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         try {
             db.beginTransaction();
             bindString(1, patient.getPerson().getName().getNameString(), patientStatement);
-            bindString(2, Boolean.toString(patient.isSynced()),patientStatement);
+            bindString(2, Boolean.toString(patient.isSynced()), patientStatement);
 
-            if(patient.getUuid()!=null)
+            if (patient.getUuid() != null)
                 bindString(3, patient.getUuid(), patientStatement);
             else
                 bindString(3, null, patientStatement);
 
-            if(patient.getIdentifier()!=null)
+            if (patient.getIdentifier() != null)
                 bindString(4, patient.getIdentifier().getIdentifier(), patientStatement);
             else
                 bindString(4, null, patientStatement);
@@ -192,7 +198,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         return db.update(PatientTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);
     }
 
-    public long insertConcept (SQLiteDatabase db, Concept concept) {
+    public long insertConcept(SQLiteDatabase db, Concept concept) {
         long conceptId;
         SQLiteStatement statement = db.compileStatement(mConceptTable.insertIntoTableDefinition());
         try {
@@ -209,7 +215,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         return conceptId;
     }
 
-    public int updateConcept (SQLiteDatabase db, long conceptId, Concept concept) {
+    public int updateConcept(SQLiteDatabase db, long conceptId, Concept concept) {
         ContentValues newValues = new ContentValues();
         newValues.put(ConceptTable.Column.UUID, concept.getUuid());
         newValues.put(ConceptTable.Column.DISPLAY, concept.getDisplay());
@@ -315,7 +321,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
                 bindString(7, obs.getDiagnosisCertainty(), observationStatement);
             }
             bindString(8, obs.getDiagnosisNote(), observationStatement);
-            if(obs.getConcept() != null){
+            if (obs.getConcept() != null) {
                 bindString(9, obs.getConcept().getUuid(), observationStatement);
             }
             obsID = observationStatement.executeInsert();
@@ -376,10 +382,50 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         return locID;
     }
 
+    public long insertProvider(SQLiteDatabase db, Provider provider) {
+        long providerID;
+
+        SQLiteStatement providerStatement = db.compileStatement(mProviderTable.insertIntoTableDefinition());
+
+        try {
+            db.beginTransaction();
+            bindString(1, provider.getDisplay(), providerStatement);
+            //temporary value true
+            bindString(2, Boolean.toString(true), providerStatement);
+
+            if (provider.getUuid() != null)
+                bindString(3, provider.getUuid(), providerStatement);
+            else
+                bindString(3, null, providerStatement);
+
+            if (provider.getIdentifier() != null)
+                bindString(4, provider.getIdentifier(), providerStatement);
+            else
+                bindString(4, null, providerStatement);
+
+            bindString(5, provider.getPerson().getUuid(), providerStatement);
+            bindString(6, provider.getPerson().getDisplay(), providerStatement);
+            bindString(7, Boolean.toString(provider.getRetired()), providerStatement);
+//            bindString(8, null, providerStatement);
+            providerID = providerStatement.executeInsert();
+            providerStatement.clearBindings();
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+            providerStatement.close();
+        }
+
+        provider.setId(providerID);
+
+        return providerID;
+    }
+
+
     public static <T> Observable<T> createObservableIO(final Callable<T> func) {
         return Observable.fromCallable(func)
                 .subscribeOn(Schedulers.io());
     }
+
     private byte[] bitmapToByteArray(Bitmap image) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 0, outputStream);

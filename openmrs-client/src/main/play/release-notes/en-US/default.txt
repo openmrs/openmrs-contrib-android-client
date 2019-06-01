@@ -1,0 +1,5 @@
+1. Added Kotlin dependency to app level build.gradle file
+2. Added release folder to gitignore
+3. Initialized SQLCipher, made app 64-bit compliant
+4. Changed Gradle to latest version
+5. Fixed Play Publisher not publishing o Play store

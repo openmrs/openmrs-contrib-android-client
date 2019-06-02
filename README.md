@@ -17,6 +17,7 @@ OpenMRS Android Client
 * [Demo Server](#demo-server)
 * [Releasing](#releasing)
 * [Release Notes](#release-notes)
+	* [Verison 2.7.2](#version-2.7.2)
 	* [Version 2.7.1](#version-2.7.1)
 	* [Version 2.7.0](#version-2.7.0)
 	* [Version 2.6.2](#version-2.6.2)
@@ -95,6 +96,15 @@ In order to release the application, go to [releases](https://github.com/openmrs
 If you want to release a new major or minor version, please be sure to update the applicationVersion variable in [build.gradle](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/openmrs-client/build.gradle#L26) prior to the release.
 
 # Release Notes
+
+<a name="version-2.7.2"></a>
+### Version 2.7.2
+### Summary:
+1. Added Kotlin dependency to app level build.gradle file
+2. Added release folder to gitignore
+3. Initialized SQLCipher, made app 64-bit compliant
+4. Changed Gradle to latest version
+5. Fixed Play Publisher not publishing o Play store
 
 <a name="version-2.7.1"></a>
 ### Version 2.7.1

@@ -177,4 +177,10 @@ play {
     }
 
     serviceAccountCredentials = rootProject.file('google_play.json')
+    resolutionStrategy = "auto"
+    releaseStatus = "inProgress"
+
+    outputProcessor { // this: ApkVariantOutput
+        versionNameOverride = "$versionNameOverride.$versionCode"
+    }
 }

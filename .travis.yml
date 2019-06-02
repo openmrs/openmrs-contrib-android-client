@@ -4,14 +4,18 @@ jdk: oraclejdk8
 dist: trusty
 
 before_install:
-  - yes | sdkmanager "platform-tools" "tools" "platforms;android-27" "extras;android;m2repository"
+  - yes | sdkmanager "platform-tools" "tools" "platforms;android-27"
+    "extras;android;m2repository"
+  - chmod +x load_files.sh
+  - chmod +x build.sh
+  - ./load_files.sh
 
 script:
-- ./build.sh
-- ./gradlew jacocoTestReport
+  - ./build.sh
+  - ./gradlew jacocoTestReport
 
 after_success:
-- bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash)
 
 deploy:
   provider: releases

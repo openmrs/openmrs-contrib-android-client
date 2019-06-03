@@ -168,6 +168,8 @@ dependencies {
 }
 
 play {
+    enabled = rootProject.file('google_play.json').exists()
+
     if (version.contains("alpha")) {
         track = 'alpha'
     } else if (version.contains("beta")) {

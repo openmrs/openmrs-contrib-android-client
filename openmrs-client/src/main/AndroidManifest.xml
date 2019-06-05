@@ -234,6 +234,13 @@
             android:name="com.activeandroid.content.ContentProvider"
             android:authorities="org.openmrs.mobile"
             android:exported="false" />
+
+        <activity android:name=".activities.providermanager.ProviderManagementActivity"
+            android:configChanges="keyboardHidden|screenSize"
+            android:label="@string/provider_manager"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeOrig"/>
+
     </application>
 
 </manifest>

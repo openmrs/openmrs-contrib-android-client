@@ -18,6 +18,7 @@ package org.openmrs.mobile.test.presenters;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardContract;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardPresenter;
 import org.openmrs.mobile.api.RestApi;
@@ -35,7 +36,6 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.atMost;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class VisitDashboardPresenterTest extends ACUnitTestBaseRx {
 
@@ -58,9 +58,9 @@ public class VisitDashboardPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldEndVisit_allOK() {
         Visit visit = createVisit(visitId);
-        when(restApi.endVisitByUUID(eq(visit.getUuid()), any())).thenReturn(mockSuccessCall(visit));
-        when(visitDAO.getVisitByID(visitId)).thenReturn(Observable.just(visit));
-        when(visitDAO.saveOrUpdate(any(), eq(visitId))).thenReturn(Observable.just(visitId));
+        Mockito.lenient().when(restApi.endVisitByUUID(eq(visit.getUuid()), any())).thenReturn(mockSuccessCall(visit));
+        Mockito.lenient().when(visitDAO.getVisitByID(visitId)).thenReturn(Observable.just(visit));
+        Mockito.lenient().when(visitDAO.saveOrUpdate(any(), eq(visitId))).thenReturn(Observable.just(visitId));
         presenter.endVisit();
         verify(view).moveToPatientDashboard();
     }
@@ -68,8 +68,8 @@ public class VisitDashboardPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldEndVisit_error() {
         Visit visit = createVisit(visitId);
-        when(restApi.endVisitByUUID(eq(visit.getUuid()), any())).thenReturn(mockErrorCall(401));
-        when(visitDAO.getVisitByID(visitId)).thenReturn(Observable.just(visit));
+        Mockito.lenient().when(restApi.endVisitByUUID(eq(visit.getUuid()), any())).thenReturn(mockErrorCall(401));
+        Mockito.lenient().when(visitDAO.getVisitByID(visitId)).thenReturn(Observable.just(visit));
         presenter.endVisit();
         verify(view).showErrorToast(any());
     }
@@ -77,7 +77,7 @@ public class VisitDashboardPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldFillForm_allOK() {
         Visit visit = createVisit(visitId);
-        when(visitDAO.getVisitByID(visitId)).thenReturn(Observable.just(visit));
+        Mockito.lenient().when(visitDAO.getVisitByID(visitId)).thenReturn(Observable.just(visit));
         presenter.fillForm();
         verify(view).startCaptureVitals(visit.getPatient().getId());
     }
@@ -86,7 +86,7 @@ public class VisitDashboardPresenterTest extends ACUnitTestBaseRx {
     public void shouldFillForm_patientNotRegistered() {
         Visit visit = createVisit(visitId);
         visit.getPatient().setUuid(null);
-        when(visitDAO.getVisitByID(visitId)).thenReturn(Observable.just(visit));
+        Mockito.lenient().when(visitDAO.getVisitByID(visitId)).thenReturn(Observable.just(visit));
         presenter.fillForm();
         verify(view).showErrorToast(anyInt());
     }
@@ -94,7 +94,7 @@ public class VisitDashboardPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldUpdatePatientName_allOK() {
         Visit visit = createVisit(visitId);
-        when(visitDAO.getVisitByID(visitId)).thenReturn(Observable.just(visit));
+        Mockito.lenient().when(visitDAO.getVisitByID(visitId)).thenReturn(Observable.just(visit));
         presenter.updatePatientName();
         verify(view).setActionBarTitle(anyString());
     }
@@ -102,7 +102,7 @@ public class VisitDashboardPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldInflateMenuForActiveVisit_allOK() {
         Visit visit = createVisit(visitId);
-        when(visitDAO.getVisitByID(visitId)).thenReturn(Observable.just(visit));
+        Mockito.lenient().when(visitDAO.getVisitByID(visitId)).thenReturn(Observable.just(visit));
         presenter.checkIfVisitActive();
         verify(view).setActiveVisitMenu();
     }
@@ -111,7 +111,7 @@ public class VisitDashboardPresenterTest extends ACUnitTestBaseRx {
     public void shouldNotInflateMenuForPastVisit_allOK() {
         Visit visit = createVisit(visitId);
         visit.setStopDatetime(DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
-        when(visitDAO.getVisitByID(visitId)).thenReturn(Observable.just(visit));
+        Mockito.lenient().when(visitDAO.getVisitByID(visitId)).thenReturn(Observable.just(visit));
         presenter.checkIfVisitActive();
         verify(view, atMost(0)).setActiveVisitMenu();
     }

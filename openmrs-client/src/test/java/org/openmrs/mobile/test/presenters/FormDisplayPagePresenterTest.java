@@ -21,6 +21,7 @@ import com.activeandroid.Cache;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayContract;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayPagePresenter;
 import org.openmrs.mobile.models.Page;
@@ -33,7 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class FormDisplayPagePresenterTest extends ACUnitTestBase {
 
@@ -54,13 +54,13 @@ public class FormDisplayPagePresenterTest extends ACUnitTestBase {
     @Test
     public  void subscribe_renderGroup() {
         List<Section> sectionList = getSectionList(sectionLabel, questionLabel, "group");
-        when(mPage.getSections()).thenReturn(sectionList);
+        Mockito.lenient().when(mPage.getSections()).thenReturn(sectionList);
 
         LinearLayout sectionLayout = new LinearLayout(Cache.getContext());
-        when(mFormDisplayPageView.createSectionLayout(sectionLabel)).thenReturn(sectionLayout);
+        Mockito.lenient().when(mFormDisplayPageView.createSectionLayout(sectionLabel)).thenReturn(sectionLayout);
 
         LinearLayout questionLayout = new LinearLayout(Cache.getContext());
-        when(mFormDisplayPageView.createQuestionGroupLayout(questionLabel)).thenReturn(questionLayout);
+        Mockito.lenient().when(mFormDisplayPageView.createQuestionGroupLayout(questionLabel)).thenReturn(questionLayout);
 
         presenter.subscribe();
         verify(mFormDisplayPageView).createSectionLayout(sectionList.get(0).getLabel());
@@ -71,13 +71,13 @@ public class FormDisplayPagePresenterTest extends ACUnitTestBase {
     @Test
     public  void subscribe_renderNumber() {
         List<Section> sectionList = getSectionList(sectionLabel, questionLabel, "number");
-        when(mPage.getSections()).thenReturn(sectionList);
+        Mockito.lenient().when(mPage.getSections()).thenReturn(sectionList);
 
         LinearLayout sectionLayout = new LinearLayout(Cache.getContext());
-        when(mFormDisplayPageView.createSectionLayout(sectionLabel)).thenReturn(sectionLayout);
+        Mockito.lenient().when(mFormDisplayPageView.createSectionLayout(sectionLabel)).thenReturn(sectionLayout);
 
         LinearLayout questionLayout = new LinearLayout(Cache.getContext());
-        when(mFormDisplayPageView.createQuestionGroupLayout(questionLabel)).thenReturn(questionLayout);
+        Mockito.lenient().when(mFormDisplayPageView.createQuestionGroupLayout(questionLabel)).thenReturn(questionLayout);
 
         presenter.subscribe();
         verify(mFormDisplayPageView).createSectionLayout(sectionList.get(0).getLabel());
@@ -89,13 +89,13 @@ public class FormDisplayPagePresenterTest extends ACUnitTestBase {
     @Test
     public  void subscribe_renderSelect() {
         List<Section> sectionList = getSectionList(sectionLabel, questionLabel, "select");
-        when(mPage.getSections()).thenReturn(sectionList);
+        Mockito.lenient().when(mPage.getSections()).thenReturn(sectionList);
 
         LinearLayout sectionLayout = new LinearLayout(Cache.getContext());
-        when(mFormDisplayPageView.createSectionLayout(sectionLabel)).thenReturn(sectionLayout);
+        Mockito.lenient().when(mFormDisplayPageView.createSectionLayout(sectionLabel)).thenReturn(sectionLayout);
 
         LinearLayout questionLayout = new LinearLayout(Cache.getContext());
-        when(mFormDisplayPageView.createQuestionGroupLayout(questionLabel)).thenReturn(questionLayout);
+        Mockito.lenient().when(mFormDisplayPageView.createQuestionGroupLayout(questionLabel)).thenReturn(questionLayout);
 
         presenter.subscribe();
         verify(mFormDisplayPageView).createSectionLayout(sectionList.get(0).getLabel());
@@ -107,13 +107,13 @@ public class FormDisplayPagePresenterTest extends ACUnitTestBase {
     @Test
     public  void subscribe_renderRadio() {
         List<Section> sectionList = getSectionList(sectionLabel, questionLabel, "radio");
-        when(mPage.getSections()).thenReturn(sectionList);
+        Mockito.lenient().when(mPage.getSections()).thenReturn(sectionList);
 
         LinearLayout sectionLayout = new LinearLayout(Cache.getContext());
-        when(mFormDisplayPageView.createSectionLayout(sectionLabel)).thenReturn(sectionLayout);
+        Mockito.lenient().when(mFormDisplayPageView.createSectionLayout(sectionLabel)).thenReturn(sectionLayout);
 
         LinearLayout questionLayout = new LinearLayout(Cache.getContext());
-        when(mFormDisplayPageView.createQuestionGroupLayout(questionLabel)).thenReturn(questionLayout);
+        Mockito.lenient().when(mFormDisplayPageView.createQuestionGroupLayout(questionLabel)).thenReturn(questionLayout);
 
         presenter.subscribe();
         verify(mFormDisplayPageView).createSectionLayout(sectionList.get(0).getLabel());

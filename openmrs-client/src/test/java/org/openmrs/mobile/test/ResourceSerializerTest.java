@@ -21,7 +21,7 @@ import com.google.gson.JsonSerializationContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.openmrs.mobile.models.IdentifierType;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Patient;
@@ -38,7 +38,7 @@ import static org.hamcrest.core.IsNot.not;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class ResourceSerializerTest {
 
     @Mock

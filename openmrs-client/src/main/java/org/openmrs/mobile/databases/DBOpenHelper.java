@@ -107,15 +107,16 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
 
         try {
             db.beginTransaction();
+
             bindString(1, patient.getName().getNameString(), patientStatement);
             bindString(2, Boolean.toString(patient.isSynced()),patientStatement);
-
-            if(patient.getUuid()!=null)
+            
+            if (patient.getUuid() != null)
                 bindString(3, patient.getUuid(), patientStatement);
             else
                 bindString(3, null, patientStatement);
 
-            if(patient.getIdentifier()!=null)
+            if (patient.getIdentifier() != null)
                 bindString(4, patient.getIdentifier().getIdentifier(), patientStatement);
             else
                 bindString(4, null, patientStatement);
@@ -192,7 +193,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         return db.update(PatientTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);
     }
 
-    public long insertConcept (SQLiteDatabase db, Concept concept) {
+    public long insertConcept(SQLiteDatabase db, Concept concept) {
         long conceptId;
         SQLiteStatement statement = db.compileStatement(mConceptTable.insertIntoTableDefinition());
         try {
@@ -209,7 +210,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         return conceptId;
     }
 
-    public int updateConcept (SQLiteDatabase db, long conceptId, Concept concept) {
+    public int updateConcept(SQLiteDatabase db, long conceptId, Concept concept) {
         ContentValues newValues = new ContentValues();
         newValues.put(ConceptTable.Column.UUID, concept.getUuid());
         newValues.put(ConceptTable.Column.DISPLAY, concept.getDisplay());
@@ -315,7 +316,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
                 bindString(7, obs.getDiagnosisCertainty(), observationStatement);
             }
             bindString(8, obs.getDiagnosisNote(), observationStatement);
-            if(obs.getConcept() != null){
+            if (obs.getConcept() != null) {
                 bindString(9, obs.getConcept().getUuid(), observationStatement);
             }
             obsID = observationStatement.executeInsert();
@@ -380,6 +381,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         return Observable.fromCallable(func)
                 .subscribeOn(Schedulers.io());
     }
+
     private byte[] bitmapToByteArray(Bitmap image) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 0, outputStream);

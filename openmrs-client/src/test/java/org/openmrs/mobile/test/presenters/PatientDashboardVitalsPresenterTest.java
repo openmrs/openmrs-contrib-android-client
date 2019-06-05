@@ -17,6 +17,7 @@ package org.openmrs.mobile.test.presenters;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.vitals.PatientDashboardVitalsPresenter;
 import org.openmrs.mobile.api.RestApi;
@@ -39,7 +40,6 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @PrepareForTest(NetworkUtils.class)
 public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
@@ -70,10 +70,10 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void subscribe_allOk() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
-        when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString()))
+        Mockito.lenient().when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString()))
                 .thenReturn(mockSuccessCall(Collections.singletonList(new Encounter())));
         Encounter encounter = new Encounter();
-        when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(encounter));
+        Mockito.lenient().when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(encounter));
         presenter.subscribe();
         verify(encounterDAO, times(2)).getLastVitalsEncounter(patient.getUuid());
         verify(viewPatientVitals, times(2)).showEncounterVitals(encounter);
@@ -82,9 +82,9 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void subscribe_nullEncounter() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
-        when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString()))
+        Mockito.lenient().when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString()))
                 .thenReturn(mockSuccessCall(Collections.singletonList(new Encounter())));
-        when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(null));
+        Mockito.lenient().when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(null));
         presenter.subscribe();
         verify(encounterDAO, times(2)).getLastVitalsEncounter(patient.getUuid());
         verify(viewPatientVitals, times(2)).showNoVitalsNotification();
@@ -93,9 +93,9 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void subscribe_errorResponse() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
-        when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString())).thenReturn(mockErrorCall(401));
+        Mockito.lenient().when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString())).thenReturn(mockErrorCall(401));
         Encounter encounter = new Encounter();
-        when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(encounter));
+        Mockito.lenient().when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(encounter));
         presenter.subscribe();
         verify(viewPatientVitals).showErrorToast(anyString());
         verify(encounterDAO).getLastVitalsEncounter(patient.getUuid());
@@ -105,8 +105,8 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void subscribe_errorResponseNullEncounter() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
-        when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString())).thenReturn(mockErrorCall(401));
-        when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(null));
+        Mockito.lenient().when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString())).thenReturn(mockErrorCall(401));
+        Mockito.lenient().when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(null));
         presenter.subscribe();
         verify(viewPatientVitals).showErrorToast(anyString());
         verify(encounterDAO).getLastVitalsEncounter(patient.getUuid());
@@ -117,7 +117,7 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
     public void subscribe_networkError() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(false);
         Encounter encounter = new Encounter();
-        when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(encounter));
+        Mockito.lenient().when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(encounter));
         presenter.subscribe();
         verify(encounterDAO).getLastVitalsEncounter(patient.getUuid());
         verify(viewPatientVitals).showEncounterVitals(encounter);
@@ -126,7 +126,7 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void subscribe_networkErrorNullEncounter() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(false);
-        when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(null));
+        Mockito.lenient().when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(null));
         presenter.subscribe();
         verify(encounterDAO).getLastVitalsEncounter(patient.getUuid());
         verify(viewPatientVitals).showNoVitalsNotification();
@@ -135,7 +135,7 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldStartFormDisplayActivityWithEncounter_allOK() {
         Encounter encounter = new Encounter();
-        when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(encounter));
+        Mockito.lenient().when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(encounter));
         presenter.startFormDisplayActivityWithEncounter();
         verify(viewPatientVitals).startFormDisplayActivity(encounter);
     }

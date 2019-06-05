@@ -17,6 +17,7 @@ package org.openmrs.mobile.test.presenters;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.visits.PatientDashboardVisitsPresenter;
 import org.openmrs.mobile.api.RestApi;
@@ -44,7 +45,6 @@ import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @PrepareForTest({NetworkUtils.class, OpenMRS.class})
 public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
@@ -76,7 +76,7 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldShowPatientsVisitsOnStartUp_allOK(){
         List<Visit> visitsList = createVisitsList();
-        when(visitDAO.getVisitsByPatientID(patient.getId())).thenReturn(Observable.just(visitsList));
+        Mockito.lenient().when(visitDAO.getVisitsByPatientID(patient.getId())).thenReturn(Observable.just(visitsList));
         presenter.subscribe();
         verify(view, atLeast(1)).toggleRecyclerListVisibility(true);
         verify(view, atLeast(1)).setVisitsToDisplay(visitsList);
@@ -84,7 +84,7 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldShowPatientsVisitsOnStartUp_noVisits(){
-        when(visitDAO.getVisitsByPatientID(patient.getId())).thenReturn(Observable.just(Arrays.asList()));
+        Mockito.lenient().when(visitDAO.getVisitsByPatientID(patient.getId())).thenReturn(Observable.just(Arrays.asList()));
         presenter.subscribe();
         verify(view, atLeast(1)).toggleRecyclerListVisibility(false);
     }
@@ -92,7 +92,7 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldShowStartVisitDialog_patientOnVisit(){
-        when(visitDAO.getActiveVisitByPatientId(patient.getId())).thenReturn(Observable.just(new Visit()));
+        Mockito.lenient().when(visitDAO.getActiveVisitByPatientId(patient.getId())).thenReturn(Observable.just(new Visit()));
         presenter.showStartVisitDialog();
         verify(view).showStartVisitDialog(false);
     }
@@ -100,7 +100,7 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldShowStartVisitDialog_noNetwork(){
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(false);
-        when(visitDAO.getActiveVisitByPatientId(patient.getId())).thenReturn(Observable.just(null));
+        Mockito.lenient().when(visitDAO.getActiveVisitByPatientId(patient.getId())).thenReturn(Observable.just(null));
         presenter.showStartVisitDialog();
         verify(view).showErrorToast(anyString());
     }
@@ -108,18 +108,18 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldShowStartVisitDialog_allOk(){
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
-        when(visitDAO.getActiveVisitByPatientId(patient.getId())).thenReturn(Observable.just(null));
+        Mockito.lenient().when(visitDAO.getActiveVisitByPatientId(patient.getId())).thenReturn(Observable.just(null));
         presenter.showStartVisitDialog();
         verify(view).showStartVisitDialog(true);
     }
 
     @Test
     public void shouldSyncVisits_allOK(){
-        when(visitDAO.saveOrUpdate(any(), anyLong())).thenReturn(Observable.just(1L));
+        Mockito.lenient().when(visitDAO.saveOrUpdate(any(), anyLong())).thenReturn(Observable.just(1L));
         List<Visit> visitsList = createVisitsList();
-        when(restApi.findVisitsByPatientUUID(any(), any())).thenReturn(mockSuccessCall(visitsList));
-        when(visitDAO.getActiveVisitByPatientId(patient.getId())).thenReturn(Observable.just(new Visit()));
-        when(visitDAO.getVisitsByPatientID(patient.getId())).thenReturn(Observable.just(visitsList));
+        Mockito.lenient().when(restApi.findVisitsByPatientUUID(any(), any())).thenReturn(mockSuccessCall(visitsList));
+        Mockito.lenient().when(visitDAO.getActiveVisitByPatientId(patient.getId())).thenReturn(Observable.just(new Visit()));
+        Mockito.lenient().when(visitDAO.getVisitsByPatientID(patient.getId())).thenReturn(Observable.just(visitsList));
         presenter.syncVisits();
         verify(view).setVisitsToDisplay(visitsList);
         verify(view).showStartVisitDialog(false);
@@ -127,23 +127,23 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldSyncVisits_errorResponse(){
-        when(restApi.findVisitsByPatientUUID(any(), any())).thenReturn(mockErrorCall(401));
+        Mockito.lenient().when(restApi.findVisitsByPatientUUID(any(), any())).thenReturn(mockErrorCall(401));
         presenter.syncVisits();
         verify(view).showErrorToast(anyString());
     }
 
     @Test
     public void shouldSyncVisits_failure(){
-        when(restApi.findVisitsByPatientUUID(any(), any())).thenReturn(mockFailureCall());
+        Mockito.lenient().when(restApi.findVisitsByPatientUUID(any(), any())).thenReturn(mockFailureCall());
         presenter.syncVisits();
-        verify(view).showErrorToast(anyString());
+        verify(view).showErrorToast(Mockito.any());
     }
 
     @Test
     public void shouldStartVisit_allOK(){
         createMocksForStartVisit();
-        when(visitDAO.saveOrUpdate(any(), anyLong())).thenReturn(Observable.just(1L));
-        when(restApi.startVisit(any())).thenReturn(mockSuccessCall(new Visit()));
+        Mockito.lenient().when(visitDAO.saveOrUpdate(any(), anyLong())).thenReturn(Observable.just(1L));
+        Mockito.lenient().when(restApi.startVisit(any())).thenReturn(mockSuccessCall(new Visit()));
         presenter.startVisit();
         verify(view).goToVisitDashboard(1L);
         verify(view).dismissCurrentDialog();
@@ -152,8 +152,8 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldStartVisit_errorResponse(){
         createMocksForStartVisit();
-        when(visitDAO.saveOrUpdate(any(), anyLong())).thenReturn(Observable.just(1L));
-        when(restApi.startVisit(any())).thenReturn(mockErrorCall(401));
+        Mockito.lenient().when(visitDAO.saveOrUpdate(any(), anyLong())).thenReturn(Observable.just(1L));
+        Mockito.lenient().when(restApi.startVisit(any())).thenReturn(mockErrorCall(401));
         presenter.startVisit();
         verify(view).showErrorToast(anyString());
         verify(view).dismissCurrentDialog();
@@ -162,10 +162,10 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldStartVisit_failure(){
         createMocksForStartVisit();
-        when(visitDAO.saveOrUpdate(any(), anyLong())).thenReturn(Observable.just(1L));
-        when(restApi.startVisit(any())).thenReturn(mockFailureCall());
+        Mockito.lenient().when(visitDAO.saveOrUpdate(any(), anyLong())).thenReturn(Observable.just(1L));
+        Mockito.lenient().when(restApi.startVisit(any())).thenReturn(mockFailureCall());
         presenter.startVisit();
-        verify(view).showErrorToast(anyString());
+        verify(view).showErrorToast(Mockito.any());
         verify(view).dismissCurrentDialog();
     }
 
@@ -174,8 +174,8 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
         PowerMockito.when(locationDAO.findLocationByName(anyString())).thenReturn(new Location());
 
-        when(openMRS.getLocation()).thenReturn("location");
-        when(openMRS.getVisitTypeUUID()).thenReturn("visitTypeUuid");
+        Mockito.lenient().when(openMRS.getLocation()).thenReturn("location");
+        Mockito.lenient().when(openMRS.getVisitTypeUUID()).thenReturn("visitTypeUuid");
     }
 
     private List<Visit> createVisitsList(){

@@ -126,52 +126,52 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
     }
 
     private void setPatientInfo(Patient patient) {
-        givenName.setText(patient.getPerson().getName().getGivenName());
-        middleName.setText(patient.getPerson().getName().getMiddleName());
-        familyName.setText(patient.getPerson().getName().getFamilyName());
-        if (("M").equals(patient.getPerson().getGender())) {
+        givenName.setText(patient.getName().getGivenName());
+        middleName.setText(patient.getName().getMiddleName());
+        familyName.setText(patient.getName().getFamilyName());
+        if (("M").equals(patient.getGender())) {
             gender.setText(getString(R.string.male));
         } else {
             gender.setText(getString(R.string.female));
         }
-        birthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
-        if (patient.getPerson().getAddress().getAddress1() != null) {
-            address1.setText(patient.getPerson().getAddress().getAddress1());
+        birthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
+        if (patient.getAddress().getAddress1() != null) {
+            address1.setText(patient.getAddress().getAddress1());
         } else {
             address1.setVisibility(View.GONE);
             view.findViewById(R.id.addr2Separator).setVisibility(View.GONE);
             view.findViewById(R.id.addr2Hint).setVisibility(View.GONE);
         }
-        if (patient.getPerson().getAddress().getAddress2() != null) {
-            address2.setText(patient.getPerson().getAddress().getAddress2());
+        if (patient.getAddress().getAddress2() != null) {
+            address2.setText(patient.getAddress().getAddress2());
         } else {
             address2.setVisibility(View.GONE);
             view.findViewById(R.id.addr2Separator).setVisibility(View.GONE);
             view.findViewById(R.id.addr2Hint).setVisibility(View.GONE);
         }
-        if (patient.getPerson().getAddress().getCityVillage() != null) {
-            city.setText(patient.getPerson().getAddress().getCityVillage());
+        if (patient.getAddress().getCityVillage() != null) {
+            city.setText(patient.getAddress().getCityVillage());
         } else {
             city.setVisibility(View.GONE);
             view.findViewById(R.id.citySeparator).setVisibility(View.GONE);
             view.findViewById(R.id.cityHint).setVisibility(View.GONE);
         }
-        if (patient.getPerson().getAddress().getStateProvince() != null) {
-            state.setText(patient.getPerson().getAddress().getStateProvince());
+        if (patient.getAddress().getStateProvince() != null) {
+            state.setText(patient.getAddress().getStateProvince());
         } else {
             state.setVisibility(View.GONE);
             view.findViewById(R.id.stateSeparator).setVisibility(View.GONE);
             view.findViewById(R.id.stateHint).setVisibility(View.GONE);
         }
-        if (patient.getPerson().getAddress().getCountry() != null) {
-            country.setText(patient.getPerson().getAddress().getCountry());
+        if (patient.getAddress().getCountry() != null) {
+            country.setText(patient.getAddress().getCountry());
         } else {
             country.setVisibility(View.GONE);
             view.findViewById(R.id.countrySeparator).setVisibility(View.GONE);
             view.findViewById(R.id.countryHint).setVisibility(View.GONE);
         }
-        if (patient.getPerson().getAddress().getPostalCode() != null) {
-            postalCode.setText(patient.getPerson().getAddress().getPostalCode());
+        if (patient.getAddress().getPostalCode() != null) {
+            postalCode.setText(patient.getAddress().getPostalCode());
         } else {
             postalCode.setVisibility(View.GONE);
             view.findViewById(R.id.postalCodeSeparator).setVisibility(View.GONE);

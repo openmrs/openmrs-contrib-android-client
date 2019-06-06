@@ -93,8 +93,8 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
     public void subscribe() {
         updatePatientDataFromServer();
         mPatient = patientDAO.findPatientByID(mPatient.getId().toString());
-        mPatientDetailsView.setMenuTitle(mPatient.getPerson().getName().getNameString(), mPatient.getIdentifier().getIdentifier());
         mPatientDetailsView.resolvePatientDataDisplay(patientDAO.findPatientByID(mPatient.getId().toString()));
+        mPatientDetailsView.setMenuTitle(mPatient.getName().getNameString(), mPatient.getIdentifier().getIdentifier());
         if (!NetworkUtils.isOnline()) {
             mPatientDetailsView.attachSnackbarToActivity();
         }

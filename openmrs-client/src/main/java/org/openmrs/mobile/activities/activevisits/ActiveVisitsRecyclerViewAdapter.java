@@ -65,14 +65,14 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
             final String display = "#" + patient.getIdentifier().getIdentifier();
             visitViewHolder.mIdentifier.setText(display);
         }
-        if (null != patient.getPerson().getName()) {
-            visitViewHolder.mDisplayName.setText(patient.getPerson().getName().getNameString());
+        if (null != patient.getName()) {
+            visitViewHolder.mDisplayName.setText(patient.getName().getNameString());
         }
-        if (null != patient.getPerson().getGender()) {
-            visitViewHolder.mGender.setText(patient.getPerson().getGender());
+        if (null != patient.getGender()) {
+            visitViewHolder.mGender.setText(patient.getGender());
         }
         try{
-            visitViewHolder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
+            visitViewHolder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
         }
         catch (Exception e)
         {

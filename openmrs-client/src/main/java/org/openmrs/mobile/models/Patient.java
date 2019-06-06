@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Patient extends Resource implements Serializable{
+public class Patient extends Person implements Serializable{
 
     private Long id;
     private String encounters = "";
@@ -30,20 +30,29 @@ public class Patient extends Resource implements Serializable{
     @Expose
     private List<PatientIdentifier> identifiers = new ArrayList<>();
 
-    @SerializedName("person")
-    @Expose
-    private Person person;
-
-    @SerializedName("voided")
-    @Expose
-    private Boolean voided;
-
-    @SerializedName("resourceVersion")
-    @Expose
-    private String resourceVersion;
-
     public Long getId() {
         return id;
+    }
+
+    @SerializedName("person")
+    public Person getPerson(){
+        Person person = new Person();
+        person.setNames(getNames());
+        person.setGender(getGender());
+        person.setAddresses(getAddresses());
+        person.setAttributes(getAttributes());
+        person.setPhoto(getPhoto());
+        person.setBirthdate(getBirthdate());
+        person.setBirthdateEstimated(getBirthdateEstimated());
+
+        return person;
+    }
+
+    public PatientDto getPatientDto(){
+        PatientDto patientDto = new PatientDto();
+        patientDto.setPerson(getPerson());
+        patientDto.setIdentifiers(getIdentifiers());
+        return patientDto;
     }
 
     public void setId(Long id) {
@@ -76,59 +85,6 @@ public class Patient extends Resource implements Serializable{
         }
     }
 
-    /**
-     * 
-     * @return
-     *     The person
-     */
-    public Person getPerson() {
-        return person;
-    }
-
-    /**
-     * 
-     * @param person
-     *     The person
-     */
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    /**
-     * 
-     * @return
-     *     The voided
-     */
-    public Boolean getVoided() {
-        return voided;
-    }
-
-    /**
-     * 
-     * @param voided
-     *     The voided
-     */
-    public void setVoided(Boolean voided) {
-        this.voided = voided;
-    }
-
-    /**
-     * 
-     * @return
-     *     The resourceVersion
-     */
-    public String getResourceVersion() {
-        return resourceVersion;
-    }
-
-    /**
-     * 
-     * @param resourceVersion
-     *     The resourceVersion
-     */
-    public void setResourceVersion(String resourceVersion) {
-        this.resourceVersion = resourceVersion;
-    }
 
     public boolean isSynced()
     {
@@ -152,17 +108,17 @@ public class Patient extends Resource implements Serializable{
 
     public Map<String, String> toMap(){
         Map<String, String> map = new HashMap<>();
-        puToMapIfNotNull(map, "givenname", person.getName().getGivenName());
-        puToMapIfNotNull(map, "middlename",person.getName().getMiddleName());
-        puToMapIfNotNull(map, "familyname", person.getName().getFamilyName());
-        puToMapIfNotNull(map, "gender", person.getGender());
-        puToMapIfNotNull(map, "birthdate", person.getBirthdate());
-        puToMapIfNotNull(map, "address1", person.getAddress().getAddress1());
-        puToMapIfNotNull(map, "address2", person.getAddress().getAddress2());
-        puToMapIfNotNull(map, "city", person.getAddress().getCityVillage());
-        puToMapIfNotNull(map, "state", person.getAddress().getStateProvince());
-        puToMapIfNotNull(map, "postalcode", person.getAddress().getPostalCode());
-        puToMapIfNotNull(map, "country", person.getAddress().getCountry());
+        puToMapIfNotNull(map, "givenname", getName().getGivenName());
+        puToMapIfNotNull(map, "middlename",getName().getMiddleName());
+        puToMapIfNotNull(map, "familyname", getName().getFamilyName());
+        puToMapIfNotNull(map, "gender", getGender());
+        puToMapIfNotNull(map, "birthdate", getBirthdate());
+        puToMapIfNotNull(map, "address1", getAddress().getAddress1());
+        puToMapIfNotNull(map, "address2", getAddress().getAddress2());
+        puToMapIfNotNull(map, "city", getAddress().getCityVillage());
+        puToMapIfNotNull(map, "state", getAddress().getStateProvince());
+        puToMapIfNotNull(map, "postalcode", getAddress().getPostalCode());
+        puToMapIfNotNull(map, "country", getAddress().getCountry());
         return map;
     }
 

@@ -77,14 +77,14 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
             final String display = "#" + patient.getIdentifier().getIdentifier();
             holder.mIdentifier.setText(display);
         }
-        if (null != patient.getPerson().getName()) {
-            holder.mDisplayName.setText(patient.getPerson().getName().getNameString());
+        if (null != patient.getName()) {
+            holder.mDisplayName.setText(patient.getName().getNameString());
         }
-        if (null != patient.getPerson().getGender()) {
-            holder.mGender.setText(patient.getPerson().getGender());
+        if (null != patient.getGender()) {
+            holder.mGender.setText(patient.getGender());
         }
 
-        holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
+        holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
     }
 
     @Override

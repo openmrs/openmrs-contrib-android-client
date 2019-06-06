@@ -37,6 +37,7 @@ import org.openmrs.mobile.models.IdGenPatientIdentifiers;
 import org.openmrs.mobile.models.IdentifierType;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.PatientDto;
 import org.openmrs.mobile.models.PatientIdentifier;
 import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.models.Results;
@@ -103,16 +104,17 @@ public class PatientApi extends RetrofitApi{
                         patient.setIdentifiers(identifiers);
                         patient.setUuid(null);
 
-                        Call<Patient> call = restApi.createPatient(patient);
-                        call.enqueue(new Callback<Patient>() {
+                        PatientDto patientDto = patient.getPatientDto();
+
+                        Call<PatientDto> call = restApi.createPatient(patientDto);
+                        call.enqueue(new Callback<PatientDto>() {
                             @Override
-                            public void onResponse(@NonNull Call<Patient> call, @NonNull Response<Patient> response) {
+                            public void onResponse(@NonNull Call<PatientDto> call, @NonNull Response<PatientDto> response) {
                                 if (response.isSuccessful()) {
-                                    Patient newPatient = response.body();
+                                    PatientDto newPatient = response.body();
 
                                     patient.setUuid(newPatient.getUuid());
-                                    patient.getPerson().setUuid(newPatient.getUuid());
-                                    if (patient.getPerson().getPhoto() != null)
+                                    if (patient.getPhoto() != null)
                                         uploadPatientPhoto(patient);
 
                                     new PatientDAO().updatePatient(patient.getId(), patient);
@@ -135,7 +137,7 @@ public class PatientApi extends RetrofitApi{
                             }
 
                             @Override
-                            public void onFailure(@NonNull Call<Patient> call, @NonNull Throwable t) {
+                            public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
                                 ToastUtil.notify("Patient[" + patient.getId() + "] cannot be synced due to request error: " + t.toString());
                                 deferred.reject(t);
                                 if (callbackListener != null) {
@@ -157,8 +159,8 @@ public class PatientApi extends RetrofitApi{
 
     private void uploadPatientPhoto(final Patient patient) {
         PatientPhoto patientPhoto = new PatientPhoto();
-        patientPhoto.setPhoto(patient.getPerson().getPhoto());
-        patientPhoto.setPerson(patient.getPerson());
+        patientPhoto.setPhoto(patient.getPhoto());
+        patientPhoto.setPerson(patient);
         Call<PatientPhoto> personPhotoCall =
                 restApi.uploadPatientPhoto(patient.getUuid(), patientPhoto);
         personPhotoCall.enqueue(new Callback<PatientPhoto>() {
@@ -174,13 +176,6 @@ public class PatientApi extends RetrofitApi{
                 ToastUtil.notify("Patient photo cannot be synced due to error: " + t.toString() );
             }
         });
-    }
-
-    /**
-     * Register Patient
-     */
-    public void registerPatient(final Patient patient) {
-        registerPatient(patient, null);
     }
 
     public void registerPatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
@@ -199,17 +194,18 @@ public class PatientApi extends RetrofitApi{
      * Update Patient
      */
     public void updatePatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
+        PatientDto patientDto = patient.getPatientDto();
         if (NetworkUtils.isOnline()) {
-            Call<Patient> call = restApi.updatePatient(patient, patient.getUuid(), "full");
-            call.enqueue(new Callback<Patient>() {
+            Call<PatientDto> call = restApi.updatePatient(patientDto, patient.getUuid(), "full");
+            call.enqueue(new Callback<PatientDto>() {
                 @Override
-                public void onResponse(@NonNull Call<Patient> call, @NonNull Response<Patient> response) {
+                public void onResponse(@NonNull Call<PatientDto> call, @NonNull Response<PatientDto> response) {
                     if (response.isSuccessful()) {
-                        Patient updatedPatient = response.body();
-                        patient.getPerson().setBirthdate(updatedPatient.getPerson().getBirthdate());
+                        PatientDto patientDto = response.body();
+                        patient.setBirthdate(patientDto.getPerson().getBirthdate());
 
-                        patient.getPerson().setUuid(patient.getUuid());
-                        if (patient.getPerson().getPhoto() != null)
+                        patient.setUuid(patient.getUuid());
+                        if (patient.getPhoto() != null)
                             uploadPatientPhoto(patient);
 
                         patientDao.updatePatient(patient.getId(), patient);
@@ -229,7 +225,7 @@ public class PatientApi extends RetrofitApi{
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<Patient> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
                     ToastUtil.notify("Patient " + patient.getPerson().getName().getNameString()
                             + " cannot be updated due to request error: " + t.toString());
                     if (callbackListener != null) {
@@ -250,27 +246,27 @@ public class PatientApi extends RetrofitApi{
      * Download Patient by UUID
      */
     public void downloadPatientByUuid(@NonNull final String uuid, @NonNull final DownloadPatientCallbackListener callbackListener) {
-        Call<Patient> call = restApi.getPatientByUUID(uuid, "full");
-        call.enqueue(new Callback<Patient>() {
+        Call<PatientDto> call = restApi.getPatientByUUID(uuid, "full");
+        call.enqueue(new Callback<PatientDto>() {
             @Override
-            public void onResponse(@NonNull Call<Patient> call, @NonNull Response<Patient> response) {
+            public void onResponse(@NonNull Call<PatientDto> call, @NonNull Response<PatientDto> response) {
                 if (response.isSuccessful()) {
-                    final Patient newPatient = response.body();
+                    final PatientDto newPatientDto = response.body();
                     AndroidDeferredManager dm = new AndroidDeferredManager();
-                    dm.when(downloadPatientPhotoByUuid(newPatient.getUuid())).done(result -> {
+                    dm.when(downloadPatientPhotoByUuid(newPatientDto.getUuid())).done(result -> {
                         if (result != null) {
-                            newPatient.getPerson().setPhoto(result);
-                            callbackListener.onPatientPhotoDownloaded(newPatient);
+                            newPatientDto.getPerson().setPhoto(result);
+                            callbackListener.onPatientPhotoDownloaded(newPatientDto.getPatient());
                         }
                     });
-                    callbackListener.onPatientDownloaded(newPatient);
+                    callbackListener.onPatientDownloaded(newPatientDto.getPatient());
                 }
                 else {
                     callbackListener.onErrorResponse(response.message());
                 }
             }
             @Override
-            public void onFailure(@NonNull Call<Patient> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
                 callbackListener.onErrorResponse(t.getMessage());
             }
         });

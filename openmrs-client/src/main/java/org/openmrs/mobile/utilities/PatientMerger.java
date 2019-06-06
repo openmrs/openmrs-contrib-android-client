@@ -22,16 +22,16 @@ import org.openmrs.mobile.models.PersonName;
 public class PatientMerger {
 
     public Patient mergePatient(Patient oldPatient, Patient newPatient){
-        mergePatientsPerson(oldPatient.getPerson(), newPatient.getPerson());
+        mergePatientsPerson(oldPatient, newPatient);
         oldPatient.setId(newPatient.getId());
         return oldPatient;
     }
 
-    private void mergePatientsPerson(Person oldPerson, Person newPerson) {
-        mergePersonNames(oldPerson.getName(), newPerson.getName());
-        mergePersonAddress(oldPerson.getAddress(), newPerson.getAddress());
-        oldPerson.setGender(getNewValueIfOldIsNull(oldPerson.getGender(), newPerson.getGender()));
-        oldPerson.setBirthdate(getNewValueIfOldIsNull(oldPerson.getBirthdate(), newPerson.getBirthdate()));
+    private void mergePatientsPerson(Patient oldPatient, Patient newPatient) {
+        mergePersonNames(oldPatient.getName(), newPatient.getName());
+        mergePersonAddress(oldPatient.getAddress(), newPatient.getAddress());
+        oldPatient.setGender(getNewValueIfOldIsNull(oldPatient.getGender(), newPatient.getGender()));
+        oldPatient.setBirthdate(getNewValueIfOldIsNull(oldPatient.getBirthdate(), newPatient.getBirthdate()));
     }
 
     private void mergePersonAddress(PersonAddress oldAddress, PersonAddress newAddress) {

@@ -62,9 +62,9 @@ public class FilterUtil {
 
     private static List<String> getPatientSearchableWords(Patient patient) {
         String patientIdentifier = patient.getIdentifier().getIdentifier();
-        String fullName = patient.getPerson().getName().getNameString();
-        String givenFamilyName = patient.getPerson().getName().getGivenName() + " "
-                + patient.getPerson().getName().getFamilyName();
+        String fullName = patient.getName().getNameString();
+        String givenFamilyName = patient.getName().getGivenName() + " "
+                + patient.getName().getFamilyName();
 
         List<String> searchableWords = new ArrayList<>();
         searchableWords.add(patientIdentifier);

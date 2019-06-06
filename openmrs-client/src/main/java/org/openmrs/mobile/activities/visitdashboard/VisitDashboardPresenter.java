@@ -129,7 +129,7 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
     public void updatePatientName() {
         addSubscription(visitDAO.getVisitByID(visitId)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(visit -> mVisitDashboardView.setActionBarTitle(visit.getPatient().getPerson().getName().getNameString())));
+                .subscribe(visit -> mVisitDashboardView.setActionBarTitle(visit.getPatient().getName().getNameString())));
     }
 
     @Override

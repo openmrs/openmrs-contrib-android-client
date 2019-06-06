@@ -15,50 +15,47 @@
 
 package org.openmrs.mobile.activities.settings;
 
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
-import org.openmrs.mobile.models.SettingsListItemDTO;
+import org.openmrs.mobile.activities.logs.LogsActivity;
 import org.openmrs.mobile.services.ConceptDownloadService;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter> implements SettingsContract.View {
-
-    private List<SettingsListItemDTO> mListItem = new ArrayList<>();
-    private RecyclerView settingsRecyclerView;
 
     private BroadcastReceiver bReceiver;
 
     private TextView conceptsInDbTextView;
     private ImageButton downloadConceptsButton;
 
+    private View root;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_settings, container, false);
+        root = inflater.inflate(R.layout.fragment_settings, container, false);
 
         bReceiver = new BroadcastReceiver() {
             @Override
@@ -67,29 +64,13 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
             }
         };
 
-        settingsRecyclerView = (RecyclerView) root.findViewById(R.id.settingsRecyclerView);
-        settingsRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        settingsRecyclerView.setLayoutManager(linearLayoutManager);
-
-        conceptsInDbTextView = ((TextView) root.findViewById(R.id.conceptsInDbTextView));
-
-        downloadConceptsButton = ((ImageButton) root.findViewById(R.id.downloadConceptsButton));
-
-        downloadConceptsButton.setOnClickListener(view -> {
-            downloadConceptsButton.setEnabled(false);
-            Intent startIntent = new Intent(getActivity(), ConceptDownloadService.class);
-            startIntent.setAction(ApplicationConstants.ServiceActions.START_CONCEPT_DOWNLOAD_ACTION);
-            Objects.requireNonNull(getActivity()).startService(startIntent);
-        });
-
+        setUpConceptsView();
         return root;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mListItem = new ArrayList<>();
         LocalBroadcastManager.getInstance(this.getActivity()).unregisterReceiver(bReceiver);
     }
 
@@ -103,19 +84,42 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
     @Override
     public void setConceptsInDbText(String text) {
         if(text.equals("0")){
-            downloadConceptsButton.setEnabled(false);
+            downloadConceptsButton.setEnabled(true);
             ToastUtil.showLongToast(getActivity(),
                     ToastUtil.ToastType.WARNING,
                     R.string.settings_no_concepts_toast);
+        }else{
+            downloadConceptsButton.setEnabled(false);
         }
         conceptsInDbTextView.setText(text);
     }
 
     @Override
     public void addLogsInfo(long logSize, String logFilename) {
-        mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_logs),
-                logFilename,
-                "Size: " + logSize + "kB"));
+        LinearLayout logsLl = root.findViewById(R.id.frag_settings_logs_ll);
+        TextView logsDesc1Tv = root.findViewById(R.id.frag_settings_logs_desc1_tv);
+        TextView logsDesc2Tv = root.findViewById(R.id.frag_settings_logs_desc2_tv);
+
+        logsDesc1Tv.setText(logFilename);
+        logsDesc2Tv.setText(getContext().getString(R.string.settings_frag_size) + logSize + "kB");
+        logsLl.setOnClickListener(view ->{
+            Intent i = new Intent(view.getContext() , LogsActivity.class);
+            startActivity(i);
+        });
+    }
+
+    @Override
+    public void setUpConceptsView() {
+        conceptsInDbTextView = root.findViewById(R.id.frag_settings_concepts_count_tv);
+
+        downloadConceptsButton = root.findViewById(R.id.frag_settings_concepts_download_btn);
+
+        downloadConceptsButton.setOnClickListener(view -> {
+            downloadConceptsButton.setEnabled(false);
+            Intent startIntent = new Intent(getActivity(), ConceptDownloadService.class);
+            startIntent.setAction(ApplicationConstants.ServiceActions.START_CONCEPT_DOWNLOAD_ACTION);
+            Objects.requireNonNull(getActivity()).startService(startIntent);
+        });
     }
 
     @Override
@@ -136,20 +140,43 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
             mPresenter.logException("Failed to load meta-data, NullPointer: " + e.getMessage());
         }
 
-        mListItem.add(new SettingsListItemDTO(getResources().getString(R.string.settings_about),
-                getResources().getString(R.string.app_name),
-                versionName + " Build: " + buildVersion));
+        TextView appName = root.findViewById(R.id.frag_settings_app_name_tv);
+        TextView version = root.findViewById(R.id.frag_settings_version_tv);
+
+        appName.setText(getResources().getString(R.string.app_name));
+        version.setText(versionName + getContext().getString(R.string.frag_settings_build) + buildVersion);
     }
 
     @Override
     public void addPrivacyPolicyInfo() {
-        mListItem.add(new SettingsListItemDTO(getString(R.string.settings_privacy_policy)));
+        LinearLayout privacyPolicyTv = root.findViewById(R.id.frag_settings_privacy_policy_ll);
+        privacyPolicyTv.setOnClickListener(view ->{
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(view.getContext().getString(R.string.url_privacy_policy)));
+            startActivity(i);
+        });
     }
 
     @Override
-    public void applyChanges() {
-        SettingsRecyclerViewAdapter adapter = new SettingsRecyclerViewAdapter(mListItem);
-        settingsRecyclerView.setAdapter(adapter);
+    public void rateUs() {
+        LinearLayout rateUsLL = root.findViewById(R.id.frag_settings_rate_us_ll);
+        rateUsLL.setOnClickListener(v -> {
+            Uri uri = Uri.parse("market://details?id=" + ApplicationConstants.PACKAGE_NAME);
+            Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+
+            // Ignore Playstore backstack, on back press will take us back to our app
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                    Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+
+            try{
+                startActivity(intent);
+            }catch (ActivityNotFoundException e){
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://play.google.com/store/apps/details?id=" + ApplicationConstants.PACKAGE_NAME)));
+            }
+        });
+
     }
 
     public static SettingsFragment newInstance() {

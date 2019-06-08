@@ -127,6 +127,8 @@ dependencies {
     )
 
     androidTestImplementation files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
+    debugImplementation 'com.github.jainsahab:Snooper-Okhttp:1.5.4'
+    releaseImplementation 'com.github.jainsahab:Snooper-Okhttp-No-Op:1.5.4'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.google.guava:guava:23.0'
     implementation "androidx.appcompat:appcompat:$support_version"

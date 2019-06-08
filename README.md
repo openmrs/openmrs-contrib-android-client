@@ -63,6 +63,10 @@ The coding conventions used by OpenMRS are outlined [here](https://wiki.openmrs.
 ### Model pattern
 We are following [Google's MVP sample](https://github.com/googlesamples/android-architecture/tree/todo-mvp) for this application's development.
 
+
+### HTTP call debugging
+In order to debug HTTP calls, we have integrated [Android Snooper](https://github.com/jainsahab/AndroidSnooper) (a GUI based open source library) to track network calls. To use Android snooper, all you have to do is shake your device and snooper will present list of network calls made by OpenMRS app.
+
 # Quick Start
 
 As of February 2016, this project has been migrated to gradle to work successfully with Android Studio. 

@@ -18,7 +18,7 @@ plugins {
     id 'jacoco-android'
 }
 
-def version = "2.7.2"
+def version = "2.7.3"
 
 android {
     compileSdkVersion 28
@@ -182,7 +182,6 @@ play {
 
     serviceAccountCredentials = rootProject.file('google_play.json')
     resolutionStrategy = "auto"
-    releaseStatus = "inProgress"
 
     outputProcessor { // this: ApkVariantOutput
         versionNameOverride = "$versionNameOverride.$versionCode"

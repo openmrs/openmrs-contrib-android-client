@@ -63,7 +63,7 @@ public class SettingsPresenterTest extends ACUnitTestBase {
         verify(view).addLogsInfo(0, directory + File.separator + logFileName);
         verify(view).addBuildVersionInfo();
         verify(view).addPrivacyPolicyInfo();
-        verify(view).applyChanges();
+        verify(view).rateUs();
     }
 
     @Test

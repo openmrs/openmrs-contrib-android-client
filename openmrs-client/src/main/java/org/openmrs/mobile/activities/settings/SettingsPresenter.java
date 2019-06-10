@@ -50,11 +50,11 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
 
     @Override
     public void subscribe() {
-        fillList();
+        updateViews();
         mSettingsView.setConceptsInDbText(String.valueOf(conceptDAO.getConceptsCount()));
     }
 
-    private void fillList() {
+    private void updateViews() {
         long size = 0;
         String filename = OpenMRS.getInstance().getOpenMRSDir()
                 + File.separator + mOpenMRSLogger.getLogFilename();
@@ -70,7 +70,7 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
         mSettingsView.addLogsInfo(size, filename);
         mSettingsView.addBuildVersionInfo();
         mSettingsView.addPrivacyPolicyInfo();
-        mSettingsView.applyChanges();
+        mSettingsView.rateUs();
     }
 
     @Override

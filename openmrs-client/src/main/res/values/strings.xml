@@ -347,7 +347,7 @@
     <string name="snackbar_nonvisitting_patients">Vitals can only be captured for patients currently in a visit.</string>
 
     <string name="logout_success">Logged out successfully!</string>
-    <string name="url_privacy_policy">https://github.com/openmrs/openmrs-contrib-android-client/blob/master/privacy_policy.md</string>
+    <string name="url_privacy_policy">https://github.com/openmrs/openmrs-contrib-android-client/blob/master/privacy_policy.md#privacy-policy</string>
     <string name="settings_privacy_policy">Privacy Policy</string>
 
     <string name="action_submit">Submit</string>
@@ -356,5 +356,8 @@
     <string name="delete_multiple_patients_dialog_message">Are you sure you want to delete these patients?</string>
     <string name="multiple_patients_deleted">Patients Deleted Successfully</string>
     <string name="delete">delete</string>
+    <string name="rate_us_string">Rate Us</string>
+    <string name="settings_frag_size">Size:</string>
+    <string name="frag_settings_build">Build:</string>
 
 </resources>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
   ~ compliance with the License. You may obtain a copy of the License at
@@ -12,105 +11,214 @@
   ~
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.settings.SettingsActivity">
+    android:orientation="vertical">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/card">
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/view">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/settings_application_info"
-            android:textSize="@dimen/dashboard_text_size"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/settingsRecyclerView"
-            android:scrollbars="vertical"
+            android:id="@+id/frag_settings_header_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            />
-    </LinearLayout>
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/action_settings"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/card">
 
         <TextView
+            android:id="@+id/frag_settings_concepts_in_db_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/settings_concepts_in_db"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_header_tv" />
+
+        <TextView
+            android:id="@+id/frag_settings_concepts_count_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/frag_settings_concepts_in_db_tv"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_concepts_in_db_tv" />
+
+        <ImageButton
+            android:id="@+id/frag_settings_concepts_download_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@drawable/ic_file_download_black_24dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_header_tv" />
+
+        <LinearLayout
+            android:id="@+id/frag_settings_logs_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="@string/settings_concepts_info"
-            android:textSize="@dimen/dashboard_text_size"/>
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_concepts_count_tv">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/settings_list_separator_width"
-            android:layout_marginTop="@dimen/settings_list_separator_margin"
-            android:layout_marginRight="@dimen/settings_list_separator_margin"
-            android:layout_marginEnd="@dimen/settings_list_separator_margin"
-            android:layout_marginLeft="@dimen/settings_list_separator_margin"
-            android:layout_marginStart="@dimen/settings_list_separator_margin"
-            android:background="@color/card_detailing"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/settings_list_padding"
-            android:paddingRight="@dimen/settings_list_padding"
-            android:paddingStart="@dimen/settings_list_padding"
-            android:paddingEnd="@dimen/settings_list_padding"
-            android:gravity="center_vertical">
-
-            <LinearLayout
-                android:id="@+id/conceptInDbLinearLayout"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:orientation="vertical">
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="@string/settings_logs"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/settings_list_text_title_size"
-                    android:textStyle="bold"
-                    android:text="@string/settings_concepts_in_db"/>
-
-                <TextView
-                    android:id="@+id/conceptsInDbTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/settings_list_text_detail_size"/>
-
-            </LinearLayout>
-
-            <ImageButton
-                android:id="@+id/downloadConceptsButton"
-                android:layout_alignRight="@id/conceptInDbLinearLayout"
-                android:layout_alignEnd="@+id/conceptInDbLinearLayout"
+            <TextView
+                android:id="@+id/frag_settings_logs_desc1_tv"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/settings_download_button_height"
-                android:src="@drawable/ic_download"
-                android:contentDescription="@string/download_concepts"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"/>
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin" />
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/frag_settings_logs_desc2_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginBottom="@dimen/activity_vertical_margin" />
 
-    </LinearLayout>
+        </LinearLayout>
 
-</LinearLayout>
+        <View
+            android:id="@+id/view"
+            android:layout_width="wrap_content"
+            android:layout_height="1dp"
+            android:background="@color/light_grey"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_logs_ll" />
+
+
+        <ImageView
+            android:id="@+id/frag_settings_app_icon_iv"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:src="@drawable/openmrs_action_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+
+        <TextView
+            android:id="@+id/frag_settings_app_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/app_name"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintStart_toEndOf="@+id/frag_settings_app_icon_iv"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <TextView
+            android:id="@+id/frag_settings_version_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintStart_toEndOf="@+id/frag_settings_app_icon_iv"
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_app_name_tv" />
+
+
+        <LinearLayout
+            android:id="@+id/frag_settings_rate_us_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_app_icon_iv">
+
+            <ImageView
+                android:layout_width="@dimen/settings_icon_size"
+                android:layout_height="@dimen/settings_icon_size"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:src="@drawable/ic_favorite_black_24dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/rate_us_string"
+                android:textColor="?android:attr/textColorPrimary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/frag_settings_privacy_policy_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_rate_us_ll">
+
+            <ImageView
+                android:layout_width="@dimen/settings_icon_size"
+                android:layout_height="@dimen/settings_icon_size"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:src="@mipmap/ic_privacy_policy" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/settings_privacy_policy"
+                android:textColor="?android:attr/textColorPrimary" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

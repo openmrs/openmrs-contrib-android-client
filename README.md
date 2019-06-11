@@ -101,6 +101,15 @@ If you want to release a new major or minor version, please be sure to update th
 
 # Release Notes
 
+<a name="version-2.7.3"></a>
+### Version 2.7.3
+### Summary:
+1. Remove Apache HTTP API Client library
+2. Patient now extends Person
+3. Make Search primary function for Find Patients
+4. Revamp Settings Page (new material design!)
+5. Integrated android snooper for debugging purpose
+
 <a name="version-2.7.2"></a>
 ### Version 2.7.2
 ### Summary:
@@ -108,7 +117,7 @@ If you want to release a new major or minor version, please be sure to update th
 2. Added release folder to gitignore
 3. Initialized SQLCipher, made app 64-bit compliant
 4. Changed Gradle to latest version
-5. Fixed Play Publisher not publishing o Play store
+5. Fixed Play Publisher not publishing to Play store
 
 <a name="version-2.7.1"></a>
 ### Version 2.7.1

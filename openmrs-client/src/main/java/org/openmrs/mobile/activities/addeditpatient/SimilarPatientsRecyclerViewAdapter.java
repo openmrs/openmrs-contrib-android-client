@@ -39,9 +39,10 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import rx.android.schedulers.AndroidSchedulers;
 
-public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<SimilarPatientsRecyclerViewAdapter.PatientViewHolder>{
+public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<SimilarPatientsRecyclerViewAdapter.PatientViewHolder> {
 
     private List<Patient> patientList;
     private Patient newPatient;
@@ -56,7 +57,7 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
     @NonNull
     @Override
     public PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.similar_patient_row, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_similar_patient, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
@@ -90,7 +91,7 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
         return patientList.size();
     }
 
-    public class PatientViewHolder extends RecyclerView.ViewHolder{
+    public class PatientViewHolder extends RecyclerView.ViewHolder {
 
         private LinearLayout mRowLayout;
         private TextView mGivenName;
@@ -102,6 +103,7 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
         private TextView mPostalCode;
         private TextView mCity;
         private TextView mCountry;
+
         public PatientViewHolder(View itemView) {
             super(itemView);
             mRowLayout = (LinearLayout) itemView;
@@ -117,6 +119,7 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
         }
 
     }
+
     private void downloadPatient(Patient patient) {
         new PatientDAO().savePatient(patient)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -127,14 +130,12 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
     }
 
     private void setBirthdate(PatientViewHolder holder, Patient patient) {
-        try{
+        try {
             holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
             if (Objects.equal(patient.getBirthdate(), newPatient.getBirthdate())) {
                 setStyleForMatchedPatientFields(holder.mBirthDate);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             holder.mBirthDate.setText(" ");
         }
     }
@@ -143,7 +144,8 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
         if (null != patient.getGender()) {
             holder.mGender.setText(patient.getGender());
             if (Objects.equal(patient.getGender(), newPatient.getGender())) {
-                setStyleForMatchedPatientFields(holder.mGender);            }
+                setStyleForMatchedPatientFields(holder.mGender);
+            }
         }
     }
 
@@ -195,8 +197,8 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
         }
     }
 
-    private void setStyleForMatchedPatientFields(TextView textView){
-        textView.setTypeface(null , Typeface.BOLD);
+    private void setStyleForMatchedPatientFields(TextView textView) {
+        textView.setTypeface(null, Typeface.BOLD);
         textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 }

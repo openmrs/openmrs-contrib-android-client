@@ -32,7 +32,7 @@ public class OpenMRSInflater {
     }
 
     public ViewGroup addKeyValueStringView(ViewGroup parentLayout, String label, String data) {
-        View view = mInflater.inflate(R.layout.key_value_data_row, null, false);
+        View view = mInflater.inflate(R.layout.row_key_value_data, null, false);
         TextView labelText = (TextView) view.findViewById(R.id.keyValueDataRowTextLabel);
         if (label.contains(":")) {
             labelText.setText(label.substring(0, label.indexOf(':')));
@@ -49,7 +49,7 @@ public class OpenMRSInflater {
     }
 
     public ViewGroup addSingleStringView(ViewGroup parentLayout, String label) {
-        View view = mInflater.inflate(R.layout.single_text_data_row, null, false);
+        View view = mInflater.inflate(R.layout.row_single_text_data, null, false);
         TextView labelText = (TextView) view.findViewById(R.id.singleTextRowLabelText);
         labelText.setText(label);
         FontsUtil.setFont(labelText, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);

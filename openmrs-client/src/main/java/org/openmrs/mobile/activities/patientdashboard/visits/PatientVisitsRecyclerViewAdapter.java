@@ -44,7 +44,7 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
     @NonNull
     @Override
     public VisitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_visit_row, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_patient_visit, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new VisitViewHolder(itemView);
     }
@@ -86,7 +86,7 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
         return mVisits.size();
     }
 
-    class VisitViewHolder extends RecyclerView.ViewHolder{
+    class VisitViewHolder extends RecyclerView.ViewHolder {
         private TextView mVisitPlace;
         private TextView mVisitStart;
         private TextView mVisitEnd;
@@ -101,6 +101,7 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
             mVisitPlace = (TextView) itemView.findViewById(R.id.patientVisitPlace);
             mVisitStatus = (TextView) itemView.findViewById(R.id.visitStatusLabel);
         }
+
         public void clearAnimation() {
             mRelativeLayout.clearAnimation();
         }

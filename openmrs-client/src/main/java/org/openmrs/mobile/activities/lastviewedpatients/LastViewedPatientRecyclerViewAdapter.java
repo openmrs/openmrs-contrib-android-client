@@ -43,6 +43,7 @@ import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import rx.android.schedulers.AndroidSchedulers;
 
 class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -78,21 +79,21 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         this.selectedPatientPositions = selectedPatientPositions;
     }
 
-    public void addPatients(List<Patient> patients){
+    public void addPatients(List<Patient> patients) {
         this.patients.addAll(patients);
         notifyDataSetChanged();
     }
 
-    public void deleteLastItem(){
-        patients.remove(getItemCount()-1);
+    public void deleteLastItem() {
+        patients.remove(getItemCount() - 1);
         notifyItemRemoved(getItemCount());
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if( viewType == VIEW_TYPE_ITEM ) {
-            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_last_viewed_patients_row, parent, false);
+        if (viewType == VIEW_TYPE_ITEM) {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_find_last_viewed_patients, parent, false);
             FontsUtil.setFont((ViewGroup) itemView);
             return new PatientViewHolder(itemView);
         } else {
@@ -130,8 +131,8 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                 ((PatientViewHolder) holder).mBirthDate.setText(" ");
             }
 
-            if (null !=  ((PatientViewHolder) holder).mAvailableOfflineCheckbox) {
-                setUpCheckBoxLogic( ((PatientViewHolder) holder), patient);
+            if (null != ((PatientViewHolder) holder).mAvailableOfflineCheckbox) {
+                setUpCheckBoxLogic(((PatientViewHolder) holder), patient);
             }
         } else {
             ((ProgressBarViewHolder) holder).progressBar.setIndeterminate(true);
@@ -140,7 +141,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
     private boolean isPatientSelected(int position) {
         for (Integer selectedPatientPosition : selectedPatientPositions) {
-            if(selectedPatientPosition.equals(position)){
+            if (selectedPatientPosition.equals(position)) {
                 return true;
             }
         }
@@ -160,7 +161,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         return patients == null ? 0 : patients.size();
     }
 
-    class PatientViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener{
+    class PatientViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener {
         private LinearLayout mRowLayout;
         private TextView mIdentifier;
         private TextView mDisplayName;
@@ -186,13 +187,13 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
         @Override
         public void onClick(View view) {
-            if(isLongClicked){
+            if (isLongClicked) {
                 setSelected(!mRowLayout.isSelected());
             }
         }
 
         private void setSelected(boolean select) {
-            if(select){
+            if (select) {
                 if (!enableDownload)
                     toggleDownloadButton();
                 selectedPatientPositions.add(getAdapterPosition());
@@ -225,20 +226,20 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
         public ProgressBarViewHolder(View itemView) {
             super(itemView);
-            progressBar = (ProgressBar)itemView.findViewById(R.id.recycleviewProgressbar);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.recycleviewProgressbar);
         }
     }
 
     private void removeIdFromSelectedIds(Integer position) {
         Set<Integer> newSet = new HashSet<>();
         for (Integer selectedPatientsId : selectedPatientPositions) {
-            if(!selectedPatientsId.equals(position)){
+            if (!selectedPatientsId.equals(position)) {
                 newSet.add(selectedPatientsId);
             }
         }
         selectedPatientPositions = newSet;
         if (selectedPatientPositions.size() == 0 && isLongClicked && enableDownload)
-                toggleDownloadButton();
+            toggleDownloadButton();
     }
 
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
@@ -285,7 +286,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             isLongClicked = false;
         }
 
-        public void finish(ActionMode mode){
+        public void finish(ActionMode mode) {
             mode.finish();
             isLongClicked = false;
         }
@@ -296,7 +297,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         isLongClicked = true;
     }
 
-    public void finishActionMode(){
+    public void finishActionMode() {
         if (actionMode != null) {
             actionMode.finish();
             isLongClicked = false;
@@ -304,7 +305,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     }
 
     public void selectAll() {
-        for(int i = 0; i < patients.size(); i++){
+        for (int i = 0; i < patients.size(); i++) {
             selectedPatientPositions.add(i);
         }
         isAllSelected = true;

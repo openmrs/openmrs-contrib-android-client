@@ -14,10 +14,16 @@
 
 package org.openmrs.mobile.utilities;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+
+import org.openmrs.mobile.activities.patientdashboard.details.PatientPhotoActivity;
+
+import java.io.ByteArrayOutputStream;
 
 public final class ImageUtils {
 
@@ -66,10 +72,10 @@ public final class ImageUtils {
         double WIDTH = 500;
         int height = photo.getHeight();
         int width = photo.getWidth();
-        double aspectRatio = Math.min(HEIGHT/height, WIDTH/width);
+        double aspectRatio = Math.min(HEIGHT / height, WIDTH / width);
 
         if (0 < aspectRatio && aspectRatio < 1) {
-            return Bitmap.createScaledBitmap(photo, (int)(aspectRatio*width), (int)(aspectRatio*height), true);
+            return Bitmap.createScaledBitmap(photo, (int) (aspectRatio * width), (int) (aspectRatio * height), true);
         }
         return photo;
     }
@@ -78,5 +84,14 @@ public final class ImageUtils {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+    }
+
+    public static void showPatientPhoto(Context context, Bitmap photo, String patientName) {
+        Intent intent = new Intent(context, PatientPhotoActivity.class);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
+        intent.putExtra("photo", byteArrayOutputStream.toByteArray());
+        intent.putExtra("name", patientName);
+        context.startActivity(intent);
     }
 }

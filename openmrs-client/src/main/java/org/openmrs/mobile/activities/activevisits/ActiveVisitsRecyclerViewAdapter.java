@@ -48,7 +48,7 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
     @NonNull
     @Override
     public VisitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_visits_row, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_find_visits, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new VisitViewHolder(itemView);
     }
@@ -71,11 +71,9 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
         if (null != patient.getGender()) {
             visitViewHolder.mGender.setText(patient.getGender());
         }
-        try{
+        try {
             visitViewHolder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             visitViewHolder.mBirthDate.setText(" ");
         }
 
@@ -96,7 +94,7 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
         return mVisits.size();
     }
 
-    class VisitViewHolder extends RecyclerView.ViewHolder{
+    class VisitViewHolder extends RecyclerView.ViewHolder {
         private TextView mIdentifier;
         private TextView mDisplayName;
         private TextView mGender;
@@ -113,6 +111,7 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
             mBirthDate = (TextView) itemView.findViewById(R.id.findVisitsPatientBirthDate);
             mGender = (TextView) itemView.findViewById(R.id.findVisitsPatientGender);
         }
+
         public void clearAnimation() {
             mRelativeLayout.clearAnimation();
         }

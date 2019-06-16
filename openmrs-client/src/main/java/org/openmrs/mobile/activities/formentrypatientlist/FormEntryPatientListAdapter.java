@@ -32,6 +32,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import rx.android.schedulers.AndroidSchedulers;
 
 public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryPatientListAdapter.PatientViewHolder> {
@@ -46,7 +47,7 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
     @NonNull
     @Override
     public PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.patient_details_row, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_patient_details, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
@@ -97,7 +98,7 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
         return mItems.size();
     }
 
-    class PatientViewHolder extends RecyclerView.ViewHolder{
+    class PatientViewHolder extends RecyclerView.ViewHolder {
         private LinearLayout mRowLayout;
         private TextView mIdentifier;
         private TextView mDisplayName;

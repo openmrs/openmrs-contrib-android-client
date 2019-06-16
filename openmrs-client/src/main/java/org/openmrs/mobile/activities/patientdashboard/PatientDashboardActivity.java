@@ -14,9 +14,13 @@
 
 package org.openmrs.mobile.activities.patientdashboard;
 
+import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.ImageView;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -33,6 +37,7 @@ import org.openmrs.mobile.activities.patientdashboard.visits.PatientVisitsFragme
 import org.openmrs.mobile.activities.patientdashboard.vitals.PatientDashboardVitalsPresenter;
 import org.openmrs.mobile.activities.patientdashboard.vitals.PatientVitalsFragment;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.TabUtil;
 
 import androidx.fragment.app.Fragment;
@@ -92,7 +97,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
     private void initViewPager(PatientDashboardPagerAdapter adapter) {
         final ViewPager viewPager = findViewById(R.id.pager);
         TabLayout tabHost = findViewById(R.id.tabhost);
-        viewPager.setOffscreenPageLimit(adapter.getCount()-1);
+        viewPager.setOffscreenPageLimit(adapter.getCount() - 1);
         viewPager.setAdapter(adapter);
         tabHost.setupWithViewPager(viewPager);
     }
@@ -102,19 +107,21 @@ public class PatientDashboardActivity extends ACBaseActivity {
         String id = String.valueOf(patientBundle.get(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE));
         if (fragment instanceof PatientDetailsFragment) {
             mPresenter = new PatientDashboardDetailsPresenter(id, ((PatientDetailsFragment) fragment));
-        }
-        else if (fragment instanceof PatientDiagnosisFragment) {
+        } else if (fragment instanceof PatientDiagnosisFragment) {
             mPresenter = new PatientDashboardDiagnosisPresenter(id, ((PatientDiagnosisFragment) fragment));
-        }
-        else if (fragment instanceof PatientVisitsFragment) {
+        } else if (fragment instanceof PatientVisitsFragment) {
             mPresenter = new PatientDashboardVisitsPresenter(id, ((PatientVisitsFragment) fragment));
-        }
-        else if (fragment instanceof PatientVitalsFragment){
+        } else if (fragment instanceof PatientVitalsFragment) {
             mPresenter = new PatientDashboardVitalsPresenter(id, ((PatientVitalsFragment) fragment));
+        } else if (fragment instanceof PatientChartsFragment) {
+            mPresenter = new PatientDashboardChartsPresenter(id, ((PatientChartsFragment) fragment));
         }
-        else if (fragment instanceof PatientChartsFragment){
-            mPresenter = new PatientDashboardChartsPresenter(id,((PatientChartsFragment) fragment));
-        }
+    }
+
+    public void setBackdropImage(Bitmap backdropImage, String patientName) {
+        ImageView imageView = findViewById(R.id.activity_patient_dashboard_backdrop);
+        imageView.setImageBitmap(backdropImage);
+        imageView.setOnClickListener(view -> ImageUtils.showPatientPhoto(this, backdropImage, patientName));
     }
 
 }

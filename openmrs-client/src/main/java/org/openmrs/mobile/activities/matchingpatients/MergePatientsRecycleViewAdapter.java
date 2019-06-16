@@ -38,7 +38,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergePatientsRecycleViewAdapter.PatientViewHolder>{
+public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergePatientsRecycleViewAdapter.PatientViewHolder> {
 
     private List<Patient> patientList;
     private Patient newPatient;
@@ -56,7 +56,7 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
     @NonNull
     @Override
     public PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.similar_patient_row, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_similar_patient, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
@@ -76,7 +76,7 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
         return patientList.size();
     }
 
-    public class PatientViewHolder extends RecyclerView.ViewHolder{
+    public class PatientViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mGivenName;
         private TextView mMiddleName;
@@ -87,6 +87,7 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
         private TextView mPostalCode;
         private TextView mCity;
         private TextView mCountry;
+
         public PatientViewHolder(View itemView) {
             super(itemView);
             mGivenName = (TextView) itemView.findViewById(R.id.patientGivenName);
@@ -99,12 +100,12 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
             mCity = (TextView) itemView.findViewById(R.id.patientCity);
             mCountry = (TextView) itemView.findViewById(R.id.patientCountry);
             itemView.setOnClickListener(view -> {
-                CardView cardView = (CardView)view.findViewById(R.id.cardView);
+                CardView cardView = (CardView) view.findViewById(R.id.cardView);
                 if (selectedPosition == -1) {
                     selectedPosition = getAdapterPosition();
                     mPresenter.setSelectedPatient(patientList.get(selectedPosition));
                     cardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.patient_selected_highlight));
-                } else if(selectedPosition == getAdapterPosition()){
+                } else if (selectedPosition == getAdapterPosition()) {
                     selectedPosition = -1;
                     mPresenter.removeSelectedPatient();
                     cardView.setCardBackgroundColor(Color.WHITE);
@@ -117,14 +118,12 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
     }
 
     private void setBirthdate(PatientViewHolder holder, Patient patient) {
-        try{
+        try {
             holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
             if (Objects.equal(patient.getBirthdate(), newPatient.getBirthdate())) {
                 setStyleForMatchedPatientFields(holder.mBirthDate);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             holder.mBirthDate.setText(" ");
         }
     }
@@ -133,7 +132,8 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
         if (null != patient.getGender()) {
             holder.mGender.setText(patient.getGender());
             if (Objects.equal(patient.getGender(), newPatient.getGender())) {
-                setStyleForMatchedPatientFields(holder.mGender);            }
+                setStyleForMatchedPatientFields(holder.mGender);
+            }
         }
     }
 
@@ -185,8 +185,8 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
         }
     }
 
-    private void setStyleForMatchedPatientFields(TextView textView){
-        textView.setTypeface(null , Typeface.BOLD);
+    private void setStyleForMatchedPatientFields(TextView textView) {
+        textView.setTypeface(null, Typeface.BOLD);
         textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 }

@@ -173,7 +173,7 @@
     <string name="dashboard_visits_icon_label">Active Visits</string>
     <string name="dashboard_forms_icon_label">Form Entry</string>
 
-    <!-- find_synced_patients_row layout-->
+    <!-- row_find_synced_patients layout-->
     <string name="find_patients_row_checkbox_download_label">Download</string>
 
     <!-- Patient Dashboard Activity -->

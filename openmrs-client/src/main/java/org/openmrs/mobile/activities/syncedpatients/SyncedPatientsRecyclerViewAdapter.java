@@ -15,9 +15,17 @@
 package org.openmrs.mobile.activities.syncedpatients;
 
 import android.content.Intent;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
@@ -30,10 +38,6 @@ import org.openmrs.mobile.utilities.FontsUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<SyncedPatientsRecyclerViewAdapter.PatientViewHolder> {
     private SyncedPatientsFragment mContext;
@@ -123,11 +127,11 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
         public PatientViewHolder(View itemView) {
             super(itemView);
             mRowLayout = (LinearLayout) itemView;
-            mIdentifier = (TextView) itemView.findViewById(R.id.syncedPatientIdentifier);
-            mDisplayName = (TextView) itemView.findViewById(R.id.syncedPatientDisplayName);
-            mGender = (TextView) itemView.findViewById(R.id.syncedPatientGender);
-            mAge = (TextView) itemView.findViewById(R.id.syncedPatientAge);
-            mBirthDate = (TextView) itemView.findViewById(R.id.syncedPatientBirthDate);
+            mIdentifier = itemView.findViewById(R.id.syncedPatientIdentifier);
+            mDisplayName = itemView.findViewById(R.id.syncedPatientDisplayName);
+            mGender = itemView.findViewById(R.id.syncedPatientGender);
+            mAge = itemView.findViewById(R.id.syncedPatientAge);
+            mBirthDate = itemView.findViewById(R.id.syncedPatientBirthDate);
         }
 
         void selectItem(Patient item) {

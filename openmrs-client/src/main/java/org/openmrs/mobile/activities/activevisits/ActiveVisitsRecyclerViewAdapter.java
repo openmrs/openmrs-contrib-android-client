@@ -22,6 +22,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
 import org.openmrs.mobile.dao.PatientDAO;
@@ -32,9 +35,6 @@ import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<ActiveVisitsRecyclerViewAdapter.VisitViewHolder> {
     private Context mContext;
@@ -105,11 +105,11 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
         public VisitViewHolder(View itemView) {
             super(itemView);
             mRelativeLayout = (LinearLayout) itemView;
-            mIdentifier = (TextView) itemView.findViewById(R.id.findVisitsIdentifier);
-            mDisplayName = (TextView) itemView.findViewById(R.id.findVisitsDisplayName);
-            mVisitPlace = (TextView) itemView.findViewById(R.id.findVisitsPlace);
-            mBirthDate = (TextView) itemView.findViewById(R.id.findVisitsPatientBirthDate);
-            mGender = (TextView) itemView.findViewById(R.id.findVisitsPatientGender);
+            mIdentifier = itemView.findViewById(R.id.findVisitsIdentifier);
+            mDisplayName = itemView.findViewById(R.id.findVisitsDisplayName);
+            mVisitPlace = itemView.findViewById(R.id.findVisitsPlace);
+            mBirthDate = itemView.findViewById(R.id.findVisitsPatientBirthDate);
+            mGender = itemView.findViewById(R.id.findVisitsPatientGender);
         }
 
         public void clearAnimation() {

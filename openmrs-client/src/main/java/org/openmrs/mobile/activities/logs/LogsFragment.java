@@ -24,12 +24,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
-
-import androidx.annotation.NonNull;
 
 
 public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> implements LogsContract.View {
@@ -42,8 +42,8 @@ public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> impleme
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_logs, container, false);
 
-        tvLogs = (TextView) root.findViewById(R.id.tvLogs);
-        fab = (FloatingActionButton) root.findViewById(R.id.fab);
+        tvLogs = root.findViewById(R.id.tvLogs);
+        fab = root.findViewById(R.id.fab);
         return root;
     }
 

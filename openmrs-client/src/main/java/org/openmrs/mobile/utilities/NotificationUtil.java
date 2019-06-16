@@ -21,12 +21,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.dashboard.DashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
-
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.TaskStackBuilder;
 
 public class NotificationUtil {
 
@@ -34,7 +34,7 @@ public class NotificationUtil {
     {
         Bitmap bitmap = BitmapFactory.decodeResource( OpenMRS.getInstance().getResources(), R.drawable.ic_openmrs);
         NotificationCompat.Builder mBuilder =
-                (NotificationCompat.Builder) new NotificationCompat.Builder(OpenMRS.getInstance())
+                new NotificationCompat.Builder(OpenMRS.getInstance())
                         .setSmallIcon(R.drawable.ic_stat_notify_openmrs)
                         .setLargeIcon(bitmap)
                         .setContentTitle(title)

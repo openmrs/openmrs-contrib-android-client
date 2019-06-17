@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.formlist;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -85,6 +87,7 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
         startActivity(intent);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public Boolean formCreate(String uuid, String formName) {
         formCreateFlag = false;
         RestApi apiService = RestServiceBuilder.createService(RestApi.class);
@@ -144,7 +147,7 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
                 public void onResponse(@NonNull Call<FormCreate> call, @NonNull Response<FormCreate> response) {
                     if (response.isSuccessful() && (response.body().getName().equals("json"))) {
                         formCreateFlag = true;
-                        }
+                    }
                 }
 
                 @Override
@@ -158,6 +161,7 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
         return formCreateFlag;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private FormData loadJSONFromAsset(String filename) {
         String json = null;
         try {

@@ -26,6 +26,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
@@ -40,9 +43,6 @@ import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListAc
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 public class DashboardFragment extends ACBaseFragment<DashboardContract.Presenter> implements DashboardContract.View, View.OnClickListener {
 
@@ -216,19 +216,19 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
         }
 
         // Font config
-        FontsUtil.setFont((ViewGroup) this.getActivity().findViewById(android.R.id.content));
+        FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
         return root;
     }
 
     private void initFragmentFields(View root) {
-        mFindPatientButton = (ImageView) root.findViewById(R.id.findPatientButton);
-        mRegistryPatientButton = (ImageView) root.findViewById(R.id.registryPatientButton);
-        mActiveVisitsButton = (ImageView) root.findViewById(R.id.activeVisitsButton);
-        mCaptureVitalsButton = (ImageView) root.findViewById(R.id.captureVitalsButton);
-        mFindPatientView = (RelativeLayout) root.findViewById(R.id.findPatientView);
-        mRegistryPatientView = (RelativeLayout) root.findViewById(R.id.registryPatientView);
-        mCaptureVitalsView = (RelativeLayout) root.findViewById(R.id.captureVitalsView);
-        mActiveVisitsView = (RelativeLayout) root.findViewById(R.id.activeVisitsView);
+        mFindPatientButton = root.findViewById(R.id.findPatientButton);
+        mRegistryPatientButton = root.findViewById(R.id.registryPatientButton);
+        mActiveVisitsButton = root.findViewById(R.id.activeVisitsButton);
+        mCaptureVitalsButton = root.findViewById(R.id.captureVitalsButton);
+        mFindPatientView = root.findViewById(R.id.findPatientView);
+        mRegistryPatientView = root.findViewById(R.id.registryPatientView);
+        mCaptureVitalsView = root.findViewById(R.id.captureVitalsView);
+        mActiveVisitsView = root.findViewById(R.id.activeVisitsView);
     }
 
     private void setListeners() {

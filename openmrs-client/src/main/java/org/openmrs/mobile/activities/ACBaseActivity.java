@@ -16,7 +16,6 @@ package org.openmrs.mobile.activities;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -27,12 +26,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.login.LoginActivity;
-import org.openmrs.mobile.activities.patientdashboard.details.PatientDetailsFragment;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
@@ -51,12 +56,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -225,7 +224,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         snackbar = Snackbar.make(findViewById(android.R.id.content),
                 getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
         View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
+        TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         snackbar.show();
     }

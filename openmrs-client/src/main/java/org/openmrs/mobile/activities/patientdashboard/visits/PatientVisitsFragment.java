@@ -24,6 +24,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
@@ -34,11 +39,6 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class PatientVisitsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientVisits {
 
@@ -86,12 +86,12 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_patient_visit, null, false);
-        visitRecyclerView = (RecyclerView) root.findViewById(R.id.patientVisitRecyclerView);
+        visitRecyclerView = root.findViewById(R.id.patientVisitRecyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         visitRecyclerView.setHasFixedSize(true);
         visitRecyclerView.setLayoutManager(linearLayoutManager);
 
-        emptyList = (TextView) root.findViewById(R.id.emptyVisitsList);
+        emptyList = root.findViewById(R.id.emptyVisitsList);
 
         return root;
     }

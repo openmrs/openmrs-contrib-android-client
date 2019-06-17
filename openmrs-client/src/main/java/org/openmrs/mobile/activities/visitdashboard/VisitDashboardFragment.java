@@ -24,6 +24,8 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.formlist.FormListActivity;
@@ -38,8 +40,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-
 public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContract.Presenter> implements VisitDashboardContract.View{
 
     private ExpandableListView mExpandableListView;
@@ -50,9 +50,9 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_visit_dashboard, container, false);
 
-        mEmptyListView = (TextView) root.findViewById(R.id.visitDashboardEmpty);
+        mEmptyListView = root.findViewById(R.id.visitDashboardEmpty);
         FontsUtil.setFont(mEmptyListView, FontsUtil.OpenFonts.OPEN_SANS_BOLD);
-        mExpandableListView = (ExpandableListView) root.findViewById(R.id.visitDashboardExpList);
+        mExpandableListView = root.findViewById(R.id.visitDashboardExpList);
         mExpandableListView.setEmptyView(mEmptyListView);
         setEmptyListVisibility(false);
         return root;

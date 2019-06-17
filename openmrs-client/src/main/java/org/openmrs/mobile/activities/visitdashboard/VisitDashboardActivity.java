@@ -19,13 +19,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.appcompat.widget.Toolbar;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-
-import androidx.appcompat.widget.Toolbar;
 
 public class VisitDashboardActivity extends ACBaseActivity {
 
@@ -38,7 +38,7 @@ public class VisitDashboardActivity extends ACBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visit_dashboard);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
 
         if (toolbar != null) {

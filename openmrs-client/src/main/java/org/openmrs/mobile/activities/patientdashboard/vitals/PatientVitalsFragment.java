@@ -25,6 +25,9 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
@@ -38,9 +41,6 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 public class PatientVitalsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientVitals {
 
@@ -62,13 +62,13 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_patient_vitals, null, false);
-        mContent = (LinearLayout) root.findViewById(R.id.vitalsDetailsContent);
-        mEmptyList = (TextView) root.findViewById(R.id.lastVitalsNoneLabel);
-        mLastVitalsDate = (TextView) root.findViewById(R.id.lastVitalsDate);
-        mFormHeader = (LinearLayout) root.findViewById(R.id.lastVitalsLayout);
+        mContent = root.findViewById(R.id.vitalsDetailsContent);
+        mEmptyList = root.findViewById(R.id.lastVitalsNoneLabel);
+        mLastVitalsDate = root.findViewById(R.id.lastVitalsDate);
+        mFormHeader = root.findViewById(R.id.lastVitalsLayout);
 
-        TextView lastVitalsLabel = (TextView) root.findViewById(R.id.lastVitalsLabel);
-        ImageButton formEditIcon = (ImageButton) root.findViewById(R.id.form_edit_icon);
+        TextView lastVitalsLabel = root.findViewById(R.id.lastVitalsLabel);
+        ImageButton formEditIcon = root.findViewById(R.id.form_edit_icon);
 
         formEditIcon.setOnClickListener(view -> ((PatientDashboardVitalsPresenter) mPresenter).startFormDisplayActivityWithEncounter());
 

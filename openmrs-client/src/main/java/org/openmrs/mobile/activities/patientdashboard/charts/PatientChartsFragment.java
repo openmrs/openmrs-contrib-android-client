@@ -21,9 +21,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -40,9 +42,6 @@ import org.openmrs.mobile.utilities.FontsUtil;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 
 public class PatientChartsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientCharts {
@@ -63,7 +62,7 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_patient_charts, null, false);
 
-        mEmptyListView = (TextView) root.findViewById(R.id.vitalEmpty);
+        mEmptyListView = root.findViewById(R.id.vitalEmpty);
         FontsUtil.setFont(mEmptyListView, FontsUtil.OpenFonts.OPEN_SANS_BOLD);
         mListView = root.findViewById(R.id.vitalList);
         mListView.setEmptyView(mEmptyListView);

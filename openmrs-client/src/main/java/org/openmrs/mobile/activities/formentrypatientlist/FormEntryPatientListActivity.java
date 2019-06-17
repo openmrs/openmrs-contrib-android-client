@@ -18,11 +18,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseActivity;
-
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseActivity;
 
 public class FormEntryPatientListActivity extends ACBaseActivity {
 
@@ -32,7 +32,7 @@ public class FormEntryPatientListActivity extends ACBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_form_entry_patient_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

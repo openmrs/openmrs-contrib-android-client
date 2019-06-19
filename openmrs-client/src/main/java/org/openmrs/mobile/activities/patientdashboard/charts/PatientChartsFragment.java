@@ -31,6 +31,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.models.Encounter;
@@ -178,4 +179,15 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
 
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            try {
+                PatientDashboardActivity.hideFABs(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

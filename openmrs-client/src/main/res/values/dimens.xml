@@ -40,5 +40,10 @@
     <dimen name="label_margin_wide">32dp</dimen>
     <dimen name="big_heading">18dp</dimen>
     <dimen name="small_heading">16dp</dimen>
+    <dimen name="fab_bottom_margin_4">4dp</dimen>
+    <dimen name="custom_fab_bottom_margin_55">55dp</dimen>
+    <dimen name="custom_fab_bottom_margin_105">105dp</dimen>
+    <dimen name="custom_fab_bottom_margin_155">155dp</dimen>
+    <dimen name="custom_fab_standard_21">21dp</dimen>
 
 </resources>

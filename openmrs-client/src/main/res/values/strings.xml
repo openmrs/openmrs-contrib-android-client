@@ -367,5 +367,7 @@
     <string name="action_provider_management">Manage Providers</string>
     <string name="unable_to_fetch_providers">Unable to fetch Providers!</string>
     <string name="device_offline_msg">Device Offline!</string>
+    <string name="fab_label_update">Update</string>
+    <string name="fab_label_delete">Delete</string>
 
 </resources>

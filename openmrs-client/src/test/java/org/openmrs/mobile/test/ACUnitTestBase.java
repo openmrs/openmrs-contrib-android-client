@@ -31,7 +31,6 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientIdentifier;
-import org.openmrs.mobile.models.Person;
 import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
 import org.openmrs.mobile.models.Results;
@@ -92,7 +91,7 @@ public abstract class ACUnitTestBase {
         Patient patient = new Patient();
         patient.setId(id);
         patient.setUuid("patient_one_uuid"+id);
-        patient.setPerson(createPerson(id));
+        updatePatientData(id,patient);
         patient.setIdentifiers(Collections.singletonList(createIdentifier(id)));
         return patient;
     }
@@ -103,13 +102,12 @@ public abstract class ACUnitTestBase {
         return identifier;
     }
 
-    protected Person createPerson(Long id) {
-        Person person = new Person();
-        person.setNames(Collections.singletonList(createPersonName(id)));
-        person.setAddresses(Collections.singletonList(createPersonAddress(id)));
-        person.setGender("M");
-        person.setBirthdate("25-02-2016");
-        return person;
+    protected Patient updatePatientData(Long id, Patient patient) {
+        patient.setNames(Collections.singletonList(createPersonName(id)));
+        patient.setAddresses(Collections.singletonList(createPersonAddress(id)));
+        patient.setGender("M");
+        patient.setBirthdate("25-02-2016");
+        return patient;
     }
 
     protected PersonAddress createPersonAddress(Long id) {

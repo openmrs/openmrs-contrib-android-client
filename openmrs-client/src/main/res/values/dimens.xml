@@ -29,4 +29,16 @@
     <dimen name="settings_download_button_height">40dp</dimen>
     <dimen name="settings_list_text_detail_size">12sp</dimen>
     <dimen name="settings_list_text_title_size">16sp</dimen>
+    <dimen name="settings_icon_size">24dp</dimen>
+    <dimen name="settings_icon_margin">16dp</dimen>
+    <dimen name="text_size_large">18sp</dimen>
+    <dimen name="information_icon_size">48dp</dimen>
+    <dimen name="margin_short">8dp</dimen>
+    <dimen name="margin_long">16dp</dimen>
+    <dimen name="margin_new_heading">24dp</dimen>
+    <dimen name="size_sub_body">14sp</dimen>
+    <dimen name="label_margin_wide">32dp</dimen>
+    <dimen name="big_heading">18dp</dimen>
+    <dimen name="small_heading">16dp</dimen>
+
 </resources>

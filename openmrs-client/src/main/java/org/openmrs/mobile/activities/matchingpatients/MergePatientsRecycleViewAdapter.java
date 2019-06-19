@@ -38,7 +38,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergePatientsRecycleViewAdapter.PatientViewHolder>{
+public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergePatientsRecycleViewAdapter.PatientViewHolder> {
 
     private List<Patient> patientList;
     private Patient newPatient;
@@ -56,7 +56,7 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
     @NonNull
     @Override
     public PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.similar_patient_row, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_similar_patient, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
@@ -76,7 +76,7 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
         return patientList.size();
     }
 
-    public class PatientViewHolder extends RecyclerView.ViewHolder{
+    public class PatientViewHolder extends RecyclerView.ViewHolder {
 
         private TextView mGivenName;
         private TextView mMiddleName;
@@ -87,6 +87,7 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
         private TextView mPostalCode;
         private TextView mCity;
         private TextView mCountry;
+
         public PatientViewHolder(View itemView) {
             super(itemView);
             mGivenName = (TextView) itemView.findViewById(R.id.patientGivenName);
@@ -99,12 +100,12 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
             mCity = (TextView) itemView.findViewById(R.id.patientCity);
             mCountry = (TextView) itemView.findViewById(R.id.patientCountry);
             itemView.setOnClickListener(view -> {
-                CardView cardView = (CardView)view.findViewById(R.id.cardView);
+                CardView cardView = (CardView) view.findViewById(R.id.cardView);
                 if (selectedPosition == -1) {
                     selectedPosition = getAdapterPosition();
                     mPresenter.setSelectedPatient(patientList.get(selectedPosition));
                     cardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.patient_selected_highlight));
-                } else if(selectedPosition == getAdapterPosition()){
+                } else if (selectedPosition == getAdapterPosition()) {
                     selectedPosition = -1;
                     mPresenter.removeSelectedPatient();
                     cardView.setCardBackgroundColor(Color.WHITE);
@@ -117,76 +118,75 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
     }
 
     private void setBirthdate(PatientViewHolder holder, Patient patient) {
-        try{
-            holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
-            if (Objects.equal(patient.getPerson().getBirthdate(), newPatient.getPerson().getBirthdate())) {
+        try {
+            holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
+            if (Objects.equal(patient.getBirthdate(), newPatient.getBirthdate())) {
                 setStyleForMatchedPatientFields(holder.mBirthDate);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             holder.mBirthDate.setText(" ");
         }
     }
 
     private void setGender(PatientViewHolder holder, Patient patient) {
-        if (null != patient.getPerson().getGender()) {
-            holder.mGender.setText(patient.getPerson().getGender());
-            if (Objects.equal(patient.getPerson().getGender(), newPatient.getPerson().getGender())) {
-                setStyleForMatchedPatientFields(holder.mGender);            }
+        if (null != patient.getGender()) {
+            holder.mGender.setText(patient.getGender());
+            if (Objects.equal(patient.getGender(), newPatient.getGender())) {
+                setStyleForMatchedPatientFields(holder.mGender);
+            }
         }
     }
 
     private void setPatientAdres(PatientViewHolder holder, Patient patient) {
-        if (null != patient.getPerson().getAddress().getAddress1()) {
-            holder.mAddres.setText(patient.getPerson().getAddress().getAddress1());
-            if (Objects.equal(patient.getPerson().getAddress().getAddress1(), newPatient.getPerson().getAddress().getAddress1())) {
+        if (null != patient.getAddress().getAddress1()) {
+            holder.mAddres.setText(patient.getAddress().getAddress1());
+            if (Objects.equal(patient.getAddress().getAddress1(), newPatient.getAddress().getAddress1())) {
                 setStyleForMatchedPatientFields(holder.mAddres);
             }
         }
-        if (null != patient.getPerson().getAddress().getPostalCode()) {
-            holder.mPostalCode.setText(patient.getPerson().getAddress().getPostalCode());
-            if (Objects.equal(patient.getPerson().getAddress().getPostalCode(), newPatient.getPerson().getAddress().getPostalCode())) {
+        if (null != patient.getAddress().getPostalCode()) {
+            holder.mPostalCode.setText(patient.getAddress().getPostalCode());
+            if (Objects.equal(patient.getAddress().getPostalCode(), newPatient.getAddress().getPostalCode())) {
                 setStyleForMatchedPatientFields(holder.mPostalCode);
             }
         }
-        if (null != patient.getPerson().getAddress().getCityVillage()) {
-            holder.mCity.setText(patient.getPerson().getAddress().getCityVillage());
-            if (Objects.equal(patient.getPerson().getAddress().getCityVillage(), newPatient.getPerson().getAddress().getCityVillage())) {
+        if (null != patient.getAddress().getCityVillage()) {
+            holder.mCity.setText(patient.getAddress().getCityVillage());
+            if (Objects.equal(patient.getAddress().getCityVillage(), newPatient.getAddress().getCityVillage())) {
                 setStyleForMatchedPatientFields(holder.mCity);
             }
         }
-        if (null != patient.getPerson().getAddress().getCountry()) {
-            holder.mCountry.setText(patient.getPerson().getAddress().getCountry());
-            if (Objects.equal(patient.getPerson().getAddress().getCountry(), newPatient.getPerson().getAddress().getCountry())) {
+        if (null != patient.getAddress().getCountry()) {
+            holder.mCountry.setText(patient.getAddress().getCountry());
+            if (Objects.equal(patient.getAddress().getCountry(), newPatient.getAddress().getCountry())) {
                 setStyleForMatchedPatientFields(holder.mCountry);
             }
         }
     }
 
     private void setPatientName(PatientViewHolder holder, Patient patient) {
-        if (null != patient.getPerson().getName().getGivenName()) {
-            holder.mGivenName.setText(patient.getPerson().getName().getGivenName());
-            if (Objects.equal(patient.getPerson().getName().getGivenName(), newPatient.getPerson().getName().getGivenName())) {
+        if (null != patient.getName().getGivenName()) {
+            holder.mGivenName.setText(patient.getName().getGivenName());
+            if (Objects.equal(patient.getName().getGivenName(), newPatient.getName().getGivenName())) {
                 setStyleForMatchedPatientFields(holder.mGivenName);
             }
         }
-        if (null != patient.getPerson().getName().getMiddleName()) {
-            holder.mMiddleName.setText(patient.getPerson().getName().getMiddleName());
-            if (Objects.equal(patient.getPerson().getName().getMiddleName(), newPatient.getPerson().getName().getMiddleName())) {
+        if (null != patient.getName().getMiddleName()) {
+            holder.mMiddleName.setText(patient.getName().getMiddleName());
+            if (Objects.equal(patient.getName().getMiddleName(), newPatient.getName().getMiddleName())) {
                 setStyleForMatchedPatientFields(holder.mMiddleName);
             }
         }
-        if (null != patient.getPerson().getName().getFamilyName()) {
-            holder.mFamilyName.setText(patient.getPerson().getName().getFamilyName());
-            if (Objects.equal(patient.getPerson().getName().getFamilyName(), newPatient.getPerson().getName().getFamilyName())) {
+        if (null != patient.getName().getFamilyName()) {
+            holder.mFamilyName.setText(patient.getName().getFamilyName());
+            if (Objects.equal(patient.getName().getFamilyName(), newPatient.getName().getFamilyName())) {
                 setStyleForMatchedPatientFields(holder.mFamilyName);
             }
         }
     }
 
-    private void setStyleForMatchedPatientFields(TextView textView){
-        textView.setTypeface(null , Typeface.BOLD);
+    private void setStyleForMatchedPatientFields(TextView textView) {
+        textView.setTypeface(null, Typeface.BOLD);
         textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 }

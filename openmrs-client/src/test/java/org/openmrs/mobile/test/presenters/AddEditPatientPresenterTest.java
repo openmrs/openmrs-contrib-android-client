@@ -82,49 +82,49 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldNotPassValidation_noGivenName() {
-        patient.getPerson().getName().setGivenName(null);
+        patient.getName().setGivenName(null);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
 
     @Test
     public void shouldNotPassValidation_invalidGivenName() {
-        patient.getPerson().getName().setGivenName(INVALID_NAME_1);
+        patient.getName().setGivenName(INVALID_NAME_1);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
 
     @Test
     public void shouldNotPassValidation_noFamilyName() {
-        patient.getPerson().getName().setFamilyName(null);
+        patient.getName().setFamilyName(null);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
 
     @Test
     public void shouldNotPassValidation_invalidFamilyName() {
-        patient.getPerson().getName().setFamilyName(INVALID_NAME_2);
+        patient.getName().setFamilyName(INVALID_NAME_2);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
 
     @Test
     public void shouldNotPassValidation_invalidMiddleName() {
-        patient.getPerson().getName().setMiddleName(INVALID_NAME_3);
+        patient.getName().setMiddleName(INVALID_NAME_3);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
 
     @Test
     public void shouldNotPassValidation_noBirthDate() {
-        patient.getPerson().setBirthdate(null);
+        patient.setBirthdate(null);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
 
     @Test
     public void shouldNotPassValidation_notFullAddress() {
-        patient.getPerson().setAddresses(Collections.singletonList(new PersonAddress()));
+        patient.setAddresses(Collections.singletonList(new PersonAddress()));
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
@@ -135,7 +135,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
 
         invalidAddress.setAddress1(INVALID_ADDRESS_1);
 
-        patient.getPerson().setAddresses(Collections.singletonList(invalidAddress));
+        patient.setAddresses(Collections.singletonList(invalidAddress));
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
@@ -146,14 +146,14 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
 
         invalidAddress.setAddress2(INVALID_ADDRESS_2);
 
-        patient.getPerson().setAddresses(Collections.singletonList(invalidAddress));
+        patient.setAddresses(Collections.singletonList(invalidAddress));
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
 
     @Test
     public void shouldNotPassValidation_notValidCountry() {
-        patient.getPerson().getAddress().setCountry("United States Of Poland");
+        patient.getAddress().setCountry("United States Of Poland");
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
@@ -161,7 +161,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldNotPassValidation_noGender() {
         presenter.subscribe();
-        patient.getPerson().setGender(null);
+        patient.setGender(null);
         presenter.confirmUpdate(patient);
         verify(view).scrollToTop();
     }
@@ -170,7 +170,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     public void shouldUpdatePatient_allOk() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
         when(restApi.updatePatient(any(), anyString(), anyString()))
-                .thenReturn(mockSuccessCall(patient));
+                .thenReturn(mockSuccessCall(patient.getPatientDto()));
         when(restApi.uploadPatientPhoto(anyString(), any()))
                 .thenReturn(mockSuccessCall(new PatientPhoto()));
 

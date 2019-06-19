@@ -69,7 +69,7 @@ public class MatchingPatientsPresenterTest extends ACUnitTestBase {
     public void mergePatientsTest_allOk(){
         Patient patient = createPatient(4l);
         presenter.setSelectedPatient(patient);
-        when(restApi.updatePatient(any(), anyString(), anyString())).thenReturn(mockSuccessCall(patient));
+        when(restApi.updatePatient(any(), anyString(), anyString())).thenReturn(mockSuccessCall(patient.getPatientDto()));
         presenter.mergePatients();
         verify(view).finishActivity();
     }

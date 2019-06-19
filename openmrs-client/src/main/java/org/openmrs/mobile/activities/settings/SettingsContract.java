@@ -23,13 +23,15 @@ public interface SettingsContract {
 
         void addLogsInfo(long logSize, String logFilename);
 
+        void setUpConceptsView();
+
         void setConceptsInDbText(String text);
 
         void addBuildVersionInfo();
 
         void addPrivacyPolicyInfo();
 
-        void applyChanges();
+        void rateUs();
 
     }
 

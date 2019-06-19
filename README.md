@@ -17,6 +17,7 @@ OpenMRS Android Client
 * [Demo Server](#demo-server)
 * [Releasing](#releasing)
 * [Release Notes](#release-notes)
+	* [Verison 2.7.2](#version-2.7.2)
 	* [Version 2.7.1](#version-2.7.1)
 	* [Version 2.7.0](#version-2.7.0)
 	* [Version 2.6.2](#version-2.6.2)
@@ -62,6 +63,10 @@ The coding conventions used by OpenMRS are outlined [here](https://wiki.openmrs.
 ### Model pattern
 We are following [Google's MVP sample](https://github.com/googlesamples/android-architecture/tree/todo-mvp) for this application's development.
 
+
+### HTTP call debugging
+In order to debug HTTP calls, we have integrated [Android Snooper](https://github.com/jainsahab/AndroidSnooper) (a GUI based open source library) to track network calls. To use Android snooper, all you have to do is shake your device and snooper will present list of network calls made by OpenMRS app.
+
 # Quick Start
 
 As of February 2016, this project has been migrated to gradle to work successfully with Android Studio. 
@@ -95,6 +100,24 @@ In order to release the application, go to [releases](https://github.com/openmrs
 If you want to release a new major or minor version, please be sure to update the applicationVersion variable in [build.gradle](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/openmrs-client/build.gradle#L26) prior to the release.
 
 # Release Notes
+
+<a name="version-2.7.3"></a>
+### Version 2.7.3
+### Summary:
+1. Remove Apache HTTP API Client library
+2. Patient now extends Person
+3. Make Search primary function for Find Patients
+4. Revamp Settings Page (new material design!)
+5. Integrated android snooper for debugging purpose
+
+<a name="version-2.7.2"></a>
+### Version 2.7.2
+### Summary:
+1. Added Kotlin dependency to app level build.gradle file
+2. Added release folder to gitignore
+3. Initialized SQLCipher, made app 64-bit compliant
+4. Changed Gradle to latest version
+5. Fixed Play Publisher not publishing to Play store
 
 <a name="version-2.7.1"></a>
 ### Version 2.7.1

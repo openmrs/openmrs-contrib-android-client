@@ -76,7 +76,7 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
     @NonNull
     @Override
     public SyncedPatientsRecyclerViewAdapter.PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_synced_patients_row, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_find_synced_patients, parent, false);
         FontsUtil.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
@@ -92,14 +92,14 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
                     patient.getIdentifier().getIdentifier());
             holder.mIdentifier.setText(patientIdentifier);
         }
-        if (null != patient.getPerson().getName()) {
-            holder.mDisplayName.setText(patient.getPerson().getName().getNameString());
+        if (null != patient.getName()) {
+            holder.mDisplayName.setText(patient.getName().getNameString());
         }
-        if (null != patient.getPerson().getGender()) {
-            holder.mGender.setText(patient.getPerson().getGender());
+        if (null != patient.getGender()) {
+            holder.mGender.setText(patient.getGender());
         }
         try{
-            holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getPerson().getBirthdate())));
+            holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
         }
         catch (Exception e)
         {

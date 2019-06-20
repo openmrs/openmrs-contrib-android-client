@@ -17,6 +17,7 @@ package org.openmrs.mobile.test.presenters;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.diagnosis.PatientDashboardDiagnosisPresenter;
 import org.openmrs.mobile.dao.EncounterDAO;
@@ -34,7 +35,6 @@ import rx.Observable;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class PatientDashboardDiagnosisPresenterTest extends ACUnitTestBaseRx {
 
@@ -56,7 +56,7 @@ public class PatientDashboardDiagnosisPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldLoadDiagnosisFromDB(){
-        when(encounterDAO.getAllEncountersByType(eq(patient.getId()), any()))
+        Mockito.lenient().when(encounterDAO.getAllEncountersByType(eq(patient.getId()), any()))
                 .thenReturn(Observable.just(createEncounters(false)));
         presenter.loadDiagnosis();
         verify(view).setDiagnosesToDisplay(createDiagnosisList(2));
@@ -64,7 +64,7 @@ public class PatientDashboardDiagnosisPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldLoadDiagnosisFromDB_shouldNotShowDuplicates(){
-        when(encounterDAO.getAllEncountersByType(eq(patient.getId()), any()))
+        Mockito.lenient().when(encounterDAO.getAllEncountersByType(eq(patient.getId()), any()))
                 .thenReturn(Observable.just(createEncounters(true)));
         presenter.loadDiagnosis();
         verify(view).setDiagnosesToDisplay(createDiagnosisList(2));

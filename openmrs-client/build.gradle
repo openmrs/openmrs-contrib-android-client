@@ -120,7 +120,7 @@ dependencies {
             'androidx.test.espresso:espresso-core:3.1.0',
             'androidx.test:rules:1.1.0-alpha4',
             'androidx.test:runner:1.1.0-alpha4',
-            'org.mockito:mockito-core:1.10.19',
+            'org.mockito:mockito-core:2.8.9+',
             'com.google.dexmaker:dexmaker-mockito:1.2',
             'com.google.dexmaker:dexmaker:1.2',
             'com.jayway.android.robotium:robotium-solo:4.2'
@@ -159,11 +159,12 @@ dependencies {
     implementation 'org.mindrot:jbcrypt:0.4'
     implementation 'com.hbb20:ccp:2.2.7'
     testImplementation(
-            'org.mockito:mockito-core:1.10.19',
+            'org.mockito:mockito-core:2.8.9',
             'junit:junit:4.12',
-            'org.powermock:powermock-api-mockito:1.6.6',
-            'org.powermock:powermock-module-junit4:1.6.6'
+            'org.powermock:powermock-api-mockito2:2.0.2',
+            'org.powermock:powermock-module-junit4:2.0.2'
     )
+    testImplementation 'android.arch.core:core-testing:1.1.1'
     // Room components
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"

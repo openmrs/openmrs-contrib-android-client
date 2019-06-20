@@ -4,13 +4,13 @@ import com.google.common.collect.ImmutableList;
 import net.sqlcipher.database.SQLiteDatabase;
 import net.sqlcipher.database.SQLiteException;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Answers;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.DBOpenHelper;
@@ -23,13 +23,11 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.doReturn;
 import static org.powermock.api.mockito.PowerMockito.doThrow;
 import static org.powermock.api.mockito.PowerMockito.spy;
-import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(OpenMRS.class)
@@ -51,10 +49,10 @@ public class DBOpenHelperTest {
 
     @Before
     public void setUp() {
-        when(openMRS.getResources().getString(R.string.dbname)).thenReturn("openmrs.db");
-        when(openMRS.getResources().getInteger(R.integer.dbversion)).thenReturn(9);
+        Mockito.lenient().when(openMRS.getResources().getString(R.string.dbname)).thenReturn("openmrs.db");
+        Mockito.lenient().when(openMRS.getResources().getInteger(R.integer.dbversion)).thenReturn(9);
         PowerMockito.mockStatic(OpenMRS.class);
-        when(OpenMRS.getInstance()).thenReturn(openMRS);
+        Mockito.lenient().when(OpenMRS.getInstance()).thenReturn(openMRS);
     }
 
     @Test
@@ -110,7 +108,7 @@ public class DBOpenHelperTest {
     private DBOpenHelper mockEncryptedDBWithKey(String key) {
         DBOpenHelper dbOpenHelper = spy(new DBOpenHelper(null));
 
-        doThrow(new SQLiteException()).when(dbOpenHelper).getWritableDatabase(argThat(CoreMatchers.not(CoreMatchers.equalTo(key))));
+        doThrow(new SQLiteException()).when(dbOpenHelper).getWritableDatabase(Mockito.nullable(String.class));
         doReturn(sqLiteDatabase).when(dbOpenHelper).getWritableDatabase(key);
 
         return dbOpenHelper;
@@ -119,13 +117,13 @@ public class DBOpenHelperTest {
     private DBOpenHelper mockUnencryptedDB() {
         DBOpenHelper dbOpenHelper = spy(new DBOpenHelper(null));
 
-        doThrow(new SQLiteException()).when(dbOpenHelper).getWritableDatabase(argThat(CoreMatchers.not(CoreMatchers.equalTo(""))));
+        doThrow(new SQLiteException()).when(dbOpenHelper).getWritableDatabase(Mockito.anyString());
         doReturn(sqLiteDatabase).when(dbOpenHelper).getWritableDatabase("");
 
         return dbOpenHelper;
     }
 
     private void mockKey(String key) {
-        when(openMRS.getSecretKey()).thenReturn(key);
+        Mockito.lenient().when(openMRS.getSecretKey()).thenReturn(key);
     }
 }

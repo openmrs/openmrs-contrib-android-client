@@ -17,6 +17,7 @@ package org.openmrs.mobile.test.presenters;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsContract;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsPresenter;
 import org.openmrs.mobile.api.RestApi;
@@ -31,7 +32,6 @@ import java.util.List;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
 
@@ -56,14 +56,14 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
                 patientDAO);
         firstPatient = createPatient(1l);
         secondPatient = createPatient(2l);
-        when(patientDAO.isUserAlreadySaved(firstPatient.getUuid())).thenReturn(true);
-        when(patientDAO.isUserAlreadySaved(secondPatient.getUuid())).thenReturn(false);
+        Mockito.lenient().when(patientDAO.isUserAlreadySaved(firstPatient.getUuid())).thenReturn(true);
+        Mockito.lenient().when(patientDAO.isUserAlreadySaved(secondPatient.getUuid())).thenReturn(false);
     }
 
     @Test
     public void shouldUpdateLastViewedPatientList_allOK(){
         List<Patient> patientList = Arrays.asList(firstPatient, secondPatient);
-        when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockSuccessCall(patientList));
+        Mockito.lenient().when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockSuccessCall(patientList));
         lastViewedPatientsPresenter.updateLastViewedList();
         verify(restApi).getLastViewedPatients(limit, startIndex);
         verify(view).updateList(Collections.singletonList(secondPatient));
@@ -74,7 +74,7 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
 
     @Test
     public void shouldUpdateLastViewedPatientList_ServerError(){
-        when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockErrorCall(401));
+        Mockito.lenient().when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockErrorCall(401));
         lastViewedPatientsPresenter.updateLastViewedList();
         verify(restApi).getLastViewedPatients(limit, startIndex);
         verify(view, atLeast(2)).setListVisibility(false);
@@ -86,19 +86,19 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
 
     @Test
     public void shouldUpdateLastViewedPatientList_Error(){
-        when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockFailureCall());
+        Mockito.lenient().when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockFailureCall());
         lastViewedPatientsPresenter.updateLastViewedList();
         verify(restApi).getLastViewedPatients(limit, startIndex);
         verify(view).setProgressBarVisibility(false);
         verify(view, atLeast(2)).setListVisibility(false);
-        verify(view).setEmptyListText(anyString());
+        verify(view).setEmptyListText(Mockito.any());
         verify(view).stopRefreshing();
     }
 
     @Test
     public void shouldFindPatientsWithQuery_allOK(){
         List<Patient> patientList = Arrays.asList(firstPatient, secondPatient);
-        when(restApi.getPatients("query", "full")).thenReturn(mockSuccessCall(patientList));
+        Mockito.lenient().when(restApi.getPatients("query", "full")).thenReturn(mockSuccessCall(patientList));
         lastViewedPatientsPresenter.findPatients("query");
         verify(restApi).getPatients("query", "full");
         verify(view).updateList(Collections.singletonList(secondPatient));
@@ -108,18 +108,18 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
 
     @Test
     public void shouldFindPatientsWithQuery_Error(){
-        when(restApi.getPatients("query", "full")).thenReturn(mockFailureCall());
+        Mockito.lenient().when(restApi.getPatients("query", "full")).thenReturn(mockFailureCall());
         lastViewedPatientsPresenter.findPatients("query");
         verify(restApi).getPatients("query", "full");
         verify(view).setProgressBarVisibility(false);
-        verify(view).setEmptyListText(anyString());
+        verify(view).setEmptyListText(Mockito.any());
         verify(view).stopRefreshing();
     }
 
     @Test
     public void shouldLoadMorePatients_allOK(){
         List<Patient> patientList = Arrays.asList(firstPatient, secondPatient);
-        when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockSuccessCall(patientList));
+        Mockito.lenient().when(restApi.getLastViewedPatients(limit, startIndex)).thenReturn(mockSuccessCall(patientList));
         lastViewedPatientsPresenter.loadMorePatients();
         verify(view).showRecycleViewProgressBar(false);
         verify(view).addPatientsToList(lastViewedPatientsPresenter.filterNotDownloadedPatients(patientList));

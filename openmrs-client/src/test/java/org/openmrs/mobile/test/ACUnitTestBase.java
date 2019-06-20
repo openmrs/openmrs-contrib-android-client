@@ -26,13 +26,18 @@ import com.activeandroid.TableInfo;
 import com.activeandroid.content.ContentProvider;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientIdentifier;
+import org.openmrs.mobile.models.Person;
 import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
+import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Results;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -49,13 +54,15 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.doNothing;
-import static org.powermock.api.mockito.PowerMockito.when;
 
 @PrepareForTest({ Cache.class, TableInfo.class, Context.class,
         ContentResolver.class, ContentProvider.class, ContentValues.class })
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor("com.activeandroid.content.ContentProvider")
 public abstract class ACUnitTestBase {
+
+    @Rule
+    public MockitoRule rule = MockitoJUnit.rule().silent();
 
     @Before
     public void initMocks() {
@@ -77,14 +84,14 @@ public abstract class ACUnitTestBase {
             e.printStackTrace();
         }
 
-        when(Cache.openDatabase()).thenReturn(sqliteDb);
-        when(context.getContentResolver()).thenReturn(resolver);
+        Mockito.lenient().when(Cache.openDatabase()).thenReturn(sqliteDb);
+        Mockito.lenient().when(context.getContentResolver()).thenReturn(resolver);
         doNothing().when(resolver).notifyChange(any(Uri.class), any(ContentObserver.class));
-        when(tableInfo.getFields()).thenReturn(new ArrayList<>());
-        when(tableInfo.getTableName()).thenReturn("TestTable");
-        when(Cache.getTableInfo(any(Class.class))).thenReturn(tableInfo);
-        when(Cache.getContext()).thenReturn(context);
-        when(ContentProvider.createUri(anyObject(), anyLong())).thenReturn(null);
+        Mockito.lenient().when(tableInfo.getFields()).thenReturn(new ArrayList<>());
+        Mockito.lenient().when(tableInfo.getTableName()).thenReturn("TestTable");
+        Mockito.lenient().when(Cache.getTableInfo(any(Class.class))).thenReturn(tableInfo);
+        Mockito.lenient().when(Cache.getContext()).thenReturn(context);
+        Mockito.lenient().when(ContentProvider.createUri(anyObject(), anyLong())).thenReturn(null);
     }
 
     protected Patient createPatient(Long id) {
@@ -136,6 +143,26 @@ public abstract class ACUnitTestBase {
         patientIdentifier.setIdentifier(identifier);
         patient.setIdentifiers(Collections.singletonList(patientIdentifier));
         return patient;
+    }
+
+    protected Person createPerson(Long id) {
+        Person person = new Person();
+        person.setNames(Collections.singletonList(createPersonName(id)));
+        person.setAddresses(Collections.singletonList(createPersonAddress(id)));
+        person.setGender("M");
+        person.setBirthdate("25-02-2016");
+        return person;
+    }
+
+    protected Provider createProvider(Long id, String identifier){
+        Provider provider = new Provider();
+        provider.setPerson(createPerson(id));
+        provider.setId(id);
+        provider.setUuid(id.toString());
+        provider.setRetired(false);
+        provider.setIdentifier(identifier);
+
+        return provider;
     }
 
     protected <T> Call<Results<T>> mockSuccessCall(List<T> list) {

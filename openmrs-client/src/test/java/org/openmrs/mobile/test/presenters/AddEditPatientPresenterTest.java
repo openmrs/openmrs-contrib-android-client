@@ -17,6 +17,7 @@ package org.openmrs.mobile.test.presenters;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientContract;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientPresenter;
 import org.openmrs.mobile.api.RestApi;
@@ -41,7 +42,6 @@ import java.util.Collections;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @PrepareForTest({OpenMRS.class, NetworkUtils.class, RestServiceBuilder.class, ToastUtil.class})
 @PowerMockIgnore("javax.net.ssl.*")
@@ -169,9 +169,9 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldUpdatePatient_allOk() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
-        when(restApi.updatePatient(any(), anyString(), anyString()))
+        Mockito.lenient().when(restApi.updatePatient(any(), anyString(), anyString()))
                 .thenReturn(mockSuccessCall(patient.getPatientDto()));
-        when(restApi.uploadPatientPhoto(anyString(), any()))
+        Mockito.lenient().when(restApi.uploadPatientPhoto(anyString(), any()))
                 .thenReturn(mockSuccessCall(new PatientPhoto()));
 
         presenter.subscribe();
@@ -185,9 +185,9 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldUpdatePatient_errorResponse() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
-        when(restApi.updatePatient(any(), anyString(), anyString()))
+        Mockito.lenient().when(restApi.updatePatient(any(), anyString(), anyString()))
                 .thenReturn(mockErrorCall(401));
-        when(restApi.uploadPatientPhoto(anyString(), any()))
+        Mockito.lenient().when(restApi.uploadPatientPhoto(anyString(), any()))
                 .thenReturn(mockSuccessCall(new PatientPhoto()));
 
         presenter.confirmUpdate(patient);

@@ -17,6 +17,7 @@ package org.openmrs.mobile.test.presenters;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListContract;
 import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListPresenter;
@@ -34,7 +35,6 @@ import rx.Observable;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @PrepareForTest(StringUtils.class)
 public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
@@ -62,8 +62,8 @@ public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
         Patient patient = createPatient(1l, mQuery);
         patientList.add(patient);
 
-        when(StringUtils.notNull(anyString())).thenReturn(true);
-        when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
+        Mockito.lenient().when(StringUtils.notNull(anyString())).thenReturn(true);
+        Mockito.lenient().when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
 
         presenter.setQuery(mQuery);
         presenter.subscribe();
@@ -74,8 +74,8 @@ public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldUpdatePatientList_emptyPatientList() {
-        when(StringUtils.notNull(anyString())).thenReturn(true);
-        when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
+        Mockito.lenient().when(StringUtils.notNull(anyString())).thenReturn(true);
+        Mockito.lenient().when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
 
         presenter.setQuery(mQuery);
         presenter.subscribe();
@@ -91,8 +91,8 @@ public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
         Patient patient = createPatient(1l);
         patientList.add(patient);
 
-        when(StringUtils.notNull(anyString())).thenReturn(false);
-        when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
+        Mockito.lenient().when(StringUtils.notNull(anyString())).thenReturn(false);
+        Mockito.lenient().when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
 
         presenter.setQuery(null);
         presenter.subscribe();
@@ -103,8 +103,8 @@ public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldUpdatePatientList_nullQueryEmptyPatientList() {
-        when(StringUtils.notNull(anyString())).thenReturn(false);
-        when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
+        Mockito.lenient().when(StringUtils.notNull(anyString())).thenReturn(false);
+        Mockito.lenient().when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
 
         presenter.setQuery(null);
         presenter.subscribe();

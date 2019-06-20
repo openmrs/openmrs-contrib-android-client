@@ -286,6 +286,11 @@
     <!--ChartsView Activity-->
     <string name="charts_view_toolbar_title">Charts View</string>
 
+    <!--ProviderManager Activity-->
+    <string name="provider_manager">Provider manager</string>
+    <string name="action_find_providers">Find Providers</string>
+
+
     <!-- Image content description strings -->
     <string name="openmrs_logo">OpenMRS logo</string>
     <string name="toast_with_black_background">Toast with black background</string>
@@ -359,5 +364,8 @@
     <string name="rate_us_string">Rate Us</string>
     <string name="settings_frag_size">Size:</string>
     <string name="frag_settings_build">Build:</string>
+    <string name="action_provider_management">Manage Providers</string>
+    <string name="unable_to_fetch_providers">Unable to fetch Providers!</string>
+    <string name="device_offline_msg">Device Offline!</string>
 
 </resources>

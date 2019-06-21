@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.openmrs.mobile.activities.formlist.FormListContract;
 import org.openmrs.mobile.activities.formlist.FormListPresenter;
 import org.openmrs.mobile.dao.EncounterDAO;
@@ -20,7 +21,6 @@ import java.util.List;
 
 import static org.mockito.Matchers.contains;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @PrepareForTest(FormService.class)
 public class FormListPresenterTest extends ACUnitTestBase {
@@ -49,7 +49,7 @@ public class FormListPresenterTest extends ACUnitTestBase {
         formList.add(createExampleFormResourceWithResourceList("thirdForm", "json"));
 
         PowerMockito.mockStatic(FormService.class);
-        when(FormService.getFormResourceList()).thenReturn(formList);
+        Mockito.lenient().when(FormService.getFormResourceList()).thenReturn(formList);
 
         presenter.loadFormResourceList();
 
@@ -66,7 +66,7 @@ public class FormListPresenterTest extends ACUnitTestBase {
         formList.add(createExampleFormResourceWithResourceList("thirdForm", "notjson"));
 
         PowerMockito.mockStatic(FormService.class);
-        when(FormService.getFormResourceList()).thenReturn(formList);
+        Mockito.lenient().when(FormService.getFormResourceList()).thenReturn(formList);
 
         presenter.loadFormResourceList();
 
@@ -85,13 +85,13 @@ public class FormListPresenterTest extends ACUnitTestBase {
         String childValueReference = formList.get(clickedPosition).getResourceList().get(0).getValueReference();
 
         PowerMockito.mockStatic(FormService.class);
-        when(FormService.getFormResourceList()).thenReturn(formList);
+        Mockito.lenient().when(FormService.getFormResourceList()).thenReturn(formList);
 
         presenter.loadFormResourceList();
 
         EncounterType encounterType = new EncounterType();
         encounterType.setUuid(encounterTypeUuid);
-        when(encounterDAO.getEncounterTypeByFormName(formName)).thenReturn(encounterType);
+        Mockito.lenient().when(encounterDAO.getEncounterTypeByFormName(formName)).thenReturn(encounterType);
 
         presenter.listItemClicked(clickedPosition, formName);
 
@@ -107,13 +107,13 @@ public class FormListPresenterTest extends ACUnitTestBase {
         List<FormResource> formList = new ArrayList<>();
         formList.add(createExampleFormResourceWithResourceList(formName, "json"));
         PowerMockito.mockStatic(FormService.class);
-        when(FormService.getFormResourceList()).thenReturn(formList);
+        Mockito.lenient().when(FormService.getFormResourceList()).thenReturn(formList);
 
         presenter.loadFormResourceList();
 
         EncounterType encounterType = new EncounterType();
         encounterType.setUuid(encounterTypeUuid);
-        when(encounterDAO.getEncounterTypeByFormName(formName)).thenReturn(null);
+        Mockito.lenient().when(encounterDAO.getEncounterTypeByFormName(formName)).thenReturn(null);
 
         presenter.listItemClicked(clickedPosition, formName);
 

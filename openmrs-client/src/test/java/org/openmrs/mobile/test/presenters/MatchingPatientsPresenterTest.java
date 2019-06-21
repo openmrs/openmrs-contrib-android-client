@@ -17,6 +17,7 @@ package org.openmrs.mobile.test.presenters;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.openmrs.mobile.activities.matchingpatients.MatchingPatientsContract;
 import org.openmrs.mobile.activities.matchingpatients.MatchingPatientsPresenter;
 import org.openmrs.mobile.api.RestApi;
@@ -33,9 +34,7 @@ import java.util.Queue;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class MatchingPatientsPresenterTest extends ACUnitTestBase {
 
@@ -69,7 +68,7 @@ public class MatchingPatientsPresenterTest extends ACUnitTestBase {
     public void mergePatientsTest_allOk(){
         Patient patient = createPatient(4l);
         presenter.setSelectedPatient(patient);
-        when(restApi.updatePatient(any(), anyString(), anyString())).thenReturn(mockSuccessCall(patient.getPatientDto()));
+        Mockito.lenient().when(restApi.updatePatient(any(), Mockito.any(), Mockito.any())).thenReturn(mockSuccessCall(patient.getPatientDto()));
         presenter.mergePatients();
         verify(view).finishActivity();
     }
@@ -78,18 +77,18 @@ public class MatchingPatientsPresenterTest extends ACUnitTestBase {
     public void mergePatientsTest_errorResponse(){
         Patient patient = createPatient(4l);
         presenter.setSelectedPatient(patient);
-        when(restApi.updatePatient(any(), anyString(), anyString())).thenReturn(mockErrorCall(401));
+        Mockito.lenient().when(restApi.updatePatient(any(), Mockito.any(), Mockito.any())).thenReturn(mockErrorCall(401));
         presenter.mergePatients();
-        verify(view).showErrorToast(anyString());
+        verify(view).showErrorToast(Mockito.any());
     }
 
     @Test
     public void mergePatientsTest_failure(){
         Patient patient = createPatient(4l);
         presenter.setSelectedPatient(patient);
-        when(restApi.updatePatient(any(), anyString(), anyString())).thenReturn(mockFailureCall());
+        Mockito.lenient().when(restApi.updatePatient(any(), Mockito.any(), Mockito.any())).thenReturn(mockFailureCall());
         presenter.mergePatients();
-        verify(view).showErrorToast(anyString());
+        verify(view).showErrorToast(Mockito.any());
     }
 
     @Test

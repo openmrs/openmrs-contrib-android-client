@@ -18,6 +18,7 @@ package org.openmrs.mobile.test.presenters;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.openmrs.mobile.activities.activevisits.ActiveVisitPresenter;
 import org.openmrs.mobile.activities.activevisits.ActiveVisitsContract;
 import org.openmrs.mobile.dao.VisitDAO;
@@ -37,7 +38,6 @@ import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class ActiveVisitPresenterTest extends ACUnitTestBaseRx {
 
@@ -59,7 +59,7 @@ public class ActiveVisitPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void updateVisitsFromDB_allOK(){
-        when(visitDAO.getActiveVisits()).thenReturn(Observable.just(visitList));
+        Mockito.lenient().when(visitDAO.getActiveVisits()).thenReturn(Observable.just(visitList));
         presenter.subscribe();
         verify(view).setEmptyListText(anyInt());
         verify(view).updateListVisibility(visitList);
@@ -67,14 +67,14 @@ public class ActiveVisitPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void updateVisitsFromDB_error(){
-        when(visitDAO.getActiveVisits()).thenReturn(Observable.error(new Throwable("error")));
+        Mockito.lenient().when(visitDAO.getActiveVisits()).thenReturn(Observable.error(new Throwable("error")));
         presenter.subscribe();
         verify(view, atLeast(2)).setEmptyListText(anyInt());
     }
 
     @Test
     public void updateVisitsFromDBWithQuery_allOK(){
-        when(visitDAO.getActiveVisits()).thenReturn(Observable.just(visitList));
+        Mockito.lenient().when(visitDAO.getActiveVisits()).thenReturn(Observable.just(visitList));
         String query = "visit1";
         presenter.updateVisitsInDatabaseList(query);
         verify(view).setEmptyListText(anyInt(), eq(query));
@@ -83,7 +83,7 @@ public class ActiveVisitPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void updateVisitsFromDBWithQuery_error(){
-        when(visitDAO.getActiveVisits()).thenReturn(Observable.error(new Throwable("error")));
+        Mockito.lenient().when(visitDAO.getActiveVisits()).thenReturn(Observable.error(new Throwable("error")));
         String query = "visit1";
         presenter.updateVisitsInDatabaseList(query);
         verify(view, atLeast(2)).setEmptyListText(anyInt(), eq(query));

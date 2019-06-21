@@ -17,6 +17,7 @@ package org.openmrs.mobile.test.presenters;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsContract;
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsPresenter;
 import org.openmrs.mobile.dao.PatientDAO;
@@ -30,7 +31,6 @@ import java.util.List;
 import rx.Observable;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 public class SyncedPatientsPresenterTest extends ACUnitTestBaseRx {
 
@@ -58,7 +58,7 @@ public class SyncedPatientsPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldShowListWhenFoundPatientsinDatabase() {
-        when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
+        Mockito.lenient().when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
         syncedPatientsPresenter.updateLocalPatientsList();
         verify(view).updateListVisibility(true);
         verify(view).updateAdapter(patientList);
@@ -67,7 +67,7 @@ public class SyncedPatientsPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldShowListWhenFoundPatientsByQuery() {
         final String query = "given_name_c";
-        when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
+        Mockito.lenient().when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
         syncedPatientsPresenter.setQuery(query);
         syncedPatientsPresenter.updateLocalPatientsList();
         verify(view).updateListVisibility(true);
@@ -76,7 +76,7 @@ public class SyncedPatientsPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldShowEmptyPatientsDatabaseMessage() {
-        when(patientDAO.getAllPatients()).thenReturn(Observable.just(new ArrayList<>()));
+        Mockito.lenient().when(patientDAO.getAllPatients()).thenReturn(Observable.just(new ArrayList<>()));
         syncedPatientsPresenter.updateLocalPatientsList();
         verify(view).updateListVisibility(false);
     }
@@ -84,7 +84,7 @@ public class SyncedPatientsPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldShowNoResultsForQueryMessage() {
         final String notExistingPatientName = "Patient_20";
-        when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
+        Mockito.lenient().when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
         syncedPatientsPresenter.setQuery(notExistingPatientName);
         syncedPatientsPresenter.updateLocalPatientsList();
         verify(view).updateListVisibility(false, notExistingPatientName);

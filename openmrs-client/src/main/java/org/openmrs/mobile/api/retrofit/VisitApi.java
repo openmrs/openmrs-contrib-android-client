@@ -78,7 +78,9 @@ public class VisitApi {
                             .forEach(visit ->
                                     visitDAO.saveOrUpdate(visit, patient.getId())
                                             .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe());
+                                            .subscribe(),
+                                    error -> error.printStackTrace()
+                            );
                     if (callbackListener != null) {
                         callbackListener.onResponse();
                     }

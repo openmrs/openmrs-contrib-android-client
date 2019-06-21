@@ -17,6 +17,7 @@ package org.openmrs.mobile.test.presenters;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.openmrs.mobile.activities.settings.SettingsContract;
 import org.openmrs.mobile.activities.settings.SettingsPresenter;
 import org.openmrs.mobile.application.OpenMRS;
@@ -30,7 +31,6 @@ import java.io.File;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @PrepareForTest(OpenMRS.class)
 public class SettingsPresenterTest extends ACUnitTestBase {
@@ -57,8 +57,8 @@ public class SettingsPresenterTest extends ACUnitTestBase {
     public void shouldFillList_allOk() {
         String directory = "directory";
         String logFileName = "logfile";
-        when(openMRS.getOpenMRSDir()).thenReturn(directory);
-        when(logger.getLogFilename()).thenReturn(logFileName);
+        Mockito.lenient().when(openMRS.getOpenMRSDir()).thenReturn(directory);
+        Mockito.lenient().when(logger.getLogFilename()).thenReturn(logFileName);
         settingsPresenter.subscribe();
         verify(view).addLogsInfo(0, directory + File.separator + logFileName);
         verify(view).addBuildVersionInfo();
@@ -75,7 +75,7 @@ public class SettingsPresenterTest extends ACUnitTestBase {
     @Test
     public void shouldUpdateConceptsInDBTextView_allOk() {
         final long conceptsInDB = 2137L;
-        when(conceptDAO.getConceptsCount()).thenReturn(conceptsInDB);
+        Mockito.lenient().when(conceptDAO.getConceptsCount()).thenReturn(conceptsInDB);
         settingsPresenter.updateConceptsInDBTextView();
         verify(view).setConceptsInDbText(String.valueOf(conceptsInDB));
     }

@@ -50,11 +50,14 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import com.hbb20.CountryCodePicker;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
+import com.hbb20.CountryCodePicker;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -89,8 +92,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
@@ -205,7 +206,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     @Override
     public void scrollToTop() {
-        ScrollView scrollView = (ScrollView) this.getActivity().findViewById(R.id.scrollView);
+        ScrollView scrollView = this.getActivity().findViewById(R.id.scrollView);
         scrollView.smoothScrollTo(0, scrollView.getPaddingTop());
     }
 
@@ -422,33 +423,33 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private void resolveViews(View v) {
-        relativeLayout = (RelativeLayout) v.findViewById(R.id.addEditRelativeLayout);
-        edfname = (EditText) v.findViewById(R.id.firstname);
-        edmname = (EditText) v.findViewById(R.id.middlename);
-        edlname = (EditText) v.findViewById(R.id.surname);
-        eddob = (EditText) v.findViewById(R.id.dob);
-        edyr = (EditText) v.findViewById(R.id.estyr);
-        edmonth = (EditText) v.findViewById(R.id.estmonth);
-        edaddr1 = (EditText) v.findViewById(R.id.addr1);
-        edaddr2 = (EditText) v.findViewById(R.id.addr2);
-        edcity = (EditText) v.findViewById(R.id.city);
-        edstate = (AutoCompleteTextView) v.findViewById(R.id.state);
+        relativeLayout = v.findViewById(R.id.addEditRelativeLayout);
+        edfname = v.findViewById(R.id.firstname);
+        edmname = v.findViewById(R.id.middlename);
+        edlname = v.findViewById(R.id.surname);
+        eddob = v.findViewById(R.id.dob);
+        edyr = v.findViewById(R.id.estyr);
+        edmonth = v.findViewById(R.id.estmonth);
+        edaddr1 = v.findViewById(R.id.addr1);
+        edaddr2 = v.findViewById(R.id.addr2);
+        edcity = v.findViewById(R.id.city);
+        edstate = v.findViewById(R.id.state);
         mCountryCodePicker=v.findViewById(R.id.ccp);
-        edpostal = (EditText) v.findViewById(R.id.postal);
+        edpostal = v.findViewById(R.id.postal);
 
-        gen = (RadioGroup) v.findViewById(R.id.gender);
-        progressBar = (ProgressBar) v.findViewById(R.id.progress_bar);
+        gen = v.findViewById(R.id.gender);
+        progressBar = v.findViewById(R.id.progress_bar);
 
-        fnameerror = (TextView) v.findViewById(R.id.fnameerror);
-        lnameerror = (TextView) v.findViewById(R.id.lnameerror);
-        doberror = (TextView) v.findViewById(R.id.doberror);
-        gendererror = (TextView) v.findViewById(R.id.gendererror);
-        addrerror = (TextView) v.findViewById(R.id.addrerror);
-        countryerror = (TextView) v.findViewById(R.id.countryerror);
+        fnameerror = v.findViewById(R.id.fnameerror);
+        lnameerror = v.findViewById(R.id.lnameerror);
+        doberror = v.findViewById(R.id.doberror);
+        gendererror = v.findViewById(R.id.gendererror);
+        addrerror = v.findViewById(R.id.addrerror);
+        countryerror = v.findViewById(R.id.countryerror);
 
-        datePicker = (Button) v.findViewById(R.id.btn_datepicker);
-        capturePhotoBtn = (FloatingActionButton) v.findViewById(R.id.capture_photo);
-        patientImageView = (ImageView) v.findViewById(R.id.patientPhoto);
+        datePicker = v.findViewById(R.id.btn_datepicker);
+        capturePhotoBtn = v.findViewById(R.id.capture_photo);
+        patientImageView = v.findViewById(R.id.patientPhoto);
 
         firstNameTIL = v.findViewById(R.id.textInputLayoutFirstName);
         middleNameTIL = v.findViewById(R.id.textInputLayoutMiddlename);
@@ -596,7 +597,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                                 } else {
                                     patientImageView.setImageResource(R.drawable.ic_person_grey_500_48dp);
                                     patientImageView.invalidate();
-                                    patientPhoto = BitmapFactory.decodeResource(getResources(),R.drawable.ic_person_grey_500_48dp);;
+                                    patientPhoto = BitmapFactory.decodeResource(getResources(), R.drawable.ic_person_grey_500_48dp);
                                 }
                             }
                         );
@@ -661,7 +662,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private Snackbar createSnackbarLong(int stringId) {
         Snackbar snackbar = Snackbar.make(relativeLayout, stringId, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(com.google.android.material.R.id.snackbar_text);
+        TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
         return snackbar;
     }

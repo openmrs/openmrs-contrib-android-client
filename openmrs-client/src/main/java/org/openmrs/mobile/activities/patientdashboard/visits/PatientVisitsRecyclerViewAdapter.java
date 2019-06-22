@@ -21,15 +21,15 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<PatientVisitsRecyclerViewAdapter.VisitViewHolder> {
     private PatientVisitsFragment mContext;
@@ -96,10 +96,10 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
         public VisitViewHolder(View itemView) {
             super(itemView);
             mRelativeLayout = (RelativeLayout) itemView;
-            mVisitStart = (TextView) itemView.findViewById(R.id.patientVisitStartDate);
-            mVisitEnd = (TextView) itemView.findViewById(R.id.patientVisitEndDate);
-            mVisitPlace = (TextView) itemView.findViewById(R.id.patientVisitPlace);
-            mVisitStatus = (TextView) itemView.findViewById(R.id.visitStatusLabel);
+            mVisitStart = itemView.findViewById(R.id.patientVisitStartDate);
+            mVisitEnd = itemView.findViewById(R.id.patientVisitEndDate);
+            mVisitPlace = itemView.findViewById(R.id.patientVisitPlace);
+            mVisitStatus = itemView.findViewById(R.id.visitStatusLabel);
         }
 
         public void clearAnimation() {

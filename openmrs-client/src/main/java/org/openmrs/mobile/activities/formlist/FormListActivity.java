@@ -17,11 +17,11 @@ package org.openmrs.mobile.activities.formlist;
 import android.os.Bundle;
 import android.view.Menu;
 
+import androidx.appcompat.widget.Toolbar;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-
-import androidx.appcompat.widget.Toolbar;
 
 public class FormListActivity extends ACBaseActivity {
 
@@ -30,7 +30,7 @@ public class FormListActivity extends ACBaseActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_form_list);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);

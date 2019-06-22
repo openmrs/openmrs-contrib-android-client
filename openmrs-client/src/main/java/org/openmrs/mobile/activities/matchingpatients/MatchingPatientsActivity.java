@@ -19,14 +19,14 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 
+import androidx.appcompat.widget.Toolbar;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.PatientAndMatchesWrapper;
 import org.openmrs.mobile.utilities.ToastUtil;
-
-import androidx.appcompat.widget.Toolbar;
 
 public class MatchingPatientsActivity extends ACBaseActivity {
 
@@ -35,7 +35,7 @@ public class MatchingPatientsActivity extends ACBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_matching_patients);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
         if (toolbar != null) {
             toolbar.setTitle(getString(R.string.matching_patients_toolbar_title));

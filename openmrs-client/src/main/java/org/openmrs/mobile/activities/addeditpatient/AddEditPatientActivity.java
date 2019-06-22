@@ -19,14 +19,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.appcompat.widget.Toolbar;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.Arrays;
 import java.util.List;
-
-import androidx.appcompat.widget.Toolbar;
 
 public class AddEditPatientActivity extends ACBaseActivity {
 
@@ -39,7 +39,7 @@ public class AddEditPatientActivity extends ACBaseActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_patient_info);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
 
         if (toolbar != null) {
             setSupportActionBar(toolbar);

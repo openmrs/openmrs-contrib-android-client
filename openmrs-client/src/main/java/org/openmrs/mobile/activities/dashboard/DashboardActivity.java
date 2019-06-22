@@ -16,10 +16,10 @@ package org.openmrs.mobile.activities.dashboard;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.Toolbar;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-
-import androidx.appcompat.widget.Toolbar;
 
 public class DashboardActivity extends ACBaseActivity {
 
@@ -50,7 +50,7 @@ public class DashboardActivity extends ACBaseActivity {
         setContentView(R.layout.activity_dashboard);
 
         // Create toolbar
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowHomeEnabled(true);

@@ -1,3 +1,3 @@
-- Removed a deprecated library
-- Make the 'Search' button easier to see
-- Revamp Settings Page (new material design!)
+- Make UI more consistent and follow more of the material design specs
+- Implement initial provider management functionality
+- Add Floating Action Button in patient's details tab, so that the menu bar is not packed.

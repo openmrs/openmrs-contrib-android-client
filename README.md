@@ -6,30 +6,49 @@ OpenMRS Android Client
 [![Build Status Travis](https://travis-ci.org/openmrs/openmrs-contrib-android-client.svg?branch=master)](https://travis-ci.org/openmrs/openmrs-contrib-android-client) [![Build Status AppVeyor](https://ci.appveyor.com/api/projects/status/github/openmrs/openmrs-contrib-android-client?branch=master&svg=true)](https://ci.appveyor.com/project/AvijitGhosh82/openmrs-contrib-android-client) [![Demo Server](https://img.shields.io/badge/demo-online-green.svg)](http://devtest04.openmrs.org:8080/openmrs) [![GitHub version](https://d25lcipzij17d.cloudfront.net/badge.svg?id=gh&type=6&v=2.6.1&x2=0)](https://github.com/openmrs/openmrs-contrib-android-client/releases/latest) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/37fa8e86a3cb4256a3b7ffcc644f13c6)](https://www.codacy.com/app/marzeion-tomasz/openmrs-contrib-android-client?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=openmrs/openmrs-contrib-android-client&amp;utm_campaign=Badge_Grade) [![codecov](https://codecov.io/gh/openmrs/openmrs-contrib-android-client/branch/master/graph/badge.svg)](https://codecov.io/gh/f4ww4z/openmrs-contrib-android-client) [![IRC](https://img.shields.io/badge/IRC-%23openmrs-1e72ff.svg?style=flat)](http://irc.openmrs.org)
 
 ## Table of Contents
-* [Description](#description)
-	* [Key Features](#key-features)
-* [Screenshots](#screenshots)
-* [GSoC 2017](#gsoc-2017)
-* [Development](#development)
-	* [Code Style](#code-style)
-	* [Model Pattern](#model-pattern)
-* [Quick Start](#quick-start)
-* [Demo Server](#demo-server)
-* [Releasing](#releasing)
-* [Release Notes](#release-notes)
-	* [Verison 2.7.2](#version-2.7.2)
-	* [Version 2.7.1](#version-2.7.1)
-	* [Version 2.7.0](#version-2.7.0)
-	* [Version 2.6.2](#version-2.6.2)
-	* [Version 2.6.1](#version-2.6.1)
-	* [Version 2.6.0](#version-2.6.0)
-	* [Version 2.5](#version-2.5)
-	* [Version 2.4](#version-2.4)
-* [Objectives](#objectives)
-	* [Version 2.8](#version-2.8)
-* [User Manual](#user-manual)
-* [License](#license)
-* [Resources](#resources)
+- [OpenMRS Android Client](#OpenMRS-Android-Client)
+	- [Table of Contents](#Table-of-Contents)
+- [Description](#Description)
+			- [Key Features](#Key-Features)
+- [Screenshots](#Screenshots)
+- [GSoC 2017](#GSoC-2017)
+- [Development](#Development)
+		- [Code Style](#Code-Style)
+		- [Model pattern](#Model-pattern)
+		- [HTTP call debugging](#HTTP-call-debugging)
+- [Quick Start](#Quick-Start)
+		- [Steps to set up:](#Steps-to-set-up)
+- [Demo Server](#Demo-Server)
+				- [Demo Username: admin](#Demo-Username-admin)
+				- [Demo Password: Admin123](#Demo-Password-Admin123)
+- [Releasing [Collaborators only]](#Releasing-Collaborators-only)
+- [Release Notes](#Release-Notes)
+		- [Version 2.7.4](#Version-274)
+		- [Summary:](#Summary)
+		- [Version 2.7.3](#Version-273)
+		- [Summary:](#Summary-1)
+		- [Version 2.7.2](#Version-272)
+		- [Summary:](#Summary-2)
+		- [Version 2.7.1](#Version-271)
+		- [Summary:](#Summary-3)
+		- [Version 2.7.0](#Version-270)
+		- [Summary:](#Summary-4)
+		- [Version 2.6.2](#Version-262)
+		- [Summary:](#Summary-5)
+		- [Version 2.6.1](#Version-261)
+		- [Summary:](#Summary-6)
+		- [Version 2.6.0](#Version-260)
+		- [Summary:](#Summary-7)
+		- [Version 2.5](#Version-25)
+		- [Summary:](#Summary-8)
+		- [Version 2.4](#Version-24)
+		- [Summary:](#Summary-9)
+- [Objectives](#Objectives)
+		- [Version 2.8 (next release)](#Version-28-next-release)
+		- [Goals:](#Goals)
+- [User Manual](#User-Manual)
+- [License](#License)
+- [Resources](#Resources)
 
 # Description
 The purpose of this project is to provide an OpenMRS 2.x client for Android devices. The app is designed to cover most of the functionality currently on the web application.
@@ -91,15 +110,29 @@ The demo test server dedicated to the client is (https://demo.openmrs.org/openmr
 ##### Demo Username: admin
 ##### Demo Password: Admin123
 
-# Releasing
+# Releasing [Collaborators only]
 
 We follow the sprint model for development. Read more about it here: [OpenMRS Sprints](https://wiki.openmrs.org/display/RES/Development+Sprints).
 
-In order to release the application, go to [releases](https://github.com/openmrs/openmrs-contrib-android-client/releases) and click the [Draft a new release](https://github.com/openmrs/openmrs-contrib-android-client/releases/new) button. It will create a new version tag in the repository and build the app. The tag name will be used as the version number for this release.
+To release the application, make sure to do these steps **in order**:
 
-If you want to release a new major or minor version, please be sure to update the applicationVersion variable in [build.gradle](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/openmrs-client/build.gradle#L26) prior to the release.
+1. Update the [version variable in build.gradle](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/openmrs-client/build.gradle#L21) prior to the release.
+3. Update the [Release notes](#Release-Notes) section.
+4. Update the [release notes text file](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/openmrs-client/src/main/play/release-notes/en-US/default.txt) to publish in the Play store. Ideally change the wording so that normal end users understand.
+5. Now commit with the title `Release <version number here>` to the master branch.
+6. Tag the commit, using the version as the tag name. Make sure CI is green!
+7. Go to [the releases page](https://github.com/openmrs/openmrs-contrib-android-client/releases) and click the [Draft a new release](https://github.com/openmrs/openmrs-contrib-android-client/releases/new) button. It will create a new version tag in the repository and build the app. The tag name will be used as the version number for this. Be sure to bump unfinished issues to the next due version.
+8. Go to [JIRA's releases page](https://issues.openmrs.org/projects/AC?selectedItem=com.atlassian.jira.jira-projects-plugin:release-page), click on the three-dots on the right, and hit **Release**.
+9. [Optional] Post a new Talk thread and describe what is changed or improved in the release.
 
 # Release Notes
+
+### Version 2.7.4
+### Summary:
+1. Make UI more consistent and follow more of the material design specs
+2. Implement Initial Provider Management
+3. Remove redundant type cast
+4. Add Floating Action Button in patient's details tab
 
 <a name="version-2.7.3"></a>
 ### Version 2.7.3

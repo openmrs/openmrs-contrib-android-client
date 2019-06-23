@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -69,5 +70,17 @@ public class PatientDiagnosisFragment extends PatientDashboardFragment implement
         ArrayAdapter<String> adapter =
                 new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, encounters);
         mDiagnosisList.setAdapter(adapter);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            try {
+                PatientDashboardActivity.hideFABs(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

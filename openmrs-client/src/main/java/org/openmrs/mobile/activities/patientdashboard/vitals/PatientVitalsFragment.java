@@ -30,6 +30,7 @@ import androidx.annotation.Nullable;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayActivity;
+import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.application.OpenMRSInflater;
@@ -128,5 +129,17 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
 
     public static PatientVitalsFragment newInstance() {
         return new PatientVitalsFragment();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            try {
+                PatientDashboardActivity.hideFABs(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

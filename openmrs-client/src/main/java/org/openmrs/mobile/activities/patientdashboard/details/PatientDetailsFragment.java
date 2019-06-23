@@ -83,9 +83,6 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
             case R.id.actionSynchronize:
                 ((PatientDashboardDetailsPresenter) mPresenter).synchronizePatient();
                 break;
-            case R.id.actionUpdatePatient:
-                startPatientUpdateActivity(mPresenter.getPatientId());
-                break;
             default:
                 // Do nothing
                 break;
@@ -130,6 +127,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
         }
 
         if (null != patient.getAddress()) {
+            ((TextView) rootView.findViewById(R.id.addressDetailsStreet)).setText(patient.getAddress().getAddressString());
             showAddressDetailsViewElement(R.id.addressDetailsStateLabel, R.id.addressDetailsState, patient.getAddress().getStateProvince());
             showAddressDetailsViewElement(R.id.addressDetailsCountryLabel, R.id.addressDetailsCountry, patient.getAddress().getCountry());
             showAddressDetailsViewElement(R.id.addressDetailsPostalCodeLabel, R.id.addressDetailsPostalCode, patient.getAddress().getPostalCode());
@@ -169,11 +167,15 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     }
 
     @Override
-    public void startPatientUpdateActivity(long patientId) {
-        Intent updatePatient = new Intent(mPatientDashboardActivity, AddEditPatientActivity.class);
-        updatePatient.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE,
-                String.valueOf(patientId));
-        startActivity(updatePatient);
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            try {
+                PatientDashboardActivity.hideFABs(false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

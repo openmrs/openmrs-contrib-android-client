@@ -148,4 +148,16 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
     public void showStartVisitProgressDialog() {
         ((PatientDashboardActivity) getActivity()).showProgressDialog(R.string.action_starting_visit);
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            try {
+                PatientDashboardActivity.hideFABs(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

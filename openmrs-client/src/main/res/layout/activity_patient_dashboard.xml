@@ -76,4 +76,7 @@
 
         </FrameLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <include layout="@layout/custom_expandable_fab"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

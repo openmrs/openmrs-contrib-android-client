@@ -39,7 +39,6 @@ public interface PatientDashboardContract {
         void dismissDialog();
         void showToast(int stringRes, boolean error);
         void setMenuTitle(String nameString, String identifier);
-        void startPatientUpdateActivity(long patientId);
     }
 
     interface ViewPatientDiagnosis extends ViewPatientMain {

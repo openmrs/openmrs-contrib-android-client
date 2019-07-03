@@ -235,10 +235,16 @@
             android:authorities="org.openmrs.mobile"
             android:exported="false" />
 
-        <activity android:name=".activities.providermanager.ProviderManagementActivity"
+        <activity android:name=".activities.providermanagerdashboard.ProviderManagerDashboardActivity"
             android:configChanges="keyboardHidden|screenSize"
             android:label="@string/provider_manager"
             android:launchMode="singleTop"
+            android:theme="@style/AppThemeOrig"/>
+
+        <activity android:name=".activities.providermanagerdashboard.addprovider.AddProviderActivity"
+            android:parentActivityName=".activities.providermanagerdashboard.ProviderManagerDashboardActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:label="@string/title_provider_info"
             android:theme="@style/AppThemeOrig"/>
 
     </application>

@@ -111,4 +111,9 @@ public abstract class ApplicationConstants {
         public static String[] ENCOUNTER_TYPES_DISPLAYS = {EncounterType.VITALS, EncounterType.ADMISSION, EncounterType.DISCHARGE, EncounterType.VISIT_NOTE};
     }
 
+    public abstract static class RequestCodes{
+        public static final int ADD_PROVIDER_REQ_CODE = 100;
+        public static final int EDIT_PROVIDER_REQ_CODE = 101;
+    }
+
 }

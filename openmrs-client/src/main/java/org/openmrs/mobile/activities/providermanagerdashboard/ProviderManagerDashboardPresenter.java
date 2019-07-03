@@ -12,12 +12,13 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.providermanager;
+package org.openmrs.mobile.activities.providermanagerdashboard;
 
 import androidx.fragment.app.Fragment;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.activities.BasePresenter;
+import org.openmrs.mobile.api.CustomApiCallback;
 import org.openmrs.mobile.api.retrofit.ProviderRepository;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -25,19 +26,19 @@ import org.openmrs.mobile.models.Provider;
 
 import java.util.List;
 
-public class ProviderManagementPresenter extends BasePresenter implements ProviderManagerContract.Presenter {
+public class ProviderManagerDashboardPresenter extends BasePresenter implements ProviderManagerDashboardContract.Presenter, CustomApiCallback {
 
     private RestApi restApi;
     @NotNull
-    private final ProviderManagerContract.View providerManagerView;
+    private final ProviderManagerDashboardContract.View providerManagerView;
 
-    ProviderManagementPresenter(@NotNull ProviderManagerContract.View providerManagerView) {
+    ProviderManagerDashboardPresenter(@NotNull ProviderManagerDashboardContract.View providerManagerView) {
         this.providerManagerView = providerManagerView;
         this.providerManagerView.setPresenter(this);
         restApi = RestServiceBuilder.createService(RestApi.class);
     }
 
-    public ProviderManagementPresenter(@NotNull ProviderManagerContract.View providerManagerView, @NotNull RestApi restApi) {
+    public ProviderManagerDashboardPresenter(@NotNull ProviderManagerDashboardContract.View providerManagerView, @NotNull RestApi restApi) {
         this.providerManagerView = providerManagerView;
         this.restApi = restApi;
         this.providerManagerView.setPresenter(this);
@@ -50,7 +51,7 @@ public class ProviderManagementPresenter extends BasePresenter implements Provid
     }
 
     @Override
-    public void updateViews(List<Provider> providerList){
+    public void updateViews(List<Provider> providerList) {
         if (providerList != null && providerList.size() != 0) {
             providerManagerView.updateAdapter(providerList);
             providerManagerView.updateVisibility(true, null);
@@ -60,7 +61,35 @@ public class ProviderManagementPresenter extends BasePresenter implements Provid
     }
 
     @Override
+    public void deleteProvider(String uuid) {
+        ProviderRepository providerRepository = new ProviderRepository();
+        providerRepository.deleteProviders(restApi, uuid, this);
+    }
+
+    @Override
+    public void addProvider(Provider provider) {
+        ProviderRepository providerRepository = new ProviderRepository();
+        providerRepository.addProvider(restApi, provider, this);
+    }
+
+    @Override
+    public void editProvider(Provider provider) {
+        ProviderRepository providerRepository = new ProviderRepository();
+        providerRepository.editProvider(restApi, provider, this);
+    }
+
+    @Override
     public void subscribe() {
+
+    }
+
+    @Override
+    public void onSuccess() {
+        providerManagerView.refreshUI();
+    }
+
+    @Override
+    public void onFailure() {
 
     }
 }

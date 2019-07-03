@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="org.openmrs.mobile.activities.providermanager.ProviderManagementActivity" >
+    tools:context="org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardActivity" >
     <!--<item android:id="@+id/actionAddPatients"-->
     <!--android:title="@string/action_add_patients"-->
     <!--android:icon="@drawable/ic_add"-->

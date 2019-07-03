@@ -13,19 +13,12 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activities.providermanagerdashboard.ProviderManagerDashboardActivity">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="0dp" />
+    android:orientation="vertical">
 
     <FrameLayout
-        android:id="@+id/providerManagementContentFrame"
+        android:id="@+id/activity_add_provider_content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center" />

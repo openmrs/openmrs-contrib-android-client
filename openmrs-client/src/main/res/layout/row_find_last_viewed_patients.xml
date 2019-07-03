@@ -47,6 +47,7 @@
             android:layout_toEndOf="@+id/lastViewedPatientIdentifier"
             android:layout_toRightOf="@+id/lastViewedPatientIdentifier"
             android:gravity="end"
+            android:paddingRight="10dp"
             android:textSize="@dimen/small_heading" />
 
     </RelativeLayout>

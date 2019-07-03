@@ -121,6 +121,11 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             }
             if (null != patient.getName()) {
                 ((PatientViewHolder) holder).mDisplayName.setText(patient.getName().getNameString());
+            } else if(null != patient.getDisplay()){
+                /* if name is null, then we can get the name from 'display' which contains the ID and name
+                separated by a hyphen( - ). */
+                String patientName = patient.getDisplay().split("-")[1];
+                ((PatientViewHolder) holder).mDisplayName.setText(patientName);
             }
             if (null != patient.getGender()) {
                 ((PatientViewHolder) holder).mGender.setText(patient.getGender());

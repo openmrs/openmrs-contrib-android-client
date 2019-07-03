@@ -38,7 +38,9 @@ import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -153,4 +155,13 @@ public interface RestApi {
     @GET("provider?v=default")
     Call<Results<Provider>> getProviderList();
 
+    @DELETE("provider/{uuid}?!purge")
+    Call<ResponseBody> deleteProvider(@Path("uuid") String uuid);
+
+    @POST("provider")
+    Call<Provider> addProvider(@Body Provider provider);
+
+    @POST("provider/{uuid}")
+    Call<Provider> editProvider(@Path("uuid") String uuid,
+                                @Body Provider provider);
 }

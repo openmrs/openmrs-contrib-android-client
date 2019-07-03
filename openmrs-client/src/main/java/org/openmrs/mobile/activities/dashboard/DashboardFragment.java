@@ -40,7 +40,7 @@ import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
 import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity;
-import org.openmrs.mobile.activities.providermanager.ProviderManagementActivity;
+import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardActivity;
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
@@ -326,7 +326,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
                 startNewActivity(ActiveVisitsActivity.class);
                 break;
             case R.id.dashboardProviderManagementView:
-                startNewActivity(ProviderManagementActivity.class);
+                startNewActivity(ProviderManagerDashboardActivity.class);
                 break;
             default:
                 // Do nothing

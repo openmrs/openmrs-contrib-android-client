@@ -45,5 +45,6 @@
     <dimen name="custom_fab_bottom_margin_105">105dp</dimen>
     <dimen name="custom_fab_bottom_margin_155">155dp</dimen>
     <dimen name="custom_fab_standard_21">21dp</dimen>
+    <dimen name="padding_16">16dp</dimen>
 
 </resources>

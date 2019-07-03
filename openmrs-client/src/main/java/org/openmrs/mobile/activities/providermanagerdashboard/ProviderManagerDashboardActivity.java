@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.providermanager;
+package org.openmrs.mobile.activities.providermanagerdashboard;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,9 +25,9 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.utilities.StringUtils;
 
-public class ProviderManagementActivity extends ACBaseActivity {
-    private ProviderManagementPresenter mPresenter;
-    ProviderManagementFragment providerManagementFragment;
+public class ProviderManagerDashboardActivity extends ACBaseActivity {
+    private ProviderManagerDashboardPresenter mPresenter;
+    ProviderManagerDashboardFragment providerManagerDashboardFragment;
 
     private SearchView searchView;
     private String query;
@@ -43,21 +43,21 @@ public class ProviderManagementActivity extends ACBaseActivity {
         }
 
         // Create fragment
-        providerManagementFragment =
-                (ProviderManagementFragment) getSupportFragmentManager().findFragmentById(R.id.providerManagementContentFrame);
-        if (providerManagementFragment == null) {
-            providerManagementFragment = ProviderManagementFragment.newInstance();
+        providerManagerDashboardFragment =
+                (ProviderManagerDashboardFragment) getSupportFragmentManager().findFragmentById(R.id.providerManagementContentFrame);
+        if (providerManagerDashboardFragment == null) {
+            providerManagerDashboardFragment = ProviderManagerDashboardFragment.newInstance();
         }
-        if (!providerManagementFragment.isActive()) {
+        if (!providerManagerDashboardFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    providerManagementFragment, R.id.providerManagementContentFrame);
+                    providerManagerDashboardFragment, R.id.providerManagementContentFrame);
         }
 
         if (savedInstanceState != null) {
 
-            mPresenter = new ProviderManagementPresenter(providerManagementFragment);
+            mPresenter = new ProviderManagerDashboardPresenter(providerManagerDashboardFragment);
         } else {
-            mPresenter = new ProviderManagementPresenter(providerManagementFragment);
+            mPresenter = new ProviderManagerDashboardPresenter(providerManagerDashboardFragment);
         }
 
     }
@@ -100,7 +100,7 @@ public class ProviderManagementActivity extends ACBaseActivity {
 
             @Override
             public boolean onQueryTextChange(String query) {
-                providerManagementFragment.filterProviders(query);
+                providerManagerDashboardFragment.filterProviders(query);
                 return true;
             }
         });

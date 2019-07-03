@@ -1,3 +1,17 @@
+/*
+ * The contents of this file are subject to the OpenMRS Public License
+ * Version 1.0 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://license.openmrs.org
+ *
+ * Software distributed under the License is distributed on an "AS IS"
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+ * License for the specific language governing rights and limitations
+ * under the License.
+ *
+ * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+ */
+
 package org.openmrs.mobile.test.presenters;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
@@ -11,8 +25,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import org.openmrs.mobile.activities.providermanager.ProviderManagementPresenter;
-import org.openmrs.mobile.activities.providermanager.ProviderManagerContract;
+import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardPresenter;
+import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardContract;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.retrofit.ProviderRepository;
 import org.openmrs.mobile.application.OpenMRS;
@@ -31,7 +45,7 @@ import java.util.List;
 import static org.mockito.Mockito.verify;
 
 @PrepareForTest({NetworkUtils.class, ToastUtil.class, OpenMRS.class, OpenMRSLogger.class})
-public class ProviderManagementPresenterTest extends ACUnitTestBase {
+public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
 
     @Rule
     public InstantTaskExecutorRule taskExecutorRule = new InstantTaskExecutorRule();
@@ -41,7 +55,7 @@ public class ProviderManagementPresenterTest extends ACUnitTestBase {
     @Mock
     private ProviderRepository providerRepository;
     @Mock
-    private ProviderManagerContract.View providerManagerView;
+    private ProviderManagerDashboardContract.View providerManagerView;
     @Mock
     private Observer<List<Provider>> observer;
     @Mock
@@ -51,21 +65,21 @@ public class ProviderManagementPresenterTest extends ACUnitTestBase {
 
     MutableLiveData<List<Provider>> providerLiveData = Mockito.mock(MutableLiveData.class);
 
-    private ProviderManagementPresenter providerManagementPresenter;
+    private ProviderManagerDashboardPresenter providerManagerDashboardPresenter;
     private Fragment fragment = new Fragment();
     List<Provider> providerList;
 
     @Before
-    public void setUp(){
-        providerManagementPresenter = new ProviderManagementPresenter(providerManagerView,restApi);
+    public void setUp() {
+        providerManagerDashboardPresenter = new ProviderManagerDashboardPresenter(providerManagerView, restApi);
         mockStaticMethods();
     }
 
     @Test
-    public void shouldGetProviders_AllOK(){
-        Provider providerOne = createProvider(1l,"doctor");
-        Provider providerTwo = createProvider(2l,"nurse");
-        providerList  = Arrays.asList(providerOne,providerTwo);
+    public void shouldGetProviders_AllOK() {
+        Provider providerOne = createProvider(1l, "doctor");
+        Provider providerTwo = createProvider(2l, "nurse");
+        providerList = Arrays.asList(providerOne, providerTwo);
         providerLiveData.postValue(providerList);
 
         Mockito.lenient().when(NetworkUtils.isOnline()).thenReturn(true);
@@ -73,25 +87,25 @@ public class ProviderManagementPresenterTest extends ACUnitTestBase {
         Mockito.lenient().when(providerRepository.getProviders(restApi)).thenReturn(providerLiveData);
 
         providerRepository.getProviders(restApi).observeForever(observer);
-        providerManagementPresenter.getProviders(fragment);
-        providerManagementPresenter.updateViews(providerList);
+        providerManagerDashboardPresenter.getProviders(fragment);
+        providerManagerDashboardPresenter.updateViews(providerList);
 
         verify(restApi).getProviderList();
         verify(providerManagerView).updateAdapter(providerList);
-        verify(providerManagerView).updateVisibility(true,null);
+        verify(providerManagerView).updateVisibility(true, null);
     }
 
     @Test
-    public void shouldGetProviders_Error(){
+    public void shouldGetProviders_Error() {
         Mockito.lenient().when(NetworkUtils.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.getProviderList()).thenReturn(mockErrorCall(401));
 
-        providerManagementPresenter.getProviders(fragment);
+        providerManagerDashboardPresenter.getProviders(fragment);
         verify(restApi).getProviderList();
     }
 
     @Test
-    public void shouldGetProviders_EmptyList(){
+    public void shouldGetProviders_EmptyList() {
         List<Provider> providerList = new ArrayList<>();
         providerLiveData.postValue(providerList);
 
@@ -100,10 +114,10 @@ public class ProviderManagementPresenterTest extends ACUnitTestBase {
         Mockito.lenient().when(providerRepository.getProviders(restApi)).thenReturn(providerLiveData);
 
         providerRepository.getProviders(restApi).observeForever(observer);
-        providerManagementPresenter.getProviders(fragment);
-        providerManagementPresenter.updateViews(providerList);
+        providerManagerDashboardPresenter.getProviders(fragment);
+        providerManagerDashboardPresenter.updateViews(providerList);
         verify(restApi).getProviderList();
-        verify(providerManagerView).updateVisibility(false,"No Data to display.");
+        verify(providerManagerView).updateVisibility(false, "No Data to display.");
     }
 
     private void mockStaticMethods() {

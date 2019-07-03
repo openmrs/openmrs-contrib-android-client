@@ -12,20 +12,21 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.providermanager;
+package org.openmrs.mobile.activities.providermanagerdashboard;
 
 import androidx.fragment.app.Fragment;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.models.Provider;
 
 import java.util.List;
 
-public interface ProviderManagerContract {
+public interface ProviderManagerDashboardContract {
 
-    interface View extends BaseView<ProviderManagerContract.Presenter> {
+    interface View extends BaseView<ProviderManagerDashboardContract.Presenter> {
+
+        void refreshUI();
 
         void updateAdapter(List<Provider> providerList);
 
@@ -34,6 +35,13 @@ public interface ProviderManagerContract {
 
     interface Presenter extends BasePresenterContract {
         void getProviders(Fragment fragment);
+
         void updateViews(List<Provider> providerList);
+
+        void deleteProvider(String uuid);
+
+        void addProvider(Provider provider);
+
+        void editProvider(Provider provider);
     }
 }

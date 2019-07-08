@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 @Table(name = "encountertype")
 public class EncounterType extends Model implements Serializable {
 

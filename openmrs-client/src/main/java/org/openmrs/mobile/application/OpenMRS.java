@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 
+
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Configuration;
 import com.prateekj.snooper.AndroidSnooper;
@@ -71,11 +72,11 @@ public class OpenMRS extends Application {
 
     protected void initializeDB() {
         Configuration.Builder configurationBuilder = new Configuration.Builder(this);
-        configurationBuilder.addModelClasses(Link.class);
-        configurationBuilder.addModelClasses(FormResource.class);
-        configurationBuilder.addModelClasses(EncounterType.class);
-        configurationBuilder.addModelClasses(Encountercreate.class);
-        configurationBuilder.addModelClasses(Obscreate.class);
+        configurationBuilder.addModelClasses(Link.class); //
+        configurationBuilder.addModelClasses(FormResource.class); //
+        configurationBuilder.addModelClasses(EncounterType.class); //
+        configurationBuilder.addModelClasses(Encountercreate.class); //
+        configurationBuilder.addModelClasses(Obscreate.class); //
 
 
         ActiveAndroid.initialize(configurationBuilder.create());

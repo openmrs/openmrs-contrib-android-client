@@ -104,14 +104,6 @@ public class Provider extends Resource {
         this.retired = retired;
     }
 
-    public List<Link> getLinks() {
-        return links;
-    }
-
-    public void setLinks(List<Link> links) {
-        this.links = links;
-    }
-
     public String getResourceVersion() {
         return resourceVersion;
     }

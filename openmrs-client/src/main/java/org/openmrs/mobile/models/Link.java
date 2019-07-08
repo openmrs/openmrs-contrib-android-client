@@ -18,6 +18,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+@Deprecated
 @Table(name = "link")
 public class Link extends Model implements Serializable{
 

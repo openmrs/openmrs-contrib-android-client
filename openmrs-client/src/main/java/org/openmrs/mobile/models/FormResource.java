@@ -24,6 +24,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 @Table(name = "formresource")
 public class FormResource extends Model implements Serializable{
 

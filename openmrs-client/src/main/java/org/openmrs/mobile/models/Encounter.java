@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class Encounter extends Resource implements Serializable{
 
     private Long id;
@@ -295,24 +296,6 @@ public class Encounter extends Resource implements Serializable{
      */
     public void setEncounterProviders(List<Resource> encounterProviders) {
         this.encounterProviders = encounterProviders;
-    }
-
-    /**
-     * 
-     * @return
-     *     The links
-     */
-    public List<Link> getLinks() {
-        return links;
-    }
-
-    /**
-     * 
-     * @param links
-     *     The links
-     */
-    public void setLinks(List<Link> links) {
-        this.links = links;
     }
 
     /**

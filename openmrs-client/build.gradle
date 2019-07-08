@@ -85,7 +85,7 @@ android {
         exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/NOTICE.txt'
-
+        exclude 'META-INF/rxjava.properties'
     }
 
     compileOptions {
@@ -99,6 +99,7 @@ android {
             includeAndroidResources = true
         }
     }
+
 }
 
 repositories {
@@ -112,6 +113,7 @@ repositories {
 dependencies {
     def support_version = '1.0.0-beta01'
     def room_version = "2.1.0-alpha04"
+    def room_rxjava_version = "1.1.1"
 
     implementation 'com.google.code.gson:gson:2.8.5'
     androidTestImplementation(
@@ -123,8 +125,11 @@ dependencies {
             'org.mockito:mockito-core:2.8.9+',
             'com.google.dexmaker:dexmaker-mockito:1.2',
             'com.google.dexmaker:dexmaker:1.2',
-            'com.jayway.android.robotium:robotium-solo:4.2'
+            'com.jayway.android.robotium:robotium-solo:4.2',
+//            'android.arch.core:core-testing:$room_rxjava_version' /*1.1.1*/
     )
+
+    androidTestImplementation "android.arch.core:core-testing:1.0.0"
 
     androidTestImplementation files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
     debugImplementation 'com.github.jainsahab:Snooper-Okhttp:1.5.4'
@@ -170,6 +175,7 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     // Swipe reveal layout
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
+    implementation "android.arch.persistence.room:rxjava2:$room_rxjava_version"
 }
 
 play {

@@ -12,11 +12,11 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.api.retrofit;
+package org.openmrs.mobile.api.repository;
 
 import org.openmrs.mobile.application.OpenMRS;
 
-abstract class RetrofitApi {
+abstract class RetrofitRepository {
 
     OpenMRS openMrs = OpenMRS.getInstance();
 

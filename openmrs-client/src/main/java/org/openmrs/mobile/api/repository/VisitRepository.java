@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.api.retrofit;
+package org.openmrs.mobile.api.repository;
 
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -41,21 +41,21 @@ import retrofit2.Response;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class VisitApi {
+public class VisitRepository {
 
     private RestApi restApi;
     private VisitDAO visitDAO;
     private LocationDAO locationDAO;
     private EncounterDAO encounterDAO;
 
-    public VisitApi() {
+    public VisitRepository() {
         restApi = RestServiceBuilder.createService(RestApi.class);
         visitDAO = new VisitDAO();
         locationDAO = new LocationDAO();
         encounterDAO = new EncounterDAO();
     }
 
-    public VisitApi(RestApi restApi, VisitDAO visitDAO, LocationDAO locationDAO, EncounterDAO encounterDAO) {
+    public VisitRepository(RestApi restApi, VisitDAO visitDAO, LocationDAO locationDAO, EncounterDAO encounterDAO) {
         this.restApi = restApi;
         this.visitDAO = visitDAO;
         this.locationDAO = locationDAO;

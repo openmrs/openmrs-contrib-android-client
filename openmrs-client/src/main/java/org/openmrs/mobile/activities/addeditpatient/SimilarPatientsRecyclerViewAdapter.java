@@ -31,7 +31,7 @@ import com.google.common.base.Objects;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
-import org.openmrs.mobile.api.retrofit.VisitApi;
+import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -124,8 +124,8 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
         new PatientDAO().savePatient(patient)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(id -> {
-                    new VisitApi().syncVisitsData(patient);
-                    new VisitApi().syncLastVitals(patient.getUuid());
+                    new VisitRepository().syncVisitsData(patient);
+                    new VisitRepository().syncLastVitals(patient.getUuid());
                 });
     }
 

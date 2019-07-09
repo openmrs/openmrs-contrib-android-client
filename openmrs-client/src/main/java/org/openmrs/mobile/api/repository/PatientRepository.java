@@ -12,16 +12,14 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.api.retrofit;
+package org.openmrs.mobile.api.repository;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import com.activeandroid.query.Select;
 
-import org.jdeferred.DoneCallback;
 import org.jdeferred.android.AndroidDeferredManager;
-import org.jdeferred.multiple.MultipleResults;
 import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -57,25 +55,25 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class PatientApi extends RetrofitApi{
+public class PatientRepository extends RetrofitRepository {
 
     private OpenMRSLogger logger;
     private PatientDAO patientDao;
-    private LocationApi locationApi;
+    private LocationRepository locationRepository;
     private RestApi restApi;
 
-    public PatientApi(){
+    public PatientRepository(){
         this.logger = new OpenMRSLogger();
         this.patientDao = new PatientDAO();
-        this.locationApi = new LocationApi();
+        this.locationRepository = new LocationRepository();
         this.restApi = RestServiceBuilder.createService(RestApi.class);
     }
 
-    public PatientApi(OpenMRS openMRS, OpenMRSLogger logger, PatientDAO patientDao, RestApi restApi, LocationApi locationApi) {
+    public PatientRepository(OpenMRS openMRS, OpenMRSLogger logger, PatientDAO patientDao, RestApi restApi, LocationRepository locationRepository) {
         this.logger = logger;
         this.patientDao = patientDao;
         this.restApi = restApi;
-        this.locationApi = locationApi;
+        this.locationRepository = locationRepository;
         this.openMrs = openMRS;
     }
 
@@ -91,7 +89,7 @@ public class PatientApi extends RetrofitApi{
 
         if (NetworkUtils.isOnline()) {
             AndroidDeferredManager dm = new AndroidDeferredManager();
-            dm.when(locationApi.getLocationUuid(), getIdGenPatientIdentifier(), getPatientIdentifierTypeUuid())
+            dm.when(locationRepository.getLocationUuid(), getIdGenPatientIdentifier(), getPatientIdentifierTypeUuid())
                     .done(results -> {
                         final List<PatientIdentifier> identifiers = new ArrayList<>();
 

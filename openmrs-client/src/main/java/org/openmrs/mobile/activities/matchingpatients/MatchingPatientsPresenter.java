@@ -18,7 +18,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
-import org.openmrs.mobile.api.retrofit.PatientApi;
+import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientDto;
@@ -39,7 +39,7 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
 
     private RestApi restApi;
     private PatientDAO patientDAO;
-    private PatientApi patientApi;
+    private PatientRepository patientRepository;
     private MatchingPatientsContract.View view;
     private Queue<PatientAndMatchingPatients> matchingPatientsList;
     private Patient selectedPatient;
@@ -49,17 +49,17 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
         this.matchingPatientsList = matchingPatientsList;
         this.restApi = RestServiceBuilder.createService(RestApi.class);
         this.patientDAO = new PatientDAO();
-        this.patientApi = new PatientApi();
+        this.patientRepository = new PatientRepository();
         this.view.setPresenter(this);
     }
 
     public MatchingPatientsPresenter(MatchingPatientsContract.View view, Queue<PatientAndMatchingPatients> matchingPatientsList,
-                                     RestApi restApi, PatientDAO patientDAO, PatientApi patientApi) {
+                                     RestApi restApi, PatientDAO patientDAO, PatientRepository patientRepository) {
         this.view = view;
         this.matchingPatientsList = matchingPatientsList;
         this.restApi = restApi;
         this.patientDAO = patientDAO;
-        this.patientApi = patientApi;
+        this.patientRepository = patientRepository;
         this.view.setPresenter(this);
     }
 
@@ -126,7 +126,7 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
     @Override
     public void registerNewPatient() {
         final Patient patient = matchingPatientsList.poll().getPatient();
-        patientApi.syncPatient(patient);
+        patientRepository.syncPatient(patient);
         removeSelectedPatient();
         if (matchingPatientsList.peek() != null) {
             subscribe();

@@ -15,7 +15,7 @@ import android.content.Intent;
 
 import com.activeandroid.query.Select;
 
-import org.openmrs.mobile.api.retrofit.VisitApi;
+import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
@@ -73,7 +73,7 @@ public class EncounterService extends IntentService {
     }
 
         private void startNewVisitForEncounter(final Encountercreate encountercreate, @Nullable final DefaultResponseCallbackListener callbackListener) {
-        new VisitApi().startVisit(new PatientDAO().findPatientByUUID(encountercreate.getPatient()),
+        new VisitRepository().startVisit(new PatientDAO().findPatientByUUID(encountercreate.getPatient()),
                 new StartVisitResponseListenerCallback() {
                     @Override
                     public void onStartVisitResponse(long id) {
@@ -118,7 +118,7 @@ public class EncounterService extends IntentService {
                         linkvisit(encountercreate.getPatientId(),encountercreate.getFormname(), encounter, encountercreate);
                         encountercreate.setSynced(true);
                         encountercreate.save();
-                        new VisitApi().syncLastVitals(encountercreate.getPatient());
+                        new VisitRepository().syncLastVitals(encountercreate.getPatient());
                         if (callbackListener != null) {
                             callbackListener.onResponse();
                         }

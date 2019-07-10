@@ -84,8 +84,11 @@ public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderMan
 
         refreshUI();
 
-        addProviderFab.setOnClickListener(v -> {
-            startActivityForResult(new Intent(getActivity(), AddProviderActivity.class), ADD_PROVIDER_REQ_CODE);
+        addProviderFab.setOnClickListener(view -> {
+            Intent intent = new Intent(getActivity(), AddProviderActivity.class);
+            ArrayList<Provider> providerArrayList = new ArrayList<>(providerList);
+            intent.putExtra(ApplicationConstants.BundleKeys.EXISTING_PROVIDERS_BUNDLE, providerArrayList);
+            startActivityForResult(intent, ADD_PROVIDER_REQ_CODE);
         });
 
         // Font config

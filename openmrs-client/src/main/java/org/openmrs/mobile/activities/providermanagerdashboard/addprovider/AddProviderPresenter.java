@@ -92,6 +92,30 @@ public class AddProviderPresenter extends BasePresenter implements AddProviderCo
         return provider;
     }
 
+    /**
+     * This function finds the matching providers from existing providers list and returns
+     * a list of matching ones.
+     * Currently only first name and last name are checked. More fields can be added with more
+     * attributes checking here.
+     *
+     * @param existingProviders
+     * @param currentProvider
+     * @return List<Provider>
+     */
+    @Override
+    public List<Provider> getMatchingProviders(ArrayList<Provider> existingProviders, Provider currentProvider) {
+        List<Provider> matchingProviders = new ArrayList<>();
+        for (Provider provider : existingProviders) {
+            String name = provider.getPerson().getDisplay().toLowerCase();
+            String fName = currentProvider.getPerson().getName().getGivenName().toLowerCase();
+            String lName = currentProvider.getPerson().getName().getFamilyName().toLowerCase();
+
+            if (name.contains(fName) || name.contains(lName))
+                matchingProviders.add(provider);
+        }
+        return matchingProviders;
+    }
+
     @Override
     public void subscribe() {
 

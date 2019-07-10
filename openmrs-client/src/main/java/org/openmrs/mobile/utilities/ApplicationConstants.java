@@ -85,6 +85,7 @@ public abstract class ApplicationConstants {
         public static final String PATIENT_QUERY_BUNDLE = "patientQuery";
         public static final String PATIENTS_START_INDEX = "patientsStartIndex";
         public static final String PROVIDER_ID_BUNDLE = "providerID";
+        public static final String EXISTING_PROVIDERS_BUNDLE = "existingProviders";
     }
 
     public abstract static class ServiceActions {

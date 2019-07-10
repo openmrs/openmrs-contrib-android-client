@@ -23,6 +23,9 @@ import org.openmrs.mobile.models.Person;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.test.ACUnitTestBase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddProviderPresenterTest extends ACUnitTestBase {
 
     @Mock
@@ -68,5 +71,34 @@ public class AddProviderPresenterTest extends ACUnitTestBase {
         assert existingProvider.getIdentifier().equals(identifier);
         assert existingProvider.getUuid().equals(uuid);
 
+    }
+
+    @Test
+    public void shouldReturnMatchingProviders(){
+        Provider providerA = createProvider("John","Smith","doc");
+        Provider providerB = createProvider("Jake","Smith","doc");
+        Provider providerC = createProvider("John","Doe","nurse");
+        Provider providerD = createProvider("Joe","Smith","clerk");
+
+        ArrayList<Provider> existingProviders = new ArrayList<>();
+        existingProviders.add(providerA);
+        existingProviders.add(providerB);
+        existingProviders.add(providerC);
+        existingProviders.add(providerD);
+
+        Provider newProviderOne = createProvider("John","Will","clerk");
+        Provider newProviderTwo = createProvider("Will","Smith","doc");
+
+        List<Provider> matchingProvidersA = presenter.getMatchingProviders(existingProviders,newProviderOne);
+        List<Provider> matchingProvidersB = presenter.getMatchingProviders(existingProviders,newProviderTwo);
+
+        assert matchingProvidersA.size() == 2;
+        assert matchingProvidersB.size() == 3;
+    }
+
+    private Provider createProvider(String fName, String lName, String identifier){
+        Person person = presenter.createPerson(fName,lName);
+        person.setDisplay(fName+" "+lName);
+        return presenter.createNewProvider(person,identifier);
     }
 }

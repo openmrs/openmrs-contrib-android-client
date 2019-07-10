@@ -32,6 +32,7 @@ import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.openmrs.mobile.utilities.ApplicationConstants.RequestCodes.EDIT_PROVIDER_REQ_CODE;
@@ -66,12 +67,14 @@ public class ProviderManagerDashboardRecyclerViewAdapter extends
             holder.mIdentifier.setText(provider.getIdentifier());
         }
 
-        holder.deleteIv.setOnClickListener(v -> {
+        holder.deleteIv.setOnClickListener(view -> {
             createDeleteDialogBox(provider);
         });
 
-        holder.editIv.setOnClickListener(v -> {
+        holder.editIv.setOnClickListener(view -> {
             Intent intent = new Intent(fragment.getContext(), AddProviderActivity.class);
+            ArrayList<Provider> providerArrayList = new ArrayList<>(mItems);
+            intent.putExtra(ApplicationConstants.BundleKeys.EXISTING_PROVIDERS_BUNDLE, providerArrayList);
             intent.putExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE, provider);
             fragment.startActivityForResult(intent, EDIT_PROVIDER_REQ_CODE);
         });

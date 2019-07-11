@@ -383,5 +383,7 @@
     <string name="edit_provider_failure_msg">Failed to edit provider.</string>
     <string name="title_provider_info">Provider Info</string>
     <string name="dialog_provider_retired">Provider will be retired.</string>
+    <string name="title_dialog_matching_provider">Found Similar Providers</string>
+    <string name="dialog_matching_provider_positive_btn">Create Anyway</string>
 
 </resources>

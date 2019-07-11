@@ -19,6 +19,9 @@ import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Person;
 import org.openmrs.mobile.models.Provider;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddProviderContract {
     public interface View extends BaseView<Presenter> {
         boolean validateFields();
@@ -30,5 +33,7 @@ public class AddProviderContract {
         Provider createNewProvider(Person person, String identifier);
 
         Provider editExistingProvider(Provider provider, Person person, String identifier);
+
+        List<Provider> getMatchingProviders(ArrayList<Provider> providers, Provider currentProvider);
     }
 }

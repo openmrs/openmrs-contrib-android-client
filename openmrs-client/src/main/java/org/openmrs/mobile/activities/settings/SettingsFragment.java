@@ -41,6 +41,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.Objects;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter> implements SettingsContract.View {
@@ -49,6 +50,7 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
 
     private TextView conceptsInDbTextView;
     private ImageButton downloadConceptsButton;
+    private SwitchCompat darkModeSwitch;
 
     private View root;
 
@@ -177,6 +179,17 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
             }
         });
 
+    }
+
+    @Override
+    public void setDarkMode() {
+        darkModeSwitch = root.findViewById(R.id.frag_settings_dark_mode_switch);
+        darkModeSwitch.setChecked(mPresenter.isDarkModeActivated());
+
+        darkModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            mPresenter.setDarkMode(isChecked);
+            getActivity().recreate();
+        });
     }
 
     public static SettingsFragment newInstance() {

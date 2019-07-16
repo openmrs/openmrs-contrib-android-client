@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.openmrs.mobile.R;
@@ -73,7 +74,7 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
             visitViewHolder.mVisitPlace.setText(mContext.getString(R.string.visit_in, visit.getLocation().getDisplay()));
         }
 
-        visitViewHolder.mRelativeLayout.setOnClickListener(view -> mContext.goToVisitDashboard(mVisits.get(adapterPos).getId()));
+        visitViewHolder.mCardView.setOnClickListener(view -> mContext.goToVisitDashboard(mVisits.get(adapterPos).getId()));
     }
 
     @Override
@@ -91,11 +92,11 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
         private TextView mVisitStart;
         private TextView mVisitEnd;
         private TextView mVisitStatus;
-        private RelativeLayout mRelativeLayout;
+        private CardView mCardView;
 
         public VisitViewHolder(View itemView) {
             super(itemView);
-            mRelativeLayout = (RelativeLayout) itemView;
+            mCardView = (CardView) itemView;
             mVisitStart = itemView.findViewById(R.id.patientVisitStartDate);
             mVisitEnd = itemView.findViewById(R.id.patientVisitEndDate);
             mVisitPlace = itemView.findViewById(R.id.patientVisitPlace);
@@ -103,7 +104,7 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
         }
 
         public void clearAnimation() {
-            mRelativeLayout.clearAnimation();
+            mCardView.clearAnimation();
         }
     }
 }

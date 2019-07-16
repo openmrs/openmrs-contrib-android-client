@@ -38,14 +38,6 @@ public class VisitDashboardActivity extends ACBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visit_dashboard);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-
-
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
         Intent intent = getIntent();
 
         // Create fragment

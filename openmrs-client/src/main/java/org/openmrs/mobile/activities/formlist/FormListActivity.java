@@ -30,13 +30,6 @@ public class FormListActivity extends ACBaseActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_form_list);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
         // Create fragment
         FormListFragment formListFragment =
                 (FormListFragment) getSupportFragmentManager().findFragmentById(R.id.formListContentFrame);

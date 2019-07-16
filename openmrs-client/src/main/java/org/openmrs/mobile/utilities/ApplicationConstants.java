@@ -117,4 +117,8 @@ public abstract class ApplicationConstants {
         public static final int EDIT_PROVIDER_REQ_CODE = 101;
     }
 
+    public abstract static class OpenMRSThemes{
+        public static final String KEY_DARK_MODE = "key_dark_mode";
+    }
+
 }

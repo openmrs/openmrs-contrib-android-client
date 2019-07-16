@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.lastviewedpatients;
 
 import android.app.Activity;
+import android.content.res.ColorStateList;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,6 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.openmrs.mobile.R;
@@ -167,16 +169,17 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     }
 
     class PatientViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener {
-        private LinearLayout mRowLayout;
+        private CardView mRowLayout;
         private TextView mIdentifier;
         private TextView mDisplayName;
         private TextView mGender;
         private TextView mBirthDate;
         private CheckBox mAvailableOfflineCheckbox;
+        private ColorStateList cardBackgroundColor;
 
         public PatientViewHolder(View itemView) {
             super(itemView);
-            mRowLayout = (LinearLayout) itemView;
+            mRowLayout = (CardView) itemView;
             mIdentifier = itemView.findViewById(R.id.lastViewedPatientIdentifier);
             mDisplayName = itemView.findViewById(R.id.lastViewedPatientDisplayName);
             mGender = itemView.findViewById(R.id.lastViewedPatientGender);
@@ -184,6 +187,8 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
             mAvailableOfflineCheckbox = itemView.findViewById(R.id.offlineCheckbox);
             mRowLayout.setOnClickListener(this);
             mRowLayout.setOnLongClickListener(this);
+
+            cardBackgroundColor = mRowLayout.getCardBackgroundColor();
         }
 
         public void clearAnimation() {
@@ -203,9 +208,11 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                     toggleDownloadButton();
                 selectedPatientPositions.add(getAdapterPosition());
                 this.mRowLayout.setSelected(true);
+                mRowLayout.setCardBackgroundColor(mContext.getResources().getColor(R.color.selected_card));
             } else {
                 removeIdFromSelectedIds(getAdapterPosition());
                 this.mRowLayout.setSelected(false);
+                mRowLayout.setCardBackgroundColor(cardBackgroundColor);
             }
         }
 
@@ -213,12 +220,14 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         public boolean onLongClick(View v) {
             if (v.isSelected()) {
                 setSelected(false);
+                mRowLayout.setCardBackgroundColor(cardBackgroundColor);
             } else {
                 if (!isLongClicked) {
                     startActionMode();
                 }
                 isLongClicked = true;
                 setSelected(true);
+                mRowLayout.setCardBackgroundColor(mContext.getResources().getColor(R.color.selected_card));
                 notifyDataSetChanged();
             }
             return true;

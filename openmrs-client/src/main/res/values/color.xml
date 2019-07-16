@@ -26,6 +26,7 @@
     <color name="dark_teal">#00463f</color>
     <color name="primary">#00463f</color>
     <color name="primary_dark">#01302b</color>
+    <color name="color_accent">#FF4081</color>
     <color name="dark_purple">#363463</color>
     <color name="dark_grey">#231F20</color>
     <color name="light_green">#a1d030</color>
@@ -38,4 +39,8 @@
     <color name="fragment_background">#EEEEEEEE</color>
     <color name="grey">#D5D5D5</color>
     <color name="light_grey">#D3D3D3</color>
+    <color name="selected_card">#249627</color>
+
+    <!-- neutral colors that look pleasing on both white and black background -->
+    <color name="neutral_green">#249627</color>
 </resources>

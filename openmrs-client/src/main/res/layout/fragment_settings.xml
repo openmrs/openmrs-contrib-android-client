@@ -13,6 +13,7 @@
   -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -44,10 +45,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:text="@string/settings_concepts_in_db"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frag_settings_header_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_dark_mode_switch" />
 
         <TextView
             android:id="@+id/frag_settings_concepts_count_tv"
@@ -66,7 +66,6 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:background="@drawable/ic_file_download_black_24dp"
@@ -74,7 +73,7 @@
             android:focusable="true"
             android:padding="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frag_settings_header_tv" />
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_dark_mode_switch" />
 
         <LinearLayout
             android:id="@+id/frag_settings_logs_ll"
@@ -184,8 +183,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@string/rate_us_string"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/rate_us_string" />
 
         </LinearLayout>
 
@@ -214,10 +212,21 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:text="@string/settings_privacy_policy"
-                android:textColor="?android:attr/textColorPrimary" />
+                android:text="@string/settings_privacy_policy" />
 
         </LinearLayout>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/frag_settings_dark_mode_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_short"
+            android:layout_marginBottom="@dimen/margin_short"
+            android:padding="@dimen/padding_16"
+            android:text="@string/label_dark_mode"
+            android:textColor="?android:colorControlNormal"
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_header_tv"
+            tools:targetApi="lollipop" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

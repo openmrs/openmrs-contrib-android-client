@@ -33,6 +33,7 @@ public interface SettingsContract {
 
         void rateUs();
 
+        void setDarkMode();
     }
 
     interface Presenter extends BasePresenterContract {
@@ -40,6 +41,10 @@ public interface SettingsContract {
         void logException(String exception);
 
         void updateConceptsInDBTextView();
+
+        boolean isDarkModeActivated();
+
+        void setDarkMode(boolean darkMode);
     }
 
 }

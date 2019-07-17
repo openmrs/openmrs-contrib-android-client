@@ -15,6 +15,8 @@
 package org.openmrs.mobile.activities.syncedpatients;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +27,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.openmrs.mobile.R;
@@ -117,40 +120,43 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
     }
 
     class PatientViewHolder extends RecyclerView.ViewHolder {
-        private LinearLayout mRowLayout;
+        private CardView mRowLayout;
         private TextView mIdentifier;
         private TextView mDisplayName;
         private TextView mGender;
         private TextView mAge;
         private TextView mBirthDate;
+        private ColorStateList cardBackgroundColor;
 
         public PatientViewHolder(View itemView) {
             super(itemView);
-            mRowLayout = (LinearLayout) itemView;
+            mRowLayout = (CardView) itemView;
             mIdentifier = itemView.findViewById(R.id.syncedPatientIdentifier);
             mDisplayName = itemView.findViewById(R.id.syncedPatientDisplayName);
             mGender = itemView.findViewById(R.id.syncedPatientGender);
             mAge = itemView.findViewById(R.id.syncedPatientAge);
             mBirthDate = itemView.findViewById(R.id.syncedPatientBirthDate);
+
+            cardBackgroundColor = mRowLayout.getCardBackgroundColor();
         }
 
         void selectItem(Patient item) {
             if (multiSelect) {
                 if (selectedItems.contains(item)) {
                     selectedItems.remove(item);
-                    mRowLayout.setBackgroundResource(R.drawable.card);
+                    mRowLayout.setCardBackgroundColor(cardBackgroundColor);
                 } else {
                     selectedItems.add(item);
-                    mRowLayout.setBackgroundResource(R.drawable.card_grey);
+                    mRowLayout.setCardBackgroundColor(mContext.getResources().getColor(R.color.selected_card));
                 }
             }
         }
 
         void update(final Patient value) {
             if (selectedItems.contains(value)) {
-                mRowLayout.setBackgroundResource(R.drawable.card_grey);
+                mRowLayout.setCardBackgroundColor(mContext.getResources().getColor(R.color.selected_card));
             } else {
-                mRowLayout.setBackgroundResource(R.drawable.card);
+                mRowLayout.setCardBackgroundColor(cardBackgroundColor);
             }
             itemView.setOnLongClickListener(view -> {
                 ((AppCompatActivity) view.getContext()).startSupportActionMode(actionModeCallbacks);

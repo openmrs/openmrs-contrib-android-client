@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.openmrs.mobile.R;
@@ -99,7 +100,7 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
     }
 
     class PatientViewHolder extends RecyclerView.ViewHolder {
-        private LinearLayout mRowLayout;
+        private CardView mRowLayout;
         private TextView mIdentifier;
         private TextView mDisplayName;
         private TextView mGender;
@@ -110,7 +111,7 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
         public PatientViewHolder(View itemView) {
             super(itemView);
             mVisitStatus = itemView.findViewById(R.id.visitStatusLabel);
-            mRowLayout = (LinearLayout) itemView;
+            mRowLayout = (CardView) itemView;
             mIdentifier = itemView.findViewById(R.id.syncedPatientIdentifier);
             mDisplayName = itemView.findViewById(R.id.syncedPatientDisplayName);
             mGender = itemView.findViewById(R.id.syncedPatientGender);

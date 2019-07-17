@@ -39,13 +39,6 @@ public class AddEditPatientActivity extends ACBaseActivity {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_patient_info);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
         // Create fragment
         addEditPatientFragment =
                 (AddEditPatientFragment) getSupportFragmentManager().findFragmentById(R.id.patientInfoContentFrame);

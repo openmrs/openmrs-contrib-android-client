@@ -18,6 +18,7 @@ import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.ConceptDAO;
+import org.openmrs.mobile.utilities.ThemeUtils;
 
 import java.io.File;
 
@@ -71,6 +72,7 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
         mSettingsView.addBuildVersionInfo();
         mSettingsView.addPrivacyPolicyInfo();
         mSettingsView.rateUs();
+        mSettingsView.setDarkMode();
     }
 
     @Override
@@ -83,4 +85,13 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
         mSettingsView.setConceptsInDbText(String.valueOf(conceptDAO.getConceptsCount()));
     }
 
+    @Override
+    public boolean isDarkModeActivated() {
+        return ThemeUtils.isDarkModeActivated();
+    }
+
+    @Override
+    public void setDarkMode(boolean darkMode) {
+        ThemeUtils.setDarkMode(darkMode);
+    }
 }

@@ -53,11 +53,6 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
         setContentView(R.layout.activity_form_display);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
 
         Bundle bundle = getIntent().getExtras();
         String valuereference = null;

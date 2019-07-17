@@ -29,6 +29,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -50,6 +51,7 @@ import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ForceClose;
 import org.openmrs.mobile.utilities.NetworkUtils;
+import org.openmrs.mobile.utilities.ThemeUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.File;
@@ -79,6 +81,9 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Thread.setDefaultUncaughtExceptionHandler(new ForceClose(this));
+
+        setupTheme();
+
         mFragmentManager = getSupportFragmentManager();
         mAuthorizationManager = new AuthorizationManager();
         locationList = new ArrayList<>();
@@ -383,4 +388,11 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    public void setupTheme(){
+        if(ThemeUtils.isDarkModeActivated()){
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else{
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
 }

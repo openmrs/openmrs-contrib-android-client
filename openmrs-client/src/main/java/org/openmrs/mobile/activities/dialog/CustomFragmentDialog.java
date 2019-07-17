@@ -274,7 +274,7 @@ public class CustomFragmentDialog extends DialogFragment {
         LinearLayout field = (LinearLayout) mInflater.inflate(R.layout.openmrs_single_choice_list_view, null);
         locationListView = field.findViewById(R.id.singleChoiceListView);
         locationListView.setAdapter(new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_list_item_single_choice, locationList));
+                R.layout.row_single_checked_layout, locationList));
         locationListView.setItemChecked(locationList.indexOf(mOpenMRS.getLocation()),true);
         mFieldsLayout.addView(field);
 

@@ -35,6 +35,7 @@
     <dimen name="information_icon_size">48dp</dimen>
     <dimen name="margin_short">8dp</dimen>
     <dimen name="margin_long">16dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
     <dimen name="margin_new_heading">24dp</dimen>
     <dimen name="size_sub_body">14sp</dimen>
     <dimen name="label_margin_wide">32dp</dimen>

@@ -31,7 +31,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:background="#ededed"
         android:gravity="center_vertical"
         tools:context=".activities.dashboard.DashboardActivity">
 

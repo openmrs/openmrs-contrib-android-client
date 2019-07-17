@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.openmrs.mobile.R;
@@ -77,7 +78,7 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
             visitViewHolder.mBirthDate.setText(" ");
         }
 
-        visitViewHolder.mRelativeLayout.setOnClickListener(view -> {
+        visitViewHolder.mLinearLayout.setOnClickListener(view -> {
             Intent intent = new Intent(mContext, VisitDashboardActivity.class);
             intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, mVisits.get(adapterPos).getId());
             mContext.startActivity(intent);
@@ -100,11 +101,11 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
         private TextView mGender;
         private TextView mBirthDate;
         private TextView mVisitPlace;
-        private LinearLayout mRelativeLayout;
+        private LinearLayout mLinearLayout;
 
         public VisitViewHolder(View itemView) {
             super(itemView);
-            mRelativeLayout = (LinearLayout) itemView;
+            mLinearLayout = itemView.findViewById(R.id.findVisitContainerLL);
             mIdentifier = itemView.findViewById(R.id.findVisitsIdentifier);
             mDisplayName = itemView.findViewById(R.id.findVisitsDisplayName);
             mVisitPlace = itemView.findViewById(R.id.findVisitsPlace);
@@ -113,7 +114,7 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
         }
 
         public void clearAnimation() {
-            mRelativeLayout.clearAnimation();
+            mLinearLayout.clearAnimation();
         }
     }
 }

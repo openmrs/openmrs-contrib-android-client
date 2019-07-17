@@ -131,7 +131,7 @@
             android:name=".activities.visitdashboard.VisitDashboardActivity"
             android:label="@string/visit_dashboard_label"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppThemeOrig">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -143,7 +143,7 @@
             android:label="@string/action_form_entry"
             android:launchMode="singleTop"
             android:parentActivityName=".activities.formentrypatientlist.FormEntryPatientListActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppThemeOrig">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.formentrypatientlist.FormEntryPatientListActivity" />
@@ -153,7 +153,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/action_form_entry"
             android:parentActivityName=".activities.dashboard.DashboardActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppThemeOrig">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.dashboard.DashboardActivity" />
@@ -163,7 +163,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/action_register_patient"
             android:parentActivityName=".activities.addeditpatient.AddEditPatientActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppThemeOrig">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -188,7 +188,7 @@
             android:label="@string/title_activity_form_create"
             android:parentActivityName=".activities.formlist.FormListActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppThemeOrig">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.openmrs.mobile.activities.formlist.FormListActivity" />

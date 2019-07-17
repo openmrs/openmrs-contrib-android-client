@@ -385,5 +385,6 @@
     <string name="dialog_provider_retired">Provider will be retired.</string>
     <string name="title_dialog_matching_provider">Found Similar Providers</string>
     <string name="dialog_matching_provider_positive_btn">Create Anyway</string>
+    <string name="label_dark_mode">Dark Mode (Experimental)</string>
 
 </resources>

@@ -12,98 +12,110 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/last_viewed_patient_list_row_selector"
-    android:orientation="vertical"
-    android:padding="10dp">
-
-    <RelativeLayout
-        android:id="@+id/lastViewedTopRow"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_long"
-        android:layout_marginTop="@dimen/margin_long"
-        android:layout_marginRight="@dimen/margin_long"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/lastViewedPatientIdentifier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/lastViewedPatientDisplayName"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:textSize="@dimen/big_heading"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/lastViewedPatientDisplayName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_toEndOf="@+id/lastViewedPatientIdentifier"
-            android:layout_toRightOf="@+id/lastViewedPatientIdentifier"
-            android:gravity="end"
-            android:paddingRight="10dp"
-            android:textSize="@dimen/small_heading" />
-
-    </RelativeLayout>
+    android:layout_marginLeft="@dimen/margin_short"
+    android:layout_marginRight="@dimen/margin_short"
+    android:layout_marginTop="@dimen/margin_small"
+    android:layout_marginBottom="@dimen/margin_small"
+    android:foreground="?android:selectableItemBackground"
+    android:focusable="true"
+    android:clickable="true">
 
     <LinearLayout
-        android:id="@+id/lastViewedBottomRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_long"
-        android:layout_marginRight="@dimen/margin_long"
-        android:layout_marginBottom="@dimen/margin_long"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:weightSum="9">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/lastViewedPatientGender"
-            android:layout_width="0dp"
+        <RelativeLayout
+            android:id="@+id/lastViewedTopRow"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="@dimen/size_sub_body" />
+            android:layout_marginLeft="@dimen/margin_long"
+            android:layout_marginTop="@dimen/margin_long"
+            android:layout_marginRight="@dimen/margin_long"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/lastViewedPatientAge"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="@dimen/size_sub_body" />
-
-        <TextView
-            android:id="@+id/lastViewedPatientBirthDate"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="3"
-            android:textSize="@dimen/size_sub_body" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:gravity="end"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/offlineCheckbox"
+            <TextView
+                android:id="@+id/lastViewedPatientIdentifier"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:button="@drawable/checkbox"
-                android:maxLines="1"
-                android:paddingStart="0dp"
-                android:paddingLeft="0dp"
-                android:paddingEnd="10dp"
+                android:layout_alignTop="@+id/lastViewedPatientDisplayName"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:textSize="@dimen/big_heading"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/lastViewedPatientDisplayName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_toEndOf="@+id/lastViewedPatientIdentifier"
+                android:layout_toRightOf="@+id/lastViewedPatientIdentifier"
+                android:gravity="end"
                 android:paddingRight="10dp"
-                android:textColor="@color/dark_purple" />
+                android:textSize="@dimen/small_heading" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/lastViewedBottomRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_long"
+            android:layout_marginRight="@dimen/margin_long"
+            android:layout_marginBottom="@dimen/margin_long"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="9">
+
+            <TextView
+                android:id="@+id/lastViewedPatientGender"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/size_sub_body" />
+
+            <TextView
+                android:id="@+id/lastViewedPatientAge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="@dimen/size_sub_body" />
+
+            <TextView
+                android:id="@+id/lastViewedPatientBirthDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:textSize="@dimen/size_sub_body" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/offlineCheckbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/checkbox"
+                    android:maxLines="1"
+                    android:paddingStart="0dp"
+                    android:paddingLeft="0dp"
+                    android:paddingEnd="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/dark_purple" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
-</LinearLayout>
+
+</androidx.cardview.widget.CardView>

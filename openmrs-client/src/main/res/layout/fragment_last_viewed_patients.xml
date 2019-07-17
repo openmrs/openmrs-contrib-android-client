@@ -24,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/swipe_container"
-        android:background="#fff3f3f3"
         tools:context=".activities.lastviewedpatients.LastViewedPatientsActivity">
 
         <RelativeLayout

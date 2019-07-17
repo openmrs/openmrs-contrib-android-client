@@ -11,52 +11,64 @@
   ~
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/visitRow"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/card"
-    android:padding="20dp">
+    android:layout_marginLeft="@dimen/margin_short"
+    android:layout_marginRight="@dimen/margin_short"
+    android:layout_marginTop="@dimen/margin_small"
+    android:layout_marginBottom="@dimen/margin_small"
+    android:foreground="?android:selectableItemBackground"
+    android:focusable="true"
+    android:clickable="true">
 
-    <TextView
-        android:id="@+id/patientVisitStartDate"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/visitRow"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/big_heading"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/patientVisitEndDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/patientVisitStartDate"
-        android:textSize="@dimen/small_heading"
-        android:visibility="gone" />
-
-    <TextView
-        android:id="@+id/patientVisitPlace"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/patientVisitEndDate"
-        android:textSize="@dimen/big_heading" />
-
-    <LinearLayout
-        android:id="@+id/visitStatus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/patientVisitStartDate"
-        android:layout_alignBottom="@+id/patientVisitPlace"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:padding="@dimen/padding_16">
 
         <TextView
-            android:id="@+id/visitStatusLabel"
+            android:id="@+id/patientVisitStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/small_heading"
+            android:textSize="@dimen/big_heading"
             android:textStyle="bold" />
-    </LinearLayout>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/patientVisitEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/patientVisitStartDate"
+            android:textSize="@dimen/small_heading"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/patientVisitPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/patientVisitEndDate"
+            android:textSize="@dimen/big_heading" />
+
+        <LinearLayout
+            android:id="@+id/visitStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/patientVisitStartDate"
+            android:layout_alignBottom="@+id/patientVisitPlace"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/visitStatusLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/small_heading"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

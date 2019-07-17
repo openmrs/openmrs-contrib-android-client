@@ -15,19 +15,19 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppThemeOrig" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppThemeOrig" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/primary</item>
-        <item name="android:textColor">@color/dark_purple</item>
+        <item name="colorAccent">@color/color_accent</item>
         <item name="actionModeStyle">@style/LongPress</item>
     </style>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/primary</item>
-        <item name="android:textColor">@color/dark_purple</item>
+        <item name="colorAccent">@color/color_accent</item>
+        <!--<item name="android:textColorPrimaryInverse">@color/white</item>
+        <item name="android:textColorPrimary">@color/dark_purple</item>-->
         <item name="actionModeStyle">@style/LongPress</item>
     </style>
 
@@ -45,7 +45,7 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="NoActionBarTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="NoActionBarTheme" parent="AppThemeOrig">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item> <!-- For 2.x version  -->
     </style>

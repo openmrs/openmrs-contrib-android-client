@@ -84,8 +84,15 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
 
         if (editProvider != null) {
             String displayName = editProvider.getPerson().getDisplay();
-            String firstName = displayName.substring(0, displayName.indexOf(' '));
-            String lastName = displayName.substring(displayName.lastIndexOf(' ') + 1);
+            String firstName, lastName;
+
+            if (displayName == null) {
+                firstName = editProvider.getPerson().getName().getGivenName();
+                lastName = editProvider.getPerson().getName().getFamilyName();
+            } else {
+                firstName = displayName.substring(0, displayName.indexOf(' '));
+                lastName = displayName.substring(displayName.lastIndexOf(' ') + 1);
+            }
 
             firstNameEt.setText(firstName);
             lastNameEt.setText(lastName);

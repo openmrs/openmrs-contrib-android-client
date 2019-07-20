@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardActivity;
 import org.openmrs.mobile.activities.providermanagerdashboard.addprovider.AddProviderActivity;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -77,6 +78,12 @@ public class ProviderManagerDashboardRecyclerViewAdapter extends
             intent.putExtra(ApplicationConstants.BundleKeys.EXISTING_PROVIDERS_BUNDLE, providerArrayList);
             intent.putExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE, provider);
             fragment.startActivityForResult(intent, EDIT_PROVIDER_REQ_CODE);
+        });
+
+        holder.mRowLayout.setOnClickListener(view -> {
+            Intent intent = new Intent(fragment.getContext(), ProviderDashboardActivity.class);
+            intent.putExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE, provider);
+            fragment.startActivity(intent);
         });
 
     }

@@ -44,10 +44,13 @@
         android:id="@+id/provider_management_foreground_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:padding="8dp"
         app:cardUseCompatPadding="true">
 
-        <include layout="@layout/row_provider_details"/>
+        <include layout="@layout/row_provider_details" />
     </androidx.cardview.widget.CardView>
 
 

@@ -157,4 +157,10 @@ public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderMan
             }
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshUI();
+    }
 }

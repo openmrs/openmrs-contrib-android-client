@@ -247,6 +247,10 @@
             android:label="@string/title_provider_info"
             android:theme="@style/AppThemeOrig"/>
 
+        <activity android:name=".activities.providerdashboard.ProviderDashboardActivity"
+            android:parentActivityName=".activities.providermanagerdashboard.ProviderManagerDashboardActivity"
+            android:theme="@style/AppThemeOrig"/>
+
     </application>
 
 </manifest>

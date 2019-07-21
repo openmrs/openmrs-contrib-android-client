@@ -386,5 +386,9 @@
     <string name="title_dialog_matching_provider">Found Similar Providers</string>
     <string name="dialog_matching_provider_positive_btn">Create Anyway</string>
     <string name="label_dark_mode">Dark Mode (Experimental)</string>
+    <string name="provider_tab_title">Providers</string>
+    <string name="patients_tab_title">Patients</string>
+    <string name="failed_provider_details">Failed to get Provider details!</string>
+    <string name="retry_action">Retry</string>
 
 </resources>

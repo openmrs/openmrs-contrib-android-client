@@ -16,11 +16,17 @@ package org.openmrs.mobile.utilities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.widget.ImageView;
 
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.ImageViewCompat;
+
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientPhotoActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -93,5 +99,10 @@ public final class ImageUtils {
         intent.putExtra("photo", byteArrayOutputStream.toByteArray());
         intent.putExtra("name", patientName);
         context.startActivity(intent);
+    }
+
+    public static void changeImageViewTint(Context context, ImageView imageView, int color) {
+        ImageViewCompat.setImageTintList(imageView, ColorStateList.valueOf(ContextCompat.getColor(context, color)));
+
     }
 }

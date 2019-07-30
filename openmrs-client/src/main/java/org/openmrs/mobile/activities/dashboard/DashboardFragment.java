@@ -44,6 +44,7 @@ import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDas
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
+import org.openmrs.mobile.utilities.ThemeUtils;
 
 public class DashboardFragment extends ACBaseFragment<DashboardContract.Presenter> implements DashboardContract.View, View.OnClickListener {
 
@@ -52,6 +53,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
     private ImageView mRegistryPatientButton;
     private ImageView mActiveVisitsButton;
     private ImageView mCaptureVitalsButton;
+    private ImageView mProviderManagementButton;
     private RelativeLayout mFindPatientView;
     private RelativeLayout mRegistryPatientView;
     private RelativeLayout mActiveVisitsView;
@@ -228,6 +230,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
         mRegistryPatientButton = root.findViewById(R.id.registryPatientButton);
         mActiveVisitsButton = root.findViewById(R.id.activeVisitsButton);
         mCaptureVitalsButton = root.findViewById(R.id.captureVitalsButton);
+        mProviderManagementButton = root.findViewById(R.id.dashboardProviderManagementButton);
         mFindPatientView = root.findViewById(R.id.findPatientView);
         mRegistryPatientView = root.findViewById(R.id.registryPatientView);
         mCaptureVitalsView = root.findViewById(R.id.captureVitalsView);
@@ -260,6 +263,10 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
         bindDrawableResource(mRegistryPatientButton, R.drawable.ico_registry);
         bindDrawableResource(mActiveVisitsButton, R.drawable.ico_visits);
         bindDrawableResource(mCaptureVitalsButton, R.drawable.ico_vitals);
+
+        if (ThemeUtils.isDarkModeActivated()) {
+            changeColorOfDashboardIcons();
+        }
     }
 
     /**
@@ -332,5 +339,15 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
                 // Do nothing
                 break;
         }
+    }
+
+    private void changeColorOfDashboardIcons() {
+        final int greenColorResId = R.color.green;
+        ImageUtils.changeImageViewTint(getContext(), mActiveVisitsButton, greenColorResId);
+        ImageUtils.changeImageViewTint(getContext(), mCaptureVitalsButton, greenColorResId);
+        ImageUtils.changeImageViewTint(getContext(), mFindPatientButton, greenColorResId);
+        ImageUtils.changeImageViewTint(getContext(), mRegistryPatientButton, greenColorResId);
+        ImageUtils.changeImageViewTint(getContext(), mProviderManagementButton, greenColorResId);
+
     }
 }

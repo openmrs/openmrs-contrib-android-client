@@ -23,6 +23,7 @@ OpenMRS Android Client
 				- [Demo Password: Admin123](#Demo-Password-Admin123)
 - [Releasing [Collaborators only]](#Releasing-Collaborators-only)
 - [Release Notes](#Release-Notes)
+        - [Version 2.8.0](#Version-280)
 		- [Version 2.7.4](#Version-274)
 		- [Summary:](#Summary)
 		- [Version 2.7.3](#Version-273)
@@ -44,7 +45,6 @@ OpenMRS Android Client
 		- [Version 2.4](#Version-24)
 		- [Summary:](#Summary-9)
 - [Objectives](#Objectives)
-		- [Version 2.8 (next release)](#Version-28-next-release)
 		- [Goals:](#Goals)
 - [User Manual](#User-Manual)
 - [License](#License)
@@ -126,6 +126,11 @@ To release the application, make sure to do these steps **in order**:
 9. [Optional] Post a new Talk thread and describe what is changed or improved in the release.
 
 # Release Notes
+
+### Version 2.8.0
+### Summary:
+1. Add Dark mode to the app
+2. Provider management: admins can now find, add, edit and delete providers
 
 ### Version 2.7.4
 ### Summary:

@@ -18,7 +18,7 @@ plugins {
     id 'jacoco-android'
 }
 
-def version = "2.7.4"
+def version = "2.8.0"
 
 android {
     compileSdkVersion 28

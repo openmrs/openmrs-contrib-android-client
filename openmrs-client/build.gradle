@@ -18,7 +18,7 @@ plugins {
     id 'jacoco-android'
 }
 
-def version = "2.7.4"
+def version = "2.8.0"
 
 android {
     compileSdkVersion 28
@@ -41,6 +41,12 @@ android {
 
         testApplicationId "org.openmrs.mobile.test"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
 
     configurations.all {

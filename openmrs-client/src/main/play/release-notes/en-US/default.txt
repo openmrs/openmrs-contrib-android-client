@@ -1,3 +1,2 @@
-- Make UI more consistent and follow more of the material design specs
-- Implement initial provider management functionality
-- Add Floating Action Button in patient's details tab, so that the menu bar is not packed.
+- Add Dark mode to the app
+- Provider management: admins can now find, add, edit and delete providers

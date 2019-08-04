@@ -14,7 +14,9 @@
 
 package org.openmrs.mobile.activities.login;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -33,10 +35,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.openmrs.mobile.R;
@@ -261,15 +265,6 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mLoginSyncButton.setSelected(syncEnabled);
     }
 
-    public void forgotPassword() {
-        CustomDialogBundle bundle = new CustomDialogBundle();
-        bundle.setTitleViewMessage(getString(R.string.forgot_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.forgot_dialog_message));
-        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
-        bundle.setLeftButtonText(getString(R.string.forgot_button_ok));
-        ((LoginActivity) this.getActivity()).createAndShowDialog(bundle, ApplicationConstants.DialogTAG.LOGOUT_DIALOG_TAG);
-    }
-
     @Override
     public void showWarningDialog() {
         CustomDialogBundle bundle = new CustomDialogBundle();
@@ -452,6 +447,45 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mPresenter.authenticateUser(mUsername.getText().toString(),
                 mPassword.getText().toString(),
                 mUrl.getText().toString(), wipeDatabase);
+    }
+
+
+    public void forgotPassword() {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        View view = getLayoutInflater().inflate(R.layout.alert_dialog_text_input_layout,null);
+        TextInputEditText emailET = view.findViewById(R.id.alert_dialog_tiet);
+
+        alertDialog.setTitle("Enter e-mail");
+        alertDialog.setView(view);
+        alertDialog.setPositiveButton("Reset", (dialog, which) -> {
+            if(emailET.getText() != null) {
+                mPresenter.callResetPassword(emailET.getText().toString());
+            }
+        }).setNegativeButton(R.string.dialog_button_cancel,((dialog, which) -> {
+
+        }));
+
+        alertDialog.create().show();
+    }
+
+
+    @Override
+    public void showSnackBarForPasswordResetCallResult(boolean isSuccess) {
+        String message = "";
+        ScrollView scrollView = mRootView.findViewById(R.id.scrollView);
+        Snackbar snackbar = Snackbar.make(scrollView,message,Snackbar.LENGTH_INDEFINITE);
+
+        if(isSuccess){
+            message = getString(R.string.pw_reset_success_message);
+            snackbar.setText(message);
+        } else {
+            message = getString(R.string.pw_reset_wrong_email_message);
+            snackbar.setText(message);
+            snackbar.setAction(getString(R.string.pw_reset_retry), v -> forgotPassword());
+        }
+
+        snackbar.show();
     }
 
 }

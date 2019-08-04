@@ -40,6 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -282,5 +284,33 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
     private void setLogin(boolean isLogin, String serverUrl) {
         mOpenMRS.setUserLoggedOnline(isLogin);
         mOpenMRS.setLastLoginServerUrl(serverUrl);
+    }
+
+    @Override
+    public void callResetPassword(String email) {
+        if(NetworkUtils.isOnline()){
+            loginView.showLoadingAnimation();
+            restApi.resetPassword(email).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+
+                    if(response.isSuccessful()){
+                        loginView.showSnackBarForPasswordResetCallResult(true);
+                    } else {
+                        loginView.showSnackBarForPasswordResetCallResult(false);
+                    }
+                    loginView.hideLoadingAnimation();
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    loginView.showSnackBarForPasswordResetCallResult(false);
+                    mOpenMRS.getOpenMRSLogger().e(t.getMessage());
+                    loginView.hideLoadingAnimation();
+                }
+            });
+        } else {
+            ToastUtil.error(mOpenMRS.getString(R.string.no_internet_connection_message));
+        }
     }
 }

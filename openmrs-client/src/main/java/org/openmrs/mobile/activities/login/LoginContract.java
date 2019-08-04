@@ -60,6 +60,8 @@ public interface LoginContract {
 
         void startFormListService();
 
+        void showSnackBarForPasswordResetCallResult(boolean isSuccess);
+
     }
 
     interface Presenter extends BasePresenterContract {
@@ -73,6 +75,8 @@ public interface LoginContract {
         void saveLocationsToDatabase(List<Location> locationList, String selectedLocation);
 
         void loadLocations(String url);
+
+        void callResetPassword(String email);
 
     }
 }

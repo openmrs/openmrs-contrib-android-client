@@ -390,5 +390,9 @@
     <string name="patients_tab_title">Patients</string>
     <string name="failed_provider_details">Failed to get Provider details!</string>
     <string name="retry_action">Retry</string>
+    <string name="pw_reset_success_message">Reset link sent to email!</string>
+    <string name="pw_reset_retry">Retry</string>
+    <string name="hint_email">Email</string>
+    <string name="pw_reset_wrong_email_message">Wrong email!</string>
 
 </resources>

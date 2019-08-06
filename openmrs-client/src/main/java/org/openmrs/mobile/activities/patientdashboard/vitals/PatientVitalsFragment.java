@@ -92,7 +92,6 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
         mFormHeader.setVisibility(View.GONE);
         mContent.setVisibility(View.GONE);
         mEmptyList.setVisibility(View.VISIBLE);
-        mEmptyList.setText(getString(R.string.last_vitals_none_label));
     }
 
     @Override

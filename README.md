@@ -11,7 +11,7 @@ OpenMRS Android Client
 - [Description](#Description)
 			- [Key Features](#Key-Features)
 - [Screenshots](#Screenshots)
-- [GSoC 2017](#GSoC-2017)
+- [GSoC 2019](#GSoC-2019)
 - [Development](#Development)
 		- [Code Style](#Code-Style)
 		- [Model pattern](#Model-pattern)
@@ -65,15 +65,17 @@ For more information on the client, visit https://wiki.openmrs.org/display/proje
 # Screenshots
 ![Login](http://i.imgur.com/zinrnCK.png) ![Dashboard](http://i.imgur.com/TLIwMoy.png) ![Register Patient](http://i.imgur.com/n7LaeKS.png)
 
-# GSoC 2017
+# GSoC 2019
 
-The project has been selected as a candidate for Google Summer of Code 2017. Please visit the [Project Wiki Page](https://wiki.openmrs.org/display/projects/OpenMRS+Android+Client+Feature+Parity+and+Improvements+-+GSoC+2017) for more details.
+This project was also selected for Google Summer of Code 2019. More details can be found on the [Project Wiki Page](https://wiki.openmrs.org/pages/viewpage.action?pageId=216367730).
+
+It was been selected as a candidate for Google Summer of Code 2017. Please visit the [Project Wiki Page](https://wiki.openmrs.org/display/projects/OpenMRS+Android+Client+Feature+Parity+and+Improvements+-+GSoC+2017) for more details.
 
 The project was also a part of GSoC 2016, the details of which can be seen in the [GSoC_2016.md](GSoC_2016.md) file.
 
 # Development
 We use JIRA to track issues and monitor project development. Refer to this link to view all issues and project summary: [Android Client JIRA](https://issues.openmrs.org/browse/AC)
-To get started contributing, try working on [introductory issues](https://issues.openmrs.org/issues/?filter=17165) in JIRA and check out [OpenMRS Pull Request Tips](https://wiki.openmrs.org/display/docs/Pull+Request+Tips). 
+To get started contributing, try working on [introductory issues](https://issues.openmrs.org/issues/?filter=17165) in JIRA and check out [OpenMRS Pull Request Tips](https://wiki.openmrs.org/display/docs/Pull+Request+Tips).
 Also, before creating a pull request, please run code review tools (Lint) and all tests.
 
 ### Code Style
@@ -88,13 +90,13 @@ In order to debug HTTP calls, we have integrated [Android Snooper](https://githu
 
 # Quick Start
 
-As of February 2016, this project has been migrated to gradle to work successfully with Android Studio. 
+As of February 2016, this project has been migrated to gradle to work successfully with Android Studio.
 
 ### Steps to set up:
 1. Fork the repository and clone your fork.
 2. From the Android Studio menu select File > New > Import Project. Alternatively, from the Welcome screen, select Import project.
 3. Navigate to the folder where you have cloned this repo and select the build.gradle file inside. Select "Import".
-4. Done! Wait for dependencies to load and download from Maven, then you're ready to go! 
+4. Done! Wait for dependencies to load and download from Maven, then you're ready to go!
 5. Make sure that you have the latest SDK and build tools downloaded, as we always build against the latest release.
 
 [In-depth tutorial](https://github.com/codepath/android_guides/wiki/Getting-Started-with-Gradle)
@@ -131,6 +133,8 @@ To release the application, make sure to do these steps **in order**:
 ### Summary:
 1. Add Dark mode to the app
 2. Provider management: admins can now find, add, edit and delete providers
+3. Refactor Repository names.
+4. Fix details not showing when searching patients
 
 ### Version 2.7.4
 ### Summary:
@@ -173,7 +177,7 @@ To release the application, make sure to do these steps **in order**:
 
 <a name="version-2.7.0"></a>
 ### Version 2.7.0
-### Summary: 
+### Summary:
 1. Implement RxJava in DAOs and migration to AndroidX
 2. Pick patient photo when registering
 3. Login form improved and doesn't require login locations when no locations are configured
@@ -181,7 +185,7 @@ To release the application, make sure to do these steps **in order**:
 5. Encrypted the database with BCrypt, derived from username and password
 6. Show toasts when toggling sync button and fixed crash when updating non-synced patient
 7. Saving user input when device is rotated, or when app instance is lost
-8. Added a Privacy Policy 
+8. Added a Privacy Policy
 9. Renewed GitHub API Key
 10. Set a Custom Path to look for the Release APK
 
@@ -189,7 +193,7 @@ To release the application, make sure to do these steps **in order**:
 <a name="version-2.6.2"></a>
 ### Version 2.6.2
 ### Summary:
-1. Add patient picture 
+1. Add patient picture
 2. Bug Fixes
 
 <a name="version-2.6.1"></a>
@@ -218,19 +222,19 @@ To release the application, make sure to do these steps **in order**:
 5. Lots of bug fixes
 
 <a name="version-2.4"></a>
-### Version 2.4 
-### Summary: 
+### Version 2.4
+### Summary:
 1. Added merging patients registered offline
 2. Find Patient storyboard refactoring
 3. Fixed bugs
 
 # Objectives
 
-<a name="version-2.8"></a>
-### Version 2.8 (next release)
-### Goals: 
+<a name="version-2.8+"></a>
+### Version 2.8+ (next releases)
+### Goals:
 1. Forgot Password
-2. Provider Module
+2. Provider Relationship Module
 3. UI Improvements
 4. Analytics
 

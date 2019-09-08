@@ -74,7 +74,7 @@ It was been selected as a candidate for Google Summer of Code 2017. Please visit
 The project was also a part of GSoC 2016, the details of which can be seen in the [GSoC_2016.md](GSoC_2016.md) file.
 
 # Development
-We use JIRA to track issues and monitor project development. Refer to this link to view all issues and project summary: [Android Client JIRA](https://issues.openmrs.org/browse/AC)
+We use JIRA to track issues and monitor project development. Refer to this link to view all issues and project summary: [Android Client JIRA](https://issues.openmrs.org/browse/AC). 
 To get started contributing, try working on [introductory issues](https://issues.openmrs.org/issues/?filter=17165) in JIRA and check out [OpenMRS Pull Request Tips](https://wiki.openmrs.org/display/docs/Pull+Request+Tips).
 Also, before creating a pull request, please run code review tools (Lint) and all tests.
 
@@ -94,8 +94,8 @@ As of February 2016, this project has been migrated to gradle to work successful
 
 ### Steps to set up:
 1. Fork the repository and clone your fork.
-2. From the Android Studio menu select File > New > Import Project. Alternatively, from the Welcome screen, select Import project.
-3. Navigate to the folder where you have cloned this repo and select the build.gradle file inside. Select "Import".
+2. From the Android Studio menu select `File` > `New` > `Import Project`. Alternatively, from the `Welcome screen`, select `Import project`.
+3. Navigate to the folder where you have cloned this repo and select the `build.gradle` file inside. Select `Import`.
 4. Done! Wait for dependencies to load and download from Maven, then you're ready to go!
 5. Make sure that you have the latest SDK and build tools downloaded, as we always build against the latest release.
 

@@ -10,6 +10,8 @@
 
 package org.openmrs.mobile.models;
 
+import android.graphics.Bitmap;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -30,22 +32,30 @@ public class Patient extends Person implements Serializable{
     @Expose
     private List<PatientIdentifier> identifiers = new ArrayList<>();
 
+    public Patient() {}
+
+    public Patient(Long id, String encounters, List<PatientIdentifier> identifiers) {
+        this.id = id;
+        this.encounters = encounters;
+        this.identifiers = identifiers;
+    }
+
+    /*Constructor to initialize values of current class as well as parent class*/
+    public Patient(Long id, String encounters, List<PatientIdentifier> identifiers,
+                   List<PersonName> names, String gender, String birthdate, boolean birthdateEstimated, List<PersonAddress> addresses, List<PersonAttribute> attributes, Bitmap photo) {
+        super(names, gender, birthdate, birthdateEstimated, addresses, attributes, photo);
+        this.id = id;
+        this.encounters = encounters;
+        this.identifiers = identifiers;
+    }
+
     public Long getId() {
         return id;
     }
 
     @SerializedName("person")
     public Person getPerson(){
-        Person person = new Person();
-        person.setNames(getNames());
-        person.setGender(getGender());
-        person.setAddresses(getAddresses());
-        person.setAttributes(getAttributes());
-        person.setPhoto(getPhoto());
-        person.setBirthdate(getBirthdate());
-        person.setBirthdateEstimated(getBirthdateEstimated());
-
-        return person;
+        return new Person(getNames(), getGender(), getBirthdate(), getBirthdateEstimated(), getAddresses(), getAttributes(), getPhoto());
     }
 
     public PatientDto getPatientDto(){

@@ -23,6 +23,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Resource implements Serializable {
 
     @SerializedName("uuid")
@@ -45,6 +47,15 @@ public class Resource implements Serializable {
     @NonNull
     @ColumnInfo(name = "_id")
     private Long id;
+
+    public Resource() { }
+
+    Resource(@NotNull String uuid, String display, List<Link> links, @NotNull Long id) {
+        this.uuid = uuid;
+        this.display = display;
+        this.links = links;
+        this.id = id;
+    }
 
     /**
      * @return id

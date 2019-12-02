@@ -58,7 +58,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
 
     static boolean isActionFABOpen = false;
     public static FloatingActionButton additionalActionsFAB, updateFAB, deleteFAB;
-    public static LinearLayout deleteFabLayout, updateFabLayout;
+     LinearLayout deleteFabLayout, updateFabLayout;
     public static Resources resources;
 
     @Override
@@ -99,7 +99,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
     @Override
     public void onBackPressed() {
         if (isActionFABOpen) {
-            closeFABMenu();
+            closeFABMenu( deleteFabLayout,  updateFabLayout);
             animateFAB(true);
         } else {
             super.onBackPressed();
@@ -154,9 +154,9 @@ public class PatientDashboardActivity extends ACBaseActivity {
         additionalActionsFAB.setOnClickListener(v -> {
             animateFAB(isActionFABOpen);
             if (!isActionFABOpen) {
-                showFABMenu();
+                showFABMenu( deleteFabLayout, updateFabLayout);
             } else {
-                closeFABMenu();
+                closeFABMenu( deleteFabLayout,  updateFabLayout);
             }
         });
 
@@ -164,7 +164,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
         updateFAB.setOnClickListener(v -> startPatientUpdateActivity(mPresenter.getPatientId()));
     }
 
-    public static void showFABMenu() {
+    public static void showFABMenu(LinearLayout deleteFabLayout, LinearLayout updateFabLayout) {
         isActionFABOpen = true;
         deleteFabLayout.setVisibility(View.VISIBLE);
         updateFabLayout.setVisibility(View.VISIBLE);
@@ -172,7 +172,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
         updateFabLayout.animate().translationY(-resources.getDimension(R.dimen.custom_fab_bottom_margin_105));
     }
 
-    public static void closeFABMenu() {
+    public static void closeFABMenu(LinearLayout deleteFabLayout, LinearLayout updateFabLayout) {
         isActionFABOpen = false;
         deleteFabLayout.animate().translationY(0);
         updateFabLayout.animate().translationY(0);
@@ -193,8 +193,8 @@ public class PatientDashboardActivity extends ACBaseActivity {
      * @param hide To hide the FAB menu depending on the Fragment visible
      */
     @SuppressLint("RestrictedApi")
-    public static void hideFABs(boolean hide) {
-        closeFABMenu();
+    public static void hideFABs(boolean hide, LinearLayout deleteFabLayout, LinearLayout updateFabLayout) {
+        closeFABMenu( deleteFabLayout, updateFabLayout);
         if (hide) {
             additionalActionsFAB.setVisibility(View.GONE);
         } else {

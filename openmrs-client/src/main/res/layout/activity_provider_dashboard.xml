@@ -68,7 +68,7 @@
                         android:layout_weight="1"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="@dimen/margin_long"
-                        android:text="Surgeon"
+                        android:text="@string/surgeon"
                         android:textColor="@color/white"
                         android:textSize="24sp" />
 

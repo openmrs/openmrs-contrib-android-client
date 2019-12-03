@@ -38,7 +38,7 @@ import java.util.List;
 public class PatientDiagnosisFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDiagnosis {
 
     private ListView mDiagnosisList;
-    private PatientDashboardActivity patients;
+    private PatientDashboardActivity patientsDiagnosis;
     public static PatientDiagnosisFragment newInstance() {
         return new PatientDiagnosisFragment();
     }
@@ -77,7 +77,7 @@ public class PatientDiagnosisFragment extends PatientDashboardFragment implement
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {
-                patients.hideFABs(true);
+                patientsDiagnosis.hideFABs(true);
             } catch (Exception e) {
                 e.printStackTrace();
             }

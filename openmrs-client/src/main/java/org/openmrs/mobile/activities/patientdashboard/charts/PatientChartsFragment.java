@@ -46,12 +46,12 @@ import java.util.List;
 
 
 public class PatientChartsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientCharts {
-
     private ListView mListView;
     private TextView mEmptyListView;
     private JSONObject observationList;
     private PatientChartsListAdapter chartsListAdapter;
     private PatientDashboardActivity mPatients;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +68,6 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
         mListView = root.findViewById(R.id.vitalList);
         mListView.setEmptyView(mEmptyListView);
         setEmptyListVisibility(false);
-
         mListView.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(getActivity(), ChartsViewActivity.class);
             Bundle mBundle = new Bundle();
@@ -181,11 +180,9 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
-
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {
-
                 mPatients.hideFABs(true);
             } catch (Exception e) {
                 e.printStackTrace();

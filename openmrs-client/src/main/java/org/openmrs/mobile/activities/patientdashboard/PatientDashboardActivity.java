@@ -16,7 +16,6 @@ package org.openmrs.mobile.activities.patientdashboard;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -27,6 +26,9 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -48,9 +50,6 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.TabUtil;
 
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-
 public class PatientDashboardActivity extends ACBaseActivity {
     private String mId;
 
@@ -58,7 +57,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
 
     static boolean isActionFABOpen = false;
     public static FloatingActionButton additionalActionsFAB, updateFAB, deleteFAB;
-    public  LinearLayout deleteFabLayout, updateFabLayout;
+    public LinearLayout deleteFabLayout, updateFabLayout;
     public static Resources resources;
 
     @Override
@@ -152,7 +151,6 @@ public class PatientDashboardActivity extends ACBaseActivity {
         deleteFAB = findViewById(R.id.activity_patient_dashboard_delete_fab);
         updateFabLayout = findViewById(R.id.custom_fab_update_ll);
         deleteFabLayout = findViewById(R.id.custom_fab_delete_ll);
-
         additionalActionsFAB.setOnClickListener(v -> {
             animateFAB(isActionFABOpen);
             if (!isActionFABOpen) {
@@ -161,22 +159,19 @@ public class PatientDashboardActivity extends ACBaseActivity {
                 closeFABMenu();
             }
         });
-
         deleteFAB.setOnClickListener(v -> showDeletePatientDialog());
         updateFAB.setOnClickListener(v -> startPatientUpdateActivity(mPresenter.getPatientId()));
     }
 
-    public  void showFABMenu() {
-
+    public void showFABMenu() {
         isActionFABOpen = true;
-
         deleteFabLayout.setVisibility(View.VISIBLE);
         updateFabLayout.setVisibility(View.VISIBLE);
         deleteFabLayout.animate().translationY(-resources.getDimension(R.dimen.custom_fab_bottom_margin_55));
         updateFabLayout.animate().translationY(-resources.getDimension(R.dimen.custom_fab_bottom_margin_105));
     }
 
-    public  void closeFABMenu() {
+    public void closeFABMenu() {
         isActionFABOpen = false;
         deleteFabLayout.animate().translationY(0);
         updateFabLayout.animate().translationY(0);
@@ -197,8 +192,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
      * @param hide To hide the FAB menu depending on the Fragment visible
      */
     @SuppressLint("RestrictedApi")
-    public  void hideFABs(boolean hide) {
-
+    public void hideFABs(boolean hide) {
         closeFABMenu();
         if (hide) {
             additionalActionsFAB.setVisibility(View.GONE);
@@ -220,7 +214,6 @@ public class PatientDashboardActivity extends ACBaseActivity {
                     .getDrawable(R.drawable.ic_close_white_24dp)), 400);
         } else {
             ObjectAnimator.ofFloat(additionalActionsFAB, "rotation", 180f, 0f).setDuration(500).start();
-
             final Handler handler = new Handler();
             handler.postDelayed(() -> additionalActionsFAB.setImageDrawable(resources
                     .getDrawable(R.drawable.ic_edit_white_24dp)), 400);

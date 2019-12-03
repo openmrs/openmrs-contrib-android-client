@@ -47,6 +47,7 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
 
     public static final int REQUEST_CODE_FOR_VISIT = 1;
     private PatientDashboardActivity mPatients;
+
     public static PatientVisitsFragment newInstance() {
         return new PatientVisitsFragment();
     }
@@ -110,8 +111,7 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
         if (isVisible) {
             visitRecyclerView.setVisibility(View.VISIBLE);
             emptyList.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             visitRecyclerView.setVisibility(View.GONE);
             emptyList.setVisibility(View.VISIBLE);
         }
@@ -137,8 +137,7 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
         if (activity.getSupportActionBar() != null) {
             if (isVisitPossible) {
                 activity.showStartVisitDialog(activity.getSupportActionBar().getTitle());
-            }
-            else {
+            } else {
                 activity.showStartVisitImpossibleDialog(activity.getSupportActionBar().getTitle());
             }
         }
@@ -150,7 +149,7 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
     }
 
     @Override
-    public  void setUserVisibleHint(boolean isVisibleToUser) {
+    public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {

@@ -41,10 +41,8 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.List;
 
 public class PatientVisitsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientVisits {
-
     private RecyclerView visitRecyclerView;
     private TextView emptyList;
-
     public static final int REQUEST_CODE_FOR_VISIT = 1;
     private PatientDashboardActivity mPatients;
 

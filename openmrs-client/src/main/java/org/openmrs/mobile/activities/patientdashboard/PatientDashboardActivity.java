@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.patientdashboard;
 
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -51,14 +52,13 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 public class PatientDashboardActivity extends ACBaseActivity {
-
     private String mId;
 
     public PatientDashboardContract.PatientDashboardMainPresenter mPresenter;
 
     static boolean isActionFABOpen = false;
     public static FloatingActionButton additionalActionsFAB, updateFAB, deleteFAB;
-     LinearLayout deleteFabLayout, updateFabLayout;
+    public  LinearLayout deleteFabLayout, updateFabLayout;
     public static Resources resources;
 
     @Override
@@ -82,7 +82,9 @@ public class PatientDashboardActivity extends ACBaseActivity {
     @Override
     public void onAttachFragment(Fragment fragment) {
         attachPresenterToFragment(fragment);
+
     }
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -99,7 +101,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
     @Override
     public void onBackPressed() {
         if (isActionFABOpen) {
-            closeFABMenu( deleteFabLayout,  updateFabLayout);
+            closeFABMenu();
             animateFAB(true);
         } else {
             super.onBackPressed();
@@ -154,9 +156,9 @@ public class PatientDashboardActivity extends ACBaseActivity {
         additionalActionsFAB.setOnClickListener(v -> {
             animateFAB(isActionFABOpen);
             if (!isActionFABOpen) {
-                showFABMenu( deleteFabLayout, updateFabLayout);
+                showFABMenu();
             } else {
-                closeFABMenu( deleteFabLayout,  updateFabLayout);
+                closeFABMenu();
             }
         });
 
@@ -164,15 +166,17 @@ public class PatientDashboardActivity extends ACBaseActivity {
         updateFAB.setOnClickListener(v -> startPatientUpdateActivity(mPresenter.getPatientId()));
     }
 
-    public static void showFABMenu(LinearLayout deleteFabLayout, LinearLayout updateFabLayout) {
+    public  void showFABMenu() {
+
         isActionFABOpen = true;
+
         deleteFabLayout.setVisibility(View.VISIBLE);
         updateFabLayout.setVisibility(View.VISIBLE);
         deleteFabLayout.animate().translationY(-resources.getDimension(R.dimen.custom_fab_bottom_margin_55));
         updateFabLayout.animate().translationY(-resources.getDimension(R.dimen.custom_fab_bottom_margin_105));
     }
 
-    public static void closeFABMenu(LinearLayout deleteFabLayout, LinearLayout updateFabLayout) {
+    public  void closeFABMenu() {
         isActionFABOpen = false;
         deleteFabLayout.animate().translationY(0);
         updateFabLayout.animate().translationY(0);
@@ -193,8 +197,9 @@ public class PatientDashboardActivity extends ACBaseActivity {
      * @param hide To hide the FAB menu depending on the Fragment visible
      */
     @SuppressLint("RestrictedApi")
-    public static void hideFABs(boolean hide, LinearLayout deleteFabLayout, LinearLayout updateFabLayout) {
-        closeFABMenu( deleteFabLayout, updateFabLayout);
+    public  void hideFABs(boolean hide) {
+
+        closeFABMenu();
         if (hide) {
             additionalActionsFAB.setVisibility(View.GONE);
         } else {

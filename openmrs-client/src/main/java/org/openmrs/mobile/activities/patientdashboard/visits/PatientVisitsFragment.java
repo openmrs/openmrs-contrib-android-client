@@ -46,7 +46,7 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
     private TextView emptyList;
 
     public static final int REQUEST_CODE_FOR_VISIT = 1;
-
+    private PatientDashboardActivity mPatients;
     public static PatientVisitsFragment newInstance() {
         return new PatientVisitsFragment();
     }
@@ -150,11 +150,11 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
+    public  void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {
-                PatientDashboardActivity.hideFABs(true);
+                mPatients.hideFABs(true);
             } catch (Exception e) {
                 e.printStackTrace();
             }

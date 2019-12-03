@@ -171,7 +171,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {
-                PatientDashboardActivity.hideFABs(false);
+                mPatientDashboardActivity.hideFABs(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }

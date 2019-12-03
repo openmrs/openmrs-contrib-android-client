@@ -44,7 +44,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 public class PatientDetailsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDetails {
 
     private View rootView;
-    private PatientDashboardActivity mPatientDashboardActivity;
+    private PatientDashboardActivity mPatientDashboardActivity, patientsDetails;
 
     public static PatientDetailsFragment newInstance() {
         return new PatientDetailsFragment();
@@ -168,7 +168,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {
-                mPatientDashboardActivity.hideFABs(false);
+                patientsDetails.hideFABs(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }

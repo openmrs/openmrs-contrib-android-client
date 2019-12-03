@@ -44,6 +44,18 @@ public class Person extends Resource implements Serializable {
 
     private Bitmap photo;
 
+    public Person() { }
+
+    public Person(List<PersonName> names, String gender, String birthdate, boolean birthdateEstimated, List<PersonAddress> addresses, List<PersonAttribute> attributes, Bitmap photo) {
+        this.names = names;
+        this.gender = gender;
+        this.birthdate = birthdate;
+        this.birthdateEstimated = birthdateEstimated;
+        this.addresses = addresses;
+        this.attributes = attributes;
+        this.photo = photo;
+    }
+
     /**
      * 
      * @return

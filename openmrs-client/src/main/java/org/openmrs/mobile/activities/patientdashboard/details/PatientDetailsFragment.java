@@ -15,7 +15,6 @@
 package org.openmrs.mobile.activities.patientdashboard.details;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -32,12 +31,10 @@ import androidx.annotation.Nullable;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
@@ -47,7 +44,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 public class PatientDetailsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDetails {
 
     private View rootView;
-    private PatientDashboardActivity mPatientDashboardActivity;
+    private PatientDashboardActivity mPatientDashboardActivity, patientsDetails;
 
     public static PatientDetailsFragment newInstance() {
         return new PatientDetailsFragment();
@@ -171,7 +168,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {
-                PatientDashboardActivity.hideFABs(false);
+                patientsDetails.hideFABs(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }

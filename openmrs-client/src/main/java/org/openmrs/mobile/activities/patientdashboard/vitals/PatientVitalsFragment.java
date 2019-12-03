@@ -49,7 +49,7 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
     private LinearLayout mFormHeader;
     private TextView mEmptyList;
     private TextView mLastVitalsDate;
-
+    private PatientDashboardActivity patients;
     private LayoutInflater mInflater;
 
     @Override
@@ -135,7 +135,7 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {
-                PatientDashboardActivity.hideFABs(true);
+                patients.hideFABs(true);
             } catch (Exception e) {
                 e.printStackTrace();
             }

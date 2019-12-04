@@ -51,6 +51,7 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
     private TextView mEmptyListView;
     private JSONObject observationList;
     private PatientChartsListAdapter chartsListAdapter;
+    private PatientDashboardActivity mPatientDashboardActivit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -184,7 +185,7 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {
-                PatientDashboardActivity.hideFABs(true);
+                mPatientDashboardActivit.hideFABs(true);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -14,12 +14,15 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import android.content.Context;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mindrot.jbcrypt.BCrypt;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.login.LoginContract;
+import org.openmrs.mobile.activities.login.LoginFragment;
 import org.openmrs.mobile.activities.login.LoginPresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -52,6 +55,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @PrepareForTest({OpenMRS.class, NetworkUtils.class, LocationDAO.class, RestServiceBuilder.class,
@@ -263,6 +267,20 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         verify(view).hideLoadingAnimation();
     }
 
+    @Test
+    public void shouldStartFormListServiceWhenAuthenticated(){
+        Context context = PowerMockito.mock(Context.class);
+        PowerMockito.mockStatic(OpenMRS.class);
+        PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
+        PowerMockito.when(openMRS.getApplicationContext()).thenReturn(context);
+        LoginFragment loginFragment = LoginFragment.newInstance();
+        try {
+            loginFragment.userAuthenticated();
+        } catch (NullPointerException ignored) {}
+
+        verify(openMRS.getApplicationContext(), times(1)).startService(any());
+    }
+
     private void mockNetworkConnection(boolean isNetwork) {
         PowerMockito.when(NetworkUtils.hasNetwork()).thenReturn(isNetwork);
     }
@@ -295,5 +313,4 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         PowerMockito.mockStatic(RestServiceBuilder.class);
         PowerMockito.when(RestServiceBuilder.createService(any(), any(), any())).thenReturn(restApi);
     }
-
 }

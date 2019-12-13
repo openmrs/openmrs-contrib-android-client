@@ -359,6 +359,8 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         Intent intent = new Intent(mOpenMRS.getApplicationContext(), DashboardActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mOpenMRS.getApplicationContext().startActivity(intent);
+        Intent formListServiceIntent = new Intent(mOpenMRS.getApplicationContext(), FormListService.class);
+        mOpenMRS.getApplicationContext().startService(formListServiceIntent);
         mPresenter.saveLocationsToDatabase(mLocationsList, mDropdownLocation.getSelectedItem().toString());
     }
 

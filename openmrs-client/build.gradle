@@ -170,6 +170,9 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     // Swipe reveal layout
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
+
+    //Leak Canary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
 }
 
 play {

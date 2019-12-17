@@ -443,6 +443,7 @@ public class CustomFragmentDialog extends DialogFragment {
                     break;
                 case SELECT_LOCATION:
                     mOpenMRS.setLocation(locationListView.getAdapter().getItem(locationListView.getCheckedItemPosition()).toString());
+                    ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.SUCCESS, org.openmrs.mobile.R.string.location_successfully_updated);
                     dismiss();
                     break;
                 default:

@@ -355,6 +355,7 @@
     <string name="delete_multiple_patients">Delete Patients?</string>
     <string name="delete_multiple_patients_dialog_message">Are you sure you want to delete these patients?</string>
     <string name="multiple_patients_deleted">Patients Deleted Successfully</string>
+    <string name="location_successfully_updated">Location Updated Successfully</string>
     <string name="delete">delete</string>
     <string name="rate_us_string">Rate Us</string>
     <string name="settings_frag_size">Size:</string>

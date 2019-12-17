@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_short"
         android:layout_weight="2"
-        android:text="Jake Smith"
+        android:text="@string/jake_smith"
         android:textSize="@dimen/settings_list_text_title_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,7 +29,7 @@
         android:layout_marginEnd="@dimen/margin_short"
         android:layout_marginRight="@dimen/margin_short"
         android:layout_weight="1"
-        android:text="Doctor"
+        android:text="@string/doctor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

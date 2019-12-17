@@ -390,5 +390,14 @@
     <string name="patients_tab_title">Patients</string>
     <string name="failed_provider_details">Failed to get Provider details!</string>
     <string name="retry_action">Retry</string>
+    <!--activity_provider_dashboard  -->
+    <string name="surgeon">Surgeon</string>
+    <!--fragment_patient_relationship-->
+    <string name="provider_patient">Provider - Patient Relationship</string>
+    <!--row_provider_details-->
+    <string name="jake_smith">Jake Smith</string>
+    <string name="doctor">Doctor</string>
+    <!--fragment_provider_relationship-->
+    <string name="provider_provider">Provider - Provider Relationship</string>
 
 </resources>

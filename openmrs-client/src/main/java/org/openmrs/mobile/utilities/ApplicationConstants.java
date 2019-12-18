@@ -34,6 +34,7 @@ public abstract class ApplicationConstants {
     public static final String DB_PASSWORD_LITERAL_PEPPER = "Open Sesame";
     public static final String DEFAULT_VISIT_TYPE_UUID = "7b0f5697-27e3-40c4-8bae-f4049abfb4ed";
     public static final int DEFAULT_BCRYPT_ROUND = 8;
+    public static final int SPLASH_TIMER = 3500;
     public static final String PACKAGE_NAME = "org.openmrs.mobile";
 
     public abstract static class OpenMRSSharedPreferenceNames {

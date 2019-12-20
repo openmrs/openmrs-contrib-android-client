@@ -45,7 +45,7 @@ public class ObservationDAO {
     }
 
     public void deleteObservation(long observationID) {
-       new ObservationTable().delete(observationID);
+        new ObservationTable().delete(observationID);
     }
 
     public List<Observation> findObservationByEncounterID(Long encounterID) {

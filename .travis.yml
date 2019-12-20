@@ -1,6 +1,6 @@
 sudo: required
 language: android
-jdk: oraclejdk8
+jdk: openjdk8
 dist: trusty
 
 before_install:

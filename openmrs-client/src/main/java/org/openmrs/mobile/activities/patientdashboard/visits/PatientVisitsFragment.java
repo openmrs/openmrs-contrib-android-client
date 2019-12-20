@@ -44,7 +44,7 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
 
     private RecyclerView visitRecyclerView;
     private TextView emptyList;
-
+    private PatientDashboardActivity mPatientDashboardActivity;
     public static final int REQUEST_CODE_FOR_VISIT = 1;
 
     public static PatientVisitsFragment newInstance() {
@@ -154,7 +154,7 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {
-                PatientDashboardActivity.hideFABs(true);
+                mPatientDashboardActivity.hideFABs(true);
             } catch (Exception e) {
                 e.printStackTrace();
             }

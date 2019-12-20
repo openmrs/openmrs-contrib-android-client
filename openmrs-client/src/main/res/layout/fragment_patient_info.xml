@@ -574,7 +574,7 @@
                                 android:focusable="true"
                                 android:hint="@string/patient_city_label"
                                 android:imeOptions="actionNext"
-                                android:inputType="text"
+                                android:inputType="textCapWords"
                                 android:maxLines="1"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>

@@ -38,6 +38,10 @@ android {
         minSdkVersion 16
         targetSdkVersion 28
 
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a", "x86"
+        }
+
         testApplicationId "org.openmrs.mobile.test"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }

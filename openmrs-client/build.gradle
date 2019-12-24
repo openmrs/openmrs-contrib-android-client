@@ -112,7 +112,6 @@ repositories {
 dependencies {
     def support_version = '1.0.0-beta01'
     def room_version = "2.1.0-alpha04"
-
     implementation 'com.google.code.gson:gson:2.8.5'
     androidTestImplementation(
             'junit:junit:4.12',
@@ -125,7 +124,6 @@ dependencies {
             'com.google.dexmaker:dexmaker:1.2',
             'com.jayway.android.robotium:robotium-solo:4.2'
     )
-
     androidTestImplementation files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
     debugImplementation 'com.github.jainsahab:Snooper-Okhttp:1.5.4'
     releaseImplementation 'com.github.jainsahab:Snooper-Okhttp-No-Op:1.5.4'
@@ -170,6 +168,7 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     // Swipe reveal layout
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
+    implementation files('libs/android-support-v4.jar')
 }
 
 play {

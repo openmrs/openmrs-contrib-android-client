@@ -21,7 +21,6 @@ import android.database.ContentObserver;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-import com.activeandroid.Cache;
 import com.activeandroid.TableInfo;
 import com.activeandroid.content.ContentProvider;
 
@@ -55,7 +54,7 @@ import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.doNothing;
 
-@PrepareForTest({ Cache.class, TableInfo.class, Context.class,
+@PrepareForTest({ new_cache.class, TableInfo.class, Context.class,
         ContentResolver.class, ContentProvider.class, ContentValues.class })
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor("com.activeandroid.content.ContentProvider")
@@ -70,7 +69,7 @@ public abstract class ACUnitTestBase {
     }
 
     protected void mockActiveAndroidContext() {
-        PowerMockito.mockStatic(Cache.class);
+        PowerMockito.mockStatic(new_cache.class);
         PowerMockito.mockStatic(ContentProvider.class);
         TableInfo tableInfo = PowerMockito.mock(TableInfo.class);
         Context context = PowerMockito.mock(Context.class);
@@ -84,13 +83,13 @@ public abstract class ACUnitTestBase {
             e.printStackTrace();
         }
 
-        Mockito.lenient().when(Cache.openDatabase()).thenReturn(sqliteDb);
+        Mockito.lenient().when(new_cache.openDatabase()).thenReturn(sqliteDb);
         Mockito.lenient().when(context.getContentResolver()).thenReturn(resolver);
         doNothing().when(resolver).notifyChange(any(Uri.class), any(ContentObserver.class));
         Mockito.lenient().when(tableInfo.getFields()).thenReturn(new ArrayList<>());
         Mockito.lenient().when(tableInfo.getTableName()).thenReturn("TestTable");
-        Mockito.lenient().when(Cache.getTableInfo(any(Class.class))).thenReturn(tableInfo);
-        Mockito.lenient().when(Cache.getContext()).thenReturn(context);
+        Mockito.lenient().when(new_cache.getTableInfo(any(Class.class))).thenReturn(tableInfo);
+        Mockito.lenient().when(new_cache.getContext()).thenReturn(context);
         Mockito.lenient().when(ContentProvider.createUri(anyObject(), anyLong())).thenReturn(null);
     }
 

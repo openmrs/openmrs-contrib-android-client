@@ -35,6 +35,7 @@
             android:id="@+id/add_provider_firstname_tiet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textCapWords"
             android:hint="@string/firstname_hint" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -52,6 +53,7 @@
             android:id="@+id/add_provider_lastname_tiet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textCapWords"
             android:hint="@string/lastname_hint" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -68,6 +70,7 @@
             android:id="@+id/add_provider_identifier_tiet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textCapWords"
             android:hint="@string/identifier_hint" />
     </com.google.android.material.textfield.TextInputLayout>
 

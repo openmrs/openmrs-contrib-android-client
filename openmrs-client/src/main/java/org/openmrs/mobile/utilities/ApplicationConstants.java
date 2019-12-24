@@ -25,6 +25,7 @@ public abstract class ApplicationConstants {
     public static final String AUTHORIZATION_TOKEN = "authorisation";
     public static final String SECRET_KEY = "secretKey";
     public static final String LOCATION = "location";
+    public static final Boolean FIRST = true;
     public static final String VISIT_TYPE_UUID = "visit_type_uuid";
     public static final String LAST_SESSION_TOKEN = "last_session_id";
     public static final String LAST_LOGIN_SERVER_URL = "last_login_server_url";
@@ -34,6 +35,7 @@ public abstract class ApplicationConstants {
     public static final String DB_PASSWORD_LITERAL_PEPPER = "Open Sesame";
     public static final String DEFAULT_VISIT_TYPE_UUID = "7b0f5697-27e3-40c4-8bae-f4049abfb4ed";
     public static final int DEFAULT_BCRYPT_ROUND = 8;
+    public static final int SPLASH_TIMER = 3500;
     public static final String PACKAGE_NAME = "org.openmrs.mobile";
 
     public abstract static class OpenMRSSharedPreferenceNames {
@@ -52,6 +54,7 @@ public abstract class ApplicationConstants {
         public static final String USER_PERSON_NAME = "userDisplay";
         public static final String USER_UUID = "userUUID";
         public static final String LOGIN = "login";
+        public static final String FIRST_TIME = "firstTime";
     }
 
     public abstract static class DialogTAG {

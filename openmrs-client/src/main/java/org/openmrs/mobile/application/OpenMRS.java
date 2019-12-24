@@ -90,6 +90,12 @@ public class OpenMRS extends Application {
                 MODE_PRIVATE);
     }
 
+    public void setUserFirstTime(boolean firstLogin) {
+        SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
+        editor.putBoolean(ApplicationConstants.UserKeys.FIRST_TIME, firstLogin);
+        editor.apply();
+    }
+
     public void setUserLoggedOnline(boolean firstLogin) {
         SharedPreferences.Editor editor = getOpenMRSSharedPreferences().edit();
         editor.putBoolean(ApplicationConstants.UserKeys.LOGIN, firstLogin);
@@ -162,6 +168,11 @@ public class OpenMRS extends Application {
     public boolean isUserLoggedOnline() {
         SharedPreferences prefs = getOpenMRSSharedPreferences();
         return prefs.getBoolean(ApplicationConstants.UserKeys.LOGIN, false);
+    }
+
+    public Boolean getFirstTime() {
+        SharedPreferences prefs = getOpenMRSSharedPreferences();
+        return prefs.getBoolean(ApplicationConstants.UserKeys.FIRST_TIME, ApplicationConstants.FIRST);
     }
 
     public String getUsername() {

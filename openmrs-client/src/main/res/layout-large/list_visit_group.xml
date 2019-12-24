@@ -43,7 +43,8 @@
 
         </LinearLayout>
 
-        <View style="@style/Divider.Horizontal.DarkGray" />
+        <View style="@style/Divider.Horizontal.DarkGray"
+            android:layout_height="match_parent"/>
 
         <LinearLayout
             android:layout_width="match_parent"

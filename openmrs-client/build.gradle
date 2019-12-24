@@ -168,7 +168,6 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     // Swipe reveal layout
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
-    implementation files('libs/android-support-v4.jar')
 }
 
 play {

@@ -20,8 +20,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 
-import com.activeandroid.ActiveAndroid;
-import com.activeandroid.Configuration;
 import com.prateekj.snooper.AndroidSnooper;
 
 import net.sqlcipher.database.SQLiteDatabase;
@@ -35,6 +33,8 @@ import org.openmrs.mobile.models.FormResource;
 import org.openmrs.mobile.models.Link;
 import org.openmrs.mobile.models.Obscreate;
 import org.openmrs.mobile.services.AuthenticateCheckService;
+import org.openmrs.mobile.utilities.ActiveAndroid.ActiveAndroid;
+import org.openmrs.mobile.utilities.ActiveAndroid.Configuration;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.io.File;

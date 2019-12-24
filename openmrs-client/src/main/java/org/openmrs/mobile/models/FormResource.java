@@ -10,14 +10,15 @@
 
 package org.openmrs.mobile.models;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
+
+import org.openmrs.mobile.utilities.ActiveAndroid.Model;
+import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Column;
+import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Table;
 
 import java.io.Serializable;
 import java.lang.reflect.Type;

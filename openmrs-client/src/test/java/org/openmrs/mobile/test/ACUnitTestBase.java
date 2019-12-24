@@ -21,10 +21,6 @@ import android.database.ContentObserver;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-import com.activeandroid.Cache;
-import com.activeandroid.TableInfo;
-import com.activeandroid.content.ContentProvider;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -39,6 +35,9 @@ import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Results;
+import org.openmrs.mobile.utilities.ActiveAndroid.Cache;
+import org.openmrs.mobile.utilities.ActiveAndroid.TableInfo;
+import org.openmrs.mobile.utilities.ActiveAndroid.content.ContentProvider;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;

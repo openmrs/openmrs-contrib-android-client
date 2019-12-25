@@ -95,7 +95,7 @@ public final class NewCache {
     }
 
     public static synchronized Model getEntity(Class<? extends Model> type, long id) {
-        return (Model)sEntities.get(getIdentifier(type, id));
+        return (Model) sEntities.get(getIdentifier(type, id));
     }
 
     public static synchronized void removeEntity(Model entity) {

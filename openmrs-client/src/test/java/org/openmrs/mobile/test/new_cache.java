@@ -1,16 +1,7 @@
-/*
- * The contents of this file are subject to the OpenMRS Public License
- * Version 1.0 (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of the License at
- * http://license.openmrs.org
- *
- * Software distributed under the License is distributed on an "AS IS"
- * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
- * License for the specific language governing rights and limitations
- * under the License.
- *
- * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
- */
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by Fernflower decompiler)
+//
 
 package org.openmrs.mobile.test;
 
@@ -24,18 +15,17 @@ import com.activeandroid.Model;
 import com.activeandroid.TableInfo;
 import com.activeandroid.serializer.TypeSerializer;
 import com.activeandroid.util.Log;
-
 import java.util.Collection;
 
-public final class NewCache {
+public final class new_cache {
     public static final int DEFAULT_CACHE_SIZE = 1024;
     private static Context sContext;
-    private static NewModelInfo sModelInfo;
+    private static new_ModelInfo sModelInfo;
     private static DatabaseHelper sDatabaseHelper;
     private static LruCache<String, Model> sEntities;
     private static boolean sIsInitialized = false;
 
-    private NewCache() {
+    private new_cache() {
     }
 
     public static synchronized void initialize(Configuration configuration) {
@@ -43,7 +33,7 @@ public final class NewCache {
             Log.v("ActiveAndroid already initialized.");
         } else {
             sContext = configuration.getContext();
-            sModelInfo = new NewModelInfo(configuration);
+            sModelInfo = new new_ModelInfo(configuration);
             sDatabaseHelper = new DatabaseHelper(configuration);
             sEntities = new LruCache(configuration.getCacheSize());
             openDatabase();

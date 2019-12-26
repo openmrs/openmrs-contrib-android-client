@@ -40,6 +40,11 @@ public class LocationEntity extends Resource {
     public LocationEntity() {
     }
 
+    public LocationEntity(String name, @NonNull String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

@@ -26,13 +26,21 @@
         android:layout_height="40dp"
         android:layout_marginTop="-20dp"
         android:indeterminate="true" />
-
+    <ImageView
+        android:id="@+id/openmrsLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/openmrs_logo"
+        android:visibility="gone"/>
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="false"
-        android:layout_centerInParent="true">
+        android:layout_marginTop="-5dp"
+        android:layout_below="@id/openmrsLogo">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -43,13 +51,6 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/openmrsLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:contentDescription="@string/openmrs_logo" />
 
             <LinearLayout
                 android:id="@+id/loginFormView"
@@ -61,37 +62,41 @@
                 android:visibility="gone">
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/textInputLayoutLoginURL"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_alignParentTop="true"
+                    android:focusedByDefault="true">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/loginUrlField"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
-                        android:focusable="true"
-                        android:gravity="center"
+                        android:hint="Url Address"
+                        android:textColorHint="@color/green"
                         android:inputType="textUri"
                         android:maxLines="1"
-                        android:textAlignment="center"
                         android:textSize="14sp"
                         android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:id="@+id/textInputLayoutUsername"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-5dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="25dp">
 
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/loginUsernameField"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginRight="20dp"
                         android:focusable="true"
                         android:inputType="text"
                         android:maxLines="1" />
@@ -102,17 +107,19 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:id="@+id/textInputLayoutPassword"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true">
+                        android:layout_centerVertical="true"
+                        android:layout_marginHorizontal="25dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="10dp">
 
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/loginPasswordField"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
                             android:focusable="true"
                             android:inputType="textPassword|text"
                             android:maxLines="1" />
@@ -124,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignEnd="@id/textInputLayoutPassword"
                         android:layout_alignRight="@id/textInputLayoutPassword"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="30dp"
                         android:button="@drawable/showpassword_button_selector"
                         android:gravity="bottom"
                         android:paddingLeft="10dp"
@@ -173,14 +180,14 @@
 
                 </LinearLayout>
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/loginButton"
-                    android:layout_width="130dp"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical|center_horizontal|center"
                     android:layout_marginBottom="30dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/button_apply"
+                    android:backgroundTint="@color/green"
                     android:enabled="false"
                     android:gravity="center_vertical|center_horizontal"
                     android:text="@string/login_button"

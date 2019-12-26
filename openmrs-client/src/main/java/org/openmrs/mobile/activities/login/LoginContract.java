@@ -60,6 +60,8 @@ public interface LoginContract {
 
         void startFormListService();
 
+        void showOpenMRSLogo();
+
     }
 
     interface Presenter extends BasePresenterContract {

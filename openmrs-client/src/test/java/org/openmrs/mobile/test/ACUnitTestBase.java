@@ -55,8 +55,8 @@ import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.doNothing;
 
-@PrepareForTest({ Cache.class, TableInfo.class, Context.class,
-        ContentResolver.class, ContentProvider.class, ContentValues.class })
+@PrepareForTest({Cache.class, TableInfo.class, Context.class,
+        ContentResolver.class, ContentProvider.class, ContentValues.class})
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor("com.activeandroid.content.ContentProvider")
 public abstract class ACUnitTestBase {
@@ -97,8 +97,8 @@ public abstract class ACUnitTestBase {
     protected Patient createPatient(Long id) {
         Patient patient = new Patient(id, null,
                 Collections.singletonList(createIdentifier(id)));
-        patient.setUuid("patient_one_uuid"+id);
-        updatePatientData(id,patient);
+        patient.setUuid("patient_one_uuid" + id);
+        updatePatientData(id, patient);
         return patient;
     }
 
@@ -148,7 +148,7 @@ public abstract class ACUnitTestBase {
         return new Person(Collections.singletonList(createPersonName(id)), "M", "25-02-2016", false, Collections.singletonList(createPersonAddress(id)), null, null);
     }
 
-    protected Provider createProvider(Long id, String identifier){
+    protected Provider createProvider(Long id, String identifier) {
         Provider provider = new Provider();
         provider.setPerson(createPerson(id));
         provider.setId(id);
@@ -164,11 +164,11 @@ public abstract class ACUnitTestBase {
     }
 
 
-    protected  <T> Call<T> mockSuccessCall(T object) {
+    protected <T> Call<T> mockSuccessCall(T object) {
         return new MockSuccessResponse<>(object);
     }
 
-    protected <T> Call<T> mockErrorCall(int code){
+    protected <T> Call<T> mockErrorCall(int code) {
         return new MockErrorResponse<>(code);
     }
 

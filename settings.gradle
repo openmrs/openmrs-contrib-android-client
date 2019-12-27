@@ -1,1 +1,1 @@
-include ':openmrs-client'
+include ':openmrs-client', ':ActiveAndroid-master'

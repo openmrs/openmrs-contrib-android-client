@@ -20,27 +20,27 @@ import java.io.File;
 
 
 public final class FileSerializer extends TypeSerializer {
-	public Class<?> getDeserializedType() {
-		return File.class;
-	}
+    public Class<?> getDeserializedType() {
+        return File.class;
+    }
 
-	public Class<?> getSerializedType() {
-		return String.class;
-	}
+    public Class<?> getSerializedType() {
+        return String.class;
+    }
 
-	public String serialize(Object data) {
-		if (data == null) {
-			return null;
-		}
+    public String serialize(Object data) {
+        if (data == null) {
+            return null;
+        }
 
-		return ((File) data).toString();
-	}
+        return data.toString();
+    }
 
-	public File deserialize(Object data) {
-		if (data == null) {
-			return null;
-		}
+    public File deserialize(Object data) {
+        if (data == null) {
+            return null;
+        }
 
-		return new File((String) data);
-	}
+        return new File((String) data);
+    }
 }

@@ -20,15 +20,15 @@ package org.openmrs.mobile.utilities.ActiveAndroid.app;
 import org.openmrs.mobile.utilities.ActiveAndroid.ActiveAndroid;
 
 public class Application extends android.app.Application {
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		ActiveAndroid.initialize(this);
-	}
-	
-	@Override
-	public void onTerminate() {
-		super.onTerminate();
-		ActiveAndroid.dispose();
-	}
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ActiveAndroid.initialize(this);
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        ActiveAndroid.dispose();
+    }
 }

@@ -22,73 +22,71 @@ import org.openmrs.mobile.utilities.ActiveAndroid.Cache;
 import org.openmrs.mobile.utilities.ActiveAndroid.Model;
 
 public final class Join implements Sqlable {
-	static enum JoinType {
-		LEFT, OUTER, INNER, CROSS
-	}
+    private From mFrom;
+    private Class<? extends Model> mType;
+    private String mAlias;
+    private JoinType mJoinType;
+    private String mOn;
+    private String[] mUsing;
+    Join(From from, Class<? extends Model> table, JoinType joinType) {
+        mFrom = from;
+        mType = table;
+        mJoinType = joinType;
+    }
 
-	private From mFrom;
-	private Class<? extends Model> mType;
-	private String mAlias;
-	private JoinType mJoinType;
-	private String mOn;
-	private String[] mUsing;
+    public Join as(String alias) {
+        mAlias = alias;
+        return this;
+    }
 
-	Join(From from, Class<? extends Model> table, JoinType joinType) {
-		mFrom = from;
-		mType = table;
-		mJoinType = joinType;
-	}
+    public From on(String on) {
+        mOn = on;
+        return mFrom;
+    }
 
-	public Join as(String alias) {
-		mAlias = alias;
-		return this;
-	}
+    public From on(String on, Object... args) {
+        mOn = on;
+        mFrom.addArguments(args);
+        return mFrom;
+    }
 
-	public From on(String on) {
-		mOn = on;
-		return mFrom;
-	}
+    public From using(String... columns) {
+        mUsing = columns;
+        return mFrom;
+    }
 
-	public From on(String on, Object... args) {
-		mOn = on;
-		mFrom.addArguments(args);
-		return mFrom;
-	}
+    @Override
+    public String toSql() {
+        StringBuilder sql = new StringBuilder();
 
-	public From using(String... columns) {
-		mUsing = columns;
-		return mFrom;
-	}
+        if (mJoinType != null) {
+            sql.append(mJoinType.toString()).append(" ");
+        }
 
-	@Override
-	public String toSql() {
-		StringBuilder sql = new StringBuilder();
+        sql.append("JOIN ");
+        sql.append(Cache.getTableName(mType));
+        sql.append(" ");
 
-		if (mJoinType != null) {
-			sql.append(mJoinType.toString()).append(" ");
-		}
+        if (mAlias != null) {
+            sql.append("AS ");
+            sql.append(mAlias);
+            sql.append(" ");
+        }
 
-		sql.append("JOIN ");
-		sql.append(Cache.getTableName(mType));
-		sql.append(" ");
+        if (mOn != null) {
+            sql.append("ON ");
+            sql.append(mOn);
+            sql.append(" ");
+        } else if (mUsing != null) {
+            sql.append("USING (");
+            sql.append(TextUtils.join(", ", mUsing));
+            sql.append(") ");
+        }
 
-		if (mAlias != null) {
-			sql.append("AS ");
-			sql.append(mAlias);
-			sql.append(" ");
-		}
+        return sql.toString();
+    }
 
-		if (mOn != null) {
-			sql.append("ON ");
-			sql.append(mOn);
-			sql.append(" ");
-		}
-		else if (mUsing != null) {
-			sql.append("USING (");
-			sql.append(TextUtils.join(", ", mUsing));
-			sql.append(") ");
-		}
-
-		return sql.toString();
-	}
+    enum JoinType {
+        LEFT, OUTER, INNER, CROSS
+    }
 }

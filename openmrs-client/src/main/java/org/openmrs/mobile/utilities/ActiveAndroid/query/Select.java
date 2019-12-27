@@ -21,73 +21,71 @@ import android.text.TextUtils;
 import org.openmrs.mobile.utilities.ActiveAndroid.Model;
 
 public final class Select implements Sqlable {
-	private String[] mColumns;
-	private boolean mDistinct = false;
-	private boolean mAll = false;
+    private String[] mColumns;
+    private boolean mDistinct = false;
+    private boolean mAll = false;
 
-	public Select() {
-	}
+    public Select() {
+    }
 
-	public Select(String... columns) {
-		mColumns = columns;
-	}
+    public Select(String... columns) {
+        mColumns = columns;
+    }
 
-	public Select(Column... columns) {
-		final int size = columns.length;
-		mColumns = new String[size];
-		for (int i = 0; i < size; i++) {
-			mColumns[i] = columns[i].name + " AS " + columns[i].alias;
-		}
-	}
+    public Select(Column... columns) {
+        final int size = columns.length;
+        mColumns = new String[size];
+        for (int i = 0; i < size; i++) {
+            mColumns[i] = columns[i].name + " AS " + columns[i].alias;
+        }
+    }
 
-	public Select distinct() {
-		mDistinct = true;
-		mAll = false;
+    public Select distinct() {
+        mDistinct = true;
+        mAll = false;
 
-		return this;
-	}
+        return this;
+    }
 
-	public Select all() {
-		mDistinct = false;
-		mAll = true;
+    public Select all() {
+        mDistinct = false;
+        mAll = true;
 
-		return this;
-	}
+        return this;
+    }
 
-	public From from(Class<? extends Model> table) {
-		return new From(table, this);
-	}
+    public From from(Class<? extends Model> table) {
+        return new From(table, this);
+    }
 
-	public static class Column {
-		String name;
-		String alias;
+    @Override
+    public String toSql() {
+        StringBuilder sql = new StringBuilder();
 
-		public Column(String name, String alias) {
-			this.name = name;
-			this.alias = alias;
-		}
-	}
+        sql.append("SELECT ");
 
-	@Override
-	public String toSql() {
-		StringBuilder sql = new StringBuilder();
+        if (mDistinct) {
+            sql.append("DISTINCT ");
+        } else if (mAll) {
+            sql.append("ALL ");
+        }
 
-		sql.append("SELECT ");
+        if (mColumns != null && mColumns.length > 0) {
+            sql.append(TextUtils.join(", ", mColumns) + " ");
+        } else {
+            sql.append("* ");
+        }
 
-		if (mDistinct) {
-			sql.append("DISTINCT ");
-		}
-		else if (mAll) {
-			sql.append("ALL ");
-		}
+        return sql.toString();
+    }
 
-		if (mColumns != null && mColumns.length > 0) {
-			sql.append(TextUtils.join(", ", mColumns) + " ");
-		}
-		else {
-			sql.append("* ");
-		}
+    public static class Column {
+        String name;
+        String alias;
 
-		return sql.toString();
-	}
+        public Column(String name, String alias) {
+            this.name = name;
+            this.alias = alias;
+        }
+    }
 }

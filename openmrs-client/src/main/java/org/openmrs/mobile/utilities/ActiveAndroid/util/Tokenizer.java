@@ -1,4 +1,3 @@
-
 package org.openmrs.mobile.utilities.ActiveAndroid.util;
 
 /*
@@ -25,8 +24,8 @@ public class Tokenizer {
 
     private final InputStream mStream;
 
-    private boolean           mIsNext;
-    private int               mCurrent;
+    private boolean mIsNext;
+    private int mCurrent;
 
     public Tokenizer(final InputStream in) {
         this.mStream = in;

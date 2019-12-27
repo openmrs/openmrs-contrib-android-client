@@ -22,27 +22,30 @@ package org.openmrs.mobile.dao;
         import androidx.room.Query;
         import androidx.room.Update;
 
+        import org.openmrs.mobile.databases.entities.ObservationEntity;
         import org.openmrs.mobile.models.Observation;
 
         import java.util.List;
+
+        import rx.Single;
 
 @Dao
 public interface ObservationRoomDAO {
 
     @Insert
-    Observable<Long> saveObservation(Observation observation, long encounterID);
+    Single<Long> saveObservation(ObservationEntity observationEntity);
 
     @Update
-    Observable<Boolean> updateObservation(long observationID, Observation observation, long encounterID);
+    Observable<Boolean> updateObservation(ObservationEntity observationEntity);
 
     @Delete
     void deleteObservation(long observationID);
 
     @Query("SELECT * FROM observations WHERE encounter_id = :encounterID")
-    List<Observation> findObservationByEncounterID(Long encounterID);
+    Single<List<ObservationEntity>> findObservationByEncounterID(Long encounterID);
 
-    @Query("SELECT * FROM observations WHERE conceptUuid = :observationUUID")
-    Observation getObservationByUUID(final String observationUUID);
+    @Query("SELECT * FROM observations WHERE uuid = :observationUUID")
+    Single<ObservationEntity> getObservationByUUID(final String observationUUID);
 
 }
 

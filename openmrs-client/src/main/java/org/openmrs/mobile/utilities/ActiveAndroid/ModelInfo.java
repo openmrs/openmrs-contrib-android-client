@@ -1,5 +1,3 @@
-package org.openmrs.mobile.utilities.ActiveAndroid;
-
 /*
  * Copyright (C) 2010 Michael Pardo
  *
@@ -15,6 +13,8 @@ package org.openmrs.mobile.utilities.ActiveAndroid;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package org.openmrs.mobile.utilities.ActiveAndroid;
 
 import android.content.Context;
 

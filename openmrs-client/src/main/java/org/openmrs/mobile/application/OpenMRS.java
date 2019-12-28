@@ -67,6 +67,13 @@ public class OpenMRS extends Application {
         startService(i);
         Intent intent = new Intent(this, AuthenticateCheckService.class);
         startService(intent);
+        ActiveAndroid.initialize(this);
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        ActiveAndroid.dispose();
     }
 
     protected void initializeDB() {

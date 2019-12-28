@@ -37,11 +37,6 @@ public class ContentProvider extends android.content.ContentProvider {
 
     private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
     private static final SparseArray<Class<? extends Model>> TYPE_CODES = new SparseArray<Class<? extends Model>>();
-
-    //////////////////////////////////////////////////////////////////////////////////////
-    // PRIVATE MEMBERS
-    //////////////////////////////////////////////////////////////////////////////////////
-
     private static String sAuthority;
     private static SparseArray<String> sMimeTypeCache = new SparseArray<String>();
 
@@ -156,10 +151,6 @@ public class ContentProvider extends android.content.ContentProvider {
         return count;
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////
-    // PUBLIC METHODS
-    //////////////////////////////////////////////////////////////////////////////////////
-
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         final Class<? extends Model> type = getModelType(uri);
@@ -177,10 +168,6 @@ public class ContentProvider extends android.content.ContentProvider {
         return cursor;
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////
-    // PROTECTED METHODS
-    //////////////////////////////////////////////////////////////////////////////////////
-
     protected String getAuthority() {
         return getContext().getPackageName();
     }
@@ -188,10 +175,6 @@ public class ContentProvider extends android.content.ContentProvider {
     protected Configuration getConfiguration() {
         return new Configuration.Builder(getContext()).create();
     }
-
-    //////////////////////////////////////////////////////////////////////////////////////
-    // PRIVATE METHODS
-    //////////////////////////////////////////////////////////////////////////////////////
 
     private Class<? extends Model> getModelType(Uri uri) {
         final int code = URI_MATCHER.match(uri);

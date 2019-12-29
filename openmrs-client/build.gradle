@@ -117,6 +117,7 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation 'androidx.test:core:1.2.0'
     androidTestImplementation(
             'junit:junit:4.12',
             'androidx.test.ext:junit:1.0.0',
@@ -170,8 +171,9 @@ dependencies {
     )
     testImplementation 'android.arch.core:core-testing:1.1.1'
     // Room components
-    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-runtime:2.2.3"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation 'android.arch.persistence.room:rxjava2:1.1.1'
     // Swipe reveal layout
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
 

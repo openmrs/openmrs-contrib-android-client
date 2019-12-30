@@ -36,8 +36,8 @@ public class IntroActivity extends AppIntro2
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_welcome), getString(R.string.intro_welcome_desc), R.drawable.openmrs_action_logo, Color.parseColor("#5B57A6")));
-        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_register), getString(R.string.intro_register_desc), R.drawable.ico_registry, Color.parseColor("#F26522")));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_welcome),"",getString(R.string.intro_welcome_desc),"", R.drawable.openmrs_logo, Color.parseColor("#ffffff"),Color.parseColor("#000000"),Color.parseColor("#000000")));
+        addSlide(AppIntroFragment.newInstance(getString(R.string.intro_register), getString(R.string.intro_register_desc), R.drawable.ico_registry, Color.parseColor("#5B57A6")));
         addSlide(AppIntroFragment.newInstance(getString(R.string.intro_find), getString(R.string.intro_find_desc), R.drawable.ico_search, Color.parseColor("#009384")));
         addSlide(AppIntroFragment.newInstance(getString(R.string.intro_monitor), getString(R.string.intro_monitor_desc), R.drawable.ico_visits, Color.parseColor("#F0A815")));
         addSlide(AppIntroFragment.newInstance(getString(R.string.intro_manage), getString(R.string.intro_manage_desc), R.mipmap.ic_provider, Color.parseColor("#F26522")));

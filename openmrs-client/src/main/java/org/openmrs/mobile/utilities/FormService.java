@@ -11,12 +11,12 @@
 package org.openmrs.mobile.utilities;
 
 
-import com.activeandroid.query.Select;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.openmrs.mobile.models.Form;
 import org.openmrs.mobile.models.FormResource;
+import org.openmrs.mobile.utilities.ActiveAndroid.query.Select;
 
 import java.lang.reflect.Modifier;
 import java.util.List;

@@ -244,7 +244,7 @@
             android:parentActivityName=".activities.patientdashboard.PatientDashboardActivity" />
 
         <provider
-            android:name="com.activeandroid.content.ContentProvider"
+            android:name=".utilities.ActiveAndroid.content.ContentProvider"
             android:authorities="org.openmrs.mobile"
             android:exported="false" />
 

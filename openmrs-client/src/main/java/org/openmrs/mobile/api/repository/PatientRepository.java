@@ -17,7 +17,6 @@ package org.openmrs.mobile.api.repository;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.activeandroid.query.Select;
 
 import org.jdeferred.android.AndroidDeferredManager;
 import org.openmrs.mobile.api.EncounterService;
@@ -39,6 +38,7 @@ import org.openmrs.mobile.models.PatientDto;
 import org.openmrs.mobile.models.PatientIdentifier;
 import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.models.Results;
+import org.openmrs.mobile.utilities.ActiveAndroid.query.Select;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 

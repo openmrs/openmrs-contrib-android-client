@@ -104,7 +104,8 @@
             android:label="@string/app_name"
             android:launchMode="singleTop"
             android:noHistory="true"
-            android:theme="@style/NoActionBarTheme" />
+            android:theme="@style/NoActionBarTheme"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activities.settings.SettingsActivity"
             android:label="@string/action_settings"
@@ -245,7 +246,7 @@
             android:parentActivityName=".activities.patientdashboard.PatientDashboardActivity" />
 
         <provider
-            android:name="com.activeandroid.content.ContentProvider"
+            android:name=".utilities.ActiveAndroid.content.ContentProvider"
             android:authorities="org.openmrs.mobile"
             android:exported="false" />
 

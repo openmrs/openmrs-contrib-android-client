@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.activities.login;
 
+import android.widget.Toast;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
@@ -110,6 +112,25 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
     @Override
     public void authenticateUser(final String username, final String password, final String url) {
         authenticateUser(username, password, url, mWipeRequired);
+    }
+
+
+    public void resetPassword(final String email)
+    {
+        restApi.resetPassword(email).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful())
+                    Toast.makeText(mOpenMRS, "Done", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(mOpenMRS, "failed", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override

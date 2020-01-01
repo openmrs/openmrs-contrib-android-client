@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.login;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,8 +38,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import org.jetbrains.annotations.Contract;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.dashboard.DashboardActivity;
@@ -262,12 +265,21 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     }
 
     public void forgotPassword() {
-        CustomDialogBundle bundle = new CustomDialogBundle();
-        bundle.setTitleViewMessage(getString(R.string.forgot_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.forgot_dialog_message));
-        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
-        bundle.setLeftButtonText(getString(R.string.forgot_button_ok));
-        ((LoginActivity) this.getActivity()).createAndShowDialog(bundle, ApplicationConstants.DialogTAG.LOGOUT_DIALOG_TAG);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        View view = getLayoutInflater().inflate(R.layout.alert_dialog_text_input_layout,null);
+        TextInputEditText emailTextField = view.findViewById(R.id.forgot_password_dialog_text_field);
+
+        alertDialog.setTitle(getString(R.string.forgot_dialog_title));
+        alertDialog.setView(view);
+        alertDialog.setPositiveButton(getString(R.string.forgot_password_dialog_positive_button), (dialog, which) -> {
+            if(emailTextField.getText() != null && emailTextField.getText().length() > 0) {
+                mPresenter.resetPassword(emailTextField.getText().toString());
+            }
+        }).setNegativeButton(R.string.dialog_button_cancel,((dialog, which) -> {
+
+        }));
+
+        alertDialog.create().show();
     }
 
     @Override

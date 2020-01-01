@@ -32,11 +32,13 @@
     <string name="req_star"><![CDATA[<font color=\'#cc0029\'> * </font>]]></string>
     <string name="warning_dialog_title">Warning</string>
     <string name="warning_lost_data_dialog">Changing the URL, username or password will erase all the data. Are you sure?</string>
-    <string name="forgot_dialog_title">Unable to login?</string>
-    <string name="forgot_dialog_message">Please contact the system administrator</string>
-    <string name="forgot_button_ok">Dismiss</string>
+    <string name="forgot_dialog_title">Forgot Password ?</string>
+    <string name="forgot_dialog_message">Please enter your registered email in the field below</string>
+    <string name="dismiss_button">Dismiss</string>
+    <string name="forgot_password_dialog_positive_button">Done</string>
     <string name="login_offline">Offline</string>
     <string name="login_online">Online</string>
+    <string name="enter_registered_email">Enter email</string>
 
     <string name="emptyerror">Required</string>
     <string name="fname_empty_error">Given name required</string>

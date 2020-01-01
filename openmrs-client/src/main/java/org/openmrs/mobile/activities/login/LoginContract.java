@@ -74,5 +74,7 @@ public interface LoginContract {
 
         void loadLocations(String url);
 
+        void resetPassword(String email);
+
     }
 }

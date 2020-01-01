@@ -33,7 +33,6 @@
     <string name="warning_dialog_title">Warning</string>
     <string name="warning_lost_data_dialog">Changing the URL, username or password will erase all the data. Are you sure?</string>
     <string name="forgot_dialog_title">Forgot Password ?</string>
-    <string name="forgot_dialog_message">Please enter your registered email in the field below</string>
     <string name="dismiss_button">Dismiss</string>
     <string name="forgot_password_dialog_positive_button">Done</string>
     <string name="login_offline">Offline</string>
@@ -276,7 +275,7 @@
     <string name="birthdate_hint">birthdate:</string>
     <string name="address_hint">address:</string>
     <string name="demographics">Demographics</string>
-    <string name="unable_to_login">Unable to login?</string>
+    <string name="unable_to_login">Forgot Password ?</string>
     <string name="no_patient_selected">No patient selected</string>
 
     <!--Matching Patient Activity-->

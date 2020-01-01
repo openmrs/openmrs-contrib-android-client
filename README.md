@@ -79,7 +79,25 @@ To get started contributing, try working on [introductory issues](https://issues
 Also, before creating a pull request, please run code review tools (Lint) and all tests.
 
 ### Code Style
-The coding conventions used by OpenMRS are outlined [here](https://wiki.openmrs.org/display/docs/Coding+Conventions).
+The coding conventions used by OpenMRS are outlined [here](https://wiki.openmrs.org/display/docs/Developer+How-To+Setup+And+Use+IntelliJ#DeveloperHow-ToSetupAndUseIntelliJ-SetupCodeStyleAndFormatForOpenMRS). These can be applied to Android Studio by following the steps given below.
+1. Install [Eclipse Code Formatter](https://github.com/krasa/EclipseCodeFormatter) plugin in Android studio
+	I. Go to `Settings` > `Preferences` > `Plugins`
+	II. Select Marketplace and searh for the plugin by name. 
+	then install it
+2. Copy the reqiured [XML](https://github.com/openmrs/openmrs-core/blob/master/tools/src/main/resources/eclipse/OpenMRSFormatter.xml)
+3. Go to `Settings` > `Eclipse Code Formatter` and import the XML created in previous step
+4. Now go to `Editor` > `Code Style` in the same window
+5. Select `Java` in the menu on left and update values in `Imports` as shown in below picture
+![Java:Imports settings](https://wiki.openmrs.org/download/attachments/3346739/Screen%20Shot%202017-03-02%20at%2013.01.04.png?version=1&modificationDate=1488438089000&api=v2)
+5. Now select `XML` in the menu on left and update values in `Other` tab as shown in below picture
+![XMLOther setings](https://wiki.openmrs.org/download/attachments/3346134/Screen%20Shot%202017-03-10%20at%2010.52.44.png?version=2&modificationDate=1489121590000&api=v2)
+
+
+Please follow the below instructions while contributing:
+1. When project is opened with Android Studio, go to `File` > `Settings` > `Editor` > `Code Style`
+2. Select Project from the Scheme dropdown
+3. Make sure that **hard wrap** is set to **125** for Java and XML language settings.
+
 
 ### Model pattern
 We are following [Google's MVP sample](https://github.com/googlesamples/android-architecture/tree/todo-mvp) for this application's development.

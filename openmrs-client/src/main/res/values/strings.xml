@@ -411,11 +411,11 @@
     <string name="intro_settings">Settings</string>
 
     <string name="intro_welcome_desc">The global OpenMRS community works together to build the world\'s leading open source electronic medical record system.</string>
-    <string name="intro_register_desc">You can register your new patients to our server</string>
-    <string name="intro_find_desc">You can find and monitor those patients</string>
-    <string name="intro_monitor_desc">We help you monitor patient visits too</string>
-    <string name="intro_manage_desc">You can manage providers using our app</string>
-    <string name="intro_location_desc">You can change your location at a simple click</string>
+    <string name="intro_register_desc">Register new patients to our server.</string>
+    <string name="intro_find_desc">You can find and monitor those patients.</string>
+    <string name="intro_monitor_desc">We help you monitor patient visits too.</string>
+    <string name="intro_manage_desc">You can manage providers using our app.</string>
+    <string name="intro_location_desc">You can change your location at a simple click.</string>
     <string name="intro_settings_desc">Try out our dark mode feature.\nExciting? Let\'s get started.</string>
 
 

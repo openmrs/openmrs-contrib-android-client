@@ -27,6 +27,7 @@ public interface LoginContract {
 
     interface View extends BaseView<Presenter> {
 
+        void showToastMessage(String message);
 
         void hideSoftKeys();
 
@@ -73,6 +74,8 @@ public interface LoginContract {
         void saveLocationsToDatabase(List<Location> locationList, String selectedLocation);
 
         void loadLocations(String url);
+
+        void resetPassword(String email);
 
     }
 }

@@ -164,4 +164,7 @@ public interface RestApi {
     @POST("provider/{uuid}")
     Call<Provider> editProvider(@Path("uuid") String uuid,
                                 @Body Provider provider);
+
+    @POST("passwordreset")
+    Call<Void> resetPassword(@Body String usernameOrEmail);
 }

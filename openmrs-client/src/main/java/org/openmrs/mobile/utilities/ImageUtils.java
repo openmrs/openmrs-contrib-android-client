@@ -26,7 +26,6 @@ import android.widget.ImageView;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.ImageViewCompat;
 
-import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientPhotoActivity;
 
 import java.io.ByteArrayOutputStream;

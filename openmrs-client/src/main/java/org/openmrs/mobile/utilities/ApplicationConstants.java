@@ -14,7 +14,6 @@
 
 package org.openmrs.mobile.utilities;
 
-import org.openmrs.mobile.R;
 import org.openmrs.mobile.models.EncounterType;
 
 public abstract class ApplicationConstants {

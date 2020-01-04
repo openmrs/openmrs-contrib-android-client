@@ -159,6 +159,7 @@ dependencies {
     implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
     implementation 'org.mindrot:jbcrypt:0.4'
     implementation 'com.hbb20:ccp:2.2.7'
+    implementation 'com.github.AppIntro:AppIntro:5.1.0'
     testImplementation(
             'org.mockito:mockito-core:2.8.9',
             'junit:junit:4.12',

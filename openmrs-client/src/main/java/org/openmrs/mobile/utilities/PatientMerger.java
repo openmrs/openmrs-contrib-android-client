@@ -15,7 +15,6 @@
 package org.openmrs.mobile.utilities;
 
 import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.Person;
 import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
 

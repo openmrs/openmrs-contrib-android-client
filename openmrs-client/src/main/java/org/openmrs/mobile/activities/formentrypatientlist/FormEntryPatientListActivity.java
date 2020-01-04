@@ -19,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;

@@ -22,7 +22,6 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
-import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;

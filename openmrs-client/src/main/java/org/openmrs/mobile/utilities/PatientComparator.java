@@ -17,7 +17,6 @@ package org.openmrs.mobile.utilities;
 import com.google.common.base.Objects;
 
 import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.Person;
 
 import java.util.Arrays;
 import java.util.LinkedList;

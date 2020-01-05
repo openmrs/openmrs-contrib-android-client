@@ -25,6 +25,7 @@ import androidx.room.RoomDatabase;
 public abstract class AppDatabase extends RoomDatabase {
 
     //instantiate Dao's
+    public abstract LocationRoomDAO locationRoomDAO();
 
     public abstract LocationRoomDAO locationDAO();
 

@@ -14,8 +14,6 @@
 
 package org.openmrs.mobile.dao;
 
-import com.activeandroid.query.Select;
-
 import net.sqlcipher.Cursor;
 
 import org.openmrs.mobile.databases.DBOpenHelper;
@@ -25,6 +23,7 @@ import org.openmrs.mobile.databases.tables.ObservationTable;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Observation;
+import org.openmrs.mobile.utilities.ActiveAndroid.query.Select;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FormService;
 

@@ -14,11 +14,12 @@
 
 package org.openmrs.mobile.dao;
 
+import java.util.List;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
-
 import org.openmrs.mobile.databases.entities.LocationEntity;
 
 import java.util.List;
@@ -26,10 +27,10 @@ import java.util.List;
 import rx.Single;
 
 @Dao
-public interface LocationRoomDAO
-{
+public interface LocationRoomDAO {
+
     @Insert
-    Single<Long> saveLocation (LocationEntity entity);
+    Single<Long> saveLocation(LocationEntity entity);
 
     @Delete
     void deleteAllLocations(LocationEntity[] entities);

@@ -36,7 +36,9 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.openmrs.mobile.R;
@@ -66,14 +68,14 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
     private View mRootView;
     private TextView mForgotPass;
-    private EditText mUrl;
-    private EditText mUsername;
-    private EditText mPassword;
+    private TextInputEditText mUrl;
+    private TextInputEditText mUsername;
+    private TextInputEditText mPassword;
     private TextInputLayout mUrlInput;
     private TextInputLayout mUsernameInput;
     private TextInputLayout mPasswordInput;
     private CheckBox mShowPassword;
-    private Button mLoginButton;
+    private MaterialButton mLoginButton;
     private ProgressBar mSpinner;
     private Spinner mDropdownLocation;
     private LinearLayout mLoginFormView;
@@ -81,6 +83,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     private TextView mSyncStateLabel;
     private SparseArray<Bitmap> mBitmapCache;
     private ProgressBar mLocationLoadingProgressBar;
+    private ImageView openMRSLogo;
 
     private LoginValidatorWatcher loginValidatorWatcher;
 
@@ -152,21 +155,19 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
         mUsername.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
-                mUsername.setHint("");
                 mUsernameInput.setHint(Html.fromHtml(getString(R.string.login_username_hint)));
             } else if (mUsername.getText().toString().equals("")) {
-                mUsername.setHint(Html.fromHtml(getString(R.string.login_username_hint) + getString(R.string.req_star)));
-                mUsernameInput.setHint("");
+                mUsernameInput.setHint(Html.fromHtml(getString(R.string.login_username_hint)+ getString(R.string.req_star)));
+                mUsernameInput.setHintAnimationEnabled(true);
             }
         });
 
         mPassword.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus) {
-                mPassword.setHint("");
                 mPasswordInput.setHint(Html.fromHtml(getString(R.string.login_password_hint)));
             } else if (mPassword.getText().toString().equals("")) {
-                mPassword.setHint(Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star)));
-                mPasswordInput.setHint("");
+                mPasswordInput.setHint(Html.fromHtml(getString(R.string.login_password_hint)+ getString(R.string.req_star)));
+                mPasswordInput.setHintAnimationEnabled(true);
             }
         });
 
@@ -190,24 +191,18 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
     private void initViewFields(View root) {
         mUrl = root.findViewById(R.id.loginUrlField);
-        mUrl.setHint(Html.fromHtml(getString(R.string.login_url_hint)));
         mUrlInput = root.findViewById(R.id.textInputLayoutLoginURL);
-        mUrlInput.setHint(Html.fromHtml(getString(R.string.login_url_hint)));
 
-        mUsername = root.findViewById(R.id.loginUsernameField);
+
+        mUsername = (TextInputEditText) root.findViewById(R.id.loginUsernameField);
         mUsername.setText(OpenMRS.getInstance().getUsername());
         mUsernameInput = root.findViewById(R.id.textInputLayoutUsername);
 
         // If we have no cached username from previous sessions, we want the hint to be set
         // directly at the EditText. Otherwise, we set it on the TextInputLayout which will
         // be floating above the saved entry for the username.
-        if (mUsername.getText().toString().equals(""))
-            mUsername.setHint(Html.fromHtml(getString(R.string.login_username_hint) + getString(R.string.req_star)));
-        else
-            mUsernameInput.setHint(Html.fromHtml(getString(R.string.login_username_hint)));
 
         mPassword = root.findViewById(R.id.loginPasswordField);
-        mPassword.setHint(Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star)));
         mPasswordInput = root.findViewById(R.id.textInputLayoutPassword);
 
         TextView mRequired = root.findViewById(R.id.loginRequiredLabel);
@@ -222,6 +217,8 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mDropdownLocation = root.findViewById(R.id.locationSpinner);
         mForgotPass = root.findViewById(R.id.forgotPass);
         mLocationLoadingProgressBar = root.findViewById(R.id.locationLoadingProgressBar);
+        mPasswordInput.setHint(Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star)));
+        mUsernameInput.setHint(Html.fromHtml(getString(R.string.login_username_hint) + getString(R.string.req_star)));
     }
 
     @Override
@@ -442,6 +439,11 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         } else {
             initLoginForm(mLocationsList, mLastCorrectURL);
         }
+    }
+
+    public void showOpenMRSLogo() {
+        openMRSLogo = mRootView.findViewById(R.id.openmrsLogo);
+        openMRSLogo.setVisibility(View.VISIBLE);
     }
 
     public void login() {

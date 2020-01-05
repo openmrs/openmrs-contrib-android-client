@@ -12,7 +12,8 @@ build/*
 *.iml
 tests/*.iml
 .gradle/
-.idea/
+.idea/*
+!.idea/codeStyles
 local.properties
 tests/bin/*
 bin/*

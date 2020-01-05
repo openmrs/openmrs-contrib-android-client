@@ -233,12 +233,14 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                         RestServiceBuilder.changeBaseUrl(url.trim());
                         mOpenMRS.setServerUrl(url);
                         loginView.initLoginForm(response.body().getResults(), url);
+                        loginView.showOpenMRSLogo();
                         loginView.startFormListService();
                         loginView.setLocationErrorOccurred(false);
                     } else {
                         loginView.showInvalidURLSnackbar("Failed to fetch server's locations");
                         loginView.setLocationErrorOccurred(true);
                         loginView.initLoginForm(new ArrayList<>(), url);
+                        loginView.showOpenMRSLogo();
                     }
                     loginView.hideUrlLoadingAnimation();
                 }

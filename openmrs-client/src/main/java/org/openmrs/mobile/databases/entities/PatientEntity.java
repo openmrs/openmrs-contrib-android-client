@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.RoomWarnings;
 
 @Entity(tableName = "patients")
 public class PatientEntity extends Resource {
@@ -63,6 +64,7 @@ public class PatientEntity extends Resource {
     private String postalCode;
 
     @Embedded(prefix = "patient_")
+    @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
     private EncounterEntity encounters;
 
     public PatientEntity() {

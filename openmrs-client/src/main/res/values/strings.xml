@@ -32,15 +32,16 @@
     <string name="req_star"><![CDATA[<font color=\'#cc0029\'> * </font>]]></string>
     <string name="warning_dialog_title">Warning</string>
     <string name="warning_lost_data_dialog">Changing the URL, username or password will erase all the data. Are you sure?</string>
-    <string name="forgot_dialog_title">Forgot Password ?</string>
+    <string name="forgot_dialog_title">Forgot Password?</string>
     <string name="forgot_dialog_message">Please contact the system administrator</string>
     <string name="forgot_button_ok">Dismiss</string>
     <string name="login_offline">Offline</string>
     <string name="login_online">Online</string>
     <string name="enter_registered_email">Enter email</string>
     <string name="forgot_password_dialog_positive_button">DONE</string>
-    <string name="email_text_field_empty_message">Please fill the email text field.</string>
-
+    <string name="email_text_field_empty_message">Please enter your email.</string>
+    <string name="error_message">Faced some error please try again.</string>
+    <string name="check_your_email_id">Please check your email id:</string>
 
     <string name="emptyerror">Required</string>
     <string name="fname_empty_error">Given name required</string>
@@ -278,7 +279,7 @@
     <string name="birthdate_hint">birthdate:</string>
     <string name="address_hint">address:</string>
     <string name="demographics">Demographics</string>
-    <string name="unable_to_login">Forgot Password?</string>
+    <string name="forgot_password">Forgot Password?</string>
     <string name="no_patient_selected">No patient selected</string>
 
     <!--Matching Patient Activity-->

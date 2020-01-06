@@ -36,7 +36,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -178,7 +177,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
                 mUrl.getText().toString(),
                 initialUrl));
 
-        mForgotPass.setOnClickListener(view -> forgotPassword());
+        mForgotPass.setOnClickListener(view -> showForgotPasswordDialog());
 
         mShowPassword.setOnCheckedChangeListener((buttonView, isChecked) -> {
             int cursorPosition = mPassword.getSelectionStart();
@@ -264,23 +263,24 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mLoginSyncButton.setSelected(syncEnabled);
     }
 
-    public void forgotPassword() {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+    @Override
+    public void showForgotPasswordDialog() {
         View view = getLayoutInflater().inflate(R.layout.alert_dialog_text_input_layout,null);
-        TextInputEditText emailTextField = view.findViewById(R.id.forgot_password_dialog_text_field);
-        alertDialog.setTitle(getString(R.string.forgot_dialog_title));
-        alertDialog.setView(view);
-        alertDialog.setPositiveButton(getString(R.string.forgot_password_dialog_positive_button), (dialog, which) -> {
+        TextInputEditText emailTextField = view.findViewById(R.id.ForgotPasswordDialogTextField);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle(getString(R.string.forgot_dialog_title));
+        builder.setView(view);
+        builder.setPositiveButton(getString(R.string.forgot_password_dialog_positive_button), (dialog, which) -> {
             if(emailTextField.getText() != null && emailTextField.getText().length() > 0) {
                 mPresenter.resetPassword(emailTextField.getText().toString());
-            }
-            else
-            {
-                showToastMessage(getString(R.string.email_text_field_empty_message));
+            } else {
+                ToastUtil.error(getString(R.string.email_text_field_empty_message));
             }
         }).setNegativeButton(R.string.dialog_button_cancel,((dialog, which) -> {
+            dialog.cancel();
         }));
-        alertDialog.create().show();
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 
@@ -300,12 +300,6 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     public void showLoadingAnimation() {
         mLoginFormView.setVisibility(View.GONE);
         mSpinner.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void showToastMessage(String message)
-    {
-        Toast.makeText(mOpenMRS, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override

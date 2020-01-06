@@ -27,7 +27,7 @@ public interface LoginContract {
 
     interface View extends BaseView<Presenter> {
 
-        void showToastMessage(String message);
+        void showForgotPasswordDialog();
 
         void hideSoftKeys();
 

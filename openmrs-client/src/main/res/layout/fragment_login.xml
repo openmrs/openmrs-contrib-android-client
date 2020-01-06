@@ -191,7 +191,7 @@
                     android:id="@+id/forgotPass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/unable_to_login"
+                    android:text="@string/forgot_password"
                     android:textColor="@color/neutral_green"
                     android:textSize="16sp" />
 

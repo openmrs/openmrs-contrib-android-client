@@ -14,7 +14,7 @@
 
 package org.openmrs.mobile.activities.login;
 
-import android.widget.Toast;
+import android.content.res.Resources;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.openmrs.mobile.R;
@@ -91,20 +91,22 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         // This method is intentionally empty
     }
 
-    public void resetPassword(final String email)
-    {
+    @Override
+    public void resetPassword(final String email) {
         restApi.resetPassword(email).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful())
-                    loginView.showToastMessage("Please check your inbox.");
-                else
-                    loginView.showToastMessage("Faced some error please try again.");
+                if (response.isSuccessful()) {
+                    String message = new StringBuilder().append(Resources.getSystem().getString(R.string.check_your_email_id)).append(email).toString();
+                    ToastUtil.success(message);
+                } else {
+                    ToastUtil.error(Resources.getSystem().getString(R.string.error_message));
+                }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                loginView.showToastMessage("Faced some error please try later.");
+                ToastUtil.error(t.getMessage());
             }
         });
     }

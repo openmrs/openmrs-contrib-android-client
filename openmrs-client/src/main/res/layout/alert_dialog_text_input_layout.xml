@@ -12,7 +12,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/forgot_password_dialog_text_field"
+            android:id="@+id/ForgotPasswordDialogTextField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_registered_email"

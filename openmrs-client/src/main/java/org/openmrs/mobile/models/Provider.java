@@ -15,6 +15,7 @@ import androidx.room.Entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,19 +46,21 @@ public class Provider extends Resource {
     @Expose
     private String resourceVersion;
 
+    @NotNull
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(@NotNull Long id) {
         this.id = id;
     }
 
+    @NotNull
     public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(String uuid) {
+    public void setUuid(@NotNull String uuid) {
         this.uuid = uuid;
     }
 

@@ -12,6 +12,7 @@ package org.openmrs.mobile.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.jetbrains.annotations.NotNull;
 
 public class Concept extends Resource{
 
@@ -29,11 +30,12 @@ public class Concept extends Resource{
     @Expose
     private ConceptClass conceptClass;
 
+    @NotNull
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(@NotNull Long id) {
         this.id = id;
     }
 

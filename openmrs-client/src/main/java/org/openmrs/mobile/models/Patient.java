@@ -15,6 +15,7 @@ import android.graphics.Bitmap;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.utilities.StringUtils;
 
 import java.io.Serializable;
@@ -49,6 +50,7 @@ public class Patient extends Person implements Serializable{
         this.identifiers = identifiers;
     }
 
+    @NotNull
     public Long getId() {
         return id;
     }
@@ -65,7 +67,7 @@ public class Patient extends Person implements Serializable{
         return patientDto;
     }
 
-    public void setId(Long id) {
+    public void setId(@NotNull Long id) {
         this.id = id;
     }
 

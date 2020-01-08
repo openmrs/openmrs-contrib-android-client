@@ -15,6 +15,7 @@
 package org.openmrs.mobile.models;
 
 import com.google.gson.annotations.Expose;
+import org.jetbrains.annotations.NotNull;
 
 public class Location extends Resource {
     @Expose
@@ -58,11 +59,12 @@ public class Location extends Resource {
         this.postalCode = postalCode;
     }
 
+    @NotNull
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(@NotNull Long id) {
         this.id = id;
     }
 

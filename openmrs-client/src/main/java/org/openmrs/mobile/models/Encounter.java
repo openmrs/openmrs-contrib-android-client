@@ -13,6 +13,7 @@ package org.openmrs.mobile.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.utilities.DateUtils;
 
 import java.io.Serializable;
@@ -60,6 +61,7 @@ public class Encounter extends Resource implements Serializable{
     private Long visitID;
     private String patientUUID;
 
+    @NotNull
     public Long getId() {
         return id;
     }
@@ -72,7 +74,7 @@ public class Encounter extends Resource implements Serializable{
         this.visitID = visitID;
     }
 
-    public void setId(Long id) {
+    public void setId(@NotNull Long id) {
         this.id = id;
     }
 
@@ -89,6 +91,7 @@ public class Encounter extends Resource implements Serializable{
      * @return
      *     The uuid
      */
+    @NotNull
     public String getUuid() {
         return uuid;
     }
@@ -98,7 +101,7 @@ public class Encounter extends Resource implements Serializable{
      * @param uuid
      *     The uuid
      */
-    public void setUuid(String uuid) {
+    public void setUuid(@NotNull String uuid) {
         this.uuid = uuid;
     }
 

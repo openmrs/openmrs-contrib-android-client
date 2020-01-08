@@ -15,6 +15,7 @@
 package org.openmrs.mobile.models;
 
 import com.google.gson.annotations.Expose;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -40,11 +41,12 @@ public class Visit extends Resource {
     @Expose
     private List<Encounter> encounters;
 
+    @NotNull
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(@NotNull Long id) {
         this.id = id;
     }
 

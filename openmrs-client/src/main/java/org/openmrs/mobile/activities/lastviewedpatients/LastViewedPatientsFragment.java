@@ -52,7 +52,6 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
     private TextView mEmptyList;
     private ProgressBar progressBar;
     private RecyclerView mPatientsRecyclerView;
-    private LinearLayoutManager linearLayoutManager;
     private LastViewedPatientRecyclerViewAdapter mAdapter;
     public SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -62,7 +61,7 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_last_viewed_patients, container, false);
         mPatientsRecyclerView = root.findViewById(R.id.lastViewedPatientRecyclerView);
-        linearLayoutManager = new LinearLayoutManager(this.getActivity());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
         mPatientsRecyclerView.setLayoutManager(linearLayoutManager);
         progressBar = root.findViewById(R.id.patientRecyclerViewLoading);
         mEmptyList = root.findViewById(R.id.emptyLastViewedPatientList);

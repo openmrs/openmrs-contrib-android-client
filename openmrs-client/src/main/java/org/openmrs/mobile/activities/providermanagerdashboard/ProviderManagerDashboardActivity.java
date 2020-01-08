@@ -26,7 +26,6 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.utilities.StringUtils;
 
 public class ProviderManagerDashboardActivity extends ACBaseActivity {
-    private ProviderManagerDashboardPresenter mPresenter;
     ProviderManagerDashboardFragment providerManagerDashboardFragment;
 
     private SearchView searchView;
@@ -53,13 +52,7 @@ public class ProviderManagerDashboardActivity extends ACBaseActivity {
                     providerManagerDashboardFragment, R.id.providerManagementContentFrame);
         }
 
-        if (savedInstanceState != null) {
-
-            mPresenter = new ProviderManagerDashboardPresenter(providerManagerDashboardFragment);
-        } else {
-            mPresenter = new ProviderManagerDashboardPresenter(providerManagerDashboardFragment);
-        }
-
+        ProviderManagerDashboardPresenter mPresenter = new ProviderManagerDashboardPresenter(providerManagerDashboardFragment);
     }
 
     @Override

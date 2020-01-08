@@ -50,7 +50,6 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
 
     private TextView conceptsInDbTextView;
     private ImageButton downloadConceptsButton;
-    private SwitchCompat darkModeSwitch;
 
     private View root;
 
@@ -183,7 +182,7 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
 
     @Override
     public void setDarkMode() {
-        darkModeSwitch = root.findViewById(R.id.frag_settings_dark_mode_switch);
+        SwitchCompat darkModeSwitch = root.findViewById(R.id.frag_settings_dark_mode_switch);
         darkModeSwitch.setChecked(mPresenter.isDarkModeActivated());
 
         darkModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {

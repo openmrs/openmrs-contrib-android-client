@@ -111,7 +111,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private TextInputLayout middleNameTIL;
     private TextInputLayout lastNameTIL;
     private TextInputLayout address1TIL;
-    private TextInputLayout countryTIL;
 
     private EditText edfname;
     private EditText edmname;
@@ -134,7 +133,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private TextView doberror;
     private TextView gendererror;
     private TextView addrerror;
-    private TextView countryerror;
 
     private Button datePicker;
 
@@ -144,7 +142,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     private FloatingActionButton capturePhotoBtn;
     private Bitmap patientPhoto = null;
-    private Bitmap resizedPatientPhoto = null;
     private String patientName;
     private File output = null;
     private final static int IMAGE_REQUEST = 1;
@@ -445,7 +442,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         doberror = v.findViewById(R.id.doberror);
         gendererror = v.findViewById(R.id.gendererror);
         addrerror = v.findViewById(R.id.addrerror);
-        countryerror = v.findViewById(R.id.countryerror);
 
         datePicker = v.findViewById(R.id.btn_datepicker);
         capturePhotoBtn = v.findViewById(R.id.capture_photo);
@@ -455,7 +451,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         middleNameTIL = v.findViewById(R.id.textInputLayoutMiddlename);
         lastNameTIL = v.findViewById(R.id.textInputLayoutSurname);
         address1TIL = v.findViewById(R.id.textInputLayoutAddress);
-        countryTIL = v.findViewById(R.id.textInputLayoutCountry);
     }
 
     private void fillFields(final Patient patient) {
@@ -493,7 +488,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
             if (patient.getPhoto() != null) {
                 patientPhoto = patient.getPhoto();
-                resizedPatientPhoto = patient.getResizedPhoto();
+                Bitmap resizedPatientPhoto = patient.getResizedPhoto();
                 patientImageView.setImageBitmap(resizedPatientPhoto);
             }
         }

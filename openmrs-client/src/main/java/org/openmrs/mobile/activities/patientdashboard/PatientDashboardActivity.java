@@ -33,6 +33,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
@@ -80,18 +81,18 @@ public class PatientDashboardActivity extends ACBaseActivity {
     }
 
     @Override
-    public void onAttachFragment(Fragment fragment) {
+    public void onAttachFragment(@NotNull Fragment fragment) {
         attachPresenterToFragment(fragment);
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NotNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mId);
     }
 
     @Override
-    public void onConfigurationChanged(final Configuration config) {
+    public void onConfigurationChanged(@NotNull final Configuration config) {
         super.onConfigurationChanged(config);
         TabUtil.setHasEmbeddedTabs(getSupportActionBar(), getWindowManager(), TabUtil.MIN_SCREEN_WIDTH_FOR_PATIENTDASHBOARDACTIVITY);
     }

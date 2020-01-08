@@ -20,6 +20,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.SparseArray;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.utilities.ActiveAndroid.ActiveAndroid;
 import org.openmrs.mobile.utilities.ActiveAndroid.Cache;
 import org.openmrs.mobile.utilities.ActiveAndroid.Configuration;
@@ -87,7 +88,7 @@ public class ContentProvider extends android.content.ContentProvider {
     // SQLite methods
 
     @Override
-    public String getType(Uri uri) {
+    public String getType(@NotNull Uri uri) {
         final int match = URI_MATCHER.match(uri);
 
         String cachedMimeType = sMimeTypeCache.get(match);
@@ -117,7 +118,7 @@ public class ContentProvider extends android.content.ContentProvider {
     }
 
     @Override
-    public Uri insert(Uri uri, ContentValues values) {
+    public Uri insert(@NotNull Uri uri, ContentValues values) {
         final Class<? extends Model> type = getModelType(uri);
         final Long id = Cache.openDatabase().insert(Cache.getTableName(type), null, values);
 
@@ -132,7 +133,7 @@ public class ContentProvider extends android.content.ContentProvider {
     }
 
     @Override
-    public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+    public int update(@NotNull Uri uri, ContentValues values, String selection, String[] selectionArgs) {
         final Class<? extends Model> type = getModelType(uri);
         final int count = Cache.openDatabase().update(Cache.getTableName(type), values, selection, selectionArgs);
 
@@ -142,7 +143,7 @@ public class ContentProvider extends android.content.ContentProvider {
     }
 
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NotNull Uri uri, String selection, String[] selectionArgs) {
         final Class<? extends Model> type = getModelType(uri);
         final int count = Cache.openDatabase().delete(Cache.getTableName(type), selection, selectionArgs);
 
@@ -152,7 +153,7 @@ public class ContentProvider extends android.content.ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+    public Cursor query(@NotNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         final Class<? extends Model> type = getModelType(uri);
         final Cursor cursor = Cache.openDatabase().query(
                 Cache.getTableName(type),

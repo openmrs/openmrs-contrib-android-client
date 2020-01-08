@@ -20,6 +20,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.utilities.ActiveAndroid.content.ContentProvider;
 import org.openmrs.mobile.utilities.ActiveAndroid.query.Delete;
 import org.openmrs.mobile.utilities.ActiveAndroid.query.Select;
@@ -262,6 +263,7 @@ public abstract class Model {
     // OVERRIDEN METHODS
     //////////////////////////////////////////////////////////////////////////////////////
 
+    @NotNull
     @Override
     public String toString() {
         return mTableInfo.getTableName() + "@" + getId();

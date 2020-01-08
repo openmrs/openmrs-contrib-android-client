@@ -192,7 +192,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mUrlInput = root.findViewById(R.id.textInputLayoutLoginURL);
 
 
-        mUsername = (TextInputEditText) root.findViewById(R.id.loginUsernameField);
+        mUsername = root.findViewById(R.id.loginUsernameField);
         mUsername.setText(OpenMRS.getInstance().getUsername());
         mUsernameInput = root.findViewById(R.id.textInputLayoutUsername);
 

@@ -123,7 +123,7 @@ public class ProviderManagerDashboardRecyclerViewAdapter extends
 
         public ProviderViewHolder(View itemView) {
             super(itemView);
-            mRowLayout = (CardView) itemView.findViewById(R.id.provider_management_foreground_card_view);
+            mRowLayout = itemView.findViewById(R.id.provider_management_foreground_card_view);
             mIdentifier = itemView.findViewById(R.id.providerManagementIdentifier);
             mName = itemView.findViewById(R.id.providerManagementName);
             deleteIv = itemView.findViewById(R.id.row_provider_management_delete_iv);

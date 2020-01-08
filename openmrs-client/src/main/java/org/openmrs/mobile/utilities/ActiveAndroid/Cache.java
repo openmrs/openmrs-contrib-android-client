@@ -71,7 +71,7 @@ public final class Cache {
         // actually used, however at this point it seems like the reflection
         // required would be too costly to be of any benefit. We'll just set a max
         // object size instead.
-        sEntities = new LruCache<String, Model>(configuration.getCacheSize());
+        sEntities = new LruCache<>(configuration.getCacheSize());
 
         openDatabase();
 

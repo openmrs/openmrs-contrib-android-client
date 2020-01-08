@@ -120,9 +120,9 @@ public final class SQLiteUtils {
     }
 
     public static ArrayList<String> createUniqueDefinition(TableInfo tableInfo) {
-        final ArrayList<String> definitions = new ArrayList<String>();
-        sUniqueGroupMap = new HashMap<String, List<String>>();
-        sOnUniqueConflictsMap = new HashMap<String, Column.ConflictAction>();
+        final ArrayList<String> definitions = new ArrayList<>();
+        sUniqueGroupMap = new HashMap<>();
+        sOnUniqueConflictsMap = new HashMap<>();
 
         for (Field field : tableInfo.getFields()) {
             createUniqueColumnDefinition(tableInfo, field);
@@ -168,7 +168,7 @@ public final class SQLiteUtils {
 
             List<String> list = sUniqueGroupMap.get(group);
             if (list == null) {
-                list = new ArrayList<String>();
+                list = new ArrayList<>();
             }
             list.add(name);
 
@@ -178,8 +178,8 @@ public final class SQLiteUtils {
     }
 
     public static String[] createIndexDefinition(TableInfo tableInfo) {
-        final ArrayList<String> definitions = new ArrayList<String>();
-        sIndexGroupMap = new HashMap<String, List<String>>();
+        final ArrayList<String> definitions = new ArrayList<>();
+        sIndexGroupMap = new HashMap<>();
 
         for (Field field : tableInfo.getFields()) {
             createIndexColumnDefinition(tableInfo, field);
@@ -207,7 +207,7 @@ public final class SQLiteUtils {
         }
 
         if (column.index()) {
-            List<String> list = new ArrayList<String>();
+            List<String> list = new ArrayList<>();
             list.add(name);
             sIndexGroupMap.put(name, list);
         }
@@ -219,7 +219,7 @@ public final class SQLiteUtils {
 
             List<String> list = sIndexGroupMap.get(group);
             if (list == null) {
-                list = new ArrayList<String>();
+                list = new ArrayList<>();
             }
 
             list.add(name);
@@ -228,7 +228,7 @@ public final class SQLiteUtils {
     }
 
     public static String createTableDefinition(TableInfo tableInfo) {
-        final ArrayList<String> definitions = new ArrayList<String>();
+        final ArrayList<String> definitions = new ArrayList<>();
 
         for (Field field : tableInfo.getFields()) {
             String definition = createColumnDefinition(tableInfo, field);
@@ -312,7 +312,7 @@ public final class SQLiteUtils {
     public static <T extends Model> List<T> processCursor(Class<? extends Model> type, Cursor cursor) {
         TableInfo tableInfo = Cache.getTableInfo(type);
         String idName = tableInfo.getIdName();
-        final List<T> entities = new ArrayList<T>();
+        final List<T> entities = new ArrayList<>();
 
         try {
             Constructor<?> entityConstructor = type.getConstructor();
@@ -322,7 +322,7 @@ public final class SQLiteUtils {
                  * Obtain the columns ordered to fix issue #106 (https://github.com/pardom/ActiveAndroid/issues/106)
                  * when the cursor have multiple columns with same name obtained from join tables.
                  */
-                List<String> columnsOrdered = new ArrayList<String>(Arrays.asList(cursor.getColumnNames()));
+                List<String> columnsOrdered = new ArrayList<>(Arrays.asList(cursor.getColumnNames()));
                 do {
                     Model entity = Cache.getEntity(type, cursor.getLong(columnsOrdered.indexOf(idName)));
                     if (entity == null) {
@@ -359,7 +359,7 @@ public final class SQLiteUtils {
     }
 
     public static List<String> lexSqlScript(String sqlScript) {
-        ArrayList<String> sl = new ArrayList<String>();
+        ArrayList<String> sl = new ArrayList<>();
         boolean inString = false, quoteNext = false;
         StringBuilder b = new StringBuilder(100);
 

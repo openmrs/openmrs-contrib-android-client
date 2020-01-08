@@ -12,7 +12,6 @@
     ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
     -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="org.openmrs.mobile">
 
     <uses-permission android:name="android.permission.INTERNET" />

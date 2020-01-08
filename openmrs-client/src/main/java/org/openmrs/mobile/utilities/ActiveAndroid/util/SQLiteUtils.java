@@ -17,7 +17,6 @@ package org.openmrs.mobile.utilities.ActiveAndroid.util;
  */
 
 import android.database.Cursor;
-import android.os.Build;
 import android.text.TextUtils;
 
 import org.openmrs.mobile.utilities.ActiveAndroid.Cache;

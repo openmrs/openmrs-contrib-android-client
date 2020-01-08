@@ -40,7 +40,7 @@ public final class SQLiteUtils {
     // ENUMERATIONS
     //////////////////////////////////////////////////////////////////////////////////////
 
-    public static final boolean FOREIGN_KEYS_SUPPORTED = Build.VERSION.SDK_INT >= Build.VERSION_CODES.FROYO;
+    public static final boolean FOREIGN_KEYS_SUPPORTED = true;
 
     //////////////////////////////////////////////////////////////////////////////////////
     // PUBLIC CONSTANTS

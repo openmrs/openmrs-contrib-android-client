@@ -21,7 +21,7 @@ public class VisitsEntity extends Resource {
 
     @NonNull
     @ColumnInfo(name = "start_date")
-    private boolean startDate;
+    private String startDate;
 
     @ColumnInfo(name = "stop_date")
     private String stopDate;
@@ -41,7 +41,7 @@ public class VisitsEntity extends Resource {
         this.visitPlace = visitPlace;
     }
 
-    public void setStartDate(boolean startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
@@ -61,11 +61,10 @@ public class VisitsEntity extends Resource {
         return visitPlace;
     }
 
-    public boolean isStartDate() {
-        return startDate;
-    }
-
     public String getStopDate() {
         return stopDate;
     }
+
+    @NonNull
+    public String getStartDate() { return startDate; }
 }

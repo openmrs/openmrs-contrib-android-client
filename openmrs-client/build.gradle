@@ -85,6 +85,7 @@ android {
         exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/rxjava.properties'
 
     }
 
@@ -125,7 +126,8 @@ dependencies {
             'org.mockito:mockito-core:2.8.9+',
             'com.google.dexmaker:dexmaker-mockito:1.2',
             'com.google.dexmaker:dexmaker:1.2',
-            'com.jayway.android.robotium:robotium-solo:4.2'
+            'com.jayway.android.robotium:robotium-solo:4.2',
+            'androidx.arch.core:core-testing:2.0.0'
     )
     androidTestImplementation files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
     debugImplementation 'com.github.jainsahab:Snooper-Okhttp:1.5.4'
@@ -166,6 +168,7 @@ dependencies {
             'org.powermock:powermock-api-mockito2:2.0.2',
             'org.powermock:powermock-module-junit4:2.0.2'
     )
+    implementation 'android.arch.persistence.room:rxjava2:1.1.1'
     testImplementation 'android.arch.core:core-testing:1.1.1'
     // Room components
     implementation "androidx.room:room-runtime:$room_version"

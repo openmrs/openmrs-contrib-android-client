@@ -23,6 +23,7 @@ OpenMRS Android Client
 				- [Demo Password: Admin123](#Demo-Password-Admin123)
 - [Releasing [Collaborators only]](#Releasing-Collaborators-only)
 - [Release Notes](#Release-Notes)
+        - [Version 2.8.1](#Version-281)
         - [Version 2.8.0](#Version-280)
 		- [Version 2.7.4](#Version-274)
 		- [Summary:](#Summary)
@@ -146,6 +147,16 @@ To release the application, make sure to do these steps **in order**:
 9. [Optional] Post a new Talk thread and describe what is changed or improved in the release.
 
 # Release Notes
+
+### Version 2.8.1
+### Summary:
+1. Fix window leakage error when viewing patient details
+2. Fix various performance issues
+3. Integrate leak canary for debug builds
+4. Add a splash screen
+5. Add intro slides for first time users
+6. Set a code style
+7. Fix broken unit tests
 
 ### Version 2.8.0
 ### Summary:

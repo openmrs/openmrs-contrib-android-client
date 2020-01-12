@@ -44,14 +44,13 @@ public class AuthenticateCheckService extends Service {
 
 
     private IBinder mBinder = new SocketServerBinder();
-    private Timer mTimer;
     private boolean mRunning = false;
     private OpenMRS mOpenMRS = OpenMRS.getInstance();
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mTimer = new Timer();
+        Timer mTimer = new Timer();
         mTimer.schedule(new TimerTask() {
             @Override
             public void run() {

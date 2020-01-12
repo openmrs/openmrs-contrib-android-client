@@ -105,7 +105,7 @@ public final class ToastUtil {
         toast.setDuration(duration);
         toast.show();
 
-        ToastThread thread = new ToastThread(bitmap, duration);
+        ToastThread thread = new ToastThread(duration);
         if (toastQueue.size() == 0) {
             thread.start();
         }
@@ -136,11 +136,9 @@ public final class ToastUtil {
     }
 
     private static class ToastThread extends Thread {
-        private Bitmap mBitmap;
         private int mDuration;
 
-        public ToastThread(Bitmap bitmap, int duration) {
-            mBitmap = bitmap;
+        public ToastThread(int duration) {
             mDuration = duration;
         }
 

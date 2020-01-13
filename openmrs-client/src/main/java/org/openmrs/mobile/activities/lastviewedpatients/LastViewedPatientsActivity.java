@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -63,7 +64,7 @@ public class LastViewedPatientsActivity extends ACBaseActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NotNull Bundle outState) {
         super.onSaveInstanceState(outState);
         String query = findPatientView.getQuery().toString();
         outState.putString(ApplicationConstants.BundleKeys.PATIENT_QUERY_BUNDLE, query);

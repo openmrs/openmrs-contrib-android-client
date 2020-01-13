@@ -1,5 +1,6 @@
 package org.openmrs.mobile.databases.tables;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.models.Concept;
@@ -60,6 +61,7 @@ public class ConceptTable extends Table<Concept> {
         openHelper.getWritableDatabase().delete(TABLE_NAME, Table.MasterColumn.ID + Table.MasterColumn.EQUALS + tableObjectID, null);
     }
 
+    @NotNull
     @Override
     public String toString() {
         return TABLE_NAME + createTableDefinition();

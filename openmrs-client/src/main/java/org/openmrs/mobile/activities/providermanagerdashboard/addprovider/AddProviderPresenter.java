@@ -28,7 +28,7 @@ public class AddProviderPresenter extends BasePresenter implements AddProviderCo
     @NotNull
     private final AddProviderContract.View addProviderView;
 
-    public AddProviderPresenter(AddProviderContract.View view) {
+    public AddProviderPresenter(@NotNull AddProviderContract.View view) {
         this.addProviderView = view;
         this.addProviderView.setPresenter(this);
     }

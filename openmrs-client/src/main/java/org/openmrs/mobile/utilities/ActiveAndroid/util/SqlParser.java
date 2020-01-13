@@ -33,7 +33,7 @@ public class SqlParser {
     public static List<String> parse(final InputStream stream) throws IOException {
 
         final BufferedInputStream buffer = new BufferedInputStream(stream);
-        final List<String> commands = new ArrayList<String>();
+        final List<String> commands = new ArrayList<>();
         final StringBuffer sb = new StringBuffer();
 
         try {

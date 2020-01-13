@@ -36,9 +36,9 @@ public class ContentProvider extends android.content.ContentProvider {
     //////////////////////////////////////////////////////////////////////////////////////
 
     private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
-    private static final SparseArray<Class<? extends Model>> TYPE_CODES = new SparseArray<Class<? extends Model>>();
+    private static final SparseArray<Class<? extends Model>> TYPE_CODES = new SparseArray<>();
     private static String sAuthority;
-    private static SparseArray<String> sMimeTypeCache = new SparseArray<String>();
+    private static SparseArray<String> sMimeTypeCache = new SparseArray<>();
 
     //////////////////////////////////////////////////////////////////////////////////////
     // PUBLIC METHODS
@@ -64,7 +64,7 @@ public class ContentProvider extends android.content.ContentProvider {
         ActiveAndroid.initialize(getConfiguration());
         sAuthority = getAuthority();
 
-        final List<TableInfo> tableInfos = new ArrayList<TableInfo>(Cache.getTableInfos());
+        final List<TableInfo> tableInfos = new ArrayList<>(Cache.getTableInfos());
         final int size = tableInfos.size();
         for (int i = 0; i < size; i++) {
             final TableInfo tableInfo = tableInfos.get(i);

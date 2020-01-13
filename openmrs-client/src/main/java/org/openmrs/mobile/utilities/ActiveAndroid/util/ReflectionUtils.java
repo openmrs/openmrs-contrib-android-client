@@ -68,15 +68,10 @@ public final class ReflectionUtils {
         Set<Field> declaredColumnFields = Collections.emptySet();
 
         if (ReflectionUtils.isSubclassOf(type, Model.class) || Model.class.equals(type)) {
-            declaredColumnFields = new LinkedHashSet<Field>();
+            declaredColumnFields = new LinkedHashSet<>();
 
             Field[] fields = type.getDeclaredFields();
-            Arrays.sort(fields, new Comparator<Field>() {
-                @Override
-                public int compare(Field field1, Field field2) {
-                    return field2.getName().compareTo(field1.getName());
-                }
-            });
+            Arrays.sort(fields, (field1, field2) -> field2.getName().compareTo(field1.getName()));
             for (Field field : fields) {
                 if (field.isAnnotationPresent(Column.class)) {
                     declaredColumnFields.add(field);

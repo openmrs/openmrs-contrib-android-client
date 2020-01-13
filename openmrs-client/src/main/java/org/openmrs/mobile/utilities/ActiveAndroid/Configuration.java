@@ -155,7 +155,7 @@ public class Configuration {
 
         public Builder addModelClass(Class<? extends Model> modelClass) {
             if (mModelClasses == null) {
-                mModelClasses = new ArrayList<Class<? extends Model>>();
+                mModelClasses = new ArrayList<>();
             }
 
             mModelClasses.add(modelClass);
@@ -164,7 +164,7 @@ public class Configuration {
 
         public Builder addModelClasses(Class<? extends Model>... modelClasses) {
             if (mModelClasses == null) {
-                mModelClasses = new ArrayList<Class<? extends Model>>();
+                mModelClasses = new ArrayList<>();
             }
 
             mModelClasses.addAll(Arrays.asList(modelClasses));
@@ -178,7 +178,7 @@ public class Configuration {
 
         public Builder addTypeSerializer(Class<? extends TypeSerializer> typeSerializer) {
             if (mTypeSerializers == null) {
-                mTypeSerializers = new ArrayList<Class<? extends TypeSerializer>>();
+                mTypeSerializers = new ArrayList<>();
             }
 
             mTypeSerializers.add(typeSerializer);
@@ -187,7 +187,7 @@ public class Configuration {
 
         public Builder addTypeSerializers(Class<? extends TypeSerializer>... typeSerializers) {
             if (mTypeSerializers == null) {
-                mTypeSerializers = new ArrayList<Class<? extends TypeSerializer>>();
+                mTypeSerializers = new ArrayList<>();
             }
 
             mTypeSerializers.addAll(Arrays.asList(typeSerializers));
@@ -280,7 +280,7 @@ public class Configuration {
         }
 
         private List<Class<? extends Model>> loadModelList(String[] models) {
-            final List<Class<? extends Model>> modelClasses = new ArrayList<Class<? extends Model>>();
+            final List<Class<? extends Model>> modelClasses = new ArrayList<>();
             final ClassLoader classLoader = mContext.getClass().getClassLoader();
             for (String model : models) {
                 try {
@@ -297,7 +297,7 @@ public class Configuration {
         }
 
         private List<Class<? extends TypeSerializer>> loadSerializerList(String[] serializers) {
-            final List<Class<? extends TypeSerializer>> typeSerializers = new ArrayList<Class<? extends TypeSerializer>>();
+            final List<Class<? extends TypeSerializer>> typeSerializers = new ArrayList<>();
             final ClassLoader classLoader = mContext.getClass().getClassLoader();
             for (String serializer : serializers) {
                 try {

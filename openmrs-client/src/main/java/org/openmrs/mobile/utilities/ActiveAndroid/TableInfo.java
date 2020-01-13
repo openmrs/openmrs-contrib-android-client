@@ -40,7 +40,7 @@ public final class TableInfo {
     private String mTableName;
     private String mIdName = Table.DEFAULT_ID_NAME;
 
-    private Map<Field, String> mColumnNames = new LinkedHashMap<Field, String>();
+    private Map<Field, String> mColumnNames = new LinkedHashMap<>();
 
     //////////////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTORS
@@ -62,7 +62,7 @@ public final class TableInfo {
         Field idField = getIdField(type);
         mColumnNames.put(idField, mIdName);
 
-        List<Field> fields = new LinkedList<Field>(ReflectionUtils.getDeclaredColumnFields(type));
+        List<Field> fields = new LinkedList<>(ReflectionUtils.getDeclaredColumnFields(type));
         Collections.reverse(fields);
 
         for (Field field : fields) {

@@ -86,7 +86,6 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/rxjava.properties'
-
     }
 
     compileOptions {
@@ -123,7 +122,7 @@ dependencies {
             'androidx.test.espresso:espresso-core:3.1.0',
             'androidx.test:rules:1.1.0-alpha4',
             'androidx.test:runner:1.1.0-alpha4',
-            'org.mockito:mockito-core:2.8.9+',
+            'org.mockito:mockito-core:2.8.9',
             'com.google.dexmaker:dexmaker-mockito:1.2',
             'com.google.dexmaker:dexmaker:1.2',
             'com.jayway.android.robotium:robotium-solo:4.2',

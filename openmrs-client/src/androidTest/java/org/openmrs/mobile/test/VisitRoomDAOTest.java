@@ -16,7 +16,6 @@ package org.openmrs.mobile.test;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
-import androidx.test.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.After;
 import org.junit.Assert;
@@ -28,7 +27,7 @@ import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.VisitsEntity;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
-
+import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 
 
@@ -42,28 +41,86 @@ public class VisitRoomDAOTest {
     private AppDatabase database;
 
     @Before
-    public void initDb() throws Exception {
+    public void initDb() {
         database = Room.inMemoryDatabaseBuilder(
-                InstrumentationRegistry.getTargetContext(),
+                androidx.test.platform.app.InstrumentationRegistry.getInstrumentation().getTargetContext(),
                 AppDatabase.class)
                 // allowing main thread queries, just for testing
                 .allowMainThreadQueries()
                 .build();
     }
 
-
     @Test
-    public void InsertLocation() {
+    public void updateVisit_shouldUpdateVisit(){
         VisitsEntity visitsEntity = new VisitsEntity();
+        createEntity(visitsEntity);
+        Long id = database.visitRoomDAO().saveVisit(visitsEntity);
+        VisitsEntity updatedVisitsEntity = new VisitsEntity();
         visitsEntity.setPatientKeyID(1);
         visitsEntity.setStartDate("startDate");
         visitsEntity.setStopDate("stopDate");
         visitsEntity.setVisitPlace("visitPlace");
         visitsEntity.setVisitType("visitType");
-        visitsEntity.setUuid("uuid");
+        visitsEntity.setUuid("updatedUuid");
+        database.visitRoomDAO().updateVisit(updatedVisitsEntity);
+        database.visitRoomDAO().getVisitByID(id).take(1).subscribe(new Subscriber<VisitsEntity>() {
+            @Override
+            public void onSubscribe(Subscription s) {
 
+            }
+
+            @Override
+            public void onNext(VisitsEntity visitsEntity) {
+                Assert.assertThat(visitsEntity.getUuid(), is("updateUuid"));
+            }
+
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Test
+    public void deleteVisit_shouldDeleteVisit(){
+        VisitsEntity visitsEntity = new VisitsEntity();
+        createEntity(visitsEntity);
+        database.visitRoomDAO().saveVisit(visitsEntity);
+        database.visitRoomDAO().deleteVisitsByPatientId(visitsEntity);
+        database.visitRoomDAO().getActiveVisits().take(1).subscribe(new Subscriber<List<VisitsEntity>>() {
+            @Override
+            public void onSubscribe(Subscription s) {
+
+            }
+
+            @Override
+            public void onNext(List<VisitsEntity> visitsEntities) {
+                Assert.assertThat(visitsEntities.size(), is(0));
+            }
+
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
+    }
+
+    @Test
+    public void saveVisit_ShouldSaveCorrectVisist() {
+        VisitsEntity visitsEntity = new VisitsEntity();
+        createEntity(visitsEntity);
         Long id  = database.visitRoomDAO().saveVisit(visitsEntity);
-
         database.visitRoomDAO().getVisitByID(id).take(1).subscribe(new Subscriber<VisitsEntity>() {
             @Override
             public void onSubscribe(Subscription s) {
@@ -88,9 +145,19 @@ public class VisitRoomDAOTest {
 
     }
 
+
     @After
-    public void closeDb() throws Exception {
+    public void closeDb(){
         database.close();
+    }
+
+    private void createEntity(VisitsEntity visitsEntity) {
+        visitsEntity.setPatientKeyID(1);
+        visitsEntity.setStartDate("startDate");
+        visitsEntity.setStopDate("stopDate");
+        visitsEntity.setVisitPlace("visitPlace");
+        visitsEntity.setVisitType("visitType");
+        visitsEntity.setUuid("uuid");
     }
 
 }

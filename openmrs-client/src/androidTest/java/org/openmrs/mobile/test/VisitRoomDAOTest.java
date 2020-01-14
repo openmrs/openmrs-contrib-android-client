@@ -86,35 +86,6 @@ public class VisitRoomDAOTest {
         });
     }
 
-    @Test
-    public void deleteVisit_shouldDeleteVisit(){
-        VisitsEntity visitsEntity = new VisitsEntity();
-        createEntity(visitsEntity);
-        database.visitRoomDAO().saveVisit(visitsEntity);
-        database.visitRoomDAO().deleteVisitsByPatientId(visitsEntity);
-        database.visitRoomDAO().getActiveVisits().take(1).subscribe(new Subscriber<List<VisitsEntity>>() {
-            @Override
-            public void onSubscribe(Subscription s) {
-
-            }
-
-            @Override
-            public void onNext(List<VisitsEntity> visitsEntities) {
-                Assert.assertThat(visitsEntities.size(), is(0));
-            }
-
-            @Override
-            public void onError(Throwable t) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
-
-    }
 
     @Test
     public void saveVisit_ShouldSaveCorrectVisist() {

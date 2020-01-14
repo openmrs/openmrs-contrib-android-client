@@ -275,8 +275,9 @@ Check this link for the manual: [Version 2.x](https://wiki.openmrs.org/download/
 This project is licensed under the OpenMRS Public License, see the [copyright](copyright/copyright) file for details.
 
 # Resources
-- JIRA https://issues.openmrs.org/browse/AC/?selectedTab=com.atlassian.jira.jira-projects-plugin:summary-panel 
-- Sprint board https://issues.openmrs.org/secure/RapidBoard.jspa?rapidView=60
-- Dashboard https://issues.openmrs.org/secure/Dashboard.jspa?selectPageId=12851
-- CI https://travis-ci.org/openmrs/openmrs-contrib-android-client
-- Google Play https://play.google.com/store/apps/details?id=org.openmrs.mobile
+- [Contribution Guidelines](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/CONTRIBUTING.md)
+- [JIRA](https://issues.openmrs.org/browse/AC/?selectedTab=com.atlassian.jira.jira-projects-plugin:summary-panel)
+- [Sprint board](https://issues.openmrs.org/secure/RapidBoard.jspa?rapidView=60)
+- [Dashboard](https://issues.openmrs.org/secure/Dashboard.jspa?selectPageId=12851)
+- [CI](https://travis-ci.org/openmrs/openmrs-contrib-android-client)
+- [Google Play](https://play.google.com/store/apps/details?id=org.openmrs.mobile)

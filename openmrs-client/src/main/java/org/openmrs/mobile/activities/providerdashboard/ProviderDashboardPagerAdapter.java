@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import org.jetbrains.annotations.NotNull;
 
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class ProviderDashboardPagerAdapter extends FragmentPagerAdapter {
         this.context = context;
     }
 
+    @NotNull
     @Override
     public Fragment getItem(int i) {
         return mFragmentList.get(i);

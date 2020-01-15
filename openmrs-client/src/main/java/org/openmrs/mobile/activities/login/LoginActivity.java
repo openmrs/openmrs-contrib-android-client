@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 
@@ -45,7 +46,7 @@ public class LoginActivity extends ACBaseActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NotNull Bundle outState) {
         super.onSaveInstanceState(outState);
     }
 

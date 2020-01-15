@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.databases.tables;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.models.Encounter;
@@ -87,6 +88,7 @@ public class EncounterTable extends Table<Encounter> {
         public static final String FORM_UUID = "form_uuid";
     }
 
+    @NotNull
     @Override
     public String toString() {
         return TABLE_NAME + createTableDefinition();

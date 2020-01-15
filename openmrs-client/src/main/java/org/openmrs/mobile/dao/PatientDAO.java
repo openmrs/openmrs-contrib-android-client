@@ -87,6 +87,9 @@ public class PatientDAO {
 
         PatientIdentifier patientIdentifier = new PatientIdentifier();
         patientIdentifier.setIdentifier(cursor.getString(cursor.getColumnIndex(PatientTable.Column.IDENTIFIER)));
+        if(patient.getIdentifiers() == null) {
+            patient.setIdentifiers(new ArrayList<>());
+        }
         patient.getIdentifiers().add(patientIdentifier);
 
         PersonName personName = new PersonName();

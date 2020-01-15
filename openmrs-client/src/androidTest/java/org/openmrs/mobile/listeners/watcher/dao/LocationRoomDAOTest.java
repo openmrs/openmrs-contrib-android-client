@@ -31,6 +31,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.LocationEntity;
+import org.openmrs.mobile.utilities.ActiveAndroid.util.Log;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -39,6 +40,9 @@ public class LocationRoomDAOTest {
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     private AppDatabase mDatabase;
+    private String TAG = "LocationRoomDAOTest";
+    private LocationEntity expectedLocationEntity = createDemoLocationEntity(10L, "name", "description", "display");
+    private LocationEntity expectedLocationEntity2 = createDemoLocationEntity(20L, "name2", "description2", "display2");
 
     @Before
     public void initDb() {
@@ -57,9 +61,7 @@ public class LocationRoomDAOTest {
 
     @Test
     public void saveLocation_ShouldSaveCorrectLocation() {
-        LocationEntity actualLocationEntity = createEntity(10L);
-
-        mDatabase.locationRoomDAO().saveLocation(actualLocationEntity);
+        mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity);
         mDatabase.locationRoomDAO().getLocations().subscribe(new SingleObserver<List<LocationEntity>>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -69,20 +71,20 @@ public class LocationRoomDAOTest {
             @Override
             public void onSuccess(List<LocationEntity> locationEntities) {
                 Assert.assertEquals(locationEntities.get(0).getName(), "name");
+                Assert.assertEquals(locationEntities.get(0).getDescription(), "description");
+                Assert.assertEquals(locationEntities.get(0).getDisplay(), "display");
             }
 
             @Override
             public void onError(Throwable e) {
-
+                Log.i(TAG, e.getMessage());
             }
         });
     }
 
     @Test
-    public void saveLocation_VerifySavedLocationByName() {
-        LocationEntity actualLocationEntity = createEntity(10L);
-
-        mDatabase.locationRoomDAO().saveLocation(actualLocationEntity);
+    public void findLocationByName_ShouldFindCorrectLocationByName() {
+        mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity);
         mDatabase.locationRoomDAO().findLocationByName("name").subscribe(new SingleObserver<LocationEntity>() {
             @Override
             public void onSubscribe(Disposable d) {
@@ -91,23 +93,20 @@ public class LocationRoomDAOTest {
 
             @Override
             public void onSuccess(LocationEntity locationEntity) {
-                Assert.assertEquals(actualLocationEntity, actualLocationEntity);
+                Assert.assertEquals(expectedLocationEntity, locationEntity);
             }
 
             @Override
             public void onError(Throwable e) {
-
+                Log.i(TAG, e.getMessage());
             }
         });
     }
 
     @Test
-    public void saveLocation_VerifyDeleteAllLoaction() {
-        LocationEntity actualLocationEntity1 = createEntity(10L);
-        LocationEntity actualLocationEntity2 = createEntity(20L);
-
-        mDatabase.locationRoomDAO().saveLocation(actualLocationEntity1);
-        mDatabase.locationRoomDAO().saveLocation(actualLocationEntity2);
+    public void deleteAllLocations_ShouldDeleteAllSavedLoactions() {
+        mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity);
+        mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity2);
 
         mDatabase.locationRoomDAO().deleteAllLocations();
 
@@ -124,18 +123,18 @@ public class LocationRoomDAOTest {
 
             @Override
             public void onError(Throwable e) {
-
+                Log.i(TAG, e.getMessage());
             }
         });
     }
 
-    private LocationEntity createEntity(Long id) {
+    private LocationEntity createDemoLocationEntity(Long id, String name, String description, String display) {
         LocationEntity entity = new LocationEntity();
         entity.setId(id);
-        entity.setDisplay("location");
+        entity.setDisplay(display);
         entity.setUuid("uuid");
-        entity.setName("name");
-        entity.setDescription("description");
+        entity.setName(name);
+        entity.setDescription(description);
         entity.setAddress_1("address 1");
         entity.setAddress_2("address2");
         entity.setCity("city");

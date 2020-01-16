@@ -59,7 +59,7 @@
                 android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <com.google.android.material.textfield.TextInputLayout
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -201,6 +201,18 @@
                     android:text="@string/unable_to_login"
                     android:textColor="@color/neutral_green"
                     android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/aboutUsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingTop="@dimen/small_heading"
+                    android:paddingBottom="@dimen/small_heading"
+                    android:text="@string/get_started_with_our_user_guide"
+                    android:textColor="@color/neutral_green"
+                    android:textSize="16sp" />
+
 
             </LinearLayout>
 

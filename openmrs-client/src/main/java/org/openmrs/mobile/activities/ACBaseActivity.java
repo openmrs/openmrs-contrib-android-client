@@ -161,9 +161,12 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.actionSettings:
-                Intent i = new Intent(this, SettingsActivity.class);
-                startActivity(i);
+                Intent settingsIntent = new Intent(this, SettingsActivity.class);
+                startActivity(settingsIntent);
                 return true;
+            case  R.id.actionContact:
+                Intent contactIntent = new Intent(this, ContactUsActivity.class);
+                startActivity(contactIntent);
             case R.id.actionSearchLocal:
                 return true;
             case R.id.actionLogout:

@@ -14,7 +14,12 @@
 
 package org.openmrs.mobile.activities.settings;
 
+import android.content.Intent;
+import android.view.View;
+import android.widget.LinearLayout;
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
+import org.openmrs.mobile.activities.ContactUsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.ConceptDAO;
@@ -94,4 +99,6 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
     public void setDarkMode(boolean darkMode) {
         ThemeUtils.setDarkMode(darkMode);
     }
+
 }
+

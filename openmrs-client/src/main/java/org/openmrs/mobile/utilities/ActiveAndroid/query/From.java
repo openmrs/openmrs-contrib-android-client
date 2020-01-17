@@ -43,11 +43,11 @@ public final class From implements Sqlable {
 
     public From(Class<? extends Model> table, Sqlable queryBase) {
         mType = table;
-        mJoins = new ArrayList<Join>();
+        mJoins = new ArrayList<>();
         mQueryBase = queryBase;
 
-        mJoins = new ArrayList<Join>();
-        mArguments = new ArrayList<Object>();
+        mJoins = new ArrayList<>();
+        mArguments = new ArrayList<>();
     }
 
     public From as(String alias) {

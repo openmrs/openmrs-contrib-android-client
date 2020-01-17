@@ -44,7 +44,7 @@ final class ModelInfo {
     // PRIVATE METHODS
     //////////////////////////////////////////////////////////////////////////////////////
 
-    private Map<Class<? extends Model>, TableInfo> mTableInfos = new HashMap<Class<? extends Model>, TableInfo>();
+    private Map<Class<? extends Model>, TableInfo> mTableInfos = new HashMap<>();
     private Map<Class<?>, TypeSerializer> mTypeSerializers = new HashMap<Class<?>, TypeSerializer>() {
         {
             put(Calendar.class, new CalendarSerializer());
@@ -122,7 +122,7 @@ final class ModelInfo {
     private void scanForModel(Context context) throws IOException {
         String packageName = context.getPackageName();
         String sourcePath = context.getApplicationInfo().sourceDir;
-        List<String> paths = new ArrayList<String>();
+        List<String> paths = new ArrayList<>();
 
         if (sourcePath != null && !(new File(sourcePath).isDirectory())) {
             DexFile dexfile = new DexFile(sourcePath);

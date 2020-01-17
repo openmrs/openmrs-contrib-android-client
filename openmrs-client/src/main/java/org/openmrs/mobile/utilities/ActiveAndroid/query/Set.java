@@ -35,16 +35,16 @@ public final class Set implements Sqlable {
         mUpdate = queryBase;
         mSet = set;
 
-        mSetArguments = new ArrayList<Object>();
-        mWhereArguments = new ArrayList<Object>();
+        mSetArguments = new ArrayList<>();
+        mWhereArguments = new ArrayList<>();
     }
 
     public Set(Update queryBase, String set, Object... args) {
         mUpdate = queryBase;
         mSet = set;
 
-        mSetArguments = new ArrayList<Object>();
-        mWhereArguments = new ArrayList<Object>();
+        mSetArguments = new ArrayList<>();
+        mWhereArguments = new ArrayList<>();
 
         mSetArguments.addAll(Arrays.asList(args));
     }

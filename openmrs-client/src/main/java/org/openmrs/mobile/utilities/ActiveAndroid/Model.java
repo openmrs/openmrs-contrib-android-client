@@ -168,7 +168,7 @@ public abstract class Model {
          * Obtain the columns ordered to fix issue #106 (https://github.com/pardom/ActiveAndroid/issues/106)
          * when the cursor have multiple columns with same name obtained from join tables.
          */
-        List<String> columnsOrdered = new ArrayList<String>(Arrays.asList(cursor.getColumnNames()));
+        List<String> columnsOrdered = new ArrayList<>(Arrays.asList(cursor.getColumnNames()));
         for (Field field : mTableInfo.getFields()) {
             final String fieldName = mTableInfo.getColumnName(field);
             Class<?> fieldType = field.getType();

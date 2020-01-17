@@ -76,7 +76,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="20dp"
-                        android:hint="Url Address"
+                        android:hint="@string/login_url_hint"
                         android:textColorHint="@color/green"
                         android:inputType="textUri"
                         android:maxLines="1"

@@ -164,11 +164,15 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivity(i);
                 return true;
+
             case R.id.actionSearchLocal:
                 return true;
             case R.id.actionLogout:
                 this.showLogoutDialog();
                 return true;
+            case  R.id.actionContact:
+                Intent contactIntent = new Intent(this, ContactUsActivity.class);
+                startActivity(contactIntent);
             case R.id.syncbutton:
                 boolean syncState = OpenMRS.getInstance().getSyncState();
                 if (syncState) {

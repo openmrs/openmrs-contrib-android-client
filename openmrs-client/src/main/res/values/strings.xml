@@ -13,345 +13,353 @@
   -->
 
 <resources>
-    <string name="app_name">OpenMRS Client</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_logout">Logout</string>
-    <string name="action_location">Location</string>
-    <string name="dbname">openmrs.db</string>
-    <string name="aadbname">aaopenmrs.db</string>
+	<string name="app_name">OpenMRS Client</string>
+	<string name="action_settings">Settings</string>
+	<string name="action_logout">Logout</string>
+	<string name="action_location">Location</string>
+	<string name="dbname">openmrs.db</string>
+	<string name="aadbname">aaopenmrs.db</string>
 
-    <string name="alphanumeric_postal_code">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 </string>
+	<string name="alphanumeric_postal_code">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 </string>
 
-    <!-- Login view -->
-    <string name="login_button">Login</string>
-    <string name="login_url_hint">URL address</string>
-    <string name="login_username_hint">Username</string>
-    <string name="login_password_hint">Password</string>
-    <string name="login_location_select">Session Location</string>
-    <string name="login_required">Required</string>
-    <string name="req_star"><![CDATA[<font color=\'#cc0029\'> * </font>]]></string>
-    <string name="warning_dialog_title">Warning</string>
-    <string name="warning_lost_data_dialog">Changing the URL, username or password will erase all the data. Are you sure?</string>
-    <string name="forgot_dialog_title">Unable to login?</string>
-    <string name="forgot_dialog_message">Please contact the system administrator</string>
-    <string name="forgot_button_ok">Dismiss</string>
-    <string name="login_offline">Offline</string>
-    <string name="login_online">Online</string>
+	<!-- Login view -->
+	<string name="login_button">Login</string>
+	<string name="login_url_hint">URL address</string>
+	<string name="login_username_hint">Username</string>
+	<string name="login_password_hint">Password</string>
+	<string name="login_location_select">Session Location</string>
+	<string name="login_required">Required</string>
+	<string name="req_star"><![CDATA[<font color=\'#cc0029\'> * </font>]]></string>
+	<string name="warning_dialog_title">Warning</string>
+	<string name="warning_lost_data_dialog">Changing the URL, username or password will erase all the data. Are you sure?</string>
+	<string name="forgot_dialog_title">Unable to login?</string>
+	<string name="forgot_dialog_message">Please contact the system administrator</string>
+	<string name="forgot_button_ok">Dismiss</string>
+	<string name="login_offline">Offline</string>
+	<string name="login_online">Online</string>
 
-    <string name="emptyerror">Required</string>
-    <string name="fname_empty_error">Given name required</string>
-    <string name="fname_invalid_error">Given name cannot contain symbols or numbers</string>
-    <string name="midname_invalid_error">Middle name cannot contain symbols or numbers</string>
-    <string name="lname_invalid_error">Family name cannot contain symbols or numbers</string>
-    <string name="dob_error">Date should be between %1$s and %2$s</string>
-    <string name="reg_firstname_hint">Given Name</string>
-    <string name="reg_midname_hint">Middle Name</string>
-    <string name="reg_surname_hint">Family Name</string>
-    <string name="reg_ques_name">What\'s the patient\'s name?</string>
-    <string name="reg_ques_gender">What\'s the patient\'s gender?</string>
-    <string name="reg_ques_dob">What\'s the patient\'s birth date?</string>
-    <string name="label_or">Or</string>
-    <string name="reg_ques_address">Address</string>
-    <string name="addr1_hint">Address</string>
-    <string name="addr2_hint">Address 2</string>
-    <string name="addr_invalid_error">Address cannot contain invalid characters</string>
-    <string name="atleastone">Fill at least one address field</string>
-    <string name="incorrect_country">Country name incorrect</string>
+	<string name="emptyerror">Required</string>
+	<string name="fname_empty_error">Given name required</string>
+	<string name="fname_invalid_error">Given name cannot contain symbols or numbers</string>
+	<string name="midname_invalid_error">Middle name cannot contain symbols or numbers</string>
+	<string name="lname_invalid_error">Family name cannot contain symbols or numbers</string>
+	<string name="dob_error">Date should be between %1$s and %2$s</string>
+	<string name="reg_firstname_hint">Given Name</string>
+	<string name="reg_midname_hint">Middle Name</string>
+	<string name="reg_surname_hint">Family Name</string>
+	<string name="reg_ques_name">What\'s the patient\'s name?</string>
+	<string name="reg_ques_gender">What\'s the patient\'s gender?</string>
+	<string name="reg_ques_dob">What\'s the patient\'s birth date?</string>
+	<string name="label_or">Or</string>
+	<string name="reg_ques_address">Address</string>
+	<string name="addr1_hint">Address</string>
+	<string name="addr2_hint">Address 2</string>
+	<string name="addr_invalid_error">Address cannot contain invalid characters</string>
+	<string name="atleastone">Fill at least one address field</string>
+	<string name="incorrect_country">Country name incorrect</string>
 
-    <string name="male">Male</string>
-    <string name="female">Female</string>
-    <string name="dob_hint">Date of Birth (format: dd/MM/yyyy)</string>
-    <string name="estyr">Estimated Years</string>
-    <string name="estmonth">Estimated Months</string>
+	<string name="male">Male</string>
+	<string name="female">Female</string>
+	<string name="dob_hint">Date of Birth (format: dd/MM/yyyy)</string>
+	<string name="estyr">Estimated Years</string>
+	<string name="estmonth">Estimated Months</string>
 
-    <!-- Offline Mode -->
-    <string name="offline_mode_unsupported_in_first_login">Offline mode is not supported during first login.Enable online mode and then try again.</string>
-    <string name="login_offline_toast_message">You are now in offline mode.</string>
+	<!-- Offline Mode -->
+	<string name="offline_mode_unsupported_in_first_login">Offline mode is not supported during first login.Enable online mode and then try again.</string>
+	<string name="login_offline_toast_message">You are now in offline mode.</string>
 
-    <!-- Authentication Failed dialog -->
-    <string name="auth_failed_dialog_message">Incorrect username or password entered. Please try again.</string>
-    <!-- No internet dialog -->
-    <string name="no_internet_conn_dialog_message">You have no internet connection.\nPlease check phone or Wi-Fi connection and signal strength and try again.</string>
+	<!-- Authentication Failed dialog -->
+	<string name="auth_failed_dialog_message">Incorrect username or password entered. Please try again.</string>
+	<!-- No internet dialog -->
+	<string name="no_internet_conn_dialog_message">You have no internet connection.\nPlease check phone or Wi-Fi connection and signal strength and try again.</string>
 
-    <!-- SimilarPatients dialog -->
-    <string name="similar_patients_dialog_title">Similar patients found</string>
+	<!-- SimilarPatients dialog -->
+	<string name="similar_patients_dialog_title">Similar patients found</string>
 
-    <!-- Logout dialog -->
-    <string name="logout_dialog_title">Logging out</string>
-    <string name="logout_dialog_message">Are you sure you want to logout from OpenMRS client?</string>
-    <string name="logout_dialog_button">Logout</string>
-    <!--Credentials Changed dialog-->
-    <string name="credentials_changed_dialog_title">Credentials changed</string>
-    <string name="credentials_changed_dialog_message">Your credentials have been changed in the web app. You are logged out automatically.</string>
-    <!-- End Visit dialog -->
-    <string name="end_visit_dialog_title">End Visit</string>
-    <string name="end_visit_dialog_message">Are you sure you want to end this visit?</string>
-    <!-- Start visit dialog -->
-    <string name="start_visit_dialog_title">Start Visit</string>
-    <string name="start_visit_dialog_message">Are you sure you want to start visit for %1$s now?</string>
-    <!-- Start visit dialog unsuccessful-->
-    <string name="start_visit_unsuccessful_dialog_title">Visit didn\'t start.</string>
-    <string name="start_visit_unsuccessful_dialog_message">There are already active visits of %1$s. Try synchronizing patient or closing previous visits</string>
+	<!-- Logout dialog -->
+	<string name="logout_dialog_title">Logging out</string>
+	<string name="logout_dialog_message">Are you sure you want to logout from OpenMRS client?</string>
+	<string name="logout_dialog_button">Logout</string>
+	<!--Credentials Changed dialog-->
+	<string name="credentials_changed_dialog_title">Credentials changed</string>
+	<string name="credentials_changed_dialog_message">Your credentials have been changed in the web app. You are logged out automatically.</string>
+	<!-- End Visit dialog -->
+	<string name="end_visit_dialog_title">End Visit</string>
+	<string name="end_visit_dialog_message">Are you sure you want to end this visit?</string>
+	<!-- Start visit dialog -->
+	<string name="start_visit_dialog_title">Start Visit</string>
+	<string name="start_visit_dialog_message">Are you sure you want to start visit for %1$s now?</string>
+	<!-- Start visit dialog unsuccessful-->
+	<string name="start_visit_unsuccessful_dialog_title">Visit didn\'t start.</string>
+	<string name="start_visit_unsuccessful_dialog_message">There are already active visits of %1$s. Try synchronizing patient or closing previous visits</string>
 
-    <!-- Delete patient dialog message -->
-    <string name="delete_patient_dialog_message">Are you sure you want to delete this patient?</string>
-    <!-- Location dialog  -->
-    <string name="location_dialog_title">Select Location</string>
-    <string name="location_dialog_current_location">Current Location: </string>
+	<!-- Delete patient dialog message -->
+	<string name="delete_patient_dialog_message">Are you sure you want to delete this patient?</string>
+	<!-- Location dialog  -->
+	<string name="location_dialog_title">Select Location</string>
+	<string name="location_dialog_current_location">Current Location: </string>
 
-    <!-- Buttons -->
-    <string name="dialog_button_cancel">Cancel</string>
-    <string name="dialog_button_ok">OK</string>
-    <string name="dialog_button_confirm">Confirm</string>
-    <string name="dialog_button_register_new">Register new</string>
-    <string name="dialog_button_merge">Merge</string>
-    <string name="action_next">Next</string>
-    <string name="dialog_button_select_location">Select Location</string>
+	<!-- Buttons -->
+	<string name="dialog_button_cancel">Cancel</string>
+	<string name="dialog_button_ok">OK</string>
+	<string name="dialog_button_confirm">Confirm</string>
+	<string name="dialog_button_register_new">Register new</string>
+	<string name="dialog_button_merge">Merge</string>
+	<string name="action_next">Next</string>
+	<string name="dialog_button_select_location">Select Location</string>
 
-    <!-- Settings activity -->
-    <string name="settings_logs">Logs</string>
-    <string name="settings_concepts_in_db">Concepts in DB:</string>
-    <string name="settings_no_concepts_toast">There are no concepts in DB!</string>
+	<!-- Settings activity -->
+	<string name="settings_logs">Logs</string>
+	<string name="settings_concepts_in_db">Concepts in DB:</string>
+	<string name="settings_no_concepts_toast">There are no concepts in DB!</string>
 
-    <!-- FindPatients activity -->
-    <string name="action_find_patients">Find Patients</string>
-    <string name="action_synced_patients">Synced Patients</string>
-    <string name="action_download_patients">Download Patients</string>
-    <string name="action_add_patients">Add Patients</string>
-    <string name="search_patient_hint">Patient name</string>
-    <string name="search_patient_no_results">No patients exist in database</string>
-    <string name="search_patient_no_result_for_query">No results found for query \"%1$s\"</string>
-    <string name="select_all_downloadable_data">Select all</string>
-    <string name="download_selected_patient_data">Download Patient Data</string>
-    <string name="download_multiple">Download Multiple</string>
+	<!-- FindPatients activity -->
+	<string name="action_find_patients">Find Patients</string>
+	<string name="action_synced_patients">Synced Patients</string>
+	<string name="action_download_patients">Download Patients</string>
+	<string name="action_add_patients">Add Patients</string>
+	<string name="search_patient_hint">Patient name</string>
+	<string name="search_patient_no_results">No patients exist in database</string>
+	<string name="search_patient_no_result_for_query">No results found for query \"%1$s\"</string>
+	<string name="select_all_downloadable_data">Select all</string>
+	<string name="download_selected_patient_data">Download Patient Data</string>
+	<string name="download_multiple">Download Multiple</string>
 
-    <!-- Dashboard Activity -->
-    <string name="dashboard_search_icon_label">Find Patients</string>
-    <string name="dashboard_registry_icon_label">Register Patient</string>
-    <string name="dashboard_visits_icon_label">Active Visits</string>
-    <string name="dashboard_forms_icon_label">Form Entry</string>
+	<!-- Dashboard Activity -->
+	<string name="dashboard_search_icon_label">Find Patients</string>
+	<string name="dashboard_registry_icon_label">Register Patient</string>
+	<string name="dashboard_visits_icon_label">Active Visits</string>
+	<string name="dashboard_forms_icon_label">Form Entry</string>
 
-    <!-- row_find_synced_patients layout-->
-    <string name="find_patients_row_checkbox_download_label">Download</string>
+	<!-- row_find_synced_patients layout-->
+	<string name="find_patients_row_checkbox_download_label">Download</string>
 
-    <!-- Patient Dashboard Activity -->
-    <string name="action_synchronize_patients">Synchronizing patient</string>
-    <string name="action_update_patient_data">Update Patient</string>
-    <string name="synchronize_patient_successful">Successfully synchronized patient data.</string>
-    <string name="synchronize_patient_error">Synchronizing patient data was unsuccessful</string>
-    <string name="synchronize_patient_network_error">Cannot synchronize in offline mode</string>
-    <string name="get_patient_from_database_error">Failed to fetch patient from database</string>
-    <string name="action_start_visit">Start visit</string>
-    <string name="patient_scroll_tab_details_label">Details</string>
-    <string name="patient_scroll_tab_diagnosis_label">Diagnosis</string>
-    <string name="patient_scroll_tab_visits_label">Visits</string>
-    <string name="patient_scroll_tab_vitals_label">Vitals</string>
-    <string name="patient_scroll_tab_charts_label">Charts</string>
-    <string name="download_started">"Downloading…"</string>
-    <string name="action_starting_visit">"Starting Visit"</string>
+	<!-- Patient Dashboard Activity -->
+	<string name="action_synchronize_patients">Synchronizing patient</string>
+	<string name="action_update_patient_data">Update Patient</string>
+	<string name="synchronize_patient_successful">Successfully synchronized patient data.</string>
+	<string name="synchronize_patient_error">Synchronizing patient data was unsuccessful</string>
+	<string name="synchronize_patient_network_error">Cannot synchronize in offline mode</string>
+	<string name="get_patient_from_database_error">Failed to fetch patient from database</string>
+	<string name="action_start_visit">Start visit</string>
+	<string name="patient_scroll_tab_details_label">Details</string>
+	<string name="patient_scroll_tab_diagnosis_label">Diagnosis</string>
+	<string name="patient_scroll_tab_visits_label">Visits</string>
+	<string name="patient_scroll_tab_vitals_label">Vitals</string>
+	<string name="patient_scroll_tab_charts_label">Charts</string>
+	<string name="download_started">"Downloading…"</string>
+	<string name="action_starting_visit">"Starting Visit"</string>
 
-    <!-- fragment_patient_details layout -->
-    <string name="patient_identifier"># %1$s</string>
-    <string name="patient_details_photo_label">Photo</string>
-    <string name="patient_details_birth_date_label">Birth date</string>
-    <string name="patient_contact_info_label">Contact Information</string>
-    <string name="patient_address_label">Address</string>
-    <string name="patient_city_label">City</string>
-    <string name="patient_postal_label">Postal Code</string>
-    <string name="patient_state_label">State</string>
-    <string name="patient_country_label">Country</string>
-    <string name="date_picker_title">Select Date of Birth</string>
+	<!-- fragment_patient_details layout -->
+	<string name="patient_identifier"># %1$s</string>
+	<string name="patient_details_photo_label">Photo</string>
+	<string name="patient_details_birth_date_label">Birth date</string>
+	<string name="patient_contact_info_label">Contact Information</string>
+	<string name="patient_address_label">Address</string>
+	<string name="patient_city_label">City</string>
+	<string name="patient_postal_label">Postal Code</string>
+	<string name="patient_state_label">State</string>
+	<string name="patient_country_label">Country</string>
+	<string name="date_picker_title">Select Date of Birth</string>
 
-    <!-- Find Active visit activity -->
-    <string name="action_active_visits">Active Visits</string>
-    <string name="action_form_entry">Form Entry</string>
-    <string name="action_find_visits">Find Active Visits</string>
-    <string name="search_visits_no_results">No visits in database</string>
+	<!-- Find Active visit activity -->
+	<string name="action_active_visits">Active Visits</string>
+	<string name="action_form_entry">Form Entry</string>
+	<string name="action_find_visits">Find Active Visits</string>
+	<string name="search_visits_no_results">No visits in database</string>
 
-    <!-- ACBase activity -->
-    <string name="error_email_subject_app_crashed">OpenMRS android client crashed</string>
-    <string name="choose_a_email_client">Choose an Email client :</string>
-    <string name="no_internet_connection_message">No internet connection</string>
+	<!-- ACBase activity -->
+	<string name="error_email_subject_app_crashed">OpenMRS android client crashed</string>
+	<string name="choose_a_email_client">Choose an Email client :</string>
+	<string name="no_internet_connection_message">No internet connection</string>
 
-    <!-- Patient Service Activity-->
-    <string name="activity_no_internet_connection">No internet connection. Patient Registration data is saved locally </string>
-    <string name="activity_sync_after_connection">and will sync when internet connection is restored. </string>
+	<!-- Patient Service Activity-->
+	<string name="activity_no_internet_connection">No internet connection. Patient Registration data is saved locally </string>
+	<string name="activity_sync_after_connection">and will sync when internet connection is restored. </string>
 
-    <!-- Patients Vitals Fragment -->
-    <string name="form_error">This form is not supported</string>
+	<!-- Patients Vitals Fragment -->
+	<string name="form_error">This form is not supported</string>
 
-    <!-- fragment_patient_visits layout -->
-    <string name="active_visit_label">Active visit</string>
-    <string name="past_visit_label">Past visit</string>
-    <string name="visit_in">in %1$s</string>
+	<!-- fragment_patient_visits layout -->
+	<string name="active_visit_label">Active visit</string>
+	<string name="past_visit_label">Past visit</string>
+	<string name="visit_in">in %1$s</string>
 
-    <!-- fragment_patient_vitals layout -->
-    <string name="last_vitals_label">Last Vitals: </string>
-    <string name="last_vitals_none_label">None</string>
+	<!-- fragment_patient_vitals layout -->
+	<string name="last_vitals_label">Last Vitals: </string>
+	<string name="last_vitals_none_label">None</string>
 
-    <!-- fragment_patient_diagnosis layout -->
-    <string name="empty_diagnoses_list">Patient has no diagnoses yet.</string>
-    <string name="diagnosis_note_label">Text of encounter note</string>
+	<!-- fragment_patient_diagnosis layout -->
+	<string name="empty_diagnoses_list">Patient has no diagnoses yet.</string>
+	<string name="diagnosis_note_label">Text of encounter note</string>
 
-    <!--fragment_vitals_charts_layout-->
-    <string name="list_vital_selector_show">show chart</string>
-    <string name="list_vital_selector_hide">hide chart</string>
+	<!--fragment_vitals_charts_layout-->
+	<string name="list_vital_selector_show">show chart</string>
+	<string name="list_vital_selector_hide">hide chart</string>
 
-    <!--fragment_patient_charts layout-->
-    <string name="no_vitals_recorded">No vitals recorded</string>
+	<!--fragment_patient_charts layout-->
+	<string name="no_vitals_recorded">No vitals recorded</string>
 
-    <!-- Visit dashboard activity -->
-    <string name="action_end_visit">End Visit</string>
-    <string name="visit_dashboard_label">Encounters</string>
-    <string name="list_visit_selector_show">show details</string>
-    <string name="list_visit_selector_hide">hide details</string>
-    <string name="list_item_encounter_no_notes">No notes for this encounter.</string>
-    <string name="visit_exp_list_empty">Visit has no encounters yet.</string>
+	<!-- Visit dashboard activity -->
+	<string name="action_end_visit">End Visit</string>
+	<string name="visit_dashboard_label">Encounters</string>
+	<string name="list_visit_selector_show">show details</string>
+	<string name="list_visit_selector_hide">hide details</string>
+	<string name="list_item_encounter_no_notes">No notes for this encounter.</string>
+	<string name="visit_exp_list_empty">Visit has no encounters yet.</string>
 
-    <!-- Capture Vitals activity -->
-    <string name="action_delete_patient">Delete Patient</string>
-    <string name="action_register_patient">Register Patient</string>
-    <string name="failed_to_open_vitals_form">An error occurred. Invalid or corrupted form file.</string>
-    <string name="active_visit_label_capture_vitals">On Visit</string>
+	<!-- Capture Vitals activity -->
+	<string name="action_delete_patient">Delete Patient</string>
+	<string name="action_register_patient">Register Patient</string>
+	<string name="failed_to_open_vitals_form">An error occurred. Invalid or corrupted form file.</string>
+	<string name="active_visit_label_capture_vitals">On Visit</string>
 
-    <!-- Form Entry Activity -->
-    <string name="empty_visits_list">Patient has no visits yet.</string>
-    <string name="title_activity_form_create">FormCreateActivity</string>
+	<!-- Form Entry Activity -->
+	<string name="empty_visits_list">Patient has no visits yet.</string>
+	<string name="title_activity_form_create">FormCreateActivity</string>
 
-    <!--Similar patient card strings-->
-    <string name="gender_hint">gender:</string>
-    <string name="birthdate_hint">birthdate:</string>
-    <string name="address_hint">address:</string>
-    <string name="demographics">Demographics</string>
-    <string name="unable_to_login">Unable to login?</string>
-    <string name="no_patient_selected">No patient selected</string>
+	<!--Similar patient card strings-->
+	<string name="gender_hint">gender:</string>
+	<string name="birthdate_hint">birthdate:</string>
+	<string name="address_hint">address:</string>
+	<string name="demographics">Demographics</string>
+	<string name="unable_to_login">Unable to login?</string>
+	<string name="no_patient_selected">No patient selected</string>
 
-    <!--Matching Patient Activity-->
-    <string name="matching_patients_toolbar_title">Merge Patients</string>
-    <string name="patient_registered_locally">Patient registered locally</string>
-    <string name="similar_patients_on_server">Similar patients exist on server</string>
-    <string name="registration_core_info">To use faster and more accurate similar patient resolution, upgrade the Registration Core Module to 1.7 or higher</string>
+	<!--Matching Patient Activity-->
+	<string name="matching_patients_toolbar_title">Merge Patients</string>
+	<string name="patient_registered_locally">Patient registered locally</string>
+	<string name="similar_patients_on_server">Similar patients exist on server</string>
+	<string name="registration_core_info">To use faster and more accurate similar patient resolution, upgrade the Registration Core Module to 1.7 or higher</string>
 
-    <!--ChartsView Activity-->
-    <string name="charts_view_toolbar_title">Charts View</string>
+	<!--ChartsView Activity-->
+	<string name="charts_view_toolbar_title">Charts View</string>
 
-    <!-- Image content description strings -->
-    <string name="openmrs_logo">OpenMRS logo</string>
-    <string name="toast_with_black_background">Toast with black background</string>
-    <string name="edit_form">Edit form</string>
-    <string name="patient_photo">Patient Photo</string>
-    <string name="take_a_photo">Take a photo</string>
+	<!-- Image content description strings -->
+	<string name="openmrs_logo">OpenMRS logo</string>
+	<string name="toast_with_black_background">Toast with black background</string>
+	<string name="edit_form">Edit form</string>
+	<string name="patient_photo">Patient Photo</string>
+	<string name="take_a_photo">Take a photo</string>
 
-    <!--Snackbar strings-->
-    <string name="snackbar_action_open">Open</string>
-    <string name="snackbar_info_patient_downloaded">Patient downloaded</string>
-    <string name="invalid_login_or_password_message">Invalid login or password, please try again.</string>
-    <string name="snackbar_no_internet_connection">No internet connection</string>
+	<!--Snackbar strings-->
+	<string name="snackbar_action_open">Open</string>
+	<string name="snackbar_info_patient_downloaded">Patient downloaded</string>
+	<string name="invalid_login_or_password_message">Invalid login or password, please try again.</string>
+	<string name="snackbar_no_internet_connection">No internet connection</string>
 
-    <!--permissions-->
-    <string name="permission_camera_rationale">Camera permission is needed to capture photo.</string>
-    <string name="permission_camera_denied">Camera permission was denied. Please consider granting it in order to access the camera</string>
-    <string name="permission_camera_neverask">Camera permission was denied with never ask again</string>
-    <string name="button_allow">Allow</string>
-    <string name="button_deny">Deny</string>
-    <string name="patient_not_yet_registered">Patient not yet registered, cannot create encounter.</string>
+	<!--permissions-->
+	<string name="permission_camera_rationale">Camera permission is needed to capture photo.</string>
+	<string name="permission_camera_denied">Camera permission was denied. Please consider granting it in order to access the camera</string>
+	<string name="permission_camera_neverask">Camera permission was denied with never ask again</string>
+	<string name="button_allow">Allow</string>
+	<string name="button_deny">Deny</string>
+	<string name="patient_not_yet_registered">Patient not yet registered, cannot create encounter.</string>
 
-    <!-- Layout strings -->
-    <string name="sync">Sync</string>
-    <string name="snackbar_edit">EDIT</string>
+	<!-- Layout strings -->
+	<string name="sync">Sync</string>
+	<string name="snackbar_edit">EDIT</string>
 
-    <!--Activity Logs-->
-    <string name="title_activity_logs">Logs</string>
+	<!--Activity Logs-->
+	<string name="title_activity_logs">Logs</string>
 
-    <!--App Crash Dialog-->
-    <string name="crash_dialog_title">Error occurred</string>
-    <string name="crash_dialog_message">Sorry ! An Unknown error has occurred. Please report the details to developers so that it can be resolved as soon as possible.</string>
-    <string name="crash_dialog_positive_button">Restart</string>
-    <string name="crash_dialog_negative_button">Close</string>
-    <string name="crash_dialog_neutral_button">Send report and restart</string>
+	<!--App Crash Dialog-->
+	<string name="crash_dialog_title">Error occurred</string>
+	<string name="crash_dialog_message">Sorry ! An Unknown error has occurred. Please report the details to developers so that it can be resolved as soon as possible.</string>
+	<string name="crash_dialog_positive_button">Restart</string>
+	<string name="crash_dialog_negative_button">Close</string>
+	<string name="crash_dialog_neutral_button">Send report and restart</string>
 
-    <!-- Syncbutton toasts -->
-    <string name="disconn_server">Disconnecting from server</string>
-    <string name="reconn_server">Reconnecting to server</string>
-    <string name="connected_to_server_message">You are now connected!</string>
+	<!-- Syncbutton toasts -->
+	<string name="disconn_server">Disconnecting from server</string>
+	<string name="reconn_server">Reconnecting to server</string>
+	<string name="connected_to_server_message">You are now connected!</string>
 
-    <string name="dialog_title_are_you_sure">Are you sure?</string>
-    <string name="dialog_message_data_lost">All patient information entered will be lost.</string>
-    <string name="dialog_button_stay">Stay</string>
-    <string name="dialog_button_leave">Leave</string>
-    <string name="snackbar_nonvisitting_patients">Vitals can only be captured for patients currently in a visit.</string>
+	<string name="dialog_title_are_you_sure">Are you sure?</string>
+	<string name="dialog_message_data_lost">All patient information entered will be lost.</string>
+	<string name="dialog_button_stay">Stay</string>
+	<string name="dialog_button_leave">Leave</string>
+	<string name="snackbar_nonvisitting_patients">Vitals can only be captured for patients currently in a visit.</string>
 
-    <string name="logout_success">Logged out successfully!</string>
-    <string name="url_privacy_policy">https://github.com/openmrs/openmrs-contrib-android-client/blob/master/privacy_policy.md#privacy-policy</string>
-    <string name="settings_privacy_policy">Privacy Policy</string>
+	<string name="logout_success">Logged out successfully!</string>
+	<string name="url_privacy_policy">https://github.com/openmrs/openmrs-contrib-android-client/blob/master/privacy_policy.md#privacy-policy</string>
+	<string name="settings_privacy_policy">Privacy Policy</string>
 
-    <string name="action_submit">Submit</string>
+	<string name="action_submit">Submit</string>
 
-    <string name="delete_multiple_patients">Delete Patients?</string>
-    <string name="delete_multiple_patients_dialog_message">Are you sure you want to delete these patients?</string>
-    <string name="multiple_patients_deleted">Patients Deleted Successfully</string>
-    <string name="location_successfully_updated">Location Updated Successfully</string>
-    <string name="delete">delete</string>
-    <string name="rate_us_string">Rate Us</string>
-    <string name="settings_frag_size">Size:</string>
-    <string name="frag_settings_build">Build:</string>
-    <string name="action_provider_management">Manage Providers</string>
-    <string name="unable_to_fetch_providers">Unable to fetch Providers!</string>
-    <string name="device_offline_msg">Device Offline!</string>
-    <string name="fab_label_update">Update</string>
-    <string name="fab_label_delete">Delete</string>
+	<string name="delete_multiple_patients">Delete Patients?</string>
+	<string name="delete_multiple_patients_dialog_message">Are you sure you want to delete these patients?</string>
+	<string name="multiple_patients_deleted">Patients Deleted Successfully</string>
+	<string name="location_successfully_updated">Location Updated Successfully</string>
+	<string name="delete">delete</string>
+	<string name="rate_us_string">Rate Us</string>
+	<string name="settings_frag_size">Size:</string>
+	<string name="frag_settings_build">Build:</string>
+	<string name="action_provider_management">Manage Providers</string>
+	<string name="unable_to_fetch_providers">Unable to fetch Providers!</string>
+	<string name="device_offline_msg">Device Offline!</string>
+	<string name="fab_label_update">Update</string>
+	<string name="fab_label_delete">Delete</string>
 
-    <!-- Provider Management -->
-    <string name="provider_manager">Provider Manager</string>
-    <string name="action_find_providers">Find Providers</string>
-    <string name="delete_provider_success_msg">Successfully deleted the provider!</string>
-    <string name="delete_provider_no_network_msg">Cannot delete providers when offline!</string>
-    <string name="delete_provider_failure_msg">Failed to delete provider.</string>
-    <string name="firstname_hint">First Name</string>
-    <string name="lastname_hint">Last Name</string>
-    <string name="identifier_hint">Identifier</string>
-    <string name="identifier_description">* Identifier can be anything. Eg. Doctor, Nurse, Clerk, etc</string>
-    <string name="add_provider_no_network_msg">Cannot add provider when offline.</string>
-    <string name="add_provider_success_msg">Successfully added provider.</string>
-    <string name="add_provider_failure_msg">Failed to add provider.</string>
-    <string name="edit_provider_no_network_msg">Cannot edit provider when offline.</string>
-    <string name="edit_provider_success_msg">Successfully edited provider.</string>
-    <string name="edit_provider_failure_msg">Failed to edit provider.</string>
-    <string name="title_provider_info">Provider Info</string>
-    <string name="dialog_provider_retired">Provider will be retired.</string>
-    <string name="title_dialog_matching_provider">Found Similar Providers</string>
-    <string name="dialog_matching_provider_positive_btn">Create Anyway</string>
-    <string name="label_dark_mode">Dark Mode (Experimental)</string>
-    <string name="provider_tab_title">Providers</string>
-    <string name="patients_tab_title">Patients</string>
-    <string name="failed_provider_details">Failed to get Provider details!</string>
-    <string name="retry_action">Retry</string>
-    <!--activity_provider_dashboard  -->
-    <string name="surgeon">Surgeon</string>
-    <!--fragment_patient_relationship-->
-    <string name="provider_patient">Provider - Patient Relationship</string>
-    <!--row_provider_details-->
-    <string name="jake_smith">Jake Smith</string>
-    <string name="doctor">Doctor</string>
-    <!--fragment_provider_relationship-->
-    <string name="provider_provider">Provider - Provider Relationship</string>
+	<!-- Provider Management -->
+	<string name="provider_manager">Provider Manager</string>
+	<string name="action_find_providers">Find Providers</string>
+	<string name="delete_provider_success_msg">Successfully deleted the provider!</string>
+	<string name="delete_provider_no_network_msg">Cannot delete providers when offline!</string>
+	<string name="delete_provider_failure_msg">Failed to delete provider.</string>
+	<string name="firstname_hint">First Name</string>
+	<string name="lastname_hint">Last Name</string>
+	<string name="identifier_hint">Identifier</string>
+	<string name="identifier_description">* Identifier can be anything. Eg. Doctor, Nurse, Clerk, etc</string>
+	<string name="add_provider_no_network_msg">Cannot add provider when offline.</string>
+	<string name="add_provider_success_msg">Successfully added provider.</string>
+	<string name="add_provider_failure_msg">Failed to add provider.</string>
+	<string name="edit_provider_no_network_msg">Cannot edit provider when offline.</string>
+	<string name="edit_provider_success_msg">Successfully edited provider.</string>
+	<string name="edit_provider_failure_msg">Failed to edit provider.</string>
+	<string name="title_provider_info">Provider Info</string>
+	<string name="dialog_provider_retired">Provider will be retired.</string>
+	<string name="title_dialog_matching_provider">Found Similar Providers</string>
+	<string name="dialog_matching_provider_positive_btn">Create Anyway</string>
+	<string name="label_dark_mode">Dark Mode (Experimental)</string>
+	<string name="provider_tab_title">Providers</string>
+	<string name="patients_tab_title">Patients</string>
+	<string name="failed_provider_details">Failed to get Provider details!</string>
+	<string name="retry_action">Retry</string>
+	<!--activity_provider_dashboard  -->
+	<string name="surgeon">Surgeon</string>
+	<!--fragment_patient_relationship-->
+	<string name="provider_patient">Provider - Patient Relationship</string>
+	<!--row_provider_details-->
+	<string name="jake_smith">Jake Smith</string>
+	<string name="doctor">Doctor</string>
+	<!--fragment_provider_relationship-->
+	<string name="provider_provider">Provider - Provider Relationship</string>
 
-    <!-- introduction Activity -->
-    <string name="intro_welcome">Welcome</string>
-    <string name="intro_register">Register Patients</string>
-    <string name="intro_find">Find Patients</string>
-    <string name="intro_monitor">Monitor Visits</string>
-    <string name="intro_manage">Manage Providers</string>
-    <string name="intro_location">Location</string>
-    <string name="intro_settings">Settings</string>
+	<!-- introduction Activity -->
+	<string name="intro_welcome">Welcome</string>
+	<string name="intro_register">Register Patients</string>
+	<string name="intro_find">Find Patients</string>
+	<string name="intro_monitor">Monitor Visits</string>
+	<string name="intro_manage">Manage Providers</string>
+	<string name="intro_location">Location</string>
+	<string name="intro_settings">Settings</string>
 
-    <string name="intro_welcome_desc">The global OpenMRS community works together to build the world\'s leading open source electronic medical record system.</string>
-    <string name="intro_register_desc">Register new patients to our server.</string>
-    <string name="intro_find_desc">You can find and monitor those patients.</string>
-    <string name="intro_monitor_desc">We help you monitor patient visits too.</string>
-    <string name="intro_manage_desc">You can manage providers using our app.</string>
-    <string name="intro_location_desc">You can change your location at a simple click.</string>
-    <string name="intro_settings_desc">Try out our dark mode feature.\nExciting? Let\'s get started.</string>
+	<string name="intro_welcome_desc">The global OpenMRS community works together to build the world\'s leading open source electronic medical record system.</string>
+	<string name="intro_register_desc">Register new patients to our server.</string>
+	<string name="intro_find_desc">You can find and monitor those patients.</string>
+	<string name="intro_monitor_desc">We help you monitor patient visits too.</string>
+	<string name="intro_manage_desc">You can manage providers using our app.</string>
+	<string name="intro_location_desc">You can change your location at a simple click.</string>
+	<string name="intro_settings_desc">Try out our dark mode feature.\nExciting? Let\'s get started.</string>
+	<string name="string_contact_us">Contact Us</string>
+
+	<!-- Contact Us Activity -->
+	<string name="string_contact_us_info">Our Team is happy to answer any questions. Fill out the form below to drop us an email and we\'ll try our best to reply as soon as possible.</string>
+	<string name="contact_us_name">Name</string>
+	<string name="contact_us_msg">Message</string>
+	<string name="contact_us_subject">Subject</string>
+	<string name="contact_us_btn">Send</string>
 
 
 </resources>

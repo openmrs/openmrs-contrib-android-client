@@ -269,7 +269,7 @@ To release the application, make sure to do these steps **in order**:
 
 
 # User Manual
-Check this link for the manual: [Version 2.x](https://wiki.openmrs.org/download/attachments/74252444/User%20Manual%202.0.pdf?version=1&modificationDate=1414759790000&api=v2)
+Check this link for the manual: [Version 3.x](https://wiki.openmrs.org/display/projects/OpenMRS+2.x+Android+Client?preview=/74252444/231310940/User%20manual%20for%20OpenMRS%20Android%20Client.pdf)
 
 # License
 This project is licensed under the OpenMRS Public License, see the [copyright](copyright/copyright) file for details.

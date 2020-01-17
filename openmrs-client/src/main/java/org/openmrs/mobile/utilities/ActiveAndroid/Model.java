@@ -20,6 +20,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.utilities.ActiveAndroid.content.ContentProvider;
 import org.openmrs.mobile.utilities.ActiveAndroid.query.Delete;
 import org.openmrs.mobile.utilities.ActiveAndroid.query.Select;
@@ -167,7 +168,7 @@ public abstract class Model {
          * Obtain the columns ordered to fix issue #106 (https://github.com/pardom/ActiveAndroid/issues/106)
          * when the cursor have multiple columns with same name obtained from join tables.
          */
-        List<String> columnsOrdered = new ArrayList<String>(Arrays.asList(cursor.getColumnNames()));
+        List<String> columnsOrdered = new ArrayList<>(Arrays.asList(cursor.getColumnNames()));
         for (Field field : mTableInfo.getFields()) {
             final String fieldName = mTableInfo.getColumnName(field);
             Class<?> fieldType = field.getType();
@@ -262,6 +263,7 @@ public abstract class Model {
     // OVERRIDEN METHODS
     //////////////////////////////////////////////////////////////////////////////////////
 
+    @NotNull
     @Override
     public String toString() {
         return mTableInfo.getTableName() + "@" + getId();

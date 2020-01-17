@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
@@ -139,7 +140,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+    public void onCreateOptionsMenu(@NotNull Menu menu, @NotNull MenuInflater menuInflater) {
         super.onCreateOptionsMenu(menu, menuInflater);
         mAddPatientMenuItem = menu.findItem(R.id.actionAddPatients);
         enableAddPatient(OpenMRS.getInstance().getSyncState());

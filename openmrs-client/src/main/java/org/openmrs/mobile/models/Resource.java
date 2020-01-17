@@ -60,6 +60,7 @@ public class Resource implements Serializable {
     /**
      * @return id
      */
+    @NotNull
     public Long getId() {
         return id;
     }
@@ -67,13 +68,14 @@ public class Resource implements Serializable {
     /**
      * @param id The id
      */
-    public void setId(Long id) {
+    public void setId(@NotNull Long id) {
         this.id = id;
     }
 
     /**
      * @return The uuid
      */
+    @NotNull
     public String getUuid() {
         return uuid;
     }
@@ -81,7 +83,7 @@ public class Resource implements Serializable {
     /**
      * @param uuid The uuid
      */
-    public void setUuid(String uuid) {
+    public void setUuid(@NotNull String uuid) {
         this.uuid = uuid;
     }
 

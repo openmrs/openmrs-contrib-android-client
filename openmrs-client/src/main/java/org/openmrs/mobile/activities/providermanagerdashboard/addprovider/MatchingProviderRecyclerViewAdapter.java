@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.FontsUtil;
@@ -25,6 +26,7 @@ public class MatchingProviderRecyclerViewAdapter extends
         this.mItems = items;
     }
 
+    @NotNull
     @Override
     public SimilarProviderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_matching_provider, parent, false);
@@ -33,7 +35,7 @@ public class MatchingProviderRecyclerViewAdapter extends
     }
 
     @Override
-    public void onBindViewHolder(SimilarProviderViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull SimilarProviderViewHolder holder, int position) {
         final Provider provider = mItems.get(position);
         if (provider.getPerson().getDisplay() != null) {
             holder.mName.setText(provider.getPerson().getDisplay());

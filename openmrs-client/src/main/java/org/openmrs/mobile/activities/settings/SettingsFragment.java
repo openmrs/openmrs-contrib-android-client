@@ -33,6 +33,7 @@ import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
+import org.openmrs.mobile.activities.ContactUsActivity;
 import org.openmrs.mobile.activities.logs.LogsActivity;
 import org.openmrs.mobile.services.ConceptDownloadService;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -112,8 +113,8 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
     @Override
     public void setUpConceptsView() {
         conceptsInDbTextView = root.findViewById(R.id.frag_settings_concepts_count_tv);
-
         downloadConceptsButton = root.findViewById(R.id.frag_settings_concepts_download_btn);
+        setUpcontactUsPage();
 
         downloadConceptsButton.setOnClickListener(view -> {
             downloadConceptsButton.setEnabled(false);
@@ -180,6 +181,7 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
 
     }
 
+
     @Override
     public void setDarkMode() {
         SwitchCompat darkModeSwitch = root.findViewById(R.id.frag_settings_dark_mode_switch);
@@ -190,6 +192,16 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
             getActivity().recreate();
         });
     }
+
+    @Override
+    public void setUpcontactUsPage() {
+        LinearLayout contactUsLL = root.findViewById(R.id.frag_settings_ccontact_us_ll);
+        contactUsLL.setOnClickListener(v -> {
+            Intent contactIntent = new Intent(getActivity(), ContactUsActivity.class);
+            startActivity(contactIntent);
+        });
+    }
+
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();

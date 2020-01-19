@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+    ~ The contents of this file are subject to the OpenMRS Public License
+    ~ Version 1.0 (the "License"); you may not use this file except in
+    ~ compliance with the License. You may obtain a copy of the License at
+    ~ http://license.openmrs.org
+    ~
+    ~ Software distributed under the License is distributed on an "AS IS"
+    ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+    ~ License for the specific language governing rights and limitations
+    ~ under the License.
+    ~
+    ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+    -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:background="#FFF">
+
+	<TextView
+			android:id="@+id/contact_tv"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="78dp"
+			android:gravity="center"
+			android:text="@string/string_contact_us"
+			android:textColor="@color/dark_teal"
+			android:textSize="45sp"
+			android:textStyle="bold" />
+
+	<TextView
+			android:id="@+id/prompt"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_below="@id/contact_tv"
+			android:layout_centerHorizontal="true"
+			android:layout_marginHorizontal="15dp"
+			android:layout_marginTop="15dp"
+			android:gravity="center"
+			android:text="@string/contact_us_msg"
+			android:textColor="@color/dark_teal"
+			android:textSize="19sp" />
+
+	<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_below="@id/prompt"
+			android:layout_marginHorizontal="25dp"
+			android:layout_marginTop="35dp"
+			android:orientation="vertical">
+
+		<com.google.android.material.textfield.TextInputLayout
+				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:hint="@string/contact_us_name"
+				android:textColorHint="@color/dark_teal"
+				app:boxStrokeColor="@color/dark_teal"
+				app:hintEnabled="true">
+
+			<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/name"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:inputType="textPersonName"
+					android:textColor="@color/light_teal" />
+
+		</com.google.android.material.textfield.TextInputLayout>
+
+		<com.google.android.material.textfield.TextInputLayout
+				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:hint="@string/contact_us_subject"
+				android:textColorHint="@color/dark_teal"
+				app:boxStrokeColor="@color/dark_teal"
+				app:hintEnabled="true">
+
+			<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/subject"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:inputType="text"
+					android:textColor="@color/light_teal" />
+
+		</com.google.android.material.textfield.TextInputLayout>
+
+		<com.google.android.material.textfield.TextInputLayout
+				style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:hint="@string/contact_us_content"
+				android:textColorHint="@color/dark_teal"
+				app:boxStrokeColor="@color/dark_teal"
+				app:hintEnabled="true">
+
+			<com.google.android.material.textfield.TextInputEditText
+					android:id="@+id/message"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:inputType="textMultiLine"
+					android:textColor="@color/light_teal" />
+
+		</com.google.android.material.textfield.TextInputLayout>
+
+		<com.google.android.material.button.MaterialButton
+				android:id="@+id/send"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginHorizontal="45dp"
+				android:layout_marginTop="35dp"
+				android:backgroundTint="@color/login_button"
+				android:padding="5dp"
+				android:text="@string/contact_us_btn"
+				android:textColor="#FFF"
+				android:textSize="25sp"
+				app:cornerRadius="5dp" />
+
+		<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="15dp"
+				android:text="OR"
+				android:textAlignment="center"
+				android:textSize="27dp" />
+
+		<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:orientation="horizontal">
+
+			<com.google.android.material.button.MaterialButton
+					android:id="@+id/forum_btn"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginEnd="5dp"
+					android:layout_marginRight="5dp"
+					android:layout_weight="1"
+					android:backgroundTint="@color/login_button"
+					android:text="Go To Forum" />
+
+			<com.google.android.material.button.MaterialButton
+					android:id="@+id/irc_btn"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:backgroundTint="@color/login_button"
+					android:text="Go To IRC" />
+		</LinearLayout>
+
+	</LinearLayout>
+
+</RelativeLayout>

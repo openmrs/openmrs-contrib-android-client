@@ -36,6 +36,7 @@ public abstract class ApplicationConstants {
     public static final int DEFAULT_BCRYPT_ROUND = 8;
     public static final int SPLASH_TIMER = 3500;
     public static final String PACKAGE_NAME = "org.openmrs.mobile";
+    public static final String USER_GUIDE = "https://openmrs.github.io/openmrs-android-client-user-guide/getting-started.html";
 
     public abstract static class OpenMRSSharedPreferenceNames {
         public static final String SHARED_PREFERENCES_NAME = "shared_preferences";

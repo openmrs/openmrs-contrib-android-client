@@ -15,9 +15,7 @@
 package org.openmrs.mobile.activities.dashboard;
 
 import android.os.Bundle;
-
-import androidx.appcompat.widget.Toolbar;
-
+import androidx.appcompat.app.ActionBar;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 
@@ -50,13 +48,14 @@ public class DashboardActivity extends ACBaseActivity {
         setContentView(R.layout.activity_dashboard);
 
         // Create toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        if (toolbar != null) {
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setIcon(R.drawable.openmrs_action_logo);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setElevation(0);
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setDisplayUseLogoEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setLogo(R.drawable.openmrs_action_logo);
         }
-
         // Create fragment
         DashboardFragment dashboardFragment =
                 (DashboardFragment) getSupportFragmentManager().findFragmentById(R.id.dashboardContentFrame);

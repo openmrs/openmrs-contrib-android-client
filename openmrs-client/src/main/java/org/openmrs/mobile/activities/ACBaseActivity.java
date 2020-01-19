@@ -109,6 +109,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        setupTheme();
         invalidateOptionsMenu();
         if (!(this instanceof LoginActivity) && !mAuthorizationManager.isUserLoggedIn()) {
             mAuthorizationManager.moveToLoginActivity();

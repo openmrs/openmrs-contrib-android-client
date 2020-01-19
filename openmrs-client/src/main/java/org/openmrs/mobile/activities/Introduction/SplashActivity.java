@@ -23,17 +23,21 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseActivity;
 
 import static org.openmrs.mobile.utilities.ApplicationConstants.SPLASH_TIMER;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends ACBaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        TextView name = findViewById(R.id.organization_name);
+        name.setText(R.string.app_name);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Animation move = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.splash_screen_logo_anim);
         ImageView logo = findViewById(R.id.logo);

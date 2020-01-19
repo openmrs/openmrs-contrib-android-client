@@ -18,6 +18,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -84,6 +85,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     private SparseArray<Bitmap> mBitmapCache;
     private ProgressBar mLocationLoadingProgressBar;
     private ImageView openMRSLogo;
+    private TextView mAboutUsTextView;
 
     private LoginValidatorWatcher loginValidatorWatcher;
 
@@ -187,6 +189,8 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
             }
             mPassword.setSelection(cursorPosition);
         });
+
+        mAboutUsTextView.setOnClickListener(view -> openAboutPage());
     }
 
     private void initViewFields(View root) {
@@ -219,6 +223,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mLocationLoadingProgressBar = root.findViewById(R.id.locationLoadingProgressBar);
         mPasswordInput.setHint(Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star)));
         mUsernameInput.setHint(Html.fromHtml(getString(R.string.login_username_hint) + getString(R.string.req_star)));
+        mAboutUsTextView = root.findViewById(R.id.aboutUsTextView);
     }
 
     @Override
@@ -247,6 +252,13 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         }
         InputMethodManager inputMethodManager = (InputMethodManager) this.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public void openAboutPage(){
+        String userGuideUrl = ApplicationConstants.USER_GUIDE;
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(userGuideUrl));
+        startActivity(intent);
     }
 
     private void setSyncButtonState(boolean syncEnabled) {

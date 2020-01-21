@@ -34,7 +34,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Openmrs">
 
-        <activity android:name=".activities.Introduction.SplashActivity"
+        <activity android:name=".activities.introduction.SplashActivity"
             android:theme="@style/AppTheme"
             android:noHistory="true">
             <intent-filter>
@@ -75,7 +75,7 @@
         </activity>
 
         <activity
-            android:name=".activities.Introduction.IntroActivity"
+            android:name=".activities.introduction.IntroActivity"
             android:label="Introduction"
             android:theme="@style/AppTheme">
         </activity>
@@ -108,6 +108,7 @@
             android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".activities.settings.SettingsActivity"
+            android:configChanges="locale|orientation"
             android:label="@string/action_settings"
             android:launchMode="singleTop"
             android:parentActivityName=".activities.dashboard.DashboardActivity"

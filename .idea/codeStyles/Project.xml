@@ -1,34 +1,9 @@
 <component name="ProjectCodeStyleConfiguration">
   <code_scheme name="Project" version="173">
-    <AndroidXmlCodeStyleSettings>
-      <option name="ARRANGEMENT_SETTINGS_MIGRATED_TO_191" value="true" />
-    </AndroidXmlCodeStyleSettings>
-    <JavaCodeStyleSettings>
-      <option name="PACKAGES_TO_USE_IMPORT_ON_DEMAND">
-        <value>
-          <package name="java.awt" withSubpackages="true" static="false" />
-          <package name="java.spring" withSubpackages="true" static="false" />
-        </value>
-      </option>
-      <option name="IMPORT_LAYOUT_TABLE">
-        <value>
-          <package name="" withSubpackages="true" static="true" />
-          <emptyLine />
-          <package name="javax" withSubpackages="true" static="false" />
-          <package name="java" withSubpackages="true" static="false" />
-          <emptyLine />
-          <package name="" withSubpackages="true" static="false" />
-        </value>
-      </option>
-    </JavaCodeStyleSettings>
-    <codeStyleSettings language="JAVA">
-      <option name="RIGHT_MARGIN" value="125" />
-    </codeStyleSettings>
+    <option name="RIGHT_MARGIN" value="125" />
     <codeStyleSettings language="XML">
-      <option name="RIGHT_MARGIN" value="125" />
       <indentOptions>
         <option name="CONTINUATION_INDENT_SIZE" value="4" />
-        <option name="USE_TAB_CHARACTER" value="true" />
       </indentOptions>
       <arrangement>
         <rules>

@@ -90,7 +90,7 @@ The coding conventions used by OpenMRS are outlined [here](https://wiki.openmrs.
 4. Now go to `Editor` > `Code Style` in the same window
 5. Select `Java` in the menu on left and update values in `Imports` as shown in below picture
 ![Java:Imports settings](https://wiki.openmrs.org/download/attachments/3346739/Screen%20Shot%202017-03-02%20at%2013.01.04.png?version=1&modificationDate=1488438089000&api=v2)
-5. Now select `XML` in the menu on left and update values in `Other` tab as shown in below picture
+5. Now select `XML` in the menu on left and update values in `Tabs and Indents` tab as shown in below picture
 ![XMLOther setings](https://wiki.openmrs.org/download/attachments/3346134/Screen%20Shot%202017-03-10%20at%2010.52.44.png?version=2&modificationDate=1489121590000&api=v2)
 
 

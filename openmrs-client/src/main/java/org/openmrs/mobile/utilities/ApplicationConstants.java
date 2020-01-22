@@ -124,4 +124,9 @@ public abstract class ApplicationConstants {
         public static final String KEY_DARK_MODE = "key_dark_mode";
     }
 
+    public abstract static class OpenMRSlanguage{
+        public static final String KEY_LANGUAGE_MODE = "key_language_mode";
+        public static final String[] LANGUAGE_LIST = {"en", "hi"};
+    }
+
 }

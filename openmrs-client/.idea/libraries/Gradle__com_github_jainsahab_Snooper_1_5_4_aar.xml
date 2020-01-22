@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.jainsahab:Snooper:1.5.4@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a4741c5242788cd706aff13c56338692/Snooper-1.5.4/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a4741c5242788cd706aff13c56338692/Snooper-1.5.4/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.jainsahab/Snooper/1.5.4/9ee27f12c17121b58b03be97f3f7eff70851355/Snooper-1.5.4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

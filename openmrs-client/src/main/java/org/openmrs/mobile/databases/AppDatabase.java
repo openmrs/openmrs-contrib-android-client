@@ -1,14 +1,14 @@
 package org.openmrs.mobile.databases;
 
 import android.content.Context;
-
 import org.openmrs.mobile.dao.LocationRoomDAO;
+import org.openmrs.mobile.dao.VisitRoomDAO;
 import org.openmrs.mobile.databases.entities.ConceptEntity;
 import org.openmrs.mobile.databases.entities.EncounterEntity;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.databases.entities.ObservationEntity;
 import org.openmrs.mobile.databases.entities.PatientEntity;
-import org.openmrs.mobile.databases.entities.VisitsEntity;
+import org.openmrs.mobile.databases.entities.VisitEntity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import androidx.room.Database;
@@ -19,13 +19,14 @@ import androidx.room.RoomDatabase;
         EncounterEntity.class,
         LocationEntity.class, ObservationEntity.class,
         PatientEntity.class,
-        VisitsEntity.class},
+        VisitEntity.class},
         version = 1)
 
 public abstract class AppDatabase extends RoomDatabase {
 
     //instantiate Dao's
     public abstract LocationRoomDAO locationRoomDAO();
+    public abstract VisitRoomDAO visitRoomDAO();
 
     private static volatile AppDatabase INSTANCE;
 

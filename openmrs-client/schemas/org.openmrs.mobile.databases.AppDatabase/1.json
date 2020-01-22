@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "3c8844be5033ba949bae73601623114c",
+    "identityHash": "421c4b7fae0b9b8a4c2a8bcafc844beb",
     "entities": [
       {
         "tableName": "concepts",
@@ -442,7 +442,7 @@
       },
       {
         "tableName": "visits",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `display` TEXT, `patient_id` INTEGER NOT NULL, `visit_type` TEXT, `visit_place` TEXT, `start_date` INTEGER NOT NULL, `stop_date` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `display` TEXT, `patient_id` INTEGER NOT NULL, `visit_type` TEXT, `visit_place` TEXT, `start_date` TEXT NOT NULL, `stop_date` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "uuid",
@@ -477,7 +477,7 @@
           {
             "fieldPath": "startDate",
             "columnName": "start_date",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -506,7 +506,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"3c8844be5033ba949bae73601623114c\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"421c4b7fae0b9b8a4c2a8bcafc844beb\")"
     ]
   }
 }

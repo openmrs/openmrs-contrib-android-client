@@ -7,11 +7,11 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 
 @Entity(tableName = "visits")
-public class VisitsEntity extends Resource {
+public class VisitEntity extends Resource {
 
     @NonNull
     @ColumnInfo(name = "patient_id")
-    private int patientKeyID;
+    private long patientKeyID;
 
     @ColumnInfo(name = "visit_type")
     private String visitType;
@@ -21,15 +21,15 @@ public class VisitsEntity extends Resource {
 
     @NonNull
     @ColumnInfo(name = "start_date")
-    private boolean startDate;
+    private String startDate;
 
     @ColumnInfo(name = "stop_date")
     private String stopDate;
 
-    public VisitsEntity() {
+    public VisitEntity() {
     }
 
-    public void setPatientKeyID(int patientKeyID) {
+    public void setPatientKeyID(long patientKeyID) {
         this.patientKeyID = patientKeyID;
     }
 
@@ -41,7 +41,7 @@ public class VisitsEntity extends Resource {
         this.visitPlace = visitPlace;
     }
 
-    public void setStartDate(boolean startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
@@ -49,7 +49,7 @@ public class VisitsEntity extends Resource {
         this.stopDate = stopDate;
     }
 
-    public int getPatientKeyID() {
+    public long getPatientKeyID() {
         return patientKeyID;
     }
 
@@ -61,7 +61,10 @@ public class VisitsEntity extends Resource {
         return visitPlace;
     }
 
-    public boolean isStartDate() {
+    @NonNull
+    public String getStartDate() { return startDate; }
+
+    public String isStartDate() {
         return startDate;
     }
 

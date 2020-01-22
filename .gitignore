@@ -7,6 +7,29 @@ pom.xml.releaseBackup
 pom.xml.next
 release.properties
 
+#Build Application Files
+*.apk
+*.ap_
+*.aab
+*.dex
+*.class
+
+#Generated Files
+bin/*
+gen/*
+out/*
+*.log
+.navigation/
+
+# Package Files #
+*.war
+*.ear
+
+#Keystore Files
+*.jks
+*.keystore
+.externalNativeBuild
+
 #android project
 build/*
 *.iml
@@ -16,11 +39,8 @@ tests/*.iml
 !.idea/codeStyles
 local.properties
 tests/bin/*
-bin/*
 tests/gen/*
-gen/*
 tests/out/*
-out/*
 /openmrs-client/build
 /openmrs-client/release
 /odkcollect/build
@@ -42,5 +62,6 @@ modules/odk.collect/android/*
 
 # Eclipse files
 *.project
+*.cproject
 *.classpath
 .settings/

@@ -35,6 +35,8 @@ public interface SettingsContract {
 
         void setDarkMode();
 
+        void setUpcontactUsPage();
+
         void chooseLanguage(String[] languageList);
     }
 

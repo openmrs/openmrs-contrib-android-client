@@ -41,6 +41,8 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
+import org.openmrs.mobile.activities.contactus.ContactUsActivity;
+import org.openmrs.mobile.activities.contactus.ContactUsActivity;
 import org.openmrs.mobile.activities.logs.LogsActivity;
 import org.openmrs.mobile.services.ConceptDownloadService;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -124,6 +126,8 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
 
         Button applyChangesButton = root.findViewById(R.id.frag_settings_apply_language);
 
+        setUpcontactUsPage();
+
         applyChangesButton.setOnClickListener(v -> getActivity().recreate());
 
         downloadConceptsButton.setOnClickListener(view -> {
@@ -199,6 +203,15 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
         darkModeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             mPresenter.setDarkMode(isChecked);
             getActivity().recreate();
+        });
+    }
+
+    @Override
+    public void setUpcontactUsPage() {
+        LinearLayout contactUsLL = root.findViewById(R.id.frag_settings_contact_us_ll);
+        contactUsLL.setOnClickListener(v -> {
+            Intent contactIntent = new Intent(getActivity(), ContactUsActivity.class);
+            startActivity(contactIntent);
         });
     }
 

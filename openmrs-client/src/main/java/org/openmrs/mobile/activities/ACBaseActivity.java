@@ -40,6 +40,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.contactus.ContactUsActivity;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
@@ -172,6 +173,9 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 Intent i = new Intent(this, SettingsActivity.class);
                 startActivity(i);
                 return true;
+            case  R.id.actionContact:
+                Intent contactIntent = new Intent(this, ContactUsActivity.class);
+                startActivity(contactIntent);
             case R.id.actionSearchLocal:
                 return true;
             case R.id.actionLogout:

@@ -34,8 +34,14 @@
         android:title="@string/action_settings"
         app:showAsAction="never" />
     <item
+        android:id="@+id/actionContact"
+        android:orderInCategory="100"
+        android:title="@string/string_contact_us"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/actionLogout"
         android:orderInCategory="100"
         android:title="@string/action_logout"
         app:showAsAction="never" />
+
 </menu>

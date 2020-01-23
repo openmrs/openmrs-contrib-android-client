@@ -213,10 +213,6 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
         });
     }
 
-
-    public static SettingsFragment newInstance() {
-        return new SettingsFragment();
-
     public void chooseLanguage(String[] languageList) {
         spinner = root.findViewById(R.id.frag_settings_spinner);
 

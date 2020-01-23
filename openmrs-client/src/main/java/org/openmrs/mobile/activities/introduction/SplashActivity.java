@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.Introduction;
+package org.openmrs.mobile.activities.introduction;
 
 import android.content.Intent;
 import android.os.Bundle;

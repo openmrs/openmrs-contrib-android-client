@@ -36,6 +36,8 @@ public interface SettingsContract {
         void setDarkMode();
 
         void setUpcontactUsPage();
+
+        void chooseLanguage(String[] languageList);
     }
 
     interface Presenter extends BasePresenterContract {
@@ -47,6 +49,12 @@ public interface SettingsContract {
         boolean isDarkModeActivated();
 
         void setDarkMode(boolean darkMode);
+
+        void setLanguage(String lang);
+
+        String getLanguage();
+
+        int getLanguagePosition();
 
     }
 

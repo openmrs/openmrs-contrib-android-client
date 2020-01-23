@@ -14,33 +14,34 @@
 
 package org.openmrs.mobile.activities.settings;
 
+
 import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import org.openmrs.mobile.R;
+
+import java.io.File;
+
+import androidx.annotation.NonNull;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.activities.ContactUsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.ConceptDAO;
+import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.LanguageUtils;
 import org.openmrs.mobile.utilities.ThemeUtils;
-
-import java.io.File;
-
-import androidx.annotation.NonNull;
 
 public class SettingsPresenter extends BasePresenter implements SettingsContract.Presenter {
 
     private static final int ONE_KB = 1024;
-    private ConceptDAO conceptDAO;
-
     @NonNull
     private final SettingsContract.View mSettingsView;
-
     @NonNull
     private final OpenMRSLogger mOpenMRSLogger;
+    private ConceptDAO conceptDAO;
 
-    public SettingsPresenter(@NonNull SettingsContract.View view, @NonNull OpenMRSLogger logger ) {
+    public SettingsPresenter(@NonNull SettingsContract.View view, @NonNull OpenMRSLogger logger) {
         mSettingsView = view;
         mOpenMRSLogger = logger;
         conceptDAO = new ConceptDAO();
@@ -78,6 +79,7 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
         mSettingsView.addPrivacyPolicyInfo();
         mSettingsView.rateUs();
         mSettingsView.setDarkMode();
+        mSettingsView.chooseLanguage(ApplicationConstants.OpenMRSlanguage.LANGUAGE_LIST);
     }
 
     @Override
@@ -98,5 +100,28 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
     @Override
     public void setDarkMode(boolean darkMode) {
         ThemeUtils.setDarkMode(darkMode);
+    }
+
+    @Override
+    public String getLanguage() {
+        return LanguageUtils.getLanguage();
+    }
+
+    @Override
+    public void setLanguage(String lang) {
+        LanguageUtils.setLanguage(lang);
+    }
+
+    @Override
+    public int getLanguagePosition() {
+        String lang = LanguageUtils.getLanguage();
+        String[] languageList = ApplicationConstants.OpenMRSlanguage.LANGUAGE_LIST;
+        int i;
+        for (i = 0; i < languageList.length; i++) {
+            if (lang.equals(languageList[i])) {
+                return i;
+            }
+        }
+        return 0;
     }
 }

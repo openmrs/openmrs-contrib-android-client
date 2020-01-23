@@ -15,6 +15,8 @@
 
 package org.openmrs.mobile.activities.settings;
 
+import java.util.Objects;
+
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -27,10 +29,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.ContactUsActivity;
@@ -39,20 +47,19 @@ import org.openmrs.mobile.services.ConceptDownloadService;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-import java.util.Objects;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SwitchCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
 public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter> implements SettingsContract.View {
 
     private BroadcastReceiver bReceiver;
 
     private TextView conceptsInDbTextView;
     private ImageButton downloadConceptsButton;
+    private Spinner spinner;
 
     private View root;
+
+    public static SettingsFragment newInstance() {
+        return new SettingsFragment();
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -85,12 +92,12 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
 
     @Override
     public void setConceptsInDbText(String text) {
-        if(text.equals("0")){
+        if (text.equals("0")) {
             downloadConceptsButton.setEnabled(true);
             ToastUtil.showLongToast(getActivity(),
                     ToastUtil.ToastType.WARNING,
                     R.string.settings_no_concepts_toast);
-        }else{
+        } else {
             downloadConceptsButton.setEnabled(false);
         }
         conceptsInDbTextView.setText(text);
@@ -104,8 +111,8 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
 
         logsDesc1Tv.setText(logFilename);
         logsDesc2Tv.setText(getContext().getString(R.string.settings_frag_size) + logSize + "kB");
-        logsLl.setOnClickListener(view ->{
-            Intent i = new Intent(view.getContext() , LogsActivity.class);
+        logsLl.setOnClickListener(view -> {
+            Intent i = new Intent(view.getContext(), LogsActivity.class);
             startActivity(i);
         });
     }
@@ -115,6 +122,10 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
         conceptsInDbTextView = root.findViewById(R.id.frag_settings_concepts_count_tv);
         downloadConceptsButton = root.findViewById(R.id.frag_settings_concepts_download_btn);
         setUpcontactUsPage();
+
+        Button applyChangesButton = root.findViewById(R.id.frag_settings_apply_language);
+
+        applyChangesButton.setOnClickListener(v -> getActivity().recreate());
 
         downloadConceptsButton.setOnClickListener(view -> {
             downloadConceptsButton.setEnabled(false);
@@ -152,7 +163,7 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
     @Override
     public void addPrivacyPolicyInfo() {
         LinearLayout privacyPolicyTv = root.findViewById(R.id.frag_settings_privacy_policy_ll);
-        privacyPolicyTv.setOnClickListener(view ->{
+        privacyPolicyTv.setOnClickListener(view -> {
             Intent i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(view.getContext().getString(R.string.url_privacy_policy)));
             startActivity(i);
@@ -164,16 +175,16 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
         LinearLayout rateUsLL = root.findViewById(R.id.frag_settings_rate_us_ll);
         rateUsLL.setOnClickListener(v -> {
             Uri uri = Uri.parse("market://details?id=" + ApplicationConstants.PACKAGE_NAME);
-            Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 
             // Ignore Playstore backstack, on back press will take us back to our app
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
                     Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
                     Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
-            try{
+            try {
                 startActivity(intent);
-            }catch (ActivityNotFoundException e){
+            } catch (ActivityNotFoundException e) {
                 startActivity(new Intent(Intent.ACTION_VIEW,
                         Uri.parse("http://play.google.com/store/apps/details?id=" + ApplicationConstants.PACKAGE_NAME)));
             }
@@ -205,6 +216,25 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
+
+    public void chooseLanguage(String[] languageList) {
+        spinner = root.findViewById(R.id.frag_settings_spinner);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, languageList);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(mPresenter.getLanguagePosition());
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mPresenter.setLanguage(spinner.getSelectedItem().toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
 }

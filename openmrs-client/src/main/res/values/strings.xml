@@ -92,7 +92,7 @@
 	<!-- Start visit dialog unsuccessful-->
 	<string name="start_visit_unsuccessful_dialog_title">Visit didn\'t start.</string>
 	<string name="start_visit_unsuccessful_dialog_message">There are already active visits of %1$s. Try synchronizing patient or closing previous visits</string>
-
+  
 	<!-- Delete patient dialog message -->
 	<string name="delete_patient_dialog_message">Are you sure you want to delete this patient?</string>
 	<!-- Location dialog  -->
@@ -353,6 +353,8 @@
 	<string name="intro_location_desc">You can change your location at a simple click.</string>
 	<string name="intro_settings_desc">Try out our dark mode feature.\nExciting? Let\'s get started.</string>
 	<string name="get_started_with_our_user_guide">Get started with our user guide</string>
+  <string name="language">Language</string>
+  <string name="apply">Apply</string>
 
 	<!-- Contact Us Activity-->
 	<string name="string_contact_us">Contact Us</string>
@@ -367,6 +369,5 @@
 	<string name="contact_email_type">message/rfc822</string>
 	<string name="contact_forum_url">https://talk.openmrs.org/</string>
 	<string name="contact_irc_url">https://wiki.openmrs.org/display/IRC/Home</string>
-
-
-</resources>
+  
+	</resources>

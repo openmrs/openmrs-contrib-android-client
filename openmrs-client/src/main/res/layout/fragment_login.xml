@@ -185,7 +185,6 @@
 					android:layout_gravity="center_vertical|center_horizontal|center"
 					android:layout_marginTop="10dp"
 					android:layout_marginBottom="30dp"
-					android:backgroundTint="@color/green"
 					android:enabled="false"
 					android:gravity="center_vertical|center_horizontal"
 					android:text="@string/login_button" />

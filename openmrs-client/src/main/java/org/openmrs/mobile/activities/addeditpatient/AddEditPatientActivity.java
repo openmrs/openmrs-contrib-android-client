@@ -106,7 +106,7 @@ public class AddEditPatientActivity extends ACBaseActivity {
         alertDialogBuilder
                 .setMessage(R.string.dialog_message_data_lost)
                 .setCancelable(false)
-                .setPositiveButton(R.string.dialog_button_stay, (dialog, id) -> dialog.cancel())
+                .setNeutralButton(R.string.dialog_button_stay, (dialog, id) -> dialog.cancel())
                 .setNegativeButton(R.string.dialog_button_leave, (dialog, id) -> {
                     // Finish the activity
                     super.onBackPressed();

@@ -12,212 +12,216 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:focusable="true"
-		android:focusableInTouchMode="true"
-		android:orientation="vertical">
+    <ProgressBar
+        android:id="@+id/locationLoadingProgressBar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="-20dp"
+        android:indeterminate="true" />
+    <ImageView
+        android:id="@+id/openmrsLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/openmrs_logo"
+        android:visibility="gone"/>
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="-5dp"
+        android:layout_below="@id/openmrsLogo">
 
-		<ProgressBar
-			android:id="@+id/locationLoadingProgressBar"
-			style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:indeterminate="true" />
-
-		<ImageView
-			android:id="@+id/openmrsLogo"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_centerHorizontal="true"
-			android:layout_marginTop="50dp"
-			android:layout_marginBottom="50dp"
-			android:contentDescription="@string/openmrs_logo"
-			android:visibility="gone" />
-
-		<LinearLayout
-			android:layout_width="fill_parent"
-			android:layout_height="match_parent"
-			android:layout_below="@id/openmrsLogo"
-			android:layout_gravity="center"
-			android:layout_marginBottom="5dp"
-			android:gravity="center"
-			android:orientation="vertical">
-
-
-			<LinearLayout
-				android:id="@+id/loginFormView"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:gravity="center"
-				android:orientation="vertical"
-				android:visibility="gone">
-
-				<com.google.android.material.textfield.TextInputLayout
-					android:id="@+id/textInputLayoutLoginURL"
-					style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:layout_alignParentTop="true"
-					android:layout_centerVertical="true"
-					android:layout_marginHorizontal="25dp"
-					android:focusedByDefault="true">
-
-					<com.google.android.material.textfield.TextInputEditText
-						android:id="@+id/loginUrlField"
-						android:layout_width="fill_parent"
-						android:layout_height="wrap_content"
-						android:layout_marginBottom="20dp"
-						android:hint="Url Address"
-						android:inputType="textUri"
-						android:maxLines="1"
-						android:textColorHint="@color/green"
-						android:textSize="14sp"
-						android:textStyle="bold" />
-				</com.google.android.material.textfield.TextInputLayout>
-
-				<com.google.android.material.textfield.TextInputLayout
-					android:id="@+id/textInputLayoutUsername"
-					style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:layout_centerVertical="true"
-					android:layout_marginHorizontal="25dp"
-					android:layout_marginTop="-5dp">
-
-					<com.google.android.material.textfield.TextInputEditText
-						android:id="@+id/loginUsernameField"
-						android:layout_width="fill_parent"
-						android:layout_height="wrap_content"
-						android:focusable="true"
-						android:inputType="text"
-						android:maxLines="1" />
-				</com.google.android.material.textfield.TextInputLayout>
-
-				<RelativeLayout
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content">
-
-					<com.google.android.material.textfield.TextInputLayout
-						android:id="@+id/textInputLayoutPassword"
-						style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-						android:layout_width="fill_parent"
-						android:layout_height="wrap_content"
-						android:layout_alignParentTop="true"
-						android:layout_centerVertical="true"
-						android:layout_marginHorizontal="25dp"
-						android:layout_marginTop="10dp">
-
-						<com.google.android.material.textfield.TextInputEditText
-							android:id="@+id/loginPasswordField"
-							android:layout_width="fill_parent"
-							android:layout_height="wrap_content"
-							android:focusable="true"
-							android:inputType="textPassword|text"
-							android:maxLines="1" />
-					</com.google.android.material.textfield.TextInputLayout>
-
-					<CheckBox
-						android:id="@+id/checkboxShowPassword"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_alignEnd="@id/textInputLayoutPassword"
-						android:layout_alignRight="@id/textInputLayoutPassword"
-						android:layout_marginTop="30dp"
-						android:button="@drawable/showpassword_button_selector"
-						android:gravity="bottom"
-						android:paddingLeft="10dp"
-						android:paddingRight="10dp" />
-				</RelativeLayout>
-
-				<Spinner
-					android:id="@+id/locationSpinner"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginLeft="20dp"
-					android:layout_marginTop="10dp"
-					android:layout_marginRight="20dp" />
-
-				<TextView
-					android:id="@+id/loginRequiredLabel"
-					android:layout_width="fill_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginStart="18dp"
-					android:layout_marginLeft="18dp"
-					android:layout_marginTop="10dp"
-					android:gravity="start"
-					android:textSize="14sp" />
-
-				<LinearLayout
-					android:layout_width="wrap_content"
-					android:layout_height="match_parent"
-					android:layout_margin="5dp"
-					android:gravity="center"
-					android:orientation="horizontal">
-
-					<TextView
-						android:id="@+id/syncLabel"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_marginEnd="10dp"
-						android:layout_marginRight="10dp"
-						android:text="@string/login_offline" />
-
-					<androidx.appcompat.widget.AppCompatImageView
-						android:id="@+id/loginSyncButton"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:src="@drawable/sync_button_selector"
-						android:tint="@color/cardview_dark_background" />
-
-				</LinearLayout>
-
-				<com.google.android.material.button.MaterialButton
-					android:id="@+id/loginButton"
-					style="@style/loginButtonStyle"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center_vertical|center_horizontal|center"
-					android:layout_marginTop="10dp"
-					android:layout_marginBottom="30dp"
-					android:backgroundTint="@color/green"
-					android:enabled="false"
-					android:gravity="center_vertical|center_horizontal"
-					android:text="@string/login_button" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="vertical">
 
 
-				<TextView
-					android:id="@+id/forgotPass"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="@string/unable_to_login"
-					android:textColor="@color/neutral_green"
-					android:textSize="16sp" />
+            <LinearLayout
+                android:id="@+id/loginFormView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible">
 
-				<TextView
-					android:id="@+id/aboutUsTextView"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center_horizontal"
-					android:paddingTop="@dimen/small_heading"
-					android:paddingBottom="@dimen/small_heading"
-					android:text="@string/get_started_with_our_user_guide"
-					android:textColor="@color/neutral_green"
-					android:textSize="16sp" />
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/textInputLayoutLoginURL"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="25dp"
+                    android:layout_alignParentTop="true"
+                    android:focusedByDefault="true">
 
-			</LinearLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/loginUrlField"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:hint="@string/login_url_hint"
+                        android:textColorHint="@color/green"
+                        android:inputType="textUri"
+                        android:maxLines="1"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-			<ProgressBar
-				android:id="@+id/loginLoading"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:layout_marginBottom="10dp" />
-		</LinearLayout>
-	</RelativeLayout>
-</ScrollView>
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:id="@+id/textInputLayoutUsername"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="-5dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="25dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/loginUsernameField"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="true"
+                        android:inputType="text"
+                        android:maxLines="1" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:id="@+id/textInputLayoutPassword"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginHorizontal="25dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="10dp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/loginPasswordField"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="true"
+                            android:inputType="textPassword|text"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <CheckBox
+                        android:id="@+id/checkboxShowPassword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@id/textInputLayoutPassword"
+                        android:layout_alignRight="@id/textInputLayoutPassword"
+                        android:layout_marginTop="30dp"
+                        android:button="@drawable/showpassword_button_selector"
+                        android:gravity="bottom"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+                </RelativeLayout>
+
+                <Spinner
+                    android:id="@+id/locationSpinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp" />
+
+                <TextView
+                    android:id="@+id/loginRequiredLabel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="start"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/syncLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginRight="10dp"
+                        android:text="@string/login_offline" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/loginSyncButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/sync_button_selector"
+                        android:tint="@color/cardview_dark_background" />
+
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/loginButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal|center"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/green"
+                    android:enabled="false"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/login_button"
+                    style="@style/loginButtonStyle"/>
+
+
+                <TextView
+                    android:id="@+id/forgotPass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/unable_to_login"
+                    android:textColor="@color/neutral_green"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/aboutUsTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:paddingTop="@dimen/small_heading"
+                    android:paddingBottom="@dimen/small_heading"
+                    android:text="@string/get_started_with_our_user_guide"
+                    android:textColor="@color/neutral_green"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/loginLoading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

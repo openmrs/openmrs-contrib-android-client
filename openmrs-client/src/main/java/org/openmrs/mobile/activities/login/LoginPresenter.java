@@ -14,10 +14,6 @@
 
 package org.openmrs.mobile.activities.login;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import androidx.annotation.NonNull;
 import org.mindrot.jbcrypt.BCrypt;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
@@ -39,6 +35,11 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -93,12 +94,12 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         if (validateLoginFields(username, password, url)) {
             loginView.hideSoftKeys();
             if ((!mOpenMRS.getUsername().equals(ApplicationConstants.EMPTY_STRING) &&
-                    !mOpenMRS.getUsername().equals(username)) ||
-                    ((!mOpenMRS.getServerUrl().equals(ApplicationConstants.EMPTY_STRING) &&
-                            !mOpenMRS.getServerUrl().equals(oldUrl))) ||
-                    (!mOpenMRS.getHashedPassword().equals(ApplicationConstants.EMPTY_STRING) &&
-                            !BCrypt.checkpw(password, mOpenMRS.getHashedPassword())) ||
-                    mWipeRequired) {
+                 !mOpenMRS.getUsername().equals(username)) ||
+               ((!mOpenMRS.getServerUrl().equals(ApplicationConstants.EMPTY_STRING) &&
+                 !mOpenMRS.getServerUrl().equals(oldUrl))) ||
+               (!mOpenMRS.getHashedPassword().equals(ApplicationConstants.EMPTY_STRING) &&
+                 !BCrypt.checkpw(password, mOpenMRS.getHashedPassword())) ||
+               mWipeRequired) {
                 loginView.showWarningDialog();
             } else {
                 authenticateUser(username, password, url);
@@ -232,12 +233,14 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                         RestServiceBuilder.changeBaseUrl(url.trim());
                         mOpenMRS.setServerUrl(url);
                         loginView.initLoginForm(response.body().getResults(), url);
+                        loginView.showOpenMRSLogo();
                         loginView.startFormListService();
                         loginView.setLocationErrorOccurred(false);
                     } else {
                         loginView.showInvalidURLSnackbar("Failed to fetch server's locations");
                         loginView.setLocationErrorOccurred(true);
                         loginView.initLoginForm(new ArrayList<>(), url);
+                        loginView.showOpenMRSLogo();
                     }
                     loginView.hideUrlLoadingAnimation();
                 }
@@ -252,14 +255,13 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
             });
         } else {
             addSubscription(locationDAO.getLocations()
-                    .observeOn(AndroidSchedulers.mainThread())
+                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(locations -> {
                         if (locations.size() > 0) {
                             loginView.initLoginForm(locations, url);
                             loginView.setLocationErrorOccurred(false);
                         } else {
                             loginView.showToast("Network not available.", ToastUtil.ToastType.ERROR);
-                            loginView.showOpenMRSLogo();
                             loginView.setLocationErrorOccurred(true);
                         }
                         loginView.hideLoadingAnimation();
@@ -272,7 +274,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         return StringUtils.notEmpty(username) || StringUtils.notEmpty(password) || StringUtils.notEmpty(url);
     }
 
-    private void setData(String sessionToken, String url, String username, String password) {
+    private void setData(String sessionToken,String url, String username, String password) {
         mOpenMRS.setSessionToken(sessionToken);
         mOpenMRS.setServerUrl(url);
         mOpenMRS.setUsername(username);

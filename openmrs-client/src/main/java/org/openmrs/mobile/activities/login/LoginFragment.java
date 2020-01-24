@@ -14,9 +14,6 @@
 
 package org.openmrs.mobile.activities.login;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,19 +28,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatImageView;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.dashboard.DashboardActivity;
@@ -60,12 +58,15 @@ import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.URLValidator;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
+
 public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> implements LoginContract.View {
 
-    private static String mLastCorrectURL = "";
-    private static List<Location> mLocationsList;
-    final private String initialUrl = OpenMRS.getInstance().getServerUrl();
-    protected OpenMRS mOpenMRS = OpenMRS.getInstance();
     private View mRootView;
     private TextView mForgotPass;
     private TextInputEditText mUrl;
@@ -87,6 +88,12 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     private TextView mAboutUsTextView;
 
     private LoginValidatorWatcher loginValidatorWatcher;
+
+    private static String mLastCorrectURL = "";
+    private static List<Location> mLocationsList;
+    final private String initialUrl = OpenMRS.getInstance().getServerUrl();
+
+    protected OpenMRS mOpenMRS = OpenMRS.getInstance();
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
@@ -152,7 +159,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
             if (hasFocus) {
                 mUsernameInput.setHint(Html.fromHtml(getString(R.string.login_username_hint)));
             } else if (mUsername.getText().toString().equals("")) {
-                mUsernameInput.setHint(Html.fromHtml(getString(R.string.login_username_hint) + getString(R.string.req_star)));
+                mUsernameInput.setHint(Html.fromHtml(getString(R.string.login_username_hint)+ getString(R.string.req_star)));
                 mUsernameInput.setHintAnimationEnabled(true);
             }
         });
@@ -161,7 +168,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
             if (hasFocus) {
                 mPasswordInput.setHint(Html.fromHtml(getString(R.string.login_password_hint)));
             } else if (mPassword.getText().toString().equals("")) {
-                mPasswordInput.setHint(Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star)));
+                mPasswordInput.setHint(Html.fromHtml(getString(R.string.login_password_hint)+ getString(R.string.req_star)));
                 mPasswordInput.setHintAnimationEnabled(true);
             }
         });
@@ -304,7 +311,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
     @Override
     public void hideUrlLoadingAnimation() {
-        mLocationLoadingProgressBar.setVisibility(View.GONE);
+        mLocationLoadingProgressBar.setVisibility(View.INVISIBLE);
         mSpinner.setVisibility(View.GONE);
     }
 
@@ -347,7 +354,6 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mLoginButton.setEnabled(false);
         mSpinner.setVisibility(View.GONE);
         mLoginFormView.setVisibility(View.VISIBLE);
-        showOpenMRSLogo();
         if (locationsList.isEmpty()) {
             mDropdownLocation.setVisibility(View.GONE);
             mLoginButton.setEnabled(true);
@@ -449,8 +455,6 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
     public void showOpenMRSLogo() {
         openMRSLogo = mRootView.findViewById(R.id.openmrsLogo);
-        createImageBitmap(R.drawable.openmrs_logo, openMRSLogo.getLayoutParams());
-        openMRSLogo.setImageBitmap(mBitmapCache.get(R.drawable.openmrs_logo));
         openMRSLogo.setVisibility(View.VISIBLE);
     }
 

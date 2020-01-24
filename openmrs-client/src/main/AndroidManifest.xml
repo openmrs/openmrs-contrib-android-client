@@ -1,272 +1,258 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-    ~ The contents of this file are subject to the OpenMRS Public License
-    ~ Version 1.0 (the "License"); you may not use this file except in
-    ~ compliance with the License. You may obtain a copy of the License at
-    ~ http://license.openmrs.org
-    ~
-    ~ Software distributed under the License is distributed on an "AS IS"
-    ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
-    ~ License for the specific language governing rights and limitations
-    ~ under the License.
-    ~
-    ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
-    -->
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 	package="org.openmrs.mobile">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.CAMERA" />
 
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-    <uses-feature
-        android:name="android.hardware.camera.autofocus"
-        android:required="false" />
+	<uses-feature
+		android:name="android.hardware.camera"
+		android:required="false" />
+	<uses-feature
+		android:name="android.hardware.camera.autofocus"
+		android:required="false" />
 
-    <application
-        android:name=".application.OpenMRS"
-        android:allowBackup="true"
-        android:icon="@drawable/ic_openmrs"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.Openmrs">
+	<application
+		android:name=".application.OpenMRS"
+		android:allowBackup="true"
+		android:icon="@drawable/ic_openmrs"
+		android:label="@string/app_name"
+		android:supportsRtl="true"
+		android:theme="@style/Theme.Openmrs">
+		<activity
+			android:name=".activities.introduction.SplashActivity"
+			android:noHistory="true"
+			android:theme="@style/AppTheme">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
 
-        <activity android:name=".activities.introduction.SplashActivity"
-            android:theme="@style/AppTheme"
-            android:noHistory="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+		<meta-data
+			android:name="AA_DB_NAME"
+			android:value="@string/aadbname" />
+		<meta-data
+			android:name="AA_DB_VERSION"
+			android:value="@integer/aadbversion" />
+		<meta-data
+			android:name="AA_MODELS"
+			android:value="org.openmrs.mobile.models.Link, org.openmrs.mobile.models.FormResource, org.openmrs.mobile.models.EncounterType,             org.openmrs.mobile.models.Encountercreate, org.openmrs.mobile.models.Obscreate" />
+		<meta-data
+			android:name="buildVersion"
+			android:value="0" />
 
-        <meta-data
-            android:name="AA_DB_NAME"
-            android:value="@string/aadbname" />
-        <meta-data
-            android:name="AA_DB_VERSION"
-            android:value="@integer/aadbversion" />
-        <meta-data
-            android:name="AA_MODELS"
-            android:value="org.openmrs.mobile.models.Link, org.openmrs.mobile.models.FormResource, org.openmrs.mobile.models.EncounterType,
-            org.openmrs.mobile.models.Encountercreate, org.openmrs.mobile.models.Obscreate" />
-        <meta-data
-            android:name="buildVersion"
-            android:value="0" />
+		<receiver
+			android:name=".api.SyncStateReceiver"
+			android:exported="false">
+			<intent-filter>
+				<action android:name="org.openmrs.mobile.intent.action.SYNC_PATIENTS" />
+			</intent-filter>
+		</receiver>
 
-        <receiver
-            android:name=".api.SyncStateReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="org.openmrs.mobile.intent.action.SYNC_PATIENTS" />
-            </intent-filter>
-        </receiver>
+		<service android:name=".services.ConceptDownloadService" />
 
-        <service android:name=".services.ConceptDownloadService" />
+		<activity
+			android:name=".activities.dashboard.DashboardActivity"
+			android:label="@string/app_name"
+			android:theme="@style/AppThemeOrig"></activity>
+		<activity
+			android:name=".activities.introduction.IntroActivity"
+			android:label="Introduction"
+			android:theme="@style/AppTheme"></activity>
+		<activity
+			android:name=".activities.syncedpatients.SyncedPatientsActivity"
+			android:configChanges="keyboardHidden|screenSize"
+			android:label="@string/action_synced_patients"
+			android:launchMode="singleTop"
+			android:theme="@style/AppThemeOrig">
 
-        <activity
-            android:name=".activities.dashboard.DashboardActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppThemeOrig">
-        </activity>
+			<!-- Parent activity meta-data to support 4.0 and lower -->
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".activities.dashboard.DashboardActivity" />
+			<meta-data
+				android:name="android.app.searchable"
+				android:resource="@xml/searchable" />
 
-        <activity
-            android:name=".activities.introduction.IntroActivity"
-            android:label="Introduction"
-            android:theme="@style/AppTheme">
-        </activity>
+			<intent-filter>
+				<action android:name="android.intent.action.SEARCH" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name=".activities.login.LoginActivity"
+			android:label="@string/app_name"
+			android:launchMode="singleTop"
+			android:noHistory="true"
+			android:theme="@style/NoActionBarTheme"
+			android:windowSoftInputMode="adjustPan" />
+		<activity
+			android:name=".activities.settings.SettingsActivity"
+			android:configChanges="locale|orientation"
+			android:label="@string/action_settings"
+			android:launchMode="singleTop"
+			android:parentActivityName=".activities.dashboard.DashboardActivity"
+			android:theme="@style/AppThemeOrig" />
+		<activity
+			android:name=".activities.patientdashboard.PatientDashboardActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden"
+			android:theme="@style/AppThemeOrig">
 
-        <activity
-            android:name=".activities.syncedpatients.SyncedPatientsActivity"
-            android:configChanges="keyboardHidden|screenSize"
-            android:label="@string/action_synced_patients"
-            android:launchMode="singleTop"
-            android:theme="@style/AppThemeOrig">
+			<!-- Parent activity meta-data to support 4.0 and lower -->
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".activities.syncedpatients.SyncedPatientsActivity" />
+		</activity>
+		<activity
+			android:name=".activities.activevisits.ActiveVisitsActivity"
+			android:configChanges="keyboardHidden|screenSize"
+			android:label="@string/action_active_visits"
+			android:launchMode="singleTop"
+			android:theme="@style/AppThemeOrig">
 
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.dashboard.DashboardActivity" />
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
+			<!-- Parent activity meta-data to support 4.0 and lower -->
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".activities.dashboard.DashboardActivity" />
+			<meta-data
+				android:name="android.app.searchable"
+				android:resource="@xml/searchable" />
 
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".activities.login.LoginActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTop"
-            android:noHistory="true"
-            android:theme="@style/NoActionBarTheme"
-            android:windowSoftInputMode="adjustPan"/>
-        <activity
-            android:name=".activities.settings.SettingsActivity"
-            android:configChanges="locale|orientation"
-            android:label="@string/action_settings"
-            android:launchMode="singleTop"
-            android:parentActivityName=".activities.dashboard.DashboardActivity"
-            android:theme="@style/AppThemeOrig" />
-        <activity
-            android:name=".activities.patientdashboard.PatientDashboardActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:theme="@style/AppThemeOrig">
+			<intent-filter>
+				<action android:name="android.intent.action.SEARCH" />
+			</intent-filter>
+		</activity>
+		<activity
+			android:name=".activities.visitdashboard.VisitDashboardActivity"
+			android:label="@string/visit_dashboard_label"
+			android:launchMode="singleTop"
+			android:theme="@style/AppThemeOrig">
 
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.syncedpatients.SyncedPatientsActivity" />
-        </activity>
-        <activity
-            android:name=".activities.activevisits.ActiveVisitsActivity"
-            android:configChanges="keyboardHidden|screenSize"
-            android:label="@string/action_active_visits"
-            android:launchMode="singleTop"
-            android:theme="@style/AppThemeOrig">
+			<!-- Parent activity meta-data to support 4.0 and lower -->
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".activities.activevisits.ActiveVisitsActivity" />
+		</activity>
+		<activity
+			android:name=".activities.formlist.FormListActivity"
+			android:label="@string/action_form_entry"
+			android:launchMode="singleTop"
+			android:parentActivityName=".activities.formentrypatientlist.FormEntryPatientListActivity"
+			android:theme="@style/AppThemeOrig">
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".activities.formentrypatientlist.FormEntryPatientListActivity" />
+		</activity>
+		<activity
+			android:name=".activities.formentrypatientlist.FormEntryPatientListActivity"
+			android:configChanges="keyboardHidden|orientation|screenSize"
+			android:label="@string/action_form_entry"
+			android:parentActivityName=".activities.dashboard.DashboardActivity"
+			android:theme="@style/AppThemeOrig">
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".activities.dashboard.DashboardActivity" />
+		</activity>
+		<activity
+			android:name=".activities.addeditpatient.AddEditPatientActivity"
+			android:configChanges="keyboardHidden|orientation|screenSize"
+			android:label="@string/action_register_patient"
+			android:parentActivityName=".activities.addeditpatient.AddEditPatientActivity"
+			android:theme="@style/AppThemeOrig">
 
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.dashboard.DashboardActivity" />
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
+			<!-- Parent activity meta-data to support 4.0 and lower -->
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".activities.addeditpatient.AddEditPatientActivity" />
+		</activity>
 
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".activities.visitdashboard.VisitDashboardActivity"
-            android:label="@string/visit_dashboard_label"
-            android:launchMode="singleTop"
-            android:theme="@style/AppThemeOrig">
+		<service
+			android:name=".api.PatientService"
+			android:enabled="true" />
+		<service
+			android:name=".api.EncounterService"
+			android:enabled="true" />
+		<service
+			android:name=".api.FormListService"
+			android:enabled="true" />
+		<service
+			android:name=".services.AuthenticateCheckService"
+			android:enabled="true" />
 
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.activevisits.ActiveVisitsActivity" />
-        </activity>
-        <activity
-            android:name=".activities.formlist.FormListActivity"
-            android:label="@string/action_form_entry"
-            android:launchMode="singleTop"
-            android:parentActivityName=".activities.formentrypatientlist.FormEntryPatientListActivity"
-            android:theme="@style/AppThemeOrig">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.formentrypatientlist.FormEntryPatientListActivity" />
-        </activity>
-        <activity
-            android:name=".activities.formentrypatientlist.FormEntryPatientListActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/action_form_entry"
-            android:parentActivityName=".activities.dashboard.DashboardActivity"
-            android:theme="@style/AppThemeOrig">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.dashboard.DashboardActivity" />
-        </activity>
-        <activity
-            android:name=".activities.addeditpatient.AddEditPatientActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/action_register_patient"
-            android:parentActivityName=".activities.addeditpatient.AddEditPatientActivity"
-            android:theme="@style/AppThemeOrig">
+		<activity
+			android:name=".activities.formdisplay.FormDisplayActivity"
+			android:configChanges="orientation|screenSize|keyboardHidden"
+			android:label="@string/title_activity_form_create"
+			android:parentActivityName=".activities.formlist.FormListActivity"
+			android:theme="@style/AppThemeOrig">
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="org.openmrs.mobile.activities.formlist.FormListActivity" />
+		</activity>
+		<activity
+			android:name=".activities.lastviewedpatients.LastViewedPatientsActivity"
+			android:configChanges="keyboardHidden|screenSize"
+			android:label="@string/action_download_patients"
+			android:launchMode="singleTop"
+			android:theme="@style/AppThemeOrig">
 
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.addeditpatient.AddEditPatientActivity" />
-        </activity>
+			<!-- Parent activity meta-data to support 4.0 and lower -->
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value=".activities.dashboard.DashboardActivity" />
+			<meta-data
+				android:name="android.app.searchable"
+				android:resource="@xml/searchable" />
 
-        <service
-            android:name=".api.PatientService"
-            android:enabled="true" />
-        <service
-            android:name=".api.EncounterService"
-            android:enabled="true" />
-        <service
-            android:name=".api.FormListService"
-            android:enabled="true" />
-        <service
-            android:name=".services.AuthenticateCheckService"
-            android:enabled="true" />
+			<intent-filter>
+				<action android:name="android.intent.action.SEARCH" />
+			</intent-filter>
+		</activity>
+		<activity android:name=".activities.matchingpatients.MatchingPatientsActivity" />
+		<activity
+			android:name=".activities.patientdashboard.details.PatientPhotoActivity"
+			android:parentActivityName=".activities.patientdashboard.PatientDashboardActivity"
+			android:theme="@style/AppTheme">
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity" />
+		</activity>
+		<activity
+			android:name=".activities.logs.LogsActivity"
+			android:label="@string/title_activity_logs"
+			android:parentActivityName=".activities.settings.SettingsActivity"
+			android:theme="@style/AppThemeOrig" />
+		<activity
+			android:name=".activities.aboutpage.AboutActivity"
+			android:parentActivityName=".activities.aboutpage.AboutActivity" />
+		<activity
+			android:name=".activities.patientdashboard.charts.ChartsViewActivity"
+			android:parentActivityName=".activities.patientdashboard.PatientDashboardActivity" />
 
-        <activity
-            android:name=".activities.formdisplay.FormDisplayActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:label="@string/title_activity_form_create"
-            android:parentActivityName=".activities.formlist.FormListActivity"
-            android:theme="@style/AppThemeOrig">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.openmrs.mobile.activities.formlist.FormListActivity" />
-        </activity>
-        <activity
-            android:name=".activities.lastviewedpatients.LastViewedPatientsActivity"
-            android:configChanges="keyboardHidden|screenSize"
-            android:label="@string/action_download_patients"
-            android:launchMode="singleTop"
-            android:theme="@style/AppThemeOrig">
+		<provider
+			android:name=".utilities.ActiveAndroid.content.ContentProvider"
+			android:authorities="org.openmrs.mobile"
+			android:exported="false" />
 
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.dashboard.DashboardActivity" />
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activities.matchingpatients.MatchingPatientsActivity" />
-        <activity
-            android:name=".activities.patientdashboard.details.PatientPhotoActivity"
-            android:parentActivityName=".activities.patientdashboard.PatientDashboardActivity"
-            android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity" />
-        </activity>
-        <activity
-            android:name=".activities.logs.LogsActivity"
-            android:label="@string/title_activity_logs"
-            android:parentActivityName=".activities.settings.SettingsActivity"
-            android:theme="@style/AppThemeOrig" />
-        <activity
-            android:name=".activities.patientdashboard.charts.ChartsViewActivity"
-            android:parentActivityName=".activities.patientdashboard.PatientDashboardActivity" />
-
-        <provider
-            android:name=".utilities.ActiveAndroid.content.ContentProvider"
-            android:authorities="org.openmrs.mobile"
-            android:exported="false" />
-
-        <activity
-            android:name=".activities.providermanagerdashboard.ProviderManagerDashboardActivity"
-            android:configChanges="keyboardHidden|screenSize"
-            android:label="@string/provider_manager"
-            android:launchMode="singleTop"
-            android:theme="@style/AppThemeOrig" />
-        <activity
-            android:name=".activities.providermanagerdashboard.addprovider.AddProviderActivity"
-            android:label="@string/title_provider_info"
-            android:parentActivityName=".activities.providermanagerdashboard.ProviderManagerDashboardActivity"
-            android:theme="@style/AppThemeOrig"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".activities.providerdashboard.ProviderDashboardActivity"
-            android:parentActivityName=".activities.providermanagerdashboard.ProviderManagerDashboardActivity"
-            android:theme="@style/AppThemeOrig" />
-    </application>
+		<activity
+			android:name=".activities.providermanagerdashboard.ProviderManagerDashboardActivity"
+			android:configChanges="keyboardHidden|screenSize"
+			android:label="@string/provider_manager"
+			android:launchMode="singleTop"
+			android:theme="@style/AppThemeOrig" />
+		<activity
+			android:name=".activities.providermanagerdashboard.addprovider.AddProviderActivity"
+			android:label="@string/title_provider_info"
+			android:parentActivityName=".activities.providermanagerdashboard.ProviderManagerDashboardActivity"
+			android:theme="@style/AppThemeOrig"
+			android:windowSoftInputMode="adjustResize" />
+		<activity
+			android:name=".activities.providerdashboard.ProviderDashboardActivity"
+			android:parentActivityName=".activities.providermanagerdashboard.ProviderManagerDashboardActivity"
+			android:theme="@style/AppThemeOrig" />
+	</application>
 
 </manifest>

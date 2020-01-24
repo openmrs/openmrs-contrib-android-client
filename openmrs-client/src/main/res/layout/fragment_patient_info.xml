@@ -494,6 +494,7 @@
                             android:maxLines="1"
                             android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -505,60 +506,49 @@
                         android:orientation="horizontal"
                         android:weightSum="2">
 
-                        <LinearLayout
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputLayoutCountry"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_gravity="center"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:gravity="center"
+                            app:errorEnabled="true">
 
                             <com.hbb20.CountryCodePicker
                                 android:id="@+id/ccp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:gravity="center"
+                                android:layout_marginTop="-14dp"
                                 app:ccpDialog_textColor="?attr/colorControlNormal"
                                 app:ccp_showFullName="true"
                                 app:ccp_showNameCode="false"
                                 app:ccp_showPhoneCode="false" />
-                        </LinearLayout>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-                        <LinearLayout
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/textInputLayoutState"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:layout_marginStart="8dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_weight="1">
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/textInputLayoutState"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            <AutoCompleteTextView
+                                android:id="@+id/state"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginEnd="4dp"
-                                android:layout_marginRight="4dp">
-
-                                <AutoCompleteTextView
-                                    android:id="@+id/state"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="48dp"
-                                    android:layout_marginStart="4dp"
-                                    android:layout_marginLeft="4dp"
-                                    android:focusable="true"
-                                    android:paddingLeft="12dp"
-                                    android:hint="@string/patient_state_label"
-                                    android:imeOptions="actionNext"
-                                    android:inputType="text"
-                                    android:maxLines="1"
-                                    android:textSize="14sp"
-                                    android:paddingStart="12dp" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                        </LinearLayout>
-
+                                android:layout_height="48dp"
+                                android:layout_marginStart="4dp"
+                                android:layout_marginLeft="4dp"
+                                android:focusable="true"
+                                android:hint="@string/patient_state_label"
+                                android:imeOptions="actionNext"
+                                android:inputType="text"
+                                android:maxLines="1"
+                                android:textSize="14sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
-
 
                     <LinearLayout
                         android:layout_width="match_parent"

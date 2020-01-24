@@ -124,6 +124,7 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
     androidTestImplementation(
             'junit:junit:4.12',
             'androidx.test.ext:junit:1.1.1',

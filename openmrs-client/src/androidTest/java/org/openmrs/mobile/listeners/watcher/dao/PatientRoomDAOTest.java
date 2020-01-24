@@ -41,10 +41,10 @@ public class PatientRoomDAOTest {
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
-    private EncounterEntity expectedEncounterEntity1 = getEncounterEntity(40L, "123-123", "Encounter","50",  "60", "70", "Visit", "22nd of May");
-    private EncounterEntity expectedEncounterEntity2 = getEncounterEntity(50L, "124-124", "Encounter","50",  "60", "70", "Visit", "23rd of May");
-    private PatientEntity expectedPatientEntity1 = getPatientEntity(10L, "123", "M","Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity1, "Tranquil", "male", "Jon", "101", "Johnson", "https://bit.ly/2W4Ofth", "2000000", "China", false);
-    private PatientEntity expectedPatientEntity2 = getPatientEntity(20L, "124", "M","Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity2, "Tranquil", "male", "Jon", "101", "Johnson", "https://bit.ly/2W4Ofth", "2000000", "China", false);
+    private EncounterEntity expectedEncounterEntity1 = newEncounterEntity(40L, "123-123", "Encounter", "50", "60", "70", "Visit", "22nd of May");
+    private EncounterEntity expectedEncounterEntity2 = newEncounterEntity(50L, "124-124", "Encounter", "50", "60", "70", "Visit", "23rd of May");
+    private PatientEntity expectedPatientEntity1 = newPatientEntity(10L, "123", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity1, "Tranquil", "male", "Jon", "101", "Johnson", "https://bit.ly/2W4Ofth", "2000000", "China", false);
+    private PatientEntity expectedPatientEntity2 = newPatientEntity(20L, "124", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity2, "Tranquil", "male", "Jon", "101", "Johnson", "https://bit.ly/2W4Ofth", "2000000", "China", false);
 
 
     private AppDatabase mDatabase;
@@ -80,50 +80,13 @@ public class PatientRoomDAOTest {
 
             @Override
             public void onSuccess(List<PatientEntity> patientEntities) {
-                Assert.assertEquals(patientEntities.get(0).getEncounters(),expectedEncounterEntity1);
-                Assert.assertEquals(patientEntities.get(0).getDisplay(),expectedPatientEntity1.getDisplay());
-                Assert.assertEquals(patientEntities.get(0).getAddress_1(),expectedPatientEntity1.getAddress_1());
-                Assert.assertEquals(patientEntities.get(0).getAddress_2(),expectedPatientEntity1.getAddress_2());
-                Assert.assertEquals(patientEntities.get(0).getAge(),expectedPatientEntity1.getAge());
-                Assert.assertEquals(patientEntities.get(0).getBirthDate(),expectedPatientEntity1.getBirthDate());
-                Assert.assertEquals(patientEntities.get(0).getCauseOfDeath(),expectedPatientEntity1.getCauseOfDeath());
-                Assert.assertEquals(patientEntities.get(0).getCity(),expectedPatientEntity1.getCity());
-                Assert.assertEquals(patientEntities.get(0).getCountry(),expectedPatientEntity1.getCountry());
-                Assert.assertEquals(patientEntities.get(0).getDeathDate(),expectedPatientEntity1.getDeathDate());
-                Assert.assertEquals(patientEntities.get(0).getFamilyName(),expectedPatientEntity1.getFamilyName());
-                Assert.assertEquals(patientEntities.get(0).getGender(),expectedPatientEntity1.getGender());
-                Assert.assertEquals(patientEntities.get(0).getGivenName(),expectedPatientEntity1.getGivenName());
-                Assert.assertEquals(patientEntities.get(0).getIdentifier(),expectedPatientEntity1.getIdentifier());
-                Assert.assertEquals(patientEntities.get(0).getMiddleName(),expectedPatientEntity1.getMiddleName());
-                Assert.assertEquals(patientEntities.get(0).getPhoto(),expectedPatientEntity1.getPhoto());
-                Assert.assertEquals(patientEntities.get(0).getPostalCode(),expectedPatientEntity1.getPostalCode());
-                Assert.assertEquals(patientEntities.get(0).getState(),expectedPatientEntity1.getState());
-                Assert.assertEquals(patientEntities.get(0).isSynced(),expectedPatientEntity1.isSynced());
-
-                Assert.assertEquals(patientEntities.get(1).getEncounters(),expectedEncounterEntity2);
-                Assert.assertEquals(patientEntities.get(1).getDisplay(),expectedPatientEntity2.getDisplay());
-                Assert.assertEquals(patientEntities.get(1).getAddress_1(),expectedPatientEntity2.getAddress_1());
-                Assert.assertEquals(patientEntities.get(1).getAddress_2(),expectedPatientEntity2.getAddress_2());
-                Assert.assertEquals(patientEntities.get(1).getAge(),expectedPatientEntity2.getAge());
-                Assert.assertEquals(patientEntities.get(1).getBirthDate(),expectedPatientEntity2.getBirthDate());
-                Assert.assertEquals(patientEntities.get(1).getCauseOfDeath(),expectedPatientEntity2.getCauseOfDeath());
-                Assert.assertEquals(patientEntities.get(1).getCity(),expectedPatientEntity2.getCity());
-                Assert.assertEquals(patientEntities.get(1).getCountry(),expectedPatientEntity2.getCountry());
-                Assert.assertEquals(patientEntities.get(1).getDeathDate(),expectedPatientEntity2.getDeathDate());
-                Assert.assertEquals(patientEntities.get(1).getFamilyName(),expectedPatientEntity2.getFamilyName());
-                Assert.assertEquals(patientEntities.get(1).getGender(),expectedPatientEntity2.getGender());
-                Assert.assertEquals(patientEntities.get(1).getGivenName(),expectedPatientEntity2.getGivenName());
-                Assert.assertEquals(patientEntities.get(1).getIdentifier(),expectedPatientEntity2.getIdentifier());
-                Assert.assertEquals(patientEntities.get(1).getMiddleName(),expectedPatientEntity2.getMiddleName());
-                Assert.assertEquals(patientEntities.get(1).getPhoto(),expectedPatientEntity2.getPhoto());
-                Assert.assertEquals(patientEntities.get(1).getPostalCode(),expectedPatientEntity2.getPostalCode());
-                Assert.assertEquals(patientEntities.get(1).getState(),expectedPatientEntity2.getState());
-                Assert.assertEquals(patientEntities.get(1).isSynced(),expectedPatientEntity2.isSynced());
+                Assert.assertEquals(patientEntities.get(0), expectedPatientEntity1);
+                Assert.assertEquals(patientEntities.get(1), expectedPatientEntity2);
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.i(TAG,e.getMessage());
+                Log.i(TAG, e.getMessage());
             }
         });
     }
@@ -141,31 +104,12 @@ public class PatientRoomDAOTest {
 
             @Override
             public void onSuccess(List<PatientEntity> patientEntities) {
-
-                Assert.assertEquals(patientEntities.get(0).getEncounters(),expectedEncounterEntity2);
-                Assert.assertEquals(patientEntities.get(0).getDisplay(),expectedPatientEntity2.getDisplay());
-                Assert.assertEquals(patientEntities.get(0).getAddress_1(),expectedPatientEntity2.getAddress_1());
-                Assert.assertEquals(patientEntities.get(0).getAddress_2(),expectedPatientEntity2.getAddress_2());
-                Assert.assertEquals(patientEntities.get(0).getAge(),expectedPatientEntity2.getAge());
-                Assert.assertEquals(patientEntities.get(0).getBirthDate(),expectedPatientEntity2.getBirthDate());
-                Assert.assertEquals(patientEntities.get(0).getCauseOfDeath(),expectedPatientEntity2.getCauseOfDeath());
-                Assert.assertEquals(patientEntities.get(0).getCity(),expectedPatientEntity2.getCity());
-                Assert.assertEquals(patientEntities.get(0).getCountry(),expectedPatientEntity2.getCountry());
-                Assert.assertEquals(patientEntities.get(0).getDeathDate(),expectedPatientEntity2.getDeathDate());
-                Assert.assertEquals(patientEntities.get(0).getFamilyName(),expectedPatientEntity2.getFamilyName());
-                Assert.assertEquals(patientEntities.get(0).getGender(),expectedPatientEntity2.getGender());
-                Assert.assertEquals(patientEntities.get(0).getGivenName(),expectedPatientEntity2.getGivenName());
-                Assert.assertEquals(patientEntities.get(0).getIdentifier(),expectedPatientEntity2.getIdentifier());
-                Assert.assertEquals(patientEntities.get(0).getMiddleName(),expectedPatientEntity2.getMiddleName());
-                Assert.assertEquals(patientEntities.get(0).getPhoto(),expectedPatientEntity2.getPhoto());
-                Assert.assertEquals(patientEntities.get(0).getPostalCode(),expectedPatientEntity2.getPostalCode());
-                Assert.assertEquals(patientEntities.get(0).getState(),expectedPatientEntity2.getState());
-                Assert.assertEquals(patientEntities.get(0).isSynced(),expectedPatientEntity2.isSynced());
+                Assert.assertEquals(patientEntities.get(0), expectedPatientEntity2);
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.i(TAG,e.getMessage());
+                Log.i(TAG, e.getMessage());
             }
         });
     }
@@ -183,13 +127,13 @@ public class PatientRoomDAOTest {
 
             @Override
             public void onSuccess(List<PatientEntity> patientEntities) {
-                Assert.assertEquals(patientEntities.size(),2);
+                Assert.assertEquals(patientEntities.size(), 2);
                 //since both the global patient entities are not synced
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.i(TAG,e.getMessage());
+                Log.i(TAG, e.getMessage());
             }
         });
     }
@@ -207,30 +151,12 @@ public class PatientRoomDAOTest {
 
             @Override
             public void onSuccess(List<PatientEntity> patientEntities) {
-                Assert.assertEquals(patientEntities.get(0).getEncounters(),expectedEncounterEntity1);
-                Assert.assertEquals(patientEntities.get(0).getDisplay(),expectedPatientEntity1.getDisplay());
-                Assert.assertEquals(patientEntities.get(0).getAddress_1(),expectedPatientEntity1.getAddress_1());
-                Assert.assertEquals(patientEntities.get(0).getAddress_2(),expectedPatientEntity1.getAddress_2());
-                Assert.assertEquals(patientEntities.get(0).getAge(),expectedPatientEntity1.getAge());
-                Assert.assertEquals(patientEntities.get(0).getBirthDate(),expectedPatientEntity1.getBirthDate());
-                Assert.assertEquals(patientEntities.get(0).getCauseOfDeath(),expectedPatientEntity1.getCauseOfDeath());
-                Assert.assertEquals(patientEntities.get(0).getCity(),expectedPatientEntity1.getCity());
-                Assert.assertEquals(patientEntities.get(0).getCountry(),expectedPatientEntity1.getCountry());
-                Assert.assertEquals(patientEntities.get(0).getDeathDate(),expectedPatientEntity1.getDeathDate());
-                Assert.assertEquals(patientEntities.get(0).getFamilyName(),expectedPatientEntity1.getFamilyName());
-                Assert.assertEquals(patientEntities.get(0).getGender(),expectedPatientEntity1.getGender());
-                Assert.assertEquals(patientEntities.get(0).getGivenName(),expectedPatientEntity1.getGivenName());
-                Assert.assertEquals(patientEntities.get(0).getIdentifier(),expectedPatientEntity1.getIdentifier());
-                Assert.assertEquals(patientEntities.get(0).getMiddleName(),expectedPatientEntity1.getMiddleName());
-                Assert.assertEquals(patientEntities.get(0).getPhoto(),expectedPatientEntity1.getPhoto());
-                Assert.assertEquals(patientEntities.get(0).getPostalCode(),expectedPatientEntity1.getPostalCode());
-                Assert.assertEquals(patientEntities.get(0).getState(),expectedPatientEntity1.getState());
-                Assert.assertEquals(patientEntities.get(0).isSynced(),expectedPatientEntity1.isSynced());
+                Assert.assertEquals(patientEntities.get(0), expectedPatientEntity1);
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.i(TAG,e.getMessage());
+                Log.i(TAG, e.getMessage());
             }
         });
     }
@@ -250,33 +176,13 @@ public class PatientRoomDAOTest {
 
             @Override
             public void onSuccess(List<PatientEntity> patientEntities) {
-                Assert.assertEquals(patientEntities.size(),1);
-                Assert.assertEquals(patientEntities.get(0).getId(),expectedPatientEntity1.getId());
-
-                Assert.assertEquals(patientEntities.get(0).getEncounters(),expectedEncounterEntity1);
-                Assert.assertEquals(patientEntities.get(0).getDisplay(),expectedPatientEntity1.getDisplay());
-                Assert.assertEquals(patientEntities.get(0).getAddress_1(),expectedPatientEntity1.getAddress_1());
-                Assert.assertEquals(patientEntities.get(0).getAddress_2(),expectedPatientEntity1.getAddress_2());
-                Assert.assertEquals(patientEntities.get(0).getAge(),expectedPatientEntity1.getAge());
-                Assert.assertEquals(patientEntities.get(0).getBirthDate(),expectedPatientEntity1.getBirthDate());
-                Assert.assertEquals(patientEntities.get(0).getCauseOfDeath(),expectedPatientEntity1.getCauseOfDeath());
-                Assert.assertEquals(patientEntities.get(0).getCity(),expectedPatientEntity1.getCity());
-                Assert.assertEquals(patientEntities.get(0).getCountry(),expectedPatientEntity1.getCountry());
-                Assert.assertEquals(patientEntities.get(0).getDeathDate(),expectedPatientEntity1.getDeathDate());
-                Assert.assertEquals(patientEntities.get(0).getFamilyName(),expectedPatientEntity1.getFamilyName());
-                Assert.assertEquals(patientEntities.get(0).getGender(),expectedPatientEntity1.getGender());
-                Assert.assertEquals(patientEntities.get(0).getGivenName(),expectedPatientEntity1.getGivenName());
-                Assert.assertEquals(patientEntities.get(0).getIdentifier(),expectedPatientEntity1.getIdentifier());
-                Assert.assertEquals(patientEntities.get(0).getMiddleName(),expectedPatientEntity1.getMiddleName());
-                Assert.assertEquals(patientEntities.get(0).getPhoto(),expectedPatientEntity1.getPhoto());
-                Assert.assertEquals(patientEntities.get(0).getPostalCode(),expectedPatientEntity1.getPostalCode());
-                Assert.assertEquals(patientEntities.get(0).getState(),expectedPatientEntity1.getState());
-                Assert.assertEquals(patientEntities.get(0).isSynced(),expectedPatientEntity1.isSynced());
+                Assert.assertEquals(patientEntities.size(), 1);
+                Assert.assertEquals(patientEntities.get(0), expectedPatientEntity1);
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.i(TAG,e.getMessage());
+                Log.i(TAG, e.getMessage());
             }
         });
     }
@@ -298,20 +204,20 @@ public class PatientRoomDAOTest {
 
             @Override
             public void onSuccess(List<PatientEntity> patientEntities) {
-                Assert.assertEquals(patientEntities.size(),1);
+                Assert.assertEquals(patientEntities.size(), 1);
 
-                Assert.assertEquals(patientEntities.get(0).getGivenName(),"Rishabh");
-                Assert.assertEquals(patientEntities.get(0).getFamilyName(),"Agarwal");
+                Assert.assertEquals(patientEntities.get(0).getGivenName(), "Rishabh");
+                Assert.assertEquals(patientEntities.get(0).getFamilyName(), "Agarwal");
             }
 
             @Override
             public void onError(Throwable e) {
-                Log.i(TAG,e.getMessage());
+                Log.i(TAG, e.getMessage());
             }
         });
     }
 
-    private EncounterEntity getEncounterEntity(Long id, String uuid, String display, String visitKeyId,
+    private EncounterEntity newEncounterEntity(Long id, String uuid, String display, String visitKeyId,
                                                String patientUuid, String formUuid, String encounterType,
                                                String encounterDateTime) {
         EncounterEntity encounterEntity = new EncounterEntity();
@@ -326,7 +232,7 @@ public class PatientRoomDAOTest {
         return encounterEntity;
     }
 
-    private PatientEntity getPatientEntity(long id, String uuid, String display,
+    private PatientEntity newPatientEntity(long id, String uuid, String display,
                                            String address1, String address2, String age,
                                            String birthDate, String causeOfDeath, String city,
                                            String country, String deathDate, EncounterEntity encounterEntity,

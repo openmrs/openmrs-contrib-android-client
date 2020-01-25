@@ -64,7 +64,7 @@ For more information on the client, visit https://wiki.openmrs.org/display/proje
 - Offline access
 
 # Screenshots
-<img src="http://i.imgur.com/I4LLWCA.png" width="280" height="420" alt="Login page" >  <img src="http://i.imgur.com/gNWOoyw.png" width="280" height="420"> <img src="http://i.imgur.com/hiCNNIx.png" width="280" height="420">
+<img src="http://i.imgur.com/I4LLWCA.png" width="280" height="420" alt="Login page" >  <img src="http://i.imgur.com/KmaWzNv.png" width="280" height="420"> <img src="http://i.imgur.com/hiCNNIx.png" width="280" height="420">
 
 # GSoC 2019
 

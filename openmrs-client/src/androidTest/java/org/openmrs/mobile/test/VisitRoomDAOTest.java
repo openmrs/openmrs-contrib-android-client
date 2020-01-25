@@ -51,7 +51,7 @@ public class VisitRoomDAOTest {
     }
 
     @Test
-    public void updateVisit_shouldUpdateVisit(){
+    public void updateVisit_ShouldUpdateVisit() {
         Long id = database.visitRoomDAO().saveVisit(actualVisitEntity);
         database.visitRoomDAO().updateVisit(updatedVisitEntity);
         database.visitRoomDAO().getVisitByID(id).take(1).subscribe(new Subscriber<VisitEntity>() {
@@ -84,7 +84,7 @@ public class VisitRoomDAOTest {
     }
 
     @Test
-    public void deleteVisitsByPatientId_shouldDeleteVisit(){
+    public void deleteVisitsByPatientId_ShouldDeleteVisit() {
         database.visitRoomDAO().saveVisit(actualVisitEntity);
         database.visitRoomDAO().deleteVisitsByPatientId(actualVisitEntity);
         database.visitRoomDAO().getActiveVisits().take(1).subscribe(new Subscriber<List<VisitEntity>>() {
@@ -111,7 +111,7 @@ public class VisitRoomDAOTest {
     }
 
     @Test
-    public void getVisitsByPatientId_shouldGetVisit(){
+    public void getVisitsByPatientId_ShouldGetVisit() {
         database.visitRoomDAO().saveVisit(actualVisitEntity);
         database.visitRoomDAO().getVisitsByPatientID(actualVisitEntity.getPatientKeyID());
         database.visitRoomDAO().getActiveVisits().take(1).subscribe(new Subscriber<List<VisitEntity>>() {
@@ -144,7 +144,38 @@ public class VisitRoomDAOTest {
     }
 
     @Test
-    public void saveVisit_ShouldSaveCorrectVisist() {
+    public void getFirstActiveVisitByPatientId_ShouldGetFirstActiveVisit() {
+        database.visitRoomDAO().saveVisit(actualVisitEntity);
+        database.visitRoomDAO().getFirstActiveVisitByPatientId(actualVisitEntity.getPatientKeyID()).subscribe(new Subscriber<VisitEntity>() {
+            @Override
+            public void onSubscribe(Subscription s) {
+
+            }
+
+            @Override
+            public void onNext(VisitEntity visitEntity) {
+                Assert.assertEquals(visitEntity.getPatientKeyID(), 1L);
+                Assert.assertEquals(visitEntity.getStartDate(), "startDate");
+                Assert.assertEquals(visitEntity.getStopDate(), "stopDate");
+                Assert.assertEquals(visitEntity.getVisitPlace(), "visitPlace");
+                Assert.assertEquals(visitEntity.getVisitType(), "visitType");
+                Assert.assertEquals(visitEntity.getUuid(), "uuid");
+            }
+
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+    }
+
+    @Test
+    public void saveVisit_ShouldSaveCorrectVisit() {
         Long id  = database.visitRoomDAO().saveVisit(actualVisitEntity);
         database.visitRoomDAO().getVisitByID(id).take(1).subscribe(new Subscriber<VisitEntity>() {
             @Override
@@ -172,6 +203,45 @@ public class VisitRoomDAOTest {
 
             }
         });
+    }
+
+    @Test
+    public void getVisitByUuid_ShouldGetCorrectVisit() {
+        database.visitRoomDAO().saveVisit(actualVisitEntity);
+        database.visitRoomDAO().getVisitByUuid("uuid").subscribe(new Subscriber<VisitEntity>() {
+            @Override
+            public void onSubscribe(Subscription s) {
+
+            }
+
+            @Override
+            public void onNext(VisitEntity visitEntity) {
+                Assert.assertEquals(visitEntity.getPatientKeyID(), 1L);
+                Assert.assertEquals(visitEntity.getStartDate(), "startDate");
+                Assert.assertEquals(visitEntity.getStopDate(), "stopDate");
+                Assert.assertEquals(visitEntity.getVisitPlace(), "visitPlace");
+                Assert.assertEquals(visitEntity.getVisitType(), "visitType");
+                Assert.assertEquals(visitEntity.getUuid(), "uuid");
+            }
+
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+
+    }
+
+    @Test
+    public void getVisitIdByUuid_ShouldGetCorrectVisitId() {
+        Long id = database.visitRoomDAO().saveVisit(actualVisitEntity);
+        Long visitId = database.visitRoomDAO().getVisitsIDByUUID("uuid");
+        Assert.assertEquals(id, visitId);
     }
 
     @After

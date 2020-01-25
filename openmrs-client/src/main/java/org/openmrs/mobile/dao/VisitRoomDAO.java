@@ -44,13 +44,13 @@ public interface VisitRoomDAO {
     @Query("SELECT * FROM visits WHERE patient_id = :patientID")
     Flowable<List<VisitEntity>> getVisitsByPatientID(final Long patientID);
 
-    @Query("SELECT * FROM visits WHERE patient_id = :patientId")
-    Flowable<VisitEntity> getActiveVisitByPatientId(Long patientId);
+    @Query("SELECT * FROM visits WHERE patient_id = :patientId LIMIT 1")
+    Flowable<VisitEntity> getFirstActiveVisitByPatientId(Long patientId);
 
     @Query("SELECT * FROM visits WHERE _id = :visitID")
     Flowable<VisitEntity> getVisitByID(final Long visitID);
 
-    @Query("SELECT * FROM visits WHERE uuid = :visitUUID")
+    @Query("SELECT _id FROM visits WHERE uuid = :visitUUID")
     long getVisitsIDByUUID(final String visitUUID);
 
     @Query("SELECT * FROM visits WHERE uuid = :uuid")

@@ -3,6 +3,7 @@ package org.openmrs.mobile.databases;
 import android.content.Context;
 import org.openmrs.mobile.dao.LocationRoomDAO;
 import org.openmrs.mobile.dao.VisitRoomDAO;
+import org.openmrs.mobile.dao.PatientRoomDAO;
 import org.openmrs.mobile.databases.entities.ConceptEntity;
 import org.openmrs.mobile.databases.entities.EncounterEntity;
 import org.openmrs.mobile.databases.entities.LocationEntity;
@@ -27,6 +28,7 @@ public abstract class AppDatabase extends RoomDatabase {
     //instantiate Dao's
     public abstract LocationRoomDAO locationRoomDAO();
     public abstract VisitRoomDAO visitRoomDAO();
+    public abstract PatientRoomDAO patientRoomDAO();
 
     private static volatile AppDatabase INSTANCE;
 

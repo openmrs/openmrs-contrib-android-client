@@ -18,9 +18,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,6 +53,7 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ForceClose;
+import org.openmrs.mobile.utilities.LanguageUtils;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ThemeUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -57,6 +61,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import rx.Observable;
 import rx.Observer;
@@ -83,6 +88,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         Thread.setDefaultUncaughtExceptionHandler(new ForceClose(this));
 
         setupTheme();
+        setupLanguage();
 
         mFragmentManager = getSupportFragmentManager();
         mAuthorizationManager = new AuthorizationManager();
@@ -110,6 +116,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         setupTheme();
+        setupLanguage();
         invalidateOptionsMenu();
         if (!(this instanceof LoginActivity) && !mAuthorizationManager.isUserLoggedIn()) {
             mAuthorizationManager.moveToLoginActivity();
@@ -395,5 +402,15 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         } else{
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+    }
+
+    private void setupLanguage() {
+        String lang = LanguageUtils.getLanguage();
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
     }
 }

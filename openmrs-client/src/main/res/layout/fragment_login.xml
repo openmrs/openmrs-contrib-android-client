@@ -14,7 +14,8 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
-	android:layout_height="match_parent">
+	android:layout_height="match_parent"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
 
 	<RelativeLayout
 		android:layout_width="match_parent"
@@ -56,7 +57,7 @@
 				android:layout_height="wrap_content"
 				android:gravity="center"
 				android:orientation="vertical"
-				android:visibility="gone">
+				android:visibility="visible">
 
 				<com.google.android.material.textfield.TextInputLayout
 					android:id="@+id/textInputLayoutLoginURL"
@@ -111,7 +112,8 @@
 						android:layout_alignParentTop="true"
 						android:layout_centerVertical="true"
 						android:layout_marginHorizontal="25dp"
-						android:layout_marginTop="10dp">
+						android:layout_marginTop="10dp"
+						app:passwordToggleEnabled="true">
 
 						<com.google.android.material.textfield.TextInputEditText
 							android:id="@+id/loginPasswordField"
@@ -122,17 +124,6 @@
 							android:maxLines="1" />
 					</com.google.android.material.textfield.TextInputLayout>
 
-					<CheckBox
-						android:id="@+id/checkboxShowPassword"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:layout_alignEnd="@id/textInputLayoutPassword"
-						android:layout_alignRight="@id/textInputLayoutPassword"
-						android:layout_marginTop="30dp"
-						android:button="@drawable/showpassword_button_selector"
-						android:gravity="bottom"
-						android:paddingLeft="10dp"
-						android:paddingRight="10dp" />
 				</RelativeLayout>
 
 				<Spinner

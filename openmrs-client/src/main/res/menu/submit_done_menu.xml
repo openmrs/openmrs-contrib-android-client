@@ -21,4 +21,11 @@
         android:icon="@drawable/ic_done"
         android:title="@string/action_submit"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/actionReset"
+        android:icon="@drawable/ic_menu_refresh"
+        android:title="@string/action_reset"
+        app:showAsAction="always"
+        />
 </menu>

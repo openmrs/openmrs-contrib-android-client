@@ -98,6 +98,9 @@
 	<string name="location_dialog_title">स्थान का चयन करें </string>
 	<string name="location_dialog_current_location">वर्तमान स्थान:  </string>
 
+	<!-- Reset patient info dialog -->
+	<string name="reset_dialog_message">दर्ज की गई सभी जानकारी मिटा दी जाएगी</string>
+
 	<!-- Buttons -->
 	<string name="dialog_button_cancel">रद्द करें</string>
 	<string name="dialog_button_ok">ठीक</string>
@@ -285,6 +288,7 @@
 	<string name="settings_privacy_policy">गोपनीयता नीति</string>
 
 	<string name="action_submit">सबमिट करें</string>
+	<string name="action_reset">रीसेट करें</string>
 
 	<string name="delete_multiple_patients">मरीजों को हटाएं?</string>
 	<string name="delete_multiple_patients_dialog_message">क्या आप वाकई इन रोगियों को हटाना चाहते हैं?</string>

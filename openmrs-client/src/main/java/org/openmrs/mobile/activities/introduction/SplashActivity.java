@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.introduction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -31,6 +32,9 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 import static org.openmrs.mobile.utilities.ApplicationConstants.SPLASH_TIMER;
 
 public class SplashActivity extends ACBaseActivity {
+
+    private Handler mHandler = new Handler();
+    private Runnable mRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,20 +52,20 @@ public class SplashActivity extends ACBaseActivity {
         set.addAnimation(fadeIn);
         set.addAnimation(move);
         logo.startAnimation(set);
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                try {
-                    Thread.sleep(SPLASH_TIMER);
-                    Intent intent = new Intent(SplashActivity.this, IntroActivity.class);
-                    startActivity(intent);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    return;
-                }
-            }
-        }.start();
+
+        mRunnable = () -> {
+            Intent intent = new Intent(SplashActivity.this, IntroActivity.class);
+            startActivity(intent);
+            finish();
+        };
+
+        mHandler.postDelayed(mRunnable, SPLASH_TIMER);
+    }
+
+    @Override
+    protected void onDestroy() {
+        mHandler.removeCallbacks(mRunnable);
+        super.onDestroy();
     }
 }
 

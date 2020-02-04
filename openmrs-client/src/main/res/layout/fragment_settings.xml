@@ -256,7 +256,9 @@
 				android:layout_height="match_parent"
 				android:layout_weight="1"
 				android:text="@string/apply"
-				android:textColor="@color/black"/>
+				android:backgroundTint="@color/grey"
+				android:textColor="@color/black"
+				tools:targetApi="lollipop" />
 
 		</LinearLayout>
 

@@ -360,6 +360,11 @@
     <string name="intro_settings_desc">Try out our dark mode feature.\nExciting? Let\'s get started.</string>
     <string name="get_started_with_our_user_guide">Get started with our user guide</string>
 
+	<!--VisitExpandableListAdapter-->
+	<string name="hiv_yes">Yes</string>
+	<string name="hiv_no">No</string>
+	<string name="hiv_unknown">Unknown</string>
+
 	<!-- Contact Activity -->
 	<string name="helpdesk_mail" translatable="false">helpdesk@openmrs.com</string>
 	<string name="go_to_forum">Go To Forum</string>

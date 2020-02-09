@@ -79,8 +79,19 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
                             convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDiagnosisOrder(),
                                     "(" + obs.getShortDiagnosisCertainty() + ") " + obs.getDiagnosisList());
                         } else if (obs.getDisplay() != null && obs.getDisplayValue() != null) {
-                            //miscellaneous, for all other cases that have a Display - Value pair
-                            convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(), obs.getDisplayValue());
+                            if (obs.getDisplay().contains(mContext.getString(R.string.hiv_yes))) {
+                                convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(),
+                                        mContext.getString(R.string.hiv_yes));
+                            } else if (obs.getDisplay().contains(mContext.getString(R.string.hiv_no))) {
+                                convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(),
+                                        mContext.getString(R.string.hiv_no));
+                            } else if (obs.getDisplay().contains(mContext.getString(R.string.hiv_unknown))) {
+                                convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(),
+                                        mContext.getString(R.string.hiv_unknown));
+                            } else {
+                                //miscellaneous, for all other cases that have a Display - Value pair
+                                convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(), obs.getDisplayValue());
+                            }
                         }
                     }
                     layouts.add(convertView);

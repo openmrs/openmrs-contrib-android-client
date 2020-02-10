@@ -99,10 +99,8 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     public void resolvePatientDataDisplay(final Patient patient) {
         if (isAdded()) {
             if (("M").equals(patient.getGender())) {
-                ((ImageView) rootView.findViewById(R.id.patientDetailsGenderIv)).setImageResource(R.mipmap.ic_male);
                 ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.male));
             } else {
-                ((ImageView) rootView.findViewById(R.id.patientDetailsGenderIv)).setImageResource(R.mipmap.ic_female);
                 ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.female));
             }
         }

@@ -26,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.models.Visit;
@@ -39,6 +40,7 @@ public class ActiveVisitsFragment extends ACBaseFragment<ActiveVisitsContract.Pr
     private RecyclerView visitsRecyclerView;
     private TextView emptyList;
     private ProgressBar progressBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public static ActiveVisitsFragment newInstance(){
         return new ActiveVisitsFragment();
@@ -51,6 +53,7 @@ public class ActiveVisitsFragment extends ACBaseFragment<ActiveVisitsContract.Pr
 
         progressBar = root.findViewById(R.id.progressBar);
         visitsRecyclerView = root.findViewById(R.id.visitsRecyclerView);
+        swipeRefreshLayout = root.findViewById(R.id.swipeLayout);
         visitsRecyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
         visitsRecyclerView.setLayoutManager(linearLayoutManager);
@@ -61,10 +64,19 @@ public class ActiveVisitsFragment extends ACBaseFragment<ActiveVisitsContract.Pr
         emptyList.setText(getString(R.string.search_visits_no_results));
         emptyList.setVisibility(View.INVISIBLE);
 
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            refreshUI();
+            swipeRefreshLayout.setRefreshing(false);
+        });
 
         FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
 
         return root;
+    }
+
+    private void refreshUI() {
+        progressBar.setVisibility(View.VISIBLE);
+        mPresenter.updateVisitsInDatabaseList();
     }
 
     @Override

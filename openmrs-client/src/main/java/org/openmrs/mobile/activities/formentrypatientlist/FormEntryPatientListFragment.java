@@ -28,6 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
@@ -45,6 +46,7 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
     private RecyclerView mPatientRecyclerView;
     private TextView mEmptyList;
     private ProgressBar mProgressBar;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -58,10 +60,21 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
 
         mEmptyList = root.findViewById(R.id.emptyPatientList);
         mProgressBar = root.findViewById(R.id.formEntryListInitialProgressBar);
+        mSwipeRefreshLayout = root.findViewById(R.id.swipeLayout);
+
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+            refreshUI();
+            mSwipeRefreshLayout.setRefreshing(false);
+        });
 
         // Font config
         FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
         return root;
+    }
+
+    private void refreshUI() {
+        mProgressBar.setVisibility(View.VISIBLE);
+        mPresenter.updatePatientsList();
     }
 
     @Override

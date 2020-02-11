@@ -57,7 +57,7 @@
 				android:layout_height="wrap_content"
 				android:gravity="center"
 				android:orientation="vertical"
-				android:visibility="visible">
+				android:visibility="gone">
 
 				<com.google.android.material.textfield.TextInputLayout
 					android:id="@+id/textInputLayoutLoginURL"

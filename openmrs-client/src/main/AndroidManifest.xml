@@ -114,6 +114,9 @@
             android:parentActivityName=".activities.dashboard.DashboardActivity"
             android:theme="@style/AppThemeOrig" />
         <activity
+            android:name=".activities.about.AboutActivity"
+            android:parentActivityName=".activities.about.AboutActivity"/>
+        <activity
             android:name=".activities.patientdashboard.PatientDashboardActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:theme="@style/AppThemeOrig">

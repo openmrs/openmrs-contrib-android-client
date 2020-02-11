@@ -360,4 +360,12 @@
     <string name="intro_settings_desc">Try out our dark mode feature.\nExciting? Let\'s get started.</string>
     <string name="get_started_with_our_user_guide">Get started with our user guide</string>
 
+	<!-- About Activity -->
+	<string name="about">About</string>
+	<string name="about_text">The OpenMRS community is a worldwide network of volunteers from many different backgrounds including technology, health care, and international development. \n\nTogether, we\'re working to build the world\'s largest and most flexible technology platform to support delivery of health care in some of the\nmost challenging environments on the planet.</string>
+	<string name="website">VISIT US</string>
+	<string name="facebook_url" translatable="false">https://www.facebook.com/OpenMRS/</string>
+	<string name="website_url" translatable="false">https://openmrs.org/</string>
+	<string name="twitter_url" translatable="false">https://www.twitter.com/OpenMRS/</string>
+	<string name="youtube_url" translatable="false">https://www.youtube.com/OpenMRS/</string>
 </resources>

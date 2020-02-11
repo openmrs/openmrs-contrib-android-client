@@ -40,6 +40,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.about.AboutActivity;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
@@ -206,6 +207,11 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 Observable<List<Location>> observableList = new LocationDAO().getLocations();
                 observableList.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(getLocationList());
                 return true;
+
+            case R.id.actionAbout:
+                Intent about = new Intent(this, AboutActivity.class);
+                startActivity(about);
+
             default:
                 return super.onOptionsItemSelected(item);
         }

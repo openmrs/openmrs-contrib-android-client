@@ -43,4 +43,6 @@
 
     <!-- neutral colors that look pleasing on both white and black background -->
     <color name="neutral_green">#249627</color>
+    <color name="blueBtn">#3F51B5</color>
+
 </resources>

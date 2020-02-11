@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".activities.about.AboutActivity">
+
+	<ImageView
+		android:id="@+id/aboutlogo"
+		android:layout_width="355dp"
+		android:layout_height="117dp"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.464"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_bias="0.154"
+		app:srcCompat="@drawable/openmrs_logo" />
+
+	<TextView
+		android:id="@+id/aboutText"
+		android:layout_width="388dp"
+		android:layout_height="240dp"
+		android:layout_marginStart="16dp"
+		android:layout_marginLeft="16dp"
+		android:layout_marginTop="8dp"
+		android:layout_marginEnd="16dp"
+		android:layout_marginRight="16dp"
+		android:layout_marginBottom="16dp"
+		android:text="@string/about_text"
+		android:textSize="18sp"
+		android:textStyle="normal"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.25"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/aboutlogo"
+		app:layout_constraintVertical_bias="0.119" />
+
+	<com.google.android.material.button.MaterialButton
+		android:id="@+id/websiteButton"
+		style="@style/Widget.AppCompat.Button.Borderless"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/website"
+		app:backgroundTint="@color/dark_purple"
+		app:layout_constraintBottom_toTopOf="@+id/twitterButton"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/aboutText"
+		app:layout_constraintVertical_bias="0.581"
+		app:shapeAppearance="@style/WebButtonShapeAppearance"
+		app:strokeColor="@color/dark_purple"
+		app:strokeWidth="6dp"
+		tools:ignore="MissingConstraints" />
+
+	<ImageButton
+		android:id="@+id/facebookButton"
+		android:layout_width="38dp"
+		android:layout_height="60dp"
+		android:layout_marginEnd="16dp"
+		android:layout_marginRight="16dp"
+		android:background="?attr/selectableItemBackgroundBorderless"
+		android:scaleType="fitCenter"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.3"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/aboutText"
+		app:layout_constraintVertical_bias="0.751"
+		app:srcCompat="@drawable/ic_facebook"
+		tools:ignore="MissingConstraints,VectorDrawableCompat" />
+
+	<ImageButton
+		android:id="@+id/twitterButton"
+		android:layout_width="38dp"
+		android:layout_height="60dp"
+		android:background="?attr/selectableItemBackgroundBorderless"
+		android:scaleType="fitCenter"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.498"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/aboutText"
+		app:layout_constraintVertical_bias="0.751"
+		app:srcCompat="@drawable/ic_twitter"
+		tools:ignore="MissingConstraints,VectorDrawableCompat" />
+
+	<ImageButton
+		android:id="@+id/youtubeButton"
+		android:layout_width="38dp"
+		android:layout_height="60dp"
+		android:layout_marginStart="16dp"
+		android:layout_marginLeft="16dp"
+		android:background="?attr/selectableItemBackgroundBorderless"
+		android:scaleType="fitCenter"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.683"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/aboutText"
+		app:layout_constraintVertical_bias="0.751"
+		app:srcCompat="@drawable/ic_youtube"
+		tools:ignore="MissingConstraints,VectorDrawableCompat" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

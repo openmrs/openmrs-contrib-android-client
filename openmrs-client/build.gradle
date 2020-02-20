@@ -92,7 +92,6 @@ android {
         exclude 'META-INF/NOTICE'
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/rxjava.properties'
-
     }
 
     compileOptions {
@@ -130,7 +129,7 @@ dependencies {
             'androidx.test.espresso:espresso-core:3.1.0',
             'androidx.test:rules:1.1.0-alpha4',
             'androidx.test:runner:1.1.0-alpha4',
-            'org.mockito:mockito-core:2.8.9+',
+            'org.mockito:mockito-core:2.8.9',
             'com.google.dexmaker:dexmaker-mockito:1.2',
             'com.google.dexmaker:dexmaker:1.2',
             'com.jayway.android.robotium:robotium-solo:4.2',
@@ -176,6 +175,7 @@ dependencies {
             'org.powermock:powermock-module-junit4:2.0.2'
     )
     testImplementation 'android.arch.core:core-testing:1.1.1'
+    implementation 'android.arch.persistence.room:rxjava2:1.1.1'
     // Room components
     implementation "androidx.room:room-runtime:$room_version"
     implementation 'android.arch.persistence.room:rxjava2:1.1.1'

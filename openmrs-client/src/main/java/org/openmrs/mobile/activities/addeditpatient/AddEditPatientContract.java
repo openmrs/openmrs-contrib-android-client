@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
+import com.google.android.libraries.places.api.net.PlacesClient;
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Patient;
@@ -67,6 +68,8 @@ public interface AddEditPatientContract {
         void registerPatient();
 
         void updatePatient(Patient patient);
+
+        PlacesClient getPlaces();
     }
 
 }

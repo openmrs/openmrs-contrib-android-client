@@ -14,17 +14,19 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
+import java.util.Arrays;
+import java.util.List;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import org.openmrs.mobile.BuildConfig;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class AddEditPatientActivity extends ACBaseActivity {
 
@@ -61,8 +63,15 @@ public class AddEditPatientActivity extends ACBaseActivity {
         }
 
         List<String> countries = Arrays.asList(getResources().getStringArray(R.array.countries_array));
+
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), BuildConfig.MAP_API_KEY);
+        }
+
+        PlacesClient placesClient = Places.createClient(this);
+
         // Create the mPresenter
-        mPresenter = new AddEditPatientPresenter(addEditPatientFragment, countries, patientID);
+        mPresenter = new AddEditPatientPresenter(addEditPatientFragment, countries, patientID, placesClient);
     }
 
     @Override

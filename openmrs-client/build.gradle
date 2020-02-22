@@ -20,6 +20,10 @@ plugins {
 
 def version = "2.8.1"
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties");
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     compileSdkVersion 28
 
@@ -35,6 +39,8 @@ android {
         versionName buildVersionName
         versionCode buildNumber
         multiDexEnabled true
+
+        buildConfigField("String", "MAP_API_KEY", apikeyProperties['API_KEY'])
 
         minSdkVersion 16
         targetSdkVersion 28
@@ -184,6 +190,8 @@ dependencies {
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
     //Leak Canary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
+    //google place api
+    implementation 'com.google.android.libraries.places:places:2.1.0'
 }
 
 play {

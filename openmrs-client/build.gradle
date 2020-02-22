@@ -20,7 +20,7 @@ plugins {
 
 def version = "2.8.1"
 
-def apikeyPropertiesFile = rootProject.file("apikey.properties");
+def apikeyPropertiesFile = rootProject.file("apikey_properties.txt");
 def apikeyProperties = new Properties()
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 

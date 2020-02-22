@@ -18,7 +18,7 @@ tests/out/*
 /odkcollect/build
 
 #ApiKey
-#/apikey.properties
+/apikey_properties.txt
 
 *.DS_Store
 
@@ -147,3 +147,4 @@ output.json
 *.ear
 .idea_modules/
 atlassian-ide-plugin.xmlv
+.gitsecret/keys/random_seed

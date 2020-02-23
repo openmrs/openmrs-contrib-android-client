@@ -17,9 +17,6 @@ tests/out/*
 /openmrs-client/release
 /odkcollect/build
 
-#ApiKey
-/apikey_properties.txt
-
 *.DS_Store
 
 modules/support/appcompat/gen/*

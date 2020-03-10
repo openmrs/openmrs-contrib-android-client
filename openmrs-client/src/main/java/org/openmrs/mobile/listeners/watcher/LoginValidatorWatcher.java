@@ -146,9 +146,11 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
      * Get length of mLocation and check whatever it's empty or not.
      * @return True if a location is selected or no location needed for the OpenMRS instance used.
      */
-    private boolean validateLocation(){
-        if(mLocation.getAdapter().getCount() > 0){
-            return mLocation.getSelectedItemId() != 0;
+    private boolean validateLocation() {
+        if (mLocation.getAdapter()!=null) {
+            if(mLocation.getAdapter().getCount() > 0) {
+                return mLocation.getSelectedItemId() != 0;
+            }
         }
         return true;
     }

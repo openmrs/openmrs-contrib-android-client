@@ -64,7 +64,7 @@ For more information on the client, visit https://wiki.openmrs.org/display/proje
 - Offline access
 
 # Screenshots
-![Login](http://i.imgur.com/zinrnCK.png) ![Dashboard](http://i.imgur.com/TLIwMoy.png) ![Register Patient](http://i.imgur.com/n7LaeKS.png)
+<img src="http://i.imgur.com/I4LLWCA.png" width="280" height="420" alt="Login page" >  <img src="http://i.imgur.com/KmaWzNv.png" width="280" height="420"> <img src="http://i.imgur.com/hiCNNIx.png" width="280" height="420">
 
 # GSoC 2019
 
@@ -84,8 +84,8 @@ The coding conventions used by OpenMRS are outlined [here](https://wiki.openmrs.
 1. Install [Eclipse Code Formatter](https://github.com/krasa/EclipseCodeFormatter) plugin in Android studio
 	I. Go to `Settings` > `Preferences` > `Plugins`
 	II. Select Marketplace and searh for the plugin by name. 
-	then install it
-2. Copy the reqiured [XML](https://github.com/openmrs/openmrs-core/blob/master/tools/src/main/resources/eclipse/OpenMRSFormatter.xml)
+	Then install it
+2. Copy the required [XML](https://github.com/openmrs/openmrs-core/blob/master/tools/src/main/resources/eclipse/OpenMRSFormatter.xml)
 3. Go to `Settings` > `Eclipse Code Formatter` and import the XML created in previous step
 4. Now go to `Editor` > `Code Style` in the same window
 5. Select `Java` in the menu on left and update values in `Imports` as shown in below picture

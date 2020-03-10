@@ -74,7 +74,6 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     private TextInputLayout mUrlInput;
     private TextInputLayout mUsernameInput;
     private TextInputLayout mPasswordInput;
-    private CheckBox mShowPassword;
     private MaterialButton mLoginButton;
     private ProgressBar mSpinner;
     private Spinner mDropdownLocation;
@@ -173,16 +172,6 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
         mForgotPass.setOnClickListener(view -> forgotPassword());
 
-        mShowPassword.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            int cursorPosition = mPassword.getSelectionStart();
-            if (isChecked) {
-                mPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-            } else {
-                mPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            }
-            mPassword.setSelection(cursorPosition);
-        });
-
         mAboutUsTextView.setOnClickListener(view -> openAboutPage());
     }
 
@@ -191,7 +180,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mUrlInput = root.findViewById(R.id.textInputLayoutLoginURL);
 
 
-        mUsername = (TextInputEditText) root.findViewById(R.id.loginUsernameField);
+        mUsername = root.findViewById(R.id.loginUsernameField);
         mUsername.setText(OpenMRS.getInstance().getUsername());
         mUsernameInput = root.findViewById(R.id.textInputLayoutUsername);
 
@@ -205,7 +194,6 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         TextView mRequired = root.findViewById(R.id.loginRequiredLabel);
         mRequired.setText(Html.fromHtml(getString(R.string.req_star) + getString(R.string.login_required)));
 
-        mShowPassword = root.findViewById(R.id.checkboxShowPassword);
         mLoginButton = root.findViewById(R.id.loginButton);
         mSpinner = root.findViewById(R.id.loginLoading);
         mLoginFormView = root.findViewById(R.id.loginFormView);

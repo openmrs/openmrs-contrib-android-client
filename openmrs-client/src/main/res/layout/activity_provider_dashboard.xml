@@ -65,9 +65,10 @@
                         android:id="@+id/provider_dashboard_identifier_tv"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/margin_long"
                         android:layout_marginLeft="@dimen/margin_long"
+                        android:layout_weight="1"
                         android:text="@string/surgeon"
                         android:textColor="@color/white"
                         android:textSize="24sp" />
@@ -94,7 +95,7 @@
             app:tabIndicatorColor="@color/white"
             app:tabMode="fixed"
             app:tabGravity="fill"
-            app:tabSelectedTextColor="@color/white"
+            app:tabSelectedTextColor="@color/black"
             app:tabTextColor="@color/grey" />
     </com.google.android.material.appbar.AppBarLayout>
 

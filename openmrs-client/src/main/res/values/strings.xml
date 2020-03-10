@@ -98,6 +98,9 @@
 	<string name="location_dialog_title">Select Location</string>
 	<string name="location_dialog_current_location">Current Location: </string>
 
+	<!-- Reset patient info dialog -->
+	<string name="reset_dialog_message">All patient information entered will be erased</string>
+
 	<!-- Buttons -->
 	<string name="dialog_button_cancel">Cancel</string>
 	<string name="dialog_button_ok">OK</string>
@@ -285,6 +288,7 @@
 	<string name="settings_privacy_policy">Privacy Policy</string>
 
 	<string name="action_submit">Submit</string>
+	<string name="action_reset">Reset</string>
 
 	<string name="delete_multiple_patients">Delete Patients?</string>
 	<string name="delete_multiple_patients_dialog_message">Are you sure you want to delete these patients?</string>

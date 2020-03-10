@@ -51,7 +51,7 @@ public class ObservationRoomDAOTest {
 
     @Test
     public void saveObservation_ShouldSaveCorrectObservation() {
-        mDatabase.observationRoomDAO().saveObervation(expectedObservationEntity);
+        mDatabase.observationRoomDAO().saveObservation(expectedObservationEntity);
         mDatabase.observationRoomDAO().getObservationByUUID("uuid").subscribe(new Subscriber<ObservationEntity>() {
             @Override
             public void onSubscribe(Subscription s) {
@@ -83,7 +83,7 @@ public class ObservationRoomDAOTest {
 
     @Test
     public void updateObservation_ShouldUpdateObservation() {
-        mDatabase.observationRoomDAO().saveObervation(expectedObservationEntity);
+        mDatabase.observationRoomDAO().saveObservation(expectedObservationEntity);
         mDatabase.observationRoomDAO().updateObservation(updatedObservationEntity);
         mDatabase.observationRoomDAO().getObservationByUUID("updatedUuid").subscribe(new Subscriber<ObservationEntity>() {
             @Override
@@ -116,7 +116,7 @@ public class ObservationRoomDAOTest {
 
     @Test
     public void deleteObservation_ShouldDeleteObservation() {
-        mDatabase.observationRoomDAO().saveObervation(expectedObservationEntity);
+        mDatabase.observationRoomDAO().saveObservation(expectedObservationEntity);
         mDatabase.observationRoomDAO().deleteObservation(expectedObservationEntity);
         mDatabase.observationRoomDAO().getObservationByUUID("uuid").subscribe(new Subscriber<ObservationEntity>() {
             @Override
@@ -126,7 +126,7 @@ public class ObservationRoomDAOTest {
 
             @Override
             public void onNext(ObservationEntity observationEntity) {
-                Assert.assertEquals(observationEntity, null);
+                Assert.assertNull(observationEntity);
             }
 
             @Override
@@ -143,7 +143,7 @@ public class ObservationRoomDAOTest {
 
     @Test
     public void getObservationByEncounterId_ShouldGetRightObservation() {
-        mDatabase.observationRoomDAO().saveObervation(expectedObservationEntity);
+        mDatabase.observationRoomDAO().saveObservation(expectedObservationEntity);
         mDatabase.observationRoomDAO().findObservationByEncounterID(10).subscribe(new Subscriber<List<ObservationEntity>>() {
             @Override
             public void onSubscribe(Subscription s) {

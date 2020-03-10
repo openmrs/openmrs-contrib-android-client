@@ -27,7 +27,7 @@ import io.reactivex.Flowable;
 public interface ObservationRoomDAO {
 
     @Insert
-    void saveObervation(ObservationEntity observationEntity);
+    void saveObservation(ObservationEntity observationEntity);
 
     @Update
     void updateObservation(ObservationEntity observationEntity);

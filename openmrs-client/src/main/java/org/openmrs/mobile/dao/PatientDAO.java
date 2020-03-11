@@ -77,16 +77,19 @@ public class PatientDAO {
     }
 
     private Patient cursorToPatient(Cursor cursor) {
-        Patient patient = new Patient();
 
-        patient.setId(cursor.getLong(cursor.getColumnIndex(PatientTable.Column.ID)));
+        Patient patient = new Patient(cursor.getLong(cursor.getColumnIndex(PatientTable.Column.ID)),
+                cursor.getString(cursor.getColumnIndex(PatientTable.Column.ENCOUNTERS)),
+                null);
+
         patient.setDisplay(cursor.getString(cursor.getColumnIndex(PatientTable.Column.DISPLAY)));
         patient.setUuid(cursor.getString(cursor.getColumnIndex(PatientTable.Column.UUID)));
-        patient.setEncounters(cursor.getString(cursor.getColumnIndex(PatientTable.Column.ENCOUNTERS)));
-
 
         PatientIdentifier patientIdentifier = new PatientIdentifier();
         patientIdentifier.setIdentifier(cursor.getString(cursor.getColumnIndex(PatientTable.Column.IDENTIFIER)));
+        if(patient.getIdentifiers() == null) {
+            patient.setIdentifiers(new ArrayList<>());
+        }
         patient.getIdentifiers().add(patientIdentifier);
 
         PersonName personName = new PersonName();

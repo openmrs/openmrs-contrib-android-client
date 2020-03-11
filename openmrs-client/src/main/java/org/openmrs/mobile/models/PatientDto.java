@@ -86,17 +86,12 @@ public class PatientDto {
      *
      */
     public Patient getPatient(){
-        Patient patient = new Patient();
         Person person = getPerson();
-        patient.setIdentifiers(identifiers);
+        Patient patient = new Patient(null, null, identifiers,
+                person.getNames(), person.getGender(), person.getBirthdate(), person.getBirthdateEstimated(), person.getAddresses(), person.getAttributes(), person.getPhoto());
+
         patient.setUuid(uuid);
-        patient.setNames(person.getNames());
-        patient.setGender(person.getGender());
-        patient.setBirthdate(person.getBirthdate());
-        patient.setBirthdateEstimated(person.getBirthdateEstimated());
-        patient.setPhoto(person.getPhoto());
-        patient.setAttributes(person.getAttributes());
-        patient.setAddresses(person.getAddresses());
+
         return  patient;
     }
 }

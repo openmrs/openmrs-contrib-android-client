@@ -16,8 +16,6 @@ package org.openmrs.mobile.test.presenters;
 
 import android.widget.LinearLayout;
 
-import com.activeandroid.Cache;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -29,6 +27,7 @@ import org.openmrs.mobile.models.Question;
 import org.openmrs.mobile.models.QuestionOptions;
 import org.openmrs.mobile.models.Section;
 import org.openmrs.mobile.test.ACUnitTestBase;
+import org.openmrs.mobile.utilities.ActiveAndroid.Cache;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -15,14 +15,14 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppThemeOrig" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="AppThemeOrig" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
         <item name="actionModeStyle">@style/LongPress</item>
     </style>
 
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
@@ -31,19 +31,10 @@
         <item name="actionModeStyle">@style/LongPress</item>
     </style>
 
-    <style name="ToggleSwitchTheme" parent="ThemeOverlay.AppCompat.Light">
-        <item name="colorAccent">@color/switchcolor</item>
-    </style>
-
     <style name="LongPress" parent="@style/Widget.AppCompat.ActionMode">
         <item name="background">@color/primary_dark</item>
         <item name="actionMenuTextColor">@android:color/white</item>
     </style>
-
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
-    </style>
-
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="NoActionBarTheme" parent="AppThemeOrig">
         <item name="windowNoTitle">true</item>
@@ -85,11 +76,6 @@
         <item name="android:background">@color/dark_grey</item>
     </style>
 
-    <style name="Divider.Vertical.NoStickyEdges">
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingRight">10dp</item>
-    </style>
-
     <style name="AddressFields">
         <item name="android:layout_marginTop">3dp</item>
         <item name="android:paddingLeft">10dp</item>
@@ -97,18 +83,8 @@
         <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="AddressFieldsLabel">
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:textAppearance">@android:style/TextAppearance.Medium</item>
-    </style>
-
     <style name="BackgroundThemeEEE">
         <item name="android:background">#EEE</item>
-    </style>
-
-    <style name="BackgroundThemeEEEF3F3F3">
-        <item name="android:background">#FFF3F3F3</item>
     </style>
 
     <!--Showcase view styles -->

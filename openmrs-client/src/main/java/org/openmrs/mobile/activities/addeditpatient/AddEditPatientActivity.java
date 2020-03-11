@@ -19,8 +19,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import androidx.appcompat.widget.Toolbar;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -108,7 +106,7 @@ public class AddEditPatientActivity extends ACBaseActivity {
         alertDialogBuilder
                 .setMessage(R.string.dialog_message_data_lost)
                 .setCancelable(false)
-                .setPositiveButton(R.string.dialog_button_stay, (dialog, id) -> dialog.cancel())
+                .setNeutralButton(R.string.dialog_button_stay, (dialog, id) -> dialog.cancel())
                 .setNegativeButton(R.string.dialog_button_leave, (dialog, id) -> {
                     // Finish the activity
                     super.onBackPressed();

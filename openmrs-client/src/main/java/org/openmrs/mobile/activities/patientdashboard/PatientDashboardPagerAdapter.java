@@ -18,6 +18,7 @@ import android.content.Context;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.charts.PatientChartsFragment;
 import org.openmrs.mobile.activities.patientdashboard.charts.PatientDashboardChartsPresenter;
@@ -58,6 +59,7 @@ class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
         this.mPatientId = id;
     }
 
+    @NotNull
     @Override
     public Fragment getItem(int i) {
         switch (i) {

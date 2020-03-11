@@ -26,6 +26,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardActivity;
 import org.openmrs.mobile.activities.providermanagerdashboard.addprovider.AddProviderActivity;
@@ -50,6 +51,7 @@ public class ProviderManagerDashboardRecyclerViewAdapter extends
         this.presenter = presenter;
     }
 
+    @NotNull
     @Override
     public ProviderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_provider_management, parent, false);
@@ -58,7 +60,7 @@ public class ProviderManagerDashboardRecyclerViewAdapter extends
     }
 
     @Override
-    public void onBindViewHolder(ProviderViewHolder holder, int position) {
+    public void onBindViewHolder(@NotNull ProviderViewHolder holder, int position) {
         final Provider provider = mItems.get(position);
         if (provider.getPerson().getDisplay() != null) {
             holder.mName.setText(provider.getPerson().getDisplay());
@@ -121,7 +123,7 @@ public class ProviderManagerDashboardRecyclerViewAdapter extends
 
         public ProviderViewHolder(View itemView) {
             super(itemView);
-            mRowLayout = (CardView) itemView.findViewById(R.id.provider_management_foreground_card_view);
+            mRowLayout = itemView.findViewById(R.id.provider_management_foreground_card_view);
             mIdentifier = itemView.findViewById(R.id.providerManagementIdentifier);
             mName = itemView.findViewById(R.id.providerManagementName);
             deleteIv = itemView.findViewById(R.id.row_provider_management_delete_iv);

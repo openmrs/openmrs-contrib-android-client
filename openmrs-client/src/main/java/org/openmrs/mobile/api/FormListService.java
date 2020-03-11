@@ -13,12 +13,11 @@ package org.openmrs.mobile.api;
 import android.app.IntentService;
 import android.content.Intent;
 
-import com.activeandroid.ActiveAndroid;
-import com.activeandroid.query.Delete;
-
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.FormResource;
 import org.openmrs.mobile.models.Results;
+import org.openmrs.mobile.utilities.ActiveAndroid.ActiveAndroid;
+import org.openmrs.mobile.utilities.ActiveAndroid.query.Delete;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 

@@ -21,11 +21,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.bundle.FormFieldsWrapper;
@@ -84,7 +84,7 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
     }
 
     @Override
-    public void onAttachFragment (Fragment fragment) {
+    public void onAttachFragment (@NotNull Fragment fragment) {
         attachPresenterToFragment(fragment);
         super.onAttachFragment(fragment);
     }

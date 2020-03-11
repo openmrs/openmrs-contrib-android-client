@@ -1,2 +1,4 @@
-- Add Dark mode to the app
-- Provider management: admins can now find, add, edit and delete providers
+- Fix window leakage error when viewing patient details
+- Fix various performance issues
+- Add a splash screen
+- Add intro slides for first time users

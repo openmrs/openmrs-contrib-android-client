@@ -15,6 +15,7 @@
 package org.openmrs.mobile.models;
 
 import com.google.gson.annotations.Expose;
+import org.jetbrains.annotations.NotNull;
 
 public class User extends Resource{
 
@@ -51,6 +52,7 @@ public class User extends Resource{
         this.person = person;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "Username: " + username;

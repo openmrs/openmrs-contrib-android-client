@@ -13,8 +13,6 @@ package org.openmrs.mobile.api;
 import android.app.IntentService;
 import android.content.Intent;
 
-import com.activeandroid.query.Select;
-
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
@@ -23,6 +21,7 @@ import org.openmrs.mobile.listeners.retrofit.StartVisitResponseListenerCallback;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Encountercreate;
+import org.openmrs.mobile.utilities.ActiveAndroid.query.Select;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 

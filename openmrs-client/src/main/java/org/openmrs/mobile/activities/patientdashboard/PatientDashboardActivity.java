@@ -27,9 +27,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
@@ -47,9 +51,6 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.TabUtil;
 
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-
 public class PatientDashboardActivity extends ACBaseActivity {
 
     private String mId;
@@ -58,7 +59,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
 
     static boolean isActionFABOpen = false;
     public static FloatingActionButton additionalActionsFAB, updateFAB, deleteFAB;
-    public static LinearLayout deleteFabLayout, updateFabLayout;
+    public LinearLayout deleteFabLayout, updateFabLayout;
     public static Resources resources;
 
     @Override
@@ -80,18 +81,18 @@ public class PatientDashboardActivity extends ACBaseActivity {
     }
 
     @Override
-    public void onAttachFragment(Fragment fragment) {
+    public void onAttachFragment(@NotNull Fragment fragment) {
         attachPresenterToFragment(fragment);
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NotNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mId);
     }
 
     @Override
-    public void onConfigurationChanged(final Configuration config) {
+    public void onConfigurationChanged(@NotNull final Configuration config) {
         super.onConfigurationChanged(config);
         TabUtil.setHasEmbeddedTabs(getSupportActionBar(), getWindowManager(), TabUtil.MIN_SCREEN_WIDTH_FOR_PATIENTDASHBOARDACTIVITY);
     }
@@ -164,7 +165,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
         updateFAB.setOnClickListener(v -> startPatientUpdateActivity(mPresenter.getPatientId()));
     }
 
-    public static void showFABMenu() {
+    public void showFABMenu() {
         isActionFABOpen = true;
         deleteFabLayout.setVisibility(View.VISIBLE);
         updateFabLayout.setVisibility(View.VISIBLE);
@@ -172,7 +173,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
         updateFabLayout.animate().translationY(-resources.getDimension(R.dimen.custom_fab_bottom_margin_105));
     }
 
-    public static void closeFABMenu() {
+    public void closeFABMenu() {
         isActionFABOpen = false;
         deleteFabLayout.animate().translationY(0);
         updateFabLayout.animate().translationY(0);
@@ -193,7 +194,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
      * @param hide To hide the FAB menu depending on the Fragment visible
      */
     @SuppressLint("RestrictedApi")
-    public static void hideFABs(boolean hide) {
+    public void hideFABs(boolean hide) {
         closeFABMenu();
         if (hide) {
             additionalActionsFAB.setVisibility(View.GONE);

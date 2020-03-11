@@ -18,7 +18,6 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -104,7 +103,6 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
         private TextView mIdentifier;
         private TextView mDisplayName;
         private TextView mGender;
-        private TextView mAge;
         private TextView mBirthDate;
         private TextView mVisitStatus;
 
@@ -115,7 +113,6 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
             mIdentifier = itemView.findViewById(R.id.syncedPatientIdentifier);
             mDisplayName = itemView.findViewById(R.id.syncedPatientDisplayName);
             mGender = itemView.findViewById(R.id.syncedPatientGender);
-            mAge = itemView.findViewById(R.id.syncedPatientAge);
             mBirthDate = itemView.findViewById(R.id.syncedPatientBirthDate);
         }
 

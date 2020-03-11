@@ -15,7 +15,6 @@
 package org.openmrs.mobile.activities.patientdashboard.details;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,14 +29,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
@@ -59,7 +57,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NotNull Context context) {
         super.onAttach(context);
         mPatientDashboardActivity = (PatientDashboardActivity) context;
     }
@@ -101,10 +99,8 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     public void resolvePatientDataDisplay(final Patient patient) {
         if (isAdded()) {
             if (("M").equals(patient.getGender())) {
-                ((ImageView) rootView.findViewById(R.id.patientDetailsGenderIv)).setImageResource(R.mipmap.ic_male);
                 ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.male));
             } else {
-                ((ImageView) rootView.findViewById(R.id.patientDetailsGenderIv)).setImageResource(R.mipmap.ic_female);
                 ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.female));
             }
         }
@@ -171,7 +167,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {
-                PatientDashboardActivity.hideFABs(false);
+                mPatientDashboardActivity.hideFABs(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }

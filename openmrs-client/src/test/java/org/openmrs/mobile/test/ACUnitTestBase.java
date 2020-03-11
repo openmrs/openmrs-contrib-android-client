@@ -21,10 +21,6 @@ import android.database.ContentObserver;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
-import com.activeandroid.Cache;
-import com.activeandroid.TableInfo;
-import com.activeandroid.content.ContentProvider;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -39,6 +35,9 @@ import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Results;
+import org.openmrs.mobile.utilities.ActiveAndroid.Cache;
+import org.openmrs.mobile.utilities.ActiveAndroid.TableInfo;
+import org.openmrs.mobile.utilities.ActiveAndroid.content.ContentProvider;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
@@ -95,11 +94,10 @@ public abstract class ACUnitTestBase {
     }
 
     protected Patient createPatient(Long id) {
-        Patient patient = new Patient();
-        patient.setId(id);
+        Patient patient = new Patient(id, null,
+                Collections.singletonList(createIdentifier(id)));
         patient.setUuid("patient_one_uuid"+id);
         updatePatientData(id,patient);
-        patient.setIdentifiers(Collections.singletonList(createIdentifier(id)));
         return patient;
     }
 
@@ -146,12 +144,7 @@ public abstract class ACUnitTestBase {
     }
 
     protected Person createPerson(Long id) {
-        Person person = new Person();
-        person.setNames(Collections.singletonList(createPersonName(id)));
-        person.setAddresses(Collections.singletonList(createPersonAddress(id)));
-        person.setGender("M");
-        person.setBirthdate("25-02-2016");
-        return person;
+        return new Person(Collections.singletonList(createPersonName(id)), "M", "25-02-2016", false, Collections.singletonList(createPersonAddress(id)), null, null);
     }
 
     protected Provider createProvider(Long id, String identifier){

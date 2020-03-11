@@ -23,7 +23,6 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 
     public class AddProviderActivity extends ACBaseActivity {
 
-        private AddProviderPresenter mPresenter;
         AddProviderFragment addProviderFragment;
 
     @Override
@@ -48,12 +47,6 @@ import org.openmrs.mobile.activities.ACBaseActivity;
                     addProviderFragment, R.id.activity_add_provider_content_frame);
         }
 
-        if (savedInstanceState != null) {
-
-            mPresenter = new AddProviderPresenter(addProviderFragment);
-        } else {
-            mPresenter = new AddProviderPresenter(addProviderFragment);
-        }
-
+        AddProviderPresenter mPresenter = new AddProviderPresenter(addProviderFragment);
     }
 }

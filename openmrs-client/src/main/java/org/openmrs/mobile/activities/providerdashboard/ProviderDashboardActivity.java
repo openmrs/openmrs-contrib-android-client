@@ -98,6 +98,7 @@ public class ProviderDashboardActivity extends ACBaseActivity implements Provide
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == EDIT_PROVIDER_REQ_CODE) {
             if (resultCode == RESULT_OK) {
                 this.provider = (Provider) data.getSerializableExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE);

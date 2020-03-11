@@ -16,6 +16,7 @@ package org.openmrs.mobile.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.jetbrains.annotations.NotNull;
 
 public class Session {
 
@@ -59,6 +60,7 @@ public class Session {
         this.user = user;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "\tsessionId: " + sessionId + "\tauthenticated: " + authenticated;

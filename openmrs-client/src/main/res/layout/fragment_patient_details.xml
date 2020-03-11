@@ -14,247 +14,235 @@
 
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/patientAddressDetailsLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/patientAddressDetailsLayout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+	<androidx.constraintlayout.widget.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/patientPhotoCardView"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                app:cardCornerRadius="40dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+		<androidx.cardview.widget.CardView
+			android:id="@+id/patientPhotoCardView"
+			android:layout_width="80dp"
+			android:layout_height="80dp"
+			android:layout_marginStart="@dimen/activity_horizontal_margin"
+			android:layout_marginLeft="@dimen/activity_horizontal_margin"
+			android:layout_marginTop="@dimen/activity_vertical_margin"
+			app:cardCornerRadius="40dp"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/patientPhoto"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:contentDescription="@string/patient_photo"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ic_person_grey_500_48dp" />
+			<ImageView
+				android:id="@+id/patientPhoto"
+				android:layout_width="80dp"
+				android:layout_height="80dp"
+				android:contentDescription="@string/patient_photo"
+				android:scaleType="fitXY"
+				android:src="@drawable/ic_person_grey_500_48dp" />
 
-            </androidx.cardview.widget.CardView>
+		</androidx.cardview.widget.CardView>
 
-            <TextView
-                android:id="@+id/patientDetailsName"
-                style="@style/AddressFields"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_short"
-                android:layout_marginLeft="@dimen/margin_short"
-                android:layout_marginTop="30dp"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textSize="@dimen/text_size_large"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/patientPhotoCardView"
-                app:layout_constraintTop_toTopOf="parent" />
+		<TextView
+			android:id="@+id/patientDetailsName"
+			style="@style/AddressFields"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/margin_short"
+			android:layout_marginLeft="@dimen/margin_short"
+			android:layout_marginTop="30dp"
+			android:textColor="?android:attr/textColorPrimary"
+			android:textSize="@dimen/text_size_large"
+			android:textStyle="bold"
+			app:layout_constraintStart_toEndOf="@+id/patientPhotoCardView"
+			app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/patientDetailsGenderIv"
-                android:layout_width="@dimen/information_icon_size"
-                android:layout_height="@dimen/information_icon_size"
-                android:layout_marginStart="@dimen/margin_long"
-                android:layout_marginLeft="@dimen/margin_long"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:src="@mipmap/ic_male"
-                app:layout_constraintEnd_toStartOf="@+id/patientDetailsGender"
-                app:layout_constraintStart_toEndOf="@+id/patientPhotoCardView"
-                app:layout_constraintTop_toBottomOf="@+id/patientDetailsName" />
+		<TextView
+			android:id="@+id/patientDetailsGender"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/margin_short"
+			android:layout_marginLeft="@dimen/margin_short"
+			android:layout_marginTop="16dp"
+			android:paddingLeft="10dp"
+			app:layout_constraintStart_toEndOf="@+id/patientPhotoCardView"
+			app:layout_constraintTop_toBottomOf="@+id/patientDetailsName" />
 
-            <TextView
-                android:id="@+id/patientDetailsGender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_short"
-                android:layout_marginLeft="@dimen/margin_short"
-                android:layout_marginTop="32dp"
-                app:layout_constraintStart_toEndOf="@+id/patientDetailsGenderIv"
-                app:layout_constraintTop_toBottomOf="@+id/patientDetailsName" />
+		<View
+			android:id="@+id/view2"
+			android:layout_width="wrap_content"
+			android:layout_height="1dp"
+			android:layout_marginStart="8dp"
+			android:layout_marginLeft="8dp"
+			android:layout_marginTop="24dp"
+			android:background="@color/grey"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/patientDetailsGender" />
 
-            <View
-                android:id="@+id/view2"
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:background="@color/grey"
-                app:layout_constraintStart_toStartOf="@+id/patientDetailsName"
-                app:layout_constraintTop_toBottomOf="@+id/patientDetailsGenderIv" />
+		<ImageView
+			android:id="@+id/patientDetailsBirthdayIv"
+			android:layout_width="32dp"
+			android:layout_height="32dp"
+			android:layout_marginStart="@dimen/activity_horizontal_margin"
+			android:layout_marginLeft="@dimen/activity_horizontal_margin"
+			android:layout_marginTop="@dimen/activity_vertical_margin"
+			android:src="@mipmap/ic_birthday"
+			app:layout_constraintStart_toEndOf="@id/patientDetailsBirthDateLabel"
+			app:layout_constraintTop_toBottomOf="@+id/view2" />
 
-            <ImageView
-                android:id="@+id/patientDetailsBirthdayIv"
-                android:layout_width="@dimen/information_icon_size"
-                android:layout_height="@dimen/information_icon_size"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:src="@mipmap/ic_birthday"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view2" />
+		<TextView
+			android:id="@+id/patientDetailsBirthDateLabel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="20dp"
+			android:fontFamily="sans-serif-medium"
+			android:text="@string/patient_details_birth_date_label"
+			android:textColor="?android:attr/textColorPrimary"
+			android:textSize="@dimen/text_size_large"
+			app:layout_constraintStart_toStartOf="@+id/patientPhotoCardView"
+			app:layout_constraintTop_toBottomOf="@+id/view2" />
 
-            <TextView
-                android:id="@+id/patientDetailsBirthDateLabel"
-                style="@style/TextLabel.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/patient_details_birth_date_label"
-                android:textSize="@dimen/text_size_large"
-                app:layout_constraintStart_toStartOf="@+id/patientDetailsName"
-                app:layout_constraintTop_toBottomOf="@+id/view2" />
+		<TextView
+			android:id="@+id/patientDetailsBirthDate"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			android:textSize="16sp"
+			app:layout_constraintStart_toStartOf="@id/patientDetailsBirthDateLabel"
+			app:layout_constraintTop_toBottomOf="@+id/patientDetailsBirthDateLabel" />
 
-            <TextView
-                android:id="@+id/patientDetailsBirthDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_large"
-                app:layout_constraintStart_toStartOf="@+id/patientDetailsBirthDateLabel"
-                app:layout_constraintTop_toBottomOf="@+id/patientDetailsBirthdayIv" />
+		<View
+			android:id="@+id/view3"
+			android:layout_width="wrap_content"
+			android:layout_height="1dp"
+			android:layout_marginTop="24dp"
+			android:background="@color/grey"
+			app:layout_constraintStart_toStartOf="@+id/patientDetailsBirthDate"
+			app:layout_constraintTop_toBottomOf="@+id/patientDetailsBirthDate" />
 
-            <View
-                android:id="@+id/view3"
-                android:layout_width="wrap_content"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:background="@color/grey"
-                app:layout_constraintStart_toStartOf="@+id/patientDetailsBirthDate"
-                app:layout_constraintTop_toBottomOf="@+id/patientDetailsBirthDate" />
+		<ImageView
+			android:id="@+id/patientDetailsAddressIv"
+			android:layout_width="32dp"
+			android:layout_height="32dp"
+			android:layout_marginStart="@dimen/activity_horizontal_margin"
+			android:layout_marginLeft="@dimen/activity_horizontal_margin"
+			android:layout_marginTop="@dimen/activity_vertical_margin"
+			android:src="@mipmap/ic_home_location"
+			app:layout_constraintStart_toEndOf="@id/patientDetailsAddressLabel"
+			app:layout_constraintTop_toBottomOf="@+id/view3" />
 
+		<TextView
+			android:id="@+id/patientDetailsAddressLabel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="20dp"
+			android:fontFamily="sans-serif-medium"
+			android:text="@string/patient_address_label"
+			android:textColor="?android:attr/textColorPrimary"
+			android:textSize="@dimen/text_size_large"
+			app:layout_constraintStart_toStartOf="@id/patientPhotoCardView"
+			app:layout_constraintTop_toBottomOf="@+id/view3" />
 
-            <ImageView
-                android:id="@+id/patientDetailsAddressIv"
-                android:layout_width="@dimen/information_icon_size"
-                android:layout_height="@dimen/information_icon_size"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:src="@mipmap/ic_home_location"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view3" />
+		<TextView
+			android:id="@+id/addressDetailsStreet"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/margin_short"
+			android:textSize="16sp"
+			app:layout_constraintStart_toStartOf="@+id/patientDetailsAddressLabel"
+			app:layout_constraintTop_toBottomOf="@+id/patientDetailsAddressIv" />
 
+		<TextView
+			android:id="@+id/addressDetailsCityLabel"
+			style="@style/TextLabel.Bold"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			android:text="@string/patient_city_label"
+			android:textSize="16sp"
+			app:layout_constraintStart_toStartOf="@+id/patientPhotoCardView"
+			app:layout_constraintTop_toBottomOf="@+id/addressDetailsStreet" />
 
-            <TextView
-                android:id="@+id/patientDetailsAddressLabel"
-                style="@style/TextLabel.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/patient_address_label"
-                android:textSize="@dimen/text_size_large"
-                app:layout_constraintStart_toStartOf="@+id/patientDetailsName"
-                app:layout_constraintTop_toBottomOf="@+id/view3" />
+		<TextView
+			android:id="@+id/addressDetailsCity"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/activity_vertical_margin"
+			android:textSize="16sp"
+			app:layout_constraintStart_toStartOf="@+id/addressDetailsPostalCode"
+			app:layout_constraintTop_toBottomOf="@+id/addressDetailsStreet" />
 
-            <TextView
-                android:id="@+id/addressDetailsStreet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_short"
-                android:textSize="@dimen/text_size_large"
-                app:layout_constraintStart_toStartOf="@+id/patientDetailsAddressLabel"
-                app:layout_constraintTop_toBottomOf="@+id/patientDetailsAddressIv" />
+		<TextView
+			android:id="@+id/addressDetailsPostalCodeLabel"
+			style="@style/TextLabel.Bold"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			android:text="@string/patient_postal_label"
+			android:textSize="16sp"
+			app:layout_constraintStart_toStartOf="@+id/patientPhotoCardView"
+			app:layout_constraintTop_toBottomOf="@+id/addressDetailsCityLabel" />
 
-            <TextView
-                android:id="@+id/addressDetailsCityLabel"
-                style="@style/TextLabel.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:text="@string/patient_city_label"
-                android:textSize="@dimen/text_size_large"
-                app:layout_constraintStart_toStartOf="@+id/patientDetailsAddressLabel"
-                app:layout_constraintTop_toBottomOf="@+id/addressDetailsStreet" />
+		<TextView
+			android:id="@+id/addressDetailsPostalCode"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="@dimen/margin_short"
+			android:layout_marginLeft="@dimen/margin_short"
+			android:layout_marginTop="12dp"
+			android:textSize="16sp"
+			app:layout_constraintStart_toEndOf="@+id/addressDetailsPostalCodeLabel"
+			app:layout_constraintTop_toBottomOf="@+id/addressDetailsCity" />
 
-            <TextView
-                android:id="@+id/addressDetailsCity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/label_margin_wide"
-                android:layout_marginLeft="@dimen/label_margin_wide"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:textSize="@dimen/text_size_large"
-                app:layout_constraintStart_toEndOf="@+id/patientDetailsAddressLabel"
-                app:layout_constraintTop_toBottomOf="@+id/addressDetailsStreet" />
+		<TextView
+			android:id="@+id/addressDetailsStateLabel"
+			style="@style/TextLabel.Bold"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			android:text="@string/patient_state_label"
+			android:textSize="16sp"
+			app:layout_constraintStart_toStartOf="@+id/patientPhotoCardView"
+			app:layout_constraintTop_toBottomOf="@+id/addressDetailsPostalCodeLabel" />
 
-            <TextView
-                android:id="@+id/addressDetailsPostalCodeLabel"
-                style="@style/TextLabel.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:text="@string/patient_postal_label"
-                android:textSize="@dimen/text_size_large"
-                app:layout_constraintStart_toStartOf="@+id/patientDetailsAddressLabel"
-                app:layout_constraintTop_toBottomOf="@+id/addressDetailsCityLabel" />
+		<TextView
+			android:id="@+id/addressDetailsState"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			android:textSize="16sp"
+			app:layout_constraintStart_toStartOf="@+id/addressDetailsPostalCode"
+			app:layout_constraintTop_toBottomOf="@+id/addressDetailsPostalCodeLabel" />
 
-            <TextView
-                android:id="@+id/addressDetailsPostalCode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_short"
-                android:layout_marginLeft="@dimen/margin_short"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:textSize="@dimen/text_size_large"
-                app:layout_constraintStart_toEndOf="@+id/addressDetailsPostalCodeLabel"
-                app:layout_constraintTop_toBottomOf="@+id/addressDetailsCity" />
+		<TextView
+			android:id="@+id/addressDetailsCountryLabel"
+			style="@style/TextLabel.Bold"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			android:text="@string/patient_country_label"
+			android:textSize="16sp"
+			app:layout_constraintStart_toStartOf="@+id/patientPhotoCardView"
+			app:layout_constraintTop_toBottomOf="@+id/addressDetailsStateLabel" />
 
-            <TextView
-                android:id="@+id/addressDetailsStateLabel"
-                style="@style/TextLabel.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:text="@string/patient_state_label"
-                android:textSize="@dimen/text_size_large"
-                app:layout_constraintStart_toStartOf="@+id/patientDetailsAddressLabel"
-                app:layout_constraintTop_toBottomOf="@+id/addressDetailsPostalCodeLabel" />
+		<TextView
+			android:id="@+id/addressDetailsCountry"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="12dp"
+			android:textSize="16sp"
+			app:layout_constraintStart_toStartOf="@+id/addressDetailsPostalCode"
+			app:layout_constraintTop_toBottomOf="@+id/addressDetailsState" />
 
-            <TextView
-                android:id="@+id/addressDetailsState"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/label_margin_wide"
-                android:layout_marginLeft="@dimen/label_margin_wide"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:textSize="@dimen/text_size_large"
-                app:layout_constraintStart_toEndOf="@+id/patientDetailsAddressLabel"
-                app:layout_constraintTop_toBottomOf="@+id/addressDetailsPostalCodeLabel" />
+		<View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginTop="50dp"
+			android:background="@color/transparent"
+			android:visibility="visible"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toBottomOf="@+id/addressDetailsCountry" />
 
-            <TextView
-                android:id="@+id/addressDetailsCountryLabel"
-                style="@style/TextLabel.Bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:text="@string/patient_country_label"
-                android:textSize="@dimen/text_size_large"
-                app:layout_constraintStart_toStartOf="@+id/patientDetailsAddressLabel"
-                app:layout_constraintTop_toBottomOf="@+id/addressDetailsStateLabel" />
-
-            <TextView
-                android:id="@+id/addressDetailsCountry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/label_margin_wide"
-                android:layout_marginLeft="@dimen/label_margin_wide"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:textSize="@dimen/text_size_large"
-                app:layout_constraintStart_toEndOf="@+id/patientDetailsAddressLabel"
-                app:layout_constraintTop_toBottomOf="@+id/addressDetailsState" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+	</androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

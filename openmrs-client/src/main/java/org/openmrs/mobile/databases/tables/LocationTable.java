@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.databases.tables;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.models.Location;
@@ -98,6 +99,7 @@ public class LocationTable extends Table<Location> {
         public static final String PARENT_LOCATION_UUID = "parentLocationUuid";
     }
 
+    @NotNull
     @Override
     public String toString() {
         return TABLE_NAME + createTableDefinition();

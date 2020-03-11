@@ -14,7 +14,6 @@
 
 package org.openmrs.mobile.utilities;
 
-import org.openmrs.mobile.R;
 import org.openmrs.mobile.models.EncounterType;
 
 public abstract class ApplicationConstants {
@@ -25,6 +24,7 @@ public abstract class ApplicationConstants {
     public static final String AUTHORIZATION_TOKEN = "authorisation";
     public static final String SECRET_KEY = "secretKey";
     public static final String LOCATION = "location";
+    public static final Boolean FIRST = true;
     public static final String VISIT_TYPE_UUID = "visit_type_uuid";
     public static final String LAST_SESSION_TOKEN = "last_session_id";
     public static final String LAST_LOGIN_SERVER_URL = "last_login_server_url";
@@ -34,7 +34,9 @@ public abstract class ApplicationConstants {
     public static final String DB_PASSWORD_LITERAL_PEPPER = "Open Sesame";
     public static final String DEFAULT_VISIT_TYPE_UUID = "7b0f5697-27e3-40c4-8bae-f4049abfb4ed";
     public static final int DEFAULT_BCRYPT_ROUND = 8;
+    public static final int SPLASH_TIMER = 3500;
     public static final String PACKAGE_NAME = "org.openmrs.mobile";
+    public static final String USER_GUIDE = "https://openmrs.github.io/openmrs-android-client-user-guide/getting-started.html";
 
     public abstract static class OpenMRSSharedPreferenceNames {
         public static final String SHARED_PREFERENCES_NAME = "shared_preferences";
@@ -52,6 +54,7 @@ public abstract class ApplicationConstants {
         public static final String USER_PERSON_NAME = "userDisplay";
         public static final String USER_UUID = "userUUID";
         public static final String LOGIN = "login";
+        public static final String FIRST_TIME = "firstTime";
     }
 
     public abstract static class DialogTAG {
@@ -119,6 +122,11 @@ public abstract class ApplicationConstants {
 
     public abstract static class OpenMRSThemes{
         public static final String KEY_DARK_MODE = "key_dark_mode";
+    }
+
+    public abstract static class OpenMRSlanguage{
+        public static final String KEY_LANGUAGE_MODE = "key_language_mode";
+        public static final String[] LANGUAGE_LIST = {"en", "hi"};
     }
 
 }

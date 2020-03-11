@@ -13,9 +13,7 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<ScrollView
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,14 +24,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <!--<androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />-->
 
         <RelativeLayout
             android:id="@+id/viewPagerIndicator"
@@ -78,11 +68,6 @@
         <LinearLayout
             android:id="@+id/pagerContainer"
             android:layout_above="@id/viewPagerIndicator"
-            android:layout_below="@+id/toolbar"
-            android:layout_alignLeft="@+id/toolbar"
-            android:layout_alignStart="@+id/toolbar"
-            android:layout_alignRight="@+id/toolbar"
-            android:layout_alignEnd="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="fill_parent"
             android:orientation="horizontal">

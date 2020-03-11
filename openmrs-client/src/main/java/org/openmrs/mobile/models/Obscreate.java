@@ -10,8 +10,8 @@
 
 package org.openmrs.mobile.models;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Table;
+import org.openmrs.mobile.utilities.ActiveAndroid.Model;
+import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Table;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

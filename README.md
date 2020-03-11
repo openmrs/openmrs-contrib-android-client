@@ -23,6 +23,7 @@ OpenMRS Android Client
 				- [Demo Password: Admin123](#Demo-Password-Admin123)
 - [Releasing [Collaborators only]](#Releasing-Collaborators-only)
 - [Release Notes](#Release-Notes)
+        - [Version 2.8.1](#Version-281)
         - [Version 2.8.0](#Version-280)
 		- [Version 2.7.4](#Version-274)
 		- [Summary:](#Summary)
@@ -63,7 +64,7 @@ For more information on the client, visit https://wiki.openmrs.org/display/proje
 - Offline access
 
 # Screenshots
-![Login](http://i.imgur.com/zinrnCK.png) ![Dashboard](http://i.imgur.com/TLIwMoy.png) ![Register Patient](http://i.imgur.com/n7LaeKS.png)
+<img src="http://i.imgur.com/I4LLWCA.png" width="280" height="420" alt="Login page" >  <img src="http://i.imgur.com/KmaWzNv.png" width="280" height="420"> <img src="http://i.imgur.com/hiCNNIx.png" width="280" height="420">
 
 # GSoC 2019
 
@@ -74,12 +75,30 @@ It was been selected as a candidate for Google Summer of Code 2017. Please visit
 The project was also a part of GSoC 2016, the details of which can be seen in the [GSoC_2016.md](GSoC_2016.md) file.
 
 # Development
-We use JIRA to track issues and monitor project development. Refer to this link to view all issues and project summary: [Android Client JIRA](https://issues.openmrs.org/browse/AC)
+We use JIRA to track issues and monitor project development. Refer to this link to view all issues and project summary: [Android Client JIRA](https://issues.openmrs.org/browse/AC). 
 To get started contributing, try working on [introductory issues](https://issues.openmrs.org/issues/?filter=17165) in JIRA and check out [OpenMRS Pull Request Tips](https://wiki.openmrs.org/display/docs/Pull+Request+Tips).
 Also, before creating a pull request, please run code review tools (Lint) and all tests.
 
 ### Code Style
-The coding conventions used by OpenMRS are outlined [here](https://wiki.openmrs.org/display/docs/Coding+Conventions).
+The coding conventions used by OpenMRS are outlined [here](https://wiki.openmrs.org/display/docs/Developer+How-To+Setup+And+Use+IntelliJ#DeveloperHow-ToSetupAndUseIntelliJ-SetupCodeStyleAndFormatForOpenMRS). These can be applied to Android Studio by following the steps given below.
+1. Install [Eclipse Code Formatter](https://github.com/krasa/EclipseCodeFormatter) plugin in Android studio
+	I. Go to `Settings` > `Preferences` > `Plugins`
+	II. Select Marketplace and searh for the plugin by name. 
+	Then install it
+2. Copy the required [XML](https://github.com/openmrs/openmrs-core/blob/master/tools/src/main/resources/eclipse/OpenMRSFormatter.xml)
+3. Go to `Settings` > `Eclipse Code Formatter` and import the XML created in previous step
+4. Now go to `Editor` > `Code Style` in the same window
+5. Select `Java` in the menu on left and update values in `Imports` as shown in below picture
+![Java:Imports settings](https://wiki.openmrs.org/download/attachments/3346739/Screen%20Shot%202017-03-02%20at%2013.01.04.png?version=1&modificationDate=1488438089000&api=v2)
+5. Now select `XML` in the menu on left and update values in `Tabs and Indents` tab as shown in below picture
+![XMLOther setings](https://wiki.openmrs.org/download/attachments/3346134/Screen%20Shot%202017-03-10%20at%2010.52.44.png?version=2&modificationDate=1489121590000&api=v2)
+
+
+Please follow the below instructions while contributing:
+1. When project is opened with Android Studio, go to `File` > `Settings` > `Editor` > `Code Style`
+2. Select Project from the Scheme dropdown
+3. Make sure that **hard wrap** is set to **125** for Java and XML language settings.
+
 
 ### Model pattern
 We are following [Google's MVP sample](https://github.com/googlesamples/android-architecture/tree/todo-mvp) for this application's development.
@@ -94,8 +113,8 @@ As of February 2016, this project has been migrated to gradle to work successful
 
 ### Steps to set up:
 1. Fork the repository and clone your fork.
-2. From the Android Studio menu select File > New > Import Project. Alternatively, from the Welcome screen, select Import project.
-3. Navigate to the folder where you have cloned this repo and select the build.gradle file inside. Select "Import".
+2. From the Android Studio menu select `File` > `New` > `Import Project`. Alternatively, from the `Welcome screen`, select `Import project`.
+3. Navigate to the folder where you have cloned this repo and select the `build.gradle` file inside. Select `Import`.
 4. Done! Wait for dependencies to load and download from Maven, then you're ready to go!
 5. Make sure that you have the latest SDK and build tools downloaded, as we always build against the latest release.
 
@@ -128,6 +147,16 @@ To release the application, make sure to do these steps **in order**:
 9. [Optional] Post a new Talk thread and describe what is changed or improved in the release.
 
 # Release Notes
+
+### Version 2.8.1
+### Summary:
+1. Fix window leakage error when viewing patient details
+2. Fix various performance issues
+3. Integrate leak canary for debug builds
+4. Add a splash screen
+5. Add intro slides for first time users
+6. Set a code style
+7. Fix broken unit tests
 
 ### Version 2.8.0
 ### Summary:
@@ -246,8 +275,9 @@ Check this link for the manual: [Version 2.x](https://wiki.openmrs.org/download/
 This project is licensed under the OpenMRS Public License, see the [copyright](copyright/copyright) file for details.
 
 # Resources
-- JIRA https://issues.openmrs.org/browse/AC/?selectedTab=com.atlassian.jira.jira-projects-plugin:summary-panel 
-- Sprint board https://issues.openmrs.org/secure/RapidBoard.jspa?rapidView=60
-- Dashboard https://issues.openmrs.org/secure/Dashboard.jspa?selectPageId=12851
-- CI https://travis-ci.org/openmrs/openmrs-contrib-android-client
-- Google Play https://play.google.com/store/apps/details?id=org.openmrs.mobile
+- [Contribution Guidelines](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/CONTRIBUTING.md)
+- [JIRA](https://issues.openmrs.org/browse/AC/?selectedTab=com.atlassian.jira.jira-projects-plugin:summary-panel)
+- [Sprint board](https://issues.openmrs.org/secure/RapidBoard.jspa?rapidView=60)
+- [Dashboard](https://issues.openmrs.org/secure/Dashboard.jspa?selectPageId=12851)
+- [CI](https://travis-ci.org/openmrs/openmrs-contrib-android-client)
+- [Google Play](https://play.google.com/store/apps/details?id=org.openmrs.mobile)

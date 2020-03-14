@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.activities.introduction;
 
+import static org.openmrs.mobile.utilities.ApplicationConstants.SPLASH_TIMER;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,11 +27,8 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-
-import static org.openmrs.mobile.utilities.ApplicationConstants.SPLASH_TIMER;
 
 public class SplashActivity extends ACBaseActivity {
 

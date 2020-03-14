@@ -413,7 +413,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 (!ViewUtils.isEmpty(edAddr2)) ||
                 (!ViewUtils.isEmpty(edCity)) ||
                 (!ViewUtils.isEmpty(edState)) ||
-                (!ViewUtils.isCountryCodePickerEmpty(mCountryCodePicker)) ||
                 (!ViewUtils.isEmpty(edPostal)));
     }
 

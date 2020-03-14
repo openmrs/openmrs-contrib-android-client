@@ -21,8 +21,7 @@ public class LanguageUtils
 {
     public static String getLanguage() {
         SharedPreferences defaultSharedPref = OpenMRS.getInstance().getOpenMRSSharedPreferences();
-        String selecetedLang = defaultSharedPref.getString(ApplicationConstants.OpenMRSlanguage.KEY_LANGUAGE_MODE, "en");
-        return selecetedLang;
+        return defaultSharedPref.getString(ApplicationConstants.OpenMRSlanguage.KEY_LANGUAGE_MODE, "en");
     }
 
     public static void setLanguage(String language) {

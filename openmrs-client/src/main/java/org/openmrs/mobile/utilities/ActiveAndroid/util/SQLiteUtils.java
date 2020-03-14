@@ -16,16 +16,6 @@ package org.openmrs.mobile.utilities.ActiveAndroid.util;
  * limitations under the License.
  */
 
-import android.database.Cursor;
-import android.os.Build;
-import android.text.TextUtils;
-
-import org.openmrs.mobile.utilities.ActiveAndroid.Cache;
-import org.openmrs.mobile.utilities.ActiveAndroid.Model;
-import org.openmrs.mobile.utilities.ActiveAndroid.TableInfo;
-import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Column;
-import org.openmrs.mobile.utilities.ActiveAndroid.serializer.TypeSerializer;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -34,6 +24,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import android.database.Cursor;
+import android.text.TextUtils;
+import org.openmrs.mobile.utilities.ActiveAndroid.Cache;
+import org.openmrs.mobile.utilities.ActiveAndroid.Model;
+import org.openmrs.mobile.utilities.ActiveAndroid.TableInfo;
+import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Column;
+import org.openmrs.mobile.utilities.ActiveAndroid.serializer.TypeSerializer;
 
 public final class SQLiteUtils {
     //////////////////////////////////////////////////////////////////////////////////////

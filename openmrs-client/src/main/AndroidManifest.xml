@@ -268,7 +268,12 @@
             android:parentActivityName=".activities.providermanagerdashboard.ProviderManagerDashboardActivity"
             android:theme="@style/AppThemeOrig" />
 
-        <meta-data
+        <activity
+            android:name=".activities.community.contact.ContactUsActivity"
+            android:theme="@style/AppThemeOrig"
+            android:label="@string/contact_us"/>
+
+		<meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${GOOGLE_PLACE_API_KEY}"/>
     </application>

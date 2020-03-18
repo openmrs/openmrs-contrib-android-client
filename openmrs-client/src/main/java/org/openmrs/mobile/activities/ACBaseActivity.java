@@ -40,6 +40,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.community.contact.ContactUsActivity;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
@@ -119,7 +120,8 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         setupTheme();
         setupLanguage();
         invalidateOptionsMenu();
-        if (!(this instanceof LoginActivity) && !mAuthorizationManager.isUserLoggedIn()) {
+        if (!(this instanceof LoginActivity) && !mAuthorizationManager.isUserLoggedIn()
+                && !(this instanceof ContactUsActivity)) {
             mAuthorizationManager.moveToLoginActivity();
         }
         registerReceiver(mPasswordChangedReceiver, mIntentFilter);
@@ -170,8 +172,10 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.actionSettings:
-                Intent i = new Intent(this, SettingsActivity.class);
-                startActivity(i);
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            case R.id.actionContact:
+                startActivity(new Intent(this, ContactUsActivity.class));
                 return true;
             case R.id.actionSearchLocal:
                 return true;

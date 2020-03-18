@@ -359,4 +359,12 @@
 	<string name="intro_settings_desc">हमारी डार्क मोड सुविधा देखें।\n आएँ शुरू करें।</string>
 	<string name="get_started_with_our_user_guide">हमारे उपयोगकर्ता गाइड के साथ आरंभ करें</string>
 
+	<!-- Contact Activity -->
+	<string name="go_to_forum">फोरम पर जाएं</string>
+	<string name="go_to_irc">आईआरसी पर जाएं</string>
+	<string name="open">खोले</string>
+	<string name="email_us">ईमेल करे</string>
+	<string name="help_message">हमारी टीम हमेशा किसी भी सवाल का जवाब देने के लिए होती है। हमें एक ईमेल ड्रॉप करें या फ़ोरम पर पहुंचें और हम जल्द से जल्द जवाब देने की पूरी कोशिश करेंगे।</string>
+	<string name="contact_us">संपर्क करें</string>
+	<string name="no_mailing_client_found">कोई ईमेल क्लाइंट स्थापित नहीं हैं।</string>
 </resources>

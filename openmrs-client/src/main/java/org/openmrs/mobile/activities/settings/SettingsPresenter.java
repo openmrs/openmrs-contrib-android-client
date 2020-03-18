@@ -71,6 +71,7 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
         mSettingsView.addBuildVersionInfo();
         mSettingsView.addPrivacyPolicyInfo();
         mSettingsView.rateUs();
+        mSettingsView.setUpContactUsButton();
         mSettingsView.setDarkMode();
         mSettingsView.chooseLanguage(ApplicationConstants.OpenMRSlanguage.LANGUAGE_LIST);
     }

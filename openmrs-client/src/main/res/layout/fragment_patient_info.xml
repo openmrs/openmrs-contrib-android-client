@@ -61,21 +61,20 @@
                             android:layout_width="200dp"
                             android:layout_height="200dp"
                             android:layout_centerInParent="true"
-                            android:background="@color/card_shadow_1"
+
                             android:contentDescription="@string/patient_photo"
                             android:scaleType="fitXY"
-                            android:src="@drawable/ic_person_grey_500_48dp" />
+                            android:src="@drawable/patient" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/capture_photo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/patientPhoto"
-                            android:layout_alignEnd="@id/patientPhoto"
+
                             android:layout_alignRight="@id/patientPhoto"
-                            android:layout_marginEnd="-25dp"
-                            android:layout_marginRight="-25dp"
-                            android:layout_marginBottom="10dp"
+
+                            android:layout_marginBottom="8dp"
                             android:src="@drawable/ic_photo_camera_white_48dp" />
                     </RelativeLayout>
 
@@ -317,7 +316,7 @@
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
-                        <Button
+                        <ImageButton
                             android:id="@+id/btn_datepicker"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
@@ -327,7 +326,7 @@
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="24dp"
                             android:layout_marginRight="24dp"
-                            android:background="@drawable/ic_date_range_24dp" />
+                            android:src="@drawable/dobicon" />
                     </RelativeLayout>
 
                     <TextView

@@ -317,7 +317,7 @@
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
-                        <Button
+                        <ImageButton
                             android:id="@+id/btn_datepicker"
                             android:layout_width="24dp"
                             android:layout_height="24dp"

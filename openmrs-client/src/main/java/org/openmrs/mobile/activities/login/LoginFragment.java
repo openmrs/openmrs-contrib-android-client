@@ -211,6 +211,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     public void onResume() {
         super.onResume();
 
+
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance());
         boolean syncState = prefs.getBoolean("sync", true);
         setSyncButtonState(syncState);
@@ -329,19 +330,21 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mLastCorrectURL = serverURL;
         mUrl.setText(serverURL);
         mLocationsList = locationsList;
-        List<String> items = getLocationStringList(locationsList);
-        final LocationArrayAdapter adapter = new LocationArrayAdapter(this.getActivity(), items);
-        mDropdownLocation.setAdapter(adapter);
-        mLoginButton.setEnabled(false);
-        mSpinner.setVisibility(View.GONE);
-        mLoginFormView.setVisibility(View.VISIBLE);
-        showOpenMRSLogo();
-        if (locationsList.isEmpty()) {
-            mDropdownLocation.setVisibility(View.GONE);
-            mLoginButton.setEnabled(true);
-        } else {
-            mDropdownLocation.setVisibility(View.VISIBLE);
+        if (isActivityNotNull()) {
+            List<String> items = getLocationStringList(locationsList);
+            final LocationArrayAdapter adapter = new LocationArrayAdapter(this.getActivity(), items);
+            mDropdownLocation.setAdapter(adapter);
             mLoginButton.setEnabled(false);
+            mSpinner.setVisibility(View.GONE);
+            mLoginFormView.setVisibility(View.VISIBLE);
+            showOpenMRSLogo();
+            if (locationsList.isEmpty()) {
+                mDropdownLocation.setVisibility(View.GONE);
+                mLoginButton.setEnabled(true);
+            } else {
+                mDropdownLocation.setVisibility(View.VISIBLE);
+                mLoginButton.setEnabled(false);
+            }
         }
     }
 
@@ -357,8 +360,10 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
     @Override
     public void startFormListService() {
-        Intent i = new Intent(getContext(), FormListService.class);
-        getActivity().startService(i);
+        if (isActivityNotNull()) {
+            Intent i = new Intent(getContext(), FormListService.class);
+            getActivity().startService(i);
+        }
     }
 
     @Override
@@ -396,14 +401,14 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
     @Override
     public void showToast(String message, ToastUtil.ToastType toastType) {
-        if (getActivity() != null) {
+        if (isActivityNotNull()) {
             ToastUtil.showShortToast(getActivity(), toastType, message);
         }
     }
 
     @Override
     public void showToast(int textId, ToastUtil.ToastType toastType) {
-        if (getActivity() != null) {
+        if (isActivityNotNull()) {
             ToastUtil.showShortToast(getActivity(), toastType, getResources().getString(textId));
         }
     }
@@ -431,7 +436,8 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         if (mLocationsList == null) {
             mPresenter.loadLocations(mLastCorrectURL);
         } else {
-            initLoginForm(mLocationsList, mLastCorrectURL);
+            if(isActivityNotNull())
+                initLoginForm(mLocationsList, mLastCorrectURL);
         }
     }
 
@@ -452,6 +458,10 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mPresenter.authenticateUser(mUsername.getText().toString(),
                 mPassword.getText().toString(),
                 mUrl.getText().toString(), wipeDatabase);
+    }
+
+    private boolean isActivityNotNull() {
+        return (isAdded() && getActivity()!=null);
     }
 
 }

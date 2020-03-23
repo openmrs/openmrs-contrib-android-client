@@ -329,19 +329,21 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mLastCorrectURL = serverURL;
         mUrl.setText(serverURL);
         mLocationsList = locationsList;
-        List<String> items = getLocationStringList(locationsList);
-        final LocationArrayAdapter adapter = new LocationArrayAdapter(this.getActivity(), items);
-        mDropdownLocation.setAdapter(adapter);
-        mLoginButton.setEnabled(false);
-        mSpinner.setVisibility(View.GONE);
-        mLoginFormView.setVisibility(View.VISIBLE);
-        showOpenMRSLogo();
-        if (locationsList.isEmpty()) {
-            mDropdownLocation.setVisibility(View.GONE);
-            mLoginButton.setEnabled(true);
-        } else {
-            mDropdownLocation.setVisibility(View.VISIBLE);
+        if (isActivityNotNull()) {
+            List<String> items = getLocationStringList(locationsList);
+            final LocationArrayAdapter adapter = new LocationArrayAdapter(this.getActivity(), items);
+            mDropdownLocation.setAdapter(adapter);
             mLoginButton.setEnabled(false);
+            mSpinner.setVisibility(View.GONE);
+            mLoginFormView.setVisibility(View.VISIBLE);
+            showOpenMRSLogo();
+            if (locationsList.isEmpty()) {
+                mDropdownLocation.setVisibility(View.GONE);
+                mLoginButton.setEnabled(true);
+            } else {
+                mDropdownLocation.setVisibility(View.VISIBLE);
+                mLoginButton.setEnabled(false);
+            }
         }
     }
 
@@ -357,8 +359,10 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
     @Override
     public void startFormListService() {
-        Intent i = new Intent(getContext(), FormListService.class);
-        getActivity().startService(i);
+        if (isActivityNotNull()) {
+            Intent i = new Intent(getContext(), FormListService.class);
+            getActivity().startService(i);
+        }
     }
 
     @Override
@@ -452,6 +456,10 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mPresenter.authenticateUser(mUsername.getText().toString(),
                 mPassword.getText().toString(),
                 mUrl.getText().toString(), wipeDatabase);
+    }
+
+    private boolean isActivityNotNull() {
+        return (isAdded() && getActivity()!=null);
     }
 
 }

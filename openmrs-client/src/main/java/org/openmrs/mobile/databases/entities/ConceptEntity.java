@@ -13,8 +13,8 @@
 
 package org.openmrs.mobile.databases.entities;
 
+import androidx.room.PrimaryKey;
 import org.jetbrains.annotations.NotNull;
-import org.openmrs.mobile.models.ConceptClass;
 import org.openmrs.mobile.models.Datatype;
 import org.openmrs.mobile.models.Resource;
 import androidx.room.ColumnInfo;
@@ -27,6 +27,7 @@ public class ConceptEntity extends Resource {
 
     public ConceptEntity() { }
 
+    @PrimaryKey
     private Long id;
 
     @Embedded(prefix = "datatype_")
@@ -35,10 +36,6 @@ public class ConceptEntity extends Resource {
 
     @ColumnInfo(name = "name")
     private String name;
-
-    @Embedded(prefix = "conceptClass_")
-    @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
-    private ConceptClass conceptClass;
 
     @NotNull
     @Override
@@ -67,11 +64,4 @@ public class ConceptEntity extends Resource {
         this.name = name;
     }
 
-    public ConceptClass getConceptClass() {
-        return conceptClass;
-    }
-
-    public void setConceptClass(ConceptClass conceptClass) {
-        this.conceptClass = conceptClass;
-    }
 }

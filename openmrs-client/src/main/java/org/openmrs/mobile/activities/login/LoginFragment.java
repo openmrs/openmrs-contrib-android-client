@@ -329,19 +329,21 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mLastCorrectURL = serverURL;
         mUrl.setText(serverURL);
         mLocationsList = locationsList;
-        List<String> items = getLocationStringList(locationsList);
-        final LocationArrayAdapter adapter = new LocationArrayAdapter(this.getActivity(), items);
-        mDropdownLocation.setAdapter(adapter);
-        mLoginButton.setEnabled(false);
-        mSpinner.setVisibility(View.GONE);
-        mLoginFormView.setVisibility(View.VISIBLE);
-        showOpenMRSLogo();
-        if (locationsList.isEmpty()) {
-            mDropdownLocation.setVisibility(View.GONE);
-            mLoginButton.setEnabled(true);
-        } else {
-            mDropdownLocation.setVisibility(View.VISIBLE);
+        if (isActivityNotNull()) {
+            List<String> items = getLocationStringList(locationsList);
+            final LocationArrayAdapter adapter = new LocationArrayAdapter(this.getActivity(), items);
+            mDropdownLocation.setAdapter(adapter);
             mLoginButton.setEnabled(false);
+            mSpinner.setVisibility(View.GONE);
+            mLoginFormView.setVisibility(View.VISIBLE);
+            showOpenMRSLogo();
+            if (locationsList.isEmpty()) {
+                mDropdownLocation.setVisibility(View.GONE);
+                mLoginButton.setEnabled(true);
+            } else {
+                mDropdownLocation.setVisibility(View.VISIBLE);
+                mLoginButton.setEnabled(false);
+            }
         }
     }
 
@@ -357,29 +359,35 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
     @Override
     public void startFormListService() {
-        Intent i = new Intent(getContext(), FormListService.class);
-        getActivity().startService(i);
+        if (isActivityNotNull()) {
+            Intent i = new Intent(getContext(), FormListService.class);
+            getActivity().startService(i);
+        }
     }
 
     @Override
     public void showInvalidURLSnackbar(String message) {
-        createSnackbar(message)
-                .setAction(getResources().getString(R.string.snackbar_edit), view -> {
-                    mUrl.requestFocus();
-                    mUrl.selectAll();
-                })
-                .show();
+        if (isActivityNotNull()) {
+            createSnackbar(message)
+                    .setAction(getResources().getString(R.string.snackbar_edit), view -> {
+                        mUrl.requestFocus();
+                        mUrl.selectAll();
+                    })
+                    .show();
+        }
     }
 
     @Override
     public void showInvalidLoginOrPasswordSnackbar() {
         String message = getResources().getString(R.string.invalid_login_or_password_message);
-        createSnackbar(message)
-                .setAction(getResources().getString(R.string.snackbar_edit), view -> {
-                    mPassword.requestFocus();
-                    mPassword.selectAll();
-                })
-                .show();
+        if (isActivityNotNull()) {
+            createSnackbar(message)
+                    .setAction(getResources().getString(R.string.snackbar_edit), view -> {
+                        mPassword.requestFocus();
+                        mPassword.selectAll();
+                    })
+                    .show();
+        }
     }
 
     private Snackbar createSnackbar(String message) {
@@ -452,6 +460,10 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         mPresenter.authenticateUser(mUsername.getText().toString(),
                 mPassword.getText().toString(),
                 mUrl.getText().toString(), wipeDatabase);
+    }
+
+    private boolean isActivityNotNull() {
+        return (isAdded() && getActivity() != null);
     }
 
 }

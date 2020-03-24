@@ -56,6 +56,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
@@ -140,7 +141,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private TextView genderError;
     private TextView addrError;
 
-    private Button datePicker;
+    private ImageButton datePicker;
 
     private DateTimeFormatter dateTimeFormatter;
 

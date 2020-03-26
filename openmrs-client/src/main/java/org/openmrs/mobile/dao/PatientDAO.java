@@ -176,6 +176,8 @@ public class PatientDAO {
     public Patient findPatientByID(String id) {
         Patient patient = new Patient();
         String where = String.format("%s = ?", PatientTable.Column.ID);
+        if(id == null)
+            id = "";
         String[] whereArgs = new String[]{id};
 
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();

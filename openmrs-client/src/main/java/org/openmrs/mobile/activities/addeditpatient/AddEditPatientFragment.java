@@ -14,6 +14,16 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -34,6 +44,7 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -45,21 +56,25 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.hbb20.CountryCodePicker;
-
 import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -83,17 +98,6 @@ import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.ViewUtils;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
@@ -122,13 +126,14 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private EditText edMonth;
     private EditText edAddr1;
     private EditText edAddr2;
-    private EditText edCity;
+    private AutoCompleteTextView edCity;
     private AutoCompleteTextView edState;
     private CountryCodePicker mCountryCodePicker;
     private EditText edPostal;
 
     private RadioGroup gen;
     private ProgressBar progressBar;
+    private ProgressBar city_progressBar;
 
     private TextView fNameError;
     private TextView lNameError;
@@ -136,11 +141,14 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private TextView genderError;
     private TextView addrError;
 
-    private Button datePicker;
+    private ImageButton datePicker;
 
     private DateTimeFormatter dateTimeFormatter;
 
     private ImageView patientImageView;
+
+    private ArrayList<String> cityList = new ArrayList<>();
+    private PlacesClient placesClient;
 
     private FloatingActionButton capturePhotoBtn;
     private Bitmap patientPhoto = null;
@@ -160,8 +168,13 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         setHasOptionsMenu(true);
         resolveViews(root);
         addListeners();
+        initializePlaces(mPresenter.getPlaces());
         fillFields(mPresenter.getPatientToUpdate());
         return root;
+    }
+
+    private void initializePlaces(PlacesClient places) {
+        placesClient = places;
     }
 
     @Override
@@ -438,6 +451,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
         gen = v.findViewById(R.id.gender);
         progressBar = v.findViewById(R.id.progress_bar);
+        city_progressBar = v.findViewById(R.id.city_progressBar);
 
         fNameError = v.findViewById(R.id.fnameerror);
         lNameError = v.findViewById(R.id.lnameerror);
@@ -622,6 +636,78 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         TextWatcher textWatcher = new PatientBirthdateValidatorWatcher(edDob, edMonth, edYear);
         edMonth.addTextChangedListener(textWatcher);
         edYear.addTextChangedListener(textWatcher);
+
+        //check for cities available on searching
+        edCity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                city_progressBar.setVisibility(View.VISIBLE);
+                cityList.clear();
+
+                AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
+
+                FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
+                        .setCountry(mCountryCodePicker.getSelectedCountryNameCode().toLowerCase())
+                        .setTypeFilter(TypeFilter.CITIES)
+                        .setSessionToken(token)
+                        .setQuery(edCity.getText().toString())
+                        .build();
+
+                placesClient.findAutocompletePredictions(request).addOnSuccessListener(response -> {
+                    city_progressBar.setVisibility(View.GONE);
+                    for (AutocompletePrediction autocompletePrediction : response.getAutocompletePredictions())
+                        cityList.add(autocompletePrediction.getFullText(null).toString());
+
+                    //creating an array from ArrayList to create adapter
+                    String[] address = new String[cityList.size()];
+                    for (int in = 0; in < cityList.size(); in++)
+                        address[in] = cityList.get(in);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_item, address);
+
+                    edCity.setAdapter(adapter);
+
+                    edCity.setOnItemClickListener((parent, view, position, id) -> {
+                        String primary_text = response.getAutocompletePredictions().get(position).getPrimaryText(null).toString();
+                        String secondary_text = response.getAutocompletePredictions().get(position).getSecondaryText(null).toString();
+
+                        edCity.setText(primary_text);
+
+                        /**
+                         * if it is a city , then format received will be :
+                         *      CITY, STATE, COUNTRY
+                         * else it is a union territory, then it will show :
+                         *      CITY, COUNTRY
+                         */
+
+                        if (secondary_text.contains(",")) {
+                            int index = secondary_text.indexOf(',');
+                            String state = secondary_text.substring(0, index);
+                            edState.setText(state);
+                        } else {
+                            edState.setText(primary_text);
+                        }
+                    });
+
+                }).addOnFailureListener((exception) -> {
+                    if (exception instanceof ApiException) {
+                        ApiException apiException = (ApiException) exception;
+                        Log.i("Place API", "Place not found: " + apiException.getStatusCode());
+                    }
+                    city_progressBar.setVisibility(View.GONE);
+                });
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @NeedsPermission({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})

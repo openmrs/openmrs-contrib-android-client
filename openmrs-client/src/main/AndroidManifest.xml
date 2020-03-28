@@ -267,6 +267,10 @@
             android:name=".activities.providerdashboard.ProviderDashboardActivity"
             android:parentActivityName=".activities.providermanagerdashboard.ProviderManagerDashboardActivity"
             android:theme="@style/AppThemeOrig" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${GOOGLE_PLACE_API_KEY}"/>
     </application>
 
 </manifest>

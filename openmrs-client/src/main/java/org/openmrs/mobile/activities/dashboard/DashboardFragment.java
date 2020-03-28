@@ -175,7 +175,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
                         //This method is intentionally left blank
                     }
                 })
-                .build();
+                .build().forceTextPosition(ShowcaseView.ABOVE_SHOWCASE);
     }
 
     private void showOverlayTutorialFour() {
@@ -207,7 +207,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
                         //This method is intentionally left blank
                     }
                 })
-                .build();
+                .build().forceTextPosition(ShowcaseView.ABOVE_SHOWCASE);
     }
 
     @Override

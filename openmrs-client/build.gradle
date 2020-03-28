@@ -19,6 +19,7 @@ plugins {
 }
 
 def version = "2.8.1"
+def GOOGLE_PLACE_API_KEY = System.getenv('GOOGLE_PLACE_API_KEY') ?: "YOUR_API_KEY"
 
 android {
     compileSdkVersion 28
@@ -47,6 +48,9 @@ android {
                 arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+        manifestPlaceholders = [
+            GOOGLE_PLACE_API_KEY : GOOGLE_PLACE_API_KEY
+        ]
     }
 
     configurations.all {
@@ -185,6 +189,8 @@ dependencies {
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
     //Leak Canary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
+    //google place api
+    implementation 'com.google.android.libraries.places:places:2.1.0'
 }
 
 play {

@@ -14,17 +14,22 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
+import java.util.Arrays;
+import java.util.List;
+
 import android.app.AlertDialog;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.widget.Toast;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class AddEditPatientActivity extends ACBaseActivity {
 
@@ -61,8 +66,23 @@ public class AddEditPatientActivity extends ACBaseActivity {
         }
 
         List<String> countries = Arrays.asList(getResources().getStringArray(R.array.countries_array));
+
+        ApplicationInfo applicationInfo = null;
+        try {
+            applicationInfo = this.getPackageManager().getApplicationInfo(this.getPackageName(), PackageManager.GET_META_DATA);
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("Package Manager",e.getMessage());
+        }
+        Bundle bundle = applicationInfo.metaData;
+        String googleMapToken = bundle.getString("com.google.android.geo.API_KEY");
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), googleMapToken);
+        }
+
+        PlacesClient placesClient = Places.createClient(this);
+
         // Create the mPresenter
-        mPresenter = new AddEditPatientPresenter(addEditPatientFragment, countries, patientID);
+        mPresenter = new AddEditPatientPresenter(addEditPatientFragment, countries, patientID, placesClient);
     }
 
     @Override

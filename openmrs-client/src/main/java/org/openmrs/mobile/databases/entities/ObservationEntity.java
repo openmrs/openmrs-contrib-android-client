@@ -11,7 +11,7 @@ public class ObservationEntity extends Resource {
 
     @NonNull
     @ColumnInfo(name = "encounter_id")
-    private int encounterKeyID;
+    private long encounterKeyID;
 
     @ColumnInfo(name = "displayValue")
     private String displayValue;
@@ -34,7 +34,7 @@ public class ObservationEntity extends Resource {
     public ObservationEntity() {
     }
 
-    public void setEncounterKeyID(int encounterKeyID) {
+    public void setEncounterKeyID(long encounterKeyID) {
         this.encounterKeyID = encounterKeyID;
     }
 
@@ -62,7 +62,7 @@ public class ObservationEntity extends Resource {
         this.conceptuuid = conceptuuid;
     }
 
-    public int getEncounterKeyID() {
+    public long getEncounterKeyID() {
         return encounterKeyID;
     }
 

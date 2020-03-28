@@ -93,6 +93,10 @@ captures/
 .idea/dynamic.xml
 .idea/uiDesigner.xml
 
+# Code style from https://github.com/openmrs/openmrs-core/blob/master/tools/src/main/resources/eclipse/OpenMRSFormatter.xml
+# stored in .idea/OpenMRSFormatter to be compatible with eclipse code formatter
+.idea/codeStyles
+
 # Keystore files
 *.jks
 *.keystore

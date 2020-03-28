@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.addeditpatient;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.libraries.places.api.net.PlacesClient;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -50,16 +51,19 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     private String patientToUpdateId;
     private List<String> mCountries;
     private boolean registeringPatient = false;
+    private PlacesClient placesClient;
 
     public AddEditPatientPresenter(AddEditPatientContract.View mPatientInfoView,
                                    List<String> countries,
-                                   String patientToUpdateId) {
+                                   String patientToUpdateId,
+                                   PlacesClient placesClient) {
         this.mPatientInfoView = mPatientInfoView;
         this.mPatientInfoView.setPresenter(this);
         this.mCountries = countries;
         this.patientToUpdateId = patientToUpdateId;
         this.patientRepository = new PatientRepository();
         this.restApi = RestServiceBuilder.createService(RestApi.class);
+        this.placesClient = placesClient;
     }
 
     public AddEditPatientPresenter(AddEditPatientContract.View mPatientInfoView, PatientRepository patientRepository,
@@ -224,6 +228,11 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
                 mPatientInfoView.setProgressBarVisibility(false);
             }
         });
+    }
+
+    @Override
+    public PlacesClient getPlaces() {
+        return placesClient;
     }
 
     public void findSimilarPatients(final Patient patient) {

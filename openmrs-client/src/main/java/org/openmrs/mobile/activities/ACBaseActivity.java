@@ -81,6 +81,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     private List<String> locationList;
     private Snackbar snackbar;
     private IntentFilter mIntentFilter;
+    private AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -392,7 +393,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     startActivity(Intent.createChooser(email, getString(R.string.choose_a_email_client)));
                 });
 
-        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 
@@ -412,5 +413,12 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (alertDialog != null && alertDialog.isShowing())
+            alertDialog.cancel();
+        super.onDestroy();
     }
 }

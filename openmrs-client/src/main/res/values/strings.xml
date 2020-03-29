@@ -152,6 +152,11 @@
 	<string name="download_started">"Downloading…"</string>
 	<string name="action_starting_visit">"Starting Visit"</string>
 
+	<!--SyncedPatient Activity-->
+	<string name="patient_update_successful" translatable="false">Patient %1$s Updated</string>
+	<string name="patient_update_unsuccessful" translatable="false">Patient %1$s cannot be updated due to server error will retry sync</string>
+	<string name="patient_photo_update_unsuccessful" translatable="false">Patient photo cannot be synced due to server error:  %1$s</string>
+
 	<!-- fragment_patient_details layout -->
 	<string name="patient_identifier"># %1$s</string>
 	<string name="patient_details_photo_label">Photo</string>

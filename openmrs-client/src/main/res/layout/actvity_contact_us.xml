@@ -40,8 +40,8 @@
 			android:padding="8dp"
 			android:text="@string/helpdesk_mail"
 			android:textSize="12sp"
-			app:layout_constraintLeft_toLeftOf="parent"
-			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintLeft_toRightOf="@id/contact_email_image"
+			app:layout_constraintRight_toLeftOf="@id/contact_email_button"
 			app:layout_constraintTop_toBottomOf="@id/contact_image" />
 
 		<ImageView
@@ -93,8 +93,8 @@
 			android:padding="8dp"
 			android:text="@string/go_to_forum"
 			android:textSize="12sp"
-			app:layout_constraintLeft_toLeftOf="parent"
-			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintLeft_toRightOf="@id/talks_image"
+			app:layout_constraintRight_toLeftOf="@id/talks_button"
 			app:layout_constraintTop_toBottomOf="@id/divider1" />
 
 		<ImageView
@@ -146,8 +146,8 @@
 			android:padding="8dp"
 			android:text="@string/go_to_irc"
 			android:textSize="12sp"
-			app:layout_constraintLeft_toLeftOf="parent"
-			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintLeft_toRightOf="@id/irc_image"
+			app:layout_constraintRight_toLeftOf="@id/irc_button"
 			app:layout_constraintTop_toBottomOf="@id/divider2" />
 
 		<ImageView
@@ -182,6 +182,7 @@
 			android:id="@+id/divider3"
 			android:layout_width="match_parent"
 			android:layout_height="1dp"
+			android:layout_marginTop="8dp"
 			android:layout_marginLeft="12dp"
 			android:layout_marginRight="12dp"
 			android:background="#555"

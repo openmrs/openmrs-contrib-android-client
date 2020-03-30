@@ -73,10 +73,6 @@ android {
             signingConfig signingConfigs.release
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
-                    /*def relativeRootDir = output.packageApplication.outputDirectory.toPath()
-                            .relativize(rootDir.toPath()).toFile()
-                    output.outputFileName = new File("$relativeRootDir/openmrs-client/release/", output.outputFile.name)*/
-                    // Redirect your apks to new defined location to relativeRootDir
                     def relativeRootDir = new File("${project.rootDir.absolutePath}/openmrs-client/release/")
                     variant.packageApplicationProvider.get().outputDirectory = relativeRootDir
 

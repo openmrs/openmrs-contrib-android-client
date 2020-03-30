@@ -12,173 +12,194 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 
-	<RelativeLayout
+	<androidx.constraintlayout.widget.ConstraintLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
 
 		<ImageView
 			android:id="@+id/contact_image"
-			android:layout_width="200dp"
+			android:layout_width="0dp"
 			android:layout_height="200dp"
-			android:layout_centerHorizontal="true"
 			android:layout_margin="12dp"
-			android:src="@drawable/contact_us" />
+			android:contentDescription="@string/contact_us"
+			android:src="@drawable/contact_us"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
 
-		<RelativeLayout
-			android:id="@+id/relativeLayout2"
-			android:layout_width="match_parent"
+		<TextView
+			android:id="@+id/contact_email_text"
+			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_below="@id/contact_image"
-			android:layout_marginTop="24dp">
+			android:layout_marginTop="32dp"
+			android:gravity="center"
+			android:padding="8dp"
+			android:text="@string/helpdesk_mail"
+			android:textSize="12sp"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/contact_image" />
 
+		<ImageView
+			android:id="@+id/contact_email_image"
+			android:layout_width="32dp"
+			android:layout_height="0dp"
+			android:layout_marginStart="16dp"
+			android:layout_marginLeft="16dp"
+			android:contentDescription="@string/helpdesk_mail"
+			android:src="@drawable/mail"
+			app:layout_constraintBottom_toBottomOf="@id/contact_email_text"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintTop_toTopOf="@id/contact_email_text" />
 
-			<LinearLayout
-				android:id="@+id/emailUsLayout"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_margin="8dp"
-				android:gravity="center">
+		<TextView
+			android:id="@+id/contact_email_button"
+			android:layout_width="80dp"
+			android:layout_height="0dp"
+			android:layout_marginEnd="16dp"
+			android:layout_marginRight="16dp"
+			android:background="@color/primary"
+			android:gravity="center"
+			android:text="@string/email_us"
+			android:textColor="#FFF"
+			android:textSize="12sp"
+			android:textStyle="bold"
+			app:layout_constraintBottom_toBottomOf="@id/contact_email_image"
+			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintTop_toTopOf="@id/contact_email_image" />
 
-				<ImageView
-					android:layout_width="32dp"
-					android:layout_height="32dp"
-					android:layout_marginRight="12dp"
-					android:src="@drawable/mail" />
+		<View
+			android:id="@+id/divider1"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginLeft="12dp"
+			android:layout_marginTop="8dp"
+			android:layout_marginRight="12dp"
+			android:background="#555"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/contact_email_text" />
 
-				<TextView
-					android:id="@+id/contact_email_text"
-					android:layout_width="200dp"
-					android:layout_height="wrap_content"
-					android:padding="4dp"
-					android:text="@string/helpdesk_mail"
-					android:gravity="center"
-					android:textSize="12sp" />
+		<TextView
+			android:id="@+id/talks_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:gravity="center"
+			android:padding="8dp"
+			android:text="@string/go_to_forum"
+			android:textSize="12sp"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/divider1" />
 
-				<TextView
-					android:id="@+id/contact_email_button"
-					android:layout_width="80dp"
-					android:layout_height="match_parent"
-					android:layout_marginStart="16dp"
-					android:layout_marginLeft="16dp"
-					android:background="@color/primary"
-					android:gravity="center"
-					android:text="@string/email_us"
-					android:textColor="#FFF"
-					android:textSize="12sp"
-					android:textStyle="bold" />
-			</LinearLayout>
+		<ImageView
+			android:id="@+id/talks_image"
+			android:layout_width="32dp"
+			android:layout_height="0dp"
+			android:layout_marginStart="16dp"
+			android:layout_marginLeft="16dp"
+			android:contentDescription="@string/go_to_forum"
+			android:src="@drawable/talk"
+			app:layout_constraintBottom_toBottomOf="@id/talks_text"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintTop_toTopOf="@id/talks_text" />
 
-			<View
-				android:layout_width="match_parent"
-				android:layout_height="1dp"
-				android:layout_below="@+id/emailUsLayout"
-				android:layout_marginLeft="12dp"
-				android:layout_marginRight="12dp"
-				android:background="#555" />
+		<TextView
+			android:id="@+id/talks_button"
+			android:layout_width="80dp"
+			android:layout_height="0dp"
+			android:layout_marginEnd="16dp"
+			android:layout_marginRight="16dp"
+			android:background="@color/primary"
+			android:gravity="center"
+			android:text="@string/open"
+			android:textColor="#FFF"
+			android:textSize="12sp"
+			android:textStyle="bold"
+			app:layout_constraintBottom_toBottomOf="@id/talks_image"
+			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintTop_toTopOf="@id/talks_image" />
 
+		<View
+			android:id="@+id/divider2"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginLeft="12dp"
+			android:layout_marginTop="8dp"
+			android:layout_marginRight="12dp"
+			android:background="#555"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/talks_text" />
 
-			<LinearLayout
-				android:id="@+id/talksLayout"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_below="@+id/emailUsLayout"
-				android:layout_margin="8dp"
-				android:gravity="center">
+		<TextView
+			android:id="@+id/irc_text"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:gravity="center"
+			android:padding="8dp"
+			android:text="@string/go_to_irc"
+			android:textSize="12sp"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/divider2" />
 
-				<ImageView
-					android:layout_width="32dp"
-					android:layout_height="32dp"
-					android:layout_marginRight="12dp"
-					android:src="@drawable/talk" />
+		<ImageView
+			android:id="@+id/irc_image"
+			android:layout_width="32dp"
+			android:layout_height="0dp"
+			android:layout_marginStart="16dp"
+			android:layout_marginLeft="16dp"
+			android:contentDescription="@string/go_to_irc"
+			android:src="@drawable/irc"
+			app:layout_constraintBottom_toBottomOf="@id/irc_text"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintTop_toTopOf="@id/irc_text" />
 
-				<TextView
-					android:id="@+id/talks_text"
-					android:layout_width="200dp"
-					android:layout_height="wrap_content"
-					android:padding="4dp"
-					android:text="@string/go_to_forum"
-					android:gravity="center"
-					android:textSize="12sp" />
+		<TextView
+			android:id="@+id/irc_button"
+			android:layout_width="80dp"
+			android:layout_height="0dp"
+			android:layout_marginEnd="16dp"
+			android:layout_marginRight="16dp"
+			android:background="@color/primary"
+			android:gravity="center"
+			android:text="@string/open"
+			android:textColor="#FFF"
+			android:textSize="12sp"
+			android:textStyle="bold"
+			app:layout_constraintBottom_toBottomOf="@id/irc_image"
+			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintTop_toTopOf="@id/irc_image" />
 
-				<TextView
-					android:id="@+id/talks_button"
-					android:layout_width="80dp"
-					android:layout_height="32dp"
-					android:layout_marginLeft="16dp"
-					android:background="@color/primary"
-					android:gravity="center"
-					android:text="@string/open"
-					android:textColor="#FFF"
-					android:textSize="12sp"
-					android:textStyle="bold" />
-			</LinearLayout>
-
-			<View
-				android:layout_width="match_parent"
-				android:layout_height="1dp"
-				android:layout_below="@+id/talksLayout"
-				android:layout_marginLeft="12dp"
-				android:layout_marginRight="12dp"
-				android:background="#555" />
-
-			<LinearLayout
-				android:id="@+id/ircLayout"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_below="@+id/talksLayout"
-				android:layout_margin="8dp"
-				android:gravity="center">
-
-				<ImageView
-					android:layout_width="32dp"
-					android:layout_height="32dp"
-					android:layout_marginRight="12dp"
-					android:src="@drawable/irc" />
-
-				<TextView
-					android:id="@+id/irc_text"
-					android:layout_width="200dp"
-					android:layout_height="wrap_content"
-					android:padding="4dp"
-					android:text="@string/go_to_irc"
-					android:gravity="center"
-					android:textSize="12sp" />
-
-				<TextView
-					android:id="@+id/irc_button"
-					android:layout_width="80dp"
-					android:layout_height="32dp"
-					android:layout_marginLeft="16dp"
-					android:background="@color/primary"
-					android:gravity="center"
-					android:text="@string/open"
-					android:textColor="#FFF"
-					android:textSize="12sp"
-					android:textStyle="bold" />
-			</LinearLayout>
-
-			<View
-				android:layout_width="match_parent"
-				android:layout_height="1dp"
-				android:layout_below="@id/ircLayout"
-				android:layout_marginLeft="12dp"
-				android:layout_marginRight="12dp"
-				android:background="#555" />
-
-		</RelativeLayout>
+		<View
+			android:id="@+id/divider3"
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginLeft="12dp"
+			android:layout_marginRight="12dp"
+			android:background="#555"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/irc_text" />
 
 		<TextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_below="@id/relativeLayout2"
 			android:layout_marginTop="50dp"
+			android:gravity="center"
 			android:padding="16dp"
 			android:text="@string/help_message"
-			android:gravity="center"
-			android:textSize="15sp" />
+			android:textSize="15sp"
+			app:layout_constraintLeft_toLeftOf="parent"
+			app:layout_constraintRight_toRightOf="parent"
+			app:layout_constraintTop_toBottomOf="@id/divider3" />
 
-	</RelativeLayout>
+	</androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

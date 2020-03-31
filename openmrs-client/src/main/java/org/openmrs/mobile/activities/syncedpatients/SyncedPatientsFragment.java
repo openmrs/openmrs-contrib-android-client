@@ -30,6 +30,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
@@ -49,6 +50,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
     // Fragment components
     private TextView mEmptyList;
     private RecyclerView mSyncedPatientRecyclerView;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     //Initialization Progress bar
     private ProgressBar mProgressBar;
@@ -72,10 +74,22 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         mEmptyList = root.findViewById(R.id.emptySyncedPatientList);
         mProgressBar = root.findViewById(R.id.syncedPatientsInitialProgressBar);
 
+        swipeRefreshLayout = root.findViewById(R.id.swipeLayout);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            refreshUI();
+            swipeRefreshLayout.setRefreshing(false);
+        });
+
         // Font config
         FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
 
         return root;
+    }
+
+    private void refreshUI() {
+        mProgressBar.setVisibility(View.VISIBLE);
+        mSyncedPatientRecyclerView.setVisibility(View.GONE);
+        mPresenter.updateLocalPatientsList();
     }
 
     @Override

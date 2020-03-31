@@ -27,6 +27,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.openmrs.mobile.R;
@@ -51,6 +52,7 @@ public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderMan
     private RecyclerView mProviderManagementRecyclerView;
     private ProviderManagerDashboardRecyclerViewAdapter providersAdapter;
     private FloatingActionButton addProviderFab;
+    private SwipeRefreshLayout refreshList;
 
     //Initialization Progress bar
     private ProgressBar mProgressBar;
@@ -81,6 +83,7 @@ public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderMan
         mEmptyList = root.findViewById(R.id.emptyProviderManagementList);
         mProgressBar = root.findViewById(R.id.providerManagementInitialProgressBar);
         addProviderFab = root.findViewById(R.id.providerManagementFragAddFAB);
+        refreshList = root.findViewById(R.id.swipeLayout);
 
         refreshUI();
 
@@ -89,6 +92,11 @@ public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderMan
             ArrayList<Provider> providerArrayList = new ArrayList<>(providerList);
             intent.putExtra(ApplicationConstants.BundleKeys.EXISTING_PROVIDERS_BUNDLE, providerArrayList);
             startActivityForResult(intent, ADD_PROVIDER_REQ_CODE);
+        });
+
+        refreshList.setOnRefreshListener(() -> {
+            refreshUI();
+            refreshList.setRefreshing(false);
         });
 
         // Font config

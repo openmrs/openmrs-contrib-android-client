@@ -1,9 +1,7 @@
 package org.openmrs.mobile.activities.providerdashboard;
 
 import android.content.Intent;
-
 import androidx.annotation.NonNull;
-
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.CustomApiCallback;
 import org.openmrs.mobile.api.RestApi;
@@ -32,8 +30,7 @@ public class ProviderDashboardPresenter extends BasePresenter implements Provide
 
     @Override
     public Provider getProviderFromIntent(Intent intent) {
-        Provider provider = (Provider) (intent.getSerializableExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE));
-        return provider;
+        return (Provider) (intent.getSerializableExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE));
     }
 
     @Override

@@ -41,6 +41,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
+import org.openmrs.mobile.activities.community.contact.ContactUsActivity;
 import org.openmrs.mobile.activities.logs.LogsActivity;
 import org.openmrs.mobile.services.ConceptDownloadService;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -189,6 +190,12 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
             }
         });
 
+    }
+
+    @Override
+    public void setUpContactUsButton() {
+        LinearLayout contactUsLL = root.findViewById(R.id.frag_settings_contact_us_ll);
+        contactUsLL.setOnClickListener(v -> startActivity(new Intent(v.getContext(), ContactUsActivity.class)));
     }
 
     @Override

@@ -35,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -44,6 +45,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
+import org.openmrs.mobile.activities.community.contact.ContactUsActivity;
 import org.openmrs.mobile.activities.dashboard.DashboardActivity;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.api.FormListService;
@@ -250,12 +252,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     }
 
     public void forgotPassword() {
-        CustomDialogBundle bundle = new CustomDialogBundle();
-        bundle.setTitleViewMessage(getString(R.string.forgot_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.forgot_dialog_message));
-        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
-        bundle.setLeftButtonText(getString(R.string.forgot_button_ok));
-        ((LoginActivity) this.getActivity()).createAndShowDialog(bundle, ApplicationConstants.DialogTAG.LOGOUT_DIALOG_TAG);
+        startActivity(new Intent(getContext(), ContactUsActivity.class));
     }
 
     @Override

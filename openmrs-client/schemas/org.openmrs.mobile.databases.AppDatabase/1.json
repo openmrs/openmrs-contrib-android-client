@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "421c4b7fae0b9b8a4c2a8bcafc844beb",
+    "identityHash": "f2ba83e78fa9d0190a4a24b5be11b2de",
     "entities": [
       {
         "tableName": "concepts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `display` TEXT, `id` INTEGER, `name` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `datatype_uuid` TEXT, `datatype_display` TEXT, `datatype__id` INTEGER, `conceptClass_uuid` TEXT, `conceptClass_display` TEXT, `conceptClass__id` INTEGER)",
         "fields": [
           {
             "fieldPath": "uuid",
@@ -22,9 +22,57 @@
           },
           {
             "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "id",
             "columnName": "_id",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "datatype.uuid",
+            "columnName": "datatype_uuid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "datatype.display",
+            "columnName": "datatype_display",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "datatype.id",
+            "columnName": "datatype__id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "conceptClass.uuid",
+            "columnName": "conceptClass_uuid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "conceptClass.display",
+            "columnName": "conceptClass_display",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "conceptClass.id",
+            "columnName": "conceptClass__id",
+            "affinity": "INTEGER",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -442,7 +490,7 @@
       },
       {
         "tableName": "visits",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `display` TEXT, `patient_id` INTEGER NOT NULL, `visit_type` TEXT, `visit_place` TEXT, `start_date` TEXT NOT NULL, `stop_date` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `display` TEXT, `patient_id` INTEGER NOT NULL, `visit_type` TEXT, `visit_place` TEXT, `start_date` INTEGER NOT NULL, `stop_date` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
           {
             "fieldPath": "uuid",
@@ -477,7 +525,7 @@
           {
             "fieldPath": "startDate",
             "columnName": "start_date",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -506,7 +554,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"421c4b7fae0b9b8a4c2a8bcafc844beb\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f2ba83e78fa9d0190a4a24b5be11b2de\")"
     ]
   }
 }

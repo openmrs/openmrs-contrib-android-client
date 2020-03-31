@@ -32,6 +32,7 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientIdentifier;
 import org.openmrs.mobile.models.Person;
 import org.openmrs.mobile.models.PersonAddress;
+import org.openmrs.mobile.models.PersonAttribute;
 import org.openmrs.mobile.models.PersonName;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Results;
@@ -94,7 +95,7 @@ public abstract class ACUnitTestBase {
     }
 
     protected Patient createPatient(Long id) {
-        Patient patient = new Patient(id, null,
+        Patient patient = new Patient(id, "",
                 Collections.singletonList(createIdentifier(id)));
         patient.setUuid("patient_one_uuid"+id);
         updatePatientData(id,patient);
@@ -144,7 +145,13 @@ public abstract class ACUnitTestBase {
     }
 
     protected Person createPerson(Long id) {
-        return new Person(Collections.singletonList(createPersonName(id)), "M", "25-02-2016", false, Collections.singletonList(createPersonAddress(id)), null, null);
+        return new Person(Collections.singletonList(createPersonName(id)), "M", "25-02-2016", false, Collections.singletonList(createPersonAddress(id)), Collections.singletonList(createPersonAttributes(id)), null);
+    }
+
+    private PersonAttribute createPersonAttributes(Long id) {
+        PersonAttribute personAttribute = new PersonAttribute();
+        personAttribute.setValue("value");
+        return personAttribute;
     }
 
     protected Provider createProvider(Long id, String identifier){

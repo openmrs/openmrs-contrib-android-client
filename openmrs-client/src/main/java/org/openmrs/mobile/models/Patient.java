@@ -10,20 +10,18 @@
 
 package org.openmrs.mobile.models;
 
-import android.graphics.Bitmap;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-import org.openmrs.mobile.utilities.StringUtils;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Patient extends Person implements Serializable{
+import android.graphics.Bitmap;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import org.openmrs.mobile.utilities.StringUtils;
+
+public class Patient extends Person implements Serializable {
 
     private Long id;
     private String encounters = "";
@@ -32,7 +30,8 @@ public class Patient extends Person implements Serializable{
     @Expose
     private List<PatientIdentifier> identifiers = new ArrayList<>();
 
-    public Patient() {}
+    public Patient() {
+    }
 
     public Patient(Long id, String encounters, List<PatientIdentifier> identifiers) {
         this.id = id;
@@ -53,35 +52,31 @@ public class Patient extends Person implements Serializable{
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @SerializedName("person")
-    public Person getPerson(){
+    public Person getPerson() {
         return new Person(getNames(), getGender(), getBirthdate(), getBirthdateEstimated(), getAddresses(), getAttributes(), getPhoto());
     }
 
-    public PatientDto getPatientDto(){
+    public PatientDto getPatientDto() {
         PatientDto patientDto = new PatientDto();
         patientDto.setPerson(getPerson());
         patientDto.setIdentifiers(getIdentifiers());
         return patientDto;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     /**
-     * 
-     * @return
-     *     The identifiers
+     * @return The identifiers
      */
     public List<PatientIdentifier> getIdentifiers() {
         return identifiers;
     }
 
     /**
-     * 
-     * @param identifiers
-     *     The identifiers
+     * @param identifiers The identifiers
      */
     public void setIdentifiers(List<PatientIdentifier> identifiers) {
         this.identifiers = identifiers;
@@ -96,8 +91,7 @@ public class Patient extends Person implements Serializable{
     }
 
 
-    public boolean isSynced()
-    {
+    public boolean isSynced() {
         return !StringUtils.isBlank(getUuid());
         //Keeping it this way until the synced flag can be made to work
     }
@@ -107,19 +101,18 @@ public class Patient extends Person implements Serializable{
     }
 
     public void setEncounters(String encounters) {
-         this.encounters=encounters;
+        this.encounters = encounters;
     }
 
 
-    public void addEncounters(Long encid)
-    {
-        this.encounters += encid+",";
+    public void addEncounters(Long encid) {
+        this.encounters += encid + ",";
     }
 
-    public Map<String, String> toMap(){
+    public Map<String, String> toMap() {
         Map<String, String> map = new HashMap<>();
         puToMapIfNotNull(map, "givenname", getName().getGivenName());
-        puToMapIfNotNull(map, "middlename",getName().getMiddleName());
+        puToMapIfNotNull(map, "middlename", getName().getMiddleName());
         puToMapIfNotNull(map, "familyname", getName().getFamilyName());
         puToMapIfNotNull(map, "gender", getGender());
         puToMapIfNotNull(map, "birthdate", getBirthdate());
@@ -133,7 +126,7 @@ public class Patient extends Person implements Serializable{
     }
 
     private void puToMapIfNotNull(Map<String, String> map, String key, String value) {
-        if(StringUtils.notNull(value)){
+        if (StringUtils.notNull(value)) {
             map.put(key, value);
         }
     }

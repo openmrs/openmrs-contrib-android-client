@@ -1,12 +1,11 @@
 package org.openmrs.mobile.databases.entities;
 
-import org.openmrs.mobile.models.Resource;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.RoomWarnings;
+import org.openmrs.mobile.models.Resource;
 
 @Entity(tableName = "patients")
 public class PatientEntity extends Resource {

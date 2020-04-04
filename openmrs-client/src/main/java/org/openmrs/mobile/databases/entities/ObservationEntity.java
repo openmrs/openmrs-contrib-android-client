@@ -1,10 +1,9 @@
 package org.openmrs.mobile.databases.entities;
 
-import org.openmrs.mobile.models.Resource;
-
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import org.openmrs.mobile.models.Resource;
 
 @Entity(tableName = "observations")
 public class ObservationEntity extends Resource {

@@ -359,6 +359,11 @@
 	<string name="intro_settings_desc">हमारी डार्क मोड सुविधा देखें।\n आएँ शुरू करें।</string>
 	<string name="get_started_with_our_user_guide">हमारे उपयोगकर्ता गाइड के साथ आरंभ करें</string>
 
+	<!--VisitExpandableListAdapter-->
+	<string name="hiv_yes">हाँ</string>
+	<string name="hiv_no">नहीं</string>
+	<string name="hiv_unknown">अनजान</string>
+
 	<!-- Contact Activity -->
 	<string name="go_to_forum">फोरम पर जाएं</string>
 	<string name="go_to_irc">आईआरसी पर जाएं</string>

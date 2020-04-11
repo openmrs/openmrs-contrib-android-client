@@ -376,4 +376,11 @@
 	<string name="contact_irc_url" translatable="false">https://wiki.openmrs.org/display/IRC/Home</string>
 	<string name="contact_us">Contact Us</string>
 	<string name="no_mailing_client_found">There are no email clients installed.</string>
+
+	<!-- ShowCaseView -->
+	<string name="showcase_find_patients">Click here to search through all the patients</string>
+	<string name="showcase_active_visits">Click here to get the list of all the currently active visits</string>
+	<string name="showcase_register_patient">Click here to register a new patient</string>
+	<string name="showcase_form_entry">Click here to capture vitals for a patient on a visit</string>
+	<string name="showcase_manage_providers">Click here to manage providers for a patient on a visit</string>
 </resources>

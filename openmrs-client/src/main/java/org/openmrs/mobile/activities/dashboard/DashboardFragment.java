@@ -82,8 +82,8 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
         Target viewTarget = new ViewTarget(R.id.findPatientView, this.getActivity());
         new ShowcaseView.Builder(this.getActivity())
                 .setTarget(viewTarget)
-                .setContentTitle("Find Patients")
-                .setContentText("Click here to search through all the patients")
+                .setContentTitle(getString(R.string.dashboard_search_icon_label))
+                .setContentText(getString(R.string.showcase_find_patients))
                 .hideOnTouchOutside()
                 .setStyle(R.style.CustomShowcaseTheme)
                 .setShowcaseEventListener(new OnShowcaseEventListener() {
@@ -116,8 +116,8 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
         Target viewTarget = new ViewTarget(R.id.activeVisitsView, this.getActivity());
         new ShowcaseView.Builder(this.getActivity())
                 .setTarget(viewTarget)
-                .setContentTitle("Active Visits")
-                .setContentText("Click here to get the list of all the currently active visits")
+                .setContentTitle(getString(R.string.dashboard_visits_icon_label))
+                .setContentText(getString(R.string.showcase_active_visits))
                 .hideOnTouchOutside()
                 .setStyle(R.style.CustomShowcaseTheme)
                 .setShowcaseEventListener(new OnShowcaseEventListener() {
@@ -149,8 +149,8 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
         Target viewTarget = new ViewTarget(R.id.registryPatientView, this.getActivity());
         new ShowcaseView.Builder(this.getActivity())
                 .setTarget(viewTarget)
-                .setContentTitle("Register Patient")
-                .setContentText("Click here to register a new patient")
+                .setContentTitle(getString(R.string.action_register_patient))
+                .setContentText(getString(R.string.showcase_register_patient))
                 .hideOnTouchOutside()
                 .setStyle(R.style.CustomShowcaseTheme)
                 .setShowcaseEventListener(new OnShowcaseEventListener() {
@@ -182,8 +182,40 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
         Target viewTarget = new ViewTarget(R.id.captureVitalsView, this.getActivity());
         new ShowcaseView.Builder(this.getActivity())
                 .setTarget(viewTarget)
-                .setContentTitle("Form Entry")
-                .setContentText("Click here to capture vitals for a patient on a visit")
+                .setContentTitle(getString(R.string.dashboard_forms_icon_label))
+                .setContentText(getString(R.string.showcase_form_entry))
+                .hideOnTouchOutside()
+                .setStyle(R.style.CustomShowcaseTheme)
+                .setShowcaseEventListener(new OnShowcaseEventListener() {
+                    @Override
+                    public void onShowcaseViewHide(ShowcaseView showcaseView) {
+                        showOverlayTutorialFive();
+                    }
+
+                    @Override
+                    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
+                        //This method is intentionally left blank
+                    }
+
+                    @Override
+                    public void onShowcaseViewShow(ShowcaseView showcaseView) {
+                        //This method is intentionally left blank
+                    }
+
+                    @Override
+                    public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
+                        //This method is intentionally left blank
+                    }
+                })
+                .build().forceTextPosition(ShowcaseView.ABOVE_SHOWCASE);
+    }
+
+    private void showOverlayTutorialFive() {
+        Target viewTarget = new ViewTarget(R.id.dashboardProviderManagementView, this.getActivity());
+        new ShowcaseView.Builder(this.getActivity())
+                .setTarget(viewTarget)
+                .setContentTitle(getString(R.string.action_provider_management))
+                .setContentText(getString(R.string.showcase_manage_providers))
                 .hideOnTouchOutside()
                 .setStyle(R.style.CustomShowcaseThemeExit)
                 .setShowcaseEventListener(new OnShowcaseEventListener() {

@@ -46,7 +46,7 @@ open class PatientDto {
         get() {
             val person = person
             val patient = Patient(null, "", identifiers,
-                    person!!.names, person.gender!!, person.birthdate!!, person.birthdateEstimated, person.addresses, person.attributes, person.photo!!)
+                    person!!.names, person.gender!!, person.birthdate!!, person.birthdateEstimated, person.addresses, person.attributes, person.photo)
 
             patient.uuid = uuid.toString()
 

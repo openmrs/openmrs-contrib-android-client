@@ -72,15 +72,14 @@ import rx.schedulers.Schedulers;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class ACBaseActivity extends AppCompatActivity {
-
     protected FragmentManager mFragmentManager;
     protected final OpenMRS mOpenMRS = OpenMRS.getInstance();
     protected final OpenMRSLogger mOpenMRSLogger = mOpenMRS.getOpenMRSLogger();
     protected AuthorizationManager mAuthorizationManager;
     protected CustomFragmentDialog mCustomFragmentDialog;
+    protected Snackbar mSnackbar;
     private MenuItem mSyncbutton;
     private List<String> locationList;
-    private Snackbar snackbar;
     private IntentFilter mIntentFilter;
     private AlertDialog alertDialog;
 
@@ -121,7 +120,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         setupLanguage();
         invalidateOptionsMenu();
         if (!(this instanceof LoginActivity) && !mAuthorizationManager.isUserLoggedIn()
-                && !(this instanceof ContactUsActivity)) {
+            && !(this instanceof ContactUsActivity)) {
             mAuthorizationManager.moveToLoginActivity();
         }
         registerReceiver(mPasswordChangedReceiver, mIntentFilter);
@@ -195,10 +194,10 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
                     getApplicationContext().sendBroadcast(intent);
                     ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.reconn_server);
-                    if (snackbar != null)
-                        snackbar.dismiss();
+                    if (mSnackbar != null) {
+                        mSnackbar.dismiss();
+                    }
                     ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.connected_to_server_message);
-
                 } else {
                     showNoInternetConnectionSnackbar();
                 }
@@ -233,18 +232,17 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 for (Location locationItem : locations) {
                     locationList.add(locationItem.getName());
                 }
-
             }
         };
     }
 
     public void showNoInternetConnectionSnackbar() {
-        snackbar = Snackbar.make(findViewById(android.R.id.content),
-                getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
-        View sbView = snackbar.getView();
+        mSnackbar = Snackbar.make(findViewById(android.R.id.content),
+            getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
+        View sbView = mSnackbar.getView();
         TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
-        snackbar.show();
+        mSnackbar.show();
     }
 
     public void logout() {
@@ -308,7 +306,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.DELET_PATIENT_DIALOG_TAG);
     }
 
-    public void showMultiDeletePatientDialog(ArrayList<Patient> selectedItems){
+    public void showMultiDeletePatientDialog(ArrayList<Patient> selectedItems) {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(org.openmrs.mobile.R.string.delete_multiple_patients));
         bundle.setTextViewMessage(getString(org.openmrs.mobile.R.string.delete_multiple_patients_dialog_message));
@@ -376,35 +374,35 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
     public void showAppCrashDialog(String error) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                this);
+            this);
         alertDialogBuilder.setTitle(R.string.crash_dialog_title);
         // set dialog message
         alertDialogBuilder
-                .setMessage(R.string.crash_dialog_message)
-                .setCancelable(false)
-                .setPositiveButton(R.string.crash_dialog_positive_button, (dialog, id) -> dialog.cancel())
-                .setNegativeButton(R.string.crash_dialog_negative_button, (dialog, id) -> finishAffinity())
-                .setNeutralButton(R.string.crash_dialog_neutral_button, (dialog, id) -> {
-                    String filename = OpenMRS.getInstance().getOpenMRSDir()
-                            + File.separator + mOpenMRSLogger.getLogFilename();
-                    Intent email = new Intent(Intent.ACTION_SEND);
-                    email.putExtra(Intent.EXTRA_SUBJECT, R.string.error_email_subject_app_crashed);
-                    email.putExtra(Intent.EXTRA_TEXT, error);
-                    email.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + filename));
-                    //need this to prompts email client only
-                    email.setType("message/rfc822");
+            .setMessage(R.string.crash_dialog_message)
+            .setCancelable(false)
+            .setPositiveButton(R.string.crash_dialog_positive_button, (dialog, id) -> dialog.cancel())
+            .setNegativeButton(R.string.crash_dialog_negative_button, (dialog, id) -> finishAffinity())
+            .setNeutralButton(R.string.crash_dialog_neutral_button, (dialog, id) -> {
+                String filename = OpenMRS.getInstance().getOpenMRSDir()
+                    + File.separator + mOpenMRSLogger.getLogFilename();
+                Intent email = new Intent(Intent.ACTION_SEND);
+                email.putExtra(Intent.EXTRA_SUBJECT, R.string.error_email_subject_app_crashed);
+                email.putExtra(Intent.EXTRA_TEXT, error);
+                email.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + filename));
+                //need this to prompts email client only
+                email.setType("message/rfc822");
 
-                    startActivity(Intent.createChooser(email, getString(R.string.choose_a_email_client)));
-                });
+                startActivity(Intent.createChooser(email, getString(R.string.choose_a_email_client)));
+            });
 
         alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 
-    public void setupTheme(){
-        if(ThemeUtils.isDarkModeActivated()){
+    public void setupTheme() {
+        if (ThemeUtils.isDarkModeActivated()) {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else{
+        } else {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
@@ -421,8 +419,9 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        if (alertDialog != null && alertDialog.isShowing())
+        if (alertDialog != null && alertDialog.isShowing()) {
             alertDialog.cancel();
+        }
         super.onDestroy();
     }
 }

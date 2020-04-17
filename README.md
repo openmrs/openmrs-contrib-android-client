@@ -23,6 +23,7 @@ OpenMRS Android Client
 				- [Demo Password: Admin123](#Demo-Password-Admin123)
 - [Releasing [Collaborators only]](#Releasing-Collaborators-only)
 - [Release Notes](#Release-Notes)
+        - [Version 2.8.2](#Version-282)
         - [Version 2.8.1](#Version-281)
         - [Version 2.8.0](#Version-280)
 		- [Version 2.7.4](#Version-274)
@@ -147,6 +148,26 @@ To release the application, make sure to do these steps **in order**:
 9. [Optional] Post a new Talk thread and describe what is changed or improved in the release.
 
 # Release Notes
+
+### Version 2.8.2
+1. Add contribution guidelines to the repository (#671, #662)
+2. Removed unused resources, decreasing APK size (#669)
+3. Removed hardcoded strings (#673)
+4. Dashboard now responds to change in app theme (#661)
+5. Add language translation in hindi (#650)
+6. Create Room Data Access Objects (DAOs) (#670, #659, #682, #657, #662)
+7. UI fixes in register patient screen (#686)
+8. Added reset button (#692)
+9. Improved login and fragment dialog button design (#672)
+10. Improve PatientDetailFragment UI (#700)
+11. Fix app crash on entering values in email or password text fields (#691)
+12. Add City and State selector using Google Places API (#694)
+13. Fix crash at register patient activity (#717)
+14. Fix context-related errors (#713, #716)
+15. Add swipe to refresh feature in relevant screens (#701)
+16. Add Contact Us screen (#710)
+17. Migrate POJO classes to Kotlin (#675, #719)
+18. Add validation to HIV status in Visit Notes screen (#698)
 
 ### Version 2.8.1
 ### Summary:

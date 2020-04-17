@@ -2,24 +2,12 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "f2ba83e78fa9d0190a4a24b5be11b2de",
+    "identityHash": "2ca31877683087a2cef9a670e3bed3be",
     "entities": [
       {
         "tableName": "concepts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `display` TEXT, `id` INTEGER, `name` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `datatype_uuid` TEXT, `datatype_display` TEXT, `datatype__id` INTEGER, `conceptClass_uuid` TEXT, `conceptClass_display` TEXT, `conceptClass__id` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `name` TEXT, `uuid` TEXT, `display` TEXT NOT NULL, `_id` INTEGER, `datatype_uuid` TEXT, `datatype_display` TEXT, `datatype__id` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
-          {
-            "fieldPath": "uuid",
-            "columnName": "uuid",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "display",
-            "columnName": "display",
-            "affinity": "TEXT",
-            "notNull": false
-          },
           {
             "fieldPath": "id",
             "columnName": "id",
@@ -33,10 +21,22 @@
             "notNull": false
           },
           {
+            "fieldPath": "uuid",
+            "columnName": "uuid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "display",
+            "columnName": "display",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "id",
             "columnName": "_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "datatype.uuid",
@@ -55,51 +55,21 @@
             "columnName": "datatype__id",
             "affinity": "INTEGER",
             "notNull": false
-          },
-          {
-            "fieldPath": "conceptClass.uuid",
-            "columnName": "conceptClass_uuid",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "conceptClass.display",
-            "columnName": "conceptClass_display",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "conceptClass.id",
-            "columnName": "conceptClass__id",
-            "affinity": "INTEGER",
-            "notNull": false
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "_id"
+            "id"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
       },
       {
         "tableName": "encounters",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `display` TEXT, `visit_id` TEXT, `encounterDatetime` TEXT NOT NULL, `type` TEXT, `patient_uuid` TEXT, `form_uuid` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`visit_id` TEXT, `encounterDatetime` TEXT NOT NULL, `type` TEXT, `patient_uuid` TEXT, `form_uuid` TEXT, `uuid` TEXT, `display` TEXT NOT NULL, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
-          {
-            "fieldPath": "uuid",
-            "columnName": "uuid",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "display",
-            "columnName": "display",
-            "affinity": "TEXT",
-            "notNull": false
-          },
           {
             "fieldPath": "visitKeyId",
             "columnName": "visit_id",
@@ -131,10 +101,22 @@
             "notNull": false
           },
           {
+            "fieldPath": "uuid",
+            "columnName": "uuid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "display",
+            "columnName": "display",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "id",
             "columnName": "_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -148,20 +130,8 @@
       },
       {
         "tableName": "locations",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `display` TEXT, `name` TEXT, `description` TEXT NOT NULL, `address1` TEXT, `address2` TEXT, `city` TEXT, `state` TEXT, `country` TEXT, `postalCode` TEXT, `parentLocationUuid` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `description` TEXT NOT NULL, `address1` TEXT, `address2` TEXT, `city` TEXT, `state` TEXT, `country` TEXT, `postalCode` TEXT, `parentLocationUuid` TEXT, `uuid` TEXT, `display` TEXT NOT NULL, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
-          {
-            "fieldPath": "uuid",
-            "columnName": "uuid",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "display",
-            "columnName": "display",
-            "affinity": "TEXT",
-            "notNull": false
-          },
           {
             "fieldPath": "name",
             "columnName": "name",
@@ -217,10 +187,22 @@
             "notNull": false
           },
           {
+            "fieldPath": "uuid",
+            "columnName": "uuid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "display",
+            "columnName": "display",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "id",
             "columnName": "_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -234,20 +216,8 @@
       },
       {
         "tableName": "observations",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `display` TEXT, `encounter_id` INTEGER NOT NULL, `displayValue` TEXT, `diagnosisOrder` TEXT, `diagnosisList` TEXT, `diagnosisCertainty` TEXT, `diagnosisNote` TEXT, `conceptUuid` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`encounter_id` INTEGER NOT NULL, `displayValue` TEXT, `diagnosisOrder` TEXT, `diagnosisList` TEXT, `diagnosisCertainty` TEXT, `diagnosisNote` TEXT, `conceptUuid` TEXT, `uuid` TEXT, `display` TEXT NOT NULL, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
-          {
-            "fieldPath": "uuid",
-            "columnName": "uuid",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "display",
-            "columnName": "display",
-            "affinity": "TEXT",
-            "notNull": false
-          },
           {
             "fieldPath": "encounterKeyID",
             "columnName": "encounter_id",
@@ -291,10 +261,22 @@
             "notNull": false
           },
           {
+            "fieldPath": "uuid",
+            "columnName": "uuid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "display",
+            "columnName": "display",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "id",
             "columnName": "_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -308,20 +290,8 @@
       },
       {
         "tableName": "patients",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `display` TEXT, `synced` INTEGER NOT NULL, `identifier` TEXT, `givenName` TEXT, `middleName` TEXT, `familyName` TEXT, `gender` TEXT, `birthDate` TEXT, `deathDate` TEXT, `causeOfDeath` TEXT, `age` TEXT, `photo` TEXT, `address1` TEXT, `address2` TEXT, `city` TEXT, `state` TEXT, `country` TEXT, `postalCode` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `patient_uuid` TEXT, `patient_display` TEXT, `patient_visit_id` TEXT, `patient_encounterDatetime` TEXT, `patient_type` TEXT, `patient_patient_uuid` TEXT, `patient_form_uuid` TEXT, `patient__id` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`synced` INTEGER NOT NULL, `identifier` TEXT, `givenName` TEXT, `middleName` TEXT, `familyName` TEXT, `gender` TEXT, `birthDate` TEXT, `deathDate` TEXT, `causeOfDeath` TEXT, `age` TEXT, `photo` TEXT, `address1` TEXT, `address2` TEXT, `city` TEXT, `state` TEXT, `country` TEXT, `postalCode` TEXT, `uuid` TEXT, `display` TEXT NOT NULL, `_id` INTEGER PRIMARY KEY AUTOINCREMENT, `patient_visit_id` TEXT, `patient_encounterDatetime` TEXT, `patient_type` TEXT, `patient_patient_uuid` TEXT, `patient_form_uuid` TEXT, `patient_uuid` TEXT, `patient_display` TEXT, `patient__id` INTEGER)",
         "fields": [
-          {
-            "fieldPath": "uuid",
-            "columnName": "uuid",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "display",
-            "columnName": "display",
-            "affinity": "TEXT",
-            "notNull": false
-          },
           {
             "fieldPath": "synced",
             "columnName": "synced",
@@ -425,21 +395,21 @@
             "notNull": false
           },
           {
-            "fieldPath": "id",
-            "columnName": "_id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "encounters.uuid",
-            "columnName": "patient_uuid",
+            "fieldPath": "uuid",
+            "columnName": "uuid",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "encounters.display",
-            "columnName": "patient_display",
+            "fieldPath": "display",
+            "columnName": "display",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "_id",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -473,6 +443,18 @@
             "notNull": false
           },
           {
+            "fieldPath": "encounters.uuid",
+            "columnName": "patient_uuid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "encounters.display",
+            "columnName": "patient_display",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "encounters.id",
             "columnName": "patient__id",
             "affinity": "INTEGER",
@@ -490,20 +472,8 @@
       },
       {
         "tableName": "visits",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`uuid` TEXT NOT NULL, `display` TEXT, `patient_id` INTEGER NOT NULL, `visit_type` TEXT, `visit_place` TEXT, `start_date` INTEGER NOT NULL, `stop_date` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`patient_id` INTEGER NOT NULL, `visit_type` TEXT, `visit_place` TEXT, `start_date` TEXT NOT NULL, `stop_date` TEXT, `uuid` TEXT, `display` TEXT NOT NULL, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
-          {
-            "fieldPath": "uuid",
-            "columnName": "uuid",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "display",
-            "columnName": "display",
-            "affinity": "TEXT",
-            "notNull": false
-          },
           {
             "fieldPath": "patientKeyID",
             "columnName": "patient_id",
@@ -525,7 +495,7 @@
           {
             "fieldPath": "startDate",
             "columnName": "start_date",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -535,10 +505,22 @@
             "notNull": false
           },
           {
+            "fieldPath": "uuid",
+            "columnName": "uuid",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "display",
+            "columnName": "display",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "id",
             "columnName": "_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -554,7 +536,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f2ba83e78fa9d0190a4a24b5be11b2de\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"2ca31877683087a2cef9a670e3bed3be\")"
     ]
   }
 }

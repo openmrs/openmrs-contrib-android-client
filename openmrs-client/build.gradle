@@ -18,7 +18,7 @@ plugins {
     id 'jacoco-android'
 }
 
-def version = "2.8.1"
+def version = "2.8.2"
 def GOOGLE_PLACE_API_KEY = System.getenv('GOOGLE_PLACE_API_KEY') ?: "YOUR_API_KEY"
 
 android {
@@ -71,16 +71,6 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             signingConfig signingConfigs.release
-            applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    def relativeRootDir = new File("${project.rootDir.absolutePath}/openmrs-client/release/")
-                    variant.packageApplicationProvider.get().outputDirectory = relativeRootDir
-
-                    // directly assign the new name back to outputFileName
-                    def apkFileName = "openmrs-client-debug.apk"
-                    output.outputFileName = apkFileName
-                }
-            }
         }
         debug {
             testCoverageEnabled true

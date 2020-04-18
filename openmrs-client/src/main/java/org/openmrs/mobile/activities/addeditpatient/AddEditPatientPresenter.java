@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
+import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.google.android.libraries.places.api.net.PlacesClient;
@@ -44,7 +45,6 @@ import retrofit2.Response;
 public class AddEditPatientPresenter extends BasePresenter implements AddEditPatientContract.Presenter {
 
     private final AddEditPatientContract.View mPatientInfoView;
-
     private PatientRepository patientRepository;
     private RestApi restApi;
     private Patient mPatient;
@@ -56,12 +56,13 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     public AddEditPatientPresenter(AddEditPatientContract.View mPatientInfoView,
                                    List<String> countries,
                                    String patientToUpdateId,
-                                   PlacesClient placesClient) {
+                                   PlacesClient placesClient,
+                                   Context appContext) {
         this.mPatientInfoView = mPatientInfoView;
         this.mPatientInfoView.setPresenter(this);
         this.mCountries = countries;
         this.patientToUpdateId = patientToUpdateId;
-        this.patientRepository = new PatientRepository();
+        this.patientRepository = new PatientRepository(appContext);
         this.restApi = RestServiceBuilder.createService(RestApi.class);
         this.placesClient = placesClient;
     }

@@ -129,4 +129,11 @@ public abstract class ApplicationConstants {
         public static final String[] LANGUAGE_LIST = {"en", "hi"};
     }
 
+    public abstract static class ShowCaseViewConstants {
+        public static final int SHOW_FIND_PATIENT = 1;
+        public static final int SHOW_ACTIVE_VISITS = 2;
+        public static final int SHOW_REGISTER_PATIENT = 3;
+        public static final int SHOW_FORM_ENTRY = 4;
+        public static final int SHOW_MANAGE_PROVIDERS = 5;
+    }
 }

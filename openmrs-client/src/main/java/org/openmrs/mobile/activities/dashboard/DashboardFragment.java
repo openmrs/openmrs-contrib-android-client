@@ -24,6 +24,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,11 +53,11 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
     private ImageView mActiveVisitsButton;
     private ImageView mCaptureVitalsButton;
     private ImageView mProviderManagementButton;
-    private RelativeLayout mFindPatientView;
-    private RelativeLayout mRegistryPatientView;
-    private RelativeLayout mActiveVisitsView;
-    private RelativeLayout mCaptureVitalsView;
-    private RelativeLayout mProviderManagementView;
+    private LinearLayout mFindPatientView;
+    private LinearLayout mRegistryPatientView;
+    private LinearLayout mActiveVisitsView;
+    private LinearLayout mCaptureVitalsView;
+    private LinearLayout mProviderManagementView;
 
     private SparseArray<Bitmap> mBitmapCache;
 

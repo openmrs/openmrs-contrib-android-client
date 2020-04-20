@@ -138,11 +138,11 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
         String familyNameError = getString(R.string.lname_invalid_error);
 
         // First name validation
-        if (ViewUtils.isEmpty(firstNameEt)) {
+        if (ViewUtils.INSTANCE.isEmpty(firstNameEt)) {
             firstNameTIL.setErrorEnabled(true);
             firstNameTIL.setError(emptyError);
             return false;
-        } else if (!ViewUtils.validateText(ViewUtils.getInput(firstNameEt), ViewUtils.ILLEGAL_CHARACTERS)) {
+        } else if (!ViewUtils.INSTANCE.validateText(ViewUtils.INSTANCE.getInput(firstNameEt), ViewUtils.ILLEGAL_CHARACTERS)) {
             firstNameTIL.setErrorEnabled(true);
             firstNameTIL.setError(givenNameError);
             return false;
@@ -152,11 +152,11 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
 
 
         // Family name validation
-        if (ViewUtils.isEmpty(lastNameEt)) {
+        if (ViewUtils.INSTANCE.isEmpty(lastNameEt)) {
             lastNameTIL.setErrorEnabled(true);
             lastNameTIL.setError(emptyError);
             return false;
-        } else if (!ViewUtils.validateText(ViewUtils.getInput(lastNameEt), ViewUtils.ILLEGAL_CHARACTERS)) {
+        } else if (!ViewUtils.INSTANCE.validateText(ViewUtils.INSTANCE.getInput(lastNameEt), ViewUtils.ILLEGAL_CHARACTERS)) {
             lastNameTIL.setErrorEnabled(true);
             lastNameTIL.setError(familyNameError);
             return false;
@@ -165,7 +165,7 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
         }
 
         // identifier validation
-        if (ViewUtils.isEmpty(identifierEt)) {
+        if (ViewUtils.INSTANCE.isEmpty(identifierEt)) {
             identifierTIL.setErrorEnabled(true);
             identifierTIL.setError(emptyError);
             return false;

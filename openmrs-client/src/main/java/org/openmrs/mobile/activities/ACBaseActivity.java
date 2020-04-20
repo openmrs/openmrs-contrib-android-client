@@ -410,7 +410,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
 
     private void setupLanguage() {
-        String lang = LanguageUtils.getLanguage();
+        String lang = LanguageUtils.INSTANCE.getLanguage();
         Locale myLocale = new Locale(lang);
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();

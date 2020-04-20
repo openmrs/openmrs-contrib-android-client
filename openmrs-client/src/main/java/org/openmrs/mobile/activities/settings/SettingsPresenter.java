@@ -98,17 +98,17 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
 
     @Override
     public String getLanguage() {
-        return LanguageUtils.getLanguage();
+        return LanguageUtils.INSTANCE.getLanguage();
     }
 
     @Override
     public void setLanguage(String lang) {
-        LanguageUtils.setLanguage(lang);
+        LanguageUtils.INSTANCE.setLanguage(lang);
     }
 
     @Override
     public int getLanguagePosition() {
-        String lang = LanguageUtils.getLanguage();
+        String lang = LanguageUtils.INSTANCE.getLanguage();
         String[] languageList = ApplicationConstants.OpenMRSlanguage.LANGUAGE_LIST;
         int i;
         for (i = 0; i < languageList.length; i++) {

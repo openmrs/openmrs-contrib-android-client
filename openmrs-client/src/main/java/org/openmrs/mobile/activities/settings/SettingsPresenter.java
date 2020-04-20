@@ -88,12 +88,12 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
 
     @Override
     public boolean isDarkModeActivated() {
-        return ThemeUtils.isDarkModeActivated();
+        return ThemeUtils.INSTANCE.isDarkModeActivated();
     }
 
     @Override
     public void setDarkMode(boolean darkMode) {
-        ThemeUtils.setDarkMode(darkMode);
+        ThemeUtils.INSTANCE.setDarkMode(darkMode);
     }
 
     @Override

@@ -111,7 +111,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
             final String patientName = patient.getName().getNameString();
             patientImageView.setImageBitmap(photo);
             mPatientDashboardActivity.setBackdropImage(photo, patientName);
-            patientImageView.setOnClickListener(view -> ImageUtils.showPatientPhoto(getContext(), photo, patientName));
+            patientImageView.setOnClickListener(view -> ImageUtils.INSTANCE.showPatientPhoto(getContext(), photo, patientName));
         }
 
         ((TextView) rootView.findViewById(R.id.patientDetailsName)).setText(patient.getName().getNameString());
@@ -137,7 +137,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     }
 
     private void showAddressDetailsViewElement(int detailsViewLabel, int detailsViewId, String detailsText) {
-        if (StringUtils.notNull(detailsText) && StringUtils.notEmpty(detailsText)) {
+        if (StringUtils.INSTANCE.notNull(detailsText) && StringUtils.INSTANCE.notEmpty(detailsText)) {
             ((TextView) rootView.findViewById(detailsViewId)).setText(detailsText);
         } else {
             rootView.findViewById(detailsViewId).setVisibility(View.GONE);

@@ -125,7 +125,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         loginValidatorWatcher = new LoginValidatorWatcher(mUrl, mUsername, mPassword, mDropdownLocation, mLoginButton);
 
         mUrl.setOnFocusChangeListener((view, hasFocus) -> {
-            if (StringUtils.notEmpty(mUrl.getText().toString())
+            if (StringUtils.INSTANCE.notEmpty(mUrl.getText().toString())
                     && !view.isFocused()
                     && loginValidatorWatcher.isUrlChanged()
                     || (loginValidatorWatcher.isUrlChanged() && !view.isFocused()
@@ -305,7 +305,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
     private void createImageBitmap(Integer key, ViewGroup.LayoutParams layoutParams) {
         if (mBitmapCache.get(key) == null) {
-            mBitmapCache.put(key, ImageUtils.decodeBitmapFromResource(getResources(), key,
+            mBitmapCache.put(key, ImageUtils.INSTANCE.decodeBitmapFromResource(getResources(), key,
                     layoutParams.width, layoutParams.height));
         }
     }

@@ -166,6 +166,6 @@ public class Person extends Resource implements Serializable {
     }
 
     public Bitmap getResizedPhoto() {
-        return ImageUtils.resizePhoto(this.photo);
+        return ImageUtils.INSTANCE.resizePhoto(this.photo);
     }
 }

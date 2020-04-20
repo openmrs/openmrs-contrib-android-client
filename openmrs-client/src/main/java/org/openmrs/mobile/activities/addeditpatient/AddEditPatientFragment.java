@@ -297,7 +297,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             lNameError.setText(emptyError);
             lastNameTIL.setErrorEnabled(true);
             lastNameTIL.setError(emptyError);
-        } else if (!ViewUtils.validateText(ViewUtils.getInput(edlName), ViewUtils.ILLEGAL_CHARACTERS)) {
+        } else if (!ViewUtils.INSTANCE.validateText(ViewUtils.INSTANCE.getInput(edlName), ViewUtils.ILLEGAL_CHARACTERS)) {
             lNameError.setText(familyNameError);
             lastNameTIL.setErrorEnabled(true);
             lastNameTIL.setError(familyNameError);
@@ -809,12 +809,12 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                     rotateAngle = 0;
                     break;
             }
-            portraitImg = ImageUtils.rotateImage(photo, rotateAngle);
+            portraitImg = ImageUtils.INSTANCE.rotateImage(photo, rotateAngle);
         } catch (IOException e) {
             logger.e(e.getMessage());
             portraitImg = photo;
         }
-        return ImageUtils.resizePhoto(portraitImg);
+        return ImageUtils.INSTANCE.resizePhoto(portraitImg);
     }
 
     @Override

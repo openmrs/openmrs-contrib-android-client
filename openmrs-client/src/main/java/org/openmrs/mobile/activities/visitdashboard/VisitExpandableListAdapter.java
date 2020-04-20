@@ -214,7 +214,7 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
 
     private void createImageBitmap(Integer key, ViewGroup.LayoutParams layoutParams) {
         if (mBitmapCache.get(key) == null) {
-            mBitmapCache.put(key, ImageUtils.decodeBitmapFromResource(mContext.getResources(), key,
+            mBitmapCache.put(key, ImageUtils.INSTANCE.decodeBitmapFromResource(mContext.getResources(), key,
                     layoutParams.width, layoutParams.height));
         }
     }

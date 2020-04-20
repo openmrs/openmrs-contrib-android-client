@@ -264,7 +264,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
         bindDrawableResource(mActiveVisitsButton, R.drawable.ico_visits);
         bindDrawableResource(mCaptureVitalsButton, R.drawable.ico_vitals);
 
-        if (ThemeUtils.isDarkModeActivated()) {
+        if (ThemeUtils.INSTANCE.isDarkModeActivated()) {
             changeColorOfDashboardIcons();
         }
     }
@@ -297,7 +297,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
 
     private void createImageBitmap(Integer key, ViewGroup.LayoutParams layoutParams) {
         if (mBitmapCache.get(key) == null) {
-            mBitmapCache.put(key, ImageUtils.decodeBitmapFromResource(getResources(), key,
+            mBitmapCache.put(key, ImageUtils.INSTANCE.decodeBitmapFromResource(getResources(), key,
                     layoutParams.width, layoutParams.height));
         }
     }
@@ -343,11 +343,11 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
 
     private void changeColorOfDashboardIcons() {
         final int greenColorResId = R.color.green;
-        ImageUtils.changeImageViewTint(getContext(), mActiveVisitsButton, greenColorResId);
-        ImageUtils.changeImageViewTint(getContext(), mCaptureVitalsButton, greenColorResId);
-        ImageUtils.changeImageViewTint(getContext(), mFindPatientButton, greenColorResId);
-        ImageUtils.changeImageViewTint(getContext(), mRegistryPatientButton, greenColorResId);
-        ImageUtils.changeImageViewTint(getContext(), mProviderManagementButton, greenColorResId);
+        ImageUtils.INSTANCE.changeImageViewTint(getContext(), mActiveVisitsButton, greenColorResId);
+        ImageUtils.INSTANCE.changeImageViewTint(getContext(), mCaptureVitalsButton, greenColorResId);
+        ImageUtils.INSTANCE.changeImageViewTint(getContext(), mFindPatientButton, greenColorResId);
+        ImageUtils.INSTANCE.changeImageViewTint(getContext(), mRegistryPatientButton, greenColorResId);
+        ImageUtils.INSTANCE.changeImageViewTint(getContext(), mProviderManagementButton, greenColorResId);
 
     }
 }

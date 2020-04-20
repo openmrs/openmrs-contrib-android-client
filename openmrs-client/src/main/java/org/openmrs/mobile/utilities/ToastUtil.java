@@ -91,7 +91,7 @@ public final class ToastUtil {
         TextView toastText = toastRoot.findViewById(R.id.toastText);
         toastText.setText(text);
 
-        bitmap = ImageUtils.decodeBitmapFromResource(
+        bitmap = ImageUtils.INSTANCE.decodeBitmapFromResource(
                 context.getResources(),
                 getImageResId(type),
                 toastImage.getLayoutParams().width,

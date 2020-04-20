@@ -47,7 +47,7 @@ public class PatientService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(NetworkUtils.isOnline()) {
+        if(NetworkUtils.INSTANCE.isOnline()) {
             PatientAndMatchesWrapper patientAndMatchesWrapper = new PatientAndMatchesWrapper();
             List<Patient> patientList = new PatientDAO().getUnsyncedPatients();
             final ListIterator<Patient> it = patientList.listIterator();

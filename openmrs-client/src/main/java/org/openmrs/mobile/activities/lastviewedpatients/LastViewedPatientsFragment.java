@@ -67,7 +67,7 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
         mEmptyList = root.findViewById(R.id.emptyLastViewedPatientList);
         mSwipeRefreshLayout = root.findViewById(R.id.swiperefreshLastPatients);
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
-            if (NetworkUtils.hasNetwork()) {
+            if (NetworkUtils.INSTANCE.hasNetwork()) {
                 mPresenter.refresh();
                 mAdapter.finishActionMode();
             }else {

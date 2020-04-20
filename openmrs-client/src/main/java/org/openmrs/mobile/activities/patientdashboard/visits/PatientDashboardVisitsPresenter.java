@@ -84,7 +84,7 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
     }
 
     public void getVisitFromServer(){
-        if (NetworkUtils.isOnline()) {
+        if (NetworkUtils.INSTANCE.isOnline()) {
             new VisitRepository().syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
                 @Override
                 public void onResponse() {
@@ -106,7 +106,7 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
                 .subscribe(visit -> {
                     if(visit != null){
                         mPatientVisitsView.showStartVisitDialog(false);
-                    } else if (!NetworkUtils.isOnline()) {
+                    } else if (!NetworkUtils.INSTANCE.isOnline()) {
                         mPatientVisitsView.showErrorToast("Cannot start a visit manually in offline mode." +
                                 "If you want to add encounters please do so in the Form Entry section, " +
                                 "they will be synced with an automatic new visit.");

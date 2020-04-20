@@ -45,7 +45,7 @@ public class ProviderDashboardPresenterTest extends ACUnitTestBase {
     @Test
     public void shouldReturnSuccessOnEditProvider() {
         Provider provider = createProvider(1l, "doctor");
-        Mockito.lenient().when(NetworkUtils.isOnline()).thenReturn(true);
+        Mockito.lenient().when(NetworkUtils.INSTANCE.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.editProvider(provider.getUuid(), provider)).thenReturn(mockSuccessCall(provider));
 
         providerDashboardPresenter.editProvider(provider);

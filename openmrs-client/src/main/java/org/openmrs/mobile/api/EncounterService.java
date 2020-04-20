@@ -44,7 +44,7 @@ public class EncounterService extends IntentService {
 
     public void addEncounter(final Encountercreate encountercreate, @Nullable DefaultResponseCallbackListener callbackListener) {
 
-        if(NetworkUtils.isOnline()) {
+        if(NetworkUtils.INSTANCE.isOnline()) {
             new VisitDAO().getActiveVisitByPatientId(encountercreate.getPatientId())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(visit -> {
@@ -105,7 +105,7 @@ public class EncounterService extends IntentService {
 
     public void syncEncounter(final Encountercreate encountercreate, @Nullable final DefaultResponseCallbackListener callbackListener) {
 
-        if (NetworkUtils.isOnline()) {
+        if (NetworkUtils.INSTANCE.isOnline()) {
 
             encountercreate.pullObslist();
             Call<Encounter> call = apiService.createEncounter(encountercreate);
@@ -169,7 +169,7 @@ public class EncounterService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(NetworkUtils.isOnline()) {
+        if(NetworkUtils.INSTANCE.isOnline()) {
 
             List<Encountercreate> encountercreatelist = new Select()
                     .from(Encountercreate.class)

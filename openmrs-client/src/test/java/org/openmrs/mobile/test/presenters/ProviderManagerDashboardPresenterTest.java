@@ -82,7 +82,7 @@ public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
         providerList = Arrays.asList(providerOne, providerTwo);
         providerLiveData.postValue(providerList);
 
-        Mockito.lenient().when(NetworkUtils.isOnline()).thenReturn(true);
+        Mockito.lenient().when(NetworkUtils.INSTANCE.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.getProviderList()).thenReturn(mockSuccessCall(providerList));
         Mockito.lenient().when(providerRepository.getProviders(restApi)).thenReturn(providerLiveData);
 
@@ -97,7 +97,7 @@ public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
 
     @Test
     public void shouldGetProviders_Error() {
-        Mockito.lenient().when(NetworkUtils.isOnline()).thenReturn(true);
+        Mockito.lenient().when(NetworkUtils.INSTANCE.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.getProviderList()).thenReturn(mockErrorCall(401));
 
         providerManagerDashboardPresenter.getProviders(fragment);
@@ -109,7 +109,7 @@ public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
         List<Provider> providerList = new ArrayList<>();
         providerLiveData.postValue(providerList);
 
-        Mockito.lenient().when(NetworkUtils.isOnline()).thenReturn(true);
+        Mockito.lenient().when(NetworkUtils.INSTANCE.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.getProviderList()).thenReturn(mockSuccessCall(providerList));
         Mockito.lenient().when(providerRepository.getProviders(restApi)).thenReturn(providerLiveData);
 

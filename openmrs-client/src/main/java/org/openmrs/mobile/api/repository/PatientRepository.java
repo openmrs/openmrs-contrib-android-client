@@ -87,7 +87,7 @@ public class PatientRepository extends RetrofitRepository {
     public SimplePromise<Patient> syncPatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
         final SimpleDeferredObject<Patient> deferred = new SimpleDeferredObject<>();
 
-        if (NetworkUtils.isOnline()) {
+        if (NetworkUtils.INSTANCE.isOnline()) {
             AndroidDeferredManager dm = new AndroidDeferredManager();
             dm.when(locationRepository.getLocationUuid(), getIdGenPatientIdentifier(), getPatientIdentifierTypeUuid())
                     .done(results -> {
@@ -193,7 +193,7 @@ public class PatientRepository extends RetrofitRepository {
      */
     public void updatePatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
         PatientDto patientDto = patient.getPatientDto();
-        if (NetworkUtils.isOnline()) {
+        if (NetworkUtils.INSTANCE.isOnline()) {
             Call<PatientDto> call = restApi.updatePatient(patientDto, patient.getUuid(), "full");
             call.enqueue(new Callback<PatientDto>() {
                 @Override

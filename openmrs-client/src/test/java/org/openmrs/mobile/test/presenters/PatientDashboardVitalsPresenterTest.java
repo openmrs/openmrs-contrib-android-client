@@ -69,7 +69,7 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void subscribe_allOk() {
-        PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
+        PowerMockito.when(NetworkUtils.INSTANCE.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString()))
                 .thenReturn(mockSuccessCall(Collections.singletonList(new Encounter())));
         Encounter encounter = new Encounter();
@@ -81,7 +81,7 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void subscribe_nullEncounter() {
-        PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
+        PowerMockito.when(NetworkUtils.INSTANCE.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString()))
                 .thenReturn(mockSuccessCall(Collections.singletonList(new Encounter())));
         Mockito.lenient().when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(null));
@@ -92,7 +92,7 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void subscribe_errorResponse() {
-        PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
+        PowerMockito.when(NetworkUtils.INSTANCE.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString())).thenReturn(mockErrorCall(401));
         Encounter encounter = new Encounter();
         Mockito.lenient().when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(encounter));
@@ -104,7 +104,7 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void subscribe_errorResponseNullEncounter() {
-        PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
+        PowerMockito.when(NetworkUtils.INSTANCE.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString())).thenReturn(mockErrorCall(401));
         Mockito.lenient().when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(null));
         presenter.subscribe();
@@ -115,7 +115,7 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void subscribe_networkError() {
-        PowerMockito.when(NetworkUtils.isOnline()).thenReturn(false);
+        PowerMockito.when(NetworkUtils.INSTANCE.isOnline()).thenReturn(false);
         Encounter encounter = new Encounter();
         Mockito.lenient().when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(encounter));
         presenter.subscribe();
@@ -125,7 +125,7 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void subscribe_networkErrorNullEncounter() {
-        PowerMockito.when(NetworkUtils.isOnline()).thenReturn(false);
+        PowerMockito.when(NetworkUtils.INSTANCE.isOnline()).thenReturn(false);
         Mockito.lenient().when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(null));
         presenter.subscribe();
         verify(encounterDAO).getLastVitalsEncounter(patient.getUuid());

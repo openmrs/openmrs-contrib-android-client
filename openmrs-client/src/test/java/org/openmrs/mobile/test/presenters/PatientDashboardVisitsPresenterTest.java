@@ -99,7 +99,7 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldShowStartVisitDialog_noNetwork(){
-        PowerMockito.when(NetworkUtils.isOnline()).thenReturn(false);
+        PowerMockito.when(NetworkUtils.INSTANCE.isOnline()).thenReturn(false);
         Mockito.lenient().when(visitDAO.getActiveVisitByPatientId(patient.getId())).thenReturn(Observable.just(null));
         presenter.showStartVisitDialog();
         verify(view).showErrorToast(anyString());
@@ -107,7 +107,7 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldShowStartVisitDialog_allOk(){
-        PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
+        PowerMockito.when(NetworkUtils.INSTANCE.isOnline()).thenReturn(true);
         Mockito.lenient().when(visitDAO.getActiveVisitByPatientId(patient.getId())).thenReturn(Observable.just(null));
         presenter.showStartVisitDialog();
         verify(view).showStartVisitDialog(true);

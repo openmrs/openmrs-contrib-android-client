@@ -87,7 +87,7 @@ public class AuthenticateCheckService extends Service {
     }
 
     private void authenticateCheck(String username, String password) {
-        if (NetworkUtils.hasNetwork()) {
+        if (NetworkUtils.INSTANCE.hasNetwork()) {
             RestApi restApi = RestServiceBuilder.createService(RestApi.class, username, password);
             Call<Session> call = restApi.getSession();
             call.enqueue(new Callback<Session>() {

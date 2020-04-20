@@ -114,7 +114,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
     @Override
     public void authenticateUser(final String username, final String password, final String url, final boolean wipeDatabase) {
         loginView.showLoadingAnimation();
-        if (NetworkUtils.isOnline()) {
+        if (NetworkUtils.INSTANCE.isOnline()) {
             mWipeRequired = wipeDatabase;
             RestApi restApi = RestServiceBuilder.createService(RestApi.class, username, password);
             Call<Session> call = restApi.getSession();
@@ -193,7 +193,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                     loginView.showToast(R.string.auth_failed_dialog_message,
                             ToastUtil.ToastType.ERROR);
                 }
-            } else if (NetworkUtils.hasNetwork()) {
+            } else if (NetworkUtils.INSTANCE.hasNetwork()) {
                 loginView.showToast(R.string.offline_mode_unsupported_in_first_login,
                         ToastUtil.ToastType.ERROR);
                 loginView.hideLoadingAnimation();
@@ -221,7 +221,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
     public void loadLocations(final String url) {
         loginView.showLocationLoadingAnimation();
 
-        if (NetworkUtils.hasNetwork()) {
+        if (NetworkUtils.INSTANCE.hasNetwork()) {
             String locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "location";
             Call<Results<Location>> call =
                     restApi.getLocations(locationEndPoint, "Login Location", "full");
@@ -269,7 +269,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
     }
 
     private boolean validateLoginFields(String username, String password, String url) {
-        return StringUtils.notEmpty(username) || StringUtils.notEmpty(password) || StringUtils.notEmpty(url);
+        return StringUtils.INSTANCE.notEmpty(username) || StringUtils.INSTANCE.notEmpty(password) || StringUtils.INSTANCE.notEmpty(url);
     }
 
     private void setData(String sessionToken, String url, String username, String password) {

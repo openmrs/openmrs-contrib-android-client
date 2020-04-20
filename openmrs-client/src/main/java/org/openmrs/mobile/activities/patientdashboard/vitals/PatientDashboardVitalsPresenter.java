@@ -55,7 +55,7 @@ public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresent
     }
 
     private void loadVitalsFromServer() {
-        if (NetworkUtils.isOnline()) {
+        if (NetworkUtils.INSTANCE.isOnline()) {
             visitRepository.syncLastVitals(mPatient.getUuid(), new DefaultResponseCallbackListener() {
                 @Override
                 public void onResponse() {

@@ -282,17 +282,17 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     }
 
     private void mockNetworkConnection(boolean isNetwork) {
-        PowerMockito.when(NetworkUtils.hasNetwork()).thenReturn(isNetwork);
+        PowerMockito.when(NetworkUtils.INSTANCE.hasNetwork()).thenReturn(isNetwork);
     }
 
 
     private void mockNonEmptyCredentials(boolean isNonEmpty) {
-        PowerMockito.when(StringUtils.notEmpty(anyString())).thenReturn(isNonEmpty);
+        PowerMockito.when(StringUtils.INSTANCE.notEmpty(anyString())).thenReturn(isNonEmpty);
     }
 
 
     private void mockOnlineMode(boolean isOnline) {
-        PowerMockito.when(NetworkUtils.isOnline()).thenReturn(isOnline);
+        PowerMockito.when(NetworkUtils.INSTANCE.isOnline()).thenReturn(isOnline);
     }
 
     private void mockLastUser(String user, String password, String url) {

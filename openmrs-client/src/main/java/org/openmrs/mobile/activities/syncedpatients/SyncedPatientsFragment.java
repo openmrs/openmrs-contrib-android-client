@@ -100,7 +100,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
                 enableAddPatient(OpenMRS.getInstance().getSyncState());
                 break;
             case R.id.actionAddPatients:
-                if (NetworkUtils.hasNetwork()) {
+                if (NetworkUtils.INSTANCE.hasNetwork()) {
                     Intent intent = new Intent(getActivity(), LastViewedPatientsActivity.class);
                     startActivity(intent);
                 }else {

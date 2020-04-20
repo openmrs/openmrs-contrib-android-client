@@ -39,7 +39,7 @@ public class ProviderRepository {
     public LiveData<List<Provider>> getProviders(RestApi restApi) {
 
         final MutableLiveData<List<Provider>> providerLiveData = new MutableLiveData<>();
-        if (NetworkUtils.isOnline()) {
+        if (NetworkUtils.INSTANCE.isOnline()) {
 
             restApi.getProviderList().enqueue(new Callback<Results<Provider>>() {
                 @Override
@@ -74,7 +74,7 @@ public class ProviderRepository {
     }
 
     public void deleteProviders(RestApi restApi, String uuid, CustomApiCallback callback) {
-        if (NetworkUtils.isOnline()) {
+        if (NetworkUtils.INSTANCE.isOnline()) {
             restApi.deleteProvider(uuid).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
@@ -100,7 +100,7 @@ public class ProviderRepository {
     }
 
     public void addProvider(RestApi restApi, Provider provider, CustomApiCallback callback) {
-        if (NetworkUtils.isOnline()) {
+        if (NetworkUtils.INSTANCE.isOnline()) {
             restApi.addProvider(provider).enqueue(new Callback<Provider>() {
                 @Override
                 public void onResponse(@NotNull Call<Provider> call, @NotNull Response<Provider> response) {
@@ -126,7 +126,7 @@ public class ProviderRepository {
     }
 
     public void editProvider(RestApi restApi, Provider provider, CustomApiCallback callback) {
-        if (NetworkUtils.isOnline()) {
+        if (NetworkUtils.INSTANCE.isOnline()) {
             restApi.editProvider(provider.getUuid(), provider).enqueue(new Callback<Provider>() {
                 @Override
                 public void onResponse(@NotNull Call<Provider> call, @NotNull Response<Provider> response) {

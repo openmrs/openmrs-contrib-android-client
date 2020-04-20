@@ -55,7 +55,7 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
 
     @Override
     public void synchronizePatient() {
-        if(NetworkUtils.isOnline()) {
+        if(NetworkUtils.INSTANCE.isOnline()) {
             mPatientDetailsView.showDialog(R.string.action_synchronize_patients);
             syncDetailsData();
             syncVisitsData();
@@ -68,7 +68,7 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
       }
 
     public void updatePatientDataFromServer(){
-        if(NetworkUtils.isOnline()) {
+        if(NetworkUtils.INSTANCE.isOnline()) {
             syncDetailsData();
             syncVisitsData();
             syncVitalsData();
@@ -95,7 +95,7 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
         mPatient = patientDAO.findPatientByID(mPatient.getId().toString());
         mPatientDetailsView.resolvePatientDataDisplay(patientDAO.findPatientByID(mPatient.getId().toString()));
         mPatientDetailsView.setMenuTitle(mPatient.getName().getNameString(), mPatient.getIdentifier().getIdentifier());
-        if (!NetworkUtils.isOnline()) {
+        if (!NetworkUtils.INSTANCE.isOnline()) {
             mPatientDetailsView.attachSnackbarToActivity();
         }
 

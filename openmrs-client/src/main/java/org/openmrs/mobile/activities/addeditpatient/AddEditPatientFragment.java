@@ -227,18 +227,18 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         String emptyError = getString(R.string.emptyerror);
 
         // Validate address
-        if (ViewUtils.isEmpty(edAddr1)
-                && ViewUtils.isEmpty(edAddr2)
-                && ViewUtils.isEmpty(edCity)
-                && ViewUtils.isEmpty(edPostal)
-                && ViewUtils.isCountryCodePickerEmpty(mCountryCodePicker)
-                && ViewUtils.isEmpty(edState)) {
+        if (ViewUtils.INSTANCE.isEmpty(edAddr1)
+                && ViewUtils.INSTANCE.isEmpty(edAddr2)
+                && ViewUtils.INSTANCE.isEmpty(edCity)
+                && ViewUtils.INSTANCE.isEmpty(edPostal)
+                && ViewUtils.INSTANCE.isCountryCodePickerEmpty(mCountryCodePicker)
+                && ViewUtils.INSTANCE.isEmpty(edState)) {
 
             addrError.setText(R.string.atleastone);
             address1TIL.setErrorEnabled(true);
             address1TIL.setError(getString(R.string.atleastone));
-        } else if (!ViewUtils.validateText(ViewUtils.getInput(edAddr1), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
-                || !ViewUtils.validateText(ViewUtils.getInput(edAddr2), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)) {
+        } else if (!ViewUtils.INSTANCE.validateText(ViewUtils.INSTANCE.getInput(edAddr1), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
+                || !ViewUtils.INSTANCE.validateText(ViewUtils.INSTANCE.getInput(edAddr2), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)) {
 
             addrError.setText(getString(R.string.addr_invalid_error));
             address1TIL.setErrorEnabled(true);
@@ -249,12 +249,12 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
         // Add address
         PersonAddress address = new PersonAddress();
-        address.setAddress1(ViewUtils.getInput(edAddr1));
-        address.setAddress2(ViewUtils.getInput(edAddr2));
-        address.setCityVillage(ViewUtils.getInput(edCity));
-        address.setPostalCode(ViewUtils.getInput(edPostal));
+        address.setAddress1(ViewUtils.INSTANCE.getInput(edAddr1));
+        address.setAddress2(ViewUtils.INSTANCE.getInput(edAddr2));
+        address.setCityVillage(ViewUtils.INSTANCE.getInput(edCity));
+        address.setPostalCode(ViewUtils.INSTANCE.getInput(edPostal));
         address.setCountry(mCountryCodePicker.getSelectedCountryName());
-        address.setStateProvince(ViewUtils.getInput(edState));
+        address.setStateProvince(ViewUtils.INSTANCE.getInput(edState));
         address.setPreferred(true);
 
         List<PersonAddress> addresses = new ArrayList<>();
@@ -271,11 +271,11 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         String familyNameError = getString(R.string.lname_invalid_error);
 
         // First name validation
-        if (ViewUtils.isEmpty(edfName)) {
+        if (ViewUtils.INSTANCE.isEmpty(edfName)) {
             fNameError.setText(emptyError);
             firstNameTIL.setErrorEnabled(true);
             firstNameTIL.setError(emptyError);
-        } else if (!ViewUtils.validateText(ViewUtils.getInput(edfName), ViewUtils.ILLEGAL_CHARACTERS)) {
+        } else if (!ViewUtils.INSTANCE.validateText(ViewUtils.INSTANCE.getInput(edfName), ViewUtils.ILLEGAL_CHARACTERS)) {
             lNameError.setText(familyNameError);
             firstNameTIL.setErrorEnabled(true);
             firstNameTIL.setError(givenNameError);
@@ -284,7 +284,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         }
 
         // Middle name validation (can be empty)
-        if (!ViewUtils.validateText(ViewUtils.getInput(edmName), ViewUtils.ILLEGAL_CHARACTERS)) {
+        if (!ViewUtils.INSTANCE.validateText(ViewUtils.INSTANCE.getInput(edmName), ViewUtils.ILLEGAL_CHARACTERS)) {
             lNameError.setText(familyNameError);
             middleNameTIL.setErrorEnabled(true);
             middleNameTIL.setError(middleNameError);
@@ -293,7 +293,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         }
 
         // Family name validation
-        if (ViewUtils.isEmpty(edlName)) {
+        if (ViewUtils.INSTANCE.isEmpty(edlName)) {
             lNameError.setText(emptyError);
             lastNameTIL.setErrorEnabled(true);
             lastNameTIL.setError(emptyError);
@@ -307,9 +307,9 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
         // Add names
         PersonName name = new PersonName();
-        name.setFamilyName(ViewUtils.getInput(edlName));
-        name.setGivenName(ViewUtils.getInput(edfName));
-        name.setMiddleName(ViewUtils.getInput(edmName));
+        name.setFamilyName(ViewUtils.INSTANCE.getInput(edlName));
+        name.setGivenName(ViewUtils.INSTANCE.getInput(edfName));
+        name.setMiddleName(ViewUtils.INSTANCE.getInput(edmName));
 
         List<PersonName> names = new ArrayList<>();
         names.add(name);
@@ -326,12 +326,12 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
         // Add birthdate
         String birthdate = null;
-        if (ViewUtils.isEmpty(edDob)) {
-            if (!StringUtils.isBlank(ViewUtils.getInput(edYear)) || !StringUtils.isBlank(ViewUtils.getInput(edMonth))) {
+        if (ViewUtils.INSTANCE.isEmpty(edDob)) {
+            if (!StringUtils.INSTANCE.isBlank(ViewUtils.INSTANCE.getInput(edYear)) || !StringUtils.INSTANCE.isBlank(ViewUtils.INSTANCE.getInput(edMonth))) {
                 dateTimeFormatter = DateTimeFormat.forPattern(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT);
 
-                int yeardiff = ViewUtils.isEmpty(edYear) ? 0 : Integer.parseInt(edYear.getText().toString());
-                int mondiff = ViewUtils.isEmpty(edMonth) ? 0 : Integer.parseInt(edMonth.getText().toString());
+                int yeardiff = ViewUtils.INSTANCE.isEmpty(edYear) ? 0 : Integer.parseInt(edYear.getText().toString());
+                int mondiff = ViewUtils.INSTANCE.isEmpty(edMonth) ? 0 : Integer.parseInt(edMonth.getText().toString());
                 LocalDate now = new LocalDate();
                 bdt = now.toDateTimeAtStartOfDay().toDateTime();
                 bdt = bdt.minusYears(yeardiff);
@@ -417,17 +417,17 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     @Override
     public boolean areFieldsNotEmpty() {
-        return (!ViewUtils.isEmpty(edfName) ||
-                (!ViewUtils.isEmpty(edmName)) ||
-                (!ViewUtils.isEmpty(edlName)) ||
-                (!ViewUtils.isEmpty(edDob)) ||
-                (!ViewUtils.isEmpty(edYear)) ||
-                (!ViewUtils.isEmpty(edAddr1)) ||
-                (!ViewUtils.isEmpty(edAddr2)) ||
-                (!ViewUtils.isEmpty(edCity)) ||
-                (!ViewUtils.isEmpty(edState)) ||
-                (!ViewUtils.isCountryCodePickerEmpty(mCountryCodePicker)) ||
-                (!ViewUtils.isEmpty(edPostal)));
+        return (!ViewUtils.INSTANCE.isEmpty(edfName) ||
+                (!ViewUtils.INSTANCE.isEmpty(edmName)) ||
+                (!ViewUtils.INSTANCE.isEmpty(edlName)) ||
+                (!ViewUtils.INSTANCE.isEmpty(edDob)) ||
+                (!ViewUtils.INSTANCE.isEmpty(edYear)) ||
+                (!ViewUtils.INSTANCE.isEmpty(edAddr1)) ||
+                (!ViewUtils.INSTANCE.isEmpty(edAddr2)) ||
+                (!ViewUtils.INSTANCE.isEmpty(edCity)) ||
+                (!ViewUtils.INSTANCE.isEmpty(edState)) ||
+                (!ViewUtils.INSTANCE.isCountryCodePickerEmpty(mCountryCodePicker)) ||
+                (!ViewUtils.INSTANCE.isEmpty(edPostal)));
     }
 
     public static AddEditPatientFragment newInstance() {
@@ -484,7 +484,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
             patientName = patient.getName().getNameString();
 
-            if (StringUtils.notNull(patient.getBirthdate()) || StringUtils.notEmpty(patient.getBirthdate())) {
+            if (StringUtils.INSTANCE.notNull(patient.getBirthdate()) || StringUtils.INSTANCE.notEmpty(patient.getBirthdate())) {
                 bdt = DateUtils.convertTimeString(patient.getBirthdate());
                 edDob.setText(DateUtils.convertTime(DateUtils.convertTime(bdt.toString(), DateUtils.OPEN_MRS_REQUEST_FORMAT),
                         DateUtils.DEFAULT_DATE_FORMAT));

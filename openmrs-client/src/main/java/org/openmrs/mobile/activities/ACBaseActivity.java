@@ -150,7 +150,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
             logoutMenuItem.setTitle(getString(R.string.action_logout) + " " + mOpenMRS.getUsername());
         }
         if (mSyncbutton != null) {
-            final Boolean syncState = NetworkUtils.isOnline();
+            final Boolean syncState = NetworkUtils.INSTANCE.isOnline();
             setSyncButtonState(syncState);
         }
         return true;
@@ -189,7 +189,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     setSyncButtonState(false);
                     showNoInternetConnectionSnackbar();
                     ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.disconn_server);
-                } else if (NetworkUtils.hasNetwork()) {
+                } else if (NetworkUtils.INSTANCE.hasNetwork()) {
                     OpenMRS.getInstance().setSyncState(true);
                     setSyncButtonState(true);
                     Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
@@ -402,7 +402,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
 
     public void setupTheme(){
-        if(ThemeUtils.isDarkModeActivated()){
+        if(ThemeUtils.INSTANCE.isDarkModeActivated()){
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else{
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);

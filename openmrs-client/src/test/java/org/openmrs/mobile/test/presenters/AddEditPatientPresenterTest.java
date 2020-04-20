@@ -168,7 +168,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldUpdatePatient_allOk() {
-        PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
+        PowerMockito.when(NetworkUtils.INSTANCE.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.updatePatient(any(), anyString(), anyString()))
                 .thenReturn(mockSuccessCall(patient.getPatientDto()));
         Mockito.lenient().when(restApi.uploadPatientPhoto(anyString(), any()))
@@ -184,7 +184,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldUpdatePatient_errorResponse() {
-        PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
+        PowerMockito.when(NetworkUtils.INSTANCE.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.updatePatient(any(), anyString(), anyString()))
                 .thenReturn(mockErrorCall(401));
         Mockito.lenient().when(restApi.uploadPatientPhoto(anyString(), any()))

@@ -135,23 +135,23 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         // Validate names
         PersonName currentPersonName = patient.getName();
 
-        if (StringUtils.isBlank(currentPersonName.getGivenName())
-                || !ViewUtils.validateText(currentPersonName.getGivenName(), ViewUtils.ILLEGAL_CHARACTERS)) {
+        if (StringUtils.INSTANCE.isBlank(currentPersonName.getGivenName())
+                || !ViewUtils.INSTANCE.validateText(currentPersonName.getGivenName(), ViewUtils.ILLEGAL_CHARACTERS)) {
             givenNameError = true;
         }
 
         // Middle name can be left empty
-        if (!ViewUtils.validateText(currentPersonName.getMiddleName(), ViewUtils.ILLEGAL_CHARACTERS)) {
+        if (!ViewUtils.INSTANCE.validateText(currentPersonName.getMiddleName(), ViewUtils.ILLEGAL_CHARACTERS)) {
             givenNameError = true;
         }
 
-        if (StringUtils.isBlank(currentPersonName.getFamilyName())
-                || !ViewUtils.validateText(currentPersonName.getFamilyName(), ViewUtils.ILLEGAL_CHARACTERS)) {
+        if (StringUtils.INSTANCE.isBlank(currentPersonName.getFamilyName())
+                || !ViewUtils.INSTANCE.validateText(currentPersonName.getFamilyName(), ViewUtils.ILLEGAL_CHARACTERS)) {
             familyNameError = true;
         }
 
         // Validate date of birth
-        if (StringUtils.isBlank(patient.getBirthdate())) {
+        if (StringUtils.INSTANCE.isBlank(patient.getBirthdate())) {
             dateOfBirthError = true;
         }
 
@@ -159,31 +159,31 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         String patientAddress1 = patient.getAddress().getAddress1();
         String patientAddress2 = patient.getAddress().getAddress2();
 
-        if ((StringUtils.isBlank(patientAddress1)
-                && StringUtils.isBlank(patientAddress2)
-                || !ViewUtils.validateText(patientAddress1, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
-                || !ViewUtils.validateText(patientAddress2, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS))) {
+        if ((StringUtils.INSTANCE.isBlank(patientAddress1)
+                && StringUtils.INSTANCE.isBlank(patientAddress2)
+                || !ViewUtils.INSTANCE.validateText(patientAddress1, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
+                || !ViewUtils.INSTANCE.validateText(patientAddress2, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS))) {
             addressError = true;
         }
 
-        if (!StringUtils.isBlank(patient.getAddress().getCountry()) && !mCountries.contains(patient.getAddress().getCountry())) {
+        if (!StringUtils.INSTANCE.isBlank(patient.getAddress().getCountry()) && !mCountries.contains(patient.getAddress().getCountry())) {
             countryError = true;
         }
 
         // Validate gender
-        if (StringUtils.isBlank(patient.getGender())) {
+        if (StringUtils.INSTANCE.isBlank(patient.getGender())) {
             genderError = true;
         }
-        if (StringUtils.isBlank(patient.getAddress().getCountry())) {
+        if (StringUtils.INSTANCE.isBlank(patient.getAddress().getCountry())) {
             countryNull = true;
         }
-        if (StringUtils.isBlank(patient.getAddress().getStateProvince())) {
+        if (StringUtils.INSTANCE.isBlank(patient.getAddress().getStateProvince())) {
             stateError = true;
         }
-        if (StringUtils.isBlank(patient.getAddress().getCityVillage())) {
+        if (StringUtils.INSTANCE.isBlank(patient.getAddress().getCityVillage())) {
             cityError = true;
         }
-        if (StringUtils.isBlank(patient.getAddress().getPostalCode())) {
+        if (StringUtils.INSTANCE.isBlank(patient.getAddress().getPostalCode())) {
             postalError = true;
         }
 
@@ -236,7 +236,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     }
 
     public void findSimilarPatients(final Patient patient) {
-        if (NetworkUtils.isOnline()) {
+        if (NetworkUtils.INSTANCE.isOnline()) {
             Call<Results<Module>> moduleCall = restApi.getModules(ApplicationConstants.API.FULL);
             moduleCall.enqueue(new Callback<Results<Module>>() {
                 @Override

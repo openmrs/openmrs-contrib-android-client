@@ -38,7 +38,7 @@ public class FormListService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(NetworkUtils.isOnline()) {
+        if(NetworkUtils.INSTANCE.isOnline()) {
 
             Call<Results<FormResource>> call = apiService.getForms();
             call.enqueue(new Callback<Results<FormResource>>() {

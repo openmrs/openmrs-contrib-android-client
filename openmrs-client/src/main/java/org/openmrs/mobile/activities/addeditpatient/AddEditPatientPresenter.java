@@ -242,7 +242,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
                 @Override
                 public void onResponse(@NonNull Call<Results<Module>> call, @NonNull Response<Results<Module>> response) {
                     if (response.isSuccessful()) {
-                        if (ModuleUtils.isRegistrationCore1_7orAbove(response.body().getResults())) {
+                        if (ModuleUtils.INSTANCE.isRegistrationCore1_7orAbove(response.body().getResults())) {
                             fetchSimilarPatientsFromServer(patient);
                         } else {
                             fetchSimilarPatientAndCalculateLocally(patient);

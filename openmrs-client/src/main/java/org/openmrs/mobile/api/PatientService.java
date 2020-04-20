@@ -73,7 +73,7 @@ public class PatientService extends IntentService {
         try {
             Response<Results<Module>> moduleResp = moduleCall.execute();
             if(moduleResp.isSuccessful()){
-                if(ModuleUtils.isRegistrationCore1_7orAbove(moduleResp.body().getResults())){
+                if(ModuleUtils.INSTANCE.isRegistrationCore1_7orAbove(moduleResp.body().getResults())){
                     fetchSimilarPatientsFromServer(patient, patientAndMatchesWrapper);
                 } else {
                     fetchPatientsAndCalculateLocally(patient, patientAndMatchesWrapper);

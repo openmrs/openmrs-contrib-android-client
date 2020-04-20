@@ -88,7 +88,7 @@ public class SyncedPatientsPresenter extends BasePresenter implements SyncedPati
         addSubscription(patientDAO.getAllPatients()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(patientList -> {
-                    boolean isFiltering = StringUtils.notNull(mQuery) && !mQuery.isEmpty();
+                    boolean isFiltering = StringUtils.INSTANCE.notNull(mQuery) && !mQuery.isEmpty();
 
                     if (isFiltering) {
                         patientList = FilterUtil.getPatientsFilteredByQuery(patientList, mQuery);

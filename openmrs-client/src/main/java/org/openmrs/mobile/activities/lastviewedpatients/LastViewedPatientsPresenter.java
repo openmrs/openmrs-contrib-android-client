@@ -239,7 +239,7 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
 
     @Override
     public void refresh() {
-        if (!StringUtils.isBlank(mQuery) && StringUtils.notEmpty(mQuery)) {
+        if (!StringUtils.INSTANCE.isBlank(mQuery) && StringUtils.INSTANCE.notEmpty(mQuery)) {
             findPatients(mQuery);
         }
         else {

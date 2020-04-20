@@ -53,7 +53,7 @@ public class PatientBirthdateValidatorWatcher implements TextWatcher{
             edyr.getText().clear();
         }
         else {
-            if (StringUtils.notEmpty(editable.toString()) && Integer.parseInt(editable.toString()) > ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE) {
+            if (StringUtils.INSTANCE.notEmpty(editable.toString()) && Integer.parseInt(editable.toString()) > ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE) {
                 ToastUtil.error("Patient's age must be between 0 and " + ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE);
                 edmonth.getText().clear();
                 edyr.getText().clear();
@@ -61,7 +61,7 @@ public class PatientBirthdateValidatorWatcher implements TextWatcher{
         }
 
         int monthValue = 0;
-        if (StringUtils.notEmpty(edmonth.getText().toString())) {
+        if (StringUtils.INSTANCE.notEmpty(edmonth.getText().toString())) {
             monthValue = Integer.parseInt(edmonth.getText().toString());
         }
         if (monthValue >= 12) {

@@ -62,7 +62,7 @@ public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
         Patient patient = createPatient(1l, mQuery);
         patientList.add(patient);
 
-        Mockito.lenient().when(StringUtils.notNull(anyString())).thenReturn(true);
+        Mockito.lenient().when(StringUtils.INSTANCE.notNull(anyString())).thenReturn(true);
         Mockito.lenient().when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
 
         presenter.setQuery(mQuery);
@@ -74,7 +74,7 @@ public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldUpdatePatientList_emptyPatientList() {
-        Mockito.lenient().when(StringUtils.notNull(anyString())).thenReturn(true);
+        Mockito.lenient().when(StringUtils.INSTANCE.notNull(anyString())).thenReturn(true);
         Mockito.lenient().when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
 
         presenter.setQuery(mQuery);
@@ -91,7 +91,7 @@ public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
         Patient patient = createPatient(1l);
         patientList.add(patient);
 
-        Mockito.lenient().when(StringUtils.notNull(anyString())).thenReturn(false);
+        Mockito.lenient().when(StringUtils.INSTANCE.notNull(anyString())).thenReturn(false);
         Mockito.lenient().when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
 
         presenter.setQuery(null);
@@ -103,7 +103,7 @@ public class FormEntryPatientListPresenterTest extends ACUnitTestBaseRx {
 
     @Test
     public void shouldUpdatePatientList_nullQueryEmptyPatientList() {
-        Mockito.lenient().when(StringUtils.notNull(anyString())).thenReturn(false);
+        Mockito.lenient().when(StringUtils.INSTANCE.notNull(anyString())).thenReturn(false);
         Mockito.lenient().when(patientDAO.getAllPatients()).thenReturn(Observable.just(patientList));
 
         presenter.setQuery(null);

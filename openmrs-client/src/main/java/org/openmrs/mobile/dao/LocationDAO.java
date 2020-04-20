@@ -65,7 +65,7 @@ public class LocationDAO {
     }
 
     public Location findLocationByName(String name) {
-        if(!StringUtils.notNull(name)){
+        if(!StringUtils.INSTANCE.notNull(name)){
             return null;
         }
         Location location = new Location();

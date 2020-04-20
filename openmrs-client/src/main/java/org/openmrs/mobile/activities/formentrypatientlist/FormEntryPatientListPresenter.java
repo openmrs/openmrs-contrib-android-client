@@ -63,7 +63,7 @@ public class FormEntryPatientListPresenter extends BasePresenter implements Form
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(patientList -> {
                     final int NO_STRING_ID = R.string.last_vitals_none_label;
-                    boolean isFiltering = StringUtils.notNull(mQuery);
+                    boolean isFiltering = StringUtils.INSTANCE.notNull(mQuery);
 
                     if (isFiltering) {
                         patientList = FilterUtil.getPatientsFilteredByQuery(patientList, mQuery);

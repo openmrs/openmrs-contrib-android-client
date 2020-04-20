@@ -66,7 +66,7 @@ public class FormListPresenter extends BasePresenter implements FormListContract
                     valueRefString = resource.getValueReference();
                 }
             }
-            if (!StringUtils.isBlank(valueRefString)) {
+            if (!StringUtils.INSTANCE.isBlank(valueRefString)) {
                 formResourceList.add(formResource);
             } else {
                 if (view.formCreate(formResource.getUuid(), formResource.getName().toLowerCase())) {

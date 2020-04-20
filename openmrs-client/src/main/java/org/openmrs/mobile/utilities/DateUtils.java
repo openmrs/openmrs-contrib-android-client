@@ -70,7 +70,7 @@ public final class DateUtils {
 
     public static Long convertTime(String dateAsString, String dateFormat) {
         Long time = null;
-        if (StringUtils.notNull(dateAsString)) {
+        if (StringUtils.INSTANCE.notNull(dateAsString)) {
             DateFormat format = new SimpleDateFormat(dateFormat);
             Date formattedDate;
             try {
@@ -101,7 +101,7 @@ public final class DateUtils {
 
     public static DateTime convertTimeString(String dateAsString) {
         DateTime date = null;
-        if (StringUtils.notNull(dateAsString)) {
+        if (StringUtils.INSTANCE.notNull(dateAsString)) {
             DateTimeFormatter originalFormat;
             if (dateAsString.length() == OPEN_MRS_REQUEST_PATIENT_FORMAT.length()){
                 originalFormat = DateTimeFormat.forPattern(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT);
@@ -115,7 +115,7 @@ public final class DateUtils {
     }
 
     public static String convertTime1(String dateAsString, String dateFormat) {
-        if (StringUtils.notNull(dateAsString) && StringUtils.notEmpty(dateAsString)) {
+        if (StringUtils.INSTANCE.notNull(dateAsString) && StringUtils.INSTANCE.notEmpty(dateAsString)) {
             return convertTime(convertTime(dateAsString), dateFormat, TimeZone.getDefault());
         }
         return dateAsString;
@@ -127,7 +127,7 @@ public final class DateUtils {
 
     public static Date getDateFromString(String dateAsString, String dateFormat) {
         Date formattedDate = null;
-        if (StringUtils.notNull(dateAsString)) {
+        if (StringUtils.INSTANCE.notNull(dateAsString)) {
             DateFormat format = new SimpleDateFormat(dateFormat);
             try {
                 formattedDate = parseString(dateAsString, format);

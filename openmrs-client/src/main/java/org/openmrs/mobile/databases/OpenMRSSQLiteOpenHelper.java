@@ -107,7 +107,7 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
      * @param statement
      */
     public void bindString(int columnIndex, String columnValue, SQLiteStatement statement) {
-        if (StringUtils.notNull(columnValue)) {
+        if (StringUtils.INSTANCE.notNull(columnValue)) {
             statement.bindString(columnIndex, columnValue);
         }
     }

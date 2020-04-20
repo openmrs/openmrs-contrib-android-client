@@ -84,7 +84,7 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
     }
 
     private void urlChanged(Editable editable) {
-        if ((!OpenMRS.getInstance().getServerUrl().equals(editable.toString())) && StringUtils.notEmpty(editable.toString())) {
+        if ((!OpenMRS.getInstance().getServerUrl().equals(editable.toString())) && StringUtils.INSTANCE.notEmpty(editable.toString())) {
             setUrlChanged(true);
         }
         else if (OpenMRS.getInstance().getServerUrl().equals(editable.toString())) {
@@ -139,7 +139,7 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
     }
 
     private boolean validateNotEmpty(EditText editText) {
-        return StringUtils.notEmpty(editText.getText().toString());
+        return StringUtils.INSTANCE.notEmpty(editText.getText().toString());
     }
 
     /**

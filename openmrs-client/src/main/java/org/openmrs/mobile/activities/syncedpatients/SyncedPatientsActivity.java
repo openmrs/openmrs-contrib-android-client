@@ -109,7 +109,7 @@ public class SyncedPatientsActivity extends ACBaseActivity {
         MenuItem searchMenuItem = menu.findItem(R.id.actionSearchLocal);
         searchView = (SearchView) searchMenuItem.getActionView();
 
-        if(StringUtils.notEmpty(query)){
+        if(StringUtils.INSTANCE.notEmpty(query)){
             searchMenuItem.expandActionView();
             searchView.setQuery(query, true);
             searchView.clearFocus();

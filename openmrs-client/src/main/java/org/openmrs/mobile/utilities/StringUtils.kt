@@ -12,7 +12,7 @@ object StringUtils {
     }
 
     fun notEmpty(string: String?): Boolean {
-        return string != null && !string.isEmpty()
+        return string != null && string.isNotEmpty()
     }
 
     fun unescapeJavaString(st: String): String {

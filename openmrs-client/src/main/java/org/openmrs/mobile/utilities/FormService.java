@@ -24,7 +24,7 @@ import java.util.List;
 public class FormService {
 
     public static Form getForm(String valueReference) {
-        String unescapedValueReference = StringUtils.unescapeJavaString(valueReference);
+        String unescapedValueReference = StringUtils.INSTANCE.unescapeJavaString(valueReference);
 
         GsonBuilder builder = new GsonBuilder();
         builder.excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC);
@@ -35,7 +35,7 @@ public class FormService {
     }
 
     public static Form getFormByUuid(String uuid) {
-        if(!StringUtils.isBlank(uuid)){
+        if(!StringUtils.INSTANCE.isBlank(uuid)){
             FormResource formResource = new Select()
                     .from(FormResource.class)
                     .where("uuid = ?", uuid)

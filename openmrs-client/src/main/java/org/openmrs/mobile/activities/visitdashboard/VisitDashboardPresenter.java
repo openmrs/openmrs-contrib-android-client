@@ -136,7 +136,7 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
     public void checkIfVisitActive() {
         addSubscription(visitDAO.getVisitByID(visitId)
                 .observeOn(AndroidSchedulers.mainThread())
-                .filter(visit -> StringUtils.isBlank(visit.getStopDatetime()))
+                .filter(visit -> StringUtils.INSTANCE.isBlank(visit.getStopDatetime()))
                 .subscribe(visit -> mVisitDashboardView.setActiveVisitMenu()));
     }
 

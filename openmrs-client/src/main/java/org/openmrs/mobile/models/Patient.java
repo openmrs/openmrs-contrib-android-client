@@ -92,7 +92,7 @@ public class Patient extends Person implements Serializable {
 
 
     public boolean isSynced() {
-        return !StringUtils.isBlank(getUuid());
+        return !StringUtils.INSTANCE.isBlank(getUuid());
         //Keeping it this way until the synced flag can be made to work
     }
 
@@ -126,7 +126,7 @@ public class Patient extends Person implements Serializable {
     }
 
     private void puToMapIfNotNull(Map<String, String> map, String key, String value) {
-        if (StringUtils.notNull(value)) {
+        if (StringUtils.INSTANCE.notNull(value)) {
             map.put(key, value);
         }
     }

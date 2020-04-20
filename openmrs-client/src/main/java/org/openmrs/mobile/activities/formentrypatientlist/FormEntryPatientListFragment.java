@@ -96,7 +96,7 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
             mEmptyList.setVisibility(View.VISIBLE);
         }
 
-        if (StringUtils.isBlank(replacementWord)) {
+        if (StringUtils.INSTANCE.isBlank(replacementWord)) {
             mEmptyList.setText(getString(emptyListTextStringId));
         }
         else {

@@ -88,7 +88,7 @@ public class LastViewedPatientsActivity extends ACBaseActivity {
         MenuItem mFindPatientMenuItem = menu.findItem(R.id.actionSearchRemote);
         findPatientView = (SearchView) mFindPatientMenuItem.getActionView();
 
-        if(StringUtils.notEmpty(query)){
+        if(StringUtils.INSTANCE.notEmpty(query)){
             mFindPatientMenuItem.expandActionView();
             findPatientView.setQuery(query, true);
             findPatientView.clearFocus();

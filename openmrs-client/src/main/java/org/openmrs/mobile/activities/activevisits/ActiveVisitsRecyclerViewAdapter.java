@@ -72,7 +72,7 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
             visitViewHolder.mGender.setText(patient.getGender());
         }
         try {
-            visitViewHolder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
+            visitViewHolder.mBirthDate.setText(DateUtils.INSTANCE.convertTime(DateUtils.INSTANCE.convertTime(patient.getBirthdate())));
         } catch (Exception e) {
             visitViewHolder.mBirthDate.setText(" ");
         }

@@ -142,31 +142,31 @@ public class DateUtilsTest {
                 .forPattern(DateUtils.OPEN_MRS_REQUEST_FORMAT)
                 .withZone(DateTimeZone.forID(TEST_TIMEZONE));
 
-        stringToLongResult = DateUtils.convertTime(INITIAL_DATA_CUSTOM_TIMEZONE);
-        longToStringResult = DateUtils.convertTime(stringToLongResult, TimeZone.getTimeZone("GMT+02:00"));
+        stringToLongResult = DateUtils.INSTANCE.convertTime(INITIAL_DATA_CUSTOM_TIMEZONE);
+        longToStringResult = DateUtils.INSTANCE.convertTime(stringToLongResult, TimeZone.getTimeZone("GMT+02:00"));
         assertEquals(EXPECTED_DATA_CUSTOM_TIMEZONE, longToStringResult);
 
-        stringToLongResult = DateUtils.convertTime(INITIAL_DATA_CUSTOM_FORMAT, "yyyy-MM-dd'T'HH:mm");
-        longToStringResult = DateUtils.convertTime(stringToLongResult);
+        stringToLongResult = DateUtils.INSTANCE.convertTime(INITIAL_DATA_CUSTOM_FORMAT, "yyyy-MM-dd'T'HH:mm");
+        longToStringResult = DateUtils.INSTANCE.convertTime(stringToLongResult);
         assertEquals(EXPECTED_DATA_CUSTOM_FORMAT, longToStringResult);
 
-        stringToLongResult = DateUtils.convertTime(INITIAL_DATA_CUSTOM_FORMAT_AND_TIMEZONE);
-        longToStringResult = DateUtils.convertTime(stringToLongResult, "yyyy-MM-dd'T'HH:mm", TimeZone.getTimeZone("GMT+02:00"));
+        stringToLongResult = DateUtils.INSTANCE.convertTime(INITIAL_DATA_CUSTOM_FORMAT_AND_TIMEZONE);
+        longToStringResult = DateUtils.INSTANCE.convertTime(stringToLongResult, "yyyy-MM-dd'T'HH:mm", TimeZone.getTimeZone("GMT+02:00"));
         assertEquals(EXPECTED_DATA_CUSTOM_FORMAT_AND_TIMEZONE, longToStringResult);
 
-        dateTime = DateUtils.convertTimeString(INITIAL_DATA_TIME_STRING);
+        dateTime = DateUtils.INSTANCE.convertTimeString(INITIAL_DATA_TIME_STRING);
         assertEquals(EXPECTED_DATA_TIME_STRING, formatter.print(dateTime));
 
-        longToStringResult = DateUtils.convertTime1(INITIAL_DATA_CONVERT_TIME_1, DateUtils.DEFAULT_DATE_FORMAT);
+        longToStringResult = DateUtils.INSTANCE.convertTime1(INITIAL_DATA_CONVERT_TIME_1, DateUtils.DEFAULT_DATE_FORMAT);
         assertEquals(EXPECTED_DATA_CONVERT_TIME_1, longToStringResult);
 
-        stringToLongResult = DateUtils.convertTime(INVALID_DATA_3);
+        stringToLongResult = DateUtils.INSTANCE.convertTime(INVALID_DATA_3);
         assertNotSame(EXPECTED_LONG_3, String.valueOf(stringToLongResult));
 
-        stringToLongResult = DateUtils.convertTime(INVALID_DATA_4);
+        stringToLongResult = DateUtils.INSTANCE.convertTime(INVALID_DATA_4);
         assertNull(stringToLongResult);
 
-        dateTime = DateUtils.convertTimeString(nullDateAsString);
+        dateTime = DateUtils.INSTANCE.convertTimeString(nullDateAsString);
         assertNull(dateTime);
     }
 
@@ -182,46 +182,46 @@ public class DateUtilsTest {
         DateTime date2000 = DateTimeFormat
                 .forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/2000");
 
-        assertTrue(DateUtils.validateDate(EXPECTED_DATA_DEFAULT_DATE_FORMAT_1, date1900, DateTime.now()));
-        assertTrue(DateUtils.validateDate(EXPECTED_DATA_DEFAULT_DATE_FORMAT_2, date1900, date2000));
-        assertTrue(DateUtils.validateDate(EXPECTED_DATA_DEFAULT_DATE_FORMAT_3, date1900, DateTime.now()));
+        assertTrue(DateUtils.INSTANCE.validateDate(EXPECTED_DATA_DEFAULT_DATE_FORMAT_1, date1900, DateTime.now()));
+        assertTrue(DateUtils.INSTANCE.validateDate(EXPECTED_DATA_DEFAULT_DATE_FORMAT_2, date1900, date2000));
+        assertTrue(DateUtils.INSTANCE.validateDate(EXPECTED_DATA_DEFAULT_DATE_FORMAT_3, date1900, DateTime.now()));
 
         // Incorrectly formatted dates
-        assertFalse(DateUtils.validateDate(INVALID_DATA_5, date1900, DateTime.now()));
-        assertFalse(DateUtils.validateDate(INVALID_DATA_6, date1900, DateTime.now()));
-        assertFalse(DateUtils.validateDate(INVALID_DATA_7, date1900, DateTime.now()));
+        assertFalse(DateUtils.INSTANCE.validateDate(INVALID_DATA_5, date1900, DateTime.now()));
+        assertFalse(DateUtils.INSTANCE.validateDate(INVALID_DATA_6, date1900, DateTime.now()));
+        assertFalse(DateUtils.INSTANCE.validateDate(INVALID_DATA_7, date1900, DateTime.now()));
         // Dates that are before minimum date
-        assertFalse(DateUtils.validateDate(INVALID_DATA_8, date1900, DateTime.now()));
+        assertFalse(DateUtils.INSTANCE.validateDate(INVALID_DATA_8, date1900, DateTime.now()));
         // Dates after the maximum date
-        assertFalse(DateUtils.validateDate(INVALID_DATA_9, date1900, date1950));
-        assertFalse(DateUtils.validateDate(INVALID_DATA_8, date1900, date2000));
+        assertFalse(DateUtils.INSTANCE.validateDate(INVALID_DATA_9, date1900, date1950));
+        assertFalse(DateUtils.INSTANCE.validateDate(INVALID_DATA_8, date1900, date2000));
         // Dates where months have more than valid days
-        assertFalse(DateUtils.validateDate(INVALID_DATA_10, date1900, DateTime.now()));
-        assertFalse(DateUtils.validateDate(INVALID_DATA_11, date1900, DateTime.now()));
-        assertFalse(DateUtils.validateDate(INVALID_DATA_12, date1900, DateTime.now()));
-        assertFalse(DateUtils.validateDate(INVALID_DATA_13, date1900, DateTime.now()));
+        assertFalse(DateUtils.INSTANCE.validateDate(INVALID_DATA_10, date1900, DateTime.now()));
+        assertFalse(DateUtils.INSTANCE.validateDate(INVALID_DATA_11, date1900, DateTime.now()));
+        assertFalse(DateUtils.INSTANCE.validateDate(INVALID_DATA_12, date1900, DateTime.now()));
+        assertFalse(DateUtils.INSTANCE.validateDate(INVALID_DATA_13, date1900, DateTime.now()));
         // Dates where day or month is negative
-        assertFalse(DateUtils.validateDate(INVALID_DATA_14, date1900, date2000));
-        assertFalse(DateUtils.validateDate(INVALID_DATA_15, date1900, date2000));
+        assertFalse(DateUtils.INSTANCE.validateDate(INVALID_DATA_14, date1900, date2000));
+        assertFalse(DateUtils.INSTANCE.validateDate(INVALID_DATA_15, date1900, date2000));
 
         SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.DEFAULT_DATE_FORMAT, Locale.US);
 
-        date = DateUtils.getDateFromString(INITIAL_DATA_DATE_FROM_STRING);
+        date = DateUtils.INSTANCE.getDateFromString(INITIAL_DATA_DATE_FROM_STRING);
         assertEquals(EXPECTED_DATA_DATE_FROM_STRING, formatter.format(date));
 
-        date = DateUtils.getDateFromString(INITIAL_DATA_DATE_FROM_STRING, DateUtils.DATE_WITH_TIME_FORMAT);
+        date = DateUtils.INSTANCE.getDateFromString(INITIAL_DATA_DATE_FROM_STRING, DateUtils.DATE_WITH_TIME_FORMAT);
         assertEquals(EXPECTED_DATA_DATE_FROM_STRING, formatter.format(date));
 
         // Null Date String
-        date = DateUtils.getDateFromString(nullDateAsString, DateUtils.DATE_WITH_TIME_FORMAT);
+        date = DateUtils.INSTANCE.getDateFromString(nullDateAsString, DateUtils.DATE_WITH_TIME_FORMAT);
         assertNull(date);
 
         // Correctly formatted dates
-        assertTrue(DateUtils.isValidFormat(DateUtils.DEFAULT_DATE_FORMAT, EXPECTED_DATA_IS_VALID_FORMAT_1));
-        assertTrue(DateUtils.isValidFormat(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT, EXPECTED_DATA_IS_VALID_FORMAT_2));
+        assertTrue(DateUtils.INSTANCE.isValidFormat(DateUtils.DEFAULT_DATE_FORMAT, EXPECTED_DATA_IS_VALID_FORMAT_1));
+        assertTrue(DateUtils.INSTANCE.isValidFormat(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT, EXPECTED_DATA_IS_VALID_FORMAT_2));
 
         // Differently formatted dates
-        assertFalse(DateUtils.isValidFormat(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT, EXPECTED_DATA_IS_VALID_FORMAT_1));
-        assertFalse(DateUtils.isValidFormat(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT, EXPECTED_DATA_IS_INVALID_FORMAT_3));
+        assertFalse(DateUtils.INSTANCE.isValidFormat(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT, EXPECTED_DATA_IS_VALID_FORMAT_1));
+        assertFalse(DateUtils.INSTANCE.isValidFormat(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT, EXPECTED_DATA_IS_INVALID_FORMAT_3));
     }
 }

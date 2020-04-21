@@ -132,7 +132,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                 ((PatientViewHolder) holder).mGender.setText(patient.getGender());
             }
             try {
-                ((PatientViewHolder) holder).mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
+                ((PatientViewHolder) holder).mBirthDate.setText(DateUtils.INSTANCE.convertTime(DateUtils.INSTANCE.convertTime(patient.getBirthdate())));
             } catch (Exception e) {
                 ((PatientViewHolder) holder).mBirthDate.setText(" ");
             }

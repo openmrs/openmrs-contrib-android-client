@@ -115,7 +115,7 @@ public class EncounterDAO {
                         encounter.setId(id);
                         encounter.setUuid(uuid);
                         encounter.setDisplay(display);
-                        encounter.setEncounterDatetime(DateUtils.convertTime(datetime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
+                        encounter.setEncounterDatetime(DateUtils.INSTANCE.convertTime(datetime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
                         encounter.setEncounterType(new Select().from(EncounterType.class).where("display = ?", EncounterType.VITALS).executeSingle());
                         encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
                         encounter.setForm(FormService.getFormByUuid(formUuid));
@@ -162,7 +162,7 @@ public class EncounterDAO {
                     encounter.setVisitID(visitID);
                     encounter.setUuid(uuid);
                     encounter.setDisplay(display);
-                    encounter.setEncounterDatetime(DateUtils.convertTime(datetime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
+                    encounter.setEncounterDatetime(DateUtils.INSTANCE.convertTime(datetime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
                     encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
                     encounter.setForm(FormService.getFormByUuid(formUuid));
                     encounters.add(encounter);
@@ -202,7 +202,7 @@ public class EncounterDAO {
                         encounter.setId(id);
                         encounter.setUuid(uuid);
                         encounter.setDisplay(display);
-                        encounter.setEncounterDatetime(DateUtils.convertTime(datetime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
+                        encounter.setEncounterDatetime(DateUtils.INSTANCE.convertTime(datetime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
                         encounter.setEncounterType(type);
                         encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
                         encounter.setForm(FormService.getFormByUuid(formUuid));

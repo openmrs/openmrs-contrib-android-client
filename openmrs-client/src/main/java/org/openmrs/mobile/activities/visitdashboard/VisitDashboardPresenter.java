@@ -58,7 +58,7 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
     }
 
     public void endVisitByUUID(final Visit visit) {
-        visit.setStopDatetime(DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
+        visit.setStopDatetime(DateUtils.INSTANCE.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
 
         Visit test = new Visit();
         test.setStopDatetime(visit.getStopDatetime());

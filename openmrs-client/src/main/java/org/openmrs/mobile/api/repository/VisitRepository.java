@@ -164,7 +164,7 @@ public class VisitRepository {
 
     public void startVisit(final Patient patient, @Nullable final StartVisitResponseListenerCallback callbackListener) {
         final Visit visit = new Visit();
-        visit.setStartDatetime(DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
+        visit.setStartDatetime(DateUtils.INSTANCE.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
         visit.setPatient(patient);
         visit.setLocation(locationDAO.findLocationByName(OpenMRS.getInstance().getLocation()));
 

@@ -104,7 +104,7 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
             holder.mGender.setText(patient.getGender());
         }
         try{
-            holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
+            holder.mBirthDate.setText(DateUtils.INSTANCE.convertTime(DateUtils.INSTANCE.convertTime(patient.getBirthdate())));
         }
         catch (Exception e)
         {

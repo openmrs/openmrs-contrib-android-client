@@ -110,7 +110,7 @@ public class VisitDashboardPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldNotInflateMenuForPastVisit_allOK() {
         Visit visit = createVisit(visitId);
-        visit.setStopDatetime(DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
+        visit.setStopDatetime(DateUtils.INSTANCE.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
         Mockito.lenient().when(visitDAO.getVisitByID(visitId)).thenReturn(Observable.just(visit));
         presenter.checkIfVisitActive();
         verify(view, atMost(0)).setActiveVisitMenu();

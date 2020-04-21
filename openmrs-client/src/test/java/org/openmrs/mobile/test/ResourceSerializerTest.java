@@ -80,7 +80,7 @@ public class ResourceSerializerTest {
     }
 
     private Patient updatePatientDetails(Patient patient) {
-        patient.setBirthdate(DateUtils.convertTime(System.currentTimeMillis()));
+        patient.setBirthdate(DateUtils.INSTANCE.convertTime(System.currentTimeMillis()));
         PersonName  personName = new PersonName();
         personName.setFamilyName("family");
         personName.setGivenName("given");

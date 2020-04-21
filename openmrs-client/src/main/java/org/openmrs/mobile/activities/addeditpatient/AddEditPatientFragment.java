@@ -346,7 +346,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                     ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE);
             DateTime maxDateOfBirth = DateTime.now();
 
-            if (DateUtils.validateDate(unvalidatedDate, minDateOfBirth, maxDateOfBirth)) {
+            if (DateUtils.INSTANCE.validateDate(unvalidatedDate, minDateOfBirth, maxDateOfBirth)) {
                 dateTimeFormatter = DateTimeFormat.forPattern(DateUtils.DEFAULT_DATE_FORMAT);
                 bdt = dateTimeFormatter.parseDateTime(unvalidatedDate);
 
@@ -485,8 +485,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             patientName = patient.getName().getNameString();
 
             if (StringUtils.INSTANCE.notNull(patient.getBirthdate()) || StringUtils.INSTANCE.notEmpty(patient.getBirthdate())) {
-                bdt = DateUtils.convertTimeString(patient.getBirthdate());
-                edDob.setText(DateUtils.convertTime(DateUtils.convertTime(bdt.toString(), DateUtils.OPEN_MRS_REQUEST_FORMAT),
+                bdt = DateUtils.INSTANCE.convertTimeString(patient.getBirthdate());
+                edDob.setText(DateUtils.INSTANCE.convertTime(DateUtils.INSTANCE.convertTime(bdt.toString(), DateUtils.OPEN_MRS_REQUEST_FORMAT),
                         DateUtils.DEFAULT_DATE_FORMAT));
             }
 

@@ -49,9 +49,9 @@ public class ChartsViewActivity extends ACBaseActivity {
             ArrayList<String> dateList = Lists.newArrayList(dates);
             //Sorting the date
             Collections.sort(dateList, (lhs, rhs) -> {
-                if (DateUtils.getDateFromString(lhs).getTime() < DateUtils.getDateFromString(rhs).getTime())
+                if (DateUtils.INSTANCE.getDateFromString(lhs).getTime() < DateUtils.INSTANCE.getDateFromString(rhs).getTime())
                     return -1;
-                else if (DateUtils.getDateFromString(lhs).getTime() == DateUtils.getDateFromString(rhs).getTime())
+                else if (DateUtils.INSTANCE.getDateFromString(lhs).getTime() == DateUtils.INSTANCE.getDateFromString(rhs).getTime())
                     return 0;
                 else
                     return 1;
@@ -68,7 +68,7 @@ public class ChartsViewActivity extends ACBaseActivity {
                 dataSet.setValueTextSize(12);
                 List<ILineDataSet> ILdataSet = new ArrayList<>();
                 ILdataSet.add(dataSet);
-                dateList.add(DateUtils.getCurrentDateTime());
+                dateList.add(DateUtils.INSTANCE.getCurrentDateTime());
                 LineData lineData = new LineData(ILdataSet);
                 chart.setData(lineData);
                 //Styling the graph

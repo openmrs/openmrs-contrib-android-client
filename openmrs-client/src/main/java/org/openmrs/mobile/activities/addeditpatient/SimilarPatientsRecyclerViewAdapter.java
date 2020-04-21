@@ -131,7 +131,7 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
 
     private void setBirthdate(PatientViewHolder holder, Patient patient) {
         try {
-            holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
+            holder.mBirthDate.setText(DateUtils.INSTANCE.convertTime(DateUtils.INSTANCE.convertTime(patient.getBirthdate())));
             if (Objects.equal(patient.getBirthdate(), newPatient.getBirthdate())) {
                 setStyleForMatchedPatientFields(holder.mBirthDate);
             }

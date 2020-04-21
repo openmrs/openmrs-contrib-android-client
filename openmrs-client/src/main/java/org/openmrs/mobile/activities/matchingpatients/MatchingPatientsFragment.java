@@ -134,7 +134,7 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
         } else {
             gender.setText(getString(R.string.female));
         }
-        birthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
+        birthDate.setText(DateUtils.INSTANCE.convertTime(DateUtils.INSTANCE.convertTime(patient.getBirthdate())));
         if (patient.getAddress().getAddress1() != null) {
             address1.setText(patient.getAddress().getAddress1());
         } else {

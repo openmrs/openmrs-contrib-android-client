@@ -36,7 +36,7 @@ public class DayAxisValueFormatter implements IAxisValueFormatter {
 
         int intValue = (int) value;
 
-        Date vitalDate = DateUtils.getDateFromString(dates.get(Math.abs(intValue)));
+        Date vitalDate = DateUtils.INSTANCE.getDateFromString(dates.get(Math.abs(intValue)));
         DateFormat dateFormat = new SimpleDateFormat("MMM d, ''yy");
         return dateFormat.format(vitalDate);
 //        return vitalDate.getDate() + "/" + vitalDate.getMonth() + "/" + vitalDate.getYear();

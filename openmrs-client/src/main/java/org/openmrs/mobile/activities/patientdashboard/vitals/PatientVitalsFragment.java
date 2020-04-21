@@ -96,7 +96,7 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
 
     @Override
     public void showEncounterVitals(Encounter encounter) {
-        mLastVitalsDate.setText(DateUtils.convertTime(encounter.getEncounterDatetime(), DateUtils.DATE_WITH_TIME_FORMAT));
+        mLastVitalsDate.setText(DateUtils.INSTANCE.convertTime(encounter.getEncounterDatetime(), DateUtils.DATE_WITH_TIME_FORMAT));
         OpenMRSInflater openMRSInflater = new OpenMRSInflater(mInflater);
         mContent.removeAllViews();
         for (Observation obs : encounter.getObservations()) {

@@ -85,7 +85,7 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
             holder.mGender.setText(patient.getGender());
         }
 
-        holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
+        holder.mBirthDate.setText(DateUtils.INSTANCE.convertTime(DateUtils.INSTANCE.convertTime(patient.getBirthdate())));
     }
 
     @Override

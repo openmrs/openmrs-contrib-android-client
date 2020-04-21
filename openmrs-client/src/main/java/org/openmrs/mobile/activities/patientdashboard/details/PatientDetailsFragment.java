@@ -116,10 +116,10 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
         ((TextView) rootView.findViewById(R.id.patientDetailsName)).setText(patient.getName().getNameString());
 
-        Long longTime = DateUtils.convertTime(patient.getBirthdate());
+        Long longTime = DateUtils.INSTANCE.convertTime(patient.getBirthdate());
 
         if (longTime != null) {
-            ((TextView) rootView.findViewById(R.id.patientDetailsBirthDate)).setText(DateUtils.convertTime(longTime));
+            ((TextView) rootView.findViewById(R.id.patientDetailsBirthDate)).setText(DateUtils.INSTANCE.convertTime(longTime));
         }
 
         if (null != patient.getAddress()) {

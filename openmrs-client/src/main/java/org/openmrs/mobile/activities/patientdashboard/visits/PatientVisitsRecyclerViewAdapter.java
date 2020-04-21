@@ -53,10 +53,10 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
     public void onBindViewHolder(@NonNull VisitViewHolder visitViewHolder, final int position) {
         final int adapterPos = visitViewHolder.getAdapterPosition();
         Visit visit = mVisits.get(adapterPos);
-        visitViewHolder.mVisitStart.setText(DateUtils.convertTime1(visit.getStartDatetime(), DateUtils.DATE_WITH_TIME_FORMAT));
-        if (DateUtils.convertTime(visit.getStopDatetime()) != null) {
+        visitViewHolder.mVisitStart.setText(DateUtils.INSTANCE.convertTime1(visit.getStartDatetime(), DateUtils.DATE_WITH_TIME_FORMAT));
+        if (DateUtils.INSTANCE.convertTime(visit.getStopDatetime()) != null) {
             visitViewHolder.mVisitEnd.setVisibility(View.VISIBLE);
-            visitViewHolder.mVisitEnd.setText(DateUtils.convertTime1((visit.getStopDatetime()), DateUtils.DATE_WITH_TIME_FORMAT));
+            visitViewHolder.mVisitEnd.setText(DateUtils.INSTANCE.convertTime1((visit.getStopDatetime()), DateUtils.DATE_WITH_TIME_FORMAT));
 
             Drawable icon = mContext.getResources().getDrawable(R.drawable.past_visit_dot);
             icon.setBounds(0, 0, icon.getIntrinsicHeight(), icon.getIntrinsicWidth());

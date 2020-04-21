@@ -49,7 +49,7 @@ public class FormListPresenterTest extends ACUnitTestBase {
         formList.add(createExampleFormResourceWithResourceList("thirdForm", "json"));
 
         PowerMockito.mockStatic(FormService.class);
-        Mockito.lenient().when(FormService.getFormResourceList()).thenReturn(formList);
+        Mockito.lenient().when(FormService.INSTANCE.getFormResourceList()).thenReturn(formList);
 
         presenter.loadFormResourceList();
 
@@ -66,7 +66,7 @@ public class FormListPresenterTest extends ACUnitTestBase {
         formList.add(createExampleFormResourceWithResourceList("thirdForm", "notjson"));
 
         PowerMockito.mockStatic(FormService.class);
-        Mockito.lenient().when(FormService.getFormResourceList()).thenReturn(formList);
+        Mockito.lenient().when(FormService.INSTANCE.getFormResourceList()).thenReturn(formList);
 
         presenter.loadFormResourceList();
 
@@ -85,7 +85,7 @@ public class FormListPresenterTest extends ACUnitTestBase {
         String childValueReference = formList.get(clickedPosition).getResourceList().get(0).getValueReference();
 
         PowerMockito.mockStatic(FormService.class);
-        Mockito.lenient().when(FormService.getFormResourceList()).thenReturn(formList);
+        Mockito.lenient().when(FormService.INSTANCE.getFormResourceList()).thenReturn(formList);
 
         presenter.loadFormResourceList();
 
@@ -107,7 +107,7 @@ public class FormListPresenterTest extends ACUnitTestBase {
         List<FormResource> formList = new ArrayList<>();
         formList.add(createExampleFormResourceWithResourceList(formName, "json"));
         PowerMockito.mockStatic(FormService.class);
-        Mockito.lenient().when(FormService.getFormResourceList()).thenReturn(formList);
+        Mockito.lenient().when(FormService.INSTANCE.getFormResourceList()).thenReturn(formList);
 
         presenter.loadFormResourceList();
 

@@ -22,6 +22,7 @@ import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.Obscreate;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.FormService;
 import org.openmrs.mobile.utilities.InputField;
 import org.openmrs.mobile.utilities.SelectOneField;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -31,7 +32,6 @@ import java.util.List;
 
 import androidx.fragment.app.Fragment;
 
-import static org.openmrs.mobile.utilities.FormService.getFormResourceByName;
 
 public class FormDisplayMainPresenter extends BasePresenter implements FormDisplayContract.Presenter.MainPresenter {
 
@@ -111,7 +111,7 @@ public class FormDisplayMainPresenter extends BasePresenter implements FormDispl
             encountercreate.setObservations(observations);
             encountercreate.setFormname(mFormname);
             encountercreate.setPatientId(mPatientID);
-            encountercreate.setFormUuid(getFormResourceByName(mFormname).getUuid());
+            encountercreate.setFormUuid(FormService.INSTANCE.getFormResourceByName(mFormname).getUuid());
             encountercreate.setObslist();
             encountercreate.save();
 

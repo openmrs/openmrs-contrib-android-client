@@ -36,7 +36,7 @@ class FormPageAdapter extends FragmentPagerAdapter {
 
     FormPageAdapter(FragmentManager fm, String valueRef) {
         super(fm);
-        Form form = FormService.getForm(valueRef);
+        Form form = FormService.INSTANCE.getForm(valueRef);
         mPageList = form.getPages();
     }
 

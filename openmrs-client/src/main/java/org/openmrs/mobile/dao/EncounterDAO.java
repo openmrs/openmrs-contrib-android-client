@@ -118,7 +118,7 @@ public class EncounterDAO {
                         encounter.setEncounterDatetime(DateUtils.INSTANCE.convertTime(datetime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
                         encounter.setEncounterType(new Select().from(EncounterType.class).where("display = ?", EncounterType.VITALS).executeSingle());
                         encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
-                        encounter.setForm(FormService.getFormByUuid(formUuid));
+                        encounter.setForm(FormService.INSTANCE.getFormByUuid(formUuid));
                         encounter.setPatient(new PatientDAO().findPatientByUUID(patientUuid));
                     }
                 } finally {
@@ -164,7 +164,7 @@ public class EncounterDAO {
                     encounter.setDisplay(display);
                     encounter.setEncounterDatetime(DateUtils.INSTANCE.convertTime(datetime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
                     encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
-                    encounter.setForm(FormService.getFormByUuid(formUuid));
+                    encounter.setForm(FormService.INSTANCE.getFormByUuid(formUuid));
                     encounters.add(encounter);
                 }
             } finally {
@@ -205,7 +205,7 @@ public class EncounterDAO {
                         encounter.setEncounterDatetime(DateUtils.INSTANCE.convertTime(datetime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
                         encounter.setEncounterType(type);
                         encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
-                        encounter.setForm(FormService.getFormByUuid(formUuid));
+                        encounter.setForm(FormService.INSTANCE.getFormByUuid(formUuid));
                         encounters.add(encounter);
                     }
                 } finally {

@@ -56,7 +56,7 @@ public class FormListPresenter extends BasePresenter implements FormListContract
     @Override
     public void loadFormResourceList() {
         formResourceList = new ArrayList<>();
-        List<FormResource> allFormResourcesList = FormService.getFormResourceList();
+        List<FormResource> allFormResourcesList = FormService.INSTANCE.getFormResourceList();
         for (FormResource formResource : allFormResourcesList) {
             List<FormResource> valueRef = formResource.getResourceList();
             String valueRefString = null;

@@ -98,7 +98,7 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
                 valueRef = (String)bundle.get(ApplicationConstants.BundleKeys.VALUEREFERENCE);
                 formFieldsWrappers = bundle.getParcelableArrayList(ApplicationConstants.BundleKeys.FORM_FIELDS_LIST_BUNDLE);
             }
-            Form form = FormService.getForm(valueRef);
+            Form form = FormService.INSTANCE.getForm(valueRef);
             List<Page> pageList = form.getPages();
             for (Page page : pageList) {
                 if(formFieldsWrappers != null){

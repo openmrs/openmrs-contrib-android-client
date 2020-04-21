@@ -40,28 +40,28 @@ public class URLValidatorTest {
         URLValidator.ValidationResult result;
         URLValidator.ValidationResult expected;
 
-        result = URLValidator.validate(INVALID_URL_1);
+        result = URLValidator.INSTANCE.validate(INVALID_URL_1);
         expected = new URLValidator.ValidationResult(false, INVALID_URL_1);
         assertEquals(expected.isURLValid(), result.isURLValid());
         assertEquals(expected.getUrl(), result.getUrl());
 
-        result = URLValidator.validate(INVALID_URL_2);
+        result = URLValidator.INSTANCE.validate(INVALID_URL_2);
         expected = new URLValidator.ValidationResult(false, INVALID_URL_2);
         assertEquals(expected.isURLValid(), result.isURLValid());
         assertEquals(expected.getUrl(), result.getUrl());
 
 
-        result = URLValidator.validate(VALID_URL_1);
+        result = URLValidator.INSTANCE.validate(VALID_URL_1);
         expected = new URLValidator.ValidationResult(true, VALID_URL_1_TRIMMED);
         assertEquals(expected.isURLValid(), result.isURLValid());
         assertEquals(expected.getUrl(), result.getUrl());
 
-        result = URLValidator.validate(VALID_URL_2);
+        result = URLValidator.INSTANCE.validate(VALID_URL_2);
         expected = new URLValidator.ValidationResult(true, VALID_URL_2);
         assertEquals(expected.isURLValid(), result.isURLValid());
         assertEquals(expected.getUrl(), result.getUrl());
 
-        result = URLValidator.validate(VALID_URL_3);
+        result = URLValidator.INSTANCE.validate(VALID_URL_3);
         expected = new URLValidator.ValidationResult(true, VALID_URL_1_TRIMMED);
         assertEquals(expected.isURLValid(), result.isURLValid());
         assertEquals(expected.getUrl(), result.getUrl());

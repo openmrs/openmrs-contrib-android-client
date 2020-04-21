@@ -422,7 +422,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     }
 
     public void setUrl(String url) {
-        URLValidator.ValidationResult result = URLValidator.validate(url);
+        URLValidator.ValidationResult result = URLValidator.INSTANCE.validate(url);
         if (result.isURLValid()) {
             mPresenter.loadLocations(result.getUrl());
         } else {

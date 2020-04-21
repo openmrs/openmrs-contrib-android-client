@@ -372,4 +372,11 @@
 	<string name="help_message">हमारी टीम हमेशा किसी भी सवाल का जवाब देने के लिए होती है। हमें एक ईमेल ड्रॉप करें या फ़ोरम पर पहुंचें और हम जल्द से जल्द जवाब देने की पूरी कोशिश करेंगे।</string>
 	<string name="contact_us">संपर्क करें</string>
 	<string name="no_mailing_client_found">कोई ईमेल क्लाइंट स्थापित नहीं हैं।</string>
+
+	<!-- ShowCaseView -->
+	<string name="showcase_find_patients">सभी मरीजों को खोजने के लिए यहां क्लिक करें</string>
+	<string name="showcase_active_visits">वर्तमान में सक्रिय दौरा की सूची प्राप्त करने के लिए यहां क्लिक करें</string>
+	<string name="showcase_register_patient">नया मरीज पंजीकृत करने के लिए यहां क्लिक करें</string>
+	<string name="showcase_form_entry">एक मरीज के वाइटल कलेक्ट करने के लिए यहां क्लिक करें</string>
+	<string name="showcase_manage_providers">एक मरीज के लिए पोषणकर्ता का प्रबंधन करने के लिए यहां क्लिक करें</string>
 </resources>

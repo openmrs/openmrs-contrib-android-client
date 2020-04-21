@@ -25,15 +25,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.ACBaseFragment;
@@ -42,6 +39,7 @@ import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
 import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity;
 import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardActivity;
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.ThemeUtils;
@@ -62,6 +60,12 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
 
     private SparseArray<Bitmap> mBitmapCache;
 
+    /**
+     * @return New instance of SyncedPatientsFragment
+     */
+    public static DashboardFragment newInstance() {
+        return new DashboardFragment();
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -72,91 +76,48 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
         SharedPreferences settings2 = getActivity().getSharedPreferences(PREFS_NAME, 0);
 
         if (settings2.getBoolean("my_first_time", true)) {
-            showOverlayTutorialOne();
+            showOverlayTutorial(R.id.findPatientView, getString(R.string.dashboard_search_icon_label),
+                    getString(R.string.showcase_find_patients), R.style.CustomShowcaseTheme,
+                    ApplicationConstants.ShowCaseViewConstants.SHOW_FIND_PATIENT, true);
             settings2.edit().putBoolean("my_first_time", false).apply();
         }
 
     }
 
-    private void showOverlayTutorialOne() {
-        Target viewTarget = new ViewTarget(R.id.findPatientView, this.getActivity());
-        new ShowcaseView.Builder(this.getActivity())
+    private void showOverlayTutorial(int view, String title, String content, int styleTheme,
+                                     int currentViewCount, Boolean showTextBelow) {
+        Target viewTarget = new ViewTarget(view, this.getActivity());
+        ShowcaseView.Builder builder = new ShowcaseView.Builder(this.getActivity())
                 .setTarget(viewTarget)
-                .setContentTitle("Find Patients")
-                .setContentText("Click here to search through all the patients")
+                .setContentTitle(title)
+                .setContentText(content)
                 .hideOnTouchOutside()
-                .setStyle(R.style.CustomShowcaseTheme)
+                .setStyle(styleTheme)
                 .setShowcaseEventListener(new OnShowcaseEventListener() {
                     @Override
                     public void onShowcaseViewHide(ShowcaseView showcaseView) {
-                        showOverlayTutorialTwo();
-                        showcaseView.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
-                        //This method is intentionally left blank
-                    }
-
-                    @Override
-                    public void onShowcaseViewShow(ShowcaseView showcaseView) {
-                        //This method is intentionally left blank
-                    }
-
-                    @Override
-                    public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
-                        //This method is intentionally left blank
-
-                    }
-                })
-                .build();
-    }
-
-    private void showOverlayTutorialTwo() {
-        Target viewTarget = new ViewTarget(R.id.activeVisitsView, this.getActivity());
-        new ShowcaseView.Builder(this.getActivity())
-                .setTarget(viewTarget)
-                .setContentTitle("Active Visits")
-                .setContentText("Click here to get the list of all the currently active visits")
-                .hideOnTouchOutside()
-                .setStyle(R.style.CustomShowcaseTheme)
-                .setShowcaseEventListener(new OnShowcaseEventListener() {
-                    @Override
-                    public void onShowcaseViewHide(ShowcaseView showcaseView) {
-                        showOverlayTutorialThree();
-                        showcaseView.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
-                        //This method is intentionally left blank
-                    }
-
-                    @Override
-                    public void onShowcaseViewShow(ShowcaseView showcaseView) {
-                        //This method is intentionally left blank
-                    }
-
-                    @Override
-                    public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
-                        //This method is intentionally left blank
-                    }
-                })
-                .build();
-    }
-
-    private void showOverlayTutorialThree() {
-        Target viewTarget = new ViewTarget(R.id.registryPatientView, this.getActivity());
-        new ShowcaseView.Builder(this.getActivity())
-                .setTarget(viewTarget)
-                .setContentTitle("Register Patient")
-                .setContentText("Click here to register a new patient")
-                .hideOnTouchOutside()
-                .setStyle(R.style.CustomShowcaseTheme)
-                .setShowcaseEventListener(new OnShowcaseEventListener() {
-                    @Override
-                    public void onShowcaseViewHide(ShowcaseView showcaseView) {
-                        showOverlayTutorialFour();
+                        switch (currentViewCount) {
+                            case ApplicationConstants.ShowCaseViewConstants.SHOW_FIND_PATIENT:
+                                showOverlayTutorial(R.id.activeVisitsView, getString(R.string.dashboard_visits_icon_label),
+                                        getString(R.string.showcase_active_visits), R.style.CustomShowcaseTheme,
+                                        ApplicationConstants.ShowCaseViewConstants.SHOW_ACTIVE_VISITS, true);
+                                break;
+                            case ApplicationConstants.ShowCaseViewConstants.SHOW_ACTIVE_VISITS:
+                                showOverlayTutorial(R.id.registryPatientView, getString(R.string.action_register_patient),
+                                        getString(R.string.showcase_register_patient), R.style.CustomShowcaseTheme,
+                                        ApplicationConstants.ShowCaseViewConstants.SHOW_REGISTER_PATIENT, false);
+                                break;
+                            case ApplicationConstants.ShowCaseViewConstants.SHOW_REGISTER_PATIENT:
+                                showOverlayTutorial(R.id.captureVitalsView, getString(R.string.dashboard_forms_icon_label),
+                                        getString(R.string.showcase_form_entry), R.style.CustomShowcaseTheme,
+                                        ApplicationConstants.ShowCaseViewConstants.SHOW_FORM_ENTRY, false);
+                                break;
+                            case ApplicationConstants.ShowCaseViewConstants.SHOW_FORM_ENTRY:
+                                showOverlayTutorial(R.id.dashboardProviderManagementView, getString(R.string.action_provider_management),
+                                        getString(R.string.showcase_manage_providers), R.style.CustomShowcaseThemeExit,
+                                        ApplicationConstants.ShowCaseViewConstants.SHOW_MANAGE_PROVIDERS, false);
+                                break;
+                        }
                         showcaseView.setVisibility(View.GONE);
                     }
 
@@ -174,40 +135,11 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
                     public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
                         //This method is intentionally left blank
                     }
-                })
-                .build().forceTextPosition(ShowcaseView.ABOVE_SHOWCASE);
-    }
-
-    private void showOverlayTutorialFour() {
-        Target viewTarget = new ViewTarget(R.id.captureVitalsView, this.getActivity());
-        new ShowcaseView.Builder(this.getActivity())
-                .setTarget(viewTarget)
-                .setContentTitle("Form Entry")
-                .setContentText("Click here to capture vitals for a patient on a visit")
-                .hideOnTouchOutside()
-                .setStyle(R.style.CustomShowcaseThemeExit)
-                .setShowcaseEventListener(new OnShowcaseEventListener() {
-                    @Override
-                    public void onShowcaseViewHide(ShowcaseView showcaseView) {
-                        showcaseView.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onShowcaseViewDidHide(ShowcaseView showcaseView) {
-                        //This method is intentionally left blank
-                    }
-
-                    @Override
-                    public void onShowcaseViewShow(ShowcaseView showcaseView) {
-                        //This method is intentionally left blank
-                    }
-
-                    @Override
-                    public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
-                        //This method is intentionally left blank
-                    }
-                })
-                .build().forceTextPosition(ShowcaseView.ABOVE_SHOWCASE);
+                });
+        if (showTextBelow)
+            builder.build();
+        else
+            builder.build().forceTextPosition(ShowcaseView.ABOVE_SHOWCASE);
     }
 
     @Override
@@ -231,6 +163,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
         mActiveVisitsButton = root.findViewById(R.id.activeVisitsButton);
         mCaptureVitalsButton = root.findViewById(R.id.captureVitalsButton);
         mProviderManagementButton = root.findViewById(R.id.dashboardProviderManagementButton);
+
         mFindPatientView = root.findViewById(R.id.findPatientView);
         mRegistryPatientView = root.findViewById(R.id.registryPatientView);
         mCaptureVitalsView = root.findViewById(R.id.captureVitalsView);
@@ -308,13 +241,6 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
     private void startNewActivity(Class<? extends ACBaseActivity> clazz) {
         Intent intent = new Intent(getActivity(), clazz);
         startActivity(intent);
-    }
-
-    /**
-     * @return New instance of SyncedPatientsFragment
-     */
-    public static DashboardFragment newInstance() {
-        return new DashboardFragment();
     }
 
     @Override

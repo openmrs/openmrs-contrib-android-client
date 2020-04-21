@@ -82,7 +82,7 @@ public class AddEditPatientActivity extends ACBaseActivity {
         PlacesClient placesClient = Places.createClient(this);
 
         // Create the mPresenter
-        mPresenter = new AddEditPatientPresenter(addEditPatientFragment, countries, patientID, placesClient);
+        mPresenter = new AddEditPatientPresenter(addEditPatientFragment, countries, patientID, placesClient, getApplicationContext());
     }
 
     @Override

@@ -14,19 +14,27 @@
 
 package org.openmrs.mobile.api.repository;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 
+import androidx.work.Constraints;
+import androidx.work.Data;
+import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 import org.jdeferred.android.AndroidDeferredManager;
 import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
+import org.openmrs.mobile.api.workers.UpdateWorker;
 import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.promise.SimplePromise;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.databases.tables.PatientTable;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
 import org.openmrs.mobile.models.Encountercreate;
@@ -61,8 +69,18 @@ public class PatientRepository extends RetrofitRepository {
     private PatientDAO patientDao;
     private LocationRepository locationRepository;
     private RestApi restApi;
+    private WorkManager mWorkManager = null;
 
-    public PatientRepository(){
+    //constructor specifically for update which uses a workManager Implementation
+    public PatientRepository(Context appContext) {
+        this.logger = new OpenMRSLogger();
+        this.patientDao = new PatientDAO();
+        this.locationRepository = new LocationRepository();
+        this.restApi = RestServiceBuilder.createService(RestApi.class);
+        this.mWorkManager = WorkManager.getInstance(appContext);
+    }
+
+    public PatientRepository() {
         this.logger = new OpenMRSLogger();
         this.patientDao = new PatientDAO();
         this.locationRepository = new LocationRepository();
@@ -116,7 +134,7 @@ public class PatientRepository extends RetrofitRepository {
                                         uploadPatientPhoto(patient);
 
                                     new PatientDAO().updatePatient(patient.getId(), patient);
-                                    if(!patient.getEncounters().equals(""))
+                                    if (!patient.getEncounters().equals(""))
                                         addEncounters(patient);
 
                                     deferred.resolve(patient);
@@ -169,6 +187,7 @@ public class PatientRepository extends RetrofitRepository {
                     ToastUtil.INSTANCE.error("Patient photo cannot be synced due to server error: "+ response.message());
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<PatientPhoto> call, @NonNull Throwable t) {
                 ToastUtil.INSTANCE.notify("Patient photo cannot be synced due to error: " + t.toString() );
@@ -233,7 +252,14 @@ public class PatientRepository extends RetrofitRepository {
             });
         } else {
             ToastUtil.INSTANCE.notify("Sync is off. Patient Update data is saved locally " +
-                    "and will sync when online mode is restored. ");
+            //add patient to the local database
+            patientDao.updatePatient(patient.getId(), patient));
+
+            // enqueue the work to workManager
+            Data data = new Data.Builder().putString(PatientTable.Column.ID, patient.getId().toString()).build();
+            Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+            mWorkManager.enqueue(new OneTimeWorkRequest.Builder(UpdateWorker.class).setConstraints(constraints).setInputData(data).build());
+
             if (callbackListener != null) {
                 callbackListener.onResponse();
             }
@@ -258,19 +284,19 @@ public class PatientRepository extends RetrofitRepository {
                         }
                     });
                     callbackListener.onPatientDownloaded(newPatientDto.getPatient());
-                }
-                else {
+                } else {
                     callbackListener.onErrorResponse(response.message());
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
                 callbackListener.onErrorResponse(t.getMessage());
             }
         });
     }
-    
-    public SimplePromise<Bitmap> downloadPatientPhotoByUuid(String  uuid) {
+
+    public SimplePromise<Bitmap> downloadPatientPhotoByUuid(String uuid) {
         final SimpleDeferredObject<Bitmap> deferredObject = new SimpleDeferredObject<>();
         Call<ResponseBody> call = restApi.downloadPatientPhoto(uuid);
         call.enqueue(new Callback<ResponseBody>() {
@@ -291,6 +317,7 @@ public class PatientRepository extends RetrofitRepository {
                     deferredObject.reject(throwable);
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 deferredObject.reject(t);
@@ -300,17 +327,16 @@ public class PatientRepository extends RetrofitRepository {
     }
 
     private void addEncounters(Patient patient) {
-        String enc=patient.getEncounters();
+        String enc = patient.getEncounters();
         List<Long> list = new ArrayList<>();
         for (String s : enc.split(","))
             list.add(Long.parseLong(s));
 
 
-        for(long id:list)
-        {
+        for (long id : list) {
             Encountercreate encountercreate = new Select()
                     .from(Encountercreate.class)
-                    .where("id = ?",id)
+                    .where("id = ?", id)
                     .executeSingle();
             encountercreate.setPatient(patient.getUuid());
             encountercreate.save();
@@ -350,7 +376,7 @@ public class PatientRepository extends RetrofitRepository {
             public void onResponse(@NonNull Call<Results<IdentifierType>> call, @NonNull Response<Results<IdentifierType>> response) {
                 Results<IdentifierType> idresList = response.body();
                 for (IdentifierType result : idresList.getResults()) {
-                    if(result.getDisplay().equals("OpenMRS ID")) {
+                    if (result.getDisplay().equals("OpenMRS ID")) {
                         deferred.resolve(result);
                         return;
                     }

@@ -94,7 +94,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
     @Override
     public void onConfigurationChanged(@NotNull final Configuration config) {
         super.onConfigurationChanged(config);
-        TabUtil.setHasEmbeddedTabs(getSupportActionBar(), getWindowManager(), TabUtil.MIN_SCREEN_WIDTH_FOR_PATIENTDASHBOARDACTIVITY);
+        TabUtil.INSTANCE.setHasEmbeddedTabs(getSupportActionBar(), getWindowManager(), TabUtil.MIN_SCREEN_WIDTH_FOR_PATIENTDASHBOARDACTIVITY);
     }
 
     @Override

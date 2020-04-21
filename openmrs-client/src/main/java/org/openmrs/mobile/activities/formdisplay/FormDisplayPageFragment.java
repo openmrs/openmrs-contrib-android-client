@@ -86,7 +86,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
                 View v = getActivity().findViewById(field.getId());
                 if(v != null && v instanceof DiscreteSeekBar) {
                     DiscreteSeekBar sb = (DiscreteSeekBar) v;
-                    sb.setProgress(field.getValue().intValue());
+                    sb.setProgress((int)field.getValue());
                 }
                 if(field.isRed()){
                     RangeEditText ed = getActivity().findViewById(field.getId());
@@ -339,7 +339,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
             if(!isEmpty(ed)){
                 field.setValue(Double.parseDouble(ed.getText().toString()));
                 boolean isRed = (ed.getCurrentTextColor()==ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
-                field.setIsRed(isRed);
+                field.setRed(isRed);
             }
             else{
                 field.setValue(-1.0);

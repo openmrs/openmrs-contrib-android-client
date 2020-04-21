@@ -440,11 +440,11 @@ public class CustomFragmentDialog extends DialogFragment {
                     }
                     dismiss();
                     Objects.requireNonNull(syncedPatientsActivity).finish();
-                    ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.SUCCESS, org.openmrs.mobile.R.string.multiple_patients_deleted);
+                    ToastUtil.INSTANCE.showShortToast(getContext(), ToastUtil.ToastType.SUCCESS, org.openmrs.mobile.R.string.multiple_patients_deleted);
                     break;
                 case SELECT_LOCATION:
                     mOpenMRS.setLocation(locationListView.getAdapter().getItem(locationListView.getCheckedItemPosition()).toString());
-                    ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.SUCCESS, org.openmrs.mobile.R.string.location_successfully_updated);
+                    ToastUtil.INSTANCE.showShortToast(getContext(), ToastUtil.ToastType.SUCCESS, org.openmrs.mobile.R.string.location_successfully_updated);
                     dismiss();
                     break;
                 default:

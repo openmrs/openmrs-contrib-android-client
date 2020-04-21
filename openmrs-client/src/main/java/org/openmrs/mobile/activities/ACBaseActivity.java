@@ -125,14 +125,14 @@ public abstract class ACBaseActivity extends AppCompatActivity {
             mAuthorizationManager.moveToLoginActivity();
         }
         registerReceiver(mPasswordChangedReceiver, mIntentFilter);
-        ToastUtil.setAppVisible(true);
+        ToastUtil.INSTANCE.setAppVisible(true);
     }
 
     @Override
     protected void onPause() {
         unregisterReceiver(mPasswordChangedReceiver);
         super.onPause();
-        ToastUtil.setAppVisible(false);
+        ToastUtil.INSTANCE.setAppVisible(false);
     }
 
     @Override
@@ -188,16 +188,16 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     OpenMRS.getInstance().setSyncState(false);
                     setSyncButtonState(false);
                     showNoInternetConnectionSnackbar();
-                    ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.disconn_server);
+                    ToastUtil.INSTANCE.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.disconn_server);
                 } else if (NetworkUtils.INSTANCE.hasNetwork()) {
                     OpenMRS.getInstance().setSyncState(true);
                     setSyncButtonState(true);
                     Intent intent = new Intent("org.openmrs.mobile.intent.action.SYNC_PATIENTS");
                     getApplicationContext().sendBroadcast(intent);
-                    ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.reconn_server);
+                    ToastUtil.INSTANCE.showShortToast(getApplicationContext(), ToastUtil.ToastType.NOTICE, R.string.reconn_server);
                     if (snackbar != null)
                         snackbar.dismiss();
-                    ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.connected_to_server_message);
+                    ToastUtil.INSTANCE.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.connected_to_server_message);
 
                 } else {
                     showNoInternetConnectionSnackbar();
@@ -250,7 +250,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     public void logout() {
         mOpenMRS.clearUserPreferencesData();
         mAuthorizationManager.moveToLoginActivity();
-        ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.logout_success);
+        ToastUtil.INSTANCE.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.logout_success);
         OpenMRSDBOpenHelper.getInstance().closeDatabases();
     }
 

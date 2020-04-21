@@ -399,7 +399,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
         }
 
         if (allEmpty) {
-            ToastUtil.error("All fields cannot be empty");
+            ToastUtil.INSTANCE.error("All fields cannot be empty");
             return false;
         }
         return valid;

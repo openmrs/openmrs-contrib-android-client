@@ -63,7 +63,7 @@ public class EncounterService extends IntentService {
                     });
         }
         else
-            ToastUtil.error("No internet connection. Form data is saved locally " +
+            ToastUtil.INSTANCE.error("No internet connection. Form data is saved locally " +
                     "and will sync when internet connection is restored. ");
     }
 
@@ -94,7 +94,7 @@ public class EncounterService extends IntentService {
                     }
                     @Override
                     public void onErrorResponse(String errorMessage) {
-                        ToastUtil.error(errorMessage);
+                        ToastUtil.INSTANCE.error(errorMessage);
                     }
                 });
     }
@@ -137,7 +137,7 @@ public class EncounterService extends IntentService {
             });
 
         } else {
-            ToastUtil.error("Sync is off. Turn on sync to save form data.");
+            ToastUtil.INSTANCE.error("Sync is off. Turn on sync to save form data.");
         }
 
     }
@@ -163,7 +163,7 @@ public class EncounterService extends IntentService {
                     visitDAO.saveOrUpdate(visit, patientid)
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(id ->
-                                    ToastUtil.success(formname+" data saved successfully"));
+                                    ToastUtil.INSTANCE.success(formname+" data saved successfully"));
                 });
     }
 
@@ -196,7 +196,7 @@ public class EncounterService extends IntentService {
 
 
         } else {
-            ToastUtil.error("No internet connection. Form data is saved locally " +
+            ToastUtil.INSTANCE.error("No internet connection. Form data is saved locally " +
                     "and will sync when internet connection is restored. ");
         }
     }

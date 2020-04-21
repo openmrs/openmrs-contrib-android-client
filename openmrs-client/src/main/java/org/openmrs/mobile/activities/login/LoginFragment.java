@@ -400,14 +400,14 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     @Override
     public void showToast(String message, ToastUtil.ToastType toastType) {
         if (getActivity() != null) {
-            ToastUtil.showShortToast(getActivity(), toastType, message);
+            ToastUtil.INSTANCE.showShortToast(getActivity(), toastType, message);
         }
     }
 
     @Override
     public void showToast(int textId, ToastUtil.ToastType toastType) {
         if (getActivity() != null) {
-            ToastUtil.showShortToast(getActivity(), toastType, getResources().getString(textId));
+            ToastUtil.INSTANCE.showShortToast(getActivity(), toastType, getResources().getString(textId));
         }
     }
 

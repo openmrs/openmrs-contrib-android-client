@@ -110,7 +110,7 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
                     mPresenter.removeSelectedPatient();
                     cardView.setCardBackgroundColor(Color.WHITE);
                 } else {
-                    ToastUtil.notify("You can select only one similar patient");
+                    ToastUtil.INSTANCE.notify("You can select only one similar patient");
                 }
             });
         }

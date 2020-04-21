@@ -50,7 +50,7 @@ public class ContactUsActivity extends ACBaseActivity implements ContactUsContra
             try {
                 startActivity(sendMailIntent);
             } catch (android.content.ActivityNotFoundException ex) {
-                ToastUtil.showShortToast(this, ToastUtil.ToastType.ERROR, getString(R.string.no_mailing_client_found));
+                ToastUtil.INSTANCE.showShortToast(this, ToastUtil.ToastType.ERROR, getString(R.string.no_mailing_client_found));
             }
         });
 

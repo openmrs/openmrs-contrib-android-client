@@ -158,14 +158,14 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
                         }
                     }
                     else {
-                        ToastUtil.error(response.message());
+                        ToastUtil.INSTANCE.error(response.message());
                         mLastViewedPatientsView.showRecycleViewProgressBar(false);
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
-                    ToastUtil.error(t.getMessage());
+                    ToastUtil.INSTANCE.error(t.getMessage());
                     mLastViewedPatientsView.showRecycleViewProgressBar(false);
                 }
             });

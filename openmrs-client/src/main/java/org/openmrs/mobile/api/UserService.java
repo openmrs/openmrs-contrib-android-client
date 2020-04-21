@@ -48,18 +48,18 @@ public class UserService {
                             }
                         }
                         if (!matchFound) {
-                            ToastUtil.error("Couldn't fetch user data");
+                            ToastUtil.INSTANCE.error("Couldn't fetch user data");
                         }
                     }
                 }
                 else {
-                    ToastUtil.error(response.message());
+                    ToastUtil.INSTANCE.error(response.message());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<Results<User>> call, @NonNull Throwable t) {
-                ToastUtil.error(t.getMessage());
+                ToastUtil.INSTANCE.error(t.getMessage());
             }
         });
     }
@@ -77,13 +77,13 @@ public class UserService {
                     OpenMRS.getInstance().setCurrentUserInformation(userInfo);
                 }
                 else {
-                    ToastUtil.error(response.message());
+                    ToastUtil.INSTANCE.error(response.message());
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-                ToastUtil.error(t.getMessage());
+                ToastUtil.INSTANCE.error(t.getMessage());
             }
         });
     }

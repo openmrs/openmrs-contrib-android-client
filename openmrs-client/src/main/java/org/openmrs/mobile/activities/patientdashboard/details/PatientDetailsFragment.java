@@ -153,7 +153,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     @Override
     public void showToast(int stringRes, boolean error) {
         ToastUtil.ToastType toastType = error ? ToastUtil.ToastType.ERROR : ToastUtil.ToastType.SUCCESS;
-        ToastUtil.showShortToast(mPatientDashboardActivity, toastType, stringRes);
+        ToastUtil.INSTANCE.showShortToast(mPatientDashboardActivity, toastType, stringRes);
     }
 
     @Override

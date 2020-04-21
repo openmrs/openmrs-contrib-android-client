@@ -116,14 +116,14 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
             intent.putParcelableArrayListExtra(ApplicationConstants.BundleKeys.FORM_FIELDS_LIST_BUNDLE, FormFieldsWrapper.create(encounter));
             startActivity(intent);
         } else {
-            ToastUtil.notify(getString(R.string.form_error));
+            ToastUtil.INSTANCE.notify(getString(R.string.form_error));
         }
 
     }
 
     @Override
     public void showErrorToast(String errorMessage) {
-        ToastUtil.error(errorMessage);
+        ToastUtil.INSTANCE.error(errorMessage);
     }
 
     public static PatientVitalsFragment newInstance() {

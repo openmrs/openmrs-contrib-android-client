@@ -79,7 +79,7 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
 
     @Override
     public void showErrorToast(String message) {
-        ToastUtil.error(message);
+        ToastUtil.INSTANCE.error(message);
     }
 
     @Override

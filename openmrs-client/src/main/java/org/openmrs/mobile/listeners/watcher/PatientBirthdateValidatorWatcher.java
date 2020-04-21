@@ -48,13 +48,13 @@ public class PatientBirthdateValidatorWatcher implements TextWatcher{
     public void afterTextChanged(Editable editable) {
         eddob.getText().clear();
         if (editable.length() > 3) {
-            ToastUtil.error("Input is too big");
+            ToastUtil.INSTANCE.error("Input is too big");
             edmonth.getText().clear();
             edyr.getText().clear();
         }
         else {
             if (StringUtils.INSTANCE.notEmpty(editable.toString()) && Integer.parseInt(editable.toString()) > ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE) {
-                ToastUtil.error("Patient's age must be between 0 and " + ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE);
+                ToastUtil.INSTANCE.error("Patient's age must be between 0 and " + ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE);
                 edmonth.getText().clear();
                 edyr.getText().clear();
             }

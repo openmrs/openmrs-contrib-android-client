@@ -333,7 +333,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
 
     public void downloadSelectedPatients() {
-        ToastUtil.showShortToast(mContext, ToastUtil.ToastType.NOTICE, R.string.download_started);
+        ToastUtil.INSTANCE.showShortToast(mContext, ToastUtil.ToastType.NOTICE, R.string.download_started);
         for (Integer selectedPatientPosition : selectedPatientPositions) {
             downloadPatient(patients.get(selectedPatientPosition), false);
         }
@@ -386,7 +386,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
 
             @Override
             public void onErrorResponse(String errorMessage) {
-                ToastUtil.error("Failed to fetch patient data");
+                ToastUtil.INSTANCE.error("Failed to fetch patient data");
             }
         });
     }

@@ -412,7 +412,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     @Override
     public void showUpgradeRegistrationModuleInfo() {
-        ToastUtil.notifyLong(getResources().getString(R.string.registration_core_info));
+        ToastUtil.INSTANCE.notifyLong(getResources().getString(R.string.registration_core_info));
     }
 
     @Override

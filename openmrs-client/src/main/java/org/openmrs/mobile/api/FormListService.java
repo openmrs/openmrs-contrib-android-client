@@ -68,7 +68,7 @@ public class FormListService extends IntentService {
 
                 @Override
                 public void onFailure(@NonNull Call<Results<FormResource>> call, @NonNull Throwable t) {
-                    ToastUtil.error(t.getMessage());
+                    ToastUtil.INSTANCE.error(t.getMessage());
                 }
             });
 
@@ -87,7 +87,7 @@ public class FormListService extends IntentService {
 
                 @Override
                 public void onFailure(@NonNull Call<Results<EncounterType>> call, @NonNull Throwable t) {
-                    ToastUtil.error(t.getMessage());
+                    ToastUtil.INSTANCE.error(t.getMessage());
 
                 }
             });

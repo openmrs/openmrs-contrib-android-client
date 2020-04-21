@@ -126,7 +126,7 @@ public class PatientRepository extends RetrofitRepository {
                                     }
 
                                 } else {
-                                    ToastUtil.error("Patient[" + patient.getId() + "] cannot be synced due to server error"+ response.message());
+                                    ToastUtil.INSTANCE.error("Patient[" + patient.getId() + "] cannot be synced due to server error"+ response.message());
                                     deferred.reject(new RuntimeException("Patient cannot be synced due to server error: " + response.errorBody().toString()));
                                     if (callbackListener != null) {
                                         callbackListener.onErrorResponse(response.message());
@@ -136,7 +136,7 @@ public class PatientRepository extends RetrofitRepository {
 
                             @Override
                             public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
-                                ToastUtil.notify("Patient[" + patient.getId() + "] cannot be synced due to request error: " + t.toString());
+                                ToastUtil.INSTANCE.notify("Patient[" + patient.getId() + "] cannot be synced due to request error: " + t.toString());
                                 deferred.reject(t);
                                 if (callbackListener != null) {
                                     callbackListener.onErrorResponse(t.getMessage());
@@ -145,7 +145,7 @@ public class PatientRepository extends RetrofitRepository {
                         });
                     });
         } else {
-            ToastUtil.notify("Sync is off. Patient Registration data is saved locally " +
+            ToastUtil.INSTANCE.notify("Sync is off. Patient Registration data is saved locally " +
                     "and will sync when online mode is restored. ");
             if (callbackListener != null) {
                 callbackListener.onResponse();
@@ -166,12 +166,12 @@ public class PatientRepository extends RetrofitRepository {
             public void onResponse(@NonNull Call<PatientPhoto> call, @NonNull Response<PatientPhoto> response) {
                 logger.i(response.message());
                 if (!response.isSuccessful()) {
-                    ToastUtil.error("Patient photo cannot be synced due to server error: "+ response.message());
+                    ToastUtil.INSTANCE.error("Patient photo cannot be synced due to server error: "+ response.message());
                 }
             }
             @Override
             public void onFailure(@NonNull Call<PatientPhoto> call, @NonNull Throwable t) {
-                ToastUtil.notify("Patient photo cannot be synced due to error: " + t.toString() );
+                ToastUtil.INSTANCE.notify("Patient photo cannot be synced due to error: " + t.toString() );
             }
         });
     }
@@ -208,13 +208,13 @@ public class PatientRepository extends RetrofitRepository {
 
                         patientDao.updatePatient(patient.getId(), patient);
 
-                        ToastUtil.success("Patient " + patient.getPerson().getName().getNameString()
+                        ToastUtil.INSTANCE.success("Patient " + patient.getPerson().getName().getNameString()
                                 + " updated");
                         if (callbackListener != null) {
                             callbackListener.onResponse();
                         }
                     } else {
-                        ToastUtil.error("Patient " + patient.getPerson().getName().getNameString()
+                        ToastUtil.INSTANCE.error("Patient " + patient.getPerson().getName().getNameString()
                                 + " cannot be updated due to server error" + response.message());
                         if (callbackListener != null) {
                             callbackListener.onErrorResponse(response.message());
@@ -224,7 +224,7 @@ public class PatientRepository extends RetrofitRepository {
 
                 @Override
                 public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
-                    ToastUtil.notify("Patient " + patient.getPerson().getName().getNameString()
+                    ToastUtil.INSTANCE.notify("Patient " + patient.getPerson().getName().getNameString()
                             + " cannot be updated due to request error: " + t.toString());
                     if (callbackListener != null) {
                         callbackListener.onErrorResponse(t.getMessage());
@@ -232,7 +232,7 @@ public class PatientRepository extends RetrofitRepository {
                 }
             });
         } else {
-            ToastUtil.notify("Sync is off. Patient Update data is saved locally " +
+            ToastUtil.INSTANCE.notify("Sync is off. Patient Update data is saved locally " +
                     "and will sync when online mode is restored. ");
             if (callbackListener != null) {
                 callbackListener.onResponse();
@@ -332,7 +332,7 @@ public class PatientRepository extends RetrofitRepository {
 
             @Override
             public void onFailure(@NonNull Call<IdGenPatientIdentifiers> call, @NonNull Throwable t) {
-                ToastUtil.notify(t.toString());
+                ToastUtil.INSTANCE.notify(t.toString());
                 deferred.reject(t);
             }
 
@@ -359,7 +359,7 @@ public class PatientRepository extends RetrofitRepository {
 
             @Override
             public void onFailure(@NonNull Call<Results<IdentifierType>> call, @NonNull Throwable t) {
-                ToastUtil.notify(t.toString());
+                ToastUtil.INSTANCE.notify(t.toString());
                 deferred.reject(t);
             }
 

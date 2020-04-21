@@ -63,7 +63,7 @@ public class PatientService extends IntentService {
                 startActivity(intent1);
             }
         } else {
-            ToastUtil.error(getString(R.string.activity_no_internet_connection) +
+            ToastUtil.INSTANCE.error(getString(R.string.activity_no_internet_connection) +
                     getString(R.string.activity_sync_after_connection));
         }
     }

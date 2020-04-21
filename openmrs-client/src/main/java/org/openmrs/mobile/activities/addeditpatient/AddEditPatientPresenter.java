@@ -256,7 +256,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
                 public void onFailure(@NonNull Call<Results<Module>> call, @NonNull Throwable t) {
                     registeringPatient = false;
                     mPatientInfoView.setProgressBarVisibility(false);
-                    ToastUtil.error(t.getMessage());
+                    ToastUtil.INSTANCE.error(t.getMessage());
                 }
             });
         } else {
@@ -290,7 +290,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
                     }
                 } else {
                     mPatientInfoView.setProgressBarVisibility(false);
-                    ToastUtil.error(response.message());
+                    ToastUtil.INSTANCE.error(response.message());
                 }
             }
 
@@ -298,7 +298,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
                 registeringPatient = false;
                 mPatientInfoView.setProgressBarVisibility(false);
-                ToastUtil.error(t.getMessage());
+                ToastUtil.INSTANCE.error(t.getMessage());
             }
         });
     }
@@ -318,7 +318,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
                     }
                 } else {
                     mPatientInfoView.setProgressBarVisibility(false);
-                    ToastUtil.error(response.message());
+                    ToastUtil.INSTANCE.error(response.message());
                 }
             }
 
@@ -326,7 +326,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
                 registeringPatient = false;
                 mPatientInfoView.setProgressBarVisibility(false);
-                ToastUtil.error(t.getMessage());
+                ToastUtil.INSTANCE.error(t.getMessage());
             }
         });
     }

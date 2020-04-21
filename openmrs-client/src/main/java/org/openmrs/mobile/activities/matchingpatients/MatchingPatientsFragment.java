@@ -107,7 +107,7 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
 
     @Override
     public void notifyUser(int stringId) {
-        ToastUtil.notify(getString(stringId));
+        ToastUtil.INSTANCE.notify(getString(stringId));
     }
 
     @Override
@@ -117,7 +117,7 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
 
     @Override
     public void showErrorToast(String message) {
-        ToastUtil.error(message);
+        ToastUtil.INSTANCE.error(message);
     }
 
     private void setMatchingPatients(Patient patient, List<Patient> matchingPatients) {

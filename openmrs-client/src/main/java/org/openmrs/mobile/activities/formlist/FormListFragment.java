@@ -191,7 +191,7 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
 
     @Override
     public void showError(String message) {
-        ToastUtil.error(message);
+        ToastUtil.INSTANCE.error(message);
     }
 
 }

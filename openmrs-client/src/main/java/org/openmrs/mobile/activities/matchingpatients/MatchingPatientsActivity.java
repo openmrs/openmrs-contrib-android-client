@@ -64,7 +64,7 @@ public class MatchingPatientsActivity extends ACBaseActivity {
     }
 
     private void showToast(String message) {
-        ToastUtil.notifyLong(message);
+        ToastUtil.INSTANCE.notifyLong(message);
     }
 
     @Override

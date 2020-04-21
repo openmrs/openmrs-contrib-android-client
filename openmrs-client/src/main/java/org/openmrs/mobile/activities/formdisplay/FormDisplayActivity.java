@@ -189,7 +189,7 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
 
     @Override
     public void showToast(String errorMessage) {
-        ToastUtil.error(errorMessage);
+        ToastUtil.INSTANCE.error(errorMessage);
     }
 
     private int getFragmentNumber(Fragment fragment) {

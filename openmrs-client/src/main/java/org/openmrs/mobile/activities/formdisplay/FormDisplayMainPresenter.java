@@ -118,7 +118,7 @@ public class FormDisplayMainPresenter extends BasePresenter implements FormDispl
             if(!mPatient.isSynced()) {
                 mPatient.addEncounters(encountercreate.getId());
                 new PatientDAO().updatePatient(mPatient.getId(),mPatient);
-                ToastUtil.error("Patient not yet registered. Form data is saved locally " +
+                ToastUtil.INSTANCE.error("Patient not yet registered. Form data is saved locally " +
                         "and will sync when internet connection is restored. ");
                 mFormDisplayView.enableSubmitButton(true);
             }

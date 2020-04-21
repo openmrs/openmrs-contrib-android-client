@@ -49,7 +49,7 @@ public class LocationRepository extends RetrofitRepository {
 
             @Override
             public void onFailure(@NonNull Call<Results<Location>> call, @NonNull Throwable t) {
-                ToastUtil.notify(t.toString());
+                ToastUtil.INSTANCE.notify(t.toString());
                 deferred.reject(t);
             }
 

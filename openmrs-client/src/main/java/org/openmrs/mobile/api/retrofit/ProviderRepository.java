@@ -52,7 +52,7 @@ public class ProviderRepository {
                         }
                     } else {
                         OpenMRS.getInstance().getOpenMRSLogger().e("Reading providers failed. Response: " + response.errorBody());
-                        ToastUtil.error(OpenMRS.getInstance().getString(R.string.unable_to_fetch_providers));
+                        ToastUtil.INSTANCE.error(OpenMRS.getInstance().getString(R.string.unable_to_fetch_providers));
                         providerLiveData.setValue(null);
                     }
 
@@ -61,12 +61,12 @@ public class ProviderRepository {
                 @Override
                 public void onFailure(@NotNull Call<Results<Provider>> call, @NotNull Throwable t) {
                     OpenMRS.getInstance().getOpenMRSLogger().e("Reading providers failed.", t);
-                    ToastUtil.error(OpenMRS.getInstance().getString(R.string.unable_to_fetch_providers));
+                    ToastUtil.INSTANCE.error(OpenMRS.getInstance().getString(R.string.unable_to_fetch_providers));
                     providerLiveData.setValue(null);
                 }
             });
         } else {
-            ToastUtil.error(OpenMRS.getInstance().getString(R.string.device_offline_msg));
+            ToastUtil.INSTANCE.error(OpenMRS.getInstance().getString(R.string.device_offline_msg));
             OpenMRS.getInstance().getOpenMRSLogger().e("Failed to read providers. Device Offline");
         }
 
@@ -79,7 +79,7 @@ public class ProviderRepository {
                 @Override
                 public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
-                        ToastUtil.success(OpenMRS.getInstance().getString(R.string.delete_provider_success_msg));
+                        ToastUtil.INSTANCE.success(OpenMRS.getInstance().getString(R.string.delete_provider_success_msg));
                         OpenMRS.getInstance().getOpenMRSLogger().e("Deleting Provider Successful " + response.raw());
                         callback.onSuccess();
                     }
@@ -87,13 +87,13 @@ public class ProviderRepository {
 
                 @Override
                 public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                    ToastUtil.error(OpenMRS.getInstance().getString(R.string.delete_provider_failure_msg));
+                    ToastUtil.INSTANCE.error(OpenMRS.getInstance().getString(R.string.delete_provider_failure_msg));
                     OpenMRS.getInstance().getOpenMRSLogger().e("Failed to delete provider. Error:  " + t.getMessage());
                     callback.onFailure();
                 }
             });
         } else {
-            ToastUtil.error(OpenMRS.getInstance().getString(R.string.delete_provider_no_network_msg));
+            ToastUtil.INSTANCE.error(OpenMRS.getInstance().getString(R.string.delete_provider_no_network_msg));
             OpenMRS.getInstance().getOpenMRSLogger().e("Failed to delete provider. Device Offline.");
             callback.onFailure();
         }
@@ -105,7 +105,7 @@ public class ProviderRepository {
                 @Override
                 public void onResponse(@NotNull Call<Provider> call, @NotNull Response<Provider> response) {
                     if (response.isSuccessful()) {
-                        ToastUtil.success(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
+                        ToastUtil.INSTANCE.success(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
                         OpenMRS.getInstance().getOpenMRSLogger().e("Adding Provider Successful " + response.raw());
                         callback.onSuccess();
                     }
@@ -113,13 +113,13 @@ public class ProviderRepository {
 
                 @Override
                 public void onFailure(@NotNull Call<Provider> call, @NotNull Throwable t) {
-                    ToastUtil.error(OpenMRS.getInstance().getString(R.string.add_provider_failure_msg));
+                    ToastUtil.INSTANCE.error(OpenMRS.getInstance().getString(R.string.add_provider_failure_msg));
                     OpenMRS.getInstance().getOpenMRSLogger().e("Failed to add provider. Error:  " + t.getMessage());
                     callback.onFailure();
                 }
             });
         } else {
-            ToastUtil.error(OpenMRS.getInstance().getString(R.string.add_provider_no_network_msg));
+            ToastUtil.INSTANCE.error(OpenMRS.getInstance().getString(R.string.add_provider_no_network_msg));
             OpenMRS.getInstance().getOpenMRSLogger().e("Failed to add provider. Device Offline");
             callback.onFailure();
         }
@@ -131,7 +131,7 @@ public class ProviderRepository {
                 @Override
                 public void onResponse(@NotNull Call<Provider> call, @NotNull Response<Provider> response) {
                     if (response.isSuccessful()) {
-                        ToastUtil.success(OpenMRS.getInstance().getString(R.string.edit_provider_success_msg));
+                        ToastUtil.INSTANCE.success(OpenMRS.getInstance().getString(R.string.edit_provider_success_msg));
                         OpenMRS.getInstance().getOpenMRSLogger().e("Editing Provider Successful " + response.raw());
                         callback.onSuccess();
                     }
@@ -139,13 +139,13 @@ public class ProviderRepository {
 
                 @Override
                 public void onFailure(@NotNull Call<Provider> call, @NotNull Throwable t) {
-                    ToastUtil.error(OpenMRS.getInstance().getString(R.string.edit_provider_failure_msg));
+                    ToastUtil.INSTANCE.error(OpenMRS.getInstance().getString(R.string.edit_provider_failure_msg));
                     OpenMRS.getInstance().getOpenMRSLogger().e("Failed to edit provider. Error:  " + t.getMessage());
                     callback.onFailure();
                 }
             });
         } else {
-            ToastUtil.error(OpenMRS.getInstance().getString(R.string.edit_provider_no_network_msg));
+            ToastUtil.INSTANCE.error(OpenMRS.getInstance().getString(R.string.edit_provider_no_network_msg));
             OpenMRS.getInstance().getOpenMRSLogger().e("Failed to edit provider. Device Offline");
             callback.onFailure();
         }

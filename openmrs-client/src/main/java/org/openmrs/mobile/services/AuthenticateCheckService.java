@@ -110,13 +110,13 @@ public class AuthenticateCheckService extends Service {
                             }
                         }
                     } else {
-                        ToastUtil.error("Error in AuthenticateCheckService Response");
+                        ToastUtil.INSTANCE.error("Error in AuthenticateCheckService Response");
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<Session> call, @NonNull Throwable t) {
-                    ToastUtil.error("Error in AuthenticateCheckService");
+                    ToastUtil.INSTANCE.error("Error in AuthenticateCheckService");
                 }
             });
         } else {

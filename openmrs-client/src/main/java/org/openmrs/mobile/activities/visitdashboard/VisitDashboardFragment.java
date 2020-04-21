@@ -65,7 +65,7 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
             intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patientId);
             startActivity(intent);
         } catch (Exception e) {
-            ToastUtil.showLongToast(this.getActivity(), ToastUtil.ToastType.ERROR, R.string.failed_to_open_vitals_form);
+            ToastUtil.INSTANCE.showLongToast(this.getActivity(), ToastUtil.ToastType.ERROR, R.string.failed_to_open_vitals_form);
             OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
         }
     }
@@ -123,12 +123,12 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
 
     @Override
     public void showErrorToast(String message) {
-        ToastUtil.error(message);
+        ToastUtil.INSTANCE.error(message);
     }
 
     @Override
     public void showErrorToast(int messageId) {
-        ToastUtil.error(getString(messageId));
+        ToastUtil.INSTANCE.error(getString(messageId));
     }
 
 }

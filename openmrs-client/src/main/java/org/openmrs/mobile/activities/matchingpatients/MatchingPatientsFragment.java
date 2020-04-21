@@ -63,7 +63,7 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
         view = inflater.inflate(R.layout.fragment_matching_patients, container, false);
         initFragmentFields(view);
         setListeners();
-        FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
+        FontsUtil.INSTANCE.setFont(this.getActivity().findViewById(android.R.id.content));
         return view;
     }
 

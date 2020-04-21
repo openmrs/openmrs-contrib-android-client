@@ -55,7 +55,7 @@ public class ProviderManagerDashboardRecyclerViewAdapter extends
     @Override
     public ProviderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_provider_management, parent, false);
-        FontsUtil.setFont((ViewGroup) itemView);
+        FontsUtil.INSTANCE.setFont((ViewGroup) itemView);
         return new ProviderViewHolder(itemView);
     }
 

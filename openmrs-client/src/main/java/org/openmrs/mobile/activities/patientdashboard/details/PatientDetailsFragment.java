@@ -91,7 +91,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_patient_details, null, false);
-        FontsUtil.setFont((ViewGroup) rootView);
+        FontsUtil.INSTANCE.setFont((ViewGroup) rootView);
         return rootView;
     }
 

@@ -221,7 +221,7 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
         }
 
         // Font config
-        FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
+        FontsUtil.INSTANCE.setFont(this.getActivity().findViewById(android.R.id.content));
         return root;
     }
 

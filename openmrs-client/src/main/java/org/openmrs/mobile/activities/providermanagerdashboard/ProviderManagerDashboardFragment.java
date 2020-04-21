@@ -100,7 +100,7 @@ public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderMan
         });
 
         // Font config
-        FontsUtil.setFont(Objects.requireNonNull(this.getActivity()).findViewById(android.R.id.content));
+        FontsUtil.INSTANCE.setFont(Objects.requireNonNull(this.getActivity()).findViewById(android.R.id.content));
 
         return root;
     }

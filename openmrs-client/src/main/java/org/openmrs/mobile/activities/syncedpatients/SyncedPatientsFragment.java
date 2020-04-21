@@ -81,7 +81,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         });
 
         // Font config
-        FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
+        FontsUtil.INSTANCE.setFont(this.getActivity().findViewById(android.R.id.content));
 
         return root;
     }

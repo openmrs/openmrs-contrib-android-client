@@ -30,7 +30,7 @@ public class MatchingProviderRecyclerViewAdapter extends
     @Override
     public SimilarProviderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_matching_provider, parent, false);
-        FontsUtil.setFont((ViewGroup) itemView);
+        FontsUtil.INSTANCE.setFont((ViewGroup) itemView);
         return new SimilarProviderViewHolder(itemView);
     }
 

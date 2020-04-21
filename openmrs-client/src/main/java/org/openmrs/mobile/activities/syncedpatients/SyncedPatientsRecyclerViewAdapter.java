@@ -82,7 +82,7 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
     @Override
     public SyncedPatientsRecyclerViewAdapter.PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_find_synced_patients, parent, false);
-        FontsUtil.setFont((ViewGroup) itemView);
+        FontsUtil.INSTANCE.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
 

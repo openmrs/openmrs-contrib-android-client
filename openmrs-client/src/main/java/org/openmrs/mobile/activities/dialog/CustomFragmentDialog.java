@@ -131,7 +131,7 @@ public class CustomFragmentDialog extends DialogFragment {
         this.setLeftButton(dialogLayout);
         getDialog().setCanceledOnTouchOutside(false);
         buildDialog();
-        FontsUtil.setFont((ViewGroup) dialogLayout);
+        FontsUtil.INSTANCE.setFont((ViewGroup) dialogLayout);
         return dialogLayout;
     }
 

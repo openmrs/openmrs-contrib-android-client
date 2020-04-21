@@ -39,11 +39,11 @@ public class OpenMRSInflater {
         } else {
             labelText.setText(label);
         }
-        FontsUtil.setFont(labelText, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);
+        FontsUtil.INSTANCE.setFont(labelText, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);
 
         TextView dataText = view.findViewById(R.id.keyValueDataRowTextData);
         dataText.setText(data);
-        FontsUtil.setFont(dataText, FontsUtil.OpenFonts.OPEN_SANS_REGULAR);
+        FontsUtil.INSTANCE.setFont(dataText, FontsUtil.OpenFonts.OPEN_SANS_REGULAR);
         parentLayout.addView(view);
         return parentLayout;
     }
@@ -52,7 +52,7 @@ public class OpenMRSInflater {
         View view = mInflater.inflate(R.layout.row_single_text_data, null, false);
         TextView labelText = view.findViewById(R.id.singleTextRowLabelText);
         labelText.setText(label);
-        FontsUtil.setFont(labelText, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);
+        FontsUtil.INSTANCE.setFont(labelText, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);
         parentLayout.addView(view);
         return parentLayout;
     }

@@ -58,7 +58,7 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
     @Override
     public PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_similar_patient, parent, false);
-        FontsUtil.setFont((ViewGroup) itemView);
+        FontsUtil.INSTANCE.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
 

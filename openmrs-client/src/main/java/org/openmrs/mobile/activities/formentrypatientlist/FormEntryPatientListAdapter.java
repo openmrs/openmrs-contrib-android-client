@@ -48,7 +48,7 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
     @Override
     public PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_patient_details, parent, false);
-        FontsUtil.setFont((ViewGroup) itemView);
+        FontsUtil.INSTANCE.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
 

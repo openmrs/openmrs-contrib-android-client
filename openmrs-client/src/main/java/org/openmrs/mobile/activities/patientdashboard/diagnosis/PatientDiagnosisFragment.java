@@ -57,7 +57,7 @@ public class PatientDiagnosisFragment extends PatientDashboardFragment implement
         mDiagnosisList = fragmentLayout.findViewById(R.id.patientDiagnosisList);
         TextView emptyList = fragmentLayout.findViewById(R.id.emptyDiagnosisListView);
         mDiagnosisList.setEmptyView(emptyList);
-        FontsUtil.setFont(fragmentLayout, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);
+        FontsUtil.INSTANCE.setFont(fragmentLayout, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);
         return fragmentLayout;
     }
 

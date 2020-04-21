@@ -107,7 +107,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         hideURLDialog();
 
         // Font config
-        FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
+        FontsUtil.INSTANCE.setFont(this.getActivity().findViewById(android.R.id.content));
 
         return mRootView;
     }

@@ -60,7 +60,7 @@ public class ActiveVisitPresenter extends BasePresenter implements ActiveVisitsC
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         visits -> {
-                            visits = FilterUtil.getPatientsWithActiveVisitsFilteredByQuery(visits, query);
+                            visits = FilterUtil.INSTANCE.getPatientsWithActiveVisitsFilteredByQuery(visits, query);
                             mActiveVisitsView.updateListVisibility(visits);
                         },
                         error -> mActiveVisitsView.setEmptyListText(R.string.search_patient_no_result_for_query, query)

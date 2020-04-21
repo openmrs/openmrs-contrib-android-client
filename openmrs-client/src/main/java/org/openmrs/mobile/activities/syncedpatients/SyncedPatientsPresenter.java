@@ -91,7 +91,7 @@ public class SyncedPatientsPresenter extends BasePresenter implements SyncedPati
                     boolean isFiltering = StringUtils.INSTANCE.notNull(mQuery) && !mQuery.isEmpty();
 
                     if (isFiltering) {
-                        patientList = FilterUtil.getPatientsFilteredByQuery(patientList, mQuery);
+                        patientList = FilterUtil.INSTANCE.getPatientsFilteredByQuery(patientList, mQuery);
                         if (patientList.isEmpty()) {
                             syncedPatientsView.updateListVisibility(false, mQuery);
                         } else {

@@ -66,7 +66,7 @@ public class FormEntryPatientListPresenter extends BasePresenter implements Form
                     boolean isFiltering = StringUtils.INSTANCE.notNull(mQuery);
 
                     if (isFiltering) {
-                        patientList = FilterUtil.getPatientsFilteredByQuery(patientList, mQuery);
+                        patientList = FilterUtil.INSTANCE.getPatientsFilteredByQuery(patientList, mQuery);
                         if (patientList.isEmpty()) {
                             mFormEntryPatientListView.updateListVisibility(false, R.string.search_patient_no_result_for_query, mQuery);
                         } else {

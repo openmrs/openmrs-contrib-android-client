@@ -20,17 +20,20 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import org.jetbrains.annotations.NotNull;
@@ -52,11 +55,8 @@ import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.TabUtil;
 
 public class PatientDashboardActivity extends ACBaseActivity {
-
     private String mId;
-
     public PatientDashboardContract.PatientDashboardMainPresenter mPresenter;
-
     static boolean isActionFABOpen = false;
     public static FloatingActionButton additionalActionsFAB, updateFAB, deleteFAB;
     public LinearLayout deleteFabLayout, updateFabLayout;
@@ -165,6 +165,16 @@ public class PatientDashboardActivity extends ACBaseActivity {
         updateFAB.setOnClickListener(v -> startPatientUpdateActivity(mPresenter.getPatientId()));
     }
 
+    @Override
+    public void showNoInternetConnectionSnackbar() {
+        mSnackbar = Snackbar.make(additionalActionsFAB,
+            getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
+        View sbView = mSnackbar.getView();
+        TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        mSnackbar.show();
+    }
+
     public void showFABMenu() {
         isActionFABOpen = true;
         deleteFabLayout.setVisibility(View.VISIBLE);
@@ -184,7 +194,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
     public void startPatientUpdateActivity(long patientId) {
         Intent updatePatient = new Intent(this, AddEditPatientActivity.class);
         updatePatient.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE,
-                String.valueOf(patientId));
+            String.valueOf(patientId));
         startActivity(updatePatient);
     }
 
@@ -204,7 +214,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
             // will animate back the icon back to its original angle instantaneously
             ObjectAnimator.ofFloat(additionalActionsFAB, "rotation", 180f, 0f).setDuration(0).start();
             additionalActionsFAB.setImageDrawable(resources
-                    .getDrawable(R.drawable.ic_edit_white_24dp));
+                .getDrawable(R.drawable.ic_edit_white_24dp));
         }
     }
 
@@ -213,14 +223,13 @@ public class PatientDashboardActivity extends ACBaseActivity {
             ObjectAnimator.ofFloat(additionalActionsFAB, "rotation", 0f, 180f).setDuration(500).start();
             final Handler handler = new Handler();
             handler.postDelayed(() -> additionalActionsFAB.setImageDrawable(resources
-                    .getDrawable(R.drawable.ic_close_white_24dp)), 400);
+                .getDrawable(R.drawable.ic_close_white_24dp)), 400);
         } else {
             ObjectAnimator.ofFloat(additionalActionsFAB, "rotation", 180f, 0f).setDuration(500).start();
 
             final Handler handler = new Handler();
             handler.postDelayed(() -> additionalActionsFAB.setImageDrawable(resources
-                    .getDrawable(R.drawable.ic_edit_white_24dp)), 400);
+                .getDrawable(R.drawable.ic_edit_white_24dp)), 400);
         }
-
     }
 }

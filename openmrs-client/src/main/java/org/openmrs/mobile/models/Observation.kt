@@ -74,8 +74,8 @@ class Observation : Resource(), Serializable {
     var encounterID: Long? = null
     var displayValue: String? = null
         get() {
-            if (field == null && display.contains(":")) {
-                displayValue = display.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
+            if (field == null && display?.contains(":") == true) {
+                displayValue = display!!.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
             }
             return field
         }

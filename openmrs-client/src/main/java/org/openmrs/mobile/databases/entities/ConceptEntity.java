@@ -27,26 +27,12 @@ public class ConceptEntity extends Resource {
 
     public ConceptEntity() { }
 
-    @PrimaryKey
-    private Long id;
-
     @Embedded(prefix = "datatype_")
     @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
     private Datatype datatype;
 
     @ColumnInfo(name = "name")
     private String name;
-
-    @NotNull
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Datatype getDatatype() {
         return datatype;

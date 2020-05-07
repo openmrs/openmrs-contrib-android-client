@@ -18,6 +18,8 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+
+import org.openmrs.mobile.dao.ConceptRoomDAO;
 import org.openmrs.mobile.dao.EncounterRoomDAO;
 import org.openmrs.mobile.dao.LocationRoomDAO;
 import org.openmrs.mobile.dao.ObservationRoomDAO;
@@ -46,6 +48,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract PatientRoomDAO patientRoomDAO();
     public abstract ObservationRoomDAO observationRoomDAO();
     public abstract EncounterRoomDAO encounterRoomDAO();
+    public abstract ConceptRoomDAO conceptRoomDAO();
     private static volatile AppDatabase INSTANCE;
 
     static AppDatabase getDatabase(final Context context) {

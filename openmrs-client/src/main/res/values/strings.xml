@@ -283,6 +283,7 @@
 	<string name="connected_to_server_message">You are now connected!</string>
 
 	<string name="dialog_title_are_you_sure">Are you sure?</string>
+	<string name="dialog_title_reset_patient">Reset patient data?</string>
 	<string name="dialog_message_data_lost">All patient information entered will be lost.</string>
 	<string name="dialog_button_stay">Stay</string>
 	<string name="dialog_button_leave">Leave</string>

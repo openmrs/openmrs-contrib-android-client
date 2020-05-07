@@ -54,7 +54,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -832,7 +831,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 break;
             case R.id.actionReset:
                 new AlertDialog.Builder(getActivity())
-                        .setTitle(R.string.dialog_title_are_you_sure)
+                        .setTitle(R.string.dialog_title_reset_patient)
                         .setMessage(R.string.reset_dialog_message)
                         .setPositiveButton(R.string.dialog_button_ok, (DialogInterface dialogInterface, int i) -> resetAction())
                         .setNegativeButton(R.string.dialog_button_cancel, null)

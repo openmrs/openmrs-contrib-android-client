@@ -37,8 +37,7 @@ import io.reactivex.disposables.Disposable;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class ConceptRoomDAOTest
-{
+public class ConceptRoomDAOTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
@@ -81,7 +80,7 @@ public class ConceptRoomDAOTest
 
             @Override
             public void onError(Throwable e) {
-                Log.i(TAG,e.getMessage());
+                Log.i(TAG, e.getMessage());
             }
         });
     }
@@ -105,13 +104,13 @@ public class ConceptRoomDAOTest
 
             @Override
             public void onError(Throwable e) {
-                Log.i(TAG,e.getMessage());
+                Log.i(TAG, e.getMessage());
             }
         });
     }
 
     @Test
-    public void getConceptsCount_shouldGetCorrectConceptCount(){
+    public void getConceptsCount_shouldGetCorrectConceptCount() {
         mDatabase.conceptRoomDAO().saveConcept(expectedConceptEntity1);
         mDatabase.conceptRoomDAO().saveConcept(expectedConceptEntity2);
 
@@ -128,7 +127,7 @@ public class ConceptRoomDAOTest
 
             @Override
             public void onError(Throwable e) {
-                Log.i(TAG,e.getMessage());
+                Log.i(TAG, e.getMessage());
             }
         });
     }
@@ -148,7 +147,7 @@ public class ConceptRoomDAOTest
 
             @Override
             public void onSuccess(List<ConceptEntity> conceptEntities) {
-                Assert.assertEquals(conceptEntities.get(0).getName(),"name_123_123");
+                Assert.assertEquals(conceptEntities.get(0).getName(), "name_123_123");
             }
 
             @Override

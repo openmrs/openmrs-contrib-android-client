@@ -277,7 +277,8 @@
 	<string name="reconn_server">सर्वर से पुनः कनेक्ट हो रहा है</string>
 	<string name="connected_to_server_message">अब आप जुड़े हुए हैं!</string>
 
-	<string name="dialog_title_are_you_sure">क्या आप सुनिश्चित हैं?</string>
+	<string name="dialog_title_are_you_sure">रक्या आप सुनिश्चित हैं?</string>
+	<string name="dialog_title_reset_patient">रोगी का डेटा मिटाएं?</string>
 	<string name="dialog_message_data_lost">दर्ज की गई सभी रोगी जानकारी खो जाएगी।</string>
 	<string name="dialog_button_stay">रहें</string>
 	<string name="dialog_button_leave">छोड़ें</string>

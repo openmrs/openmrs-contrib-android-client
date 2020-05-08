@@ -34,6 +34,7 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -41,7 +42,6 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.List;
 
 public class PatientVisitsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientVisits {
-
     private RecyclerView visitRecyclerView;
     private TextView emptyList;
     private PatientDashboardActivity mPatientDashboardActivity;
@@ -68,7 +68,11 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
         int id = item.getItemId();
         switch (id) {
             case R.id.actionStartVisit:
-                ((PatientDashboardVisitsPresenter) mPresenter).syncVisits();
+                if (OpenMRS.getInstance().getSyncState()) {
+                    ((PatientDashboardVisitsPresenter) mPresenter).syncVisits();
+                } else {
+                    ToastUtil.notify(getString(R.string.offline_mode_not_supported));
+                }
                 break;
             default:
                 // Do nothing
@@ -110,8 +114,7 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
         if (isVisible) {
             visitRecyclerView.setVisibility(View.VISIBLE);
             emptyList.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             visitRecyclerView.setVisibility(View.GONE);
             emptyList.setVisibility(View.VISIBLE);
         }
@@ -137,8 +140,7 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
         if (activity.getSupportActionBar() != null) {
             if (isVisitPossible) {
                 activity.showStartVisitDialog(activity.getSupportActionBar().getTitle());
-            }
-            else {
+            } else {
                 activity.showStartVisitImpossibleDialog(activity.getSupportActionBar().getTitle());
             }
         }

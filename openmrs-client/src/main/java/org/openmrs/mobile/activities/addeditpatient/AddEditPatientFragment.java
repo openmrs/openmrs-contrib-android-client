@@ -106,7 +106,7 @@ import permissions.dispatcher.RuntimePermissions;
 
 
 @RuntimePermissions
-public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContract.Presenter> implements AddEditPatientContract.View {
+public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContract.Presenter> implements AddEditPatientContract.View, CameraOrGalleryPickerDialog.onInputSelected {
 
     private RelativeLayout relativeLayout;
     private LocalDate birthdate;
@@ -588,33 +588,13 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         });
 
         capturePhotoBtn.setOnClickListener(view -> {
-
-            CameraOrGalleryPickerDialog dialog = CameraOrGalleryPickerDialog.getInstance(
-                    (dialog1, which) -> {
-                                if (which == 0) {
-                                    StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-                                    StrictMode.setVmPolicy(builder.build());
-                                    AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
-                                } else if (which == 1) {
-                                    Intent i;
-                                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
-                                        i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                                    else
-                                        i = new Intent(Intent.ACTION_GET_CONTENT);
-                                    i.addCategory(Intent.CATEGORY_OPENABLE);
-                                    i.setType("image/*");
-                                    startActivityForResult(i, GALLERY_IMAGE_REQUEST);
-                                } else {
-                                    patientImageView.setImageResource(R.drawable.ic_person_grey_500_48dp);
-                                    patientImageView.invalidate();
-                                    patientPhoto = BitmapFactory.decodeResource(getResources(), R.drawable.ic_person_grey_500_48dp);
-                                }
-                            }
-                        );
-                dialog.show(getChildFragmentManager(), null);
-            }
-        );
-
+            boolean showRemoveButton = true;
+            if(patientPhoto == null)
+                showRemoveButton = false;
+            CameraOrGalleryPickerDialog cameraOrGalleryPickerDialog = new CameraOrGalleryPickerDialog(showRemoveButton);
+            cameraOrGalleryPickerDialog.setTargetFragment(AddEditPatientFragment.this,1000);
+            cameraOrGalleryPickerDialog.show(getFragmentManager(),"tag");
+        });
 
         patientImageView.setOnClickListener(view -> {
             if (output != null) {
@@ -707,6 +687,28 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
             }
         });
+    }
+
+    @Override
+    public void performFunction(int position) {
+        if (position == 0) {
+            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+            StrictMode.setVmPolicy(builder.build());
+            AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
+        } else if (position == 1) {
+            Intent i;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
+                i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            else
+                i = new Intent(Intent.ACTION_GET_CONTENT);
+            i.addCategory(Intent.CATEGORY_OPENABLE);
+            i.setType("image/*");
+            startActivityForResult(i, GALLERY_IMAGE_REQUEST);
+        } else {
+            patientImageView.setImageResource(R.drawable.ic_person_grey_500_48dp);
+            patientImageView.invalidate();
+            patientPhoto = null;
+        }
     }
 
     @NeedsPermission({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})

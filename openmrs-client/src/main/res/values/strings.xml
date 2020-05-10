@@ -187,6 +187,9 @@
 	<!-- Patients Vitals Fragment -->
 	<string name="form_error">This form is not supported</string>
 
+	<!-- fragment_patient_visits -->
+	<string name="offline_mode_not_supported">Active patient visit cannot be started in offline mode</string>
+
 	<!-- fragment_patient_visits layout -->
 	<string name="active_visit_label">Active visit</string>
 	<string name="past_visit_label">Past visit</string>

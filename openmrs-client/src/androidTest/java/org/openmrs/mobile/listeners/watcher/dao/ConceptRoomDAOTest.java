@@ -21,21 +21,14 @@ import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.ConceptEntity;
-import org.openmrs.mobile.utilities.ActiveAndroid.util.Log;
 
-import java.util.List;
 import java.util.Objects;
-
-import io.reactivex.SingleObserver;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Predicate;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest

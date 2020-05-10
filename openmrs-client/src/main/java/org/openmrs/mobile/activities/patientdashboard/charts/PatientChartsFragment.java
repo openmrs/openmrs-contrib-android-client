@@ -27,6 +27,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.google.common.collect.Lists;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,9 +41,12 @@ import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
+import org.openmrs.mobile.utilities.ToastUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -71,16 +76,35 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
         setEmptyListVisibility(false);
 
         mListView.setOnItemClickListener((parent, view, position, id) -> {
-            Intent intent = new Intent(getActivity(), ChartsViewActivity.class);
-            Bundle mBundle = new Bundle();
+
             String vitalName = chartsListAdapter.getItem(position);
             try {
-                mBundle.putString("vitalName", observationList.getJSONObject(vitalName).toString());
+                JSONObject chartData = observationList.getJSONObject(vitalName);
+                Iterator<String> dates = chartData.keys();
+                ArrayList<String> dateList = Lists.newArrayList(dates);
+
+                if(dateList.size() == 0)
+                    ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.ERROR, getString(R.string.data_not_available_for_this_field));
+                else {
+                    JSONArray dataArray = chartData.getJSONArray(dateList.get(0));
+                    String entry = (String) dataArray.get(0);
+                    try {
+                        Float entryValue = Float.parseFloat(entry);
+                        Intent intent = new Intent(getActivity(), ChartsViewActivity.class);
+                        Bundle mBundle = new Bundle();
+                        mBundle.putString("vitalName", chartData.toString());
+                        intent.putExtra("bundle", mBundle);
+                        startActivity(intent);
+                    } catch (NumberFormatException e) {
+                        ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.ERROR, getString(R.string.data_type_not_available_for_this_field));
+                    }
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
+                ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.ERROR, e.getMessage());
             }
-            intent.putExtra("bundle", mBundle);
-            startActivity(intent);
+
         });
         return root;
     }

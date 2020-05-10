@@ -381,4 +381,8 @@
 	<string name="showcase_form_entry">एक मरीज के वाइटल कलेक्ट करने के लिए यहां क्लिक करें</string>
 	<string name="showcase_manage_providers">एक मरीज के लिए पोषणकर्ता का प्रबंधन करने के लिए यहां क्लिक करें</string>
     <string name="offline_mode_not_supported">रोगी यात्रा ऑफ़लाइन मोड में शुरू नहीं की जा सकती</string>
+
+	<!-- Chart Activity -->
+	<string name="data_not_available_for_this_field">चार्ट प्रदर्शित करने के लिए कोई डेटा उपलब्ध नहीं है</string>
+	<string name="data_type_not_available_for_this_field">इस क्षेत्र के लिए चार्ट उपलब्ध नहीं है</string>
 </resources>

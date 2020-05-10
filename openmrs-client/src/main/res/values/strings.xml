@@ -392,4 +392,8 @@
 	<string name="showcase_register_patient">Click here to register a new patient</string>
 	<string name="showcase_form_entry">Click here to capture vitals for a patient on a visit</string>
 	<string name="showcase_manage_providers">Click here to manage providers for a patient on a visit</string>
+
+	<!-- Chart Activity -->
+	<string name="data_not_available_for_this_field">No data available to display chart</string>
+	<string name="data_type_not_available_for_this_field">Chart not available for this field</string>
 </resources>

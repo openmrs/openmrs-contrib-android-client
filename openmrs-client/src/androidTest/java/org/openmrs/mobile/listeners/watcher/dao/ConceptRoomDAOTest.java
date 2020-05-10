@@ -31,9 +31,11 @@ import org.openmrs.mobile.databases.entities.ConceptEntity;
 import org.openmrs.mobile.utilities.ActiveAndroid.util.Log;
 
 import java.util.List;
+import java.util.Objects;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Predicate;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -45,7 +47,6 @@ public class ConceptRoomDAOTest {
     private ConceptEntity expectedConceptEntity2 = newConceptEntity(20L, "124", "Concept 2", "name_124");
 
     private AppDatabase mDatabase;
-    private String TAG = "ConceptRoomDAOTest";
 
     @Before
     public void initDb() {
@@ -66,23 +67,14 @@ public class ConceptRoomDAOTest {
         mDatabase.conceptRoomDAO().saveConcept(expectedConceptEntity1);
         mDatabase.conceptRoomDAO().saveConcept(expectedConceptEntity2);
 
-        mDatabase.conceptRoomDAO().findConceptsByUUID(expectedConceptEntity1.getUuid()).subscribe(new SingleObserver<List<ConceptEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<ConceptEntity> conceptEntities) {
-                Assert.assertEquals(conceptEntities.get(0), expectedConceptEntity1);
-                Assert.assertEquals(conceptEntities.get(1), expectedConceptEntity2);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        mDatabase.conceptRoomDAO().findConceptsByUUID(expectedConceptEntity1.getUuid())
+                .test()
+                .assertValue(conceptEntities -> {
+                    ConceptEntity actualEntity = conceptEntities.get(0);
+                    return Objects.equals(actualEntity.getUuid(), expectedConceptEntity1.getUuid())
+                            && Objects.equals(actualEntity.getName(), expectedConceptEntity1.getName())
+                            && Objects.equals(actualEntity.getDisplay(), expectedConceptEntity1.getDisplay());
+                });
     }
 
     @Test
@@ -90,23 +82,14 @@ public class ConceptRoomDAOTest {
         mDatabase.conceptRoomDAO().saveConcept(expectedConceptEntity1);
         mDatabase.conceptRoomDAO().saveConcept(expectedConceptEntity2);
 
-        mDatabase.conceptRoomDAO().findConceptsByName(expectedConceptEntity1.getName()).subscribe(new SingleObserver<List<ConceptEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<ConceptEntity> conceptEntities) {
-                Assert.assertEquals(conceptEntities.get(0), expectedConceptEntity1);
-                Assert.assertEquals(conceptEntities.get(1), expectedConceptEntity2);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        mDatabase.conceptRoomDAO().findConceptsByName(expectedConceptEntity1.getName())
+                .test()
+                .assertValue(conceptEntities -> {
+                    ConceptEntity actualEntity = conceptEntities.get(0);
+                    return Objects.equals(actualEntity.getUuid(), expectedConceptEntity1.getUuid())
+                            && Objects.equals(actualEntity.getName(), expectedConceptEntity1.getName())
+                            && Objects.equals(actualEntity.getDisplay(), expectedConceptEntity1.getDisplay());
+                });
     }
 
     @Test
@@ -114,22 +97,9 @@ public class ConceptRoomDAOTest {
         mDatabase.conceptRoomDAO().saveConcept(expectedConceptEntity1);
         mDatabase.conceptRoomDAO().saveConcept(expectedConceptEntity2);
 
-        mDatabase.conceptRoomDAO().findConceptsByName(expectedConceptEntity1.getName()).subscribe(new SingleObserver<List<ConceptEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<ConceptEntity> conceptEntities) {
-                Assert.assertEquals(conceptEntities.size(), 2);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        mDatabase.conceptRoomDAO().getConceptsCount()
+                .test()
+                .assertValue(aLong -> Objects.equals(aLong, 2L));
     }
 
     @Test
@@ -139,22 +109,12 @@ public class ConceptRoomDAOTest {
 
         mDatabase.conceptRoomDAO().updateConcept(expectedConceptEntity1);
 
-        mDatabase.conceptRoomDAO().findConceptsByUUID(expectedConceptEntity1.getUuid()).subscribe(new SingleObserver<List<ConceptEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<ConceptEntity> conceptEntities) {
-                Assert.assertEquals(conceptEntities.get(0).getName(), "name_123_123");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        mDatabase.conceptRoomDAO().findConceptsByUUID(expectedConceptEntity1.getUuid())
+                .test()
+                .assertValue(conceptEntities -> {
+                    ConceptEntity actualEntity = conceptEntities.get(0);
+                    return Objects.equals(actualEntity.getName(), expectedConceptEntity1.getName());
+                });
     }
 
     private ConceptEntity newConceptEntity(long id, String uuid, String display, String name) {

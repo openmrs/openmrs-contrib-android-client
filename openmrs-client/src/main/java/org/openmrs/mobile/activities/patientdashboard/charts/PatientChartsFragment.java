@@ -82,38 +82,28 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
                 JSONObject chartData = observationList.getJSONObject(vitalName);
                 Iterator<String> dates = chartData.keys();
                 ArrayList<String> dateList = Lists.newArrayList(dates);
-                Boolean validChartData = true;
 
-                if(dateList.size()==0)
+                if(dateList.size() == 0)
                     ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.ERROR, getString(R.string.data_not_available_for_this_field));
                 else {
                     JSONArray dataArray = chartData.getJSONArray(dateList.get(0));
                     String entry = (String) dataArray.get(0);
                     try {
                         Float entryValue = Float.parseFloat(entry);
+                        Intent intent = new Intent(getActivity(), ChartsViewActivity.class);
+                        Bundle mBundle = new Bundle();
+                        mBundle.putString("vitalName", chartData.toString());
+                        intent.putExtra("bundle", mBundle);
+                        startActivity(intent);
                     } catch (NumberFormatException e) {
-                        validChartData = false;
                         ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.ERROR, getString(R.string.data_type_not_available_for_this_field));
                     }
                 }
 
-                if(dateList.size()!=0 && validChartData) {
-                    Intent intent = new Intent(getActivity(), ChartsViewActivity.class);
-                    Bundle mBundle = new Bundle();
-                    try {
-                        mBundle.putString("vitalName", observationList.getJSONObject(vitalName).toString());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    intent.putExtra("bundle", mBundle);
-                    startActivity(intent);
-                }
-
             } catch (JSONException e) {
                 e.printStackTrace();
+                ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.ERROR, e.getMessage());
             }
-
-
 
         });
         return root;

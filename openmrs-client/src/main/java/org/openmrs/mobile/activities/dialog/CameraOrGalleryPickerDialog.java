@@ -49,11 +49,11 @@ public class CameraOrGalleryPickerDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_my_custom, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_dialog);
-        list.add(new CustomDialogModel("Take a photo", R.drawable.ic_photo_camera));
-        list.add(new CustomDialogModel("Choose photo", R.drawable.ic_photo_library));
-        if (showRemoveButton)
-            list.add(new CustomDialogModel("Remove photo", R.drawable.ic_photo_delete));
-
+        list.add(new CustomDialogModel(getString(R.string.dialog_take_photo), R.drawable.ic_photo_camera));
+        list.add(new CustomDialogModel(getString(R.string.dialog_choose_photo), R.drawable.ic_photo_library));
+        if (showRemoveButton) {
+            list.add(new CustomDialogModel(getString(R.string.dialog_remove_photo), R.drawable.ic_photo_delete));
+        }
         CustomDialogAdapter adapter = new CustomDialogAdapter(getActivity(), list);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -104,12 +104,7 @@ public class CameraOrGalleryPickerDialog extends DialogFragment {
             CustomDialogModel customDialogModel = modelList.get(position);
             holder.textView.setText(customDialogModel.getName());
             holder.imageView.setImageResource(customDialogModel.getId());
-            holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    CameraOrGalleryPickerDialog.this.performActivity(position);
-                }
-            });
+            holder.linearLayout.setOnClickListener(v -> CameraOrGalleryPickerDialog.this.performActivity(position));
         }
 
         @Override

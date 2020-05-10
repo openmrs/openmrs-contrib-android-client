@@ -25,8 +25,8 @@
         android:id="@+id/imageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         tools:src="@drawable/ic_photo_camera" />
 
     <TextView
@@ -35,8 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="50dp"
         android:layout_marginRight="50dp"
-        android:paddingEnd="15dp"
-        android:paddingRight="15dp"
+        android:paddingEnd="16dp"
+        android:paddingRight="16dp"
         android:textSize="16sp"
         tools:text="@string/take_a_photo" />
 

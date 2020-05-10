@@ -124,6 +124,7 @@
                         android:textStyle="bold" />
 
                     <LinearLayout
+                        android:id="@+id/linearLayout_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -249,6 +250,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/linearLayout_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -301,6 +303,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/linearLayout_dob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -441,6 +444,7 @@
                 android:layout_margin="@dimen/margin_short">
 
                 <LinearLayout
+                    android:id="@+id/linearLayout_contact_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">

@@ -54,9 +54,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -111,6 +114,12 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private RelativeLayout relativeLayout;
     private LocalDate birthdate;
     private DateTime bdt;
+
+    private LinearLayout linearLayout_name;
+    private LinearLayout linearLayout_dob;
+    private LinearLayout linearLayout_contact_info;
+    private CheckBox unidentified_checkBox;
+    private Boolean isPatientUnidentified = false;
 
     private TextInputLayout firstNameTIL;
     private TextInputLayout middleNameTIL;
@@ -466,10 +475,18 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         middleNameTIL = v.findViewById(R.id.textInputLayoutMiddlename);
         lastNameTIL = v.findViewById(R.id.textInputLayoutSurname);
         address1TIL = v.findViewById(R.id.textInputLayoutAddress);
+
+        linearLayout_name = v.findViewById(R.id.linearLayout_name);
+        linearLayout_dob = v.findViewById(R.id.linearLayout_dob);
+        linearLayout_contact_info = v.findViewById(R.id.linearLayout_contact_info);
+        unidentified_checkBox = v.findViewById(R.id.unidentified_checkbox);
     }
 
     private void fillFields(final Patient patient) {
         if (patient != null) {
+            //no need for un-identification option once the patient is registered
+            unidentified_checkBox.setVisibility(View.GONE);
+
             //Change to Update Patient Form
             String updatePatientStr = getResources().getString(R.string.action_update_patient_data);
             this.getActivity().setTitle(updatePatientStr);
@@ -685,6 +702,20 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        unidentified_checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(unidentified_checkBox.isChecked()) {
+                linearLayout_name.setVisibility(View.GONE);
+                linearLayout_dob.setVisibility(View.GONE);
+                linearLayout_contact_info.setVisibility(View.GONE);
+                isPatientUnidentified = true;
+            } else {
+                linearLayout_name.setVisibility(View.VISIBLE);
+                linearLayout_dob.setVisibility(View.VISIBLE);
+                linearLayout_contact_info.setVisibility(View.VISIBLE);
+                isPatientUnidentified = false;
             }
         });
     }

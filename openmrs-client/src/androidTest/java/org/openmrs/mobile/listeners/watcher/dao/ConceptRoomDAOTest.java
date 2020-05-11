@@ -92,7 +92,7 @@ public class ConceptRoomDAOTest {
 
         mDatabase.conceptRoomDAO().getConceptsCount()
                 .test()
-                .assertValue(aLong -> Objects.equals(aLong, 2L));
+                .assertValue(actualConceptsCount -> Objects.equals(actualConceptsCount, 2L));
     }
 
     @Test

@@ -385,4 +385,7 @@
 	<!-- Chart Activity -->
 	<string name="data_not_available_for_this_field">चार्ट प्रदर्शित करने के लिए कोई डेटा उपलब्ध नहीं है</string>
 	<string name="data_type_not_available_for_this_field">इस क्षेत्र के लिए चार्ट उपलब्ध नहीं है</string>
+	<string name="dialog_take_photo">एक तस्वीर लें</string>
+	<string name="dialog_choose_photo">फोटो चुनो</string>
+	<string name="dialog_remove_photo">फोटो निकालें</string>
 </resources>

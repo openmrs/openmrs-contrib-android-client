@@ -396,4 +396,7 @@
 	<!-- Chart Activity -->
 	<string name="data_not_available_for_this_field">No data available to display chart</string>
 	<string name="data_type_not_available_for_this_field">Chart not available for this field</string>
+	<string name="dialog_take_photo">Take a photo</string>
+	<string name="dialog_choose_photo">Choose photo</string>
+	<string name="dialog_remove_photo">Remove photo</string>
 </resources>

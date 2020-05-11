@@ -390,4 +390,5 @@
 	<string name="dialog_remove_photo">फोटो निकालें</string>
 
 	<string name="unidentified_patient">अज्ञात रोगी</string>
+    <string name="dob_error_for_unidentified">कृपया रोगी की उम्र का अनुमान दें</string>
 </resources>

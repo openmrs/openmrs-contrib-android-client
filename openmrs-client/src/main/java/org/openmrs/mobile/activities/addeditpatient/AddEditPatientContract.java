@@ -59,7 +59,7 @@ public interface AddEditPatientContract {
 
         boolean isRegisteringPatient();
 
-        void confirmRegister(Patient patient);
+        void confirmRegister(Patient patient, boolean isPatientUnidentified);
 
         void confirmUpdate(Patient patient);
 

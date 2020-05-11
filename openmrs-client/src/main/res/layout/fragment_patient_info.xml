@@ -261,6 +261,7 @@
                             android:layout_marginStart="12dp"
                             android:layout_marginLeft="12dp"
                             android:layout_marginRight="12dp"
+                            android:layout_marginTop="20dp"
                             android:text="@string/reg_ques_gender"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -303,7 +304,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/linearLayout_dob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -332,6 +332,7 @@
                             android:visibility="gone" />
 
                         <RelativeLayout
+                            android:id="@+id/relativeLayout_dob"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp">
@@ -368,17 +369,20 @@
                                 android:layout_marginEnd="24dp"
                                 android:layout_marginRight="24dp"
                                 android:background="@drawable/ic_date_range_24dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="12dp"
+                                android:text="@string/label_or"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:layout_below="@id/textInputLayoutDOB"/>
+
                         </RelativeLayout>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:text="@string/label_or"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:layout_width="match_parent"

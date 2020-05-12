@@ -54,12 +54,12 @@ public class VisitRoomDAOTest {
         database.visitRoomDAO().updateVisit(updatedVisitEntity);
         database.visitRoomDAO().getVisitByID(id).
                 test()
-                .assertValue(visitEntity -> Objects.equals(visitEntity.getPatientKeyID(), 2L)
-                        && Objects.equals(visitEntity.getStartDate(), "updatedStartDate")
-                        && Objects.equals(visitEntity.getStopDate(), "updatedStopDate")
-                        && Objects.equals(visitEntity.getVisitPlace(), "updatedVisitPlace")
-                        && Objects.equals(visitEntity.getVisitType(), "updatedVisitType")
-                        && Objects.equals(visitEntity.getUuid(), "updatedUuid"));
+                .assertValue(actualVisitEntity -> Objects.equals(actualVisitEntity.getPatientKeyID(), 2L)
+                        && Objects.equals(actualVisitEntity.getStartDate(), "updatedStartDate")
+                        && Objects.equals(actualVisitEntity.getStopDate(), "updatedStopDate")
+                        && Objects.equals(actualVisitEntity.getVisitPlace(), "updatedVisitPlace")
+                        && Objects.equals(actualVisitEntity.getVisitType(), "updatedVisitType")
+                        && Objects.equals(actualVisitEntity.getUuid(), "updatedUuid"));
     }
 
     @Test
@@ -68,7 +68,7 @@ public class VisitRoomDAOTest {
         database.visitRoomDAO().deleteVisitsByPatientId(actualVisitEntity);
         database.visitRoomDAO().getActiveVisits()
                 .test()
-                .assertValue(visitEntities -> Objects.equals(visitEntities.size(), 0));
+                .assertValue(actualVisitEntities -> Objects.equals(actualVisitEntities.size(), 0));
     }
 
     @Test
@@ -77,13 +77,13 @@ public class VisitRoomDAOTest {
         database.visitRoomDAO().getVisitsByPatientID(actualVisitEntity.getPatientKeyID())
                 .test()
                 .assertValue(visitEntities -> {
-                    VisitEntity visitEntity = visitEntities.get(0);
-                    return Objects.equals(visitEntity.getPatientKeyID(), 1L)
-                            && Objects.equals(visitEntity.getStartDate(), "startDate")
-                            && Objects.equals(visitEntity.getStopDate(), "stopDate")
-                            && Objects.equals(visitEntity.getVisitPlace(), "visitPlace")
-                            && Objects.equals(visitEntity.getVisitType(), "visitType")
-                            && Objects.equals(visitEntity.getUuid(), "uuid");
+                    VisitEntity actualVisitEntity = visitEntities.get(0);
+                    return Objects.equals(actualVisitEntity.getPatientKeyID(), 1L)
+                            && Objects.equals(actualVisitEntity.getStartDate(), "startDate")
+                            && Objects.equals(actualVisitEntity.getStopDate(), "stopDate")
+                            && Objects.equals(actualVisitEntity.getVisitPlace(), "visitPlace")
+                            && Objects.equals(actualVisitEntity.getVisitType(), "visitType")
+                            && Objects.equals(actualVisitEntity.getUuid(), "uuid");
                 });
     }
 
@@ -92,12 +92,12 @@ public class VisitRoomDAOTest {
         database.visitRoomDAO().saveVisit(actualVisitEntity);
         database.visitRoomDAO().getFirstActiveVisitByPatientId(actualVisitEntity.getPatientKeyID())
                 .test()
-                .assertValue(visitEntity -> Objects.equals(visitEntity.getPatientKeyID(), 1L)
-                        && Objects.equals(visitEntity.getStartDate(), "startDate")
-                        && Objects.equals(visitEntity.getStopDate(), "stopDate")
-                        && Objects.equals(visitEntity.getVisitPlace(), "visitPlace")
-                        && Objects.equals(visitEntity.getVisitType(), "visitType")
-                        && Objects.equals(visitEntity.getUuid(), "uuid"));
+                .assertValue(actualVisitEntity -> Objects.equals(actualVisitEntity.getPatientKeyID(), 1L)
+                        && Objects.equals(actualVisitEntity.getStartDate(), "startDate")
+                        && Objects.equals(actualVisitEntity.getStopDate(), "stopDate")
+                        && Objects.equals(actualVisitEntity.getVisitPlace(), "visitPlace")
+                        && Objects.equals(actualVisitEntity.getVisitType(), "visitType")
+                        && Objects.equals(actualVisitEntity.getUuid(), "uuid"));
     }
 
     @Test
@@ -105,12 +105,12 @@ public class VisitRoomDAOTest {
         Long id = database.visitRoomDAO().saveVisit(actualVisitEntity);
         database.visitRoomDAO().getVisitByID(id)
                 .test()
-                .assertValue(visitEntity -> Objects.equals(visitEntity.getPatientKeyID(), 1L)
-                        && Objects.equals(visitEntity.getStartDate(), "startDate")
-                        && Objects.equals(visitEntity.getStopDate(), "stopDate")
-                        && Objects.equals(visitEntity.getVisitPlace(), "visitPlace")
-                        && Objects.equals(visitEntity.getVisitType(), "visitType")
-                        && Objects.equals(visitEntity.getUuid(), "uuid"));
+                .assertValue(actualVisitEntity -> Objects.equals(actualVisitEntity.getPatientKeyID(), 1L)
+                        && Objects.equals(actualVisitEntity.getStartDate(), "startDate")
+                        && Objects.equals(actualVisitEntity.getStopDate(), "stopDate")
+                        && Objects.equals(actualVisitEntity.getVisitPlace(), "visitPlace")
+                        && Objects.equals(actualVisitEntity.getVisitType(), "visitType")
+                        && Objects.equals(actualVisitEntity.getUuid(), "uuid"));
     }
 
     @Test
@@ -118,12 +118,12 @@ public class VisitRoomDAOTest {
         database.visitRoomDAO().saveVisit(actualVisitEntity);
         database.visitRoomDAO().getVisitByUuid("uuid")
                 .test()
-                .assertValue(visitEntity -> Objects.equals(visitEntity.getPatientKeyID(), 1L)
-                        && Objects.equals(visitEntity.getStartDate(), "startDate")
-                        && Objects.equals(visitEntity.getStopDate(), "stopDate")
-                        && Objects.equals(visitEntity.getVisitPlace(), "visitPlace")
-                        && Objects.equals(visitEntity.getVisitType(), "visitType")
-                        && Objects.equals(visitEntity.getUuid(), "uuid"));
+                .assertValue(actualVisitEntity -> Objects.equals(actualVisitEntity.getPatientKeyID(), 1L)
+                        && Objects.equals(actualVisitEntity.getStartDate(), "startDate")
+                        && Objects.equals(actualVisitEntity.getStopDate(), "stopDate")
+                        && Objects.equals(actualVisitEntity.getVisitPlace(), "visitPlace")
+                        && Objects.equals(actualVisitEntity.getVisitType(), "visitType")
+                        && Objects.equals(actualVisitEntity.getUuid(), "uuid"));
     }
 
     @Test

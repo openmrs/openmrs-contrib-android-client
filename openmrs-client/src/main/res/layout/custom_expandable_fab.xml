@@ -25,13 +25,6 @@
         app:layout_anchor="@id/activity_patient_dashboard_action_fab"
         app:layout_anchorGravity="center">
 
-        <TextView
-            android:id="@+id/custom_fab_delete_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="@string/fab_label_delete" />
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/activity_patient_dashboard_delete_fab"
             android:layout_width="wrap_content"
@@ -53,13 +46,6 @@
         android:visibility="gone"
         app:layout_anchor="@id/activity_patient_dashboard_action_fab"
         app:layout_anchorGravity="center">
-
-        <TextView
-            android:id="@+id/custom_fab_update_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="@string/fab_label_update" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/activity_patient_dashboard_update_fab"

@@ -35,7 +35,7 @@ public class VisitRoomDAOTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
     private AppDatabase database;
-    private VisitEntity actualVisitEntity = createVisitEntity(10L, 1L, "startDate", "stopDate", "visitPlace", "visitType", "uuid");
+    private VisitEntity expectedVisitEntity = createVisitEntity(10L, 1L, "startDate", "stopDate", "visitPlace", "visitType", "uuid");
     private VisitEntity updatedVisitEntity = createVisitEntity(10L, 2L, "updatedStartDate", "updatedStopDate", "updatedVisitPlace", "updatedVisitType", "updatedUuid");
 
     @Before
@@ -50,7 +50,7 @@ public class VisitRoomDAOTest {
 
     @Test
     public void updateVisit_ShouldUpdateVisit() {
-        Long id = database.visitRoomDAO().saveVisit(actualVisitEntity);
+        Long id = database.visitRoomDAO().saveVisit(expectedVisitEntity);
         database.visitRoomDAO().updateVisit(updatedVisitEntity);
         database.visitRoomDAO().getVisitByID(id).
                 test()
@@ -64,8 +64,8 @@ public class VisitRoomDAOTest {
 
     @Test
     public void deleteVisitsByPatientId_ShouldDeleteVisit() {
-        database.visitRoomDAO().saveVisit(actualVisitEntity);
-        database.visitRoomDAO().deleteVisitsByPatientId(actualVisitEntity);
+        database.visitRoomDAO().saveVisit(expectedVisitEntity);
+        database.visitRoomDAO().deleteVisitsByPatientId(expectedVisitEntity);
         database.visitRoomDAO().getActiveVisits()
                 .test()
                 .assertValue(actualVisitEntities -> Objects.equals(actualVisitEntities.size(), 0));
@@ -73,8 +73,8 @@ public class VisitRoomDAOTest {
 
     @Test
     public void getVisitsByPatientId_ShouldGetVisit() {
-        database.visitRoomDAO().saveVisit(actualVisitEntity);
-        database.visitRoomDAO().getVisitsByPatientID(actualVisitEntity.getPatientKeyID())
+        database.visitRoomDAO().saveVisit(expectedVisitEntity);
+        database.visitRoomDAO().getVisitsByPatientID(expectedVisitEntity.getPatientKeyID())
                 .test()
                 .assertValue(visitEntities -> {
                     VisitEntity actualVisitEntity = visitEntities.get(0);
@@ -89,8 +89,8 @@ public class VisitRoomDAOTest {
 
     @Test
     public void getFirstActiveVisitByPatientId_ShouldGetFirstActiveVisit() {
-        database.visitRoomDAO().saveVisit(actualVisitEntity);
-        database.visitRoomDAO().getFirstActiveVisitByPatientId(actualVisitEntity.getPatientKeyID())
+        database.visitRoomDAO().saveVisit(expectedVisitEntity);
+        database.visitRoomDAO().getFirstActiveVisitByPatientId(expectedVisitEntity.getPatientKeyID())
                 .test()
                 .assertValue(actualVisitEntity -> Objects.equals(actualVisitEntity.getPatientKeyID(), 1L)
                         && Objects.equals(actualVisitEntity.getStartDate(), "startDate")
@@ -102,7 +102,7 @@ public class VisitRoomDAOTest {
 
     @Test
     public void saveVisit_ShouldSaveCorrectVisit() {
-        Long id = database.visitRoomDAO().saveVisit(actualVisitEntity);
+        Long id = database.visitRoomDAO().saveVisit(expectedVisitEntity);
         database.visitRoomDAO().getVisitByID(id)
                 .test()
                 .assertValue(actualVisitEntity -> Objects.equals(actualVisitEntity.getPatientKeyID(), 1L)
@@ -115,7 +115,7 @@ public class VisitRoomDAOTest {
 
     @Test
     public void getVisitByUuid_ShouldGetCorrectVisit() {
-        database.visitRoomDAO().saveVisit(actualVisitEntity);
+        database.visitRoomDAO().saveVisit(expectedVisitEntity);
         database.visitRoomDAO().getVisitByUuid("uuid")
                 .test()
                 .assertValue(actualVisitEntity -> Objects.equals(actualVisitEntity.getPatientKeyID(), 1L)
@@ -128,7 +128,7 @@ public class VisitRoomDAOTest {
 
     @Test
     public void getVisitIdByUuid_ShouldGetCorrectVisitId() {
-        Long id = database.visitRoomDAO().saveVisit(actualVisitEntity);
+        Long id = database.visitRoomDAO().saveVisit(expectedVisitEntity);
         Long visitId = database.visitRoomDAO().getVisitsIDByUUID("uuid");
         Assert.assertEquals(id, visitId);
     }

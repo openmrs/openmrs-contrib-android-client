@@ -14,17 +14,13 @@
 
 package org.openmrs.mobile.listeners.watcher.dao;
 
-import java.util.List;
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
-import io.reactivex.SingleObserver;
-import io.reactivex.disposables.Disposable;
+
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,7 +29,8 @@ import org.openmrs.mobile.dao.PatientRoomDAO;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.EncounterEntity;
 import org.openmrs.mobile.databases.entities.PatientEntity;
-import org.openmrs.mobile.utilities.ActiveAndroid.util.Log;
+
+import java.util.Objects;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -72,23 +69,11 @@ public class PatientRoomDAOTest {
         patientRoomDAO.savePatient(expectedPatientEntity1);
         patientRoomDAO.savePatient(expectedPatientEntity2);
 
-        patientRoomDAO.getAllPatients().subscribe(new SingleObserver<List<PatientEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<PatientEntity> patientEntities) {
-                Assert.assertEquals(patientEntities.get(0), expectedPatientEntity1);
-                Assert.assertEquals(patientEntities.get(1), expectedPatientEntity2);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        patientRoomDAO.getAllPatients()
+                .test()
+                .assertValue(actualPatientEntities -> Objects.equals(actualPatientEntities.size(), 2)
+                        && Objects.equals(renderPatientEntityString(actualPatientEntities.get(0)), renderPatientEntityString(expectedPatientEntity1))
+                        && Objects.equals(renderPatientEntityString(actualPatientEntities.get(1)), renderPatientEntityString(expectedPatientEntity2)));
     }
 
     @Test
@@ -96,22 +81,10 @@ public class PatientRoomDAOTest {
         patientRoomDAO.savePatient(expectedPatientEntity1);
         patientRoomDAO.savePatient(expectedPatientEntity2);
 
-        patientRoomDAO.findPatientByUUID(expectedPatientEntity2.getUuid()).subscribe(new SingleObserver<List<PatientEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<PatientEntity> patientEntities) {
-                Assert.assertEquals(patientEntities.get(0), expectedPatientEntity2);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        patientRoomDAO.findPatientByUUID(expectedPatientEntity2.getUuid())
+                .test()
+                .assertValue(actualPatientEntities -> Objects.equals(actualPatientEntities.size(), 1)
+                        && Objects.equals(renderPatientEntityString(actualPatientEntities.get(0)), renderPatientEntityString(expectedPatientEntity2)));
     }
 
     @Test
@@ -119,23 +92,11 @@ public class PatientRoomDAOTest {
         patientRoomDAO.savePatient(expectedPatientEntity1);
         patientRoomDAO.savePatient(expectedPatientEntity2);
 
-        patientRoomDAO.getUnsyncedPatients().subscribe(new SingleObserver<List<PatientEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<PatientEntity> patientEntities) {
-                Assert.assertEquals(patientEntities.size(), 2);
-                //since both the global patient entities are not synced
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        patientRoomDAO.getUnsyncedPatients()
+                .test()
+                .assertValue(actualPatientEntities -> Objects.equals(actualPatientEntities.size(), 2)
+                        && Objects.equals(renderPatientEntityString(actualPatientEntities.get(0)), renderPatientEntityString(expectedPatientEntity1))
+                        && Objects.equals(renderPatientEntityString(actualPatientEntities.get(1)), renderPatientEntityString(expectedPatientEntity2)));
     }
 
     @Test
@@ -143,22 +104,10 @@ public class PatientRoomDAOTest {
         patientRoomDAO.savePatient(expectedPatientEntity1);
         patientRoomDAO.savePatient(expectedPatientEntity2);
 
-        patientRoomDAO.findPatientByID(expectedEncounterEntity1.getId()).subscribe(new SingleObserver<List<PatientEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<PatientEntity> patientEntities) {
-                Assert.assertEquals(patientEntities.get(0), expectedPatientEntity1);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        patientRoomDAO.findPatientByID(expectedPatientEntity1.getId())
+                .test()
+                .assertValue(actualPatientEntities -> Objects.equals(actualPatientEntities.size(), 1)
+                        && Objects.equals(renderPatientEntityString(actualPatientEntities.get(0)), renderPatientEntityString(expectedPatientEntity1)));
     }
 
     @Test
@@ -166,25 +115,12 @@ public class PatientRoomDAOTest {
         patientRoomDAO.savePatient(expectedPatientEntity1);
         patientRoomDAO.savePatient(expectedPatientEntity2);
 
-        patientRoomDAO.deletePatient(expectedPatientEntity2.getId());
+        patientRoomDAO.deletePatient(20L);
 
-        patientRoomDAO.getAllPatients().subscribe(new SingleObserver<List<PatientEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<PatientEntity> patientEntities) {
-                Assert.assertEquals(patientEntities.size(), 1);
-                Assert.assertEquals(patientEntities.get(0), expectedPatientEntity1);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        patientRoomDAO.getAllPatients()
+                .test()
+                .assertValue(actualPatientEntities -> Objects.equals(actualPatientEntities.size(), 1)
+                        && Objects.equals(renderPatientEntityString(actualPatientEntities.get(0)), renderPatientEntityString(expectedPatientEntity1)));
     }
 
     @Test
@@ -196,25 +132,12 @@ public class PatientRoomDAOTest {
 
         patientRoomDAO.updatePatient(expectedPatientEntity1);
 
-        patientRoomDAO.getAllPatients().subscribe(new SingleObserver<List<PatientEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
+        patientRoomDAO.getAllPatients()
+                .test()
+                .assertValue(actualPatientEntities -> Objects.equals(actualPatientEntities.size(), 1)
+                        && Objects.equals(actualPatientEntities.get(0).getGivenName(), "Rishabh")
+                        && Objects.equals(actualPatientEntities.get(0).getFamilyName(), "Agarwal"));
 
-            }
-
-            @Override
-            public void onSuccess(List<PatientEntity> patientEntities) {
-                Assert.assertEquals(patientEntities.size(), 1);
-
-                Assert.assertEquals(patientEntities.get(0).getGivenName(), "Rishabh");
-                Assert.assertEquals(patientEntities.get(0).getFamilyName(), "Agarwal");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
     }
 
     private EncounterEntity newEncounterEntity(Long id, String uuid, String display, String visitKeyId,
@@ -264,4 +187,20 @@ public class PatientRoomDAOTest {
         return entity;
     }
 
+    private String renderPatientEntityString(PatientEntity patientEntity) {
+        return patientEntity.getId() + patientEntity.getDisplay()
+                + patientEntity.getAddress_1() + patientEntity.getAddress_2()
+                + patientEntity.getAge() + patientEntity.getBirthDate() + patientEntity.getCauseOfDeath()
+                + patientEntity.getCity() + patientEntity.getState() + patientEntity.getCountry()
+                + patientEntity.getDeathDate() + renderEncounterEntityString(patientEntity.getEncounters())
+                + patientEntity.getFamilyName() + patientEntity.getGender()
+                + patientEntity.getGivenName() + patientEntity.getIdentifier() + patientEntity.getMiddleName()
+                + patientEntity.getPhoto() + patientEntity.getPostalCode();
+    }
+
+    private String renderEncounterEntityString(EncounterEntity encounterEntity) {
+        return encounterEntity.getId() + encounterEntity.getUuid() + encounterEntity.getVisitKeyId()
+                + encounterEntity.getPatientUuid() + encounterEntity.getFormUuid()
+                + encounterEntity.getEncounterType() + encounterEntity.getEncounterDateTime();
+    }
 }

@@ -19,6 +19,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.SearchView;
+
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
@@ -27,11 +30,7 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.SearchView;
-
 public class SyncedPatientsActivity extends ACBaseActivity {
-
     public SyncedPatientsPresenter mPresenter;
     private SearchView searchView;
     private String query;
@@ -42,6 +41,7 @@ public class SyncedPatientsActivity extends ACBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_find_patients);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -51,16 +51,16 @@ public class SyncedPatientsActivity extends ACBaseActivity {
 
         // Create fragment
         SyncedPatientsFragment syncedPatientsFragment =
-                (SyncedPatientsFragment) getSupportFragmentManager().findFragmentById(R.id.syncedPatientsContentFrame);
+            (SyncedPatientsFragment) getSupportFragmentManager().findFragmentById(R.id.syncedPatientsContentFrame);
         if (syncedPatientsFragment == null) {
             syncedPatientsFragment = SyncedPatientsFragment.newInstance();
         }
         if (!syncedPatientsFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    syncedPatientsFragment, R.id.syncedPatientsContentFrame);
+                syncedPatientsFragment, R.id.syncedPatientsContentFrame);
         }
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             query = savedInstanceState.getString(ApplicationConstants.BundleKeys.PATIENT_QUERY_BUNDLE, "");
             mPresenter = new SyncedPatientsPresenter(syncedPatientsFragment, query);
         } else {
@@ -71,8 +71,15 @@ public class SyncedPatientsActivity extends ACBaseActivity {
     @Override
     protected void onSaveInstanceState(@NotNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        String query = searchView.getQuery().toString();
-        outState.putString(ApplicationConstants.BundleKeys.PATIENT_QUERY_BUNDLE, query);
+
+        /*
+         * searchView takes up null value in dark mode of operation in absence of ActionBar
+         * thus onCreateOptionsMenu never gets called
+         */
+        if (searchView != null) {
+            String query = searchView.getQuery().toString();
+            outState.putString(ApplicationConstants.BundleKeys.PATIENT_QUERY_BUNDLE, query);
+        }
     }
 
     @Override
@@ -109,7 +116,7 @@ public class SyncedPatientsActivity extends ACBaseActivity {
         MenuItem searchMenuItem = menu.findItem(R.id.actionSearchLocal);
         searchView = (SearchView) searchMenuItem.getActionView();
 
-        if(StringUtils.notEmpty(query)){
+        if (StringUtils.notEmpty(query)) {
             searchMenuItem.expandActionView();
             searchView.setQuery(query, true);
             searchView.clearFocus();
@@ -137,5 +144,4 @@ public class SyncedPatientsActivity extends ACBaseActivity {
         mAddPatientMenuItem.setEnabled(enabled);
         mAddPatientMenuItem.setIcon(resId);
     }
-
 }

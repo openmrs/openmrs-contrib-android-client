@@ -19,9 +19,13 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
+
 import org.openmrs.mobile.databases.entities.ObservationEntity;
+
 import java.util.List;
+
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 @Dao
 public interface ObservationRoomDAO {
@@ -39,6 +43,9 @@ public interface ObservationRoomDAO {
     Flowable<List<ObservationEntity>> findObservationByEncounterID(long encounterID);
 
     @Query("SELECT * FROM observations WHERE uuid = :observationUUID")
-    Flowable<ObservationEntity> getObservationByUUID(String observationUUID);
+    Single<ObservationEntity> getObservationByUUID(String observationUUID);
+
+    @Query("SELECT * FROM observations")
+    Single<List<ObservationEntity>> getAllObservations();
 
 }

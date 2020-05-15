@@ -138,9 +138,6 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
             }
         });
 
-
-
-
         /*
         encountercreate.setObslist();
         encountercreate.save();

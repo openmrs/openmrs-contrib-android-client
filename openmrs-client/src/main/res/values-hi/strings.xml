@@ -388,4 +388,6 @@
 	<string name="dialog_take_photo">एक तस्वीर लें</string>
 	<string name="dialog_choose_photo">फोटो चुनो</string>
 	<string name="dialog_remove_photo">फोटो निकालें</string>
+
+	<string name="unidentified_patient">अज्ञात रोगी</string>
 </resources>

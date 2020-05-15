@@ -119,6 +119,12 @@ public class FormAdmissionFragment extends ACBaseFragment<FormAdmissionContract.
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 admittedToPerson = formAdmissionBinding.admittedToSpinner.getSelectedItem().toString();
+
+                for(int i = 0;i<results.size();i++) {
+                    if(admittedToPerson.equals(results.get(i).getDisplay())){
+                        admittedToPerson = results.get(i).getUuid();
+                    }
+                }
             }
 
             @Override

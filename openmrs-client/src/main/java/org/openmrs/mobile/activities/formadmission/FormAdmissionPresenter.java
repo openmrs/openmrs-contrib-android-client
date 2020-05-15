@@ -29,6 +29,7 @@ import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.retrofit.ProviderRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
+import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Obscreate;
@@ -116,49 +117,32 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
 
         Encountercreate encountercreate=new Encountercreate();
         encountercreate.setPatient(mPatient.getUuid());
-        Log.i("hello-patientUUID",mPatient.getUuid());
-
         encountercreate.setEncounterType(encounterType);
-        Log.i("hello-encounterType",encounterType);
-
         encountercreate.setFormname(formName);
-        Log.i("hello-formName",formName);
-
         encountercreate.setPatientId(patientID);
-        Log.i("hello-patientID",patientID+"");
-
         encountercreate.setFormUuid(formUUID);
-        Log.i("hello-formUUID",formUUID);
+        encountercreate.setLocation(admittedByPerson);
 
         List<Obscreate> observations=new ArrayList<>();
-        LocalDateTime localDateTime = new LocalDateTime();
-
-        Obscreate obscreate1 = new Obscreate();
-        obscreate1.setConcept("encounterDate");
-        obscreate1.setValue(localDateTime.toString());
-        obscreate1.setObsDatetime(localDateTime.toString());
-        obscreate1.setPerson(mPatient.getUuid());
-        observations.add(obscreate1);
-        Log.i("hello-obs1",obscreate1.toString());
-
-        Obscreate obscreate2 = new Obscreate();
-        obscreate2.setConcept("encounterProviderAndRole");
-        obscreate2.setValue(admittedByPerson);
-        obscreate2.setObsDatetime(localDateTime.toString());
-        obscreate2.setPerson(mPatient.getUuid());
-        observations.add(obscreate2);
-        Log.i("hello-obs2",obscreate2.toString());
-
-        Obscreate obscreate3 = new Obscreate();
-        obscreate3.setConcept("encounterLocation");
-        obscreate3.setValue(admittedToPerson);
-        obscreate3.setObsDatetime(localDateTime.toString());
-        obscreate3.setPerson(mPatient.getUuid());
-        observations.add(obscreate3);
-        Log.i("hello-obs3",obscreate3.toString());
-
         encountercreate.setObservations(observations);
-        /*encountercreate.setObslist();
+
+        restApi.createEncounter(encountercreate).enqueue(new Callback<Encounter>() {
+            @Override
+            public void onResponse(Call<Encounter> call, Response<Encounter> response) {
+                String s = response.body().toString();
+            }
+
+            @Override
+            public void onFailure(Call<Encounter> call, Throwable t) {
+                String error = t.getMessage();
+            }
+        });
+
+
+
+
+        /*
+        encountercreate.setObslist();
         encountercreate.save();
 
         if(!mPatient.isSynced()) {

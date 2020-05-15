@@ -14,6 +14,7 @@ import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
+import org.openmrs.mobile.activities.formadmission.EncounterProviderModel
 import org.openmrs.mobile.utilities.ActiveAndroid.Model
 import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Column
 import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Table
@@ -54,6 +55,14 @@ class Encountercreate : Model(), Serializable {
 
     @Column(name = "synced")
     private var synced = false
+
+    @SerializedName("location")
+    @Expose
+    var location: String? = null;
+
+    @SerializedName("encounterProviders")
+    @Expose
+    var encounterProvider: List<EncounterProviderModel> = ArrayList();
 
     @SerializedName("obs")
     @Expose

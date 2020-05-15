@@ -402,4 +402,5 @@
 
     <string name="unidentified_patient">Unidentified Patient</string>
     <string name="dob_error_for_unidentified">Please give a rough estimate of patient age</string>
+    <string name="unidentified_patient_name" translatable="false">UNKNOWN</string>
 </resources>

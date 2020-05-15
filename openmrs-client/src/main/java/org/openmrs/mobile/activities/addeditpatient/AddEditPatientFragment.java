@@ -118,10 +118,10 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private LocalDate birthdate;
     private DateTime bdt;
 
-    private LinearLayout linearLayout_name;
-    private RelativeLayout relativeLayout_dob;
-    private LinearLayout linearLayout_contact_info;
-    private CheckBox unidentified_checkBox;
+    private LinearLayout linearLayoutName;
+    private RelativeLayout relativeLayoutDOB;
+    private LinearLayout linearLayoutContactInfo;
+    private CheckBox unidentifiedCheckBox;
     private Boolean isPatientUnidentified = false;
 
     private TextInputLayout firstNameTIL;
@@ -214,7 +214,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                     ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE)
                     .toString(dateTimeFormatter);
             String maximumDate = DateTime.now().toString(dateTimeFormatter);
-            if(unidentified_checkBox.isChecked()) {
+            if(unidentifiedCheckBox.isChecked()) {
                 dobError.setText(getString(R.string.dob_error_for_unidentified));
             } else {
                 dobError.setText(getString(R.string.dob_error, minimumDate, maximumDate));
@@ -241,11 +241,11 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         String emptyError = getString(R.string.emptyerror);
 
         // errors for the empty fields must be filtered
-        if (unidentified_checkBox.isChecked()) {
+        if (unidentifiedCheckBox.isChecked()) {
 
             PersonName name = new PersonName();
-            name.setFamilyName("UNKNOWN");
-            name.setGivenName("UNKNOWN");
+            name.setFamilyName(getString(R.string.unidentified_patient_name));
+            name.setGivenName(getString(R.string.unidentified_patient_name));
             List<PersonName> names = new ArrayList<>();
             names.add(name);
             patient.setNames(names);
@@ -497,16 +497,16 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         lastNameTIL = v.findViewById(R.id.textInputLayoutSurname);
         address1TIL = v.findViewById(R.id.textInputLayoutAddress);
 
-        linearLayout_name = v.findViewById(R.id.linearLayout_name);
-        relativeLayout_dob = v.findViewById(R.id.relativeLayout_dob);
-        linearLayout_contact_info = v.findViewById(R.id.linearLayout_contact_info);
-        unidentified_checkBox = v.findViewById(R.id.unidentified_checkbox);
+        linearLayoutName = v.findViewById(R.id.linearLayout_name);
+        relativeLayoutDOB = v.findViewById(R.id.relativeLayout_dob);
+        linearLayoutContactInfo = v.findViewById(R.id.linearLayout_contact_info);
+        unidentifiedCheckBox = v.findViewById(R.id.unidentified_checkbox);
     }
 
     private void fillFields(final Patient patient) {
         if (patient != null) {
             //no need for un-identification option once the patient is registered
-            unidentified_checkBox.setVisibility(View.GONE);
+            unidentifiedCheckBox.setVisibility(View.GONE);
 
             //Change to Update Patient Form
             String updatePatientStr = getResources().getString(R.string.action_update_patient_data);
@@ -726,16 +726,16 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             }
         });
 
-        unidentified_checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(unidentified_checkBox.isChecked()) {
-                linearLayout_name.setVisibility(View.GONE);
-                relativeLayout_dob.setVisibility(View.GONE);
-                linearLayout_contact_info.setVisibility(View.GONE);
+        unidentifiedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(unidentifiedCheckBox.isChecked()) {
+                linearLayoutName.setVisibility(View.GONE);
+                relativeLayoutDOB.setVisibility(View.GONE);
+                linearLayoutContactInfo.setVisibility(View.GONE);
                 isPatientUnidentified = true;
             } else {
-                linearLayout_name.setVisibility(View.VISIBLE);
-                relativeLayout_dob.setVisibility(View.VISIBLE);
-                linearLayout_contact_info.setVisibility(View.VISIBLE);
+                linearLayoutName.setVisibility(View.VISIBLE);
+                relativeLayoutDOB.setVisibility(View.VISIBLE);
+                linearLayoutContactInfo.setVisibility(View.VISIBLE);
                 isPatientUnidentified = false;
             }
         });

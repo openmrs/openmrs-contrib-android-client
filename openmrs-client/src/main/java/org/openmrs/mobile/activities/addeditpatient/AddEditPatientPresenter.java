@@ -52,6 +52,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     private List<String> mCountries;
     private boolean registeringPatient = false;
     private PlacesClient placesClient;
+    boolean isPatientUnidentified = false;
 
     public AddEditPatientPresenter(AddEditPatientContract.View mPatientInfoView,
                                    List<String> countries,
@@ -90,12 +91,17 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     }
 
     @Override
-    public void confirmRegister(Patient patient) {
+    public void confirmRegister(Patient patient, boolean isPatientUnidentified) {
+        this.isPatientUnidentified = isPatientUnidentified;
         if (!registeringPatient && validate(patient)) {
             mPatientInfoView.setProgressBarVisibility(true);
             mPatientInfoView.hideSoftKeys();
             registeringPatient = true;
-            findSimilarPatients(patient);
+            if(!isPatientUnidentified) {
+                findSimilarPatients(patient);
+            } else {
+                registerPatient();
+            }
         } else {
             mPatientInfoView.scrollToTop();
         }
@@ -131,61 +137,65 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         boolean cityError = false;
         boolean postalError = false;
 
-        mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, genderError, addressError, countryError, countryNull, stateError, cityError, postalError);
+        if(!isPatientUnidentified) {
 
-        // Validate names
-        PersonName currentPersonName = patient.getName();
+            mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, genderError, addressError, countryError, countryNull, stateError, cityError, postalError);
 
-        if (StringUtils.isBlank(currentPersonName.getGivenName())
-                || !ViewUtils.validateText(currentPersonName.getGivenName(), ViewUtils.ILLEGAL_CHARACTERS)) {
-            givenNameError = true;
-        }
+            // Validate names
+            PersonName currentPersonName = patient.getName();
 
-        // Middle name can be left empty
-        if (!ViewUtils.validateText(currentPersonName.getMiddleName(), ViewUtils.ILLEGAL_CHARACTERS)) {
-            givenNameError = true;
-        }
+            if (StringUtils.isBlank(currentPersonName.getGivenName())
+                    || !ViewUtils.validateText(currentPersonName.getGivenName(), ViewUtils.ILLEGAL_CHARACTERS)) {
+                givenNameError = true;
+            }
 
-        if (StringUtils.isBlank(currentPersonName.getFamilyName())
-                || !ViewUtils.validateText(currentPersonName.getFamilyName(), ViewUtils.ILLEGAL_CHARACTERS)) {
-            familyNameError = true;
-        }
+            // Middle name can be left empty
+            if (!ViewUtils.validateText(currentPersonName.getMiddleName(), ViewUtils.ILLEGAL_CHARACTERS)) {
+                givenNameError = true;
+            }
 
-        // Validate date of birth
-        if (StringUtils.isBlank(patient.getBirthdate())) {
-            dateOfBirthError = true;
-        }
+            if (StringUtils.isBlank(currentPersonName.getFamilyName())
+                    || !ViewUtils.validateText(currentPersonName.getFamilyName(), ViewUtils.ILLEGAL_CHARACTERS)) {
+                familyNameError = true;
+            }
 
-        // Validate address
-        String patientAddress1 = patient.getAddress().getAddress1();
-        String patientAddress2 = patient.getAddress().getAddress2();
+            // Validate address
+            String patientAddress1 = patient.getAddress().getAddress1();
+            String patientAddress2 = patient.getAddress().getAddress2();
 
-        if ((StringUtils.isBlank(patientAddress1)
-                && StringUtils.isBlank(patientAddress2)
-                || !ViewUtils.validateText(patientAddress1, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
-                || !ViewUtils.validateText(patientAddress2, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS))) {
-            addressError = true;
-        }
+            if ((StringUtils.isBlank(patientAddress1)
+                    && StringUtils.isBlank(patientAddress2)
+                    || !ViewUtils.validateText(patientAddress1, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
+                    || !ViewUtils.validateText(patientAddress2, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS))) {
+                addressError = true;
+            }
 
-        if (!StringUtils.isBlank(patient.getAddress().getCountry()) && !mCountries.contains(patient.getAddress().getCountry())) {
-            countryError = true;
+            if (!StringUtils.isBlank(patient.getAddress().getCountry()) && !mCountries.contains(patient.getAddress().getCountry())) {
+                countryError = true;
+            }
+
+            if (StringUtils.isBlank(patient.getAddress().getCountry())) {
+                countryNull = true;
+            }
+            if (StringUtils.isBlank(patient.getAddress().getStateProvince())) {
+                stateError = true;
+            }
+            if (StringUtils.isBlank(patient.getAddress().getCityVillage())) {
+                cityError = true;
+            }
+            if (StringUtils.isBlank(patient.getAddress().getPostalCode())) {
+                postalError = true;
+            }
         }
 
         // Validate gender
         if (StringUtils.isBlank(patient.getGender())) {
             genderError = true;
         }
-        if (StringUtils.isBlank(patient.getAddress().getCountry())) {
-            countryNull = true;
-        }
-        if (StringUtils.isBlank(patient.getAddress().getStateProvince())) {
-            stateError = true;
-        }
-        if (StringUtils.isBlank(patient.getAddress().getCityVillage())) {
-            cityError = true;
-        }
-        if (StringUtils.isBlank(patient.getAddress().getPostalCode())) {
-            postalError = true;
+
+        // Validate date of birth
+        if (StringUtils.isBlank(patient.getBirthdate())) {
+            dateOfBirthError = true;
         }
 
         boolean result = !givenNameError && !familyNameError && !dateOfBirthError && !addressError && !countryError && !genderError;

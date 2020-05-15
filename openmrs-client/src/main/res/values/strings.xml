@@ -399,4 +399,8 @@
 	<string name="dialog_take_photo">Take a photo</string>
 	<string name="dialog_choose_photo">Choose photo</string>
 	<string name="dialog_remove_photo">Remove photo</string>
+
+    <string name="unidentified_patient">Unidentified Patient</string>
+    <string name="dob_error_for_unidentified">Please give a rough estimate of patient age</string>
+    <string name="unidentified_patient_name" translatable="false">UNKNOWN</string>
 </resources>

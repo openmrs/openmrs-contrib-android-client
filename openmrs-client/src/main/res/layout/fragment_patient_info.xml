@@ -86,6 +86,24 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+
+                <CheckBox
+                    android:id="@+id/unidentified_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/unidentified_patient"
+                    android:padding="8dp"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_short">
 
                 <LinearLayout
@@ -105,292 +123,321 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="@string/reg_ques_name"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
                     <LinearLayout
+                        android:id="@+id/linearLayout_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginBottom="8dp"
-                        android:baselineAligned="false"
-                        android:weightSum="2">
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginBottom="8dp"
+                            android:text="@string/reg_ques_name"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginBottom="8dp"
+                            android:baselineAligned="false"
+                            android:weightSum="2">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayoutFirstName"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:errorEnabled="true"
+                                app:helperText="*Required">
+
+                                <EditText
+                                    android:id="@+id/firstname"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:focusable="true"
+                                    android:hint="@string/reg_firstname_hint"
+                                    android:imeOptions="actionNext"
+                                    android:inputType="textPersonName|textCapWords"
+                                    android:maxLines="1"
+                                    android:textSize="14sp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayoutMiddlename"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_weight="1"
+                                app:errorEnabled="true">
+
+                                <EditText
+                                    android:id="@+id/middlename"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:focusable="true"
+                                    android:hint="@string/reg_midname_hint"
+                                    android:imeOptions="actionNext"
+                                    android:inputType="textPersonName|textCapWords"
+                                    android:maxLines="1"
+                                    android:textSize="14sp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/fnameerror"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="1"
+                            android:padding="2dp"
+                            android:text="@string/emptyerror"
+                            android:textColor="@color/red"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/textInputLayoutFirstName"
+                            android:id="@+id/textInputLayoutSurname"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            app:errorEnabled="true"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginBottom="8dp"
                             app:helperText="*Required">
 
                             <EditText
-                                android:id="@+id/firstname"
-                                android:layout_width="fill_parent"
+                                android:id="@+id/surname"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:focusable="true"
-                                android:hint="@string/reg_firstname_hint"
+                                android:hint="@string/reg_surname_hint"
                                 android:imeOptions="actionNext"
                                 android:inputType="textPersonName|textCapWords"
                                 android:maxLines="1"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/textInputLayoutMiddlename"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/lnameerror"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginLeft="8dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginLeft="20dp"
                             android:layout_weight="1"
-                            app:errorEnabled="true">
-
-                            <EditText
-                                android:id="@+id/middlename"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:focusable="true"
-                                android:hint="@string/reg_midname_hint"
-                                android:imeOptions="actionNext"
-                                android:inputType="textPersonName|textCapWords"
-                                android:maxLines="1"
-                                android:textSize="14sp" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                            android:gravity="end"
+                            android:padding="2dp"
+                            android:text="@string/emptyerror"
+                            android:textColor="@color/red"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 
-
-                    <TextView
-                        android:id="@+id/fnameerror"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="1"
-                        android:padding="2dp"
-                        android:text="@string/emptyerror"
-                        android:textColor="@color/red"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutSurname"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <LinearLayout
+                        android:id="@+id/linearLayout_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginBottom="8dp"
-                        app:helperText="*Required">
+                        android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/surname"
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:focusable="true"
-                            android:hint="@string/reg_surname_hint"
-                            android:imeOptions="actionNext"
-                            android:inputType="textPersonName|textCapWords"
-                            android:maxLines="1"
-                            android:textSize="14sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                            android:layout_marginStart="12dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/reg_ques_gender"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
-                    <TextView
-                        android:id="@+id/lnameerror"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:padding="2dp"
-                        android:text="@string/emptyerror"
-                        android:textColor="@color/red"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
+                        <TextView
+                            android:id="@+id/gendererror"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginLeft="12dp"
+                            android:padding="2dp"
+                            android:text="@string/emptyerror"
+                            android:textColor="@color/red"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:text="@string/reg_ques_gender"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/gendererror"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:padding="2dp"
-                        android:text="@string/emptyerror"
-                        android:textColor="@color/red"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
-
-                    <RadioGroup
-                        android:id="@+id/gender"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp">
-
-                        <RadioButton
-                            android:id="@+id/male"
+                        <RadioGroup
+                            android:id="@+id/gender"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/male" />
-
-                        <RadioButton
-                            android:id="@+id/female"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/female" />
-
-                    </RadioGroup>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="12dp"
-                        android:text="@string/reg_ques_dob"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/doberror"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:padding="2dp"
-                        android:textColor="@color/red"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp">
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/textInputLayoutDOB"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentTop="true"
+                            android:layout_marginStart="12dp"
                             android:layout_marginLeft="12dp"
                             android:layout_marginRight="12dp">
 
-                            <EditText
-                                android:id="@+id/dob"
+                            <RadioButton
+                                android:id="@+id/male"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="@string/dob_hint"
-                                android:imeOptions="actionNext"
-                                android:inputType="datetime"
-                                android:maxLines="1"
-                                android:nextFocusDown="@+id/estyr"
-                                android:textSize="14sp" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                                android:text="@string/male" />
 
-                        <ImageButton
-                            android:id="@+id/btn_datepicker"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="24dp"
-                            android:layout_marginRight="24dp"
-                            android:background="@drawable/ic_date_range_24dp" />
-                    </RelativeLayout>
+                            <RadioButton
+                                android:id="@+id/female"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/female" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:text="@string/label_or"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        </RadioGroup>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginBottom="20dp"
-                        android:baselineAligned="false"
-                        android:weightSum="2">
+                        android:orientation="vertical">
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/textInputLayoutEstyr"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                            android:layout_width="0dp"
+                        <TextView
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                            android:layout_marginStart="12dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="12dp"
+                            android:text="@string/reg_ques_dob"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
-                            <EditText
-                                android:id="@+id/estyr"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:focusable="true"
-                                android:hint="@string/estyr"
-                                android:imeOptions="actionNext"
-                                android:inputType="number"
-                                android:maxLines="1"
-                                android:textSize="14sp" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/textInputLayoutEstmonth"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                            android:layout_width="0dp"
+                        <TextView
+                            android:id="@+id/doberror"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_weight="1">
+                            android:layout_marginStart="12dp"
+                            android:layout_marginLeft="12dp"
+                            android:padding="2dp"
+                            android:textColor="@color/red"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
-                            <EditText
-                                android:id="@+id/estmonth"
-                                android:layout_width="fill_parent"
+                        <RelativeLayout
+                            android:id="@+id/relativeLayout_dob"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayoutDOB"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:focusable="true"
-                                android:hint="@string/estmonth"
-                                android:imeOptions="actionNext"
-                                android:inputType="number"
-                                android:maxLines="1"
-                                android:textSize="14sp" />
-                        </com.google.android.material.textfield.TextInputLayout>
+                                android:layout_alignParentTop="true"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="12dp">
+
+                                <EditText
+                                    android:id="@+id/dob"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:hint="@string/dob_hint"
+                                    android:imeOptions="actionNext"
+                                    android:inputType="datetime"
+                                    android:maxLines="1"
+                                    android:nextFocusDown="@+id/estyr"
+                                    android:textSize="14sp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <ImageButton
+                                android:id="@+id/btn_datepicker"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="24dp"
+                                android:layout_marginRight="24dp"
+                                android:background="@drawable/ic_date_range_24dp" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:layout_marginLeft="12dp"
+                                android:layout_marginRight="12dp"
+                                android:text="@string/label_or"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:layout_below="@id/textInputLayoutDOB"/>
+
+                        </RelativeLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_marginBottom="20dp"
+                            android:baselineAligned="false"
+                            android:weightSum="2">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayoutEstyr"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <EditText
+                                    android:id="@+id/estyr"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:focusable="true"
+                                    android:hint="@string/estyr"
+                                    android:imeOptions="actionNext"
+                                    android:inputType="number"
+                                    android:maxLines="1"
+                                    android:textSize="14sp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayoutEstmonth"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_weight="1">
+
+                                <EditText
+                                    android:id="@+id/estmonth"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:focusable="true"
+                                    android:hint="@string/estmonth"
+                                    android:imeOptions="actionNext"
+                                    android:inputType="number"
+                                    android:maxLines="1"
+                                    android:textSize="14sp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
 
                     </LinearLayout>
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -401,6 +448,7 @@
                 android:layout_margin="@dimen/margin_short">
 
                 <LinearLayout
+                    android:id="@+id/linearLayout_contact_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">

@@ -14,16 +14,6 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileDescriptor;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -54,16 +44,20 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.libraries.places.api.model.AutocompletePrediction;
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
@@ -74,6 +68,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.hbb20.CountryCodePicker;
+
 import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -97,6 +92,17 @@ import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.ViewUtils;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
 import permissions.dispatcher.OnPermissionDenied;
@@ -111,6 +117,12 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private RelativeLayout relativeLayout;
     private LocalDate birthdate;
     private DateTime bdt;
+
+    private LinearLayout linearLayoutName;
+    private RelativeLayout relativeLayoutDOB;
+    private LinearLayout linearLayoutContactInfo;
+    private CheckBox unidentifiedCheckBox;
+    private Boolean isPatientUnidentified = false;
 
     private TextInputLayout firstNameTIL;
     private TextInputLayout middleNameTIL;
@@ -202,8 +214,11 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                     ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE)
                     .toString(dateTimeFormatter);
             String maximumDate = DateTime.now().toString(dateTimeFormatter);
-
-            dobError.setText(getString(R.string.dob_error, minimumDate, maximumDate));
+            if(unidentifiedCheckBox.isChecked()) {
+                dobError.setText(getString(R.string.dob_error_for_unidentified));
+            } else {
+                dobError.setText(getString(R.string.dob_error, minimumDate, maximumDate));
+            }
         } else {
             dobError.setVisibility(View.GONE);
         }
@@ -225,104 +240,109 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private Patient updatePatientWithData(Patient patient) {
         String emptyError = getString(R.string.emptyerror);
 
-        // Validate address
-        if (ViewUtils.isEmpty(edAddr1)
-                && ViewUtils.isEmpty(edAddr2)
-                && ViewUtils.isEmpty(edCity)
-                && ViewUtils.isEmpty(edPostal)
-                && ViewUtils.isCountryCodePickerEmpty(mCountryCodePicker)
-                && ViewUtils.isEmpty(edState)) {
+        // errors for the empty fields must be filtered
+        if (unidentifiedCheckBox.isChecked()) {
 
-            addrError.setText(R.string.atleastone);
-            address1TIL.setErrorEnabled(true);
-            address1TIL.setError(getString(R.string.atleastone));
-        } else if (!ViewUtils.validateText(ViewUtils.getInput(edAddr1), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
-                || !ViewUtils.validateText(ViewUtils.getInput(edAddr2), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)) {
+            PersonName name = new PersonName();
+            name.setFamilyName(getString(R.string.unidentified_patient_name));
+            name.setGivenName(getString(R.string.unidentified_patient_name));
+            List<PersonName> names = new ArrayList<>();
+            names.add(name);
+            patient.setNames(names);
 
-            addrError.setText(getString(R.string.addr_invalid_error));
-            address1TIL.setErrorEnabled(true);
-            address1TIL.setError(getString(R.string.addr_invalid_error));
+            List<PersonAddress> addresses = new ArrayList<>();
+            patient.setAddresses(addresses);
+
         } else {
-            address1TIL.setErrorEnabled(false);
+            // Validate address
+            if (ViewUtils.isEmpty(edAddr1)
+                    && ViewUtils.isEmpty(edAddr2)
+                    && ViewUtils.isEmpty(edCity)
+                    && ViewUtils.isEmpty(edPostal)
+                    && ViewUtils.isCountryCodePickerEmpty(mCountryCodePicker)
+                    && ViewUtils.isEmpty(edState)) {
+
+                addrError.setText(R.string.atleastone);
+                address1TIL.setErrorEnabled(true);
+                address1TIL.setError(getString(R.string.atleastone));
+            } else if (!ViewUtils.validateText(ViewUtils.getInput(edAddr1), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
+                    || !ViewUtils.validateText(ViewUtils.getInput(edAddr2), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)) {
+
+                addrError.setText(getString(R.string.addr_invalid_error));
+                address1TIL.setErrorEnabled(true);
+                address1TIL.setError(getString(R.string.addr_invalid_error));
+            } else {
+                address1TIL.setErrorEnabled(false);
+            }
+
+            // Add address
+            PersonAddress address = new PersonAddress();
+            address.setAddress1(ViewUtils.getInput(edAddr1));
+            address.setAddress2(ViewUtils.getInput(edAddr2));
+            address.setCityVillage(ViewUtils.getInput(edCity));
+            address.setPostalCode(ViewUtils.getInput(edPostal));
+            address.setCountry(mCountryCodePicker.getSelectedCountryName());
+            address.setStateProvince(ViewUtils.getInput(edState));
+            address.setPreferred(true);
+
+            List<PersonAddress> addresses = new ArrayList<>();
+            addresses.add(address);
+            patient.setAddresses(addresses);
+
+            // Validate names
+            String givenNameEmpty = getString(R.string.fname_empty_error);
+            // Invalid characters for given name only
+            String givenNameError = getString(R.string.fname_invalid_error);
+            // Invalid characters for the middle name
+            String middleNameError = getString(R.string.midname_invalid_error);
+            // Invalid family name
+            String familyNameError = getString(R.string.lname_invalid_error);
+
+            // First name validation
+            if (ViewUtils.isEmpty(edfName)) {
+                fNameError.setText(emptyError);
+                firstNameTIL.setErrorEnabled(true);
+                firstNameTIL.setError(emptyError);
+            } else if (!ViewUtils.validateText(ViewUtils.getInput(edfName), ViewUtils.ILLEGAL_CHARACTERS)) {
+                lNameError.setText(familyNameError);
+                firstNameTIL.setErrorEnabled(true);
+                firstNameTIL.setError(givenNameError);
+            } else {
+                firstNameTIL.setErrorEnabled(false);
+            }
+
+            // Middle name validation (can be empty)
+            if (!ViewUtils.validateText(ViewUtils.getInput(edmName), ViewUtils.ILLEGAL_CHARACTERS)) {
+                lNameError.setText(familyNameError);
+                middleNameTIL.setErrorEnabled(true);
+                middleNameTIL.setError(middleNameError);
+            } else {
+                middleNameTIL.setErrorEnabled(false);
+            }
+
+            // Family name validation
+            if (ViewUtils.isEmpty(edlName)) {
+                lNameError.setText(emptyError);
+                lastNameTIL.setErrorEnabled(true);
+                lastNameTIL.setError(emptyError);
+            } else if (!ViewUtils.validateText(ViewUtils.getInput(edlName), ViewUtils.ILLEGAL_CHARACTERS)) {
+                lNameError.setText(familyNameError);
+                lastNameTIL.setErrorEnabled(true);
+                lastNameTIL.setError(familyNameError);
+            } else {
+                lastNameTIL.setErrorEnabled(false);
+            }
+
+            // Add names
+            PersonName name = new PersonName();
+            name.setFamilyName(ViewUtils.getInput(edlName));
+            name.setGivenName(ViewUtils.getInput(edfName));
+            name.setMiddleName(ViewUtils.getInput(edmName));
+
+            List<PersonName> names = new ArrayList<>();
+            names.add(name);
+            patient.setNames(names);
         }
-
-        // Add address
-        PersonAddress address = new PersonAddress();
-        address.setAddress1(ViewUtils.getInput(edAddr1));
-        address.setAddress2(ViewUtils.getInput(edAddr2));
-        address.setCityVillage(ViewUtils.getInput(edCity));
-        address.setPostalCode(ViewUtils.getInput(edPostal));
-        address.setCountry(mCountryCodePicker.getSelectedCountryName());
-        address.setStateProvince(ViewUtils.getInput(edState));
-        address.setPreferred(true);
-
-        List<PersonAddress> addresses = new ArrayList<>();
-        addresses.add(address);
-        patient.setAddresses(addresses);
-
-        // Validate names
-        String givenNameEmpty = getString(R.string.fname_empty_error);
-        // Invalid characters for given name only
-        String givenNameError = getString(R.string.fname_invalid_error);
-        // Invalid characters for the middle name
-        String middleNameError = getString(R.string.midname_invalid_error);
-        // Invalid family name
-        String familyNameError = getString(R.string.lname_invalid_error);
-
-        // First name validation
-        if (ViewUtils.isEmpty(edfName)) {
-            fNameError.setText(emptyError);
-            firstNameTIL.setErrorEnabled(true);
-            firstNameTIL.setError(emptyError);
-        } else if (!ViewUtils.validateText(ViewUtils.getInput(edfName), ViewUtils.ILLEGAL_CHARACTERS)) {
-            lNameError.setText(familyNameError);
-            firstNameTIL.setErrorEnabled(true);
-            firstNameTIL.setError(givenNameError);
-        } else {
-            firstNameTIL.setErrorEnabled(false);
-        }
-
-        // Middle name validation (can be empty)
-        if (!ViewUtils.validateText(ViewUtils.getInput(edmName), ViewUtils.ILLEGAL_CHARACTERS)) {
-            lNameError.setText(familyNameError);
-            middleNameTIL.setErrorEnabled(true);
-            middleNameTIL.setError(middleNameError);
-        } else {
-            middleNameTIL.setErrorEnabled(false);
-        }
-
-        // Family name validation
-        if (ViewUtils.isEmpty(edlName)) {
-            lNameError.setText(emptyError);
-            lastNameTIL.setErrorEnabled(true);
-            lastNameTIL.setError(emptyError);
-        } else if (!ViewUtils.validateText(ViewUtils.getInput(edlName), ViewUtils.ILLEGAL_CHARACTERS)) {
-            lNameError.setText(familyNameError);
-            lastNameTIL.setErrorEnabled(true);
-            lastNameTIL.setError(familyNameError);
-        } else {
-            lastNameTIL.setErrorEnabled(false);
-        }
-
-        // Add names
-        PersonName name = new PersonName();
-        name.setFamilyName(ViewUtils.getInput(edlName));
-        name.setGivenName(ViewUtils.getInput(edfName));
-        name.setMiddleName(ViewUtils.getInput(edmName));
-
-        List<PersonName> names = new ArrayList<>();
-        names.add(name);
-        patient.setNames(names);
-
-        // Add gender
-        String[] genderChoices = {"M", "F"};
-        int index = gen.indexOfChild(getActivity().findViewById(gen.getCheckedRadioButtonId()));
-        if (index != -1) {
-            patient.setGender(genderChoices[index]);
-        } else {
-            patient.setGender(null);
-        }
-
         // Add birthdate
         String birthdate = null;
         if (ViewUtils.isEmpty(edDob)) {
@@ -355,6 +375,16 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         }
         patient.setBirthdate(birthdate);
 
+        // Validating gender
+        String[] genderChoices = {"M", "F"};
+        int index = gen.indexOfChild(getActivity().findViewById(gen.getCheckedRadioButtonId()));
+        if (index != -1) {
+            patient.setGender(genderChoices[index]);
+        } else {
+            patient.setGender(null);
+        }
+
+        // Add patient photo
         if (patientPhoto != null)
             patient.setPhoto(patientPhoto);
 
@@ -466,10 +496,18 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         middleNameTIL = v.findViewById(R.id.textInputLayoutMiddlename);
         lastNameTIL = v.findViewById(R.id.textInputLayoutSurname);
         address1TIL = v.findViewById(R.id.textInputLayoutAddress);
+
+        linearLayoutName = v.findViewById(R.id.linearLayout_name);
+        relativeLayoutDOB = v.findViewById(R.id.relativeLayout_dob);
+        linearLayoutContactInfo = v.findViewById(R.id.linearLayout_contact_info);
+        unidentifiedCheckBox = v.findViewById(R.id.unidentified_checkbox);
     }
 
     private void fillFields(final Patient patient) {
         if (patient != null) {
+            //no need for un-identification option once the patient is registered
+            unidentifiedCheckBox.setVisibility(View.GONE);
+
             //Change to Update Patient Form
             String updatePatientStr = getResources().getString(R.string.action_update_patient_data);
             this.getActivity().setTitle(updatePatientStr);
@@ -687,6 +725,20 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
             }
         });
+
+        unidentifiedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(unidentifiedCheckBox.isChecked()) {
+                linearLayoutName.setVisibility(View.GONE);
+                relativeLayoutDOB.setVisibility(View.GONE);
+                linearLayoutContactInfo.setVisibility(View.GONE);
+                isPatientUnidentified = true;
+            } else {
+                linearLayoutName.setVisibility(View.VISIBLE);
+                relativeLayoutDOB.setVisibility(View.VISIBLE);
+                linearLayoutContactInfo.setVisibility(View.VISIBLE);
+                isPatientUnidentified = false;
+            }
+        });
     }
 
     @Override
@@ -850,7 +902,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         if (isUpdatePatient) {
             mPresenter.confirmUpdate(updatePatient(updatedPatient));
         } else {
-            mPresenter.confirmRegister(createPatient());
+            mPresenter.confirmRegister(createPatient(), isPatientUnidentified);
         }
     }
 

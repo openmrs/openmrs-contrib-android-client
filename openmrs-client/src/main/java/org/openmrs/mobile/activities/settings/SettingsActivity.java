@@ -18,14 +18,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.appcompat.app.ActionBar;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 
-import androidx.appcompat.app.ActionBar;
-
 public class SettingsActivity extends ACBaseActivity {
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,18 +36,17 @@ public class SettingsActivity extends ACBaseActivity {
 
         // Create fragment
         SettingsFragment settingsFragment =
-                (SettingsFragment) getSupportFragmentManager().findFragmentById(R.id.settingsContentFrame);
+            (SettingsFragment) getSupportFragmentManager().findFragmentById(R.id.settingsContentFrame);
         if (settingsFragment == null) {
             settingsFragment = SettingsFragment.newInstance();
         }
         if (!settingsFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    settingsFragment, R.id.settingsContentFrame);
+                settingsFragment, R.id.settingsContentFrame);
         }
 
         // Create the presenter
         new SettingsPresenter(settingsFragment, mOpenMRSLogger);
-
     }
 
     @Override
@@ -65,6 +62,7 @@ public class SettingsActivity extends ACBaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                setResult(RESULT_OK, null);
                 this.finish();
                 return true;
             default:
@@ -72,5 +70,9 @@ public class SettingsActivity extends ACBaseActivity {
         }
     }
 
-
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK, null);
+        super.onBackPressed();
+    }
 }

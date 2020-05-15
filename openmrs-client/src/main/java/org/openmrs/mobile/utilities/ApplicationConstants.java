@@ -118,6 +118,7 @@ public abstract class ApplicationConstants {
     public abstract static class RequestCodes{
         public static final int ADD_PROVIDER_REQ_CODE = 100;
         public static final int EDIT_PROVIDER_REQ_CODE = 101;
+        public static final int START_SETTINGS_REQ_CODE = 102;
     }
 
     public abstract static class OpenMRSThemes{

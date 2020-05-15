@@ -30,6 +30,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -164,6 +165,14 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == ApplicationConstants.RequestCodes.START_SETTINGS_REQ_CODE) {
+            recreate();
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -171,7 +180,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.actionSettings:
-                startActivity(new Intent(this, SettingsActivity.class));
+                startActivityForResult(new Intent(this, SettingsActivity.class), ApplicationConstants.RequestCodes.START_SETTINGS_REQ_CODE);
                 return true;
             case R.id.actionContact:
                 startActivity(new Intent(this, ContactUsActivity.class));

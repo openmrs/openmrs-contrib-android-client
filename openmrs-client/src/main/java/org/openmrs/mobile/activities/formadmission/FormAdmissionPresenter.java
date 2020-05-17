@@ -126,15 +126,23 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         List<Obscreate> observations=new ArrayList<>();
         encountercreate.setObservations(observations);
 
+        List<EncounterProviderModel> encounterProviderModel = new ArrayList<>();
+        encounterProviderModel.add(new EncounterProviderModel(admittedToPerson, "240b26f9-dd88-4172-823d-4a8bfeb7841f"));
+        encountercreate.setEncounterProvider(encounterProviderModel);
+
         restApi.createEncounter(encountercreate).enqueue(new Callback<Encounter>() {
             @Override
             public void onResponse(Call<Encounter> call, Response<Encounter> response) {
-                String s = response.body().toString();
+                //String s = response.body().toString();
+                if(response.isSuccessful())
+                    view.showToast("succcess");
+                else
+                    view.showToast(response.errorBody().toString());
             }
 
             @Override
             public void onFailure(Call<Encounter> call, Throwable t) {
-                String error = t.getMessage();
+                view.showToast(t.getMessage());
             }
         });
 

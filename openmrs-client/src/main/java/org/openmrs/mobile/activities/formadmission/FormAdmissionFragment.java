@@ -77,7 +77,6 @@ public class FormAdmissionFragment extends ACBaseFragment<FormAdmissionContract.
             ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.ERROR, "Please Select Required Field");
         else
             mPresenter.createEncounter(admittedByPerson, admittedToPerson);
-
     }
 
     @Override
@@ -93,6 +92,12 @@ public class FormAdmissionFragment extends ACBaseFragment<FormAdmissionContract.
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 admittedByPerson = formAdmissionBinding.admittedBySpinner.getSelectedItem().toString();
+
+                for(int i = 0;i<providerList.size();i++) {
+                    if(admittedByPerson.equals(providerList.get(i).getDisplay())){
+                        admittedByPerson = providerList.get(i).getUuid();
+                    }
+                }
             }
 
             @Override

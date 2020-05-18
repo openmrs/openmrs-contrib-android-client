@@ -26,7 +26,7 @@ import org.openmrs.mobile.databases.entities.LocationEntity;
 public interface LocationRoomDAO {
 
     @Insert
-    Single<Long> saveLocation(LocationEntity entity);
+    long saveLocation(LocationEntity entity);
 
     @Query("DELETE FROM locations")
     void deleteAllLocations();

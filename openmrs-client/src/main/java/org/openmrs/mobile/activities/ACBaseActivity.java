@@ -43,6 +43,7 @@ import com.google.android.material.snackbar.Snackbar;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.community.contact.ContactUsActivity;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
+import org.openmrs.mobile.activities.introduction.SplashActivity;
 import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
 import org.openmrs.mobile.application.OpenMRS;
@@ -121,7 +122,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         setupLanguage();
         invalidateOptionsMenu();
         if (!(this instanceof LoginActivity) && !mAuthorizationManager.isUserLoggedIn()
-            && !(this instanceof ContactUsActivity)) {
+            && !(this instanceof ContactUsActivity) && !(this instanceof SplashActivity)) {
             mAuthorizationManager.moveToLoginActivity();
         }
         registerReceiver(mPasswordChangedReceiver, mIntentFilter);

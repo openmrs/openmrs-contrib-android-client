@@ -15,8 +15,6 @@
 
 package org.openmrs.mobile.activities.settings;
 
-import java.util.Objects;
-
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -36,9 +34,11 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.community.contact.ContactUsActivity;
@@ -47,14 +47,13 @@ import org.openmrs.mobile.services.ConceptDownloadService;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 
+import java.util.Objects;
+
 public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter> implements SettingsContract.View {
-
     private BroadcastReceiver bReceiver;
-
     private TextView conceptsInDbTextView;
     private ImageButton downloadConceptsButton;
     private Spinner spinner;
-
     private View root;
 
     public static SettingsFragment newInstance() {
@@ -87,7 +86,8 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
     public void onResume() {
         super.onResume();
         mPresenter.updateConceptsInDBTextView();
-        LocalBroadcastManager.getInstance(this.getActivity()).registerReceiver(bReceiver, new IntentFilter(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID));
+        LocalBroadcastManager.getInstance(this.getActivity())
+            .registerReceiver(bReceiver, new IntentFilter(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID));
     }
 
     @Override
@@ -95,8 +95,8 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
         if (text.equals("0")) {
             downloadConceptsButton.setEnabled(true);
             ToastUtil.showLongToast(getActivity(),
-                    ToastUtil.ToastType.WARNING,
-                    R.string.settings_no_concepts_toast);
+                ToastUtil.ToastType.WARNING,
+                R.string.settings_no_concepts_toast);
         } else {
             downloadConceptsButton.setEnabled(false);
         }
@@ -179,17 +179,16 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
 
             // Ignore Playstore backstack, on back press will take us back to our app
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-                    Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
-                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
             try {
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
                 startActivity(new Intent(Intent.ACTION_VIEW,
-                        Uri.parse("http://play.google.com/store/apps/details?id=" + ApplicationConstants.PACKAGE_NAME)));
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + ApplicationConstants.PACKAGE_NAME)));
             }
         });
-
     }
 
     @Override
@@ -228,5 +227,4 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
             }
         });
     }
-
 }

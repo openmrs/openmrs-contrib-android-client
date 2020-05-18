@@ -10,7 +10,7 @@
 
 package org.openmrs.mobile.models
 
-class VisitType(override var display: String) : Resource() {
+class VisitType(override var display: String?) : Resource() {
 
     constructor(display: String, uuid: String) : this(display) {
         this.uuid = uuid

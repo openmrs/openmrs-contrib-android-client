@@ -30,7 +30,7 @@ open class Resource : Serializable {
     @ColumnInfo(name = "display")
     @SerializedName("display")
     @Expose
-    open var display: String = ""
+    open var display: String? = ""
 
 
     @Ignore

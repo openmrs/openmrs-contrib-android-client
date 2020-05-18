@@ -94,6 +94,7 @@ captures/
 .idea/uiDesigner.xml
 .idea/markdown-navigator-enh.xml
 .idea/markdown-navigator.xml
+/openmrs-client/.idea
 
 # Code style from https://github.com/openmrs/openmrs-core/blob/master/tools/src/main/resources/eclipse/OpenMRSFormatter.xml
 # stored in .idea/OpenMRSFormatter to be compatible with eclipse code formatter

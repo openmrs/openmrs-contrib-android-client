@@ -18,17 +18,16 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
+
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.ObservationEntity;
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-import java.util.List;
+
+import java.util.Objects;
 
 @RunWith(AndroidJUnit4.class)
 public class ObservationRoomDAOTest {
@@ -36,8 +35,8 @@ public class ObservationRoomDAOTest {
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     private AppDatabase mDatabase;
-    private ObservationEntity expectedObservationEntity = createObservationEntity(10L, "uuid", "diagnosisCertainty", "diagnosisList", "diagnosisNote", "diagnosisOrder", "displayValue");
-    private ObservationEntity updatedObservationEntity = createObservationEntity(20L, "updatedUuid", "updatedDiagnosisCertainty", "updatedDiagnosisList", "updatedDiagnosisNote", "updatedDiagnosisOrder", "updatedDisplayValue");
+    private ObservationEntity expectedObservationEntity = createObservationEntity(10L, 100L, "uuid", "diagnosisCertainty", "diagnosisList", "diagnosisNote", "diagnosisOrder", "displayValue");
+    private ObservationEntity updatedObservationEntity = createObservationEntity(10L, 100L, "updatedUuid", "updatedDiagnosisCertainty", "updatedDiagnosisList", "updatedDiagnosisNote", "updatedDiagnosisOrder", "updatedDisplayValue");
 
     @Before
     public void initDb() {
@@ -52,126 +51,56 @@ public class ObservationRoomDAOTest {
     @Test
     public void saveObservation_ShouldSaveCorrectObservation() {
         mDatabase.observationRoomDAO().saveObservation(expectedObservationEntity);
-        mDatabase.observationRoomDAO().getObservationByUUID("uuid").subscribe(new Subscriber<ObservationEntity>() {
-            @Override
-            public void onSubscribe(Subscription s) {
-
-            }
-
-            @Override
-            public void onNext(ObservationEntity observationEntity) {
-                Assert.assertEquals(observationEntity.getEncounterKeyID(), 10);
-                Assert.assertEquals(observationEntity.getConceptuuid(), "uuid");
-                Assert.assertEquals(observationEntity.getDiagnosisCertainty(), "diagnosisCertainty");
-                Assert.assertEquals(observationEntity.getDiagnosisList(), "diagnosisList");
-                Assert.assertEquals(observationEntity.getDiagnosisNote(), "diagnosisNote");
-                Assert.assertEquals(observationEntity.getDiagnosisOrder(), "diagnosisOrder");
-                Assert.assertEquals(observationEntity.getDisplayValue(), "displayValue");
-            }
-
-            @Override
-            public void onError(Throwable t) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
+        mDatabase.observationRoomDAO().getObservationByUUID("uuid")
+                .test()
+                .assertValue(actualObservationEntity -> Objects.equals(actualObservationEntity.getId(), 10L)
+                        && Objects.equals(actualObservationEntity.getEncounterKeyID(), 100L)
+                        && Objects.equals(actualObservationEntity.getDiagnosisCertainty(), "diagnosisCertainty")
+                        && Objects.equals(actualObservationEntity.getDiagnosisList(), "diagnosisList")
+                        && Objects.equals(actualObservationEntity.getDiagnosisNote(), "diagnosisNote")
+                        && Objects.equals(actualObservationEntity.getDiagnosisOrder(), "diagnosisOrder")
+                        && Objects.equals(actualObservationEntity.getDisplayValue(), "displayValue"));
     }
 
     @Test
     public void updateObservation_ShouldUpdateObservation() {
         mDatabase.observationRoomDAO().saveObservation(expectedObservationEntity);
         mDatabase.observationRoomDAO().updateObservation(updatedObservationEntity);
-        mDatabase.observationRoomDAO().getObservationByUUID("updatedUuid").subscribe(new Subscriber<ObservationEntity>() {
-            @Override
-            public void onSubscribe(Subscription s) {
-
-            }
-
-            @Override
-            public void onNext(ObservationEntity observationEntity) {
-                Assert.assertEquals(observationEntity.getEncounterKeyID(), 20);
-                Assert.assertEquals(observationEntity.getConceptuuid(), "updatedUuid");
-                Assert.assertEquals(observationEntity.getDiagnosisCertainty(), "updatedDiagnosisCertainty");
-                Assert.assertEquals(observationEntity.getDiagnosisList(), "updatedDiagnosisList");
-                Assert.assertEquals(observationEntity.getDiagnosisNote(), "updatedDiagnosisNote");
-                Assert.assertEquals(observationEntity.getDiagnosisOrder(), "updatedDiagnosisOrder");
-                Assert.assertEquals(observationEntity.getDisplayValue(), "updatedDisplayValue");
-            }
-
-            @Override
-            public void onError(Throwable t) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
+        mDatabase.observationRoomDAO().getObservationByUUID("uuid")
+                .test()
+                .assertValue(actualObservationEntity -> Objects.equals(actualObservationEntity.getId(), 10L)
+                        && Objects.equals(actualObservationEntity.getEncounterKeyID(), 100L)
+                        && Objects.equals(actualObservationEntity.getDiagnosisCertainty(), "updatedDiagnosisCertainty")
+                        && Objects.equals(actualObservationEntity.getDiagnosisList(), "updatedDiagnosisList")
+                        && Objects.equals(actualObservationEntity.getDiagnosisNote(), "updatedDiagnosisNote")
+                        && Objects.equals(actualObservationEntity.getDiagnosisOrder(), "updatedDiagnosisOrder")
+                        && Objects.equals(actualObservationEntity.getDisplayValue(), "updatedDisplayValue"));
     }
 
     @Test
     public void deleteObservation_ShouldDeleteObservation() {
         mDatabase.observationRoomDAO().saveObservation(expectedObservationEntity);
         mDatabase.observationRoomDAO().deleteObservation(expectedObservationEntity);
-        mDatabase.observationRoomDAO().getObservationByUUID("uuid").subscribe(new Subscriber<ObservationEntity>() {
-            @Override
-            public void onSubscribe(Subscription s) {
-
-            }
-
-            @Override
-            public void onNext(ObservationEntity observationEntity) {
-                Assert.assertNull(observationEntity);
-            }
-
-            @Override
-            public void onError(Throwable t) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
+        mDatabase.observationRoomDAO().getAllObservations()
+                .test()
+                .assertValue(actualObservationEntities -> Objects.equals(actualObservationEntities.size(), 0));
     }
 
     @Test
     public void getObservationByEncounterId_ShouldGetRightObservation() {
         mDatabase.observationRoomDAO().saveObservation(expectedObservationEntity);
-        mDatabase.observationRoomDAO().findObservationByEncounterID(10).subscribe(new Subscriber<List<ObservationEntity>>() {
-            @Override
-            public void onSubscribe(Subscription s) {
-
-            }
-
-            @Override
-            public void onNext(List<ObservationEntity> observationEntities) {
-                ObservationEntity observationEntity = observationEntities.get(0);
-                Assert.assertEquals(observationEntity.getEncounterKeyID(), 10);
-                Assert.assertEquals(observationEntity.getConceptuuid(), "uuid");
-                Assert.assertEquals(observationEntity.getDiagnosisCertainty(), "diagnosisCertainty");
-                Assert.assertEquals(observationEntity.getDiagnosisList(), "diagnosisList");
-                Assert.assertEquals(observationEntity.getDiagnosisNote(), "diagnosisNote");
-                Assert.assertEquals(observationEntity.getDiagnosisOrder(), "diagnosisOrder");
-                Assert.assertEquals(observationEntity.getDisplayValue(), "displayValue");
-            }
-
-            @Override
-            public void onError(Throwable t) {
-
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
+        mDatabase.observationRoomDAO().findObservationByEncounterID(100L)
+                .test()
+                .assertValue(observationEntities -> {
+                    ObservationEntity actualObservationEntity = observationEntities.get(0);
+                    return Objects.equals(actualObservationEntity.getId(), 10L)
+                            && Objects.equals(actualObservationEntity.getEncounterKeyID(), 100L)
+                            && Objects.equals(actualObservationEntity.getDiagnosisCertainty(), "diagnosisCertainty")
+                            && Objects.equals(actualObservationEntity.getDiagnosisList(), "diagnosisList")
+                            && Objects.equals(actualObservationEntity.getDiagnosisNote(), "diagnosisNote")
+                            && Objects.equals(actualObservationEntity.getDiagnosisOrder(), "diagnosisOrder")
+                            && Objects.equals(actualObservationEntity.getDisplayValue(), "displayValue");
+                });
     }
 
     @After
@@ -179,10 +108,11 @@ public class ObservationRoomDAOTest {
         mDatabase.close();
     }
 
-    private ObservationEntity createObservationEntity(long id, String uuid, String diagnosisCertainty, String diagnosisList, String diagnosisNote, String diagnosisOrder, String displayValue) {
+    private ObservationEntity createObservationEntity(long id, long encounterID, String conceptUUID, String diagnosisCertainty, String diagnosisList, String diagnosisNote, String diagnosisOrder, String displayValue) {
         ObservationEntity entity = new ObservationEntity();
-        entity.setEncounterKeyID(id);
-        entity.setConceptuuid(uuid);
+        entity.setId(id);
+        entity.setEncounterKeyID(encounterID);
+        entity.setConceptuuid(conceptUUID);
         entity.setUuid("uuid");
         entity.setDiagnosisCertainty(diagnosisCertainty);
         entity.setDiagnosisList(diagnosisList);

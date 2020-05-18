@@ -14,89 +14,117 @@
 
 package org.openmrs.mobile.activities.dialog;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.openmrs.mobile.R;
 
-import androidx.annotation.IdRes;
-import androidx.annotation.LayoutRes;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CameraOrGalleryPickerDialog extends DialogFragment {
+    private onInputSelected mOnInputSelected;
+    private List<CustomDialogModel> list = new ArrayList<>();
+    private Boolean showRemoveButton;
 
-    private DialogInterface.OnClickListener listener;
-
-
-    public static CameraOrGalleryPickerDialog getInstance(DialogInterface.OnClickListener listener) {
-        CameraOrGalleryPickerDialog dialog = new CameraOrGalleryPickerDialog();
-        dialog.listener = listener;
-        return dialog;
+    public CameraOrGalleryPickerDialog(Boolean showRemoveButton) {
+        this.showRemoveButton = showRemoveButton;
     }
 
-    @NonNull
+    @Nullable
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.dialog_my_custom, container, false);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_dialog);
+        list.add(new CustomDialogModel(getString(R.string.dialog_take_photo), R.drawable.ic_photo_camera));
+        list.add(new CustomDialogModel(getString(R.string.dialog_choose_photo), R.drawable.ic_photo_library));
+        if (showRemoveButton) {
+            list.add(new CustomDialogModel(getString(R.string.dialog_remove_photo), R.drawable.ic_photo_delete));
+        }
+        CustomDialogAdapter adapter = new CustomDialogAdapter(getActivity(), list);
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(false);
+        recyclerView.setAdapter(adapter);
 
-        String[] textResources = {"Take a photo", "Choose another", "Remove photo"};
-        int[] imageResources = {R.drawable.ic_photo_camera, R.drawable.ic_photo_library, R.drawable.ic_photo_delete};
-
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setAdapter(new GalleryOrCameraPickerListAdapter(getActivity(),
-                R.layout.list_gallery_or_camera_item, R.id.textView, R.id.imageView,
-                textResources, imageResources), listener);
-
-        return builder.create();
+        return view;
     }
 
-    private class GalleryOrCameraPickerListAdapter extends ArrayAdapter<String> {
+    private void performActivity(int position) {
+        getDialog().dismiss();
+        mOnInputSelected.performFunction(position);
+    }
 
-        @IdRes
-        private int textViewResourceId;
-
-        @IdRes private int imageViewResourceId;
-
-        private String[] textResources;
-        private int[] imageResources;
-
-
-        public GalleryOrCameraPickerListAdapter(@NonNull Context context, @LayoutRes int resource,
-                                                @IdRes int textViewResourceId, @IdRes int imageViewResourceId,
-                                                String[] textResources, int[] imageResources) {
-            super(context, resource, textViewResourceId, textResources);
-            this.textResources = textResources;
-            this.imageResources = imageResources;
-            this.textViewResourceId = textViewResourceId;
-            this.imageViewResourceId = imageViewResourceId;
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try {
+            mOnInputSelected = (onInputSelected) getTargetFragment();
+        } catch (ClassCastException e) {
+            Log.e("error", "onAttach: ClassCastException : " + e.getMessage());
         }
+    }
 
-        @Override
-        public int getCount() {
-            return textResources.length;
+    public interface onInputSelected {
+        void performFunction(int position);
+    }
+
+    public class CustomDialogAdapter extends RecyclerView.Adapter<CustomDialogAdapter.ViewHolder> {
+
+        Context context;
+        List<CustomDialogModel> modelList;
+
+        public CustomDialogAdapter(Context context, List<CustomDialogModel> list) {
+            this.context = context;
+            this.modelList = list;
         }
 
         @NonNull
         @Override
-        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        public CustomDialogAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(context).inflate(R.layout.list_gallery_or_camera_item, parent, false);
+            return new ViewHolder(view);
+        }
 
-            View v =  super.getView(position, convertView, parent);
+        @Override
+        public void onBindViewHolder(@NonNull CustomDialogAdapter.ViewHolder holder, int position) {
+            CustomDialogModel customDialogModel = modelList.get(position);
+            holder.textView.setText(customDialogModel.getName());
+            holder.imageView.setImageResource(customDialogModel.getId());
+            holder.linearLayout.setOnClickListener(v -> CameraOrGalleryPickerDialog.this.performActivity(position));
+        }
 
-            ((ImageView) v.findViewById(imageViewResourceId)).setImageResource(imageResources[position]);
-            ((TextView) v.findViewById(textViewResourceId)).setText(textResources[position]);
+        @Override
+        public int getItemCount() {
+            return modelList.size();
+        }
 
-            return v;
+        public class ViewHolder extends RecyclerView.ViewHolder {
+
+            ImageView imageView;
+            TextView textView;
+            LinearLayout linearLayout;
+
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+                imageView = itemView.findViewById(R.id.imageView);
+                textView = itemView.findViewById(R.id.textView);
+                linearLayout = itemView.findViewById(R.id.linearLayoutDialog);
+            }
         }
     }
+
 }

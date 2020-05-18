@@ -24,7 +24,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import org.openmrs.mobile.R;
@@ -121,7 +121,7 @@ public class AddEditPatientActivity extends ACBaseActivity {
     private void showInfoLostDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 this);
-        alertDialogBuilder.setTitle(R.string.dialog_title_are_you_sure);
+        alertDialogBuilder.setTitle(R.string.dialog_title_reset_patient);
         // set dialog message
         alertDialogBuilder
                 .setMessage(R.string.dialog_message_data_lost)

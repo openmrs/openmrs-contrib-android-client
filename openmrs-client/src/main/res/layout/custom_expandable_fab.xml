@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:paddingBottom="@dimen/margin_long">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/activity_patient_dashboard_action_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="@dimen/margin_long"
+        android:hapticFeedbackEnabled="true"
+        android:src="@drawable/ic_edit_white_24dp"
+        app:elevation="0dp"
+        app:rippleColor="@color/grey" />
 
     <LinearLayout
         android:id="@+id/custom_fab_delete_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/custom_fab_delete_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="@string/fab_label_delete" />
+        android:visibility="gone"
+        app:layout_anchor="@id/activity_patient_dashboard_action_fab"
+        app:layout_anchorGravity="center">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/activity_patient_dashboard_delete_fab"
@@ -39,18 +42,10 @@
         android:id="@+id/custom_fab_update_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/custom_fab_update_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="@string/fab_label_update" />
+        android:visibility="gone"
+        app:layout_anchor="@id/activity_patient_dashboard_action_fab"
+        app:layout_anchorGravity="center">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/activity_patient_dashboard_update_fab"
@@ -63,19 +58,4 @@
             app:fabSize="mini"
             app:rippleColor="@color/grey" />
     </LinearLayout>
-
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/activity_patient_dashboard_action_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/margin_long"
-        android:hapticFeedbackEnabled="true"
-        android:src="@drawable/ic_edit_white_24dp"
-        app:elevation="0dp"
-        app:rippleColor="@color/grey" />
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

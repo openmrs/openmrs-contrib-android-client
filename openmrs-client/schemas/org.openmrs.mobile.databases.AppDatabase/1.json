@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "2ca31877683087a2cef9a670e3bed3be",
+    "identityHash": "41a50b7fab10cb07ddedc8846a9b55f5",
     "entities": [
       {
         "tableName": "concepts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `name` TEXT, `uuid` TEXT, `display` TEXT NOT NULL, `_id` INTEGER, `datatype_uuid` TEXT, `datatype_display` TEXT, `datatype__id` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `name` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER, `datatype_uuid` TEXT, `datatype_display` TEXT, `datatype__id` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -30,7 +30,7 @@
             "fieldPath": "display",
             "columnName": "display",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "id",
@@ -68,7 +68,7 @@
       },
       {
         "tableName": "encounters",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`visit_id` TEXT, `encounterDatetime` TEXT NOT NULL, `type` TEXT, `patient_uuid` TEXT, `form_uuid` TEXT, `uuid` TEXT, `display` TEXT NOT NULL, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`visit_id` TEXT, `encounterDatetime` TEXT NOT NULL, `type` TEXT, `patient_uuid` TEXT, `form_uuid` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
             "fieldPath": "visitKeyId",
@@ -110,7 +110,7 @@
             "fieldPath": "display",
             "columnName": "display",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "id",
@@ -130,7 +130,7 @@
       },
       {
         "tableName": "locations",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `description` TEXT NOT NULL, `address1` TEXT, `address2` TEXT, `city` TEXT, `state` TEXT, `country` TEXT, `postalCode` TEXT, `parentLocationUuid` TEXT, `uuid` TEXT, `display` TEXT NOT NULL, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `description` TEXT NOT NULL, `address1` TEXT, `address2` TEXT, `city` TEXT, `state` TEXT, `country` TEXT, `postalCode` TEXT, `parentLocationUuid` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
             "fieldPath": "name",
@@ -196,7 +196,7 @@
             "fieldPath": "display",
             "columnName": "display",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "id",
@@ -216,7 +216,7 @@
       },
       {
         "tableName": "observations",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`encounter_id` INTEGER NOT NULL, `displayValue` TEXT, `diagnosisOrder` TEXT, `diagnosisList` TEXT, `diagnosisCertainty` TEXT, `diagnosisNote` TEXT, `conceptUuid` TEXT, `uuid` TEXT, `display` TEXT NOT NULL, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`encounter_id` INTEGER NOT NULL, `displayValue` TEXT, `diagnosisOrder` TEXT, `diagnosisList` TEXT, `diagnosisCertainty` TEXT, `diagnosisNote` TEXT, `conceptUuid` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
             "fieldPath": "encounterKeyID",
@@ -270,7 +270,7 @@
             "fieldPath": "display",
             "columnName": "display",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "id",
@@ -290,7 +290,7 @@
       },
       {
         "tableName": "patients",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`synced` INTEGER NOT NULL, `identifier` TEXT, `givenName` TEXT, `middleName` TEXT, `familyName` TEXT, `gender` TEXT, `birthDate` TEXT, `deathDate` TEXT, `causeOfDeath` TEXT, `age` TEXT, `photo` TEXT, `address1` TEXT, `address2` TEXT, `city` TEXT, `state` TEXT, `country` TEXT, `postalCode` TEXT, `uuid` TEXT, `display` TEXT NOT NULL, `_id` INTEGER PRIMARY KEY AUTOINCREMENT, `patient_visit_id` TEXT, `patient_encounterDatetime` TEXT, `patient_type` TEXT, `patient_patient_uuid` TEXT, `patient_form_uuid` TEXT, `patient_uuid` TEXT, `patient_display` TEXT, `patient__id` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`synced` INTEGER NOT NULL, `identifier` TEXT, `givenName` TEXT, `middleName` TEXT, `familyName` TEXT, `gender` TEXT, `birthDate` TEXT, `deathDate` TEXT, `causeOfDeath` TEXT, `age` TEXT, `photo` TEXT, `address1` TEXT, `address2` TEXT, `city` TEXT, `state` TEXT, `country` TEXT, `postalCode` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT, `patient_visit_id` TEXT, `patient_encounterDatetime` TEXT, `patient_type` TEXT, `patient_patient_uuid` TEXT, `patient_form_uuid` TEXT, `patient_uuid` TEXT, `patient_display` TEXT, `patient__id` INTEGER)",
         "fields": [
           {
             "fieldPath": "synced",
@@ -404,7 +404,7 @@
             "fieldPath": "display",
             "columnName": "display",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "id",
@@ -472,7 +472,7 @@
       },
       {
         "tableName": "visits",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`patient_id` INTEGER NOT NULL, `visit_type` TEXT, `visit_place` TEXT, `start_date` TEXT NOT NULL, `stop_date` TEXT, `uuid` TEXT, `display` TEXT NOT NULL, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`patient_id` INTEGER NOT NULL, `visit_type` TEXT, `visit_place` TEXT, `start_date` TEXT NOT NULL, `stop_date` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
             "fieldPath": "patientKeyID",
@@ -514,7 +514,7 @@
             "fieldPath": "display",
             "columnName": "display",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "id",
@@ -536,7 +536,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"2ca31877683087a2cef9a670e3bed3be\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"41a50b7fab10cb07ddedc8846a9b55f5\")"
     ]
   }
 }

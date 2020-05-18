@@ -187,6 +187,9 @@
 	<!-- Patients Vitals Fragment -->
 	<string name="form_error">This form is not supported</string>
 
+	<!-- fragment_patient_visits -->
+	<string name="offline_mode_not_supported">Active patient visit cannot be started in offline mode</string>
+
 	<!-- fragment_patient_visits layout -->
 	<string name="active_visit_label">Active visit</string>
 	<string name="past_visit_label">Past visit</string>
@@ -283,6 +286,7 @@
 	<string name="connected_to_server_message">You are now connected!</string>
 
 	<string name="dialog_title_are_you_sure">Are you sure?</string>
+	<string name="dialog_title_reset_patient">Reset patient data?</string>
 	<string name="dialog_message_data_lost">All patient information entered will be lost.</string>
 	<string name="dialog_button_stay">Stay</string>
 	<string name="dialog_button_leave">Leave</string>
@@ -388,4 +392,15 @@
 	<string name="showcase_register_patient">Click here to register a new patient</string>
 	<string name="showcase_form_entry">Click here to capture vitals for a patient on a visit</string>
 	<string name="showcase_manage_providers">Click here to manage providers for a patient on a visit</string>
+
+	<!-- Chart Activity -->
+	<string name="data_not_available_for_this_field">No data available to display chart</string>
+	<string name="data_type_not_available_for_this_field">Chart not available for this field</string>
+	<string name="dialog_take_photo">Take a photo</string>
+	<string name="dialog_choose_photo">Choose photo</string>
+	<string name="dialog_remove_photo">Remove photo</string>
+
+    <string name="unidentified_patient">Unidentified Patient</string>
+    <string name="dob_error_for_unidentified">Please give a rough estimate of patient age</string>
+    <string name="unidentified_patient_name" translatable="false">UNKNOWN</string>
 </resources>

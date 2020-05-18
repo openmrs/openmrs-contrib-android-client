@@ -14,26 +14,25 @@
 
 package org.openmrs.mobile.listeners.watcher.dao;
 
-import java.util.List;
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
-import io.reactivex.SingleObserver;
-import io.reactivex.disposables.Disposable;
+
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.EncounterEntity;
+import org.openmrs.mobile.databases.entities.ObservationEntity;
 import org.openmrs.mobile.databases.entities.PatientEntity;
+import org.openmrs.mobile.databases.entities.VisitEntity;
 import org.openmrs.mobile.models.EncounterType;
-import org.openmrs.mobile.utilities.ActiveAndroid.util.Log;
+
+import java.util.Objects;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -47,12 +46,14 @@ public class EncounterRoomDAOTest {
     private EncounterEntity expectedEncounterEntity3 = newEncounterEntity(30L, "125", "Encounter 3", null, "50", "60", "Visit 3", "20 January");
 
     private PatientEntity expectedPatientEntity1 = newPatientEntity(40L, "123-123", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity1, "Tranquil", "male", "Jon", "101", "Johnson", "https://bit.ly/2W4Ofth", "2000000", "China", false);
-    private PatientEntity expectedPatientEntity2 = newPatientEntity(50L, "124-124", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity2, "Tranquil", "male", "Jon", "101", "Johnson", "https://bit.ly/2W4Ofth", "2000000", "China", false);
+
+    private VisitEntity expectedVisitEntity = createVisitEntity(1L, 40L, "startDate", "stopDate", "visitPlace", "visitType", "uuid");
+
+    private ObservationEntity expectedObservationEntity = createObservationEntity(10L, "uuid", "diagnosisCertainty", "diagnosisList", "diagnosisNote", "diagnosisOrder", "displayValue");
 
     private EncounterType encounterType = new EncounterType(EncounterType.VITALS);
 
     private AppDatabase mDatabase;
-    private String TAG = "EncounterRoomDAOTest";
 
     @Before
     public void initDb() {
@@ -72,44 +73,19 @@ public class EncounterRoomDAOTest {
     public void findEncounterByFormName_ShouldFindCorrectEncounterByFormName() {
         mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity1);
 
-        mDatabase.encounterRoomDAO().getEncounterTypeByFormName("Encounter 1").subscribe(new SingleObserver<List<EncounterEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<EncounterEntity> encounterEntities) {
-                Assert.assertEquals(encounterEntities.get(0), expectedEncounterEntity1);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        mDatabase.encounterRoomDAO().getEncounterTypeByFormName(expectedEncounterEntity1.getDisplay())
+                .test()
+                .assertValue(actualEncounterEntities -> Objects.equals(actualEncounterEntities.size(), 1)
+                        && Objects.equals(renderEncounterEntityString(actualEncounterEntities.get(0)), renderEncounterEntityString(expectedEncounterEntity1)));
     }
 
     @Test
     public void getLastVitalsEncounterID_ShouldGetCorrectLastVitalsEncounterID() {
         mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity3);
 
-        mDatabase.encounterRoomDAO().getLastVitalsEncounterID("50").subscribe(new SingleObserver<Long>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(Long actualEncounterID) {
-                Assert.assertEquals(expectedEncounterEntity3.getId(), actualEncounterID);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        mDatabase.encounterRoomDAO().getLastVitalsEncounterID("50")
+                .test()
+                .assertValue(actualEncounterID -> Objects.equals(actualEncounterID, expectedEncounterEntity3.getId()));
     }
 
     @Test
@@ -117,22 +93,10 @@ public class EncounterRoomDAOTest {
         mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity1);
         mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity2);
 
-        mDatabase.encounterRoomDAO().getLastVitalsEncounter(expectedEncounterEntity1.getPatientUuid(), expectedEncounterEntity1.getEncounterType()).subscribe(new SingleObserver<List<EncounterEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<EncounterEntity> encounterEntities) {
-                Assert.assertEquals(encounterEntities.get(0), expectedEncounterEntity1);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        mDatabase.encounterRoomDAO().getLastVitalsEncounter(expectedEncounterEntity1.getPatientUuid(), expectedEncounterEntity1.getEncounterType())
+                .test()
+                .assertValue(actualEncounterEntities -> Objects.equals(actualEncounterEntities.size(), 1)
+                        && Objects.equals(renderEncounterEntityString(actualEncounterEntities.get(0)), renderEncounterEntityString(expectedEncounterEntity1)));
     }
 
     @Test
@@ -140,22 +104,9 @@ public class EncounterRoomDAOTest {
         mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity1);
         mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity2);
 
-        mDatabase.encounterRoomDAO().getEncounterByUUID(expectedEncounterEntity1.getUuid()).subscribe(new SingleObserver<Long>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(Long actualEncounterID) {
-                Assert.assertEquals(actualEncounterID, expectedEncounterEntity1.getId());
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        mDatabase.encounterRoomDAO().getEncounterByUUID(expectedEncounterEntity1.getUuid())
+                .test()
+                .assertValue(actualEncounterID -> Objects.equals(actualEncounterID, expectedEncounterEntity1.getId()));
     }
 
     @Test
@@ -163,22 +114,10 @@ public class EncounterRoomDAOTest {
         mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity1);
         mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity2);
 
-        mDatabase.encounterRoomDAO().findEncountersByVisitID(expectedEncounterEntity2.getVisitKeyId()).subscribe(new SingleObserver<List<EncounterEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<EncounterEntity> encounterEntities) {
-                Assert.assertEquals(encounterEntities.get(0), expectedEncounterEntity2);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        mDatabase.encounterRoomDAO().findEncountersByVisitID(expectedEncounterEntity2.getVisitKeyId())
+                .test()
+                .assertValue(actualEncounterEntities -> Objects.equals(actualEncounterEntities.size(), 1)
+                        && Objects.equals(renderEncounterEntityString(actualEncounterEntities.get(0)), renderEncounterEntityString(expectedEncounterEntity2)));
     }
 
     @Test
@@ -188,46 +127,26 @@ public class EncounterRoomDAOTest {
 
         mDatabase.encounterRoomDAO().deleteEncounter(expectedEncounterEntity1.getUuid());
 
-        mDatabase.encounterRoomDAO().getAllEncounters().subscribe(new SingleObserver<List<EncounterEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<EncounterEntity> encounterEntities) {
-                Assert.assertEquals(encounterEntities.size(), 1);
-                Assert.assertEquals(encounterEntities.get(0), expectedEncounterEntity2);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        mDatabase.encounterRoomDAO().getAllEncounters()
+                .test()
+                .assertValue(actualEncounterEntities -> Objects.equals(actualEncounterEntities.size(), 1)
+                        && Objects.equals(renderEncounterEntityString(actualEncounterEntities.get(0)), renderEncounterEntityString(expectedEncounterEntity2)));
     }
 
     @Test
     public void getAllEncountersByType_ShouldGetCorrectEncounterByType() {
+        expectedEncounterEntity1.setPatientUuid(expectedPatientEntity1.getUuid());
+        expectedEncounterEntity1.setVisitKeyId(String.valueOf(expectedVisitEntity.getId()));
+
+        mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity1);
         mDatabase.patientRoomDAO().savePatient(expectedPatientEntity1);
-        mDatabase.patientRoomDAO().savePatient(expectedPatientEntity2);
+        mDatabase.visitRoomDAO().saveVisit(expectedVisitEntity);
+        mDatabase.observationRoomDAO().saveObservation(expectedObservationEntity);
 
-        mDatabase.encounterRoomDAO().getAllEncountersByType(expectedPatientEntity1.getId(), encounterType.getDisplay()).subscribe(new SingleObserver<List<EncounterEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<EncounterEntity> encounterEntities) {
-                Assert.assertEquals(encounterEntities.get(0), expectedEncounterEntity1);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        mDatabase.encounterRoomDAO().getAllEncountersByType(expectedVisitEntity.getPatientKeyID(), encounterType.getDisplay())
+                .test()
+                .assertValue(actualEncounterEntities -> Objects.equals(actualEncounterEntities.size(), 1)
+                        && Objects.equals(renderEncounterEntityString(actualEncounterEntities.get(0)), renderEncounterEntityString(expectedEncounterEntity1)));
     }
 
     private EncounterEntity newEncounterEntity(long id, String uuid, String display, String visitKeyID, String patientUUID, String formUUID, String encounterType, String encounterDayTime) {
@@ -275,5 +194,36 @@ public class EncounterRoomDAOTest {
         entity.setState(state);
         entity.setSynced(synced);
         return entity;
+    }
+
+    private VisitEntity createVisitEntity(long id, long patientID, String startDate, String stopDate, String visitPlace, String visitType, String uuid) {
+        VisitEntity visitEntity = new VisitEntity();
+        visitEntity.setId(id);
+        visitEntity.setPatientKeyID(patientID);
+        visitEntity.setStartDate(startDate);
+        visitEntity.setStopDate(stopDate);
+        visitEntity.setVisitPlace(visitPlace);
+        visitEntity.setVisitType(visitType);
+        visitEntity.setUuid(uuid);
+        return visitEntity;
+    }
+
+    private ObservationEntity createObservationEntity(long id, String uuid, String diagnosisCertainty, String diagnosisList, String diagnosisNote, String diagnosisOrder, String displayValue) {
+        ObservationEntity entity = new ObservationEntity();
+        entity.setEncounterKeyID(id);
+        entity.setConceptuuid(uuid);
+        entity.setUuid("uuid");
+        entity.setDiagnosisCertainty(diagnosisCertainty);
+        entity.setDiagnosisList(diagnosisList);
+        entity.setDiagnosisNote(diagnosisNote);
+        entity.setDiagnosisOrder(diagnosisOrder);
+        entity.setDisplayValue(displayValue);
+        return entity;
+    }
+
+    private String renderEncounterEntityString(EncounterEntity encounterEntity) {
+        return encounterEntity.getId() + encounterEntity.getUuid() + encounterEntity.getDisplay() + encounterEntity.getVisitKeyId()
+                + encounterEntity.getPatientUuid() + encounterEntity.getFormUuid()
+                + encounterEntity.getEncounterType() + encounterEntity.getEncounterDateTime();
     }
 }

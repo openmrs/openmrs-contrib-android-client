@@ -39,7 +39,6 @@ import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.NetworkUtils;
 
 import java.util.ArrayList;
@@ -79,10 +78,6 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
             refreshUI();
             swipeRefreshLayout.setRefreshing(false);
         });
-
-        // Font config
-        FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
-
         return root;
     }
 

@@ -1,9 +1,9 @@
-package org.openmrs.mobile.activities.formadmission;
+package org.openmrs.mobile.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class EncounterProviderModel {
+public class EncounterProviderCreate {
     @SerializedName("provider")
     @Expose
     private String providerUUID;
@@ -12,7 +12,7 @@ public class EncounterProviderModel {
     @Expose
     private String encounterRoleUUID;
 
-    public EncounterProviderModel(String providerUUID, String encounterRoleUUID) {
+    public EncounterProviderCreate(String providerUUID, String encounterRoleUUID) {
         this.providerUUID = providerUUID;
         this.encounterRoleUUID = encounterRoleUUID;
     }

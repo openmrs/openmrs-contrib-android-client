@@ -40,7 +40,9 @@ public class EncounterTable extends Table<Encounter> {
                 + Column.ENCOUNTER_DATETIME + Column.Type.DATE_TYPE_NOT_NULL
                 + Column.ENCOUNTER_TYPE + Column.Type.DATE_TYPE_WITH_COMMA
                 + Column.PATIENT_UUID + Column.Type.TEXT_TYPE + Column.COMMA
-                + Column.FORM_UUID + Column.Type.TEXT_TYPE
+                + Column.FORM_UUID + Column.Type.TEXT_TYPE + Column.COMMA
+                + Column.LOCATION_UUID + Column.Type.TEXT_TYPE + Column.COMMA
+                + Column.ENCOUNTER_PROVIDER_UUID + Column.Type.TEXT_TYPE
                 + ");";
     }
 
@@ -53,7 +55,9 @@ public class EncounterTable extends Table<Encounter> {
                 + Column.ENCOUNTER_DATETIME + Column.COMMA
                 + Column.ENCOUNTER_TYPE + Column.COMMA
                 + Column.PATIENT_UUID + Column.COMMA
-                + Column.FORM_UUID + ")"
+                + Column.FORM_UUID + Column.COMMA
+                + Column.LOCATION_UUID + Column.COMMA
+                + Column.ENCOUNTER_PROVIDER_UUID + ")"
                 + values(INSERT_COLUMNS_COUNT);
     }
 
@@ -86,6 +90,8 @@ public class EncounterTable extends Table<Encounter> {
         public static final String ENCOUNTER_TYPE = "type";
         public static final String PATIENT_UUID = "patient_uuid";
         public static final String FORM_UUID = "form_uuid";
+        public static final String LOCATION_UUID = "location_uuid";
+        public static final String ENCOUNTER_PROVIDER_UUID = "encounterProviders_uuid";
     }
 
     @NotNull

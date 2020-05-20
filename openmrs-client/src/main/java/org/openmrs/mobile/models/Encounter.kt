@@ -30,7 +30,7 @@ class Encounter : Resource(), Serializable {
 
     @SerializedName("location")
     @Expose
-    var location: Resource? = null
+    var location: Location? = null
 
     @SerializedName("form")
     @Expose
@@ -58,7 +58,7 @@ class Encounter : Resource(), Serializable {
 
     @SerializedName("encounterProviders")
     @Expose
-    var encounterProviders: List<Resource> = ArrayList()
+    var encounterProviders: List<EncounterProvider> = ArrayList()
 
     @SerializedName("resourceVersion")
     @Expose

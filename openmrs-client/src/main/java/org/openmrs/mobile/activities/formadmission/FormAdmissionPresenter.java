@@ -14,32 +14,27 @@
 
 package org.openmrs.mobile.activities.formadmission;
 
-import android.util.Log;
-
 import static org.openmrs.mobile.utilities.FormService.getFormResourceByName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.LocalDateTime;
 import org.openmrs.mobile.activities.BasePresenter;
-import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.retrofit.ProviderRepository;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.models.Encounter;
+import org.openmrs.mobile.models.EncounterProviderCreate;
 import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Obscreate;
-import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -126,9 +121,9 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         List<Obscreate> observations=new ArrayList<>();
         encountercreate.setObservations(observations);
 
-        List<EncounterProviderModel> encounterProviderModel = new ArrayList<>();
-        encounterProviderModel.add(new EncounterProviderModel(admittedByPerson, "240b26f9-dd88-4172-823d-4a8bfeb7841f"));
-        encountercreate.setEncounterProvider(encounterProviderModel);
+        List<EncounterProviderCreate> encounterProviderCreate = new ArrayList<>();
+        encounterProviderCreate.add(new EncounterProviderCreate(admittedByPerson, "240b26f9-dd88-4172-823d-4a8bfeb7841f"));
+        encountercreate.setEncounterProvider(encounterProviderCreate);
 
         restApi.createEncounter(encountercreate).enqueue(new Callback<Encounter>() {
             @Override

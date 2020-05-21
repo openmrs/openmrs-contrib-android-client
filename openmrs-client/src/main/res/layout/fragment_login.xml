@@ -206,8 +206,9 @@
                     android:paddingStart="4dp"
                     android:paddingLeft="4dp"
                     android:text="@string/unable_to_login"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/color_accent"
                     android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -232,7 +233,6 @@
                         android:layout_marginHorizontal="8dp"
                         android:fontFamily="@font/montserrat"
                         android:text="@string/login_offline"
-                        android:textColor="@color/dark_grey_for_stroke"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -243,8 +243,9 @@
                 android:id="@+id/aboutUsTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginHorizontal="25dp"
-                android:layout_marginVertical="20dp"
+                android:layout_marginVertical="30dp"
                 android:fontFamily="@font/montserrat"
                 android:text="@string/get_started_with_our_user_guide"
                 android:textColor="@color/color_accent"

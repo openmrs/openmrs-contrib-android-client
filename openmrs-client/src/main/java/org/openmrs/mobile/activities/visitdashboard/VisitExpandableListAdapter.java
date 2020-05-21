@@ -96,7 +96,7 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
                     break;
                 case EncounterType.DISCHARGE:
                 case EncounterType.ADMISSION:
-                    convertView = openMRSInflater.addSingleStringView(contentLayout, mContext.getString(R.string.list_item_encounter_no_notes));
+                    convertView = openMRSInflater.addSingleStringView(contentLayout, "Admitted to " + encounter.getLocation().getDisplay());
                     layouts.add(convertView);
                     break;
                 default:

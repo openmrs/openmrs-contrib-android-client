@@ -28,7 +28,7 @@ public class EncounterTable extends Table<Encounter> {
      *
      * @see org.openmrs.mobile.databases.tables.Table#values(int)
      */
-    private static final int INSERT_COLUMNS_COUNT = 7;
+    private static final int INSERT_COLUMNS_COUNT = 9;
 
     @Override
     public String createTableDefinition() {

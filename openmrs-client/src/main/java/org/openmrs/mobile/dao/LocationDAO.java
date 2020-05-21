@@ -85,6 +85,28 @@ public class LocationDAO {
         return location;
     }
 
+    public Location findLocationByUUID(String uuid) {
+        if(!StringUtils.notNull(uuid)){
+            return null;
+        }
+        Location location = new Location();
+        String where = String.format("%s = ?", LocationTable.Column.UUID);
+        String[] whereArgs = new String[]{uuid};
+
+        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        final Cursor cursor = helper.getReadableDatabase().query(LocationTable.TABLE_NAME, null, where, whereArgs, null, null, null);
+        if (null != cursor) {
+            try {
+                if (cursor.moveToFirst()) {
+                    location = cursorToLocation(cursor);
+                }
+            } finally {
+                cursor.close();
+            }
+        }
+        return location;
+    }
+
     private Location cursorToLocation(Cursor cursor) {
         Location location = new Location();
         location.setId(cursor.getLong(cursor.getColumnIndex(LocationTable.Column.ID)));

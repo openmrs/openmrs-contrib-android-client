@@ -275,8 +275,16 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(5, encounter.getEncounterType().getDisplay(), encounterStatement);
             bindString(6, encounter.getPatientUUID(), encounterStatement);
             bindString(7, encounter.getFormUuid(), encounterStatement);
-            bindString(8, encounter.getLocation().getUuid(), encounterStatement);
-            bindString(9, encounter.getEncounterProviders().get(0).getProvider().getUuid(), encounterStatement);
+
+            if(encounter.getLocation() == null)
+                bindString(8, "", encounterStatement);
+            else
+                bindString(8, encounter.getLocation().getUuid(), encounterStatement);
+
+            if(encounter.getEncounterProviders().size() == 0)
+                bindString(9, "", encounterStatement);
+            else
+                bindString(9, encounter.getEncounterProviders().get(0).getProvider().getUuid(), encounterStatement);
             encounterId = encounterStatement.executeInsert();
             encounterStatement.clearBindings();
             db.setTransactionSuccessful();
@@ -294,8 +302,15 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         newValues.put(EncounterTable.Column.DISPLAY, encounter.getDisplay());
         newValues.put(EncounterTable.Column.ENCOUNTER_DATETIME, encounter.getEncounterDatetime());
         newValues.put(EncounterTable.Column.ENCOUNTER_TYPE, encounter.getEncounterType().getDisplay());
-        newValues.put(EncounterTable.Column.LOCATION_UUID, encounter.getLocation().getUuid());
-        newValues.put(EncounterTable.Column.ENCOUNTER_PROVIDER_UUID, encounter.getEncounterProviders().get(0).getProvider().getUuid());
+        if(encounter.getLocation() == null)
+            newValues.put(EncounterTable.Column.LOCATION_UUID, "");
+        else
+            newValues.put(EncounterTable.Column.LOCATION_UUID, encounter.getLocation().getUuid());
+
+        if(encounter.getEncounterProviders().size() == 0)
+            newValues.put(EncounterTable.Column.ENCOUNTER_PROVIDER_UUID, "");
+        else
+            newValues.put(EncounterTable.Column.ENCOUNTER_PROVIDER_UUID, encounter.getEncounterProviders().get(0).getProvider().getUuid());
 
         String[] whereArgs = new String[]{String.valueOf(encounterID)};
 

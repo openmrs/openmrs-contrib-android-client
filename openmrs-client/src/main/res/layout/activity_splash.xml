@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="#616161"
+        android:textColor="@color/dark_grey_8x"
         android:textSize="21sp"
         app:layout_constraintTop_toBottomOf="@id/organization_name" />
 

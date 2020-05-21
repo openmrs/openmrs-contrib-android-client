@@ -105,7 +105,7 @@
             android:launchMode="singleTop"
             android:noHistory="true"
             android:theme="@style/NoActionBarTheme"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activities.settings.SettingsActivity"
             android:configChanges="locale|orientation"

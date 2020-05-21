@@ -34,7 +34,6 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
     private PatientVisitsFragment mContext;
     private List<Visit> mVisits;
 
-
     public PatientVisitsRecyclerViewAdapter(PatientVisitsFragment context, List<Visit> items) {
         this.mContext = context;
         this.mVisits = items;

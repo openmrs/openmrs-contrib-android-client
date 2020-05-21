@@ -17,7 +17,5 @@ package org.openmrs.mobile.api.repository;
 import org.openmrs.mobile.application.OpenMRS;
 
 abstract class RetrofitRepository {
-
     OpenMRS openMrs = OpenMRS.getInstance();
-
 }

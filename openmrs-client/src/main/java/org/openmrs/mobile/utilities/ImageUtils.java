@@ -31,7 +31,6 @@ import org.openmrs.mobile.activities.patientdashboard.details.PatientPhotoActivi
 import java.io.ByteArrayOutputStream;
 
 public final class ImageUtils {
-
     private ImageUtils() {
 
     }
@@ -51,7 +50,7 @@ public final class ImageUtils {
     }
 
     public static int calculateInSampleSize(
-            BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;
@@ -102,6 +101,5 @@ public final class ImageUtils {
 
     public static void changeImageViewTint(Context context, ImageView imageView, int color) {
         ImageViewCompat.setImageTintList(imageView, ColorStateList.valueOf(ContextCompat.getColor(context, color)));
-
     }
 }

@@ -26,7 +26,6 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.NetworkUtils;
 
 public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientDetailsPresenter {
-
     private PatientDashboardContract.ViewPatientDetails mPatientDetailsView;
     private VisitRepository visitRepository;
     private PatientRepository patientRepository;
@@ -55,20 +54,19 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
 
     @Override
     public void synchronizePatient() {
-        if(NetworkUtils.isOnline()) {
+        if (NetworkUtils.isOnline()) {
             mPatientDetailsView.showDialog(R.string.action_synchronize_patients);
             syncDetailsData();
             syncVisitsData();
             syncVitalsData();
-        }
-        else {
+        } else {
             reloadPatientData(mPatient);
             mPatientDetailsView.showToast(R.string.synchronize_patient_network_error, true);
         }
-      }
+    }
 
-    public void updatePatientDataFromServer(){
-        if(NetworkUtils.isOnline()) {
+    public void updatePatientDataFromServer() {
+        if (NetworkUtils.isOnline()) {
             syncDetailsData();
             syncVisitsData();
             syncVitalsData();
@@ -98,19 +96,18 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
         if (!NetworkUtils.isOnline()) {
             mPatientDetailsView.attachSnackbarToActivity();
         }
-
     }
 
     /*
-    * Sync Vitals
-    */
+     * Sync Vitals
+     */
     private void syncVitalsData() {
         visitRepository.syncLastVitals(mPatient.getUuid());
     }
 
     /*
-    * Sync Visits
-    */
+     * Sync Visits
+     */
     private void syncVisitsData() {
         visitRepository.syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
             @Override
@@ -128,8 +125,8 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
     }
 
     /*
-    * Download Patient
-    */
+     * Download Patient
+     */
     private void syncDetailsData() {
         patientRepository.downloadPatientByUuid(mPatient.getUuid(), new DownloadPatientCallbackListener() {
             @Override
@@ -146,11 +143,11 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
             public void onResponse() {
                 // This method is intentionally empty
             }
+
             @Override
             public void onErrorResponse(String errorMessage) {
                 mPatientDetailsView.showToast(R.string.synchronize_patient_error, true);
             }
         });
     }
-
 }

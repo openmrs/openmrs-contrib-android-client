@@ -22,7 +22,6 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 public class FormListActivity extends ACBaseActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,25 +29,23 @@ public class FormListActivity extends ACBaseActivity {
 
         // Create fragment
         FormListFragment formListFragment =
-                (FormListFragment) getSupportFragmentManager().findFragmentById(R.id.formListContentFrame);
+            (FormListFragment) getSupportFragmentManager().findFragmentById(R.id.formListContentFrame);
         if (formListFragment == null) {
             formListFragment = FormListFragment.newInstance();
         }
         if (!formListFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    formListFragment, R.id.formListContentFrame);
+                formListFragment, R.id.formListContentFrame);
         }
 
         Bundle bundle = getIntent().getExtras();
         Long mPatientID = null;
-        if(bundle != null)
-        {
+        if (bundle != null) {
             mPatientID = bundle.getLong(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE);
         }
 
         // Create the presenter
         new FormListPresenter(formListFragment, mPatientID);
-
     }
 
     @Override

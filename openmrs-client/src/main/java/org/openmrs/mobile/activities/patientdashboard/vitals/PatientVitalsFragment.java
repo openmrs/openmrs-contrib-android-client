@@ -43,7 +43,6 @@ import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 public class PatientVitalsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientVitals {
-
     private LinearLayout mContent;
     private LinearLayout mFormHeader;
     private TextView mEmptyList;
@@ -100,7 +99,7 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
     @Override
     public void startFormDisplayActivity(Encounter encounter) {
         Form form = encounter.getForm();
-        if(form != null){
+        if (form != null) {
             Intent intent = new Intent(getContext(), FormDisplayActivity.class);
             intent.putExtra(ApplicationConstants.BundleKeys.FORM_NAME, form.getName());
             intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, encounter.getPatient().getId());
@@ -111,7 +110,6 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
         } else {
             ToastUtil.notify(getString(R.string.form_error));
         }
-
     }
 
     @Override

@@ -15,6 +15,7 @@
 package org.openmrs.mobile.databases;
 
 import android.content.Context;
+
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
@@ -23,8 +24,8 @@ import org.openmrs.mobile.dao.ConceptRoomDAO;
 import org.openmrs.mobile.dao.EncounterRoomDAO;
 import org.openmrs.mobile.dao.LocationRoomDAO;
 import org.openmrs.mobile.dao.ObservationRoomDAO;
-import org.openmrs.mobile.dao.VisitRoomDAO;
 import org.openmrs.mobile.dao.PatientRoomDAO;
+import org.openmrs.mobile.dao.VisitRoomDAO;
 import org.openmrs.mobile.databases.entities.ConceptEntity;
 import org.openmrs.mobile.databases.entities.EncounterEntity;
 import org.openmrs.mobile.databases.entities.LocationEntity;
@@ -34,19 +35,22 @@ import org.openmrs.mobile.databases.entities.VisitEntity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 @Database(entities = {ConceptEntity.class,
-        EncounterEntity.class,
-        LocationEntity.class, ObservationEntity.class,
-        PatientEntity.class,
-        VisitEntity.class},
-        version = 1)
+    EncounterEntity.class,
+    LocationEntity.class, ObservationEntity.class,
+    PatientEntity.class,
+    VisitEntity.class},
+    version = 1)
 
 public abstract class AppDatabase extends RoomDatabase {
-
     //instantiate Dao's
     public abstract LocationRoomDAO locationRoomDAO();
+
     public abstract VisitRoomDAO visitRoomDAO();
+
     public abstract PatientRoomDAO patientRoomDAO();
+
     public abstract ObservationRoomDAO observationRoomDAO();
+
     public abstract EncounterRoomDAO encounterRoomDAO();
     public abstract ConceptRoomDAO conceptRoomDAO();
     private static volatile AppDatabase INSTANCE;
@@ -56,12 +60,11 @@ public abstract class AppDatabase extends RoomDatabase {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, ApplicationConstants.DB_NAME)
-                            .build();
+                        AppDatabase.class, ApplicationConstants.DB_NAME)
+                        .build();
                 }
             }
         }
         return INSTANCE;
     }
-
 }

@@ -14,7 +14,6 @@
 
 package org.openmrs.mobile.security;
 
-
 import org.openmrs.mobile.application.OpenMRS;
 
 import java.security.NoSuchAlgorithmException;
@@ -24,7 +23,6 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 public final class SecretKeyGenerator {
-
     private SecretKeyGenerator() {
     }
 

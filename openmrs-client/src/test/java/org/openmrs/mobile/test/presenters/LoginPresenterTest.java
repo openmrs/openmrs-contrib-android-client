@@ -59,10 +59,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @PrepareForTest({OpenMRS.class, NetworkUtils.class, LocationDAO.class, RestServiceBuilder.class,
-        StringUtils.class})
+    StringUtils.class})
 @PowerMockIgnore("javax.net.ssl.*")
 public class LoginPresenterTest extends ACUnitTestBaseRx {
-
     @Mock
     private OpenMRS openMRS;
     @Mock
@@ -79,21 +78,19 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     private VisitDAO visitDAO;
     @Mock
     private UserService userService;
-
-
     private LoginPresenter presenter;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         super.setUp();
         VisitRepository visitRepository = new VisitRepository(restApi, visitDAO, locationDAO, new EncounterDAO());
         presenter = new LoginPresenter(restApi, visitRepository, locationDAO, userService, view, openMRS,
-                openMRSLogger, authorizationManager);
+            openMRSLogger, authorizationManager);
         mockStaticMethods();
     }
 
     @Test
-    public void shouldNotLoginUser_emptyCredentials(){
+    public void shouldNotLoginUser_emptyCredentials() {
         mockNonEmptyCredentials(false);
         presenter.login("", "", "some_url", "some_old_url");
         verify(view, never()).showWarningDialog();
@@ -101,7 +98,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldShowWipingDBWarningDialog_newUsernameAndUrl(){
+    public void shouldShowWipingDBWarningDialog_newUsernameAndUrl() {
         mockNonEmptyCredentials(true);
         mockLastUser("newUser", "pass", "newUrl");
         presenter.login("oldUsername", "pass", "some_url", "some_old_url");
@@ -110,13 +107,13 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldLoginUserInOnlineMode_noWipe_userAuthenticated(){
+    public void shouldLoginUserInOnlineMode_noWipe_userAuthenticated() {
         mockNonEmptyCredentials(true);
         mockOnlineMode(true);
         Mockito.lenient().when(restApi.getSession())
-                .thenReturn(mockSuccessCall(new Session("someId", true, new User())));
+            .thenReturn(mockSuccessCall(new Session("someId", true, new User())));
         Mockito.lenient().when(restApi.getVisitType())
-                .thenReturn(mockSuccessCall(Collections.singletonList(new VisitType("visitType"))));
+            .thenReturn(mockSuccessCall(Collections.singletonList(new VisitType("visitType"))));
         Mockito.lenient().when(authorizationManager.isUserNameOrServerEmpty()).thenReturn(false);
         String user = "user";
         String url = "url";
@@ -130,13 +127,13 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldLoginUserInOnlineMode_noWipe_userNotAuthenticated(){
+    public void shouldLoginUserInOnlineMode_noWipe_userNotAuthenticated() {
         mockNonEmptyCredentials(true);
         mockOnlineMode(true);
         Mockito.lenient().when(restApi.getSession())
-                .thenReturn(mockSuccessCall(new Session("someId", false, new User())));
+            .thenReturn(mockSuccessCall(new Session("someId", false, new User())));
         Mockito.lenient().when(restApi.getVisitType())
-                .thenReturn(mockSuccessCall(Collections.singletonList(new VisitType("visitType"))));
+            .thenReturn(mockSuccessCall(Collections.singletonList(new VisitType("visitType"))));
         Mockito.lenient().when(authorizationManager.isUserNameOrServerEmpty()).thenReturn(false);
         String user = "user";
         String url = "url";
@@ -149,7 +146,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldLoginUserInOnlineMode_errorResponse(){
+    public void shouldLoginUserInOnlineMode_errorResponse() {
         mockNonEmptyCredentials(true);
         mockOnlineMode(true);
         Mockito.lenient().when(restApi.getSession()).thenReturn(mockErrorCall(401));
@@ -164,7 +161,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldLoginUserInOnlineMode_failure(){
+    public void shouldLoginUserInOnlineMode_failure() {
         mockNonEmptyCredentials(true);
         mockOnlineMode(true);
         Mockito.lenient().when(restApi.getSession()).thenReturn(mockFailureCall());
@@ -179,7 +176,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldLoginUserInOfflineMode_userLoggedBefore_sameUrl(){
+    public void shouldLoginUserInOfflineMode_userLoggedBefore_sameUrl() {
         String user = "user";
         String url = "url";
         String password = "pass";
@@ -196,7 +193,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldShowWipingDBWarningDialogUserInOfflineMode_userLoggedBefore_wrongCredentials(){
+    public void shouldShowWipingDBWarningDialogUserInOfflineMode_userLoggedBefore_wrongCredentials() {
         String user = "user";
         String url = "url";
         String password = "pass";
@@ -212,10 +209,10 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldLoadLocationsInOnlineMode_allOK(){
+    public void shouldLoadLocationsInOnlineMode_allOK() {
         mockNetworkConnection(true);
         Mockito.lenient().when(restApi.getLocations(any(), anyString(), anyString()))
-                .thenReturn(mockSuccessCall(Collections.singletonList(new Location())));
+            .thenReturn(mockSuccessCall(Collections.singletonList(new Location())));
         presenter.loadLocations("someUrl");
         verify(view).initLoginForm(any(), any());
         verify(view).startFormListService();
@@ -224,41 +221,42 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldLoadLocationsInOnlineMode_errorResponse(){
+    public void shouldLoadLocationsInOnlineMode_errorResponse() {
         mockNetworkConnection(true);
         Mockito.lenient().when(restApi.getLocations(any(), anyString(), anyString()))
-                .thenReturn(mockErrorCall(401));
+            .thenReturn(mockErrorCall(401));
+
         presenter.loadLocations("someUrl");
         verify(view).initLoginForm(any(), any());
         verify(view).setLocationErrorOccurred(true);
-        verify(view).showInvalidURLSnackbar(anyString());
+        verify(view).showInvalidURLSnackbar();
         verify(view).hideUrlLoadingAnimation();
     }
 
     @Test
-    public void shouldLoadLocationsInOnlineMode_failure(){
+    public void shouldLoadLocationsInOnlineMode_failure() {
         mockNetworkConnection(true);
         Mockito.lenient().when(restApi.getLocations(any(), anyString(), anyString()))
-                .thenReturn(mockFailureCall());
+            .thenReturn(mockFailureCall());
         presenter.loadLocations("someUrl");
         verify(view).initLoginForm(any(), any());
         verify(view).setLocationErrorOccurred(true);
-        verify(view).showInvalidURLSnackbar(Mockito.any());
+        verify(view).showInvalidURLSnackbar();
         verify(view).hideUrlLoadingAnimation();
     }
 
     @Test
-    public void shouldLoadLocationsInOfflineMode_emptyList(){
+    public void shouldLoadLocationsInOfflineMode_emptyList() {
         mockNetworkConnection(false);
         Mockito.lenient().when(locationDAO.getLocations()).thenReturn(Observable.just(new ArrayList<>()));
         presenter.loadLocations("someUrl");
-        verify(view).showToast(anyString(), any());
+        verify(view).showToast(anyInt(), any());
         verify(view).setLocationErrorOccurred(true);
         verify(view).hideLoadingAnimation();
     }
 
     @Test
-    public void shouldLoadLocationsInOfflineMode_nonEmptyList(){
+    public void shouldLoadLocationsInOfflineMode_nonEmptyList() {
         mockNetworkConnection(false);
         Mockito.lenient().when(locationDAO.getLocations()).thenReturn(Observable.just(Collections.singletonList(new Location())));
         presenter.loadLocations("someUrl");
@@ -268,7 +266,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldStartFormListServiceWhenAuthenticated(){
+    public void shouldStartFormListServiceWhenAuthenticated() {
         Context context = PowerMockito.mock(Context.class);
         PowerMockito.mockStatic(OpenMRS.class);
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
@@ -276,7 +274,8 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         LoginFragment loginFragment = LoginFragment.newInstance();
         try {
             loginFragment.userAuthenticated();
-        } catch (NullPointerException ignored) {}
+        } catch (NullPointerException ignored) {
+        }
 
         verify(openMRS.getApplicationContext(), times(1)).startService(any());
     }
@@ -285,11 +284,9 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         PowerMockito.when(NetworkUtils.hasNetwork()).thenReturn(isNetwork);
     }
 
-
     private void mockNonEmptyCredentials(boolean isNonEmpty) {
         PowerMockito.when(StringUtils.notEmpty(anyString())).thenReturn(isNonEmpty);
     }
-
 
     private void mockOnlineMode(boolean isOnline) {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(isOnline);

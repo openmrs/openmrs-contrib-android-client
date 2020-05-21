@@ -14,7 +14,6 @@
 
 package org.openmrs.mobile.dao;
 
-
 import net.sqlcipher.Cursor;
 
 import org.openmrs.mobile.application.OpenMRS;
@@ -48,7 +47,7 @@ public class LocationDAO {
             List<Location> locations = new ArrayList<>();
             DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
             Cursor cursor = openHelper.getReadableDatabase().query(LocationTable.TABLE_NAME,
-                    null, null, null, null, null, null);
+                null, null, null, null, null, null);
 
             if (null != cursor) {
                 try {
@@ -65,7 +64,7 @@ public class LocationDAO {
     }
 
     public Location findLocationByName(String name) {
-        if(!StringUtils.notNull(name)){
+        if (!StringUtils.notNull(name)) {
             return null;
         }
         Location location = new Location();

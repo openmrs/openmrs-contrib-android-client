@@ -16,6 +16,15 @@ package org.openmrs.mobile.utilities.ActiveAndroid.util;
  * limitations under the License.
  */
 
+import android.database.Cursor;
+import android.text.TextUtils;
+
+import org.openmrs.mobile.utilities.ActiveAndroid.Cache;
+import org.openmrs.mobile.utilities.ActiveAndroid.Model;
+import org.openmrs.mobile.utilities.ActiveAndroid.TableInfo;
+import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Column;
+import org.openmrs.mobile.utilities.ActiveAndroid.serializer.TypeSerializer;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -25,21 +34,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import android.database.Cursor;
-import android.text.TextUtils;
-import org.openmrs.mobile.utilities.ActiveAndroid.Cache;
-import org.openmrs.mobile.utilities.ActiveAndroid.Model;
-import org.openmrs.mobile.utilities.ActiveAndroid.TableInfo;
-import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Column;
-import org.openmrs.mobile.utilities.ActiveAndroid.serializer.TypeSerializer;
-
 public final class SQLiteUtils {
     //////////////////////////////////////////////////////////////////////////////////////
     // ENUMERATIONS
     //////////////////////////////////////////////////////////////////////////////////////
-
     public static final boolean FOREIGN_KEYS_SUPPORTED = true;
-
     //////////////////////////////////////////////////////////////////////////////////////
     // PUBLIC CONSTANTS
     //////////////////////////////////////////////////////////////////////////////////////
@@ -67,12 +66,10 @@ public final class SQLiteUtils {
             put(Byte[].class, SQLiteType.BLOB);
         }
     };
-
     //////////////////////////////////////////////////////////////////////////////////////
     // PRIVATE CONTSANTS
     //////////////////////////////////////////////////////////////////////////////////////
     private static HashMap<String, List<String>> sIndexGroupMap;
-
     //////////////////////////////////////////////////////////////////////////////////////
     // PRIVATE MEMBERS
     //////////////////////////////////////////////////////////////////////////////////////
@@ -136,7 +133,7 @@ public final class SQLiteUtils {
             Column.ConflictAction conflictAction = sOnUniqueConflictsMap.get(key);
 
             definitions.add(String.format("UNIQUE (%s) ON CONFLICT %s",
-                    TextUtils.join(", ", group), conflictAction.toString()));
+                TextUtils.join(", ", group), conflictAction.toString()));
         }
 
         return definitions;
@@ -154,15 +151,17 @@ public final class SQLiteUtils {
 
         String[] groups = column.uniqueGroups();
         Column.ConflictAction[] conflictActions = column.onUniqueConflicts();
-        if (groups.length != conflictActions.length)
+        if (groups.length != conflictActions.length) {
             return;
+        }
 
         for (int i = 0; i < groups.length; i++) {
             String group = groups[i];
             Column.ConflictAction conflictAction = conflictActions[i];
 
-            if (TextUtils.isEmpty(group))
+            if (TextUtils.isEmpty(group)) {
                 continue;
+            }
 
             List<String> list = sUniqueGroupMap.get(group);
             if (list == null) {
@@ -189,8 +188,8 @@ public final class SQLiteUtils {
 
         for (Map.Entry<String, List<String>> entry : sIndexGroupMap.entrySet()) {
             definitions.add(String.format("CREATE INDEX IF NOT EXISTS %s on %s(%s);",
-                    "index_" + tableInfo.getTableName() + "_" + entry.getKey(),
-                    tableInfo.getTableName(), TextUtils.join(", ", entry.getValue())));
+                "index_" + tableInfo.getTableName() + "_" + entry.getKey(),
+                tableInfo.getTableName(), TextUtils.join(", ", entry.getValue())));
         }
 
         return definitions.toArray(new String[definitions.size()]);
@@ -212,8 +211,9 @@ public final class SQLiteUtils {
 
         String[] groups = column.indexGroups();
         for (String group : groups) {
-            if (TextUtils.isEmpty(group))
+            if (TextUtils.isEmpty(group)) {
                 continue;
+            }
 
             List<String> list = sIndexGroupMap.get(group);
             if (list == null) {
@@ -238,7 +238,7 @@ public final class SQLiteUtils {
         definitions.addAll(createUniqueDefinition(tableInfo));
 
         return String.format("CREATE TABLE IF NOT EXISTS %s (%s);", tableInfo.getTableName(),
-                TextUtils.join(", ", definitions));
+            TextUtils.join(", ", definitions));
     }
 
     @SuppressWarnings("unchecked")
@@ -332,15 +332,14 @@ public final class SQLiteUtils {
                 }
                 while (cursor.moveToNext());
             }
-
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(
-                    "Your model " + type.getName() + " does not define a default " +
-                            "constructor. The default constructor is required for " +
-                            "now in ActiveAndroid models, as the process to " +
-                            "populate the ORM model is : " +
-                            "1. instantiate default model " +
-                            "2. populate fields"
+                "Your model " + type.getName() + " does not define a default " +
+                    "constructor. The default constructor is required for " +
+                    "now in ActiveAndroid models, as the process to " +
+                    "populate the ORM model is : " +
+                    "1. instantiate default model " +
+                    "2. populate fields"
             );
         } catch (Exception e) {
             Log.e("Failed to process cursor.", e);

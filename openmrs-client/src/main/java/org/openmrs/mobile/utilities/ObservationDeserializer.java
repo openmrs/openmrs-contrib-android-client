@@ -27,7 +27,6 @@ import org.openmrs.mobile.models.Observation;
 import java.lang.reflect.Type;
 
 public class ObservationDeserializer implements JsonDeserializer<Observation> {
-
     private static final String UUID_KEY = "uuid";
     private static final String DISPLAY_KEY = "display";
     private static final String VALUE_KEY = "value";
@@ -51,15 +50,14 @@ public class ObservationDeserializer implements JsonDeserializer<Observation> {
 
                 if ("Diagnosis order".equals(diagnosisDetail)) {
                     observation.setDiagnosisOrder(
-                            diagnosisDetails.getAsJsonObject().get(VALUE_KEY).getAsJsonObject().get(DISPLAY_KEY).getAsString());
+                        diagnosisDetails.getAsJsonObject().get(VALUE_KEY).getAsJsonObject().get(DISPLAY_KEY).getAsString());
                 } else if ("Diagnosis certainty".equals(diagnosisDetail)) {
                     observation.setDiagnosisCertanity(
-                            diagnosisDetails.getAsJsonObject().get(VALUE_KEY).getAsJsonObject().get(DISPLAY_KEY).getAsString());
+                        diagnosisDetails.getAsJsonObject().get(VALUE_KEY).getAsJsonObject().get(DISPLAY_KEY).getAsString());
                 } else {
                     try {
                         observation.setDiagnosisList(diagnosisDetails.getAsJsonObject().get(VALUE_KEY).getAsJsonObject().get(DISPLAY_KEY).getAsString());
-                    }
-                    catch (IllegalStateException e) {
+                    } catch (IllegalStateException e) {
                         observation.setDiagnosisList(diagnosisDetails.getAsJsonObject().get(VALUE_KEY).getAsString());
                     }
                 }
@@ -74,5 +72,4 @@ public class ObservationDeserializer implements JsonDeserializer<Observation> {
         }
         return observation;
     }
-
 }

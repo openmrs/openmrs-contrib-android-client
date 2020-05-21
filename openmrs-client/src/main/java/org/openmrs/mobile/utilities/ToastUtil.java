@@ -30,9 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class ToastUtil {
-
     private static OpenMRSLogger logger = OpenMRS.getInstance().getOpenMRSLogger();
-
     private static List<ToastThread> toastQueue = new ArrayList<>();
     private static boolean isAppVisible = true;
 
@@ -81,8 +79,9 @@ public final class ToastUtil {
 
     private static void showToast(Context context, ToastType type,
                                   String text, final int duration) {
-        if (!isAppVisible)
+        if (!isAppVisible) {
             return;
+        }
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View toastRoot = inflater.inflate(R.layout.toast, null);
 
@@ -92,10 +91,10 @@ public final class ToastUtil {
         toastText.setText(text);
 
         bitmap = ImageUtils.decodeBitmapFromResource(
-                context.getResources(),
-                getImageResId(type),
-                toastImage.getLayoutParams().width,
-                toastImage.getLayoutParams().height);
+            context.getResources(),
+            getImageResId(type),
+            toastImage.getLayoutParams().width,
+            toastImage.getLayoutParams().height);
         toastImage.setImageBitmap(bitmap);
 
         logger.d("Decode bitmap: " + bitmap.toString());

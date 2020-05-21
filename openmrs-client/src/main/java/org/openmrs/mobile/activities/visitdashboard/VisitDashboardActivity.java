@@ -26,9 +26,7 @@ import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 public class VisitDashboardActivity extends ACBaseActivity {
-
     public VisitDashboardPresenter mPresenter;
-
     public Menu menu;
 
     @Override
@@ -40,13 +38,13 @@ public class VisitDashboardActivity extends ACBaseActivity {
 
         // Create fragment
         VisitDashboardFragment visitDashboardFragment =
-                (VisitDashboardFragment) getSupportFragmentManager().findFragmentById(R.id.visitDashboardContentFrame);
+            (VisitDashboardFragment) getSupportFragmentManager().findFragmentById(R.id.visitDashboardContentFrame);
         if (visitDashboardFragment == null) {
             visitDashboardFragment = VisitDashboardFragment.newInstance();
         }
         if (!visitDashboardFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    visitDashboardFragment, R.id.visitDashboardContentFrame);
+                visitDashboardFragment, R.id.visitDashboardContentFrame);
         }
 
         // Create the presenter

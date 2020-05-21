@@ -30,13 +30,11 @@ import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class PatientDashboardDiagnosisPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientDiagnosisPresenter {
-
     private PatientDashboardContract.ViewPatientDiagnosis mPatientDiagnosisView;
     private EncounterDAO encounterDAO;
 
-
     public PatientDashboardDiagnosisPresenter(String id,
-                                            PatientDashboardContract.ViewPatientDiagnosis patientDiagnosisView) {
+                                              PatientDashboardContract.ViewPatientDiagnosis patientDiagnosisView) {
         this.mPatient = new PatientDAO().findPatientByID(id);
         this.mPatientDiagnosisView = patientDiagnosisView;
         this.encounterDAO = new EncounterDAO();
@@ -57,8 +55,8 @@ public class PatientDashboardDiagnosisPresenter extends PatientDashboardMainPres
         for (Encounter encounter : encounters) {
             for (Observation obs : encounter.getObservations()) {
                 if (obs.getDiagnosisList() != null
-                        && !obs.getDiagnosisList().equals(ApplicationConstants.EMPTY_STRING)
-                        && !diagnosis.contains(obs.getDiagnosisList())) {
+                    && !obs.getDiagnosisList().equals(ApplicationConstants.EMPTY_STRING)
+                    && !diagnosis.contains(obs.getDiagnosisList())) {
                     diagnosis.add(obs.getDiagnosisList());
                 }
             }
@@ -74,9 +72,8 @@ public class PatientDashboardDiagnosisPresenter extends PatientDashboardMainPres
     @Override
     public void loadDiagnosis() {
         addSubscription(
-                encounterDAO.getAllEncountersByType(mPatient.getId(), new EncounterType(EncounterType.VISIT_NOTE))
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(encounters -> mPatientDiagnosisView.setDiagnosesToDisplay(getAllDiagnosis(encounters))));
+            encounterDAO.getAllEncountersByType(mPatient.getId(), new EncounterType(EncounterType.VISIT_NOTE))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(encounters -> mPatientDiagnosisView.setDiagnosesToDisplay(getAllDiagnosis(encounters))));
     }
-
 }

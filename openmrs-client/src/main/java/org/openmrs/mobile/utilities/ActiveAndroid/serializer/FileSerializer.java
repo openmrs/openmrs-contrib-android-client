@@ -18,7 +18,6 @@ import java.io.File;
  * limitations under the License.
  */
 
-
 public final class FileSerializer extends TypeSerializer {
     public Class<?> getDeserializedType() {
         return File.class;

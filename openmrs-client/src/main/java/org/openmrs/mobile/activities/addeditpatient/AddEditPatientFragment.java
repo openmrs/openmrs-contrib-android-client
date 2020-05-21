@@ -56,6 +56,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringDef;
 import androidx.appcompat.app.AlertDialog;
 
 import com.google.android.gms.common.api.ApiException;
@@ -97,6 +98,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.lang.annotation.Retention;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -110,6 +112,7 @@ import permissions.dispatcher.OnShowRationale;
 import permissions.dispatcher.PermissionRequest;
 import permissions.dispatcher.RuntimePermissions;
 
+import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 @RuntimePermissions
 public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContract.Presenter> implements AddEditPatientContract.View, CameraOrGalleryPickerDialog.onInputSelected {
@@ -128,7 +131,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private TextInputLayout middleNameTIL;
     private TextInputLayout lastNameTIL;
     private TextInputLayout address1TIL;
-
     private EditText edfName;
     private EditText edmName;
     private EditText edlName;
@@ -141,26 +143,19 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private AutoCompleteTextView edState;
     private CountryCodePicker mCountryCodePicker;
     private EditText edPostal;
-
     private RadioGroup gen;
     private ProgressBar progressBar;
     private ProgressBar city_progressBar;
-
     private TextView fNameError;
     private TextView lNameError;
     private TextView dobError;
     private TextView genderError;
     private TextView addrError;
-
     private ImageButton datePicker;
-
     private DateTimeFormatter dateTimeFormatter;
-
     private ImageView patientImageView;
-
     private ArrayList<String> cityList = new ArrayList<>();
     private PlacesClient placesClient;
-
     private FloatingActionButton capturePhotoBtn;
     private Bitmap patientPhoto = null;
     private String patientName;
@@ -168,9 +163,15 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private final static int IMAGE_REQUEST = 1;
     private final static int GALLERY_IMAGE_REQUEST = 2;
     private OpenMRSLogger logger = new OpenMRSLogger();
-
     private boolean isUpdatePatient = false;
     private Patient updatedPatient;
+
+    @Retention(SOURCE)
+    @StringDef({StringValue.MALE, StringValue.FEMALE})
+    public @interface StringValue {
+        String FEMALE = "F";
+        String MALE = "M";
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -211,8 +212,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
             dateTimeFormatter = DateTimeFormat.forPattern(DateUtils.DEFAULT_DATE_FORMAT);
             String minimumDate = DateTime.now().minusYears(
-                    ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE)
-                    .toString(dateTimeFormatter);
+                ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE)
+                .toString(dateTimeFormatter);
             String maximumDate = DateTime.now().toString(dateTimeFormatter);
             if(unidentifiedCheckBox.isChecked()) {
                 dobError.setText(getString(R.string.dob_error_for_unidentified));
@@ -235,7 +236,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         ScrollView scrollView = this.getActivity().findViewById(R.id.scrollView);
         scrollView.smoothScrollTo(0, scrollView.getPaddingTop());
     }
-
 
     private Patient updatePatientWithData(Patient patient) {
         String emptyError = getString(R.string.emptyerror);
@@ -362,7 +362,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             String unvalidatedDate = edDob.getText().toString().trim();
 
             DateTime minDateOfBirth = DateTime.now().minusYears(
-                    ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE);
+                ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE);
             DateTime maxDateOfBirth = DateTime.now();
 
             if (DateUtils.validateDate(unvalidatedDate, minDateOfBirth, maxDateOfBirth)) {
@@ -376,21 +376,21 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         patient.setBirthdate(birthdate);
 
         // Validating gender
-        String[] genderChoices = {"M", "F"};
+        String[] genderChoices = {StringValue.MALE, StringValue.FEMALE};
         int index = gen.indexOfChild(getActivity().findViewById(gen.getCheckedRadioButtonId()));
         if (index != -1) {
             patient.setGender(genderChoices[index]);
         } else {
             patient.setGender(null);
         }
-
+        
         // Add patient photo
-        if (patientPhoto != null)
+        if (patientPhoto != null){
             patient.setPhoto(patientPhoto);
+        }
 
         return patient;
     }
-
 
     private Patient createPatient() {
         Patient patient = new Patient();
@@ -447,16 +447,16 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     @Override
     public boolean areFieldsNotEmpty() {
         return (!ViewUtils.isEmpty(edfName) ||
-                (!ViewUtils.isEmpty(edmName)) ||
-                (!ViewUtils.isEmpty(edlName)) ||
-                (!ViewUtils.isEmpty(edDob)) ||
-                (!ViewUtils.isEmpty(edYear)) ||
-                (!ViewUtils.isEmpty(edAddr1)) ||
-                (!ViewUtils.isEmpty(edAddr2)) ||
-                (!ViewUtils.isEmpty(edCity)) ||
-                (!ViewUtils.isEmpty(edState)) ||
-                (!ViewUtils.isCountryCodePickerEmpty(mCountryCodePicker)) ||
-                (!ViewUtils.isEmpty(edPostal)));
+            (!ViewUtils.isEmpty(edmName)) ||
+            (!ViewUtils.isEmpty(edlName)) ||
+            (!ViewUtils.isEmpty(edDob)) ||
+            (!ViewUtils.isEmpty(edYear)) ||
+            (!ViewUtils.isEmpty(edAddr1)) ||
+            (!ViewUtils.isEmpty(edAddr2)) ||
+            (!ViewUtils.isEmpty(edCity)) ||
+            (!ViewUtils.isEmpty(edState)) ||
+            (!ViewUtils.isCountryCodePickerEmpty(mCountryCodePicker)) ||
+            (!ViewUtils.isEmpty(edPostal)));
     }
 
     public static AddEditPatientFragment newInstance() {
@@ -475,7 +475,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         edAddr2 = v.findViewById(R.id.addr2);
         edCity = v.findViewById(R.id.city);
         edState = v.findViewById(R.id.state);
-        mCountryCodePicker=v.findViewById(R.id.ccp);
+        mCountryCodePicker = v.findViewById(R.id.ccp);
         edPostal = v.findViewById(R.id.postal);
 
         gen = v.findViewById(R.id.gender);
@@ -524,12 +524,12 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             if (StringUtils.notNull(patient.getBirthdate()) || StringUtils.notEmpty(patient.getBirthdate())) {
                 bdt = DateUtils.convertTimeString(patient.getBirthdate());
                 edDob.setText(DateUtils.convertTime(DateUtils.convertTime(bdt.toString(), DateUtils.OPEN_MRS_REQUEST_FORMAT),
-                        DateUtils.DEFAULT_DATE_FORMAT));
+                    DateUtils.DEFAULT_DATE_FORMAT));
             }
 
-            if (("M").equals(patient.getGender())) {
+            if ((StringValue.MALE).equals(patient.getGender())) {
                 gen.check(R.id.male);
-            } else if (("F").equals(patient.getGender())) {
+            } else if ((StringValue.FEMALE).equals(patient.getGender())) {
                 gen.check(R.id.female);
             }
 
@@ -559,7 +559,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         if (resourceId != 0) {
             String[] states = getContext().getResources().getStringArray(resourceId);
             ArrayAdapter<String> state_adapter = new ArrayAdapter<>(getContext(),
-                    android.R.layout.simple_dropdown_item_1line, states);
+                android.R.layout.simple_dropdown_item_1line, states);
             edState.setAdapter(state_adapter);
         }
     }
@@ -637,16 +637,15 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         patientImageView.setOnClickListener(view -> {
             if (output != null) {
                 Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setDataAndType(Uri.fromFile(output), "image/jpeg");
+                i.setDataAndType(Uri.fromFile(output), ApplicationConstants.IMAGE_JPEG);
                 startActivity(i);
             } else if (patientPhoto != null) {
                 Intent intent = new Intent(getContext(), PatientPhotoActivity.class);
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
                 patientPhoto.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
-                intent.putExtra("photo", byteArrayOutputStream.toByteArray());
-                intent.putExtra("name", patientName);
+                intent.putExtra(ApplicationConstants.INTENT_KEY_PHOTO, byteArrayOutputStream.toByteArray());
+                intent.putExtra(ApplicationConstants.INTENT_KEY_NAME, patientName);
                 startActivity(intent);
-
             }
         });
 
@@ -669,11 +668,11 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
 
                 FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
-                        .setCountry(mCountryCodePicker.getSelectedCountryNameCode().toLowerCase())
-                        .setTypeFilter(TypeFilter.CITIES)
-                        .setSessionToken(token)
-                        .setQuery(edCity.getText().toString())
-                        .build();
+                    .setCountry(mCountryCodePicker.getSelectedCountryNameCode().toLowerCase())
+                    .setTypeFilter(TypeFilter.CITIES)
+                    .setSessionToken(token)
+                    .setQuery(edCity.getText().toString())
+                    .build();
 
                 placesClient.findAutocompletePredictions(request).addOnSuccessListener(response -> {
                     city_progressBar.setVisibility(View.GONE);
@@ -709,7 +708,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                             edState.setText(primary_text);
                         }
                     });
-
                 }).addOnFailureListener((exception) -> {
                     if (exception instanceof ApiException) {
                         ApiException apiException = (ApiException) exception;
@@ -717,7 +715,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                     }
                     city_progressBar.setVisibility(View.GONE);
                 });
-
             }
 
             @Override
@@ -777,22 +774,22 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     @OnShowRationale({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void showRationaleForCamera(final PermissionRequest request) {
         new AlertDialog.Builder(getActivity())
-                .setMessage(R.string.permission_camera_rationale)
-                .setPositiveButton(R.string.button_allow, (dialog, which) -> request.proceed())
-                .setNegativeButton(R.string.button_deny, (dialog, button) -> request.cancel())
-                .show();
+            .setMessage(R.string.permission_camera_rationale)
+            .setPositiveButton(R.string.button_allow, (dialog, which) -> request.proceed())
+            .setNegativeButton(R.string.button_deny, (dialog, button) -> request.cancel())
+            .show();
     }
 
     @OnPermissionDenied({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void showDeniedForCamera() {
         createSnackbarLong(R.string.permission_camera_denied)
-                .show();
+            .show();
     }
 
     @OnNeverAskAgain({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void showNeverAskForCamera() {
         createSnackbarLong(R.string.permission_camera_neverask)
-                .show();
+            .show();
     }
 
     private Snackbar createSnackbarLong(int stringId) {
@@ -818,7 +815,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
             try {
                 ParcelFileDescriptor parcelFileDescriptor =
-                        getActivity().getContentResolver().openFileDescriptor(data.getData(), "r");
+                    getActivity().getContentResolver().openFileDescriptor(data.getData(), ApplicationConstants.READ_MODE);
                 FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
                 Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
                 parcelFileDescriptor.close();

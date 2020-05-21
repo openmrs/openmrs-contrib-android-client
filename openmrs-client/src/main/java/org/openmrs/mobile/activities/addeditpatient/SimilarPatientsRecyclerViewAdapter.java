@@ -42,7 +42,6 @@ import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<SimilarPatientsRecyclerViewAdapter.PatientViewHolder> {
-
     private List<Patient> patientList;
     private Patient newPatient;
     private Activity mContext;
@@ -90,7 +89,6 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
     }
 
     public class PatientViewHolder extends RecyclerView.ViewHolder {
-
         private LinearLayout mRowLayout;
         private TextView mGivenName;
         private TextView mMiddleName;
@@ -115,16 +113,15 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
             mCity = itemView.findViewById(R.id.patientCity);
             mCountry = itemView.findViewById(R.id.patientCountry);
         }
-
     }
 
     private void downloadPatient(Patient patient) {
         new PatientDAO().savePatient(patient)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(id -> {
-                    new VisitRepository().syncVisitsData(patient);
-                    new VisitRepository().syncLastVitals(patient.getUuid());
-                });
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(id -> {
+                new VisitRepository().syncVisitsData(patient);
+                new VisitRepository().syncLastVitals(patient.getUuid());
+            });
     }
 
     private void setBirthdate(PatientViewHolder holder, Patient patient) {

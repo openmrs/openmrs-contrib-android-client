@@ -14,9 +14,8 @@
 
 package org.openmrs.mobile.activities.settings;
 
-import java.io.File;
-
 import androidx.annotation.NonNull;
+
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
@@ -25,8 +24,9 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.LanguageUtils;
 import org.openmrs.mobile.utilities.ThemeUtils;
 
-public class SettingsPresenter extends BasePresenter implements SettingsContract.Presenter {
+import java.io.File;
 
+public class SettingsPresenter extends BasePresenter implements SettingsContract.Presenter {
     private static final int ONE_KB = 1024;
     @NonNull
     private final SettingsContract.View mSettingsView;
@@ -57,7 +57,7 @@ public class SettingsPresenter extends BasePresenter implements SettingsContract
     private void updateViews() {
         long size = 0;
         String filename = OpenMRS.getInstance().getOpenMRSDir()
-                + File.separator + mOpenMRSLogger.getLogFilename();
+            + File.separator + mOpenMRSLogger.getLogFilename();
         try {
             File file = new File(filename);
             size = file.length();

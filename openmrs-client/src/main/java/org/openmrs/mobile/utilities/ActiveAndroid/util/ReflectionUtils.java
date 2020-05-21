@@ -16,20 +16,20 @@ package org.openmrs.mobile.utilities.ActiveAndroid.util;
  * limitations under the License.
  */
 
+import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+
+import org.openmrs.mobile.utilities.ActiveAndroid.Model;
+import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Column;
+import org.openmrs.mobile.utilities.ActiveAndroid.serializer.TypeSerializer;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
-
-import android.content.Context;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import org.openmrs.mobile.utilities.ActiveAndroid.Model;
-import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Column;
-import org.openmrs.mobile.utilities.ActiveAndroid.serializer.TypeSerializer;
-
 
 public final class ReflectionUtils {
     //////////////////////////////////////////////////////////////////////////////////////
@@ -50,7 +50,7 @@ public final class ReflectionUtils {
     public static <T> T getMetaData(Context context, String name) {
         try {
             final ApplicationInfo ai = context.getPackageManager().getApplicationInfo(context.getPackageName(),
-                    PackageManager.GET_META_DATA);
+                PackageManager.GET_META_DATA);
 
             if (ai.metaData != null) {
                 return (T) ai.metaData.get(name);

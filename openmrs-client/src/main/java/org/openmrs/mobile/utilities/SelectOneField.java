@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SelectOneField implements Serializable, Parcelable {
-
     private String concept = null;
     private Answer chosenAnswer = null;
     private List<Answer> answerList;

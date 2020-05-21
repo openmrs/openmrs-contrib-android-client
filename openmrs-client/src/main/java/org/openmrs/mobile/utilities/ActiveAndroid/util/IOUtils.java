@@ -22,7 +22,6 @@ import java.io.Closeable;
 import java.io.IOException;
 
 public class IOUtils {
-
     /**
      * <p>
      * Unconditionally close a {@link Closeable}.

@@ -25,7 +25,6 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.ACBaseFragment;
 
 public class PatientDashboardFragment extends ACBaseFragment<PatientDashboardContract.PatientDashboardMainPresenter> implements PatientDashboardContract.ViewPatientMain {
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

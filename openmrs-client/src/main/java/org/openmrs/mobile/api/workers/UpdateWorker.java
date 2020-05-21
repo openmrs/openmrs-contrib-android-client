@@ -14,14 +14,15 @@
 package org.openmrs.mobile.api.workers;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -34,6 +35,7 @@ import org.openmrs.mobile.models.PatientDto;
 import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,7 +45,6 @@ public class UpdateWorker extends Worker {
     private static final int ON_FAILURE = 2;
     private static final int ON_UNSUCCESSFUL_RESPONSE_PHOTO_UPDATE = 3;
     private static final int ON_FAILURE_RESPONSE_PHOTO_UPDATE = 4;
-
     private RestApi restApi;
     private OpenMRSLogger logger;
     private Handler mHandler;
@@ -60,24 +61,23 @@ public class UpdateWorker extends Worker {
                 switch (msg.what) {
                     case ON_SUCCESS:
                         String updateSuccessPatientName = (String) msg.obj;
-                        ToastUtil.success(Resources.getSystem().getString(R.string.patient_update_successful, updateSuccessPatientName));
+                        ToastUtil.success(getApplicationContext().getString(R.string.patient_update_successful, updateSuccessPatientName));
                         break;
                     case ON_FAILURE:
                         String updateFailedPatientName = (String) msg.obj;
-                        ToastUtil.error(Resources.getSystem().getString(R.string.patient_update_unsuccessful, updateFailedPatientName));
+                        ToastUtil.error(getApplicationContext().getString(R.string.patient_update_unsuccessful, updateFailedPatientName));
                         break;
                     case ON_UNSUCCESSFUL_RESPONSE_PHOTO_UPDATE:
                         responseMessage = (String) msg.obj;
-                        ToastUtil.error(Resources.getSystem().getString(R.string.patient_photo_update_unsuccessful, responseMessage));
+                        ToastUtil.error(getApplicationContext().getString(R.string.patient_photo_update_unsuccessful, responseMessage));
                     case ON_FAILURE_RESPONSE_PHOTO_UPDATE:
                         responseMessage = (String) msg.obj;
-                        ToastUtil.notify(Resources.getSystem().getString(R.string.patient_photo_update_unsuccessful, responseMessage));
+                        ToastUtil.notify(getApplicationContext().getString(R.string.patient_photo_update_unsuccessful, responseMessage));
                 }
                 super.handleMessage(msg);
             }
         };
     }
-
 
     @NonNull
     @Override
@@ -121,8 +121,9 @@ public class UpdateWorker extends Worker {
                         patient.setBirthdate(patientDto.getPerson().getBirthdate());
 
                         patient.setUuid(patient.getUuid());
-                        if (patient.getPhoto() != null)
+                        if (patient.getPhoto() != null) {
                             uploadPatientPhoto(patient);
+                        }
 
                         new PatientDAO().updatePatient(patient.getId(), patient);
 

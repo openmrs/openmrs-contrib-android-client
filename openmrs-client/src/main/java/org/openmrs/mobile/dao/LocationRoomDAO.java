@@ -14,17 +14,18 @@
 
 package org.openmrs.mobile.dao;
 
-import java.util.List;
-
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
-import io.reactivex.Single;
+
 import org.openmrs.mobile.databases.entities.LocationEntity;
+
+import java.util.List;
+
+import io.reactivex.Single;
 
 @Dao
 public interface LocationRoomDAO {
-
     @Insert
     long saveLocation(LocationEntity entity);
 

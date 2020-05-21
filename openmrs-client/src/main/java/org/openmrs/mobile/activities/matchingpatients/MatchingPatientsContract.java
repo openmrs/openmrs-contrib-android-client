@@ -21,9 +21,7 @@ import org.openmrs.mobile.models.Patient;
 import java.util.List;
 
 public interface MatchingPatientsContract {
-
-    interface View extends BaseView<Presenter>{
-
+    interface View extends BaseView<Presenter> {
         void showPatientsData(Patient patient, List<Patient> matchingPatients);
 
         void enableMergeButton();
@@ -38,7 +36,6 @@ public interface MatchingPatientsContract {
     }
 
     interface Presenter extends BasePresenterContract {
-
         void setSelectedPatient(Patient patient);
 
         void removeSelectedPatient();

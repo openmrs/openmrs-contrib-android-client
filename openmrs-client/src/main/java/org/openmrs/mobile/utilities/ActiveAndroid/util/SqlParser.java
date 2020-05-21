@@ -22,9 +22,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class SqlParser {
-
     public final static int STATE_NONE = 0;
     public final static int STATE_STRING = 1;
     public final static int STATE_COMMENT = 2;
@@ -48,33 +46,26 @@ public class SqlParser {
                         state = STATE_NONE;
                     }
                     continue;
-
                 } else if (state == STATE_COMMENT) {
                     if (isNewLine(c)) {
                         state = STATE_NONE;
                     }
                     continue;
-
                 } else if (state == STATE_NONE && tokenizer.skip("/*")) {
                     state = STATE_COMMENT_BLOCK;
                     continue;
-
                 } else if (state == STATE_NONE && tokenizer.skip("--")) {
                     state = STATE_COMMENT;
                     continue;
-
                 } else if (state == STATE_NONE && c == ';') {
                     final String command = sb.toString().trim();
                     commands.add(command);
                     sb.setLength(0);
                     continue;
-
                 } else if (state == STATE_NONE && c == '\'') {
                     state = STATE_STRING;
-
                 } else if (state == STATE_STRING && c == '\'') {
                     state = STATE_NONE;
-
                 }
 
                 if (state == STATE_NONE || state == STATE_STRING) {
@@ -87,7 +78,6 @@ public class SqlParser {
                     }
                 }
             }
-
         } finally {
             IOUtils.closeQuietly(buffer);
         }

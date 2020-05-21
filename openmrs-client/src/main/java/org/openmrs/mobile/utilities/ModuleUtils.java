@@ -19,7 +19,6 @@ import org.openmrs.mobile.models.Module;
 import java.util.List;
 
 public class ModuleUtils {
-
     public static boolean isRegistrationCore1_7orAbove(List<Module> modules) {
         for (Module module : modules) {
             if ("org.openmrs.module.registrationcore".equals(module.getPackageName())) {
@@ -34,7 +33,7 @@ public class ModuleUtils {
 
     private static int parseVersion(String version) {
         String result = version;
-        if(version.contains("-SNAPSHOT")){
+        if (version.contains("-SNAPSHOT")) {
             result = version.replace("-SNAPSHOT", "");
         }
         return Integer.valueOf(result);

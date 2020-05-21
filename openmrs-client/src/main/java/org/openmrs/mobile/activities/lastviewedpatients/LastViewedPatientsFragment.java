@@ -46,7 +46,6 @@ import java.util.List;
 import java.util.Set;
 
 public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatientsContract.Presenter> implements LastViewedPatientsContract.View {
-
     private static final String PATIENT_LIST = "patient_list";
     private static final String SELECTED_PATIENT_POSITIONS = "selected_patient_positions";
     private TextView mEmptyList;
@@ -54,7 +53,6 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
     private RecyclerView mPatientsRecyclerView;
     private LastViewedPatientRecyclerViewAdapter mAdapter;
     public SwipeRefreshLayout mSwipeRefreshLayout;
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -70,8 +68,8 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
             if (NetworkUtils.hasNetwork()) {
                 mPresenter.refresh();
                 mAdapter.finishActionMode();
-            }else {
-                ToastUtil.error("No Internet Connection");
+            } else {
+                ToastUtil.error(getString(R.string.no_internet_connection_message));
                 getActivity().finish();
             }
         });

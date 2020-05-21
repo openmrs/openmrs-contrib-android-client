@@ -42,7 +42,7 @@ class Answer : Serializable, Parcelable {
         dest.writeString(this.label)
     }
 
-    constructor() {}
+    constructor()
 
     constructor(`in`: Parcel) {
         this.concept = `in`.readString()

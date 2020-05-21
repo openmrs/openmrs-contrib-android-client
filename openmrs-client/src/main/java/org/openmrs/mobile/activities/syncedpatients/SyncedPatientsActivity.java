@@ -34,7 +34,6 @@ public class SyncedPatientsActivity extends ACBaseActivity {
     public SyncedPatientsPresenter mPresenter;
     private SearchView searchView;
     private String query;
-
     //Menu Items
     private MenuItem mAddPatientMenuItem;
 

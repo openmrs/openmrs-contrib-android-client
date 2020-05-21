@@ -24,7 +24,6 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 
 public class FormEntryPatientListActivity extends ACBaseActivity {
-
     private FormEntryPatientListContract.Presenter mPresenter;
 
     @Override
@@ -34,17 +33,17 @@ public class FormEntryPatientListActivity extends ACBaseActivity {
 
         // Create fragment
         FormEntryPatientListFragment formEntryPatientListFragment =
-                (FormEntryPatientListFragment) getSupportFragmentManager().findFragmentById(R.id.formEntryPatientListContentFrame);
+            (FormEntryPatientListFragment) getSupportFragmentManager().findFragmentById(R.id.formEntryPatientListContentFrame);
         if (formEntryPatientListFragment == null) {
             formEntryPatientListFragment = FormEntryPatientListFragment.newInstance();
         }
         if (!formEntryPatientListFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    formEntryPatientListFragment, R.id.formEntryPatientListContentFrame);
+                formEntryPatientListFragment, R.id.formEntryPatientListContentFrame);
         }
 
         // Create the presenter
-        mPresenter = new FormEntryPatientListPresenter (formEntryPatientListFragment);
+        mPresenter = new FormEntryPatientListPresenter(formEntryPatientListFragment);
     }
 
     @Override
@@ -72,5 +71,4 @@ public class FormEntryPatientListActivity extends ACBaseActivity {
         });
         return true;
     }
-
 }

@@ -16,6 +16,8 @@ package org.openmrs.mobile.activities.lastviewedpatients;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -31,21 +33,17 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LastViewedPatientsPresenter extends BasePresenter implements LastViewedPatientsContract.Presenter{
-
+public class LastViewedPatientsPresenter extends BasePresenter implements LastViewedPatientsContract.Presenter {
     private static final int MIN_NUMBER_OF_PATIENTS_TO_SHOW = 7;
     // View
     @NonNull
     private final LastViewedPatientsContract.View mLastViewedPatientsView;
-
     private PatientDAO patientDAO;
     private RestApi restApi;
-
     private String mQuery;
     private String lastQuery = "";
     private int limit = 15;
@@ -86,7 +84,7 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
         updateLastViewedList(new ArrayList<>());
     }
 
-    private void updateLastViewedList(List<Patient> patients){
+    private void updateLastViewedList(List<Patient> patients) {
         Call<Results<Patient>> call = restApi.getLastViewedPatients(limit, startIndex);
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
@@ -100,12 +98,11 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
                         mLastViewedPatientsView.updateList(patients);
                         setViewAfterPatientDownloadSuccess();
                         mLastViewedPatientsView.enableSwipeRefresh(true);
-                        if(!isDownloadedAll){
+                        if (!isDownloadedAll) {
                             mLastViewedPatientsView.showRecycleViewProgressBar(true);
                         }
                     }
-                }
-                else {
+                } else {
                     setViewAfterPatientDownloadError(response.message());
                     mLastViewedPatientsView.enableSwipeRefresh(true);
                 }
@@ -129,11 +126,11 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
                 if (response.isSuccessful()) {
                     mLastViewedPatientsView.updateList(filterNotDownloadedPatients(response.body().getResults()));
                     setViewAfterPatientDownloadSuccess();
-                }
-                else {
+                } else {
                     setViewAfterPatientDownloadError(response.message());
                 }
             }
+
             @Override
             public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
                 setViewAfterPatientDownloadError(t.getMessage());
@@ -153,11 +150,10 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
                         mLastViewedPatientsView.showRecycleViewProgressBar(false);
                         mLastViewedPatientsView.addPatientsToList(filterNotDownloadedPatients(patients));
                         setStartIndexIfMorePatientsAvailable(response.body().getLinks());
-                        if(!isDownloadedAll){
+                        if (!isDownloadedAll) {
                             mLastViewedPatientsView.showRecycleViewProgressBar(true);
                         }
-                    }
-                    else {
+                    } else {
                         ToastUtil.error(response.message());
                         mLastViewedPatientsView.showRecycleViewProgressBar(false);
                     }
@@ -185,13 +181,13 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
     private void setStartIndexIfMorePatientsAvailable(List<Link> links) {
         boolean linkFound = false;
         for (Link link : links) {
-            if("next".equals(link.getRel())){
+            if ("next".equals(link.getRel())) {
                 startIndex += limit;
                 isDownloadedAll = false;
                 linkFound = true;
             }
         }
-        if(!linkFound){
+        if (!linkFound) {
             isDownloadedAll = true;
         }
     }
@@ -222,8 +218,8 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
 
     public List<Patient> filterNotDownloadedPatients(List<Patient> patients) {
         List<Patient> newPatientList = new LinkedList<>();
-        for (Patient patient: patients){
-            if(!patientDAO.isUserAlreadySaved(patient.getUuid())){
+        for (Patient patient : patients) {
+            if (!patientDAO.isUserAlreadySaved(patient.getUuid())) {
                 newPatientList.add(patient);
             }
         }
@@ -241,8 +237,7 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
     public void refresh() {
         if (!StringUtils.isBlank(mQuery) && StringUtils.notEmpty(mQuery)) {
             findPatients(mQuery);
-        }
-        else {
+        } else {
             updateLastViewedList();
         }
     }
@@ -250,5 +245,4 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
     public void setLastQueryEmpty() {
         lastQuery = "";
     }
-
 }

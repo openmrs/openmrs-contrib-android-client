@@ -1,23 +1,21 @@
 package org.openmrs.mobile.activities.providerdashboard;
 
 import android.content.Context;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import org.jetbrains.annotations.NotNull;
 
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProviderDashboardPagerAdapter extends FragmentPagerAdapter {
-
     private static final int TAB_COUNT = 2;
-
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
-
     private Context context;
 
     ProviderDashboardPagerAdapter(FragmentManager fm, Context context) {
@@ -46,5 +44,4 @@ public class ProviderDashboardPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return TAB_COUNT;
     }
-
 }

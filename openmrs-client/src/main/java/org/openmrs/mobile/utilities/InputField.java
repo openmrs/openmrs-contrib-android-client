@@ -20,12 +20,10 @@ import android.os.Parcelable;
 import java.io.Serializable;
 
 public class InputField implements Serializable, Parcelable {
-
     private int id;
     private String concept;
     private double value = -1.0;
     private boolean isRed = false;
-
 
     public InputField(String concept) {
         this.concept = concept;
@@ -57,7 +55,7 @@ public class InputField implements Serializable, Parcelable {
     }
 
     public void setIsRed(boolean isRed) {
-        this.isRed=isRed;
+        this.isRed = isRed;
     }
 
     public boolean isRed() {
@@ -74,14 +72,14 @@ public class InputField implements Serializable, Parcelable {
         dest.writeInt(this.id);
         dest.writeString(this.concept);
         dest.writeDouble(this.value);
-        dest.writeInt(this.isRed?1:0);
+        dest.writeInt(this.isRed ? 1 : 0);
     }
 
     protected InputField(Parcel in) {
         this.id = in.readInt();
         this.concept = in.readString();
         this.value = in.readDouble();
-        this.isRed = (in.readInt()==1);
+        this.isRed = (in.readInt() == 1);
     }
 
     public static final Parcelable.Creator<InputField> CREATOR = new Parcelable.Creator<InputField>() {

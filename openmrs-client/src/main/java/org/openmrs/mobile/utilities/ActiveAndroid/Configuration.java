@@ -26,16 +26,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class Configuration {
-
     public final static String SQL_PARSER_LEGACY = "legacy";
     public final static String SQL_PARSER_DELIMITED = "delimited";
 
     //////////////////////////////////////////////////////////////////////////////////////
     // PRIVATE MEMBERS
     //////////////////////////////////////////////////////////////////////////////////////
-
     private Context mContext;
     private String mDatabaseName;
     private int mDatabaseVersion;
@@ -96,13 +93,11 @@ public class Configuration {
         //////////////////////////////////////////////////////////////////////////////////////
         // PRIVATE CONSTANTS
         //////////////////////////////////////////////////////////////////////////////////////
-
         private static final String AA_DB_NAME = "AA_DB_NAME";
         private static final String AA_DB_VERSION = "AA_DB_VERSION";
         private final static String AA_MODELS = "AA_MODELS";
         private final static String AA_SERIALIZERS = "AA_SERIALIZERS";
         private final static String AA_SQL_PARSER = "AA_SQL_PARSER";
-
         private static final int DEFAULT_CACHE_SIZE = 1024;
         private static final String DEFAULT_DB_NAME = "Application.db";
         private static final String DEFAULT_SQL_PARSER = SQL_PARSER_LEGACY;
@@ -110,9 +105,7 @@ public class Configuration {
         //////////////////////////////////////////////////////////////////////////////////////
         // PRIVATE MEMBERS
         //////////////////////////////////////////////////////////////////////////////////////
-
         private Context mContext;
-
         private Integer mCacheSize;
         private String mDatabaseName;
         private Integer mDatabaseVersion;
@@ -312,6 +305,5 @@ public class Configuration {
 
             return typeSerializers;
         }
-
     }
 }

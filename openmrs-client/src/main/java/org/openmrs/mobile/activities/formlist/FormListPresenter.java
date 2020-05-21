@@ -14,7 +14,6 @@
 
 package org.openmrs.mobile.activities.formlist;
 
-
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.models.EncounterType;
@@ -26,9 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FormListPresenter extends BasePresenter implements FormListContract.Presenter {
-
     private static String[] formsStringArray = null;
-
     private FormListContract.View view;
     private Long patientId;
     private List<FormResource> formResourceList;
@@ -73,7 +70,6 @@ public class FormListPresenter extends BasePresenter implements FormListContract
                     formResourceList.add(formResource);
                 }
             }
-
         }
 
         int size = formResourceList.size();
@@ -89,8 +85,9 @@ public class FormListPresenter extends BasePresenter implements FormListContract
         List<FormResource> valueRef = formResourceList.get(position).getResourceList();
         String valueRefString = null;
         for (FormResource resource : valueRef) {
-            if (resource.getName().equals("json"))
+            if (resource.getName().equals("json")) {
                 valueRefString = resource.getValueReference();
+            }
         }
 
         EncounterType encType = encounterDAO.getEncounterTypeByFormName(formsStringArray[position]);
@@ -98,8 +95,7 @@ public class FormListPresenter extends BasePresenter implements FormListContract
             String encounterType = encType.getUuid();
             view.startFormDisplayActivity(formName, patientId, valueRefString, encounterType);
         } else {
-            view.showError("There is no encounter type called " + formName);
+            view.showError(formName);
         }
     }
-
 }

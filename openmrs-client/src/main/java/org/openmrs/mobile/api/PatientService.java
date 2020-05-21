@@ -37,7 +37,6 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class PatientService extends IntentService {
-
     public static final String PATIENT_SERVICE_TAG = "PATIENT_SERVICE";
     private boolean calculatedLocally = false;
 
@@ -47,12 +46,12 @@ public class PatientService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(NetworkUtils.isOnline()) {
+        if (NetworkUtils.isOnline()) {
             PatientAndMatchesWrapper patientAndMatchesWrapper = new PatientAndMatchesWrapper();
             List<Patient> patientList = new PatientDAO().getUnsyncedPatients();
             final ListIterator<Patient> it = patientList.listIterator();
             while (it.hasNext()) {
-                final Patient patient=it.next();
+                final Patient patient = it.next();
                 fetchSimilarPatients(patient, patientAndMatchesWrapper);
             }
             if (!patientAndMatchesWrapper.getMatchingPatients().isEmpty()) {
@@ -64,16 +63,17 @@ public class PatientService extends IntentService {
             }
         } else {
             ToastUtil.error(getString(R.string.activity_no_internet_connection) +
-                    getString(R.string.activity_sync_after_connection));
+                getString(R.string.activity_sync_after_connection));
         }
     }
+
     private void fetchSimilarPatients(final Patient patient, final PatientAndMatchesWrapper patientAndMatchesWrapper) {
         RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<Results<Module>> moduleCall = restApi.getModules(ApplicationConstants.API.FULL);
         try {
             Response<Results<Module>> moduleResp = moduleCall.execute();
-            if(moduleResp.isSuccessful()){
-                if(ModuleUtils.isRegistrationCore1_7orAbove(moduleResp.body().getResults())){
+            if (moduleResp.isSuccessful()) {
+                if (ModuleUtils.isRegistrationCore1_7orAbove(moduleResp.body().getResults())) {
                     fetchSimilarPatientsFromServer(patient, patientAndMatchesWrapper);
                 } else {
                     fetchPatientsAndCalculateLocally(patient, patientAndMatchesWrapper);
@@ -91,9 +91,9 @@ public class PatientService extends IntentService {
         RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<Results<Patient>> patientCall = restApi.getPatients(patient.getName().getGivenName(), ApplicationConstants.API.FULL);
         Response<Results<Patient>> resp = patientCall.execute();
-        if(resp.isSuccessful()){
+        if (resp.isSuccessful()) {
             List<Patient> similarPatient = new PatientComparator().findSimilarPatient(resp.body().getResults(), patient);
-            if(!similarPatient.isEmpty()){
+            if (!similarPatient.isEmpty()) {
                 patientAndMatchesWrapper.addToList(new PatientAndMatchingPatients(patient, similarPatient));
             } else {
                 new PatientRepository().syncPatient(patient);
@@ -106,7 +106,7 @@ public class PatientService extends IntentService {
         RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<Results<Patient>> patientCall = restApi.getSimilarPatients(patient.toMap());
         Response<Results<Patient>> patientsResp = patientCall.execute();
-        if(patientsResp.isSuccessful()) {
+        if (patientsResp.isSuccessful()) {
             List<Patient> patientList = patientsResp.body().getResults();
             if (!patientList.isEmpty()) {
                 patientAndMatchesWrapper.addToList(new PatientAndMatchingPatients(patient, patientList));
@@ -115,5 +115,4 @@ public class PatientService extends IntentService {
             }
         }
     }
-
 }

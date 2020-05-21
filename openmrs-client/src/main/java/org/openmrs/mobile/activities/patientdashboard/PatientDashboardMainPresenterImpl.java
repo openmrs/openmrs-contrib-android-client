@@ -22,15 +22,14 @@ import org.openmrs.mobile.models.Patient;
 import rx.schedulers.Schedulers;
 
 public abstract class PatientDashboardMainPresenterImpl extends BasePresenter implements PatientDashboardContract.PatientDashboardMainPresenter {
-
     protected Patient mPatient;
 
     @Override
     public void deletePatient() {
         new PatientDAO().deletePatient(mPatient.getId());
         addSubscription(new VisitDAO().deleteVisitsByPatientId(mPatient.getId())
-                .observeOn(Schedulers.io())
-                .subscribe());
+            .observeOn(Schedulers.io())
+            .subscribe());
     }
 
     @Override

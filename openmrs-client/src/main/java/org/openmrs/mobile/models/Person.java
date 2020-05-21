@@ -10,17 +10,18 @@
 
 package org.openmrs.mobile.models;
 
+import android.graphics.Bitmap;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import org.openmrs.mobile.utilities.ImageUtils;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.graphics.Bitmap;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-import org.openmrs.mobile.utilities.ImageUtils;
-
 public class Person extends Resource implements Serializable {
-
     @SerializedName("names")
     @Expose
     private List<PersonName> names = new ArrayList<>();
@@ -39,13 +40,13 @@ public class Person extends Resource implements Serializable {
     @SerializedName("attributes")
     @Expose
     private List<PersonAttribute> attributes = new ArrayList<>();
-
     private Bitmap photo;
 
     public Person() {
     }
 
-    public Person(List<PersonName> names, String gender, String birthdate, boolean birthdateEstimated, List<PersonAddress> addresses, List<PersonAttribute> attributes, Bitmap photo) {
+    public Person(List<PersonName> names, String gender, String birthdate, boolean birthdateEstimated, List<PersonAddress> addresses, List<PersonAttribute> attributes,
+                  Bitmap photo) {
         this.names = names;
         this.gender = gender;
         this.birthdate = birthdate;
@@ -119,7 +120,6 @@ public class Person extends Resource implements Serializable {
         this.birthdateEstimated = birthdateEstimated;
     }
 
-
     /**
      * @return The addresses
      */
@@ -155,7 +155,6 @@ public class Person extends Resource implements Serializable {
     public void setAttributes(List<PersonAttribute> attributes) {
         this.attributes = attributes;
     }
-
 
     public Bitmap getPhoto() {
         return photo;

@@ -27,7 +27,6 @@ import org.openmrs.mobile.utilities.StringUtils;
 
 public class ProviderManagerDashboardActivity extends ACBaseActivity {
     ProviderManagerDashboardFragment providerManagerDashboardFragment;
-
     private SearchView searchView;
     private String query;
 
@@ -43,13 +42,13 @@ public class ProviderManagerDashboardActivity extends ACBaseActivity {
 
         // Create fragment
         providerManagerDashboardFragment =
-                (ProviderManagerDashboardFragment) getSupportFragmentManager().findFragmentById(R.id.providerManagementContentFrame);
+            (ProviderManagerDashboardFragment) getSupportFragmentManager().findFragmentById(R.id.providerManagementContentFrame);
         if (providerManagerDashboardFragment == null) {
             providerManagerDashboardFragment = ProviderManagerDashboardFragment.newInstance();
         }
         if (!providerManagerDashboardFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    providerManagerDashboardFragment, R.id.providerManagementContentFrame);
+                providerManagerDashboardFragment, R.id.providerManagementContentFrame);
         }
 
         ProviderManagerDashboardPresenter mPresenter = new ProviderManagerDashboardPresenter(providerManagerDashboardFragment);

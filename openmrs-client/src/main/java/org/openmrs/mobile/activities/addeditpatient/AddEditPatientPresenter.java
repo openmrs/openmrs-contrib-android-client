@@ -15,9 +15,11 @@
 package org.openmrs.mobile.activities.addeditpatient;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.libraries.places.api.net.PlacesClient;
+
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -43,7 +45,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddEditPatientPresenter extends BasePresenter implements AddEditPatientContract.Presenter {
-
     private final AddEditPatientContract.View mPatientInfoView;
     private PatientRepository patientRepository;
     private RestApi restApi;
@@ -203,7 +204,8 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             mPatient = patient;
             return true;
         } else {
-            mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, addressError, countryError, genderError, countryNull, stateError, cityError, postalError);
+            mPatientInfoView
+                .setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, addressError, countryError, genderError, countryNull, stateError, cityError, postalError);
             return false;
         }
     }
@@ -346,5 +348,4 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     public boolean isRegisteringPatient() {
         return registeringPatient;
     }
-
 }

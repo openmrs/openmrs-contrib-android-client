@@ -29,29 +29,27 @@ import org.openmrs.mobile.activities.dashboard.DashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 
 public class NotificationUtil {
-
-    public static void notify(String title, String message)
-    {
-        Bitmap bitmap = BitmapFactory.decodeResource( OpenMRS.getInstance().getResources(), R.drawable.ic_openmrs);
+    public static void notify(String title, String message) {
+        Bitmap bitmap = BitmapFactory.decodeResource(OpenMRS.getInstance().getResources(), R.drawable.ic_openmrs);
         NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(OpenMRS.getInstance())
-                        .setSmallIcon(R.drawable.ic_stat_notify_openmrs)
-                        .setLargeIcon(bitmap)
-                        .setContentTitle(title)
-                        .setContentText(message);
+            new NotificationCompat.Builder(OpenMRS.getInstance())
+                .setSmallIcon(R.drawable.ic_stat_notify_openmrs)
+                .setLargeIcon(bitmap)
+                .setContentTitle(title)
+                .setContentText(message);
         Intent resultIntent = new Intent(OpenMRS.getInstance(), DashboardActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(OpenMRS.getInstance());
         stackBuilder.addParentStack(DashboardActivity.class);
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent =
-                stackBuilder.getPendingIntent(
-                        0,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
+            stackBuilder.getPendingIntent(
+                0,
+                PendingIntent.FLAG_UPDATE_CURRENT
+            );
         mBuilder.setContentIntent(resultPendingIntent);
         mBuilder.setAutoCancel(true);
         NotificationManager mNotificationManager =
-                (NotificationManager) OpenMRS.getInstance().getSystemService(Context.NOTIFICATION_SERVICE);
+            (NotificationManager) OpenMRS.getInstance().getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(0, mBuilder.build());
     }
 }

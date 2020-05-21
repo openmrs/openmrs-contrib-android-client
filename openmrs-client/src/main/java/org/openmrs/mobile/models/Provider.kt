@@ -12,11 +12,9 @@ package org.openmrs.mobile.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-
-import java.util.ArrayList
+import java.util.*
 
 @Entity(tableName = "provider_table")
 class Provider : Resource() {

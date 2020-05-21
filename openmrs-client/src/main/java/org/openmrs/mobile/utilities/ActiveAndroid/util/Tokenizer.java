@@ -19,11 +19,8 @@ package org.openmrs.mobile.utilities.ActiveAndroid.util;
 import java.io.IOException;
 import java.io.InputStream;
 
-
 public class Tokenizer {
-
     private final InputStream mStream;
-
     private boolean mIsNext;
     private int mCurrent;
 

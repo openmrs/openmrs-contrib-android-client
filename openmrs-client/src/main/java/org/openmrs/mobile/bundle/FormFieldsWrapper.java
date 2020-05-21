@@ -32,11 +32,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class FormFieldsWrapper implements Serializable, Parcelable {
-
     private List<InputField> inputFields;
     private List<SelectOneField> selectOneFields;
 
-    public FormFieldsWrapper() {}
+    public FormFieldsWrapper() {
+    }
 
     public FormFieldsWrapper(List<InputField> inputFields, List<SelectOneField> selectOneFields) {
         this.inputFields = inputFields;
@@ -59,8 +59,7 @@ public class FormFieldsWrapper implements Serializable, Parcelable {
         this.selectOneFields = selectOneFields;
     }
 
-
-    public static ArrayList<FormFieldsWrapper> create(Encounter encounter){
+    public static ArrayList<FormFieldsWrapper> create(Encounter encounter) {
         ArrayList<FormFieldsWrapper> formFieldsWrapperList = new ArrayList<>();
 
         List<Page> pages = encounter.getForm().getPages();
@@ -73,7 +72,7 @@ public class FormFieldsWrapper implements Serializable, Parcelable {
                 List<Question> questions = section.getQuestions();
                 for (Question questionGroup : questions) {
                     for (Question question : questionGroup.getQuestions()) {
-                        if(question.getQuestionOptions().getRendering().equals("number")) {
+                        if (question.getQuestionOptions().getRendering().equals("number")) {
                             String conceptUuid = question.getQuestionOptions().getConcept();
                             InputField inputField = new InputField(conceptUuid);
                             inputField.setValue(getValue(encounter.getObservations(), conceptUuid));
@@ -81,7 +80,7 @@ public class FormFieldsWrapper implements Serializable, Parcelable {
                         } else if (question.getQuestionOptions().getRendering().equals("select") || question.getQuestionOptions().getRendering().equals("radio")) {
                             String conceptUuid = question.getQuestionOptions().getConcept();
                             SelectOneField selectOneField =
-                                    new SelectOneField(question.getQuestionOptions().getAnswers(), conceptUuid);
+                                new SelectOneField(question.getQuestionOptions().getAnswers(), conceptUuid);
                             Answer chosenAnswer = new Answer();
                             chosenAnswer.setConcept(conceptUuid);
                             chosenAnswer.setLabel(getValue(encounter.getObservations(), conceptUuid).toString());
@@ -100,7 +99,7 @@ public class FormFieldsWrapper implements Serializable, Parcelable {
 
     private static Double getValue(List<Observation> observations, String conceptUuid) {
         for (Observation observation : observations) {
-            if(observation.getConcept().getUuid().equals(conceptUuid)){
+            if (observation.getConcept().getUuid().equals(conceptUuid)) {
                 return Double.valueOf(observation.getDisplayValue());
             }
         }

@@ -14,14 +14,12 @@
 
 package org.openmrs.mobile.application;
 
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.openmrs.mobile.R;
-
 
 public class OpenMRSInflater {
     private LayoutInflater mInflater;
@@ -52,5 +50,4 @@ public class OpenMRSInflater {
         parentLayout.addView(view);
         return parentLayout;
     }
-
 }

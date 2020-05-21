@@ -20,7 +20,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public class PatientAndMatchingPatients implements Serializable {
-
     private Patient patient;
     private List<Patient> matchingPatientList;
 

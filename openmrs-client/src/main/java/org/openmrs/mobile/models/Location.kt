@@ -49,7 +49,7 @@ class Location : Resource {
     var postalCode: String? = null
 
 
-    constructor() {}
+    constructor()
 
     constructor(display: String) {
         this.display = display

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.formlist.FormListContract;
@@ -15,6 +16,7 @@ import org.openmrs.mobile.test.ACUnitTestBase;
 import org.openmrs.mobile.utilities.FormService;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +25,12 @@ import static org.mockito.Matchers.contains;
 import static org.mockito.Mockito.verify;
 
 @PrepareForTest(FormService.class)
+@RunWith(PowerMockRunner.class)
 public class FormListPresenterTest extends ACUnitTestBase {
-
     @Mock
     private FormListContract.View view;
-
     @Mock
     private EncounterDAO encounterDAO;
-
     private FormListPresenter presenter;
     private final int patientId = 1;
 
@@ -114,9 +114,7 @@ public class FormListPresenterTest extends ACUnitTestBase {
         EncounterType encounterType = new EncounterType();
         encounterType.setUuid(encounterTypeUuid);
         Mockito.lenient().when(encounterDAO.getEncounterTypeByFormName(formName)).thenReturn(null);
-
         presenter.listItemClicked(clickedPosition, formName);
-
         verify(view).showError(contains(formName));
     }
 
@@ -143,15 +141,14 @@ public class FormListPresenterTest extends ACUnitTestBase {
     }
 
     private String getExampleFormResourceJson(String name) {
-        return  "{" +
-                "\"display\":\"json\"," +
-                "\"name\":\"" + name + "\"," +
-                "\"valueReference\":\"" +
-                    "{" +
-                    "\\\"name\\\":\\\"Some Form\\\"," +
-                    "\\\"uuid\\\":\\\"77174d67-954f-45c4-a782-d157e70d59f4\\\"" +
-                    "}\"" +
-                "}";
+        return "{" +
+            "\"display\":\"json\"," +
+            "\"name\":\"" + name + "\"," +
+            "\"valueReference\":\"" +
+            "{" +
+            "\\\"name\\\":\\\"Some Form\\\"," +
+            "\\\"uuid\\\":\\\"77174d67-954f-45c4-a782-d157e70d59f4\\\"" +
+            "}\"" +
+            "}";
     }
-
 }

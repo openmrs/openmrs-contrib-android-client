@@ -15,7 +15,6 @@ import android.content.Context;
 import androidx.appcompat.widget.AppCompatEditText;
 
 public class RangeEditText extends AppCompatEditText {
-
     private Double upperlimit;
     private Double lowerlimit;
     private String name;
@@ -24,33 +23,27 @@ public class RangeEditText extends AppCompatEditText {
         super(context);
     }
 
-    public void setUpperlimit(Double upperlimit)
-    {
-        this.upperlimit=upperlimit;
+    public void setUpperlimit(Double upperlimit) {
+        this.upperlimit = upperlimit;
     }
 
-    public double getUpperlimit()
-    {
+    public double getUpperlimit() {
         return upperlimit;
     }
 
-    public void setLowerlimit(Double lowerlimit)
-    {
-        this.lowerlimit=lowerlimit;
+    public void setLowerlimit(Double lowerlimit) {
+        this.lowerlimit = lowerlimit;
     }
 
-    public double getLowerlimit()
-    {
+    public double getLowerlimit() {
         return lowerlimit;
     }
 
-    public void setName(String name)
-    {
-        this.name=name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 }

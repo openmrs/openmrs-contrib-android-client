@@ -11,7 +11,7 @@ package org.openmrs.mobile.models
 
 class IdentifierType : Resource {
 
-    constructor() {}
+    constructor()
 
     constructor(display: String) {
         this.display = display

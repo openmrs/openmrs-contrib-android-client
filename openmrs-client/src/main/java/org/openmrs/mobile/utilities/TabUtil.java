@@ -64,9 +64,9 @@ public final class TabUtil {
         }
 
         try {
-            final Method method = actionBarClass.getDeclaredMethod("setHasEmbeddedTabs", new Class[]{Boolean.TYPE});
+            final Method method = actionBarClass.getDeclaredMethod("setHasEmbeddedTabs", Boolean.TYPE);
             method.setAccessible(true);
-            method.invoke(inActionBar2, new Object[]{inHasEmbeddedTabs});
+            method.invoke(inActionBar2, inHasEmbeddedTabs);
         } catch (NoSuchMethodException e) {
             mLogger.d(e.toString());
         } catch (InvocationTargetException e) {

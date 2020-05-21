@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.utilities;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -31,10 +33,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 import java.util.Collection;
 
-import androidx.annotation.NonNull;
-
 public class ResourceSerializer implements JsonSerializer<Resource> {
-
     public static final String RESOURCE_SERIALIZER = "RESOURCE_SERIALIZER";
     public static final String EXCEPTION = "exception";
 
@@ -91,8 +90,8 @@ public class ResourceSerializer implements JsonSerializer<Resource> {
     private Gson getGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         return gsonBuilder
-                .excludeFieldsWithoutExposeAnnotation()
-                .create();
+            .excludeFieldsWithoutExposeAnnotation()
+            .create();
     }
 
     private JsonElement serializeField(Resource src, JsonSerializationContext context) {
@@ -102,7 +101,6 @@ public class ResourceSerializer implements JsonSerializer<Resource> {
             return context.serialize(src);
         }
     }
-
 
     private boolean isResourceCollection(Collection collection) {
         return Resource.class.isAssignableFrom(collection.toArray()[0].getClass());

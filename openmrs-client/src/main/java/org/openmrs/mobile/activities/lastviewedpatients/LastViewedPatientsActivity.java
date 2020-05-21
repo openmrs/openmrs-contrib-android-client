@@ -19,17 +19,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.SearchView;
+
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.SearchView;
-
 public class LastViewedPatientsActivity extends ACBaseActivity {
-
     private LastViewedPatientsContract.Presenter mPresenter;
     private SearchView findPatientView;
     private String query;
@@ -46,16 +45,16 @@ public class LastViewedPatientsActivity extends ACBaseActivity {
 
         // Create fragment
         LastViewedPatientsFragment lastViewedPatientsFragment =
-                (LastViewedPatientsFragment) getSupportFragmentManager().findFragmentById(R.id.lastPatientsContentFrame);
+            (LastViewedPatientsFragment) getSupportFragmentManager().findFragmentById(R.id.lastPatientsContentFrame);
         if (lastViewedPatientsFragment == null) {
             lastViewedPatientsFragment = LastViewedPatientsFragment.newInstance();
         }
         if (!lastViewedPatientsFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    lastViewedPatientsFragment, R.id.lastPatientsContentFrame);
+                lastViewedPatientsFragment, R.id.lastPatientsContentFrame);
         }
 
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             query = savedInstanceState.getString(ApplicationConstants.BundleKeys.PATIENT_QUERY_BUNDLE, "");
             mPresenter = new LastViewedPatientsPresenter(lastViewedPatientsFragment, query);
         } else {
@@ -88,7 +87,7 @@ public class LastViewedPatientsActivity extends ACBaseActivity {
         MenuItem mFindPatientMenuItem = menu.findItem(R.id.actionSearchRemote);
         findPatientView = (SearchView) mFindPatientMenuItem.getActionView();
 
-        if(StringUtils.notEmpty(query)){
+        if (StringUtils.notEmpty(query)) {
             mFindPatientMenuItem.expandActionView();
             findPatientView.setQuery(query, true);
             findPatientView.clearFocus();
@@ -124,5 +123,4 @@ public class LastViewedPatientsActivity extends ACBaseActivity {
 
         return true;
     }
-
 }

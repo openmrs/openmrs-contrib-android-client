@@ -24,6 +24,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
@@ -62,6 +64,15 @@ public class CameraOrGalleryPickerDialog extends DialogFragment {
 
         return view;
     }
+    // public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+    //     String[] textResources = getResources().getStringArray(R.array.dialog_options);
+    //     int[] imageResources = {R.drawable.ic_photo_camera, R.drawable.ic_photo_library, R.drawable.ic_photo_delete};
+
+    //     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+    //     builder.setAdapter(new GalleryOrCameraPickerListAdapter(getActivity(),
+    //         R.layout.list_gallery_or_camera_item, R.id.textView, R.id.imageView,
+    //         textResources, imageResources), listener);
 
     private void performActivity(int position) {
         getDialog().dismiss();

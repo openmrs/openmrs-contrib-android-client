@@ -5,63 +5,46 @@ import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.RoomWarnings;
+
 import org.openmrs.mobile.models.Resource;
 
 @Entity(tableName = "patients")
 public class PatientEntity extends Resource {
-
     @NonNull
     @ColumnInfo(name = "synced")
     private boolean synced;
-
     @ColumnInfo(name = "identifier")
     private String identifier;
-
     @ColumnInfo(name = "givenName")
     private String givenName;
-
     @ColumnInfo(name = "middleName")
     private String middleName;
-
     @ColumnInfo(name = "familyName")
     private String familyName;
-
     @ColumnInfo(name = "gender")
     private String gender;
-
     @ColumnInfo(name = "birthDate")
     private String birthDate;
-
     @ColumnInfo(name = "deathDate")
     private String deathDate;
-
     @ColumnInfo(name = "causeOfDeath")
     private String causeOfDeath;
-
     @ColumnInfo(name = "age")
     private String age;
-
     @ColumnInfo(name = "photo")
     private String photo;
-
     @ColumnInfo(name = "address1")
     private String address_1;
-
     @ColumnInfo(name = "address2")
     private String address_2;
-
     @ColumnInfo(name = "city")
     private String city;
-
     @ColumnInfo(name = "state")
     private String state;
-
     @ColumnInfo(name = "country")
     private String country;
-
     @ColumnInfo(name = "postalCode")
     private String postalCode;
-
     @Embedded(prefix = "patient_")
     @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
     private EncounterEntity encounters;

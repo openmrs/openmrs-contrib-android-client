@@ -3,36 +3,28 @@ package org.openmrs.mobile.databases.entities;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+
 import org.openmrs.mobile.models.Resource;
 
 @Entity(tableName = "locations")
 public class LocationEntity extends Resource {
-
     @ColumnInfo(name = "name")
     private String name;
-
     @NonNull
     @ColumnInfo(name = "description")
     private String description;
-
     @ColumnInfo(name = "address1")
     private String address_1;
-
     @ColumnInfo(name = "address2")
     private String address_2;
-
     @ColumnInfo(name = "city")
     private String city;
-
     @ColumnInfo(name = "state")
     private String state;
-
     @ColumnInfo(name = "country")
     private String country;
-
     @ColumnInfo(name = "postalCode")
     private String postalCode;
-
     @ColumnInfo(name = "parentLocationUuid")
     private String parentLocationuuid;
 

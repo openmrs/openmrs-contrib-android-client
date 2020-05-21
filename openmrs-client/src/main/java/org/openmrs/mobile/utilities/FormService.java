@@ -10,7 +10,6 @@
 
 package org.openmrs.mobile.utilities;
 
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -22,7 +21,6 @@ import java.lang.reflect.Modifier;
 import java.util.List;
 
 public class FormService {
-
     public static Form getForm(String valueReference) {
         String unescapedValueReference = StringUtils.unescapeJavaString(valueReference);
 
@@ -35,15 +33,15 @@ public class FormService {
     }
 
     public static Form getFormByUuid(String uuid) {
-        if(!StringUtils.isBlank(uuid)){
+        if (!StringUtils.isBlank(uuid)) {
             FormResource formResource = new Select()
-                    .from(FormResource.class)
-                    .where("uuid = ?", uuid)
-                    .executeSingle();
-            if(formResource != null){
+                .from(FormResource.class)
+                .where("uuid = ?", uuid)
+                .executeSingle();
+            if (formResource != null) {
                 List<FormResource> resourceList = formResource.getResourceList();
                 for (FormResource resource : resourceList) {
-                    if("json".equals(resource.getName())){
+                    if ("json".equals(resource.getName())) {
                         String valueRefString = resource.getValueReference();
                         Form form = FormService.getForm(valueRefString);
                         form.setValueReference(valueRefString);
@@ -58,15 +56,14 @@ public class FormService {
 
     public static FormResource getFormResourceByName(String name) {
         return new Select()
-                .from(FormResource.class)
-                .where("name = ?", name)
-                .executeSingle();
+            .from(FormResource.class)
+            .where("name = ?", name)
+            .executeSingle();
     }
 
-    public static List<FormResource> getFormResourceList(){
+    public static List<FormResource> getFormResourceList() {
         return new Select()
-                .from(FormResource.class)
-                .execute();
+            .from(FormResource.class)
+            .execute();
     }
-
 }

@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.activities.matchingpatients;
 
+import androidx.annotation.NonNull;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
@@ -28,15 +30,13 @@ import org.openmrs.mobile.utilities.PatientMerger;
 
 import java.util.Queue;
 
-import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.google.common.collect.ComparisonChain.start;
 
-public class MatchingPatientsPresenter extends BasePresenter implements MatchingPatientsContract.Presenter{
-
+public class MatchingPatientsPresenter extends BasePresenter implements MatchingPatientsContract.Presenter {
     private RestApi restApi;
     private PatientDAO patientDAO;
     private PatientRepository patientRepository;
@@ -87,7 +87,7 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
             updatePatient(mergedPatient);
             removeSelectedPatient();
             if (matchingPatientsList.peek() != null) {
-               start();
+                start();
             } else {
                 view.finishActivity();
             }
@@ -103,8 +103,8 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
         call.enqueue(new Callback<PatientDto>() {
             @Override
             public void onResponse(@NonNull Call<PatientDto> call, @NonNull Response<PatientDto> response) {
-                if(response.isSuccessful()){
-                    if(patientDAO.isUserAlreadySaved(patient.getUuid())){
+                if (response.isSuccessful()) {
+                    if (patientDAO.isUserAlreadySaved(patient.getUuid())) {
                         Long id = patientDAO.findPatientByUUID(patient.getUuid()).getId();
                         patientDAO.updatePatient(id, patient);
                         patientDAO.deletePatient(patient.getId());
@@ -136,7 +136,7 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
     }
 
     private void setSelectedIfOnlyOneMatching() {
-        if(matchingPatientsList.peek().getMatchingPatientList().size() == 1){
+        if (matchingPatientsList.peek().getMatchingPatientList().size() == 1) {
             selectedPatient = matchingPatientsList.peek().getMatchingPatientList().get(0);
         }
     }

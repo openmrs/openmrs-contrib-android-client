@@ -438,9 +438,9 @@
 	<string name="helpdesk_mail" translatable="false">helpdesk@openmrs.com</string>
 	<string name="go_to_forum">Forum</string>
 	<string name="go_to_irc">IRC</string>
-	<string name="open">Go To</string>
+	<string name="open">Go to</string>
 	<string name="email_us">Email us</string>
-	<string name="help_message">Our Team is always there to answer any questions. Drop us an email or reach out at forums and we\'ll try our best to reply as soon as possible.</string>
+	<string name="help_message">Our Team will try our best to help you. Please reach out to us by using the services above.</string>
 	<string name="contact_forum_url" translatable="false">https://talk.openmrs.org/</string>
 	<string name="contact_irc_url" translatable="false">https://wiki.openmrs.org/display/IRC/Home</string>
 	<string name="contact_us">Contact Us</string>

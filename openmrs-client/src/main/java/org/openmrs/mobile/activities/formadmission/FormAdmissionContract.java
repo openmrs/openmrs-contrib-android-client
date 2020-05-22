@@ -20,6 +20,7 @@ import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Provider;
+import org.openmrs.mobile.models.Resource;
 
 public interface FormAdmissionContract {
 
@@ -29,11 +30,13 @@ public interface FormAdmissionContract {
 
         void showToast(String error);
 
-        void updateLocationAdapter(List<Location> results);
+        void updateLocationAdapter(List<Location> locationList);
 
         void enableSubmitButton(boolean value);
 
         void quitFormEntry();
+
+        void updateEncounterRoleList(List<Resource> encounterRoleList);
     }
 
     interface Presenter extends BasePresenterContract {
@@ -44,6 +47,8 @@ public interface FormAdmissionContract {
 
         void getLocation(String url);
 
-        void createEncounter(String admittedByPerson, String admittedToPerson);
+        void getEncounterRoles();
+
+        void createEncounter(String providerUUID, String locationUUID, String encounterRoleUUID);
     }
 }

@@ -47,10 +47,28 @@
 		android:background="@drawable/spinner_background"/>
 
 	<TextView
-		android:id="@+id/admitted_to_header"
+		android:id="@+id/encounter_role_header"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_below="@id/admitted_by_spinner"
+		android:layout_margin="8dp"
+		android:padding="8dp"
+		android:text="Provider Role : "
+		android:textSize="16sp" />
+
+	<Spinner
+		android:id="@+id/encounter_role_spinner"
+		android:layout_width="match_parent"
+		android:layout_height="40dp"
+		android:layout_margin="8dp"
+		android:layout_below="@id/encounter_role_header"
+		android:background="@drawable/spinner_background"/>
+
+	<TextView
+		android:id="@+id/admitted_to_header"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/encounter_role_spinner"
 		android:layout_margin="8dp"
 		android:padding="8dp"
 		android:text="Admitted To : "

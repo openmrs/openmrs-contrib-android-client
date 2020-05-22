@@ -27,6 +27,7 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientDto;
 import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.models.Provider;
+import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.models.Session;
 import org.openmrs.mobile.models.SystemSetting;
@@ -34,6 +35,7 @@ import org.openmrs.mobile.models.User;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.VisitType;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -100,6 +102,9 @@ public interface RestApi {
 
     @GET("encountertype")
     Call<Results<EncounterType>> getEncounterTypes();
+
+    @GET("encounterrole")
+    Call<Results<Resource>> getEncounterRoles();
 
     @GET("session")
     Call<Session> getSession();

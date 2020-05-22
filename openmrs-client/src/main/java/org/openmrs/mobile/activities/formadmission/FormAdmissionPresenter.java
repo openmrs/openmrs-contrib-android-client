@@ -33,6 +33,7 @@ import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Obscreate;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Provider;
+import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
@@ -80,6 +81,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
             view.updateProviderAdapter(providerList);
         } else {
             view.showToast("Error");
+            view.enableSubmitButton(false);
         }
     }
 
@@ -96,12 +98,14 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
                         view.updateLocationAdapter(response.body().getResults());
                     } else {
                         view.showToast("An error Occurred, Try Again Later !!!");
+                        view.enableSubmitButton(false);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Results<Location>> call, Throwable t) {
                     view.showToast(t.getMessage());
+                    view.enableSubmitButton(false);
                 }
             });
         } else {
@@ -110,7 +114,28 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
     }
 
     @Override
-    public void createEncounter(String admittedByPerson, String admittedToPerson) {
+    public void getEncounterRoles() {
+        restApi.getEncounterRoles().enqueue(new Callback<Results<Resource>>() {
+            @Override
+            public void onResponse(Call<Results<Resource>> call, Response<Results<Resource>> response) {
+                if(response.isSuccessful()) {
+                    view.updateEncounterRoleList(response.body().getResults());
+                } else {
+                    view.enableSubmitButton(false);
+                    view.showToast("An error Occurred, Try Again Later !!!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Results<Resource>> call, Throwable t) {
+                view.showToast(t.getMessage());
+                view.enableSubmitButton(false);
+            }
+        });
+    }
+
+    @Override
+    public void createEncounter(String providerUUID, String locationUUID, String encounterRoleUUID) {
         view.enableSubmitButton(false);
 
         Encountercreate encountercreate=new Encountercreate();
@@ -119,13 +144,13 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         encountercreate.setFormname(formName);
         encountercreate.setPatientId(patientID);
         encountercreate.setFormUuid(formUUID);
-        encountercreate.setLocation(admittedToPerson);
+        encountercreate.setLocation(locationUUID);
 
         List<Obscreate> observations=new ArrayList<>();
         encountercreate.setObservations(observations);
 
         List<EncounterProviderCreate> encounterProviderCreate = new ArrayList<>();
-        encounterProviderCreate.add(new EncounterProviderCreate(admittedByPerson, "240b26f9-dd88-4172-823d-4a8bfeb7841f"));
+        encounterProviderCreate.add(new EncounterProviderCreate(providerUUID, encounterRoleUUID));
         encountercreate.setEncounterProvider(encounterProviderCreate);
 
         encountercreate.setObslist();

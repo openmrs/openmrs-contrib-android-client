@@ -14,24 +14,21 @@
 
 package org.openmrs.mobile.listeners.watcher.dao;
 
-import java.util.List;
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
-import io.reactivex.SingleObserver;
-import io.reactivex.disposables.Disposable;
+
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.LocationEntity;
-import org.openmrs.mobile.utilities.ActiveAndroid.util.Log;
+
+import java.util.Objects;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -40,8 +37,7 @@ public class LocationRoomDAOTest {
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     private AppDatabase mDatabase;
-    private String TAG = "LocationRoomDAOTest";
-    private LocationEntity expectedLocationEntity = createDemoLocationEntity(10L, "name", "description", "display");
+    private LocationEntity expectedLocationEntity1 = createDemoLocationEntity(10L, "name", "description", "display");
     private LocationEntity expectedLocationEntity2 = createDemoLocationEntity(20L, "name2", "description2", "display2");
 
     @Before
@@ -61,71 +57,37 @@ public class LocationRoomDAOTest {
 
     @Test
     public void saveLocation_ShouldSaveCorrectLocation() {
-        mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity);
-        mDatabase.locationRoomDAO().getLocations().subscribe(new SingleObserver<List<LocationEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<LocationEntity> locationEntities) {
-                Assert.assertEquals(locationEntities.get(0).getName(), "name");
-                Assert.assertEquals(locationEntities.get(0).getDescription(), "description");
-                Assert.assertEquals(locationEntities.get(0).getDisplay(), "display");
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity1);
+        mDatabase.locationRoomDAO().getLocations()
+                .test()
+                .assertValue(locationEntities -> {
+                    LocationEntity actualLocationEntity = locationEntities.get(0);
+                    return Objects.equals(actualLocationEntity.getName(), "name")
+                            && Objects.equals(actualLocationEntity.getDescription(), "description")
+                            && Objects.equals(actualLocationEntity.getDisplay(), "display");
+                });
     }
 
     @Test
     public void findLocationByName_ShouldFindCorrectLocationByName() {
-        mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity);
-        mDatabase.locationRoomDAO().findLocationByName("name").subscribe(new SingleObserver<LocationEntity>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(LocationEntity locationEntity) {
-                Assert.assertEquals(expectedLocationEntity, locationEntity);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity1);
+        mDatabase.locationRoomDAO().findLocationByName("name")
+                .test()
+                .assertValue(actualLocationEntity -> Objects.equals(actualLocationEntity.getName(), "name")
+                        && Objects.equals(actualLocationEntity.getDescription(), "description")
+                        && Objects.equals(actualLocationEntity.getDisplay(), "display"));
     }
 
     @Test
     public void deleteAllLocations_ShouldDeleteAllSavedLoactions() {
-        mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity);
+        mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity1);
         mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity2);
 
         mDatabase.locationRoomDAO().deleteAllLocations();
 
-        mDatabase.locationRoomDAO().getLocations().subscribe(new SingleObserver<List<LocationEntity>>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-
-            @Override
-            public void onSuccess(List<LocationEntity> locationEntities) {
-                Assert.assertEquals(locationEntities.size(), 0);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                Log.i(TAG, e.getMessage());
-            }
-        });
+        mDatabase.locationRoomDAO().getLocations()
+                .test()
+                .assertValue(locationEntities -> Objects.equals(locationEntities.size(), 0));
     }
 
     private LocationEntity createDemoLocationEntity(Long id, String name, String description, String display) {

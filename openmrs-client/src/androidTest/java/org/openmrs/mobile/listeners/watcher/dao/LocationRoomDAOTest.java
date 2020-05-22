@@ -37,8 +37,8 @@ public class LocationRoomDAOTest {
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
     private AppDatabase mDatabase;
-    private LocationEntity expectedLocationEntity1 = createDemoLocationEntity(10L, "name", "description", "display");
-    private LocationEntity expectedLocationEntity2 = createDemoLocationEntity(20L, "name2", "description2", "display2");
+    private LocationEntity expectedLocationEntity1 = createDemoLocationEntity(10L, "uuid1", "name", "description", "display");
+    private LocationEntity expectedLocationEntity2 = createDemoLocationEntity(20L, "uuid2", "name2", "description2", "display2");
 
     @Before
     public void initDb() {
@@ -79,6 +79,16 @@ public class LocationRoomDAOTest {
     }
 
     @Test
+    public void findLocationByUUID_ShouldFindCorrectLocationByUUID() {
+        mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity1);
+        mDatabase.locationRoomDAO().findLocationByUUID(expectedLocationEntity1.getUuid())
+                .test()
+                .assertValue(actualLocationEntity -> Objects.equals(actualLocationEntity.getName(), "name")
+                        && Objects.equals(actualLocationEntity.getDescription(), "description")
+                        && Objects.equals(actualLocationEntity.getDisplay(), "display"));
+    }
+
+    @Test
     public void deleteAllLocations_ShouldDeleteAllSavedLoactions() {
         mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity1);
         mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity2);
@@ -90,11 +100,11 @@ public class LocationRoomDAOTest {
                 .assertValue(locationEntities -> Objects.equals(locationEntities.size(), 0));
     }
 
-    private LocationEntity createDemoLocationEntity(Long id, String name, String description, String display) {
+    private LocationEntity createDemoLocationEntity(Long id, String uuid, String name, String description, String display) {
         LocationEntity entity = new LocationEntity();
         entity.setId(id);
         entity.setDisplay(display);
-        entity.setUuid("uuid");
+        entity.setUuid(uuid);
         entity.setName(name);
         entity.setDescription(description);
         entity.setAddress_1("address 1");

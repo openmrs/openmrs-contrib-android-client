@@ -68,6 +68,13 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         this.mContext = context;
     }
 
+    public FormAdmissionPresenter(FormAdmissionContract.View formAdmissionView, RestApi restApi, Context context) {
+        this.view = formAdmissionView;
+        this.restApi = restApi;
+        this.view.setPresenter(this);
+        this.mContext = context;
+    }
+
     @Override
     public void subscribe() {
         //the function to start with

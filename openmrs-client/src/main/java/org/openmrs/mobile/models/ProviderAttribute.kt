@@ -12,31 +12,21 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
+
 package org.openmrs.mobile.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-
 import java.io.Serializable
 
-class PersonName : Serializable {
+class ProviderAttribute : Serializable {
 
-    @SerializedName("givenName")
+    @SerializedName("attributeType")
     @Expose
-    var givenName: String? = null
+    var attributeType: ProviderAttributeType? = null
 
-    @SerializedName("middleName")
+    @SerializedName("value")
     @Expose
-    var middleName: String? = null
+    var value: String? = null
 
-    @SerializedName("familyName")
-    @Expose
-    var familyName: String? = null
-
-
-    val nameString: String
-        get() = if (middleName == null || middleName == "null")
-            "$givenName $familyName"
-        else
-            "$givenName $middleName $familyName"
 }

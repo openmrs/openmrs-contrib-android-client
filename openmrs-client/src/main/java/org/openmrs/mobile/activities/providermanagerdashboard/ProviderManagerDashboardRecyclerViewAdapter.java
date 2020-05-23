@@ -60,7 +60,7 @@ public class ProviderManagerDashboardRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(@NotNull ProviderViewHolder holder, int position) {
         final Provider provider = mItems.get(position);
-        if (provider.getPerson().getDisplay() != null) {
+        if (provider.getPerson().getDisplay()!=null) {
             holder.mName.setText(provider.getPerson().getDisplay());
         }
 
@@ -98,15 +98,15 @@ public class ProviderManagerDashboardRecyclerViewAdapter extends
         alertDialogBuilder.setTitle(R.string.dialog_title_are_you_sure);
 
         alertDialogBuilder
-            .setMessage(R.string.dialog_provider_retired)
-            .setCancelable(false)
-            .setPositiveButton(R.string.dialog_button_ok, (dialog, id) -> {
-                presenter.deleteProvider(provider.getUuid());
-                dialog.cancel();
-            })
-            .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> {
-                dialog.dismiss();
-            });
+                .setMessage(R.string.dialog_provider_retired)
+                .setCancelable(false)
+                .setPositiveButton(R.string.dialog_button_ok, (dialog, id) -> {
+                    presenter.deleteProvider(provider.getUuid());
+                    dialog.cancel();
+                })
+                .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> {
+                    dialog.dismiss();
+                });
         alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }

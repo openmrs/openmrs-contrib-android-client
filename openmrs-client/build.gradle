@@ -121,7 +121,7 @@ dependencies {
     def room_version = "2.1.0-alpha04"
     def appcompat_version = "1.2.0-alpha01"
     def material_version = "1.2.0-alpha03"
-    def worker_manager_version = "2.3.3"
+    def worker_manager_version = "2.3.4"
 
     implementation "androidx.work:work-runtime:$worker_manager_version"
     implementation 'com.google.code.gson:gson:2.8.5'
@@ -140,6 +140,7 @@ dependencies {
     )
 
     //http request chucker
+    testImplementation 'com.readystatesoftware.chuck:library:1.1.0'
     debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
     releaseImplementation 'com.readystatesoftware.chuck:library-no-op:1.1.0'
     implementation 'com.google.guava:guava:27.0.1-android'

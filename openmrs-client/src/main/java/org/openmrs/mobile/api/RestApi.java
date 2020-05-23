@@ -158,6 +158,6 @@ public interface RestApi {
     Call<Provider> addProvider(@Body Provider provider);
 
     @POST("provider/{uuid}")
-    Call<Provider> editProvider(@Path("uuid") String uuid,
-                                @Body Provider provider);
+    Call<Provider> UpdateProvider(@Path("uuid") String uuid,
+                                  @Body Provider provider);
 }

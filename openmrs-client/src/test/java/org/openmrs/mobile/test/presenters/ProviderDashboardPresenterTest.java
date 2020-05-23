@@ -1,6 +1,5 @@
 package org.openmrs.mobile.test.presenters;
 
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import org.junit.Before;
@@ -13,12 +12,16 @@ import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardPresente
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
+import org.openmrs.mobile.dao.ProviderRoomDAO;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.spy;
 
 @PrepareForTest({NetworkUtils.class, ToastUtil.class, OpenMRS.class, OpenMRSLogger.class})
 public class ProviderDashboardPresenterTest extends ACUnitTestBase {
@@ -43,12 +46,16 @@ public class ProviderDashboardPresenterTest extends ACUnitTestBase {
     }
 
     @Test
-    public void shouldReturnSuccessOnEditProvider() {
+    public void shouldReturnSuccessOnUpdateProvider() {
         Provider provider = createProvider(1l, "doctor");
         Mockito.lenient().when(NetworkUtils.isOnline()).thenReturn(true);
-        Mockito.lenient().when(restApi.editProvider(provider.getUuid(), provider)).thenReturn(mockSuccessCall(provider));
+        Mockito.lenient().when(restApi.UpdateProvider(provider.getUuid(), provider)).thenReturn(mockSuccessCall(provider));
 
-        providerDashboardPresenter.editProvider(provider);
+        ProviderRoomDAO providerRoomDao = Mockito.mock(ProviderRoomDAO.class);
+        ProviderRoomDAO spyProviderRoomDao = spy(providerRoomDao);
+        doNothing().when(spyProviderRoomDao).updateProviderByUuid(Mockito.anyString(), Mockito.anyLong() ,Mockito.any(),Mockito.anyString(),Mockito.anyString());
+
+        providerDashboardPresenter.updateProvider(provider);
         Mockito.verify(providerManagerView).setupBackdrop(provider);
     }
 

@@ -24,6 +24,8 @@ import org.openmrs.mobile.dao.ConceptRoomDAO;
 import org.openmrs.mobile.dao.EncounterRoomDAO;
 import org.openmrs.mobile.dao.LocationRoomDAO;
 import org.openmrs.mobile.dao.ObservationRoomDAO;
+import org.openmrs.mobile.dao.ProviderRoomDAO;
+import org.openmrs.mobile.dao.VisitRoomDAO;
 import org.openmrs.mobile.dao.PatientRoomDAO;
 import org.openmrs.mobile.dao.VisitRoomDAO;
 import org.openmrs.mobile.databases.entities.ConceptEntity;
@@ -32,14 +34,16 @@ import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.databases.entities.ObservationEntity;
 import org.openmrs.mobile.databases.entities.PatientEntity;
 import org.openmrs.mobile.databases.entities.VisitEntity;
+import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 @Database(entities = {ConceptEntity.class,
-    EncounterEntity.class,
-    LocationEntity.class, ObservationEntity.class,
-    PatientEntity.class,
-    VisitEntity.class},
-    version = 1)
+        EncounterEntity.class,
+        LocationEntity.class, ObservationEntity.class,
+        PatientEntity.class,
+        VisitEntity.class,
+        Provider.class},
+        version = 1)
 
 public abstract class AppDatabase extends RoomDatabase {
     //instantiate Dao's
@@ -53,15 +57,18 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract EncounterRoomDAO encounterRoomDAO();
     public abstract ConceptRoomDAO conceptRoomDAO();
+    public abstract ProviderRoomDAO providerRoomDAO();
     private static volatile AppDatabase INSTANCE;
 
-    static AppDatabase getDatabase(final Context context) {
+    //TODO remove this public and refactor the packages of classes to incorporate allDAOs under this repository
+    public static AppDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                        AppDatabase.class, ApplicationConstants.DB_NAME)
-                        .build();
+                            AppDatabase.class, ApplicationConstants.DB_NAME)
+                            .allowMainThreadQueries().fallbackToDestructiveMigration()
+                            .build();
                 }
             }
         }

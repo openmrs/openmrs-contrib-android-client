@@ -35,9 +35,9 @@ public class ProviderDashboardActivity extends ACBaseActivity implements Provide
 
         if (savedInstanceState != null) {
 
-            mPresenter = new ProviderDashboardPresenter(this);
+            mPresenter = new ProviderDashboardPresenter(this,getApplicationContext());
         } else {
-            mPresenter = new ProviderDashboardPresenter(this);
+            mPresenter = new ProviderDashboardPresenter(this,getApplicationContext());
         }
 
         provider = mPresenter.getProviderFromIntent(getIntent());
@@ -72,7 +72,7 @@ public class ProviderDashboardActivity extends ACBaseActivity implements Provide
         rootLayout = findViewById(R.id.provider_dashboard_root_layout);
         Snackbar.make(rootLayout, getString(R.string.failed_provider_details), Snackbar.LENGTH_INDEFINITE)
             .setAction(getString(R.string.retry_action), view -> {
-                mPresenter.editProvider(this.provider);
+                mPresenter.updateProvider(this.provider);
             }).show();
     }
 
@@ -99,7 +99,7 @@ public class ProviderDashboardActivity extends ACBaseActivity implements Provide
         if (requestCode == EDIT_PROVIDER_REQ_CODE) {
             if (resultCode == RESULT_OK) {
                 this.provider = (Provider) data.getSerializableExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE);
-                mPresenter.editProvider(this.provider);
+                mPresenter.updateProvider(this.provider);
             }
         }
     }

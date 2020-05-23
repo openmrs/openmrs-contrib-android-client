@@ -14,16 +14,13 @@
 
 package org.openmrs.mobile.application;
 
-import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
-
+import androidx.multidex.MultiDexApplication;
 import com.prateekj.snooper.AndroidSnooper;
-
 import net.sqlcipher.database.SQLiteDatabase;
-
 import org.mindrot.jbcrypt.BCrypt;
 import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
@@ -36,12 +33,11 @@ import org.openmrs.mobile.services.AuthenticateCheckService;
 import org.openmrs.mobile.utilities.ActiveAndroid.ActiveAndroid;
 import org.openmrs.mobile.utilities.ActiveAndroid.Configuration;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OpenMRS extends Application {
+public class OpenMRS extends MultiDexApplication {
 
     private static final String OPENMRS_DIR_NAME = "OpenMRS";
     private static final String OPENMRS_DIR_PATH = File.separator + OPENMRS_DIR_NAME;

@@ -353,9 +353,21 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     }
 
     @Override
-    public void showInvalidURLSnackbar() {
+    public void showInvalidURLSnackbar(int resId) {
         if (isActivityNotNull()) {
-            createSnackbar(getString(R.string.failed_fetching_servers_location))
+            createSnackbar(getString(resId))
+                .setAction(getResources().getString(R.string.snackbar_edit), view -> {
+                    mUrl.requestFocus();
+                    mUrl.selectAll();
+                })
+                .show();
+        }
+    }
+
+    @Override
+    public void showInvalidURLSnackbar(String message) {
+        if (isActivityNotNull()) {
+            createSnackbar(message)
                 .setAction(getResources().getString(R.string.snackbar_edit), view -> {
                     mUrl.requestFocus();
                     mUrl.selectAll();
@@ -417,7 +429,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         if (result.isURLValid()) {
             mPresenter.loadLocations(result.getUrl());
         } else {
-            showInvalidURLSnackbar();
+            showInvalidURLSnackbar(getResources().getString(R.string.invalid_URL_message));
         }
     }
 

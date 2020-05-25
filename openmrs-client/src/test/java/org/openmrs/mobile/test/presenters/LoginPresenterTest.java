@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.mindrot.jbcrypt.BCrypt;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.login.LoginContract;
 import org.openmrs.mobile.activities.login.LoginFragment;
 import org.openmrs.mobile.activities.login.LoginPresenter;
@@ -229,7 +230,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         presenter.loadLocations("someUrl");
         verify(view).initLoginForm(any(), any());
         verify(view).setLocationErrorOccurred(true);
-        verify(view).showInvalidURLSnackbar();
+        verify(view).showInvalidURLSnackbar(R.string.failed_fetching_servers_location);
         verify(view).hideUrlLoadingAnimation();
     }
 
@@ -241,7 +242,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         presenter.loadLocations("someUrl");
         verify(view).initLoginForm(any(), any());
         verify(view).setLocationErrorOccurred(true);
-        verify(view).showInvalidURLSnackbar();
+        verify(view).showInvalidURLSnackbar(Mockito.any());
         verify(view).hideUrlLoadingAnimation();
     }
 

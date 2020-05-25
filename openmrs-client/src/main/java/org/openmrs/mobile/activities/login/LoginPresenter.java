@@ -234,7 +234,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                         loginView.startFormListService();
                         loginView.setLocationErrorOccurred(false);
                     } else {
-                        loginView.showInvalidURLSnackbar();
+                        loginView.showInvalidURLSnackbar(R.string.failed_fetching_servers_location);
                         loginView.setLocationErrorOccurred(true);
                         loginView.initLoginForm(new ArrayList<>(), url);
                     }
@@ -244,7 +244,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                 @Override
                 public void onFailure(@NonNull Call<Results<Location>> call, @NonNull Throwable t) {
                     loginView.hideUrlLoadingAnimation();
-                    loginView.showInvalidURLSnackbar();
+                    loginView.showInvalidURLSnackbar(t.getMessage());
                     loginView.initLoginForm(new ArrayList<>(), url);
                     loginView.setLocationErrorOccurred(true);
                 }

@@ -41,7 +41,9 @@ public interface LoginContract {
 
         void finishLoginActivity();
 
-        void showInvalidURLSnackbar();
+        void showInvalidURLSnackbar(String message);
+
+        void showInvalidURLSnackbar(int resId);
 
         void showInvalidLoginOrPasswordSnackbar();
 

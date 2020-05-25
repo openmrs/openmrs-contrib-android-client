@@ -38,6 +38,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
+                android:textStyle="bold"
                 android:gravity="center_vertical|end" />
         </RelativeLayout>
 

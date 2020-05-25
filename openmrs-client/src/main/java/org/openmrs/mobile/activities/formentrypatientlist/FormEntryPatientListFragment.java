@@ -36,7 +36,6 @@ import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.formlist.FormListActivity;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.StringUtils;
 
 import java.util.List;
@@ -66,9 +65,6 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
             refreshUI();
             mSwipeRefreshLayout.setRefreshing(false);
         });
-
-        // Font config
-        FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
         return root;
     }
 

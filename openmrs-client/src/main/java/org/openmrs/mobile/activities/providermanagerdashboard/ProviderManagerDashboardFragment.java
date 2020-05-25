@@ -35,11 +35,9 @@ import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.providermanagerdashboard.addprovider.AddProviderActivity;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 import static org.openmrs.mobile.utilities.ApplicationConstants.RequestCodes.ADD_PROVIDER_REQ_CODE;
@@ -98,10 +96,6 @@ public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderMan
             refreshUI();
             refreshList.setRefreshing(false);
         });
-
-        // Font config
-        FontsUtil.setFont(Objects.requireNonNull(this.getActivity()).findViewById(android.R.id.content));
-
         return root;
     }
 

@@ -32,7 +32,6 @@ import org.openmrs.mobile.activities.formlist.FormListActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
@@ -51,7 +50,6 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
         View root = inflater.inflate(R.layout.fragment_visit_dashboard, container, false);
 
         mEmptyListView = root.findViewById(R.id.visitDashboardEmpty);
-        FontsUtil.setFont(mEmptyListView, FontsUtil.OpenFonts.OPEN_SANS_BOLD);
         mExpandableListView = root.findViewById(R.id.visitDashboardExpList);
         mExpandableListView.setEmptyView(mEmptyListView);
         setEmptyListVisibility(false);

@@ -62,7 +62,6 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
@@ -131,7 +130,6 @@ public class CustomFragmentDialog extends DialogFragment {
         this.setLeftButton(dialogLayout);
         getDialog().setCanceledOnTouchOutside(false);
         buildDialog();
-        FontsUtil.setFont((ViewGroup) dialogLayout);
         return dialogLayout;
     }
 

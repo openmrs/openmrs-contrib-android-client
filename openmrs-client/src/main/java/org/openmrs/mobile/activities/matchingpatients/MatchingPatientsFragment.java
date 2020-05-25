@@ -30,7 +30,6 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.DateUtils;
-import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
@@ -63,7 +62,6 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
         view = inflater.inflate(R.layout.fragment_matching_patients, container, false);
         initFragmentFields(view);
         setListeners();
-        FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
         return view;
     }
 

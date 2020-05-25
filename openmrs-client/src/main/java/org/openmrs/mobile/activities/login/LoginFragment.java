@@ -35,7 +35,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -54,7 +53,6 @@ import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.listeners.watcher.LoginValidatorWatcher;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -105,10 +103,6 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
             mUrl.setText(mLastCorrectURL);
         }
         hideURLDialog();
-
-        // Font config
-        FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
-
         return mRootView;
     }
 

@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.models.Provider;
-import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
@@ -30,7 +29,6 @@ public class MatchingProviderRecyclerViewAdapter extends
     @Override
     public SimilarProviderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_matching_provider, parent, false);
-        FontsUtil.setFont((ViewGroup) itemView);
         return new SimilarProviderViewHolder(itemView);
     }
 

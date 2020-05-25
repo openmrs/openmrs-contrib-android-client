@@ -31,7 +31,6 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
-import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
@@ -57,7 +56,6 @@ public class PatientDiagnosisFragment extends PatientDashboardFragment implement
         mDiagnosisList = fragmentLayout.findViewById(R.id.patientDiagnosisList);
         TextView emptyList = fragmentLayout.findViewById(R.id.emptyDiagnosisListView);
         mDiagnosisList.setEmptyView(emptyList);
-        FontsUtil.setFont(fragmentLayout, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);
         return fragmentLayout;
     }
 

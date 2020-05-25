@@ -27,7 +27,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.DateUtils;
-import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
@@ -45,7 +44,6 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
     @Override
     public VisitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_patient_visit, parent, false);
-        FontsUtil.setFont((ViewGroup) itemView);
         return new VisitViewHolder(itemView);
     }
 

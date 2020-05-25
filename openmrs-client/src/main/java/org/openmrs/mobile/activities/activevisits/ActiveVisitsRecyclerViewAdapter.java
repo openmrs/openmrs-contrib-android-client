@@ -32,7 +32,6 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
-import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
@@ -49,7 +48,6 @@ public class ActiveVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Active
     @Override
     public VisitViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_find_visits, parent, false);
-        FontsUtil.setFont((ViewGroup) itemView);
         return new VisitViewHolder(itemView);
     }
 

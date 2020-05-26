@@ -42,7 +42,7 @@ public class SplashActivity extends ACBaseActivity {
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/OpenSans/Montserrat.ttf");
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/Roboto/Montserrat.ttf");
 
         binding.organizationName.setTypeface(typeface);
         binding.organizationName.setText(R.string.organization_name);

@@ -35,7 +35,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProviderRepository {
-
     public LiveData<List<Provider>> getProviders(RestApi restApi) {
 
         final MutableLiveData<List<Provider>> providerLiveData = new MutableLiveData<>();
@@ -55,7 +54,6 @@ public class ProviderRepository {
                         ToastUtil.error(OpenMRS.getInstance().getString(R.string.unable_to_fetch_providers));
                         providerLiveData.setValue(null);
                     }
-
                 }
 
                 @Override
@@ -105,6 +103,8 @@ public class ProviderRepository {
                 @Override
                 public void onResponse(@NotNull Call<Provider> call, @NotNull Response<Provider> response) {
                     if (response.isSuccessful()) {
+                        provider.setUuid(response.body().getUuid());
+                        provider.getPerson().setUuid(response.body().getPerson().getUuid());
                         ToastUtil.success(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
                         OpenMRS.getInstance().getOpenMRSLogger().e("Adding Provider Successful " + response.raw());
                         callback.onSuccess();

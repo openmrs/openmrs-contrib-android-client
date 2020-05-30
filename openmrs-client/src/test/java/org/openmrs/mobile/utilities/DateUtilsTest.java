@@ -16,30 +16,32 @@
 
     import android.content.res.Resources;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Answers;
-import org.mockito.Mock;
-import org.openmrs.mobile.application.OpenMRS;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+    import org.joda.time.DateTime;
+    import org.joda.time.DateTimeZone;
+    import org.joda.time.format.DateTimeFormat;
+    import org.joda.time.format.DateTimeFormatter;
+    import org.junit.Before;
+    import org.junit.Rule;
+    import org.junit.Test;
+    import org.junit.runner.RunWith;
+    import org.mockito.Answers;
+    import org.mockito.Mock;
+    import org.openmrs.mobile.application.OpenMRS;
+    import org.powermock.api.mockito.PowerMockito;
+    import org.powermock.core.classloader.annotations.PrepareForTest;
+    import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+    import java.text.SimpleDateFormat;
+    import java.util.Date;
+    import java.util.Locale;
+    import java.util.TimeZone;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.*;
-import static org.powermock.api.mockito.PowerMockito.when;
+    import static junit.framework.Assert.assertFalse;
+    import static junit.framework.TestCase.assertTrue;
+    import static org.junit.Assert.assertEquals;
+    import static org.junit.Assert.assertNotSame;
+    import static org.junit.Assert.assertNull;
+    import static org.powermock.api.mockito.PowerMockito.when;
 
     @RunWith(PowerMockRunner.class)
     @PrepareForTest({OpenMRS.class, Resources.class})
@@ -180,46 +182,46 @@ import static org.powermock.api.mockito.PowerMockito.when;
             DateTime date2000 = DateTimeFormat
                 .forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/2000");
 
-        assertTrue(DateUtils.validateDate(EXPECTED_DATA_DEFAULT_DATE_FORMAT_1, date1900, DateTime.now()));
-        assertTrue(DateUtils.validateDate(EXPECTED_DATA_DEFAULT_DATE_FORMAT_2, date1900, date2000));
-        assertTrue(DateUtils.validateDate(EXPECTED_DATA_DEFAULT_DATE_FORMAT_3, date1900, DateTime.now()));
+            assertTrue(DateUtils.validateDate(EXPECTED_DATA_DEFAULT_DATE_FORMAT_1, date1900, DateTime.now()));
+            assertTrue(DateUtils.validateDate(EXPECTED_DATA_DEFAULT_DATE_FORMAT_2, date1900, date2000));
+            assertTrue(DateUtils.validateDate(EXPECTED_DATA_DEFAULT_DATE_FORMAT_3, date1900, DateTime.now()));
 
-        // Incorrectly formatted dates
-        assertFalse(DateUtils.validateDate(INVALID_DATA_5, date1900, DateTime.now()));
-        assertFalse(DateUtils.validateDate(INVALID_DATA_6, date1900, DateTime.now()));
-        assertFalse(DateUtils.validateDate(INVALID_DATA_7, date1900, DateTime.now()));
-        // Dates that are before minimum date
-        assertFalse(DateUtils.validateDate(INVALID_DATA_8, date1900, DateTime.now()));
-        // Dates after the maximum date
-        assertFalse(DateUtils.validateDate(INVALID_DATA_9, date1900, date1950));
-        assertFalse(DateUtils.validateDate(INVALID_DATA_8, date1900, date2000));
-        // Dates where months have more than valid days
-        assertFalse(DateUtils.validateDate(INVALID_DATA_10, date1900, DateTime.now()));
-        assertFalse(DateUtils.validateDate(INVALID_DATA_11, date1900, DateTime.now()));
-        assertFalse(DateUtils.validateDate(INVALID_DATA_12, date1900, DateTime.now()));
-        assertFalse(DateUtils.validateDate(INVALID_DATA_13, date1900, DateTime.now()));
-        // Dates where day or month is negative
-        assertFalse(DateUtils.validateDate(INVALID_DATA_14, date1900, date2000));
-        assertFalse(DateUtils.validateDate(INVALID_DATA_15, date1900, date2000));
+            // Incorrectly formatted dates
+            assertFalse(DateUtils.validateDate(INVALID_DATA_5, date1900, DateTime.now()));
+            assertFalse(DateUtils.validateDate(INVALID_DATA_6, date1900, DateTime.now()));
+            assertFalse(DateUtils.validateDate(INVALID_DATA_7, date1900, DateTime.now()));
+            // Dates that are before minimum date
+            assertFalse(DateUtils.validateDate(INVALID_DATA_8, date1900, DateTime.now()));
+            // Dates after the maximum date
+            assertFalse(DateUtils.validateDate(INVALID_DATA_9, date1900, date1950));
+            assertFalse(DateUtils.validateDate(INVALID_DATA_8, date1900, date2000));
+            // Dates where months have more than valid days
+            assertFalse(DateUtils.validateDate(INVALID_DATA_10, date1900, DateTime.now()));
+            assertFalse(DateUtils.validateDate(INVALID_DATA_11, date1900, DateTime.now()));
+            assertFalse(DateUtils.validateDate(INVALID_DATA_12, date1900, DateTime.now()));
+            assertFalse(DateUtils.validateDate(INVALID_DATA_13, date1900, DateTime.now()));
+            // Dates where day or month is negative
+            assertFalse(DateUtils.validateDate(INVALID_DATA_14, date1900, date2000));
+            assertFalse(DateUtils.validateDate(INVALID_DATA_15, date1900, date2000));
 
-        SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.DEFAULT_DATE_FORMAT, Locale.US);
+            SimpleDateFormat formatter = new SimpleDateFormat(DateUtils.DEFAULT_DATE_FORMAT, Locale.US);
 
-        date = DateUtils.getDateFromString(INITIAL_DATA_DATE_FROM_STRING);
-        assertEquals(EXPECTED_DATA_DATE_FROM_STRING, formatter.format(date));
+            date = DateUtils.getDateFromString(INITIAL_DATA_DATE_FROM_STRING);
+            assertEquals(EXPECTED_DATA_DATE_FROM_STRING, formatter.format(date));
 
-        date = DateUtils.getDateFromString(INITIAL_DATA_DATE_FROM_STRING, DateUtils.DATE_WITH_TIME_FORMAT);
-        assertEquals(EXPECTED_DATA_DATE_FROM_STRING, formatter.format(date));
+            date = DateUtils.getDateFromString(INITIAL_DATA_DATE_FROM_STRING, DateUtils.DATE_WITH_TIME_FORMAT);
+            assertEquals(EXPECTED_DATA_DATE_FROM_STRING, formatter.format(date));
 
-        // Null Date String
-        date = DateUtils.getDateFromString(nullDateAsString, DateUtils.DATE_WITH_TIME_FORMAT);
-        assertNull(date);
+            // Null Date String
+            date = DateUtils.getDateFromString(nullDateAsString, DateUtils.DATE_WITH_TIME_FORMAT);
+            assertNull(date);
 
-        // Correctly formatted dates
-        assertTrue(DateUtils.isValidFormat(DateUtils.DEFAULT_DATE_FORMAT, EXPECTED_DATA_IS_VALID_FORMAT_1));
-        assertTrue(DateUtils.isValidFormat(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT, EXPECTED_DATA_IS_VALID_FORMAT_2));
+            // Correctly formatted dates
+            assertTrue(DateUtils.isValidFormat(DateUtils.DEFAULT_DATE_FORMAT, EXPECTED_DATA_IS_VALID_FORMAT_1));
+            assertTrue(DateUtils.isValidFormat(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT, EXPECTED_DATA_IS_VALID_FORMAT_2));
 
-        // Differently formatted dates
-        assertFalse(DateUtils.isValidFormat(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT, EXPECTED_DATA_IS_VALID_FORMAT_1));
-        assertFalse(DateUtils.isValidFormat(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT, EXPECTED_DATA_IS_INVALID_FORMAT_3));
+            // Differently formatted dates
+            assertFalse(DateUtils.isValidFormat(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT, EXPECTED_DATA_IS_VALID_FORMAT_1));
+            assertFalse(DateUtils.isValidFormat(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT, EXPECTED_DATA_IS_INVALID_FORMAT_3));
+        }
     }
-}

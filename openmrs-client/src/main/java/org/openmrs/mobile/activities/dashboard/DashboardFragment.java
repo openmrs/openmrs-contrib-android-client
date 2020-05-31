@@ -40,6 +40,7 @@ import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
 import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity;
 import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardActivity;
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
+import org.openmrs.mobile.databinding.FragmentDashboardBinding;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
@@ -53,11 +54,12 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
     private ImageView mActiveVisitsButton;
     private ImageView mCaptureVitalsButton;
     private ImageView mProviderManagementButton;
-    private LinearLayout mFindPatientView;
-    private LinearLayout mRegistryPatientView;
-    private LinearLayout mActiveVisitsView;
-    private LinearLayout mCaptureVitalsView;
-    private LinearLayout mProviderManagementView;
+    private RelativeLayout mFindPatientView;
+    private RelativeLayout mRegistryPatientView;
+    private RelativeLayout mActiveVisitsView;
+    private RelativeLayout mCaptureVitalsView;
+    private RelativeLayout mProviderManagementView;
+    private FragmentDashboardBinding binding;
 
     private SparseArray<Bitmap> mBitmapCache;
 
@@ -146,7 +148,8 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
         if (root != null) {
             initFragmentFields(root);
@@ -159,17 +162,17 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
     }
 
     private void initFragmentFields(View root) {
-        mFindPatientButton = root.findViewById(R.id.findPatientButton);
-        mRegistryPatientButton = root.findViewById(R.id.registryPatientButton);
-        mActiveVisitsButton = root.findViewById(R.id.activeVisitsButton);
-        mCaptureVitalsButton = root.findViewById(R.id.captureVitalsButton);
-        mProviderManagementButton = root.findViewById(R.id.dashboardProviderManagementButton);
+        mFindPatientButton = binding.findPatientButton;
+        mRegistryPatientButton = binding.registryPatientButton;
+        mActiveVisitsButton = binding.activeVisitsButton;
+        mCaptureVitalsButton = binding.captureVitalsButton;
+        mProviderManagementButton = binding.dashboardProviderManagementButton;
 
-        mFindPatientView = root.findViewById(R.id.findPatientView);
-        mRegistryPatientView = root.findViewById(R.id.registryPatientView);
-        mCaptureVitalsView = root.findViewById(R.id.captureVitalsView);
-        mActiveVisitsView = root.findViewById(R.id.activeVisitsView);
-        mProviderManagementView = root.findViewById(R.id.dashboardProviderManagementView);
+        mFindPatientView = binding.findPatientView;
+        mRegistryPatientView = binding.registryPatientView;
+        mCaptureVitalsView = binding.captureVitalsView;
+        mActiveVisitsView = binding.activeVisitsView;
+        mProviderManagementView = binding.dashboardProviderManagementView;
     }
 
     private void setListeners() {

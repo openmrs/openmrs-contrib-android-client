@@ -40,7 +40,6 @@ import org.openmrs.mobile.models.Form;
 import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
-import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 public class PatientVitalsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientVitals {
@@ -68,17 +67,11 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
         mLastVitalsDate = root.findViewById(R.id.lastVitalsDate);
         mFormHeader = root.findViewById(R.id.lastVitalsLayout);
 
-        TextView lastVitalsLabel = root.findViewById(R.id.lastVitalsLabel);
         ImageButton formEditIcon = root.findViewById(R.id.form_edit_icon);
 
         formEditIcon.setOnClickListener(view -> ((PatientDashboardVitalsPresenter) mPresenter).startFormDisplayActivityWithEncounter());
 
         this.mInflater = inflater;
-
-        FontsUtil.setFont(mEmptyList, FontsUtil.OpenFonts.OPEN_SANS_EXTRA_BOLD);
-        FontsUtil.setFont(lastVitalsLabel, FontsUtil.OpenFonts.OPEN_SANS_EXTRA_BOLD);
-        FontsUtil.setFont(mLastVitalsDate, FontsUtil.OpenFonts.OPEN_SANS_SEMIBOLD);
-
         return root;
     }
 

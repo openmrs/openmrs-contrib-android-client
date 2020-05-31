@@ -14,13 +14,12 @@
 
 package org.openmrs.mobile.application;
 
-import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 
-import com.prateekj.snooper.AndroidSnooper;
+import androidx.multidex.MultiDexApplication;
 
 import net.sqlcipher.database.SQLiteDatabase;
 
@@ -41,12 +40,10 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class OpenMRS extends Application {
-
+public class OpenMRS extends MultiDexApplication {
     private static final String OPENMRS_DIR_NAME = "OpenMRS";
     private static final String OPENMRS_DIR_PATH = File.separator + OPENMRS_DIR_NAME;
     private static String mExternalDirectoryPath;
-
     private static OpenMRS instance;
     private OpenMRSLogger mLogger;
     private String secretKey;
@@ -62,7 +59,6 @@ public class OpenMRS extends Application {
         mLogger = new OpenMRSLogger();
         OpenMRSDBOpenHelper.init();
         initializeDB();
-        AndroidSnooper.init(this);
         Intent i = new Intent(this, FormListService.class);
         startService(i);
         Intent intent = new Intent(this, AuthenticateCheckService.class);
@@ -84,7 +80,6 @@ public class OpenMRS extends Application {
         configurationBuilder.addModelClasses(Encountercreate.class);
         configurationBuilder.addModelClasses(Obscreate.class);
 
-
         ActiveAndroid.initialize(configurationBuilder.create());
     }
 
@@ -94,7 +89,7 @@ public class OpenMRS extends Application {
 
     public SharedPreferences getOpenMRSSharedPreferences() {
         return getSharedPreferences(ApplicationConstants.OpenMRSSharedPreferenceNames.SHARED_PREFERENCES_NAME,
-                MODE_PRIVATE);
+            MODE_PRIVATE);
     }
 
     public void setUserFirstTime(boolean firstLogin) {
@@ -314,7 +309,7 @@ public class OpenMRS extends Application {
         SharedPreferences prefs = OpenMRS.getInstance().getOpenMRSSharedPreferences();
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(ApplicationConstants.LAST_SESSION_TOKEN,
-                prefs.getString(ApplicationConstants.SESSION_TOKEN, ApplicationConstants.EMPTY_STRING));
+            prefs.getString(ApplicationConstants.SESSION_TOKEN, ApplicationConstants.EMPTY_STRING));
         editor.remove(ApplicationConstants.SESSION_TOKEN);
         editor.remove(ApplicationConstants.AUTHORIZATION_TOKEN);
         clearCurrentLoggedInUserInfo();
@@ -322,6 +317,4 @@ public class OpenMRS extends Application {
         deleteSecretKey();
         editor.apply();
     }
-
-
 }

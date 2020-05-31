@@ -28,6 +28,7 @@
         android:layout_gravity="center"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/last_vitals_none_label"
+        android:textStyle="bold"
         android:visibility="gone" />
 
     <ScrollView
@@ -56,14 +57,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|center_horizontal"
-                        android:text="@string/last_vitals_label" />
+                        android:text="@string/last_vitals_label"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/lastVitalsDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical|center_horizontal"
-                        android:layout_gravity="center_vertical" />
+                        android:layout_gravity="center_vertical"
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
 

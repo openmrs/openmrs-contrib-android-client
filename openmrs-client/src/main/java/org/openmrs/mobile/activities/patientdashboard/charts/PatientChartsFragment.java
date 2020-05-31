@@ -40,7 +40,6 @@ import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
@@ -70,7 +69,6 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
         View root = inflater.inflate(R.layout.fragment_patient_charts, null, false);
 
         mEmptyListView = root.findViewById(R.id.vitalEmpty);
-        FontsUtil.setFont(mEmptyListView, FontsUtil.OpenFonts.OPEN_SANS_BOLD);
         mListView = root.findViewById(R.id.vitalList);
         mListView.setEmptyView(mEmptyListView);
         setEmptyListVisibility(false);

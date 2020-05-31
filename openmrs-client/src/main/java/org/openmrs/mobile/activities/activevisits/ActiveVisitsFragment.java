@@ -25,12 +25,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.models.Visit;
-import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +41,7 @@ public class ActiveVisitsFragment extends ACBaseFragment<ActiveVisitsContract.Pr
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    public static ActiveVisitsFragment newInstance(){
+    public static ActiveVisitsFragment newInstance() {
         return new ActiveVisitsFragment();
     }
 
@@ -68,8 +67,6 @@ public class ActiveVisitsFragment extends ACBaseFragment<ActiveVisitsContract.Pr
             refreshUI();
             swipeRefreshLayout.setRefreshing(false);
         });
-
-        FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
 
         return root;
     }

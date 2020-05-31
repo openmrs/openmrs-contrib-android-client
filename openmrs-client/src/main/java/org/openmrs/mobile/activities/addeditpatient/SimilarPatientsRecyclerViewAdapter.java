@@ -36,7 +36,6 @@ import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
-import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.List;
 
@@ -58,7 +57,6 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
     @Override
     public PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_similar_patient, parent, false);
-        FontsUtil.setFont((ViewGroup) itemView);
         return new PatientViewHolder(itemView);
     }
 

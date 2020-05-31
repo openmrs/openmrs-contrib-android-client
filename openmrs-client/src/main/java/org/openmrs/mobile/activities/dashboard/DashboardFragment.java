@@ -42,7 +42,6 @@ import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDas
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.databinding.FragmentDashboardBinding;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.FontsUtil;
 import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.ThemeUtils;
 
@@ -155,9 +154,6 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
             initFragmentFields(root);
             setListeners();
         }
-
-        // Font config
-        FontsUtil.setFont(this.getActivity().findViewById(android.R.id.content));
         return root;
     }
 

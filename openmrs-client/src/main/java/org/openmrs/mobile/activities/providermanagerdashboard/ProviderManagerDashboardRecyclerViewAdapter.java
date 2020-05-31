@@ -32,7 +32,6 @@ import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardActivity
 import org.openmrs.mobile.activities.providermanagerdashboard.addprovider.AddProviderActivity;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.FontsUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +54,6 @@ public class ProviderManagerDashboardRecyclerViewAdapter extends
     @Override
     public ProviderViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_provider_management, parent, false);
-        FontsUtil.setFont((ViewGroup) itemView);
         return new ProviderViewHolder(itemView);
     }
 

@@ -31,6 +31,7 @@ android:layout_height="match_parent">
     android:layout_gravity="center"
     android:gravity="center"
     android:textSize="18sp"
+    android:textStyle="bold"
     android:text="@string/visit_exp_list_empty"/>
 
 </LinearLayout>

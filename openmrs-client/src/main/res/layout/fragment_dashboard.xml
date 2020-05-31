@@ -19,13 +19,12 @@
 		xmlns:tools="http://schemas.android.com/tools" android:layout_height="match_parent">
 
 <androidx.constraintlayout.widget.ConstraintLayout
-
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
 	<androidx.cardview.widget.CardView
 			android:id="@+id/cardView7"
-			android:layout_width="@dimen/dashboard_card_width"
+			android:layout_width="0dp"
 			android:layout_height="@dimen/dashboard_card_height"
 			android:layout_gravity="center_horizontal"
 			android:layout_margin="@dimen/margin_short"
@@ -71,7 +70,7 @@
 
 	<androidx.cardview.widget.CardView
 			android:id="@+id/cardView8"
-			android:layout_width="@dimen/dashboard_card_width"
+			android:layout_width="0dp"
 			android:layout_height="@dimen/dashboard_card_height"
 			android:layout_gravity="center_horizontal"
 			android:layout_margin="@dimen/margin_short"
@@ -118,7 +117,7 @@
 
 	<androidx.cardview.widget.CardView
 			android:id="@+id/cardView9"
-			android:layout_width="@dimen/dashboard_card_width"
+			android:layout_width="0dp"
 			android:layout_height="@dimen/dashboard_card_height"
 			android:layout_gravity="center_horizontal"
 			android:layout_margin="@dimen/margin_short"
@@ -164,7 +163,7 @@
 
 	<androidx.cardview.widget.CardView
 			android:id="@+id/cardView11"
-			android:layout_width="@dimen/dashboard_card_width"
+			android:layout_width="0dp"
 			android:layout_height="@dimen/dashboard_card_height"
 			android:layout_gravity="center_horizontal"
 			android:layout_margin="@dimen/margin_short"
@@ -213,7 +212,7 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			app:barrierDirection="bottom"
-			app:constraint_referenced_ids="cardView9,cardView11" />
+			app:constraint_referenced_ids="cardView11,cardView9" />
 
 	<androidx.cardview.widget.CardView
 			android:id="@+id/cardView10"
@@ -225,7 +224,7 @@
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"
-			>
+			app:layout_constraintTop_toBottomOf="@+id/labelBarrier">
 
 		<RelativeLayout
 				android:id="@+id/dashboardProviderManagementView"
@@ -252,10 +251,10 @@
 					android:layout_below="@id/dashboardProviderManagementButton"
 					android:layout_centerHorizontal="true"
 					android:layout_gravity="center"
-					android:textAlignment="center"
 					android:layout_marginTop="@dimen/dashboard_text_top_margin"
 					android:layout_marginBottom="@dimen/dashboard_text_bottom_margin"
 					android:text="@string/action_provider_management"
+					android:textAlignment="center"
 					android:textSize="@dimen/dashboard_text_size" />
 		</RelativeLayout>
 

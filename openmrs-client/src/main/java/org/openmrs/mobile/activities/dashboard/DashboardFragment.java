@@ -48,16 +48,6 @@ import org.openmrs.mobile.utilities.ThemeUtils;
 public class DashboardFragment extends ACBaseFragment<DashboardContract.Presenter> implements DashboardContract.View, View.OnClickListener {
 
     // ImageView Buttons
-    private ImageView mFindPatientButton;
-    private ImageView mRegistryPatientButton;
-    private ImageView mActiveVisitsButton;
-    private ImageView mCaptureVitalsButton;
-    private ImageView mProviderManagementButton;
-    private RelativeLayout mFindPatientView;
-    private RelativeLayout mRegistryPatientView;
-    private RelativeLayout mActiveVisitsView;
-    private RelativeLayout mCaptureVitalsView;
-    private RelativeLayout mProviderManagementView;
     private FragmentDashboardBinding binding;
 
     private SparseArray<Bitmap> mBitmapCache;
@@ -151,32 +141,17 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
         View root = binding.getRoot();
 
         if (root != null) {
-            initFragmentFields(root);
             setListeners();
         }
         return root;
     }
 
-    private void initFragmentFields(View root) {
-        mFindPatientButton = binding.findPatientButton;
-        mRegistryPatientButton = binding.registryPatientButton;
-        mActiveVisitsButton = binding.activeVisitsButton;
-        mCaptureVitalsButton = binding.captureVitalsButton;
-        mProviderManagementButton = binding.dashboardProviderManagementButton;
-
-        mFindPatientView = binding.findPatientView;
-        mRegistryPatientView = binding.registryPatientView;
-        mCaptureVitalsView = binding.captureVitalsView;
-        mActiveVisitsView = binding.activeVisitsView;
-        mProviderManagementView = binding.dashboardProviderManagementView;
-    }
-
     private void setListeners() {
-        mActiveVisitsView.setOnClickListener(this);
-        mRegistryPatientView.setOnClickListener(this);
-        mFindPatientView.setOnClickListener(this);
-        mCaptureVitalsView.setOnClickListener(this);
-        mProviderManagementView.setOnClickListener(this);
+        binding.activeVisitsView.setOnClickListener(this);
+        binding.registryPatientView.setOnClickListener(this);
+        binding.findPatientView.setOnClickListener(this);
+        binding.captureVitalsView.setOnClickListener(this);
+        binding.dashboardProviderManagementView.setOnClickListener(this);
 
     }
 
@@ -192,10 +167,10 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
      */
     @Override
     public void bindDrawableResources() {
-        bindDrawableResource(mFindPatientButton, R.drawable.ico_search);
-        bindDrawableResource(mRegistryPatientButton, R.drawable.ico_registry);
-        bindDrawableResource(mActiveVisitsButton, R.drawable.ico_visits);
-        bindDrawableResource(mCaptureVitalsButton, R.drawable.ico_vitals);
+        bindDrawableResource(binding.findPatientButton, R.drawable.ico_search);
+        bindDrawableResource(binding.registryPatientButton, R.drawable.ico_registry);
+        bindDrawableResource(binding.activeVisitsButton, R.drawable.ico_visits);
+        bindDrawableResource(binding.captureVitalsButton, R.drawable.ico_vitals);
 
         if (ThemeUtils.isDarkModeActivated()) {
             changeColorOfDashboardIcons();
@@ -269,11 +244,11 @@ public class DashboardFragment extends ACBaseFragment<DashboardContract.Presente
 
     private void changeColorOfDashboardIcons() {
         final int greenColorResId = R.color.green;
-        ImageUtils.changeImageViewTint(getContext(), mActiveVisitsButton, greenColorResId);
-        ImageUtils.changeImageViewTint(getContext(), mCaptureVitalsButton, greenColorResId);
-        ImageUtils.changeImageViewTint(getContext(), mFindPatientButton, greenColorResId);
-        ImageUtils.changeImageViewTint(getContext(), mRegistryPatientButton, greenColorResId);
-        ImageUtils.changeImageViewTint(getContext(), mProviderManagementButton, greenColorResId);
+        ImageUtils.changeImageViewTint(getContext(), binding.activeVisitsButton, greenColorResId);
+        ImageUtils.changeImageViewTint(getContext(), binding.captureVitalsButton, greenColorResId);
+        ImageUtils.changeImageViewTint(getContext(), binding.findPatientButton, greenColorResId);
+        ImageUtils.changeImageViewTint(getContext(), binding.registryPatientButton, greenColorResId);
+        ImageUtils.changeImageViewTint(getContext(), binding.dashboardProviderManagementButton, greenColorResId);
 
     }
 }

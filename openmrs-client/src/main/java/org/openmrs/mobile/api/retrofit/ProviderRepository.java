@@ -103,6 +103,8 @@ public class ProviderRepository {
                 @Override
                 public void onResponse(@NotNull Call<Provider> call, @NotNull Response<Provider> response) {
                     if (response.isSuccessful()) {
+                        provider.setUuid(response.body().getUuid());
+                        provider.getPerson().setUuid(response.body().getPerson().getUuid());
                         ToastUtil.success(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
                         OpenMRS.getInstance().getOpenMRSLogger().e("Adding Provider Successful " + response.raw());
                         callback.onSuccess();

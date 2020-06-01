@@ -93,12 +93,12 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
     @Override
     public void setConceptsInDbText(String text) {
         if (text.equals("0")) {
-            downloadConceptsButton.setEnabled(true);
+            downloadConceptsButton.setEnabled(false);
             ToastUtil.showLongToast(getActivity(),
                 ToastUtil.ToastType.WARNING,
                 R.string.settings_no_concepts_toast);
         } else {
-            downloadConceptsButton.setEnabled(false);
+            downloadConceptsButton.setEnabled(true);
         }
         conceptsInDbTextView.setText(text);
     }

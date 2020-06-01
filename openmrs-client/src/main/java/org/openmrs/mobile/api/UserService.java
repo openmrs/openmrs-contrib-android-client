@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.api;
 
+import androidx.annotation.NonNull;
+
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.models.User;
@@ -24,13 +26,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class UserService {
-
     public void updateUserInformation(final String username) {
         RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<Results<User>> call = restApi.getUserInfo(username);
@@ -48,11 +48,11 @@ public class UserService {
                             }
                         }
                         if (!matchFound) {
+                            //string resource and translation added "error_fetching_user_data_message"
                             ToastUtil.error("Couldn't fetch user data");
                         }
                     }
-                }
-                else {
+                } else {
                     ToastUtil.error(response.message());
                 }
             }
@@ -75,8 +75,7 @@ public class UserService {
                     userInfo.put(ApplicationConstants.UserKeys.USER_PERSON_NAME, response.body().getPerson().getDisplay());
                     userInfo.put(ApplicationConstants.UserKeys.USER_UUID, response.body().getPerson().getUuid());
                     OpenMRS.getInstance().setCurrentUserInformation(userInfo);
-                }
-                else {
+                } else {
                     ToastUtil.error(response.message());
                 }
             }

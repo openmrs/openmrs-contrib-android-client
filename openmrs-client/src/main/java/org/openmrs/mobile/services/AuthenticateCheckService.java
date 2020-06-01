@@ -22,6 +22,9 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
@@ -35,14 +38,11 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AuthenticateCheckService extends Service {
-
-
     private IBinder mBinder = new SocketServerBinder();
     private boolean mRunning = false;
     private OpenMRS mOpenMRS = OpenMRS.getInstance();
@@ -58,11 +58,10 @@ public class AuthenticateCheckService extends Service {
                     String username = mOpenMRS.getUsername();
                     String password = mOpenMRS.getPassword();
                     if ((!username.equals(ApplicationConstants.EMPTY_STRING)) &&
-                            (!password.equals(ApplicationConstants.EMPTY_STRING))) {
+                        (!password.equals(ApplicationConstants.EMPTY_STRING))) {
                         Log.e("Service Task ", "Running");
                         authenticateCheck(username, password);
                     }
-
                 }
             }
         }, 10000, 100000);
@@ -110,13 +109,13 @@ public class AuthenticateCheckService extends Service {
                             }
                         }
                     } else {
-                        ToastUtil.error("Error in AuthenticateCheckService Response");
+                        ToastUtil.error(getString(R.string.authenticate_check_service_error_response_message));
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<Session> call, @NonNull Throwable t) {
-                    ToastUtil.error("Error in AuthenticateCheckService");
+                    ToastUtil.error(getString(R.string.authenticate_service_error_message));
                 }
             });
         } else {
@@ -132,11 +131,8 @@ public class AuthenticateCheckService extends Service {
     }
 
     public class SocketServerBinder extends Binder {
-
         public AuthenticateCheckService getService() {
             return AuthenticateCheckService.this;
         }
-
     }
-
 }

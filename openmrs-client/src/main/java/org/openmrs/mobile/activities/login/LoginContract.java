@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.activities.login;
 
+import androidx.annotation.NonNull;
+
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Location;
@@ -21,13 +23,8 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-
 public interface LoginContract {
-
     interface View extends BaseView<Presenter> {
-
-
         void hideSoftKeys();
 
         void setPresenter(@NonNull Presenter presenter);
@@ -46,6 +43,8 @@ public interface LoginContract {
 
         void showInvalidURLSnackbar(String message);
 
+        void showInvalidURLSnackbar(int resId);
+
         void showInvalidLoginOrPasswordSnackbar();
 
         void setLocationErrorOccurred(boolean errorOccurred);
@@ -61,11 +60,9 @@ public interface LoginContract {
         void startFormListService();
 
         void showOpenMRSLogo();
-
     }
 
     interface Presenter extends BasePresenterContract {
-
         void authenticateUser(final String username, final String password, final String url);
 
         void authenticateUser(final String username, final String password, final String url, boolean wipeDatabase);
@@ -75,6 +72,5 @@ public interface LoginContract {
         void saveLocationsToDatabase(List<Location> locationList, String selectedLocation);
 
         void loadLocations(String url);
-
     }
 }

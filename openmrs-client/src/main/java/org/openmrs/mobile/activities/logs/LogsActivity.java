@@ -19,15 +19,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.appcompat.app.ActionBar;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 
-import androidx.appcompat.app.ActionBar;
-
-
 public class LogsActivity extends ACBaseActivity {
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,18 +38,17 @@ public class LogsActivity extends ACBaseActivity {
 
         // Create fragment
         LogsFragment logsFragment =
-                (LogsFragment) getSupportFragmentManager().findFragmentById(R.id.logsContentFragment);
+            (LogsFragment) getSupportFragmentManager().findFragmentById(R.id.logsContentFragment);
         if (logsFragment == null) {
             logsFragment = LogsFragment.newInstance();
         }
         if (!logsFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    logsFragment, R.id.logsContentFragment);
+                logsFragment, R.id.logsContentFragment);
         }
 
         // Create the presenter
         new LogsPresenter(logsFragment, mOpenMRSLogger);
-
     }
 
     @Override

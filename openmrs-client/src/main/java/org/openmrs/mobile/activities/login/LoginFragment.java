@@ -14,9 +14,6 @@
 
 package org.openmrs.mobile.activities.login;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,10 +35,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
+
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.community.contact.ContactUsActivity;
@@ -58,8 +57,10 @@ import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.URLValidator;
 
-public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> implements LoginContract.View {
+import java.util.ArrayList;
+import java.util.List;
 
+public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> implements LoginContract.View {
     private static String mLastCorrectURL = "";
     private static List<Location> mLocationsList;
     final private String initialUrl = OpenMRS.getInstance().getServerUrl();
@@ -82,13 +83,11 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     private ProgressBar mLocationLoadingProgressBar;
     private ImageView openMRSLogo;
     private TextView mAboutUsTextView;
-
     private LoginValidatorWatcher loginValidatorWatcher;
 
     public static LoginFragment newInstance() {
         return new LoginFragment();
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -120,15 +119,15 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
         mUrl.setOnFocusChangeListener((view, hasFocus) -> {
             if (StringUtils.notEmpty(mUrl.getText().toString())
-                    && !view.isFocused()
-                    && loginValidatorWatcher.isUrlChanged()
-                    || (loginValidatorWatcher.isUrlChanged() && !view.isFocused()
-                    && loginValidatorWatcher.isLocationErrorOccurred())
-                    || (!loginValidatorWatcher.isUrlChanged() && !view.isFocused())) {
+                && !view.isFocused()
+                && loginValidatorWatcher.isUrlChanged()
+                || (loginValidatorWatcher.isUrlChanged() && !view.isFocused()
+                && loginValidatorWatcher.isLocationErrorOccurred())
+                || (!loginValidatorWatcher.isUrlChanged() && !view.isFocused())) {
                 ((LoginFragment) getActivity()
-                        .getSupportFragmentManager()
-                        .findFragmentById(R.id.loginContentFrame))
-                        .setUrl(mUrl.getText().toString());
+                    .getSupportFragmentManager()
+                    .findFragmentById(R.id.loginContentFrame))
+                    .setUrl(mUrl.getText().toString());
                 loginValidatorWatcher.setUrlChanged(false);
             }
 
@@ -160,9 +159,9 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         });
 
         mLoginButton.setOnClickListener(view -> mPresenter.login(mUsername.getText().toString(),
-                mPassword.getText().toString(),
-                mUrl.getText().toString(),
-                initialUrl));
+            mPassword.getText().toString(),
+            mUrl.getText().toString(),
+            initialUrl));
 
         mForgotPass.setOnClickListener(view -> forgotPassword());
 
@@ -172,7 +171,6 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     private void initViewFields(View root) {
         mUrl = root.findViewById(R.id.loginUrlField);
         mUrlInput = root.findViewById(R.id.textInputLayoutLoginURL);
-
 
         mUsername = root.findViewById(R.id.loginUsernameField);
         mUsername.setText(OpenMRS.getInstance().getUsername());
@@ -229,7 +227,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public void openAboutPage(){
+    public void openAboutPage() {
         String userGuideUrl = ApplicationConstants.USER_GUIDE;
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(userGuideUrl));
@@ -300,7 +298,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     private void createImageBitmap(Integer key, ViewGroup.LayoutParams layoutParams) {
         if (mBitmapCache.get(key) == null) {
             mBitmapCache.put(key, ImageUtils.decodeBitmapFromResource(getResources(), key,
-                    layoutParams.width, layoutParams.height));
+                layoutParams.width, layoutParams.height));
         }
     }
 
@@ -355,14 +353,26 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     }
 
     @Override
+    public void showInvalidURLSnackbar(int resId) {
+        if (isActivityNotNull()) {
+            createSnackbar(getString(resId))
+                .setAction(getResources().getString(R.string.snackbar_edit), view -> {
+                    mUrl.requestFocus();
+                    mUrl.selectAll();
+                })
+                .show();
+        }
+    }
+
+    @Override
     public void showInvalidURLSnackbar(String message) {
         if (isActivityNotNull()) {
             createSnackbar(message)
-                    .setAction(getResources().getString(R.string.snackbar_edit), view -> {
-                        mUrl.requestFocus();
-                        mUrl.selectAll();
-                    })
-                    .show();
+                .setAction(getResources().getString(R.string.snackbar_edit), view -> {
+                    mUrl.requestFocus();
+                    mUrl.selectAll();
+                })
+                .show();
         }
     }
 
@@ -371,17 +381,17 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         String message = getResources().getString(R.string.invalid_login_or_password_message);
         if (isActivityNotNull()) {
             createSnackbar(message)
-                    .setAction(getResources().getString(R.string.snackbar_edit), view -> {
-                        mPassword.requestFocus();
-                        mPassword.selectAll();
-                    })
-                    .show();
+                .setAction(getResources().getString(R.string.snackbar_edit), view -> {
+                    mPassword.requestFocus();
+                    mPassword.selectAll();
+                })
+                .show();
         }
     }
 
     private Snackbar createSnackbar(String message) {
         return Snackbar
-                .make(mRootView, message, Snackbar.LENGTH_LONG);
+            .make(mRootView, message, Snackbar.LENGTH_LONG);
     }
 
     @Override
@@ -405,7 +415,6 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         }
     }
 
-
     private List<String> getLocationStringList(List<Location> locationList) {
         List<String> list = new ArrayList<>();
         list.add(getString(R.string.login_location_select));
@@ -420,7 +429,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         if (result.isURLValid()) {
             mPresenter.loadLocations(result.getUrl());
         } else {
-            showInvalidURLSnackbar("Invalid URL");
+            showInvalidURLSnackbar(getResources().getString(R.string.invalid_URL_message));
         }
     }
 
@@ -441,18 +450,17 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
     public void login() {
         mPresenter.authenticateUser(mUsername.getText().toString(),
-                mPassword.getText().toString(),
-                mUrl.getText().toString());
+            mPassword.getText().toString(),
+            mUrl.getText().toString());
     }
 
     public void login(boolean wipeDatabase) {
         mPresenter.authenticateUser(mUsername.getText().toString(),
-                mPassword.getText().toString(),
-                mUrl.getText().toString(), wipeDatabase);
+            mPassword.getText().toString(),
+            mUrl.getText().toString(), wipeDatabase);
     }
 
     private boolean isActivityNotNull() {
         return (isAdded() && getActivity() != null);
     }
-
 }

@@ -16,13 +16,13 @@ package org.openmrs.mobile.models
 
 import com.google.gson.annotations.Expose
 
-data class User (@Expose var username: String? = null,
-                 @Expose var systemId: String? = null,
-                 @Expose var person: Person? = null) : Resource() {
+data class User(@Expose var username: String? = null,
+                @Expose var systemId: String? = null,
+                @Expose var person: Person? = null) : Resource() {
 
     override fun toString(): String {
         if (username == null)
-            return "Username: "+""
+            return "Username: " + ""
         return "Username: $username"
     }
 }

@@ -10,11 +10,10 @@
 
 package org.openmrs.mobile.models
 
-import org.openmrs.mobile.utilities.ActiveAndroid.Model
-import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Table
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-
+import org.openmrs.mobile.utilities.ActiveAndroid.Model
+import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Table
 import java.io.Serializable
 
 @Table(name = "obscreate")

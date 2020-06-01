@@ -42,7 +42,6 @@ import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 public class PatientDetailsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDetails {
-
     private View rootView;
     private PatientDashboardActivity mPatientDashboardActivity;
 
@@ -171,5 +170,4 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
             }
         }
     }
-
 }

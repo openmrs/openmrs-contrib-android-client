@@ -38,17 +38,17 @@ public final class StringUtils {
             char ch = st.charAt(i);
             if (ch == '\\') {
                 char nextChar = (i == st.length() - 1) ? '\\' : st
-                        .charAt(i + 1);
+                    .charAt(i + 1);
                 // Octal escape?
                 if (nextChar >= '0' && nextChar <= '7') {
                     String code = "" + nextChar;
                     i++;
                     if ((i < st.length() - 1) && st.charAt(i + 1) >= '0'
-                            && st.charAt(i + 1) <= '7') {
+                        && st.charAt(i + 1) <= '7') {
                         code += st.charAt(i + 1);
                         i++;
                         if ((i < st.length() - 1) && st.charAt(i + 1) >= '0'
-                                && st.charAt(i + 1) <= '7') {
+                            && st.charAt(i + 1) <= '7') {
                             code += st.charAt(i + 1);
                             i++;
                         }
@@ -88,8 +88,8 @@ public final class StringUtils {
                             break;
                         }
                         int code = Integer.parseInt(
-                                "" + st.charAt(i + 2) + st.charAt(i + 3)
-                                        + st.charAt(i + 4) + st.charAt(i + 5), 16);
+                            "" + st.charAt(i + 2) + st.charAt(i + 3)
+                                + st.charAt(i + 4) + st.charAt(i + 5), 16);
                         sb.append(Character.toChars(code));
                         i += 5;
                         continue;

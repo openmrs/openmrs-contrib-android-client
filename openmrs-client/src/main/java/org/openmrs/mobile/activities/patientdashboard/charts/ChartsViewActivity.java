@@ -21,6 +21,7 @@ import org.json.JSONObject;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.DayAxisValueFormatter;
 
@@ -30,7 +31,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ChartsViewActivity extends ACBaseActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,19 +42,20 @@ public class ChartsViewActivity extends ACBaseActivity {
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        Bundle mBundle = this.getIntent().getBundleExtra("bundle");
+        Bundle mBundle = this.getIntent().getBundleExtra(ApplicationConstants.BUNDLE);
         try {
-            JSONObject chartData = new JSONObject(mBundle.getString("vitalName"));
+            JSONObject chartData = new JSONObject(mBundle.getString(ApplicationConstants.VITAL_NAME));
             Iterator<String> dates = chartData.keys();
             ArrayList<String> dateList = Lists.newArrayList(dates);
             //Sorting the date
             Collections.sort(dateList, (lhs, rhs) -> {
-                if (DateUtils.getDateFromString(lhs).getTime() < DateUtils.getDateFromString(rhs).getTime())
+                if (DateUtils.getDateFromString(lhs).getTime() < DateUtils.getDateFromString(rhs).getTime()) {
                     return -1;
-                else if (DateUtils.getDateFromString(lhs).getTime() == DateUtils.getDateFromString(rhs).getTime())
+                } else if (DateUtils.getDateFromString(lhs).getTime() == DateUtils.getDateFromString(rhs).getTime()) {
                     return 0;
-                else
+                } else {
                     return 1;
+                }
             });
             for (Integer j = 0; j < dateList.size(); j++) {
                 JSONArray dataArray = chartData.getJSONArray(dateList.get(j));
@@ -63,7 +64,7 @@ public class ChartsViewActivity extends ACBaseActivity {
                 for (Integer i = 0; i < dataArray.length(); i++) {
                     entries.add(new Entry(j, Float.parseFloat((String) dataArray.get(i))));
                 }
-                LineDataSet dataSet = new LineDataSet(entries, "Label"); // add entries to dataset
+                LineDataSet dataSet = new LineDataSet(entries, getString(R.string.dataset_entry_label)); // add entries to dataset
                 dataSet.setCircleColor(R.color.green);
                 dataSet.setValueTextSize(12);
                 List<ILineDataSet> ILdataSet = new ArrayList<>();
@@ -84,7 +85,6 @@ public class ChartsViewActivity extends ACBaseActivity {
 
                 YAxis rightAxis = chart.getAxisRight();
                 rightAxis.setEnabled(false);
-
 
                 chart.invalidate();
             }

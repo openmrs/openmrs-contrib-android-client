@@ -48,9 +48,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-
 public class PatientChartsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientCharts {
-
     private ListView mListView;
     private TextView mEmptyListView;
     private JSONObject observationList;
@@ -106,7 +104,6 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
         });
         return root;
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -174,7 +171,6 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
                                         e.printStackTrace();
                                     }
                                 }
-
                             } else {
                                 JSONObject chartData = new JSONObject();
                                 JSONArray obsValue = new JSONArray();
@@ -189,7 +185,6 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-
                             }
                         }
                     }
@@ -198,8 +193,6 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
             chartsListAdapter = new PatientChartsListAdapter(this.getActivity(), observationList);
             mListView.setAdapter(chartsListAdapter);
         }
-
-
     }
 
     @Override

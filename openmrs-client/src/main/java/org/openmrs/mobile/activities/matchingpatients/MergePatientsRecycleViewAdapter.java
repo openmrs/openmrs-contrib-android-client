@@ -38,7 +38,6 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.List;
 
 public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergePatientsRecycleViewAdapter.PatientViewHolder> {
-
     private List<Patient> patientList;
     private Patient newPatient;
     private Activity mContext;
@@ -75,7 +74,6 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
     }
 
     public class PatientViewHolder extends RecyclerView.ViewHolder {
-
         private TextView mGivenName;
         private TextView mMiddleName;
         private TextView mFamilyName;
@@ -108,11 +106,10 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
                     mPresenter.removeSelectedPatient();
                     cardView.setCardBackgroundColor(Color.WHITE);
                 } else {
-                    ToastUtil.notify("You can select only one similar patient");
+                    ToastUtil.notify(mContext.getString(R.string.only_one_patient_can_be_selected_notification_message));
                 }
             });
         }
-
     }
 
     private void setBirthdate(PatientViewHolder holder, Patient patient) {

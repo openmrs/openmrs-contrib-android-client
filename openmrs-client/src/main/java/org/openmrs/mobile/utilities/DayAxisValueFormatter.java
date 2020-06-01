@@ -22,9 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-
 public class DayAxisValueFormatter implements IAxisValueFormatter {
-
     private ArrayList<String> dates;
 
     public DayAxisValueFormatter(ArrayList<String> dateList) {
@@ -41,4 +39,4 @@ public class DayAxisValueFormatter implements IAxisValueFormatter {
         return dateFormat.format(vitalDate);
 //        return vitalDate.getDate() + "/" + vitalDate.getMonth() + "/" + vitalDate.getYear();
     }
-  }
+}

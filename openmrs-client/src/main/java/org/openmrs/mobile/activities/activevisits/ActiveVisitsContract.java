@@ -21,9 +21,7 @@ import org.openmrs.mobile.models.Visit;
 import java.util.List;
 
 public interface ActiveVisitsContract {
-
     interface View extends BaseView<Presenter> {
-
         void updateListVisibility(List<Visit> visitList);
 
         void setEmptyListText(int stringId);
@@ -31,11 +29,9 @@ public interface ActiveVisitsContract {
         void setEmptyListText(int stringId, String query);
     }
 
-    interface Presenter extends BasePresenterContract{
-
+    interface Presenter extends BasePresenterContract {
         void updateVisitsInDatabaseList();
 
         void updateVisitsInDatabaseList(String query);
-
     }
 }

@@ -3,24 +3,20 @@ package org.openmrs.mobile.databases.entities;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+
 import org.openmrs.mobile.models.Resource;
 
 @Entity(tableName = "encounters")
 public class EncounterEntity extends Resource {
-
     @ColumnInfo(name = "visit_id")
     private String visitKeyId;
-
     @NonNull
     @ColumnInfo(name = "encounterDatetime")
     private String encounterDateTime;
-
     @ColumnInfo(name = "type")
     private String encounterType;
-
     @ColumnInfo(name = "patient_uuid")
     private String patientUuid;
-
     @ColumnInfo(name = "form_uuid")
     private String formUuid;
 

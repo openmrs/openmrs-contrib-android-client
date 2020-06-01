@@ -3,25 +3,21 @@ package org.openmrs.mobile.databases.entities;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+
 import org.openmrs.mobile.models.Resource;
 
 @Entity(tableName = "visits")
 public class VisitEntity extends Resource {
-
     @NonNull
     @ColumnInfo(name = "patient_id")
     private long patientKeyID;
-
     @ColumnInfo(name = "visit_type")
     private String visitType;
-
     @ColumnInfo(name = "visit_place")
     private String visitPlace;
-
     @NonNull
     @ColumnInfo(name = "start_date")
     private String startDate;
-
     @ColumnInfo(name = "stop_date")
     private String stopDate;
 
@@ -61,7 +57,9 @@ public class VisitEntity extends Resource {
     }
 
     @NonNull
-    public String getStartDate() { return startDate; }
+    public String getStartDate() {
+        return startDate;
+    }
 
     public String isStartDate() {
         return startDate;

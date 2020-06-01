@@ -37,10 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
-
     private static final int LEFT = 0;
     private static final int RIGHT = 1;
-
     private Context mContext;
     private List<Encounter> mEncounters;
     private List<ViewGroup> mChildLayouts;
@@ -77,17 +75,17 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
                         } else if (obs.getDiagnosisOrder() != null && obs.getShortDiagnosisCertainty() != null && obs.getDiagnosisList() != null) {
                             //if the observation is a Diagnosis Order
                             convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDiagnosisOrder(),
-                                    "(" + obs.getShortDiagnosisCertainty() + ") " + obs.getDiagnosisList());
+                                "(" + obs.getShortDiagnosisCertainty() + ") " + obs.getDiagnosisList());
                         } else if (obs.getDisplay() != null && obs.getDisplayValue() != null) {
                             if (obs.getDisplay().contains(mContext.getString(R.string.hiv_yes))) {
                                 convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(),
-                                        mContext.getString(R.string.hiv_yes));
+                                    mContext.getString(R.string.hiv_yes));
                             } else if (obs.getDisplay().contains(mContext.getString(R.string.hiv_no))) {
                                 convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(),
-                                        mContext.getString(R.string.hiv_no));
+                                    mContext.getString(R.string.hiv_no));
                             } else if (obs.getDisplay().contains(mContext.getString(R.string.hiv_unknown))) {
                                 convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(),
-                                        mContext.getString(R.string.hiv_unknown));
+                                    mContext.getString(R.string.hiv_unknown));
                             } else {
                                 //miscellaneous, for all other cases that have a Display - Value pair
                                 convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(), obs.getDisplayValue());
@@ -116,7 +114,7 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return  1;
+        return 1;
     }
 
     @Override
@@ -201,13 +199,13 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
     private void bindDrawableResources(int drawableID, TextView textView, int direction) {
         final float scale = mContext.getResources().getDisplayMetrics().density;
         Drawable image = mContext.getResources().getDrawable(drawableID);
-        if(direction == LEFT) {
-            image.setBounds(0, 0, (int)(40 * scale + 0.5f), (int)(40 * scale + 0.5f));
-            textView.setCompoundDrawablePadding((int)(13 * scale + 0.5f));
+        if (direction == LEFT) {
+            image.setBounds(0, 0, (int) (40 * scale + 0.5f), (int) (40 * scale + 0.5f));
+            textView.setCompoundDrawablePadding((int) (13 * scale + 0.5f));
             textView.setCompoundDrawables(image, null, null, null);
-        }else {
+        } else {
             image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
-            textView.setCompoundDrawablePadding((int)(10 * scale + 0.5f));
+            textView.setCompoundDrawablePadding((int) (10 * scale + 0.5f));
             textView.setCompoundDrawables(null, null, image, null);
         }
     }
@@ -215,7 +213,7 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
     private void createImageBitmap(Integer key, ViewGroup.LayoutParams layoutParams) {
         if (mBitmapCache.get(key) == null) {
             mBitmapCache.put(key, ImageUtils.decodeBitmapFromResource(mContext.getResources(), key,
-                    layoutParams.width, layoutParams.height));
+                layoutParams.width, layoutParams.height));
         }
     }
 }

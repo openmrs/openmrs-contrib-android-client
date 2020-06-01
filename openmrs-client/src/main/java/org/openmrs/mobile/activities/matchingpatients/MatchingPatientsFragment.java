@@ -34,8 +34,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
-public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsContract.Presenter> implements MatchingPatientsContract.View{
-
+public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsContract.Presenter> implements MatchingPatientsContract.View {
     private Button registerNewPatientButton;
     private Button mergePatientsButton;
     private TextView givenName;
@@ -52,7 +51,7 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
     private RecyclerView mRecyclerView;
     private View view;
 
-    public static MatchingPatientsFragment newInstance(){
+    public static MatchingPatientsFragment newInstance() {
         return new MatchingPatientsFragment();
     }
 
@@ -120,7 +119,7 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
 
     private void setMatchingPatients(Patient patient, List<Patient> matchingPatients) {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(new MergePatientsRecycleViewAdapter((getActivity()), mPresenter,  matchingPatients, patient));
+        mRecyclerView.setAdapter(new MergePatientsRecycleViewAdapter((getActivity()), mPresenter, matchingPatients, patient));
     }
 
     private void setPatientInfo(Patient patient) {

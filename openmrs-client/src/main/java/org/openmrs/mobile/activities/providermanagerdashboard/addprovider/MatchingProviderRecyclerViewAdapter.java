@@ -16,7 +16,7 @@ import org.openmrs.mobile.models.Provider;
 import java.util.List;
 
 public class MatchingProviderRecyclerViewAdapter extends
-        RecyclerView.Adapter<MatchingProviderRecyclerViewAdapter.SimilarProviderViewHolder> {
+    RecyclerView.Adapter<MatchingProviderRecyclerViewAdapter.SimilarProviderViewHolder> {
     private List<Provider> mItems;
     private Context context;
 
@@ -47,14 +47,12 @@ public class MatchingProviderRecyclerViewAdapter extends
         holder.providerDetailsCL.setOnClickListener(view -> {
             // Action
         });
-
     }
 
     @Override
     public int getItemCount() {
         return mItems.size();
     }
-
 
     class SimilarProviderViewHolder extends RecyclerView.ViewHolder {
         private TextView mIdentifier;
@@ -66,7 +64,6 @@ public class MatchingProviderRecyclerViewAdapter extends
             providerDetailsCL = itemView.findViewById(R.id.providerManagementCL);
             mIdentifier = itemView.findViewById(R.id.providerManagementIdentifier);
             mName = itemView.findViewById(R.id.providerManagementName);
-
         }
     }
 

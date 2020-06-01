@@ -21,9 +21,7 @@ import org.openmrs.mobile.models.Encounter;
 import java.util.List;
 
 public interface VisitDashboardContract {
-
     interface View extends BaseView<Presenter> {
-
         void startCaptureVitals(long patientId);
 
         void moveToPatientDashboard();
@@ -42,12 +40,10 @@ public interface VisitDashboardContract {
     }
 
     interface Presenter extends BasePresenterContract {
-        
         void fillForm();
 
         void updatePatientName();
 
         void checkIfVisitActive();
     }
-
 }

@@ -8,14 +8,12 @@ import org.openmrs.mobile.models.Provider;
 
 public class ProviderDashboardContract {
     public interface View extends BaseView<Presenter> {
-
         void setupBackdrop(Provider provider);
 
         void showSnackbarForFailedEditRequest();
     }
 
     public interface Presenter extends BasePresenterContract {
-
         void editProvider(Provider provider);
 
         Provider getProviderFromIntent(Intent intent);

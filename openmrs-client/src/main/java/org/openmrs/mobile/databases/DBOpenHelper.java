@@ -45,9 +45,8 @@ import rx.schedulers.Schedulers;
 
 public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     private static int DATABASE_VERSION = OpenMRS.getInstance().
-            getResources().getInteger(R.integer.dbversion);
+        getResources().getInteger(R.integer.dbversion);
     private static final String WHERE_ID_CLAUSE = String.format("%s = ?", Table.MasterColumn.ID);
-
     private PatientTable mPatientTable;
     private ConceptTable mConceptTable;
     private VisitTable mVisitTable;
@@ -109,17 +108,19 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             db.beginTransaction();
 
             bindString(1, patient.getName().getNameString(), patientStatement);
-            bindString(2, Boolean.toString(patient.isSynced()),patientStatement);
-            
-            if (patient.getUuid() != null)
-                bindString(3, patient.getUuid(), patientStatement);
-            else
-                bindString(3, null, patientStatement);
+            bindString(2, Boolean.toString(patient.isSynced()), patientStatement);
 
-            if (patient.getIdentifier() != null)
+            if (patient.getUuid() != null) {
+                bindString(3, patient.getUuid(), patientStatement);
+            } else {
+                bindString(3, null, patientStatement);
+            }
+
+            if (patient.getIdentifier() != null) {
                 bindString(4, patient.getIdentifier().getIdentifier(), patientStatement);
-            else
+            } else {
                 bindString(4, null, patientStatement);
+            }
 
             bindString(5, patient.getName().getGivenName(), patientStatement);
             bindString(6, patient.getName().getMiddleName(), patientStatement);
@@ -184,7 +185,6 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             newValues.put(PatientTable.Column.COUNTRY, patient.getAddress().getCountry());
             newValues.put(PatientTable.Column.STATE, patient.getAddress().getStateProvince());
             newValues.put(PatientTable.Column.CITY, patient.getAddress().getCityVillage());
-
         }
         newValues.put(PatientTable.Column.ENCOUNTERS, patient.getEncounters());
 
@@ -379,7 +379,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
 
     public static <T> Observable<T> createObservableIO(final Callable<T> func) {
         return Observable.fromCallable(func)
-                .subscribeOn(Schedulers.io());
+            .subscribeOn(Schedulers.io());
     }
 
     private byte[] bitmapToByteArray(Bitmap image) {

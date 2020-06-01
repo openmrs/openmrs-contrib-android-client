@@ -26,8 +26,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.openmrs.mobile.R;
@@ -44,17 +44,15 @@ import static org.openmrs.mobile.utilities.ApplicationConstants.RequestCodes.ADD
 import static org.openmrs.mobile.utilities.ApplicationConstants.RequestCodes.EDIT_PROVIDER_REQ_CODE;
 
 public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderManagerDashboardContract.Presenter>
-        implements ProviderManagerDashboardContract.View {
+    implements ProviderManagerDashboardContract.View {
     // Fragment components
     private TextView mEmptyList;
     private RecyclerView mProviderManagementRecyclerView;
     private ProviderManagerDashboardRecyclerViewAdapter providersAdapter;
     private FloatingActionButton addProviderFab;
     private SwipeRefreshLayout refreshList;
-
     //Initialization Progress bar
     private ProgressBar mProgressBar;
-
     private List<Provider> providerList;
 
     /**

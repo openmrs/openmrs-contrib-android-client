@@ -14,8 +14,6 @@
 
 package org.openmrs.mobile.activities.introduction;
 
-import static org.openmrs.mobile.utilities.ApplicationConstants.SPLASH_TIMER;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,11 +25,13 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 
-public class SplashActivity extends ACBaseActivity {
+import static org.openmrs.mobile.utilities.ApplicationConstants.SPLASH_TIMER;
 
+public class SplashActivity extends ACBaseActivity {
     private Handler mHandler = new Handler();
     private Runnable mRunnable;
 
@@ -45,7 +45,7 @@ public class SplashActivity extends ACBaseActivity {
         Animation move = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.splash_screen_logo_anim);
         ImageView logo = findViewById(R.id.logo);
         AnimationSet set = new AnimationSet(true);
-        Animation fadeIn = new AlphaAnimation(0,1);
+        Animation fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setInterpolator(new AccelerateInterpolator());
         fadeIn.setDuration(1000);
         set.addAnimation(fadeIn);

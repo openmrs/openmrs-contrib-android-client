@@ -49,7 +49,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FormListFragment extends ACBaseFragment<FormListContract.Presenter> implements FormListContract.View {
-
     private ListView formList;
     private static Boolean formCreateFlag;
 
@@ -72,9 +71,9 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
     @Override
     public void showFormList(String[] forms) {
         formList.setAdapter(new ArrayAdapter<>(getContext(),
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1,
-                forms));
+            android.R.layout.simple_list_item_1,
+            android.R.id.text1,
+            forms));
     }
 
     @Override
@@ -155,8 +154,6 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
                     //This method is lef blank intentionally
                 }
             });
-
-
         }
         return formCreateFlag;
     }
@@ -190,8 +187,7 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
     }
 
     @Override
-    public void showError(String message) {
-        ToastUtil.error(message);
+    public void showError(String formName) {
+        ToastUtil.error(getString(R.string.no_such_form_name_error_message, formName));
     }
-
 }

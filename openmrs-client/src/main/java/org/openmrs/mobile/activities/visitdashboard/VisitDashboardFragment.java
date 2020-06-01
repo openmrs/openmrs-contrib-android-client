@@ -39,8 +39,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContract.Presenter> implements VisitDashboardContract.View{
-
+public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContract.Presenter> implements VisitDashboardContract.View {
     private ExpandableListView mExpandableListView;
     private TextView mEmptyListView;
 
@@ -83,8 +82,8 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
     public void updateList(List<Encounter> visitEncounters) {
         final String[] displayableEncounterTypes = ApplicationConstants.EncounterTypes.ENCOUNTER_TYPES_DISPLAYS;
         final HashSet<String> displayableEncounterTypesArray = new HashSet<>(Arrays.asList(displayableEncounterTypes));
-        
-        List<Encounter> displayableEncounters  = new ArrayList<>();
+
+        List<Encounter> displayableEncounters = new ArrayList<>();
 
         for (Encounter encounter : visitEncounters) {
             String encounterTypeDisplay = encounter.getEncounterType().getDisplay();
@@ -102,15 +101,14 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
     public void setEmptyListVisibility(boolean visibility) {
         if (visibility) {
             mEmptyListView.setVisibility(View.VISIBLE);
-        }
-        else {
+        } else {
             mEmptyListView.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void setActionBarTitle(String name) {
-        ((VisitDashboardActivity)getActivity()).getSupportActionBar().setTitle(name);
+        ((VisitDashboardActivity) getActivity()).getSupportActionBar().setTitle(name);
     }
 
     @Override
@@ -128,5 +126,4 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
     public void showErrorToast(int messageId) {
         ToastUtil.error(getString(messageId));
     }
-
 }

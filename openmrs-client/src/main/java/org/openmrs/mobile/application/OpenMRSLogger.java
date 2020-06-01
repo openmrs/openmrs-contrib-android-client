@@ -27,7 +27,6 @@ import java.io.LineNumberReader;
 import java.io.PrintWriter;
 
 public class OpenMRSLogger {
-
     private static String mTAG = "OpenMRS";
     private static final boolean IS_DEBUGGING_ON = true;
     private static final String LOG_FILENAME = "OpenMRS.log";
@@ -92,7 +91,6 @@ public class OpenMRSLogger {
     }
 
     private static class SaveToFileAsyncTask extends AsyncTask<Void, Void, Void> {
-
         @Override
         protected Void doInBackground(Void... voids) {
             if (isFolderExist() && isSaveToFileEnable()) {
@@ -115,7 +113,6 @@ public class OpenMRSLogger {
 
                     mLoggerProcess = Runtime.getRuntime().exec("logcat -c");
                     mLoggerProcess.waitFor();
-
                 } catch (IOException e) {
                     setErrorCount();
                     if (isSaveToFileEnable()) {
@@ -150,7 +147,6 @@ public class OpenMRSLogger {
         asyncTask.execute(msg);
     }
 
-
     private static class WriteMsgToFileAsyncTask extends AsyncTask<String, Void, Void> {
         @Override
         // custom message as string parameter
@@ -164,7 +160,6 @@ public class OpenMRSLogger {
 
                     writer.flush();
                     writer.close();
-
                 } catch (IOException e) {
                     setErrorCount();
                     if (isSaveToFileEnable()) {

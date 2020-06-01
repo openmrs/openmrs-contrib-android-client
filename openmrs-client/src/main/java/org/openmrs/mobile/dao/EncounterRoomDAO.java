@@ -14,17 +14,18 @@
 
 package org.openmrs.mobile.dao;
 
-import java.util.List;
-
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
-import io.reactivex.Single;
+
 import org.openmrs.mobile.databases.entities.EncounterEntity;
+
+import java.util.List;
+
+import io.reactivex.Single;
 
 @Dao
 public interface EncounterRoomDAO {
-
     @Query("SELECT * FROM encounters WHERE display = :formname")
     Single<List<EncounterEntity>> getEncounterTypeByFormName(String formname);
 
@@ -58,8 +59,7 @@ public interface EncounterRoomDAO {
      * 1. Delete that encounter with that UUID
      * 2. Create new Encounter with that UUID
      */
-
     @Query("SELECT e.* FROM observations AS o JOIN encounters AS e ON o.encounter_id = e._id " +
-            "JOIN visits AS v on e.visit_id = v._id WHERE v.patient_id = :patientID AND e.type = :encounterType ORDER BY e.encounterDatetime DESC")
+        "JOIN visits AS v on e.visit_id = v._id WHERE v.patient_id = :patientID AND e.type = :encounterType ORDER BY e.encounterDatetime DESC")
     Single<List<EncounterEntity>> getAllEncountersByType(Long patientID, String encounterType);
 }

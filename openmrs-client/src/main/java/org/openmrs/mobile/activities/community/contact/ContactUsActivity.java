@@ -19,14 +19,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import androidx.appcompat.app.ActionBar;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.databinding.ActvityContactUsBinding;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 public class ContactUsActivity extends ACBaseActivity implements ContactUsContract.View {
-
     ContactUsContract.Presenter presenter;
     private ActvityContactUsBinding binding;
 
@@ -45,7 +47,7 @@ public class ContactUsActivity extends ACBaseActivity implements ContactUsContra
 
         binding.contactEmailButton.setOnClickListener(v -> {
             Intent sendMailIntent = new Intent(Intent.ACTION_SENDTO);
-            String mailTo = "mailto:".concat(binding.contactEmailText.getText().toString());
+            String mailTo = ApplicationConstants.MIME_TYPE_MAILTO.concat(binding.contactEmailText.getText().toString());
             sendMailIntent.setData(Uri.parse(mailTo));
             try {
                 startActivity(sendMailIntent);
@@ -64,7 +66,6 @@ public class ContactUsActivity extends ACBaseActivity implements ContactUsContra
             startActivity(intent);
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

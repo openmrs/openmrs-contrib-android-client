@@ -14,18 +14,19 @@
 
 package org.openmrs.mobile.dao;
 
-import java.util.List;
-
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
-import io.reactivex.Single;
+
 import org.openmrs.mobile.databases.entities.PatientEntity;
+
+import java.util.List;
+
+import io.reactivex.Single;
 
 @Dao
 public interface PatientRoomDAO {
-
     @Insert
     void savePatient(PatientEntity patientEntity);
 

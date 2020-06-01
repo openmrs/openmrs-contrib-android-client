@@ -16,7 +16,6 @@ package org.openmrs.mobile.utilities.ActiveAndroid.query;
  * limitations under the License.
  */
 
-
 import org.openmrs.mobile.utilities.ActiveAndroid.Cache;
 import org.openmrs.mobile.utilities.ActiveAndroid.Model;
 

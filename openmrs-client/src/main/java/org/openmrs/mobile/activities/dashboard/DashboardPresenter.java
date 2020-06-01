@@ -14,13 +14,11 @@
 
 package org.openmrs.mobile.activities.dashboard;
 
+import androidx.annotation.NonNull;
 
 import org.openmrs.mobile.activities.BasePresenter;
 
-import androidx.annotation.NonNull;
-
 public class DashboardPresenter extends BasePresenter implements DashboardContract.Presenter {
-
     // View
     @NonNull
     private final DashboardContract.View mDashboardView;
@@ -34,5 +32,4 @@ public class DashboardPresenter extends BasePresenter implements DashboardContra
     public void subscribe() {
         mDashboardView.bindDrawableResources();
     }
-
 }

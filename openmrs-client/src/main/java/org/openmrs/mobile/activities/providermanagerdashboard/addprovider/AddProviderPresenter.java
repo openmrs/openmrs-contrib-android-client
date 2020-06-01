@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddProviderPresenter extends BasePresenter implements AddProviderContract.Presenter {
-
     @NotNull
     private final AddProviderContract.View addProviderView;
 
@@ -110,8 +109,9 @@ public class AddProviderPresenter extends BasePresenter implements AddProviderCo
             String fName = currentProvider.getPerson().getName().getGivenName().toLowerCase();
             String lName = currentProvider.getPerson().getName().getFamilyName().toLowerCase();
 
-            if (name.contains(fName) || name.contains(lName))
+            if (name.contains(fName) || name.contains(lName)) {
                 matchingProviders.add(provider);
+            }
         }
         return matchingProviders;
     }

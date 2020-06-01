@@ -29,8 +29,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
@@ -45,15 +45,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContract.Presenter> implements SyncedPatientsContract.View {
-
     // Fragment components
     private TextView mEmptyList;
     private RecyclerView mSyncedPatientRecyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
-
     //Initialization Progress bar
     private ProgressBar mProgressBar;
-
     private MenuItem mAddPatientMenuItem;
 
     @Override
@@ -65,7 +62,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         mSyncedPatientRecyclerView = root.findViewById(R.id.syncedPatientRecyclerView);
         mSyncedPatientRecyclerView.setHasFixedSize(true);
         mSyncedPatientRecyclerView.setAdapter(new SyncedPatientsRecyclerViewAdapter(this,
-                new ArrayList<>()));
+            new ArrayList<>()));
         mSyncedPatientRecyclerView.setVisibility(View.GONE);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
         mSyncedPatientRecyclerView.setLayoutManager(linearLayoutManager);
@@ -98,7 +95,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
                 if (NetworkUtils.hasNetwork()) {
                     Intent intent = new Intent(getActivity(), LastViewedPatientsActivity.class);
                     startActivity(intent);
-                }else {
+                } else {
                     NoInternetConnectionSnackbar();
                 }
                 break;
@@ -160,9 +157,10 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         mAddPatientMenuItem.setEnabled(enabled);
         mAddPatientMenuItem.setIcon(resId);
     }
+
     private void NoInternetConnectionSnackbar() {
         Snackbar mSnackbar = Snackbar.make(getActivity().findViewById(android.R.id.content),
-                R.string.snackbar_no_internet_connection, Snackbar.LENGTH_SHORT);
+            R.string.snackbar_no_internet_connection, Snackbar.LENGTH_SHORT);
         View sbView = mSnackbar.getView();
         TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
@@ -175,5 +173,4 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
     public static SyncedPatientsFragment newInstance() {
         return new SyncedPatientsFragment();
     }
-
 }

@@ -35,11 +35,9 @@ public final class TableInfo {
     //////////////////////////////////////////////////////////////////////////////////////
     // PRIVATE MEMBERS
     //////////////////////////////////////////////////////////////////////////////////////
-
     private Class<? extends Model> mType;
     private String mTableName;
     private String mIdName = Table.DEFAULT_ID_NAME;
-
     private Map<Field, String> mColumnNames = new LinkedHashMap<>();
 
     //////////////////////////////////////////////////////////////////////////////////////
@@ -76,7 +74,6 @@ public final class TableInfo {
                 mColumnNames.put(field, columnName);
             }
         }
-
     }
 
     //////////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +100,6 @@ public final class TableInfo {
         return mColumnNames.get(field);
     }
 
-
     private Field getIdField(Class<?> type) {
         if (type.equals(Model.class)) {
             try {
@@ -117,5 +113,4 @@ public final class TableInfo {
 
         return null;
     }
-
 }

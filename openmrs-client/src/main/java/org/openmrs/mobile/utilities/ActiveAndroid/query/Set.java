@@ -24,10 +24,8 @@ import java.util.List;
 
 public final class Set implements Sqlable {
     private Update mUpdate;
-
     private String mSet;
     private String mWhere;
-
     private List<Object> mSetArguments;
     private List<Object> mWhereArguments;
 

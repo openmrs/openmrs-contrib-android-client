@@ -43,7 +43,6 @@ final class ModelInfo {
     //////////////////////////////////////////////////////////////////////////////////////
     // PRIVATE METHODS
     //////////////////////////////////////////////////////////////////////////////////////
-
     private Map<Class<? extends Model>, TableInfo> mTableInfos = new HashMap<>();
     private Map<Class<?>, TypeSerializer> mTypeSerializers = new HashMap<Class<?>, TypeSerializer>() {
         {

@@ -14,6 +14,9 @@
 
 package org.openmrs.mobile.activities.syncedpatients;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
@@ -21,18 +24,14 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.FilterUtil;
 import org.openmrs.mobile.utilities.StringUtils;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class SyncedPatientsPresenter extends BasePresenter implements SyncedPatientsContract.Presenter {
-
     // View
     @NonNull
     private final SyncedPatientsContract.View syncedPatientsView;
     private PatientDAO patientDAO;
-
     // Query for data filtering
     @Nullable
     private String mQuery;
@@ -40,8 +39,8 @@ public class SyncedPatientsPresenter extends BasePresenter implements SyncedPati
     public void deletePatient(Patient mPatient) {
         new PatientDAO().deletePatient(mPatient.getId());
         addSubscription(new VisitDAO().deleteVisitsByPatientId(mPatient.getId())
-                .observeOn(Schedulers.io())
-                .subscribe());
+            .observeOn(Schedulers.io())
+            .subscribe());
     }
 
     public SyncedPatientsPresenter(@NonNull SyncedPatientsContract.View syncedPatientsView, @org.jetbrains.annotations.Nullable String mQuery) {
@@ -58,7 +57,7 @@ public class SyncedPatientsPresenter extends BasePresenter implements SyncedPati
     }
 
     public SyncedPatientsPresenter(@NonNull SyncedPatientsContract.View syncedPatientsView, PatientDAO patientDAO) {
-        this.patientDAO= patientDAO;
+        this.patientDAO = patientDAO;
         this.syncedPatientsView = syncedPatientsView;
         this.syncedPatientsView.setPresenter(this);
     }
@@ -86,27 +85,25 @@ public class SyncedPatientsPresenter extends BasePresenter implements SyncedPati
     @Override
     public void updateLocalPatientsList() {
         addSubscription(patientDAO.getAllPatients()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(patientList -> {
-                    boolean isFiltering = StringUtils.notNull(mQuery) && !mQuery.isEmpty();
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(patientList -> {
+                boolean isFiltering = StringUtils.notNull(mQuery) && !mQuery.isEmpty();
 
-                    if (isFiltering) {
-                        patientList = FilterUtil.getPatientsFilteredByQuery(patientList, mQuery);
-                        if (patientList.isEmpty()) {
-                            syncedPatientsView.updateListVisibility(false, mQuery);
-                        } else {
-                            syncedPatientsView.updateListVisibility(true);
-                        }
+                if (isFiltering) {
+                    patientList = FilterUtil.getPatientsFilteredByQuery(patientList, mQuery);
+                    if (patientList.isEmpty()) {
+                        syncedPatientsView.updateListVisibility(false, mQuery);
                     } else {
-                        if (patientList.isEmpty()) {
-                            syncedPatientsView.updateListVisibility(false);
-                        } else {
-                            syncedPatientsView.updateListVisibility(true);
-                        }
+                        syncedPatientsView.updateListVisibility(true);
                     }
-                    syncedPatientsView.updateAdapter(patientList);
-                }));
-
+                } else {
+                    if (patientList.isEmpty()) {
+                        syncedPatientsView.updateListVisibility(false);
+                    } else {
+                        syncedPatientsView.updateListVisibility(true);
+                    }
+                }
+                syncedPatientsView.updateAdapter(patientList);
+            }));
     }
-
 }

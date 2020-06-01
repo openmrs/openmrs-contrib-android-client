@@ -23,16 +23,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class PatientComparator {
-
     private static final int MIN_SCORE = 6;
     private static final List<String> PATIENT_FIELDS = Arrays.asList("name", "gender",
-            "birthdate", "addres");
+        "birthdate", "addres");
 
-    public List<Patient> findSimilarPatient(List<Patient> patientList, Patient patient){
+    public List<Patient> findSimilarPatient(List<Patient> patientList, Patient patient) {
         List<Patient> similarPatients = new LinkedList<>();
-        for(Patient patient1: patientList){
+        for (Patient patient1 : patientList) {
             int score = comparePatients(patient1, patient);
-            if(score >= MIN_SCORE){
+            if (score >= MIN_SCORE) {
                 similarPatients.add(patient1);
             }
         }
@@ -44,8 +43,8 @@ public class PatientComparator {
 //        Person newPerson = newPatient.getPerson();
 //        Person existingPerson = existingPatient.getPerson();
 
-        for(String field: PATIENT_FIELDS){
-            switch (field){
+        for (String field : PATIENT_FIELDS) {
+            switch (field) {
                 case "name":
                     score += compareFullPersonName(newPatient, existingPatient);
                     break;
@@ -69,31 +68,31 @@ public class PatientComparator {
     private int compareAddress(Patient newPatient, Patient existingPatient) {
         int score = 0;
         if (existingPatient.getAddress() != null && newPatient.getAddress() != null) {
-            if(Objects.equal(newPatient.getAddress().getAddress1(), existingPatient.getAddress().getAddress1())){
+            if (Objects.equal(newPatient.getAddress().getAddress1(), existingPatient.getAddress().getAddress1())) {
                 score += 1;
             }
-            if(Objects.equal(newPatient.getAddress().getAddress2(), existingPatient.getAddress().getAddress2())){
+            if (Objects.equal(newPatient.getAddress().getAddress2(), existingPatient.getAddress().getAddress2())) {
                 score += 1;
             }
-            if(Objects.equal(newPatient.getAddress().getCityVillage(), existingPatient.getAddress().getAddress2())){
+            if (Objects.equal(newPatient.getAddress().getCityVillage(), existingPatient.getAddress().getAddress2())) {
                 score += 1;
             }
-            if(Objects.equal(newPatient.getAddress().getCountry(), existingPatient.getAddress().getCountry())){
+            if (Objects.equal(newPatient.getAddress().getCountry(), existingPatient.getAddress().getCountry())) {
                 score += 1;
             }
-            if(Objects.equal(newPatient.getAddress().getStateProvince(), existingPatient.getAddress().getStateProvince())){
+            if (Objects.equal(newPatient.getAddress().getStateProvince(), existingPatient.getAddress().getStateProvince())) {
                 score += 1;
             }
-            if(Objects.equal(newPatient.getAddress().getPostalCode(), existingPatient.getAddress().getPostalCode())){
+            if (Objects.equal(newPatient.getAddress().getPostalCode(), existingPatient.getAddress().getPostalCode())) {
                 score += 1;
             }
         }
-        return score == 6 ? MIN_SCORE-1:score;
+        return score == 6 ? MIN_SCORE - 1 : score;
     }
 
     private int compareBirthdate(Patient newPatient, Patient existingPatient) {
         int score = 0;
-        if(Objects.equal(newPatient.getBirthdate(), existingPatient.getBirthdate())){
+        if (Objects.equal(newPatient.getBirthdate(), existingPatient.getBirthdate())) {
             score += 1;
         }
         return score;
@@ -101,7 +100,7 @@ public class PatientComparator {
 
     private int compareGender(Patient newPatient, Patient existingPatient) {
         int score = 0;
-        if(Objects.equal(newPatient.getGender(), existingPatient.getGender())){
+        if (Objects.equal(newPatient.getGender(), existingPatient.getGender())) {
             score += 1;
         }
         return score;
@@ -109,16 +108,16 @@ public class PatientComparator {
 
     private int compareFullPersonName(Patient newPatient, Patient existingPatient) {
         int score = 0;
-        if(Objects.equal(newPatient.getName().getGivenName(), existingPatient.getName().getGivenName())){
+        if (Objects.equal(newPatient.getName().getGivenName(), existingPatient.getName().getGivenName())) {
             score += 1;
         }
-        if(Objects.equal(newPatient.getName().getFamilyName(), existingPatient.getName().getFamilyName())){
+        if (Objects.equal(newPatient.getName().getFamilyName(), existingPatient.getName().getFamilyName())) {
             score += 1;
         }
-        if(Objects.equal(newPatient.getName().getMiddleName(), existingPatient.getName().getMiddleName())){
+        if (Objects.equal(newPatient.getName().getMiddleName(), existingPatient.getName().getMiddleName())) {
             score += 1;
         }
         //if the whole name is the same we return MIN_SCORE-1 so if any other field will be equal(e.g gender) this patient is marked as similar
-        return score == 3 ? MIN_SCORE-1:score;
+        return score == 3 ? MIN_SCORE - 1 : score;
     }
 }

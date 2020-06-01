@@ -28,6 +28,7 @@ public final class Join implements Sqlable {
     private JoinType mJoinType;
     private String mOn;
     private String[] mUsing;
+
     Join(From from, Class<? extends Model> table, JoinType joinType) {
         mFrom = from;
         mType = table;

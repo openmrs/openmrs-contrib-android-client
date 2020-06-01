@@ -19,15 +19,14 @@ import androidx.fragment.app.Fragment;
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.CustomApiCallback;
-import org.openmrs.mobile.api.retrofit.ProviderRepository;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
+import org.openmrs.mobile.api.retrofit.ProviderRepository;
 import org.openmrs.mobile.models.Provider;
 
 import java.util.List;
 
 public class ProviderManagerDashboardPresenter extends BasePresenter implements ProviderManagerDashboardContract.Presenter, CustomApiCallback {
-
     private RestApi restApi;
     @NotNull
     private final ProviderManagerDashboardContract.View providerManagerView;

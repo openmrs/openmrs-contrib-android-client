@@ -18,16 +18,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseActivity;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 
+import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.ACBaseActivity;
+
 public class ActiveVisitsActivity extends ACBaseActivity {
-
     private ActiveVisitsContract.Presenter mPresenter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +39,13 @@ public class ActiveVisitsActivity extends ACBaseActivity {
 
         // Create fragment
         ActiveVisitsFragment activeVisitsFragment =
-                (ActiveVisitsFragment) getSupportFragmentManager().findFragmentById(R.id.activeVisitContentFrame);
+            (ActiveVisitsFragment) getSupportFragmentManager().findFragmentById(R.id.activeVisitContentFrame);
         if (activeVisitsFragment == null) {
             activeVisitsFragment = ActiveVisitsFragment.newInstance();
         }
         if (!activeVisitsFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    activeVisitsFragment, R.id.activeVisitContentFrame);
+                activeVisitsFragment, R.id.activeVisitContentFrame);
         }
 
         // Create the presenter
@@ -73,8 +71,7 @@ public class ActiveVisitsActivity extends ACBaseActivity {
             public boolean onQueryTextChange(String query) {
                 if (!query.isEmpty()) {
                     mPresenter.updateVisitsInDatabaseList(query);
-                }
-                else {
+                } else {
                     mPresenter.updateVisitsInDatabaseList();
                 }
                 return true;
@@ -82,6 +79,4 @@ public class ActiveVisitsActivity extends ACBaseActivity {
         });
         return true;
     }
-
-
 }

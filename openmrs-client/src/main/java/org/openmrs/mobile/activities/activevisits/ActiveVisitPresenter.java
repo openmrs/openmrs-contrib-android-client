@@ -21,8 +21,7 @@ import org.openmrs.mobile.utilities.FilterUtil;
 
 import rx.android.schedulers.AndroidSchedulers;
 
-public class ActiveVisitPresenter extends BasePresenter implements ActiveVisitsContract.Presenter{
-
+public class ActiveVisitPresenter extends BasePresenter implements ActiveVisitsContract.Presenter {
     private ActiveVisitsContract.View mActiveVisitsView;
     private VisitDAO visitDAO;
 
@@ -47,24 +46,24 @@ public class ActiveVisitPresenter extends BasePresenter implements ActiveVisitsC
     public void updateVisitsInDatabaseList() {
         mActiveVisitsView.setEmptyListText(R.string.search_visits_no_results);
         addSubscription(visitDAO.getActiveVisits()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        visits -> mActiveVisitsView.updateListVisibility(visits),
-                        error -> mActiveVisitsView.setEmptyListText(R.string.search_visits_no_results)
-                ));
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                visits -> mActiveVisitsView.updateListVisibility(visits),
+                error -> mActiveVisitsView.setEmptyListText(R.string.search_visits_no_results)
+            ));
     }
 
     public void updateVisitsInDatabaseList(final String query) {
         mActiveVisitsView.setEmptyListText(R.string.search_patient_no_result_for_query, query);
         addSubscription(visitDAO.getActiveVisits()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        visits -> {
-                            visits = FilterUtil.getPatientsWithActiveVisitsFilteredByQuery(visits, query);
-                            mActiveVisitsView.updateListVisibility(visits);
-                        },
-                        error -> mActiveVisitsView.setEmptyListText(R.string.search_patient_no_result_for_query, query)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                visits -> {
+                    visits = FilterUtil.getPatientsWithActiveVisitsFilteredByQuery(visits, query);
+                    mActiveVisitsView.updateListVisibility(visits);
+                },
+                error -> mActiveVisitsView.setEmptyListText(R.string.search_patient_no_result_for_query, query)
 
-                ));
+            ));
     }
 }

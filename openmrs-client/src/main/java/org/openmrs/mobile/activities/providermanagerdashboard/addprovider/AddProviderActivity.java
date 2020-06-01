@@ -21,9 +21,8 @@ import androidx.appcompat.app.ActionBar;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 
-    public class AddProviderActivity extends ACBaseActivity {
-
-        AddProviderFragment addProviderFragment;
+public class AddProviderActivity extends ACBaseActivity {
+    AddProviderFragment addProviderFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +37,13 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 
         // Create fragment
         addProviderFragment =
-                (AddProviderFragment) getSupportFragmentManager().findFragmentById(R.id.activity_add_provider_content_frame);
+            (AddProviderFragment) getSupportFragmentManager().findFragmentById(R.id.activity_add_provider_content_frame);
         if (addProviderFragment == null) {
             addProviderFragment = AddProviderFragment.newInstance();
         }
         if (!addProviderFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    addProviderFragment, R.id.activity_add_provider_content_frame);
+                addProviderFragment, R.id.activity_add_provider_content_frame);
         }
 
         AddProviderPresenter mPresenter = new AddProviderPresenter(addProviderFragment);

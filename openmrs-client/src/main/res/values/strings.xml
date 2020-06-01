@@ -366,30 +366,6 @@
     <string name="intro_settings_desc">Try out our dark mode feature.\nExciting? Let\'s get started.</string>
     <string name="get_started_with_our_user_guide">Get started with our user guide</string>
 
-    <!--VisitExpandableListAdapter-->
-    <string name="hiv_yes">Yes</string>
-    <string name="hiv_no">No</string>
-    <string name="hiv_unknown">Unknown</string>
-
-    <!-- Contact Activity -->
-    <string name="helpdesk_mail" translatable="false">helpdesk@openmrs.com</string>
-    <string name="go_to_forum">Go To Forum</string>
-    <string name="go_to_irc">Go To IRC</string>
-    <string name="open">Open</string>
-    <string name="email_us">Email us</string>
-    <string name="help_message">Our Team is always there to answer any questions. Drop us an email or reach out at forums and we\'ll try our best to reply as soon as possible.</string>
-    <string name="contact_forum_url" translatable="false">https://talk.openmrs.org/</string>
-    <string name="contact_irc_url" translatable="false">https://wiki.openmrs.org/display/IRC/Home</string>
-    <string name="contact_us">Contact Us</string>
-    <string name="no_mailing_client_found">There are no email clients installed.</string>
-
-    <!-- ShowCaseView -->
-    <string name="showcase_find_patients">Click here to search through all the patients</string>
-    <string name="showcase_active_visits">Click here to get the list of all the currently active visits</string>
-    <string name="showcase_register_patient">Click here to register a new patient</string>
-    <string name="showcase_form_entry">Click here to capture vitals for a patient on a visit</string>
-    <string name="showcase_manage_providers">Click here to manage providers for a patient on a visit</string>
-
     <!--AuthenticateCheck service-->
     <string name="authenticate_check_service_error_response_message">Error in Authenticate Check Service Response</string>
     <string name="authenticate_service_error_message">Error in Authenticate Check Service</string>
@@ -453,8 +429,32 @@
     <string name="offline_mode_patient_data_saved_locally_notification_message">Sync is off. Patient Update data is saved locally and will sync when online mode is restored.</string>
     <string name="patent_and_form_data_sync_resumed">Syncing switched on, attempting to sync patients and form data</string>
 
+	<!--VisitExpandableListAdapter-->
+	<string name="hiv_yes">Yes</string>
+	<string name="hiv_no">No</string>
+	<string name="hiv_unknown">Unknown</string>
 
-    <!-- Chart Activity -->
+	<!-- Contact Activity -->
+	<string name="helpdesk_mail" translatable="false">helpdesk@openmrs.com</string>
+	<string name="go_to_forum">Forum</string>
+	<string name="go_to_irc">IRC</string>
+	<string name="open">Go To</string>
+	<string name="email_us">Email us</string>
+	<string name="help_message">Our Team is always there to answer any questions. Drop us an email or reach out at forums and we\'ll try our best to reply as soon as possible.</string>
+	<string name="contact_forum_url" translatable="false">https://talk.openmrs.org/</string>
+	<string name="contact_irc_url" translatable="false">https://wiki.openmrs.org/display/IRC/Home</string>
+	<string name="contact_us">Contact Us</string>
+	<string name="no_mailing_client_found">There are no email clients installed.</string>
+	<string name="contact_us_or">OR</string>
+
+	<!-- ShowCaseView -->
+	<string name="showcase_find_patients">Click here to search through all the patients</string>
+	<string name="showcase_active_visits">Click here to get the list of all the currently active visits</string>
+	<string name="showcase_register_patient">Click here to register a new patient</string>
+	<string name="showcase_form_entry">Click here to capture vitals for a patient on a visit</string>
+	<string name="showcase_manage_providers">Click here to manage providers for a patient on a visit</string>
+
+	<!-- Chart Activity -->
 	<string name="data_not_available_for_this_field">No data available to display chart</string>
 	<string name="data_type_not_available_for_this_field">Chart not available for this field</string>
 	<string name="dialog_take_photo">Take a photo</string>

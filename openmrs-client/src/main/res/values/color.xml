@@ -26,7 +26,7 @@
     <color name="dark_teal">#00463f</color>
     <color name="primary">#00463f</color>
     <color name="primary_dark">#01302b</color>
-    <color name="color_accent">#FF4081</color>
+    <color name="color_accent">#F8793B</color>
     <color name="dark_purple">#363463</color>
     <color name="dark_grey">#231F20</color>
     <color name="light_green">#a1d030</color>
@@ -40,6 +40,12 @@
     <color name="grey">#D5D5D5</color>
     <color name="light_grey">#D3D3D3</color>
     <color name="selected_card">#249627</color>
+
+    <!-- Colors for New UI -->
+    <color name="dark_grey_for_stroke">#909090</color>
+    <color name="light_grey_for_solid">#EFEFEF</color>
+    <color name="dark_grey_8x">#616161</color>
+    <color name="dark_grey_10x">#454545</color>
 
     <!-- neutral colors that look pleasing on both white and black background -->
     <color name="neutral_green">#249627</color>

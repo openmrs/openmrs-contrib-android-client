@@ -79,6 +79,10 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     private VisitDAO visitDAO;
     @Mock
     private UserService userService;
+<<<<<<< HEAD
+=======
+
+>>>>>>> removed context from presenter
     private LoginPresenter presenter;
 
     @Before
@@ -86,7 +90,11 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         super.setUp();
         VisitRepository visitRepository = new VisitRepository(restApi, visitDAO, locationDAO, new EncounterDAO());
         presenter = new LoginPresenter(restApi, visitRepository, locationDAO, userService, view, openMRS,
+<<<<<<< HEAD
             openMRSLogger, authorizationManager);
+=======
+                openMRSLogger, authorizationManager);
+>>>>>>> removed context from presenter
         mockStaticMethods();
     }
 
@@ -225,12 +233,20 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     public void shouldLoadLocationsInOnlineMode_errorResponse() {
         mockNetworkConnection(true);
         Mockito.lenient().when(restApi.getLocations(any(), anyString(), anyString()))
+<<<<<<< HEAD
             .thenReturn(mockErrorCall(401));
+=======
+                .thenReturn(mockErrorCall(401));
+>>>>>>> removed context from presenter
 
         presenter.loadLocations("someUrl");
         verify(view).initLoginForm(any(), any());
         verify(view).setLocationErrorOccurred(true);
+<<<<<<< HEAD
         verify(view).showInvalidURLSnackbar(R.string.failed_fetching_servers_location);
+=======
+        verify(view).showInvalidURLSnackbar(R.string.snackbar_server_error);
+>>>>>>> removed context from presenter
         verify(view).hideUrlLoadingAnimation();
     }
 

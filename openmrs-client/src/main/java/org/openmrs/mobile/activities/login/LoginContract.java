@@ -43,7 +43,7 @@ public interface LoginContract {
 
         void showInvalidURLSnackbar(String message);
 
-        void showInvalidURLSnackbar(int resId);
+        void showInvalidURLSnackbar(int messageID);
 
         void showInvalidLoginOrPasswordSnackbar();
 

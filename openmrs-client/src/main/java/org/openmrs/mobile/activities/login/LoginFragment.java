@@ -257,21 +257,21 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     }
 
     @Override
-    public void showInvalidURLSnackbar(int resId) {
+    public void showInvalidURLSnackbar(String message) {
         if (isActivityNotNull()) {
-            createSnackbar(getString(resId))
-                    .setAction(getResources().getString(R.string.snackbar_edit), view -> {
-                        binding.loginUrlField.requestFocus();
-                        binding.loginUrlField.selectAll();
+            createSnackbar(message)
+                    .setAction(getResources().getString(R.string.snackbar_choose), view -> {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_server_list)));
+                        startActivity(intent);
                     })
                     .show();
         }
     }
 
     @Override
-    public void showInvalidURLSnackbar(String message) {
+    public void showInvalidURLSnackbar(int messageID) {
         if (isActivityNotNull()) {
-            createSnackbar(message)
+            createSnackbar(getString(messageID))
                     .setAction(getResources().getString(R.string.snackbar_choose), view -> {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.url_server_list)));
                         startActivity(intent);

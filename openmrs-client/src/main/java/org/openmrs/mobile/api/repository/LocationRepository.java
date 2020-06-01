@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.api.repository;
 
+import androidx.annotation.NonNull;
+
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.promise.SimpleDeferredObject;
@@ -22,19 +24,16 @@ import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LocationRepository extends RetrofitRepository {
-
-
     public SimplePromise<Location> getLocationUuid() {
         final SimpleDeferredObject<Location> deferred = new SimpleDeferredObject<>();
 
         RestApi apiService =
-                RestServiceBuilder.createService(RestApi.class);
+            RestServiceBuilder.createService(RestApi.class);
         Call<Results<Location>> call = apiService.getLocations(null);
         call.enqueue(new Callback<Results<Location>>() {
             @Override
@@ -52,7 +51,6 @@ public class LocationRepository extends RetrofitRepository {
                 ToastUtil.notify(t.toString());
                 deferred.reject(t);
             }
-
         });
 
         return deferred.promise();

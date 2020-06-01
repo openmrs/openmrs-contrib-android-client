@@ -48,14 +48,11 @@ import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
 public interface RestApi {
-
-
     @GET("form?v=custom:(uuid,name,resources)")
     Call<Results<FormResource>> getForms();
 
     @GET("location?tag=Login%20Location")
     Call<Results<Location>> getLocations(@Query("v") String representation);
-
 
     @GET()
     Call<Results<Location>> getLocations(@Url String url,
@@ -79,7 +76,7 @@ public interface RestApi {
 
     @POST("patient")
     Call<PatientDto> createPatient(
-            @Body PatientDto patientDto);
+        @Body PatientDto patientDto);
 
     @GET("patient")
     Call<Results<Patient>> getPatients(@Query("q") String searchQuery,

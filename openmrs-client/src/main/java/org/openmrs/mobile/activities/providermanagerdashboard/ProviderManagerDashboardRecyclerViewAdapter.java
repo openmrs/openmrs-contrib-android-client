@@ -39,7 +39,7 @@ import java.util.List;
 import static org.openmrs.mobile.utilities.ApplicationConstants.RequestCodes.EDIT_PROVIDER_REQ_CODE;
 
 public class ProviderManagerDashboardRecyclerViewAdapter extends
-        RecyclerView.Adapter<ProviderManagerDashboardRecyclerViewAdapter.ProviderViewHolder> {
+    RecyclerView.Adapter<ProviderManagerDashboardRecyclerViewAdapter.ProviderViewHolder> {
     private Fragment fragment;
     private List<Provider> mItems;
     private ProviderManagerDashboardContract.Presenter presenter;
@@ -85,7 +85,6 @@ public class ProviderManagerDashboardRecyclerViewAdapter extends
             intent.putExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE, provider);
             fragment.startActivity(intent);
         });
-
     }
 
     @Override
@@ -99,15 +98,15 @@ public class ProviderManagerDashboardRecyclerViewAdapter extends
         alertDialogBuilder.setTitle(R.string.dialog_title_are_you_sure);
 
         alertDialogBuilder
-                .setMessage(R.string.dialog_provider_retired)
-                .setCancelable(false)
-                .setPositiveButton(R.string.dialog_button_ok, (dialog, id) -> {
-                    presenter.deleteProvider(provider.getUuid());
-                    dialog.cancel();
-                })
-                .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> {
-                    dialog.dismiss();
-                });
+            .setMessage(R.string.dialog_provider_retired)
+            .setCancelable(false)
+            .setPositiveButton(R.string.dialog_button_ok, (dialog, id) -> {
+                presenter.deleteProvider(provider.getUuid());
+                dialog.cancel();
+            })
+            .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> {
+                dialog.dismiss();
+            });
         alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
@@ -118,7 +117,6 @@ public class ProviderManagerDashboardRecyclerViewAdapter extends
         private TextView mName;
         private ImageView deleteIv, editIv;
 
-
         public ProviderViewHolder(View itemView) {
             super(itemView);
             mRowLayout = itemView.findViewById(R.id.provider_management_foreground_card_view);
@@ -126,7 +124,6 @@ public class ProviderManagerDashboardRecyclerViewAdapter extends
             mName = itemView.findViewById(R.id.providerManagementName);
             deleteIv = itemView.findViewById(R.id.row_provider_management_delete_iv);
             editIv = itemView.findViewById(R.id.row_provider_management_edit_iv);
-
         }
     }
 

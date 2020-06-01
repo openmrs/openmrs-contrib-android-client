@@ -38,7 +38,6 @@ public final class From implements Sqlable {
     private String mOrderBy;
     private String mLimit;
     private String mOffset;
-
     private List<Object> mArguments;
 
     public From(Class<? extends Model> table, Sqlable queryBase) {
@@ -294,12 +293,10 @@ public final class From implements Sqlable {
     public <T extends Model> List<T> execute() {
         if (mQueryBase instanceof Select) {
             return SQLiteUtils.rawQuery(mType, toSql(), getArguments());
-
         } else {
             SQLiteUtils.execSql(toSql(), getArguments());
             Cache.getContext().getContentResolver().notifyChange(ContentProvider.createUri(mType, null), null);
             return null;
-
         }
     }
 
@@ -307,12 +304,10 @@ public final class From implements Sqlable {
         if (mQueryBase instanceof Select) {
             limit(1);
             return (T) SQLiteUtils.rawQuerySingle(mType, toSql(), getArguments());
-
         } else {
             limit(1);
             SQLiteUtils.rawQuerySingle(mType, toSql(), getArguments()).delete();
             return null;
-
         }
     }
 

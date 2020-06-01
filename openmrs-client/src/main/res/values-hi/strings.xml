@@ -380,7 +380,7 @@
 	<string name="showcase_register_patient">नया मरीज पंजीकृत करने के लिए यहां क्लिक करें</string>
 	<string name="showcase_form_entry">एक मरीज के वाइटल कलेक्ट करने के लिए यहां क्लिक करें</string>
 	<string name="showcase_manage_providers">एक मरीज के लिए पोषणकर्ता का प्रबंधन करने के लिए यहां क्लिक करें</string>
-    <string name="offline_mode_not_supported">रोगी यात्रा ऑफ़लाइन मोड में शुरू नहीं की जा सकती</string>
+	<string name="offline_mode_not_supported">ऑफ़लाइन मोड में मैन्युअल रूप से रोगी की यात्रा शुरू नहीं कर सकता।</string>
 
 	<!-- Chart Activity -->
 	<string name="data_not_available_for_this_field">चार्ट प्रदर्शित करने के लिए कोई डेटा उपलब्ध नहीं है</string>
@@ -389,6 +389,37 @@
 	<string name="dialog_choose_photo">फोटो चुनो</string>
 	<string name="dialog_remove_photo">फोटो निकालें</string>
 
+	<!--fragment_patient_Info.xml-->
 	<string name="unidentified_patient">अज्ञात रोगी</string>
     <string name="dob_error_for_unidentified">कृपया रोगी की उम्र का अनुमान दें</string>
+	<string name="patent_and_form_data_sync_resumed">सिंकिंग चालू है, रोगियों को सिंक करने और डेटा बनाने का प्रयास कर रहा है</string>
+	<string name="offline_mode_patient_data_saved_locally_notification_message">सिंक बंद है। रोगी अद्यतन डेटा स्थानीय रूप से सहेजा जाता है और ऑनलाइन मोड बहाल होने पर सिंक होगा।</string>
+	<string name="patient_update_unsuccessful_server_error">%1$s को सर्वर त्रुटि के कारण अपडेट नहीं किया जा सकता है, सिंक %2$s को पुनः प्रयास करेगा</string>
+	<string name="patient_cannot_be_synced_due_to_request_error_message">रोगी [%1$i] अनुरोध त्रुटि%2$s के कारण समन्वयित नहीं किया जा सकता है</string>
+	<string name="patient_cannot_be_synced_due_to_server_error_message">रोगी [%1$i] को सर्वर त्रुटि%2$s के कारण समन्‍वयित नहीं किया जा सकता है</string>
+	<string name="alternate_method_of_adding_encounters_in_offline_mode_error_message">यदि आप प्रपत्र प्रविष्टि अनुभाग में ऐसा करना चाहते हैं, तो वे एक स्वचालित नई यात्रा के साथ समन्वयित होंगे।</string>
+	<string name="patient_age_out_of_bounds_error_message">ऑफ़लाइन मोड में मैन्युअल रूप से रोगी की यात्रा शुरू नहीं कर सकता। रोगी की आयु 0 और%1$i के बीच होनी चाहिए</string>
+	<string name="input_too_big_error_message">"इनपुट बहुत बड़ा है "</string>
+	<string name="only_one_patient_can_be_selected_notification_message">आप केवल एक समान रोगी का चयन कर सकते हैं</string>
+	<string name="all_fields_empty_error_message">सभी फ़ील्ड रिक्त नहीं हो सकते</string>
+	<string name="no_such_form_name_error_message">%1$s नामक कोई मुठभेड़ प्रकार नहीं है</string>
+	<string name="failed_fetching_patient_data_error_message">रोगी डेटा लाने में विफल</string>
+	<string name="invalid_URL_message">अवैध यूआरएल</string>
+	<string name="failed_fetching_visit_type_error_message">यात्रा प्रकार लाने में विफल</string>
+	<string name="failed_fetching_servers_location">सर्वर के स्थानों को लाने में विफल</string>
+	<string name="logs_copied_to_clipboard_message">क्लिपबोर्ड पर कॉपी किए गए लॉग</string>
+	<string name="authenticate_check_service_error_response_message">प्रामाणिक जाँच सेवा प्रतिक्रिया में त्रुटि</string>
+	<string name="authenticate_service_error_message">प्रमाणिक जाँच सेवा में त्रुटि</string>
+	<string name="dataset_entry_label">लेबल</string>
+	<string name="downloading_concepts_notification_message">डाउनलोडिंग कॉन्सेप्ट</string>
+	<string name="application_exit_logger_message">छोड़ने के लिए प्रार्थनापत्र</string>
+	<string name="error_fetching_user_data_message">उपयोगकर्ता डेटा प्राप्त नहीं किया जा सका</string>
+
+	<string name="patient_update_successful">रोगी %1$s अपडेट किया गया</string>
+	<string name="patient_update_unsuccessful">"रोगी %1$s को सर्वर त्रुटि के कारण समन्‍वयित नहीं किया जा सकता है "</string>
+	<string name="patient_photo_update_unsuccessful" >सर्वर त्रुटि के कारण रोगी की फोटो को सिंक नहीं किया जा सकता है: %1$s</string>
+	<string name="form_data_will_be_synced_later_error_message">रोगी अभी तक पंजीकृत नहीं है। कोई इंटरनेट कनेक्शन नहीं। प्रपत्र डेटा स्थानीय रूप से सहेजा जाता है और इंटरनेट कनेक्शन बहाल होने पर सिंक होगा।</string>
+	<string name="form_data_sync_is_off_message">सिंक बंद है। फ़ॉर्म डेटा सहेजने के लिए सिंक चालू करें।</string>
+	<string name="form_data_saved_successfully">%1$s डेटा सफलतापूर्वक सहेजा गया</string>
+	<string name="unidentified_patient_name">अज्ञात रोगी</string>
 </resources>

@@ -24,16 +24,16 @@ import androidx.room.Update;
 import org.openmrs.mobile.databases.entities.VisitEntity;
 
 import java.util.List;
+
 import io.reactivex.Flowable;
 
 @Dao
 public interface VisitRoomDAO {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long saveOrUpdate(VisitEntity visitEntity);
 
     @Insert
-    long saveVisit (VisitEntity visitEntity);
+    long saveVisit(VisitEntity visitEntity);
 
     @Update
     int updateVisit(VisitEntity visitEntity);
@@ -58,5 +58,4 @@ public interface VisitRoomDAO {
 
     @Delete
     int deleteVisitsByPatientId(VisitEntity visitEntity);
-
 }

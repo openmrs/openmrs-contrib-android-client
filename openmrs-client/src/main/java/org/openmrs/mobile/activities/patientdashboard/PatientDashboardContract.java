@@ -25,19 +25,23 @@ import java.util.List;
 public interface PatientDashboardContract {
 
     /*
-    * Views
-    */
+     * Views
+     */
 
     interface ViewPatientMain extends BaseView<PatientDashboardMainPresenter> {
-
     }
 
     interface ViewPatientDetails extends ViewPatientMain {
         void attachSnackbarToActivity();
+
         void resolvePatientDataDisplay(Patient patient);
+
         void showDialog(int resId);
+
         void dismissDialog();
+
         void showToast(int stringRes, boolean error);
+
         void setMenuTitle(String nameString, String identifier);
     }
 
@@ -47,48 +51,64 @@ public interface PatientDashboardContract {
 
     interface ViewPatientVisits extends ViewPatientMain {
         void showErrorToast(String message);
+
+        void showErrorToast(int messageId);
+
         void dismissCurrentDialog();
+
         void toggleRecyclerListVisibility(boolean isVisible);
+
         void setVisitsToDisplay(List<Visit> visits);
+
         void goToVisitDashboard(Long visitID);
+
         void showStartVisitDialog(boolean isVisitPossible);
+
         void showStartVisitProgressDialog();
     }
 
     interface ViewPatientVitals extends ViewPatientMain {
         void showNoVitalsNotification();
+
         void showEncounterVitals(Encounter encounter);
+
         void startFormDisplayActivity(Encounter lastVitalsEncounter);
+
         void showErrorToast(String errorMessage);
     }
 
-    interface ViewPatientCharts extends ViewPatientMain{
+    interface ViewPatientCharts extends ViewPatientMain {
         void populateList(List<Visit> visits);
-        void setEmptyListVisibility(boolean visibility);
 
+        void setEmptyListVisibility(boolean visibility);
     }
 
     /*
-    * Presenters
-    */
+     * Presenters
+     */
     interface PatientDashboardMainPresenter extends BasePresenterContract {
         void deletePatient();
+
         long getPatientId();
     }
 
-    interface PatientDetailsPresenter extends PatientDashboardMainPresenter  {
+    interface PatientDetailsPresenter extends PatientDashboardMainPresenter {
         void synchronizePatient();
+
         void updatePatientDataFromServer();
+
         void reloadPatientData(Patient patient);
     }
 
-    interface PatientDiagnosisPresenter extends PatientDashboardMainPresenter  {
+    interface PatientDiagnosisPresenter extends PatientDashboardMainPresenter {
         void loadDiagnosis();
     }
 
     interface PatientVisitsPresenter extends PatientDashboardMainPresenter {
         void showStartVisitDialog();
+
         void syncVisits();
+
         void startVisit();
     }
 
@@ -97,6 +117,5 @@ public interface PatientDashboardContract {
     }
 
     interface PatientChartsPresenter extends PatientDashboardMainPresenter {
-
     }
 }

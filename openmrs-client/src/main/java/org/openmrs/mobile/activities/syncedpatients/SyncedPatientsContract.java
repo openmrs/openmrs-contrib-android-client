@@ -14,18 +14,16 @@
 
 package org.openmrs.mobile.activities.syncedpatients;
 
+import androidx.annotation.NonNull;
+
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Patient;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-
 public interface SyncedPatientsContract {
-
     interface View extends BaseView<Presenter> {
-
         void updateAdapter(List<Patient> patientList);
 
         void updateListVisibility(boolean isVisible);
@@ -34,10 +32,8 @@ public interface SyncedPatientsContract {
     }
 
     interface Presenter extends BasePresenterContract {
-
         void setQuery(String query);
 
         void updateLocalPatientsList();
     }
-
 }

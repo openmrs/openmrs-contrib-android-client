@@ -15,6 +15,7 @@
 
 package org.openmrs.mobile.activities.logs;
 
+import androidx.annotation.NonNull;
 
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.application.OpenMRS;
@@ -27,24 +28,20 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import androidx.annotation.NonNull;
-
 public class LogsPresenter extends BasePresenter implements LogsContract.Presenter {
-
     @NonNull
     private final OpenMRSLogger mOpenMRSLogger;
-
     @NonNull
     private final LogsContract.View mLogsView;
 
-    public  LogsPresenter (@NonNull LogsContract.View view, @NonNull OpenMRSLogger logger ){
+    public LogsPresenter(@NonNull LogsContract.View view, @NonNull OpenMRSLogger logger) {
         mOpenMRSLogger = logger;
-        mLogsView = view ;
+        mLogsView = view;
         view.setPresenter(this);
     }
 
     @Override
-    public void subscribe(){
+    public void subscribe() {
         String logsText = getLogs();
         mLogsView.attachLogsToTextView(logsText);
         mLogsView.fabCopyAll(logsText);
@@ -53,7 +50,7 @@ public class LogsPresenter extends BasePresenter implements LogsContract.Present
     public String getLogs() {
         String textLogs = "";
         String filename = OpenMRS.getInstance().getOpenMRSDir()
-                + File.separator + mOpenMRSLogger.getLogFilename();
+            + File.separator + mOpenMRSLogger.getLogFilename();
         try {
             File myFile = new File(filename);
             FileInputStream fIn = new FileInputStream(myFile);
@@ -70,5 +67,4 @@ public class LogsPresenter extends BasePresenter implements LogsContract.Present
         }
         return textLogs;
     }
-
 }

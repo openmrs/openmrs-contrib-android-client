@@ -8,6 +8,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
 import org.openmrs.mobile.api.RestApi;
@@ -21,18 +26,12 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ConceptDownloadService extends Service {
-
     private int downloadedConcepts;
-
     private int maxConceptsInOneQuery = 100;
 
     @Override
@@ -42,7 +41,7 @@ public class ConceptDownloadService extends Service {
             startDownload();
             downloadConcepts(downloadedConcepts);
         } else if (intent.getAction().equals(
-                ApplicationConstants.ServiceActions.STOP_CONCEPT_DOWNLOAD_ACTION)) {
+            ApplicationConstants.ServiceActions.STOP_CONCEPT_DOWNLOAD_ACTION)) {
             stopForeground(true);
             stopSelf();
         }
@@ -52,8 +51,8 @@ public class ConceptDownloadService extends Service {
     private void startDownload() {
         RestApi service = RestServiceBuilder.createService(RestApi.class);
         Call<Results<SystemSetting>> call = service.getSystemSettingsByQuery(
-                ApplicationConstants.SystemSettingKeys.WS_REST_MAX_RESULTS_ABSOLUTE,
-                ApplicationConstants.API.FULL);
+            ApplicationConstants.SystemSettingKeys.WS_REST_MAX_RESULTS_ABSOLUTE,
+            ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<SystemSetting>>() {
             @Override
             public void onResponse(@NonNull Call<Results<SystemSetting>> call, @NonNull Response<Results<SystemSetting>> response) {
@@ -77,7 +76,6 @@ public class ConceptDownloadService extends Service {
                 downloadConcepts(0);
             }
         });
-
     }
 
     private void showNotification(int downloadedConcepts) {
@@ -89,17 +87,17 @@ public class ConceptDownloadService extends Service {
         Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_openmrs);
 
         Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle("Downloading Concepts")
-                .setTicker("OpenMRS Android Client")
-                .setContentText(String.valueOf(downloadedConcepts))
-                .setSmallIcon(R.drawable.ic_stat_notify_download)
-                .setLargeIcon(
-                        Bitmap.createScaledBitmap(icon, 128, 128, false))
-                .setContentIntent(pendingIntent)
-                .setOngoing(true)
-                .build();
+            .setContentTitle(getString(R.string.downloading_concepts_notification_message))
+            .setTicker(getString(R.string.app_name))
+            .setContentText(String.valueOf(downloadedConcepts))
+            .setSmallIcon(R.drawable.ic_stat_notify_download)
+            .setLargeIcon(
+                Bitmap.createScaledBitmap(icon, 128, 128, false))
+            .setContentIntent(pendingIntent)
+            .setOngoing(true)
+            .build();
         startForeground(ApplicationConstants.ServiceNotificationId.CONCEPT_DOWNLOADFOREGROUND_SERVICE,
-                notification);
+            notification);
     }
 
     private void downloadConcepts(int startIndex) {

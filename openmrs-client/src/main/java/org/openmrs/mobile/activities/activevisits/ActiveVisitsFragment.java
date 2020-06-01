@@ -35,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActiveVisitsFragment extends ACBaseFragment<ActiveVisitsContract.Presenter> implements ActiveVisitsContract.View {
-
     private RecyclerView visitsRecyclerView;
     private TextView emptyList;
     private ProgressBar progressBar;
@@ -57,7 +56,7 @@ public class ActiveVisitsFragment extends ACBaseFragment<ActiveVisitsContract.Pr
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
         visitsRecyclerView.setLayoutManager(linearLayoutManager);
         visitsRecyclerView.setAdapter(new ActiveVisitsRecyclerViewAdapter(this.getActivity(),
-                new ArrayList<>()));
+            new ArrayList<>()));
 
         emptyList = root.findViewById(R.id.emptyVisitsListViewLabel);
         emptyList.setText(getString(R.string.search_visits_no_results));

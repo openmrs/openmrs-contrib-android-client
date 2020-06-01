@@ -13,14 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConceptDAO {
-
     public long saveOrUpdate(Concept concept) {
         Concept foundConcept = findConceptsByUUID(concept.getUuid());
         if (foundConcept != null) {
             updateConcept(foundConcept.getId(), concept);
             return foundConcept.getId();
-        }
-        else {
+        } else {
             return saveConcept(concept);
         }
     }
@@ -72,10 +70,10 @@ public class ConceptDAO {
     }
 
     public long getConceptsCount() {
-            SQLiteDatabase db = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper().getReadableDatabase();
-            long cnt  = DatabaseUtils.queryNumEntries(db, ConceptTable.TABLE_NAME);
-            db.close();
-            return cnt;
+        SQLiteDatabase db = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper().getReadableDatabase();
+        long cnt = DatabaseUtils.queryNumEntries(db, ConceptTable.TABLE_NAME);
+        db.close();
+        return cnt;
     }
 
     private Concept cursorToConcept(Cursor cursor) {
@@ -87,5 +85,4 @@ public class ConceptDAO {
 
         return concept;
     }
-
 }

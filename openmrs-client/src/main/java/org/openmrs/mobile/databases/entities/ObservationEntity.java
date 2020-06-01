@@ -3,30 +3,24 @@ package org.openmrs.mobile.databases.entities;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+
 import org.openmrs.mobile.models.Resource;
 
 @Entity(tableName = "observations")
 public class ObservationEntity extends Resource {
-
     @NonNull
     @ColumnInfo(name = "encounter_id")
     private long encounterKeyID;
-
     @ColumnInfo(name = "displayValue")
     private String displayValue;
-
     @ColumnInfo(name = "diagnosisOrder")
     private String diagnosisOrder;
-
     @ColumnInfo(name = "diagnosisList")
     private String diagnosisList;
-
     @ColumnInfo(name = "diagnosisCertainty")
     private String diagnosisCertainty;
-
     @ColumnInfo(name = "diagnosisNote")
     private String diagnosisNote;
-
     @ColumnInfo(name = "conceptUuid")
     private String conceptuuid;
 

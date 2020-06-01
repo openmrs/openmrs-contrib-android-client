@@ -49,7 +49,7 @@ public final class URLValidator {
         return trimmedUrl;
     }
 
-    public static String toLowerCase(String url){
+    public static String toLowerCase(String url) {
         return url.toLowerCase();
     }
 
@@ -61,10 +61,8 @@ public final class URLValidator {
         return validUrl;
     }
 
-    public static String ensureProtocol(String url)
-    {
-        if (!url.matches("\\w+:.*"))
-        {
+    public static String ensureProtocol(String url) {
+        if (!url.matches("\\w+:.*")) {
             return "http://" + url;
         }
         return url;
@@ -86,6 +84,5 @@ public final class URLValidator {
         public String getUrl() {
             return url;
         }
-
     }
 }

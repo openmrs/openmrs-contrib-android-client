@@ -14,7 +14,6 @@
 
 package org.openmrs.mobile.activities.patientdashboard.details;
 
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -29,7 +28,6 @@ import org.openmrs.mobile.R;
 import java.io.ByteArrayInputStream;
 
 public class PatientPhotoActivity extends AppCompatActivity {
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

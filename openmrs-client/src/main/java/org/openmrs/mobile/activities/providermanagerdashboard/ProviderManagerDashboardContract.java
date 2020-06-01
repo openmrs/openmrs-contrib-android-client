@@ -23,9 +23,7 @@ import org.openmrs.mobile.models.Provider;
 import java.util.List;
 
 public interface ProviderManagerDashboardContract {
-
     interface View extends BaseView<ProviderManagerDashboardContract.Presenter> {
-
         void refreshUI();
 
         void updateAdapter(List<Provider> providerList);

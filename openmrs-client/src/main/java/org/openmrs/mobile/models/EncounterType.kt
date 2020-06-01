@@ -35,7 +35,7 @@ class EncounterType : Model, Serializable {
     @Expose
     var links: List<Link> = ArrayList()
 
-    constructor() {}
+    constructor()
 
     constructor(display: String) {
         this.display = display

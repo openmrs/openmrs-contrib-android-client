@@ -29,7 +29,6 @@ import org.openmrs.mobile.utilities.PatientAndMatchesWrapper;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 public class MatchingPatientsActivity extends ACBaseActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,13 +43,13 @@ public class MatchingPatientsActivity extends ACBaseActivity {
 
         // Create fragment
         MatchingPatientsFragment matchingPatientsFragment =
-                (MatchingPatientsFragment) getSupportFragmentManager().findFragmentById(R.id.matchingPatientsContentFrame);
+            (MatchingPatientsFragment) getSupportFragmentManager().findFragmentById(R.id.matchingPatientsContentFrame);
         if (matchingPatientsFragment == null) {
             matchingPatientsFragment = MatchingPatientsFragment.newInstance();
         }
         if (!matchingPatientsFragment.isAdded()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    matchingPatientsFragment, R.id.matchingPatientsContentFrame);
+                matchingPatientsFragment, R.id.matchingPatientsContentFrame);
         }
 
         if (getIntent().getExtras().getBoolean(ApplicationConstants.BundleKeys.CALCULATED_LOCALLY, false)) {
@@ -80,5 +79,4 @@ public class MatchingPatientsActivity extends ACBaseActivity {
         editor.putBoolean("sync", false);
         editor.apply();
     }
-
 }

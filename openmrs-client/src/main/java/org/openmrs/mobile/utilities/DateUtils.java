@@ -30,11 +30,9 @@ import java.util.TimeZone;
 public final class DateUtils {
     public static final String DEFAULT_DATE_FORMAT = "dd/MM/yyyy";
     public static final String DATE_WITH_TIME_FORMAT = "dd/MM/yyyy HH:mm";
-
     private static final String OPEN_MRS_RESPONSE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     public static final String OPEN_MRS_REQUEST_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     public static final String OPEN_MRS_REQUEST_PATIENT_FORMAT = "yyyy-MM-dd";
-
     public static final Long ZERO = 0L;
 
     private DateUtils() {
@@ -103,7 +101,7 @@ public final class DateUtils {
         DateTime date = null;
         if (StringUtils.notNull(dateAsString)) {
             DateTimeFormatter originalFormat;
-            if (dateAsString.length() == OPEN_MRS_REQUEST_PATIENT_FORMAT.length()){
+            if (dateAsString.length() == OPEN_MRS_REQUEST_PATIENT_FORMAT.length()) {
                 originalFormat = DateTimeFormat.forPattern(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT);
             } else {
                 originalFormat = DateTimeFormat.forPattern(DateUtils.OPEN_MRS_REQUEST_FORMAT);
@@ -111,7 +109,6 @@ public final class DateUtils {
             date = originalFormat.parseDateTime(dateAsString);
         }
         return date;
-
     }
 
     public static String convertTime1(String dateAsString, String dateFormat) {
@@ -153,8 +150,8 @@ public final class DateUtils {
      * Date format is dd/MM/yyyy
      *
      * @param dateString the date to check
-     * @param minDate    minimum date allowed
-     * @param maxDate    maximum date limit
+     * @param minDate minimum date allowed
+     * @param maxDate maximum date limit
      * @return true if date is appropriate
      */
     public static boolean validateDate(String dateString, DateTime minDate, DateTime maxDate) {
@@ -186,8 +183,8 @@ public final class DateUtils {
             String[] bundledDate = s.split("/");
 
             int day = Integer.parseInt(bundledDate[0]),
-                    month = Integer.parseInt(bundledDate[1]),
-                    year = Integer.parseInt(bundledDate[2]);
+                month = Integer.parseInt(bundledDate[1]),
+                year = Integer.parseInt(bundledDate[2]);
 
             int maxDays;
             // Leap year on February -> 29 days
@@ -209,11 +206,11 @@ public final class DateUtils {
             int maxMonths = 12;
 
             if (day <= 0
-                    || day > maxDays
-                    || month <= 0
-                    || month > maxMonths
-                    || year <= minDate.getYear()
-                    || year > maxDate.getYear()) {
+                || day > maxDays
+                || month <= 0
+                || month > maxMonths
+                || year <= minDate.getYear()
+                || year > maxDate.getYear()) {
                 return false;
             } else {
                 // Now we are able to convert the string into a DateTime variable
@@ -224,7 +221,6 @@ public final class DateUtils {
                 // Final check to ensure dob is between the minimum and maximum date (up to the second)
                 return dob.isAfter(minDate) && dob.isBefore(maxDate);
             }
-
         }
     }
 
@@ -245,7 +241,7 @@ public final class DateUtils {
                     date = null;
                 }
             } catch (ParseException exception) {
-                OpenMRS.getInstance().getOpenMRSLogger().w("Failed to validate date format :" + dateAsString + " caused by " + exception.toString());
+                OpenMRS.getInstance().getOpenMRSLogger().w("Failed to validate date format : "+ dateAsString+ " caused by "+exception.toString());
             }
             return date != null;
         }

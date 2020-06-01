@@ -29,10 +29,8 @@ import org.openmrs.mobile.utilities.StringUtils;
 
 public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
     protected OpenMRSLogger mLogger = OpenMRS.getInstance().getOpenMRSLogger();
-
     public static final String DATABASE_NAME = OpenMRS.getInstance().
-            getResources().getString(R.string.dbname);
-
+        getResources().getString(R.string.dbname);
     private String mSecretKey;
 
     public OpenMRSSQLiteOpenHelper(Context context, SQLiteDatabase.CursorFactory factory, int version, SQLiteDatabaseHook hook) {
@@ -85,7 +83,6 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
     }
 
     public static class OpenMRSDefaultDBHook implements SQLiteDatabaseHook {
-
         @Override
         public void preKey(SQLiteDatabase sqLiteDatabase) {
             sqLiteDatabase.execSQL("PRAGMA cipher_default_kdf_iter = '4000'");
@@ -95,16 +92,15 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
         public void postKey(SQLiteDatabase sqLiteDatabase) {
             // This method is intentionally empty
         }
-
     }
 
     /**
      * Null safe wrapper method for
-     * @see net.sqlcipher.database.SQLiteStatement#bindString(int, String)
      *
      * @param columnIndex
      * @param columnValue
      * @param statement
+     * @see net.sqlcipher.database.SQLiteStatement#bindString(int, String)
      */
     public void bindString(int columnIndex, String columnValue, SQLiteStatement statement) {
         if (StringUtils.notNull(columnValue)) {
@@ -114,24 +110,25 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Null safe wrapper method for
-     * @see net.sqlcipher.database.SQLiteStatement#bindLong(int, long)
      *
      * @param columnIndex
      * @param columnValue
      * @param statement
+     * @see net.sqlcipher.database.SQLiteStatement#bindLong(int, long)
      */
     public void bindLong(int columnIndex, Long columnValue, SQLiteStatement statement) {
         if (null != columnValue) {
             statement.bindLong(columnIndex, columnValue);
         }
     }
+
     /**
      * Null safe wrapper method for
-     * @see net.sqlcipher.database.SQLiteStatement#bindDouble(int, double)
      *
      * @param columnIndex
      * @param columnValue
      * @param statement
+     * @see net.sqlcipher.database.SQLiteStatement#bindDouble(int, double)
      */
     public void bindDouble(int columnIndex, Double columnValue, SQLiteStatement statement) {
         if (null != columnValue) {
@@ -141,11 +138,11 @@ public abstract class OpenMRSSQLiteOpenHelper extends SQLiteOpenHelper {
 
     /**
      * Null safe wrapper method for
-     * @see net.sqlcipher.database.SQLiteStatement#bindBlob(int, byte[])
      *
      * @param columnIndex
      * @param columnValue
      * @param statement
+     * @see net.sqlcipher.database.SQLiteStatement#bindBlob(int, byte[])
      */
     public void bindBlob(int columnIndex, byte[] columnValue, SQLiteStatement statement) {
         if (null != columnValue) {

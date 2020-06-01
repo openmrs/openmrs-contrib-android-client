@@ -18,7 +18,6 @@ import org.openmrs.mobile.application.OpenMRS;
 
 public class OpenMRSDBOpenHelper {
     private static OpenMRSDBOpenHelper sInstance;
-
     private final DBOpenHelper mDBOpenHelper;
 
     public OpenMRSDBOpenHelper() {
@@ -45,5 +44,4 @@ public class OpenMRSDBOpenHelper {
     public DBOpenHelper getDBOpenHelper() {
         return mDBOpenHelper;
     }
-
 }

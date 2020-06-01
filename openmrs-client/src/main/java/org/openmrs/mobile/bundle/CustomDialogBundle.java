@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomDialogBundle implements Serializable {
-
     private CustomFragmentDialog.OnClickAction leftButtonAction;
     private CustomFragmentDialog.OnClickAction rightButtonAction;
     private String textViewMessage;
@@ -45,7 +44,6 @@ public class CustomDialogBundle implements Serializable {
     public void setProgressDialog(boolean progressDialog) {
         this.progressDialog = progressDialog;
     }
-
 
     public boolean hasLoadingBar() {
         return loadingBar;
@@ -71,7 +69,7 @@ public class CustomDialogBundle implements Serializable {
         this.rightButtonAction = rightButtonAction;
     }
 
-    public void setSelectedItems(ArrayList<Patient> toDelete){
+    public void setSelectedItems(ArrayList<Patient> toDelete) {
         this.selectedItems = toDelete;
     }
 
@@ -131,7 +129,7 @@ public class CustomDialogBundle implements Serializable {
         return patientsList;
     }
 
-    public boolean hasPatientList(){
+    public boolean hasPatientList() {
         return patientsList != null;
     }
 

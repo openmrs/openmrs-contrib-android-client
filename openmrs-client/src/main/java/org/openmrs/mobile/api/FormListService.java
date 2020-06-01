@@ -13,6 +13,8 @@ package org.openmrs.mobile.api;
 import android.app.IntentService;
 import android.content.Intent;
 
+import androidx.annotation.NonNull;
+
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.FormResource;
 import org.openmrs.mobile.models.Results;
@@ -23,7 +25,6 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,32 +39,27 @@ public class FormListService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(NetworkUtils.isOnline()) {
+        if (NetworkUtils.isOnline()) {
 
             Call<Results<FormResource>> call = apiService.getForms();
             call.enqueue(new Callback<Results<FormResource>>() {
-
                 @Override
                 public void onResponse(@NonNull Call<Results<FormResource>> call, @NonNull Response<Results<FormResource>> response) {
                     if (response.isSuccessful()) {
                         new Delete().from(FormResource.class).execute();
-                        formresourcelist=response.body().getResults();
-                        int size=formresourcelist.size();
+                        formresourcelist = response.body().getResults();
+                        int size = formresourcelist.size();
                         ActiveAndroid.beginTransaction();
                         try {
-                            for (int i = 0; i < size; i++)
-                            {
+                            for (int i = 0; i < size; i++) {
                                 formresourcelist.get(i).setResourcelist();
                                 formresourcelist.get(i).save();
                             }
                             ActiveAndroid.setTransactionSuccessful();
-                        }
-                        finally {
+                        } finally {
                             ActiveAndroid.endTransaction();
                         }
-
                     }
-
                 }
 
                 @Override
@@ -79,20 +75,16 @@ public class FormListService extends IntentService {
                     if (response.isSuccessful()) {
                         new Delete().from(EncounterType.class).execute();
                         Results<EncounterType> encountertypelist = response.body();
-                            for (EncounterType enctype : encountertypelist.getResults())
-                                enctype.save();
+                        for (EncounterType enctype : encountertypelist.getResults())
+                            enctype.save();
                     }
-
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<Results<EncounterType>> call, @NonNull Throwable t) {
                     ToastUtil.error(t.getMessage());
-
                 }
             });
         }
-
     }
-
 }

@@ -27,8 +27,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
@@ -40,8 +40,7 @@ import org.openmrs.mobile.utilities.StringUtils;
 
 import java.util.List;
 
-public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatientListContract.Presenter> implements  FormEntryPatientListContract.View {
-
+public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatientListContract.Presenter> implements FormEntryPatientListContract.View {
     private RecyclerView mPatientRecyclerView;
     private TextView mEmptyList;
     private ProgressBar mProgressBar;
@@ -75,7 +74,7 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
 
     @Override
     public void updateAdapter(List<Patient> patientList) {
-        FormEntryPatientListAdapter adapter = new FormEntryPatientListAdapter(this,patientList);
+        FormEntryPatientListAdapter adapter = new FormEntryPatientListAdapter(this, patientList);
         adapter.notifyDataSetChanged();
         mPatientRecyclerView.setAdapter(adapter);
     }
@@ -86,16 +85,14 @@ public class FormEntryPatientListFragment extends ACBaseFragment<FormEntryPatien
         if (isVisible) {
             mPatientRecyclerView.setVisibility(View.VISIBLE);
             mEmptyList.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             mPatientRecyclerView.setVisibility(View.GONE);
             mEmptyList.setVisibility(View.VISIBLE);
         }
 
         if (StringUtils.isBlank(replacementWord)) {
             mEmptyList.setText(getString(emptyListTextStringId));
-        }
-        else {
+        } else {
             mEmptyList.setText(getString(emptyListTextStringId, replacementWord));
         }
     }

@@ -45,10 +45,8 @@ import java.util.Iterator;
 import java.util.List;
 
 public class VitalsListAdapter extends BaseExpandableListAdapter {
-
     private static final int LEFT = 0;
     private static final int RIGHT = 1;
-
     private Context mContext;
     private List<ViewGroup> mChildLayouts;
     private JSONObject mObservationList;
@@ -62,7 +60,6 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
         this.mChildLayouts = generateChildLayouts();
     }
 
-
     private List<ViewGroup> generateChildLayouts() {
         List<ViewGroup> layouts = new ArrayList<>();
         LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -75,12 +72,13 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
                 ArrayList<String> dateList = Lists.newArrayList(dates);
                 //Sorting the date
                 Collections.sort(dateList, (lhs, rhs) -> {
-                    if (DateUtils.getDateFromString(lhs).getTime() < DateUtils.getDateFromString(rhs).getTime())
+                    if (DateUtils.getDateFromString(lhs).getTime() < DateUtils.getDateFromString(rhs).getTime()) {
                         return -1;
-                    else if (DateUtils.getDateFromString(lhs).getTime() == DateUtils.getDateFromString(rhs).getTime())
+                    } else if (DateUtils.getDateFromString(lhs).getTime() == DateUtils.getDateFromString(rhs).getTime()) {
                         return 0;
-                    else
+                    } else {
                         return 1;
+                    }
                 });
                 for (Integer j = 0; j < dateList.size(); j++) {
                     JSONArray dataArray = chartData.getJSONArray(dateList.get(j));
@@ -105,12 +103,11 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
                     xAxis.setDrawAxisLine(true);
                     xAxis.setGranularity(1);
                     xAxis.setAxisMinimum(0);
-                    xAxis.setAxisMaximum(dateList.size() -1);
+                    xAxis.setAxisMaximum(dateList.size() - 1);
                     xAxis.setValueFormatter(new DayAxisValueFormatter(dateList));
 
                     YAxis rightAxis = chart.getAxisRight();
                     rightAxis.setEnabled(false);
-
 
                     chart.invalidate();
                     layouts.add(convertView);
@@ -120,12 +117,10 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
             } catch (NumberFormatException e) {
                 OpenMRS.getInstance().getOpenMRSLogger().e(e.toString());
             }
-
         }
 
         return layouts;
     }
-
 
     @Override
     public int getGroupCount() {
@@ -156,7 +151,6 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
     }
-
 
     @Override
     public boolean hasStableIds() {
@@ -207,5 +201,4 @@ public class VitalsListAdapter extends BaseExpandableListAdapter {
             textView.setCompoundDrawables(null, null, image, null);
         }
     }
-
 }

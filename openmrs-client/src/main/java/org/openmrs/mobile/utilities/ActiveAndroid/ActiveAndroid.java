@@ -21,7 +21,6 @@ import android.database.sqlite.SQLiteDatabase;
 
 import org.openmrs.mobile.utilities.ActiveAndroid.util.Log;
 
-
 public final class ActiveAndroid {
     //////////////////////////////////////////////////////////////////////////////////////
     // PUBLIC METHODS

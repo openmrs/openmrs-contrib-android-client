@@ -14,6 +14,9 @@
 
 package org.openmrs.mobile.api.repository;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
@@ -33,8 +36,6 @@ import org.openmrs.mobile.utilities.DateUtils;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,7 +43,6 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class VisitRepository {
-
     private RestApi restApi;
     private VisitDAO visitDAO;
     private LocationDAO locationDAO;
@@ -74,18 +74,17 @@ public class VisitRepository {
                 if (response.isSuccessful()) {
                     List<Visit> visits = response.body().getResults();
                     Observable.just(visits)
-                            .flatMap(Observable::from)
-                            .forEach(visit ->
-                                    visitDAO.saveOrUpdate(visit, patient.getId())
-                                            .observeOn(AndroidSchedulers.mainThread())
-                                            .subscribe(),
-                                    error -> error.printStackTrace()
-                            );
+                        .flatMap(Observable::from)
+                        .forEach(visit ->
+                                visitDAO.saveOrUpdate(visit, patient.getId())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(),
+                            error -> error.printStackTrace()
+                        );
                     if (callbackListener != null) {
                         callbackListener.onResponse();
                     }
-                }
-                else {
+                } else {
                     if (callbackListener != null) {
                         callbackListener.onErrorResponse(response.message());
                     }
@@ -98,20 +97,17 @@ public class VisitRepository {
                     callbackListener.onErrorResponse(t.getMessage());
                 }
             }
-
         });
     }
 
     public void getVisitType(final GetVisitTypeCallbackListener callbackListener) {
         Call<Results<VisitType>> call = restApi.getVisitType();
         call.enqueue(new Callback<Results<VisitType>>() {
-
             @Override
             public void onResponse(@NonNull Call<Results<VisitType>> call, @NonNull Response<Results<VisitType>> response) {
                 if (response.isSuccessful()) {
                     callbackListener.onGetVisitTypeResponse(response.body().getResults().get(0));
-                }
-                else {
+                } else {
                     callbackListener.onErrorResponse(response.message());
                 }
             }
@@ -120,7 +116,6 @@ public class VisitRepository {
             public void onFailure(@NonNull Call<Results<VisitType>> call, @NonNull Throwable t) {
                 callbackListener.onErrorResponse(t.getMessage());
             }
-
         });
     }
 
@@ -129,7 +124,7 @@ public class VisitRepository {
     }
 
     public void syncLastVitals(final String patientUuid, @Nullable final DefaultResponseCallbackListener callbackListener) {
-        Call<Results<Encounter>> call = restApi.getLastVitals(patientUuid, ApplicationConstants.EncounterTypes.VITALS, "full", 1,"desc");
+        Call<Results<Encounter>> call = restApi.getLastVitals(patientUuid, ApplicationConstants.EncounterTypes.VITALS, "full", 1, "desc");
         call.enqueue(new Callback<Results<Encounter>>() {
             @Override
             public void onResponse(@NonNull Call<Results<Encounter>> call, @NonNull Response<Results<Encounter>> response) {
@@ -140,8 +135,7 @@ public class VisitRepository {
                     if (callbackListener != null) {
                         callbackListener.onResponse();
                     }
-                }
-                else {
+                } else {
                     if (callbackListener != null) {
                         callbackListener.onErrorResponse(response.message());
                     }
@@ -156,7 +150,6 @@ public class VisitRepository {
             }
         });
     }
-
 
     public void startVisit(final Patient patient) {
         startVisit(patient, null);
@@ -177,15 +170,14 @@ public class VisitRepository {
                 if (response.isSuccessful()) {
                     Visit newVisit = response.body();
                     visitDAO.saveOrUpdate(newVisit, patient.getId())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(id -> {
-                                if(callbackListener != null) {
-                                    callbackListener.onStartVisitResponse(id);
-                                }
-                            });
-                }
-                else {
-                    if(callbackListener != null) {
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(id -> {
+                            if (callbackListener != null) {
+                                callbackListener.onStartVisitResponse(id);
+                            }
+                        });
+                } else {
+                    if (callbackListener != null) {
                         callbackListener.onErrorResponse(response.message());
                     }
                 }
@@ -193,11 +185,10 @@ public class VisitRepository {
 
             @Override
             public void onFailure(@NonNull Call<Visit> call, @NonNull Throwable t) {
-                if(callbackListener != null) {
+                if (callbackListener != null) {
                     callbackListener.onErrorResponse(t.getMessage());
                 }
             }
         });
     }
-
 }

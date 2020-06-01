@@ -17,7 +17,6 @@ package org.openmrs.mobile.utilities;
 import org.openmrs.mobile.models.EncounterType;
 
 public abstract class ApplicationConstants {
-
     public static final String EMPTY_STRING = "";
     public static final String SERVER_URL = "server_url";
     public static final String SESSION_TOKEN = "session_id";
@@ -29,7 +28,7 @@ public abstract class ApplicationConstants {
     public static final String LAST_SESSION_TOKEN = "last_session_id";
     public static final String LAST_LOGIN_SERVER_URL = "last_login_server_url";
     public static final String DEFAULT_OPEN_MRS_URL = "https://demo.openmrs.org/openmrs";
-    public static final String DB_NAME ="openmrs.db";
+    public static final String DB_NAME = "openmrs.db";
     public static final String DB_PASSWORD_BCRYPT_PEPPER = "$2a$08$iUp3M1VapYpjcAXQBNX6uu";
     public static final String DB_PASSWORD_LITERAL_PEPPER = "Open Sesame";
     public static final String DEFAULT_VISIT_TYPE_UUID = "7b0f5697-27e3-40c4-8bae-f4049abfb4ed";
@@ -37,6 +36,21 @@ public abstract class ApplicationConstants {
     public static final int SPLASH_TIMER = 3500;
     public static final String PACKAGE_NAME = "org.openmrs.mobile";
     public static final String USER_GUIDE = "https://openmrs.github.io/openmrs-android-client-user-guide/getting-started.html";
+    public static final String MESSAGE_RFC_822 = "message/rfc822";
+    public static final String FLAG = "flag";
+    public static final String ERROR = "error";
+    public static final String URI_FILE = "file://";
+    public static final String URI_IMAGE = "image/*";
+    public static final String IMAGE_JPEG = "image/jpeg";
+    public static final String INTENT_KEY_PHOTO = "photo";
+    public static final String INTENT_KEY_NAME = "name";
+    public static final String READ_MODE = "r";
+    public static final String MIME_TYPE_MAILTO = "mailto:";
+    public static final String OPENMRS_PREF_FILE = "OpenMRSPrefFile";
+    public static final String VITAL_NAME = "vitalName";
+    public static final String BUNDLE = "bundle";
+    public static final String URI_CONTENT = "content://";
+    public static final String MIME_TYPE_VND = "vnd";
 
     public abstract static class OpenMRSSharedPreferenceNames {
         public static final String SHARED_PREFERENCES_NAME = "shared_preferences";
@@ -99,7 +113,7 @@ public abstract class ApplicationConstants {
     public abstract static class BroadcastActions {
         public static final String CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID = "com.openmrs.mobile.services.conceptdownloadservice.action.broadcastintent";
         public static final String CONCEPT_DOWNLOAD_BROADCAST_INTENT_KEY_COUNT = "com.openmrs.mobile.services.conceptdownloadservice.broadcastintent.key.count";
-        public static final String AUTHENTICATION_CHECK_BROADCAST_ACTION="org.openmrs.mobile.services.AuthenticateCheckService";
+        public static final String AUTHENTICATION_CHECK_BROADCAST_ACTION = "org.openmrs.mobile.services.AuthenticateCheckService";
     }
 
     public abstract static class ServiceNotificationId {
@@ -115,17 +129,17 @@ public abstract class ApplicationConstants {
         public static String[] ENCOUNTER_TYPES_DISPLAYS = {EncounterType.VITALS, EncounterType.ADMISSION, EncounterType.DISCHARGE, EncounterType.VISIT_NOTE};
     }
 
-    public abstract static class RequestCodes{
+    public abstract static class RequestCodes {
         public static final int ADD_PROVIDER_REQ_CODE = 100;
         public static final int EDIT_PROVIDER_REQ_CODE = 101;
         public static final int START_SETTINGS_REQ_CODE = 102;
     }
 
-    public abstract static class OpenMRSThemes{
+    public abstract static class OpenMRSThemes {
         public static final String KEY_DARK_MODE = "key_dark_mode";
     }
 
-    public abstract static class OpenMRSlanguage{
+    public abstract static class OpenMRSlanguage {
         public static final String KEY_LANGUAGE_MODE = "key_language_mode";
         public static final String[] LANGUAGE_LIST = {"en", "hi"};
     }

@@ -14,9 +14,6 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
-import java.util.Arrays;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -27,12 +24,15 @@ import android.view.MenuItem;
 
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.net.PlacesClient;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
-public class AddEditPatientActivity extends ACBaseActivity {
+import java.util.Arrays;
+import java.util.List;
 
+public class AddEditPatientActivity extends ACBaseActivity {
     public AddEditPatientContract.Presenter mPresenter;
     public AddEditPatientFragment addEditPatientFragment;
     private AlertDialog alertDialog;
@@ -44,13 +44,13 @@ public class AddEditPatientActivity extends ACBaseActivity {
 
         // Create fragment
         addEditPatientFragment =
-                (AddEditPatientFragment) getSupportFragmentManager().findFragmentById(R.id.patientInfoContentFrame);
+            (AddEditPatientFragment) getSupportFragmentManager().findFragmentById(R.id.patientInfoContentFrame);
         if (addEditPatientFragment == null) {
             addEditPatientFragment = AddEditPatientFragment.newInstance();
         }
         if (!addEditPatientFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    addEditPatientFragment, R.id.patientInfoContentFrame);
+                addEditPatientFragment, R.id.patientInfoContentFrame);
         }
 
         //Check if bundle includes patient ID
@@ -71,7 +71,7 @@ public class AddEditPatientActivity extends ACBaseActivity {
         try {
             applicationInfo = this.getPackageManager().getApplicationInfo(this.getPackageName(), PackageManager.GET_META_DATA);
         } catch (PackageManager.NameNotFoundException e) {
-            Log.e("Package Manager",e.getMessage());
+            Log.e("Package Manager", e.getMessage());
         }
         Bundle bundle = applicationInfo.metaData;
         String googleMapToken = bundle.getString("com.google.android.geo.API_KEY");
@@ -124,17 +124,16 @@ public class AddEditPatientActivity extends ACBaseActivity {
         alertDialogBuilder.setTitle(R.string.dialog_title_reset_patient);
         // set dialog message
         alertDialogBuilder
-                .setMessage(R.string.dialog_message_data_lost)
-                .setCancelable(false)
-                .setNeutralButton(R.string.dialog_button_stay, (dialog, id) -> dialog.cancel())
-                .setNegativeButton(R.string.dialog_button_leave, (dialog, id) -> {
-                    // Finish the activity
-                    super.onBackPressed();
-                    finish();
-                });
+            .setMessage(R.string.dialog_message_data_lost)
+            .setCancelable(false)
+            .setNeutralButton(R.string.dialog_button_stay, (dialog, id) -> dialog.cancel())
+            .setNegativeButton(R.string.dialog_button_leave, (dialog, id) -> {
+                // Finish the activity
+                super.onBackPressed();
+                finish();
+            });
         alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-
     }
 
     @Override

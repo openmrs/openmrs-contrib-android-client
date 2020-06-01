@@ -35,7 +35,6 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import java.util.List;
 
 public class PatientDiagnosisFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDiagnosis {
-
     private ListView mDiagnosisList;
     private PatientDashboardActivity mPatientDashboardActivity;
 
@@ -67,7 +66,7 @@ public class PatientDiagnosisFragment extends PatientDashboardFragment implement
     @Override
     public void setDiagnosesToDisplay(List<String> encounters) {
         ArrayAdapter<String> adapter =
-                new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, encounters);
+            new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, encounters);
         mDiagnosisList.setAdapter(adapter);
     }
 

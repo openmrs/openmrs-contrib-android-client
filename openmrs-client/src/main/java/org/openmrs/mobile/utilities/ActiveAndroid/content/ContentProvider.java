@@ -26,16 +26,15 @@ import org.openmrs.mobile.utilities.ActiveAndroid.Cache;
 import org.openmrs.mobile.utilities.ActiveAndroid.Configuration;
 import org.openmrs.mobile.utilities.ActiveAndroid.Model;
 import org.openmrs.mobile.utilities.ActiveAndroid.TableInfo;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class ContentProvider extends android.content.ContentProvider {
     //////////////////////////////////////////////////////////////////////////////////////
     // PRIVATE CONSTANTS
     //////////////////////////////////////////////////////////////////////////////////////
-
     private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
     private static final SparseArray<Class<? extends Model>> TYPE_CODES = new SparseArray<>();
     private static String sAuthority;
@@ -47,7 +46,7 @@ public class ContentProvider extends android.content.ContentProvider {
 
     public static Uri createUri(Class<? extends Model> type, Long id) {
         final StringBuilder uri = new StringBuilder();
-        uri.append("content://");
+        uri.append(ApplicationConstants.URI_CONTENT);
         uri.append(sAuthority);
         uri.append("/");
         uri.append(Cache.getTableName(type).toLowerCase());
@@ -100,13 +99,13 @@ public class ContentProvider extends android.content.ContentProvider {
         final boolean single = ((match % 2) == 0);
 
         StringBuilder mimeType = new StringBuilder();
-        mimeType.append("vnd");
+        mimeType.append(ApplicationConstants.MIME_TYPE_VND);
         mimeType.append(".");
         mimeType.append(sAuthority);
         mimeType.append(".");
         mimeType.append(single ? "item" : "dir");
         mimeType.append("/");
-        mimeType.append("vnd");
+        mimeType.append(ApplicationConstants.MIME_TYPE_VND);
         mimeType.append(".");
         mimeType.append(sAuthority);
         mimeType.append(".");
@@ -156,13 +155,13 @@ public class ContentProvider extends android.content.ContentProvider {
     public Cursor query(@NotNull Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         final Class<? extends Model> type = getModelType(uri);
         final Cursor cursor = Cache.openDatabase().query(
-                Cache.getTableName(type),
-                projection,
-                selection,
-                selectionArgs,
-                null,
-                null,
-                sortOrder);
+            Cache.getTableName(type),
+            projection,
+            selection,
+            selectionArgs,
+            null,
+            null,
+            sortOrder);
 
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
 

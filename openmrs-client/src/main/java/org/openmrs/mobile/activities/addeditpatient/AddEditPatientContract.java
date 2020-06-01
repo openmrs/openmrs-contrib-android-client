@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.addeditpatient;
 
 import com.google.android.libraries.places.api.net.PlacesClient;
+
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Patient;
@@ -22,9 +23,7 @@ import org.openmrs.mobile.models.Patient;
 import java.util.List;
 
 public interface AddEditPatientContract {
-
     interface View extends BaseView<Presenter> {
-
         void finishPatientInfoActivity();
 
         void setErrorsVisibility(boolean givenNameError,
@@ -54,7 +53,6 @@ public interface AddEditPatientContract {
     }
 
     interface Presenter extends BasePresenterContract {
-
         Patient getPatientToUpdate();
 
         boolean isRegisteringPatient();
@@ -71,5 +69,4 @@ public interface AddEditPatientContract {
 
         PlacesClient getPlaces();
     }
-
 }

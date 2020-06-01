@@ -55,23 +55,23 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
         final int adapterPos = holder.getAdapterPosition();
         final Patient patient = mItems.get(adapterPos);
         new VisitDAO().getActiveVisitByPatientId(patient.getId())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(visit -> {
-                    if (visit != null) {
-                        Drawable icon = mContext.getResources().getDrawable(R.drawable.active_visit_dot);
-                        icon.setBounds(0, 0, icon.getIntrinsicHeight(), icon.getIntrinsicWidth());
-                        holder.mVisitStatus.setCompoundDrawables(icon, null, null, null);
-                        holder.mVisitStatus.setText(mContext.getString(R.string.active_visit_label_capture_vitals));
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(visit -> {
+                if (visit != null) {
+                    Drawable icon = mContext.getResources().getDrawable(R.drawable.active_visit_dot);
+                    icon.setBounds(0, 0, icon.getIntrinsicHeight(), icon.getIntrinsicWidth());
+                    holder.mVisitStatus.setCompoundDrawables(icon, null, null, null);
+                    holder.mVisitStatus.setText(mContext.getString(R.string.active_visit_label_capture_vitals));
 
-                        holder.mRowLayout.setOnClickListener(v ->
-                                mContext.startEncounterForPatient(mItems.get(adapterPos).getId()));
-                    } else {
-                        holder.mVisitStatus.setText(ApplicationConstants.EMPTY_STRING);
+                    holder.mRowLayout.setOnClickListener(v ->
+                        mContext.startEncounterForPatient(mItems.get(adapterPos).getId()));
+                } else {
+                    holder.mVisitStatus.setText(ApplicationConstants.EMPTY_STRING);
 
-                        holder.mRowLayout.setOnClickListener(v ->
-                                mContext.showSnackbarInactivePatients(v));
-                    }
-                });
+                    holder.mRowLayout.setOnClickListener(v ->
+                        mContext.showSnackbarInactivePatients(v));
+                }
+            });
         if (null != patient.getIdentifier()) {
             final String display = "#" + patient.getIdentifier().getIdentifier();
             holder.mIdentifier.setText(display);
@@ -118,5 +118,4 @@ public class FormEntryPatientListAdapter extends RecyclerView.Adapter<FormEntryP
             mRowLayout.clearAnimation();
         }
     }
-
 }

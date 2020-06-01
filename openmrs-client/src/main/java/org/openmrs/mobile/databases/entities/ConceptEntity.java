@@ -13,24 +13,24 @@
 
 package org.openmrs.mobile.databases.entities;
 
-import androidx.room.PrimaryKey;
-import org.jetbrains.annotations.NotNull;
-import org.openmrs.mobile.models.Datatype;
-import org.openmrs.mobile.models.Resource;
 import androidx.room.ColumnInfo;
 import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 import androidx.room.RoomWarnings;
+
+import org.jetbrains.annotations.NotNull;
+import org.openmrs.mobile.models.Datatype;
+import org.openmrs.mobile.models.Resource;
 
 @Entity(tableName = "concepts")
 public class ConceptEntity extends Resource {
-
-    public ConceptEntity() { }
+    public ConceptEntity() {
+    }
 
     @Embedded(prefix = "datatype_")
     @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
     private Datatype datatype;
-
     @ColumnInfo(name = "name")
     private String name;
 
@@ -49,5 +49,4 @@ public class ConceptEntity extends Resource {
     public void setName(String name) {
         this.name = name;
     }
-
 }

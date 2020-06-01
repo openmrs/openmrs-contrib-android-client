@@ -18,9 +18,7 @@ import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 
 public interface SettingsContract {
-
     interface View extends BaseView<Presenter> {
-
         void addLogsInfo(long logSize, String logFilename);
 
         void setUpConceptsView();
@@ -41,7 +39,6 @@ public interface SettingsContract {
     }
 
     interface Presenter extends BasePresenterContract {
-
         void logException(String exception);
 
         void updateConceptsInDBTextView();
@@ -56,5 +53,4 @@ public interface SettingsContract {
 
         int getLanguagePosition();
     }
-
 }

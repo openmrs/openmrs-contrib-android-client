@@ -15,10 +15,10 @@
 package org.openmrs.mobile.utilities;
 
 import android.content.SharedPreferences;
+
 import org.openmrs.mobile.application.OpenMRS;
 
-public class LanguageUtils
-{
+public class LanguageUtils {
     public static String getLanguage() {
         SharedPreferences defaultSharedPref = OpenMRS.getInstance().getOpenMRSSharedPreferences();
         return defaultSharedPref.getString(ApplicationConstants.OpenMRSlanguage.KEY_LANGUAGE_MODE, "en");

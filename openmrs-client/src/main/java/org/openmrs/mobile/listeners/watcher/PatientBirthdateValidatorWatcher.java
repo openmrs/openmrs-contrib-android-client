@@ -22,8 +22,7 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-public class PatientBirthdateValidatorWatcher implements TextWatcher{
-
+public class PatientBirthdateValidatorWatcher implements TextWatcher {
     private EditText eddob;
     private EditText edmonth;
     private EditText edyr;
@@ -48,13 +47,15 @@ public class PatientBirthdateValidatorWatcher implements TextWatcher{
     public void afterTextChanged(Editable editable) {
         eddob.getText().clear();
         if (editable.length() > 3) {
+            //string resource added "input_too_big_error_message"
             ToastUtil.error("Input is too big");
             edmonth.getText().clear();
             edyr.getText().clear();
-        }
-        else {
-            if (StringUtils.notEmpty(editable.toString()) && Integer.parseInt(editable.toString()) > ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE) {
-                ToastUtil.error("Patient's age must be between 0 and " + ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE);
+        } else {
+            if (StringUtils.notEmpty(editable.toString()) && (Integer.parseInt(editable.toString()) > ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE)) {
+                //string resource added "patient_age_out_of_bounds_error_message"
+                ToastUtil
+                    .error("Patient's age must be between 0 and "+ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE);
                 edmonth.getText().clear();
                 edyr.getText().clear();
             }

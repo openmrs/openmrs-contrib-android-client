@@ -28,8 +28,8 @@ import java.util.List;
 import rx.Observable;
 
 import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
-public class ObservationDAO {
 
+public class ObservationDAO {
     public Observable<Long> saveObservation(Observation observation, long encounterID) {
         return createObservableIO(() -> {
             observation.setEncounterID(encounterID);
@@ -45,7 +45,7 @@ public class ObservationDAO {
     }
 
     public void deleteObservation(long observationID) {
-       new ObservationTable().delete(observationID);
+        new ObservationTable().delete(observationID);
     }
 
     public List<Observation> findObservationByEncounterID(Long encounterID) {

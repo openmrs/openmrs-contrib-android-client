@@ -16,10 +16,8 @@ package org.openmrs.mobile.activities.community.contact;
 
 public class ContactUsContract {
     interface View {
-
     }
 
     interface Presenter {
-
     }
 }

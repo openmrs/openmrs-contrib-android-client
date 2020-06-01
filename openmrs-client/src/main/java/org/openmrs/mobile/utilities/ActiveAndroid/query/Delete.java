@@ -19,15 +19,15 @@ package org.openmrs.mobile.utilities.ActiveAndroid.query;
 import org.openmrs.mobile.utilities.ActiveAndroid.Model;
 
 public final class Delete implements Sqlable {
-	public Delete() {
-	}
+    public Delete() {
+    }
 
-	public From from(Class<? extends Model> table) {
-		return new From(table, this);
-	}
+    public From from(Class<? extends Model> table) {
+        return new From(table, this);
+    }
 
-	@Override
-	public String toSql() {
-		return "DELETE ";
-	}
+    @Override
+    public String toSql() {
+        return "DELETE ";
+    }
 }

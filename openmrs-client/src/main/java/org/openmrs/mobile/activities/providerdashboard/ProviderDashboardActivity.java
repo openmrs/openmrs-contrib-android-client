@@ -22,12 +22,10 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import static org.openmrs.mobile.utilities.ApplicationConstants.RequestCodes.EDIT_PROVIDER_REQ_CODE;
 
 public class ProviderDashboardActivity extends ACBaseActivity implements ProviderDashboardContract.View {
-
     Provider provider;
     TextView identifierTv;
     ImageView editProviderIv;
     CoordinatorLayout rootLayout;
-
     private ProviderDashboardPresenter mPresenter;
 
     @Override
@@ -72,10 +70,10 @@ public class ProviderDashboardActivity extends ACBaseActivity implements Provide
     @Override
     public void showSnackbarForFailedEditRequest() {
         rootLayout = findViewById(R.id.provider_dashboard_root_layout);
-        Snackbar.make(rootLayout,getString(R.string.failed_provider_details), Snackbar.LENGTH_INDEFINITE)
-                .setAction(getString(R.string.retry_action), view -> {
-                    mPresenter.editProvider(this.provider);
-                }).show();
+        Snackbar.make(rootLayout, getString(R.string.failed_provider_details), Snackbar.LENGTH_INDEFINITE)
+            .setAction(getString(R.string.retry_action), view -> {
+                mPresenter.editProvider(this.provider);
+            }).show();
     }
 
     private void initViewPager() {
@@ -89,7 +87,6 @@ public class ProviderDashboardActivity extends ACBaseActivity implements Provide
 
         viewPager.setAdapter(adapter);
     }
-
 
     @Override
     public void setPresenter(ProviderDashboardContract.Presenter presenter) {

@@ -15,7 +15,6 @@
 
 package org.openmrs.mobile.activities.logs;
 
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,9 +30,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 
-
 public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> implements LogsContract.View {
-
     private TextView tvLogs;
     private FloatingActionButton fab;
 
@@ -55,8 +52,8 @@ public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> impleme
 
         fab.setOnClickListener(view -> {
             setClipboard(getContext(), textLogs);
-            Toast.makeText(getContext(), "Logs copied to clipboard",
-                    Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.logs_copied_to_clipboard_message,
+                Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -69,5 +66,4 @@ public class LogsFragment extends ACBaseFragment<LogsContract.Presenter> impleme
     public static LogsFragment newInstance() {
         return new LogsFragment();
     }
-
 }

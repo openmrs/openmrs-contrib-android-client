@@ -14,8 +14,11 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import android.content.res.Resources;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientContract;
@@ -36,14 +39,17 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.Collections;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.RETURNS_MOCKS;
 import static org.mockito.Mockito.verify;
 
 @PrepareForTest({OpenMRS.class, NetworkUtils.class, RestServiceBuilder.class, ToastUtil.class})
+@RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.net.ssl.*")
 public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
 
@@ -175,6 +181,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
                 .thenReturn(mockSuccessCall(new PatientPhoto()));
 
         presenter.subscribe();
+
         presenter.confirmUpdate(patient);
         verify(view).setErrorsVisibility(false, false, false, false, false, false, false, false, false, false);
         verify(view).setProgressBarVisibility(true);

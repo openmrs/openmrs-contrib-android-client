@@ -19,11 +19,9 @@ import java.util.List;
 /**
  * Created by Chathuranga on 15/06/2018.
  */
-
 public class PatientChartsListAdapter extends BaseAdapter {
     private static final int LEFT = 0;
     private static final int RIGHT = 1;
-
     private Context mContext;
     private JSONObject mObservationList;
     private List<String> mVitalNameList;
@@ -61,7 +59,6 @@ public class PatientChartsListAdapter extends BaseAdapter {
             holder.vitalName = rowView.findViewById(R.id.listVisitGroupVitalName);
             holder.detailsSelector = rowView.findViewById(R.id.listVisitGroupDetailsSelector);
             rowView.setTag(holder);
-
         } else {
             holder = (ViewHolder) rowView.getTag();
         }
@@ -69,17 +66,14 @@ public class PatientChartsListAdapter extends BaseAdapter {
         String vitalLabel = String.valueOf(mVitalNameList.get(i));
         holder.vitalName.setText(vitalLabel);
 
-
         holder.detailsSelector.setText(mContext.getString(R.string.list_vital_selector_show));
         bindDrawableResources(R.drawable.exp_list_show_details, holder.detailsSelector, RIGHT);
 
         return rowView;
     }
 
-
     private static class ViewHolder {
         private TextView vitalName, detailsSelector;
-
     }
 
     private void bindDrawableResources(int drawableID, TextView textView, int direction) {

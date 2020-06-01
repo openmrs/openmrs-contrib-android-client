@@ -44,12 +44,10 @@ import java.util.Objects;
 import static android.app.Activity.RESULT_OK;
 
 public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Presenter>
-        implements AddProviderContract.View {
-
+    implements AddProviderContract.View {
     private FloatingActionButton doneFAB;
     private TextInputEditText firstNameEt, lastNameEt, identifierEt;
     private TextInputLayout firstNameTIL, lastNameTIL, identifierTIL;
-
     private Provider editProvider = null;
     private ArrayList<Provider> existingProviders;
 
@@ -64,10 +62,10 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
         View root = inflater.inflate(R.layout.fragment_add_provider, container, false);
 
         editProvider = (Provider) (Objects.requireNonNull(getActivity()).getIntent()
-                .getSerializableExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE));
+            .getSerializableExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE));
 
         existingProviders = (ArrayList<Provider>) (Objects.requireNonNull(getActivity()).getIntent()
-                .getSerializableExtra(ApplicationConstants.BundleKeys.EXISTING_PROVIDERS_BUNDLE));
+            .getSerializableExtra(ApplicationConstants.BundleKeys.EXISTING_PROVIDERS_BUNDLE));
 
         setupUI(root);
         return root;
@@ -117,14 +115,11 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
                     } else {
                         setProviderResult(provider);
                     }
-
                 } else {
                     provider = mPresenter.editExistingProvider(editProvider, person, identifier);
                     setProviderResult(provider);
                 }
-
             }
-
         });
     }
 
@@ -149,7 +144,6 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
         } else {
             firstNameTIL.setErrorEnabled(false);
         }
-
 
         // Family name validation
         if (ViewUtils.isEmpty(lastNameEt)) {
@@ -195,7 +189,6 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
 
         builder.setPositiveButton(getActivity().getString(R.string.dialog_matching_provider_positive_btn), (dialog, which) -> {
             setProviderResult(provider);
-
         }).setNegativeButton(getActivity().getString(R.string.dialog_button_cancel), (dialog, which) -> {
             // Do nothing and cancel the dialog box
         });
@@ -206,6 +199,7 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
 
     /**
      * This will set the Intent result with new/existing providers
+     *
      * @param provider
      */
     public void setProviderResult(Provider provider) {

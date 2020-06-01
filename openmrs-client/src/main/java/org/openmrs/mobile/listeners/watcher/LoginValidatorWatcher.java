@@ -32,14 +32,11 @@ import org.openmrs.mobile.utilities.StringUtils;
 
 //Class used to extract view validation logic
 public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSelectedListener {
-
     private EditText mUrl;
     private EditText mUsername;
     private EditText mPassword;
     private Spinner mLocation;
-
     private Button mLoginButton;
-
     private boolean urlChanged;
     private boolean locationErrorOccurred;
 
@@ -86,8 +83,7 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
     private void urlChanged(Editable editable) {
         if ((!OpenMRS.getInstance().getServerUrl().equals(editable.toString())) && StringUtils.notEmpty(editable.toString())) {
             setUrlChanged(true);
-        }
-        else if (OpenMRS.getInstance().getServerUrl().equals(editable.toString())) {
+        } else if (OpenMRS.getInstance().getServerUrl().equals(editable.toString())) {
             setUrlChanged(false);
         }
     }
@@ -106,7 +102,7 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
             TextView currentText = (TextView) parent.getChildAt(0);
             if (currentText != null) {
                 currentText.setText(Html.fromHtml(view.getContext().getString(R.string.login_location_select)
-                        + view.getContext().getString(R.string.req_star)));
+                    + view.getContext().getString(R.string.req_star)));
             }
         }
         mLoginButton.setEnabled(isAllDataValid());
@@ -124,8 +120,7 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
         if (locationErrorOccurred && urlChanged) {
             mLocation.setEnabled(false);
             mLocation.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             mLocation.setEnabled(true);
             mLocation.setVisibility(View.VISIBLE);
         }
@@ -144,11 +139,12 @@ public class LoginValidatorWatcher implements TextWatcher, AdapterView.OnItemSel
 
     /**
      * Get length of mLocation and check whatever it's empty or not.
+     *
      * @return True if a location is selected or no location needed for the OpenMRS instance used.
      */
     private boolean validateLocation() {
-        if (mLocation.getAdapter()!=null) {
-            if(mLocation.getAdapter().getCount() > 0) {
+        if (mLocation.getAdapter() != null) {
+            if (mLocation.getAdapter().getCount() > 0) {
                 return mLocation.getSelectedItemId() != 0;
             }
         }

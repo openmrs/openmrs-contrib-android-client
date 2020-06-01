@@ -22,6 +22,5 @@ import org.jdeferred.Promise;
  *
  * @param <T> Type used for {@link #done(org.jdeferred.DoneCallback)}
  */
-
 public interface SimplePromise<T> extends Promise<T, Throwable, Void> {
 }

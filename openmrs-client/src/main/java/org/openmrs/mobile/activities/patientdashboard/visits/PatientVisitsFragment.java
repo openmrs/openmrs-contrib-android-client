@@ -87,6 +87,11 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
     }
 
     @Override
+    public void showErrorToast(int messageId) {
+        ToastUtil.error(getString(messageId));
+    }
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_patient_visit, null, false);

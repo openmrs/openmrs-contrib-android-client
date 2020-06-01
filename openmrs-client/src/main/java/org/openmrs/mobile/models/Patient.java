@@ -10,22 +10,22 @@
 
 package org.openmrs.mobile.models;
 
+import android.graphics.Bitmap;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import org.openmrs.mobile.utilities.StringUtils;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.graphics.Bitmap;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-import org.openmrs.mobile.utilities.StringUtils;
-
 public class Patient extends Person implements Serializable {
-
     private Long id;
     private String encounters = "";
-
     @SerializedName("identifiers")
     @Expose
     private List<PatientIdentifier> identifiers = new ArrayList<>();
@@ -41,7 +41,8 @@ public class Patient extends Person implements Serializable {
 
     /*Constructor to initialize values of current class as well as parent class*/
     public Patient(Long id, String encounters, List<PatientIdentifier> identifiers,
-                   List<PersonName> names, String gender, String birthdate, boolean birthdateEstimated, List<PersonAddress> addresses, List<PersonAttribute> attributes, Bitmap photo) {
+                   List<PersonName> names, String gender, String birthdate, boolean birthdateEstimated, List<PersonAddress> addresses, List<PersonAttribute> attributes,
+                   Bitmap photo) {
         super(names, gender, birthdate, birthdateEstimated, addresses, attributes, photo);
         this.id = id;
         this.encounters = encounters;
@@ -90,7 +91,6 @@ public class Patient extends Person implements Serializable {
         }
     }
 
-
     public boolean isSynced() {
         return !StringUtils.isBlank(getUuid());
         //Keeping it this way until the synced flag can be made to work
@@ -103,7 +103,6 @@ public class Patient extends Person implements Serializable {
     public void setEncounters(String encounters) {
         this.encounters = encounters;
     }
-
 
     public void addEncounters(Long encid) {
         this.encounters += encid + ",";

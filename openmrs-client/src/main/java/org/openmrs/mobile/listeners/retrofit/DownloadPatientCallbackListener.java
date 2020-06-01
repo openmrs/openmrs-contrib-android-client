@@ -17,7 +17,6 @@ package org.openmrs.mobile.listeners.retrofit;
 import org.openmrs.mobile.models.Patient;
 
 public interface DownloadPatientCallbackListener extends DefaultResponseCallbackListener {
-
     void onPatientDownloaded(Patient patient);
 
     void onPatientPhotoDownloaded(Patient patient);

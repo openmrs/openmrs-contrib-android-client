@@ -21,10 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FilterUtil {
-
     /**
      * Used to filter list by specified query
      * Its possible to filter patients by: Name, Surname (Family Name) or ID.
+     *
      * @param patientList list of patients to filter
      * @param query query that needs to be contained in Name, Surname or ID.
      * @return patient list filtered by query
@@ -39,7 +39,6 @@ public class FilterUtil {
             if (doesAnySearchableWordFitQuery(searchableWords, query)) {
                 filteredList.add(patient);
             }
-
         }
         return filteredList;
     }
@@ -64,7 +63,7 @@ public class FilterUtil {
         String patientIdentifier = patient.getIdentifier().getIdentifier();
         String fullName = patient.getName().getNameString();
         String givenFamilyName = patient.getName().getGivenName() + " "
-                + patient.getName().getFamilyName();
+            + patient.getName().getFamilyName();
 
         List<String> searchableWords = new ArrayList<>();
         searchableWords.add(patientIdentifier);
@@ -99,5 +98,4 @@ public class FilterUtil {
         }
         return false;
     }
-
 }

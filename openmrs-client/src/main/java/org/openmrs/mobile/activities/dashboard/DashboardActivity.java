@@ -15,7 +15,9 @@
 package org.openmrs.mobile.activities.dashboard;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.ActionBar;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 
@@ -58,18 +60,17 @@ public class DashboardActivity extends ACBaseActivity {
         }
         // Create fragment
         DashboardFragment dashboardFragment =
-                (DashboardFragment) getSupportFragmentManager().findFragmentById(R.id.dashboardContentFrame);
+            (DashboardFragment) getSupportFragmentManager().findFragmentById(R.id.dashboardContentFrame);
         if (dashboardFragment == null) {
             dashboardFragment = DashboardFragment.newInstance();
         }
         if (!dashboardFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                    dashboardFragment, R.id.dashboardContentFrame);
+                dashboardFragment, R.id.dashboardContentFrame);
         }
 
         // Create the presenter
         new DashboardPresenter(dashboardFragment);
-
     }
 
     /*TODO: Permission handling to be coded later, moving to SDK 22 for now.
@@ -94,5 +95,4 @@ public class DashboardActivity extends ACBaseActivity {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }*/
-
 }

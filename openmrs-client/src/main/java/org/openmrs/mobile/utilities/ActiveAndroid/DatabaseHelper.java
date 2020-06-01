@@ -42,13 +42,11 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     //////////////////////////////////////////////////////////////////////////////////////
     // PUBLIC CONSTANTS
     //////////////////////////////////////////////////////////////////////////////////////
-
     public final static String MIGRATION_PATH = "migrations";
 
     //////////////////////////////////////////////////////////////////////////////////////
     // PRIVATE FIELDS
     //////////////////////////////////////////////////////////////////////////////////////
-
     private final String mSqlParser;
 
     //////////////////////////////////////////////////////////////////////////////////////
@@ -201,18 +199,13 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
             if (Configuration.SQL_PARSER_DELIMITED.equalsIgnoreCase(mSqlParser)) {
                 executeDelimitedSqlScript(db, stream);
-
             } else {
                 executeLegacySqlScript(db, stream);
-
             }
-
         } catch (IOException e) {
             Log.e("Failed to execute " + file, e);
-
         } finally {
             IOUtils.closeQuietly(stream);
-
         }
     }
 
@@ -241,11 +234,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                     db.execSQL(line);
                 }
             }
-
         } finally {
             IOUtils.closeQuietly(buffer);
             IOUtils.closeQuietly(reader);
-
         }
     }
 }

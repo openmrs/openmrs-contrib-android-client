@@ -22,7 +22,6 @@ import org.openmrs.mobile.utilities.ActiveAndroid.Model;
 import java.util.Collection;
 import java.util.List;
 
-
 public class ModelAdapter<T extends Model> extends ArrayAdapter<T> {
     public ModelAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);

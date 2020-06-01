@@ -43,7 +43,7 @@ open class Resource : Serializable {
     @ColumnInfo(name = "_id")
     open var id: Long? = null
 
-    constructor() {}
+    constructor()
 
     constructor(uuid: String, display: String, links: List<Link>, id: Long) {
         this.uuid = uuid

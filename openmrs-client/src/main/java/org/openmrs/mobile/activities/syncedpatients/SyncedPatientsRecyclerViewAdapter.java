@@ -44,7 +44,6 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
     private List<Patient> mItems;
     private boolean multiSelect = false;
     private ArrayList<Patient> selectedItems = new ArrayList<>();
-
     private androidx.appcompat.view.ActionMode.Callback actionModeCallbacks = new androidx.appcompat.view.ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(androidx.appcompat.view.ActionMode mode, Menu menu) {
@@ -72,7 +71,7 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
         }
     };
 
-    public SyncedPatientsRecyclerViewAdapter(SyncedPatientsFragment context, List<Patient> items){
+    public SyncedPatientsRecyclerViewAdapter(SyncedPatientsFragment context, List<Patient> items) {
         this.mContext = context;
         this.mItems = items;
     }
@@ -92,7 +91,7 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
 
         if (null != patient.getIdentifier()) {
             String patientIdentifier = String.format(mContext.getResources().getString(R.string.patient_identifier),
-                    patient.getIdentifier().getIdentifier());
+                patient.getIdentifier().getIdentifier());
             holder.mIdentifier.setText(patientIdentifier);
         }
         if (null != patient.getName()) {
@@ -101,11 +100,9 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
         if (null != patient.getGender()) {
             holder.mGender.setText(patient.getGender());
         }
-        try{
+        try {
             holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             holder.mBirthDate.setText("");
         }
     }
@@ -165,7 +162,6 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
                 } else {
                     selectItem(value);
                 }
-
             });
         }
     }

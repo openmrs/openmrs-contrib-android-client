@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.introduction;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.WindowManager;
@@ -23,34 +24,42 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.databinding.ActivitySplashBinding;
 
 import static org.openmrs.mobile.utilities.ApplicationConstants.SPLASH_TIMER;
 
 public class SplashActivity extends ACBaseActivity {
     private Handler mHandler = new Handler();
     private Runnable mRunnable;
+    private ActivitySplashBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        TextView name = findViewById(R.id.organization_name);
-        name.setText(R.string.app_name);
+        binding = ActivitySplashBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/OpenSans/Montserrat.ttf");
+
+        binding.organizationName.setTypeface(typeface);
+        binding.organizationName.setText(R.string.organization_name);
+
+        binding.clientName.setTypeface(typeface);
+        binding.clientName.setText(R.string.client_name);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Animation move = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.splash_screen_logo_anim);
-        ImageView logo = findViewById(R.id.logo);
+
         AnimationSet set = new AnimationSet(true);
         Animation fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setInterpolator(new AccelerateInterpolator());
         fadeIn.setDuration(1000);
         set.addAnimation(fadeIn);
         set.addAnimation(move);
-        logo.startAnimation(set);
+        binding.logo.startAnimation(set);
 
         mRunnable = () -> {
             Intent intent = new Intent(SplashActivity.this, IntroActivity.class);

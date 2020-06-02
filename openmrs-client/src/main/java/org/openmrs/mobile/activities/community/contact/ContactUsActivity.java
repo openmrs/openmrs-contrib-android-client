@@ -45,7 +45,7 @@ public class ContactUsActivity extends ACBaseActivity implements ContactUsContra
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        binding.contactEmailButton.setOnClickListener(v -> {
+        binding.emailLayout.setOnClickListener(v -> {
             Intent sendMailIntent = new Intent(Intent.ACTION_SENDTO);
             String mailTo = ApplicationConstants.MIME_TYPE_MAILTO.concat(binding.contactEmailText.getText().toString());
             sendMailIntent.setData(Uri.parse(mailTo));
@@ -56,12 +56,12 @@ public class ContactUsActivity extends ACBaseActivity implements ContactUsContra
             }
         });
 
-        binding.talksButton.setOnClickListener(v -> {
+        binding.forumLayout.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.contact_forum_url)));
             startActivity(intent);
         });
 
-        binding.ircButton.setOnClickListener(v -> {
+        binding.ircLayout.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.contact_irc_url)));
             startActivity(intent);
         });

@@ -14,8 +14,6 @@
 
 package org.openmrs.mobile.activities.login;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 
 import org.mindrot.jbcrypt.BCrypt;

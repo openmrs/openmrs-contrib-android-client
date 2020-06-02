@@ -32,13 +32,13 @@ public class LoginActivity extends ACBaseActivity {
 
         // Create fragment
         LoginFragment loginFragment =
-            (LoginFragment) getSupportFragmentManager().findFragmentById(R.id.loginContentFrame);
+                (LoginFragment) getSupportFragmentManager().findFragmentById(R.id.loginContentFrame);
         if (loginFragment == null) {
             loginFragment = LoginFragment.newInstance();
         }
         if (!loginFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                loginFragment, R.id.loginContentFrame);
+                    loginFragment, R.id.loginContentFrame);
         }
 
         mPresenter = new LoginPresenter(loginFragment, mOpenMRS);

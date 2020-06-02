@@ -12,12 +12,6 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.community.contact;
+package org.openmrs.mobile.activities.community.contact
 
-public class ContactUsPresenter implements ContactUsContract.Presenter {
-    ContactUsContract.View contactUsView;
-
-    public ContactUsPresenter(ContactUsContract.View contactUsView) {
-        this.contactUsView = contactUsView;
-    }
-}
+class ContactUsPresenter : ContactUsContract.Presenter

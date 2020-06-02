@@ -2,18 +2,12 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "41a50b7fab10cb07ddedc8846a9b55f5",
+    "identityHash": "80ed17c12fe7718613ca933e0b480ce5",
     "entities": [
       {
         "tableName": "concepts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `name` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER, `datatype_uuid` TEXT, `datatype_display` TEXT, `datatype__id` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT, `datatype_uuid` TEXT, `datatype_display` TEXT, `datatype__id` INTEGER)",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
           {
             "fieldPath": "name",
             "columnName": "name",
@@ -59,9 +53,9 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "id"
+            "_id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -536,7 +530,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"41a50b7fab10cb07ddedc8846a9b55f5\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"80ed17c12fe7718613ca933e0b480ce5\")"
     ]
   }
 }

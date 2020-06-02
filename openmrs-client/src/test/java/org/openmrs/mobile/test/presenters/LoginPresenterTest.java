@@ -60,7 +60,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @PrepareForTest({OpenMRS.class, NetworkUtils.class, LocationDAO.class, RestServiceBuilder.class,
-    StringUtils.class})
+        StringUtils.class})
 @PowerMockIgnore("javax.net.ssl.*")
 public class LoginPresenterTest extends ACUnitTestBaseRx {
     @Mock
@@ -79,10 +79,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     private VisitDAO visitDAO;
     @Mock
     private UserService userService;
-<<<<<<< HEAD
-=======
 
->>>>>>> removed context from presenter
     private LoginPresenter presenter;
 
     @Before
@@ -90,11 +87,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         super.setUp();
         VisitRepository visitRepository = new VisitRepository(restApi, visitDAO, locationDAO, new EncounterDAO());
         presenter = new LoginPresenter(restApi, visitRepository, locationDAO, userService, view, openMRS,
-<<<<<<< HEAD
-            openMRSLogger, authorizationManager);
-=======
                 openMRSLogger, authorizationManager);
->>>>>>> removed context from presenter
         mockStaticMethods();
     }
 
@@ -120,9 +113,9 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         mockNonEmptyCredentials(true);
         mockOnlineMode(true);
         Mockito.lenient().when(restApi.getSession())
-            .thenReturn(mockSuccessCall(new Session("someId", true, new User())));
+                .thenReturn(mockSuccessCall(new Session("someId", true, new User())));
         Mockito.lenient().when(restApi.getVisitType())
-            .thenReturn(mockSuccessCall(Collections.singletonList(new VisitType("visitType"))));
+                .thenReturn(mockSuccessCall(Collections.singletonList(new VisitType("visitType"))));
         Mockito.lenient().when(authorizationManager.isUserNameOrServerEmpty()).thenReturn(false);
         String user = "user";
         String url = "url";
@@ -140,9 +133,9 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         mockNonEmptyCredentials(true);
         mockOnlineMode(true);
         Mockito.lenient().when(restApi.getSession())
-            .thenReturn(mockSuccessCall(new Session("someId", false, new User())));
+                .thenReturn(mockSuccessCall(new Session("someId", false, new User())));
         Mockito.lenient().when(restApi.getVisitType())
-            .thenReturn(mockSuccessCall(Collections.singletonList(new VisitType("visitType"))));
+                .thenReturn(mockSuccessCall(Collections.singletonList(new VisitType("visitType"))));
         Mockito.lenient().when(authorizationManager.isUserNameOrServerEmpty()).thenReturn(false);
         String user = "user";
         String url = "url";
@@ -221,7 +214,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     public void shouldLoadLocationsInOnlineMode_allOK() {
         mockNetworkConnection(true);
         Mockito.lenient().when(restApi.getLocations(any(), anyString(), anyString()))
-            .thenReturn(mockSuccessCall(Collections.singletonList(new Location())));
+                .thenReturn(mockSuccessCall(Collections.singletonList(new Location())));
         presenter.loadLocations("someUrl");
         verify(view).initLoginForm(any(), any());
         verify(view).startFormListService();
@@ -233,20 +226,12 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     public void shouldLoadLocationsInOnlineMode_errorResponse() {
         mockNetworkConnection(true);
         Mockito.lenient().when(restApi.getLocations(any(), anyString(), anyString()))
-<<<<<<< HEAD
-            .thenReturn(mockErrorCall(401));
-=======
                 .thenReturn(mockErrorCall(401));
->>>>>>> removed context from presenter
 
         presenter.loadLocations("someUrl");
         verify(view).initLoginForm(any(), any());
         verify(view).setLocationErrorOccurred(true);
-<<<<<<< HEAD
-        verify(view).showInvalidURLSnackbar(R.string.failed_fetching_servers_location);
-=======
         verify(view).showInvalidURLSnackbar(R.string.snackbar_server_error);
->>>>>>> removed context from presenter
         verify(view).hideUrlLoadingAnimation();
     }
 
@@ -254,7 +239,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     public void shouldLoadLocationsInOnlineMode_failure() {
         mockNetworkConnection(true);
         Mockito.lenient().when(restApi.getLocations(any(), anyString(), anyString()))
-            .thenReturn(mockFailureCall());
+                .thenReturn(mockFailureCall());
         presenter.loadLocations("someUrl");
         verify(view).initLoginForm(any(), any());
         verify(view).setLocationErrorOccurred(true);

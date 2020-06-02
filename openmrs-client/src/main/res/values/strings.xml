@@ -14,6 +14,8 @@
 
 <resources>
     <string name="app_name">OpenMRS Android Client</string>
+    <string name="organization_name" translatable="false">OpenMRS</string>
+    <string name="client_name" translatable="false">Client</string>
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
     <string name="action_location">Location</string>
@@ -283,7 +285,7 @@
     <string name="connected_to_server_message">You are now connected!</string>
 
     <string name="dialog_title_are_you_sure">Are you sure?</string>
-	<string name="dialog_title_reset_patient">Reset patient data?</string>
+    <string name="dialog_title_reset_patient">Reset patient data?</string>
     <string name="dialog_message_data_lost">All patient information entered will be lost.</string>
     <string name="dialog_button_stay">Stay</string>
     <string name="dialog_button_leave">Leave</string>
@@ -429,37 +431,37 @@
     <string name="offline_mode_patient_data_saved_locally_notification_message">Sync is off. Patient Update data is saved locally and will sync when online mode is restored.</string>
     <string name="patent_and_form_data_sync_resumed">Syncing switched on, attempting to sync patients and form data</string>
 
-	<!--VisitExpandableListAdapter-->
-	<string name="hiv_yes">Yes</string>
-	<string name="hiv_no">No</string>
-	<string name="hiv_unknown">Unknown</string>
+	  <!--VisitExpandableListAdapter-->
+	  <string name="hiv_yes">Yes</string>
+    <string name="hiv_no">No</string>
+    <string name="hiv_unknown">Unknown</string>
 
-	<!-- Contact Activity -->
-	<string name="helpdesk_mail" translatable="false">helpdesk@openmrs.com</string>
-	<string name="go_to_forum">Forum</string>
-	<string name="go_to_irc">IRC</string>
-	<string name="open">Go to</string>
-	<string name="email_us">Email us</string>
-	<string name="help_message">Our Team will try our best to help you. Please reach out to us by using the services above.</string>
-	<string name="contact_forum_url" translatable="false">https://talk.openmrs.org/</string>
-	<string name="contact_irc_url" translatable="false">https://wiki.openmrs.org/display/IRC/Home</string>
-	<string name="contact_us">Contact Us</string>
-	<string name="no_mailing_client_found">There are no email clients installed.</string>
-	<string name="contact_us_or">OR</string>
+    <!-- Contact Activity -->
+    <string name="helpdesk_mail" translatable="false">helpdesk@openmrs.com</string>
+    <string name="go_to_forum">Forum</string>
+    <string name="go_to_irc">IRC</string>
+    <string name="open">Go to</string>
+    <string name="email_us">Email us</string>
+    <string name="help_message">Our Team will try our best to help you. Please reach out to us by using the services above.</string>
+    <string name="contact_forum_url" translatable="false">https://talk.openmrs.org/</string>
+    <string name="contact_irc_url" translatable="false">https://wiki.openmrs.org/display/IRC/Home</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="no_mailing_client_found">There are no email clients installed.</string>
+    <string name="contact_us_or">OR</string>
 
-	<!-- ShowCaseView -->
-	<string name="showcase_find_patients">Click here to search through all the patients</string>
-	<string name="showcase_active_visits">Click here to get the list of all the currently active visits</string>
-	<string name="showcase_register_patient">Click here to register a new patient</string>
-	<string name="showcase_form_entry">Click here to capture vitals for a patient on a visit</string>
-	<string name="showcase_manage_providers">Click here to manage providers for a patient on a visit</string>
-
-	<!-- Chart Activity -->
-	<string name="data_not_available_for_this_field">No data available to display chart</string>
-	<string name="data_type_not_available_for_this_field">Chart not available for this field</string>
-	<string name="dialog_take_photo">Take a photo</string>
-	<string name="dialog_choose_photo">Choose photo</string>
-	<string name="dialog_remove_photo">Remove photo</string>
+    <!-- ShowCaseView -->
+    <string name="showcase_find_patients">Click here to search through all the patients</string>
+    <string name="showcase_active_visits">Click here to get the list of all the currently active visits</string>
+    <string name="showcase_register_patient">Click here to register a new patient</string>
+    <string name="showcase_form_entry">Click here to capture vitals for a patient on a visit</string>
+    <string name="showcase_manage_providers">Click here to manage providers for a patient on a visit</string>
+  
+    <!-- Chart Activity -->
+    <string name="data_not_available_for_this_field">No data available to display chart</string>
+    <string name="data_type_not_available_for_this_field">Chart not available for this field</string>
+    <string name="dialog_take_photo">Take a photo</string>
+    <string name="dialog_choose_photo">Choose photo</string>
+    <string name="dialog_remove_photo">Remove photo</string>
 
     <string name="unidentified_patient">Unidentified Patient</string>
     <string name="dob_error_for_unidentified">Please give a rough estimate of patient age</string>

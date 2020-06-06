@@ -12,12 +12,9 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.community.contact;
+package org.openmrs.mobile.activities.community.contact
 
-public class ContactUsContract {
-    interface View {
-    }
-
-    interface Presenter {
-    }
+class ContactUsContract {
+    interface View
+    interface Presenter
 }

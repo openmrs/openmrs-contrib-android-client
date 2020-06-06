@@ -43,7 +43,7 @@ public interface LoginContract {
 
         void showInvalidURLSnackbar(String message);
 
-        void showInvalidURLSnackbar(int resId);
+        void showInvalidURLSnackbar(int messageID);
 
         void showInvalidLoginOrPasswordSnackbar();
 
@@ -58,8 +58,6 @@ public interface LoginContract {
         void userAuthenticated();
 
         void startFormListService();
-
-        void showOpenMRSLogo();
     }
 
     interface Presenter extends BasePresenterContract {

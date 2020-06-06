@@ -29,7 +29,7 @@
 	<string name="login_password_hint">कुंजिका</string>
 	<string name="login_location_select">सत्र का स्थान</string>
 	<string name="login_required">अपेक्षित</string>
-	<string name="req_star"><![CDATA[<font color=\'#cc0029\'> * </font>]]></string>
+	<string name="req_star"><![CDATA[<font color=\'#616161\'> * </font>]]></string>
 	<string name="warning_dialog_title">चेतावनी</string>
 	<string name="warning_lost_data_dialog">URL, उपयोगकर्ता नाम या पासवर्ड बदलने से सारा डेटा मिट जाएगा। क्या आपको यकीन है?</string>
 	<string name="forgot_dialog_title">लॉग इन करने में असमर्थ रहा</string>
@@ -423,4 +423,6 @@
 	<string name="form_data_sync_is_off_message">सिंक बंद है। फ़ॉर्म डेटा सहेजने के लिए सिंक चालू करें।</string>
 	<string name="form_data_saved_successfully">%1$s डेटा सफलतापूर्वक सहेजा गया</string>
 	<string name="unidentified_patient_name">अज्ञात रोगी</string>
+	<string name="snackbar_server_error">The entered server is currently down, please select a different one.</string>
+	<string name="snackbar_choose">Choose</string>
 </resources>

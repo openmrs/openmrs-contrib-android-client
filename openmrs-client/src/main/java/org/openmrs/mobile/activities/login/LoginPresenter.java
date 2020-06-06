@@ -94,12 +94,12 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         if (validateLoginFields(username, password, url)) {
             loginView.hideSoftKeys();
             if ((!mOpenMRS.getUsername().equals(ApplicationConstants.EMPTY_STRING) &&
-                !mOpenMRS.getUsername().equals(username)) ||
-                ((!mOpenMRS.getServerUrl().equals(ApplicationConstants.EMPTY_STRING) &&
-                    !mOpenMRS.getServerUrl().equals(oldUrl))) ||
-                (!mOpenMRS.getHashedPassword().equals(ApplicationConstants.EMPTY_STRING) &&
-                    !BCrypt.checkpw(password, mOpenMRS.getHashedPassword())) ||
-                mWipeRequired) {
+                    !mOpenMRS.getUsername().equals(username)) ||
+                    ((!mOpenMRS.getServerUrl().equals(ApplicationConstants.EMPTY_STRING) &&
+                            !mOpenMRS.getServerUrl().equals(oldUrl))) ||
+                    (!mOpenMRS.getHashedPassword().equals(ApplicationConstants.EMPTY_STRING) &&
+                            !BCrypt.checkpw(password, mOpenMRS.getHashedPassword())) ||
+                    mWipeRequired) {
                 loginView.showWarningDialog();
             } else {
                 authenticateUser(username, password, url);
@@ -154,7 +154,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                                 public void onErrorResponse(String errorMessage) {
 
                                     OpenMRS.getInstance().setVisitTypeUUID(ApplicationConstants.DEFAULT_VISIT_TYPE_UUID);
-                                    loginView.showToast(R.string.failed_fetching_visit_type_error_message,ToastUtil.ToastType.ERROR);
+                                    loginView.showToast(R.string.failed_fetching_visit_type_error_message, ToastUtil.ToastType.ERROR);
                                 }
                             });
                             setLogin(true, url);
@@ -185,21 +185,21 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                     mOpenMRS.setPasswordAndHashedPassword(password);
                     mOpenMRS.setSessionToken(mOpenMRS.getLastSessionToken());
                     loginView.showToast(R.string.login_offline_toast_message,
-                        ToastUtil.ToastType.NOTICE);
+                            ToastUtil.ToastType.NOTICE);
                     loginView.userAuthenticated();
                     loginView.finishLoginActivity();
                 } else {
                     loginView.hideLoadingAnimation();
                     loginView.showToast(R.string.auth_failed_dialog_message,
-                        ToastUtil.ToastType.ERROR);
+                            ToastUtil.ToastType.ERROR);
                 }
             } else if (NetworkUtils.hasNetwork()) {
                 loginView.showToast(R.string.offline_mode_unsupported_in_first_login,
-                    ToastUtil.ToastType.ERROR);
+                        ToastUtil.ToastType.ERROR);
                 loginView.hideLoadingAnimation();
             } else {
                 loginView.showToast(R.string.no_internet_conn_dialog_message,
-                    ToastUtil.ToastType.ERROR);
+                        ToastUtil.ToastType.ERROR);
                 loginView.hideLoadingAnimation();
             }
         }
@@ -211,8 +211,8 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         locationDAO.deleteAllLocations();
         for (int i = 0; i < locationList.size(); i++) {
             locationDAO.saveLocation(locationList.get(i))
-                .observeOn(Schedulers.io())
-                .subscribe();
+                    .observeOn(Schedulers.io())
+                    .subscribe();
         }
     }
 
@@ -223,7 +223,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         if (NetworkUtils.hasNetwork()) {
             String locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "location";
             Call<Results<Location>> call =
-                restApi.getLocations(locationEndPoint, "Login Location", "full");
+                    restApi.getLocations(locationEndPoint, "Login Location", "full");
             call.enqueue(new Callback<Results<Location>>() {
                 @Override
                 public void onResponse(@NonNull Call<Results<Location>> call, @NonNull Response<Results<Location>> response) {
@@ -234,7 +234,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                         loginView.startFormListService();
                         loginView.setLocationErrorOccurred(false);
                     } else {
-                        loginView.showInvalidURLSnackbar(R.string.failed_fetching_servers_location);
+                        loginView.showInvalidURLSnackbar(R.string.snackbar_server_error);
                         loginView.setLocationErrorOccurred(true);
                         loginView.initLoginForm(new ArrayList<>(), url);
                     }
@@ -251,18 +251,17 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
             });
         } else {
             addSubscription(locationDAO.getLocations()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(locations -> {
-                    if (locations.size() > 0) {
-                        loginView.initLoginForm(locations, url);
-                        loginView.setLocationErrorOccurred(false);
-                    } else {
-                        loginView.showToast(R.string.no_internet_connection_message, ToastUtil.ToastType.ERROR);
-                        loginView.showOpenMRSLogo();
-                        loginView.setLocationErrorOccurred(true);
-                    }
-                    loginView.hideLoadingAnimation();
-                }));
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(locations -> {
+                        if (locations.size() > 0) {
+                            loginView.initLoginForm(locations, url);
+                            loginView.setLocationErrorOccurred(false);
+                        } else {
+                            loginView.showToast(R.string.no_internet_connection_message, ToastUtil.ToastType.ERROR);
+                            loginView.setLocationErrorOccurred(true);
+                        }
+                        loginView.hideLoadingAnimation();
+                    }));
         }
     }
 

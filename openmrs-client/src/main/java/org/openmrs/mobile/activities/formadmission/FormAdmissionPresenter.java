@@ -14,11 +14,9 @@
 
 package org.openmrs.mobile.activities.formadmission;
 
-import static org.openmrs.mobile.utilities.FormService.getFormResourceByName;
+import android.content.Context;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.api.RestApi;
@@ -26,7 +24,6 @@ import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.retrofit.ProviderRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
-import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterProviderCreate;
 import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.Location;
@@ -39,9 +36,14 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static org.openmrs.mobile.utilities.FormService.getFormResourceByName;
 
 public class FormAdmissionPresenter extends BasePresenter implements FormAdmissionContract.Presenter {
 
@@ -52,8 +54,9 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
     private String formUUID;
     private Patient mPatient;
     private RestApi restApi;
+    private Context mContext;
 
-    public FormAdmissionPresenter(FormAdmissionContract.View view, Long patientID, String encounterType, String formName) {
+    public FormAdmissionPresenter(FormAdmissionContract.View view, Long patientID, String encounterType, String formName, Context context) {
         this.view = view;
         this.patientID = patientID;
         this.encounterType = encounterType;
@@ -62,6 +65,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         this.formUUID = getFormResourceByName(formName).getUuid();
         restApi = RestServiceBuilder.createService(RestApi.class);
         this.view.setPresenter(this);
+        this.mContext = context;
     }
 
     @Override
@@ -80,7 +84,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         if (providerList != null && providerList.size() != 0) {
             view.updateProviderAdapter(providerList);
         } else {
-            view.showToast("Error");
+            view.showToast(mContext.getResources().getString(R.string.error_occurred));
             view.enableSubmitButton(false);
         }
     }
@@ -97,7 +101,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
                     if (response.isSuccessful()) {
                         view.updateLocationAdapter(response.body().getResults());
                     } else {
-                        view.showToast("An error Occurred, Try Again Later !!!");
+                        view.showToast(mContext.getResources().getString(R.string.error_occurred));
                         view.enableSubmitButton(false);
                     }
                 }
@@ -109,7 +113,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
                 }
             });
         } else {
-            view.showToast("You are currently offline, Try again when connected !!!");
+            view.showToast(mContext.getResources().getString(R.string.offline_error_message));
         }
     }
 
@@ -118,11 +122,11 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         restApi.getEncounterRoles().enqueue(new Callback<Results<Resource>>() {
             @Override
             public void onResponse(Call<Results<Resource>> call, Response<Results<Resource>> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     view.updateEncounterRoleList(response.body().getResults());
                 } else {
                     view.enableSubmitButton(false);
-                    view.showToast("An error Occurred, Try Again Later !!!");
+                    view.showToast(mContext.getResources().getString(R.string.error_occurred));
                 }
             }
 
@@ -138,7 +142,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
     public void createEncounter(String providerUUID, String locationUUID, String encounterRoleUUID) {
         view.enableSubmitButton(false);
 
-        Encountercreate encountercreate=new Encountercreate();
+        Encountercreate encountercreate = new Encountercreate();
         encountercreate.setPatient(mPatient.getUuid());
         encountercreate.setEncounterType(encounterType);
         encountercreate.setFormname(formName);
@@ -146,7 +150,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         encountercreate.setFormUuid(formUUID);
         encountercreate.setLocation(locationUUID);
 
-        List<Obscreate> observations=new ArrayList<>();
+        List<Obscreate> observations = new ArrayList<>();
         encountercreate.setObservations(observations);
 
         List<EncounterProviderCreate> encounterProviderCreate = new ArrayList<>();
@@ -156,19 +160,19 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         encountercreate.setObslist();
         encountercreate.save();
 
-        if(!mPatient.isSynced()) {
+        if (!mPatient.isSynced()) {
             mPatient.addEncounters(encountercreate.getId());
-            new PatientDAO().updatePatient(mPatient.getId(),mPatient);
+            new PatientDAO().updatePatient(mPatient.getId(), mPatient);
             ToastUtil.error("Patient not yet registered. Form data is saved locally " +
                     "and will sync when internet connection is restored. ");
             view.enableSubmitButton(true);
-        }
-        else {
+        } else {
             new EncounterService().addEncounter(encountercreate, new DefaultResponseCallbackListener() {
                 @Override
                 public void onResponse() {
                     view.enableSubmitButton(true);
                 }
+
                 @Override
                 public void onErrorResponse(String errorMessage) {
                     view.showToast(errorMessage);

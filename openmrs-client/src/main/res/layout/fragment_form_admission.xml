@@ -10,7 +10,7 @@
 		android:layout_height="wrap_content"
 		android:layout_margin="8dp"
 		android:padding="8dp"
-		android:text="Admission Date : "
+		android:text="@string/admission_date"
 		android:textSize="16sp"
 		android:layout_alignParentStart="true"
 		android:layout_alignParentLeft="true" />
@@ -35,7 +35,7 @@
 		android:layout_below="@id/admission_date_header"
 		android:layout_margin="8dp"
 		android:padding="8dp"
-		android:text="Admitted By : "
+		android:text="@string/admission_admitted_by"
 		android:textSize="16sp" />
 
 	<Spinner
@@ -53,7 +53,7 @@
 		android:layout_below="@id/admitted_by_spinner"
 		android:layout_margin="8dp"
 		android:padding="8dp"
-		android:text="Provider Role : "
+		android:text="@string/admission_provider_role"
 		android:textSize="16sp" />
 
 	<Spinner
@@ -71,7 +71,7 @@
 		android:layout_below="@id/encounter_role_spinner"
 		android:layout_margin="8dp"
 		android:padding="8dp"
-		android:text="Admitted To : "
+		android:text="@string/admission_admitted_to"
 		android:textSize="16sp" />
 
 	<Spinner
@@ -88,6 +88,6 @@
 		android:layout_height="wrap_content"
 		android:layout_alignParentBottom="true"
 		android:layout_margin="8dp"
-		android:text="Submit" />
+		android:text="@string/action_submit" />
 
 </RelativeLayout>

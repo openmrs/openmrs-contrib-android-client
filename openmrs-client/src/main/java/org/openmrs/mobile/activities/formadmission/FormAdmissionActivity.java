@@ -57,7 +57,7 @@ public class FormAdmissionActivity extends ACBaseActivity {
                     formAdmissionFragment, R.id.admissionFormContentFrame);
         }
 
-        new FormAdmissionPresenter(formAdmissionFragment, patientID, encounterType, formName);
+        new FormAdmissionPresenter(formAdmissionFragment, patientID, encounterType, formName, getApplicationContext());
     }
 
     @Override

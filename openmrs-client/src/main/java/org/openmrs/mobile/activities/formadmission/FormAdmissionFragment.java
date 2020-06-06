@@ -16,7 +16,6 @@ package org.openmrs.mobile.activities.formadmission;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +25,7 @@ import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databinding.FragmentFormAdmissionBinding;
@@ -35,7 +35,6 @@ import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -80,7 +79,7 @@ public class FormAdmissionFragment extends ACBaseFragment<FormAdmissionContract.
 
     private void createEncounter() {
         if (providerUUID.isEmpty() || locationUUID.isEmpty() || encounterRoleUUID.isEmpty())
-            ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.ERROR, "Please Select Required Field");
+            ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.ERROR, getString(R.string.admission_fields_required));
         else
             mPresenter.createEncounter(providerUUID, locationUUID, encounterRoleUUID);
     }
@@ -168,8 +167,8 @@ public class FormAdmissionFragment extends ACBaseFragment<FormAdmissionContract.
     }
 
     @Override
-    public void showToast(String error) {
-        Log.i("error", error);
+    public void showToast(String errorMessage) {
+        ToastUtil.error(errorMessage);
     }
 
     @Override

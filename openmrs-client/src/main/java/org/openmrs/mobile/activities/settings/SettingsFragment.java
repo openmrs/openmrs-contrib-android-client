@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,7 +31,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,20 +39,21 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.community.contact.ContactUsActivity;
 import org.openmrs.mobile.activities.logs.LogsActivity;
 import org.openmrs.mobile.services.ConceptDownloadService;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.Objects;
 
 public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter> implements SettingsContract.View {
     private BroadcastReceiver bReceiver;
     private TextView conceptsInDbTextView;
-    private ImageButton downloadConceptsButton;
+    private Button downloadConceptsButton;
     private Spinner spinner;
     private View root;
 
@@ -87,16 +88,26 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
         super.onResume();
         mPresenter.updateConceptsInDBTextView();
         LocalBroadcastManager.getInstance(this.getActivity())
-            .registerReceiver(bReceiver, new IntentFilter(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID));
+                .registerReceiver(bReceiver, new IntentFilter(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID));
     }
 
     @Override
     public void setConceptsInDbText(String text) {
         if (text.equals("0")) {
             downloadConceptsButton.setEnabled(true);
-            ToastUtil.showLongToast(getActivity(),
-                ToastUtil.ToastType.WARNING,
-                R.string.settings_no_concepts_toast);
+
+            Snackbar snackbar = Snackbar.make(root, "", Snackbar.LENGTH_INDEFINITE);
+            View customSnackBarView = getLayoutInflater().inflate(R.layout.snackbar, null);
+            Snackbar.SnackbarLayout snackBarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+            snackBarLayout.setPadding(0, 0, 0, 0);
+
+            TextView dismiss_button = customSnackBarView.findViewById(R.id.snackbar_action_button);
+            Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), "fonts/Roboto/Roboto-Medium.ttf");
+            dismiss_button.setTypeface(typeface);
+            dismiss_button.setOnClickListener(v -> snackbar.dismiss());
+
+            snackBarLayout.addView(customSnackBarView, 0);
+            snackbar.show();
         } else {
             downloadConceptsButton.setEnabled(false);
         }
@@ -179,14 +190,14 @@ public class SettingsFragment extends ACBaseFragment<SettingsContract.Presenter>
 
             // Ignore Playstore backstack, on back press will take us back to our app
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
-                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
-                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                    Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 
             try {
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
                 startActivity(new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://play.google.com/store/apps/details?id=" + ApplicationConstants.PACKAGE_NAME)));
+                        Uri.parse("http://play.google.com/store/apps/details?id=" + ApplicationConstants.PACKAGE_NAME)));
             }
         });
     }

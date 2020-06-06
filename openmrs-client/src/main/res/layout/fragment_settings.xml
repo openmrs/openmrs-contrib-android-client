@@ -12,285 +12,293 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-	<androidx.constraintlayout.widget.ConstraintLayout
-		android:id="@+id/linearLayout"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		app:layout_constraintBottom_toBottomOf="@+id/view"
-		app:layout_constraintTop_toBottomOf="@+id/view">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/view">
 
-		<TextView
-			android:id="@+id/frag_settings_header_tv"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/activity_horizontal_margin"
-			android:layout_marginLeft="@dimen/activity_horizontal_margin"
-			android:layout_marginTop="@dimen/activity_vertical_margin"
-			android:text="@string/action_settings"
-			android:textColor="?android:attr/textColorPrimary"
-			android:textStyle="bold"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/frag_settings_concepts_in_db_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="@string/settings_concepts_in_db"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/frag_settings_concepts_download_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/frag_settings_concepts_download_btn" />
+
+        <TextView
+            android:id="@+id/frag_settings_concepts_count_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/frag_settings_concepts_in_db_tv"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/frag_settings_concepts_download_btn"
+            app:layout_constraintLeft_toRightOf="@+id/frag_settings_concepts_in_db_tv"
+            app:layout_constraintTop_toTopOf="@+id/frag_settings_concepts_download_btn" />
+
+        <Button
+            android:id="@+id/frag_settings_concepts_download_btn"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:backgroundTint="@color/color_accent"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/find_patients_row_checkbox_download_label"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_apply_language"
+            tools:targetApi="lollipop" />
+
+        <View
+            android:id="@+id/view_divider1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/dark_grey_6x"
+            app:layout_constraintTop_toBottomOf="@id/frag_settings_concepts_download_btn" />
+
+        <LinearLayout
+            android:id="@+id/frag_settings_logs_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_divider1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_logs"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/frag_settings_logs_desc1_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/frag_settings_logs_desc2_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/help_message" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/dark_grey_6x"
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_logs_ll" />
+
+        <ImageView
+            android:id="@+id/frag_settings_app_icon_iv"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:src="@drawable/openmrs_action_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <TextView
+            android:id="@+id/frag_settings_app_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/app_name"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintStart_toEndOf="@+id/frag_settings_app_icon_iv"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <TextView
+            android:id="@+id/frag_settings_version_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintStart_toEndOf="@+id/frag_settings_app_icon_iv"
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_app_name_tv" />
+
+        <LinearLayout
+            android:id="@+id/frag_settings_rate_us_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_app_icon_iv">
+
+            <ImageView
+                android:layout_width="@dimen/settings_icon_size"
+                android:layout_height="@dimen/settings_icon_size"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:src="@drawable/ic_favorite_black_24dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/rate_us_string"
+                android:textColor="?android:attr/textColorPrimary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/frag_settings_contact_us_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_rate_us_ll">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:src="@drawable/mail_setting" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/contact_us"
+                android:textColor="?android:attr/textColorPrimary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/frag_settings_privacy_policy_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/frag_settings_contact_us_ll">
+
+            <ImageView
+                android:layout_width="@dimen/settings_icon_size"
+                android:layout_height="@dimen/settings_icon_size"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:src="@drawable/ic_security_black_24dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="@string/settings_privacy_policy"
+                android:textColor="?android:attr/textColorPrimary" />
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/frag_settings_dark_mode_switch"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginBottom="@dimen/margin_short"
+            android:background="@color/dark_grey_6x"
+            android:paddingStart="20dp"
+            android:paddingLeft="20dp"
+            android:paddingEnd="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/label_dark_mode"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:targetApi="lollipop" />
+
+        <TextView
+            android:id="@+id/language_header"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingStart="20dp"
+            android:paddingLeft="20dp"
+            android:text="@string/language"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/frag_settings_apply_language"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/frag_settings_apply_language"
+            tools:ignore="RtlSymmetry" />
+
+        <Spinner
+            android:id="@+id/frag_settings_spinner"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/spinner_settings_page"
+            app:layout_constraintBottom_toBottomOf="@+id/frag_settings_apply_language"
+            app:layout_constraintLeft_toRightOf="@+id/language_header"
+            app:layout_constraintRight_toLeftOf="@id/frag_settings_apply_language"
+            app:layout_constraintTop_toTopOf="@+id/frag_settings_apply_language" />
+
+        <Button
+            android:id="@+id/frag_settings_apply_language"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/color_accent"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/apply"
+            app:layout_constraintLeft_toLeftOf="@id/frag_settings_concepts_download_btn"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frag_settings_dark_mode_switch"
+            tools:targetApi="lollipop" />
 
 
-		<TextView
-			android:id="@+id/frag_settings_concepts_in_db_tv"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="@dimen/activity_horizontal_margin"
-			android:layout_marginLeft="@dimen/activity_horizontal_margin"
-			android:text="@string/settings_concepts_in_db"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/frag_settings_dark_mode_switch" />
-
-		<TextView
-			android:id="@+id/frag_settings_concepts_count_tv"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_below="@id/frag_settings_concepts_in_db_tv"
-			android:layout_marginStart="@dimen/activity_horizontal_margin"
-			android:layout_marginLeft="@dimen/activity_horizontal_margin"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/frag_settings_concepts_in_db_tv" />
-
-		<ImageButton
-			android:id="@+id/frag_settings_concepts_download_btn"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_alignParentEnd="true"
-			android:layout_alignParentRight="true"
-			android:layout_centerVertical="true"
-			android:layout_marginEnd="@dimen/activity_horizontal_margin"
-			android:layout_marginRight="@dimen/activity_horizontal_margin"
-			android:background="@drawable/ic_file_download_black_24dp"
-			android:clickable="true"
-			android:focusable="true"
-			android:padding="16dp"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/frag_settings_dark_mode_switch" />
-
-		<LinearLayout
-			android:id="@+id/frag_settings_logs_ll"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/activity_vertical_margin"
-			android:background="?attr/selectableItemBackground"
-			android:clickable="true"
-			android:focusable="true"
-			android:orientation="vertical"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/frag_settings_concepts_count_tv">
-
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/activity_horizontal_margin"
-				android:layout_marginLeft="@dimen/activity_horizontal_margin"
-				android:layout_marginTop="@dimen/activity_vertical_margin"
-				android:text="@string/settings_logs"
-				android:textColor="?android:attr/textColorPrimary"
-				android:textStyle="bold" />
-
-			<TextView
-				android:id="@+id/frag_settings_logs_desc1_tv"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/activity_horizontal_margin"
-				android:layout_marginLeft="@dimen/activity_horizontal_margin" />
-
-			<TextView
-				android:id="@+id/frag_settings_logs_desc2_tv"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginStart="@dimen/activity_horizontal_margin"
-				android:layout_marginLeft="@dimen/activity_horizontal_margin"
-				android:layout_marginBottom="@dimen/activity_vertical_margin" />
-
-		</LinearLayout>
-
-		<View
-			android:id="@+id/view"
-			android:layout_width="wrap_content"
-			android:layout_height="1dp"
-			android:background="@color/light_grey"
-			android:visibility="visible"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/frag_settings_logs_ll" />
-
-
-		<ImageView
-			android:id="@+id/frag_settings_app_icon_iv"
-			android:layout_width="60dp"
-			android:layout_height="60dp"
-			android:layout_marginStart="@dimen/activity_horizontal_margin"
-			android:layout_marginLeft="@dimen/activity_horizontal_margin"
-			android:layout_marginTop="@dimen/activity_vertical_margin"
-			android:src="@drawable/openmrs_action_logo"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/view" />
-
-
-		<TextView
-			android:id="@+id/frag_settings_app_name_tv"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="8dp"
-			android:layout_marginLeft="8dp"
-			android:layout_marginTop="24dp"
-			android:text="@string/app_name"
-			android:textColor="?android:attr/textColorPrimary"
-			app:layout_constraintStart_toEndOf="@+id/frag_settings_app_icon_iv"
-			app:layout_constraintTop_toBottomOf="@+id/view" />
-
-		<TextView
-			android:id="@+id/frag_settings_version_tv"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:layout_marginStart="8dp"
-			android:layout_marginLeft="8dp"
-			app:layout_constraintStart_toEndOf="@+id/frag_settings_app_icon_iv"
-			app:layout_constraintTop_toBottomOf="@+id/frag_settings_app_name_tv" />
-
-
-		<LinearLayout
-			android:id="@+id/frag_settings_rate_us_ll"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="?attr/selectableItemBackground"
-			android:clickable="true"
-			android:focusable="true"
-			android:orientation="horizontal"
-			android:padding="16dp"
-			android:visibility="visible"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/frag_settings_app_icon_iv">
-
-			<ImageView
-				android:layout_width="@dimen/settings_icon_size"
-				android:layout_height="@dimen/settings_icon_size"
-				android:layout_marginEnd="@dimen/activity_horizontal_margin"
-				android:layout_marginRight="@dimen/activity_horizontal_margin"
-				android:src="@drawable/ic_favorite_black_24dp" />
-
-			<TextView
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
-				android:layout_weight="1"
-				android:text="@string/rate_us_string" />
-
-		</LinearLayout>
-
-		<LinearLayout
-			android:id="@+id/frag_settings_contact_us_ll"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="?attr/selectableItemBackground"
-			android:clickable="true"
-			android:focusable="true"
-			android:orientation="horizontal"
-			android:padding="16dp"
-			android:visibility="visible"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/frag_settings_rate_us_ll">
-
-			<ImageView
-				android:layout_width="20dp"
-				android:layout_height="25dp"
-				android:layout_marginEnd="@dimen/activity_horizontal_margin"
-				android:layout_marginRight="@dimen/activity_horizontal_margin"
-				android:src="@drawable/mail_setting" />
-
-			<TextView
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
-				android:layout_weight="1"
-				android:text="@string/contact_us" />
-
-		</LinearLayout>
-
-		<LinearLayout
-			android:id="@+id/frag_settings_privacy_policy_ll"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:background="?attr/selectableItemBackground"
-			android:clickable="true"
-			android:focusable="true"
-			android:orientation="horizontal"
-			android:padding="16dp"
-			android:visibility="visible"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toBottomOf="@+id/frag_settings_contact_us_ll">
-
-			<ImageView
-				android:layout_width="@dimen/settings_icon_size"
-				android:layout_height="@dimen/settings_icon_size"
-				android:layout_marginEnd="@dimen/activity_horizontal_margin"
-				android:layout_marginRight="@dimen/activity_horizontal_margin"
-				android:src="@mipmap/ic_privacy_policy" />
-
-			<TextView
-				android:layout_width="0dp"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center_vertical"
-				android:layout_weight="1"
-				android:text="@string/settings_privacy_policy" />
-
-		</LinearLayout>
-
-		<androidx.appcompat.widget.SwitchCompat
-			android:id="@+id/frag_settings_dark_mode_switch"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/margin_short"
-			android:layout_marginBottom="@dimen/margin_short"
-			android:padding="@dimen/padding_16"
-			android:text="@string/label_dark_mode"
-			android:textColor="?android:colorControlNormal"
-			app:layout_constraintTop_toBottomOf="@+id/frag_settings_linear_layout"
-			tools:targetApi="lollipop" />
-
-		<LinearLayout
-			android:id="@+id/frag_settings_linear_layout"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="@dimen/margin_short"
-			android:layout_marginBottom="@dimen/margin_short"
-			app:layout_constraintTop_toBottomOf="@id/frag_settings_header_tv">
-
-			<TextView
-				android:layout_width="0dp"
-				android:layout_height="match_parent"
-				android:layout_weight="1"
-				android:paddingLeft="@dimen/padding_16"
-				android:text="@string/language"
-				android:gravity="center_vertical"/>
-
-			<Spinner
-				android:id="@+id/frag_settings_spinner"
-				android:layout_width="0dp"
-				android:layout_height="match_parent"
-				android:layout_weight="1" />
-
-			<Button
-				android:id="@+id/frag_settings_apply_language"
-				android:layout_width="0dp"
-				android:layout_height="match_parent"
-				android:layout_weight="1"
-				android:text="@string/apply"
-				android:backgroundTint="@color/grey"
-				android:textColor="@color/black"
-				tools:targetApi="lollipop" />
-
-		</LinearLayout>
-
-	</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

@@ -10,6 +10,7 @@ import org.mockito.Mockito;
 import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardContract;
 import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardPresenter;
 import org.openmrs.mobile.api.RestApi;
+import org.openmrs.mobile.api.repository.ProviderRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.ProviderRoomDAO;
@@ -38,10 +39,17 @@ public class ProviderDashboardPresenterTest extends ACUnitTestBase {
     private OpenMRS openMRS;
 
     private ProviderDashboardPresenter providerDashboardPresenter;
+    private ProviderRepository providerRepository;
 
     @Before
     public void setup() {
-        this.providerDashboardPresenter = new ProviderDashboardPresenter(providerManagerView, restApi);
+        this.providerRepository =new ProviderRepository();
+        ProviderRoomDAO providerRoomDao = Mockito.mock(ProviderRoomDAO.class);
+        ProviderRoomDAO spyProviderRoomDao = spy(providerRoomDao);
+        doNothing().when(spyProviderRoomDao).updateProviderByUuid(Mockito.anyString(), Mockito.anyLong() ,Mockito.any(),Mockito.anyString(),Mockito.anyString());
+
+        this.providerRepository.setProviderRoomDao(spyProviderRoomDao);
+        this.providerDashboardPresenter = new ProviderDashboardPresenter(providerManagerView, restApi,providerRepository);
         mockStaticMethods();
     }
 
@@ -50,10 +58,6 @@ public class ProviderDashboardPresenterTest extends ACUnitTestBase {
         Provider provider = createProvider(1l, "doctor");
         Mockito.lenient().when(NetworkUtils.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.UpdateProvider(provider.getUuid(), provider)).thenReturn(mockSuccessCall(provider));
-
-        ProviderRoomDAO providerRoomDao = Mockito.mock(ProviderRoomDAO.class);
-        ProviderRoomDAO spyProviderRoomDao = spy(providerRoomDao);
-        doNothing().when(spyProviderRoomDao).updateProviderByUuid(Mockito.anyString(), Mockito.anyLong() ,Mockito.any(),Mockito.anyString(),Mockito.anyString());
 
         providerDashboardPresenter.updateProvider(provider);
         Mockito.verify(providerManagerView).setupBackdrop(provider);

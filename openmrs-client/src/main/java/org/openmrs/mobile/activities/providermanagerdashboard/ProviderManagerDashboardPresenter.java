@@ -41,10 +41,11 @@ public class ProviderManagerDashboardPresenter extends BasePresenter implements 
         providerRepository = new ProviderRepository(context);
     }
 
-    public ProviderManagerDashboardPresenter(@NotNull ProviderManagerDashboardContract.View providerManagerView, @NotNull RestApi restApi) {
+    public ProviderManagerDashboardPresenter(@NotNull ProviderManagerDashboardContract.View providerManagerView, @NotNull RestApi restApi,ProviderRepository providerRepository) {
         this.providerManagerView = providerManagerView;
         this.restApi = restApi;
         this.providerManagerView.setPresenter(this);
+        this.providerRepository = providerRepository;
     }
 
     @Override

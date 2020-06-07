@@ -24,13 +24,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-
-import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardPresenter;
 import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardContract;
+import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardPresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.repository.ProviderRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
+import org.openmrs.mobile.dao.ProviderRoomDAO;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.openmrs.mobile.utilities.NetworkUtils;
@@ -42,18 +42,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.Mockito.RETURNS_MOCKS;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @PrepareForTest({NetworkUtils.class, ToastUtil.class, OpenMRS.class, OpenMRSLogger.class})
 public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
-
     @Rule
     public InstantTaskExecutorRule taskExecutorRule = new InstantTaskExecutorRule();
-
     @Mock
     private RestApi restApi;
-    @Mock
-    private ProviderRepository providerRepository;
     @Mock
     private ProviderManagerDashboardContract.View providerManagerView;
     @Mock
@@ -61,34 +61,53 @@ public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
     @Mock
     private OpenMRSLogger openMRSLogger;
     @Mock
+
     private OpenMRS openMRS;
 
     MutableLiveData<List<Provider>> providerLiveData = Mockito.mock(MutableLiveData.class);
 
     private ProviderManagerDashboardPresenter providerManagerDashboardPresenter;
+    private ProviderRepository providerRepository;
     private Fragment fragment = new Fragment();
+
     List<Provider> providerList;
+
+    Provider providerOne = createProvider(1l, "doctor");
+    Provider providerTwo = createProvider(2l, "nurse");
 
     @Before
     public void setUp() {
-        providerManagerDashboardPresenter = new ProviderManagerDashboardPresenter(providerManagerView, restApi);
+        providerList = Arrays.asList(providerOne, providerTwo);
+        providerLiveData.postValue(providerList);
+
+        this.providerRepository = new ProviderRepository();
+        ProviderRoomDAO providerRoomDao = Mockito.mock(ProviderRoomDAO.class, RETURNS_MOCKS);
+        ProviderRoomDAO spyProviderRoomDao = spy(providerRoomDao);
+
+        Single listSingle = Mockito.mock(Single.class);
+        doNothing().when(spyProviderRoomDao).updateProviderByUuid(Mockito.anyString(), Mockito.anyLong(), Mockito.any(), Mockito.anyString(), Mockito.anyString());
+        when(spyProviderRoomDao.getProviderList()).thenReturn(listSingle);
+        when(listSingle.blockingGet()).thenReturn(providerList);
+
+        this.providerRepository.setProviderRoomDao(spyProviderRoomDao);
+
+        this.providerManagerDashboardPresenter = new ProviderManagerDashboardPresenter(providerManagerView, restApi, providerRepository);
         mockStaticMethods();
     }
 
     @Test
     public void shouldGetProviders_AllOK() {
+
         Provider providerOne = createProvider(1l, "doctor");
         Provider providerTwo = createProvider(2l, "nurse");
         providerList = Arrays.asList(providerOne, providerTwo);
         providerLiveData.postValue(providerList);
 
-        Mockito.lenient().when(NetworkUtils.isOnline()).thenReturn(true);
-        Mockito.lenient().when(restApi.getProviderList()).thenReturn(mockSuccessCall(providerList));
-        Mockito.lenient().when(providerRepository.getProviders(restApi)).thenReturn(providerLiveData);
+        when(NetworkUtils.isOnline()).thenReturn(true);
+        when(restApi.getProviderList()).thenReturn(mockSuccessCall(providerList));
 
-        providerRepository.getProviders(restApi).observeForever(observer);
-        providerManagerDashboardPresenter.getProviders(fragment);
         providerManagerDashboardPresenter.updateViews(providerList);
+        providerRepository.getProviders(restApi).observeForever(observer);
 
         verify(restApi).getProviderList();
         verify(providerManagerView).updateAdapter(providerList);
@@ -110,10 +129,7 @@ public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
         providerLiveData.postValue(providerList);
 
         Mockito.lenient().when(NetworkUtils.isOnline()).thenReturn(true);
-        Mockito.lenient().when(restApi.getProviderList()).thenReturn(mockSuccessCall(providerList));
-        Mockito.lenient().when(providerRepository.getProviders(restApi)).thenReturn(providerLiveData);
-
-        providerRepository.getProviders(restApi).observeForever(observer);
+        when(restApi.getProviderList()).thenReturn(mockSuccessCall(providerList));
         providerManagerDashboardPresenter.getProviders(fragment);
         providerManagerDashboardPresenter.updateViews(providerList);
         verify(restApi).getProviderList();
@@ -127,5 +143,8 @@ public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
         Mockito.lenient().when(OpenMRS.getInstance()).thenReturn(openMRS);
         PowerMockito.when(openMRS.getOpenMRSLogger()).thenReturn(openMRSLogger);
         PowerMockito.mockStatic(ToastUtil.class);
+    }
+
+    public abstract class Single extends io.reactivex.Single {
     }
 }

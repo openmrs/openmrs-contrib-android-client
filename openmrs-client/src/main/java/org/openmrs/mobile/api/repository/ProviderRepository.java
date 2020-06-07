@@ -56,6 +56,13 @@ public class ProviderRepository {
         workManager = WorkManager.getInstance(context);
     }
 
+    public ProviderRepository(){
+    }
+
+    public void setProviderRoomDao(ProviderRoomDAO providerRoomDao) {
+        this.providerRoomDao = providerRoomDao;
+    }
+
     public LiveData<List<Provider>> getProviders(RestApi restApi) {
 
         MutableLiveData<List<Provider>> providerLiveData = new MutableLiveData<>();

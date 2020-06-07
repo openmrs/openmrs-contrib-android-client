@@ -32,6 +32,7 @@ import io.reactivex.Single;
 
 @Dao
 public interface ProviderRoomDAO {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long addProvider(Provider provider);
 
@@ -47,10 +48,12 @@ public interface ProviderRoomDAO {
     @Update
     void updateProvider(Provider provider);
 
-    /*
-     * since the current implementation of the procider update operation
-     * only changes display and person field in the provider entity
+    /**
+     *  since the current implementation of the provider update operation
+     *  only changes display and person field in the provider entity
+     *
      */
+
     @TypeConverters(PersonConverter.class)
     @Query("UPDATE provider_table SET person= :person, id= :id, display=:display, identifier=:identifier WHERE uuid = :uuid")
     void updateProviderByUuid(String display, long id, Person person, String uuid, String identifier);

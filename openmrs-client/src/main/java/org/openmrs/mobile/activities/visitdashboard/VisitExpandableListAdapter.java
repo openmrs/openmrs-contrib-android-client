@@ -95,6 +95,9 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
                     layouts.add(convertView);
                     break;
                 case EncounterType.DISCHARGE:
+                    convertView = openMRSInflater.addSingleStringView(contentLayout, mContext.getString(R.string.discharge_location_in_list, encounter.getLocation().getDisplay()));
+                    layouts.add(convertView);
+                    break;
                 case EncounterType.ADMISSION:
                     convertView = openMRSInflater.addSingleStringView(contentLayout, mContext.getString(R.string.admission_location_in_list, encounter.getLocation().getDisplay()));
                     layouts.add(convertView);

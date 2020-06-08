@@ -489,4 +489,5 @@
 	<string name="admission_provider_role">Provider Role :</string>
 	<string name="admission_admitted_to">Admitted To :</string>
 	<string name="admission_location_in_list" translatable="false">Admitted To %1$s</string>
+    <string name="discharge_location_in_list" translatable="false">Discharged From %1$s</string>
 </resources>

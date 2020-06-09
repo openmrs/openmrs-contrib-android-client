@@ -141,6 +141,7 @@ dependencies {
 
     //http request chucker
     debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
+    testImplementation 'com.readystatesoftware.chuck:library:1.1.0'
     releaseImplementation 'com.readystatesoftware.chuck:library-no-op:1.1.0'
     implementation 'com.google.guava:guava:27.0.1-android'
 

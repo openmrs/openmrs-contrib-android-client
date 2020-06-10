@@ -13,65 +13,63 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/dialogRelativeForm"
-	style="@style/BackgroundThemeEEE"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:background="@color/white"
-	android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dialogRelativeForm"
+    style="@style/BackgroundThemeEEE"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
-	<LinearLayout
-		android:id="@+id/dialogForm"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical" />
+    <LinearLayout
+        android:id="@+id/dialogForm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
 
-	<LinearLayout
-		android:id="@+id/dialogFormButtons"
-		style="?android:attr/buttonBarStyle"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_below="@id/dialogForm"
-		android:layout_alignParentEnd="true"
-		android:layout_alignParentRight="true"
-		android:layout_marginLeft="10dp"
-		android:layout_marginRight="10dp"
-		android:background="@color/white"
-		android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/dialogFormButtons"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialogForm"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
 
-		<Button
-			android:id="@+id/dialogFormButtonsCancelButton"
-			android:layout_width="wrap_content"
-			android:layout_height="40dp"
-			android:layout_marginTop="20dp"
-			android:layout_marginEnd="12dp"
-			android:layout_marginRight="12dp"
-			android:layout_marginBottom="20dp"
-			android:backgroundTint="@color/primary"
-			android:gravity="center"
-			android:paddingLeft="16dp"
-			android:paddingRight="16dp"
-			android:textAllCaps="true"
-			android:textColor="@color/white"
-			android:textStyle="bold"
-			android:visibility="gone"
-			tools:targetApi="lollipop"/>
+        <Button
+            android:id="@+id/dialogFormButtonsCancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="@color/dark_grey_8x"
+            android:gravity="center"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="gone"
+            tools:targetApi="lollipop" />
 
-		<Button
-			android:id="@+id/dialogFormButtonsSubmitButton"
-			android:layout_width="wrap_content"
-			android:layout_height="40dp"
-			android:layout_marginTop="20dp"
-			android:layout_marginBottom="20dp"
-			android:backgroundTint="@color/primary"
-			android:gravity="center"
-			android:paddingLeft="16dp"
-			android:paddingRight="16dp"
-			android:textAllCaps="true"
-			android:textColor="@color/white"
-			android:textStyle="bold"
-			android:visibility="gone"
-			tools:targetApi="lollipop"/>
-	</LinearLayout>
+        <Button
+            android:id="@+id/dialogFormButtonsSubmitButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="20dp"
+            android:backgroundTint="@color/color_accent"
+            android:gravity="center"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="gone"
+            tools:targetApi="lollipop" />
+    </LinearLayout>
 </RelativeLayout>

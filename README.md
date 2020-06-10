@@ -65,7 +65,7 @@ For more information on the client, visit https://wiki.openmrs.org/display/proje
 - Offline access
 
 # Screenshots
-<img src="http://i.imgur.com/I4LLWCA.png" width="280" height="420" alt="Login page" >  <img src="http://i.imgur.com/KmaWzNv.png" width="280" height="420"> <img src="http://i.imgur.com/hiCNNIx.png" width="280" height="420">
+<img src="https://user-images.githubusercontent.com/45125121/82362785-804c2800-9a2a-11ea-9bb1-f1b778c70de5.jpg" width="280" height="420" alt="Login page" >  <img src="http://i.imgur.com/KmaWzNv.png" width="280" height="420"> <img src="http://i.imgur.com/hiCNNIx.png" width="280" height="420">
 
 # GSoC 2019
 
@@ -106,7 +106,7 @@ We are following [Google's MVP sample](https://github.com/googlesamples/android-
 
 
 ### HTTP call debugging
-In order to debug HTTP calls, we have integrated [Android Snooper](https://github.com/jainsahab/AndroidSnooper) (a GUI based open source library) to track network calls. To use Android snooper, all you have to do is shake your device and snooper will present list of network calls made by OpenMRS app.
+In order to debug HTTP calls, we have integrated [Chuck Library](https://github.com/jgilfelt/chuck) (a GUI based open source library) to track network calls. Apps using Chuck will display a notification showing a summary of ongoing HTTP activity. Tapping on the notification launches the full Chuck UI.
 
 # Quick Start
 
@@ -128,6 +128,7 @@ Note:
 # Demo Server
 
 The demo test server dedicated to the client is (https://demo.openmrs.org/openmrs/).
+In case the demo server fails to respond, you can use oher alternate servers provided [here.](https://wiki.openmrs.org/display/ISM/OpenMRS+environments)
 
 ##### Demo Username: admin
 ##### Demo Password: Admin123
@@ -280,13 +281,14 @@ To release the application, make sure to do these steps **in order**:
 
 # Objectives
 
-<a name="version-2.8+"></a>
-### Version 2.8+ (next releases)
+<a name="version-2.9+"></a>
+### Version 2.9+ (next releases)
 ### Goals:
-1. Forgot Password
-2. Provider Relationship Module
-3. UI Improvements
-4. Analytics
+1. Material UI design
+2. Integrate more components of the webapp to the client
+3. Password reset via email
+4. Replace Java code with Kotlin
+5. Migrate ActiveAndroid SQL library to room library
 
 
 # User Manual

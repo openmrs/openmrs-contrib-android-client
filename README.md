@@ -292,7 +292,7 @@ To release the application, make sure to do these steps **in order**:
 
 
 # User Manual
-Check this link for the manual: [Version 2.x](https://wiki.openmrs.org/download/attachments/74252444/User%20Manual%202.0.pdf?version=1&modificationDate=1414759790000&api=v2)
+Check this link for the manual: [Version 2.9+](https://wiki.openmrs.org/download/attachments/235275984/User%20Guide.pdf?api=v2)
 
 # License
 This project is licensed under the OpenMRS Public License, see the [copyright](copyright/copyright) file for details.

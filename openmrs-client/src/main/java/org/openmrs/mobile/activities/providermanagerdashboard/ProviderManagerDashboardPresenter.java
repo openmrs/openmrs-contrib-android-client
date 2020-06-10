@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.activities.providermanagerdashboard;
 
+import android.content.Context;
+
 import androidx.fragment.app.Fragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -21,31 +23,33 @@ import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.CustomApiCallback;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
-import org.openmrs.mobile.api.retrofit.ProviderRepository;
+import org.openmrs.mobile.api.repository.ProviderRepository;
 import org.openmrs.mobile.models.Provider;
 
 import java.util.List;
 
 public class ProviderManagerDashboardPresenter extends BasePresenter implements ProviderManagerDashboardContract.Presenter, CustomApiCallback {
     private RestApi restApi;
+    private ProviderRepository providerRepository;
     @NotNull
     private final ProviderManagerDashboardContract.View providerManagerView;
 
-    ProviderManagerDashboardPresenter(@NotNull ProviderManagerDashboardContract.View providerManagerView) {
+    ProviderManagerDashboardPresenter(@NotNull ProviderManagerDashboardContract.View providerManagerView, Context context) {
         this.providerManagerView = providerManagerView;
         this.providerManagerView.setPresenter(this);
         restApi = RestServiceBuilder.createService(RestApi.class);
+        providerRepository = new ProviderRepository(context);
     }
 
-    public ProviderManagerDashboardPresenter(@NotNull ProviderManagerDashboardContract.View providerManagerView, @NotNull RestApi restApi) {
+    public ProviderManagerDashboardPresenter(@NotNull ProviderManagerDashboardContract.View providerManagerView, @NotNull RestApi restApi,ProviderRepository providerRepository) {
         this.providerManagerView = providerManagerView;
         this.restApi = restApi;
         this.providerManagerView.setPresenter(this);
+        this.providerRepository = providerRepository;
     }
 
     @Override
     public void getProviders(Fragment fragment) {
-        ProviderRepository providerRepository = new ProviderRepository();
         providerRepository.getProviders(restApi).observe(fragment, this::updateViews);
     }
 
@@ -60,21 +64,19 @@ public class ProviderManagerDashboardPresenter extends BasePresenter implements 
     }
 
     @Override
-    public void deleteProvider(String uuid) {
-        ProviderRepository providerRepository = new ProviderRepository();
-        providerRepository.deleteProviders(restApi, uuid, this);
+    public void deleteProvider(String providerUuid) {
+        providerRepository.deleteProviders(restApi, providerUuid, this);
+
     }
 
     @Override
     public void addProvider(Provider provider) {
-        ProviderRepository providerRepository = new ProviderRepository();
         providerRepository.addProvider(restApi, provider, this);
     }
 
     @Override
-    public void editProvider(Provider provider) {
-        ProviderRepository providerRepository = new ProviderRepository();
-        providerRepository.editProvider(restApi, provider, this);
+    public void updateProvider(Provider provider) {
+        providerRepository.updateProvider(restApi, provider, this);
     }
 
     @Override

@@ -36,10 +36,10 @@ public interface ProviderManagerDashboardContract {
 
         void updateViews(List<Provider> providerList);
 
-        void deleteProvider(String uuid);
+        void deleteProvider(String providerUuid);
 
         void addProvider(Provider provider);
 
-        void editProvider(Provider provider);
+        void updateProvider(Provider provider);
     }
 }

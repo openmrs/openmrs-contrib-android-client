@@ -14,7 +14,7 @@ public class ProviderDashboardContract {
     }
 
     public interface Presenter extends BasePresenterContract {
-        void editProvider(Provider provider);
+        void updateProvider(Provider provider);
 
         Provider getProviderFromIntent(Intent intent);
     }

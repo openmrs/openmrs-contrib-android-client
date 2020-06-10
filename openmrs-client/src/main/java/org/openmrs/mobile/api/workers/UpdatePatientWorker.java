@@ -40,7 +40,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UpdateWorker extends Worker {
+public class UpdatePatientWorker extends Worker {
     private static final int ON_SUCCESS = 1;
     private static final int ON_FAILURE = 2;
     private static final int ON_UNSUCCESSFUL_RESPONSE_PHOTO_UPDATE = 3;
@@ -49,7 +49,7 @@ public class UpdateWorker extends Worker {
     private OpenMRSLogger logger;
     private Handler mHandler;
 
-    public UpdateWorker(@NonNull Context appContext, @NonNull WorkerParameters workerParams) {
+    public UpdatePatientWorker(@NonNull Context appContext, @NonNull WorkerParameters workerParams) {
         super(appContext, workerParams);
         restApi = RestServiceBuilder.createService(RestApi.class);
         logger = new OpenMRSLogger();

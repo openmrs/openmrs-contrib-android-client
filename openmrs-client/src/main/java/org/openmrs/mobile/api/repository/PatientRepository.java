@@ -33,7 +33,7 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.promise.SimplePromise;
-import org.openmrs.mobile.api.workers.UpdateWorker;
+import org.openmrs.mobile.api.workers.UpdatePatientWorker;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.PatientDAO;
@@ -265,7 +265,7 @@ public class PatientRepository extends RetrofitRepository {
             // enqueue the work to workManager
             Data data = new Data.Builder().putString(PatientTable.Column.ID, patient.getId().toString()).build();
             Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
-            mWorkManager.enqueue(new OneTimeWorkRequest.Builder(UpdateWorker.class).setConstraints(constraints).setInputData(data).build());
+            mWorkManager.enqueue(new OneTimeWorkRequest.Builder(UpdatePatientWorker.class).setConstraints(constraints).setInputData(data).build());
 
             ToastUtil.notify(openMrs.getString(R.string.offline_mode_patient_data_saved_locally_notification_message));
             if (callbackListener != null) {

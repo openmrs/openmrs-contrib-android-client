@@ -12,6 +12,8 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
+
 package org.openmrs.mobile.models
 
-class PersonAttributeType : Resource()
+class ProviderAttributeType: Resource() {
+}

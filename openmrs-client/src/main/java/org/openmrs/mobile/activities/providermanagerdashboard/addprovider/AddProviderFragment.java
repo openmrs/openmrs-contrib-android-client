@@ -87,6 +87,7 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
             if (displayName == null) {
                 firstName = editProvider.getPerson().getName().getGivenName();
                 lastName = editProvider.getPerson().getName().getFamilyName();
+                displayName = firstName + " " + lastName;
             } else {
                 firstName = displayName.substring(0, displayName.indexOf(' '));
                 lastName = displayName.substring(displayName.lastIndexOf(' ') + 1);
@@ -95,6 +96,7 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
             firstNameEt.setText(firstName);
             lastNameEt.setText(lastName);
             identifierEt.setText(editProvider.getIdentifier());
+            editProvider.getPerson().setDisplay(displayName);
         }
 
         doneFAB.setOnClickListener(v -> {

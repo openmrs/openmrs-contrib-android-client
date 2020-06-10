@@ -48,6 +48,7 @@ public class AddProviderPresenter extends BasePresenter implements AddProviderCo
         personName.setFamilyName(lastName);
         person.setUuid(null);
 
+        // this display gets used up by the recycler view for the name
         person.setDisplay(firstName + " " + lastName);
 
         List<PersonName> names = new ArrayList<>();
@@ -71,7 +72,6 @@ public class AddProviderPresenter extends BasePresenter implements AddProviderCo
         provider.setPerson(person);
 
         provider.setUuid(null);
-        provider.setDisplay(identifier + " - " + person.getDisplay());
         provider.setIdentifier(identifier);
 
         provider.setRetired(false);
@@ -92,6 +92,7 @@ public class AddProviderPresenter extends BasePresenter implements AddProviderCo
     public Provider editExistingProvider(Provider provider, Person person, String identifier) {
         provider.setPerson(person);
         provider.setIdentifier(identifier);
+
 
         return provider;
     }

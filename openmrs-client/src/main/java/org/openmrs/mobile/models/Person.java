@@ -1,20 +1,29 @@
 /*
- * This Source Code Form is subject to the terms of the Mozilla Public License,
- * v. 2.0. If a copy of the MPL was not distributed with this file, You can
- * obtain one at http://mozilla.org/MPL/2.0/. OpenMRS is also distributed under
- * the terms of the Healthcare Disclaimer located at http://openmrs.org/license.
+ * The contents of this file are subject to the OpenMRS Public License
+ * Version 1.0 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://license.openmrs.org
  *
- * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
- * graphic logo is a trademark of OpenMRS Inc.
+ * Software distributed under the License is distributed on an "AS IS"
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+ * License for the specific language governing rights and limitations
+ * under the License.
+ *
+ * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
 package org.openmrs.mobile.models;
 
 import android.graphics.Bitmap;
 
+import androidx.room.TypeConverters;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.openmrs.mobile.models.typeConverters.PersonAddressConverter;
+import org.openmrs.mobile.models.typeConverters.PersonAttributeConverter;
+import org.openmrs.mobile.models.typeConverters.PersonNameConverter;
 import org.openmrs.mobile.utilities.ImageUtils;
 
 import java.io.Serializable;
@@ -22,6 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Person extends Resource implements Serializable {
+
+    @TypeConverters(PersonNameConverter.class)
     @SerializedName("names")
     @Expose
     private List<PersonName> names = new ArrayList<>();
@@ -34,9 +45,13 @@ public class Person extends Resource implements Serializable {
     @SerializedName("birthdateEstimated")
     @Expose
     private boolean birthdateEstimated;
+
+    @TypeConverters(PersonAddressConverter.class)
     @SerializedName("addresses")
     @Expose
     private List<PersonAddress> addresses = new ArrayList<>();
+
+    @TypeConverters(PersonAttributeConverter.class)
     @SerializedName("attributes")
     @Expose
     private List<PersonAttribute> attributes = new ArrayList<>();

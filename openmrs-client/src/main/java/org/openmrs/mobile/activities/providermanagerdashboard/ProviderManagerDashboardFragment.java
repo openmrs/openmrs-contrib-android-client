@@ -101,7 +101,6 @@ public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderMan
     public void refreshUI() {
         mProviderManagementRecyclerView.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
-
         mPresenter.getProviders(this);
     }
 
@@ -153,14 +152,8 @@ public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderMan
         } else if (requestCode == EDIT_PROVIDER_REQ_CODE) {
             if (resultCode == RESULT_OK) {
                 Provider provider = (Provider) data.getSerializableExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE);
-                mPresenter.editProvider(provider);
+                mPresenter.updateProvider(provider);
             }
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        refreshUI();
     }
 }

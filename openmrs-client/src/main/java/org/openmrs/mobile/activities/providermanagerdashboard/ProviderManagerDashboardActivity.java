@@ -51,7 +51,7 @@ public class ProviderManagerDashboardActivity extends ACBaseActivity {
                 providerManagerDashboardFragment, R.id.providerManagementContentFrame);
         }
 
-        ProviderManagerDashboardPresenter mPresenter = new ProviderManagerDashboardPresenter(providerManagerDashboardFragment);
+        ProviderManagerDashboardPresenter mPresenter = new ProviderManagerDashboardPresenter(providerManagerDashboardFragment,getApplicationContext());
     }
 
     @Override

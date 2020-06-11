@@ -12,24 +12,20 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.dashboard;
+package org.openmrs.mobile.activities.dashboard
 
-import android.os.Bundle;
+import android.os.Bundle
+import org.openmrs.mobile.R
+import org.openmrs.mobile.activities.ACBaseActivity
 
-import androidx.appcompat.app.ActionBar;
-
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseActivity;
-
-public class DashboardActivity extends ACBaseActivity {
+class DashboardActivity : ACBaseActivity() {
 
     /*TODO: Permission handling to be coded later, moving to SDK 22 for now.
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     Bundle currinstantstate;
     */
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+        override fun onCreate(savedInstanceState: Bundle?) {
 
         /*TODO: Permission handling to be coded later, moving to SDK 22 for now.
         currinstantstate=savedInstanceState;
@@ -46,32 +42,30 @@ public class DashboardActivity extends ACBaseActivity {
             // Pre-Marshmallow
         }
         */
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_dashboard)
 
         // Create toolbar
-        ActionBar actionBar = getSupportActionBar();
+        val actionBar = supportActionBar
         if (actionBar != null) {
-            actionBar.setElevation(0);
-            actionBar.setDisplayHomeAsUpEnabled(false);
-            actionBar.setDisplayUseLogoEnabled(true);
-            actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setLogo(R.drawable.openmrs_action_logo);
+        actionBar.elevation = 0f
+        actionBar.setDisplayHomeAsUpEnabled(false)
+        actionBar.setDisplayUseLogoEnabled(true)
+        actionBar.setDisplayShowHomeEnabled(true)
+        actionBar.setLogo(R.drawable.openmrs_action_logo)
         }
         // Create fragment
-        DashboardFragment dashboardFragment =
-            (DashboardFragment) getSupportFragmentManager().findFragmentById(R.id.dashboardContentFrame);
+        var dashboardFragment = supportFragmentManager.findFragmentById(R.id.dashboardContentFrame) as DashboardFragment?
         if (dashboardFragment == null) {
-            dashboardFragment = DashboardFragment.newInstance();
+        dashboardFragment = DashboardFragment.newInstance()
         }
-        if (!dashboardFragment.isActive()) {
-            addFragmentToActivity(getSupportFragmentManager(),
-                dashboardFragment, R.id.dashboardContentFrame);
+        if (!dashboardFragment.isActive) {
+        addFragmentToActivity(supportFragmentManager,
+        dashboardFragment, R.id.dashboardContentFrame)
         }
-
         // Create the presenter
-        new DashboardPresenter(dashboardFragment);
-    }
+        DashboardPresenter(dashboardFragment)
+        }
 
     /*TODO: Permission handling to be coded later, moving to SDK 22 for now.
     @Override
@@ -95,4 +89,4 @@ public class DashboardActivity extends ACBaseActivity {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }*/
-}
+        }

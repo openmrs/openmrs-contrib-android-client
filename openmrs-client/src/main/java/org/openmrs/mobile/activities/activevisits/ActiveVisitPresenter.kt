@@ -20,19 +20,11 @@ import org.openmrs.mobile.models.Visit
 import org.openmrs.mobile.utilities.FilterUtil
 import rx.android.schedulers.AndroidSchedulers
 
-class ActiveVisitPresenter : BasePresenter, ActiveVisitsContract.Presenter {
-    private var mActiveVisitsView: ActiveVisitsContract.View
-    private var visitDAO: VisitDAO
+class ActiveVisitPresenter(private var mActiveVisitsView: ActiveVisitsContract.View, private var visitDAO: VisitDAO) : BasePresenter(), ActiveVisitsContract.Presenter {
 
-    constructor(mActiveVisitsView: ActiveVisitsContract.View) {
-        this.mActiveVisitsView = mActiveVisitsView
-        this.mActiveVisitsView.setPresenter(this)
-        visitDAO = VisitDAO()
-    }
+    constructor(mActiveVisitsView: ActiveVisitsContract.View) : this(mActiveVisitsView, VisitDAO())
 
-    constructor(mActiveVisitsView: ActiveVisitsContract.View, visitDAO: VisitDAO) {
-        this.mActiveVisitsView = mActiveVisitsView
-        this.visitDAO = visitDAO
+    init {
         this.mActiveVisitsView.setPresenter(this)
     }
 

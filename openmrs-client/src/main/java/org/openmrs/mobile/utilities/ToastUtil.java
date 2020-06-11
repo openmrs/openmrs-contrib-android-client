@@ -19,6 +19,7 @@ import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,6 +89,7 @@ public final class ToastUtil {
         Bitmap bitmap;
         ImageView toastImage = toastRoot.findViewById(R.id.toastImage);
         TextView toastText = toastRoot.findViewById(R.id.toastText);
+        LinearLayout toastLayout = toastRoot.findViewById(R.id.toastLayout);
         toastText.setText(text);
 
         bitmap = ImageUtils.decodeBitmapFromResource(
@@ -96,6 +98,21 @@ public final class ToastUtil {
             toastImage.getLayoutParams().width,
             toastImage.getLayoutParams().height);
         toastImage.setImageBitmap(bitmap);
+
+        switch(type) {
+            case ERROR:
+            case WARNING:
+                toastLayout.setBackgroundResource(R.drawable.toast_border_warning);
+                break;
+            case NOTICE:
+                toastLayout.setBackgroundResource(R.drawable.toast_border_notice);
+                break;
+            case SUCCESS:
+                toastLayout.setBackgroundResource(R.drawable.toast_border_success);
+                break;
+            default:
+                break;
+        }
 
         logger.d("Decode bitmap: " + bitmap.toString());
         Toast toast = new Toast(context);
@@ -116,16 +133,14 @@ public final class ToastUtil {
 
         switch (type) {
             case ERROR:
-                toastTypeImageId = R.drawable.toast_error;
+            case WARNING:
+                toastTypeImageId = R.drawable.toast_warning;
                 break;
             case NOTICE:
                 toastTypeImageId = R.drawable.toast_notice;
                 break;
             case SUCCESS:
                 toastTypeImageId = R.drawable.toast_success;
-                break;
-            case WARNING:
-                toastTypeImageId = R.drawable.toast_warning;
                 break;
             default:
                 break;

@@ -18,7 +18,11 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
-import android.view.animation.*
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.animation.AnimationSet
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
 import org.openmrs.mobile.databinding.ActivitySplashBinding
@@ -33,13 +37,15 @@ class SplashActivity : ACBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
-        setContentView(binding.getRoot())
+        setContentView(binding.root)
 
         val typeface = Typeface.createFromAsset(assets, "fonts/Roboto/Montserrat.ttf")
-        binding.organizationName.typeface = typeface
-        binding.organizationName.setText(R.string.organization_name)
-        binding.clientName.typeface = typeface
-        binding.clientName.setText(R.string.client_name)
+        with(binding) {
+            organizationName.typeface = typeface
+            organizationName.setText(R.string.organization_name)
+            clientName.typeface = typeface
+            clientName.setText(R.string.client_name)
+        }
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         val move = AnimationUtils.loadAnimation(applicationContext, R.anim.splash_screen_logo_anim)
         val set = AnimationSet(true)

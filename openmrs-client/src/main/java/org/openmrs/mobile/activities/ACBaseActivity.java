@@ -331,7 +331,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     private void showLocationDialog(List<String> locationList) {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.location_dialog_title));
-        bundle.setTextViewMessage(getString(R.string.location_dialog_current_location) + mOpenMRS.getLocation());
+        bundle.setTextViewMessage(getString(R.string.location_dialog_current_location) + " " + mOpenMRS.getLocation());
         bundle.setLocationList(locationList);
         bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.SELECT_LOCATION);
         bundle.setRightButtonText(getString(R.string.dialog_button_select_location));

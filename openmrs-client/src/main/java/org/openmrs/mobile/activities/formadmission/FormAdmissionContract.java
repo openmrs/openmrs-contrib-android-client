@@ -12,27 +12,38 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.formlist;
+package org.openmrs.mobile.activities.formadmission;
+
+import java.util.List;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
+import org.openmrs.mobile.models.Location;
+import org.openmrs.mobile.models.Provider;
 
-public interface FormListContract {
+public interface FormAdmissionContract {
+
     interface View extends BaseView<Presenter> {
-        void showFormList(String[] forms);
 
-        void startFormDisplayActivity(String formName, Long patientId, String valueRefString, String encounterType);
+        void updateProviderAdapter(List<Provider> providerList);
 
-        void showError(String formName);
+        void showToast(String error);
 
-        Boolean formCreate(String uuid, String formName);
+        void updateLocationAdapter(List<Location> results);
 
-        void startAdmissionFormActivity(String formName, Long patientId, String encounterType);
+        void enableSubmitButton(boolean value);
+
+        void quitFormEntry();
     }
 
     interface Presenter extends BasePresenterContract {
-        void loadFormResourceList();
 
-        void listItemClicked(int position, String formName);
+        void getProviders(FormAdmissionFragment formAdmissionFragment);
+
+        void updateViews(List<Provider> providerList);
+
+        void getLocation(String url);
+
+        void createEncounter(String admittedByPerson, String admittedToPerson);
     }
 }

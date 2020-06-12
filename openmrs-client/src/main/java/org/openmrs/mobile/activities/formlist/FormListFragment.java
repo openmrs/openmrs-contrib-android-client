@@ -17,6 +17,7 @@ package org.openmrs.mobile.activities.formlist;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
+import org.openmrs.mobile.activities.formadmission.FormAdmissionActivity;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayActivity;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -82,6 +84,15 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
         intent.putExtra(ApplicationConstants.BundleKeys.FORM_NAME, formName);
         intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patientId);
         intent.putExtra(ApplicationConstants.BundleKeys.VALUEREFERENCE, valueRefString);
+        intent.putExtra(ApplicationConstants.BundleKeys.ENCOUNTERTYPE, encounterType);
+        startActivity(intent);
+    }
+
+    @Override
+    public void startAdmissionFormActivity(String formName, Long patientId, String encounterType) {
+        Intent intent = new Intent(getContext(), FormAdmissionActivity.class);
+        intent.putExtra(ApplicationConstants.BundleKeys.FORM_NAME, formName);
+        intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patientId);
         intent.putExtra(ApplicationConstants.BundleKeys.ENCOUNTERTYPE, encounterType);
         startActivity(intent);
     }

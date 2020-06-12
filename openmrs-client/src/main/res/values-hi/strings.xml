@@ -430,4 +430,7 @@
     <string name="offline_provider_edit">"जब डिवाइस नेटवर्क से कनेक्ट हो जाता है तो अपडेटेड प्रदाता सर्वर से सिंक हो जाएगा "</string>
     <string name="offline_provider_delete">ऑनलाइन वापस आने पर प्रदाता को सर्वर से हटा दिया जाएगा</string>
     <string name="dashboard_exit_toast_message">"ऐप से बाहर निकलने के लिए कृपया BACK पर फिर से क्लिक करें "</string>
+
+	<!--Admission Form -->
+	<string name="admission">प्रवेश फार्म</string>
 </resources>

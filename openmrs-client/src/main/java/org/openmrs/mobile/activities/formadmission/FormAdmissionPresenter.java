@@ -1,0 +1,186 @@
+/*
+ * The contents of this file are subject to the OpenMRS Public License
+ * Version 1.0 (the "License"); you may not use this file except in
+ * compliance with the License. You may obtain a copy of the License at
+ * http://license.openmrs.org
+ *
+ * Software distributed under the License is distributed on an "AS IS"
+ * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+ * License for the specific language governing rights and limitations
+ * under the License.
+ *
+ * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+ */
+
+package org.openmrs.mobile.activities.formadmission;
+
+import android.util.Log;
+
+import static org.openmrs.mobile.utilities.FormService.getFormResourceByName;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.joda.time.LocalDateTime;
+import org.openmrs.mobile.activities.BasePresenter;
+import org.openmrs.mobile.api.EncounterService;
+import org.openmrs.mobile.api.RestApi;
+import org.openmrs.mobile.api.RestServiceBuilder;
+import org.openmrs.mobile.api.retrofit.ProviderRepository;
+import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
+import org.openmrs.mobile.models.Encountercreate;
+import org.openmrs.mobile.models.Location;
+import org.openmrs.mobile.models.Obscreate;
+import org.openmrs.mobile.models.Observation;
+import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.Provider;
+import org.openmrs.mobile.models.Results;
+import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.NetworkUtils;
+import org.openmrs.mobile.utilities.ToastUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class FormAdmissionPresenter extends BasePresenter implements FormAdmissionContract.Presenter {
+
+    private FormAdmissionContract.View view;
+    private Long patientID;
+    private String encounterType;
+    private String formName;
+    private String formUUID;
+    private Patient mPatient;
+    private RestApi restApi;
+
+    public FormAdmissionPresenter(FormAdmissionContract.View view, Long patientID, String encounterType, String formName) {
+        this.view = view;
+        this.patientID = patientID;
+        this.encounterType = encounterType;
+        this.formName = formName;
+        this.mPatient = new PatientDAO().findPatientByID(Long.toString(patientID));
+        this.formUUID = getFormResourceByName(formName).getUuid();
+        restApi = RestServiceBuilder.createService(RestApi.class);
+        this.view.setPresenter(this);
+    }
+
+    @Override
+    public void subscribe() {
+        //the function to start with
+    }
+
+    @Override
+    public void getProviders(FormAdmissionFragment fragment) {
+        ProviderRepository providerRepository = new ProviderRepository();
+        providerRepository.getProviders(restApi).observe(fragment, this::updateViews);
+    }
+
+    @Override
+    public void updateViews(List<Provider> providerList) {
+        if (providerList != null && providerList.size() != 0) {
+            view.updateProviderAdapter(providerList);
+        } else {
+            view.showToast("Error");
+        }
+    }
+
+    @Override
+    public void getLocation(String url) {
+        if (NetworkUtils.hasNetwork()) {
+            String locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "location";
+            Call<Results<Location>> call =
+                    restApi.getLocations(locationEndPoint, "Admission Location", "full");
+            call.enqueue(new Callback<Results<Location>>() {
+                @Override
+                public void onResponse(Call<Results<Location>> call, Response<Results<Location>> response) {
+                    if (response.isSuccessful()) {
+                        view.updateLocationAdapter(response.body().getResults());
+                    } else {
+                        view.showToast("An error Occurred, Try Again Later !!!");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Results<Location>> call, Throwable t) {
+                    view.showToast(t.getMessage());
+                }
+            });
+        } else {
+            view.showToast("You are currently offline, Try again when connected !!!");
+        }
+    }
+
+    @Override
+    public void createEncounter(String admittedByPerson, String admittedToPerson) {
+        view.enableSubmitButton(false);
+
+        Encountercreate encountercreate=new Encountercreate();
+        encountercreate.setPatient(mPatient.getUuid());
+        Log.i("hello-patientUUID",mPatient.getUuid());
+
+        encountercreate.setEncounterType(encounterType);
+        Log.i("hello-encounterType",encounterType);
+
+        encountercreate.setFormname(formName);
+        Log.i("hello-formName",formName);
+
+        encountercreate.setPatientId(patientID);
+        Log.i("hello-patientID",patientID+"");
+
+        encountercreate.setFormUuid(formUUID);
+        Log.i("hello-formUUID",formUUID);
+
+        List<Obscreate> observations=new ArrayList<>();
+        LocalDateTime localDateTime = new LocalDateTime();
+
+        Obscreate obscreate1 = new Obscreate();
+        obscreate1.setConcept("encounterDate");
+        obscreate1.setValue(localDateTime.toString());
+        obscreate1.setObsDatetime(localDateTime.toString());
+        obscreate1.setPerson(mPatient.getUuid());
+        observations.add(obscreate1);
+        Log.i("hello-obs1",obscreate1.toString());
+
+        Obscreate obscreate2 = new Obscreate();
+        obscreate2.setConcept("encounterProviderAndRole");
+        obscreate2.setValue(admittedByPerson);
+        obscreate2.setObsDatetime(localDateTime.toString());
+        obscreate2.setPerson(mPatient.getUuid());
+        observations.add(obscreate2);
+        Log.i("hello-obs2",obscreate2.toString());
+
+        Obscreate obscreate3 = new Obscreate();
+        obscreate3.setConcept("encounterLocation");
+        obscreate3.setValue(admittedToPerson);
+        obscreate3.setObsDatetime(localDateTime.toString());
+        obscreate3.setPerson(mPatient.getUuid());
+        observations.add(obscreate3);
+        Log.i("hello-obs3",obscreate3.toString());
+
+        encountercreate.setObservations(observations);
+        /*encountercreate.setObslist();
+        encountercreate.save();
+
+        if(!mPatient.isSynced()) {
+            mPatient.addEncounters(encountercreate.getId());
+            new PatientDAO().updatePatient(mPatient.getId(),mPatient);
+            ToastUtil.error("Patient not yet registered. Form data is saved locally " +
+                    "and will sync when internet connection is restored. ");
+            view.enableSubmitButton(true);
+        }
+        else {
+            new EncounterService().addEncounter(encountercreate, new DefaultResponseCallbackListener() {
+                @Override
+                public void onResponse() {
+                    view.enableSubmitButton(true);
+                }
+                @Override
+                public void onErrorResponse(String errorMessage) {
+                    view.showToast(errorMessage);
+                    view.enableSubmitButton(true);
+                }
+            });
+            view.quitFormEntry();
+        }*/
+    }
+}

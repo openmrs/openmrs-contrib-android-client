@@ -479,4 +479,6 @@
     <string name="snackbar_choose">Choose</string>
     <string name="url_server_list" translatable="false">https://wiki.openmrs.org/display/ISM/OpenMRS+environments</string>
 
+	<!--Admission Form -->
+	<string name="admission">Admission</string>
 </resources>

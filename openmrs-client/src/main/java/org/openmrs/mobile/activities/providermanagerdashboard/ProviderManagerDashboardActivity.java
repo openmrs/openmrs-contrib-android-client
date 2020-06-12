@@ -14,12 +14,17 @@
 
 package org.openmrs.mobile.activities.providermanagerdashboard;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
@@ -51,7 +56,7 @@ public class ProviderManagerDashboardActivity extends ACBaseActivity {
                 providerManagerDashboardFragment, R.id.providerManagementContentFrame);
         }
 
-        ProviderManagerDashboardPresenter mPresenter = new ProviderManagerDashboardPresenter(providerManagerDashboardFragment,getApplicationContext());
+        ProviderManagerDashboardPresenter mPresenter = new ProviderManagerDashboardPresenter(providerManagerDashboardFragment, getApplicationContext());
     }
 
     @Override
@@ -67,6 +72,16 @@ public class ProviderManagerDashboardActivity extends ACBaseActivity {
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void showNoInternetConnectionSnackbar() {
+        mSnackbar = Snackbar.make(providerManagerDashboardFragment.addProviderFab,
+            getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
+        View sbView = mSnackbar.getView();
+        TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        mSnackbar.show();
     }
 
     @Override

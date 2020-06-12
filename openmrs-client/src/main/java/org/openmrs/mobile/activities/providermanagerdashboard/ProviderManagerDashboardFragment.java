@@ -45,15 +45,17 @@ import static org.openmrs.mobile.utilities.ApplicationConstants.RequestCodes.EDI
 
 public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderManagerDashboardContract.Presenter>
     implements ProviderManagerDashboardContract.View {
+
     // Fragment components
     private TextView mEmptyList;
     private RecyclerView mProviderManagementRecyclerView;
     private ProviderManagerDashboardRecyclerViewAdapter providersAdapter;
-    private FloatingActionButton addProviderFab;
     private SwipeRefreshLayout refreshList;
+
     //Initialization Progress bar
     private ProgressBar mProgressBar;
     private List<Provider> providerList;
+    public FloatingActionButton addProviderFab;
 
     /**
      * @return New instance of ProviderManagerDashboardFragment

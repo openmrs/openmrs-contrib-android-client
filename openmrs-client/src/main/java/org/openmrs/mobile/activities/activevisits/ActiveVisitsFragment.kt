@@ -30,15 +30,17 @@ class ActiveVisitsFragment : ACBaseFragment<ActiveVisitsContract.Presenter>(), A
         binding = FragmentActiveVisitsBinding.inflate(inflater, container, false)
 
         val linearLayoutManager = LinearLayoutManager(this.activity)
-        binding.visitsRecyclerView.setHasFixedSize(true)
-        binding.visitsRecyclerView.layoutManager = linearLayoutManager
-        binding.visitsRecyclerView.adapter = ActiveVisitsRecyclerViewAdapter(this.activity!!, ArrayList())
+        with(binding) {
+            visitsRecyclerView.setHasFixedSize(true)
+            visitsRecyclerView.layoutManager = linearLayoutManager
+            binding.visitsRecyclerView.adapter = ActiveVisitsRecyclerViewAdapter(context!!, ArrayList())
 
-        binding.emptyVisitsListViewLabel.text = getString(R.string.search_visits_no_results)
-        binding.emptyVisitsListViewLabel.visibility = View.INVISIBLE
-        binding.swipeLayout.setOnRefreshListener {
-            refreshUI()
-            binding.swipeLayout.isRefreshing = false
+            emptyVisitsListViewLabel.text = getString(R.string.search_visits_no_results)
+            emptyVisitsListViewLabel.visibility = View.INVISIBLE
+            swipeLayout.setOnRefreshListener {
+                refreshUI()
+                swipeLayout.isRefreshing = false
+            }
         }
         return binding.root
     }
@@ -49,14 +51,16 @@ class ActiveVisitsFragment : ACBaseFragment<ActiveVisitsContract.Presenter>(), A
     }
 
     override fun updateListVisibility(visitList: List<Visit?>?) {
-        binding.progressBar.visibility = View.GONE
-        if (visitList!!.isEmpty()) {
-            binding.visitsRecyclerView.visibility = View.GONE
-            binding.emptyVisitsListViewLabel.visibility = View.VISIBLE
-        } else {
-            binding.visitsRecyclerView.adapter = ActiveVisitsRecyclerViewAdapter(this.activity!!, visitList)
-            binding.visitsRecyclerView.visibility = View.VISIBLE
-            binding.emptyVisitsListViewLabel.visibility = View.GONE
+        with(binding) {
+            progressBar.visibility = View.GONE
+            if (visitList!!.isEmpty()) {
+                visitsRecyclerView.visibility = View.GONE
+                emptyVisitsListViewLabel.visibility = View.VISIBLE
+            } else {
+                visitsRecyclerView.adapter = ActiveVisitsRecyclerViewAdapter(context!!, visitList)
+                visitsRecyclerView.visibility = View.VISIBLE
+                emptyVisitsListViewLabel.visibility = View.GONE
+            }
         }
     }
 

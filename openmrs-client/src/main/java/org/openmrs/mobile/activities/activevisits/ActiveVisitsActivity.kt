@@ -58,9 +58,9 @@ class ActiveVisitsActivity : ACBaseActivity() {
 
             override fun onQueryTextChange(query: String): Boolean {
                 if (query.isNotEmpty()) {
-                    mPresenter!!.updateVisitsInDatabaseList(query)
+                    mPresenter?.updateVisitsInDatabaseList(query)
                 } else {
-                    mPresenter!!.updateVisitsInDatabaseList()
+                    mPresenter?.updateVisitsInDatabaseList()
                 }
                 return true
             }

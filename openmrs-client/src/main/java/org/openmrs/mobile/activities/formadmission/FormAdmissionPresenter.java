@@ -21,7 +21,7 @@ import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
-import org.openmrs.mobile.api.retrofit.ProviderRepository;
+import org.openmrs.mobile.api.repository.ProviderRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.models.EncounterProviderCreate;
@@ -83,7 +83,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
     @Override
     public void getProviders(FormAdmissionFragment fragment) {
         ProviderRepository providerRepository = new ProviderRepository();
-        providerRepository.getProviders(restApi).observe(fragment, this::updateViews);
+        providerRepository.getProvidersWithoutStorage(restApi).observe(fragment, this::updateViews);
     }
 
     @Override
@@ -170,19 +170,19 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         if (!mPatient.isSynced()) {
             mPatient.addEncounters(encountercreate.getId());
             new PatientDAO().updatePatient(mPatient.getId(), mPatient);
-            ToastUtil.error("Patient not yet registered. Form data is saved locally " +
-                    "and will sync when internet connection is restored. ");
+            view.showToast(mContext.getResources().getString(R.string.form_data_will_be_synced_later_error_message));
             view.enableSubmitButton(true);
         } else {
             new EncounterService().addEncounter(encountercreate, new DefaultResponseCallbackListener() {
                 @Override
                 public void onResponse() {
                     view.enableSubmitButton(true);
+                    ToastUtil.success(mContext.getString(R.string.form_submitted_successfully));
                 }
 
                 @Override
                 public void onErrorResponse(String errorMessage) {
-                    view.showToast(errorMessage);
+                    ToastUtil.error(errorMessage);
                     view.enableSubmitButton(true);
                 }
             });

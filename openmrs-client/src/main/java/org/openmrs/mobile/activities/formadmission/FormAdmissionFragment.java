@@ -73,7 +73,6 @@ public class FormAdmissionFragment extends ACBaseFragment<FormAdmissionContract.
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         formAdmissionBinding.admissionDateHeader.setText(df.format(currentDate));
-
         formAdmissionBinding.submitButton.setOnClickListener(v -> createEncounter());
     }
 

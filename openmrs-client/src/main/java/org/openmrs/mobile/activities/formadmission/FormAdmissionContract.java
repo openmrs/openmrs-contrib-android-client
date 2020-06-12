@@ -14,13 +14,13 @@
 
 package org.openmrs.mobile.activities.formadmission;
 
-import java.util.List;
-
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Resource;
+
+import java.util.List;
 
 public interface FormAdmissionContract {
 

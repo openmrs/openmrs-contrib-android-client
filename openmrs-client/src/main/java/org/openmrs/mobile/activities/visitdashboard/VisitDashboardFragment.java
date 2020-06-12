@@ -87,7 +87,9 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
 
         for (Encounter encounter : visitEncounters) {
             String encounterTypeDisplay = encounter.getEncounterType().getDisplay();
+            encounterTypeDisplay=encounterTypeDisplay.split("\\(")[0].trim();
             if (displayableEncounterTypesArray.contains(encounterTypeDisplay)) {
+                encounter.getEncounterType().setDisplay(encounterTypeDisplay.split("\\(")[0].trim());
                 displayableEncounters.add(encounter);
             }
         }
@@ -125,5 +127,11 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
     @Override
     public void showErrorToast(int messageId) {
         ToastUtil.error(getString(messageId));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.subscribe();
     }
 }

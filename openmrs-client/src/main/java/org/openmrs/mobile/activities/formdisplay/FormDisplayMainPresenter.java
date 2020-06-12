@@ -24,6 +24,7 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.InputField;
 import org.openmrs.mobile.utilities.SelectOneField;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -120,6 +121,7 @@ public class FormDisplayMainPresenter extends BasePresenter implements FormDispl
                 new EncounterService().addEncounter(encountercreate, new DefaultResponseCallbackListener() {
                     @Override
                     public void onResponse() {
+                        mFormDisplayView.showSuccessfulToast();
                         mFormDisplayView.enableSubmitButton(true);
                     }
 

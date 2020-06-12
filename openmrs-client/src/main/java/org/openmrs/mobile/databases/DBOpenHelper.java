@@ -290,7 +290,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             if (0 == encounter.getEncounterProviders().size()) {
                 bindString(9, "", encounterStatement);
             } else {
-                bindString(9, encounter.getEncounterProviders().get(0).getProvider().getUuid(), encounterStatement);
+                bindString(9, encounter.getEncounterProviders().get(0).getUuid(), encounterStatement);
             }
             encounterId = encounterStatement.executeInsert();
             encounterStatement.clearBindings();

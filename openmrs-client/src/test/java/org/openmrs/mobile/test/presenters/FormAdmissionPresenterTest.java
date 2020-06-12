@@ -16,7 +16,6 @@ import org.openmrs.mobile.activities.formadmission.FormAdmissionContract;
 import org.openmrs.mobile.activities.formadmission.FormAdmissionFragment;
 import org.openmrs.mobile.activities.formadmission.FormAdmissionPresenter;
 import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.retrofit.ProviderRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.models.Location;
@@ -47,8 +46,6 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
     List<Provider> providerList;
     @Mock
     private RestApi restApi;
-    @Mock
-    private ProviderRepository providerRepository;
     @Mock
     private FormAdmissionContract.View formAdmissionView;
     @Mock
@@ -81,9 +78,7 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
 
         Mockito.lenient().when(NetworkUtils.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.getProviderList()).thenReturn(mockSuccessCall(providerList));
-        Mockito.lenient().when(providerRepository.getProviders(restApi)).thenReturn(providerLiveData);
 
-        providerRepository.getProviders(restApi).observeForever(observer);
         formAdmissionPresenter.getProviders(fragment);
         formAdmissionPresenter.updateViews(providerList);
 
@@ -147,18 +142,6 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
         verify(formAdmissionView).showToast(anyString());
         verify(formAdmissionView).enableSubmitButton(false);
     }
-
-    /*@Test
-    public void shouldCreateEncounter_AllOK() {
-        Mockito.lenient().when(NetworkUtils.hasNetwork()).thenReturn(true);
-        Mockito.lenient().when(restApi.createEncounter(any()))
-                .thenReturn(mockSuccessCall(new Encounter()));
-
-        formAdmissionPresenter.createEncounter("uuid", "uuid", "uuid");
-        verify(formAdmissionView).enableSubmitButton(false);
-        verify(formAdmissionView).enableSubmitButton(true);
-
-    }*/
 
     private void mockStaticMethods() {
         PowerMockito.mockStatic(NetworkUtils.class);

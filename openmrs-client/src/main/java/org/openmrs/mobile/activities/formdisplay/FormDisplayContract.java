@@ -28,6 +28,8 @@ public interface FormDisplayContract {
             void showToast(String errorMessage);
 
             void showToast();
+
+            void showSuccessfulToast();
         }
 
         interface PageView extends BaseView<Presenter.PagePresenter> {

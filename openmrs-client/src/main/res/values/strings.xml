@@ -134,6 +134,7 @@
     <string name="dashboard_registry_icon_label">Register Patient</string>
     <string name="dashboard_visits_icon_label">Active Visits</string>
     <string name="dashboard_forms_icon_label">Form Entry</string>
+    <string name="dashboard_exit_toast_message">Please press BACK again to exit</string>
 
     <!-- row_find_synced_patients layout-->
     <string name="find_patients_row_checkbox_download_label">Download</string>

@@ -15,8 +15,10 @@
 package org.openmrs.mobile.activities.dashboard
 
 import android.os.Bundle
+import android.os.Handler
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
+import org.openmrs.mobile.utilities.ToastUtil
 
 class DashboardActivity : ACBaseActivity() {
 
@@ -25,7 +27,18 @@ class DashboardActivity : ACBaseActivity() {
     Bundle currinstantstate;
     */
 
-        override fun onCreate(savedInstanceState: Bundle?) {
+
+    private var doubleBackToExitPressedOnce: Boolean = false
+    private var handler: Handler? = Handler()
+
+    private var runnable = object : Runnable {
+        override fun run() {
+            doubleBackToExitPressedOnce = false
+        }
+    }
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
 
         /*TODO: Permission handling to be coded later, moving to SDK 22 for now.
         currinstantstate=savedInstanceState;
@@ -48,24 +61,24 @@ class DashboardActivity : ACBaseActivity() {
         // Create toolbar
         val actionBar = supportActionBar
         if (actionBar != null) {
-        actionBar.elevation = 0f
-        actionBar.setDisplayHomeAsUpEnabled(false)
-        actionBar.setDisplayUseLogoEnabled(true)
-        actionBar.setDisplayShowHomeEnabled(true)
-        actionBar.setLogo(R.drawable.openmrs_action_logo)
+            actionBar.elevation = 0f
+            actionBar.setDisplayHomeAsUpEnabled(false)
+            actionBar.setDisplayUseLogoEnabled(true)
+            actionBar.setDisplayShowHomeEnabled(true)
+            actionBar.setLogo(R.drawable.openmrs_action_logo)
         }
         // Create fragment
         var dashboardFragment = supportFragmentManager.findFragmentById(R.id.dashboardContentFrame) as DashboardFragment?
         if (dashboardFragment == null) {
-        dashboardFragment = DashboardFragment.newInstance()
+            dashboardFragment = DashboardFragment.newInstance()
         }
         if (!dashboardFragment.isActive) {
-        addFragmentToActivity(supportFragmentManager,
-        dashboardFragment, R.id.dashboardContentFrame)
+            addFragmentToActivity(supportFragmentManager,
+                    dashboardFragment, R.id.dashboardContentFrame)
         }
         // Create the presenter
         DashboardPresenter(dashboardFragment)
-        }
+    }
 
     /*TODO: Permission handling to be coded later, moving to SDK 22 for now.
     @Override
@@ -89,4 +102,21 @@ class DashboardActivity : ACBaseActivity() {
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }*/
+
+
+    override fun onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+
+            return;
         }
+        this.doubleBackToExitPressedOnce = true;
+        ToastUtil.notify(getString(R.string.dashboard_exit_toast_message));
+        handler?.postDelayed(runnable, 2000);
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler?.removeCallbacks(runnable)
+    }
+}

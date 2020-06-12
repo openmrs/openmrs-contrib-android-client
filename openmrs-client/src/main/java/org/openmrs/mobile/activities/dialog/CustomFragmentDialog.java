@@ -19,9 +19,13 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -282,7 +286,15 @@ public class CustomFragmentDialog extends DialogFragment {
     public TextView addTextField(String message) {
         LinearLayout field = (LinearLayout) mInflater.inflate(R.layout.openmrs_text_view_field, null);
         TextView textView = field.findViewById(R.id.openmrsTextView);
-        textView.setText(message);
+
+        if(message.contains(getString(R.string.location_dialog_current_location))) {
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(message);
+            StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
+            spannableStringBuilder.setSpan(styleSpan, 18, message.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+            textView.setText(spannableStringBuilder);
+        } else {
+            textView.setText(message);
+        }
         textView.setSingleLine(false);
 
         if (null != mCustomDialogBundle.getLocationList()) {

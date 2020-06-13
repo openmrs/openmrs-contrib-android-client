@@ -30,7 +30,7 @@ class LogsPresenter(private val mLogsView: LogsContract.View, private val mOpenM
         mLogsView.setPresenter(this)
     }
 
-    fun getLogs(): String {
+    private fun getLogs(): String {
         var textLogs = ""
         val filename = (OpenMRS.getInstance().openMRSDir
                 + File.separator + mOpenMRSLogger.logFilename)

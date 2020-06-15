@@ -23,6 +23,7 @@ OpenMRS Android Client
 				- [Demo Password: Admin123](#Demo-Password-Admin123)
 - [Releasing [Collaborators only]](#Releasing-Collaborators-only)
 - [Release Notes](#Release-Notes)
+        - [Version 2.8.3](#Version-283)
         - [Version 2.8.2](#Version-282)
         - [Version 2.8.1](#Version-281)
         - [Version 2.8.0](#Version-280)
@@ -149,6 +150,25 @@ To release the application, make sure to do these steps **in order**:
 9. [Optional] Post a new Talk thread and describe what is changed or improved in the release.
 
 # Release Notes
+
+### Version 2.8.3
+
+1. Fixed critical bugs (#718, #721, #722, #730, #734, #741, #742)
+2. Add showcase view for manage providers module (#720)
+3. Continue creating Room DAOs (#727, #736, #739, #740, #735, #738)
+4. Refined custom dialog box in add patient activity (#731)
+5. Start visit is disabled in offline mode (#729)
+6. Add option for 'Unknown' patients when registering (#733)
+7. Change main font to Roboto (#745)
+8. Fixed app crash on lower API devices (#749)
+9. Avoid keyboard blocking SnackBar messages (#747)
+10. Change endpoint debugger to Chucker to avoid crash (#750)
+11. Better localization (#723)
+12. Fix ill formed provider fields (#751)
+13. UI overhaul, better compliant with Material UI guidelines (#744, #746, #743, #753, #759, #761, #760)
+14. Migrate Java code to Kotlin (#752, #758, #756)
+15. Add offline support for provider module (#748)
+16. Double back press to exit the app (#762)
 
 ### Version 2.8.2
 1. Add contribution guidelines to the repository (#671, #662)

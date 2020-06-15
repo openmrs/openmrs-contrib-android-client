@@ -1,11 +1,11 @@
-- Removed unused resources, decreasing APK size
-- Dashboard now responds to change in app theme
-- Add language translation in hindi
-- UI fixes in register patient screen
-- Added reset button
-- Improved login and fragment dialog button design
-- Improve PatientDetailFragment UI
-- Fix app crash on entering values in email or password text fields
-- Add swipe to refresh feature in relevant screens
-- Add Contact Us screen
-- Add validation to HIV status in Visit Notes screen
+- Fixed critical bugs
+- Add showcase view for manage providers module
+- Refined custom dialog box in add patient activity
+- Start visit is disabled in offline mode
+- Add option for 'Unknown' patients when registering
+- Change main font to Roboto
+- Fixed app crash on lower API devices
+- Avoid keyboard blocking SnackBar messages
+- Fix ill formed provider fields
+- UI overhaul, better compliant with Material UI guidelines
+- Add offline support for provider module

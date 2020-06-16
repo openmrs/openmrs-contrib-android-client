@@ -82,10 +82,10 @@ public class FormDisplayMainPresenter extends BasePresenter implements FormDispl
 
         if (valid) {
             for (InputField input : inputFields) {
-                if (input.getValue() != -1.0) {
+                if (input.value != -1.0) {
                     Obscreate obscreate = new Obscreate();
-                    obscreate.setConcept(input.getConcept());
-                    obscreate.setValue(String.valueOf(input.getValue()));
+                    obscreate.setConcept(input.concept);
+                    obscreate.setValue(String.valueOf(input.value));
                     LocalDateTime localDateTime = new LocalDateTime();
                     obscreate.setObsDatetime(localDateTime.toString());
                     obscreate.setPerson(mPatient.getUuid());

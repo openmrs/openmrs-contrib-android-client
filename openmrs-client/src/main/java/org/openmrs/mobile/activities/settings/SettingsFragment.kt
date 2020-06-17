@@ -40,13 +40,13 @@ import org.openmrs.mobile.utilities.ApplicationConstants
 import java.util.*
 
 class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsContract.View {
-    private var bReceiver: BroadcastReceiver? = null
+    private var broadcastReceiver: BroadcastReceiver? = null
     private lateinit var binding: FragmentSettingsBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
-        bReceiver = object : BroadcastReceiver() {
+        broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 mPresenter?.updateConceptsInDBTextView()
             }
@@ -57,14 +57,14 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
 
     override fun onPause() {
         super.onPause()
-        LocalBroadcastManager.getInstance(this.activity!!).unregisterReceiver(bReceiver!!)
+        LocalBroadcastManager.getInstance(this.activity!!).unregisterReceiver(broadcastReceiver!!)
     }
 
     override fun onResume() {
         super.onResume()
         mPresenter?.updateConceptsInDBTextView()
         LocalBroadcastManager.getInstance(this.activity!!)
-                .registerReceiver(bReceiver!!, IntentFilter(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID))
+                .registerReceiver(broadcastReceiver!!, IntentFilter(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID))
     }
 
     override fun setConceptsInDbText(text: String?) {
@@ -123,7 +123,7 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
         }
         with(binding) {
             appNameTextView.text = resources.getString(R.string.app_name)
-            versionTextView.text = versionName + context!!.getString(R.string.frag_settings_build) + buildVersion
+            versionTextView.text = versionName + context?.getString(R.string.frag_settings_build) + buildVersion
         }
     }
 
@@ -155,12 +155,12 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
     }
 
     override fun setUpContactUsButton() {
-        binding.contactUsLayout.setOnClickListener { v: View -> startActivity(Intent(v.context, ContactUsActivity::class.java)) }
+        binding.contactUsLayout.setOnClickListener { view: View -> startActivity(Intent(view.context, ContactUsActivity::class.java)) }
     }
 
     override fun setDarkMode() {
         with(binding) {
-            darkModeSwitch.isChecked = mPresenter!!.isDarkModeActivated
+            darkModeSwitch.isChecked = mPresenter?.isDarkModeActivated ?: false
             darkModeSwitch.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
                 mPresenter?.setDarkMode(isChecked)
                 activity!!.recreate()
@@ -172,7 +172,7 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
         val adapter = ArrayAdapter(context!!, android.R.layout.simple_list_item_1, languageList)
         with(binding) {
             languageSpinner.adapter = adapter
-            languageSpinner.setSelection(mPresenter!!.languagePosition)
+            languageSpinner.setSelection(mPresenter?.languagePosition ?: 0)
             languageSpinner.onItemSelectedListener = object : OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     mPresenter?.language = languageSpinner.selectedItem.toString()

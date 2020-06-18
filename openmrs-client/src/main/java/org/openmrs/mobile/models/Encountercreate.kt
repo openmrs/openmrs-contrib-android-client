@@ -55,6 +55,14 @@ class Encountercreate : Model(), Serializable {
     @Column(name = "synced")
     private var synced = false
 
+    @SerializedName("location")
+    @Expose
+    var location: String? = null;
+
+    @SerializedName("encounterProviders")
+    @Expose
+    var encounterProvider: List<EncounterProviderCreate> = ArrayList();
+
     @SerializedName("obs")
     @Expose
     var observations: List<Obscreate> = ArrayList()

@@ -18,11 +18,7 @@ import android.graphics.Typeface
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
-import android.view.animation.AccelerateInterpolator
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.view.animation.AnimationSet
+import android.view.animation.*
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
 import org.openmrs.mobile.databinding.ActivitySplashBinding
@@ -32,7 +28,7 @@ class SplashActivity : ACBaseActivity() {
 
     private val mHandler = Handler()
     private var mRunnable: Runnable? = null
-    private lateinit  var binding: ActivitySplashBinding
+    private lateinit var binding: ActivitySplashBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

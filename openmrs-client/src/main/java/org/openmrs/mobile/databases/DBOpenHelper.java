@@ -44,9 +44,9 @@ import rx.Observable;
 import rx.schedulers.Schedulers;
 
 public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
-    private static int DATABASE_VERSION = OpenMRS.getInstance().
-        getResources().getInteger(R.integer.dbversion);
     private static final String WHERE_ID_CLAUSE = String.format("%s = ?", Table.MasterColumn.ID);
+    private static int DATABASE_VERSION = OpenMRS.getInstance().
+            getResources().getInteger(R.integer.dbversion);
     private PatientTable mPatientTable;
     private ConceptTable mConceptTable;
     private VisitTable mVisitTable;
@@ -62,6 +62,11 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         this.mEncounterTable = new EncounterTable();
         this.mObservationTable = new ObservationTable();
         this.mLocationTable = new LocationTable();
+    }
+
+    public static <T> Observable<T> createObservableIO(final Callable<T> func) {
+        return Observable.fromCallable(func)
+                .subscribeOn(Schedulers.io());
     }
 
     @Override
@@ -275,6 +280,18 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(5, encounter.getEncounterType().getDisplay(), encounterStatement);
             bindString(6, encounter.getPatientUUID(), encounterStatement);
             bindString(7, encounter.getFormUuid(), encounterStatement);
+
+            if (null == encounter.getLocation()) {
+                bindString(8, "", encounterStatement);
+            } else {
+                bindString(8, encounter.getLocation().getUuid(), encounterStatement);
+            }
+
+            if (0 == encounter.getEncounterProviders().size()) {
+                bindString(9, "", encounterStatement);
+            } else {
+                bindString(9, encounter.getEncounterProviders().get(0).getUuid(), encounterStatement);
+            }
             encounterId = encounterStatement.executeInsert();
             encounterStatement.clearBindings();
             db.setTransactionSuccessful();
@@ -292,6 +309,17 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         newValues.put(EncounterTable.Column.DISPLAY, encounter.getDisplay());
         newValues.put(EncounterTable.Column.ENCOUNTER_DATETIME, encounter.getEncounterDatetime());
         newValues.put(EncounterTable.Column.ENCOUNTER_TYPE, encounter.getEncounterType().getDisplay());
+        if (null == encounter.getLocation()) {
+            newValues.put(EncounterTable.Column.LOCATION_UUID, "");
+        } else {
+            newValues.put(EncounterTable.Column.LOCATION_UUID, encounter.getLocation().getUuid());
+        }
+
+        if (0 == encounter.getEncounterProviders().size()) {
+            newValues.put(EncounterTable.Column.ENCOUNTER_PROVIDER_UUID, "");
+        } else {
+            newValues.put(EncounterTable.Column.ENCOUNTER_PROVIDER_UUID, encounter.getEncounterProviders().get(0).getProvider().getUuid());
+        }
 
         String[] whereArgs = new String[]{String.valueOf(encounterID)};
 
@@ -375,11 +403,6 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             locationStatement.close();
         }
         return locID;
-    }
-
-    public static <T> Observable<T> createObservableIO(final Callable<T> func) {
-        return Observable.fromCallable(func)
-            .subscribeOn(Schedulers.io());
     }
 
     private byte[] bitmapToByteArray(Bitmap image) {

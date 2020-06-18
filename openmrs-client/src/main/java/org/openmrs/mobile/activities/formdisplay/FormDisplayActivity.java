@@ -195,6 +195,11 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
         ToastUtil.error(getString(R.string.form_data_will_be_synced_later_error_message));
     }
 
+    @Override
+    public void showSuccessfulToast() {
+        ToastUtil.success(getString(R.string.form_submitted_successfully));
+    }
+
     private int getFragmentNumber(Fragment fragment) {
         String fragmentTag = fragment.getTag();
         String[] parts = fragmentTag.split(":");

@@ -163,6 +163,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.formentrypatientlist.FormEntryPatientListActivity" />
         </activity>
+
+        <activity android:name=".activities.formadmission.FormAdmissionActivity"
+            android:label="@string/admission"
+            android:theme="@style/AppThemeOrig"
+            android:parentActivityName=".activities.formlist.FormListActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.openmrs.mobile.activities.formlist.FormListActivity"/>
+        </activity>
+
         <activity
             android:name=".activities.formentrypatientlist.FormEntryPatientListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

@@ -150,12 +150,14 @@ public class EncounterDAO {
                     int datetime_CI = cursor.getColumnIndex(EncounterTable.Column.ENCOUNTER_DATETIME);
                     int encounterType_CI = cursor.getColumnIndex(EncounterTable.Column.ENCOUNTER_TYPE);
                     int formUuid_CI = cursor.getColumnIndex(EncounterTable.Column.FORM_UUID);
+                    int location_CI = cursor.getColumnIndex(EncounterTable.Column.LOCATION_UUID);
                     Long id = cursor.getLong(id_CI);
                     String uuid = cursor.getString(uuid_CI);
                     String display = cursor.getString(display_CI);
                     Long datetime = cursor.getLong(datetime_CI);
                     String formUuid = cursor.getString(formUuid_CI);
                     String typeDisplay = cursor.getString(encounterType_CI);
+                    String locationUUID = cursor.getString(location_CI);
                     Encounter encounter = new Encounter();
                     encounter.setEncounterType(new EncounterType(typeDisplay));
                     encounter.setId(id);
@@ -164,6 +166,7 @@ public class EncounterDAO {
                     encounter.setDisplay(display);
                     encounter.setEncounterDatetime(DateUtils.convertTime(datetime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
                     encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
+                    encounter.setLocation(new LocationDAO().findLocationByUUID(locationUUID));
                     encounter.setForm(FormService.getFormByUuid(formUuid));
                     encounters.add(encounter);
                 }

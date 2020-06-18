@@ -479,4 +479,16 @@
     <string name="snackbar_choose">Choose</string>
     <string name="url_server_list" translatable="false">https://wiki.openmrs.org/display/ISM/OpenMRS+environments</string>
 
+	<!--Admission Form -->
+	<string name="admission">Admission</string>
+	<string name="error_occurred">An error Occurred, Try Again Later !!!</string>
+	<string name="offline_error_message">You are currently offline, Try again when connected !!!</string>
+	<string name="admission_fields_required">Please Select Required Field</string>
+    <string name="admission_date">Admission Date :</string>
+	<string name="admission_admitted_by">Admitted By :</string>
+	<string name="admission_provider_role">Provider Role :</string>
+	<string name="admission_admitted_to">Admitted To :</string>
+	<string name="admission_location_in_list" translatable="false">Admitted To %1$s</string>
+    <string name="discharge_location_in_list" translatable="false">Discharged From %1$s</string>
+    <string name="form_submitted_successfully" translatable="false">Form Submitted Successfully</string>
 </resources>

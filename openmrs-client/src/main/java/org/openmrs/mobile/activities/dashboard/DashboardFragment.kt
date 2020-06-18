@@ -38,6 +38,7 @@ import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity
 import org.openmrs.mobile.utilities.ApplicationConstants
 import org.openmrs.mobile.utilities.ImageUtils
 import org.openmrs.mobile.utilities.ThemeUtils
+import org.openmrs.mobile.utilities.ToastUtil
 
 class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), DashboardContract.View, View.OnClickListener {
 
@@ -206,7 +207,7 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
             R.id.registryPatientView -> startNewActivity(AddEditPatientActivity::class.java)
             R.id.captureVitalsView -> startNewActivity(FormEntryPatientListActivity::class.java)
             R.id.activeVisitsView -> startNewActivity(ActiveVisitsActivity::class.java)
-            R.id.dashboardProviderManagementView -> startNewActivity(ProviderManagerDashboardActivity::class.java)
+            R.id.dashboardProviderManagementView -> ToastUtil.error(getString(R.string.failed_to_open_vitals_form));
             else -> {
             }
         }

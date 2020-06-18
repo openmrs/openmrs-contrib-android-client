@@ -158,8 +158,7 @@ public class EncounterService extends IntentService {
                 encounterList.add(encounter);
                 visitDAO.saveOrUpdate(visit, patientid)
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(id ->
-                        ToastUtil.success(getString(R.string.form_data_saved_successfully, formname)));
+                    .subscribe();
             });
     }
 

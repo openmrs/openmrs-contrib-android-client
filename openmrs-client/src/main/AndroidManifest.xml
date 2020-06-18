@@ -283,6 +283,10 @@
             android:theme="@style/AppThemeOrig"
             android:label="@string/contact_us"/>
 
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:theme="@style/AppTheme"/>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${GOOGLE_PLACE_API_KEY}"/>

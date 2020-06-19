@@ -478,6 +478,7 @@
     <string name="snackbar_server_error">The entered server is currently down, please select a different one.</string>
     <string name="snackbar_choose">Choose</string>
     <string name="url_server_list" translatable="false">https://wiki.openmrs.org/display/ISM/OpenMRS+environments</string>
+    <string name="copied_text" translatable="false">Copied Text</string>
 
 	<!--Admission Form -->
 	<string name="admission">Admission</string>

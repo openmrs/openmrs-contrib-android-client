@@ -28,7 +28,8 @@
             android:id="@+id/tvLogs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textIsSelectable="true" />
+            android:textIsSelectable="true"
+            android:padding="@dimen/button_margin"/>
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

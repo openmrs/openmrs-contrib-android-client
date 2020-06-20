@@ -54,6 +54,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringDef;
@@ -69,6 +70,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.hbb20.CountryCodePicker;
+import com.yalantis.ucrop.UCrop;
 
 import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTime;
@@ -160,6 +162,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private Bitmap patientPhoto = null;
     private String patientName;
     private File output = null;
+    private String currentPhotoPath = "";
     private final static int IMAGE_REQUEST = 1;
     private final static int GALLERY_IMAGE_REQUEST = 2;
     private OpenMRSLogger logger = new OpenMRSLogger();
@@ -811,11 +814,18 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             } else {
                 output = null;
             }
-        } else if (requestCode == GALLERY_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
-
+        }
+        else if (requestCode == GALLERY_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+            Uri sourceUri = data.getData();
+            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+            output = new File(dir, getUniqueImageFileName());
+            Uri destinationUri = Uri.fromFile(output);
+            openCropActivity(sourceUri, destinationUri);
+        }
+        else if (requestCode == UCrop.REQUEST_CROP) {
             try {
                 ParcelFileDescriptor parcelFileDescriptor =
-                    getActivity().getContentResolver().openFileDescriptor(data.getData(), ApplicationConstants.READ_MODE);
+                        getActivity().getContentResolver().openFileDescriptor(data.getData(), ApplicationConstants.READ_MODE);
                 FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
                 Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
                 parcelFileDescriptor.close();
@@ -828,9 +838,18 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 logger.e("Error getting image from gallery.", e);
             }
         }
+        else if (requestCode == UCrop.RESULT_ERROR) {
+            Toast.makeText(getContext(), "hhhhhh", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private String getUniqueImageFileName() {
+    private void openCropActivity(Uri sourceUri, Uri destinationUri) {
+        UCrop.of(sourceUri, destinationUri)
+                .withAspectRatio(5f, 5f)
+                .start(getActivity());
+    }
+
+        private String getUniqueImageFileName() {
         // Create an image file name
         @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         return timeStamp + "_" + ".jpg";

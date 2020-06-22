@@ -14,9 +14,14 @@
 
 package org.openmrs.mobile.activities.providermanagerdashboard.addprovider;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
@@ -47,5 +52,15 @@ public class AddProviderActivity extends ACBaseActivity {
         }
 
         AddProviderPresenter mPresenter = new AddProviderPresenter(addProviderFragment);
+    }
+
+    @Override
+    public void showNoInternetConnectionSnackbar() {
+        mSnackbar = Snackbar.make(addProviderFragment.doneFAB,
+            getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
+        View sbView = mSnackbar.getView();
+        TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        mSnackbar.show();
     }
 }

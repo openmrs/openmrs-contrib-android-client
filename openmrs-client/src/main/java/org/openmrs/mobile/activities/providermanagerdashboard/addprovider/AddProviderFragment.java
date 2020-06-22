@@ -45,11 +45,11 @@ import static android.app.Activity.RESULT_OK;
 
 public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Presenter>
     implements AddProviderContract.View {
-    private FloatingActionButton doneFAB;
     private TextInputEditText firstNameEt, lastNameEt, identifierEt;
     private TextInputLayout firstNameTIL, lastNameTIL, identifierTIL;
     private Provider editProvider = null;
     private ArrayList<Provider> existingProviders;
+    public FloatingActionButton doneFAB;
 
     public static AddProviderFragment newInstance() {
         return new AddProviderFragment();

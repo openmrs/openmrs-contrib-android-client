@@ -50,7 +50,7 @@ class LogsFragment : ACBaseFragment<LogsContract.Presenter>(), LogsContract.View
     private fun setClipboard(context: Context?, text: String?) {
         val clipboard = context!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText(getString(R.string.copied_text), text)
-        clipboard.primaryClip = clip
+        clipboard.setPrimaryClip(clip)
     }
 
     companion object {

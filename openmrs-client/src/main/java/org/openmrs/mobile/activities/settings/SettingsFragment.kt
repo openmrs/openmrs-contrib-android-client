@@ -13,8 +13,12 @@
  */
 package org.openmrs.mobile.activities.settings
 
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.content.ActivityNotFoundException
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
@@ -37,7 +41,6 @@ import org.openmrs.mobile.activities.logs.LogsActivity
 import org.openmrs.mobile.databinding.FragmentSettingsBinding
 import org.openmrs.mobile.services.ConceptDownloadService
 import org.openmrs.mobile.utilities.ApplicationConstants
-import java.util.*
 
 class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsContract.View {
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -102,7 +105,7 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
                 conceptsDownloadButton.isEnabled = false
                 val startIntent = Intent(activity, ConceptDownloadService::class.java)
                 startIntent.action = ApplicationConstants.ServiceActions.START_CONCEPT_DOWNLOAD_ACTION
-                Objects.requireNonNull(activity)!!.startService(startIntent)
+                activity?.startService(startIntent)
             }
         }
     }
@@ -137,7 +140,7 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
 
     override fun rateUs() {
         binding.rateUsLayout.setOnClickListener {
-            val uri = Uri.parse("market://details?id=" + ApplicationConstants.PACKAGE_NAME)
+            val uri = Uri.parse("market://details?id=${ApplicationConstants.PACKAGE_NAME}")
             val intent = Intent(Intent.ACTION_VIEW, uri)
             // Ignore Playstore backstack, on back press will take us back to our app
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -149,7 +152,7 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
                 startActivity(intent)
             } catch (e: ActivityNotFoundException) {
                 startActivity(Intent(Intent.ACTION_VIEW,
-                        Uri.parse("http://play.google.com/store/apps/details?id=" + ApplicationConstants.PACKAGE_NAME)))
+                        Uri.parse("http://play.google.com/store/apps/details?id=${ApplicationConstants.PACKAGE_NAME}")))
             }
         }
     }

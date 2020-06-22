@@ -44,7 +44,7 @@ class SettingsPresenter(private val mSettingsView: SettingsContract.View, privat
             val file = File(filename)
             size = file.length()
             size /= ONE_KB
-            mOpenMRSLogger.i("File Path : " + file.path + ", File size: " + size + " KB")
+            mOpenMRSLogger.i("File Path :${file.path} , File size: $size KB")
         } catch (e: Exception) {
             mOpenMRSLogger.w("File not found")
         }

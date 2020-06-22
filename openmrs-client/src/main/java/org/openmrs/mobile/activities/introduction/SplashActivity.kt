@@ -27,7 +27,7 @@ import org.openmrs.mobile.utilities.ApplicationConstants
 class SplashActivity : ACBaseActivity() {
 
     private val mHandler = Handler()
-    private var mRunnable: Runnable? = null
+    private lateinit var mRunnable: Runnable
     private lateinit var binding: ActivitySplashBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

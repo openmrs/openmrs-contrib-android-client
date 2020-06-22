@@ -91,7 +91,7 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
 
     override fun addLogsInfo(logSize: Long, logFilename: String?) {
         binding.logsDesc1TextView.text = logFilename
-        binding.logsDesc2TextView.text = context!!.getString(R.string.settings_frag_size) + logSize + "kB"
+        binding.logsDesc2TextView.text = "${context!!.getString(R.string.settings_frag_size)} $logSize kB"
         binding.logsLayout.setOnClickListener { view: View ->
             val i = Intent(view.context, LogsActivity::class.java)
             startActivity(i)
@@ -120,9 +120,9 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
             val ai = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
             buildVersion = ai.metaData.getInt("buildVersion")
         } catch (e: PackageManager.NameNotFoundException) {
-            mPresenter?.logException("Failed to load meta-data, NameNotFound: " + e.message)
+            mPresenter?.logException("Failed to load meta-data, NameNotFound: ${e.message}")
         } catch (e: NullPointerException) {
-            mPresenter?.logException("Failed to load meta-data, NullPointer: " + e.message)
+            mPresenter?.logException("Failed to load meta-data, NullPointer: ${e.message}")
         }
         with(binding) {
             appNameTextView.text = resources.getString(R.string.app_name)

@@ -118,8 +118,6 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 @RuntimePermissions
 public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContract.Presenter> implements AddEditPatientContract.View, CameraOrGalleryPickerDialog.onInputSelected {
 
-    private final static int IMAGE_REQUEST = 1;
-    private final static int GALLERY_IMAGE_REQUEST = 2;
     private RelativeLayout relativeLayout;
     private LocalDate birthdate;
     private DateTime bdt;
@@ -737,7 +735,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             StrictMode.setVmPolicy(builder.build());
             AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
         } else if (position == 1) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, GALLERY_IMAGE_REQUEST);
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, ApplicationConstants.RequestCodes.GALLERY_IMAGE_REQUEST);
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
@@ -749,7 +747,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 i = new Intent(Intent.ACTION_GET_CONTENT);
             i.addCategory(Intent.CATEGORY_OPENABLE);
             i.setType("image/*");
-            startActivityForResult(i, GALLERY_IMAGE_REQUEST);
+            startActivityForResult(i, ApplicationConstants.RequestCodes.GALLERY_IMAGE_REQUEST);
         } else {
             patientImageView.setImageResource(R.drawable.ic_person_grey_500_48dp);
             patientImageView.invalidate();
@@ -764,7 +762,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
             output = new File(dir, getUniqueImageFileName());
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
-            startActivityForResult(takePictureIntent, IMAGE_REQUEST);
+            startActivityForResult(takePictureIntent, ApplicationConstants.RequestCodes.IMAGE_REQUEST);
         }
     }
 
@@ -799,14 +797,14 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == IMAGE_REQUEST) {
+        if (requestCode == ApplicationConstants.RequestCodes.IMAGE_REQUEST) {
             if (resultCode == Activity.RESULT_OK) {
                 Uri sourceUri = Uri.fromFile(output);
                 openCropActivity(sourceUri, sourceUri);
             } else {
                 output = null;
             }
-        } else if (requestCode == GALLERY_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == ApplicationConstants.RequestCodes.IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
             Uri sourceUri = data.getData();
             File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
             output = new File(dir, getUniqueImageFileName());
@@ -828,7 +826,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     private void openCropActivity(Uri sourceUri, Uri destinationUri) {
         UCrop.of(sourceUri, destinationUri)
-                .withAspectRatio(5f, 5f)
+                .withAspectRatio(ApplicationConstants.ASPECT_RATIO_FOR_CROPPING, ApplicationConstants.ASPECT_RATIO_FOR_CROPPING)
                 .start(getActivity(), AddEditPatientFragment.this);
     }
 

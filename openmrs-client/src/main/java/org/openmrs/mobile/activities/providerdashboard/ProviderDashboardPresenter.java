@@ -13,14 +13,14 @@ import org.openmrs.mobile.api.repository.ProviderRepository;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
-public class ProviderDashboardPresenter extends BasePresenter implements ProviderDashboardContract.Presenter {
+public class ProviderDashboardPresenter extends BasePresenter implements ProviderDashboardContract.Presenter, CustomApiCallback {
     private RestApi restApi;
     private ProviderRepository providerRepository;
-
+    private Provider provider;
     @NonNull
     private ProviderDashboardContract.View providerDashboardView;
 
-    public ProviderDashboardPresenter(@NonNull ProviderDashboardContract.View view, Context context){
+    public ProviderDashboardPresenter(@NonNull ProviderDashboardContract.View view, Context context) {
         this.providerDashboardView = view;
         this.providerDashboardView.setPresenter(this);
         this.restApi = RestServiceBuilder.createService(RestApi.class);
@@ -55,7 +55,35 @@ public class ProviderDashboardPresenter extends BasePresenter implements Provide
     }
 
     @Override
+    public void deleteProvider() {
+        providerRepository.deleteProviders(restApi, provider.getUuid(), this);
+    }
+
+    @Override
     public void subscribe() {
 
+    }
+
+    @Override
+    public void onFailure() {
+
+    }
+
+    /**
+     * no need of refreshUI in this onSuccess() callback
+     * since onUpdate() will rebuild this dashboard again
+     * and onDelete this dashboard will be closed as activity finishes
+     */
+    @Override
+    public void onSuccess() {
+
+    }
+
+    public Provider getProvider() {
+        return provider;
+    }
+
+    public void setProvider(Provider provider) {
+        this.provider = provider;
     }
 }

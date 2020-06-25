@@ -64,6 +64,7 @@ public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderMan
         return new ProviderManagerDashboardFragment();
     }
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -158,4 +159,10 @@ public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderMan
             }
         }
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
 }

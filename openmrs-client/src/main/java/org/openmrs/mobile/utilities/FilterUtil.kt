@@ -26,38 +26,44 @@ object FilterUtil {
      * @return patient list filtered by query
      */
     @JvmStatic
-    fun getPatientsFilteredByQuery(patientList: List<Patient>, query: String): List<Patient> {
+    fun getPatientsFilteredByQuery(patientList: List<Patient?>, query: String?): List<Patient> {
         val filteredList: MutableList<Patient> = ArrayList()
         for (patient in patientList) {
             val searchableWords = getPatientSearchableWords(patient)
             if (doesAnySearchableWordFitQuery(searchableWords, query)) {
-                filteredList.add(patient)
+                if (patient != null) {
+                    filteredList.add(patient)
+                }
             }
         }
         return filteredList
     }
 
     @JvmStatic
-    fun getPatientsWithActiveVisitsFilteredByQuery(visitList: List<Visit>, query: String): List<Visit> {
+    fun getPatientsWithActiveVisitsFilteredByQuery(visitList: List<Visit?>?, query: String?): List<Visit> {
         val filteredList: MutableList<Visit> = ArrayList()
-        for (visit in visitList) {
-            val patient = visit.patient
-            val patientsWithActiveVisitsSearchableWords: MutableList<String?> = ArrayList()
-            patientsWithActiveVisitsSearchableWords.addAll(getVisitSearchableWords(visit))
-            patientsWithActiveVisitsSearchableWords.addAll(getPatientSearchableWords(patient))
-            if (doesAnySearchableWordFitQuery(patientsWithActiveVisitsSearchableWords, query)) {
-                filteredList.add(visit)
+        if (visitList != null) {
+            for (visit in visitList) {
+                val patient = visit?.patient
+                val patientsWithActiveVisitsSearchableWords: MutableList<String?> = ArrayList()
+                patientsWithActiveVisitsSearchableWords.addAll(getVisitSearchableWords(visit))
+                patientsWithActiveVisitsSearchableWords.addAll(getPatientSearchableWords(patient))
+                if (doesAnySearchableWordFitQuery(patientsWithActiveVisitsSearchableWords, query)) {
+                    if (visit != null) {
+                        filteredList.add(visit)
+                    }
+                }
             }
         }
         return filteredList
     }
 
     @JvmStatic
-    private fun getPatientSearchableWords(patient: Patient): List<String?> {
-        val patientIdentifier = patient.identifier.identifier
-        val fullName = patient.name.nameString
-        val givenFamilyName = (patient.name.givenName + " "
-                + patient.name.familyName)
+    private fun getPatientSearchableWords(patient: Patient?): List<String?> {
+        val patientIdentifier = patient?.identifier?.identifier
+        val fullName = patient?.name?.nameString
+        val givenFamilyName = (patient?.name?.givenName + " "
+                + patient?.name?.familyName)
         val searchableWords: MutableList<String?> = ArrayList()
         searchableWords.add(patientIdentifier)
         searchableWords.add(fullName)
@@ -66,9 +72,9 @@ object FilterUtil {
     }
 
     @JvmStatic
-    private fun getVisitSearchableWords(visit: Visit): List<String> {
-        val visitPlace = visit.location.display
-        val visitType = visit.visitType.display
+    private fun getVisitSearchableWords(visit: Visit?): List<String> {
+        val visitPlace = visit?.location?.display
+        val visitType = visit?.visitType?.display
         val searchableWords: MutableList<String> = ArrayList()
         searchableWords.add(visitPlace!!)
         searchableWords.add(visitType!!)
@@ -76,16 +82,16 @@ object FilterUtil {
     }
 
     @JvmStatic
-    private fun doesAnySearchableWordFitQuery(searchableWords: List<String?>, query: String): Boolean {
+    private fun doesAnySearchableWordFitQuery(searchableWords: List<String?>, query: String?): Boolean {
         var mutableQuery = query
         var i = 0
         while (i<searchableWords.size) {
             var searchableWord = searchableWords[i]
             if (searchableWord != null) {
-                val queryLength = mutableQuery.trim { it <= ' ' }.length
+                val queryLength = mutableQuery?.trim { it <= ' ' }?.length
                 searchableWord = searchableWord.toLowerCase()
-                mutableQuery = mutableQuery.toLowerCase().trim { it <= ' ' }
-                val fits = searchableWord.length >= queryLength && searchableWord.contains(mutableQuery)
+                mutableQuery = mutableQuery?.toLowerCase()?.trim { it <= ' ' }
+                val fits = searchableWord.length >= queryLength!! && searchableWord.contains(mutableQuery.toString())
                 if (fits) {
                     return true
                 }

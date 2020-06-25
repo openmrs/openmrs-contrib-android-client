@@ -36,8 +36,8 @@ object DateUtils {
     const val ZERO = 0L
 
     @JvmStatic
-    fun convertTime(time: Long, dateFormat: String?, timeZone: TimeZone ): String {
-        val date = Date(time)
+    fun convertTime(time: Long?, dateFormat: String?, timeZone: TimeZone ): String {
+        val date = time?.let { Date(it) }
         @SuppressLint("SimpleDateFormat") val format = SimpleDateFormat(dateFormat)
         format.timeZone = timeZone
         return format.format(date)
@@ -54,7 +54,7 @@ object DateUtils {
     }
 
     @JvmStatic
-    fun convertTime(timestamp: Long): String {
+    fun convertTime(timestamp: Long?): String {
         return convertTime(timestamp, DEFAULT_DATE_FORMAT, TimeZone.getDefault())
     }
 

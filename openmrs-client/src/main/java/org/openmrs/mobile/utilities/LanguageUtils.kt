@@ -24,7 +24,7 @@ object LanguageUtils {
     }
 
     @JvmStatic
-    fun setLanguage(language : String) {
+    fun setLanguage(language: String?) {
         val editor = OpenMRS.getInstance().openMRSSharedPreferences.edit()
         editor.putString(ApplicationConstants.OpenMRSlanguage.KEY_LANGUAGE_MODE, language)
         editor.apply()

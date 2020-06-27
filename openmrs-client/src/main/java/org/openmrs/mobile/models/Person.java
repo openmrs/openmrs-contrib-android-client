@@ -55,13 +55,22 @@ public class Person extends Resource implements Serializable {
     @SerializedName("attributes")
     @Expose
     private List<PersonAttribute> attributes = new ArrayList<>();
+
+    @SerializedName("dead")
+    @Expose
+    private Boolean dead;
+
+    @SerializedName("causeOfDeath")
+    @Expose
+    private Resource causeOfDeath = null;
+
     private Bitmap photo;
 
     public Person() {
     }
 
     public Person(List<PersonName> names, String gender, String birthdate, boolean birthdateEstimated, List<PersonAddress> addresses, List<PersonAttribute> attributes,
-                  Bitmap photo) {
+                  Bitmap photo, Resource causeOfDeath, boolean dead) {
         this.names = names;
         this.gender = gender;
         this.birthdate = birthdate;
@@ -69,6 +78,8 @@ public class Person extends Resource implements Serializable {
         this.addresses = addresses;
         this.attributes = attributes;
         this.photo = photo;
+        this.causeOfDeath = causeOfDeath;
+        this.dead = dead;
     }
 
     /**
@@ -181,5 +192,21 @@ public class Person extends Resource implements Serializable {
 
     public Bitmap getResizedPhoto() {
         return ImageUtils.resizePhoto(this.photo);
+    }
+
+    public Resource getCauseOfDeath() {
+        return causeOfDeath;
+    }
+
+    public void setCauseOfDeath(Resource causeOfDeath) {
+        this.causeOfDeath = causeOfDeath;
+    }
+
+    public Boolean getDead() {
+        return dead;
+    }
+
+    public void setDead(Boolean dead) {
+        this.dead = dead;
     }
 }

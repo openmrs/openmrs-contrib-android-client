@@ -92,6 +92,7 @@ public abstract class Table<T> {
             public static final String TEXT_TYPE_NOT_NULL = " text not null,";
             public static final String DATE_TYPE = " date";
             public static final String BOOLEAN = " boolean,";
+            public static final String BOOLEAN_WITHOUT_COMMA = " boolean";
             public static final String DATE_TYPE_WITH_COMMA = DATE_TYPE + COMMA;
             public static final String DATE_TYPE_NOT_NULL = " data not null,";
             public static final String INT_TYPE = " integer";

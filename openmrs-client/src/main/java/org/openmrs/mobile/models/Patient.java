@@ -42,8 +42,8 @@ public class Patient extends Person implements Serializable {
     /*Constructor to initialize values of current class as well as parent class*/
     public Patient(Long id, String encounters, List<PatientIdentifier> identifiers,
                    List<PersonName> names, String gender, String birthdate, boolean birthdateEstimated, List<PersonAddress> addresses, List<PersonAttribute> attributes,
-                   Bitmap photo) {
-        super(names, gender, birthdate, birthdateEstimated, addresses, attributes, photo);
+                   Bitmap photo, Resource causeOfDeath, boolean dead) {
+        super(names, gender, birthdate, birthdateEstimated, addresses, attributes, photo, causeOfDeath, dead);
         this.id = id;
         this.encounters = encounters;
         this.identifiers = identifiers;
@@ -59,7 +59,7 @@ public class Patient extends Person implements Serializable {
 
     @SerializedName("person")
     public Person getPerson() {
-        return new Person(getNames(), getGender(), getBirthdate(), getBirthdateEstimated(), getAddresses(), getAttributes(), getPhoto());
+        return new Person(getNames(), getGender(), getBirthdate(), getBirthdateEstimated(), getAddresses(), getAttributes(), getPhoto(), getCauseOfDeath(), getDead());
     }
 
     public PatientDto getPatientDto() {

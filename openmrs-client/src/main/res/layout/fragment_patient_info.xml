@@ -150,7 +150,7 @@
                         android:textStyle="bold" />
 
                     <LinearLayout
-                        android:id="@+id/linearLayout_name"
+                        android:id="@+id/linearLayoutName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
@@ -158,17 +158,17 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
                             android:text="@string/reg_ques_name"
                             android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:layout_marginTop="20dp" />
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
                             android:baselineAligned="false"
-                            android:weightSum="2"
-                            android:layout_marginTop="8dp">
+                            android:weightSum="2">
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/textInputLayoutFirstName"
@@ -178,7 +178,7 @@
                                 android:layout_weight="1">
 
                                 <EditText
-                                    android:id="@+id/firstname"
+                                    android:id="@+id/firstName"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
                                     android:focusable="true"
@@ -237,8 +237,8 @@
                         android:id="@+id/linearLayout_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="20dp">
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -281,8 +281,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="20dp">
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
@@ -292,7 +292,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/doberror"
+                            android:id="@+id/dobError"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="2dp"
@@ -301,7 +301,7 @@
                             android:visibility="gone" />
 
                         <androidx.constraintlayout.widget.ConstraintLayout
-                            android:id="@+id/constraintLayout_dob"
+                            android:id="@+id/constraintLayoutDOB"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp">
@@ -312,50 +312,50 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentTop="true"
-                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintLeft_toLeftOf="parent">
+                                app:layout_constraintTop_toTopOf="parent">
 
                                 <EditText
-                                    android:id="@+id/dob"
+                                    android:id="@+id/dobEditText"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:hint="@string/dob_hint"
                                     android:imeOptions="actionNext"
                                     android:inputType="datetime"
                                     android:maxLines="1"
-                                    android:nextFocusDown="@+id/estyr"
+                                    android:nextFocusDown="@+id/estimatedYear"
                                     android:textSize="14sp" />
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <ImageButton
-                                android:id="@+id/btn_datepicker"
+                                android:id="@+id/datePicker"
                                 android:layout_width="24dp"
                                 android:layout_height="24dp"
                                 android:layout_alignParentEnd="true"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginTop="8dp"
-                                android:layout_marginEnd="24dp"
-                                android:layout_marginRight="24dp"
+                                android:layout_marginEnd="16dp"
+                                android:layout_marginRight="16dp"
                                 android:background="@drawable/ic_date_range_24dp"
-                                app:layout_constraintTop_toTopOf="@id/textInputLayoutDOB"
                                 app:layout_constraintBottom_toBottomOf="@id/textInputLayoutDOB"
-                                app:layout_constraintRight_toRightOf="@id/textInputLayoutDOB"/>
+                                app:layout_constraintRight_toRightOf="@id/textInputLayoutDOB"
+                                app:layout_constraintTop_toTopOf="@id/textInputLayoutDOB" />
 
                             <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@id/textInputLayoutDOB"
+                                android:layout_marginTop="8dp"
+                                android:fontFamily="@font/montserrat"
                                 android:gravity="center"
                                 android:text="@string/label_or"
                                 android:textSize="18sp"
                                 android:textStyle="bold"
-                                android:fontFamily="@font/montserrat"
-                                android:layout_marginTop="8dp"
                                 app:layout_constraintLeft_toLeftOf="parent"
                                 app:layout_constraintRight_toRightOf="parent"
-                                app:layout_constraintTop_toBottomOf="@id/textInputLayoutDOB"/>
+                                app:layout_constraintTop_toBottomOf="@id/textInputLayoutDOB" />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -367,14 +367,14 @@
                             android:weightSum="2">
 
                             <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/textInputLayoutEstyr"
+                                android:id="@+id/textInputLayoutYear"
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1">
 
                                 <EditText
-                                    android:id="@+id/estyr"
+                                    android:id="@+id/estimatedYear"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
                                     android:focusable="true"
@@ -386,7 +386,7 @@
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/textInputLayoutEstmonth"
+                                android:id="@+id/textInputLayoutMonth"
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -395,7 +395,7 @@
                                 android:layout_weight="1">
 
                                 <EditText
-                                    android:id="@+id/estmonth"
+                                    android:id="@+id/estimatedMonth"
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
                                     android:focusable="true"
@@ -440,21 +440,11 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/addrerror"
+                        android:id="@+id/addressError"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="2dp"
                         android:text="@string/atleastone"
-                        android:textColor="@color/red"
-                        android:textSize="14sp"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/countryerror"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="2dp"
-                        android:text="@string/incorrect_country"
                         android:textColor="@color/red"
                         android:textSize="14sp"
                         android:visibility="gone" />
@@ -475,7 +465,7 @@
                         android:layout_marginTop="8dp">
 
                         <EditText
-                            android:id="@+id/addr1"
+                            android:id="@+id/addressOne"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:focusable="true"
@@ -494,7 +484,7 @@
                         android:layout_marginTop="4dp">
 
                         <EditText
-                            android:id="@+id/addr2"
+                            android:id="@+id/addressTwo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:focusable="true"
@@ -536,7 +526,7 @@
                             app:layout_constraintTop_toTopOf="parent">
 
                             <com.hbb20.CountryCodePicker
-                                android:id="@+id/ccp"
+                                android:id="@+id/countryCodeSpinner"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
@@ -547,7 +537,7 @@
                         </LinearLayout>
 
                         <EditText
-                            android:id="@+id/postal"
+                            android:id="@+id/postalCode"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:layout_marginStart="8dp"
@@ -561,20 +551,22 @@
                             android:maxLines="1"
                             android:paddingStart="14dp"
                             android:paddingLeft="14dp"
+                            android:textColorHint="@color/dark_grey_8x"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toRightOf="@id/guideline"
                             app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="RtlSymmetry" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:baselineAligned="false"
-                        android:orientation="vertical"
-                        android:layout_marginTop="4dp">
+                        android:orientation="vertical">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -588,7 +580,7 @@
                                 android:layout_toLeftOf="@id/city_progressBar">
 
                                 <AutoCompleteTextView
-                                    android:id="@+id/city"
+                                    android:id="@+id/cityAutoComplete"
                                     android:layout_width="match_parent"
                                     android:layout_height="48dp"
                                     android:focusable="true"
@@ -619,7 +611,7 @@
                             android:layout_marginTop="4dp">
 
                             <AutoCompleteTextView
-                                android:id="@+id/state"
+                                android:id="@+id/stateAutoComplete"
                                 android:layout_width="match_parent"
                                 android:layout_height="48dp"
                                 android:focusable="true"

@@ -196,6 +196,8 @@ dependencies {
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
     //google place api
     implementation 'com.google.android.libraries.places:places:2.1.0'
+    //Image Cropping Library
+    implementation 'com.github.yalantis:ucrop:2.2.5'
 }
 
 play {

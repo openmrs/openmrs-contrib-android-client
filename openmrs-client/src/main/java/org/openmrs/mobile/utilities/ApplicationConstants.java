@@ -51,6 +51,7 @@ public abstract class ApplicationConstants {
     public static final String BUNDLE = "bundle";
     public static final String URI_CONTENT = "content://";
     public static final String MIME_TYPE_VND = "vnd";
+    public static final float ASPECT_RATIO_FOR_CROPPING = 5f;
 
     public abstract static class OpenMRSSharedPreferenceNames {
         public static final String SHARED_PREFERENCES_NAME = "shared_preferences";
@@ -133,6 +134,8 @@ public abstract class ApplicationConstants {
         public static final int ADD_PROVIDER_REQ_CODE = 100;
         public static final int EDIT_PROVIDER_REQ_CODE = 101;
         public static final int START_SETTINGS_REQ_CODE = 102;
+        public final static int IMAGE_REQUEST = 1;
+        public final static int GALLERY_IMAGE_REQUEST = 2;
     }
 
     public abstract static class OpenMRSThemes {

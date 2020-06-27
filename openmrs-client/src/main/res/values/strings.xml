@@ -46,15 +46,15 @@
     <string name="midname_invalid_error">Middle name cannot contain symbols or numbers</string>
     <string name="lname_invalid_error">Family name cannot contain symbols or numbers</string>
     <string name="dob_error">Date should be between %1$s and %2$s</string>
-    <string name="reg_firstname_hint">Given Name</string>
+    <string name="reg_firstname_hint">First Name*</string>
     <string name="reg_midname_hint">Middle Name</string>
-    <string name="reg_surname_hint">Family Name</string>
-    <string name="reg_ques_name">What\'s the patient\'s name?</string>
-    <string name="reg_ques_gender">What\'s the patient\'s gender?</string>
-    <string name="reg_ques_dob">What\'s the patient\'s birth date?</string>
-    <string name="label_or">Or</string>
+    <string name="reg_surname_hint">Family Name*</string>
+    <string name="reg_ques_name">Patient\’s Name</string>
+    <string name="reg_ques_gender">Patient\'s gender*</string>
+    <string name="reg_ques_dob">Patient\'s birth date*</string>
+    <string name="label_or">OR</string>
     <string name="reg_ques_address">Address</string>
-    <string name="addr1_hint">Address</string>
+    <string name="addr1_hint">Address 1*</string>
     <string name="addr2_hint">Address 2</string>
     <string name="addr_invalid_error">Address cannot contain invalid characters</string>
     <string name="atleastone">Fill at least one address field</string>
@@ -62,7 +62,7 @@
 
     <string name="male">Male</string>
     <string name="female">Female</string>
-    <string name="dob_hint">Date of Birth (format: dd/MM/yyyy)</string>
+    <string name="dob_hint">Date of Birth (dd/MM/yyyy)</string>
     <string name="estyr">Estimated Years</string>
     <string name="estmonth">Estimated Months</string>
 
@@ -162,7 +162,7 @@
 
     <!-- fragment_patient_details layout -->
     <string name="patient_identifier"># %1$s</string>
-    <string name="patient_details_photo_label">Photo</string>
+    <string name="patient_details_photo_label">PATIENT\’S PHOTO</string>
     <string name="patient_details_birth_date_label">Birth date</string>
     <string name="patient_contact_info_label">Contact Information</string>
     <string name="patient_address_label">Address</string>
@@ -232,7 +232,7 @@
     <string name="gender_hint">gender:</string>
     <string name="birthdate_hint">birthdate:</string>
     <string name="address_hint">address:</string>
-    <string name="demographics">Demographics</string>
+    <string name="demographics">DEMOGRAPHICS</string>
     <string name="unable_to_login">Unable to login?</string>
     <string name="no_patient_selected">No patient selected</string>
 

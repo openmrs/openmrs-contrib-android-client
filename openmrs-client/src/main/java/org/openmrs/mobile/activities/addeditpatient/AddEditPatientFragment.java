@@ -44,14 +44,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -59,6 +57,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringDef;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.libraries.places.api.model.AutocompletePrediction;
@@ -118,13 +118,13 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 @RuntimePermissions
 public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContract.Presenter> implements AddEditPatientContract.View, CameraOrGalleryPickerDialog.onInputSelected {
 
-    private RelativeLayout relativeLayout;
+    private ConstraintLayout constraintLayout;
     private LocalDate birthdate;
     private DateTime bdt;
     private LinearLayout linearLayoutName;
-    private RelativeLayout relativeLayoutDOB;
+    private ConstraintLayout constraintLayoutDOB;
     private LinearLayout linearLayoutContactInfo;
-    private CheckBox unidentifiedCheckBox;
+    private SwitchCompat unidentifiedCheckBox;
     private Boolean isPatientUnidentified = false;
     private TextInputLayout firstNameTIL;
     private TextInputLayout middleNameTIL;
@@ -145,8 +145,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private RadioGroup gen;
     private ProgressBar progressBar;
     private ProgressBar city_progressBar;
-    private TextView fNameError;
-    private TextView lNameError;
     private TextView dobError;
     private TextView genderError;
     private TextView addrError;
@@ -294,11 +292,9 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
             // First name validation
             if (ViewUtils.isEmpty(edfName)) {
-                fNameError.setText(emptyError);
                 firstNameTIL.setErrorEnabled(true);
                 firstNameTIL.setError(emptyError);
             } else if (!ViewUtils.validateText(ViewUtils.getInput(edfName), ViewUtils.ILLEGAL_CHARACTERS)) {
-                lNameError.setText(familyNameError);
                 firstNameTIL.setErrorEnabled(true);
                 firstNameTIL.setError(givenNameError);
             } else {
@@ -307,7 +303,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
             // Middle name validation (can be empty)
             if (!ViewUtils.validateText(ViewUtils.getInput(edmName), ViewUtils.ILLEGAL_CHARACTERS)) {
-                lNameError.setText(familyNameError);
                 middleNameTIL.setErrorEnabled(true);
                 middleNameTIL.setError(middleNameError);
             } else {
@@ -316,11 +311,9 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
             // Family name validation
             if (ViewUtils.isEmpty(edlName)) {
-                lNameError.setText(emptyError);
                 lastNameTIL.setErrorEnabled(true);
                 lastNameTIL.setError(emptyError);
             } else if (!ViewUtils.validateText(ViewUtils.getInput(edlName), ViewUtils.ILLEGAL_CHARACTERS)) {
-                lNameError.setText(familyNameError);
                 lastNameTIL.setErrorEnabled(true);
                 lastNameTIL.setError(familyNameError);
             } else {
@@ -454,7 +447,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private void resolveViews(View v) {
-        relativeLayout = v.findViewById(R.id.addEditRelativeLayout);
+        constraintLayout = v.findViewById(R.id.addEditConstraintLayout);
         edfName = v.findViewById(R.id.firstname);
         edmName = v.findViewById(R.id.middlename);
         edlName = v.findViewById(R.id.surname);
@@ -472,8 +465,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         progressBar = v.findViewById(R.id.progress_bar);
         city_progressBar = v.findViewById(R.id.city_progressBar);
 
-        fNameError = v.findViewById(R.id.fnameerror);
-        lNameError = v.findViewById(R.id.lnameerror);
         dobError = v.findViewById(R.id.doberror);
         genderError = v.findViewById(R.id.gendererror);
         addrError = v.findViewById(R.id.addrerror);
@@ -488,7 +479,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         address1TIL = v.findViewById(R.id.textInputLayoutAddress);
 
         linearLayoutName = v.findViewById(R.id.linearLayout_name);
-        relativeLayoutDOB = v.findViewById(R.id.relativeLayout_dob);
+        constraintLayoutDOB = v.findViewById(R.id.constraintLayout_dob);
         linearLayoutContactInfo = v.findViewById(R.id.linearLayout_contact_info);
         unidentifiedCheckBox = v.findViewById(R.id.unidentified_checkbox);
     }
@@ -716,12 +707,12 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         unidentifiedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (unidentifiedCheckBox.isChecked()) {
                 linearLayoutName.setVisibility(View.GONE);
-                relativeLayoutDOB.setVisibility(View.GONE);
+                constraintLayoutDOB.setVisibility(View.GONE);
                 linearLayoutContactInfo.setVisibility(View.GONE);
                 isPatientUnidentified = true;
             } else {
                 linearLayoutName.setVisibility(View.VISIBLE);
-                relativeLayoutDOB.setVisibility(View.VISIBLE);
+                constraintLayoutDOB.setVisibility(View.VISIBLE);
                 linearLayoutContactInfo.setVisibility(View.VISIBLE);
                 isPatientUnidentified = false;
             }
@@ -788,7 +779,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private Snackbar createSnackbarLong(int stringId) {
-        Snackbar snackbar = Snackbar.make(relativeLayout, stringId, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(constraintLayout, stringId, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
         TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
@@ -919,8 +910,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         edPostal.setText("");
         gen.clearCheck();
 
-        fNameError.setText("");
-        lNameError.setText("");
         dobError.setText("");
         genderError.setText("");
         addrError.setText("");

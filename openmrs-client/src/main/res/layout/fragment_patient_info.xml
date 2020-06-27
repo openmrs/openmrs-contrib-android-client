@@ -12,9 +12,10 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/addEditRelativeLayout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addEditConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -22,39 +23,53 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/photo_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_short">
+                android:layout_margin="@dimen/margin_short"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/photo_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginHorizontal="14dp"
+                        android:layout_marginTop="14dp"
+                        android:fontFamily="@font/montserrat"
                         android:text="@string/patient_details_photo_label"
                         android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:focusable="true"
-                        android:focusableInTouchMode="true">
+                        android:focusableInTouchMode="true"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/photo_title">
 
                         <ImageView
                             android:id="@+id/patientPhoto"
@@ -76,51 +91,62 @@
                             android:layout_marginEnd="-25dp"
                             android:layout_marginRight="-25dp"
                             android:layout_marginBottom="10dp"
-                            android:src="@drawable/ic_photo_camera_white_48dp" />
+                            android:backgroundTint="@color/color_accent"
+                            android:src="@drawable/ic_photo_camera_white_48dp"
+                            android:tint="@color/color_accent"
+                            app:borderWidth="0dp"
+                            app:rippleColor="@color/color_accent"
+                            tools:targetApi="lollipop" />
                     </RelativeLayout>
 
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
-
             <androidx.cardview.widget.CardView
+                android:id="@+id/unknown_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp">
+                android:layout_margin="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/photo_cardview">
 
-                <CheckBox
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/unidentified_checkbox"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="12dp"
+                    android:fontFamily="@font/montserrat"
                     android:text="@string/unidentified_patient"
-                    android:padding="8dp"
                     android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
             </androidx.cardview.widget.CardView>
 
-
             <androidx.cardview.widget.CardView
+                android:id="@+id/demographic_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_short">
+                android:layout_margin="@dimen/margin_short"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/unknown_cardview">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="14dp"
+                    android:layout_marginVertical="14dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="8dp"
+                        android:fontFamily="@font/montserrat"
                         android:text="@string/demographics"
                         android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -132,32 +158,24 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_marginBottom="8dp"
                             android:text="@string/reg_ques_name"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="20dp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_marginBottom="8dp"
                             android:baselineAligned="false"
-                            android:weightSum="2">
+                            android:weightSum="2"
+                            android:layout_marginTop="8dp">
 
                             <com.google.android.material.textfield.TextInputLayout
                                 android:id="@+id/textInputLayoutFirstName"
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                app:errorEnabled="true"
-                                app:helperText="*Required">
+                                android:layout_weight="1">
 
                                 <EditText
                                     android:id="@+id/firstname"
@@ -178,8 +196,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
                                 android:layout_marginLeft="8dp"
-                                android:layout_weight="1"
-                                app:errorEnabled="true">
+                                android:layout_weight="1">
 
                                 <EditText
                                     android:id="@+id/middlename"
@@ -195,30 +212,12 @@
 
                         </LinearLayout>
 
-
-                        <TextView
-                            android:id="@+id/fnameerror"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_weight="1"
-                            android:padding="2dp"
-                            android:text="@string/emptyerror"
-                            android:textColor="@color/red"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:visibility="gone" />
-
                         <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/textInputLayoutSurname"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_marginBottom="8dp"
-                            app:helperText="*Required">
+                            android:layout_marginTop="4dp">
 
                             <EditText
                                 android:id="@+id/surname"
@@ -232,60 +231,36 @@
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
 
-                        <TextView
-                            android:id="@+id/lnameerror"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:padding="2dp"
-                            android:text="@string/emptyerror"
-                            android:textColor="@color/red"
-                            android:textSize="14sp"
-                            android:textStyle="bold"
-                            android:visibility="gone" />
-
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/linearLayout_gender"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginTop="20dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_marginTop="20dp"
                             android:text="@string/reg_ques_gender"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/gendererror"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginLeft="12dp"
                             android:padding="2dp"
                             android:text="@string/emptyerror"
                             android:textColor="@color/red"
                             android:textSize="14sp"
-                            android:textStyle="bold"
                             android:visibility="gone" />
 
                         <RadioGroup
                             android:id="@+id/gender"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginRight="12dp">
+                            android:layout_height="wrap_content">
 
                             <RadioButton
                                 android:id="@+id/male"
@@ -306,33 +281,27 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginTop="20dp">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginTop="20dp"
-                            android:layout_marginRight="12dp"
                             android:text="@string/reg_ques_dob"
-                            android:textSize="18sp"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/doberror"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginLeft="12dp"
                             android:padding="2dp"
                             android:textColor="@color/red"
                             android:textSize="14sp"
-                            android:textStyle="bold"
                             android:visibility="gone" />
 
-                        <RelativeLayout
-                            android:id="@+id/relativeLayout_dob"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/constraintLayout_dob"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp">
@@ -343,8 +312,9 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentTop="true"
-                                android:layout_marginLeft="12dp"
-                                android:layout_marginRight="12dp">
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintLeft_toLeftOf="parent">
 
                                 <EditText
                                     android:id="@+id/dob"
@@ -368,29 +338,31 @@
                                 android:layout_marginTop="8dp"
                                 android:layout_marginEnd="24dp"
                                 android:layout_marginRight="24dp"
-                                android:background="@drawable/ic_date_range_24dp" />
+                                android:background="@drawable/ic_date_range_24dp"
+                                app:layout_constraintTop_toTopOf="@id/textInputLayoutDOB"
+                                app:layout_constraintBottom_toBottomOf="@id/textInputLayoutDOB"
+                                app:layout_constraintRight_toRightOf="@id/textInputLayoutDOB"/>
 
                             <TextView
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:layout_marginLeft="12dp"
-                                android:layout_marginRight="12dp"
+                                android:layout_below="@id/textInputLayoutDOB"
+                                android:gravity="center"
                                 android:text="@string/label_or"
                                 android:textSize="18sp"
                                 android:textStyle="bold"
-                                android:layout_below="@id/textInputLayoutDOB"/>
+                                android:fontFamily="@font/montserrat"
+                                android:layout_marginTop="8dp"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintRight_toRightOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/textInputLayoutDOB"/>
 
-                        </RelativeLayout>
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="12dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginRight="12dp"
-                            android:layout_marginBottom="20dp"
                             android:baselineAligned="false"
                             android:weightSum="2">
 
@@ -439,65 +411,60 @@
                     </LinearLayout>
 
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
 
-
             <androidx.cardview.widget.CardView
+                android:id="@+id/address_cardview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_short">
+                android:layout_margin="@dimen/margin_short"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/demographic_cardview">
 
                 <LinearLayout
                     android:id="@+id/linearLayout_contact_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="14dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/montserrat"
                         android:text="@string/patient_contact_info_label"
                         android:textColor="?android:attr/textColorPrimary"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/addrerror"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
                         android:padding="2dp"
                         android:text="@string/atleastone"
                         android:textColor="@color/red"
                         android:textSize="14sp"
-                        android:textStyle="bold"
                         android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/countryerror"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
                         android:padding="2dp"
                         android:text="@string/incorrect_country"
                         android:textColor="@color/red"
                         android:textSize="14sp"
-                        android:textStyle="bold"
                         android:visibility="gone" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
                         android:layout_marginTop="20dp"
                         android:text="@string/reg_ques_address"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -505,10 +472,7 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginRight="12dp"
-                        app:helperText="*Required">
+                        android:layout_marginTop="8dp">
 
                         <EditText
                             android:id="@+id/addr1"
@@ -527,9 +491,7 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        app:errorEnabled="true">
+                        android:layout_marginTop="4dp">
 
                         <EditText
                             android:id="@+id/addr2"
@@ -543,67 +505,76 @@
                             android:textSize="14sp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_marginTop="10dp"
                         android:baselineAligned="false"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.5" />
+
                         <LinearLayout
+                            android:id="@+id/country_picker_layout"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:layout_marginEnd="4dp"
+                            android:layout_marginRight="8dp"
                             android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:background="@drawable/rectangle_transparent_box"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toLeftOf="@id/guideline"
+                            app:layout_constraintTop_toTopOf="parent">
 
                             <com.hbb20.CountryCodePicker
                                 android:id="@+id/ccp"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center"
-                                app:ccpDialog_textColor="?attr/colorControlNormal"
+                                app:ccpDialog_textColor="?android:attr/textColorPrimary"
                                 app:ccp_showFullName="true"
                                 app:ccp_showNameCode="false"
                                 app:ccp_showPhoneCode="false" />
                         </LinearLayout>
 
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/textInputLayoutPostal"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        <EditText
+                            android:id="@+id/postal"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="0dp"
                             android:layout_marginStart="8dp"
                             android:layout_marginLeft="8dp"
-                            android:layout_weight="1">
+                            android:background="@drawable/rectangle_transparent_box"
+                            android:digits="@string/alphanumeric_postal_code"
+                            android:focusable="true"
+                            android:hint="@string/patient_postal_label"
+                            android:imeOptions="actionDone"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:paddingStart="14dp"
+                            android:paddingLeft="14dp"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toRightOf="@id/guideline"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <EditText
-                                android:id="@+id/postal"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:digits="@string/alphanumeric_postal_code"
-                                android:focusable="true"
-                                android:hint="@string/patient_postal_label"
-                                android:imeOptions="actionDone"
-                                android:inputType="text"
-                                android:maxLines="1"
-                                android:textSize="14sp" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                    </LinearLayout>
-
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
                         android:baselineAligned="false"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginTop="4dp">
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -614,8 +585,6 @@
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginEnd="4dp"
-                                android:layout_marginRight="4dp"
                                 android:layout_toLeftOf="@id/city_progressBar">
 
                                 <AutoCompleteTextView
@@ -647,15 +616,12 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="4dp"
-                            android:layout_marginRight="4dp">
+                            android:layout_marginTop="4dp">
 
                             <AutoCompleteTextView
                                 android:id="@+id/state"
                                 android:layout_width="match_parent"
                                 android:layout_height="48dp"
-                                android:layout_marginStart="4dp"
-                                android:layout_marginLeft="4dp"
                                 android:focusable="true"
                                 android:hint="@string/patient_state_label"
                                 android:imeOptions="actionNext"
@@ -669,42 +635,22 @@
 
                     </LinearLayout>
 
-
-                    <!--<TextView-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginTop="20dp"-->
-                    <!--android:layout_marginLeft="12dp"-->
-                    <!--android:textSize="18sp"-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:textColor="#555"-->
-                    <!--android:text="@string/reg_ques_phno"/>-->
-
-                    <!--<EditText-->
-                    <!--android:id="@+id/phone"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="20dp"-->
-                    <!--android:layout_marginRight="20dp"-->
-                    <!--android:layout_marginBottom="20dp"-->
-                    <!--android:textSize="14sp"-->
-                    <!--android:focusable="true"-->
-                    <!--android:hint="@string/phone_hint"-->
-                    <!--android:inputType="phone"-->
-                    <!--android:singleLine="true" />-->
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
-    </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </ScrollView>
 
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

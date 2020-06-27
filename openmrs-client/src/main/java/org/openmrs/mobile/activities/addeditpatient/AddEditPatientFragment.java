@@ -713,12 +713,16 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             } else {
                 output = null;
             }
-        } else if (requestCode == ApplicationConstants.RequestCodes.IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
-            Uri sourceUri = data.getData();
-            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-            output = new File(dir, getUniqueImageFileName());
-            Uri destinationUri = Uri.fromFile(output);
-            openCropActivity(sourceUri, destinationUri);
+        } else if (requestCode == ApplicationConstants.RequestCodes.GALLERY_IMAGE_REQUEST) {
+            if(resultCode == Activity.RESULT_OK) {
+                Uri sourceUri = data.getData();
+                File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+                output = new File(dir, getUniqueImageFileName());
+                Uri destinationUri = Uri.fromFile(output);
+                openCropActivity(sourceUri, destinationUri);
+            } else {
+                output= null;
+            }
         } else if (requestCode == UCrop.REQUEST_CROP) {
             if (resultCode == Activity.RESULT_OK) {
                 patientPhoto = getResizedPortraitImage(output.getPath());

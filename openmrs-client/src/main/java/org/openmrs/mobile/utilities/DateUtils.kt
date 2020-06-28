@@ -36,8 +36,8 @@ object DateUtils {
     const val ZERO = 0L
 
     @JvmStatic
-    fun convertTime(time: Long?, dateFormat: String?, timeZone: TimeZone ): String {
-        val date = time?.let { Date(it) }
+    fun convertTime(time: Long, dateFormat: String?, timeZone: TimeZone): String {
+        val date:Date = Date(time)
         @SuppressLint("SimpleDateFormat") val format = SimpleDateFormat(dateFormat)
         format.timeZone = timeZone
         return format.format(date)
@@ -54,7 +54,7 @@ object DateUtils {
     }
 
     @JvmStatic
-    fun convertTime(timestamp: Long?): String {
+    fun convertTime(timestamp: Long): String {
         return convertTime(timestamp, DEFAULT_DATE_FORMAT, TimeZone.getDefault())
     }
 
@@ -191,9 +191,9 @@ object DateUtils {
             val year = bundledDate[2].toInt()
             val maxDays: Int
             // Leap year on February -> 29 days
-// Non leap year on February -> 28 days
-// April, June, September, November -> 30 days
-// January, March, May, July, August, October, December -> 31 days
+            // Non leap year on February -> 28 days
+            // April, June, September, November -> 30 days
+            // January, March, May, July, August, October, December -> 31 days
             maxDays = if (month == 2) {
                 if (year % 4 == 0) {
                     29
@@ -225,7 +225,7 @@ object DateUtils {
      * @return true if the given date matches the given format
      */
     @JvmStatic
-    fun isValidFormat(format: String?, dateAsString: String?): Boolean{
+    fun isValidFormat(format: String?, dateAsString: String?): Boolean {
         var date: Date? = null
         if (dateAsString != null) {
             try {

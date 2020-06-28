@@ -22,9 +22,7 @@ object ViewUtils {
     const val ILLEGAL_ADDRESS_CHARACTERS = "[$&+:;=\\\\?@|<>^%!]"
     @JvmStatic
     fun getInput(e: EditText): String? {
-        return if (e.text == null) {
-            null
-        } else if (isEmpty(e)) {
+        return if (e.text == null|| isEmpty(e)) {
             null
         } else {
             e.text.toString()

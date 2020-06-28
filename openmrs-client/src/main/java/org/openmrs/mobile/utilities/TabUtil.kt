@@ -22,6 +22,7 @@ object TabUtil {
     const val MIN_SCREEN_WIDTH_FOR_FINDPATIENTSACTIVITY = 480
     const val MIN_SCREEN_WIDTH_FOR_PATIENTDASHBOARDACTIVITY = 960
     private val mLogger = OpenMRS.getInstance().openMRSLogger
+
     @JvmStatic
     fun setHasEmbeddedTabs(inActionBar: Any, windowManager: WindowManager, minScreenWidth: Int) {
         val displaymetrics = DisplayMetrics()
@@ -42,26 +43,30 @@ object TabUtil {
             actionBarField.isAccessible = true
             inActionBar2 = actionBarField[inActionBar]
             actionBarClass = inActionBar2.javaClass
-        } catch (e: IllegalAccessException) {
-            mLogger.d(e.toString())
-        } catch (e: IllegalArgumentException) {
-            mLogger.d(e.toString())
-        } catch (e: NoSuchFieldException) {
-            inActionBar2 = inActionBar
-            mLogger.d(e.toString())
+
+        } catch (e: Exception) {
+            when (e) {
+                is IllegalAccessException, is IllegalArgumentException -> {
+                    mLogger.d(e.toString())
+                }
+            }
+            when (e) {
+                is NoSuchFieldException -> {
+                    inActionBar2 = inActionBar
+                    mLogger.d(e.toString())
+                }
+            }
         }
         try {
             val method = actionBarClass!!.getDeclaredMethod("setHasEmbeddedTabs", Boolean::class.javaObjectType)
             method.isAccessible = true
             method.invoke(inActionBar2, inHasEmbeddedTabs)
-        } catch (e: NoSuchMethodException) {
-            mLogger.d(e.toString())
-        } catch (e: InvocationTargetException) {
-            mLogger.d(e.toString())
-        } catch (e: IllegalAccessException) {
-            mLogger.d(e.toString())
-        } catch (e: IllegalArgumentException) {
-            mLogger.d(e.toString())
+        } catch (e: Exception) {
+            when (e) {
+                is NoSuchMethodException, is InvocationTargetException, is IllegalAccessException, is IllegalArgumentException -> {
+                    mLogger.d(e.toString())
+                }
+            }
         }
     }
 }

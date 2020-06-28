@@ -27,10 +27,12 @@ object FileUtils {
             while (ios.read(buffer).also { read = it } != -1) {
                 out.write(buffer, 0, read)
             }
-        } catch (e: FileNotFoundException) {
-            OpenMRS.getInstance().openMRSLogger.d(e.toString())
-        } catch (e: IOException) {
-            OpenMRS.getInstance().openMRSLogger.d(e.toString())
+        } catch (e: Exception) {
+            when (e) {
+                is FileNotFoundException, is IOException -> {
+                    OpenMRS.getInstance().openMRSLogger.d(e.toString())
+                }
+            }
         } finally {
             try {
                 ios?.close()

@@ -62,8 +62,7 @@ object FilterUtil {
     private fun getPatientSearchableWords(patient: Patient?): List<String?> {
         val patientIdentifier = patient?.identifier?.identifier
         val fullName = patient?.name?.nameString
-        val givenFamilyName = (patient?.name?.givenName + " "
-                + patient?.name?.familyName)
+        val givenFamilyName = "${patient?.name?.givenName} ${" "} ${patient?.name?.familyName}"
         val searchableWords: MutableList<String?> = ArrayList()
         searchableWords.add(patientIdentifier)
         searchableWords.add(fullName)
@@ -85,7 +84,7 @@ object FilterUtil {
     private fun doesAnySearchableWordFitQuery(searchableWords: List<String?>, query: String?): Boolean {
         var mutableQuery = query
         var i = 0
-        while (i<searchableWords.size) {
+        while (i < searchableWords.size) {
             var searchableWord = searchableWords[i]
             if (searchableWord != null) {
                 val queryLength = mutableQuery?.trim { it <= ' ' }?.length

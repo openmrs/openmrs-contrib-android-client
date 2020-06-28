@@ -5,7 +5,14 @@ import android.os.Build
 import android.os.Process
 import org.openmrs.mobile.application.OpenMRS
 import org.openmrs.mobile.application.OpenMRSLogger
-import java.io.*
+import java.io.File
+import java.io.FileInputStream
+import java.io.PrintWriter
+import java.io.StringWriter
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.io.FileNotFoundException
+import java.io.IOException
 import kotlin.system.exitProcess
 
 class ForceClose(private val myContext: Activity) : Thread.UncaughtExceptionHandler {
@@ -55,11 +62,10 @@ class ForceClose(private val myContext: Activity) : Thread.UncaughtExceptionHand
         exitProcess(10)
     }
 
-    fun getLogs(): String?{
+    fun getLogs(): String? {
         val mOpenMRSLogger = OpenMRSLogger()
         var textLogs: String? = ""
-        val filename = (OpenMRS.getInstance().openMRSDir
-                + File.separator + mOpenMRSLogger.logFilename)
+        val filename = "${OpenMRS.getInstance().openMRSDir} ${File.separator} ${mOpenMRSLogger.logFilename}"
         try {
             val myFile = File(filename)
             val fIn = FileInputStream(myFile)
@@ -69,13 +75,13 @@ class ForceClose(private val myContext: Activity) : Thread.UncaughtExceptionHand
                 textLogs += aDataRow
             }
             myReader.close()
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        } catch (e: IOException) {
-            e.printStackTrace()
+        }  catch (e: Exception) {
+            when (e) {
+                is FileNotFoundException, is IOException -> {
+                    e.printStackTrace()
+                }
+            }
         }
         return textLogs
     }
-
-
 }

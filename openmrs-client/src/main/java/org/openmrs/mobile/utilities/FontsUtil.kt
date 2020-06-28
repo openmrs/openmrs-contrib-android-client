@@ -20,7 +20,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import org.openmrs.mobile.application.OpenMRS
-import java.util.*
 
 object FontsUtil {
 
@@ -52,7 +51,7 @@ object FontsUtil {
         var openTypeFace = typefacesForFonts!![openFont]
         if (openTypeFace == null) {
             openTypeFace = Typeface.createFromAsset(OpenMRS.getInstance().assets,
-                    OPEN_FONTS_PATH + openFont.fontName)
+                    "$OPEN_FONTS_PATH ${openFont.fontName}")
             typefacesForFonts!![openFont] = openTypeFace
         }
         return openTypeFace

@@ -1,0 +1,51 @@
+ext.versions = [:]
+
+versions.compileSdk = 29
+versions.minSdk = 16
+versions.targetSdk = 29
+versions.appVersion = "2.8.3"
+
+// Libraries
+versions.material = '1.3.0-alpha01'
+versions.guava = '29.0-android'
+versions.supportVersion = '1.0.0'
+versions.recyclerView = '1.2.0-alpha03'
+versions.constraintlayout = '1.1.3'
+
+versions.retrofit = '2.3.0'
+versions.retrofitConverter = '2.1.0'
+versions.gson = '2.8.5'
+
+versions.rxjava = '1.3.4'
+versions.rxandroid = '1.2.1'
+versions.rxbinding = '1.0.0'
+
+versions.roomRuntime = '2.3.0-alpha01'
+versions.roomPersistence = '1.1.1'
+versions.roomCompiler = '2.1.0-alpha04'
+
+versions.chuckLibrary = '1.1.0'
+
+versions.workManager = '2.3.4'
+
+versions.seekbar = '1.0.1'
+versions.MPAndroidChart = 'v3.1.0'
+versions.showcaseview = '5.4.3'
+versions.jbcrypt = '0.4'
+versions.countryCodePicker = '2.4.0'
+versions.AppIntro = '6.0.0'
+versions.swipereveallayout = '1.4.1'
+
+versions.codec = '1.10'
+versions.sqlcipher = '4.1.3@aar'
+versions.jdeferred = '1.2.6'
+versions.legacySupport = '1.0.0'
+versions.multidex = '2.0.1'
+versions.jodaTime = '2.10.6'
+versions.kxml2 = '2.3.0'
+versions.permissionsdispatcher = '4.7.0'
+
+versions.leakcanary = '2.4'
+versions.placesAPI = '2.3.0'
+
+versions.coreTesting = '1.1.1'

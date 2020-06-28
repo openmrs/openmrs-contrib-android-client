@@ -642,7 +642,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         if (position == 0) {
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builder.build());
-            AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithCheck(AddEditPatientFragment.this);
+            AddEditPatientFragmentPermissionsDispatcher.capturePhotoWithPermissionCheck(AddEditPatientFragment.this);
         } else if (position == 1) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, ApplicationConstants.RequestCodes.GALLERY_IMAGE_REQUEST);
             if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {

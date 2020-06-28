@@ -16,13 +16,14 @@ package org.openmrs.mobile.utilities;
 
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class DayAxisValueFormatter implements IAxisValueFormatter {
+public class DayAxisValueFormatter extends ValueFormatter implements IAxisValueFormatter {
     private ArrayList<String> dates;
 
     public DayAxisValueFormatter(ArrayList<String> dateList) {

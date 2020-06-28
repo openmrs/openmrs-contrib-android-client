@@ -42,7 +42,7 @@ class IntroActivity : AppIntro2() {
                 title = getString(R.string.intro_register),
                 description = getString(R.string.intro_register_desc),
                 imageDrawable = R.drawable.ico_registry,
-                backgroundColor = R.color.color_accent
+                backgroundColor = Color.parseColor("F8793B")
         ))
         addSlide(AppIntroFragment.newInstance(
                 title = getString(R.string.intro_find),

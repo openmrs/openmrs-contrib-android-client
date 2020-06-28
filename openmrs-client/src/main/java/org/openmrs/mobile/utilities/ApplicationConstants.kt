@@ -50,6 +50,7 @@ object ApplicationConstants {
     const val BUNDLE = "bundle"
     const val URI_CONTENT = "content://"
     const val MIME_TYPE_VND = "vnd"
+    const val ASPECT_RATIO_FOR_CROPPING = 5f
 
     object OpenMRSSharedPreferenceNames {
         const val SHARED_PREFERENCES_NAME = "shared_preferences"
@@ -133,6 +134,8 @@ object ApplicationConstants {
         const val ADD_PROVIDER_REQ_CODE = 100
         const val EDIT_PROVIDER_REQ_CODE = 101
         const val START_SETTINGS_REQ_CODE = 102
+        const val IMAGE_REQUEST = 1
+        const val GALLERY_IMAGE_REQUEST = 2
     }
 
     object OpenMRSThemes {
@@ -141,9 +144,6 @@ object ApplicationConstants {
 
     object OpenMRSlanguage {
         const val KEY_LANGUAGE_MODE = "key_language_mode"
-
-        //using as a normal field not generating setters and getters
-        @JvmField
         val LANGUAGE_LIST = arrayOf("en", "hi")
     }
 

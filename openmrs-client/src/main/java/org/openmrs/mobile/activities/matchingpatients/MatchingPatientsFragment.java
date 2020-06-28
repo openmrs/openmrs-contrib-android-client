@@ -79,8 +79,8 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
         birthDate = root.findViewById(R.id.birthDate);
         address1 = root.findViewById(R.id.address1);
         address2 = root.findViewById(R.id.address2);
-        city = root.findViewById(R.id.city);
-        state = root.findViewById(R.id.state);
+        city = root.findViewById(R.id.cityAutoComplete);
+        state = root.findViewById(R.id.stateAutoComplete);
         country = root.findViewById(R.id.country);
         postalCode = root.findViewById(R.id.postalCode);
         mRecyclerView = root.findViewById(R.id.recyclerView);

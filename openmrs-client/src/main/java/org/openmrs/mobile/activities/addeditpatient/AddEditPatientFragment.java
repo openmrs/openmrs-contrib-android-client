@@ -43,16 +43,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -66,10 +56,7 @@ import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
 import com.google.android.libraries.places.api.model.TypeFilter;
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
 import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputLayout;
-import com.hbb20.CountryCodePicker;
 import com.yalantis.ucrop.UCrop;
 
 import org.jetbrains.annotations.NotNull;
@@ -85,6 +72,7 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientPhotoActivity;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
+import org.openmrs.mobile.databinding.FragmentPatientInfoBinding;
 import org.openmrs.mobile.listeners.watcher.PatientBirthdateValidatorWatcher;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PersonAddress;
@@ -105,6 +93,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -118,44 +107,13 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 @RuntimePermissions
 public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContract.Presenter> implements AddEditPatientContract.View, CameraOrGalleryPickerDialog.onInputSelected {
 
-    private RelativeLayout relativeLayout;
-    private LocalDate birthdate;
+    private FragmentPatientInfoBinding binding;
+    private LocalDate birthDate;
     private DateTime bdt;
-    private LinearLayout linearLayoutName;
-    private RelativeLayout relativeLayoutDOB;
-    private LinearLayout linearLayoutContactInfo;
-    private CheckBox unidentifiedCheckBox;
     private Boolean isPatientUnidentified = false;
-    private TextInputLayout firstNameTIL;
-    private TextInputLayout middleNameTIL;
-    private TextInputLayout lastNameTIL;
-    private TextInputLayout address1TIL;
-    private EditText edfName;
-    private EditText edmName;
-    private EditText edlName;
-    private EditText edDob;
-    private EditText edYear;
-    private EditText edMonth;
-    private EditText edAddr1;
-    private EditText edAddr2;
-    private AutoCompleteTextView edCity;
-    private AutoCompleteTextView edState;
-    private CountryCodePicker mCountryCodePicker;
-    private EditText edPostal;
-    private RadioGroup gen;
-    private ProgressBar progressBar;
-    private ProgressBar city_progressBar;
-    private TextView fNameError;
-    private TextView lNameError;
-    private TextView dobError;
-    private TextView genderError;
-    private TextView addrError;
-    private ImageButton datePicker;
     private DateTimeFormatter dateTimeFormatter;
-    private ImageView patientImageView;
     private ArrayList<String> cityList = new ArrayList<>();
     private PlacesClient placesClient;
-    private FloatingActionButton capturePhotoBtn;
     private Bitmap patientPhoto = null;
     private String patientName;
     private File output = null;
@@ -168,15 +126,14 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_patient_info, container, false);
+        binding = FragmentPatientInfoBinding.inflate(inflater, container, false);
         setHasOptionsMenu(true);
-        resolveViews(root);
         addListeners();
         initializePlaces(mPresenter.getPlaces());
         fillFields(mPresenter.getPatientToUpdate());
-        return root;
+        return binding.getRoot();
     }
 
     private void initializePlaces(PlacesClient places) {
@@ -185,7 +142,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     @Override
     public void finishPatientInfoActivity() {
-        getActivity().finish();
+        Objects.requireNonNull(getActivity()).finish();
     }
 
     @Override
@@ -202,40 +159,39 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         // Only two dedicated text views will be visible for error messages.
         // Rest error messages will be displayed in dedicated TextInputLayouts.
         if (dayOfBirthError) {
-            dobError.setVisibility(View.VISIBLE);
+            binding.dobError.setVisibility(View.VISIBLE);
 
             dateTimeFormatter = DateTimeFormat.forPattern(DateUtils.DEFAULT_DATE_FORMAT);
             String minimumDate = DateTime.now().minusYears(
                     ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE)
                     .toString(dateTimeFormatter);
             String maximumDate = DateTime.now().toString(dateTimeFormatter);
-            if (unidentifiedCheckBox.isChecked()) {
-                dobError.setText(getString(R.string.dob_error_for_unidentified));
+            if (binding.unidentifiedCheckbox.isChecked()) {
+                binding.dobError.setText(getString(R.string.dob_error_for_unidentified));
             } else {
-                dobError.setText(getString(R.string.dob_error, minimumDate, maximumDate));
+                binding.dobError.setText(getString(R.string.dob_error, minimumDate, maximumDate));
             }
         } else {
-            dobError.setVisibility(View.GONE);
+            binding.dobError.setVisibility(View.GONE);
         }
 
         if (genderError) {
-            this.genderError.setVisibility(View.VISIBLE);
+            this.binding.gendererror.setVisibility(View.VISIBLE);
         } else {
-            this.genderError.setVisibility(View.GONE);
+            this.binding.gendererror.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void scrollToTop() {
-        ScrollView scrollView = this.getActivity().findViewById(R.id.scrollView);
-        scrollView.smoothScrollTo(0, scrollView.getPaddingTop());
+        binding.scrollView.smoothScrollTo(0, binding.scrollView.getPaddingTop());
     }
 
     private Patient updatePatientWithData(Patient patient) {
         String emptyError = getString(R.string.emptyerror);
 
         // errors for the empty fields must be filtered
-        if (unidentifiedCheckBox.isChecked()) {
+        if (binding.unidentifiedCheckbox.isChecked()) {
 
             PersonName name = new PersonName();
             name.setFamilyName(getString(R.string.unidentified_patient_name));
@@ -249,42 +205,40 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
         } else {
             // Validate address
-            if (ViewUtils.isEmpty(edAddr1)
-                    && ViewUtils.isEmpty(edAddr2)
-                    && ViewUtils.isEmpty(edCity)
-                    && ViewUtils.isEmpty(edPostal)
-                    && ViewUtils.isCountryCodePickerEmpty(mCountryCodePicker)
-                    && ViewUtils.isEmpty(edState)) {
+            if (ViewUtils.isEmpty(binding.addressOne)
+                    && ViewUtils.isEmpty(binding.addressTwo)
+                    && ViewUtils.isEmpty(binding.cityAutoComplete)
+                    && ViewUtils.isEmpty(binding.postalCode)
+                    && ViewUtils.isCountryCodePickerEmpty(binding.countryCodeSpinner)
+                    && ViewUtils.isEmpty(binding.stateAutoComplete)) {
 
-                addrError.setText(R.string.atleastone);
-                address1TIL.setErrorEnabled(true);
-                address1TIL.setError(getString(R.string.atleastone));
-            } else if (!ViewUtils.validateText(ViewUtils.getInput(edAddr1), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
-                    || !ViewUtils.validateText(ViewUtils.getInput(edAddr2), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)) {
+                binding.addressError.setText(R.string.atleastone);
+                binding.textInputLayoutAddress.setErrorEnabled(true);
+                binding.textInputLayoutAddress.setError(getString(R.string.atleastone));
+            } else if (!ViewUtils.validateText(ViewUtils.getInput(binding.addressOne), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
+                    || !ViewUtils.validateText(ViewUtils.getInput(binding.addressTwo), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)) {
 
-                addrError.setText(getString(R.string.addr_invalid_error));
-                address1TIL.setErrorEnabled(true);
-                address1TIL.setError(getString(R.string.addr_invalid_error));
+                binding.addressError.setText(getString(R.string.addr_invalid_error));
+                binding.textInputLayoutAddress.setErrorEnabled(true);
+                binding.textInputLayoutAddress.setError(getString(R.string.addr_invalid_error));
             } else {
-                address1TIL.setErrorEnabled(false);
+                binding.textInputLayoutAddress.setErrorEnabled(false);
             }
 
             // Add address
             PersonAddress address = new PersonAddress();
-            address.setAddress1(ViewUtils.getInput(edAddr1));
-            address.setAddress2(ViewUtils.getInput(edAddr2));
-            address.setCityVillage(ViewUtils.getInput(edCity));
-            address.setPostalCode(ViewUtils.getInput(edPostal));
-            address.setCountry(mCountryCodePicker.getSelectedCountryName());
-            address.setStateProvince(ViewUtils.getInput(edState));
+            address.setAddress1(ViewUtils.getInput(binding.addressOne));
+            address.setAddress2(ViewUtils.getInput(binding.addressTwo));
+            address.setCityVillage(ViewUtils.getInput(binding.cityAutoComplete));
+            address.setPostalCode(ViewUtils.getInput(binding.postalCode));
+            address.setCountry(binding.countryCodeSpinner.getSelectedCountryName());
+            address.setStateProvince(ViewUtils.getInput(binding.stateAutoComplete));
             address.setPreferred(true);
 
             List<PersonAddress> addresses = new ArrayList<>();
             addresses.add(address);
             patient.setAddresses(addresses);
 
-            // Validate names
-            String givenNameEmpty = getString(R.string.fname_empty_error);
             // Invalid characters for given name only
             String givenNameError = getString(R.string.fname_invalid_error);
             // Invalid characters for the middle name
@@ -293,45 +247,40 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             String familyNameError = getString(R.string.lname_invalid_error);
 
             // First name validation
-            if (ViewUtils.isEmpty(edfName)) {
-                fNameError.setText(emptyError);
-                firstNameTIL.setErrorEnabled(true);
-                firstNameTIL.setError(emptyError);
-            } else if (!ViewUtils.validateText(ViewUtils.getInput(edfName), ViewUtils.ILLEGAL_CHARACTERS)) {
-                lNameError.setText(familyNameError);
-                firstNameTIL.setErrorEnabled(true);
-                firstNameTIL.setError(givenNameError);
+            if (ViewUtils.isEmpty(binding.firstName)) {
+                binding.textInputLayoutFirstName.setErrorEnabled(true);
+                binding.textInputLayoutFirstName.setError(emptyError);
+            } else if (!ViewUtils.validateText(ViewUtils.getInput(binding.firstName), ViewUtils.ILLEGAL_CHARACTERS)) {
+                binding.textInputLayoutFirstName.setErrorEnabled(true);
+                binding.textInputLayoutFirstName.setError(givenNameError);
             } else {
-                firstNameTIL.setErrorEnabled(false);
+                binding.textInputLayoutFirstName.setErrorEnabled(false);
             }
 
             // Middle name validation (can be empty)
-            if (!ViewUtils.validateText(ViewUtils.getInput(edmName), ViewUtils.ILLEGAL_CHARACTERS)) {
-                lNameError.setText(familyNameError);
-                middleNameTIL.setErrorEnabled(true);
-                middleNameTIL.setError(middleNameError);
+            if (!ViewUtils.validateText(ViewUtils.getInput(binding.middlename), ViewUtils.ILLEGAL_CHARACTERS)) {
+                binding.textInputLayoutMiddlename.setErrorEnabled(true);
+                binding.textInputLayoutMiddlename.setError(middleNameError);
             } else {
-                middleNameTIL.setErrorEnabled(false);
+                binding.textInputLayoutMiddlename.setErrorEnabled(false);
             }
 
             // Family name validation
-            if (ViewUtils.isEmpty(edlName)) {
-                lNameError.setText(emptyError);
-                lastNameTIL.setErrorEnabled(true);
-                lastNameTIL.setError(emptyError);
-            } else if (!ViewUtils.validateText(ViewUtils.getInput(edlName), ViewUtils.ILLEGAL_CHARACTERS)) {
-                lNameError.setText(familyNameError);
-                lastNameTIL.setErrorEnabled(true);
-                lastNameTIL.setError(familyNameError);
+            if (ViewUtils.isEmpty(binding.surname)) {
+                binding.textInputLayoutSurname.setErrorEnabled(true);
+                binding.textInputLayoutSurname.setError(emptyError);
+            } else if (!ViewUtils.validateText(ViewUtils.getInput(binding.surname), ViewUtils.ILLEGAL_CHARACTERS)) {
+                binding.textInputLayoutSurname.setErrorEnabled(true);
+                binding.textInputLayoutSurname.setError(familyNameError);
             } else {
-                lastNameTIL.setErrorEnabled(false);
+                binding.textInputLayoutSurname.setErrorEnabled(false);
             }
 
             // Add names
             PersonName name = new PersonName();
-            name.setFamilyName(ViewUtils.getInput(edlName));
-            name.setGivenName(ViewUtils.getInput(edfName));
-            name.setMiddleName(ViewUtils.getInput(edmName));
+            name.setFamilyName(ViewUtils.getInput(binding.surname));
+            name.setGivenName(ViewUtils.getInput(binding.firstName));
+            name.setMiddleName(ViewUtils.getInput(binding.middlename));
 
             List<PersonName> names = new ArrayList<>();
             names.add(name);
@@ -339,12 +288,12 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         }
         // Add birthdate
         String birthdate = null;
-        if (ViewUtils.isEmpty(edDob)) {
-            if (!StringUtils.isBlank(ViewUtils.getInput(edYear)) || !StringUtils.isBlank(ViewUtils.getInput(edMonth))) {
+        if (ViewUtils.isEmpty(binding.dobEditText)) {
+            if (!StringUtils.isBlank(ViewUtils.getInput(binding.estimatedYear)) || !StringUtils.isBlank(ViewUtils.getInput(binding.estimatedMonth))) {
                 dateTimeFormatter = DateTimeFormat.forPattern(DateUtils.OPEN_MRS_REQUEST_PATIENT_FORMAT);
 
-                int yeardiff = ViewUtils.isEmpty(edYear) ? 0 : Integer.parseInt(edYear.getText().toString());
-                int mondiff = ViewUtils.isEmpty(edMonth) ? 0 : Integer.parseInt(edMonth.getText().toString());
+                int yeardiff = ViewUtils.isEmpty(binding.estimatedYear) ? 0 : Integer.parseInt(binding.estimatedYear.getText().toString());
+                int mondiff = ViewUtils.isEmpty(binding.estimatedMonth) ? 0 : Integer.parseInt(binding.estimatedMonth.getText().toString());
                 LocalDate now = new LocalDate();
                 bdt = now.toDateTimeAtStartOfDay().toDateTime();
                 bdt = bdt.minusYears(yeardiff);
@@ -353,7 +302,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 birthdate = dateTimeFormatter.print(bdt);
             }
         } else {
-            String unvalidatedDate = edDob.getText().toString().trim();
+            String unvalidatedDate = binding.dobEditText.getText().toString().trim();
 
             DateTime minDateOfBirth = DateTime.now().minusYears(
                     ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE);
@@ -371,7 +320,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
         // Validating gender
         String[] genderChoices = {StringValue.MALE, StringValue.FEMALE};
-        int index = gen.indexOfChild(getActivity().findViewById(gen.getCheckedRadioButtonId()));
+        int index = binding.gender.indexOfChild(getActivity().findViewById(binding.gender.getCheckedRadioButtonId()));
         if (index != -1) {
             patient.setGender(genderChoices[index]);
         } else {
@@ -409,7 +358,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     @Override
     public void setProgressBarVisibility(boolean visibility) {
-        progressBar.setVisibility(visibility ? View.VISIBLE : View.GONE);
+        binding.progressBar.setVisibility(visibility ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -440,63 +389,23 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     @Override
     public boolean areFieldsNotEmpty() {
-        return (!ViewUtils.isEmpty(edfName) ||
-                (!ViewUtils.isEmpty(edmName)) ||
-                (!ViewUtils.isEmpty(edlName)) ||
-                (!ViewUtils.isEmpty(edDob)) ||
-                (!ViewUtils.isEmpty(edYear)) ||
-                (!ViewUtils.isEmpty(edAddr1)) ||
-                (!ViewUtils.isEmpty(edAddr2)) ||
-                (!ViewUtils.isEmpty(edCity)) ||
-                (!ViewUtils.isEmpty(edState)) ||
-                (!ViewUtils.isCountryCodePickerEmpty(mCountryCodePicker)) ||
-                (!ViewUtils.isEmpty(edPostal)));
-    }
-
-    private void resolveViews(View v) {
-        relativeLayout = v.findViewById(R.id.addEditRelativeLayout);
-        edfName = v.findViewById(R.id.firstname);
-        edmName = v.findViewById(R.id.middlename);
-        edlName = v.findViewById(R.id.surname);
-        edDob = v.findViewById(R.id.dob);
-        edYear = v.findViewById(R.id.estyr);
-        edMonth = v.findViewById(R.id.estmonth);
-        edAddr1 = v.findViewById(R.id.addr1);
-        edAddr2 = v.findViewById(R.id.addr2);
-        edCity = v.findViewById(R.id.city);
-        edState = v.findViewById(R.id.state);
-        mCountryCodePicker = v.findViewById(R.id.ccp);
-        edPostal = v.findViewById(R.id.postal);
-
-        gen = v.findViewById(R.id.gender);
-        progressBar = v.findViewById(R.id.progress_bar);
-        city_progressBar = v.findViewById(R.id.city_progressBar);
-
-        fNameError = v.findViewById(R.id.fnameerror);
-        lNameError = v.findViewById(R.id.lnameerror);
-        dobError = v.findViewById(R.id.doberror);
-        genderError = v.findViewById(R.id.gendererror);
-        addrError = v.findViewById(R.id.addrerror);
-
-        datePicker = v.findViewById(R.id.btn_datepicker);
-        capturePhotoBtn = v.findViewById(R.id.capture_photo);
-        patientImageView = v.findViewById(R.id.patientPhoto);
-
-        firstNameTIL = v.findViewById(R.id.textInputLayoutFirstName);
-        middleNameTIL = v.findViewById(R.id.textInputLayoutMiddlename);
-        lastNameTIL = v.findViewById(R.id.textInputLayoutSurname);
-        address1TIL = v.findViewById(R.id.textInputLayoutAddress);
-
-        linearLayoutName = v.findViewById(R.id.linearLayout_name);
-        relativeLayoutDOB = v.findViewById(R.id.relativeLayout_dob);
-        linearLayoutContactInfo = v.findViewById(R.id.linearLayout_contact_info);
-        unidentifiedCheckBox = v.findViewById(R.id.unidentified_checkbox);
+        return (!ViewUtils.isEmpty(binding.firstName) ||
+                (!ViewUtils.isEmpty(binding.middlename)) ||
+                (!ViewUtils.isEmpty(binding.surname)) ||
+                (!ViewUtils.isEmpty(binding.dobEditText)) ||
+                (!ViewUtils.isEmpty(binding.estimatedYear)) ||
+                (!ViewUtils.isEmpty(binding.addressOne)) ||
+                (!ViewUtils.isEmpty(binding.addressTwo)) ||
+                (!ViewUtils.isEmpty(binding.cityAutoComplete)) ||
+                (!ViewUtils.isEmpty(binding.stateAutoComplete)) ||
+                (!ViewUtils.isCountryCodePickerEmpty(binding.countryCodeSpinner)) ||
+                (!ViewUtils.isEmpty(binding.postalCode)));
     }
 
     private void fillFields(final Patient patient) {
         if (patient != null) {
             //no need for un-identification option once the patient is registered
-            unidentifiedCheckBox.setVisibility(View.GONE);
+            binding.unidentifiedCheckbox.setVisibility(View.GONE);
 
             //Change to Update Patient Form
             String updatePatientStr = getResources().getString(R.string.action_update_patient_data);
@@ -505,40 +414,40 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             isUpdatePatient = true;
             updatedPatient = patient;
 
-            edfName.setText(patient.getName().getGivenName());
-            edmName.setText(patient.getName().getMiddleName());
-            edlName.setText(patient.getName().getFamilyName());
+            binding.firstName.setText(patient.getName().getGivenName());
+            binding.middlename.setText(patient.getName().getMiddleName());
+            binding.surname.setText(patient.getName().getFamilyName());
 
             patientName = patient.getName().getNameString();
 
             if (StringUtils.notNull(patient.getBirthdate()) || StringUtils.notEmpty(patient.getBirthdate())) {
                 bdt = DateUtils.convertTimeString(patient.getBirthdate());
-                edDob.setText(DateUtils.convertTime(DateUtils.convertTime(bdt.toString(), DateUtils.OPEN_MRS_REQUEST_FORMAT),
+                binding.dobEditText.setText(DateUtils.convertTime(DateUtils.convertTime(bdt.toString(), DateUtils.OPEN_MRS_REQUEST_FORMAT),
                         DateUtils.DEFAULT_DATE_FORMAT));
             }
 
             if ((StringValue.MALE).equals(patient.getGender())) {
-                gen.check(R.id.male);
+                binding.gender.check(R.id.male);
             } else if ((StringValue.FEMALE).equals(patient.getGender())) {
-                gen.check(R.id.female);
+                binding.gender.check(R.id.female);
             }
 
-            edAddr1.setText(patient.getAddress().getAddress1());
-            edAddr2.setText(patient.getAddress().getAddress2());
-            edCity.setText(patient.getAddress().getCityVillage());
-            edState.setText(patient.getAddress().getStateProvince());
-            edPostal.setText(patient.getAddress().getPostalCode());
+            binding.addressOne.setText(patient.getAddress().getAddress1());
+            binding.addressTwo.setText(patient.getAddress().getAddress2());
+            binding.cityAutoComplete.setText(patient.getAddress().getCityVillage());
+            binding.stateAutoComplete.setText(patient.getAddress().getStateProvince());
+            binding.postalCode.setText(patient.getAddress().getPostalCode());
 
             if (patient.getPhoto() != null) {
                 patientPhoto = patient.getPhoto();
                 Bitmap resizedPatientPhoto = patient.getResizedPhoto();
-                patientImageView.setImageBitmap(resizedPatientPhoto);
+                binding.patientPhoto.setImageBitmap(resizedPatientPhoto);
             }
         }
     }
 
     private void addSuggestionsToCities() {
-        String country_name = mCountryCodePicker.getSelectedCountryName();
+        String country_name = binding.countryCodeSpinner.getSelectedCountryName();
         country_name = country_name.replace("(", "");
         country_name = country_name.replace(")", "");
         country_name = country_name.replace(" ", "");
@@ -550,7 +459,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             String[] states = getContext().getResources().getStringArray(resourceId);
             ArrayAdapter<String> state_adapter = new ArrayAdapter<>(getContext(),
                     android.R.layout.simple_dropdown_item_1line, states);
-            edState.setAdapter(state_adapter);
+            binding.stateAutoComplete.setAdapter(state_adapter);
         }
     }
 
@@ -561,10 +470,10 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private void addListeners() {
-        gen.setOnCheckedChangeListener((radioGroup, checkedId) -> genderError.setVisibility(View.GONE));
-        edState.setOnFocusChangeListener((view, hasFocus) -> addSuggestionsToCities());
+        binding.gender.setOnCheckedChangeListener((radioGroup, checkedId) -> binding.gendererror.setVisibility(View.GONE));
+        binding.stateAutoComplete.setOnFocusChangeListener((view, hasFocus) -> addSuggestionsToCities());
 
-        edDob.addTextChangedListener(new TextWatcher() {
+        binding.dobEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 // Only needs afterTextChanged method from TextWacher
@@ -579,13 +488,13 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             public void afterTextChanged(Editable s) {
                 // If a considerable amount of text is filled in edDob, then remove 'Estimated age' fields.
                 if (s.length() >= 8) {
-                    edMonth.getText().clear();
-                    edYear.getText().clear();
+                    binding.estimatedMonth.getText().clear();
+                    binding.estimatedYear.getText().clear();
                 }
             }
         });
 
-        datePicker.setOnClickListener(v -> {
+        binding.datePicker.setOnClickListener(v -> {
             int cYear;
             int cMonth;
             int cDay;
@@ -601,21 +510,21 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 cDay = bdt.getDayOfMonth();
             }
 
-            edMonth.getText().clear();
-            edYear.getText().clear();
+            binding.estimatedMonth.getText().clear();
+            binding.estimatedYear.getText().clear();
 
             DatePickerDialog mDatePicker = new DatePickerDialog(AddEditPatientFragment.this.getActivity(), (datePicker, selectedYear, selectedMonth, selectedDay) -> {
                 int adjustedMonth = selectedMonth + 1;
-                edDob.setText(selectedDay + "/" + adjustedMonth + "/" + selectedYear);
-                birthdate = new LocalDate(selectedYear, adjustedMonth, selectedDay);
-                bdt = birthdate.toDateTimeAtStartOfDay().toDateTime();
+                binding.dobEditText.setText(selectedDay + "/" + adjustedMonth + "/" + selectedYear);
+                birthDate = new LocalDate(selectedYear, adjustedMonth, selectedDay);
+                bdt = birthDate.toDateTimeAtStartOfDay().toDateTime();
             }, cYear, cMonth, cDay);
             mDatePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
             mDatePicker.setTitle(getString(R.string.date_picker_title));
             mDatePicker.show();
         });
 
-        capturePhotoBtn.setOnClickListener(view -> {
+        binding.capturePhoto.setOnClickListener(view -> {
             boolean showRemoveButton = true;
             if (patientPhoto == null)
                 showRemoveButton = false;
@@ -624,7 +533,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             cameraOrGalleryPickerDialog.show(getFragmentManager(), "tag");
         });
 
-        patientImageView.setOnClickListener(view -> {
+        binding.patientPhoto.setOnClickListener(view -> {
             if (output != null) {
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setDataAndType(Uri.fromFile(output), ApplicationConstants.IMAGE_JPEG);
@@ -639,12 +548,12 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             }
         });
 
-        TextWatcher textWatcher = new PatientBirthdateValidatorWatcher(edDob, edMonth, edYear);
-        edMonth.addTextChangedListener(textWatcher);
-        edYear.addTextChangedListener(textWatcher);
+        TextWatcher textWatcher = new PatientBirthdateValidatorWatcher(binding.dobEditText, binding.estimatedMonth, binding.estimatedYear);
+        binding.estimatedMonth.addTextChangedListener(textWatcher);
+        binding.estimatedYear.addTextChangedListener(textWatcher);
 
         //check for cities available on searching
-        edCity.addTextChangedListener(new TextWatcher() {
+        binding.cityAutoComplete.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -652,20 +561,20 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                city_progressBar.setVisibility(View.VISIBLE);
+                binding.cityProgressBar.setVisibility(View.VISIBLE);
                 cityList.clear();
 
                 AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
 
                 FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
-                        .setCountry(mCountryCodePicker.getSelectedCountryNameCode().toLowerCase())
+                        .setCountry(binding.countryCodeSpinner.getSelectedCountryNameCode().toLowerCase())
                         .setTypeFilter(TypeFilter.CITIES)
                         .setSessionToken(token)
-                        .setQuery(edCity.getText().toString())
+                        .setQuery(binding.cityAutoComplete.getText().toString())
                         .build();
 
                 placesClient.findAutocompletePredictions(request).addOnSuccessListener(response -> {
-                    city_progressBar.setVisibility(View.GONE);
+                    binding.cityProgressBar.setVisibility(View.GONE);
                     for (AutocompletePrediction autocompletePrediction : response.getAutocompletePredictions())
                         cityList.add(autocompletePrediction.getFullText(null).toString());
 
@@ -675,13 +584,13 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                         address[in] = cityList.get(in);
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_item, address);
 
-                    edCity.setAdapter(adapter);
+                    binding.cityAutoComplete.setAdapter(adapter);
 
-                    edCity.setOnItemClickListener((parent, view, position, id) -> {
+                    binding.cityAutoComplete.setOnItemClickListener((parent, view, position, id) -> {
                         String primary_text = response.getAutocompletePredictions().get(position).getPrimaryText(null).toString();
                         String secondary_text = response.getAutocompletePredictions().get(position).getSecondaryText(null).toString();
 
-                        edCity.setText(primary_text);
+                        binding.cityAutoComplete.setText(primary_text);
 
                         /**
                          * if it is a city , then format received will be :
@@ -693,9 +602,9 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                         if (secondary_text.contains(",")) {
                             int index = secondary_text.indexOf(',');
                             String state = secondary_text.substring(0, index);
-                            edState.setText(state);
+                            binding.stateAutoComplete.setText(state);
                         } else {
-                            edState.setText(primary_text);
+                            binding.stateAutoComplete.setText(primary_text);
                         }
                     });
                 }).addOnFailureListener((exception) -> {
@@ -703,7 +612,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                         ApiException apiException = (ApiException) exception;
                         Log.i("Place API", "Place not found: " + apiException.getStatusCode());
                     }
-                    city_progressBar.setVisibility(View.GONE);
+                    binding.cityProgressBar.setVisibility(View.GONE);
                 });
             }
 
@@ -713,16 +622,16 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             }
         });
 
-        unidentifiedCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (unidentifiedCheckBox.isChecked()) {
-                linearLayoutName.setVisibility(View.GONE);
-                relativeLayoutDOB.setVisibility(View.GONE);
-                linearLayoutContactInfo.setVisibility(View.GONE);
+        binding.unidentifiedCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (binding.unidentifiedCheckbox.isChecked()) {
+                binding.linearLayoutName.setVisibility(View.GONE);
+                binding.constraintLayoutDOB.setVisibility(View.GONE);
+                binding.linearLayoutContactInfo.setVisibility(View.GONE);
                 isPatientUnidentified = true;
             } else {
-                linearLayoutName.setVisibility(View.VISIBLE);
-                relativeLayoutDOB.setVisibility(View.VISIBLE);
-                linearLayoutContactInfo.setVisibility(View.VISIBLE);
+                binding.linearLayoutName.setVisibility(View.VISIBLE);
+                binding.constraintLayoutDOB.setVisibility(View.VISIBLE);
+                binding.linearLayoutContactInfo.setVisibility(View.VISIBLE);
                 isPatientUnidentified = false;
             }
         });
@@ -749,8 +658,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             i.setType("image/*");
             startActivityForResult(i, ApplicationConstants.RequestCodes.GALLERY_IMAGE_REQUEST);
         } else {
-            patientImageView.setImageResource(R.drawable.ic_person_grey_500_48dp);
-            patientImageView.invalidate();
+            binding.patientPhoto.setImageResource(R.drawable.ic_person_grey_500_48dp);
+            binding.patientPhoto.invalidate();
             patientPhoto = null;
         }
     }
@@ -788,7 +697,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     private Snackbar createSnackbarLong(int stringId) {
-        Snackbar snackbar = Snackbar.make(relativeLayout, stringId, Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(binding.addEditConstraintLayout, stringId, Snackbar.LENGTH_LONG);
         View sbView = snackbar.getView();
         TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
@@ -804,18 +713,22 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             } else {
                 output = null;
             }
-        } else if (requestCode == ApplicationConstants.RequestCodes.IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
-            Uri sourceUri = data.getData();
-            File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-            output = new File(dir, getUniqueImageFileName());
-            Uri destinationUri = Uri.fromFile(output);
-            openCropActivity(sourceUri, destinationUri);
+        } else if (requestCode == ApplicationConstants.RequestCodes.GALLERY_IMAGE_REQUEST) {
+            if(resultCode == Activity.RESULT_OK) {
+                Uri sourceUri = data.getData();
+                File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+                output = new File(dir, getUniqueImageFileName());
+                Uri destinationUri = Uri.fromFile(output);
+                openCropActivity(sourceUri, destinationUri);
+            } else {
+                output= null;
+            }
         } else if (requestCode == UCrop.REQUEST_CROP) {
             if (resultCode == Activity.RESULT_OK) {
                 patientPhoto = getResizedPortraitImage(output.getPath());
-                Bitmap bitmap = ThumbnailUtils.extractThumbnail(patientPhoto, patientImageView.getWidth(), patientImageView.getHeight());
-                patientImageView.setImageBitmap(bitmap);
-                patientImageView.invalidate();
+                Bitmap bitmap = ThumbnailUtils.extractThumbnail(patientPhoto, binding.patientPhoto.getWidth(), binding.patientPhoto.getHeight());
+                binding.patientPhoto.setImageBitmap(bitmap);
+                binding.patientPhoto.invalidate();
             } else {
                 output = null;
             }
@@ -905,32 +818,30 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     private void resetAction() {
 
-        edfName.setText("");
-        edmName.setText("");
-        edlName.setText("");
-        edDob.setText("");
-        edYear.setText("");
-        edMonth.setText("");
-        edAddr1.setText("");
-        edAddr2.setText("");
-        mCountryCodePicker.resetToDefaultCountry();
-        edCity.setText("");
-        edState.setText("");
-        edPostal.setText("");
-        gen.clearCheck();
+        binding.firstName.setText("");
+        binding.middlename.setText("");
+        binding.surname.setText("");
+        binding.dobEditText.setText("");
+        binding.estimatedYear.setText("");
+        binding.estimatedMonth.setText("");
+        binding.addressOne.setText("");
+        binding.addressTwo.setText("");
+        binding.countryCodeSpinner.resetToDefaultCountry();
+        binding.cityAutoComplete.setText("");
+        binding.stateAutoComplete.setText("");
+        binding.postalCode.setText("");
+        binding.gender.clearCheck();
 
-        fNameError.setText("");
-        lNameError.setText("");
-        dobError.setText("");
-        genderError.setText("");
-        addrError.setText("");
+        binding.dobError.setText("");
+        binding.gendererror.setText("");
+        binding.addressError.setText("");
 
-        firstNameTIL.setError("");
-        middleNameTIL.setError("");
-        lastNameTIL.setError("");
-        address1TIL.setError("");
+        binding.textInputLayoutFirstName.setError("");
+        binding.textInputLayoutMiddlename.setError("");
+        binding.textInputLayoutSurname.setError("");
+        binding.textInputLayoutAddress.setError("");
 
-        patientImageView.setImageResource(R.drawable.ic_person_grey_500_48dp);
+        binding.patientPhoto.setImageResource(R.drawable.ic_person_grey_500_48dp);
         patientPhoto = null;
         patientName = null;
         isUpdatePatient = false;

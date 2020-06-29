@@ -60,6 +60,7 @@ import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.activities.login.LoginFragment;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.visits.PatientVisitsFragment;
+import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardActivity;
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
@@ -80,7 +81,7 @@ public class CustomFragmentDialog extends DialogFragment {
 
     public enum OnClickAction {
         SET_URL, SHOW_URL_DIALOG, DISMISS_URL_DIALOG, DISMISS, LOGOUT, FINISH, INTERNET, UNAUTHORIZED, END_VISIT,
-        START_VISIT, LOGIN, REGISTER_PATIENT, CANCEL_REGISTERING, DELETE_PATIENT, MULTI_DELETE_PATIENT, SELECT_LOCATION
+        START_VISIT, LOGIN, REGISTER_PATIENT, CANCEL_REGISTERING, DELETE_PATIENT, MULTI_DELETE_PATIENT, SELECT_LOCATION, DELETE_PROVIDER
     }
 
     protected LayoutInflater mInflater;
@@ -287,7 +288,7 @@ public class CustomFragmentDialog extends DialogFragment {
         LinearLayout field = (LinearLayout) mInflater.inflate(R.layout.openmrs_text_view_field, null);
         TextView textView = field.findViewById(R.id.openmrsTextView);
 
-        if(message.contains(getString(R.string.location_dialog_current_location))) {
+        if (message.contains(getString(R.string.location_dialog_current_location))) {
             SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(message);
             StyleSpan styleSpan = new StyleSpan(Typeface.BOLD);
             spannableStringBuilder.setSpan(styleSpan, 18, message.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
@@ -431,6 +432,12 @@ public class CustomFragmentDialog extends DialogFragment {
                     dismiss();
                     activity.finish();
                     break;
+                case DELETE_PROVIDER:
+                    ProviderDashboardActivity providerDashboardActivity = (ProviderDashboardActivity) getActivity();
+                    providerDashboardActivity.mPresenter.deleteProvider();
+                    dismiss();
+                    providerDashboardActivity.finish();
+                    break;
                 case MULTI_DELETE_PATIENT:
                     SyncedPatientsActivity syncedPatientsActivity = (SyncedPatientsActivity) getActivity();
                     for (Patient patientItem : itemsToDelete) {
@@ -447,6 +454,7 @@ public class CustomFragmentDialog extends DialogFragment {
                     ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.SUCCESS, org.openmrs.mobile.R.string.location_successfully_updated);
                     dismiss();
                     break;
+
                 default:
                     break;
             }

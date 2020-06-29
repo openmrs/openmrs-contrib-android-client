@@ -73,14 +73,6 @@
                         android:textColor="@color/white"
                         android:textSize="24sp" />
 
-                    <ImageView
-                        android:id="@+id/provider_dashboard_edit_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_edit_white_24dp"
-                        android:layout_gravity="center_vertical"
-                        android:padding="@dimen/padding_16"/>
-
                 </LinearLayout>
 
 
@@ -92,9 +84,9 @@
             android:id="@+id/provider_dashboard_tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabGravity="fill"
             app:tabIndicatorColor="@color/white"
             app:tabMode="fixed"
-            app:tabGravity="fill"
             app:tabSelectedTextColor="@color/black"
             app:tabTextColor="@color/grey" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -117,5 +109,7 @@
 
         </FrameLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <include layout="@layout/custom_expandable_fab" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

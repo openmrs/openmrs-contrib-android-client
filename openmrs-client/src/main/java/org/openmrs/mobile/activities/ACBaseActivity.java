@@ -313,7 +313,18 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         bundle.setRightButtonText(getString(R.string.dialog_button_confirm));
         bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
         bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
-        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.DELET_PATIENT_DIALOG_TAG);
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.DELETE_PATIENT_DIALOG_TAG);
+    }
+
+    public void showDeleteProviderDialog(){
+        CustomDialogBundle bundle = new CustomDialogBundle();
+        bundle.setTitleViewMessage(getString(R.string.dialog_title_are_you_sure));
+        bundle.setTextViewMessage(getString(R.string.dialog_provider_retired));
+        bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.DELETE_PROVIDER);
+        bundle.setRightButtonText(getString(R.string.dialog_button_confirm));
+        bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
+        bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
+        createAndShowDialog(bundle, ApplicationConstants.DialogTAG.DELETE_PROVIDER_DIALOG_TAG);
     }
 
     public void showMultiDeletePatientDialog(ArrayList<Patient> selectedItems) {

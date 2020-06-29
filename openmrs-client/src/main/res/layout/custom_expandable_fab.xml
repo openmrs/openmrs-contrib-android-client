@@ -6,7 +6,7 @@
     android:paddingBottom="@dimen/margin_long">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/activity_patient_dashboard_action_fab"
+        android:id="@+id/activity_dashboard_action_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
@@ -22,11 +22,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:visibility="gone"
-        app:layout_anchor="@id/activity_patient_dashboard_action_fab"
+        app:layout_anchor="@id/activity_dashboard_action_fab"
         app:layout_anchorGravity="center">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/activity_patient_dashboard_delete_fab"
+            android:id="@+id/activity_dashboard_delete_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/custom_fab_standard_21"
@@ -44,11 +44,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:visibility="gone"
-        app:layout_anchor="@id/activity_patient_dashboard_action_fab"
+        app:layout_anchor="@id/activity_dashboard_action_fab"
         app:layout_anchorGravity="center">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/activity_patient_dashboard_update_fab"
+            android:id="@+id/activity_dashboard_update_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/custom_fab_standard_21"

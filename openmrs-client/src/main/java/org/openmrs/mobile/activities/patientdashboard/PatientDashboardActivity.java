@@ -146,9 +146,9 @@ public class PatientDashboardActivity extends ACBaseActivity {
     }
 
     public void setupUpdateDeleteActionFAB() {
-        additionalActionsFAB = findViewById(R.id.activity_patient_dashboard_action_fab);
-        updateFAB = findViewById(R.id.activity_patient_dashboard_update_fab);
-        deleteFAB = findViewById(R.id.activity_patient_dashboard_delete_fab);
+        additionalActionsFAB = findViewById(R.id.activity_dashboard_action_fab);
+        updateFAB = findViewById(R.id.activity_dashboard_update_fab);
+        deleteFAB = findViewById(R.id.activity_dashboard_delete_fab);
         updateFabLayout = findViewById(R.id.custom_fab_update_ll);
         deleteFabLayout = findViewById(R.id.custom_fab_delete_ll);
 

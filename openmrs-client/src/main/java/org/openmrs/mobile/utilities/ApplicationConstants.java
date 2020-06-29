@@ -79,7 +79,8 @@ public abstract class ApplicationConstants {
         public static final String START_VISIT_IMPOSSIBLE_DIALOG_TAG = "startVisitImpossibleDialog";
         public static final String WARNING_LOST_DATA_DIALOG_TAG = "warningLostDataDialog";
         public static final String SIMILAR_PATIENTS_TAG = "similarPatientsDialogTag";
-        public static final String DELET_PATIENT_DIALOG_TAG = "deletePatientDialogTag";
+        public static final String DELETE_PATIENT_DIALOG_TAG = "deletePatientDialogTag";
+        public static final String DELETE_PROVIDER_DIALOG_TAG = "deleteProviderDialogTag";
         public static final String LOCATION_DIALOG_TAG = "locationDialogTag";
         public static final String CREDENTIAL_CHANGED_DIALOG_TAG = "locationDialogTag";
         public static final String MULTI_DELETE_PATIENT_DIALOG_TAG = "multiDeletePatientDialogTag";

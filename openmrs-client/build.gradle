@@ -17,12 +17,13 @@ plugins {
     id 'kotlin-android-extensions'
     id 'jacoco-android'
 }
+apply from: './versions.gradle'
 
-def version = "2.8.3"
+def version = versions.appVersion
 def GOOGLE_PLACE_API_KEY = System.getenv('GOOGLE_PLACE_API_KEY') ?: "YOUR_API_KEY"
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion versions.compileSdk
 
     def travisBuildNumber = System.getenv("TRAVIS_BUILD_NUMBER")
     def buildNumber = (travisBuildNumber) ? (travisBuildNumber as int) : 1
@@ -37,8 +38,8 @@ android {
         versionCode buildNumber
         multiDexEnabled true
 
-        minSdkVersion 16
-        targetSdkVersion 29
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targetSdk
 
         testApplicationId "org.openmrs.mobile.test"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -49,7 +50,7 @@ android {
             }
         }
         manifestPlaceholders = [
-            GOOGLE_PLACE_API_KEY : GOOGLE_PLACE_API_KEY
+                GOOGLE_PLACE_API_KEY: GOOGLE_PLACE_API_KEY
         ]
     }
 
@@ -117,15 +118,67 @@ repositories {
 }
 
 dependencies {
-    def support_version = '1.0.0-beta01'
-    def room_version = "2.1.0-alpha04"
-    def appcompat_version = "1.2.0-alpha01"
-    def material_version = "1.2.0-alpha03"
-    def worker_manager_version = "2.3.4"
 
-    implementation "androidx.work:work-runtime:$worker_manager_version"
-    implementation 'com.google.code.gson:gson:2.8.5'
-    implementation "androidx.appcompat:appcompat:$appcompat_version"
+    implementation "androidx.appcompat:appcompat:${versions.material}"
+    implementation "com.google.android.material:material:${versions.material}"
+    implementation "androidx.legacy:legacy-support-v13:${versions.supportVersion}"
+    implementation "androidx.gridlayout:gridlayout:${versions.supportVersion}"
+    implementation "androidx.recyclerview:recyclerview:${versions.recyclerView}"
+    implementation "androidx.cardview:cardview:${versions.supportVersion}"
+    implementation "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Networking and Processing
+    implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
+    implementation "com.squareup.retrofit2:converter-gson:${versions.retrofitConverter}"
+    implementation "com.google.code.gson:gson:${versions.gson}"
+
+    // Rx Java
+    implementation "io.reactivex:rxjava:${versions.rxjava}"
+    implementation "io.reactivex:rxandroid:${versions.rxandroid}"
+    implementation "com.jakewharton.rxbinding:rxbinding:${versions.rxbinding}"
+
+    // Database components
+    implementation "androidx.room:room-runtime:${versions.roomRuntime}"
+    implementation "android.arch.persistence.room:rxjava2:${versions.roomPersistence}"
+    //noinspection GradleDependency
+    annotationProcessor "androidx.room:room-compiler:${versions.roomCompiler}"
+    implementation "net.zetetic:android-database-sqlcipher:${versions.sqlcipher}"
+
+    // Work Manager
+    implementation "androidx.work:work-runtime:${versions.workManager}"
+
+    //http request Chuck Library
+    testImplementation "com.readystatesoftware.chuck:library:${versions.chuckLibrary}"
+    debugImplementation "com.readystatesoftware.chuck:library:${versions.chuckLibrary}"
+    releaseImplementation "com.readystatesoftware.chuck:library-no-op:${versions.chuckLibrary}"
+
+    // Third Party UI Libraries
+    implementation "org.adw.library:discrete-seekbar:${versions.seekbar}"
+    implementation "com.github.PhilJay:MPAndroidChart:${versions.MPAndroidChart}"
+    implementation "com.github.amlcurran.showcaseview:library:${versions.showcaseview}"
+    implementation "org.mindrot:jbcrypt:${versions.jbcrypt}"
+    implementation "com.hbb20:ccp:${versions.countryCodePicker}"
+    implementation "com.github.AppIntro:AppIntro:${versions.AppIntro}"
+    implementation "com.chauthai.swipereveallayout:swipe-reveal-layout:${versions.swipereveallayout}"
+    implementation 'com.github.yalantis:ucrop:2.2.5'
+
+    // Third Party Performance Libraries
+    implementation "org.permissionsdispatcher:permissionsdispatcher:${versions.permissionsdispatcher}"
+    annotationProcessor "org.permissionsdispatcher:permissionsdispatcher-processor:${versions.permissionsdispatcher}"
+    implementation "androidx.multidex:multidex:${versions.multidex}"
+    implementation "joda-time:joda-time:${versions.jodaTime}"
+    implementation "net.sf.kxml:kxml2:${versions.kxml2}"
+    implementation "commons-codec:commons-codec:${versions.codec}"
+    implementation "org.jdeferred:jdeferred-android-aar:${versions.jdeferred}"
+    implementation "com.google.guava:guava:${versions.guava}"
+
+    //Leak Canary
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}"
+    //google place api
+    implementation "com.google.android.libraries.places:places:${versions.placesAPI}"
+
+    // Test Implementations
     androidTestImplementation(
             'junit:junit:4.12',
             'androidx.test.ext:junit:1.1.1',
@@ -138,44 +191,6 @@ dependencies {
             'com.jayway.android.robotium:robotium-solo:4.2',
             'androidx.arch.core:core-testing:2.0.0'
     )
-
-    //http request chucker
-    testImplementation 'com.readystatesoftware.chuck:library:1.1.0'
-    debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
-    testImplementation 'com.readystatesoftware.chuck:library:1.1.0'
-    releaseImplementation 'com.readystatesoftware.chuck:library-no-op:1.1.0'
-    implementation 'com.google.guava:guava:27.0.1-android'
-
-    androidTestImplementation files('libs/the-missing-android-xml-junit-test-runner-release-1.3_2.jar')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.google.guava:guava:23.0'
-    implementation "androidx.appcompat:appcompat:$support_version"
-    implementation "androidx.gridlayout:gridlayout:$support_version"
-    implementation "androidx.recyclerview:recyclerview:$support_version"
-    implementation "androidx.cardview:cardview:$support_version"
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation "com.google.android.material:material:$material_version"
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
-    implementation 'commons-codec:commons-codec:1.10'
-    implementation 'net.zetetic:android-database-sqlcipher:4.1.3@aar'
-    implementation 'org.jdeferred:jdeferred-android-aar:1.2.4'
-    implementation "androidx.legacy:legacy-support-v13:$support_version"
-
-    implementation 'androidx.multidex:multidex:2.0.0'
-    implementation 'joda-time:joda-time:2.0'
-    implementation 'net.sf.kxml:kxml2:2.3.0'
-    implementation 'io.reactivex:rxjava:1.3.4'
-    implementation 'io.reactivex:rxandroid:1.2.1'
-    implementation 'com.jakewharton.rxbinding:rxbinding:1.0.0'
-    implementation 'com.github.hotchemi:permissionsdispatcher:2.3.1'
-    annotationProcessor 'com.github.hotchemi:permissionsdispatcher-processor:2.3.1'
-    implementation 'org.adw.library:discrete-seekbar:1.0.1'
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2'
-    implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
-    implementation 'org.mindrot:jbcrypt:0.4'
-    implementation 'com.hbb20:ccp:2.2.7'
-    implementation 'com.github.AppIntro:AppIntro:5.1.0'
     testImplementation(
             'org.mockito:mockito-core:2.8.9',
             'org.mockito:mockito-inline:2.13.0',
@@ -183,21 +198,7 @@ dependencies {
             'org.powermock:powermock-api-mockito2:2.0.2',
             'org.powermock:powermock-module-junit4:2.0.2'
     )
-    testImplementation 'android.arch.core:core-testing:1.1.1'
-    implementation 'android.arch.persistence.room:rxjava2:1.1.1'
-    // Room components
-    implementation "androidx.room:room-runtime:$room_version"
-    implementation 'android.arch.persistence.room:rxjava2:1.1.1'
-    annotationProcessor "androidx.room:room-compiler:$room_version"
-    implementation 'android.arch.persistence.room:rxjava2:1.1.1'
-    // Swipe reveal layout
-    implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
-    //Leak Canary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
-    //google place api
-    implementation 'com.google.android.libraries.places:places:2.1.0'
-    //Image Cropping Library
-    implementation 'com.github.yalantis:ucrop:2.2.5'
+    testImplementation "android.arch.core:core-testing:${versions.coreTesting}"
 }
 
 play {

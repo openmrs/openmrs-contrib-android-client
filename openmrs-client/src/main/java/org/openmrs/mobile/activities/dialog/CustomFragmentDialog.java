@@ -260,7 +260,7 @@ public class CustomFragmentDialog extends DialogFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new SimilarPatientsRecyclerViewAdapter((getActivity()), patientsList, newPatient));
         mFieldsLayout.addView(field);
-        recyclerView.setHasFixedSize(true);
+        recyclerView.setHasFixedSize(false);
         return recyclerView;
     }
 

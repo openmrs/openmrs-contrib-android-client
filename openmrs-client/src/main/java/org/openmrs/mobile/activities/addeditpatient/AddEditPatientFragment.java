@@ -42,6 +42,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -75,6 +76,7 @@ import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.databinding.FragmentPatientInfoBinding;
 import org.openmrs.mobile.listeners.watcher.PatientBirthdateValidatorWatcher;
+import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
@@ -122,6 +124,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private OpenMRSLogger logger = new OpenMRSLogger();
     private boolean isUpdatePatient = false;
     private Patient updatedPatient;
+    private String causeOfDeathUUID = "";
+    private Resource causeOfDeath;
 
     public static AddEditPatientFragment newInstance() {
         return new AddEditPatientFragment();
@@ -334,8 +338,13 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             patient.setPhoto(patientPhoto);
         }
 
-        patient.setDead(false);
-        patient.setCauseOfDeath(new Resource());
+        if (binding.deceasedCheckbox.isChecked() && !causeOfDeathUUID.isEmpty()) {
+            patient.setDead(true);
+            patient.setCauseOfDeath(causeOfDeath);
+        } else {
+            patient.setDead(false);
+            patient.setCauseOfDeath(new Resource());
+        }
         return patient;
     }
 
@@ -404,6 +413,48 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 (!ViewUtils.isEmpty(binding.stateAutoComplete)) ||
                 (!ViewUtils.isCountryCodePickerEmpty(binding.countryCodeSpinner)) ||
                 (!ViewUtils.isEmpty(binding.postalCode)));
+    }
+
+    @Override
+    public void cannotMarkDeceased(String message) {
+        binding.deceasedProgressBar.setVisibility(View.GONE);
+        binding.deceasedSpinner.setVisibility(View.GONE);
+        binding.deceasedCheckbox.setChecked(false);
+        if (message.isEmpty()) {
+            ToastUtil.error("Please add cause of death concepts in the server. Aborting !!!");
+        } else {
+            ToastUtil.error(message);
+        }
+    }
+
+    @Override
+    public void updateCauseOfDeathSpinner(Concept concept) {
+        binding.deceasedProgressBar.setVisibility(View.GONE);
+        binding.deceasedSpinner.setVisibility(View.VISIBLE);
+        List<Resource> answers = concept.getAnswers();
+        String[] answerDisplays = new String[answers.size()];
+        for (int i = 0; i < answers.size(); i++) {
+            answerDisplays[i] = answers.get(i).getDisplay();
+        }
+        ArrayAdapter<String> adapterAnswers = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, answerDisplays);
+        binding.deceasedSpinner.setAdapter(adapterAnswers);
+        binding.deceasedSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                String display = binding.deceasedSpinner.getSelectedItem().toString();
+                for (int i = 0; i < answers.size(); i++) {
+                    if (display.equals(answers.get(i).getDisplay())) {
+                        causeOfDeathUUID = answers.get(i).getUuid();
+                        causeOfDeath = answers.get(i);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     private void fillFields(final Patient patient) {
@@ -645,11 +696,11 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         binding.deceasedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(binding.deceasedCheckbox.isChecked()) {
+                if (binding.deceasedCheckbox.isChecked()) {
                     binding.deceasedProgressBar.setVisibility(View.VISIBLE);
+                    binding.deceasedSpinner.setVisibility(View.GONE);
                     mPresenter.getCauseOfDeathGlobalID();
-                }
-                else {
+                } else {
                     binding.deceasedProgressBar.setVisibility(View.GONE);
                     binding.deceasedSpinner.setVisibility(View.GONE);
                 }
@@ -734,14 +785,14 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 output = null;
             }
         } else if (requestCode == ApplicationConstants.RequestCodes.GALLERY_IMAGE_REQUEST) {
-            if(resultCode == Activity.RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 Uri sourceUri = data.getData();
                 File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
                 output = new File(dir, getUniqueImageFileName());
                 Uri destinationUri = Uri.fromFile(output);
                 openCropActivity(sourceUri, destinationUri);
             } else {
-                output= null;
+                output = null;
             }
         } else if (requestCode == UCrop.REQUEST_CROP) {
             if (resultCode == Activity.RESULT_OK) {

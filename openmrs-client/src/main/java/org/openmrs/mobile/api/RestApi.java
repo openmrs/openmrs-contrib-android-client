@@ -31,6 +31,7 @@ import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.models.Session;
+import org.openmrs.mobile.models.SystemProperty;
 import org.openmrs.mobile.models.SystemSetting;
 import org.openmrs.mobile.models.User;
 import org.openmrs.mobile.models.Visit;
@@ -61,6 +62,10 @@ public interface RestApi {
     Call<Results<Location>> getLocations(@Url String url,
                                          @Query("tag") String tag,
                                          @Query("v") String representation);
+
+    @GET("systemsetting")
+    Call<Results<SystemProperty>> getSystemProperty(@Query("q") String property,
+                                                    @Query("v") String representation);
 
     @GET("patientidentifiertype")
     Call<Results<IdentifierType>> getIdentifierTypes();
@@ -145,6 +150,9 @@ public interface RestApi {
 
     @GET("concept")
     Call<Results<Concept>> getConcepts(@Query("limit") int limit, @Query("startIndex") int startIndex);
+
+    @GET("concept/{uuid}")
+    Call<Concept> getConceptFromUUID(@Path("uuid") String uuid);
 
     @GET("systemsetting")
     Call<Results<SystemSetting>> getSystemSettingsByQuery(@Query("q") String query,

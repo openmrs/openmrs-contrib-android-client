@@ -252,6 +252,11 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         return placesClient;
     }
 
+    @Override
+    public void getCauseOfDeathGlobalID() {
+
+    }
+
     public void findSimilarPatients(final Patient patient) {
         if (NetworkUtils.isOnline()) {
             Call<Results<Module>> moduleCall = restApi.getModules(ApplicationConstants.API.FULL);

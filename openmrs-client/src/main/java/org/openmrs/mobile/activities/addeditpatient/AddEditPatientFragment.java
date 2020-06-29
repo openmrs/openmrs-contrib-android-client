@@ -43,6 +43,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -409,6 +410,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         if (patient != null) {
             //no need for un-identification option once the patient is registered
             binding.unidentifiedCheckbox.setVisibility(View.GONE);
+            // show deceased option only when patient is registered
+            binding.deceasedCardview.setVisibility(View.VISIBLE);
 
             //Change to Update Patient Form
             String updatePatientStr = getResources().getString(R.string.action_update_patient_data);
@@ -636,6 +639,20 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 binding.constraintLayoutDOB.setVisibility(View.VISIBLE);
                 binding.linearLayoutContactInfo.setVisibility(View.VISIBLE);
                 isPatientUnidentified = false;
+            }
+        });
+
+        binding.deceasedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(binding.deceasedCheckbox.isChecked()) {
+                    binding.deceasedProgressBar.setVisibility(View.VISIBLE);
+                    mPresenter.getCauseOfDeathGlobalID();
+                }
+                else {
+                    binding.deceasedProgressBar.setVisibility(View.GONE);
+                    binding.deceasedSpinner.setVisibility(View.GONE);
+                }
             }
         });
     }

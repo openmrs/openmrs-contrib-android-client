@@ -68,5 +68,7 @@ public interface AddEditPatientContract {
         void updatePatient(Patient patient);
 
         PlacesClient getPlaces();
+
+        void getCauseOfDeathGlobalID();
     }
 }

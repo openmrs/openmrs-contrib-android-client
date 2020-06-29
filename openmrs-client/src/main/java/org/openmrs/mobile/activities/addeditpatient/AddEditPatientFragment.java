@@ -77,6 +77,7 @@ import org.openmrs.mobile.listeners.watcher.PatientBirthdateValidatorWatcher;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
+import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.ImageUtils;
@@ -332,6 +333,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             patient.setPhoto(patientPhoto);
         }
 
+        patient.setDead(false);
+        patient.setCauseOfDeath(new Resource());
         return patient;
     }
 

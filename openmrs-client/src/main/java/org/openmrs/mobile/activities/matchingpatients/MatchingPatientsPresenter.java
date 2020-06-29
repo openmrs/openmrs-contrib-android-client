@@ -24,6 +24,7 @@ import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientDto;
+import org.openmrs.mobile.models.PatientDtoUpdate;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.PatientAndMatchingPatients;
 import org.openmrs.mobile.utilities.PatientMerger;
@@ -97,7 +98,7 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
     }
 
     private void updatePatient(final Patient patient) {
-        PatientDto patientDto = patient.getPatientDto();
+        PatientDtoUpdate patientDto = patient.getUpdatedPatientDto();
         patient.setUuid(null);
         Call<PatientDto> call = restApi.updatePatient(patientDto, patient.getUuid(), ApplicationConstants.API.FULL);
         call.enqueue(new Callback<PatientDto>() {

@@ -32,6 +32,7 @@ import org.openmrs.mobile.databases.tables.PatientTable;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientDto;
+import org.openmrs.mobile.models.PatientDtoUpdate;
 import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -110,7 +111,7 @@ public class UpdatePatientWorker extends Worker {
     }
 
     public void updatePatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
-        PatientDto patientDto = patient.getPatientDto();
+        PatientDtoUpdate patientDto = patient.getUpdatedPatientDto();
         if (NetworkUtils.isOnline()) {
             Call<PatientDto> call = restApi.updatePatient(patientDto, patient.getUuid(), "full");
             call.enqueue(new Callback<PatientDto>() {

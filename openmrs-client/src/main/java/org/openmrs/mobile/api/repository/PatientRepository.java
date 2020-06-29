@@ -46,6 +46,7 @@ import org.openmrs.mobile.models.IdentifierType;
 import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientDto;
+import org.openmrs.mobile.models.PatientDtoUpdate;
 import org.openmrs.mobile.models.PatientIdentifier;
 import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.models.Results;
@@ -216,7 +217,7 @@ public class PatientRepository extends RetrofitRepository {
      * Update Patient
      */
     public void updatePatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
-        PatientDto patientDto = patient.getPatientDto();
+        PatientDtoUpdate patientDto = patient.getUpdatedPatientDto();
         if (NetworkUtils.isOnline()) {
             Call<PatientDto> call = restApi.updatePatient(patientDto, patient.getUuid(), "full");
             call.enqueue(new Callback<PatientDto>() {

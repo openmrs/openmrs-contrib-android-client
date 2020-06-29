@@ -53,7 +53,7 @@ public class PatientTable extends Table<Patient> {
                 + Column.STATE + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.CITY + Column.Type.TEXT_TYPE_WITH_COMMA
                 + Column.ENCOUNTERS + Column.Type.TEXT_TYPE_WITH_COMMA
-                + Column.DEAD + Column.Type.BOOLEAN_WITHOUT_COMMA
+                + Column.DEAD + Column.Type.TEXT_TYPE
                 + ");";
     }
 

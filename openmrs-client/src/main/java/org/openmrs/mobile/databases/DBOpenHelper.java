@@ -132,8 +132,12 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(7, patient.getName().getFamilyName(), patientStatement);
             bindString(8, patient.getGender(), patientStatement);
             bindString(9, patient.getBirthdate(), patientStatement);
-            bindLong(10, null, patientStatement);
-            bindString(11, null, patientStatement);
+            bindLong(10, null, patientStatement); //death date
+            if(patient.getCauseOfDeath().getDisplay() == null) {
+                bindString(11, null, patientStatement); //causeOfDeath
+            } else {
+                bindString(11, patient.getCauseOfDeath().getDisplay(), patientStatement); //causeOfDeath
+            }
             bindString(12, null, patientStatement);
             if (null != patient.getPhoto()) {
                 bindBlob(13, bitmapToByteArray(patient.getPhoto()), patientStatement);
@@ -147,7 +151,8 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
                 bindString(19, patient.getAddress().getCityVillage(), patientStatement);
             }
             bindString(20, patient.getEncounters(), patientStatement);
-            bindString(21, null, patientStatement);
+            bindString(21, patient.getDead().toString(), patientStatement);
+            bindString(22, null, patientStatement);
             patientId = patientStatement.executeInsert();
             patientStatement.clearBindings();
             db.setTransactionSuccessful();
@@ -176,7 +181,16 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         newValues.put(PatientTable.Column.BIRTH_DATE, patient.getBirthdate());
 
         newValues.put(PatientTable.Column.DEATH_DATE, (Long) null);
-        newValues.put(PatientTable.Column.CAUSE_OF_DEATH, (String) null);
+        if(null != patient.getCauseOfDeath()) {
+            if (patient.getCauseOfDeath().getDisplay().isEmpty() || patient.getCauseOfDeath().getDisplay() == null) {
+                newValues.put(PatientTable.Column.CAUSE_OF_DEATH, (String) null);
+            } else {
+                newValues.put(PatientTable.Column.CAUSE_OF_DEATH, patient.getCauseOfDeath().getDisplay());
+            }
+        } else {
+            newValues.put(PatientTable.Column.CAUSE_OF_DEATH, (String) null);
+        }
+        newValues.put(PatientTable.Column.DEAD, patient.getDead().toString());
         newValues.put(PatientTable.Column.AGE, (String) null);
         if (null != patient.getPhoto()) {
             mLogger.i("inserting into db");

@@ -29,6 +29,7 @@ import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.models.Module;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PersonName;
+import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ModuleUtils;
@@ -38,6 +39,7 @@ import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.ViewUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -110,6 +112,8 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     @Override
     public void confirmUpdate(Patient patient) {
+        patient.setDead(true);
+        patient.setCauseOfDeath(new Resource("160148AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", "Malaria, confirmed", new ArrayList<>(), 160148));
         if (!registeringPatient && validate(patient)) {
             mPatientInfoView.setProgressBarVisibility(true);
             mPatientInfoView.hideSoftKeys();

@@ -62,11 +62,22 @@ public class Patient extends Person implements Serializable {
         return new Person(getNames(), getGender(), getBirthdate(), getBirthdateEstimated(), getAddresses(), getAttributes(), getPhoto(), getCauseOfDeath(), getDead());
     }
 
+    public PersonUpdate getUpdatedPerson() {
+        return new PersonUpdate(getNames(), getGender(), getBirthdate(), getBirthdateEstimated(), getAddresses(), getAttributes(), getPhoto(), getCauseOfDeath().getUuid(), getDead());
+    }
+
     public PatientDto getPatientDto() {
         PatientDto patientDto = new PatientDto();
         patientDto.setPerson(getPerson());
         patientDto.setIdentifiers(getIdentifiers());
         return patientDto;
+    }
+
+    public PatientDtoUpdate getUpdatedPatientDto() {
+        PatientDtoUpdate patientDtoUpdate = new PatientDtoUpdate();
+        patientDtoUpdate.setIdentifiers(getIdentifiers());
+        patientDtoUpdate.setPerson(getUpdatedPerson());
+        return patientDtoUpdate;
     }
 
     /**

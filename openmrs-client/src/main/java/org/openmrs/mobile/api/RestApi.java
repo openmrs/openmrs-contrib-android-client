@@ -25,6 +25,7 @@ import org.openmrs.mobile.models.Obscreate;
 import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientDto;
+import org.openmrs.mobile.models.PatientDtoUpdate;
 import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Resource;
@@ -130,7 +131,7 @@ public interface RestApi {
                                            @Query("order") String order);
 
     @POST("patient/{uuid}")
-    Call<PatientDto> updatePatient(@Body PatientDto patientDto, @Path("uuid") String uuid,
+    Call<PatientDto> updatePatient(@Body PatientDtoUpdate patientDto, @Path("uuid") String uuid,
                                    @Query("v") String representation);
 
     @GET("module")

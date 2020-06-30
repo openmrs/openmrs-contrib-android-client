@@ -35,6 +35,7 @@ import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonAttribute;
 import org.openmrs.mobile.models.PersonName;
 import org.openmrs.mobile.models.Provider;
+import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.ActiveAndroid.Cache;
 import org.openmrs.mobile.utilities.ActiveAndroid.TableInfo;
@@ -113,6 +114,8 @@ public abstract class ACUnitTestBase {
         patient.setAddresses(Collections.singletonList(createPersonAddress(id)));
         patient.setGender("M");
         patient.setBirthdate("25-02-2016");
+        patient.setDead(false);
+        patient.setCauseOfDeath(new Resource());
         return patient;
     }
 
@@ -145,7 +148,7 @@ public abstract class ACUnitTestBase {
     }
 
     protected Person createPerson(Long id) {
-        return new Person(Collections.singletonList(createPersonName(id)), "M", "25-02-2016", false, Collections.singletonList(createPersonAddress(id)), Collections.singletonList(createPersonAttributes(id)), null);
+        return new Person(Collections.singletonList(createPersonName(id)), "M", "25-02-2016", false, Collections.singletonList(createPersonAddress(id)), Collections.singletonList(createPersonAttributes(id)), null, new Resource(), false);
     }
 
     private PersonAttribute createPersonAttributes(Long id) {

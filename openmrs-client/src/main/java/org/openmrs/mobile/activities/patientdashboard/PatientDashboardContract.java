@@ -65,6 +65,8 @@ public interface PatientDashboardContract {
         void showStartVisitDialog(boolean isVisitPossible);
 
         void showStartVisitProgressDialog();
+
+        void setPatient(Patient mPatient);
     }
 
     interface ViewPatientVitals extends ViewPatientMain {

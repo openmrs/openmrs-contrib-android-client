@@ -35,6 +35,7 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -46,6 +47,7 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
     private TextView emptyList;
     private PatientDashboardActivity mPatientDashboardActivity;
     public static final int REQUEST_CODE_FOR_VISIT = 1;
+    private Patient patient;
 
     public static PatientVisitsFragment newInstance() {
         return new PatientVisitsFragment();
@@ -106,7 +108,11 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
     }
 
     public void startVisit() {
-        ((PatientDashboardVisitsPresenter) mPresenter).startVisit();
+        if (patient.getDead()) {
+            ToastUtil.error("Cannot start visit for deceased patient");
+        } else {
+            ((PatientDashboardVisitsPresenter) mPresenter).startVisit();
+        }
     }
 
     @Override
@@ -154,6 +160,11 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
     @Override
     public void showStartVisitProgressDialog() {
         ((PatientDashboardActivity) getActivity()).showProgressDialog(R.string.action_starting_visit);
+    }
+
+    @Override
+    public void setPatient(Patient mPatient) {
+        patient = mPatient;
     }
 
     @Override

@@ -440,4 +440,14 @@
 	<string name="admission_admitted_by">Admitted By :</string>
 	<string name="admission_provider_role">Provider Role :</string>
 	<string name="admission_admitted_to">Admitted To :</string>
+
+    // Marking Patient Deceased
+    <string name="no_death_concepts_in_server">कृपया सर्वर में मौत के संभावित कारणों को जोड़ें</string>
+    <string name="mark_patient_deceased">रोगी को चिह्नित करें?</string>
+    <string name="mark_patient_deceased_notice">रोगी को मृतक चिह्नित किया जाएगा और आगे कोई निरीक्षण संभव नहीं होगी.</string>
+    <string name="mark_patient_deceased_proceed">प्रोसीड</string>
+    <string name="mark_patient_deceased_invalid_uuid">कृपया सर्वर में एक मान्य concept UUID जोड़ें </string>
+    <string name="mark_patient_deceased_concept_has_no_answer">इस सेटिंग के लिए मृत्यु के कोई संभावित कारण नहीं मिले</string>
+    <string name="marked_patient_deceased_successfully">रोगी मृतक चिह्नित है — %1$s</string>
+    <string name="cannot_start_visit_for_deceased">मृतक मरीज के लिए निरीक्षण शुरू नहीं कर सकते</string>
 </resources>

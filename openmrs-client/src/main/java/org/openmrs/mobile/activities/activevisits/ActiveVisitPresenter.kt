@@ -48,7 +48,7 @@ class ActiveVisitPresenter(private var mActiveVisitsView: ActiveVisitsContract.V
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { visits: List<Visit?>? ->
-                            var visitList: List<Visit?>? = visits
+                            var visitList: List<Visit?>?
                             visitList = FilterUtil.getPatientsWithActiveVisitsFilteredByQuery(visits, query)
                             mActiveVisitsView.updateListVisibility(visitList)
                         },

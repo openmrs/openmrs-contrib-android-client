@@ -60,7 +60,7 @@ class FormEntryPatientListAdapter(private val mContext: FormEntryPatientListFrag
         if (null != patient?.gender) {
             holder.mGender.text = patient.gender
         }
-        holder.mBirthDate.text = DateUtils.convertTime(DateUtils.convertTime(patient?.birthdate))
+        holder.mBirthDate.text = DateUtils.convertTime(patient?.birthdate)?.let { DateUtils.convertTime(it) }
     }
 
     override fun onViewDetachedFromWindow(holder: PatientViewHolder) {

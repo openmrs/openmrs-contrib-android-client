@@ -55,7 +55,7 @@ public class PatientBirthdateValidatorWatcher implements TextWatcher {
             if (StringUtils.notEmpty(editable.toString()) && (Integer.parseInt(editable.toString()) > ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE)) {
                 //string resource added "patient_age_out_of_bounds_error_message"
                 ToastUtil
-                    .error("Patient's age must be between 0 and "+ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE);
+                    .error("Patient's age must be between 0 and "+ ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE);
                 edmonth.getText().clear();
                 edyr.getText().clear();
             }

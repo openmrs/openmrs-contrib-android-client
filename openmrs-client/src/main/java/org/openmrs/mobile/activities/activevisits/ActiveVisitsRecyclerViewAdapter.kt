@@ -51,7 +51,7 @@ class ActiveVisitsRecyclerViewAdapter(private val mContext: Context, private val
             visitViewHolder.mGender.text = patient.gender
         }
         try {
-            visitViewHolder.mBirthDate.text = DateUtils.convertTime(DateUtils.convertTime(patient.birthdate))
+            visitViewHolder.mBirthDate.text = DateUtils.convertTime(patient.birthdate)?.let { DateUtils.convertTime(it) }
         } catch (e: Exception) {
             visitViewHolder.mBirthDate.text = " "
         }

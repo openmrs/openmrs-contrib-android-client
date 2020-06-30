@@ -80,13 +80,13 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
             inputFields = formFieldsWrapper.getInputFields();
 
             for (InputField field : inputFields) {
-                View v = getActivity().findViewById(field.getId());
+                View v = getActivity().findViewById(field.id);
                 if (v != null && v instanceof DiscreteSeekBar) {
                     DiscreteSeekBar sb = (DiscreteSeekBar) v;
-                    sb.setProgress(field.getValue().intValue());
+                    sb.setProgress(Double.valueOf(field.value).intValue());
                 }
-                if (field.isRed()) {
-                    RangeEditText ed = getActivity().findViewById(field.getId());
+                if (field.isRed) {
+                    RangeEditText ed = getActivity().findViewById(field.id);
                     ed.setTextColor(ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
                 }
             }
@@ -112,11 +112,11 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
         RangeEditText ed = new RangeEditText(getActivity());
         DiscreteSeekBar dsb = new DiscreteSeekBar(getActivity());
         InputField field = new InputField(question.getQuestionOptions().getConcept());
-        InputField inputField = getInputField(field.getConcept());
+        InputField inputField = getInputField(field.concept);
         if (inputField != null) {
-            inputField.setId(field.getId());
+            inputField.id = field.id;
         } else {
-            field.setConcept(question.getQuestionOptions().getConcept());
+            field.concept = question.getQuestionOptions().getConcept();
             inputFields.add(field);
         }
         sectionLinearLayout.addView(generateTextView(question.getLabel()));
@@ -124,7 +124,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
         if ((question.getQuestionOptions().getMax() != null) && (!(question.getQuestionOptions().isAllowDecimal()))) {
             dsb.setMax((int) Double.parseDouble(question.getQuestionOptions().getMax()));
             dsb.setMin((int) Double.parseDouble(question.getQuestionOptions().getMin()));
-            dsb.setId(field.getId());
+            dsb.setId(field.id);
             sectionLinearLayout.addView(dsb, layoutParams);
         } else {
             ed.setName(question.getLabel());
@@ -138,7 +138,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
             } else {
                 ed.setInputType(InputType.TYPE_CLASS_NUMBER);
             }
-            ed.setId(field.getId());
+            ed.setId(field.id);
             sectionLinearLayout.addView(ed, layoutParams);
         }
     }
@@ -155,7 +155,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
 
     public InputField getInputField(String concept) {
         for (InputField inputField : inputFields) {
-            if (concept.equals(inputField.getConcept())) {
+            if (concept.equals(inputField.concept)) {
                 return inputField;
             }
         }
@@ -329,17 +329,17 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
     public List<InputField> getInputFields() {
         for (InputField field : inputFields) {
             try {
-                RangeEditText ed = getActivity().findViewById(field.getId());
+                RangeEditText ed = getActivity().findViewById(field.id);
                 if (!isEmpty(ed)) {
-                    field.setValue(Double.parseDouble(ed.getText().toString()));
+                    field.value = Double.parseDouble(ed.getText().toString());
                     boolean isRed = (ed.getCurrentTextColor() == ContextCompat.getColor(OpenMRS.getInstance(), R.color.red));
-                    field.setIsRed(isRed);
+                    field.isRed = isRed;
                 } else {
-                    field.setValue(-1.0);
+                    field.value = -1.0;
                 }
             } catch (ClassCastException e) {
-                DiscreteSeekBar dsb = getActivity().findViewById(field.getId());
-                field.setValue((double) dsb.getProgress());
+                DiscreteSeekBar dsb = getActivity().findViewById(field.id);
+                field.value = (double) dsb.getProgress();
             }
         }
 
@@ -361,7 +361,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
         boolean valid = true;
         for (InputField field : inputFields) {
             try {
-                RangeEditText ed = getActivity().findViewById(field.getId());
+                RangeEditText ed = getActivity().findViewById(field.id);
                 if (!isEmpty(ed)) {
                     allEmpty = false;
                     if (ed.getText().toString().charAt(0) != '.') {
@@ -376,7 +376,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
                     }
                 }
             } catch (ClassCastException e) {
-                DiscreteSeekBar dsb = getActivity().findViewById(field.getId());
+                DiscreteSeekBar dsb = getActivity().findViewById(field.id);
                 if (dsb.getProgress() > dsb.getMin()) {
                     allEmpty = false;
                 }

@@ -127,6 +127,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private Patient updatedPatient;
     private String causeOfDeathUUID = "";
     private Resource causeOfDeath;
+    AlertDialog alertDialog;
 
     public static AddEditPatientFragment newInstance() {
         return new AddEditPatientFragment();
@@ -886,7 +887,25 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     private void submitAction() {
         if (isUpdatePatient) {
-            mPresenter.confirmUpdate(updatePatient(updatedPatient));
+            if(binding.deceasedCheckbox.isChecked() && !causeOfDeathUUID.isEmpty()) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                alertDialogBuilder.setTitle("Mark Patient Deceased?");
+                // set dialog message
+                alertDialogBuilder
+                        .setMessage("The patient will be marked deceased.")
+                        .setCancelable(false)
+                        .setPositiveButton("Proceed", (dialog, id) -> {
+                            dialog.cancel();
+                            mPresenter.confirmUpdate(updatePatient(updatedPatient));
+                        })
+                        .setNegativeButton("Cancel", (dialog, id) -> {
+                            alertDialog.cancel();
+                        });
+                alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            } else {
+                mPresenter.confirmUpdate(updatePatient(updatedPatient));
+            }
         } else {
             mPresenter.confirmRegister(createPatient(), isPatientUnidentified);
         }

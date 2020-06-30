@@ -501,6 +501,10 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 Bitmap resizedPatientPhoto = patient.getResizedPhoto();
                 binding.patientPhoto.setImageBitmap(resizedPatientPhoto);
             }
+
+            if (patient.getDead()) {
+                binding.deceasedCheckbox.setChecked(true);
+            }
         }
     }
 

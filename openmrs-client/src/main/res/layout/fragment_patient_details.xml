@@ -23,6 +23,17 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content">
 
+		<TextView
+			android:id="@+id/deceasedView"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:layout_constraintTop_toTopOf="parent"
+			android:background="@drawable/rectangle_deceased_box"
+			android:layout_margin="12dp"
+			android:padding="8dp"
+			android:fontFamily="@font/roboto_medium"
+			android:visibility="gone"/>
+
 		<androidx.cardview.widget.CardView
 			android:id="@+id/patientPhotoCardView"
 			android:layout_width="80dp"
@@ -32,7 +43,7 @@
 			android:layout_marginTop="@dimen/activity_vertical_margin"
 			app:cardCornerRadius="40dp"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent">
+			app:layout_constraintTop_toBottomOf="@id/deceasedView">
 
 			<ImageView
 				android:id="@+id/patientPhoto"
@@ -56,7 +67,8 @@
 			android:textSize="@dimen/text_size_large"
 			android:textStyle="bold"
 			app:layout_constraintStart_toEndOf="@+id/patientPhotoCardView"
-			app:layout_constraintTop_toTopOf="parent" />
+			app:layout_constraintTop_toBottomOf="@id/deceasedView"
+			android:text="Rishabh Agarwal"/>
 
 		<TextView
 			android:id="@+id/patientDetailsGender"
@@ -67,7 +79,8 @@
 			android:layout_marginTop="16dp"
 			android:paddingLeft="10dp"
 			app:layout_constraintStart_toEndOf="@+id/patientPhotoCardView"
-			app:layout_constraintTop_toBottomOf="@+id/patientDetailsName" />
+			app:layout_constraintTop_toBottomOf="@+id/patientDetailsName"
+			android:text="male"/>
 
 		<View
 			android:id="@+id/view2"

@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.formlist;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,6 +55,8 @@ import retrofit2.Response;
 public class FormListFragment extends ACBaseFragment<FormListContract.Presenter> implements FormListContract.View {
     private ListView formList;
     private static Boolean formCreateFlag;
+    private Snackbar snackbar;
+    private View root;
 
     public static FormListFragment newInstance() {
 
@@ -61,7 +66,7 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_form_list, container, false);
+        root = inflater.inflate(R.layout.fragment_form_list, container, false);
 
         formList = root.findViewById(R.id.formlist);
         formList.setOnItemClickListener((parent, view, position, id) -> mPresenter.listItemClicked(position, ((TextView) view).getText().toString()));
@@ -71,6 +76,22 @@ public class FormListFragment extends ACBaseFragment<FormListContract.Presenter>
 
     @Override
     public void showFormList(String[] forms) {
+        if(forms.length == 0) {
+            snackbar = Snackbar.make(root, ApplicationConstants.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE);
+            View customSnackBarView = getLayoutInflater().inflate(R.layout.snackbar, null);
+            Snackbar.SnackbarLayout snackBarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+            snackBarLayout.setPadding(0, 0, 0, 0);
+
+            TextView noticeField = customSnackBarView.findViewById(R.id.snackbar_text);
+            noticeField.setText(R.string.snackbar_no_forms_found);
+            TextView dismissButton = customSnackBarView.findViewById(R.id.snackbar_action_button);
+            Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), ApplicationConstants.TypeFacePathConstants.ROBOTO_MEDIUM);
+            dismissButton.setTypeface(typeface);
+            dismissButton.setOnClickListener(v -> snackbar.dismiss());
+
+            snackBarLayout.addView(customSnackBarView, 0);
+            snackbar.show();
+        }
         formList.setAdapter(new ArrayAdapter<>(getContext(),
             android.R.layout.simple_list_item_1,
             android.R.id.text1,

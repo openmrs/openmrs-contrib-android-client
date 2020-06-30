@@ -423,8 +423,11 @@
     <string name="form_data_sync_is_off_message">सिंक बंद है। फ़ॉर्म डेटा सहेजने के लिए सिंक चालू करें।</string>
     <string name="form_data_saved_successfully">%1$s डेटा सफलतापूर्वक सहेजा गया</string>
     <string name="unidentified_patient_name">अज्ञात रोगी</string>
-    <string name="snackbar_server_error">The entered server is currently down, please select a different one.</string>
-    <string name="snackbar_choose">Choose</string>
+    <string name="snackbar_server_error">दर्ज किया गया सर्वर वर्तमान में नीचे है, कृपया एक अलग चुनें।</string>
+    <string name="snackbar_empty_visit_list">मेनू से फॉर्म एंट्री का चयन करें</string>
+    <string name="snackbar_no_forms_found">कोई फॉर्म नहीं मिला, एप्लिकेशन को पुनरारंभ करें।</string>
+    <string name="snackbar_choose">चुनें</string>
+    <string name="snackbar_select">चुनें</string>
     <string name="offline_provider_fetch">ऑफ़लाइन प्रदाता डेटाबेस के साथ सिंक नहीं कर सका, डिवाइस ऑफ़लाइन है</string>
     <string name="offline_provider_add">जब डिवाइस नेटवर्क से कनेक्ट हो जाता है तो प्रदाता सर्वर से सिंक हो जाएगा</string>
     <string name="offline_provider_edit">"जब डिवाइस नेटवर्क से कनेक्ट हो जाता है तो अपडेटेड प्रदाता सर्वर से सिंक हो जाएगा "</string>

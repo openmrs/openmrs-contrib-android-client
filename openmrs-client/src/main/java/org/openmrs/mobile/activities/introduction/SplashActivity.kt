@@ -35,7 +35,7 @@ class SplashActivity : ACBaseActivity() {
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val typeface = Typeface.createFromAsset(assets, "fonts/Roboto/Montserrat.ttf")
+        val typeface = Typeface.createFromAsset(assets, ApplicationConstants.TypeFacePathConstants.MONTSERRAT)
         with(binding) {
             organizationName.typeface = typeface
             organizationName.setText(R.string.organization_name)

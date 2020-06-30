@@ -27,6 +27,7 @@ import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.models.Concept;
+import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Module;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PersonName;
@@ -278,9 +279,9 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     }
 
     private void getConceptCauseOfDeath(String uuid) {
-        restApi.getConceptFromUUID(uuid).enqueue(new Callback<Concept>() {
+        restApi.getConceptFromUUID(uuid).enqueue(new Callback<ConceptAnswers>() {
             @Override
-            public void onResponse(Call<Concept> call, Response<Concept> response) {
+            public void onResponse(Call<ConceptAnswers> call, Response<ConceptAnswers> response) {
                 if(response.isSuccessful()) {
                     if(response.body().getAnswers().size() != 0) {
                         mPatientInfoView.updateCauseOfDeathSpinner(response.body());
@@ -294,7 +295,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             }
 
             @Override
-            public void onFailure(Call<Concept> call, Throwable t) {
+            public void onFailure(Call<ConceptAnswers> call, Throwable t) {
                 mPatientInfoView.cannotMarkDeceased(t.getMessage());
             }
         });

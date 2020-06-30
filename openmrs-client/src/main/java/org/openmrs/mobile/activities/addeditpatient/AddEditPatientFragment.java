@@ -77,6 +77,7 @@ import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.databinding.FragmentPatientInfoBinding;
 import org.openmrs.mobile.listeners.watcher.PatientBirthdateValidatorWatcher;
 import org.openmrs.mobile.models.Concept;
+import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
@@ -428,7 +429,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     @Override
-    public void updateCauseOfDeathSpinner(Concept concept) {
+    public void updateCauseOfDeathSpinner(ConceptAnswers concept) {
         binding.deceasedProgressBar.setVisibility(View.GONE);
         binding.deceasedSpinner.setVisibility(View.VISIBLE);
         List<Resource> answers = concept.getAnswers();

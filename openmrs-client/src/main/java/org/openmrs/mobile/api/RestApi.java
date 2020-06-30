@@ -11,6 +11,7 @@
 package org.openmrs.mobile.api;
 
 import org.openmrs.mobile.models.Concept;
+import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Encountercreate;
@@ -37,7 +38,6 @@ import org.openmrs.mobile.models.User;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.VisitType;
 
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -84,7 +84,7 @@ public interface RestApi {
 
     @POST("patient")
     Call<PatientDto> createPatient(
-        @Body PatientDto patientDto);
+            @Body PatientDto patientDto);
 
     @GET("patient")
     Call<Results<Patient>> getPatients(@Query("q") String searchQuery,
@@ -152,7 +152,7 @@ public interface RestApi {
     Call<Results<Concept>> getConcepts(@Query("limit") int limit, @Query("startIndex") int startIndex);
 
     @GET("concept/{uuid}")
-    Call<Concept> getConceptFromUUID(@Path("uuid") String uuid);
+    Call<ConceptAnswers> getConceptFromUUID(@Path("uuid") String uuid);
 
     @GET("systemsetting")
     Call<Results<SystemSetting>> getSystemSettingsByQuery(@Query("q") String query,

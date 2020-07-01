@@ -76,7 +76,6 @@ import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.databinding.FragmentPatientInfoBinding;
 import org.openmrs.mobile.listeners.watcher.PatientBirthdateValidatorWatcher;
-import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PersonAddress;
@@ -112,6 +111,7 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 @RuntimePermissions
 public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContract.Presenter> implements AddEditPatientContract.View, CameraOrGalleryPickerDialog.onInputSelected {
 
+    AlertDialog alertDialog;
     private FragmentPatientInfoBinding binding;
     private LocalDate birthDate;
     private DateTime bdt;
@@ -127,7 +127,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private Patient updatedPatient;
     private String causeOfDeathUUID = "";
     private Resource causeOfDeath;
-    AlertDialog alertDialog;
 
     public static AddEditPatientFragment newInstance() {
         return new AddEditPatientFragment();
@@ -423,10 +422,18 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         binding.deceasedSpinner.setVisibility(View.GONE);
         binding.deceasedCheckbox.setChecked(false);
         if (message.isEmpty()) {
-            ToastUtil.error("Please add cause of death concepts in the server. Aborting !!!");
+            ToastUtil.error(getString(R.string.no_death_concepts_in_server));
         } else {
             ToastUtil.error(message);
         }
+    }
+
+    @Override
+    public void cannotMarkDeceased(int messageID) {
+        binding.deceasedProgressBar.setVisibility(View.GONE);
+        binding.deceasedSpinner.setVisibility(View.GONE);
+        binding.deceasedCheckbox.setChecked(false);
+        ToastUtil.error(getString(messageID));
     }
 
     @Override
@@ -887,18 +894,18 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     private void submitAction() {
         if (isUpdatePatient) {
-            if(binding.deceasedCheckbox.isChecked() && !causeOfDeathUUID.isEmpty()) {
+            if (binding.deceasedCheckbox.isChecked() && !causeOfDeathUUID.isEmpty()) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-                alertDialogBuilder.setTitle("Mark Patient Deceased?");
+                alertDialogBuilder.setTitle(R.string.mark_patient_deceased);
                 // set dialog message
                 alertDialogBuilder
-                        .setMessage("The patient will be marked deceased.")
+                        .setMessage(R.string.mark_patient_deceased_notice)
                         .setCancelable(false)
-                        .setPositiveButton("Proceed", (dialog, id) -> {
+                        .setPositiveButton(R.string.mark_patient_deceased_proceed, (dialog, id) -> {
                             dialog.cancel();
                             mPresenter.confirmUpdate(updatePatient(updatedPatient));
                         })
-                        .setNegativeButton("Cancel", (dialog, id) -> {
+                        .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> {
                             alertDialog.cancel();
                         });
                 alertDialog = alertDialogBuilder.create();

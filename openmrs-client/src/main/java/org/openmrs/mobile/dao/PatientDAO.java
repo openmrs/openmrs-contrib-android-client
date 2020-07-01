@@ -28,6 +28,7 @@ import org.openmrs.mobile.models.PatientIdentifier;
 import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
 import org.openmrs.mobile.models.Resource;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
@@ -105,7 +106,7 @@ public class PatientDAO {
         }
         patient.getAddresses().add(cursorToAddress(cursor));
         if (cursor.getString(cursor.getColumnIndex(PatientTable.Column.CAUSE_OF_DEATH)) != null) {
-            patient.setCauseOfDeath(new Resource("", cursor.getString(cursor.getColumnIndex(PatientTable.Column.CAUSE_OF_DEATH)), new ArrayList<>(), 0));
+            patient.setCauseOfDeath(new Resource(ApplicationConstants.EMPTY_STRING, cursor.getString(cursor.getColumnIndex(PatientTable.Column.CAUSE_OF_DEATH)), new ArrayList<>(), 0));
         }
         if (cursor.getString(cursor.getColumnIndex(PatientTable.Column.DEAD)).equals("true")) {
             patient.setDead(true);

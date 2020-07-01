@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 
 import com.google.android.libraries.places.api.net.PlacesClient;
 
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -255,7 +256,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     @Override
     public void getCauseOfDeathGlobalID() {
-        restApi.getSystemProperty("concept.causeOfDeath", "full").enqueue(new Callback<Results<SystemProperty>>() {
+        restApi.getSystemProperty(ApplicationConstants.CAUSE_OF_DEATH, ApplicationConstants.REPRESENTATION_FULL).enqueue(new Callback<Results<SystemProperty>>() {
             @Override
             public void onResponse(Call<Results<SystemProperty>> call, Response<Results<SystemProperty>> response) {
                 if(response.isSuccessful()) {
@@ -263,11 +264,11 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
                     if(uuid.length() == 36) {
                         getConceptCauseOfDeath(uuid);
                     } else {
-                        mPatientInfoView.cannotMarkDeceased("Please add a valid conceptUUID in the server.");
+                        mPatientInfoView.cannotMarkDeceased(R.string.mark_patient_deceased_invalid_uuid);
                     }
                 }
                 else {
-                    mPatientInfoView.cannotMarkDeceased("");
+                    mPatientInfoView.cannotMarkDeceased(ApplicationConstants.EMPTY_STRING);
                 }
             }
 
@@ -286,11 +287,11 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
                     if(response.body().getAnswers().size() != 0) {
                         mPatientInfoView.updateCauseOfDeathSpinner(response.body());
                     } else {
-                        mPatientInfoView.cannotMarkDeceased("No cause of death found for this UUID");
+                        mPatientInfoView.cannotMarkDeceased(R.string.mark_patient_deceased_concept_has_no_answer);
                     }
                 }
                 else {
-                    mPatientInfoView.cannotMarkDeceased("");
+                    mPatientInfoView.cannotMarkDeceased(ApplicationConstants.EMPTY_STRING);
                 }
             }
 

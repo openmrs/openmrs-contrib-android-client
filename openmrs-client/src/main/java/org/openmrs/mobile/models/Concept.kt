@@ -29,7 +29,4 @@ class Concept : Resource() {
     @Expose
     var conceptClass: ConceptClass? = null
 
-    @SerializedName("answers")
-    @Expose
-    var answers: List<Resource> = ArrayList()
 }

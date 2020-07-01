@@ -129,7 +129,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
         if (patient.getDead()) {
             rootView.findViewById(R.id.deceasedView).setVisibility(View.VISIBLE);
-            ((TextView) rootView.findViewById(R.id.deceasedView)).setText("Patient is marked deceased -- " + patient.getCauseOfDeath().getDisplay());
+            ((TextView) rootView.findViewById(R.id.deceasedView)).setText(getString(R.string.marked_patient_deceased_successfully, patient.getCauseOfDeath().getDisplay()));
         }
     }
 

@@ -109,7 +109,7 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
 
     public void startVisit() {
         if (patient.getDead()) {
-            ToastUtil.error("Cannot start visit for deceased patient");
+            ToastUtil.error(getString(R.string.cannot_start_visit_for_deceased));
         } else {
             ((PatientDashboardVisitsPresenter) mPresenter).startVisit();
         }

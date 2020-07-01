@@ -492,4 +492,14 @@
 	<string name="admission_location_in_list" translatable="false">Admitted To %1$s</string>
     <string name="discharge_location_in_list" translatable="false">Discharged From %1$s</string>
     <string name="form_submitted_successfully" translatable="false">Form Submitted Successfully</string>
+
+    // Marking Patient Deceased
+    <string name="no_death_concepts_in_server">Please add cause of death concepts in the server</string>
+    <string name="mark_patient_deceased">Mark Patient Deceased?</string>
+    <string name="mark_patient_deceased_notice">The patient will be marked deceased.</string>
+    <string name="mark_patient_deceased_proceed">Proceed</string>
+    <string name="mark_patient_deceased_invalid_uuid">Please add a valid conceptUUID in the server.</string>
+    <string name="mark_patient_deceased_concept_has_no_answer">No cause of death found for this UUID</string>
+    <string name="marked_patient_deceased_successfully">Patient is marked deceased — %1$s</string>
+    <string name="cannot_start_visit_for_deceased">Cannot start visit for deceased patient</string>
 </resources>

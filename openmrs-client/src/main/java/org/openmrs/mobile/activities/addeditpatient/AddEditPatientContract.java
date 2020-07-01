@@ -55,6 +55,8 @@ public interface AddEditPatientContract {
 
         void cannotMarkDeceased(String message);
 
+        void cannotMarkDeceased(int messageID);
+
         void updateCauseOfDeathSpinner(ConceptAnswers concept);
     }
 

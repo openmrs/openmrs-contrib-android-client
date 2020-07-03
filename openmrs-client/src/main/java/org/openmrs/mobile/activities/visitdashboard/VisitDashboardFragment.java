@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.visitdashboard;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +26,8 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
@@ -42,11 +45,13 @@ import java.util.List;
 public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContract.Presenter> implements VisitDashboardContract.View {
     private ExpandableListView mExpandableListView;
     private TextView mEmptyListView;
+    private View root;
+    private Snackbar snackbar;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_visit_dashboard, container, false);
+        root = inflater.inflate(R.layout.fragment_visit_dashboard, container, false);
 
         mEmptyListView = root.findViewById(R.id.visitDashboardEmpty);
         mExpandableListView = root.findViewById(R.id.visitDashboardExpList);
@@ -93,10 +98,32 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
                 displayableEncounters.add(encounter);
             }
         }
+        setupSnackBar();
+        if (displayableEncounters.size() == 0) {
+            snackbar.show();
+        } else {
+            snackbar.dismiss();
+        }
 
         VisitExpandableListAdapter expandableListAdapter = new VisitExpandableListAdapter(this.getActivity(), displayableEncounters);
         mExpandableListView.setAdapter(expandableListAdapter);
         mExpandableListView.setGroupIndicator(null);
+    }
+
+    private void setupSnackBar() {
+        snackbar = Snackbar.make(root, ApplicationConstants.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE);
+        View customSnackBarView = getLayoutInflater().inflate(R.layout.snackbar, null);
+        Snackbar.SnackbarLayout snackBarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackBarLayout.setPadding(0, 0, 0, 0);
+
+        TextView noticeField = customSnackBarView.findViewById(R.id.snackbar_text);
+        noticeField.setText(R.string.snackbar_empty_visit_list);
+        TextView dismissButton = customSnackBarView.findViewById(R.id.snackbar_action_button);
+        dismissButton.setText(R.string.snackbar_select);
+        Typeface typeface = Typeface.createFromAsset(getActivity().getAssets(), ApplicationConstants.TypeFacePathConstants.ROBOTO_MEDIUM);
+        dismissButton.setTypeface(typeface);
+        dismissButton.setOnClickListener(v -> mPresenter.fillForm());
+        snackBarLayout.addView(customSnackBarView, 0);
     }
 
     @Override

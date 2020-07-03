@@ -155,4 +155,13 @@ object ApplicationConstants {
         const val SHOW_FORM_ENTRY = 4
         const val SHOW_MANAGE_PROVIDERS = 5
     }
+
+    object TypeFacePathConstants {
+        const val MONTSERRAT = "fonts/Roboto/Montserrat.ttf"
+        const val ROBOTO_LIGHT = "fonts/Roboto/Roboto-Light.ttf"
+        const val ROBOTO_LIGHT_ITALIC = "fonts/Roboto/Roboto-LightItalic.ttf"
+        const val ROBOTO_MEDIUM = "fonts/Roboto/Roboto-Medium.ttf"
+        const val ROBOTO_MEDIUM_ITALIC = "fonts/Roboto/Roboto-MediumItalic.ttf"
+        const val ROBOTO_REGULAR = "fonts/Roboto/Roboto-Regular.ttf"
+    }
 }

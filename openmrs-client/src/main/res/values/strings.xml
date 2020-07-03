@@ -476,7 +476,10 @@
 
     <string name="unidentified_patient_name" translatable="false">UNKNOWN</string>
     <string name="snackbar_server_error">The entered server is currently down, please select a different one.</string>
+    <string name="snackbar_empty_visit_list">Select Form Entry from the menu to begin analyzing this patient</string>
+    <string name="snackbar_no_forms_found">No Forms Found, try restarting the app.</string>
     <string name="snackbar_choose">Choose</string>
+    <string name="snackbar_select">Select</string>
     <string name="url_server_list" translatable="false">https://wiki.openmrs.org/display/ISM/OpenMRS+environments</string>
     <string name="copied_text" translatable="false">Copied Text</string>
 

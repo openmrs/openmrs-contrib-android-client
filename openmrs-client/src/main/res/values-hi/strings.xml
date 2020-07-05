@@ -145,6 +145,7 @@
     <string name="get_patient_from_database_error">डेटाबेस से रोगी लाने में विफल</string>
     <string name="action_start_visit">विज़िट शुरू करें </string>
     <string name="patient_scroll_tab_details_label">विवरण</string>
+    <string name="patient_scroll_tab_allergy_label">एलर्जी</string>
     <string name="patient_scroll_tab_diagnosis_label">निदान</string>
     <string name="patient_scroll_tab_visits_label">विज़िट</string>
     <string name="patient_scroll_tab_vitals_label">विटल्स</string>
@@ -453,4 +454,11 @@
     <string name="mark_patient_deceased_concept_has_no_answer">इस सेटिंग के लिए मृत्यु के कोई संभावित कारण नहीं मिले</string>
     <string name="marked_patient_deceased_successfully">रोगी मृतक चिह्नित है — %1$s</string>
     <string name="cannot_start_visit_for_deceased">मृतक मरीज के लिए निरीक्षण शुरू नहीं कर सकते</string>
+
+    <!--Allergies -->
+    <string name="allergy_comment">टिप्पणी</string>
+    <string name="allergy_severity">तीव्रता</string>
+    <string name="allergy_reactions">प्रतिक्रिया</string>
+    <string name="empty_allergy_list">रोगी को अभी तक कोई एलर्जी नहीं है।</string>
+    <string name="unable_to_fetch_allergies">एलर्जी लाने में असमर्थ!</string>
 </resources>

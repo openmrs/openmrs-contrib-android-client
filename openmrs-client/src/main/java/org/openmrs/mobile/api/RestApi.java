@@ -10,6 +10,7 @@
 
 package org.openmrs.mobile.api;
 
+import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Encounter;
@@ -174,4 +175,7 @@ public interface RestApi {
     @POST("provider/{uuid}")
     Call<Provider> UpdateProvider(@Path("uuid") String uuid,
                                   @Body Provider provider);
+
+    @GET("patient/{uuid}/allergy")
+    Call<Results<Allergy>> getAllergies(@Path("uuid") String uuid);
 }

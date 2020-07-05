@@ -26,6 +26,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.patientdashboard.allergy.PatientAllergyFragment;
+import org.openmrs.mobile.activities.patientdashboard.allergy.PatientDashboardAllergyPresenter;
 import org.openmrs.mobile.activities.patientdashboard.charts.PatientChartsFragment;
 import org.openmrs.mobile.activities.patientdashboard.charts.PatientDashboardChartsPresenter;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientDashboardDetailsPresenter;
@@ -37,13 +39,15 @@ import org.openmrs.mobile.activities.patientdashboard.visits.PatientVisitsFragme
 import org.openmrs.mobile.activities.patientdashboard.vitals.PatientDashboardVitalsPresenter;
 import org.openmrs.mobile.activities.patientdashboard.vitals.PatientVitalsFragment;
 
+import static org.openmrs.mobile.utilities.ApplicationConstants.PatientDashboardTabs.ALLERGY_TAB_POS;
+import static org.openmrs.mobile.utilities.ApplicationConstants.PatientDashboardTabs.CHARTS_TAB_POS;
+import static org.openmrs.mobile.utilities.ApplicationConstants.PatientDashboardTabs.DETAILS_TAB_POS;
+import static org.openmrs.mobile.utilities.ApplicationConstants.PatientDashboardTabs.DIAGNOSIS_TAB_POS;
+import static org.openmrs.mobile.utilities.ApplicationConstants.PatientDashboardTabs.TAB_COUNT;
+import static org.openmrs.mobile.utilities.ApplicationConstants.PatientDashboardTabs.VISITS_TAB_POS;
+import static org.openmrs.mobile.utilities.ApplicationConstants.PatientDashboardTabs.VITALS_TAB_POS;
+
 class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
-    private static final int TAB_COUNT = 5;
-    private static final int DETAILS_TAB_POS = 0;
-    private static final int DIAGNOSIS_TAB_POS = 1;
-    private static final int VISITS_TAB_POS = 2;
-    private static final int VITALS_TAB_POS = 3;
-    private static final int CHARTS_TAB_POS = 4;
     private SparseArray<Fragment> registeredFragments = new SparseArray<>();
     private String mPatientId;
     private Context context;
@@ -62,6 +66,10 @@ class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
                 PatientDetailsFragment patientDetailsFragment = PatientDetailsFragment.newInstance();
                 new PatientDashboardDetailsPresenter(mPatientId, patientDetailsFragment);
                 return patientDetailsFragment;
+            case ALLERGY_TAB_POS:
+                PatientAllergyFragment patientAllergyFragment = PatientAllergyFragment.newInstance();
+                new PatientDashboardAllergyPresenter(mPatientId, patientAllergyFragment);
+                return patientAllergyFragment;
             case DIAGNOSIS_TAB_POS:
                 PatientDiagnosisFragment patientDiagnosisFragment = PatientDiagnosisFragment.newInstance();
                 new PatientDashboardDiagnosisPresenter(mPatientId, patientDiagnosisFragment);
@@ -89,6 +97,8 @@ class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case DETAILS_TAB_POS:
                 return context.getString(R.string.patient_scroll_tab_details_label);
+            case ALLERGY_TAB_POS:
+                return context.getString(R.string.patient_scroll_tab_allergy_label);
             case DIAGNOSIS_TAB_POS:
                 return context.getString(R.string.patient_scroll_tab_diagnosis_label);
             case VISITS_TAB_POS:

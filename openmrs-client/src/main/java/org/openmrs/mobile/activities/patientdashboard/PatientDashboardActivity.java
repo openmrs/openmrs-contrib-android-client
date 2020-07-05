@@ -40,6 +40,8 @@ import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
+import org.openmrs.mobile.activities.patientdashboard.allergy.PatientAllergyFragment;
+import org.openmrs.mobile.activities.patientdashboard.allergy.PatientDashboardAllergyPresenter;
 import org.openmrs.mobile.activities.patientdashboard.charts.PatientChartsFragment;
 import org.openmrs.mobile.activities.patientdashboard.charts.PatientDashboardChartsPresenter;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientDashboardDetailsPresenter;
@@ -136,6 +138,8 @@ public class PatientDashboardActivity extends ACBaseActivity {
             mPresenter = new PatientDashboardVitalsPresenter(id, ((PatientVitalsFragment) fragment));
         } else if (fragment instanceof PatientChartsFragment) {
             mPresenter = new PatientDashboardChartsPresenter(id, ((PatientChartsFragment) fragment));
+        } else if (fragment instanceof PatientAllergyFragment) {
+            mPresenter = new PatientDashboardAllergyPresenter(id, ((PatientAllergyFragment) fragment));
         }
     }
 

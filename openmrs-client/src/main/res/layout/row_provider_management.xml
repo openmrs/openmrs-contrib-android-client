@@ -1,44 +1,9 @@
-<com.chauthai.swipereveallayout.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="4dp"
-    android:layout_marginRight="4dp"
-    app:dragEdge="right"
-    app:mode="same_level">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:foregroundGravity="center_vertical"
-        android:padding="16dp">
-
-        <ImageView
-            android:id="@+id/row_provider_management_delete_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_short"
-            android:background="@drawable/ic_delete_red"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/row_provider_management_edit_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_short"
-            android:layout_marginEnd="@dimen/margin_long"
-            android:layout_marginRight="@dimen/margin_long"
-            android:background="@drawable/ic_edit_green"
-            android:clickable="true"
-            android:focusable="true"
-            android:padding="@dimen/padding_16"
-            app:layout_constraintEnd_toStartOf="@+id/row_provider_management_delete_iv"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    android:layout_marginRight="4dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/provider_management_foreground_card_view"
@@ -48,10 +13,14 @@
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:padding="8dp"
-        app:cardUseCompatPadding="true">
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <include layout="@layout/row_provider_details" />
     </androidx.cardview.widget.CardView>
 
 
-</com.chauthai.swipereveallayout.SwipeRevealLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

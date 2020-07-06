@@ -20,6 +20,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import net.sqlcipher.database.SQLiteDatabase;
+import net.sqlcipher.database.SupportFactory;
+
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.ConceptRoomDAO;
 import org.openmrs.mobile.dao.EncounterRoomDAO;
 import org.openmrs.mobile.dao.LocationRoomDAO;
@@ -45,18 +49,14 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
         version = 1)
 
 public abstract class AppDatabase extends RoomDatabase {
-    //instantiate Dao's
     public abstract LocationRoomDAO locationRoomDAO();
-
     public abstract VisitRoomDAO visitRoomDAO();
-
     public abstract PatientRoomDAO patientRoomDAO();
-
     public abstract ObservationRoomDAO observationRoomDAO();
-
     public abstract EncounterRoomDAO encounterRoomDAO();
     public abstract ConceptRoomDAO conceptRoomDAO();
     public abstract ProviderRoomDAO providerRoomDAO();
+
     private static volatile AppDatabase INSTANCE;
 
     //TODO remove this public and refactor the packages of classes to incorporate allDAOs under this repository
@@ -64,9 +64,16 @@ public abstract class AppDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
+
+                    String secretKey = OpenMRS.getInstance().getSecretKey();
+                    char[] secretPassPhrase = secretKey.toCharArray();
+                    final byte[] passphrase = SQLiteDatabase.getBytes(secretPassPhrase);
+                    final SupportFactory factory = new SupportFactory(passphrase);
+
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppDatabase.class, ApplicationConstants.DB_NAME)
                             .allowMainThreadQueries().fallbackToDestructiveMigration()
+                            .openHelperFactory(factory)
                             .build();
                 }
             }

@@ -23,6 +23,8 @@ versions.rxbinding = '1.0.0'
 versions.roomRuntime = '2.3.0-alpha01'
 versions.roomPersistence = '1.1.1'
 versions.roomCompiler = '2.1.0-alpha04'
+versions.sqlcipher = '4.4.0'
+versions.sqlAndroidx = '2.1.0'
 
 versions.chuckLibrary = '1.1.0'
 
@@ -37,7 +39,6 @@ versions.AppIntro = '6.0.0'
 versions.swipereveallayout = '1.4.1'
 
 versions.codec = '1.10'
-versions.sqlcipher = '4.1.3@aar'
 versions.jdeferred = '1.2.6'
 versions.legacySupport = '1.0.0'
 versions.multidex = '2.0.1'

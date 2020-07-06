@@ -144,6 +144,7 @@ dependencies {
     //noinspection GradleDependency
     annotationProcessor "androidx.room:room-compiler:${versions.roomCompiler}"
     implementation "net.zetetic:android-database-sqlcipher:${versions.sqlcipher}"
+    implementation "androidx.sqlite:sqlite:${versions.sqlAndroidx}"
 
     // Work Manager
     implementation "androidx.work:work-runtime:${versions.workManager}"

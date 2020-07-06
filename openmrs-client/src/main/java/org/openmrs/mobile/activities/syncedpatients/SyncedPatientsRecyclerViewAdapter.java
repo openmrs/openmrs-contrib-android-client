@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -98,7 +99,18 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
             holder.mDisplayName.setText(patient.getName().getNameString());
         }
         if (null != patient.getGender()) {
-            holder.mGender.setText(patient.getGender());
+            if (patient.getPhoto()!=null ){
+                holder.mGender.setImageBitmap(patient.getPhoto());
+            } else {
+                if (patient.getGender().equals("M")) {
+                    holder.mGender.setImageResource(R.drawable.patient_male);
+                } else {
+                    holder.mGender.setImageResource(R.drawable.patient_female);
+                }
+            }
+        }
+        if (patient.getDead()) {
+            holder.mRowLayout.setCardBackgroundColor(mContext.getResources().getColor(R.color.deceased_red));
         }
         try {
             holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
@@ -116,7 +128,7 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
         private CardView mRowLayout;
         private TextView mIdentifier;
         private TextView mDisplayName;
-        private TextView mGender;
+        private ImageView mGender;
         private TextView mBirthDate;
         private ColorStateList cardBackgroundColor;
 

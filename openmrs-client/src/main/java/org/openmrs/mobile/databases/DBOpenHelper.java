@@ -133,10 +133,14 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(8, patient.getGender(), patientStatement);
             bindString(9, patient.getBirthdate(), patientStatement);
             bindLong(10, null, patientStatement); //death date
-            if(patient.getCauseOfDeath().getDisplay() == null) {
-                bindString(11, null, patientStatement); //causeOfDeath
+            if(null != patient.getCauseOfDeath()) {
+                if (patient.getCauseOfDeath().getDisplay() == null) {
+                    bindString(11, null, patientStatement); //causeOfDeath
+                } else {
+                    bindString(11, patient.getCauseOfDeath().getDisplay(), patientStatement); //causeOfDeath
+                }
             } else {
-                bindString(11, patient.getCauseOfDeath().getDisplay(), patientStatement); //causeOfDeath
+                bindString(11, null, patientStatement);
             }
             bindString(12, null, patientStatement);
             if (null != patient.getPhoto()) {

@@ -42,7 +42,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -74,9 +76,11 @@ import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.databinding.FragmentPatientInfoBinding;
 import org.openmrs.mobile.listeners.watcher.PatientBirthdateValidatorWatcher;
+import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
+import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.ImageUtils;
@@ -107,6 +111,7 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 @RuntimePermissions
 public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContract.Presenter> implements AddEditPatientContract.View, CameraOrGalleryPickerDialog.onInputSelected {
 
+    AlertDialog alertDialog;
     private FragmentPatientInfoBinding binding;
     private LocalDate birthDate;
     private DateTime bdt;
@@ -120,6 +125,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private OpenMRSLogger logger = new OpenMRSLogger();
     private boolean isUpdatePatient = false;
     private Patient updatedPatient;
+    private String causeOfDeathUUID = "";
+    private Resource causeOfDeath;
 
     public static AddEditPatientFragment newInstance() {
         return new AddEditPatientFragment();
@@ -332,6 +339,13 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             patient.setPhoto(patientPhoto);
         }
 
+        if (binding.deceasedCheckbox.isChecked() && !causeOfDeathUUID.isEmpty()) {
+            patient.setDead(true);
+            patient.setCauseOfDeath(causeOfDeath);
+        } else {
+            patient.setDead(false);
+            patient.setCauseOfDeath(new Resource());
+        }
         return patient;
     }
 
@@ -402,10 +416,62 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 (!ViewUtils.isEmpty(binding.postalCode)));
     }
 
+    @Override
+    public void cannotMarkDeceased(String message) {
+        binding.deceasedProgressBar.setVisibility(View.GONE);
+        binding.deceasedSpinner.setVisibility(View.GONE);
+        binding.deceasedCheckbox.setChecked(false);
+        if (message.isEmpty()) {
+            ToastUtil.error(getString(R.string.no_death_concepts_in_server));
+        } else {
+            ToastUtil.error(message);
+        }
+    }
+
+    @Override
+    public void cannotMarkDeceased(int messageID) {
+        binding.deceasedProgressBar.setVisibility(View.GONE);
+        binding.deceasedSpinner.setVisibility(View.GONE);
+        binding.deceasedCheckbox.setChecked(false);
+        ToastUtil.error(getString(messageID));
+    }
+
+    @Override
+    public void updateCauseOfDeathSpinner(ConceptAnswers concept) {
+        binding.deceasedProgressBar.setVisibility(View.GONE);
+        binding.deceasedSpinner.setVisibility(View.VISIBLE);
+        List<Resource> answers = concept.getAnswers();
+        String[] answerDisplays = new String[answers.size()];
+        for (int i = 0; i < answers.size(); i++) {
+            answerDisplays[i] = answers.get(i).getDisplay();
+        }
+        ArrayAdapter<String> adapterAnswers = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, answerDisplays);
+        binding.deceasedSpinner.setAdapter(adapterAnswers);
+        binding.deceasedSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long l) {
+                String display = binding.deceasedSpinner.getSelectedItem().toString();
+                for (int i = 0; i < answers.size(); i++) {
+                    if (display.equals(answers.get(i).getDisplay())) {
+                        causeOfDeathUUID = answers.get(i).getUuid();
+                        causeOfDeath = answers.get(i);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+
     private void fillFields(final Patient patient) {
         if (patient != null) {
             //no need for un-identification option once the patient is registered
             binding.unidentifiedCheckbox.setVisibility(View.GONE);
+            // show deceased option only when patient is registered
+            binding.deceasedCardview.setVisibility(View.VISIBLE);
 
             //Change to Update Patient Form
             String updatePatientStr = getResources().getString(R.string.action_update_patient_data);
@@ -442,6 +508,10 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 patientPhoto = patient.getPhoto();
                 Bitmap resizedPatientPhoto = patient.getResizedPhoto();
                 binding.patientPhoto.setImageBitmap(resizedPatientPhoto);
+            }
+
+            if (patient.getDead()) {
+                binding.deceasedCheckbox.setChecked(true);
             }
         }
     }
@@ -635,6 +705,20 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 isPatientUnidentified = false;
             }
         });
+
+        binding.deceasedCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (binding.deceasedCheckbox.isChecked()) {
+                    binding.deceasedProgressBar.setVisibility(View.VISIBLE);
+                    binding.deceasedSpinner.setVisibility(View.GONE);
+                    mPresenter.getCauseOfDeathGlobalID();
+                } else {
+                    binding.deceasedProgressBar.setVisibility(View.GONE);
+                    binding.deceasedSpinner.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     @Override
@@ -714,14 +798,14 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 output = null;
             }
         } else if (requestCode == ApplicationConstants.RequestCodes.GALLERY_IMAGE_REQUEST) {
-            if(resultCode == Activity.RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 Uri sourceUri = data.getData();
                 File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
                 output = new File(dir, getUniqueImageFileName());
                 Uri destinationUri = Uri.fromFile(output);
                 openCropActivity(sourceUri, destinationUri);
             } else {
-                output= null;
+                output = null;
             }
         } else if (requestCode == UCrop.REQUEST_CROP) {
             if (resultCode == Activity.RESULT_OK) {
@@ -810,7 +894,25 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     private void submitAction() {
         if (isUpdatePatient) {
-            mPresenter.confirmUpdate(updatePatient(updatedPatient));
+            if (binding.deceasedCheckbox.isChecked() && !causeOfDeathUUID.isEmpty()) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                alertDialogBuilder.setTitle(R.string.mark_patient_deceased);
+                // set dialog message
+                alertDialogBuilder
+                        .setMessage(R.string.mark_patient_deceased_notice)
+                        .setCancelable(false)
+                        .setPositiveButton(R.string.mark_patient_deceased_proceed, (dialog, id) -> {
+                            dialog.cancel();
+                            mPresenter.confirmUpdate(updatePatient(updatedPatient));
+                        })
+                        .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> {
+                            alertDialog.cancel();
+                        });
+                alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            } else {
+                mPresenter.confirmUpdate(updatePatient(updatedPatient));
+            }
         } else {
             mPresenter.confirmRegister(createPatient(), isPatientUnidentified);
         }

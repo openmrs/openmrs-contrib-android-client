@@ -18,6 +18,8 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
+import org.openmrs.mobile.models.Concept;
+import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Patient;
 
 import java.util.List;
@@ -50,6 +52,12 @@ public interface AddEditPatientContract {
         void showUpgradeRegistrationModuleInfo();
 
         boolean areFieldsNotEmpty();
+
+        void cannotMarkDeceased(String message);
+
+        void cannotMarkDeceased(int messageID);
+
+        void updateCauseOfDeathSpinner(ConceptAnswers concept);
     }
 
     interface Presenter extends BasePresenterContract {
@@ -68,5 +76,7 @@ public interface AddEditPatientContract {
         void updatePatient(Patient patient);
 
         PlacesClient getPlaces();
+
+        void getCauseOfDeathGlobalID();
     }
 }

@@ -20,7 +20,7 @@ import java.util.*
  * This object is serialized as request/response body to send the patient related over the wire.
  *
  */
-open class PatientDto {
+open class PatientDtoUpdate {
 
     @SerializedName("uuid")
     @Expose
@@ -33,25 +33,7 @@ open class PatientDto {
 
     @SerializedName("person")
     @Expose
-    var person: Person? = null
-
-
-    /**
-     *
-     * @return
-     * The patient object after transformation from patientDto Details
-     */
-    val patient: Patient
-        get() {
-            val person = person
-            val patient = Patient(null, "", identifiers,
-                    person!!.names, person.gender!!, person.birthdate!!, person.birthdateEstimated, person.addresses, person.attributes, person.photo, person.causeOfDeath, person.dead)
-
-            patient.uuid = uuid.toString()
-
-            return patient
-        }
-
+    var person: PersonUpdate? = null
 
     fun setIdentifiers(identifiers: List<PatientIdentifier>) {
         this.identifiers = identifiers

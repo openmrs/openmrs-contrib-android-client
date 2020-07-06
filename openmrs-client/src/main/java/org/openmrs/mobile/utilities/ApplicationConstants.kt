@@ -51,6 +51,8 @@ object ApplicationConstants {
     const val URI_CONTENT = "content://"
     const val MIME_TYPE_VND = "vnd"
     const val ASPECT_RATIO_FOR_CROPPING = 5f
+    const val REPRESENTATION_FULL = "full"
+    const val CAUSE_OF_DEATH = "concept.causeOfDeath"
 
     object OpenMRSSharedPreferenceNames {
         const val SHARED_PREFERENCES_NAME = "shared_preferences"

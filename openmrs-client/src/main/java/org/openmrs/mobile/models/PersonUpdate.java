@@ -30,7 +30,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person extends Resource implements Serializable {
+public class PersonUpdate extends Resource implements Serializable {
 
     @TypeConverters(PersonNameConverter.class)
     @SerializedName("names")
@@ -58,19 +58,19 @@ public class Person extends Resource implements Serializable {
 
     @SerializedName("dead")
     @Expose
-    private Boolean dead;
+    private Boolean dead = false;
 
     @SerializedName("causeOfDeath")
     @Expose
-    private Resource causeOfDeath = null;
+    private String causeOfDeath = null;
 
     private Bitmap photo;
 
-    public Person() {
+    public PersonUpdate() {
     }
 
-    public Person(List<PersonName> names, String gender, String birthdate, boolean birthdateEstimated, List<PersonAddress> addresses, List<PersonAttribute> attributes,
-                  Bitmap photo, Resource causeOfDeath, boolean dead) {
+    public PersonUpdate(List<PersonName> names, String gender, String birthdate, boolean birthdateEstimated, List<PersonAddress> addresses, List<PersonAttribute> attributes,
+                        Bitmap photo, String causeOfDeath, boolean dead) {
         this.names = names;
         this.gender = gender;
         this.birthdate = birthdate;
@@ -194,11 +194,11 @@ public class Person extends Resource implements Serializable {
         return ImageUtils.resizePhoto(this.photo);
     }
 
-    public Resource getCauseOfDeath() {
+    public String getCauseOfDeath() {
         return causeOfDeath;
     }
 
-    public void setCauseOfDeath(Resource causeOfDeath) {
+    public void setCauseOfDeath(String causeOfDeath) {
         this.causeOfDeath = causeOfDeath;
     }
 

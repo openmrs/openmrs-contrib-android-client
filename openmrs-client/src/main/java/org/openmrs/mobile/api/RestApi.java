@@ -11,6 +11,7 @@
 package org.openmrs.mobile.api;
 
 import org.openmrs.mobile.models.Concept;
+import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Encountercreate;
@@ -25,17 +26,18 @@ import org.openmrs.mobile.models.Obscreate;
 import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientDto;
+import org.openmrs.mobile.models.PatientDtoUpdate;
 import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.models.Session;
+import org.openmrs.mobile.models.SystemProperty;
 import org.openmrs.mobile.models.SystemSetting;
 import org.openmrs.mobile.models.User;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.VisitType;
 
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -61,6 +63,10 @@ public interface RestApi {
                                          @Query("tag") String tag,
                                          @Query("v") String representation);
 
+    @GET("systemsetting")
+    Call<Results<SystemProperty>> getSystemProperty(@Query("q") String property,
+                                                    @Query("v") String representation);
+
     @GET("patientidentifiertype")
     Call<Results<IdentifierType>> getIdentifierTypes();
 
@@ -78,7 +84,7 @@ public interface RestApi {
 
     @POST("patient")
     Call<PatientDto> createPatient(
-        @Body PatientDto patientDto);
+            @Body PatientDto patientDto);
 
     @GET("patient")
     Call<Results<Patient>> getPatients(@Query("q") String searchQuery,
@@ -130,7 +136,7 @@ public interface RestApi {
                                            @Query("order") String order);
 
     @POST("patient/{uuid}")
-    Call<PatientDto> updatePatient(@Body PatientDto patientDto, @Path("uuid") String uuid,
+    Call<PatientDto> updatePatient(@Body PatientDtoUpdate patientDto, @Path("uuid") String uuid,
                                    @Query("v") String representation);
 
     @GET("module")
@@ -144,6 +150,9 @@ public interface RestApi {
 
     @GET("concept")
     Call<Results<Concept>> getConcepts(@Query("limit") int limit, @Query("startIndex") int startIndex);
+
+    @GET("concept/{uuid}")
+    Call<ConceptAnswers> getConceptFromUUID(@Path("uuid") String uuid);
 
     @GET("systemsetting")
     Call<Results<SystemSetting>> getSystemSettingsByQuery(@Query("q") String query,

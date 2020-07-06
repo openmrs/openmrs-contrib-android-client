@@ -27,6 +27,8 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientIdentifier;
 import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.models.PersonName;
+import org.openmrs.mobile.models.Resource;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
@@ -50,7 +52,7 @@ public class PatientDAO {
         OpenMRS.getInstance().getOpenMRSLogger().w("Patient deleted with id: " + id);
         DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
         openHelper.getReadableDatabase().delete(PatientTable.TABLE_NAME, PatientTable.Column.ID
-            + " = " + id, null);
+                + " = " + id, null);
     }
 
     public Observable<List<Patient>> getAllPatients() {
@@ -58,7 +60,7 @@ public class PatientDAO {
             List<Patient> patients = new ArrayList<>();
             DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
             Cursor cursor = openHelper.getReadableDatabase().query(PatientTable.TABLE_NAME,
-                null, null, null, null, null, null);
+                    null, null, null, null, null, null);
 
             if (null != cursor) {
                 try {
@@ -77,8 +79,8 @@ public class PatientDAO {
     private Patient cursorToPatient(Cursor cursor) {
 
         Patient patient = new Patient(cursor.getLong(cursor.getColumnIndex(PatientTable.Column.ID)),
-            cursor.getString(cursor.getColumnIndex(PatientTable.Column.ENCOUNTERS)),
-            null);
+                cursor.getString(cursor.getColumnIndex(PatientTable.Column.ENCOUNTERS)),
+                null);
 
         patient.setDisplay(cursor.getString(cursor.getColumnIndex(PatientTable.Column.DISPLAY)));
         patient.setUuid(cursor.getString(cursor.getColumnIndex(PatientTable.Column.UUID)));
@@ -103,6 +105,14 @@ public class PatientDAO {
             patient.setPhoto(byteArrayToBitmap(photoByteArray));
         }
         patient.getAddresses().add(cursorToAddress(cursor));
+        if (cursor.getString(cursor.getColumnIndex(PatientTable.Column.CAUSE_OF_DEATH)) != null) {
+            patient.setCauseOfDeath(new Resource(ApplicationConstants.EMPTY_STRING, cursor.getString(cursor.getColumnIndex(PatientTable.Column.CAUSE_OF_DEATH)), new ArrayList<>(), 0));
+        }
+        if (cursor.getString(cursor.getColumnIndex(PatientTable.Column.DEAD)).equals("true")) {
+            patient.setDead(true);
+        } else {
+            patient.setDead(false);
+        }
 
         return patient;
     }

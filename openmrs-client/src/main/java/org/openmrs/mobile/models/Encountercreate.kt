@@ -57,11 +57,11 @@ class Encountercreate : Model(), Serializable {
 
     @SerializedName("location")
     @Expose
-    var location: String? = null;
+    var location: String? = null
 
     @SerializedName("encounterProviders")
     @Expose
-    var encounterProvider: List<EncounterProviderCreate> = ArrayList();
+    var encounterProvider: List<EncounterProviderCreate> = ArrayList()
 
     @SerializedName("obs")
     @Expose

@@ -33,7 +33,7 @@ import static org.powermock.api.mockito.PowerMockito.spy;
 @PrepareForTest(OpenMRS.class)
 public class DBOpenHelperTest {
     private static final ImmutableList<String> createTableQueries = ImmutableList.of(
-            "CREATE TABLE patients(_id integer primary key autoincrement,synced boolean,display text,uuid text,identifier text,givenName text not null,middleName text,familyName text not null,gender text not null,birthDate data not null,deathDate date,causeOfDeath text,age text,photo blob,address1 text,address2 text,postalCode text,country text,state text,city text,encounters text);",
+            "CREATE TABLE patients(_id integer primary key autoincrement,synced boolean,display text,uuid text,identifier text,givenName text not null,middleName text,familyName text not null,gender text not null,birthDate data not null,deathDate date,causeOfDeath text,age text,photo blob,address1 text,address2 text,postalCode text,country text,state text,city text,encounters text,dead text);",
             "CREATE TABLE concepts(_id integer primary key autoincrement,uuid text not null,display text);",
             "CREATE TABLE visits(_id integer primary key autoincrement,patient_id integer not null,uuid data not null,visit_type text,visit_place text,start_date data not null,stop_date date);",
             "CREATE TABLE encounters(_id integer primary key autoincrement,visit_id integer,uuid text not null,display text,encounterDatetime data not null,type date,patient_uuid text,form_uuid text,location_uuid text,encounterProviders_uuid text);",

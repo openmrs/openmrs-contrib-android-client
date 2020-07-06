@@ -53,6 +53,7 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
 
     @Override
     public void subscribe() {
+        mPatientVisitsView.setPatient(mPatient);
         addSubscription(visitDAO.getVisitsByPatientID(mPatient.getId())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(patientVisits -> {

@@ -13,7 +13,7 @@ package org.openmrs.mobile.models
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class Concept : Resource() {
+class ConceptAnswers : Resource() {
 
     override var id: Long? = null
 
@@ -21,12 +21,11 @@ class Concept : Resource() {
     @Expose
     var datatype: Datatype? = null
 
-    @SerializedName("name")
-    @Expose
-    var name: String? = null
-
     @SerializedName("conceptClass")
     @Expose
     var conceptClass: ConceptClass? = null
 
+    @SerializedName("answers")
+    @Expose
+    var answers: List<Resource> = ArrayList()
 }

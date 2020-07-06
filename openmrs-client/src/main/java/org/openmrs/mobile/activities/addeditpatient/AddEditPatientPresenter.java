@@ -20,16 +20,21 @@ import androidx.annotation.NonNull;
 
 import com.google.android.libraries.places.api.net.PlacesClient;
 
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
+import org.openmrs.mobile.models.Concept;
+import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Module;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PersonName;
+import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.models.Results;
+import org.openmrs.mobile.models.SystemProperty;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ModuleUtils;
 import org.openmrs.mobile.utilities.NetworkUtils;
@@ -38,6 +43,7 @@ import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.ViewUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -246,6 +252,54 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     @Override
     public PlacesClient getPlaces() {
         return placesClient;
+    }
+
+    @Override
+    public void getCauseOfDeathGlobalID() {
+        restApi.getSystemProperty(ApplicationConstants.CAUSE_OF_DEATH, ApplicationConstants.REPRESENTATION_FULL).enqueue(new Callback<Results<SystemProperty>>() {
+            @Override
+            public void onResponse(Call<Results<SystemProperty>> call, Response<Results<SystemProperty>> response) {
+                if(response.isSuccessful()) {
+                    String uuid = response.body().getResults().get(0).getConceptUUID();
+                    if(uuid.length() == 36) {
+                        getConceptCauseOfDeath(uuid);
+                    } else {
+                        mPatientInfoView.cannotMarkDeceased(R.string.mark_patient_deceased_invalid_uuid);
+                    }
+                }
+                else {
+                    mPatientInfoView.cannotMarkDeceased(ApplicationConstants.EMPTY_STRING);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Results<SystemProperty>> call, Throwable t) {
+                mPatientInfoView.cannotMarkDeceased(t.getMessage());
+            }
+        });
+    }
+
+    private void getConceptCauseOfDeath(String uuid) {
+        restApi.getConceptFromUUID(uuid).enqueue(new Callback<ConceptAnswers>() {
+            @Override
+            public void onResponse(Call<ConceptAnswers> call, Response<ConceptAnswers> response) {
+                if(response.isSuccessful()) {
+                    if(response.body().getAnswers().size() != 0) {
+                        mPatientInfoView.updateCauseOfDeathSpinner(response.body());
+                    } else {
+                        mPatientInfoView.cannotMarkDeceased(R.string.mark_patient_deceased_concept_has_no_answer);
+                    }
+                }
+                else {
+                    mPatientInfoView.cannotMarkDeceased(ApplicationConstants.EMPTY_STRING);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ConceptAnswers> call, Throwable t) {
+                mPatientInfoView.cannotMarkDeceased(t.getMessage());
+            }
+        });
     }
 
     public void findSimilarPatients(final Patient patient) {

@@ -160,7 +160,6 @@ dependencies {
     implementation "org.mindrot:jbcrypt:${versions.jbcrypt}"
     implementation "com.hbb20:ccp:${versions.countryCodePicker}"
     implementation "com.github.AppIntro:AppIntro:${versions.AppIntro}"
-    implementation "com.chauthai.swipereveallayout:swipe-reveal-layout:${versions.swipereveallayout}"
     implementation 'com.github.yalantis:ucrop:2.2.5'
 
     // Third Party Performance Libraries

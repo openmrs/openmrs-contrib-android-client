@@ -155,7 +155,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
                 bindString(19, patient.getAddress().getCityVillage(), patientStatement);
             }
             bindString(20, patient.getEncounters(), patientStatement);
-            bindString(21, patient.getDead().toString(), patientStatement);
+            bindString(21, patient.isDeceased().toString(), patientStatement);
             bindString(22, null, patientStatement);
             patientId = patientStatement.executeInsert();
             patientStatement.clearBindings();
@@ -194,7 +194,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         } else {
             newValues.put(PatientTable.Column.CAUSE_OF_DEATH, (String) null);
         }
-        newValues.put(PatientTable.Column.DEAD, patient.getDead().toString());
+        newValues.put(PatientTable.Column.DEAD, patient.isDeceased().toString());
         newValues.put(PatientTable.Column.AGE, (String) null);
         if (null != patient.getPhoto()) {
             mLogger.i("inserting into db");

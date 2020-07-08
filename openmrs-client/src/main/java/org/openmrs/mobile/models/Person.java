@@ -202,11 +202,11 @@ public class Person extends Resource implements Serializable {
         this.causeOfDeath = causeOfDeath;
     }
 
-    public Boolean getDead() {
+    public Boolean isDeceased() {
         return dead;
     }
 
-    public void setDead(Boolean dead) {
+    public void setDeceased(Boolean dead) {
         this.dead = dead;
     }
 }

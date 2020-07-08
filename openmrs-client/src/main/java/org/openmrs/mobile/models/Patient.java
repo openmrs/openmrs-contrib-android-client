@@ -59,11 +59,11 @@ public class Patient extends Person implements Serializable {
 
     @SerializedName("person")
     public Person getPerson() {
-        return new Person(getNames(), getGender(), getBirthdate(), getBirthdateEstimated(), getAddresses(), getAttributes(), getPhoto(), getCauseOfDeath(), getDead());
+        return new Person(getNames(), getGender(), getBirthdate(), getBirthdateEstimated(), getAddresses(), getAttributes(), getPhoto(), getCauseOfDeath(), isDeceased());
     }
 
     public PersonUpdate getUpdatedPerson() {
-        return new PersonUpdate(getNames(), getGender(), getBirthdate(), getBirthdateEstimated(), getAddresses(), getAttributes(), getPhoto(), getCauseOfDeath().getUuid(), getDead());
+        return new PersonUpdate(getNames(), getGender(), getBirthdate(), getBirthdateEstimated(), getAddresses(), getAttributes(), getPhoto(), getCauseOfDeath().getUuid(), isDeceased());
     }
 
     public PatientDto getPatientDto() {

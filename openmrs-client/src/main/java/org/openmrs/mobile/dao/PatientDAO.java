@@ -109,9 +109,9 @@ public class PatientDAO {
             patient.setCauseOfDeath(new Resource(ApplicationConstants.EMPTY_STRING, cursor.getString(cursor.getColumnIndex(PatientTable.Column.CAUSE_OF_DEATH)), new ArrayList<>(), 0));
         }
         if (cursor.getString(cursor.getColumnIndex(PatientTable.Column.DEAD)).equals("true")) {
-            patient.setDead(true);
+            patient.setDeceased(true);
         } else {
-            patient.setDead(false);
+            patient.setDeceased(false);
         }
 
         return patient;

@@ -53,6 +53,7 @@ object ApplicationConstants {
     const val ASPECT_RATIO_FOR_CROPPING = 5f
     const val REPRESENTATION_FULL = "full"
     const val CAUSE_OF_DEATH = "concept.causeOfDeath"
+    const val MALE = "M";
 
     object OpenMRSSharedPreferenceNames {
         const val SHARED_PREFERENCES_NAME = "shared_preferences"

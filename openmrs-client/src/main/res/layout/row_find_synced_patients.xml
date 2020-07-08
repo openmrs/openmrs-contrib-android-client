@@ -64,23 +64,16 @@
             app:layout_constraintLeft_toRightOf="@id/syncedPatientIdentifier"
             app:layout_constraintTop_toTopOf="@id/syncedPatientIdentifier" />
 
-        <androidx.cardview.widget.CardView
+        <ImageView
+            android:id="@+id/syncedPatientGender"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="12dp"
-            app:cardCornerRadius="40dp"
+            android:scaleType="fitXY"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/syncedPatientGender"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:scaleType="fitXY"
-                android:visibility="visible" />
-
-        </androidx.cardview.widget.CardView>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"

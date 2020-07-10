@@ -127,7 +127,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
             showAddressDetailsViewElement(R.id.addressDetailsCityLabel, R.id.addressDetailsCity, patient.getAddress().getCityVillage());
         }
 
-        if (patient.getDead()) {
+        if (patient.isDeceased()) {
             rootView.findViewById(R.id.deceasedView).setVisibility(View.VISIBLE);
             ((TextView) rootView.findViewById(R.id.deceasedView)).setText(getString(R.string.marked_patient_deceased_successfully, patient.getCauseOfDeath().getDisplay()));
         }

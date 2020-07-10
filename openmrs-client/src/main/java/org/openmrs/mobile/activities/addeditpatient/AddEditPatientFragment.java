@@ -340,10 +340,10 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         }
 
         if (binding.deceasedCheckbox.isChecked() && !causeOfDeathUUID.isEmpty()) {
-            patient.setDead(true);
+            patient.setDeceased(true);
             patient.setCauseOfDeath(causeOfDeath);
         } else {
-            patient.setDead(false);
+            patient.setDeceased(false);
             patient.setCauseOfDeath(new Resource());
         }
         return patient;
@@ -510,7 +510,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 binding.patientPhoto.setImageBitmap(resizedPatientPhoto);
             }
 
-            if (patient.getDead()) {
+            if (patient.isDeceased()) {
                 binding.deceasedCheckbox.setChecked(true);
             }
         }

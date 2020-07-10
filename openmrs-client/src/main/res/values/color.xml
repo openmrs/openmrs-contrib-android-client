@@ -46,6 +46,7 @@
     <color name="dark_grey_6x">#B1B1B1</color>
     <color name="dark_grey_8x">#616161</color>
     <color name="dark_grey_10x">#454545</color>
+    <color name="deceased_red">#FFB3B3</color>
 
     <!-- neutral colors that look pleasing on both white and black background -->
     <color name="neutral_green">#249627</color>

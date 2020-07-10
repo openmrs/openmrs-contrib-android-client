@@ -114,7 +114,7 @@ public abstract class ACUnitTestBase {
         patient.setAddresses(Collections.singletonList(createPersonAddress(id)));
         patient.setGender("M");
         patient.setBirthdate("25-02-2016");
-        patient.setDead(false);
+        patient.setDeceased(false);
         patient.setCauseOfDeath(new Resource());
         return patient;
     }

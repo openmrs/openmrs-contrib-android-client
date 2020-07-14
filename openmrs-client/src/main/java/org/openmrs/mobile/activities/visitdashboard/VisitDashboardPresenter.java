@@ -14,13 +14,13 @@
 
 package org.openmrs.mobile.activities.visitdashboard;
 
-import androidx.annotation.NonNull;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
+import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.VisitDAO;
+import org.openmrs.mobile.listeners.retrofit.DefaultVisitsCallback;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
@@ -29,9 +29,6 @@ import org.openmrs.mobile.utilities.StringUtils;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class VisitDashboardPresenter extends BasePresenter implements VisitDashboardContract.Presenter {
@@ -39,6 +36,7 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
     private VisitDAO visitDAO;
     private Long visitId;
     private VisitDashboardContract.View mVisitDashboardView;
+    private VisitRepository visitRepository;
 
     public VisitDashboardPresenter(VisitDashboardContract.View mVisitDashboardView, Long id) {
         this.mVisitDashboardView = mVisitDashboardView;
@@ -46,6 +44,7 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
         this.visitId = id;
         this.restApi = RestServiceBuilder.createService(RestApi.class);
         mVisitDashboardView.setPresenter(this);
+        visitRepository = new VisitRepository();
     }
 
     public VisitDashboardPresenter(RestApi restApi, VisitDAO visitDAO, Long visitId, VisitDashboardContract.View mVisitDashboardView) {
@@ -62,28 +61,22 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
         Visit test = new Visit();
         test.setStopDatetime(visit.getStopDatetime());
 
-        Call<Visit> call = restApi.endVisitByUUID(visit.getUuid(), test);
-
-        call.enqueue(new Callback<Visit>() {
+        visitRepository.endVisitByUuid(visit.getUuid(), test, new DefaultVisitsCallback() {
             @Override
-            public void onResponse(@NonNull Call<Visit> call, @NonNull Response<Visit> response) {
-                if (response.isSuccessful()) {
-                    addSubscription(visitDAO.getVisitByID(visit.getId())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(vis -> {
-                            vis.setStopDatetime(response.body().getStopDatetime());
-                            visitDAO.saveOrUpdate(vis, vis.getPatient().getId())
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(id -> moveToPatientDashboard());
-                        }));
-                } else {
-                    mVisitDashboardView.showErrorToast(response.message());
-                }
+            public void onSuccess(String response) {
+                addSubscription(visitDAO.getVisitByID(visit.getId())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(vis -> {
+                        vis.setStopDatetime(response);
+                        visitDAO.saveOrUpdate(vis, vis.getPatient().getId())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(id -> moveToPatientDashboard());
+                    }));
             }
 
             @Override
-            public void onFailure(@NonNull Call<Visit> call, @NonNull Throwable t) {
-                mVisitDashboardView.showErrorToast(t.getMessage());
+            public void onFailure(String errorMessage) {
+                mVisitDashboardView.showErrorToast(errorMessage);
             }
         });
     }

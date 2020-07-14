@@ -24,6 +24,7 @@ import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
+import org.openmrs.mobile.listeners.retrofit.DefaultVisitsCallback;
 import org.openmrs.mobile.listeners.retrofit.GetVisitTypeCallbackListener;
 import org.openmrs.mobile.listeners.retrofit.StartVisitResponseListenerCallback;
 import org.openmrs.mobile.models.Encounter;
@@ -146,6 +147,30 @@ public class VisitRepository {
             public void onFailure(@NonNull Call<Results<Encounter>> call, @NonNull Throwable t) {
                 if (callbackListener != null) {
                     callbackListener.onErrorResponse(t.getMessage());
+                }
+            }
+        });
+    }
+
+    public void endVisitByUuid(String uuid, Visit test, DefaultVisitsCallback callbackListener) {
+        restApi.endVisitByUUID(uuid, test).enqueue(new Callback<Visit>() {
+            @Override
+            public void onResponse(@NonNull Call<Visit> call, @NonNull Response<Visit> response) {
+                if (response.isSuccessful()) {
+                    if (callbackListener != null) {
+                        callbackListener.onSuccess(response.body().getStopDatetime());
+                    }
+                } else {
+                    if (callbackListener != null) {
+                        callbackListener.onFailure(response.message());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Visit> call, @NonNull Throwable t) {
+                if (callbackListener != null) {
+                    callbackListener.onFailure(t.getMessage());
                 }
             }
         });

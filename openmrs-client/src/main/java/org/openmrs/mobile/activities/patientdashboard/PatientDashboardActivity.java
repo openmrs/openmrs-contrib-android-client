@@ -57,7 +57,7 @@ import org.openmrs.mobile.utilities.TabUtil;
 public class PatientDashboardActivity extends ACBaseActivity {
     private String mId;
     public PatientDashboardContract.PatientDashboardMainPresenter mPresenter;
-    static boolean isActionFABOpen = false;
+    public boolean isActionFABOpen = false;
     public static FloatingActionButton additionalActionsFAB, updateFAB, deleteFAB;
     public LinearLayout deleteFabLayout, updateFabLayout;
     public static Resources resources;

@@ -28,6 +28,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
+import org.openmrs.mobile.models.Allergen;
+import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientIdentifier;
 import org.openmrs.mobile.models.Person;
@@ -166,6 +168,20 @@ public abstract class ACUnitTestBase {
         provider.setIdentifier(identifier);
 
         return provider;
+    }
+
+    protected Allergy createAllergy(Long id, String display) {
+        Allergy allergy = new Allergy();
+        allergy.setId(id);
+        allergy.setUuid("uuid");
+        allergy.setDisplay(display);
+
+        allergy.setComment("comment");
+        allergy.setAllergen(new Allergen());
+        allergy.setReactions(new ArrayList<>());
+        allergy.setSeverity(null);
+
+        return allergy;
     }
 
     protected <T> Call<Results<T>> mockSuccessCall(List<T> list) {

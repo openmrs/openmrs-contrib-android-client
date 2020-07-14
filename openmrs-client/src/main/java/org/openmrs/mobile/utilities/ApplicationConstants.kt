@@ -54,6 +54,8 @@ object ApplicationConstants {
     const val REPRESENTATION_FULL = "full"
     const val CAUSE_OF_DEATH = "concept.causeOfDeath"
     const val MALE = "M";
+    const val EMPTY_DASH_REPRESENTATION = "---"
+    const val COMMA_WITH_SPACE = ", "
 
     object OpenMRSSharedPreferenceNames {
         const val SHARED_PREFERENCES_NAME = "shared_preferences"
@@ -166,5 +168,15 @@ object ApplicationConstants {
         const val ROBOTO_MEDIUM = "fonts/Roboto/Roboto-Medium.ttf"
         const val ROBOTO_MEDIUM_ITALIC = "fonts/Roboto/Roboto-MediumItalic.ttf"
         const val ROBOTO_REGULAR = "fonts/Roboto/Roboto-Regular.ttf"
+    }
+
+    object PatientDashboardTabs {
+        const val DETAILS_TAB_POS = 0
+        const val ALLERGY_TAB_POS = 1
+        const val DIAGNOSIS_TAB_POS = 2
+        const val VISITS_TAB_POS = 3
+        const val VITALS_TAB_POS = 4
+        const val CHARTS_TAB_POS = 5
+        const val TAB_COUNT = 6
     }
 }

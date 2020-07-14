@@ -14,8 +14,11 @@
 
 package org.openmrs.mobile.activities.patientdashboard;
 
+import androidx.fragment.app.Fragment;
+
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
+import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
@@ -85,6 +88,10 @@ public interface PatientDashboardContract {
         void setEmptyListVisibility(boolean visibility);
     }
 
+    interface ViewPatientAllergy extends ViewPatientMain {
+        void showAllergyList(List<Allergy> allergies);
+    }
+
     /*
      * Presenters
      */
@@ -119,5 +126,9 @@ public interface PatientDashboardContract {
     }
 
     interface PatientChartsPresenter extends PatientDashboardMainPresenter {
+    }
+
+    interface PatientAllergyPresenter extends PatientDashboardMainPresenter {
+        void getAllergy(Fragment fragment);
     }
 }

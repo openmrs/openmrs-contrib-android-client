@@ -45,6 +45,8 @@ public class PatientEntity extends Resource {
     private String country;
     @ColumnInfo(name = "postalCode")
     private String postalCode;
+    @ColumnInfo(name = "dead")
+    private String deceased;
     @Embedded(prefix = "patient_")
     @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
     private EncounterEntity encounters;
@@ -120,6 +122,10 @@ public class PatientEntity extends Resource {
         this.postalCode = postalCode;
     }
 
+    public void setDeceased(String deceased) {
+        this.deceased = deceased;
+    }
+
     public void setEncounters(EncounterEntity encounters) {
         this.encounters = encounters;
     }
@@ -190,6 +196,10 @@ public class PatientEntity extends Resource {
 
     public String getPostalCode() {
         return postalCode;
+    }
+
+    public String getDeceased() {
+        return deceased;
     }
 
     public EncounterEntity getEncounters() {

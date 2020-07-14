@@ -41,9 +41,9 @@ public class EncounterRoomDAOTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private EncounterEntity expectedEncounterEntity1 = newEncounterEntity(10L, "123", "Encounter 1", "20", "123-123", "40", "Vitals", "18 January");
-    private EncounterEntity expectedEncounterEntity2 = newEncounterEntity(20L, "124", "Encounter 2", "30", "124-124", "50", "Visit Note", "19 January");
-    private EncounterEntity expectedEncounterEntity3 = newEncounterEntity(30L, "125", "Encounter 3", null, "50", "60", "Visit 3", "20 January");
+    private EncounterEntity expectedEncounterEntity1 = newEncounterEntity(10L, "123", "Encounter 1", "20", "123-123", "40", "Vitals", "18 January", "location_uuid 1", "encounterProviders_uuid 1");
+    private EncounterEntity expectedEncounterEntity2 = newEncounterEntity(20L, "124", "Encounter 2", "30", "124-124", "50", "Visit Note", "19 January", "location_uuid 2 ", "encounterProviders_uuid 2");
+    private EncounterEntity expectedEncounterEntity3 = newEncounterEntity(30L, "125", "Encounter 3", null, "50", "60", "Visit 3", "20 January", "location_uuid 3", "encounterProviders_uuid 3");
 
     private PatientEntity expectedPatientEntity1 = newPatientEntity(40L, "123-123", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity1, "Tranquil", "male", "Jon", "101", "Johnson", "https://bit.ly/2W4Ofth", "2000000", "China", false);
 
@@ -149,7 +149,7 @@ public class EncounterRoomDAOTest {
                         && Objects.equals(renderEncounterEntityString(actualEncounterEntities.get(0)), renderEncounterEntityString(expectedEncounterEntity1)));
     }
 
-    private EncounterEntity newEncounterEntity(long id, String uuid, String display, String visitKeyID, String patientUUID, String formUUID, String encounterType, String encounterDayTime) {
+    private EncounterEntity newEncounterEntity(long id, String uuid, String display, String visitKeyID, String patientUUID, String formUUID, String encounterType, String encounterDayTime, String locationUUID, String providerUUID) {
         EncounterEntity encounterEntity = new EncounterEntity();
 
         encounterEntity.setId(id);
@@ -160,6 +160,8 @@ public class EncounterRoomDAOTest {
         encounterEntity.setFormUuid(formUUID);
         encounterEntity.setEncounterType(encounterType);
         encounterEntity.setEncounterDateTime(encounterDayTime);
+        encounterEntity.setLocationUuid(locationUUID);
+        encounterEntity.setEncounterProviderUuid(providerUUID);
 
         return encounterEntity;
     }
@@ -224,6 +226,7 @@ public class EncounterRoomDAOTest {
     private String renderEncounterEntityString(EncounterEntity encounterEntity) {
         return encounterEntity.getId() + encounterEntity.getUuid() + encounterEntity.getDisplay() + encounterEntity.getVisitKeyId()
                 + encounterEntity.getPatientUuid() + encounterEntity.getFormUuid()
-                + encounterEntity.getEncounterType() + encounterEntity.getEncounterDateTime();
+                + encounterEntity.getEncounterType() + encounterEntity.getEncounterDateTime()
+                + encounterEntity.getLocationUuid() + encounterEntity.getEncounterProviderUuid();
     }
 }

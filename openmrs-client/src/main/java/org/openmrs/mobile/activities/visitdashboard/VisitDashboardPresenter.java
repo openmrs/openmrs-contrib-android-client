@@ -47,12 +47,20 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
         visitRepository = new VisitRepository();
     }
 
+    /**
+     * Mock presenter used in the unit Tests
+     * @param restApi
+     * @param visitDAO
+     * @param visitId
+     * @param mVisitDashboardView
+     */
     public VisitDashboardPresenter(RestApi restApi, VisitDAO visitDAO, Long visitId, VisitDashboardContract.View mVisitDashboardView) {
         this.mVisitDashboardView = mVisitDashboardView;
         this.visitDAO = visitDAO;
         this.visitId = visitId;
         this.restApi = restApi;
         mVisitDashboardView.setPresenter(this);
+        visitRepository = new VisitRepository(restApi,visitDAO,null,null);
     }
 
     public void endVisitByUUID(final Visit visit) {

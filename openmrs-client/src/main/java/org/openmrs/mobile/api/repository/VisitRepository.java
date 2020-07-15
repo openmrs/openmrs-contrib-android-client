@@ -56,6 +56,14 @@ public class VisitRepository {
         encounterDAO = new EncounterDAO();
     }
 
+    /**
+     * used in Unit tests with mockUp objects
+     * @param restApi
+     * @param visitDAO
+     * @param locationDAO
+     * @param encounterDAO
+     *
+     */
     public VisitRepository(RestApi restApi, VisitDAO visitDAO, LocationDAO locationDAO, EncounterDAO encounterDAO) {
         this.restApi = restApi;
         this.visitDAO = visitDAO;

@@ -49,6 +49,7 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
 
     /**
      * Mock presenter used in the unit Tests
+     *
      * @param restApi
      * @param visitDAO
      * @param visitId
@@ -60,23 +61,23 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
         this.visitId = visitId;
         this.restApi = restApi;
         mVisitDashboardView.setPresenter(this);
-        visitRepository = new VisitRepository(restApi,visitDAO,null,null);
+        visitRepository = new VisitRepository(restApi, visitDAO, null, null);
     }
 
     public void endVisitByUUID(final Visit visit) {
         visit.setStopDatetime(DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
 
-        Visit test = new Visit();
-        test.setStopDatetime(visit.getStopDatetime());
+        Visit testVisit = new Visit();
+        testVisit.setStopDatetime(visit.getStopDatetime());
 
-        visitRepository.endVisitByUuid(visit.getUuid(), test, new DefaultVisitsCallback() {
+        visitRepository.endVisitByUuid(visit.getUuid(), testVisit, new DefaultVisitsCallback() {
             @Override
             public void onSuccess(String response) {
                 addSubscription(visitDAO.getVisitByID(visit.getId())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(vis -> {
-                        vis.setStopDatetime(response);
-                        visitDAO.saveOrUpdate(vis, vis.getPatient().getId())
+                    .subscribe(visit -> {
+                        visit.setStopDatetime(response);
+                        visitDAO.saveOrUpdate(visit, visit.getPatient().getId())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(id -> moveToPatientDashboard());
                     }));

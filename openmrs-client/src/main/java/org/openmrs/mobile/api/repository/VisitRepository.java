@@ -160,8 +160,8 @@ public class VisitRepository {
         });
     }
 
-    public void endVisitByUuid(String uuid, Visit test, DefaultVisitsCallback callbackListener) {
-        restApi.endVisitByUUID(uuid, test).enqueue(new Callback<Visit>() {
+    public void endVisitByUuid(String uuid, Visit visit, DefaultVisitsCallback callbackListener) {
+        restApi.endVisitByUUID(uuid, visit).enqueue(new Callback<Visit>() {
             @Override
             public void onResponse(@NonNull Call<Visit> call, @NonNull Response<Visit> response) {
                 if (response.isSuccessful()) {

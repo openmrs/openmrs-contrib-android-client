@@ -57,8 +57,8 @@ public class ConceptRoomDAOTest {
 
     @Test
     public void findConceptsByUUID_shouldGetCorrectConceptByUUID() {
-        mDatabase.conceptRoomDAO().saveConcept(expectedConceptEntity1);
-        mDatabase.conceptRoomDAO().saveConcept(expectedConceptEntity2);
+        mDatabase.conceptRoomDAO().addConcept(expectedConceptEntity1);
+        mDatabase.conceptRoomDAO().addConcept(expectedConceptEntity2);
 
         mDatabase.conceptRoomDAO().findConceptsByUUID(expectedConceptEntity1.getUuid())
                 .test()
@@ -72,8 +72,8 @@ public class ConceptRoomDAOTest {
 
     @Test
     public void findConceptsByName_shouldGetCorrectConceptByName() {
-        mDatabase.conceptRoomDAO().saveConcept(expectedConceptEntity1);
-        mDatabase.conceptRoomDAO().saveConcept(expectedConceptEntity2);
+        mDatabase.conceptRoomDAO().addConcept(expectedConceptEntity1);
+        mDatabase.conceptRoomDAO().addConcept(expectedConceptEntity2);
 
         mDatabase.conceptRoomDAO().findConceptsByName(expectedConceptEntity1.getName())
                 .test()
@@ -87,8 +87,8 @@ public class ConceptRoomDAOTest {
 
     @Test
     public void getConceptsCount_shouldGetCorrectConceptCount() {
-        mDatabase.conceptRoomDAO().saveConcept(expectedConceptEntity1);
-        mDatabase.conceptRoomDAO().saveConcept(expectedConceptEntity2);
+        mDatabase.conceptRoomDAO().addConcept(expectedConceptEntity1);
+        mDatabase.conceptRoomDAO().addConcept(expectedConceptEntity2);
 
         mDatabase.conceptRoomDAO().getConceptsCount()
                 .test()
@@ -97,7 +97,7 @@ public class ConceptRoomDAOTest {
 
     @Test
     public void updateConcept_ShouldCorrectlyUpdateConcept() {
-        mDatabase.conceptRoomDAO().saveConcept(expectedConceptEntity1);
+        mDatabase.conceptRoomDAO().addConcept(expectedConceptEntity1);
         expectedConceptEntity1.setName("name_123_123");
 
         mDatabase.conceptRoomDAO().updateConcept(expectedConceptEntity1);

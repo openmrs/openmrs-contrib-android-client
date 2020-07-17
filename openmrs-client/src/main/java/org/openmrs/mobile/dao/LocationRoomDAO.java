@@ -27,7 +27,7 @@ import io.reactivex.Single;
 @Dao
 public interface LocationRoomDAO {
     @Insert
-    long saveLocation(LocationEntity entity);
+    long addLocation(LocationEntity entity);
 
     @Query("DELETE FROM locations")
     void deleteAllLocations();

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c92083b535e9f72d064befe054790ae0",
+    "identityHash": "b8a02b83db64acbc87440885a9c647cc",
     "entities": [
       {
         "tableName": "concepts",
@@ -62,7 +62,7 @@
       },
       {
         "tableName": "encounters",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`visit_id` TEXT, `encounterDatetime` TEXT NOT NULL, `type` TEXT, `patient_uuid` TEXT, `form_uuid` TEXT, `location_uuid` TEXT, `encounterProviders_uuid` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`visit_id` TEXT, `encounterDatetime` TEXT NOT NULL, `type` TEXT, `patient_uuid` TEXT, `form_uuid` TEXT, `location_uuid` TEXT, `encounter_provider_uuid` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
             "fieldPath": "visitKeyId",
@@ -102,7 +102,7 @@
           },
           {
             "fieldPath": "encounterProviderUuid",
-            "columnName": "encounterProviders_uuid",
+            "columnName": "encounter_provider_uuid",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -296,7 +296,7 @@
       },
       {
         "tableName": "patients",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`synced` INTEGER NOT NULL, `identifier` TEXT, `givenName` TEXT, `middleName` TEXT, `familyName` TEXT, `gender` TEXT, `birthDate` TEXT, `deathDate` TEXT, `causeOfDeath` TEXT, `age` TEXT, `photo` TEXT, `address1` TEXT, `address2` TEXT, `city` TEXT, `state` TEXT, `country` TEXT, `postalCode` TEXT, `dead` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT, `patient_visit_id` TEXT, `patient_encounterDatetime` TEXT, `patient_type` TEXT, `patient_patient_uuid` TEXT, `patient_form_uuid` TEXT, `patient_location_uuid` TEXT, `patient_encounterProviders_uuid` TEXT, `patient_uuid` TEXT, `patient_display` TEXT, `patient__id` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`synced` INTEGER NOT NULL, `identifier` TEXT, `givenName` TEXT, `middleName` TEXT, `familyName` TEXT, `gender` TEXT, `birthDate` TEXT, `deathDate` TEXT, `causeOfDeath` TEXT, `age` TEXT, `photo` TEXT, `address1` TEXT, `address2` TEXT, `city` TEXT, `state` TEXT, `country` TEXT, `postalCode` TEXT, `dead` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT, `patient_visit_id` TEXT, `patient_encounterDatetime` TEXT, `patient_type` TEXT, `patient_patient_uuid` TEXT, `patient_form_uuid` TEXT, `patient_location_uuid` TEXT, `patient_encounter_provider_uuid` TEXT, `patient_uuid` TEXT, `patient_display` TEXT, `patient__id` INTEGER)",
         "fields": [
           {
             "fieldPath": "synced",
@@ -462,7 +462,7 @@
           },
           {
             "fieldPath": "encounters.encounterProviderUuid",
-            "columnName": "patient_encounterProviders_uuid",
+            "columnName": "patient_encounter_provider_uuid",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -678,7 +678,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c92083b535e9f72d064befe054790ae0\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b8a02b83db64acbc87440885a9c647cc\")"
     ]
   }
 }

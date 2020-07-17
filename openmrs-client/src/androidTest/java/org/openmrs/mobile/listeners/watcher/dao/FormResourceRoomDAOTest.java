@@ -61,7 +61,7 @@ public class FormResourceRoomDAOTest {
 
     @Test
     public void findFormResourceByName_ShouldFindCorrectFormResourceByName() {
-        mDatabase.formResourceDAO().saveFormResource(formResourceEntity1);
+        mDatabase.formResourceDAO().addFormResource(formResourceEntity1);
 
         mDatabase.formResourceDAO().getFormResourceByName("firstForm1")
                 .test()
@@ -73,8 +73,8 @@ public class FormResourceRoomDAOTest {
 
     @Test
     public void findFormResourceList_ShouldFindCorrectFormResourceList() {
-        mDatabase.formResourceDAO().saveFormResource(formResourceEntity1);
-        mDatabase.formResourceDAO().saveFormResource(formResourceEntity2);
+        mDatabase.formResourceDAO().addFormResource(formResourceEntity1);
+        mDatabase.formResourceDAO().addFormResource(formResourceEntity2);
 
         mDatabase.formResourceDAO().getFormResourceList()
                 .test()
@@ -89,8 +89,8 @@ public class FormResourceRoomDAOTest {
 
     @Test
     public void findFormByUuid_ShouldFindCorrectFormByUuid() {
-        mDatabase.formResourceDAO().saveFormResource(formResourceEntity1);
-        mDatabase.formResourceDAO().saveFormResource(formResourceEntity2);
+        mDatabase.formResourceDAO().addFormResource(formResourceEntity1);
+        mDatabase.formResourceDAO().addFormResource(formResourceEntity2);
 
         mDatabase.formResourceDAO().getFormByUuid("123_123")
                 .test()
@@ -101,8 +101,8 @@ public class FormResourceRoomDAOTest {
 
     @Test
     public void deleteALlForms_ShouldDeleteALlFormsCorrectly() {
-        mDatabase.formResourceDAO().saveFormResource(formResourceEntity1);
-        mDatabase.formResourceDAO().saveFormResource(formResourceEntity2);
+        mDatabase.formResourceDAO().addFormResource(formResourceEntity1);
+        mDatabase.formResourceDAO().addFormResource(formResourceEntity2);
         mDatabase.formResourceDAO().deleteALlForms();
 
         mDatabase.formResourceDAO().getFormResourceList()
@@ -112,8 +112,8 @@ public class FormResourceRoomDAOTest {
 
     @Test
     public void saveFormResource_ShouldSaveFormResource() {
-        mDatabase.formResourceDAO().saveFormResource(formResourceEntity1);
-        mDatabase.formResourceDAO().saveFormResource(formResourceEntity2);
+        mDatabase.formResourceDAO().addFormResource(formResourceEntity1);
+        mDatabase.formResourceDAO().addFormResource(formResourceEntity2);
 
         mDatabase.formResourceDAO().getFormResourceList()
                 .test()

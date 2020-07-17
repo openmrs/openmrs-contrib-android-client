@@ -39,5 +39,5 @@ public interface FormResourceDAO {
     void deleteALlForms();
 
     @Insert
-    void saveFormResource(FormResourceEntity formResourceEntity);
+    void addFormResource(FormResourceEntity formResourceEntity);
 }

@@ -66,8 +66,8 @@ public class PatientRoomDAOTest {
 
     @Test
     public void getAllPatients_ShouldGetAllPatientsCorrectly() {
-        patientRoomDAO.savePatient(expectedPatientEntity1);
-        patientRoomDAO.savePatient(expectedPatientEntity2);
+        patientRoomDAO.addPatient(expectedPatientEntity1);
+        patientRoomDAO.addPatient(expectedPatientEntity2);
 
         patientRoomDAO.getAllPatients()
                 .test()
@@ -78,8 +78,8 @@ public class PatientRoomDAOTest {
 
     @Test
     public void findPatientByUUID_ShouldFindCorrectPatientByUUID() {
-        patientRoomDAO.savePatient(expectedPatientEntity1);
-        patientRoomDAO.savePatient(expectedPatientEntity2);
+        patientRoomDAO.addPatient(expectedPatientEntity1);
+        patientRoomDAO.addPatient(expectedPatientEntity2);
 
         patientRoomDAO.findPatientByUUID(expectedPatientEntity2.getUuid())
                 .test()
@@ -89,8 +89,8 @@ public class PatientRoomDAOTest {
 
     @Test
     public void getUnsyncedPatients_ShouldGetUnsyncedPatients() {
-        patientRoomDAO.savePatient(expectedPatientEntity1);
-        patientRoomDAO.savePatient(expectedPatientEntity2);
+        patientRoomDAO.addPatient(expectedPatientEntity1);
+        patientRoomDAO.addPatient(expectedPatientEntity2);
 
         patientRoomDAO.getUnsyncedPatients()
                 .test()
@@ -101,8 +101,8 @@ public class PatientRoomDAOTest {
 
     @Test
     public void findPatientByID_ShouldGetCorrectPatientByID() {
-        patientRoomDAO.savePatient(expectedPatientEntity1);
-        patientRoomDAO.savePatient(expectedPatientEntity2);
+        patientRoomDAO.addPatient(expectedPatientEntity1);
+        patientRoomDAO.addPatient(expectedPatientEntity2);
 
         patientRoomDAO.findPatientByID(expectedPatientEntity1.getId())
                 .test()
@@ -112,8 +112,8 @@ public class PatientRoomDAOTest {
 
     @Test
     public void deletePatientByID_ShouldDeleteCorrectPatientByID() {
-        patientRoomDAO.savePatient(expectedPatientEntity1);
-        patientRoomDAO.savePatient(expectedPatientEntity2);
+        patientRoomDAO.addPatient(expectedPatientEntity1);
+        patientRoomDAO.addPatient(expectedPatientEntity2);
 
         patientRoomDAO.deletePatient(20L);
 
@@ -125,7 +125,7 @@ public class PatientRoomDAOTest {
 
     @Test
     public void updatePatient_ShouldCorrectlyUpdatePatient() {
-        patientRoomDAO.savePatient(expectedPatientEntity1);
+        patientRoomDAO.addPatient(expectedPatientEntity1);
 
         expectedPatientEntity1.setGivenName("Rishabh");
         expectedPatientEntity1.setFamilyName("Agarwal");

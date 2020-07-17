@@ -57,7 +57,7 @@ public class LocationRoomDAOTest {
 
     @Test
     public void saveLocation_ShouldSaveCorrectLocation() {
-        mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity1);
+        mDatabase.locationRoomDAO().addLocation(expectedLocationEntity1);
         mDatabase.locationRoomDAO().getLocations()
                 .test()
                 .assertValue(locationEntities -> {
@@ -70,7 +70,7 @@ public class LocationRoomDAOTest {
 
     @Test
     public void findLocationByName_ShouldFindCorrectLocationByName() {
-        mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity1);
+        mDatabase.locationRoomDAO().addLocation(expectedLocationEntity1);
         mDatabase.locationRoomDAO().findLocationByName("name")
                 .test()
                 .assertValue(actualLocationEntity -> Objects.equals(actualLocationEntity.getName(), "name")
@@ -80,7 +80,7 @@ public class LocationRoomDAOTest {
 
     @Test
     public void findLocationByUUID_ShouldFindCorrectLocationByUUID() {
-        mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity1);
+        mDatabase.locationRoomDAO().addLocation(expectedLocationEntity1);
         mDatabase.locationRoomDAO().findLocationByUUID(expectedLocationEntity1.getUuid())
                 .test()
                 .assertValue(actualLocationEntity -> Objects.equals(actualLocationEntity.getName(), "name")
@@ -90,8 +90,8 @@ public class LocationRoomDAOTest {
 
     @Test
     public void deleteAllLocations_ShouldDeleteAllSavedLoactions() {
-        mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity1);
-        mDatabase.locationRoomDAO().saveLocation(expectedLocationEntity2);
+        mDatabase.locationRoomDAO().addLocation(expectedLocationEntity1);
+        mDatabase.locationRoomDAO().addLocation(expectedLocationEntity2);
 
         mDatabase.locationRoomDAO().deleteAllLocations();
 

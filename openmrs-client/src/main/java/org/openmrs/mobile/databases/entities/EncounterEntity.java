@@ -21,7 +21,7 @@ public class EncounterEntity extends Resource {
     private String formUuid;
     @ColumnInfo(name = "location_uuid")
     private String locationUuid;
-    @ColumnInfo(name = "encounterProviders_uuid")
+    @ColumnInfo(name = "encounter_provider_uuid")
     private String encounterProviderUuid;
 
     public EncounterEntity() {

@@ -50,7 +50,7 @@ public class VisitRoomDAOTest {
 
     @Test
     public void updateVisit_ShouldUpdateVisit() {
-        Long id = database.visitRoomDAO().saveVisit(expectedVisitEntity);
+        Long id = database.visitRoomDAO().addVisit(expectedVisitEntity);
         database.visitRoomDAO().updateVisit(updatedVisitEntity);
         database.visitRoomDAO().getVisitByID(id).
                 test()
@@ -59,7 +59,7 @@ public class VisitRoomDAOTest {
 
     @Test
     public void deleteVisitsByPatientId_ShouldDeleteVisit() {
-        database.visitRoomDAO().saveVisit(expectedVisitEntity);
+        database.visitRoomDAO().addVisit(expectedVisitEntity);
         database.visitRoomDAO().deleteVisitsByPatientId(expectedVisitEntity);
         database.visitRoomDAO().getActiveVisits()
                 .test()
@@ -68,7 +68,7 @@ public class VisitRoomDAOTest {
 
     @Test
     public void getVisitsByPatientId_ShouldGetVisit() {
-        database.visitRoomDAO().saveVisit(expectedVisitEntity);
+        database.visitRoomDAO().addVisit(expectedVisitEntity);
         database.visitRoomDAO().getVisitsByPatientID(expectedVisitEntity.getPatientKeyID())
                 .test()
                 .assertValue(visitEntities -> {
@@ -79,7 +79,7 @@ public class VisitRoomDAOTest {
 
     @Test
     public void getFirstActiveVisitByPatientId_ShouldGetFirstActiveVisit() {
-        database.visitRoomDAO().saveVisit(expectedVisitEntity);
+        database.visitRoomDAO().addVisit(expectedVisitEntity);
         database.visitRoomDAO().getFirstActiveVisitByPatientId(expectedVisitEntity.getPatientKeyID())
                 .test()
                 .assertValue(actualVisitEntity -> Objects.equals(renderVisitEntityString(actualVisitEntity), renderVisitEntityString(expectedVisitEntity)));
@@ -87,7 +87,7 @@ public class VisitRoomDAOTest {
 
     @Test
     public void saveVisit_ShouldSaveCorrectVisit() {
-        Long id = database.visitRoomDAO().saveVisit(expectedVisitEntity);
+        Long id = database.visitRoomDAO().addVisit(expectedVisitEntity);
         database.visitRoomDAO().getVisitByID(id)
                 .test()
                 .assertValue(actualVisitEntity -> Objects.equals(renderVisitEntityString(actualVisitEntity), renderVisitEntityString(expectedVisitEntity)));
@@ -95,7 +95,7 @@ public class VisitRoomDAOTest {
 
     @Test
     public void getVisitByUuid_ShouldGetCorrectVisit() {
-        database.visitRoomDAO().saveVisit(expectedVisitEntity);
+        database.visitRoomDAO().addVisit(expectedVisitEntity);
         database.visitRoomDAO().getVisitByUuid("uuid")
                 .test()
                 .assertValue(actualVisitEntity -> Objects.equals(renderVisitEntityString(actualVisitEntity), renderVisitEntityString(expectedVisitEntity)));
@@ -103,7 +103,7 @@ public class VisitRoomDAOTest {
 
     @Test
     public void getVisitIdByUuid_ShouldGetCorrectVisitId() {
-        Long id = database.visitRoomDAO().saveVisit(expectedVisitEntity);
+        Long id = database.visitRoomDAO().addVisit(expectedVisitEntity);
         Long visitId = database.visitRoomDAO().getVisitsIDByUUID("uuid");
         Assert.assertEquals(id, visitId);
     }

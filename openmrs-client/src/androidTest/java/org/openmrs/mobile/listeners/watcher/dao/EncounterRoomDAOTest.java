@@ -71,7 +71,7 @@ public class EncounterRoomDAOTest {
 
     @Test
     public void findEncounterByFormName_ShouldFindCorrectEncounterByFormName() {
-        mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity1);
+        mDatabase.encounterRoomDAO().addEncounter(expectedEncounterEntity1);
 
         mDatabase.encounterRoomDAO().getEncounterTypeByFormName(expectedEncounterEntity1.getDisplay())
                 .test()
@@ -81,7 +81,7 @@ public class EncounterRoomDAOTest {
 
     @Test
     public void getLastVitalsEncounterID_ShouldGetCorrectLastVitalsEncounterID() {
-        mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity3);
+        mDatabase.encounterRoomDAO().addEncounter(expectedEncounterEntity3);
 
         mDatabase.encounterRoomDAO().getLastVitalsEncounterID("50")
                 .test()
@@ -90,8 +90,8 @@ public class EncounterRoomDAOTest {
 
     @Test
     public void getLastVitalsEncounter_ShouldGetCorrectLastVitalsEncounter() {
-        mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity1);
-        mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity2);
+        mDatabase.encounterRoomDAO().addEncounter(expectedEncounterEntity1);
+        mDatabase.encounterRoomDAO().addEncounter(expectedEncounterEntity2);
 
         mDatabase.encounterRoomDAO().getLastVitalsEncounter(expectedEncounterEntity1.getPatientUuid(), expectedEncounterEntity1.getEncounterType())
                 .test()
@@ -101,8 +101,8 @@ public class EncounterRoomDAOTest {
 
     @Test
     public void getEncounterByUUID_ShouldGetCorrectEncounterByUUID() {
-        mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity1);
-        mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity2);
+        mDatabase.encounterRoomDAO().addEncounter(expectedEncounterEntity1);
+        mDatabase.encounterRoomDAO().addEncounter(expectedEncounterEntity2);
 
         mDatabase.encounterRoomDAO().getEncounterByUUID(expectedEncounterEntity1.getUuid())
                 .test()
@@ -111,8 +111,8 @@ public class EncounterRoomDAOTest {
 
     @Test
     public void getEncountersByVisitID_ShouldFindCorrectEncountersByVisitID() {
-        mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity1);
-        mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity2);
+        mDatabase.encounterRoomDAO().addEncounter(expectedEncounterEntity1);
+        mDatabase.encounterRoomDAO().addEncounter(expectedEncounterEntity2);
 
         mDatabase.encounterRoomDAO().findEncountersByVisitID(expectedEncounterEntity2.getVisitKeyId())
                 .test()
@@ -122,8 +122,8 @@ public class EncounterRoomDAOTest {
 
     @Test
     public void deleteEncounter_ShouldDeleteEncounter() {
-        mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity1);
-        mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity2);
+        mDatabase.encounterRoomDAO().addEncounter(expectedEncounterEntity1);
+        mDatabase.encounterRoomDAO().addEncounter(expectedEncounterEntity2);
 
         mDatabase.encounterRoomDAO().deleteEncounter(expectedEncounterEntity1.getUuid());
 
@@ -138,10 +138,10 @@ public class EncounterRoomDAOTest {
         expectedEncounterEntity1.setPatientUuid(expectedPatientEntity1.getUuid());
         expectedEncounterEntity1.setVisitKeyId(String.valueOf(expectedVisitEntity.getId()));
 
-        mDatabase.encounterRoomDAO().saveEncounter(expectedEncounterEntity1);
-        mDatabase.patientRoomDAO().savePatient(expectedPatientEntity1);
-        mDatabase.visitRoomDAO().saveVisit(expectedVisitEntity);
-        mDatabase.observationRoomDAO().saveObservation(expectedObservationEntity);
+        mDatabase.encounterRoomDAO().addEncounter(expectedEncounterEntity1);
+        mDatabase.patientRoomDAO().addPatient(expectedPatientEntity1);
+        mDatabase.visitRoomDAO().addVisit(expectedVisitEntity);
+        mDatabase.observationRoomDAO().addObservation(expectedObservationEntity);
 
         mDatabase.encounterRoomDAO().getAllEncountersByType(expectedVisitEntity.getPatientKeyID(), encounterType.getDisplay())
                 .test()

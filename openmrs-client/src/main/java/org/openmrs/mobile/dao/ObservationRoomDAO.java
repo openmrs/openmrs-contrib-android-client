@@ -30,7 +30,7 @@ import io.reactivex.Single;
 @Dao
 public interface ObservationRoomDAO {
     @Insert
-    void saveObservation(ObservationEntity observationEntity);
+    void addObservation(ObservationEntity observationEntity);
 
     @Update
     void updateObservation(ObservationEntity observationEntity);

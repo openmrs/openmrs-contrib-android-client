@@ -30,10 +30,10 @@ import io.reactivex.Flowable;
 @Dao
 public interface VisitRoomDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long saveOrUpdate(VisitEntity visitEntity);
+    long addOrUpdate(VisitEntity visitEntity);
 
     @Insert
-    long saveVisit(VisitEntity visitEntity);
+    long addVisit(VisitEntity visitEntity);
 
     @Update
     int updateVisit(VisitEntity visitEntity);

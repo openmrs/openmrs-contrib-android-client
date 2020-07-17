@@ -16,16 +16,17 @@ package org.openmrs.mobile.activities.settings
 import org.openmrs.mobile.activities.BasePresenter
 import org.openmrs.mobile.application.OpenMRS
 import org.openmrs.mobile.application.OpenMRSLogger
-import org.openmrs.mobile.dao.ConceptDAO
+import org.openmrs.mobile.dao.ConceptRoomDAO
+import org.openmrs.mobile.databases.AppDatabase
 import org.openmrs.mobile.utilities.ApplicationConstants
 import org.openmrs.mobile.utilities.LanguageUtils
 import org.openmrs.mobile.utilities.ThemeUtils
 import java.io.File
 
 class SettingsPresenter(private val mSettingsView: SettingsContract.View, private val mOpenMRSLogger: OpenMRSLogger,
-                        private var conceptDAO: ConceptDAO) : BasePresenter(), SettingsContract.Presenter {
+                        private var conceptRoomDAO: ConceptRoomDAO) : BasePresenter(), SettingsContract.Presenter {
 
-    constructor(view: SettingsContract.View, logger: OpenMRSLogger): this(view, logger, ConceptDAO())
+    constructor(view: SettingsContract.View, logger: OpenMRSLogger) : this(view, logger, AppDatabase.getDatabase(OpenMRS.getInstance().applicationContext).conceptRoomDAO())
 
     init {
         mSettingsView.setPresenter(this)
@@ -33,7 +34,7 @@ class SettingsPresenter(private val mSettingsView: SettingsContract.View, privat
 
     override fun subscribe() {
         updateViews()
-        mSettingsView.setConceptsInDbText(conceptDAO.conceptsCount.toString())
+        mSettingsView.setConceptsInDbText(conceptRoomDAO.conceptsCount.toString())
     }
 
     private fun updateViews() {
@@ -62,7 +63,7 @@ class SettingsPresenter(private val mSettingsView: SettingsContract.View, privat
     }
 
     override fun updateConceptsInDBTextView() {
-        mSettingsView.setConceptsInDbText(conceptDAO.conceptsCount.toString())
+        mSettingsView.setConceptsInDbText(conceptRoomDAO.conceptsCount.toString())
     }
 
     override val isDarkModeActivated: Boolean

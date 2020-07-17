@@ -212,7 +212,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         mOpenMRS.setLocation(selectedLocation);
         locationRoomDAO.deleteAllLocations();
         for (int i = 0; i < locationList.size(); i++) {
-            locationRoomDAO.saveLocation(locationList.get(i));
+            locationRoomDAO.addLocation(locationList.get(i));
         }
     }
 

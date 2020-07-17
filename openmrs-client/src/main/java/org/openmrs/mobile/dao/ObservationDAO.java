@@ -18,8 +18,8 @@ import net.sqlcipher.Cursor;
 
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
+import org.openmrs.mobile.databases.entities.ConceptEntity;
 import org.openmrs.mobile.databases.tables.ObservationTable;
-import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.Observation;
 
 import java.util.ArrayList;
@@ -90,7 +90,7 @@ public class ObservationDAO {
                         obs.setDiagnosisCertanity(obsDiagnosisCertainty);
                     }
                     obs.setDiagnosisNote(obsDiagnosisNote);
-                    Concept concept = new Concept();
+                    ConceptEntity concept = new ConceptEntity();
                     concept.setUuid(conceptUuid);
                     obs.setConcept(concept);
                     observationList.add(obs);

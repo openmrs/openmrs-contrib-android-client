@@ -39,12 +39,12 @@ public interface ConceptRoomDAO {
     @Update
     void updateConcept(ConceptEntity conceptEntity);
 
-    @Query("SELECT * FROM concepts WHERE uuid = :uuid")
+    @Query("SELECT * FROM con WHERE uuid = :uuid")
     Single<List<ConceptEntity>> findConceptsByUUID(String uuid);
 
-    @Query("SELECT * FROM concepts WHERE name = :name")
+    @Query("SELECT * FROM con WHERE display = :name")
     Single<List<ConceptEntity>> findConceptsByName(String name);
 
-    @Query("SELECT count(*) FROM concepts")
+    @Query("SELECT count(*) FROM con")
     Single<Long> getConceptsCount();
 }

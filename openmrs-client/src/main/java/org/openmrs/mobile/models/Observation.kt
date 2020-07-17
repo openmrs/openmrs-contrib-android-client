@@ -12,6 +12,7 @@ package org.openmrs.mobile.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import org.openmrs.mobile.databases.entities.ConceptEntity
 
 import java.io.Serializable
 
@@ -20,7 +21,7 @@ class Observation : Resource(), Serializable {
 
     @SerializedName("concept")
     @Expose
-    var concept: Concept? = null
+    var concept: ConceptEntity? = null
 
     @SerializedName("person")
     @Expose

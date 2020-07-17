@@ -17,8 +17,10 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
-import org.openmrs.mobile.dao.ConceptDAO;
-import org.openmrs.mobile.models.Concept;
+import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.dao.ConceptRoomDAO;
+import org.openmrs.mobile.databases.AppDatabase;
+import org.openmrs.mobile.databases.entities.ConceptEntity;
 import org.openmrs.mobile.models.Link;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.models.SystemSetting;
@@ -102,15 +104,15 @@ public class ConceptDownloadService extends Service {
 
     private void downloadConcepts(int startIndex) {
         RestApi service = RestServiceBuilder.createService(RestApi.class);
-        Call<Results<Concept>> call = service.getConcepts(maxConceptsInOneQuery, startIndex);
-        call.enqueue(new Callback<Results<Concept>>() {
+        Call<Results<ConceptEntity>> call = service.getConcepts(maxConceptsInOneQuery, startIndex);
+        call.enqueue(new Callback<Results<ConceptEntity>>() {
             @Override
-            public void onResponse(@NonNull Call<Results<Concept>> call, @NonNull Response<Results<Concept>> response) {
+            public void onResponse(@NonNull Call<Results<ConceptEntity>> call, @NonNull Response<Results<ConceptEntity>> response) {
                 if (response.isSuccessful()) {
-                    ConceptDAO conceptDAO = new ConceptDAO();
+                    ConceptRoomDAO conceptDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).conceptRoomDAO();
                     if (response.body() != null) {
-                        for (Concept concept : response.body().getResults()) {
-                            conceptDAO.saveOrUpdate(concept);
+                        for (ConceptEntity concept : response.body().getResults()) {
+                            conceptDAO.addConcept(concept);
                             downloadedConcepts++;
                         }
                     }
@@ -137,7 +139,7 @@ public class ConceptDownloadService extends Service {
             }
 
             @Override
-            public void onFailure(@NonNull Call<Results<Concept>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Results<ConceptEntity>> call, @NonNull Throwable t) {
                 stopSelf();
             }
         });

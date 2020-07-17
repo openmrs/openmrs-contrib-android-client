@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b8a02b83db64acbc87440885a9c647cc",
+    "identityHash": "ed08006290643ebf602cdc2efdb78a7d",
     "entities": [
       {
-        "tableName": "concepts",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT, `datatype_uuid` TEXT, `datatype_display` TEXT, `datatype__id` INTEGER)",
+        "tableName": "con",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
             "fieldPath": "name",
@@ -29,24 +29,6 @@
           {
             "fieldPath": "id",
             "columnName": "_id",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "datatype.uuid",
-            "columnName": "datatype_uuid",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "datatype.display",
-            "columnName": "datatype_display",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "datatype.id",
-            "columnName": "datatype__id",
             "affinity": "INTEGER",
             "notNull": false
           }
@@ -678,7 +660,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b8a02b83db64acbc87440885a9c647cc\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ed08006290643ebf602cdc2efdb78a7d\")"
     ]
   }
 }

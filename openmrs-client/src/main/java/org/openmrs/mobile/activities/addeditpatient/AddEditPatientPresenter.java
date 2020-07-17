@@ -27,12 +27,10 @@ import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
-import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Module;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PersonName;
-import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.models.SystemProperty;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -43,7 +41,6 @@ import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.ViewUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -52,6 +49,7 @@ import retrofit2.Response;
 
 public class AddEditPatientPresenter extends BasePresenter implements AddEditPatientContract.Presenter {
     private final AddEditPatientContract.View mPatientInfoView;
+    boolean isPatientUnidentified = false;
     private PatientRepository patientRepository;
     private RestApi restApi;
     private Patient mPatient;
@@ -59,7 +57,6 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     private List<String> mCountries;
     private boolean registeringPatient = false;
     private PlacesClient placesClient;
-    boolean isPatientUnidentified = false;
 
     public AddEditPatientPresenter(AddEditPatientContract.View mPatientInfoView,
                                    List<String> countries,
@@ -104,7 +101,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             mPatientInfoView.setProgressBarVisibility(true);
             mPatientInfoView.hideSoftKeys();
             registeringPatient = true;
-            if(!isPatientUnidentified) {
+            if (!isPatientUnidentified) {
                 findSimilarPatients(patient);
             } else {
                 registerPatient();
@@ -144,7 +141,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         boolean cityError = false;
         boolean postalError = false;
 
-        if(!isPatientUnidentified) {
+        if (!isPatientUnidentified) {
 
             mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, genderError, addressError, countryError, countryNull, stateError, cityError, postalError);
 
@@ -211,7 +208,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             return true;
         } else {
             mPatientInfoView
-                .setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, addressError, countryError, genderError, countryNull, stateError, cityError, postalError);
+                    .setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, addressError, countryError, genderError, countryNull, stateError, cityError, postalError);
             return false;
         }
     }
@@ -259,15 +256,14 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         restApi.getSystemProperty(ApplicationConstants.CAUSE_OF_DEATH, ApplicationConstants.REPRESENTATION_FULL).enqueue(new Callback<Results<SystemProperty>>() {
             @Override
             public void onResponse(Call<Results<SystemProperty>> call, Response<Results<SystemProperty>> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     String uuid = response.body().getResults().get(0).getConceptUUID();
-                    if(uuid.length() == 36) {
+                    if (uuid.length() == 36) {
                         getConceptCauseOfDeath(uuid);
                     } else {
                         mPatientInfoView.cannotMarkDeceased(R.string.mark_patient_deceased_invalid_uuid);
                     }
-                }
-                else {
+                } else {
                     mPatientInfoView.cannotMarkDeceased(ApplicationConstants.EMPTY_STRING);
                 }
             }
@@ -283,14 +279,13 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         restApi.getConceptFromUUID(uuid).enqueue(new Callback<ConceptAnswers>() {
             @Override
             public void onResponse(Call<ConceptAnswers> call, Response<ConceptAnswers> response) {
-                if(response.isSuccessful()) {
-                    if(response.body().getAnswers().size() != 0) {
+                if (response.isSuccessful()) {
+                    if (response.body().getAnswers().size() != 0) {
                         mPatientInfoView.updateCauseOfDeathSpinner(response.body());
                     } else {
                         mPatientInfoView.cannotMarkDeceased(R.string.mark_patient_deceased_concept_has_no_answer);
                     }
-                }
-                else {
+                } else {
                     mPatientInfoView.cannotMarkDeceased(ApplicationConstants.EMPTY_STRING);
                 }
             }

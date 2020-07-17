@@ -10,9 +10,9 @@
 
 package org.openmrs.mobile.api;
 
+import org.openmrs.mobile.databases.entities.ConceptEntity;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Allergy;
-import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
@@ -150,7 +150,7 @@ public interface RestApi {
     Call<User> getFullUserInfo(@Path("uuid") String uuid);
 
     @GET("concept")
-    Call<Results<Concept>> getConcepts(@Query("limit") int limit, @Query("startIndex") int startIndex);
+    Call<Results<ConceptEntity>> getConcepts(@Query("limit") int limit, @Query("startIndex") int startIndex);
 
     @GET("concept/{uuid}")
     Call<ConceptAnswers> getConceptFromUUID(@Path("uuid") String uuid);

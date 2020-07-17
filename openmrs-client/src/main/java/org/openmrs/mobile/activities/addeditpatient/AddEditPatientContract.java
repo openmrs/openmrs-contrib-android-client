@@ -18,7 +18,6 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Patient;
 

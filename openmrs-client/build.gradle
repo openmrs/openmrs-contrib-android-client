@@ -133,7 +133,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:${versions.retrofitConverter}"
     implementation "com.google.code.gson:gson:${versions.gson}"
 
-    // Rx Java
+    // Rx Java dependency
     implementation "io.reactivex.rxjava2:rxjava:${versions.rxjava}"
     implementation "io.reactivex.rxjava2:rxandroid:${versions.rxandroid}"
     implementation "com.jakewharton.rxbinding:rxbinding:${versions.rxbinding}"

@@ -23,6 +23,7 @@ import net.sqlcipher.database.SQLiteStatement;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.databases.entities.ConceptEntity;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.databases.tables.ConceptTable;
 import org.openmrs.mobile.databases.tables.EncounterTable;
@@ -31,7 +32,6 @@ import org.openmrs.mobile.databases.tables.ObservationTable;
 import org.openmrs.mobile.databases.tables.PatientTable;
 import org.openmrs.mobile.databases.tables.Table;
 import org.openmrs.mobile.databases.tables.VisitTable;
-import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Patient;
@@ -216,7 +216,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         return db.update(PatientTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);
     }
 
-    public long insertConcept(SQLiteDatabase db, Concept concept) {
+    public long insertConcept(SQLiteDatabase db, ConceptEntity concept) {
         long conceptId;
         SQLiteStatement statement = db.compileStatement(mConceptTable.insertIntoTableDefinition());
         try {
@@ -233,7 +233,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         return conceptId;
     }
 
-    public int updateConcept(SQLiteDatabase db, long conceptId, Concept concept) {
+    public int updateConcept(SQLiteDatabase db, long conceptId, ConceptEntity concept) {
         ContentValues newValues = new ContentValues();
         newValues.put(ConceptTable.Column.UUID, concept.getUuid());
         newValues.put(ConceptTable.Column.DISPLAY, concept.getDisplay());

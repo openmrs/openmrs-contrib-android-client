@@ -3,9 +3,9 @@ package org.openmrs.mobile.databases.tables;
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
-import org.openmrs.mobile.models.Concept;
+import org.openmrs.mobile.databases.entities.ConceptEntity;
 
-public class ConceptTable extends Table<Concept> {
+public class ConceptTable extends Table<ConceptEntity> {
 
 
     public static final String TABLE_NAME = "concepts";
@@ -45,13 +45,13 @@ public class ConceptTable extends Table<Concept> {
     }
 
     @Override
-    public Long insert(Concept tableObject) {
+    public Long insert(ConceptEntity tableObject) {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
         return helper.insertConcept(helper.getWritableDatabase(), tableObject);
     }
 
     @Override
-    public int update(long tableObjectID, Concept tableObject) {
+    public int update(long tableObjectID, ConceptEntity tableObject) {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
         return helper.updateConcept(helper.getWritableDatabase(), tableObjectID, tableObject);
     }

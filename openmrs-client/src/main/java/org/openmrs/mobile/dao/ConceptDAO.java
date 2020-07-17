@@ -6,33 +6,33 @@ import net.sqlcipher.database.SQLiteDatabase;
 
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
+import org.openmrs.mobile.databases.entities.ConceptEntity;
 import org.openmrs.mobile.databases.tables.ConceptTable;
-import org.openmrs.mobile.models.Concept;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConceptDAO {
-    public long saveOrUpdate(Concept concept) {
-        Concept foundConcept = findConceptsByUUID(concept.getUuid());
+    public long saveOrUpdate(ConceptEntity ConceptEntity) {
+        ConceptEntity foundConcept = findConceptsByUUID(ConceptEntity.getUuid());
         if (foundConcept != null) {
-            updateConcept(foundConcept.getId(), concept);
+            updateConcept(foundConcept.getId(), ConceptEntity);
             return foundConcept.getId();
         } else {
-            return saveConcept(concept);
+            return saveConcept(ConceptEntity);
         }
     }
 
-    public long saveConcept(Concept concept) {
-        return new ConceptTable().insert(concept);
+    public long saveConcept(ConceptEntity ConceptEntity) {
+        return new ConceptTable().insert(ConceptEntity);
     }
 
-    public boolean updateConcept(long conceptID, Concept concept) {
-        return new ConceptTable().update(conceptID, concept) > 0;
+    public boolean updateConcept(long conceptID, ConceptEntity ConceptEntity) {
+        return new ConceptTable().update(conceptID, ConceptEntity) > 0;
     }
 
-    public List<Concept> findConceptsByName(String name) {
-        List<Concept> result = new ArrayList<>();
+    public List<ConceptEntity> findConceptsByName(String name) {
+        List<ConceptEntity> result = new ArrayList<>();
         String where = String.format("%s like ?", ConceptTable.Column.DISPLAY);
         String[] whereArgs = new String[]{name + "%"};
 
@@ -51,7 +51,7 @@ public class ConceptDAO {
         return result;
     }
 
-    public Concept findConceptsByUUID(String uuid) {
+    public ConceptEntity findConceptsByUUID(String uuid) {
         String where = String.format("%s = ?", ConceptTable.Column.UUID);
         String[] whereArgs = new String[]{uuid};
 
@@ -76,13 +76,13 @@ public class ConceptDAO {
         return cnt;
     }
 
-    private Concept cursorToConcept(Cursor cursor) {
-        Concept concept = new Concept();
+    private ConceptEntity cursorToConcept(Cursor cursor) {
+        ConceptEntity ConceptEntity = new ConceptEntity();
 
-        concept.setId(cursor.getLong(cursor.getColumnIndex(ConceptTable.Column.ID)));
-        concept.setDisplay(cursor.getString(cursor.getColumnIndex(ConceptTable.Column.DISPLAY)));
-        concept.setUuid(cursor.getString(cursor.getColumnIndex(ConceptTable.Column.UUID)));
+        ConceptEntity.setId(cursor.getLong(cursor.getColumnIndex(ConceptTable.Column.ID)));
+        ConceptEntity.setDisplay(cursor.getString(cursor.getColumnIndex(ConceptTable.Column.DISPLAY)));
+        ConceptEntity.setUuid(cursor.getString(cursor.getColumnIndex(ConceptTable.Column.UUID)));
 
-        return concept;
+        return ConceptEntity;
     }
 }

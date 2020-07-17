@@ -17,10 +17,6 @@ class ConceptAnswers : Resource() {
 
     override var id: Long? = null
 
-    @SerializedName("datatype")
-    @Expose
-    var datatype: Datatype? = null
-
     @SerializedName("conceptClass")
     @Expose
     var conceptClass: ConceptClass? = null

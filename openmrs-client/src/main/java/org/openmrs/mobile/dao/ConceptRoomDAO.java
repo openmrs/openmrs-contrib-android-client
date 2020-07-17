@@ -29,7 +29,7 @@ import io.reactivex.Single;
 public interface ConceptRoomDAO {
 
     @Insert
-    void saveConcept(ConceptEntity conceptEntity);
+    void addConcept(ConceptEntity conceptEntity);
 
     /**
      * To update a concept, first get the concept using

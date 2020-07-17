@@ -28,7 +28,7 @@ import io.reactivex.Single;
 @Dao
 public interface PatientRoomDAO {
     @Insert
-    void savePatient(PatientEntity patientEntity);
+    void addPatient(PatientEntity patientEntity);
 
     @Query("DELETE FROM patients WHERE _id = :id")
     void deletePatient(long id);

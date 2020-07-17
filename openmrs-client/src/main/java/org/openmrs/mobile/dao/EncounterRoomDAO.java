@@ -42,7 +42,7 @@ public interface EncounterRoomDAO {
     Single<List<EncounterEntity>> findEncountersByVisitID(String visitID);
 
     @Insert
-    void saveEncounter(EncounterEntity encounterEntity);
+    void addEncounter(EncounterEntity encounterEntity);
 
     @Query("DELETE FROM encounters WHERE uuid = :uuid")
     void deleteEncounter(String uuid);

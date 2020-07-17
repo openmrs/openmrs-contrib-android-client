@@ -19,6 +19,10 @@ public class EncounterEntity extends Resource {
     private String patientUuid;
     @ColumnInfo(name = "form_uuid")
     private String formUuid;
+    @ColumnInfo(name = "location_uuid")
+    private String locationUuid;
+    @ColumnInfo(name = "encounter_provider_uuid")
+    private String encounterProviderUuid;
 
     public EncounterEntity() {
     }
@@ -43,6 +47,14 @@ public class EncounterEntity extends Resource {
         this.formUuid = formUuid;
     }
 
+    public void setLocationUuid(String locationUuid) {
+        this.locationUuid = locationUuid;
+    }
+
+    public void setEncounterProviderUuid(String encounterProviderUuid) {
+        this.encounterProviderUuid = encounterProviderUuid;
+    }
+
     public String getVisitKeyId() {
         return visitKeyId;
     }
@@ -62,5 +74,13 @@ public class EncounterEntity extends Resource {
 
     public String getFormUuid() {
         return formUuid;
+    }
+
+    public String getLocationUuid() {
+        return locationUuid;
+    }
+
+    public String getEncounterProviderUuid() {
+        return encounterProviderUuid;
     }
 }

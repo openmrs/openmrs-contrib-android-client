@@ -38,10 +38,10 @@ public class PatientRoomDAOTest {
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
-    private EncounterEntity expectedEncounterEntity1 = newEncounterEntity(40L, "123-123", "Encounter", "50", "60", "70", "Visit", "22nd of May");
-    private EncounterEntity expectedEncounterEntity2 = newEncounterEntity(50L, "124-124", "Encounter", "50", "60", "70", "Visit", "23rd of May");
-    private PatientEntity expectedPatientEntity1 = newPatientEntity(10L, "123", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity1, "Tranquil", "male", "Jon", "101", "Johnson", "https://bit.ly/2W4Ofth", "2000000", "China", false);
-    private PatientEntity expectedPatientEntity2 = newPatientEntity(20L, "124", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity2, "Tranquil", "male", "Jon", "101", "Johnson", "https://bit.ly/2W4Ofth", "2000000", "China", false);
+    private EncounterEntity expectedEncounterEntity1 = newEncounterEntity(40L, "123-123", "Encounter", "50", "60", "70", "Visit", "22nd of May", "location_uuid 1", "encounterProviders_uuid 1");
+    private EncounterEntity expectedEncounterEntity2 = newEncounterEntity(50L, "124-124", "Encounter", "50", "60", "70", "Visit", "23rd of May", "location_uuid 2", "encounterProviders_uuid 2");
+    private PatientEntity expectedPatientEntity1 = newPatientEntity(10L, "123", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity1, "Tranquil", "male", "Jon", "101", "Johnson", "https://bit.ly/2W4Ofth", "2000000", "China", false, "true");
+    private PatientEntity expectedPatientEntity2 = newPatientEntity(20L, "124", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity2, "Tranquil", "male", "Jon", "101", "Johnson", "https://bit.ly/2W4Ofth", "2000000", "China", false, "false");
 
 
     private AppDatabase mDatabase;
@@ -66,8 +66,8 @@ public class PatientRoomDAOTest {
 
     @Test
     public void getAllPatients_ShouldGetAllPatientsCorrectly() {
-        patientRoomDAO.savePatient(expectedPatientEntity1);
-        patientRoomDAO.savePatient(expectedPatientEntity2);
+        patientRoomDAO.addPatient(expectedPatientEntity1);
+        patientRoomDAO.addPatient(expectedPatientEntity2);
 
         patientRoomDAO.getAllPatients()
                 .test()
@@ -78,8 +78,8 @@ public class PatientRoomDAOTest {
 
     @Test
     public void findPatientByUUID_ShouldFindCorrectPatientByUUID() {
-        patientRoomDAO.savePatient(expectedPatientEntity1);
-        patientRoomDAO.savePatient(expectedPatientEntity2);
+        patientRoomDAO.addPatient(expectedPatientEntity1);
+        patientRoomDAO.addPatient(expectedPatientEntity2);
 
         patientRoomDAO.findPatientByUUID(expectedPatientEntity2.getUuid())
                 .test()
@@ -89,8 +89,8 @@ public class PatientRoomDAOTest {
 
     @Test
     public void getUnsyncedPatients_ShouldGetUnsyncedPatients() {
-        patientRoomDAO.savePatient(expectedPatientEntity1);
-        patientRoomDAO.savePatient(expectedPatientEntity2);
+        patientRoomDAO.addPatient(expectedPatientEntity1);
+        patientRoomDAO.addPatient(expectedPatientEntity2);
 
         patientRoomDAO.getUnsyncedPatients()
                 .test()
@@ -101,8 +101,8 @@ public class PatientRoomDAOTest {
 
     @Test
     public void findPatientByID_ShouldGetCorrectPatientByID() {
-        patientRoomDAO.savePatient(expectedPatientEntity1);
-        patientRoomDAO.savePatient(expectedPatientEntity2);
+        patientRoomDAO.addPatient(expectedPatientEntity1);
+        patientRoomDAO.addPatient(expectedPatientEntity2);
 
         patientRoomDAO.findPatientByID(expectedPatientEntity1.getId())
                 .test()
@@ -112,8 +112,8 @@ public class PatientRoomDAOTest {
 
     @Test
     public void deletePatientByID_ShouldDeleteCorrectPatientByID() {
-        patientRoomDAO.savePatient(expectedPatientEntity1);
-        patientRoomDAO.savePatient(expectedPatientEntity2);
+        patientRoomDAO.addPatient(expectedPatientEntity1);
+        patientRoomDAO.addPatient(expectedPatientEntity2);
 
         patientRoomDAO.deletePatient(20L);
 
@@ -125,7 +125,7 @@ public class PatientRoomDAOTest {
 
     @Test
     public void updatePatient_ShouldCorrectlyUpdatePatient() {
-        patientRoomDAO.savePatient(expectedPatientEntity1);
+        patientRoomDAO.addPatient(expectedPatientEntity1);
 
         expectedPatientEntity1.setGivenName("Rishabh");
         expectedPatientEntity1.setFamilyName("Agarwal");
@@ -142,7 +142,7 @@ public class PatientRoomDAOTest {
 
     private EncounterEntity newEncounterEntity(Long id, String uuid, String display, String visitKeyId,
                                                String patientUuid, String formUuid, String encounterType,
-                                               String encounterDateTime) {
+                                               String encounterDateTime, String locationUUID, String providerUUID) {
         EncounterEntity encounterEntity = new EncounterEntity();
         encounterEntity.setId(id);
         encounterEntity.setUuid(uuid);
@@ -152,6 +152,8 @@ public class PatientRoomDAOTest {
         encounterEntity.setFormUuid(formUuid);
         encounterEntity.setEncounterType(encounterType);
         encounterEntity.setEncounterDateTime(encounterDateTime);
+        encounterEntity.setLocationUuid(locationUUID);
+        encounterEntity.setEncounterProviderUuid(providerUUID);
         return encounterEntity;
     }
 
@@ -161,7 +163,7 @@ public class PatientRoomDAOTest {
                                            String country, String deathDate, EncounterEntity encounterEntity,
                                            String familyName, String gender, String givenName,
                                            String identifier, String middleName, String photo,
-                                           String postalCode, String state, boolean synced) {
+                                           String postalCode, String state, boolean synced, String dead) {
         PatientEntity entity = new PatientEntity();
         entity.setId(id);
         entity.setUuid(uuid);
@@ -184,6 +186,7 @@ public class PatientRoomDAOTest {
         entity.setPostalCode(postalCode);
         entity.setState(state);
         entity.setSynced(synced);
+        entity.setDeceased(dead);
         return entity;
     }
 

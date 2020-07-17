@@ -50,7 +50,7 @@ public class ObservationRoomDAOTest {
 
     @Test
     public void saveObservation_ShouldSaveCorrectObservation() {
-        mDatabase.observationRoomDAO().saveObservation(expectedObservationEntity);
+        mDatabase.observationRoomDAO().addObservation(expectedObservationEntity);
         mDatabase.observationRoomDAO().getObservationByUUID("uuid")
                 .test()
                 .assertValue(actualObservationEntity -> Objects.equals(actualObservationEntity.getId(), 10L)
@@ -64,7 +64,7 @@ public class ObservationRoomDAOTest {
 
     @Test
     public void updateObservation_ShouldUpdateObservation() {
-        mDatabase.observationRoomDAO().saveObservation(expectedObservationEntity);
+        mDatabase.observationRoomDAO().addObservation(expectedObservationEntity);
         mDatabase.observationRoomDAO().updateObservation(updatedObservationEntity);
         mDatabase.observationRoomDAO().getObservationByUUID("uuid")
                 .test()
@@ -79,7 +79,7 @@ public class ObservationRoomDAOTest {
 
     @Test
     public void deleteObservation_ShouldDeleteObservation() {
-        mDatabase.observationRoomDAO().saveObservation(expectedObservationEntity);
+        mDatabase.observationRoomDAO().addObservation(expectedObservationEntity);
         mDatabase.observationRoomDAO().deleteObservation(expectedObservationEntity);
         mDatabase.observationRoomDAO().getAllObservations()
                 .test()
@@ -88,7 +88,7 @@ public class ObservationRoomDAOTest {
 
     @Test
     public void getObservationByEncounterId_ShouldGetRightObservation() {
-        mDatabase.observationRoomDAO().saveObservation(expectedObservationEntity);
+        mDatabase.observationRoomDAO().addObservation(expectedObservationEntity);
         mDatabase.observationRoomDAO().findObservationByEncounterID(100L)
                 .test()
                 .assertValue(observationEntities -> {

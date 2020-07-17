@@ -18,26 +18,26 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import org.openmrs.mobile.databases.entities.LocationEntity;
+import org.openmrs.mobile.databases.entities.FormResourceEntity;
 
 import java.util.List;
 
 import io.reactivex.Single;
 
 @Dao
-public interface LocationRoomDAO {
+public interface FormResourceDAO {
+    @Query("SELECT * FROM forms WHERE name = :name")
+    Single<FormResourceEntity> getFormResourceByName(String name);
+
+    @Query("SELECT * FROM forms")
+    Single<List<FormResourceEntity>> getFormResourceList();
+
+    @Query("SELECT * FROM forms WHERE uuid = :uuid")
+    Single<FormResourceEntity> getFormByUuid(String uuid);
+
+    @Query("DELETE FROM forms")
+    void deleteALlForms();
+
     @Insert
-    long addLocation(LocationEntity entity);
-
-    @Query("DELETE FROM locations")
-    void deleteAllLocations();
-
-    @Query("SELECT * FROM locations")
-    Single<List<LocationEntity>> getLocations();
-
-    @Query("SELECT * FROM locations WHERE name = :mName")
-    Single<LocationEntity> findLocationByName(String mName);
-
-    @Query("SELECT * FROM locations WHERE uuid = :uuid")
-    Single<LocationEntity> findLocationByUUID(String uuid);
+    void addFormResource(FormResourceEntity formResourceEntity);
 }

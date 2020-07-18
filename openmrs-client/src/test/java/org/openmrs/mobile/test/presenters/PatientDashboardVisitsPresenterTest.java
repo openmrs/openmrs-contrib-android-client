@@ -25,7 +25,7 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.EncounterDAO;
-import org.openmrs.mobile.dao.LocationDAO;
+import org.openmrs.mobile.dao.LocationRoomDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Patient;
@@ -46,8 +46,11 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.RETURNS_MOCKS;
 import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({NetworkUtils.class, OpenMRS.class})
@@ -57,13 +60,13 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     @Mock
     private VisitDAO visitDAO;
     @Mock
-    private LocationDAO locationDAO;
-    @Mock
     private RestApi restApi;
     @Mock
     private OpenMRS openMRS;
     private PatientDashboardVisitsPresenter presenter;
     private Patient patient;
+    private LocationRoomDAO locationDAO;
+    private LocationRoomDAO spyLocationRoomDAO;
 
     @Before
     public void setUp() {
@@ -171,7 +174,7 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
 
     private void createMocksForStartVisit() {
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
-        PowerMockito.when(locationDAO.findLocationByName(anyString())).thenReturn(new LocationEntity("display"));
+        PowerMockito.when(locationDAO.findLocationByName(anyString()).blockingGet()).thenReturn(new LocationEntity("display"));
 
         Mockito.lenient().when(openMRS.getLocation()).thenReturn("location");
         Mockito.lenient().when(openMRS.getVisitTypeUUID()).thenReturn("visitTypeUuid");
@@ -187,5 +190,14 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     private void mockStaticMethods() {
         PowerMockito.mockStatic(NetworkUtils.class);
         PowerMockito.mockStatic(OpenMRS.class);
+        locationDAO = Mockito.mock(LocationRoomDAO.class, RETURNS_MOCKS);
+        spyLocationRoomDAO = spy(locationDAO);
+        Single single = Mockito.mock(Single.class);
+        LocationEntity locationEntity = new LocationEntity("");
+        when(locationDAO.findLocationByName(anyString())).thenReturn(single);
+        when(single.blockingGet()).thenReturn(locationEntity);
+    }
+
+    public abstract class Single extends io.reactivex.Single {
     }
 }

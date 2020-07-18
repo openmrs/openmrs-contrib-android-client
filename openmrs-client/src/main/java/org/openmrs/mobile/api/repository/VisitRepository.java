@@ -49,11 +49,15 @@ public class VisitRepository {
     private RestApi restApi;
     private VisitDAO visitDAO;
     private EncounterDAO encounterDAO;
+    AppDatabase db;
+    LocationRoomDAO locationRoomDAO;
 
     public VisitRepository() {
         restApi = RestServiceBuilder.createService(RestApi.class);
         visitDAO = new VisitDAO();
         encounterDAO = new EncounterDAO();
+        db = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext());
+        locationRoomDAO = db.locationRoomDAO();
     }
 
     /**
@@ -186,7 +190,6 @@ public class VisitRepository {
     }
 
     public void startVisit(final Patient patient, @Nullable final StartVisitResponseListenerCallback callbackListener) {
-        LocationRoomDAO locationRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).locationRoomDAO();
         final Visit visit = new Visit();
         visit.setStartDatetime(DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
         visit.setPatient(patient);

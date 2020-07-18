@@ -27,7 +27,6 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.EncounterDAO;
-import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.models.Encounter;
@@ -42,11 +41,11 @@ import java.util.Collections;
 
 import rx.Observable;
 
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.anyLong;
 import static org.mockito.Mockito.anyString;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
@@ -72,7 +71,7 @@ public class PatientDashboardDetailsPresenterTest extends ACUnitTestBaseRx {
     private Patient patient;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         super.setUp();
         VisitRepository visitRepository = new VisitRepository(restApi, visitDAO, encounterDAO);
         patient = createPatient(1L);
@@ -82,7 +81,7 @@ public class PatientDashboardDetailsPresenterTest extends ACUnitTestBaseRx {
 
 
     @Test
-    public void shouldSynchronizePatient_onlineMode_successCalls(){
+    public void shouldSynchronizePatient_onlineMode_successCalls() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.findVisitsByPatientUUID(anyString(), anyString()))
                 .thenReturn(mockSuccessCall(Collections.singletonList(new Visit())));
@@ -97,7 +96,7 @@ public class PatientDashboardDetailsPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldSynchronizePatient_onlineMode_errorCalls(){
+    public void shouldSynchronizePatient_onlineMode_errorCalls() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.findVisitsByPatientUUID(anyString(), anyString()))
                 .thenReturn(mockErrorCall(401));
@@ -111,7 +110,7 @@ public class PatientDashboardDetailsPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldSynchronizePatient_offlineMode(){
+    public void shouldSynchronizePatient_offlineMode() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(false);
         presenter.synchronizePatient();
         verify(view).showToast(anyInt(), eq(true));
@@ -119,7 +118,7 @@ public class PatientDashboardDetailsPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldShowPatientOnStartup_onlineMode(){
+    public void shouldShowPatientOnStartup_onlineMode() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
         Mockito.lenient().when(patientDAO.findPatientByID(patient.getId().toString())).thenReturn(patient);
         Mockito.lenient().when(restApi.findVisitsByPatientUUID(anyString(), anyString()))
@@ -134,7 +133,7 @@ public class PatientDashboardDetailsPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldShowPatientOnStartup_onlineMode_errorCalls(){
+    public void shouldShowPatientOnStartup_onlineMode_errorCalls() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.findVisitsByPatientUUID(anyString(), anyString()))
                 .thenReturn(mockErrorCall(401));
@@ -150,7 +149,7 @@ public class PatientDashboardDetailsPresenterTest extends ACUnitTestBaseRx {
     }
 
     @Test
-    public void shouldShowPatientOnStartup_offlineMode(){
+    public void shouldShowPatientOnStartup_offlineMode() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(false);
         Mockito.lenient().when(patientDAO.findPatientByID(patient.getId().toString())).thenReturn(patient);
         presenter.subscribe();

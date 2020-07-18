@@ -65,7 +65,7 @@ public class ConceptRoomDAOTest {
                 .assertValue(conceptEntities -> {
                     ConceptEntity actualEntity = conceptEntities.get(0);
                     return Objects.equals(actualEntity.getUuid(), expectedConceptEntity1.getUuid())
-                            && Objects.equals(actualEntity.name, expectedConceptEntity1.name)
+                            && Objects.equals(actualEntity.getName(), expectedConceptEntity1.getName())
                             && Objects.equals(actualEntity.getDisplay(), expectedConceptEntity1.getDisplay());
                 });
     }
@@ -80,7 +80,7 @@ public class ConceptRoomDAOTest {
                 .assertValue(conceptEntities -> {
                     ConceptEntity actualEntity = conceptEntities.get(0);
                     return Objects.equals(actualEntity.getUuid(), expectedConceptEntity1.getUuid())
-                            && Objects.equals(actualEntity.name, expectedConceptEntity1.name)
+                            && Objects.equals(actualEntity.getName(), expectedConceptEntity1.getName())
                             && Objects.equals(actualEntity.getDisplay(), expectedConceptEntity1.getDisplay());
                 });
     }
@@ -98,7 +98,7 @@ public class ConceptRoomDAOTest {
     @Test
     public void updateConcept_ShouldCorrectlyUpdateConcept() {
         mDatabase.conceptRoomDAO().addConcept(expectedConceptEntity1);
-        expectedConceptEntity1.name = "name_123_123";
+        expectedConceptEntity1.setName("name_123_123");
 
         mDatabase.conceptRoomDAO().updateConcept(expectedConceptEntity1);
 
@@ -106,7 +106,7 @@ public class ConceptRoomDAOTest {
                 .test()
                 .assertValue(conceptEntities -> {
                     ConceptEntity actualEntity = conceptEntities.get(0);
-                    return Objects.equals(actualEntity.name, expectedConceptEntity1.name);
+                    return Objects.equals(actualEntity.getName(), expectedConceptEntity1.getName());
                 });
     }
 
@@ -116,7 +116,7 @@ public class ConceptRoomDAOTest {
         entity.setId(id);
         entity.setUuid(uuid);
         entity.setDisplay(display);
-        entity.name = name;
+        entity.setName(name);
 
         return entity;
     }

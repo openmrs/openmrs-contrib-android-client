@@ -32,7 +32,7 @@ public class PatientEntity extends Resource {
     @ColumnInfo(name = "age")
     private String age;
     @ColumnInfo(name = "photo")
-    private String photo;
+    private byte[] photo;
     @ColumnInfo(name = "address1")
     private String address_1;
     @ColumnInfo(name = "address2")
@@ -94,7 +94,7 @@ public class PatientEntity extends Resource {
         this.age = age;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 
@@ -170,7 +170,7 @@ public class PatientEntity extends Resource {
         return age;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 

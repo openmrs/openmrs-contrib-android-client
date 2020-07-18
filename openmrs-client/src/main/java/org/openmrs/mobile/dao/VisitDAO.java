@@ -20,9 +20,11 @@ import net.sqlcipher.Cursor;
 
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.AppDatabase;
+import org.openmrs.mobile.databases.AppDatabaseHelper;
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.entities.LocationEntity;
+import org.openmrs.mobile.databases.entities.ObservationEntity;
 import org.openmrs.mobile.databases.tables.VisitTable;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Observation;
@@ -33,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
-import rx.schedulers.Schedulers;
 
 import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 
@@ -41,7 +42,9 @@ public class VisitDAO {
 
     OpenMRS openMRS = OpenMRS.getInstance();
     Context context = openMRS.getApplicationContext();
+    AppDatabaseHelper appDatabaseHelper = new AppDatabaseHelper();
     LocationRoomDAO locationRoomDAO = AppDatabase.getDatabase(context).locationRoomDAO();
+    ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(context).observationRoomDAO();
 
     public Observable<Long> saveOrUpdate(Visit visit, long patientId) {
         return createObservableIO(() -> {
@@ -60,16 +63,14 @@ public class VisitDAO {
 
     private long saveVisit(Visit visit, long patientID) {
         EncounterDAO encounterDAO = new EncounterDAO();
-        ObservationDAO observationDAO = new ObservationDAO();
         visit.setPatient(new PatientDAO().findPatientByID(String.valueOf(patientID)));
         long visitID = new VisitTable().insert(visit);
         if (visit.getEncounters() != null) {
             for (Encounter encounter : visit.getEncounters()) {
                 long encounterID = encounterDAO.saveEncounter(encounter, visitID);
                 for (Observation obs : encounter.getObservations()) {
-                    observationDAO.saveObservation(obs, encounterID)
-                            .observeOn(Schedulers.io())
-                            .subscribe();
+                    ObservationEntity observationEntity = appDatabaseHelper.observationToEntity(obs, encounterID);
+                    observationRoomDAO.addObservation(observationEntity);
                 }
             }
         }
@@ -92,13 +93,13 @@ public class VisitDAO {
 
                 List<Observation> oldObs = observationDAO.findObservationByEncounterID(encounterID);
                 for (Observation obs : oldObs) {
-                    observationDAO.deleteObservation(obs.getId());
+                    ObservationEntity observationEntity = appDatabaseHelper.observationToEntity(obs, encounterID);
+                    observationRoomDAO.deleteObservation(observationEntity);
                 }
 
                 for (Observation obs : encounter.getObservations()) {
-                    observationDAO.saveObservation(obs, encounterID)
-                            .observeOn(Schedulers.io())
-                            .subscribe();
+                    ObservationEntity observationEntity = appDatabaseHelper.observationToEntity(obs, encounterID);
+                    observationRoomDAO.addObservation(observationEntity);
                 }
             }
         }

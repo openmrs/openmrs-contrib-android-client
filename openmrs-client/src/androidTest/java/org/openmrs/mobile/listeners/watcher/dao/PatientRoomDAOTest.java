@@ -40,8 +40,8 @@ public class PatientRoomDAOTest {
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
     private EncounterEntity expectedEncounterEntity1 = newEncounterEntity(40L, "123-123", "Encounter", "50", "60", "70", "Visit", "22nd of May", "location_uuid 1", "encounterProviders_uuid 1");
     private EncounterEntity expectedEncounterEntity2 = newEncounterEntity(50L, "124-124", "Encounter", "50", "60", "70", "Visit", "23rd of May", "location_uuid 2", "encounterProviders_uuid 2");
-    private PatientEntity expectedPatientEntity1 = newPatientEntity(10L, "123", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity1, "Tranquil", "male", "Jon", "101", "Johnson", "https://bit.ly/2W4Ofth", "2000000", "China", false, "true");
-    private PatientEntity expectedPatientEntity2 = newPatientEntity(20L, "124", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity2, "Tranquil", "male", "Jon", "101", "Johnson", "https://bit.ly/2W4Ofth", "2000000", "China", false, "false");
+    private PatientEntity expectedPatientEntity1 = newPatientEntity(10L, "123", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity1, "Tranquil", "male", "Jon", "101", "Johnson", "2000000", "China", false, "true");
+    private PatientEntity expectedPatientEntity2 = newPatientEntity(20L, "124", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity2, "Tranquil", "male", "Jon", "101", "Johnson", "2000000", "China", false, "false");
 
 
     private AppDatabase mDatabase;
@@ -162,7 +162,7 @@ public class PatientRoomDAOTest {
                                            String birthDate, String causeOfDeath, String city,
                                            String country, String deathDate, EncounterEntity encounterEntity,
                                            String familyName, String gender, String givenName,
-                                           String identifier, String middleName, String photo,
+                                           String identifier, String middleName,
                                            String postalCode, String state, boolean synced, String dead) {
         PatientEntity entity = new PatientEntity();
         entity.setId(id);
@@ -182,7 +182,7 @@ public class PatientRoomDAOTest {
         entity.setGivenName(givenName);
         entity.setIdentifier(identifier);
         entity.setMiddleName(middleName);
-        entity.setPhoto(photo);
+        entity.setPhoto(null);
         entity.setPostalCode(postalCode);
         entity.setState(state);
         entity.setSynced(synced);

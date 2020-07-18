@@ -45,7 +45,7 @@ public class EncounterRoomDAOTest {
     private EncounterEntity expectedEncounterEntity2 = newEncounterEntity(20L, "124", "Encounter 2", "30", "124-124", "50", "Visit Note", "19 January", "location_uuid 2 ", "encounterProviders_uuid 2");
     private EncounterEntity expectedEncounterEntity3 = newEncounterEntity(30L, "125", "Encounter 3", null, "50", "60", "Visit 3", "20 January", "location_uuid 3", "encounterProviders_uuid 3");
 
-    private PatientEntity expectedPatientEntity1 = newPatientEntity(40L, "123-123", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity1, "Tranquil", "male", "Jon", "101", "Johnson", "https://bit.ly/2W4Ofth", "2000000", "China", false);
+    private PatientEntity expectedPatientEntity1 = newPatientEntity(40L, "123-123", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity1, "Tranquil", "male", "Jon", "101", "Johnson", "2000000", "China", false);
 
     private VisitEntity expectedVisitEntity = createVisitEntity(1L, 40L, "startDate", "stopDate", "visitPlace", "visitType", "uuid");
 
@@ -171,7 +171,7 @@ public class EncounterRoomDAOTest {
                                            String birthDate, String causeOfDeath, String city,
                                            String country, String deathDate, EncounterEntity encounterEntity,
                                            String familyName, String gender, String givenName,
-                                           String identifier, String middleName, String photo,
+                                           String identifier, String middleName,
                                            String postalCode, String state, boolean synced) {
         PatientEntity entity = new PatientEntity();
         entity.setId(id);
@@ -191,7 +191,7 @@ public class EncounterRoomDAOTest {
         entity.setGivenName(givenName);
         entity.setIdentifier(identifier);
         entity.setMiddleName(middleName);
-        entity.setPhoto(photo);
+        entity.setPhoto(null);
         entity.setPostalCode(postalCode);
         entity.setState(state);
         entity.setSynced(synced);

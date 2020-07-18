@@ -11,6 +11,7 @@
 package org.openmrs.mobile.api;
 
 import org.openmrs.mobile.databases.entities.ConceptEntity;
+import org.openmrs.mobile.databases.entities.FormResourceEntity;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.models.ConceptAnswers;
@@ -19,7 +20,6 @@ import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.FormCreate;
 import org.openmrs.mobile.models.FormData;
-import org.openmrs.mobile.models.FormResource;
 import org.openmrs.mobile.models.IdGenPatientIdentifiers;
 import org.openmrs.mobile.models.IdentifierType;
 import org.openmrs.mobile.models.Module;
@@ -54,7 +54,7 @@ import retrofit2.http.Url;
 
 public interface RestApi {
     @GET("form?v=custom:(uuid,name,resources)")
-    Call<Results<FormResource>> getForms();
+    Call<Results<FormResourceEntity>> getForms();
 
     @GET("location?tag=Login%20Location")
     Call<Results<LocationEntity>> getLocations(@Query("v") String representation);

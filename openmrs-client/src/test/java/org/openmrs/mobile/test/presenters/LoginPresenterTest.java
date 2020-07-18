@@ -32,7 +32,7 @@ import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.EncounterDAO;
-import org.openmrs.mobile.dao.LocationDAO;
+import org.openmrs.mobile.dao.LocationRoomDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Session;
@@ -50,19 +50,21 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import rx.Observable;
+import io.reactivex.Single;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-@PrepareForTest({OpenMRS.class, NetworkUtils.class, LocationDAO.class, RestServiceBuilder.class,
+@PrepareForTest({OpenMRS.class, NetworkUtils.class, LocationRoomDAO.class, RestServiceBuilder.class,
         StringUtils.class})
 @PowerMockIgnore("javax.net.ssl.*")
 public class LoginPresenterTest extends ACUnitTestBaseRx {
+    LocationRoomDAO spyLocationRoomDAO;
     @Mock
     private OpenMRS openMRS;
     @Mock
@@ -74,7 +76,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     @Mock
     private LoginContract.View view;
     @Mock
-    private LocationDAO locationDAO;
+    private LocationRoomDAO locationDAO;
     @Mock
     private VisitDAO visitDAO;
     @Mock
@@ -250,7 +252,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldLoadLocationsInOfflineMode_emptyList() {
         mockNetworkConnection(false);
-        Mockito.lenient().when(locationDAO.getLocations()).thenReturn(Observable.just(new ArrayList<>()));
+        Mockito.lenient().when(locationDAO.getLocations()).thenReturn(Single.just(new ArrayList<>()));
         presenter.loadLocations("someUrl");
         verify(view).showToast(anyInt(), any());
         verify(view).setLocationErrorOccurred(true);
@@ -260,7 +262,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldLoadLocationsInOfflineMode_nonEmptyList() {
         mockNetworkConnection(false);
-        Mockito.lenient().when(locationDAO.getLocations()).thenReturn(Observable.just(Collections.singletonList(new LocationEntity(""))));
+        Mockito.lenient().when(locationDAO.getLocations()).thenReturn(Single.just(Collections.singletonList(new LocationEntity(""))));
         presenter.loadLocations("someUrl");
         verify(view).initLoginForm(any(), any());
         verify(view).setLocationErrorOccurred(false);
@@ -303,7 +305,8 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
 
     private void mockStaticMethods() {
         PowerMockito.mockStatic(OpenMRS.class);
-        PowerMockito.mockStatic(LocationDAO.class);
+        PowerMockito.mockStatic(LocationRoomDAO.class);
+        spyLocationRoomDAO = spy(locationDAO);
         PowerMockito.mockStatic(StringUtils.class);
         PowerMockito.mockStatic(NetworkUtils.class);
         Mockito.lenient().when(openMRS.getServerUrl()).thenReturn("http://www.some_server_url.com");

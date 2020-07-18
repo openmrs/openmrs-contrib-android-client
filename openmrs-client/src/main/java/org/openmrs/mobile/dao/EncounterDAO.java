@@ -14,8 +14,6 @@
 
 package org.openmrs.mobile.dao;
 
-import android.content.Context;
-
 import net.sqlcipher.Cursor;
 
 import org.openmrs.mobile.application.OpenMRS;
@@ -40,12 +38,7 @@ import rx.Observable;
 import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 
 public class EncounterDAO {
-
-    OpenMRS openMRS = OpenMRS.getInstance();
-    Context context = openMRS.getApplicationContext();
     AppDatabaseHelper appDatabaseHelper = new AppDatabaseHelper();
-    LocationRoomDAO locationRoomDAO = AppDatabase.getDatabase(context).locationRoomDAO();
-    ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(context).observationRoomDAO();
 
     public long saveEncounter(Encounter encounter, Long visitID) {
         encounter.setVisitID(visitID);
@@ -60,6 +53,7 @@ public class EncounterDAO {
     }
 
     public void saveLastVitalsEncounter(Encounter encounter, String patientUUID) {
+        ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).observationRoomDAO();
         if (null != encounter) {
             encounter.setPatientUUID(patientUUID);
             long oldLastVitalsEncounterID = getLastVitalsEncounterID(patientUUID);
@@ -146,6 +140,7 @@ public class EncounterDAO {
 
     public List<Encounter> findEncountersByVisitID(Long visitID) {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
+        LocationRoomDAO locationRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).locationRoomDAO();
         List<Encounter> encounters = new ArrayList<>();
 
         String where = String.format("%s = ?", EncounterTable.Column.VISIT_KEY_ID);

@@ -62,7 +62,8 @@ import static org.mockito.Mockito.doNothing;
         ContentResolver.class, ContentProvider.class, ContentValues.class })
 @RunWith(PowerMockRunner.class)
 @SuppressStaticInitializationFor("com.activeandroid.content.ContentProvider")
-public abstract class ACUnitTestBase {
+public abstract class
+ACUnitTestBase {
 
     @Rule
     public MockitoRule rule = MockitoJUnit.rule().silent();

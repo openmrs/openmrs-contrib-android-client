@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "92bbfde5a265529b8ea36fddde6c1581",
+    "identityHash": "0737ecf3d9b929beafde451403352195",
     "entities": [
       {
         "tableName": "con",
@@ -278,7 +278,7 @@
       },
       {
         "tableName": "pat",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`synced` INTEGER NOT NULL, `identifier` TEXT, `givenName` TEXT, `middleName` TEXT, `familyName` TEXT, `gender` TEXT, `birthDate` TEXT, `deathDate` TEXT, `causeOfDeath` TEXT, `age` TEXT, `photo` BLOB, `address1` TEXT, `address2` TEXT, `city` TEXT, `state` TEXT, `country` TEXT, `postalCode` TEXT, `dead` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT, `patient_visit_id` TEXT, `patient_encounterDatetime` TEXT, `patient_type` TEXT, `patient_patient_uuid` TEXT, `patient_form_uuid` TEXT, `patient_location_uuid` TEXT, `patient_encounter_provider_uuid` TEXT, `patient_uuid` TEXT, `patient_display` TEXT, `patient__id` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`synced` INTEGER NOT NULL, `identifier` TEXT, `givenName` TEXT, `middleName` TEXT, `familyName` TEXT, `gender` TEXT, `birthDate` TEXT, `deathDate` TEXT, `causeOfDeath` TEXT, `age` TEXT, `photo` BLOB, `address1` TEXT, `address2` TEXT, `city` TEXT, `state` TEXT, `country` TEXT, `postalCode` TEXT, `dead` TEXT, `encounters` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
             "fieldPath": "synced",
@@ -389,6 +389,12 @@
             "notNull": false
           },
           {
+            "fieldPath": "encounters",
+            "columnName": "encounters",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "uuid",
             "columnName": "uuid",
             "affinity": "TEXT",
@@ -403,66 +409,6 @@
           {
             "fieldPath": "id",
             "columnName": "_id",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "encounters.visitKeyId",
-            "columnName": "patient_visit_id",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "encounters.encounterDateTime",
-            "columnName": "patient_encounterDatetime",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "encounters.encounterType",
-            "columnName": "patient_type",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "encounters.patientUuid",
-            "columnName": "patient_patient_uuid",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "encounters.formUuid",
-            "columnName": "patient_form_uuid",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "encounters.locationUuid",
-            "columnName": "patient_location_uuid",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "encounters.encounterProviderUuid",
-            "columnName": "patient_encounter_provider_uuid",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "encounters.uuid",
-            "columnName": "patient_uuid",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "encounters.display",
-            "columnName": "patient_display",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "encounters.id",
-            "columnName": "patient__id",
             "affinity": "INTEGER",
             "notNull": false
           }
@@ -660,7 +606,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"92bbfde5a265529b8ea36fddde6c1581\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0737ecf3d9b929beafde451403352195\")"
     ]
   }
 }

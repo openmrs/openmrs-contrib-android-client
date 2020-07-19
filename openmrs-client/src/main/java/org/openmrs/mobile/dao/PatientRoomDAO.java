@@ -28,23 +28,23 @@ import io.reactivex.Single;
 @Dao
 public interface PatientRoomDAO {
     @Insert
-    void addPatient(PatientEntity patientEntity);
+    long addPatient(PatientEntity patientEntity);
 
     @Query("DELETE FROM pat WHERE _id = :id")
     void deletePatient(long id);
 
     @Update
-    void updatePatient(PatientEntity patientEntity);
+    int updatePatient(PatientEntity patientEntity);
 
     @Query("SELECT * FROM pat")
     Single<List<PatientEntity>> getAllPatients();
 
     @Query("SELECT * FROM pat WHERE uuid = :uuid")
-    Single<List<PatientEntity>> findPatientByUUID(String uuid);
+    Single<PatientEntity> findPatientByUUID(String uuid);
 
     @Query("SELECT * FROM pat WHERE synced = 0")
     Single<List<PatientEntity>> getUnsyncedPatients();
 
     @Query("SELECT * FROM pat WHERE _id = :id")
-    Single<List<PatientEntity>> findPatientByID(Long id);
+    Single<PatientEntity> findPatientByID(String id);
 }

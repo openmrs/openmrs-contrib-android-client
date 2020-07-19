@@ -14,6 +14,9 @@
 
 package org.openmrs.mobile.databases;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.ObservationDAO;
@@ -22,15 +25,24 @@ import org.openmrs.mobile.databases.entities.ConceptEntity;
 import org.openmrs.mobile.databases.entities.EncounterEntity;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.databases.entities.ObservationEntity;
+import org.openmrs.mobile.databases.entities.PatientEntity;
 import org.openmrs.mobile.databases.entities.VisitEntity;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Observation;
+import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.models.PatientIdentifier;
+import org.openmrs.mobile.models.PersonAddress;
+import org.openmrs.mobile.models.PersonName;
+import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.models.VisitType;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FormService;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,10 +125,10 @@ public class AppDatabaseHelper {
         encounter.setEncounterDatetime(DateUtils.convertTime(dateTime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
         encounter.setObservations(new ObservationDAO().findObservationByEncounterID(entity.getId()));
         LocationEntity location = AppDatabase
-                                    .getDatabase(OpenMRS.getInstance().getApplicationContext())
-                                    .locationRoomDAO()
-                                    .findLocationByUUID(entity.getLocationUuid())
-                                    .blockingGet();
+                .getDatabase(OpenMRS.getInstance().getApplicationContext())
+                .locationRoomDAO()
+                .findLocationByUUID(entity.getLocationUuid())
+                .blockingGet();
         encounter.setLocation(location);
         encounter.setForm(FormService.getFormByUuid(entity.getFormUuid()));
         return encounter;
@@ -154,4 +166,113 @@ public class AppDatabaseHelper {
         visitEntity.setStopDate(visit.getStopDatetime());
         return visitEntity;
     }
+
+    public Patient patientEntityToPatient(PatientEntity patientEntity) {
+        Patient patient = new Patient(patientEntity.getId(), patientEntity.getEncounters(), null);
+        patient.setDisplay(patientEntity.getDisplay());
+        patient.setUuid(patientEntity.getUuid());
+
+        PatientIdentifier patientIdentifier = new PatientIdentifier();
+        patientIdentifier.setIdentifier(patientEntity.getIdentifier());
+        if (patient.getIdentifiers() == null) {
+            patient.setIdentifiers(new ArrayList<>());
+        }
+        patient.getIdentifiers().add(patientIdentifier);
+
+        PersonName personName = new PersonName();
+        personName.setGivenName(patientEntity.getGivenName());
+        personName.setMiddleName(patientEntity.getMiddleName());
+        personName.setFamilyName(patientEntity.getFamilyName());
+        patient.getNames().add(personName);
+
+        patient.setGender(patientEntity.getGender());
+        patient.setBirthdate(patientEntity.getBirthDate());
+        byte[] photoByteArray = patientEntity.getPhoto();
+        if (photoByteArray != null) {
+            patient.setPhoto(byteArrayToBitmap(photoByteArray));
+        }
+
+        PersonAddress personAddress = new PersonAddress();
+        personAddress.setAddress1(patientEntity.getAddress_1());
+        personAddress.setAddress2(patientEntity.getAddress_2());
+        personAddress.setPostalCode(patientEntity.getPostalCode());
+        personAddress.setCountry(patientEntity.getCountry());
+        personAddress.setStateProvince(patientEntity.getState());
+        personAddress.setCityVillage(patientEntity.getCity());
+        patient.getAddresses().add(personAddress);
+
+        if (patientEntity.getCauseOfDeath() != null) {
+            patient.setCauseOfDeath(new Resource(ApplicationConstants.EMPTY_STRING, patientEntity.getCauseOfDeath(), new ArrayList<>(), 0));
+        }
+        if (patientEntity.getDeceased().equals("true")) {
+            patient.setDeceased(true);
+        } else {
+            patient.setDeceased(false);
+        }
+
+        return patient;
+    }
+
+    public PatientEntity patientToPatientEntity(Patient patient) {
+        PatientEntity patientEntity = new PatientEntity();
+        patientEntity.setDisplay(patient.getName().getNameString());
+        patientEntity.setUuid(patient.getUuid());
+        patientEntity.setSynced(patient.isSynced());
+
+        if (patient.getIdentifier() != null) {
+            patientEntity.setIdentifier(patient.getIdentifier().getIdentifier());
+        } else {
+            patientEntity.setIdentifier(null);
+        }
+
+        patientEntity.setGivenName(patient.getName().getGivenName());
+        patientEntity.setMiddleName(patient.getName().getMiddleName());
+        patientEntity.setFamilyName(patient.getName().getFamilyName());
+        patientEntity.setGender(patient.getGender());
+        patientEntity.setBirthDate(patient.getBirthdate());
+        patientEntity.setDeathDate(null);
+
+        if (null != patient.getCauseOfDeath()) {
+            if (patient.getCauseOfDeath().getDisplay() == null) {
+                patientEntity.setCauseOfDeath(null);
+            } else {
+                patientEntity.setCauseOfDeath(patient.getCauseOfDeath().getDisplay());
+            }
+        } else {
+            patientEntity.setCauseOfDeath(null);
+        }
+        patientEntity.setAge(null);
+
+        if (patient.getPhoto() != null) {
+            patientEntity.setPhoto(bitmapToByteArray(patient.getPhoto()));
+        } else {
+            patientEntity.setPhoto(null);
+        }
+
+        if (null != patient.getAddress()) {
+            patientEntity.setAddress_1(patient.getAddress().getAddress1());
+            patientEntity.setAddress_2(patient.getAddress().getAddress2());
+            patientEntity.setPostalCode(patient.getAddress().getPostalCode());
+            patientEntity.setCountry(patient.getAddress().getCountry());
+            patientEntity.setState(patient.getAddress().getStateProvince());
+            patientEntity.setCity(patient.getAddress().getCityVillage());
+        }
+
+        patientEntity.setEncounters(patient.getEncounters());
+        patientEntity.setDeceased(patient.isDeceased().toString());
+
+        return patientEntity;
+    }
+
+    private byte[] bitmapToByteArray(Bitmap image) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+        return outputStream.toByteArray();
+    }
+
+    private Bitmap byteArrayToBitmap(byte[] imageByteArray) {
+        ByteArrayInputStream inputStream = new ByteArrayInputStream(imageByteArray);
+        return BitmapFactory.decodeStream(inputStream);
+    }
 }
+

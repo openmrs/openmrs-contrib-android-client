@@ -40,7 +40,6 @@ public class VisitDAO {
     OpenMRS openMRS = OpenMRS.getInstance();
     Context context = openMRS.getApplicationContext();
     AppDatabaseHelper appDatabaseHelper = new AppDatabaseHelper();
-    LocationRoomDAO locationRoomDAO = AppDatabase.getDatabase(context).locationRoomDAO();
     ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(context).observationRoomDAO();
     VisitRoomDAO visitRoomDAO = AppDatabase.getDatabase(context).visitRoomDAO();
 

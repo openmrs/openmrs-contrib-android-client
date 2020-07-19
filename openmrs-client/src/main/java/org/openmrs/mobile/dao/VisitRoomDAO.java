@@ -26,6 +26,7 @@ import org.openmrs.mobile.databases.entities.VisitEntity;
 import java.util.List;
 
 import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 @Dao
 public interface VisitRoomDAO {
@@ -38,24 +39,24 @@ public interface VisitRoomDAO {
     @Update
     int updateVisit(VisitEntity visitEntity);
 
-    @Query("SELECT * FROM vis")
-    Flowable<List<VisitEntity>> getActiveVisits();
+    @Query("SELECT * FROM vis WHERE stop_date IS NULL OR stop_date = '' ORDER BY start_date DESC")
+    Single<List<VisitEntity>> getActiveVisits();
 
-    @Query("SELECT * FROM vis WHERE patient_id = :patientID")
-    Flowable<List<VisitEntity>> getVisitsByPatientID(final Long patientID);
+    @Query("SELECT * FROM vis WHERE patient_id = :patientID ORDER BY start_date DESC")
+    Single<List<VisitEntity>> getVisitsByPatientID(final Long patientID);
 
-    @Query("SELECT * FROM vis WHERE patient_id = :patientId LIMIT 1")
-    Flowable<VisitEntity> getFirstActiveVisitByPatientId(Long patientId);
+    @Query("SELECT * FROM vis WHERE patient_id = :patientId AND (stop_date IS NULL OR stop_date = '')  ORDER BY start_date DESC")
+    Single<VisitEntity> getActiveVisitByPatientId(Long patientId);
 
     @Query("SELECT * FROM vis WHERE _id = :visitID")
-    Flowable<VisitEntity> getVisitByID(final Long visitID);
+    Single<VisitEntity> getVisitByID(final Long visitID);
 
     @Query("SELECT _id FROM vis WHERE uuid = :visitUUID")
     long getVisitsIDByUUID(final String visitUUID);
 
     @Query("SELECT * FROM vis WHERE uuid = :uuid")
-    Flowable<VisitEntity> getVisitByUuid(String uuid);
+    Single<VisitEntity> getVisitByUuid(String uuid);
 
-    @Delete
-    int deleteVisitsByPatientId(VisitEntity visitEntity);
+    @Query("DELETE FROM vis WHERE patient_id = :patientID")
+    int deleteVisitsByPatientId(long patientID);
 }

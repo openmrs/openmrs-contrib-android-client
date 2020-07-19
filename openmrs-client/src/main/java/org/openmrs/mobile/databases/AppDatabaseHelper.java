@@ -15,14 +15,19 @@
 package org.openmrs.mobile.databases;
 
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.ObservationDAO;
+import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.databases.entities.ConceptEntity;
 import org.openmrs.mobile.databases.entities.EncounterEntity;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.databases.entities.ObservationEntity;
+import org.openmrs.mobile.databases.entities.VisitEntity;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Observation;
+import org.openmrs.mobile.models.Visit;
+import org.openmrs.mobile.models.VisitType;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.FormService;
 
@@ -115,5 +120,38 @@ public class AppDatabaseHelper {
         encounter.setLocation(location);
         encounter.setForm(FormService.getFormByUuid(entity.getFormUuid()));
         return encounter;
+    }
+
+    public Visit visitEntityToVisit(VisitEntity visitEntity) {
+        Visit visit = new Visit();
+        visit.setId(visitEntity.getId());
+        visit.setDisplay(visitEntity.getDisplay());
+        visit.setVisitType(new VisitType(visitEntity.getDisplay()));
+
+        LocationEntity locationEntity = AppDatabase
+                .getDatabase(OpenMRS.getInstance().getApplicationContext())
+                .locationRoomDAO()
+                .findLocationByName(visitEntity.getVisitPlace())
+                .blockingGet();
+        visit.setLocation(locationEntity);
+
+        visit.setStartDatetime(visitEntity.getStartDate());
+        visit.setStopDatetime(visitEntity.getStopDate());
+        visit.setEncounters(new EncounterDAO().findEncountersByVisitID(visitEntity.getId()));
+        visit.setPatient(new PatientDAO().findPatientByID(String.valueOf(visitEntity.getPatientKeyID())));
+
+        return visit;
+    }
+
+    public VisitEntity visitToVisitEntity(Visit visit) {
+        VisitEntity visitEntity = new VisitEntity();
+        visitEntity.setId(visit.getId());
+        visitEntity.setUuid(visit.getUuid());
+        visitEntity.setPatientKeyID(visit.getPatient().getId());
+        visitEntity.setVisitType(visit.getVisitType().getDisplay());
+        visitEntity.setVisitPlace(visit.getLocation().getDisplay());
+        visitEntity.setStartDate(visit.getStartDatetime());
+        visitEntity.setStopDate(visit.getStopDatetime());
+        return visitEntity;
     }
 }

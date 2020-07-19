@@ -38,22 +38,22 @@ public interface VisitRoomDAO {
     @Update
     int updateVisit(VisitEntity visitEntity);
 
-    @Query("SELECT * FROM visits")
+    @Query("SELECT * FROM vis")
     Flowable<List<VisitEntity>> getActiveVisits();
 
-    @Query("SELECT * FROM visits WHERE patient_id = :patientID")
+    @Query("SELECT * FROM vis WHERE patient_id = :patientID")
     Flowable<List<VisitEntity>> getVisitsByPatientID(final Long patientID);
 
-    @Query("SELECT * FROM visits WHERE patient_id = :patientId LIMIT 1")
+    @Query("SELECT * FROM vis WHERE patient_id = :patientId LIMIT 1")
     Flowable<VisitEntity> getFirstActiveVisitByPatientId(Long patientId);
 
-    @Query("SELECT * FROM visits WHERE _id = :visitID")
+    @Query("SELECT * FROM vis WHERE _id = :visitID")
     Flowable<VisitEntity> getVisitByID(final Long visitID);
 
-    @Query("SELECT _id FROM visits WHERE uuid = :visitUUID")
+    @Query("SELECT _id FROM vis WHERE uuid = :visitUUID")
     long getVisitsIDByUUID(final String visitUUID);
 
-    @Query("SELECT * FROM visits WHERE uuid = :uuid")
+    @Query("SELECT * FROM vis WHERE uuid = :uuid")
     Flowable<VisitEntity> getVisitByUuid(String uuid);
 
     @Delete

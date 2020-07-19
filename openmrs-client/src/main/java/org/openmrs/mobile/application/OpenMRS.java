@@ -77,7 +77,6 @@ public class OpenMRS extends MultiDexApplication {
 
     protected void initializeDB() {
         Configuration.Builder configurationBuilder = new Configuration.Builder(this);
-        configurationBuilder.addModelClasses(Link.class);
         configurationBuilder.addModelClasses(EncounterType.class);
         configurationBuilder.addModelClasses(Encountercreate.class);
         configurationBuilder.addModelClasses(Obscreate.class);

@@ -6,7 +6,7 @@ import androidx.room.Entity;
 
 import org.openmrs.mobile.models.Resource;
 
-@Entity(tableName = "encounters")
+@Entity(tableName = "enc")
 public class EncounterEntity extends Resource {
     @ColumnInfo(name = "visit_id")
     private String visitKeyId;

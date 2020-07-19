@@ -95,8 +95,7 @@ public class EncounterRoomDAOTest {
 
         mDatabase.encounterRoomDAO().getLastVitalsEncounter(expectedEncounterEntity1.getPatientUuid(), expectedEncounterEntity1.getEncounterType())
                 .test()
-                .assertValue(actualEncounterEntities -> Objects.equals(actualEncounterEntities.size(), 1)
-                        && Objects.equals(renderEncounterEntityString(actualEncounterEntities.get(0)), renderEncounterEntityString(expectedEncounterEntity1)));
+                .assertValue(actualEncounterEntities -> Objects.equals(renderEncounterEntityString(actualEncounterEntities), renderEncounterEntityString(expectedEncounterEntity1)));
     }
 
     @Test

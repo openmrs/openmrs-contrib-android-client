@@ -30,21 +30,21 @@ public interface PatientRoomDAO {
     @Insert
     void addPatient(PatientEntity patientEntity);
 
-    @Query("DELETE FROM patients WHERE _id = :id")
+    @Query("DELETE FROM pat WHERE _id = :id")
     void deletePatient(long id);
 
     @Update
     void updatePatient(PatientEntity patientEntity);
 
-    @Query("SELECT * FROM patients")
+    @Query("SELECT * FROM pat")
     Single<List<PatientEntity>> getAllPatients();
 
-    @Query("SELECT * FROM patients WHERE uuid = :uuid")
+    @Query("SELECT * FROM pat WHERE uuid = :uuid")
     Single<List<PatientEntity>> findPatientByUUID(String uuid);
 
-    @Query("SELECT * FROM patients WHERE synced = 0")
+    @Query("SELECT * FROM pat WHERE synced = 0")
     Single<List<PatientEntity>> getUnsyncedPatients();
 
-    @Query("SELECT * FROM patients WHERE _id = :id")
+    @Query("SELECT * FROM pat WHERE _id = :id")
     Single<List<PatientEntity>> findPatientByID(Long id);
 }

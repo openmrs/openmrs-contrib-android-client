@@ -17,6 +17,7 @@ package org.openmrs.mobile.dao;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import org.openmrs.mobile.databases.entities.EncounterEntity;
 
@@ -26,29 +27,35 @@ import io.reactivex.Single;
 
 @Dao
 public interface EncounterRoomDAO {
-    @Query("SELECT * FROM encounters WHERE display = :formname")
+    @Query("SELECT * FROM enc WHERE display = :formname")
     Single<List<EncounterEntity>> getEncounterTypeByFormName(String formname);
 
-    @Query("SELECT _id from encounters WHERE visit_id IS NULL AND patient_uuid = :patientUUID")
+    @Query("SELECT _id from enc WHERE visit_id IS NULL AND patient_uuid = :patientUUID")
     Single<Long> getLastVitalsEncounterID(String patientUUID);
 
-    @Query("SELECT * FROM encounters WHERE patient_uuid = :patientUUID AND type = :type ORDER BY encounterDatetime DESC LIMIT 1")
-    Single<List<EncounterEntity>> getLastVitalsEncounter(String patientUUID, String type);
+    @Query("SELECT * FROM enc WHERE patient_uuid = :patientUUID AND type = :type ORDER BY encounterDatetime DESC LIMIT 1")
+    Single<EncounterEntity> getLastVitalsEncounter(String patientUUID, String type);
 
-    @Query("SELECT _id FROM encounters WHERE uuid = :encounterUUID")
+    @Query("SELECT _id FROM enc WHERE uuid = :encounterUUID")
     Single<Long> getEncounterByUUID(String encounterUUID);
 
-    @Query("SELECT * FROM encounters WHERE visit_id = :visitID")
+    @Query("SELECT * FROM enc WHERE visit_id = :visitID")
     Single<List<EncounterEntity>> findEncountersByVisitID(String visitID);
 
     @Insert
-    void addEncounter(EncounterEntity encounterEntity);
+    long addEncounter(EncounterEntity encounterEntity);
 
-    @Query("DELETE FROM encounters WHERE uuid = :uuid")
+    @Query("DELETE FROM enc WHERE uuid = :uuid")
     void deleteEncounter(String uuid);
 
-    @Query("SELECT * FROM encounters")
+    @Query("DELETE FROM enc WHERE _id = :id")
+    void deleteEncounterByID(long id);
+
+    @Query("SELECT * FROM enc")
     Single<List<EncounterEntity>> getAllEncounters();
+
+    @Update
+    int updateEncounter(EncounterEntity encounterEntity);
 
     /**
      * To Update encounter
@@ -59,7 +66,7 @@ public interface EncounterRoomDAO {
      * 1. Delete that encounter with that UUID
      * 2. Create new Encounter with that UUID
      */
-    @Query("SELECT e.* FROM observations AS o JOIN encounters AS e ON o.encounter_id = e._id " +
-        "JOIN visits AS v on e.visit_id = v._id WHERE v.patient_id = :patientID AND e.type = :encounterType ORDER BY e.encounterDatetime DESC")
+    @Query("SELECT e.* FROM obs AS o JOIN enc AS e ON o.encounter_id = e._id " +
+            "JOIN vis AS v on e.visit_id = v._id WHERE v.patient_id = :patientID AND e.type = :encounterType ORDER BY e.encounterDatetime DESC")
     Single<List<EncounterEntity>> getAllEncountersByType(Long patientID, String encounterType);
 }

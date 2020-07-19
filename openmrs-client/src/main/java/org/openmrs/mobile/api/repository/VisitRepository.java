@@ -164,12 +164,10 @@ public class VisitRepository {
         restApi.endVisitByUUID(uuid, visit).enqueue(new Callback<Visit>() {
             @Override
             public void onResponse(@NonNull Call<Visit> call, @NonNull Response<Visit> response) {
-                if (response.isSuccessful()) {
-                    if (callbackListener != null) {
+                if (callbackListener != null) {
+                    if (response.isSuccessful()) {
                         callbackListener.onSuccess(response.body().getStopDatetime());
-                    }
-                } else {
-                    if (callbackListener != null) {
+                    } else {
                         callbackListener.onFailure(response.message());
                     }
                 }

@@ -99,9 +99,9 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
     @Override
     public void getLocation(String url) {
         if (NetworkUtils.hasNetwork()) {
-            String locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "LocationEntity";
+            String locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "location";
             Call<Results<LocationEntity>> call =
-                    restApi.getLocations(locationEndPoint, "Admission LocationEntity", "full");
+                    restApi.getLocations(locationEndPoint, "Admission Location", "full");
             call.enqueue(new Callback<Results<LocationEntity>>() {
                 @Override
                 public void onResponse(Call<Results<LocationEntity>> call, Response<Results<LocationEntity>> response) {

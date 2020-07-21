@@ -36,7 +36,7 @@ public interface FormResourceDAO {
     Single<FormResourceEntity> getFormByUuid(String uuid);
 
     @Query("DELETE FROM forms")
-    void deleteALlForms();
+    void deleteAllForms();
 
     @Insert
     void addFormResource(FormResourceEntity formResourceEntity);

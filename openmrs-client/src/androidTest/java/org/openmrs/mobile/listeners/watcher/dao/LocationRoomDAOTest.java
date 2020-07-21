@@ -70,7 +70,7 @@ public class LocationRoomDAOTest {
 
     @Test
     public void findLocationByName_ShouldFindCorrectLocationByName() {
-        mDatabase.locationRoomDAO().findLocationByName("name");
+        mDatabase.locationRoomDAO().addLocation(expectedLocationEntity1);
         mDatabase.locationRoomDAO().findLocationByName("display")
                 .test()
                 .assertValue(actualLocationEntity -> Objects.equals(actualLocationEntity.getName(), "name")

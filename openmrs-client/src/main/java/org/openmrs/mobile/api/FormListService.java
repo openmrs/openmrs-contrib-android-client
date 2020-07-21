@@ -21,6 +21,7 @@ import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.FormResourceEntity;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Results;
+import org.openmrs.mobile.utilities.ActiveAndroid.query.Delete;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -48,7 +49,7 @@ public class FormListService extends IntentService {
                 @Override
                 public void onResponse(@NonNull Call<Results<FormResourceEntity>> call, @NonNull Response<Results<FormResourceEntity>> response) {
                     if (response.isSuccessful()) {
-                        formResourceDAO.deleteALlForms();
+                        formResourceDAO.deleteAllForms();
                         formresourcelist = response.body().getResults();
                         int size = formresourcelist.size();
                         for (int i = 0; i < size; i++) {
@@ -68,7 +69,7 @@ public class FormListService extends IntentService {
                 @Override
                 public void onResponse(@NonNull Call<Results<EncounterType>> call, @NonNull Response<Results<EncounterType>> response) {
                     if (response.isSuccessful()) {
-                        formResourceDAO.deleteALlForms();
+                        new Delete().from(EncounterType.class).execute();
                         Results<EncounterType> encountertypelist = response.body();
                         for (EncounterType enctype : encountertypelist.getResults())
                             enctype.save();

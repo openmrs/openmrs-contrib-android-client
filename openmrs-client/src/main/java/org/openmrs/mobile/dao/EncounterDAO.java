@@ -43,10 +43,11 @@ public class EncounterDAO {
     }
 
     public EncounterType getEncounterTypeByFormName(String formname) {
-        return new Select()
+        EncounterType encounterType = new Select()
                 .from(EncounterType.class)
                 .where("display = ?", formname)
                 .executeSingle();
+        return encounterType;
     }
 
     public void saveLastVitalsEncounter(Encounter encounter, String patientUUID) {

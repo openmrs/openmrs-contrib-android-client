@@ -211,7 +211,12 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 if (!locationList.isEmpty()) {
                     locationList.clear();
                 }
-                List<LocationEntity> locationEntities = AppDatabase.getDatabase(this).locationRoomDAO().getLocations().blockingGet();
+                List<LocationEntity> locationEntities;
+                try {
+                    locationEntities = AppDatabase.getDatabase(this).locationRoomDAO().getLocations().blockingGet();
+                } catch (Exception e) {
+                    locationEntities = new ArrayList<>();
+                }
                 locationList = getLocationList(locationEntities);
                 showLocationDialog(locationList);
                 return true;
@@ -226,27 +231,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         }
         return locationList;
     }
-
-    /*private String getLocationList(LocationEntity locationEntity) {
-        return new Observer<List<Location>>() {
-            @Override
-            public void onCompleted() {
-                showLocationDialog(locationList);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                mOpenMRSLogger.e(e.getMessage());
-            }
-
-            @Override
-            public void onNext(List<Location> locations) {
-                for (Location locationItem : locations) {
-                    locationList.add(locationItem.getName());
-                }
-            }
-        };
-    }*/
 
     public void showNoInternetConnectionSnackbar() {
         mSnackbar = Snackbar.make(findViewById(android.R.id.content),

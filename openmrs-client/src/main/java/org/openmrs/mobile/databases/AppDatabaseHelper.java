@@ -99,6 +99,7 @@ public class AppDatabaseHelper {
             encounterEntity.setVisitKeyId(visitID.toString());
         }
         encounterEntity.setEncounterDateTime(encounter.getEncounterDatetime().toString());
+        encounterEntity.setEncounterType(encounter.getEncounterType().getDisplay());
         encounterEntity.setPatientUuid(encounter.getPatientUUID());
         encounterEntity.setFormUuid(encounter.getFormUuid());
         if (null == encounter.getLocation()) {
@@ -128,11 +129,16 @@ public class AppDatabaseHelper {
         Long dateTime = Long.parseLong(entity.getEncounterDateTime());
         encounter.setEncounterDatetime(DateUtils.convertTime(dateTime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
         encounter.setObservations(new ObservationDAO().findObservationByEncounterID(entity.getId()));
-        LocationEntity location = AppDatabase
-                .getDatabase(OpenMRS.getInstance().getApplicationContext())
-                .locationRoomDAO()
-                .findLocationByUUID(entity.getLocationUuid())
-                .blockingGet();
+        LocationEntity location;
+        try {
+            location = AppDatabase
+                    .getDatabase(OpenMRS.getInstance().getApplicationContext())
+                    .locationRoomDAO()
+                    .findLocationByUUID(entity.getLocationUuid())
+                    .blockingGet();
+        } catch (Exception e) {
+            location = null;
+        }
         encounter.setLocation(location);
         encounter.setForm(FormService.getFormByUuid(entity.getFormUuid()));
         return encounter;
@@ -142,7 +148,7 @@ public class AppDatabaseHelper {
         Visit visit = new Visit();
         visit.setId(visitEntity.getId());
         visit.setDisplay(visitEntity.getDisplay());
-        visit.setVisitType(new VisitType(visitEntity.getDisplay()));
+        visit.setVisitType(new VisitType(visitEntity.getVisitType()));
         try {
             LocationEntity locationEntity = AppDatabase
                     .getDatabase(OpenMRS.getInstance().getApplicationContext())

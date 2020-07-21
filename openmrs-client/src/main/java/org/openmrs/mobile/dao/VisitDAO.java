@@ -107,88 +107,54 @@ public class VisitDAO {
     public Observable<List<Visit>> getActiveVisits() {
         return createObservableIO(() -> {
             List<Visit> visits = new ArrayList<>();
-            visitRoomDAO.getActiveVisits()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableSingleObserver<List<VisitEntity>>() {
-                        @Override
-                        public void onSuccess(List<VisitEntity> visitEntities) {
-                            for (VisitEntity entity : visitEntities) {
-                                visits.add(appDatabaseHelper.visitEntityToVisit(entity));
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-                    });
-            return visits;
+            List<VisitEntity> visitEntities;
+            try {
+                visitEntities = visitRoomDAO.getActiveVisits().blockingGet();
+                for (VisitEntity entity : visitEntities) {
+                    visits.add(appDatabaseHelper.visitEntityToVisit(entity));
+                }
+                return visits;
+            } catch (Exception e) {
+                return new ArrayList<>();
+            }
         });
     }
 
     public Observable<List<Visit>> getVisitsByPatientID(final Long patientID) {
         return createObservableIO(() -> {
             List<Visit> visits = new ArrayList<>();
-            visitRoomDAO.getVisitsByPatientID(patientID)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableSingleObserver<List<VisitEntity>>() {
-                        @Override
-                        public void onSuccess(List<VisitEntity> visitEntities) {
-                            for (VisitEntity entity : visitEntities) {
-                                visits.add(appDatabaseHelper.visitEntityToVisit(entity));
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-                    });
-            return visits;
+            List<VisitEntity> visitEntities;
+            try {
+                visitEntities = visitRoomDAO.getVisitsByPatientID(patientID).blockingGet();
+                for (VisitEntity entity : visitEntities) {
+                    visits.add(appDatabaseHelper.visitEntityToVisit(entity));
+                }
+                return visits;
+            } catch (Exception e) {
+                return visits;
+            }
         });
     }
 
     public Observable<Visit> getActiveVisitByPatientId(Long patientId) {
         return createObservableIO(() -> {
-            final Visit[] activeVisit = {null};
-            visitRoomDAO.getActiveVisitByPatientId(patientId)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableSingleObserver<VisitEntity>() {
-                        @Override
-                        public void onSuccess(VisitEntity visitEntity) {
-                            activeVisit[0] = appDatabaseHelper.visitEntityToVisit(visitEntity);
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            activeVisit[0] = null;
-                        }
-                    });
-            return activeVisit[0];
+            try {
+                VisitEntity visitEntity = visitRoomDAO.getActiveVisitByPatientId(patientId).blockingGet();
+                return appDatabaseHelper.visitEntityToVisit(visitEntity);
+            } catch (Exception e) {
+                return null;
+            }
         });
     }
 
     public Observable<Visit> getVisitByID(final Long visitID) {
         return createObservableIO(() -> {
-            final Visit[] visit = {null};
-            visitRoomDAO.getVisitByID(visitID)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableSingleObserver<VisitEntity>() {
-                        @Override
-                        public void onSuccess(VisitEntity visitEntity) {
-                            visit[0] = appDatabaseHelper.visitEntityToVisit(visitEntity);
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            visit[0] = null;
-                        }
-                    });
-            return visit[0];
+            try {
+                VisitEntity visitEntity = visitRoomDAO.getVisitByID(visitID).blockingGet();
+                return appDatabaseHelper.visitEntityToVisit(visitEntity);
+            } catch (Exception e) {
+                return null;
+            }
         });
     }
 
@@ -198,23 +164,12 @@ public class VisitDAO {
 
     public Observable<Visit> getVisitByUuid(String uuid) {
         return createObservableIO(() -> {
-            final Visit[] visit = {null};
-            visitRoomDAO.getVisitByUuid(uuid)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableSingleObserver<VisitEntity>() {
-                        @Override
-                        public void onSuccess(VisitEntity visitEntity) {
-                            visit[0] = appDatabaseHelper.visitEntityToVisit(visitEntity);
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            visit[0] = null;
-                        }
-                    });
-
-            return visit[0];
+            try {
+                VisitEntity visitEntity = visitRoomDAO.getVisitByUuid(uuid).blockingGet();
+                return appDatabaseHelper.visitEntityToVisit(visitEntity);
+            } catch (Exception e) {
+                return null;
+            }
         });
     }
 

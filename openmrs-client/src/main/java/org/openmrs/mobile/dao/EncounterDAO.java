@@ -27,9 +27,6 @@ import org.openmrs.mobile.utilities.ActiveAndroid.query.Select;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableSingleObserver;
-import io.reactivex.schedulers.Schedulers;
 import rx.Observable;
 
 import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
@@ -41,7 +38,8 @@ public class EncounterDAO {
 
     public long saveEncounter(Encounter encounter, Long visitID) {
         EncounterEntity encounterEntity = appDatabaseHelper.encounterToEntity(encounter, visitID);
-        return encounterRoomDAO.addEncounter(encounterEntity);
+        long id = encounterRoomDAO.addEncounter(encounterEntity);
+        return id;
     }
 
     public EncounterType getEncounterTypeByFormName(String formname) {
@@ -54,7 +52,12 @@ public class EncounterDAO {
     public void saveLastVitalsEncounter(Encounter encounter, String patientUUID) {
         if (null != encounter) {
             encounter.setPatientUUID(patientUUID);
-            long oldLastVitalsEncounterID = encounterRoomDAO.getLastVitalsEncounterID(patientUUID).blockingGet();
+            long oldLastVitalsEncounterID;
+            try {
+                oldLastVitalsEncounterID = encounterRoomDAO.getLastVitalsEncounterID(patientUUID).blockingGet();
+            } catch (Exception e) {
+                oldLastVitalsEncounterID = 0;
+            }
             if (0 != oldLastVitalsEncounterID) {
                 for (Observation obs : new ObservationDAO().findObservationByEncounterID(oldLastVitalsEncounterID)) {
                     ObservationEntity observationEntity = appDatabaseHelper.observationToEntity(obs, 1L);
@@ -72,64 +75,57 @@ public class EncounterDAO {
 
     public Observable<Encounter> getLastVitalsEncounter(String patientUUID) {
         return createObservableIO(() -> {
-            final Encounter[] encounter = {null};
-            encounterRoomDAO.getLastVitalsEncounter(patientUUID, EncounterType.VITALS)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableSingleObserver<EncounterEntity>() {
-                        @Override
-                        public void onSuccess(EncounterEntity encounterEntity) {
-                            encounter[0] = appDatabaseHelper.encounterEntityToEncounter(encounterEntity);
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            encounter[0] = null;
-                        }
-                    });
-            return encounter[0];
+            try {
+                EncounterEntity encounterEntity = encounterRoomDAO.getLastVitalsEncounter(patientUUID, EncounterType.VITALS).blockingGet();
+                return appDatabaseHelper.encounterEntityToEncounter(encounterEntity);
+            } catch (Exception e) {
+                return null;
+            }
         });
     }
 
     public int updateEncounter(long encounterID, Encounter encounter, long visitID) {
         EncounterEntity encounterEntity = appDatabaseHelper.encounterToEntity(encounter, visitID);
-        return encounterRoomDAO.updateEncounter(encounterEntity);
+        encounterEntity.setId(encounterID);
+        int id =  encounterRoomDAO.updateEncounter(encounterEntity);
+        return id;
     }
 
     public List<Encounter> findEncountersByVisitID(Long visitID) {
         List<Encounter> encounters = new ArrayList<>();
-        List<EncounterEntity> encounterEntities = encounterRoomDAO.findEncountersByVisitID(visitID.toString()).blockingGet();
+        try {
+            List<EncounterEntity> encounterEntities = encounterRoomDAO.findEncountersByVisitID(visitID.toString()).blockingGet();
 
-        for (EncounterEntity entity : encounterEntities) {
-            encounters.add(appDatabaseHelper.encounterEntityToEncounter(entity));
+            for (EncounterEntity entity : encounterEntities) {
+                encounters.add(appDatabaseHelper.encounterEntityToEncounter(entity));
+            }
+            return encounters;
+        } catch (Exception e) {
+            return encounters;
         }
-        return encounters;
     }
 
     public Observable<List<Encounter>> getAllEncountersByType(Long patientID, EncounterType type) {
         return createObservableIO(() -> {
             List<Encounter> encounters = new ArrayList<>();
-            encounterRoomDAO.getAllEncountersByType(patientID, type.getDisplay())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableSingleObserver<List<EncounterEntity>>() {
-                        @Override
-                        public void onSuccess(List<EncounterEntity> encounterEntities) {
-                            for (EncounterEntity entity : encounterEntities) {
-                                encounters.add(appDatabaseHelper.encounterEntityToEncounter(entity));
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-                    });
-            return encounters;
+            List<EncounterEntity> encounterEntities;
+            try {
+                encounterEntities = encounterRoomDAO.getAllEncountersByType(patientID, type.getDisplay()).blockingGet();
+                for (EncounterEntity entity : encounterEntities) {
+                    encounters.add(appDatabaseHelper.encounterEntityToEncounter(entity));
+                }
+                return encounters;
+            } catch (Exception e) {
+                return new ArrayList<>();
+            }
         });
     }
 
     public long getEncounterByUUID(final String encounterUUID) {
-        return encounterRoomDAO.getEncounterByUUID(encounterUUID).blockingGet();
+        try {
+            return encounterRoomDAO.getEncounterByUUID(encounterUUID).blockingGet();
+        } catch (Exception e) {
+            return 0;
+        }
     }
 }

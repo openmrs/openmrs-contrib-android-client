@@ -95,7 +95,9 @@ public class AppDatabaseHelper {
         encounterEntity.setId(encounter.getId());
         encounterEntity.setDisplay(encounter.getDisplay());
         encounterEntity.setUuid(encounter.getUuid());
-        encounterEntity.setVisitKeyId(visitID.toString());
+        if (visitID != null) {
+            encounterEntity.setVisitKeyId(visitID.toString());
+        }
         encounterEntity.setEncounterDateTime(encounter.getEncounterDatetime().toString());
         encounterEntity.setPatientUuid(encounter.getPatientUUID());
         encounterEntity.setFormUuid(encounter.getFormUuid());
@@ -139,14 +141,16 @@ public class AppDatabaseHelper {
         visit.setId(visitEntity.getId());
         visit.setDisplay(visitEntity.getDisplay());
         visit.setVisitType(new VisitType(visitEntity.getDisplay()));
-
-        LocationEntity locationEntity = AppDatabase
-                .getDatabase(OpenMRS.getInstance().getApplicationContext())
-                .locationRoomDAO()
-                .findLocationByName(visitEntity.getVisitPlace())
-                .blockingGet();
-        visit.setLocation(locationEntity);
-
+        try {
+            LocationEntity locationEntity = AppDatabase
+                    .getDatabase(OpenMRS.getInstance().getApplicationContext())
+                    .locationRoomDAO()
+                    .findLocationByName(visitEntity.getVisitPlace())
+                    .blockingGet();
+            visit.setLocation(locationEntity);
+        } catch (Exception e) {
+            visit.setLocation(new LocationEntity(visitEntity.getVisitPlace()));
+        }
         visit.setStartDatetime(visitEntity.getStartDate());
         visit.setStopDatetime(visitEntity.getStopDate());
         visit.setEncounters(new EncounterDAO().findEncountersByVisitID(visitEntity.getId()));

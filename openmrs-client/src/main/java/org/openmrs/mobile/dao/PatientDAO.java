@@ -24,9 +24,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableSingleObserver;
-import io.reactivex.schedulers.Schedulers;
 import rx.Observable;
 
 import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
@@ -53,22 +50,15 @@ public class PatientDAO {
     public Observable<List<Patient>> getAllPatients() {
         return createObservableIO(() -> {
             List<Patient> patients = new ArrayList<>();
-            patientRoomDAO.getAllPatients()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new DisposableSingleObserver<List<PatientEntity>>() {
-                        @Override
-                        public void onSuccess(List<PatientEntity> patientEntities) {
-                            for (PatientEntity entity : patientEntities) {
-                                patients.add(appDatabaseHelper.patientEntityToPatient(entity));
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-                    });
+            List<PatientEntity> patientEntities = new ArrayList<>();
+            try {
+                patientEntities = patientRoomDAO.getAllPatients().blockingGet();
+                for (PatientEntity entity : patientEntities) {
+                    patients.add(appDatabaseHelper.patientEntityToPatient(entity));
+                }
+            } catch (Exception e) {
+                return new ArrayList<>();
+            }
             return patients;
         });
     }
@@ -87,18 +77,26 @@ public class PatientDAO {
     }
 
     public Patient findPatientByUUID(String uuid) {
-        PatientEntity patient = patientRoomDAO.findPatientByUUID(uuid).blockingGet();
-        return appDatabaseHelper.patientEntityToPatient(patient);
+        try {
+            PatientEntity patient = patientRoomDAO.findPatientByUUID(uuid).blockingGet();
+            return appDatabaseHelper.patientEntityToPatient(patient);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     public List<Patient> getUnSyncedPatients() {
         List<Patient> patientList = new LinkedList<>();
-        List<PatientEntity> unSyncedPatientList = new ArrayList<>();
-        unSyncedPatientList = patientRoomDAO.getUnsyncedPatients().blockingGet();
-        for (PatientEntity entity : unSyncedPatientList) {
-            patientList.add(appDatabaseHelper.patientEntityToPatient(entity));
+        List<PatientEntity> unSyncedPatientList;
+        try {
+            unSyncedPatientList = patientRoomDAO.getUnsyncedPatients().blockingGet();
+            for (PatientEntity entity : unSyncedPatientList) {
+                patientList.add(appDatabaseHelper.patientEntityToPatient(entity));
+            }
+            return patientList;
+        } catch (Exception e) {
+            return new ArrayList<>();
         }
-        return patientList;
     }
 
     public Patient findPatientByID(String id) {

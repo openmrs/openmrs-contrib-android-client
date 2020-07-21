@@ -20,6 +20,7 @@ import org.openmrs.mobile.databases.AppDatabaseHelper;
 import org.openmrs.mobile.databases.entities.ObservationEntity;
 import org.openmrs.mobile.models.Observation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ObservationDAO {
@@ -29,8 +30,12 @@ public class ObservationDAO {
     public List<Observation> findObservationByEncounterID(Long encounterID) {
         List<Observation> observationList;
         List<ObservationEntity> observationEntityList;
-        observationEntityList = observationRoomDAO.findObservationByEncounterID(encounterID).blockingGet();
-        observationList = helper.observationEntityToObservation(observationEntityList);
-        return observationList;
+        try {
+            observationEntityList = observationRoomDAO.findObservationByEncounterID(encounterID).blockingGet();
+            observationList = helper.observationEntityToObservation(observationEntityList);
+            return observationList;
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 }

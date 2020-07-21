@@ -91,7 +91,7 @@ class Observation : Resource(), Serializable {
     val shortDiagnosisCertainty: String
         get() = diagnosisCertainty!!.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
 
-    fun setDiagnosisCertanity(certanity: String) {
+    fun setDiagnosisCertanity(certanity: String?) {
         this.diagnosisCertainty = certanity
     }
 

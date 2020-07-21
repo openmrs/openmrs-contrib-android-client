@@ -118,7 +118,9 @@ public class AppDatabaseHelper {
 
     public Encounter encounterEntityToEncounter(EncounterEntity entity) {
         Encounter encounter = new Encounter();
-        encounter.setEncounterType(new EncounterType(entity.getEncounterType()));
+        if(null != entity.getEncounterType()) {
+            encounter.setEncounterType(new EncounterType(entity.getEncounterType()));
+        }
         encounter.setId(entity.getId());
         encounter.setVisitID(Long.parseLong(entity.getVisitKeyId()));
         encounter.setUuid(entity.getUuid());

@@ -8,7 +8,7 @@ import androidx.room.RoomWarnings;
 
 import org.openmrs.mobile.models.Resource;
 
-@Entity(tableName = "pat")
+@Entity(tableName = "patients")
 public class PatientEntity extends Resource {
     @NonNull
     @ColumnInfo(name = "synced")

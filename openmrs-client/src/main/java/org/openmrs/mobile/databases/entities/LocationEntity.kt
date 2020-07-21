@@ -6,7 +6,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import org.openmrs.mobile.models.Resource
 
-@Entity(tableName = "loc")
+@Entity(tableName = "locations")
 class LocationEntity : Resource {
     @ColumnInfo(name = "name")
     @SerializedName("name")

@@ -27,31 +27,31 @@ import io.reactivex.Single;
 
 @Dao
 public interface EncounterRoomDAO {
-    @Query("SELECT * FROM enc WHERE display = :formname")
+    @Query("SELECT * FROM encounters WHERE display = :formname")
     Single<List<EncounterEntity>> getEncounterTypeByFormName(String formname);
 
-    @Query("SELECT _id from enc WHERE visit_id IS NULL AND patient_uuid = :patientUUID")
+    @Query("SELECT _id from encounters WHERE visit_id IS NULL AND patient_uuid = :patientUUID")
     Single<Long> getLastVitalsEncounterID(String patientUUID);
 
-    @Query("SELECT * FROM enc WHERE patient_uuid = :patientUUID AND type = :type ORDER BY encounterDatetime DESC LIMIT 1")
+    @Query("SELECT * FROM encounters WHERE patient_uuid = :patientUUID AND type = :type ORDER BY encounterDatetime DESC LIMIT 1")
     Single<EncounterEntity> getLastVitalsEncounter(String patientUUID, String type);
 
-    @Query("SELECT _id FROM enc WHERE uuid = :encounterUUID")
+    @Query("SELECT _id FROM encounters WHERE uuid = :encounterUUID")
     Single<Long> getEncounterByUUID(String encounterUUID);
 
-    @Query("SELECT * FROM enc WHERE visit_id = :visitID")
+    @Query("SELECT * FROM encounters WHERE visit_id = :visitID")
     Single<List<EncounterEntity>> findEncountersByVisitID(String visitID);
 
     @Insert
     long addEncounter(EncounterEntity encounterEntity);
 
-    @Query("DELETE FROM enc WHERE uuid = :uuid")
+    @Query("DELETE FROM encounters WHERE uuid = :uuid")
     void deleteEncounter(String uuid);
 
-    @Query("DELETE FROM enc WHERE _id = :id")
+    @Query("DELETE FROM encounters WHERE _id = :id")
     void deleteEncounterByID(long id);
 
-    @Query("SELECT * FROM enc")
+    @Query("SELECT * FROM encounters")
     Single<List<EncounterEntity>> getAllEncounters();
 
     @Update
@@ -66,7 +66,7 @@ public interface EncounterRoomDAO {
      * 1. Delete that encounter with that UUID
      * 2. Create new Encounter with that UUID
      */
-    @Query("SELECT e.* FROM obs AS o JOIN enc AS e ON o.encounter_id = e._id " +
-            "JOIN vis AS v on e.visit_id = v._id WHERE v.patient_id = :patientID AND e.type = :encounterType ORDER BY e.encounterDatetime DESC")
+    @Query("SELECT e.* FROM observations AS o JOIN encounters AS e ON o.encounter_id = e._id " +
+            "JOIN visits AS v on e.visit_id = v._id WHERE v.patient_id = :patientID AND e.type = :encounterType ORDER BY e.encounterDatetime DESC")
     Single<List<EncounterEntity>> getAllEncountersByType(Long patientID, String encounterType);
 }

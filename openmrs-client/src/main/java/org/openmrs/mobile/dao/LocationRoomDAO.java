@@ -29,15 +29,15 @@ public interface LocationRoomDAO {
     @Insert
     long addLocation(LocationEntity entity);
 
-    @Query("DELETE FROM loc")
+    @Query("DELETE FROM locations")
     void deleteAllLocations();
 
-    @Query("SELECT * FROM loc")
+    @Query("SELECT * FROM locations")
     Single<List<LocationEntity>> getLocations();
 
-    @Query("SELECT * FROM loc WHERE display = :mName")
+    @Query("SELECT * FROM locations WHERE display = :mName")
     Single<LocationEntity> findLocationByName(String mName);
 
-    @Query("SELECT * FROM loc WHERE uuid = :uuid")
+    @Query("SELECT * FROM locations WHERE uuid = :uuid")
     Single<LocationEntity> findLocationByUUID(String uuid);
 }

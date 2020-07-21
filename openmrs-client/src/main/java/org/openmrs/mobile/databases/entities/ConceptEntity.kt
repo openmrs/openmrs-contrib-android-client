@@ -19,7 +19,7 @@ import com.google.gson.annotations.SerializedName
 import org.openmrs.mobile.models.Datatype
 import org.openmrs.mobile.models.Resource
 
-@Entity(tableName = "con")
+@Entity(tableName = "concepts")
 class ConceptEntity : Resource() {
 
     @ColumnInfo(name = "name")

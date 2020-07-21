@@ -2,10 +2,10 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0737ecf3d9b929beafde451403352195",
+    "identityHash": "e6d3481854a92592d12afde9e347cdc1",
     "entities": [
       {
-        "tableName": "con",
+        "tableName": "concepts",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
@@ -43,7 +43,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "enc",
+        "tableName": "encounters",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`visit_id` TEXT, `encounterDatetime` TEXT NOT NULL, `type` TEXT, `patient_uuid` TEXT, `form_uuid` TEXT, `location_uuid` TEXT, `encounter_provider_uuid` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
@@ -117,7 +117,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "loc",
+        "tableName": "locations",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT, `description` TEXT, `address1` TEXT, `address2` TEXT, `city` TEXT, `state` TEXT, `country` TEXT, `postalCode` TEXT, `parentLocationUuid` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
@@ -203,7 +203,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "obs",
+        "tableName": "observations",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`encounter_id` INTEGER NOT NULL, `displayValue` TEXT, `diagnosisOrder` TEXT, `diagnosisList` TEXT, `diagnosisCertainty` TEXT, `diagnosisNote` TEXT, `conceptUuid` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
@@ -277,7 +277,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "pat",
+        "tableName": "patients",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`synced` INTEGER NOT NULL, `identifier` TEXT, `givenName` TEXT, `middleName` TEXT, `familyName` TEXT, `gender` TEXT, `birthDate` TEXT, `deathDate` TEXT, `causeOfDeath` TEXT, `age` TEXT, `photo` BLOB, `address1` TEXT, `address2` TEXT, `city` TEXT, `state` TEXT, `country` TEXT, `postalCode` TEXT, `dead` TEXT, `encounters` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
@@ -423,7 +423,7 @@
         "foreignKeys": []
       },
       {
-        "tableName": "vis",
+        "tableName": "visits",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`patient_id` INTEGER NOT NULL, `visit_type` TEXT, `visit_place` TEXT, `start_date` TEXT NOT NULL, `stop_date` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
@@ -606,7 +606,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0737ecf3d9b929beafde451403352195\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e6d3481854a92592d12afde9e347cdc1\")"
     ]
   }
 }

@@ -6,7 +6,7 @@ import androidx.room.Entity;
 
 import org.openmrs.mobile.models.Resource;
 
-@Entity(tableName = "obs")
+@Entity(tableName = "observations")
 public class ObservationEntity extends Resource {
     @NonNull
     @ColumnInfo(name = "encounter_id")

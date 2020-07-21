@@ -39,24 +39,24 @@ public interface VisitRoomDAO {
     @Update
     int updateVisit(VisitEntity visitEntity);
 
-    @Query("SELECT * FROM vis WHERE stop_date IS NULL OR stop_date = '' ORDER BY start_date DESC")
+    @Query("SELECT * FROM visits WHERE stop_date IS NULL OR stop_date = '' ORDER BY start_date DESC")
     Single<List<VisitEntity>> getActiveVisits();
 
-    @Query("SELECT * FROM vis WHERE patient_id = :patientID ORDER BY start_date DESC")
+    @Query("SELECT * FROM visits WHERE patient_id = :patientID ORDER BY start_date DESC")
     Single<List<VisitEntity>> getVisitsByPatientID(final Long patientID);
 
-    @Query("SELECT * FROM vis WHERE patient_id = :patientId AND (stop_date IS NULL OR stop_date = '')  ORDER BY start_date DESC")
+    @Query("SELECT * FROM visits WHERE patient_id = :patientId AND (stop_date IS NULL OR stop_date = '')  ORDER BY start_date DESC")
     Single<VisitEntity> getActiveVisitByPatientId(Long patientId);
 
-    @Query("SELECT * FROM vis WHERE _id = :visitID")
+    @Query("SELECT * FROM visits WHERE _id = :visitID")
     Single<VisitEntity> getVisitByID(final Long visitID);
 
-    @Query("SELECT _id FROM vis WHERE uuid = :visitUUID")
+    @Query("SELECT _id FROM visits WHERE uuid = :visitUUID")
     long getVisitsIDByUUID(final String visitUUID);
 
-    @Query("SELECT * FROM vis WHERE uuid = :uuid")
+    @Query("SELECT * FROM visits WHERE uuid = :uuid")
     Single<VisitEntity> getVisitByUuid(String uuid);
 
-    @Query("DELETE FROM vis WHERE patient_id = :patientID")
+    @Query("DELETE FROM visits WHERE patient_id = :patientID")
     int deleteVisitsByPatientId(long patientID);
 }

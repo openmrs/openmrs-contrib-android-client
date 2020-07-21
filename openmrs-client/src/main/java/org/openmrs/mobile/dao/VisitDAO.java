@@ -32,7 +32,6 @@ import rx.Observable;
 
 import static org.openmrs.mobile.databases.AppDatabaseHelper.createObservableIO;
 
-
 public class VisitDAO {
 
     OpenMRS openMRS = OpenMRS.getInstance();

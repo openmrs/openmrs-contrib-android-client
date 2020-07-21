@@ -28,7 +28,6 @@ import rx.Observable;
 
 import static org.openmrs.mobile.databases.AppDatabaseHelper.createObservableIO;
 
-
 public class PatientDAO {
     AppDatabaseHelper appDatabaseHelper = new AppDatabaseHelper();
     PatientRoomDAO patientRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).patientRoomDAO();

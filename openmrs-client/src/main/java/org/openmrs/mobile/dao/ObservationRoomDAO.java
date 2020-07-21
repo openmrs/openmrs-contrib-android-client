@@ -38,13 +38,13 @@ public interface ObservationRoomDAO {
     @Delete
     void deleteObservation(ObservationEntity observationEntity);
 
-    @Query("SELECT * FROM obs WHERE encounter_id = :encounterID")
+    @Query("SELECT * FROM observations WHERE encounter_id = :encounterID")
     Single<List<ObservationEntity>> findObservationByEncounterID(long encounterID);
 
-    @Query("SELECT * FROM obs WHERE uuid = :observationUUID")
+    @Query("SELECT * FROM observations WHERE uuid = :observationUUID")
     Single<ObservationEntity> getObservationByUUID(String observationUUID);
 
-    @Query("SELECT * FROM obs")
+    @Query("SELECT * FROM observations")
     Single<List<ObservationEntity>> getAllObservations();
 
 }

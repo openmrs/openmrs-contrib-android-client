@@ -27,7 +27,6 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.LocationRoomDAO;
 import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.databases.OpenMRSSQLiteOpenHelper;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.listeners.retrofit.GetVisitTypeCallbackListener;
 import org.openmrs.mobile.models.Results;
@@ -130,7 +129,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                         if (session.isAuthenticated()) {
                             mOpenMRS.deleteSecretKey();
                             if (wipeDatabase) {
-                                mOpenMRS.deleteDatabase(OpenMRSSQLiteOpenHelper.DATABASE_NAME);
+                                mOpenMRS.deleteDatabase(ApplicationConstants.DB_NAME);
                                 setData(session.getSessionId(), url, username, password);
                                 mWipeRequired = false;
                             }

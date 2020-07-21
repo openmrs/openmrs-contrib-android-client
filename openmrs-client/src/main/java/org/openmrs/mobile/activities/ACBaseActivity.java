@@ -50,7 +50,6 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.AuthorizationManager;
@@ -245,7 +244,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         mOpenMRS.clearUserPreferencesData();
         mAuthorizationManager.moveToLoginActivity();
         ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.logout_success);
-        OpenMRSDBOpenHelper.getInstance().closeDatabases();
+        AppDatabase.getDatabase(getApplicationContext()).close();
     }
 
     private void showCredentialChangedDialog() {
@@ -343,7 +342,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
 
     public void moveUnauthorizedUserToLoginScreen() {
-        OpenMRSDBOpenHelper.getInstance().closeDatabases();
+        AppDatabase.getDatabase(getApplicationContext()).close();
         mOpenMRS.clearUserPreferencesData();
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

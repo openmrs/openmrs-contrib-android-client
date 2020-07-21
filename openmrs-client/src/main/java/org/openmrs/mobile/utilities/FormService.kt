@@ -33,10 +33,15 @@ object FormService {
     @JvmStatic
     fun getFormByUuid(uuid: String?): Form? {
         if (!isBlank(uuid)) {
-            val formResourceEntity = AppDatabase.getDatabase(OpenMRS.getInstance().applicationContext)
-                    .formResourceDAO()
-                    .getFormByUuid(uuid)
-                    .blockingGet()
+            var formResourceEntity : FormResourceEntity?
+            try {
+                formResourceEntity = AppDatabase.getDatabase(OpenMRS.getInstance().applicationContext)
+                        .formResourceDAO()
+                        .getFormByUuid(uuid)
+                        .blockingGet()
+            } catch (e: Exception) {
+                formResourceEntity = null;
+            }
             if (formResourceEntity != null) {
                 val resourceList = formResourceEntity.resources
                 for (resource in resourceList) {

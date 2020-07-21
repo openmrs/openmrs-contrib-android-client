@@ -26,7 +26,8 @@ import java.util.List;
 
 import rx.Observable;
 
-import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
+import static org.openmrs.mobile.databases.AppDatabaseHelper.createObservableIO;
+
 
 public class PatientDAO {
     AppDatabaseHelper appDatabaseHelper = new AppDatabaseHelper();

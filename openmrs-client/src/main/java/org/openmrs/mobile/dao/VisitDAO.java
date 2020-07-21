@@ -28,12 +28,10 @@ import org.openmrs.mobile.models.Visit;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableSingleObserver;
-import io.reactivex.schedulers.Schedulers;
 import rx.Observable;
 
-import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
+import static org.openmrs.mobile.databases.AppDatabaseHelper.createObservableIO;
+
 
 public class VisitDAO {
 

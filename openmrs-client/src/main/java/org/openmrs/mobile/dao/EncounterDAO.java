@@ -29,7 +29,7 @@ import java.util.List;
 
 import rx.Observable;
 
-import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
+import static org.openmrs.mobile.databases.AppDatabaseHelper.createObservableIO;
 
 public class EncounterDAO {
     AppDatabaseHelper appDatabaseHelper = new AppDatabaseHelper();
@@ -88,7 +88,7 @@ public class EncounterDAO {
     public int updateEncounter(long encounterID, Encounter encounter, long visitID) {
         EncounterEntity encounterEntity = appDatabaseHelper.encounterToEntity(encounter, visitID);
         encounterEntity.setId(encounterID);
-        int id =  encounterRoomDAO.updateEncounter(encounterEntity);
+        int id = encounterRoomDAO.updateEncounter(encounterEntity);
         return id;
     }
 

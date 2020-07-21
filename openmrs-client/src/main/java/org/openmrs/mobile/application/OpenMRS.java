@@ -25,10 +25,8 @@ import net.sqlcipher.database.SQLiteDatabase;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.openmrs.mobile.api.FormListService;
-import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Encountercreate;
-import org.openmrs.mobile.models.Link;
 import org.openmrs.mobile.models.Obscreate;
 import org.openmrs.mobile.services.AuthenticateCheckService;
 import org.openmrs.mobile.utilities.ActiveAndroid.ActiveAndroid;
@@ -60,7 +58,6 @@ public class OpenMRS extends MultiDexApplication {
             mExternalDirectoryPath = this.getExternalFilesDir(null).toString();
         }
         mLogger = new OpenMRSLogger();
-        OpenMRSDBOpenHelper.init();
         initializeDB();
         Intent i = new Intent(this, FormListService.class);
         startService(i);

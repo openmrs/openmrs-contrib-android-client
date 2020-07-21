@@ -45,6 +45,10 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import rx.Observable;
+import rx.schedulers.Schedulers;
 
 public class AppDatabaseHelper {
     public AppDatabaseHelper() {
@@ -123,7 +127,9 @@ public class AppDatabaseHelper {
             encounter.setEncounterType(new EncounterType(entity.getEncounterType()));
         }
         encounter.setId(entity.getId());
-        encounter.setVisitID(Long.parseLong(entity.getVisitKeyId()));
+        if(null != entity.getVisitKeyId()) {
+            encounter.setVisitID(Long.parseLong(entity.getVisitKeyId()));
+        }
         encounter.setUuid(entity.getUuid());
         encounter.setDisplay(entity.getDisplay());
         Long dateTime = Long.parseLong(entity.getEncounterDateTime());
@@ -147,6 +153,7 @@ public class AppDatabaseHelper {
     public Visit visitEntityToVisit(VisitEntity visitEntity) {
         Visit visit = new Visit();
         visit.setId(visitEntity.getId());
+        visit.setUuid(visitEntity.getUuid());
         visit.setDisplay(visitEntity.getDisplay());
         visit.setVisitType(new VisitType(visitEntity.getVisitType()));
         try {
@@ -286,5 +293,11 @@ public class AppDatabaseHelper {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(imageByteArray);
         return BitmapFactory.decodeStream(inputStream);
     }
+
+    public static <T> Observable<T> createObservableIO(final Callable<T> func) {
+        return Observable.fromCallable(func)
+                .subscribeOn(Schedulers.io());
+    }
+
 }
 

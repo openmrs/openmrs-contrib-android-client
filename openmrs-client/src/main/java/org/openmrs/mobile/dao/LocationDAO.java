@@ -28,7 +28,8 @@ import java.util.List;
 
 import rx.Observable;
 
-import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
+import static org.openmrs.mobile.databases.AppDatabaseHelper.createObservableIO;
+
 
 public class LocationDAO {
     public Observable<Long> saveLocation(LocationEntity LocationEntity) {
@@ -47,7 +48,7 @@ public class LocationDAO {
             List<LocationEntity> locations = new ArrayList<>();
             DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
             Cursor cursor = openHelper.getReadableDatabase().query(LocationTable.TABLE_NAME,
-                null, null, null, null, null, null);
+                    null, null, null, null, null, null);
 
             if (null != cursor) {
                 try {
@@ -86,7 +87,7 @@ public class LocationDAO {
     }
 
     public LocationEntity findLocationByUUID(String uuid) {
-        if(!StringUtils.notNull(uuid)){
+        if (!StringUtils.notNull(uuid)) {
             return null;
         }
         LocationEntity LocationEntity = new LocationEntity("display");

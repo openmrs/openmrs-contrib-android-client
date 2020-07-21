@@ -38,10 +38,6 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
 
 import java.io.ByteArrayOutputStream;
-import java.util.concurrent.Callable;
-
-import rx.Observable;
-import rx.schedulers.Schedulers;
 
 public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
     private static final String WHERE_ID_CLAUSE = String.format("%s = ?", Table.MasterColumn.ID);
@@ -62,11 +58,6 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         this.mEncounterTable = new EncounterTable();
         this.mObservationTable = new ObservationTable();
         this.mLocationTable = new LocationTable();
-    }
-
-    public static <T> Observable<T> createObservableIO(final Callable<T> func) {
-        return Observable.fromCallable(func)
-                .subscribeOn(Schedulers.io());
     }
 
     @Override
@@ -133,7 +124,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(8, patient.getGender(), patientStatement);
             bindString(9, patient.getBirthdate(), patientStatement);
             bindLong(10, null, patientStatement); //death date
-            if(null != patient.getCauseOfDeath()) {
+            if (null != patient.getCauseOfDeath()) {
                 if (patient.getCauseOfDeath().getDisplay() == null) {
                     bindString(11, null, patientStatement); //causeOfDeath
                 } else {
@@ -185,7 +176,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         newValues.put(PatientTable.Column.BIRTH_DATE, patient.getBirthdate());
 
         newValues.put(PatientTable.Column.DEATH_DATE, (Long) null);
-        if(null != patient.getCauseOfDeath()) {
+        if (null != patient.getCauseOfDeath()) {
             if (patient.getCauseOfDeath().getDisplay().isEmpty() || patient.getCauseOfDeath().getDisplay() == null) {
                 newValues.put(PatientTable.Column.CAUSE_OF_DEATH, (String) null);
             } else {

@@ -28,7 +28,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
+import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.models.Session;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
@@ -58,7 +58,7 @@ public class AuthenticateCheckService extends Service {
                     String username = mOpenMRS.getUsername();
                     String password = mOpenMRS.getPassword();
                     if ((!username.equals(ApplicationConstants.EMPTY_STRING)) &&
-                        (!password.equals(ApplicationConstants.EMPTY_STRING))) {
+                            (!password.equals(ApplicationConstants.EMPTY_STRING))) {
                         Log.e("Service Task ", "Running");
                         authenticateCheck(username, password);
                     }
@@ -103,7 +103,7 @@ public class AuthenticateCheckService extends Service {
                                 broadcastIntent.setAction(ApplicationConstants.BroadcastActions.AUTHENTICATION_CHECK_BROADCAST_ACTION);
                                 sendBroadcast(broadcastIntent);
                             } else {
-                                OpenMRSDBOpenHelper.getInstance().closeDatabases();
+                                AppDatabase.getDatabase(getApplicationContext()).close();
                                 mOpenMRS.clearUserPreferencesData();
                                 mOpenMRS.clearCurrentLoggedInUserInfo();
                             }

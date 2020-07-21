@@ -477,7 +477,7 @@
 
     <string name="unidentified_patient_name" translatable="false">UNKNOWN</string>
     <string name="snackbar_server_error">The entered server is currently down, please select a different one.</string>
-    <string name="snackbar_empty_visit_list">Select Form Entry from the menu to begin analyzing this patient</string>
+    <string name="snackbar_empty_visit_list">Select Form Entry from the menu to begin examining.</string>
     <string name="snackbar_no_forms_found">No Forms Found, try restarting the app.</string>
     <string name="snackbar_choose">Choose</string>
     <string name="snackbar_select">Select</string>
@@ -497,7 +497,7 @@
     <string name="discharge_location_in_list" translatable="false">Discharged From %1$s</string>
     <string name="form_submitted_successfully" translatable="false">Form Submitted Successfully</string>
 
-    // Marking Patient Deceased
+    <!--Marking Patient Deceased -->
     <string name="no_death_concepts_in_server">Please add the possible causes of death in the server</string>
     <string name="mark_patient_deceased">Mark Patient Deceased?</string>
     <string name="mark_patient_deceased_notice">The patient will be marked deceased and no further visit will be possible.</string>

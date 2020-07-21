@@ -204,6 +204,7 @@ public class PatientRepository extends RetrofitRepository {
         patientDao.savePatient(patient)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(id -> {
+                    patient.setId(id);
                     if (callbackListener != null) {
                         syncPatient(patient, callbackListener);
                     } else {

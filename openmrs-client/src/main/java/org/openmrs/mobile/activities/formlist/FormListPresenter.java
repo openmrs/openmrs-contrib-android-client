@@ -54,8 +54,8 @@ public class FormListPresenter extends BasePresenter implements FormListContract
     public void loadFormResourceList() {
         formResourceList = new ArrayList<>();
         List<FormResourceEntity> allFormResourcesList = FormService.getFormResourceList();
-        for (FormResourceEntity FormResourceEntity : allFormResourcesList) {
-            List<FormResourceEntity> valueRef = FormResourceEntity.getResources();
+        for (FormResourceEntity formResourceEntity : allFormResourcesList) {
+            List<FormResourceEntity> valueRef = formResourceEntity.getResources();
             String valueRefString = null;
 
             for (FormResourceEntity resource : valueRef) {
@@ -64,10 +64,10 @@ public class FormListPresenter extends BasePresenter implements FormListContract
                 }
             }
             if (!StringUtils.isBlank(valueRefString)) {
-                formResourceList.add(FormResourceEntity);
+                formResourceList.add(formResourceEntity);
             } else {
-                if (view.formCreate(FormResourceEntity.getUuid(), FormResourceEntity.getName().toLowerCase())) {
-                    formResourceList.add(FormResourceEntity);
+                if (view.formCreate(formResourceEntity.getUuid(), formResourceEntity.getName().toLowerCase())) {
+                    formResourceList.add(formResourceEntity);
                 }
             }
         }

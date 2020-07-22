@@ -75,7 +75,7 @@ public class SettingsPresenterTest extends ACUnitTestBase {
     @Test
     public void shouldUpdateConceptsInDBTextView_allOk() {
         final long conceptsInDB = 2137L;
-        Mockito.lenient().when(conceptRoomDAO.getConceptsCount().blockingGet()).thenReturn(conceptsInDB);
+        Mockito.lenient().when(conceptRoomDAO.getConceptsCount()).thenReturn(conceptsInDB);
         settingsPresenter.updateConceptsInDBTextView();
         verify(view).setConceptsInDbText(String.valueOf(conceptsInDB));
     }

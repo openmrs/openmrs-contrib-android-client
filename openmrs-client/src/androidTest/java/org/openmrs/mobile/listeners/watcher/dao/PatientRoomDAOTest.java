@@ -81,12 +81,11 @@ public class PatientRoomDAOTest {
 
         patientRoomDAO.findPatientByUUID(expectedPatientEntity2.getUuid())
                 .test()
-                .assertValue(actualPatientEntities -> Objects.equals(actualPatientEntities, 1)
-                        && Objects.equals(renderPatientEntityString(actualPatientEntities), renderPatientEntityString(expectedPatientEntity2)));
+                .assertValue(actualPatientEntities -> Objects.equals(renderPatientEntityString(actualPatientEntities), renderPatientEntityString(expectedPatientEntity2)));
     }
 
     @Test
-    public void getUnsyncedPatients_ShouldGetUnsyncedPatients() {
+    public void getUnSyncedPatients_ShouldGetUnSyncedPatients() {
         patientRoomDAO.addPatient(expectedPatientEntity1);
         patientRoomDAO.addPatient(expectedPatientEntity2);
 
@@ -102,10 +101,9 @@ public class PatientRoomDAOTest {
         patientRoomDAO.addPatient(expectedPatientEntity1);
         patientRoomDAO.addPatient(expectedPatientEntity2);
 
-        patientRoomDAO.findPatientByID(expectedPatientEntity1.getId())
+        patientRoomDAO.findPatientByID(expectedPatientEntity1.getId().toString())
                 .test()
-                .assertValue(actualPatientEntities -> Objects.equals(actualPatientEntities, 1)
-                        && Objects.equals(renderPatientEntityString(actualPatientEntities), renderPatientEntityString(expectedPatientEntity1)));
+                .assertValue(actualPatientEntities -> Objects.equals(renderPatientEntityString(actualPatientEntities), renderPatientEntityString(expectedPatientEntity1)));
     }
 
     @Test

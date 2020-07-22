@@ -68,9 +68,10 @@ object FormService {
 
     @JvmStatic
     fun getFormResourceList(): List<FormResourceEntity> {
-        return AppDatabase.getDatabase(OpenMRS.getInstance().applicationContext)
+        var list : List<FormResourceEntity>  = AppDatabase.getDatabase(OpenMRS.getInstance().applicationContext)
                 .formResourceDAO()
                 .formResourceList
                 .blockingGet()
+        return list
     }
 }

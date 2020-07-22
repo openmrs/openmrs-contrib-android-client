@@ -21,6 +21,7 @@ import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -90,9 +91,8 @@ public class ConceptRoomDAOTest {
         mDatabase.conceptRoomDAO().addConcept(expectedConceptEntity1);
         mDatabase.conceptRoomDAO().addConcept(expectedConceptEntity2);
 
-        mDatabase.conceptRoomDAO().getConceptsCount()
-                .test()
-                .assertValue(actualConceptsCount -> Objects.equals(actualConceptsCount, 2L));
+        long count = mDatabase.conceptRoomDAO().getConceptsCount();
+        Assert.assertEquals(count, 2L);
     }
 
     @Test

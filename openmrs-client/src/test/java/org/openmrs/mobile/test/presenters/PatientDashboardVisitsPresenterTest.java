@@ -60,6 +60,8 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     @Mock
     private VisitDAO visitDAO;
     @Mock
+    private EncounterDAO encounterDAO;
+    @Mock
     private RestApi restApi;
     @Mock
     private OpenMRS openMRS;
@@ -72,7 +74,7 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     public void setUp() {
         super.setUp();
         patient = createPatient(1L);
-        VisitRepository visitRepository = new VisitRepository(restApi, visitDAO, new EncounterDAO());
+        VisitRepository visitRepository = new VisitRepository(restApi, visitDAO, encounterDAO);
         presenter = new PatientDashboardVisitsPresenter(patient, view, visitDAO, visitRepository);
         mockStaticMethods();
     }

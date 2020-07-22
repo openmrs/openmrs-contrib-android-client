@@ -78,6 +78,8 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     @Mock
     private LocationRoomDAO locationDAO;
     @Mock
+    private EncounterDAO encounterDAO;
+    @Mock
     private VisitDAO visitDAO;
     @Mock
     private UserService userService;
@@ -87,7 +89,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     @Before
     public void setUp() {
         super.setUp();
-        VisitRepository visitRepository = new VisitRepository(restApi, visitDAO, new EncounterDAO());
+        VisitRepository visitRepository = new VisitRepository(restApi, visitDAO, encounterDAO);
         presenter = new LoginPresenter(restApi, visitRepository, locationDAO, userService, view, openMRS,
                 openMRSLogger, authorizationManager);
         mockStaticMethods();

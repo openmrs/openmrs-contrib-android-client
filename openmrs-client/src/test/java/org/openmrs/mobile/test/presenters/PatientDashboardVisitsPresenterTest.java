@@ -46,14 +46,11 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.RETURNS_MOCKS;
 import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({NetworkUtils.class, OpenMRS.class, LocationDAO.class})
+@PrepareForTest({NetworkUtils.class, OpenMRS.class})
 public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     @Mock
     private PatientDashboardContract.ViewPatientVisits view;
@@ -176,7 +173,7 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
 
     private void createMocksForStartVisit() {
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
-        PowerMockito.when(locationDAO.findLocationByName(anyString())).thenReturn(new LocationEntity("display"));
+        PowerMockito.when(locationDAO.findLocationByName(anyString())).thenReturn(new LocationEntity("location"));
 
         Mockito.lenient().when(openMRS.getLocation()).thenReturn("location");
         Mockito.lenient().when(openMRS.getVisitTypeUUID()).thenReturn("visitTypeUuid");
@@ -192,6 +189,5 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     private void mockStaticMethods() {
         PowerMockito.mockStatic(NetworkUtils.class);
         PowerMockito.mockStatic(OpenMRS.class);
-        PowerMockito.mockStatic(LocationDAO.class);
     }
 }

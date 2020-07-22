@@ -44,6 +44,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class LoginPresenter extends BasePresenter implements LoginContract.Presenter {
     private RestApi restApi;
@@ -208,7 +209,9 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         mOpenMRS.setLocation(selectedLocation);
         locationDAO.deleteAllLocations();
         for (int i = 0; i < locationList.size(); i++) {
-            locationDAO.saveLocation(locationList.get(i));
+            locationDAO.saveLocation(locationList.get(i))
+                    .observeOn(Schedulers.io())
+                    .subscribe();
         }
     }
 

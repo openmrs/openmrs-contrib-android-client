@@ -71,6 +71,7 @@ public class VisitRepository {
         this.restApi = restApi;
         this.visitDAO = visitDAO;
         this.encounterDAO = encounterDAO;
+        this.locationDAO = locationDAO;
     }
 
     public void syncVisitsData(@NonNull Patient patient) {

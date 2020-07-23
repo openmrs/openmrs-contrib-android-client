@@ -33,6 +33,7 @@ import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientDto;
 import org.openmrs.mobile.models.PatientDtoUpdate;
 import org.openmrs.mobile.models.PatientPhoto;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -83,7 +84,7 @@ public class UpdatePatientWorker extends Worker {
     @Override
     public Result doWork() {
         final boolean[] result = new boolean[1];
-        String patientIdTobeUpdated = getInputData().getString("_id");
+        String patientIdTobeUpdated = getInputData().getString(ApplicationConstants.PRIMARY_KEY_ID);
         PatientDAO patientDAO = new PatientDAO();
         Patient patientTobeUpdated = patientDAO.findPatientByID(patientIdTobeUpdated);
 

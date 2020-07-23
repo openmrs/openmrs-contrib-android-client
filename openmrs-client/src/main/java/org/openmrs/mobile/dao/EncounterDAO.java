@@ -31,13 +31,12 @@ import rx.Observable;
 import static org.openmrs.mobile.databases.AppDatabaseHelper.createObservableIO;
 
 public class EncounterDAO {
-    AppDatabaseHelper appDatabaseHelper = new AppDatabaseHelper();
     EncounterRoomDAO encounterRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).encounterRoomDAO();
     ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).observationRoomDAO();
     EncounterTypeRoomDAO encounterTypeRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).encounterTypeRoomDAO();
 
     public long saveEncounter(Encounter encounter, Long visitID) {
-        EncounterEntity encounterEntity = appDatabaseHelper.encounterToEntity(encounter, visitID);
+        EncounterEntity encounterEntity = AppDatabaseHelper.encounterToEntity(encounter, visitID);
         long id = encounterRoomDAO.addEncounter(encounterEntity);
         return id;
     }
@@ -57,14 +56,14 @@ public class EncounterDAO {
             }
             if (0 != oldLastVitalsEncounterID) {
                 for (Observation obs : new ObservationDAO().findObservationByEncounterID(oldLastVitalsEncounterID)) {
-                    ObservationEntity observationEntity = appDatabaseHelper.observationToEntity(obs, 1L);
+                    ObservationEntity observationEntity = AppDatabaseHelper.observationToEntity(obs, 1L);
                     observationRoomDAO.deleteObservation(observationEntity);
                 }
                 encounterRoomDAO.deleteEncounterByID(oldLastVitalsEncounterID);
             }
             long encounterID = saveEncounter(encounter, null);
             for (Observation obs : encounter.getObservations()) {
-                ObservationEntity observationEntity = appDatabaseHelper.observationToEntity(obs, encounterID);
+                ObservationEntity observationEntity = AppDatabaseHelper.observationToEntity(obs, encounterID);
                 observationRoomDAO.addObservation(observationEntity);
             }
         }
@@ -74,7 +73,7 @@ public class EncounterDAO {
         return createObservableIO(() -> {
             try {
                 EncounterEntity encounterEntity = encounterRoomDAO.getLastVitalsEncounter(patientUUID, EncounterType.VITALS).blockingGet();
-                return appDatabaseHelper.encounterEntityToEncounter(encounterEntity);
+                return AppDatabaseHelper.encounterEntityToEncounter(encounterEntity);
             } catch (Exception e) {
                 return null;
             }
@@ -82,7 +81,7 @@ public class EncounterDAO {
     }
 
     public int updateEncounter(long encounterID, Encounter encounter, long visitID) {
-        EncounterEntity encounterEntity = appDatabaseHelper.encounterToEntity(encounter, visitID);
+        EncounterEntity encounterEntity = AppDatabaseHelper.encounterToEntity(encounter, visitID);
         encounterEntity.setId(encounterID);
         int id = encounterRoomDAO.updateEncounter(encounterEntity);
         return id;
@@ -94,7 +93,7 @@ public class EncounterDAO {
             List<EncounterEntity> encounterEntities = encounterRoomDAO.findEncountersByVisitID(visitID.toString()).blockingGet();
 
             for (EncounterEntity entity : encounterEntities) {
-                encounters.add(appDatabaseHelper.encounterEntityToEncounter(entity));
+                encounters.add(AppDatabaseHelper.encounterEntityToEncounter(entity));
             }
             return encounters;
         } catch (Exception e) {
@@ -109,7 +108,7 @@ public class EncounterDAO {
             try {
                 encounterEntities = encounterRoomDAO.getAllEncountersByType(patientID, type.getDisplay()).blockingGet();
                 for (EncounterEntity entity : encounterEntities) {
-                    encounters.add(appDatabaseHelper.encounterEntityToEncounter(entity));
+                    encounters.add(AppDatabaseHelper.encounterEntityToEncounter(entity));
                 }
                 return encounters;
             } catch (Exception e) {

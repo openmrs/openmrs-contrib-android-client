@@ -51,10 +51,8 @@ import rx.Observable;
 import rx.schedulers.Schedulers;
 
 public class AppDatabaseHelper {
-    public AppDatabaseHelper() {
-    }
 
-    public ObservationEntity observationToEntity(Observation obs, long encounterID) {
+    public static ObservationEntity observationToEntity(Observation obs, long encounterID) {
         ObservationEntity observationEntity = new ObservationEntity();
         observationEntity.setId(obs.getId());
         observationEntity.setUuid(obs.getUuid());
@@ -73,7 +71,7 @@ public class AppDatabaseHelper {
         return observationEntity;
     }
 
-    public List<Observation> observationEntityToObservation(List<ObservationEntity> observationEntityList) {
+    public static List<Observation> observationEntityToObservation(List<ObservationEntity> observationEntityList) {
         List<Observation> observationList = new ArrayList<>();
         for (ObservationEntity entity : observationEntityList) {
             Observation obs = new Observation();
@@ -94,7 +92,7 @@ public class AppDatabaseHelper {
         return observationList;
     }
 
-    public EncounterEntity encounterToEntity(Encounter encounter, Long visitID) {
+    public static EncounterEntity encounterToEntity(Encounter encounter, Long visitID) {
         EncounterEntity encounterEntity = new EncounterEntity();
         encounterEntity.setId(encounter.getId());
         encounterEntity.setDisplay(encounter.getDisplay());
@@ -121,7 +119,7 @@ public class AppDatabaseHelper {
         return encounterEntity;
     }
 
-    public Encounter encounterEntityToEncounter(EncounterEntity entity) {
+    public static Encounter encounterEntityToEncounter(EncounterEntity entity) {
         Encounter encounter = new Encounter();
         if(null != entity.getEncounterType()) {
             encounter.setEncounterType(new EncounterType(entity.getEncounterType()));
@@ -150,7 +148,7 @@ public class AppDatabaseHelper {
         return encounter;
     }
 
-    public Visit visitEntityToVisit(VisitEntity visitEntity) {
+    public static Visit visitEntityToVisit(VisitEntity visitEntity) {
         Visit visit = new Visit();
         visit.setId(visitEntity.getId());
         visit.setUuid(visitEntity.getUuid());
@@ -174,7 +172,7 @@ public class AppDatabaseHelper {
         return visit;
     }
 
-    public VisitEntity visitToVisitEntity(Visit visit) {
+    public static VisitEntity visitToVisitEntity(Visit visit) {
         VisitEntity visitEntity = new VisitEntity();
         visitEntity.setId(visit.getId());
         visitEntity.setUuid(visit.getUuid());
@@ -186,7 +184,7 @@ public class AppDatabaseHelper {
         return visitEntity;
     }
 
-    public Patient patientEntityToPatient(PatientEntity patientEntity) {
+    public static Patient patientEntityToPatient(PatientEntity patientEntity) {
         Patient patient = new Patient(patientEntity.getId(), patientEntity.getEncounters(), null);
         patient.setDisplay(patientEntity.getDisplay());
         patient.setUuid(patientEntity.getUuid());
@@ -232,7 +230,7 @@ public class AppDatabaseHelper {
         return patient;
     }
 
-    public PatientEntity patientToPatientEntity(Patient patient) {
+    public static PatientEntity patientToPatientEntity(Patient patient) {
         PatientEntity patientEntity = new PatientEntity();
         patientEntity.setDisplay(patient.getName().getNameString());
         patientEntity.setUuid(patient.getUuid());
@@ -283,13 +281,13 @@ public class AppDatabaseHelper {
         return patientEntity;
     }
 
-    private byte[] bitmapToByteArray(Bitmap image) {
+    private static byte[] bitmapToByteArray(Bitmap image) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
         return outputStream.toByteArray();
     }
 
-    private Bitmap byteArrayToBitmap(byte[] imageByteArray) {
+    private static Bitmap byteArrayToBitmap(byte[] imageByteArray) {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(imageByteArray);
         return BitmapFactory.decodeStream(inputStream);
     }

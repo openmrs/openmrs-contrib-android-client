@@ -17,11 +17,13 @@ package org.openmrs.mobile.models.typeConverters;
 import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.openmrs.mobile.models.Obscreate;
 
 import java.io.Serializable;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -30,13 +32,18 @@ public class ObservationListConverter implements Serializable {
     public static List<Obscreate> fromString(String value) {
         Type listType = new TypeToken<List<Obscreate>>() {
         }.getType();
-        List<Obscreate> attributes = new Gson().fromJson(value, listType);
+        GsonBuilder builder = new GsonBuilder();
+        builder.excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC);
+        Gson gson = builder.create();
+        List<Obscreate> attributes = gson.fromJson(value, listType);
         return attributes;
     }
 
     @TypeConverter
     public static String listToString(List<Obscreate> list) {
-        Gson gson = new Gson();
+        GsonBuilder builder = new GsonBuilder();
+        builder.excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC);
+        Gson gson = builder.create();
         return gson.toJson(list);
     }
 }

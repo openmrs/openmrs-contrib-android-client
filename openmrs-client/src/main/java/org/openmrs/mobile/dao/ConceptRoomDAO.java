@@ -46,5 +46,5 @@ public interface ConceptRoomDAO {
     Single<List<ConceptEntity>> findConceptsByName(String name);
 
     @Query("SELECT count(*) FROM concepts")
-    Long getConceptsCount();
+    long getConceptsCount();
 }

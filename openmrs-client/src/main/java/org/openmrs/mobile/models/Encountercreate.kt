@@ -10,7 +10,11 @@
 
 package org.openmrs.mobile.models
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.Ignore
+import androidx.room.TypeConverters
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import org.openmrs.mobile.models.typeConverters.ObservationListConverter

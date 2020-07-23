@@ -31,8 +31,7 @@ public class FormResourceConverter implements Serializable {
 
     @TypeConverter
     public static List<FormResourceEntity> fromString(String value) {
-        Type listType = new TypeToken<List<FormResourceEntity>>() {
-        }.getType();
+        Type listType = new TypeToken<List<FormResourceEntity>>() {}.getType();
         GsonBuilder builder = new GsonBuilder();
         builder.excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC);
         Gson gson = builder.create();

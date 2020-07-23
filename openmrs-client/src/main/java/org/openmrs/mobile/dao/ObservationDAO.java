@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ObservationDAO {
-    AppDatabaseHelper helper = new AppDatabaseHelper();
     ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).observationRoomDAO();
 
     public List<Observation> findObservationByEncounterID(Long encounterID) {
@@ -32,7 +31,7 @@ public class ObservationDAO {
         List<ObservationEntity> observationEntityList;
         try {
             observationEntityList = observationRoomDAO.findObservationByEncounterID(encounterID).blockingGet();
-            observationList = helper.observationEntityToObservation(observationEntityList);
+            observationList = AppDatabaseHelper.observationEntityToObservation(observationEntityList);
             return observationList;
         } catch (Exception e) {
             return new ArrayList<>();

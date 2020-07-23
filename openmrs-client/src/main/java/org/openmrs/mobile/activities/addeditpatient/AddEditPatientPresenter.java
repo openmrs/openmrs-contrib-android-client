@@ -49,7 +49,7 @@ import retrofit2.Response;
 
 public class AddEditPatientPresenter extends BasePresenter implements AddEditPatientContract.Presenter {
     private final AddEditPatientContract.View mPatientInfoView;
-    boolean isPatientUnidentified = false;
+    private boolean isPatientUnidentified = false;
     private PatientRepository patientRepository;
     private RestApi restApi;
     private Patient mPatient;

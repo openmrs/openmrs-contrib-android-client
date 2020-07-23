@@ -36,7 +36,6 @@ public class VisitDAO {
 
     OpenMRS openMRS = OpenMRS.getInstance();
     Context context = openMRS.getApplicationContext();
-    AppDatabaseHelper appDatabaseHelper = new AppDatabaseHelper();
     ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(context).observationRoomDAO();
     VisitRoomDAO visitRoomDAO = AppDatabase.getDatabase(context).visitRoomDAO();
 
@@ -58,13 +57,13 @@ public class VisitDAO {
     private long saveVisit(Visit visit, long patientID) {
         EncounterDAO encounterDAO = new EncounterDAO();
         visit.setPatient(new PatientDAO().findPatientByID(String.valueOf(patientID)));
-        VisitEntity visitEntity = appDatabaseHelper.visitToVisitEntity(visit);
+        VisitEntity visitEntity = AppDatabaseHelper.visitToVisitEntity(visit);
         long visitID = visitRoomDAO.addVisit(visitEntity);
         if (visit.getEncounters() != null) {
             for (Encounter encounter : visit.getEncounters()) {
                 long encounterID = encounterDAO.saveEncounter(encounter, visitID);
                 for (Observation obs : encounter.getObservations()) {
-                    ObservationEntity observationEntity = appDatabaseHelper.observationToEntity(obs, encounterID);
+                    ObservationEntity observationEntity = AppDatabaseHelper.observationToEntity(obs, encounterID);
                     observationRoomDAO.addObservation(observationEntity);
                 }
             }
@@ -88,17 +87,17 @@ public class VisitDAO {
 
                 List<Observation> oldObs = observationDAO.findObservationByEncounterID(encounterID);
                 for (Observation obs : oldObs) {
-                    ObservationEntity observationEntity = appDatabaseHelper.observationToEntity(obs, encounterID);
+                    ObservationEntity observationEntity = AppDatabaseHelper.observationToEntity(obs, encounterID);
                     observationRoomDAO.deleteObservation(observationEntity);
                 }
 
                 for (Observation obs : encounter.getObservations()) {
-                    ObservationEntity observationEntity = appDatabaseHelper.observationToEntity(obs, encounterID);
+                    ObservationEntity observationEntity = AppDatabaseHelper.observationToEntity(obs, encounterID);
                     observationRoomDAO.addObservation(observationEntity);
                 }
             }
         }
-        return visitRoomDAO.updateVisit(appDatabaseHelper.visitToVisitEntity(visit)) > 0;
+        return visitRoomDAO.updateVisit(AppDatabaseHelper.visitToVisitEntity(visit)) > 0;
     }
 
     public Observable<List<Visit>> getActiveVisits() {
@@ -108,7 +107,7 @@ public class VisitDAO {
             try {
                 visitEntities = visitRoomDAO.getActiveVisits().blockingGet();
                 for (VisitEntity entity : visitEntities) {
-                    visits.add(appDatabaseHelper.visitEntityToVisit(entity));
+                    visits.add(AppDatabaseHelper.visitEntityToVisit(entity));
                 }
                 return visits;
             } catch (Exception e) {
@@ -124,7 +123,7 @@ public class VisitDAO {
             try {
                 visitEntities = visitRoomDAO.getVisitsByPatientID(patientID).blockingGet();
                 for (VisitEntity entity : visitEntities) {
-                    visits.add(appDatabaseHelper.visitEntityToVisit(entity));
+                    visits.add(AppDatabaseHelper.visitEntityToVisit(entity));
                 }
                 return visits;
             } catch (Exception e) {
@@ -137,7 +136,7 @@ public class VisitDAO {
         return createObservableIO(() -> {
             try {
                 VisitEntity visitEntity = visitRoomDAO.getActiveVisitByPatientId(patientId).blockingGet();
-                return appDatabaseHelper.visitEntityToVisit(visitEntity);
+                return AppDatabaseHelper.visitEntityToVisit(visitEntity);
             } catch (Exception e) {
                 return null;
             }
@@ -148,7 +147,7 @@ public class VisitDAO {
         return createObservableIO(() -> {
             try {
                 VisitEntity visitEntity = visitRoomDAO.getVisitByID(visitID).blockingGet();
-                return appDatabaseHelper.visitEntityToVisit(visitEntity);
+                return AppDatabaseHelper.visitEntityToVisit(visitEntity);
             } catch (Exception e) {
                 return null;
             }
@@ -163,7 +162,7 @@ public class VisitDAO {
         return createObservableIO(() -> {
             try {
                 VisitEntity visitEntity = visitRoomDAO.getVisitByUuid(uuid).blockingGet();
-                return appDatabaseHelper.visitEntityToVisit(visitEntity);
+                return AppDatabaseHelper.visitEntityToVisit(visitEntity);
             } catch (Exception e) {
                 return null;
             }

@@ -90,9 +90,7 @@ public class ConceptRoomDAOTest {
     public void getConceptsCount_shouldGetCorrectConceptCount() {
         mDatabase.conceptRoomDAO().addConcept(expectedConceptEntity1);
         mDatabase.conceptRoomDAO().addConcept(expectedConceptEntity2);
-
-        long count = mDatabase.conceptRoomDAO().getConceptsCount();
-        Assert.assertEquals(count, 2L);
+        Assert.assertEquals(mDatabase.conceptRoomDAO().getConceptsCount(), 2L);
     }
 
     @Test

@@ -35,6 +35,7 @@ public class EncounterDAO {
     AppDatabaseHelper appDatabaseHelper = new AppDatabaseHelper();
     EncounterRoomDAO encounterRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).encounterRoomDAO();
     ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).observationRoomDAO();
+    EncounterTypeRoomDAO encounterTypeRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).encounterTypeRoomDAO();
 
     public long saveEncounter(Encounter encounter, Long visitID) {
         EncounterEntity encounterEntity = appDatabaseHelper.encounterToEntity(encounter, visitID);
@@ -43,11 +44,7 @@ public class EncounterDAO {
     }
 
     public EncounterType getEncounterTypeByFormName(String formname) {
-        EncounterType encounterType = new Select()
-                .from(EncounterType.class)
-                .where("display = ?", formname)
-                .executeSingle();
-        return encounterType;
+        return encounterTypeRoomDAO.getEncounterTypeByFormName(formname);
     }
 
     public void saveLastVitalsEncounter(Encounter encounter, String patientUUID) {

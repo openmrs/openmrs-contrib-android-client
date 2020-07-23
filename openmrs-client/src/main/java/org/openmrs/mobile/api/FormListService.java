@@ -16,12 +16,13 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.dao.EncounterTypeRoomDAO;
 import org.openmrs.mobile.dao.FormResourceDAO;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.FormResourceEntity;
+import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Results;
-import org.openmrs.mobile.utilities.ActiveAndroid.query.Delete;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -42,6 +43,7 @@ public class FormListService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         FormResourceDAO formResourceDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).formResourceDAO();
+        EncounterTypeRoomDAO encounterTypeRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).encounterTypeRoomDAO();
         if (NetworkUtils.isOnline()) {
 
             Call<Results<FormResourceEntity>> call = apiService.getForms();
@@ -69,10 +71,10 @@ public class FormListService extends IntentService {
                 @Override
                 public void onResponse(@NonNull Call<Results<EncounterType>> call, @NonNull Response<Results<EncounterType>> response) {
                     if (response.isSuccessful()) {
-                        new Delete().from(EncounterType.class).execute();
-                        Results<EncounterType> encountertypelist = response.body();
-                        for (EncounterType enctype : encountertypelist.getResults())
-                            enctype.save();
+                        encounterTypeRoomDAO.deleteAllEncounterTypes();
+                        Results<EncounterType> encounterTypeList = response.body();
+                        for (EncounterType encounterType : encounterTypeList.getResults())
+                            encounterTypeRoomDAO.addEncounterType(encounterType);
                     }
                 }
 

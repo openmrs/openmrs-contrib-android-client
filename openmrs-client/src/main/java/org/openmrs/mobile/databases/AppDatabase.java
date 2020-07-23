@@ -22,6 +22,7 @@ import androidx.room.RoomDatabase;
 
 import org.openmrs.mobile.dao.ConceptRoomDAO;
 import org.openmrs.mobile.dao.EncounterRoomDAO;
+import org.openmrs.mobile.dao.EncounterTypeRoomDAO;
 import org.openmrs.mobile.dao.FormResourceDAO;
 import org.openmrs.mobile.dao.LocationRoomDAO;
 import org.openmrs.mobile.dao.ObservationRoomDAO;
@@ -35,6 +36,7 @@ import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.databases.entities.ObservationEntity;
 import org.openmrs.mobile.databases.entities.PatientEntity;
 import org.openmrs.mobile.databases.entities.VisitEntity;
+import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
@@ -45,8 +47,9 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
         PatientEntity.class,
         VisitEntity.class,
         Provider.class,
-        FormResourceEntity.class},
-        version = 1)
+        FormResourceEntity.class,
+        EncounterType.class},
+        version = 2)
 
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -82,4 +85,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ProviderRoomDAO providerRoomDAO();
 
     public abstract FormResourceDAO formResourceDAO();
+
+    public abstract EncounterTypeRoomDAO encounterTypeRoomDAO();
 }

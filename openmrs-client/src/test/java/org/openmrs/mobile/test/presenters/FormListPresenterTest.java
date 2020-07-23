@@ -89,7 +89,7 @@ public class FormListPresenterTest extends ACUnitTestBase {
 
         presenter.loadFormResourceList();
 
-        EncounterType encounterType = new EncounterType();
+        EncounterType encounterType = new EncounterType(EncounterType.VISIT_NOTE);
         encounterType.setUuid(encounterTypeUuid);
         Mockito.lenient().when(encounterDAO.getEncounterTypeByFormName(formName)).thenReturn(encounterType);
 
@@ -111,7 +111,7 @@ public class FormListPresenterTest extends ACUnitTestBase {
 
         presenter.loadFormResourceList();
 
-        EncounterType encounterType = new EncounterType();
+        EncounterType encounterType = new EncounterType(EncounterType.VISIT_NOTE);
         encounterType.setUuid(encounterTypeUuid);
         Mockito.lenient().when(encounterDAO.getEncounterTypeByFormName(formName)).thenReturn(null);
         presenter.listItemClicked(clickedPosition, formName);

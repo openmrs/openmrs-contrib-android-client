@@ -10,34 +10,12 @@
 
 package org.openmrs.mobile.models
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
-import org.openmrs.mobile.utilities.ActiveAndroid.Model
-import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Column
-import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Table
-import java.io.Serializable
+import androidx.room.Entity
 
-@Table(name = "encountertype")
-class EncounterType : Model, Serializable {
+@Entity(tableName = "encounterType")
+class EncounterType : Resource {
 
-    @Column(name = "uuid")
-    @SerializedName("uuid")
-    @Expose
-    var uuid: String? = null
-
-    @Column(name = "display")
-    @SerializedName("display")
-    @Expose
-    var display: String? = null
-
-    @Column(name = "links")
-    @SerializedName("links")
-    @Expose
-    var links: List<Link> = ArrayList()
-
-    constructor()
-
-    constructor(display: String) {
+    constructor(display: String?) {
         this.display = display
     }
 
@@ -48,6 +26,4 @@ class EncounterType : Model, Serializable {
         const val DISCHARGE = "Discharge"
         const val ADMISSION = "Admission"
     }
-
-
 }

@@ -12,9 +12,6 @@ package org.openmrs.mobile.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import org.openmrs.mobile.utilities.ActiveAndroid.Model
-import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Column
-import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Table
 import java.io.Serializable
 
 class Link : Serializable {

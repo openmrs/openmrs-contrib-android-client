@@ -22,24 +22,29 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayContract;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayPagePresenter;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Page;
 import org.openmrs.mobile.models.Question;
 import org.openmrs.mobile.models.QuestionOptions;
 import org.openmrs.mobile.models.Section;
 import org.openmrs.mobile.test.ACUnitTestBase;
-import org.openmrs.mobile.utilities.ActiveAndroid.Cache;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
 
+@PrepareForTest({OpenMRS.class})
 public class FormDisplayPagePresenterTest extends ACUnitTestBase {
 
     @Mock
     private FormDisplayContract.View.PageView mFormDisplayPageView;
     @Mock
     private Page mPage;
+    @Mock
+    private OpenMRS openMRS;
 
     private FormDisplayPagePresenter presenter;
     private String sectionLabel = "section label";
@@ -48,17 +53,19 @@ public class FormDisplayPagePresenterTest extends ACUnitTestBase {
     @Before
     public void setUp() {
         presenter = new FormDisplayPagePresenter(mFormDisplayPageView, mPage);
+        PowerMockito.mockStatic(OpenMRS.class);
+        PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
     }
 
     @Test
-    public  void subscribe_renderGroup() {
+    public void subscribe_renderGroup() {
         List<Section> sectionList = getSectionList(sectionLabel, questionLabel, "group");
         Mockito.lenient().when(mPage.getSections()).thenReturn(sectionList);
 
-        LinearLayout sectionLayout = new LinearLayout(Cache.getContext());
+        LinearLayout sectionLayout = new LinearLayout(openMRS.getApplicationContext());
         Mockito.lenient().when(mFormDisplayPageView.createSectionLayout(sectionLabel)).thenReturn(sectionLayout);
 
-        LinearLayout questionLayout = new LinearLayout(Cache.getContext());
+        LinearLayout questionLayout = new LinearLayout(openMRS.getApplicationContext());
         Mockito.lenient().when(mFormDisplayPageView.createQuestionGroupLayout(questionLabel)).thenReturn(questionLayout);
 
         presenter.subscribe();
@@ -68,14 +75,14 @@ public class FormDisplayPagePresenterTest extends ACUnitTestBase {
     }
 
     @Test
-    public  void subscribe_renderNumber() {
+    public void subscribe_renderNumber() {
         List<Section> sectionList = getSectionList(sectionLabel, questionLabel, "number");
         Mockito.lenient().when(mPage.getSections()).thenReturn(sectionList);
 
-        LinearLayout sectionLayout = new LinearLayout(Cache.getContext());
+        LinearLayout sectionLayout = new LinearLayout(openMRS.getApplicationContext());
         Mockito.lenient().when(mFormDisplayPageView.createSectionLayout(sectionLabel)).thenReturn(sectionLayout);
 
-        LinearLayout questionLayout = new LinearLayout(Cache.getContext());
+        LinearLayout questionLayout = new LinearLayout(openMRS.getApplicationContext());
         Mockito.lenient().when(mFormDisplayPageView.createQuestionGroupLayout(questionLabel)).thenReturn(questionLayout);
 
         presenter.subscribe();
@@ -86,14 +93,14 @@ public class FormDisplayPagePresenterTest extends ACUnitTestBase {
     }
 
     @Test
-    public  void subscribe_renderSelect() {
+    public void subscribe_renderSelect() {
         List<Section> sectionList = getSectionList(sectionLabel, questionLabel, "select");
         Mockito.lenient().when(mPage.getSections()).thenReturn(sectionList);
 
-        LinearLayout sectionLayout = new LinearLayout(Cache.getContext());
+        LinearLayout sectionLayout = new LinearLayout(openMRS.getApplicationContext());
         Mockito.lenient().when(mFormDisplayPageView.createSectionLayout(sectionLabel)).thenReturn(sectionLayout);
 
-        LinearLayout questionLayout = new LinearLayout(Cache.getContext());
+        LinearLayout questionLayout = new LinearLayout(openMRS.getApplicationContext());
         Mockito.lenient().when(mFormDisplayPageView.createQuestionGroupLayout(questionLabel)).thenReturn(questionLayout);
 
         presenter.subscribe();
@@ -104,14 +111,14 @@ public class FormDisplayPagePresenterTest extends ACUnitTestBase {
     }
 
     @Test
-    public  void subscribe_renderRadio() {
+    public void subscribe_renderRadio() {
         List<Section> sectionList = getSectionList(sectionLabel, questionLabel, "radio");
         Mockito.lenient().when(mPage.getSections()).thenReturn(sectionList);
 
-        LinearLayout sectionLayout = new LinearLayout(Cache.getContext());
+        LinearLayout sectionLayout = new LinearLayout(openMRS.getApplicationContext());
         Mockito.lenient().when(mFormDisplayPageView.createSectionLayout(sectionLabel)).thenReturn(sectionLayout);
 
-        LinearLayout questionLayout = new LinearLayout(Cache.getContext());
+        LinearLayout questionLayout = new LinearLayout(openMRS.getApplicationContext());
         Mockito.lenient().when(mFormDisplayPageView.createQuestionGroupLayout(questionLabel)).thenReturn(questionLayout);
 
         presenter.subscribe();

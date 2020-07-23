@@ -25,10 +25,7 @@ import net.sqlcipher.database.SQLiteDatabase;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.openmrs.mobile.api.FormListService;
-import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.services.AuthenticateCheckService;
-import org.openmrs.mobile.utilities.ActiveAndroid.ActiveAndroid;
-import org.openmrs.mobile.utilities.ActiveAndroid.Configuration;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.io.File;
@@ -56,25 +53,15 @@ public class OpenMRS extends MultiDexApplication {
             mExternalDirectoryPath = this.getExternalFilesDir(null).toString();
         }
         mLogger = new OpenMRSLogger();
-        initializeDB();
         Intent i = new Intent(this, FormListService.class);
         startService(i);
         Intent intent = new Intent(this, AuthenticateCheckService.class);
         startService(intent);
-        ActiveAndroid.initialize(this);
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
-        ActiveAndroid.dispose();
-    }
-
-    protected void initializeDB() {
-        Configuration.Builder configurationBuilder = new Configuration.Builder(this);
-        configurationBuilder.addModelClasses(Encountercreate.class);
-
-        ActiveAndroid.initialize(configurationBuilder.create());
     }
 
     public SharedPreferences getOpenMRSSharedPreferences() {

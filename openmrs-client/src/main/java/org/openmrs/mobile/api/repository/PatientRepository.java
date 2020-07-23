@@ -36,7 +36,9 @@ import org.openmrs.mobile.api.promise.SimplePromise;
 import org.openmrs.mobile.api.workers.UpdatePatientWorker;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
+import org.openmrs.mobile.dao.EncounterCreateRoomDAO;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
@@ -49,7 +51,6 @@ import org.openmrs.mobile.models.PatientDtoUpdate;
 import org.openmrs.mobile.models.PatientIdentifier;
 import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.models.Results;
-import org.openmrs.mobile.utilities.ActiveAndroid.query.Select;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -336,18 +337,17 @@ public class PatientRepository extends RetrofitRepository {
     }
 
     private void addEncounters(Patient patient) {
+        EncounterCreateRoomDAO dao = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext())
+                .encounterCreateRoomDAO();
         String enc = patient.getEncounters();
         List<Long> list = new ArrayList<>();
         for (String s : enc.split(","))
             list.add(Long.parseLong(s));
 
         for (long id : list) {
-            Encountercreate encountercreate = new Select()
-                    .from(Encountercreate.class)
-                    .where("id = ?", id)
-                    .executeSingle();
+            Encountercreate encountercreate = dao.getCreatedEncountersByID(id);
             encountercreate.setPatient(patient.getUuid());
-            encountercreate.save();
+            dao.updateExistingEncounter(encountercreate);
             new EncounterService().addEncounter(encountercreate);
         }
     }

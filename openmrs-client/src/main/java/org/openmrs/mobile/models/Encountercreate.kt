@@ -10,82 +10,61 @@
 
 package org.openmrs.mobile.models
 
-import com.google.gson.GsonBuilder
+import androidx.room.*
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.google.gson.reflect.TypeToken
-import org.openmrs.mobile.utilities.ActiveAndroid.Model
-import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Column
-import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Table
+import org.openmrs.mobile.models.typeConverters.ObservationListConverter
 import java.io.Serializable
 
-@Table(name = "encountercreate")
-class Encountercreate : Model(), Serializable {
+@Entity(tableName = "encountercreate")
+class Encountercreate : Serializable {
 
-    private val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
-    private val obscreatetype = object : TypeToken<List<Obscreate>>() {
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "_id")
+    var id: Long? = null
 
-    }.type
-
-    @Column(name = "visit")
+    @ColumnInfo(name = "visit")
     @SerializedName("visit")
     @Expose
     var visit: String? = null
 
-    @Column(name = "patient")
+    @ColumnInfo(name = "patient")
     @SerializedName("patient")
     @Expose
     var patient: String? = null
 
-    @Column(name = "patientid")
+    @ColumnInfo(name = "patientid")
     var patientId: Long? = null
 
-    @Column(name = "encounterType")
+    @ColumnInfo(name = "encounterType")
     @SerializedName("encounterType")
     @Expose
     var encounterType: String? = null
 
-    @SerializedName("form")
-    @Expose
-    var formUuid: String? = null
-
-    @Column(name = "formname")
+    @ColumnInfo(name = "formname")
     var formname: String? = null
 
-    @Column(name = "synced")
-    private var synced = false
+    @ColumnInfo(name = "synced")
+    var synced = false
 
-    @SerializedName("location")
-    @Expose
-    var location: String? = null
-
-    @SerializedName("encounterProviders")
-    @Expose
-    var encounterProvider: List<EncounterProviderCreate> = ArrayList()
-
+    @TypeConverters(ObservationListConverter::class)
+    @ColumnInfo(name = "obs")
     @SerializedName("obs")
     @Expose
     var observations: List<Obscreate> = ArrayList()
 
-    @Column(name = "obs")
-    private var obslist: String? = null
+    @SerializedName("form")
+    @Expose
+    @Ignore
+    var formUuid: String? = null
 
-    fun getSynced(): Boolean? {
-        return synced
-    }
+    @SerializedName("location")
+    @Expose
+    @Ignore
+    var location: String? = null
 
-    fun setSynced(synced: Boolean?) {
-        this.synced = synced!!
-    }
-
-
-    fun setObslist() {
-        this.obslist = gson.toJson(observations, obscreatetype)
-    }
-
-    fun pullObslist() {
-        this.observations = gson.fromJson(this.obslist, obscreatetype)
-    }
-
-
+    @SerializedName("encounterProviders")
+    @Expose
+    @Ignore
+    var encounterProvider: List<EncounterProviderCreate> = ArrayList()
 }

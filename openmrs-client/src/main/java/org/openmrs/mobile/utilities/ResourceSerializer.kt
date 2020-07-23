@@ -13,10 +13,10 @@
  */
 package org.openmrs.mobile.utilities
 
+import android.util.Log
 import com.google.gson.*
 import com.google.gson.annotations.Expose
 import org.openmrs.mobile.models.Resource
-import org.openmrs.mobile.utilities.ActiveAndroid.util.Log
 import java.lang.reflect.Type
 
 class ResourceSerializer : JsonSerializer<Resource> {

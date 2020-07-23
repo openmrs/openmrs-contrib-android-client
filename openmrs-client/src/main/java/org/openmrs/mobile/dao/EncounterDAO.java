@@ -22,7 +22,6 @@ import org.openmrs.mobile.databases.entities.ObservationEntity;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Observation;
-import org.openmrs.mobile.utilities.ActiveAndroid.query.Select;
 
 import java.util.ArrayList;
 import java.util.List;

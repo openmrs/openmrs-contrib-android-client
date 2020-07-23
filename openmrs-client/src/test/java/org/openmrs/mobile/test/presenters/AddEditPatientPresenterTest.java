@@ -14,8 +14,6 @@
 
 package org.openmrs.mobile.test.presenters;
 
-import android.content.res.Resources;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,7 +43,6 @@ import java.util.Collections;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.RETURNS_MOCKS;
 import static org.mockito.Mockito.verify;
 
 @PrepareForTest({OpenMRS.class, NetworkUtils.class, RestServiceBuilder.class, ToastUtil.class})
@@ -53,6 +50,11 @@ import static org.mockito.Mockito.verify;
 @PowerMockIgnore("javax.net.ssl.*")
 public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
 
+    private final String INVALID_NAME_1 = "#James";
+    private final String INVALID_NAME_2 = "John@Doe";
+    private final String INVALID_NAME_3 = "Em*%ile";
+    private final String INVALID_ADDRESS_1 = "Washington street ^%123";
+    private final String INVALID_ADDRESS_2 = "Door $164";
     @Mock
     private AddEditPatientContract.View view;
     @Mock
@@ -65,16 +67,8 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     private OpenMRSLogger openMRSLogger;
     @Mock
     private OpenMRS openMRS;
-
     private AddEditPatientPresenter presenter;
     private Patient patient;
-
-    private final String INVALID_NAME_1 = "#James";
-    private final String INVALID_NAME_2 = "John@Doe";
-    private final String INVALID_NAME_3 = "Em*%ile";
-
-    private final String INVALID_ADDRESS_1 = "Washington street ^%123";
-    private final String INVALID_ADDRESS_2 = "Door $164";
 
     @Before
     public void setUp() {

@@ -22,7 +22,9 @@ import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.ProviderRepository;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.models.EncounterProviderCreate;
@@ -164,9 +166,10 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         encounterProviderCreate.add(new EncounterProviderCreate(providerUUID, encounterRoleUUID));
         encountercreate.setEncounterProvider(encounterProviderCreate);
 
-        encountercreate.setObslist();
-        encountercreate.save();
-
+        long id = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext())
+                .encounterCreateRoomDAO()
+                .addEncounterCreated(encountercreate);
+        encountercreate.setId(id);
         if (!mPatient.isSynced()) {
             mPatient.addEncounters(encountercreate.getId());
             new PatientDAO().updatePatient(mPatient.getId(), mPatient);

@@ -25,9 +25,7 @@ import net.sqlcipher.database.SQLiteDatabase;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.openmrs.mobile.api.FormListService;
-import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Encountercreate;
-import org.openmrs.mobile.models.Obscreate;
 import org.openmrs.mobile.services.AuthenticateCheckService;
 import org.openmrs.mobile.utilities.ActiveAndroid.ActiveAndroid;
 import org.openmrs.mobile.utilities.ActiveAndroid.Configuration;
@@ -75,7 +73,6 @@ public class OpenMRS extends MultiDexApplication {
     protected void initializeDB() {
         Configuration.Builder configurationBuilder = new Configuration.Builder(this);
         configurationBuilder.addModelClasses(Encountercreate.class);
-        configurationBuilder.addModelClasses(Obscreate.class);
 
         ActiveAndroid.initialize(configurationBuilder.create());
     }

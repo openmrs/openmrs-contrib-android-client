@@ -49,6 +49,7 @@ import org.openmrs.mobile.activities.settings.SettingsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
+import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Patient;
@@ -64,6 +65,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -210,25 +216,33 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 if (!locationList.isEmpty()) {
                     locationList.clear();
                 }
-                List<LocationEntity> locationEntities;
-                try {
-                    locationEntities = AppDatabase.getDatabase(this).locationRoomDAO().getLocations().blockingGet();
-                } catch (Exception e) {
-                    locationEntities = new ArrayList<>();
-                }
-                locationList = getLocationList(locationEntities);
-                showLocationDialog(locationList);
+                Observable<List<LocationEntity>> observableList = new LocationDAO().getLocations();
+                observableList.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(getLocationList());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private List<String> getLocationList(List<LocationEntity> locationEntities) {
-        for (LocationEntity entity : locationEntities) {
-            locationList.add(entity.getName());
-        }
-        return locationList;
+    private Observer<List<LocationEntity>> getLocationList() {
+        return new Observer<List<LocationEntity>>() {
+            @Override
+            public void onCompleted() {
+                showLocationDialog(locationList);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mOpenMRSLogger.e(e.getMessage());
+            }
+
+            @Override
+            public void onNext(List<LocationEntity> locations) {
+                for (LocationEntity locationItem : locations) {
+                    locationList.add(locationItem.getName());
+                }
+            }
+        };
     }
 
     public void showNoInternetConnectionSnackbar() {

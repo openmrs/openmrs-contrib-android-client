@@ -14,8 +14,12 @@
 
 package org.openmrs.mobile.dao;
 
+import android.content.Context;
+
 import net.sqlcipher.Cursor;
 
+import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
 import org.openmrs.mobile.databases.tables.EncounterTable;
@@ -36,6 +40,11 @@ import rx.schedulers.Schedulers;
 import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 
 public class EncounterDAO {
+
+    OpenMRS openMRS = OpenMRS.getInstance();
+    Context context = openMRS.getApplicationContext();
+    LocationRoomDAO locationRoomDAO = AppDatabase.getDatabase(context).locationRoomDAO();
+
     public long saveEncounter(Encounter encounter, Long visitID) {
         encounter.setVisitID(visitID);
         return new EncounterTable().insert(encounter);
@@ -166,7 +175,7 @@ public class EncounterDAO {
                     encounter.setDisplay(display);
                     encounter.setEncounterDatetime(DateUtils.convertTime(datetime, DateUtils.OPEN_MRS_REQUEST_FORMAT));
                     encounter.setObservations(new ObservationDAO().findObservationByEncounterID(id));
-                    encounter.setLocation(new LocationDAO().findLocationByUUID(locationUUID));
+                    encounter.setLocation(locationRoomDAO.findLocationByUUID(locationUUID).blockingGet());
                     encounter.setForm(FormService.getFormByUuid(formUuid));
                     encounters.add(encounter);
                 }

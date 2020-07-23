@@ -23,10 +23,10 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.ProviderRepository;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.models.EncounterProviderCreate;
 import org.openmrs.mobile.models.Encountercreate;
-import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Obscreate;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Provider;
@@ -99,12 +99,12 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
     @Override
     public void getLocation(String url) {
         if (NetworkUtils.hasNetwork()) {
-            String locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "location";
-            Call<Results<Location>> call =
-                    restApi.getLocations(locationEndPoint, "Admission Location", "full");
-            call.enqueue(new Callback<Results<Location>>() {
+            String locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "LocationEntity";
+            Call<Results<LocationEntity>> call =
+                    restApi.getLocations(locationEndPoint, "Admission LocationEntity", "full");
+            call.enqueue(new Callback<Results<LocationEntity>>() {
                 @Override
-                public void onResponse(Call<Results<Location>> call, Response<Results<Location>> response) {
+                public void onResponse(Call<Results<LocationEntity>> call, Response<Results<LocationEntity>> response) {
                     if (response.isSuccessful()) {
                         view.updateLocationAdapter(response.body().getResults());
                     } else {
@@ -114,7 +114,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
                 }
 
                 @Override
-                public void onFailure(Call<Results<Location>> call, Throwable t) {
+                public void onFailure(Call<Results<LocationEntity>> call, Throwable t) {
                     view.showToast(t.getMessage());
                     view.enableSubmitButton(false);
                 }

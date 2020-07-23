@@ -16,6 +16,7 @@ package org.openmrs.mobile.models
 
 import androidx.room.Entity
 import com.google.gson.annotations.Expose
+import org.openmrs.mobile.databases.entities.LocationEntity
 
 @Entity
 class Visit : Resource() {
@@ -29,7 +30,7 @@ class Visit : Resource() {
     lateinit var visitType: VisitType
 
     @Expose
-    lateinit var location: Location
+    lateinit var location: LocationEntity
 
     @Expose
     lateinit var startDatetime: String

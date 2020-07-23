@@ -37,13 +37,13 @@ import org.openmrs.mobile.api.workers.UpdatePatientWorker;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.databases.tables.PatientTable;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
 import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.IdGenPatientIdentifiers;
 import org.openmrs.mobile.models.IdentifierType;
-import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientDto;
 import org.openmrs.mobile.models.PatientDtoUpdate;
@@ -114,7 +114,7 @@ public class PatientRepository extends RetrofitRepository {
                     final List<PatientIdentifier> identifiers = new ArrayList<>();
 
                     final PatientIdentifier identifier = new PatientIdentifier();
-                    identifier.setLocation((Location) results.get(0).getResult());
+                    identifier.setLocation((LocationEntity) results.get(0).getResult());
                     identifier.setIdentifier((String) results.get(1).getResult());
                     identifier.setIdentifierType((IdentifierType) results.get(2).getResult());
                     identifiers.add(identifier);

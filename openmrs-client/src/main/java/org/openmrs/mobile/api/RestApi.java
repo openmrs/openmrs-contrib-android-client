@@ -10,6 +10,7 @@
 
 package org.openmrs.mobile.api;
 
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.ConceptAnswers;
@@ -21,7 +22,6 @@ import org.openmrs.mobile.models.FormData;
 import org.openmrs.mobile.models.FormResource;
 import org.openmrs.mobile.models.IdGenPatientIdentifiers;
 import org.openmrs.mobile.models.IdentifierType;
-import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Module;
 import org.openmrs.mobile.models.Obscreate;
 import org.openmrs.mobile.models.Observation;
@@ -57,12 +57,12 @@ public interface RestApi {
     Call<Results<FormResource>> getForms();
 
     @GET("location?tag=Login%20Location")
-    Call<Results<Location>> getLocations(@Query("v") String representation);
+    Call<Results<LocationEntity>> getLocations(@Query("v") String representation);
 
     @GET()
-    Call<Results<Location>> getLocations(@Url String url,
-                                         @Query("tag") String tag,
-                                         @Query("v") String representation);
+    Call<Results<LocationEntity>> getLocations(@Url String url,
+                                               @Query("tag") String tag,
+                                               @Query("v") String representation);
 
     @GET("systemsetting")
     Call<Results<SystemProperty>> getSystemProperty(@Query("q") String property,

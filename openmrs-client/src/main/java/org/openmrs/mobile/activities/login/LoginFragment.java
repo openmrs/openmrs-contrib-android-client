@@ -39,9 +39,9 @@ import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.databinding.FragmentLoginBinding;
 import org.openmrs.mobile.listeners.watcher.LoginValidatorWatcher;
-import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -52,7 +52,7 @@ import java.util.List;
 
 public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> implements LoginContract.View {
     private static String mLastCorrectURL = "";
-    private static List<Location> mLocationsList;
+    private static List<LocationEntity> mLocationsList;
     final private String initialUrl = OpenMRS.getInstance().getServerUrl();
     protected OpenMRS mOpenMRS = OpenMRS.getInstance();
     private FragmentLoginBinding binding;
@@ -218,7 +218,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         getActivity().finish();
     }
 
-    public void initLoginForm(List<Location> locationsList, String serverURL) {
+    public void initLoginForm(List<LocationEntity> locationsList, String serverURL) {
         setLocationErrorOccurred(false);
         mLastCorrectURL = serverURL;
         binding.loginUrlField.setText(serverURL);
@@ -318,7 +318,7 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         }
     }
 
-    private List<String> getLocationStringList(List<Location> locationList) {
+    private List<String> getLocationStringList(List<LocationEntity> locationList) {
         List<String> list = new ArrayList<>();
         list.add(getString(R.string.login_location_select));
         for (int i = 0; i < locationList.size(); i++) {

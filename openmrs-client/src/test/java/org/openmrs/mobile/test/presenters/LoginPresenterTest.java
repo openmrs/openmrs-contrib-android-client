@@ -34,7 +34,7 @@ import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.models.Location;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Session;
 import org.openmrs.mobile.models.User;
 import org.openmrs.mobile.models.VisitType;
@@ -85,7 +85,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     @Before
     public void setUp() {
         super.setUp();
-        VisitRepository visitRepository = new VisitRepository(restApi, visitDAO, locationDAO, new EncounterDAO());
+        VisitRepository visitRepository = new VisitRepository(restApi, visitDAO, new EncounterDAO());
         presenter = new LoginPresenter(restApi, visitRepository, locationDAO, userService, view, openMRS,
                 openMRSLogger, authorizationManager);
         mockStaticMethods();
@@ -214,7 +214,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     public void shouldLoadLocationsInOnlineMode_allOK() {
         mockNetworkConnection(true);
         Mockito.lenient().when(restApi.getLocations(any(), anyString(), anyString()))
-                .thenReturn(mockSuccessCall(Collections.singletonList(new Location())));
+                .thenReturn(mockSuccessCall(Collections.singletonList(new LocationEntity(""))));
         presenter.loadLocations("someUrl");
         verify(view).initLoginForm(any(), any());
         verify(view).startFormListService();
@@ -260,7 +260,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     @Test
     public void shouldLoadLocationsInOfflineMode_nonEmptyList() {
         mockNetworkConnection(false);
-        Mockito.lenient().when(locationDAO.getLocations()).thenReturn(Observable.just(Collections.singletonList(new Location())));
+        Mockito.lenient().when(locationDAO.getLocations()).thenReturn(Observable.just(Collections.singletonList(new LocationEntity(""))));
         presenter.loadLocations("someUrl");
         verify(view).initLoginForm(any(), any());
         verify(view).setLocationErrorOccurred(false);

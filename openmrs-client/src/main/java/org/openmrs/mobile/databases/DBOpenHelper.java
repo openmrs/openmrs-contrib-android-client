@@ -23,6 +23,7 @@ import net.sqlcipher.database.SQLiteStatement;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.databases.tables.ConceptTable;
 import org.openmrs.mobile.databases.tables.EncounterTable;
 import org.openmrs.mobile.databases.tables.LocationTable;
@@ -32,7 +33,6 @@ import org.openmrs.mobile.databases.tables.Table;
 import org.openmrs.mobile.databases.tables.VisitTable;
 import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
@@ -395,7 +395,7 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
         return db.update(ObservationTable.TABLE_NAME, newValues, WHERE_ID_CLAUSE, whereArgs);
     }
 
-    public Long insertLocation(SQLiteDatabase db, Location loc) {
+    public Long insertLocation(SQLiteDatabase db, LocationEntity loc) {
         long locID;
 
         SQLiteStatement locationStatement = db.compileStatement(mLocationTable.insertIntoTableDefinition());
@@ -406,13 +406,13 @@ public class DBOpenHelper extends OpenMRSSQLiteOpenHelper {
             bindString(2, loc.getDisplay(), locationStatement);
             bindString(3, loc.getName(), locationStatement);
             bindString(4, loc.getDescription(), locationStatement);
-            bindString(5, loc.getAddress1(), locationStatement);
-            bindString(6, loc.getAddress2(), locationStatement);
-            bindString(7, loc.getCityVillage(), locationStatement);
-            bindString(8, loc.getStateProvince(), locationStatement);
+            bindString(5, loc.getAddress_1(), locationStatement);
+            bindString(6, loc.getAddress_2(), locationStatement);
+            bindString(7, loc.getCity(), locationStatement);
+            bindString(8, loc.getState(), locationStatement);
             bindString(9, loc.getCountry(), locationStatement);
             bindString(10, loc.getPostalCode(), locationStatement);
-            bindString(11, loc.getParentLocationUuid(), locationStatement);
+            bindString(11, loc.getParentLocationuuid(), locationStatement);
             locID = locationStatement.executeInsert();
             locationStatement.clearBindings();
             db.setTransactionSuccessful();

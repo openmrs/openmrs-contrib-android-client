@@ -7,6 +7,7 @@ import org.openmrs.mobile.models.Concept;
 
 public class ConceptTable extends Table<Concept> {
 
+
     public static final String TABLE_NAME = "concepts";
 
     /**

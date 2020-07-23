@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.models.Location;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public interface LoginContract {
 
         void showToast(int textId, ToastUtil.ToastType toastType);
 
-        void initLoginForm(List<Location> locationList, String url);
+        void initLoginForm(List<LocationEntity> locationList, String url);
 
         void userAuthenticated();
 
@@ -67,7 +67,7 @@ public interface LoginContract {
 
         void login(String username, String password, String url, String oldUrl);
 
-        void saveLocationsToDatabase(List<Location> locationList, String selectedLocation);
+        void saveLocationsToDatabase(List<LocationEntity> locationList, String selectedLocation);
 
         void loadLocations(String url);
     }

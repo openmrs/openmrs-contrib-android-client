@@ -28,8 +28,8 @@ import androidx.annotation.Nullable;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.databinding.FragmentFormAdmissionBinding;
-import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -112,7 +112,7 @@ public class FormAdmissionFragment extends ACBaseFragment<FormAdmissionContract.
     }
 
     @Override
-    public void updateLocationAdapter(List<Location> locationList) {
+    public void updateLocationAdapter(List<LocationEntity> locationList) {
         String[] locations = new String[locationList.size()];
         for (int i = 0; i < locationList.size(); i++) {
             locations[i] = locationList.get(i).getDisplay();

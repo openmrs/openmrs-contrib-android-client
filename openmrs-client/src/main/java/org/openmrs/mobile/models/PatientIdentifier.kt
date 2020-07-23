@@ -12,6 +12,7 @@ package org.openmrs.mobile.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import org.openmrs.mobile.databases.entities.LocationEntity
 
 class PatientIdentifier : Resource() {
 
@@ -26,6 +27,6 @@ class PatientIdentifier : Resource() {
 
     @SerializedName("location")
     @Expose
-    var location: Location? = null
+    var location: LocationEntity? = null
 
 }

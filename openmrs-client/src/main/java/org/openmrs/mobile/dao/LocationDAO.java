@@ -19,8 +19,8 @@ import net.sqlcipher.Cursor;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.databases.tables.LocationTable;
-import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.utilities.StringUtils;
 
 import java.util.ArrayList;
@@ -31,8 +31,8 @@ import rx.Observable;
 import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
 
 public class LocationDAO {
-    public Observable<Long> saveLocation(Location location) {
-        return createObservableIO(() -> new LocationTable().insert(location));
+    public Observable<Long> saveLocation(LocationEntity LocationEntity) {
+        return createObservableIO(() -> new LocationTable().insert(LocationEntity));
     }
 
     public void deleteAllLocations() {
@@ -42,9 +42,9 @@ public class LocationDAO {
         OpenMRS.getInstance().getOpenMRSLogger().d("All Locations deleted");
     }
 
-    public Observable<List<Location>> getLocations() {
+    public Observable<List<LocationEntity>> getLocations() {
         return createObservableIO(() -> {
-            List<Location> locations = new ArrayList<>();
+            List<LocationEntity> locations = new ArrayList<>();
             DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
             Cursor cursor = openHelper.getReadableDatabase().query(LocationTable.TABLE_NAME,
                 null, null, null, null, null, null);
@@ -52,8 +52,8 @@ public class LocationDAO {
             if (null != cursor) {
                 try {
                     while (cursor.moveToNext()) {
-                        Location location = cursorToLocation(cursor);
-                        locations.add(location);
+                        LocationEntity LocationEntity = cursorToLocation(cursor);
+                        locations.add(LocationEntity);
                     }
                 } finally {
                     cursor.close();
@@ -63,11 +63,11 @@ public class LocationDAO {
         });
     }
 
-    public Location findLocationByName(String name) {
+    public LocationEntity findLocationByName(String name) {
         if (!StringUtils.notNull(name)) {
             return null;
         }
-        Location location = new Location();
+        LocationEntity LocationEntity = new LocationEntity("display");
         String where = String.format("%s = ?", LocationTable.Column.DISPLAY);
         String[] whereArgs = new String[]{name};
 
@@ -76,20 +76,20 @@ public class LocationDAO {
         if (null != cursor) {
             try {
                 if (cursor.moveToFirst()) {
-                    location = cursorToLocation(cursor);
+                    LocationEntity = cursorToLocation(cursor);
                 }
             } finally {
                 cursor.close();
             }
         }
-        return location;
+        return LocationEntity;
     }
 
-    public Location findLocationByUUID(String uuid) {
+    public LocationEntity findLocationByUUID(String uuid) {
         if(!StringUtils.notNull(uuid)){
             return null;
         }
-        Location location = new Location();
+        LocationEntity LocationEntity = new LocationEntity("display");
         String where = String.format("%s = ?", LocationTable.Column.UUID);
         String[] whereArgs = new String[]{uuid};
 
@@ -98,23 +98,22 @@ public class LocationDAO {
         if (null != cursor) {
             try {
                 if (cursor.moveToFirst()) {
-                    location = cursorToLocation(cursor);
+                    LocationEntity = cursorToLocation(cursor);
                 }
             } finally {
                 cursor.close();
             }
         }
-        return location;
+        return LocationEntity;
     }
 
-    private Location cursorToLocation(Cursor cursor) {
-        Location location = new Location();
-        location.setId(cursor.getLong(cursor.getColumnIndex(LocationTable.Column.ID)));
-        location.setUuid(cursor.getString(cursor.getColumnIndex(LocationTable.Column.UUID)));
-        location.setDisplay(cursor.getString(cursor.getColumnIndex(LocationTable.Column.DISPLAY)));
-        location.setName(cursor.getString(cursor.getColumnIndex(LocationTable.Column.NAME)));
-        location.setDescription(cursor.getString(cursor.getColumnIndex(LocationTable.Column.DESCRIPTION)));
-        location.setParentLocationUuid(cursor.getString(cursor.getColumnIndex(LocationTable.Column.PARENT_LOCATION_UUID)));
-        return location;
+    private LocationEntity cursorToLocation(Cursor cursor) {
+        LocationEntity LocationEntity = new LocationEntity(cursor.getString(cursor.getColumnIndex(LocationTable.Column.DISPLAY)));
+        LocationEntity.setId(cursor.getLong(cursor.getColumnIndex(LocationTable.Column.ID)));
+        LocationEntity.setUuid(cursor.getString(cursor.getColumnIndex(LocationTable.Column.UUID)));
+        LocationEntity.setName(cursor.getString(cursor.getColumnIndex(LocationTable.Column.NAME)));
+        LocationEntity.setDescription(cursor.getString(cursor.getColumnIndex(LocationTable.Column.DESCRIPTION)));
+        LocationEntity.setParentLocationuuid(cursor.getString(cursor.getColumnIndex(LocationTable.Column.PARENT_LOCATION_UUID)));
+        return LocationEntity;
     }
 }

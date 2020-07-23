@@ -25,10 +25,11 @@ import org.openmrs.mobile.api.UserService;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
-import org.openmrs.mobile.dao.LocationDAO;
+import org.openmrs.mobile.dao.LocationRoomDAO;
+import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.OpenMRSSQLiteOpenHelper;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.listeners.retrofit.GetVisitTypeCallbackListener;
-import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.models.Session;
 import org.openmrs.mobile.models.VisitType;
@@ -41,11 +42,12 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public class LoginPresenter extends BasePresenter implements LoginContract.Presenter {
     private RestApi restApi;
@@ -55,7 +57,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
     private OpenMRS mOpenMRS;
     private OpenMRSLogger mLogger;
     private AuthorizationManager authorizationManager;
-    private LocationDAO locationDAO;
+    private LocationRoomDAO locationRoomDAO;
     private boolean mWipeRequired;
 
     public LoginPresenter(LoginContract.View loginView, OpenMRS openMRS) {
@@ -64,18 +66,18 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         this.mLogger = openMRS.getOpenMRSLogger();
         this.loginView.setPresenter(this);
         this.authorizationManager = new AuthorizationManager();
-        this.locationDAO = new LocationDAO();
+        this.locationRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).locationRoomDAO();
         this.restApi = RestServiceBuilder.createService(RestApi.class);
         this.visitRepository = new VisitRepository();
         this.userService = new UserService();
     }
 
-    public LoginPresenter(RestApi restApi, VisitRepository visitRepository, LocationDAO locationDAO,
+    public LoginPresenter(RestApi restApi, VisitRepository visitRepository, LocationRoomDAO locationRoomDAO,
                           UserService userService, LoginContract.View loginView, OpenMRS mOpenMRS,
                           OpenMRSLogger mLogger, AuthorizationManager authorizationManager) {
         this.restApi = restApi;
         this.visitRepository = visitRepository;
-        this.locationDAO = locationDAO;
+        this.locationRoomDAO = locationRoomDAO;
         this.userService = userService;
         this.loginView = loginView;
         this.mOpenMRS = mOpenMRS;
@@ -206,13 +208,11 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
     }
 
     @Override
-    public void saveLocationsToDatabase(List<Location> locationList, String selectedLocation) {
+    public void saveLocationsToDatabase(List<LocationEntity> locationList, String selectedLocation) {
         mOpenMRS.setLocation(selectedLocation);
-        locationDAO.deleteAllLocations();
+        locationRoomDAO.deleteAllLocations();
         for (int i = 0; i < locationList.size(); i++) {
-            locationDAO.saveLocation(locationList.get(i))
-                    .observeOn(Schedulers.io())
-                    .subscribe();
+            locationRoomDAO.saveLocation(locationList.get(i));
         }
     }
 
@@ -222,11 +222,11 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
 
         if (NetworkUtils.hasNetwork()) {
             String locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "location";
-            Call<Results<Location>> call =
+            Call<Results<LocationEntity>> call =
                     restApi.getLocations(locationEndPoint, "Login Location", "full");
-            call.enqueue(new Callback<Results<Location>>() {
+            call.enqueue(new Callback<Results<LocationEntity>>() {
                 @Override
-                public void onResponse(@NonNull Call<Results<Location>> call, @NonNull Response<Results<Location>> response) {
+                public void onResponse(@NonNull Call<Results<LocationEntity>> call, @NonNull Response<Results<LocationEntity>> response) {
                     if (response.isSuccessful()) {
                         RestServiceBuilder.changeBaseUrl(url.trim());
                         mOpenMRS.setServerUrl(url);
@@ -242,7 +242,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<Results<Location>> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<Results<LocationEntity>> call, @NonNull Throwable t) {
                     loginView.hideUrlLoadingAnimation();
                     loginView.showInvalidURLSnackbar(t.getMessage());
                     loginView.initLoginForm(new ArrayList<>(), url);
@@ -250,18 +250,29 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                 }
             });
         } else {
-            addSubscription(locationDAO.getLocations()
+            locationRoomDAO.getLocations()
+                    .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(locations -> {
-                        if (locations.size() > 0) {
-                            loginView.initLoginForm(locations, url);
-                            loginView.setLocationErrorOccurred(false);
-                        } else {
-                            loginView.showToast(R.string.no_internet_connection_message, ToastUtil.ToastType.ERROR);
+                    .subscribe(new DisposableSingleObserver<List<LocationEntity>>() {
+                        @Override
+                        public void onSuccess(List<LocationEntity> locationEntities) {
+                            if (locationEntities.size() > 0) {
+                                loginView.initLoginForm(locationEntities, url);
+                                loginView.setLocationErrorOccurred(false);
+                            } else {
+                                loginView.showToast(R.string.no_internet_connection_message, ToastUtil.ToastType.ERROR);
+                                loginView.setLocationErrorOccurred(true);
+                            }
+                            loginView.hideLoadingAnimation();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            loginView.showToast(e.getMessage(), ToastUtil.ToastType.ERROR);
+                            loginView.hideLoadingAnimation();
                             loginView.setLocationErrorOccurred(true);
                         }
-                        loginView.hideLoadingAnimation();
-                    }));
+                    });
         }
     }
 

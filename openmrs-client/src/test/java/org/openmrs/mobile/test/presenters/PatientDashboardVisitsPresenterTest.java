@@ -27,7 +27,7 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.models.Location;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
@@ -69,7 +69,7 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     public void setUp() {
         super.setUp();
         patient = createPatient(1L);
-        VisitRepository visitRepository = new VisitRepository(restApi, visitDAO, locationDAO, new EncounterDAO());
+        VisitRepository visitRepository = new VisitRepository(restApi, visitDAO, new EncounterDAO());
         presenter = new PatientDashboardVisitsPresenter(patient, view, visitDAO, visitRepository);
         mockStaticMethods();
     }
@@ -171,7 +171,7 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
 
     private void createMocksForStartVisit() {
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
-        PowerMockito.when(locationDAO.findLocationByName(anyString())).thenReturn(new Location());
+        PowerMockito.when(locationDAO.findLocationByName(anyString())).thenReturn(new LocationEntity("display"));
 
         Mockito.lenient().when(openMRS.getLocation()).thenReturn("location");
         Mockito.lenient().when(openMRS.getVisitTypeUUID()).thenReturn("visitTypeUuid");

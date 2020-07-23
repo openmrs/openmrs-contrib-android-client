@@ -16,7 +16,7 @@ package org.openmrs.mobile.activities.formadmission;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.models.Location;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Resource;
 
@@ -30,7 +30,7 @@ public interface FormAdmissionContract {
 
         void showToast(String error);
 
-        void updateLocationAdapter(List<Location> locationList);
+        void updateLocationAdapter(List<LocationEntity> locationList);
 
         void enableSubmitButton(boolean value);
 

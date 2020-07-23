@@ -62,7 +62,7 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
     public void setUp() {
         super.setUp();
         patient = createPatient(1L);
-        VisitRepository visitRepository = new VisitRepository(restApi, visitDAO, locationDAO, encounterDAO);
+        VisitRepository visitRepository = new VisitRepository(restApi, visitDAO, encounterDAO);
         presenter = new PatientDashboardVitalsPresenter(patient, viewPatientVitals, encounterDAO, visitRepository);
         PowerMockito.mockStatic(NetworkUtils.class);
     }

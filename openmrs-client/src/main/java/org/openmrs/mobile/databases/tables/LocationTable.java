@@ -17,9 +17,9 @@ package org.openmrs.mobile.databases.tables;
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.databases.DBOpenHelper;
 import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
-import org.openmrs.mobile.models.Location;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 
-public class LocationTable extends Table<Location> {
+public class LocationTable extends Table<LocationEntity> {
     public static final String TABLE_NAME = "locations";
 
     /**
@@ -71,13 +71,13 @@ public class LocationTable extends Table<Location> {
     }
 
     @Override
-    public Long insert(Location tableObject) {
+    public Long insert(LocationEntity tableObject) {
         DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
         return helper.insertLocation(helper.getWritableDatabase(), tableObject);
     }
 
     @Override
-    public int update(long tableObjectID, Location tableObject) {
+    public int update(long tableObjectID, LocationEntity tableObject) {
         return 0;
     }
 

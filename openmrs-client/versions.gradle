@@ -16,8 +16,8 @@ versions.retrofit = '2.3.0'
 versions.retrofitConverter = '2.1.0'
 versions.gson = '2.8.5'
 
-versions.rxjava = '1.3.4'
-versions.rxandroid = '1.2.1'
+versions.rxjava = '2.2.6'
+versions.rxandroid = '2.1.1'
 versions.rxbinding = '1.0.0'
 
 versions.roomRuntime = '2.3.0-alpha01'

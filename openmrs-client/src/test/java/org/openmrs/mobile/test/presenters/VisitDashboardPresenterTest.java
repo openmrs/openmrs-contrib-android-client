@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import androidx.annotation.NonNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +28,6 @@ import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 import org.openmrs.mobile.utilities.DateUtils;
 
-import androidx.annotation.NonNull;
 import rx.Observable;
 
 import static org.mockito.Matchers.any;
@@ -38,14 +38,12 @@ import static org.mockito.Mockito.atMost;
 import static org.mockito.Mockito.verify;
 
 public class VisitDashboardPresenterTest extends ACUnitTestBaseRx {
-
     @Mock
     private VisitDashboardContract.View view;
     @Mock
     private VisitDAO visitDAO;
     @Mock
     private RestApi restApi;
-
     private VisitDashboardPresenter presenter;
     private Long visitId = 1L;
 

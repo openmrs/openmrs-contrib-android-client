@@ -24,6 +24,7 @@ import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
+import org.openmrs.mobile.listeners.retrofit.DefaultVisitsCallback;
 import org.openmrs.mobile.listeners.retrofit.GetVisitTypeCallbackListener;
 import org.openmrs.mobile.listeners.retrofit.StartVisitResponseListenerCallback;
 import org.openmrs.mobile.models.Encounter;
@@ -55,6 +56,14 @@ public class VisitRepository {
         encounterDAO = new EncounterDAO();
     }
 
+    /**
+     * used in Unit tests with mockUp objects
+     * @param restApi
+     * @param visitDAO
+     * @param locationDAO
+     * @param encounterDAO
+     *
+     */
     public VisitRepository(RestApi restApi, VisitDAO visitDAO, LocationDAO locationDAO, EncounterDAO encounterDAO) {
         this.restApi = restApi;
         this.visitDAO = visitDAO;
@@ -146,6 +155,28 @@ public class VisitRepository {
             public void onFailure(@NonNull Call<Results<Encounter>> call, @NonNull Throwable t) {
                 if (callbackListener != null) {
                     callbackListener.onErrorResponse(t.getMessage());
+                }
+            }
+        });
+    }
+
+    public void endVisitByUuid(String uuid, Visit visit, DefaultVisitsCallback callbackListener) {
+        restApi.endVisitByUUID(uuid, visit).enqueue(new Callback<Visit>() {
+            @Override
+            public void onResponse(@NonNull Call<Visit> call, @NonNull Response<Visit> response) {
+                if (callbackListener != null) {
+                    if (response.isSuccessful()) {
+                        callbackListener.onSuccess(response.body().getStopDatetime());
+                    } else {
+                        callbackListener.onFailure(response.message());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Visit> call, @NonNull Throwable t) {
+                if (callbackListener != null) {
+                    callbackListener.onFailure(t.getMessage());
                 }
             }
         });

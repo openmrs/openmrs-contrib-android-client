@@ -16,7 +16,9 @@ import androidx.fragment.app.Fragment;
 import org.joda.time.LocalDateTime;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.EncounterService;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.Obscreate;
@@ -108,8 +110,11 @@ public class FormDisplayMainPresenter extends BasePresenter implements FormDispl
             encountercreate.setFormname(mFormname);
             encountercreate.setPatientId(mPatientID);
             encountercreate.setFormUuid(getFormResourceByName(mFormname).getUuid());
-            encountercreate.setObslist();
-            encountercreate.save();
+
+            long id = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext())
+                    .encounterCreateRoomDAO()
+                    .addEncounterCreated(encountercreate);
+            encountercreate.setId(id);
 
             if (!mPatient.isSynced()) {
                 mPatient.addEncounters(encountercreate.getId());

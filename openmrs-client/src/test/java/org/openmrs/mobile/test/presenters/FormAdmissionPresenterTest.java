@@ -32,7 +32,7 @@ import org.openmrs.mobile.activities.formadmission.FormAdmissionPresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
-import org.openmrs.mobile.models.Location;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.test.ACUnitTestBase;
@@ -113,7 +113,7 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
     public void shouldGetAdmissionLocation_AllOK() {
         Mockito.lenient().when(NetworkUtils.hasNetwork()).thenReturn(true);
         Mockito.lenient().when(restApi.getLocations(any(), anyString(), anyString()))
-                .thenReturn(mockSuccessCall(Collections.singletonList(new Location())));
+                .thenReturn(mockSuccessCall(Collections.singletonList(new LocationEntity(""))));
         formAdmissionPresenter.getLocation("someUrl");
         verify(formAdmissionView).updateLocationAdapter(any());
     }

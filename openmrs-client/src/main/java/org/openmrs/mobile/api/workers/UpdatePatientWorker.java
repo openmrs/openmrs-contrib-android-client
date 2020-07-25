@@ -28,12 +28,12 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.databases.tables.PatientTable;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientDto;
 import org.openmrs.mobile.models.PatientDtoUpdate;
 import org.openmrs.mobile.models.PatientPhoto;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -84,7 +84,7 @@ public class UpdatePatientWorker extends Worker {
     @Override
     public Result doWork() {
         final boolean[] result = new boolean[1];
-        String patientIdTobeUpdated = getInputData().getString(PatientTable.Column.ID);
+        String patientIdTobeUpdated = getInputData().getString(ApplicationConstants.PRIMARY_KEY_ID);
         PatientDAO patientDAO = new PatientDAO();
         Patient patientTobeUpdated = patientDAO.findPatientByID(patientIdTobeUpdated);
 

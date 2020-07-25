@@ -12,6 +12,7 @@ package org.openmrs.mobile.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import org.openmrs.mobile.databases.entities.LocationEntity
 import org.openmrs.mobile.utilities.DateUtils
 import java.io.Serializable
 
@@ -30,7 +31,7 @@ class Encounter : Resource(), Serializable {
 
     @SerializedName("location")
     @Expose
-    var location: Location? = null
+    var location: LocationEntity? = null
 
     @SerializedName("form")
     @Expose

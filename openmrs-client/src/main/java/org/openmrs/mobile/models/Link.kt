@@ -12,20 +12,14 @@ package org.openmrs.mobile.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import org.openmrs.mobile.utilities.ActiveAndroid.Model
-import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Column
-import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Table
 import java.io.Serializable
 
-@Table(name = "link")
-class Link : Model(), Serializable {
+class Link : Serializable {
 
-    @Column
     @SerializedName("rel")
     @Expose
     var rel: String? = null
 
-    @Column
     @SerializedName("uri")
     @Expose
     var uri: String? = null

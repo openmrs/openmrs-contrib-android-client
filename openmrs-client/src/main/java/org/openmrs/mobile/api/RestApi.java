@@ -10,18 +10,18 @@
 
 package org.openmrs.mobile.api;
 
+import org.openmrs.mobile.databases.entities.ConceptEntity;
+import org.openmrs.mobile.databases.entities.FormResourceEntity;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Allergy;
-import org.openmrs.mobile.models.Concept;
 import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.FormCreate;
 import org.openmrs.mobile.models.FormData;
-import org.openmrs.mobile.models.FormResource;
 import org.openmrs.mobile.models.IdGenPatientIdentifiers;
 import org.openmrs.mobile.models.IdentifierType;
-import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Module;
 import org.openmrs.mobile.models.Obscreate;
 import org.openmrs.mobile.models.Observation;
@@ -54,15 +54,15 @@ import retrofit2.http.Url;
 
 public interface RestApi {
     @GET("form?v=custom:(uuid,name,resources)")
-    Call<Results<FormResource>> getForms();
+    Call<Results<FormResourceEntity>> getForms();
 
     @GET("location?tag=Login%20Location")
-    Call<Results<Location>> getLocations(@Query("v") String representation);
+    Call<Results<LocationEntity>> getLocations(@Query("v") String representation);
 
     @GET()
-    Call<Results<Location>> getLocations(@Url String url,
-                                         @Query("tag") String tag,
-                                         @Query("v") String representation);
+    Call<Results<LocationEntity>> getLocations(@Url String url,
+                                               @Query("tag") String tag,
+                                               @Query("v") String representation);
 
     @GET("systemsetting")
     Call<Results<SystemProperty>> getSystemProperty(@Query("q") String property,
@@ -150,7 +150,7 @@ public interface RestApi {
     Call<User> getFullUserInfo(@Path("uuid") String uuid);
 
     @GET("concept")
-    Call<Results<Concept>> getConcepts(@Query("limit") int limit, @Query("startIndex") int startIndex);
+    Call<Results<ConceptEntity>> getConcepts(@Query("limit") int limit, @Query("startIndex") int startIndex);
 
     @GET("concept/{uuid}")
     Call<ConceptAnswers> getConceptFromUUID(@Path("uuid") String uuid);

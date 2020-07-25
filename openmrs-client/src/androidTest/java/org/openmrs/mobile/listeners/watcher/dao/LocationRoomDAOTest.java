@@ -27,6 +27,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.LocationEntity;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.Objects;
 
@@ -71,7 +72,7 @@ public class LocationRoomDAOTest {
     @Test
     public void findLocationByName_ShouldFindCorrectLocationByName() {
         mDatabase.locationRoomDAO().addLocation(expectedLocationEntity1);
-        mDatabase.locationRoomDAO().findLocationByName("name")
+        mDatabase.locationRoomDAO().findLocationByName("display")
                 .test()
                 .assertValue(actualLocationEntity -> Objects.equals(actualLocationEntity.getName(), "name")
                         && Objects.equals(actualLocationEntity.getDescription(), "description")
@@ -101,7 +102,7 @@ public class LocationRoomDAOTest {
     }
 
     private LocationEntity createDemoLocationEntity(Long id, String uuid, String name, String description, String display) {
-        LocationEntity entity = new LocationEntity();
+        LocationEntity entity = new LocationEntity(ApplicationConstants.EMPTY_STRING);
         entity.setId(id);
         entity.setDisplay(display);
         entity.setUuid(uuid);

@@ -14,127 +14,61 @@
 
 package org.openmrs.mobile.dao;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-import net.sqlcipher.Cursor;
-
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.databases.DBOpenHelper;
-import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
-import org.openmrs.mobile.databases.tables.PatientTable;
+import org.openmrs.mobile.databases.AppDatabase;
+import org.openmrs.mobile.databases.AppDatabaseHelper;
+import org.openmrs.mobile.databases.entities.PatientEntity;
 import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.PatientIdentifier;
-import org.openmrs.mobile.models.PersonAddress;
-import org.openmrs.mobile.models.PersonName;
-import org.openmrs.mobile.models.Resource;
-import org.openmrs.mobile.utilities.ApplicationConstants;
 
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import rx.Observable;
 
-import static org.openmrs.mobile.databases.DBOpenHelper.createObservableIO;
+import static org.openmrs.mobile.databases.AppDatabaseHelper.createObservableIO;
 
 public class PatientDAO {
+    PatientRoomDAO patientRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).patientRoomDAO();
+
     public Observable<Long> savePatient(Patient patient) {
-        return createObservableIO(() -> new PatientTable().insert(patient));
+        PatientEntity entity = AppDatabaseHelper.patientToPatientEntity(patient);
+        return createObservableIO(() -> patientRoomDAO.addPatient(entity));
     }
 
     public boolean updatePatient(long patientID, Patient patient) {
-        return new PatientTable().update(patientID, patient) > 0;
+        PatientEntity entity = AppDatabaseHelper.patientToPatientEntity(patient);
+        entity.setId(patientID);
+        return patientRoomDAO.updatePatient(entity) > 0;
     }
 
     public void deletePatient(long id) {
-        OpenMRS.getInstance().getOpenMRSLogger().w("Patient deleted with id: " + id);
-        DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        openHelper.getReadableDatabase().delete(PatientTable.TABLE_NAME, PatientTable.Column.ID
-                + " = " + id, null);
+        patientRoomDAO.deletePatient(id);
     }
 
     public Observable<List<Patient>> getAllPatients() {
         return createObservableIO(() -> {
             List<Patient> patients = new ArrayList<>();
-            DBOpenHelper openHelper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-            Cursor cursor = openHelper.getReadableDatabase().query(PatientTable.TABLE_NAME,
-                    null, null, null, null, null, null);
-
-            if (null != cursor) {
-                try {
-                    while (cursor.moveToNext()) {
-                        Patient patient = cursorToPatient(cursor);
-                        patients.add(patient);
-                    }
-                } finally {
-                    cursor.close();
+            List<PatientEntity> patientEntities = new ArrayList<>();
+            try {
+                patientEntities = patientRoomDAO.getAllPatients().blockingGet();
+                for (PatientEntity entity : patientEntities) {
+                    patients.add(AppDatabaseHelper.patientEntityToPatient(entity));
                 }
+            } catch (Exception e) {
+                return new ArrayList<>();
             }
             return patients;
         });
     }
 
-    private Patient cursorToPatient(Cursor cursor) {
-
-        Patient patient = new Patient(cursor.getLong(cursor.getColumnIndex(PatientTable.Column.ID)),
-                cursor.getString(cursor.getColumnIndex(PatientTable.Column.ENCOUNTERS)),
-                null);
-
-        patient.setDisplay(cursor.getString(cursor.getColumnIndex(PatientTable.Column.DISPLAY)));
-        patient.setUuid(cursor.getString(cursor.getColumnIndex(PatientTable.Column.UUID)));
-
-        PatientIdentifier patientIdentifier = new PatientIdentifier();
-        patientIdentifier.setIdentifier(cursor.getString(cursor.getColumnIndex(PatientTable.Column.IDENTIFIER)));
-        if (patient.getIdentifiers() == null) {
-            patient.setIdentifiers(new ArrayList<>());
-        }
-        patient.getIdentifiers().add(patientIdentifier);
-
-        PersonName personName = new PersonName();
-        personName.setGivenName(cursor.getString(cursor.getColumnIndex(PatientTable.Column.GIVEN_NAME)));
-        personName.setMiddleName(cursor.getString(cursor.getColumnIndex(PatientTable.Column.MIDDLE_NAME)));
-        personName.setFamilyName(cursor.getString(cursor.getColumnIndex(PatientTable.Column.FAMILY_NAME)));
-        patient.getNames().add(personName);
-
-        patient.setGender(cursor.getString(cursor.getColumnIndex(PatientTable.Column.GENDER)));
-        patient.setBirthdate(cursor.getString(cursor.getColumnIndex(PatientTable.Column.BIRTH_DATE)));
-        byte[] photoByteArray = cursor.getBlob(cursor.getColumnIndex(PatientTable.Column.PHOTO));
-        if (photoByteArray != null) {
-            patient.setPhoto(byteArrayToBitmap(photoByteArray));
-        }
-        patient.getAddresses().add(cursorToAddress(cursor));
-        if (cursor.getString(cursor.getColumnIndex(PatientTable.Column.CAUSE_OF_DEATH)) != null) {
-            patient.setCauseOfDeath(new Resource(ApplicationConstants.EMPTY_STRING, cursor.getString(cursor.getColumnIndex(PatientTable.Column.CAUSE_OF_DEATH)), new ArrayList<>(), 0));
-        }
-        if (cursor.getString(cursor.getColumnIndex(PatientTable.Column.DEAD)).equals("true")) {
-            patient.setDeceased(true);
-        } else {
-            patient.setDeceased(false);
-        }
-
-        return patient;
-    }
-
     public boolean isUserAlreadySaved(String uuid) {
-        String where = String.format("%s = ?", PatientTable.Column.UUID);
-        String[] whereArgs = new String[]{uuid};
-
-        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        final Cursor cursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null, where, whereArgs, null, null, null);
-        String patientUUID = "";
-        if (null != cursor) {
-            try {
-                if (cursor.moveToFirst()) {
-                    int uuidColumnIndex = cursor.getColumnIndex(PatientTable.Column.UUID);
-                    patientUUID = cursor.getString(uuidColumnIndex);
-                }
-            } finally {
-                cursor.close();
-            }
+        try {
+            PatientEntity patientEntity = patientRoomDAO.findPatientByUUID(uuid).blockingGet();
+            return uuid.equalsIgnoreCase(patientEntity.getUuid());
+        } catch (Exception e) {
+            return false;
         }
-        return uuid.equalsIgnoreCase(patientUUID);
     }
 
     public boolean userDoesNotExist(String uuid) {
@@ -142,91 +76,34 @@ public class PatientDAO {
     }
 
     public Patient findPatientByUUID(String uuid) {
-        Patient patient = new Patient();
-        String where = String.format("%s = ?", PatientTable.Column.UUID);
-        String[] whereArgs = new String[]{uuid};
-
-        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        final Cursor cursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null, where, whereArgs, null, null, null);
-        if (null != cursor) {
-            try {
-                if (cursor.moveToFirst()) {
-                    patient = cursorToPatient(cursor);
-                }
-            } finally {
-                cursor.close();
-            }
+        try {
+            PatientEntity patient = patientRoomDAO.findPatientByUUID(uuid).blockingGet();
+            return AppDatabaseHelper.patientEntityToPatient(patient);
+        } catch (Exception e) {
+            return null;
         }
-        return patient;
     }
 
-    public List<Patient> getUnsyncedPatients() {
+    public List<Patient> getUnSyncedPatients() {
         List<Patient> patientList = new LinkedList<>();
-        String where = String.format("%s = ?", PatientTable.Column.SYNCED);
-        String[] whereArgs = new String[]{"false"};
-
-        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        final Cursor cursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null, where, whereArgs, null, null, null);
-        if (null != cursor) {
-            try {
-                while (cursor.moveToNext()) {
-                    Patient patient = cursorToPatient(cursor);
-                    if (!patient.isSynced()) {
-                        patientList.add(patient);
-                    }
-                }
-            } finally {
-                cursor.close();
+        List<PatientEntity> unSyncedPatientList;
+        try {
+            unSyncedPatientList = patientRoomDAO.getUnsyncedPatients().blockingGet();
+            for (PatientEntity entity : unSyncedPatientList) {
+                patientList.add(AppDatabaseHelper.patientEntityToPatient(entity));
             }
+            return patientList;
+        } catch (Exception e) {
+            return new ArrayList<>();
         }
-        return patientList;
     }
 
     public Patient findPatientByID(String id) {
-        Patient patient = new Patient();
-        String where = String.format("%s = ?", PatientTable.Column.ID);
-        if (id == null) {
-            id = "";
+        try {
+            PatientEntity patientEntity = patientRoomDAO.findPatientByID(id).blockingGet();
+            return AppDatabaseHelper.patientEntityToPatient(patientEntity);
+        } catch (Exception e) {
+            return null;
         }
-        String[] whereArgs = new String[]{id};
-
-        DBOpenHelper helper = OpenMRSDBOpenHelper.getInstance().getDBOpenHelper();
-        final Cursor cursor = helper.getReadableDatabase().query(PatientTable.TABLE_NAME, null, where, whereArgs, null, null, null);
-        if (null != cursor) {
-            try {
-                if (cursor.moveToFirst()) {
-                    patient = cursorToPatient(cursor);
-                } else {
-                    patient = null;
-                }
-            } finally {
-                cursor.close();
-            }
-        }
-        return patient;
-    }
-
-    private PersonAddress cursorToAddress(Cursor cursor) {
-        int address1ColumnIndex = cursor.getColumnIndex(PatientTable.Column.ADDRESS_1);
-        int address2ColumnIndex = cursor.getColumnIndex(PatientTable.Column.ADDRESS_2);
-        int postalColumnIndex = cursor.getColumnIndex(PatientTable.Column.POSTAL_CODE);
-        int countryColumnIndex = cursor.getColumnIndex(PatientTable.Column.COUNTRY);
-        int stateColumnIndex = cursor.getColumnIndex(PatientTable.Column.STATE);
-        int cityColumnIndex = cursor.getColumnIndex(PatientTable.Column.CITY);
-
-        PersonAddress personAddress = new PersonAddress();
-        personAddress.setAddress1(cursor.getString(address1ColumnIndex));
-        personAddress.setAddress2(cursor.getString(address2ColumnIndex));
-        personAddress.setPostalCode(cursor.getString(postalColumnIndex));
-        personAddress.setCountry(cursor.getString(countryColumnIndex));
-        personAddress.setStateProvince(cursor.getString(stateColumnIndex));
-        personAddress.setCityVillage(cursor.getString(cityColumnIndex));
-
-        return personAddress;
-    }
-
-    private Bitmap byteArrayToBitmap(byte[] imageByteArray) {
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(imageByteArray);
-        return BitmapFactory.decodeStream(inputStream);
     }
 }

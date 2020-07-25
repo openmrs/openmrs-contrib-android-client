@@ -22,7 +22,7 @@ import org.openmrs.mobile.activities.settings.SettingsContract;
 import org.openmrs.mobile.activities.settings.SettingsPresenter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
-import org.openmrs.mobile.dao.ConceptDAO;
+import org.openmrs.mobile.dao.ConceptRoomDAO;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -42,13 +42,13 @@ public class SettingsPresenterTest extends ACUnitTestBase {
     @Mock
     private OpenMRS openMRS;
     @Mock
-    private ConceptDAO conceptDAO;
+    private ConceptRoomDAO conceptRoomDAO;
 
     private SettingsPresenter settingsPresenter;
 
     @Before
     public void setUp() {
-        settingsPresenter = new SettingsPresenter(view, logger, conceptDAO);
+        settingsPresenter = new SettingsPresenter(view, logger, conceptRoomDAO);
         PowerMockito.mockStatic(OpenMRS.class);
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
     }
@@ -75,7 +75,7 @@ public class SettingsPresenterTest extends ACUnitTestBase {
     @Test
     public void shouldUpdateConceptsInDBTextView_allOk() {
         final long conceptsInDB = 2137L;
-        Mockito.lenient().when(conceptDAO.getConceptsCount()).thenReturn(conceptsInDB);
+        Mockito.lenient().when(conceptRoomDAO.getConceptsCount()).thenReturn(conceptsInDB);
         settingsPresenter.updateConceptsInDBTextView();
         verify(view).setConceptsInDbText(String.valueOf(conceptsInDB));
     }

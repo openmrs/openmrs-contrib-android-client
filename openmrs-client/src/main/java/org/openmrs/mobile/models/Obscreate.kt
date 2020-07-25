@@ -12,25 +12,26 @@ package org.openmrs.mobile.models
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import org.openmrs.mobile.utilities.ActiveAndroid.Model
-import org.openmrs.mobile.utilities.ActiveAndroid.annotation.Table
 import java.io.Serializable
 
-@Table(name = "obscreate")
-class Obscreate : Model(), Serializable {
+class Obscreate : Serializable {
 
     @SerializedName("person")
     @Expose
     var person: String? = null
+
     @SerializedName("obsDatetime")
     @Expose
     var obsDatetime: String? = null
+
     @SerializedName("concept")
     @Expose
     var concept: String? = null
+
     @SerializedName("value")
     @Expose
     var value: String? = null
+
     @SerializedName("encounter")
     @Expose
     var encounter: String? = null

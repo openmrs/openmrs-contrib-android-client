@@ -10,14 +10,16 @@
 package org.openmrs.mobile.utilities
 
 import com.google.gson.GsonBuilder
+import org.openmrs.mobile.application.OpenMRS
+import org.openmrs.mobile.databases.AppDatabase
+import org.openmrs.mobile.databases.entities.FormResourceEntity
 import org.openmrs.mobile.models.Form
-import org.openmrs.mobile.models.FormResource
-import org.openmrs.mobile.utilities.ActiveAndroid.query.Select
 import org.openmrs.mobile.utilities.StringUtils.isBlank
 import org.openmrs.mobile.utilities.StringUtils.unescapeJavaString
 import java.lang.reflect.Modifier
 
 object FormService {
+
     @JvmStatic
     fun getForm(valueReference: String?): Form {
         val unescapedValueReference = unescapeJavaString(valueReference!!)
@@ -31,18 +33,23 @@ object FormService {
     @JvmStatic
     fun getFormByUuid(uuid: String?): Form? {
         if (!isBlank(uuid)) {
-            val formResource = Select()
-                    .from(FormResource::class.java)
-                    .where("uuid = ?", uuid)
-                    .executeSingle<FormResource>()
-            if (formResource != null) {
-                val resourceList = formResource.resourceList
-                for (resource in resourceList!!) {
+            var formResourceEntity : FormResourceEntity?
+            try {
+                formResourceEntity = AppDatabase.getDatabase(OpenMRS.getInstance().applicationContext)
+                        .formResourceDAO()
+                        .getFormByUuid(uuid)
+                        .blockingGet()
+            } catch (e: Exception) {
+                formResourceEntity = null;
+            }
+            if (formResourceEntity != null) {
+                val resourceList = formResourceEntity.resources
+                for (resource in resourceList) {
                     if ("json" == resource.name) {
                         val valueRefString = resource.valueReference
                         val form = getForm(valueRefString)
                         form.valueReference = valueRefString
-                        form.name = formResource.name
+                        form.name = formResourceEntity.name
                         return form
                     }
                 }
@@ -52,17 +59,19 @@ object FormService {
     }
 
     @JvmStatic
-    fun getFormResourceByName(name: String?): FormResource {
-        return Select()
-                .from(FormResource::class.java)
-                .where("name = ?", name)
-                .executeSingle()
+    fun getFormResourceByName(name: String?): FormResourceEntity {
+        return AppDatabase.getDatabase(OpenMRS.getInstance().applicationContext)
+                .formResourceDAO()
+                .getFormResourceByName(name)
+                .blockingGet()
     }
 
     @JvmStatic
-    fun getFormResourceList(): List<FormResource> {
-        return Select()
-                .from(FormResource::class.java)
-                .execute()
+    fun getFormResourceList(): List<FormResourceEntity> {
+        var list : List<FormResourceEntity>  = AppDatabase.getDatabase(OpenMRS.getInstance().applicationContext)
+                .formResourceDAO()
+                .formResourceList
+                .blockingGet()
+        return list
     }
 }

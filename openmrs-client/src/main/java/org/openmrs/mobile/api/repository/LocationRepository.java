@@ -20,7 +20,7 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.promise.SimplePromise;
-import org.openmrs.mobile.models.Location;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -29,17 +29,17 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LocationRepository extends RetrofitRepository {
-    public SimplePromise<Location> getLocationUuid() {
-        final SimpleDeferredObject<Location> deferred = new SimpleDeferredObject<>();
+    public SimplePromise<LocationEntity> getLocationUuid() {
+        final SimpleDeferredObject<LocationEntity> deferred = new SimpleDeferredObject<>();
 
         RestApi apiService =
             RestServiceBuilder.createService(RestApi.class);
-        Call<Results<Location>> call = apiService.getLocations(null);
-        call.enqueue(new Callback<Results<Location>>() {
+        Call<Results<LocationEntity>> call = apiService.getLocations(null);
+        call.enqueue(new Callback<Results<LocationEntity>>() {
             @Override
-            public void onResponse(@NonNull Call<Results<Location>> call, @NonNull Response<Results<Location>> response) {
-                Results<Location> locationList = response.body();
-                for (Location result : locationList.getResults()) {
+            public void onResponse(@NonNull Call<Results<LocationEntity>> call, @NonNull Response<Results<LocationEntity>> response) {
+                Results<LocationEntity> locationList = response.body();
+                for (LocationEntity result : locationList.getResults()) {
                     if ((result.getDisplay().trim()).equalsIgnoreCase((openMrs.getLocation().trim()))) {
                         deferred.resolve(result);
                     }
@@ -47,7 +47,7 @@ public class LocationRepository extends RetrofitRepository {
             }
 
             @Override
-            public void onFailure(@NonNull Call<Results<Location>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Results<LocationEntity>> call, @NonNull Throwable t) {
                 ToastUtil.notify(t.toString());
                 deferred.reject(t);
             }

@@ -50,8 +50,8 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.dao.LocationDAO;
-import org.openmrs.mobile.databases.OpenMRSDBOpenHelper;
-import org.openmrs.mobile.models.Location;
+import org.openmrs.mobile.databases.AppDatabase;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -74,9 +74,9 @@ import rx.schedulers.Schedulers;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public abstract class ACBaseActivity extends AppCompatActivity {
-    protected FragmentManager mFragmentManager;
     protected final OpenMRS mOpenMRS = OpenMRS.getInstance();
     protected final OpenMRSLogger mOpenMRSLogger = mOpenMRS.getOpenMRSLogger();
+    protected FragmentManager mFragmentManager;
     protected AuthorizationManager mAuthorizationManager;
     protected CustomFragmentDialog mCustomFragmentDialog;
     protected Snackbar mSnackbar;
@@ -84,6 +84,12 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     private List<String> locationList;
     private IntentFilter mIntentFilter;
     private AlertDialog alertDialog;
+    private BroadcastReceiver mPasswordChangedReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            showCredentialChangedDialog();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,13 +114,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         mIntentFilter.addAction(ApplicationConstants.BroadcastActions.AUTHENTICATION_CHECK_BROADCAST_ACTION);
     }
 
-    private BroadcastReceiver mPasswordChangedReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            showCredentialChangedDialog();
-        }
-    };
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -122,7 +121,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         setupLanguage();
         invalidateOptionsMenu();
         if (!(this instanceof LoginActivity) && !mAuthorizationManager.isUserLoggedIn()
-            && !(this instanceof ContactUsActivity) && !(this instanceof SplashActivity)) {
+                && !(this instanceof ContactUsActivity) && !(this instanceof SplashActivity)) {
             mAuthorizationManager.moveToLoginActivity();
         }
         registerReceiver(mPasswordChangedReceiver, mIntentFilter);
@@ -217,7 +216,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 if (!locationList.isEmpty()) {
                     locationList.clear();
                 }
-                Observable<List<Location>> observableList = new LocationDAO().getLocations();
+                Observable<List<LocationEntity>> observableList = new LocationDAO().getLocations();
                 observableList.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(getLocationList());
                 return true;
             default:
@@ -225,8 +224,8 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         }
     }
 
-    private Observer<List<Location>> getLocationList() {
-        return new Observer<List<Location>>() {
+    private Observer<List<LocationEntity>> getLocationList() {
+        return new Observer<List<LocationEntity>>() {
             @Override
             public void onCompleted() {
                 showLocationDialog(locationList);
@@ -238,8 +237,8 @@ public abstract class ACBaseActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNext(List<Location> locations) {
-                for (Location locationItem : locations) {
+            public void onNext(List<LocationEntity> locations) {
+                for (LocationEntity locationItem : locations) {
                     locationList.add(locationItem.getName());
                 }
             }
@@ -248,7 +247,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
     public void showNoInternetConnectionSnackbar() {
         mSnackbar = Snackbar.make(findViewById(android.R.id.content),
-            getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
+                getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
         View sbView = mSnackbar.getView();
         TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(Color.WHITE);
@@ -259,7 +258,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         mOpenMRS.clearUserPreferencesData();
         mAuthorizationManager.moveToLoginActivity();
         ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.logout_success);
-        OpenMRSDBOpenHelper.getInstance().closeDatabases();
+        AppDatabase.getDatabase(getApplicationContext()).close();
     }
 
     private void showCredentialChangedDialog() {
@@ -316,7 +315,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         createAndShowDialog(bundle, ApplicationConstants.DialogTAG.DELETE_PATIENT_DIALOG_TAG);
     }
 
-    public void showDeleteProviderDialog(){
+    public void showDeleteProviderDialog() {
         CustomDialogBundle bundle = new CustomDialogBundle();
         bundle.setTitleViewMessage(getString(R.string.dialog_title_are_you_sure));
         bundle.setTextViewMessage(getString(R.string.dialog_provider_retired));
@@ -357,7 +356,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
 
     public void moveUnauthorizedUserToLoginScreen() {
-        OpenMRSDBOpenHelper.getInstance().closeDatabases();
+        AppDatabase.getDatabase(getApplicationContext()).close();
         mOpenMRS.clearUserPreferencesData();
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -395,26 +394,26 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
     public void showAppCrashDialog(String error) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-            this);
+                this);
         alertDialogBuilder.setTitle(R.string.crash_dialog_title);
         // set dialog message
         alertDialogBuilder
-            .setMessage(R.string.crash_dialog_message)
-            .setCancelable(false)
-            .setPositiveButton(R.string.crash_dialog_positive_button, (dialog, id) -> dialog.cancel())
-            .setNegativeButton(R.string.crash_dialog_negative_button, (dialog, id) -> finishAffinity())
-            .setNeutralButton(R.string.crash_dialog_neutral_button, (dialog, id) -> {
-                String filename = OpenMRS.getInstance().getOpenMRSDir()
-                    + File.separator + mOpenMRSLogger.getLogFilename();
-                Intent email = new Intent(Intent.ACTION_SEND);
-                email.putExtra(Intent.EXTRA_SUBJECT, R.string.error_email_subject_app_crashed);
-                email.putExtra(Intent.EXTRA_TEXT, error);
-                email.putExtra(Intent.EXTRA_STREAM, Uri.parse(ApplicationConstants.URI_FILE + filename));
-                //need this to prompts email client only
-                email.setType(ApplicationConstants.MESSAGE_RFC_822);
+                .setMessage(R.string.crash_dialog_message)
+                .setCancelable(false)
+                .setPositiveButton(R.string.crash_dialog_positive_button, (dialog, id) -> dialog.cancel())
+                .setNegativeButton(R.string.crash_dialog_negative_button, (dialog, id) -> finishAffinity())
+                .setNeutralButton(R.string.crash_dialog_neutral_button, (dialog, id) -> {
+                    String filename = OpenMRS.getInstance().getOpenMRSDir()
+                            + File.separator + mOpenMRSLogger.getLogFilename();
+                    Intent email = new Intent(Intent.ACTION_SEND);
+                    email.putExtra(Intent.EXTRA_SUBJECT, R.string.error_email_subject_app_crashed);
+                    email.putExtra(Intent.EXTRA_TEXT, error);
+                    email.putExtra(Intent.EXTRA_STREAM, Uri.parse(ApplicationConstants.URI_FILE + filename));
+                    //need this to prompts email client only
+                    email.setType(ApplicationConstants.MESSAGE_RFC_822);
 
-                startActivity(Intent.createChooser(email, getString(R.string.choose_a_email_client)));
-            });
+                    startActivity(Intent.createChooser(email, getString(R.string.choose_a_email_client)));
+                });
 
         alertDialog = alertDialogBuilder.create();
         alertDialog.show();

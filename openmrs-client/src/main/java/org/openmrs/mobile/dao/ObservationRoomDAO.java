@@ -39,7 +39,7 @@ public interface ObservationRoomDAO {
     void deleteObservation(ObservationEntity observationEntity);
 
     @Query("SELECT * FROM observations WHERE encounter_id = :encounterID")
-    Flowable<List<ObservationEntity>> findObservationByEncounterID(long encounterID);
+    Single<List<ObservationEntity>> findObservationByEncounterID(long encounterID);
 
     @Query("SELECT * FROM observations WHERE uuid = :observationUUID")
     Single<ObservationEntity> getObservationByUUID(String observationUUID);

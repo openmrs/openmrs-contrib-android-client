@@ -103,7 +103,7 @@ public class FormResourceRoomDAOTest {
     public void deleteALlForms_ShouldDeleteALlFormsCorrectly() {
         mDatabase.formResourceDAO().addFormResource(formResourceEntity1);
         mDatabase.formResourceDAO().addFormResource(formResourceEntity2);
-        mDatabase.formResourceDAO().deleteALlForms();
+        mDatabase.formResourceDAO().deleteAllForms();
 
         mDatabase.formResourceDAO().getFormResourceList()
                 .test()

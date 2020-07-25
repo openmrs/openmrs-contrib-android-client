@@ -26,9 +26,8 @@ import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.LocationDAO;
-import org.openmrs.mobile.databases.OpenMRSSQLiteOpenHelper;
+import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.listeners.retrofit.GetVisitTypeCallbackListener;
-import org.openmrs.mobile.models.Location;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.models.Session;
 import org.openmrs.mobile.models.VisitType;
@@ -128,7 +127,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                         if (session.isAuthenticated()) {
                             mOpenMRS.deleteSecretKey();
                             if (wipeDatabase) {
-                                mOpenMRS.deleteDatabase(OpenMRSSQLiteOpenHelper.DATABASE_NAME);
+                                mOpenMRS.deleteDatabase(ApplicationConstants.DB_NAME);
                                 setData(session.getSessionId(), url, username, password);
                                 mWipeRequired = false;
                             }
@@ -206,7 +205,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
     }
 
     @Override
-    public void saveLocationsToDatabase(List<Location> locationList, String selectedLocation) {
+    public void saveLocationsToDatabase(List<LocationEntity> locationList, String selectedLocation) {
         mOpenMRS.setLocation(selectedLocation);
         locationDAO.deleteAllLocations();
         for (int i = 0; i < locationList.size(); i++) {
@@ -222,11 +221,11 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
 
         if (NetworkUtils.hasNetwork()) {
             String locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "location";
-            Call<Results<Location>> call =
+            Call<Results<LocationEntity>> call =
                     restApi.getLocations(locationEndPoint, "Login Location", "full");
-            call.enqueue(new Callback<Results<Location>>() {
+            call.enqueue(new Callback<Results<LocationEntity>>() {
                 @Override
-                public void onResponse(@NonNull Call<Results<Location>> call, @NonNull Response<Results<Location>> response) {
+                public void onResponse(@NonNull Call<Results<LocationEntity>> call, @NonNull Response<Results<LocationEntity>> response) {
                     if (response.isSuccessful()) {
                         RestServiceBuilder.changeBaseUrl(url.trim());
                         mOpenMRS.setServerUrl(url);
@@ -242,7 +241,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<Results<Location>> call, @NonNull Throwable t) {
+                public void onFailure(@NonNull Call<Results<LocationEntity>> call, @NonNull Throwable t) {
                     loginView.hideUrlLoadingAnimation();
                     loginView.showInvalidURLSnackbar(t.getMessage());
                     loginView.initLoginForm(new ArrayList<>(), url);
@@ -252,9 +251,9 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         } else {
             addSubscription(locationDAO.getLocations()
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(locations -> {
-                        if (locations.size() > 0) {
-                            loginView.initLoginForm(locations, url);
+                    .subscribe(locationEntities -> {
+                        if (locationEntities.size() > 0) {
+                            loginView.initLoginForm(locationEntities, url);
                             loginView.setLocationErrorOccurred(false);
                         } else {
                             loginView.showToast(R.string.no_internet_connection_message, ToastUtil.ToastType.ERROR);

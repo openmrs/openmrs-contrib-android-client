@@ -56,6 +56,7 @@ object ApplicationConstants {
     const val MALE = "M";
     const val EMPTY_DASH_REPRESENTATION = "---"
     const val COMMA_WITH_SPACE = ", "
+    const val PRIMARY_KEY_ID = "_id"
 
     object OpenMRSSharedPreferenceNames {
         const val SHARED_PREFERENCES_NAME = "shared_preferences"

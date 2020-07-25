@@ -17,7 +17,7 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonParseException
-import org.openmrs.mobile.models.Concept
+import org.openmrs.mobile.databases.entities.ConceptEntity
 import org.openmrs.mobile.models.Observation
 import java.lang.reflect.Type
 
@@ -51,7 +51,7 @@ class ObservationDeserializer : JsonDeserializer<Observation> {
             observation.diagnosisNote = jsonObject.asJsonObject[VALUE_KEY].asString
         }
         if (conceptJson != null) {
-            val concept = Concept()
+            val concept = ConceptEntity()
             concept.uuid = conceptJson.asJsonObject[UUID_KEY].asString
             observation.concept = concept
         }

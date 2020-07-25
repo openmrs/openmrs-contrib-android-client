@@ -18,14 +18,15 @@ import androidx.annotation.Nullable;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.repository.VisitRepository;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
+import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.listeners.retrofit.StartVisitResponseListenerCallback;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Encountercreate;
-import org.openmrs.mobile.utilities.ActiveAndroid.query.Select;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -47,20 +48,20 @@ public class EncounterService extends IntentService {
 
         if (NetworkUtils.isOnline()) {
             new VisitDAO().getActiveVisitByPatientId(encountercreate.getPatientId())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(visit -> {
-                    if (visit != null) {
-                        encountercreate.setVisit(visit.getUuid());
-                        if (callbackListener != null) {
-                            syncEncounter(encountercreate, callbackListener);
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(visit -> {
+                        if (visit != null) {
+                            encountercreate.setVisit(visit.getUuid());
+                            if (callbackListener != null) {
+                                syncEncounter(encountercreate, callbackListener);
+                            } else {
+                                syncEncounter(encountercreate);
+                            }
                         } else {
-                            syncEncounter(encountercreate);
-                        }
-                    } else {
 
-                        startNewVisitForEncounter(encountercreate);
-                    }
-                });
+                            startNewVisitForEncounter(encountercreate);
+                        }
+                    });
         } else {
             ToastUtil.error(getString(R.string.form_data_will_be_synced_later_error_message));
         }
@@ -72,31 +73,31 @@ public class EncounterService extends IntentService {
 
     private void startNewVisitForEncounter(final Encountercreate encountercreate, @Nullable final DefaultResponseCallbackListener callbackListener) {
         new VisitRepository().startVisit(new PatientDAO().findPatientByUUID(encountercreate.getPatient()),
-            new StartVisitResponseListenerCallback() {
-                @Override
-                public void onStartVisitResponse(long id) {
-                    new VisitDAO().getVisitByID(id)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(visit -> {
-                            encountercreate.setVisit(visit.getUuid());
-                            if (callbackListener != null) {
-                                syncEncounter(encountercreate, callbackListener);
-                            } else {
-                                syncEncounter(encountercreate);
-                            }
-                        });
-                }
+                new StartVisitResponseListenerCallback() {
+                    @Override
+                    public void onStartVisitResponse(long id) {
+                        new VisitDAO().getVisitByID(id)
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(visit -> {
+                                    encountercreate.setVisit(visit.getUuid());
+                                    if (callbackListener != null) {
+                                        syncEncounter(encountercreate, callbackListener);
+                                    } else {
+                                        syncEncounter(encountercreate);
+                                    }
+                                });
+                    }
 
-                @Override
-                public void onResponse() {
-                    // This method is intentionally empty
-                }
+                    @Override
+                    public void onResponse() {
+                        // This method is intentionally empty
+                    }
 
-                @Override
-                public void onErrorResponse(String errorMessage) {
-                    ToastUtil.error(errorMessage);
-                }
-            });
+                    @Override
+                    public void onErrorResponse(String errorMessage) {
+                        ToastUtil.error(errorMessage);
+                    }
+                });
     }
 
     public void startNewVisitForEncounter(final Encountercreate encountercreate) {
@@ -107,7 +108,6 @@ public class EncounterService extends IntentService {
 
         if (NetworkUtils.isOnline()) {
 
-            encountercreate.pullObslist();
             Call<Encounter> call = apiService.createEncounter(encountercreate);
             call.enqueue(new Callback<Encounter>() {
                 @Override
@@ -116,7 +116,9 @@ public class EncounterService extends IntentService {
                         Encounter encounter = response.body();
                         linkvisit(encountercreate.getPatientId(), encountercreate.getFormname(), encounter, encountercreate);
                         encountercreate.setSynced(true);
-                        encountercreate.save();
+                        AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext())
+                                .encounterCreateRoomDAO()
+                                .updateExistingEncounter(encountercreate);
                         new VisitRepository().syncLastVitals(encountercreate.getPatient());
                         if (callbackListener != null) {
                             callbackListener.onResponse();
@@ -147,42 +149,42 @@ public class EncounterService extends IntentService {
     private void linkvisit(Long patientid, String formname, Encounter encounter, Encountercreate encountercreate) {
         VisitDAO visitDAO = new VisitDAO();
         visitDAO.getVisitByUuid(encounter.getVisit().getUuid())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(visit -> {
-                encounter.setEncounterType(new EncounterType(formname));
-                for (int i = 0; i < encountercreate.getObservations().size(); i++) {
-                    encounter.getObservations().get(i).setDisplayValue
-                        (encountercreate.getObservations().get(i).getValue());
-                }
-                List<Encounter> encounterList = visit.getEncounters();
-                encounterList.add(encounter);
-                visitDAO.saveOrUpdate(visit, patientid)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe();
-            });
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(visit -> {
+                    encounter.setEncounterType(new EncounterType(formname));
+                    for (int i = 0; i < encountercreate.getObservations().size(); i++) {
+                        encounter.getObservations().get(i).setDisplayValue
+                                (encountercreate.getObservations().get(i).getValue());
+                    }
+                    List<Encounter> encounterList = visit.getEncounters();
+                    encounterList.add(encounter);
+                    visitDAO.saveOrUpdate(visit, patientid)
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe();
+                });
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         if (NetworkUtils.isOnline()) {
 
-            List<Encountercreate> encountercreatelist = new Select()
-                .from(Encountercreate.class)
-                .execute();
+            List<Encountercreate> encountercreatelist = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext())
+                    .encounterCreateRoomDAO()
+                    .getAllCreatedEncounters();
 
             for (final Encountercreate encountercreate : encountercreatelist) {
                 if (!encountercreate.getSynced() &&
-                    new PatientDAO().findPatientByID(Long.toString(encountercreate.getPatientId())).isSynced()) {
+                        new PatientDAO().findPatientByID(Long.toString(encountercreate.getPatientId())).isSynced()) {
                     new VisitDAO().getActiveVisitByPatientId(encountercreate.getPatientId())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(visit -> {
-                            if (visit != null) {
-                                encountercreate.setVisit(visit.getUuid());
-                                syncEncounter(encountercreate);
-                            } else {
-                                startNewVisitForEncounter(encountercreate);
-                            }
-                        });
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(visit -> {
+                                if (visit != null) {
+                                    encountercreate.setVisit(visit.getUuid());
+                                    syncEncounter(encountercreate);
+                                } else {
+                                    startNewVisitForEncounter(encountercreate);
+                                }
+                            });
                 }
             }
         } else {

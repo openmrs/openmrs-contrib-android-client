@@ -61,7 +61,6 @@ public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
     @Mock
     private OpenMRSLogger openMRSLogger;
     @Mock
-
     private OpenMRS openMRS;
 
     MutableLiveData<List<Provider>> providerLiveData = Mockito.mock(MutableLiveData.class);

@@ -36,10 +36,10 @@ public class RestServiceBuilder {
 
     static {
         builder =
-            new Retrofit.Builder()
-                .baseUrl(API_BASE_URL)
-                .addConverterFactory(buildGsonConverter())
-                .client((httpClient).build());
+                new Retrofit.Builder()
+                        .baseUrl(API_BASE_URL)
+                        .addConverterFactory(buildGsonConverter())
+                        .client((httpClient).build());
     }
 
     public static <S> S createService(Class<S> serviceClass, String username, String password) {
@@ -52,9 +52,9 @@ public class RestServiceBuilder {
                 Request original = chain.request();
 
                 Request.Builder requestBuilder = original.newBuilder()
-                    .header("Authorization", basic)
-                    .header("Accept", "application/json")
-                    .method(original.method(), original.body());
+                        .header("Authorization", basic)
+                        .header("Accept", "application/json")
+                        .method(original.method(), original.body());
 
                 Request request = requestBuilder.build();
                 return chain.proceed(request);
@@ -76,27 +76,27 @@ public class RestServiceBuilder {
     private static GsonConverterFactory buildGsonConverter() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson myGson = gsonBuilder
-            .excludeFieldsWithoutExposeAnnotation()
-            .registerTypeHierarchyAdapter(Resource.class, new ResourceSerializer())
-            .registerTypeHierarchyAdapter(Observation.class, new ObservationDeserializer())
-            .create();
+                .excludeFieldsWithoutExposeAnnotation()
+                .registerTypeHierarchyAdapter(Resource.class, new ResourceSerializer())
+                .registerTypeHierarchyAdapter(Observation.class, new ObservationDeserializer())
+                .create();
 
         return GsonConverterFactory.create(myGson);
     }
 
     public static <S> S createServiceForPatientIdentifier(Class<S> clazz) {
         return new Retrofit.Builder()
-            .baseUrl(mOpenMRS.getServerUrl() + '/')
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(clazz);
+                .baseUrl(mOpenMRS.getServerUrl() + '/')
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(clazz);
     }
 
     public static void changeBaseUrl(String newServerUrl) {
         API_BASE_URL = newServerUrl + ApplicationConstants.API.REST_ENDPOINT;
 
         builder = new Retrofit.Builder()
-            .baseUrl(API_BASE_URL)
-            .addConverterFactory(buildGsonConverter());
+                .baseUrl(API_BASE_URL)
+                .addConverterFactory(buildGsonConverter());
     }
 }

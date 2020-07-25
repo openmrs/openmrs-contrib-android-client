@@ -35,7 +35,7 @@ public interface LocationRoomDAO {
     @Query("SELECT * FROM locations")
     Single<List<LocationEntity>> getLocations();
 
-    @Query("SELECT * FROM locations WHERE name = :mName")
+    @Query("SELECT * FROM locations WHERE display = :mName")
     Single<LocationEntity> findLocationByName(String mName);
 
     @Query("SELECT * FROM locations WHERE uuid = :uuid")

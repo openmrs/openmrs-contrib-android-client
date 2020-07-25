@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.test;
+package org.openmrs.mobile.listeners.watcher.dao;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
@@ -36,6 +36,7 @@ public class VisitRoomDAOTest {
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
     private AppDatabase database;
     private VisitEntity expectedVisitEntity = createVisitEntity(10L, 1L, "startDate", "stopDate", "visitPlace", "visitType", "uuid");
+    private VisitEntity expectedActiveVisitEntity = createVisitEntity(20L, 5L, "startDate", null, "visitPlace", "visitType", "uuid");
     private VisitEntity updatedVisitEntity = createVisitEntity(10L, 2L, "updatedStartDate", "updatedStopDate", "updatedVisitPlace", "updatedVisitType", "updatedUuid");
 
     @Before
@@ -60,7 +61,7 @@ public class VisitRoomDAOTest {
     @Test
     public void deleteVisitsByPatientId_ShouldDeleteVisit() {
         database.visitRoomDAO().addVisit(expectedVisitEntity);
-        database.visitRoomDAO().deleteVisitsByPatientId(expectedVisitEntity);
+        database.visitRoomDAO().deleteVisitsByPatientId(expectedVisitEntity.getPatientKeyID());
         database.visitRoomDAO().getActiveVisits()
                 .test()
                 .assertValue(actualVisitEntities -> Objects.equals(actualVisitEntities.size(), 0));
@@ -79,10 +80,10 @@ public class VisitRoomDAOTest {
 
     @Test
     public void getFirstActiveVisitByPatientId_ShouldGetFirstActiveVisit() {
-        database.visitRoomDAO().addVisit(expectedVisitEntity);
-        database.visitRoomDAO().getFirstActiveVisitByPatientId(expectedVisitEntity.getPatientKeyID())
+        database.visitRoomDAO().addVisit(expectedActiveVisitEntity);
+        database.visitRoomDAO().getActiveVisitByPatientId(expectedActiveVisitEntity.getPatientKeyID())
                 .test()
-                .assertValue(actualVisitEntity -> Objects.equals(renderVisitEntityString(actualVisitEntity), renderVisitEntityString(expectedVisitEntity)));
+                .assertValue(actualVisitEntity -> Objects.equals(renderVisitEntityString(actualVisitEntity), renderVisitEntityString(expectedActiveVisitEntity)));
     }
 
     @Test

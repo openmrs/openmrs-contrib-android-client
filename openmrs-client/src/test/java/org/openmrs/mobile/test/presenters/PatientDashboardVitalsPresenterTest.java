@@ -47,7 +47,7 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
     @Mock
     private PatientDashboardContract.ViewPatientVitals viewPatientVitals;
     @Mock
-    private  EncounterDAO encounterDAO;
+    private EncounterDAO encounterDAO;
     @Mock
     private RestApi restApi;
     @Mock

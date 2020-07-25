@@ -23,6 +23,7 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.dao.VisitDAO;
+import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
 import org.openmrs.mobile.listeners.retrofit.DefaultVisitsCallback;
 import org.openmrs.mobile.listeners.retrofit.GetVisitTypeCallbackListener;
@@ -44,16 +45,18 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class VisitRepository {
+    AppDatabase db;
+    LocationDAO locationDAO;
     private RestApi restApi;
     private VisitDAO visitDAO;
-    private LocationDAO locationDAO;
     private EncounterDAO encounterDAO;
 
     public VisitRepository() {
         restApi = RestServiceBuilder.createService(RestApi.class);
         visitDAO = new VisitDAO();
-        locationDAO = new LocationDAO();
         encounterDAO = new EncounterDAO();
+        db = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext());
+        locationDAO = new LocationDAO();
     }
 
     /**
@@ -67,8 +70,8 @@ public class VisitRepository {
     public VisitRepository(RestApi restApi, VisitDAO visitDAO, LocationDAO locationDAO, EncounterDAO encounterDAO) {
         this.restApi = restApi;
         this.visitDAO = visitDAO;
-        this.locationDAO = locationDAO;
         this.encounterDAO = encounterDAO;
+        this.locationDAO = locationDAO;
     }
 
     public void syncVisitsData(@NonNull Patient patient) {
@@ -83,13 +86,13 @@ public class VisitRepository {
                 if (response.isSuccessful()) {
                     List<Visit> visits = response.body().getResults();
                     Observable.just(visits)
-                        .flatMap(Observable::from)
-                        .forEach(visit ->
-                                visitDAO.saveOrUpdate(visit, patient.getId())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(),
-                            error -> error.printStackTrace()
-                        );
+                            .flatMap(Observable::from)
+                            .forEach(visit ->
+                                            visitDAO.saveOrUpdate(visit, patient.getId())
+                                                    .observeOn(AndroidSchedulers.mainThread())
+                                                    .subscribe(),
+                                    error -> error.printStackTrace()
+                            );
                     if (callbackListener != null) {
                         callbackListener.onResponse();
                     }
@@ -201,12 +204,12 @@ public class VisitRepository {
                 if (response.isSuccessful()) {
                     Visit newVisit = response.body();
                     visitDAO.saveOrUpdate(newVisit, patient.getId())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(id -> {
-                            if (callbackListener != null) {
-                                callbackListener.onStartVisitResponse(id);
-                            }
-                        });
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(id -> {
+                                if (callbackListener != null) {
+                                    callbackListener.onStartVisitResponse(id);
+                                }
+                            });
                 } else {
                     if (callbackListener != null) {
                         callbackListener.onErrorResponse(response.message());

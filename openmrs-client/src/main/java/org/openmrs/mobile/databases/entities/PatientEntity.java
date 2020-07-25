@@ -32,7 +32,7 @@ public class PatientEntity extends Resource {
     @ColumnInfo(name = "age")
     private String age;
     @ColumnInfo(name = "photo")
-    private String photo;
+    private byte[] photo;
     @ColumnInfo(name = "address1")
     private String address_1;
     @ColumnInfo(name = "address2")
@@ -47,9 +47,8 @@ public class PatientEntity extends Resource {
     private String postalCode;
     @ColumnInfo(name = "dead")
     private String deceased;
-    @Embedded(prefix = "patient_")
-    @SuppressWarnings(RoomWarnings.PRIMARY_KEY_FROM_EMBEDDED_IS_DROPPED)
-    private EncounterEntity encounters;
+    @ColumnInfo(name = "encounters")
+    private String encounters;
 
     public PatientEntity() {
     }
@@ -94,7 +93,7 @@ public class PatientEntity extends Resource {
         this.age = age;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 
@@ -126,7 +125,7 @@ public class PatientEntity extends Resource {
         this.deceased = deceased;
     }
 
-    public void setEncounters(EncounterEntity encounters) {
+    public void setEncounters(String encounters) {
         this.encounters = encounters;
     }
 
@@ -170,7 +169,7 @@ public class PatientEntity extends Resource {
         return age;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
@@ -202,7 +201,7 @@ public class PatientEntity extends Resource {
         return deceased;
     }
 
-    public EncounterEntity getEncounters() {
+    public String getEncounters() {
         return encounters;
     }
 }

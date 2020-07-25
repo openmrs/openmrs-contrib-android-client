@@ -42,9 +42,9 @@ public interface ConceptRoomDAO {
     @Query("SELECT * FROM concepts WHERE uuid = :uuid")
     Single<List<ConceptEntity>> findConceptsByUUID(String uuid);
 
-    @Query("SELECT * FROM concepts WHERE name = :name")
+    @Query("SELECT * FROM concepts WHERE display = :name")
     Single<List<ConceptEntity>> findConceptsByName(String name);
 
     @Query("SELECT count(*) FROM concepts")
-    Single<Long> getConceptsCount();
+    long getConceptsCount();
 }

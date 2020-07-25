@@ -3,7 +3,6 @@
  * Version 1.0 (the "License"); you may not use this file except in
  * compliance with the License. You may obtain a copy of the License at
  * http://license.openmrs.org
- *
  * Software distributed under the License is distributed on an "AS IS"
  * basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
  * License for the specific language governing rights and limitations
@@ -11,33 +10,20 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package org.openmrs.mobile.databases.entities
 
-package org.openmrs.mobile.models
-
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import com.google.gson.annotations.Expose
-import org.openmrs.mobile.databases.entities.LocationEntity
+import com.google.gson.annotations.SerializedName
+import org.openmrs.mobile.models.Datatype
+import org.openmrs.mobile.models.Resource
 
-@Entity
-class Visit : Resource() {
+@Entity(tableName = "concepts")
+class ConceptEntity : Resource() {
 
-    override var id: Long? = null
-
+    @ColumnInfo(name = "name")
+    @SerializedName("name")
     @Expose
-    lateinit var patient: Patient
-
-    @Expose
-    lateinit var visitType: VisitType
-
-    @Expose
-    lateinit var location: LocationEntity
-
-    @Expose
-    lateinit var startDatetime: String
-
-    @Expose
-    var stopDatetime: String? = null
-
-    @Expose
-    lateinit var encounters: List<Encounter>
+    var name: String? = null
 }

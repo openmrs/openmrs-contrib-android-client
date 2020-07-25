@@ -17,6 +17,7 @@ package org.openmrs.mobile.dao;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import org.openmrs.mobile.databases.entities.EncounterEntity;
 
@@ -33,7 +34,7 @@ public interface EncounterRoomDAO {
     Single<Long> getLastVitalsEncounterID(String patientUUID);
 
     @Query("SELECT * FROM encounters WHERE patient_uuid = :patientUUID AND type = :type ORDER BY encounterDatetime DESC LIMIT 1")
-    Single<List<EncounterEntity>> getLastVitalsEncounter(String patientUUID, String type);
+    Single<EncounterEntity> getLastVitalsEncounter(String patientUUID, String type);
 
     @Query("SELECT _id FROM encounters WHERE uuid = :encounterUUID")
     Single<Long> getEncounterByUUID(String encounterUUID);
@@ -42,13 +43,19 @@ public interface EncounterRoomDAO {
     Single<List<EncounterEntity>> findEncountersByVisitID(String visitID);
 
     @Insert
-    void addEncounter(EncounterEntity encounterEntity);
+    long addEncounter(EncounterEntity encounterEntity);
 
     @Query("DELETE FROM encounters WHERE uuid = :uuid")
     void deleteEncounter(String uuid);
 
+    @Query("DELETE FROM encounters WHERE _id = :id")
+    void deleteEncounterByID(long id);
+
     @Query("SELECT * FROM encounters")
     Single<List<EncounterEntity>> getAllEncounters();
+
+    @Update
+    int updateEncounter(EncounterEntity encounterEntity);
 
     /**
      * To Update encounter
@@ -60,6 +67,6 @@ public interface EncounterRoomDAO {
      * 2. Create new Encounter with that UUID
      */
     @Query("SELECT e.* FROM observations AS o JOIN encounters AS e ON o.encounter_id = e._id " +
-        "JOIN visits AS v on e.visit_id = v._id WHERE v.patient_id = :patientID AND e.type = :encounterType ORDER BY e.encounterDatetime DESC")
+            "JOIN visits AS v on e.visit_id = v._id WHERE v.patient_id = :patientID AND e.type = :encounterType ORDER BY e.encounterDatetime DESC")
     Single<List<EncounterEntity>> getAllEncountersByType(Long patientID, String encounterType);
 }

@@ -38,10 +38,8 @@ public class PatientRoomDAOTest {
 
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
-    private EncounterEntity expectedEncounterEntity1 = newEncounterEntity(40L, "123-123", "Encounter", "50", "60", "70", "Visit", "22nd of May", "location_uuid 1", "encounterProviders_uuid 1");
-    private EncounterEntity expectedEncounterEntity2 = newEncounterEntity(50L, "124-124", "Encounter", "50", "60", "70", "Visit", "23rd of May", "location_uuid 2", "encounterProviders_uuid 2");
-    private PatientEntity expectedPatientEntity1 = newPatientEntity(10L, "123", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity1, "Tranquil", "male", "Jon", "101", "Johnson", "https://bit.ly/2W4Ofth", "2000000", "China", false, "true");
-    private PatientEntity expectedPatientEntity2 = newPatientEntity(20L, "124", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", expectedEncounterEntity2, "Tranquil", "male", "Jon", "101", "Johnson", "https://bit.ly/2W4Ofth", "2000000", "China", false, "false");
+    private PatientEntity expectedPatientEntity1 = newPatientEntity(10L, "123", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", "expectedEncounterEntity1", "Tranquil", "male", "Jon", "101", "Johnson", "2000000", "China", false, "true");
+    private PatientEntity expectedPatientEntity2 = newPatientEntity(20L, "124", "M", "Beijing", "Shanghai", "34", "China", "who knows", "Missouri", "USA", "12/10/1903", "expectedEncounterEntity2", "Tranquil", "male", "Jon", "101", "Johnson", "2000000", "China", false, "false");
 
 
     private AppDatabase mDatabase;
@@ -83,12 +81,11 @@ public class PatientRoomDAOTest {
 
         patientRoomDAO.findPatientByUUID(expectedPatientEntity2.getUuid())
                 .test()
-                .assertValue(actualPatientEntities -> Objects.equals(actualPatientEntities.size(), 1)
-                        && Objects.equals(renderPatientEntityString(actualPatientEntities.get(0)), renderPatientEntityString(expectedPatientEntity2)));
+                .assertValue(actualPatientEntities -> Objects.equals(renderPatientEntityString(actualPatientEntities), renderPatientEntityString(expectedPatientEntity2)));
     }
 
     @Test
-    public void getUnsyncedPatients_ShouldGetUnsyncedPatients() {
+    public void getUnSyncedPatients_ShouldGetUnSyncedPatients() {
         patientRoomDAO.addPatient(expectedPatientEntity1);
         patientRoomDAO.addPatient(expectedPatientEntity2);
 
@@ -104,10 +101,9 @@ public class PatientRoomDAOTest {
         patientRoomDAO.addPatient(expectedPatientEntity1);
         patientRoomDAO.addPatient(expectedPatientEntity2);
 
-        patientRoomDAO.findPatientByID(expectedPatientEntity1.getId())
+        patientRoomDAO.findPatientByID(expectedPatientEntity1.getId().toString())
                 .test()
-                .assertValue(actualPatientEntities -> Objects.equals(actualPatientEntities.size(), 1)
-                        && Objects.equals(renderPatientEntityString(actualPatientEntities.get(0)), renderPatientEntityString(expectedPatientEntity1)));
+                .assertValue(actualPatientEntities -> Objects.equals(renderPatientEntityString(actualPatientEntities), renderPatientEntityString(expectedPatientEntity1)));
     }
 
     @Test
@@ -140,29 +136,12 @@ public class PatientRoomDAOTest {
 
     }
 
-    private EncounterEntity newEncounterEntity(Long id, String uuid, String display, String visitKeyId,
-                                               String patientUuid, String formUuid, String encounterType,
-                                               String encounterDateTime, String locationUUID, String providerUUID) {
-        EncounterEntity encounterEntity = new EncounterEntity();
-        encounterEntity.setId(id);
-        encounterEntity.setUuid(uuid);
-        encounterEntity.setDisplay(display);
-        encounterEntity.setVisitKeyId(visitKeyId);
-        encounterEntity.setPatientUuid(patientUuid);
-        encounterEntity.setFormUuid(formUuid);
-        encounterEntity.setEncounterType(encounterType);
-        encounterEntity.setEncounterDateTime(encounterDateTime);
-        encounterEntity.setLocationUuid(locationUUID);
-        encounterEntity.setEncounterProviderUuid(providerUUID);
-        return encounterEntity;
-    }
-
     private PatientEntity newPatientEntity(long id, String uuid, String display,
                                            String address1, String address2, String age,
                                            String birthDate, String causeOfDeath, String city,
-                                           String country, String deathDate, EncounterEntity encounterEntity,
+                                           String country, String deathDate, String encounterEntity,
                                            String familyName, String gender, String givenName,
-                                           String identifier, String middleName, String photo,
+                                           String identifier, String middleName,
                                            String postalCode, String state, boolean synced, String dead) {
         PatientEntity entity = new PatientEntity();
         entity.setId(id);
@@ -182,7 +161,7 @@ public class PatientRoomDAOTest {
         entity.setGivenName(givenName);
         entity.setIdentifier(identifier);
         entity.setMiddleName(middleName);
-        entity.setPhoto(photo);
+        entity.setPhoto(null);
         entity.setPostalCode(postalCode);
         entity.setState(state);
         entity.setSynced(synced);
@@ -195,15 +174,9 @@ public class PatientRoomDAOTest {
                 + patientEntity.getAddress_1() + patientEntity.getAddress_2()
                 + patientEntity.getAge() + patientEntity.getBirthDate() + patientEntity.getCauseOfDeath()
                 + patientEntity.getCity() + patientEntity.getState() + patientEntity.getCountry()
-                + patientEntity.getDeathDate() + renderEncounterEntityString(patientEntity.getEncounters())
+                + patientEntity.getDeathDate() + patientEntity.getEncounters()
                 + patientEntity.getFamilyName() + patientEntity.getGender()
                 + patientEntity.getGivenName() + patientEntity.getIdentifier() + patientEntity.getMiddleName()
                 + patientEntity.getPhoto() + patientEntity.getPostalCode();
-    }
-
-    private String renderEncounterEntityString(EncounterEntity encounterEntity) {
-        return encounterEntity.getId() + encounterEntity.getUuid() + encounterEntity.getVisitKeyId()
-                + encounterEntity.getPatientUuid() + encounterEntity.getFormUuid()
-                + encounterEntity.getEncounterType() + encounterEntity.getEncounterDateTime();
     }
 }

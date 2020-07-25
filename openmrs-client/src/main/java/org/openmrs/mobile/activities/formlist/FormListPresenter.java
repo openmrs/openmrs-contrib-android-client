@@ -16,8 +16,8 @@ package org.openmrs.mobile.activities.formlist;
 
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.dao.EncounterDAO;
+import org.openmrs.mobile.databases.entities.FormResourceEntity;
 import org.openmrs.mobile.models.EncounterType;
-import org.openmrs.mobile.models.FormResource;
 import org.openmrs.mobile.utilities.FormService;
 import org.openmrs.mobile.utilities.StringUtils;
 
@@ -28,7 +28,7 @@ public class FormListPresenter extends BasePresenter implements FormListContract
     private static String[] formsStringArray = null;
     private FormListContract.View view;
     private Long patientId;
-    private List<FormResource> formResourceList;
+    private List<FormResourceEntity> formResourceList;
     private EncounterDAO encounterDAO;
 
     public FormListPresenter(FormListContract.View view, long patientId) {
@@ -53,21 +53,21 @@ public class FormListPresenter extends BasePresenter implements FormListContract
     @Override
     public void loadFormResourceList() {
         formResourceList = new ArrayList<>();
-        List<FormResource> allFormResourcesList = FormService.getFormResourceList();
-        for (FormResource formResource : allFormResourcesList) {
-            List<FormResource> valueRef = formResource.getResourceList();
+        List<FormResourceEntity> allFormResourcesList = FormService.getFormResourceList();
+        for (FormResourceEntity formResourceEntity : allFormResourcesList) {
+            List<FormResourceEntity> valueRef = formResourceEntity.getResources();
             String valueRefString = null;
 
-            for (FormResource resource : valueRef) {
+            for (FormResourceEntity resource : valueRef) {
                 if (resource.getName().equals("json")) {
                     valueRefString = resource.getValueReference();
                 }
             }
             if (!StringUtils.isBlank(valueRefString)) {
-                formResourceList.add(formResource);
+                formResourceList.add(formResourceEntity);
             } else {
-                if (view.formCreate(formResource.getUuid(), formResource.getName().toLowerCase())) {
-                    formResourceList.add(formResource);
+                if (view.formCreate(formResourceEntity.getUuid(), formResourceEntity.getName().toLowerCase())) {
+                    formResourceList.add(formResourceEntity);
                 }
             }
         }
@@ -82,9 +82,9 @@ public class FormListPresenter extends BasePresenter implements FormListContract
 
     @Override
     public void listItemClicked(int position, String formName) {
-        List<FormResource> valueRef = formResourceList.get(position).getResourceList();
+        List<FormResourceEntity> valueRef = formResourceList.get(position).getResources();
         String valueRefString = null;
-        for (FormResource resource : valueRef) {
+        for (FormResourceEntity resource : valueRef) {
             if (resource.getName().equals("json")) {
                 valueRefString = resource.getValueReference();
             }

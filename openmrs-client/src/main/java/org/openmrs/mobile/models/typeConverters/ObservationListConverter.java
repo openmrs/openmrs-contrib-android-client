@@ -20,27 +20,27 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import org.openmrs.mobile.databases.entities.FormResourceEntity;
+import org.openmrs.mobile.models.Obscreate;
 
 import java.io.Serializable;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class FormResourceConverter implements Serializable {
-
+public class ObservationListConverter implements Serializable {
     @TypeConverter
-    public static List<FormResourceEntity> fromString(String value) {
-        Type listType = new TypeToken<List<FormResourceEntity>>() {}.getType();
+    public static List<Obscreate> fromString(String value) {
+        Type listType = new TypeToken<List<Obscreate>>() {
+        }.getType();
         GsonBuilder builder = new GsonBuilder();
         builder.excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC);
         Gson gson = builder.create();
-        List<FormResourceEntity> formResources = gson.fromJson(value, listType);
-        return formResources;
+        List<Obscreate> attributes = gson.fromJson(value, listType);
+        return attributes;
     }
 
     @TypeConverter
-    public static String listToString(List<FormResourceEntity> list) {
+    public static String listToString(List<Obscreate> list) {
         GsonBuilder builder = new GsonBuilder();
         builder.excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC);
         Gson gson = builder.create();

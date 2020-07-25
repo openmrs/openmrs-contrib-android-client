@@ -107,7 +107,6 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
             final Bitmap photo = patient.getResizedPhoto();
             final String patientName = patient.getName().getNameString();
             patientImageView.setImageBitmap(photo);
-            mPatientDashboardActivity.setBackdropImage(photo, patientName);
             patientImageView.setOnClickListener(view -> ImageUtils.showPatientPhoto(getContext(), photo, patientName));
         }
 

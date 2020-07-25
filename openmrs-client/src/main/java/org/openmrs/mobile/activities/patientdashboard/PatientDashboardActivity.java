@@ -143,12 +143,6 @@ public class PatientDashboardActivity extends ACBaseActivity {
         }
     }
 
-    public void setBackdropImage(Bitmap backdropImage, String patientName) {
-        ImageView imageView = findViewById(R.id.activity_patient_dashboard_backdrop);
-        imageView.setImageBitmap(backdropImage);
-        imageView.setOnClickListener(view -> ImageUtils.showPatientPhoto(this, backdropImage, patientName));
-    }
-
     public void setupUpdateDeleteActionFAB() {
         additionalActionsFAB = findViewById(R.id.activity_dashboard_action_fab);
         updateFAB = findViewById(R.id.activity_dashboard_update_fab);

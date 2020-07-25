@@ -140,16 +140,34 @@ We follow the sprint model for development. Read more about it here: [OpenMRS Sp
 
 To release the application, make sure to do these steps **in order**:
 
-1. Update the [version variable in build.gradle](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/openmrs-client/build.gradle#L21) prior to the release.
+1. Update the [version variable in versions.gradle](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/openmrs-client/versions.gradle#L6) prior to the release.
 3. Update the [Release notes](#Release-Notes) section.
 4. Update the [release notes text file](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/openmrs-client/src/main/play/release-notes/en-US/default.txt) to publish in the Play store. Ideally change the wording so that normal end users understand.
 5. Now commit with the title `Release <version number here>` to the master branch.
 6. Tag the commit, using the version as the tag name. Make sure CI is green!
 7. Go to [the releases page](https://github.com/openmrs/openmrs-contrib-android-client/releases) and click the [Draft a new release](https://github.com/openmrs/openmrs-contrib-android-client/releases/new) button. It will create a new version tag in the repository and build the app. The tag name will be used as the version number for this. Be sure to bump unfinished issues to the next due version.
 8. Go to [JIRA's releases page](https://issues.openmrs.org/projects/AC?selectedItem=com.atlassian.jira.jira-projects-plugin:release-page), click on the three-dots on the right, and hit **Release**.
-9. [Optional] Post a new Talk thread and describe what is changed or improved in the release.
+9. Post a new Talk thread and describe what is changed or improved in the release.
 
 # Release Notes
+
+
+### Version 2.8.4
+
+1. Create admission form (#696)
+2. Migrate Java code to Kotlin (#757, #766, #765, #764, #767)
+3. Fix Floating Action Button bugs (#763, #769)
+4. Add crop image feature in patient registration (#768)
+5. Update UI to follow material design (#770, #778, #777)
+6. Upgrade dependencies to the latest versions (#772)
+7. Add expandable FAB for provider dashboard (#773)
+8. Add empty active visits view (#771)
+9. Mark patient deceased using coded response (#774)
+10. Removed swipe actions in provider dashboard (#775)
+11. Fix the reverse flipping bug in patient dashboard (#779)
+12. Add allergy tab to fetch allergies from server (#780)
+13. Finish migration from ActiveAndroid to Room (#781, #783)
+14. Add repository layer in visit dashboard (#782)
 
 ### Version 2.8.3
 

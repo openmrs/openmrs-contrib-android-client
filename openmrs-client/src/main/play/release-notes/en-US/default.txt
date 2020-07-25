@@ -1,11 +1,10 @@
-- Fixed critical bugs
-- Add showcase view for manage providers module
-- Refined custom dialog box in add patient activity
-- Start visit is disabled in offline mode
-- Add option for 'Unknown' patients when registering
-- Change main font to Roboto
-- Fixed app crash on lower API devices
-- Avoid keyboard blocking SnackBar messages
-- Fix ill formed provider fields
-- UI overhaul, better compliant with Material UI guidelines
-- Add offline support for provider module
+- Create admission form
+- Fix Floating Action Button bugs
+- Add crop image feature in patient registration
+- Update UI to follow material design
+- Add expandable FAB for provider dashboard
+- Add empty active visits view
+- Mark patient deceased using coded response
+- Removed swipe actions in provider dashboard
+- Fix the reverse flipping bug in patient dashboard
+- Add allergy tab to fetch allergies from server

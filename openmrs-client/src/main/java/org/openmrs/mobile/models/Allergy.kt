@@ -14,8 +14,10 @@
 
 package org.openmrs.mobile.models
 
+import androidx.room.TypeConverters
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import org.openmrs.mobile.models.typeConverters.AllergyReactionConverter
 
 class Allergy : Resource() {
 
@@ -31,6 +33,7 @@ class Allergy : Resource() {
     @Expose
     var comment: String? = null
 
+    @TypeConverters(AllergyReactionConverter::class)
     @SerializedName("reactions")
     @Expose
     var reactions: List<AllergyReaction> = ArrayList()

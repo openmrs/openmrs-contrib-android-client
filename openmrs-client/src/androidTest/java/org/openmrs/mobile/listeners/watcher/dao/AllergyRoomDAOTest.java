@@ -60,9 +60,9 @@ public class AllergyRoomDAOTest {
     public void deleteAllAllergies_shouldDeleteAllAllergiesCorrectly() {
         allergyRoomDAO.saveAllergy(allergyEntity1);
         allergyRoomDAO.saveAllergy(allergyEntity2);
-        Assert.assertEquals(allergyRoomDAO.getAllAllergies().size(), 2L);
-        allergyRoomDAO.deleteAllAllergies();
-        Assert.assertEquals(allergyRoomDAO.getAllAllergies().size(), 0L);
+        Assert.assertEquals(allergyRoomDAO.getAllAllergiesByPatientID("1").size(), 1L);
+        allergyRoomDAO.deleteAllPatientAllergy("1");
+        Assert.assertEquals(allergyRoomDAO.getAllAllergiesByPatientID("1").size(), 0L);
     }
 
     @Test
@@ -70,16 +70,16 @@ public class AllergyRoomDAOTest {
         allergyRoomDAO.saveAllergy(allergyEntity1);
         allergyEntity1.setComment("changed");
         allergyRoomDAO.updateAllergy(allergyEntity1);
-        Assert.assertEquals(renderAllergyString(allergyRoomDAO.getAllAllergies().get(0)), renderAllergyString(allergyEntity1));
+        Assert.assertEquals(renderAllergyString(allergyRoomDAO.getAllAllergiesByPatientID("1").get(0)), renderAllergyString(allergyEntity1));
     }
 
     @Test
     public void getAllAllergies_shouldGetAllAllergiesCorrectly() {
         allergyRoomDAO.saveAllergy(allergyEntity1);
         allergyRoomDAO.saveAllergy(allergyEntity2);
-        Assert.assertEquals(allergyRoomDAO.getAllAllergies().size(), 2L);
-        Assert.assertEquals(renderAllergyString(allergyRoomDAO.getAllAllergies().get(0)), renderAllergyString(allergyEntity1));
-        Assert.assertEquals(renderAllergyString(allergyRoomDAO.getAllAllergies().get(1)), renderAllergyString(allergyEntity2));
+        Assert.assertEquals(allergyRoomDAO.getAllAllergiesByPatientID("2").size(), 1L);
+        Assert.assertEquals(renderAllergyString(allergyRoomDAO.getAllAllergiesByPatientID("1").get(0)), renderAllergyString(allergyEntity1));
+        Assert.assertEquals(renderAllergyString(allergyRoomDAO.getAllAllergiesByPatientID("2").get(0)), renderAllergyString(allergyEntity2));
     }
 
     private AllergyEntity createAllergyEntity(long id, String patientID, String comment, String severityDisplay, String severityUUID, String allergenDisplay, String allergenUUID) {

@@ -39,17 +39,17 @@ public class PatientDashboardAllergyPresenter extends PatientDashboardMainPresen
         this.patientId = patientId;
         this.patientDAO = new PatientDAO();
         this.mPatient = patientDAO.findPatientByID(patientId);
-        allergyRepository = new AllergyRepository();
+        allergyRepository = new AllergyRepository(patientId);
         restApi = RestServiceBuilder.createService(RestApi.class);
         mPatientAllergyView.setPresenter(this);
     }
 
-    public PatientDashboardAllergyPresenter(Patient patient, PatientDashboardContract.ViewPatientAllergy viewPatientAllergy, RestApi restApi) {
+    public PatientDashboardAllergyPresenter(Patient patient, PatientDashboardContract.ViewPatientAllergy viewPatientAllergy, RestApi restApi, AllergyRepository allergyRepository) {
         this.mPatientAllergyView = viewPatientAllergy;
         this.mPatient = patient;
         this.restApi = restApi;
         this.mPatientAllergyView.setPresenter(this);
-        allergyRepository = new AllergyRepository();
+        this.allergyRepository = allergyRepository;
     }
 
     @Override

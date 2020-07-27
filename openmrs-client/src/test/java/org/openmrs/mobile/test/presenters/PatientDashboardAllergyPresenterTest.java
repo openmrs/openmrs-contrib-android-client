@@ -26,8 +26,11 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.allergy.PatientAllergyFragment;
 import org.openmrs.mobile.activities.patientdashboard.allergy.PatientDashboardAllergyPresenter;
 import org.openmrs.mobile.api.RestApi;
+import org.openmrs.mobile.api.repository.AllergyRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
+import org.openmrs.mobile.dao.AllergyRoomDAO;
+import org.openmrs.mobile.databases.AppDatabaseHelper;
 import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
@@ -39,12 +42,14 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.Mockito.RETURNS_MOCKS;
 import static org.mockito.Mockito.verify;
 
 @PrepareForTest({NetworkUtils.class,
         ToastUtil.class,
         OpenMRS.class,
-        OpenMRSLogger.class})
+        OpenMRSLogger.class,
+        AppDatabaseHelper.class})
 public class PatientDashboardAllergyPresenterTest extends ACUnitTestBaseRx {
     @Rule
     public InstantTaskExecutorRule taskExecutorRule = new InstantTaskExecutorRule();
@@ -57,6 +62,8 @@ public class PatientDashboardAllergyPresenterTest extends ACUnitTestBaseRx {
     @Mock
     private OpenMRS openMRS;
     @Mock
+    private AppDatabaseHelper appDatabaseHelper;
+    @Mock
     private PatientDashboardContract.ViewPatientAllergy viewPatientAllergy;
 
     private PatientDashboardAllergyPresenter presenter;
@@ -66,8 +73,11 @@ public class PatientDashboardAllergyPresenterTest extends ACUnitTestBaseRx {
     @Before
     public void setUp() {
         super.setUp();
+        AllergyRoomDAO allergyRoomDAO = Mockito.mock(AllergyRoomDAO.class, RETURNS_MOCKS);
         patient = createPatient(1L);
-        presenter = new PatientDashboardAllergyPresenter(patient, viewPatientAllergy, restApi);
+        AllergyRepository allergyRepository = new AllergyRepository();
+        allergyRepository.setRepositoryValues(patient.getId().toString(), allergyRoomDAO);
+        presenter = new PatientDashboardAllergyPresenter(patient, viewPatientAllergy, restApi, allergyRepository);
         mockStaticMethods();
     }
 
@@ -75,6 +85,7 @@ public class PatientDashboardAllergyPresenterTest extends ACUnitTestBaseRx {
         PowerMockito.mockStatic(NetworkUtils.class);
         PowerMockito.mockStatic(OpenMRS.class);
         PowerMockito.mockStatic(OpenMRSLogger.class);
+        PowerMockito.mockStatic(AppDatabaseHelper.class);
         Mockito.lenient().when(OpenMRS.getInstance()).thenReturn(openMRS);
         PowerMockito.when(openMRS.getOpenMRSLogger()).thenReturn(openMRSLogger);
         PowerMockito.mockStatic(ToastUtil.class);

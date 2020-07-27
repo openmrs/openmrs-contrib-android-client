@@ -26,15 +26,15 @@ import java.util.List;
 @Dao
 public interface AllergyRoomDAO {
 
-    @Query("DELETE FROM allergy")
-    void deleteAllAllergies();
-
     @Insert
     long saveAllergy(AllergyEntity allergyEntity);
 
     @Update
     int updateAllergy(AllergyEntity allergyEntity);
 
-    @Query("SELECT * FROM allergy")
-    List<AllergyEntity> getAllAllergies();
+    @Query("SELECT * FROM allergy WHERE patientID = :patientID")
+    List<AllergyEntity> getAllAllergiesByPatientID(String patientID);
+
+    @Query("DELETE FROM allergy WHERE patientID = :patientID")
+    void deleteAllPatientAllergy(String patientID);
 }

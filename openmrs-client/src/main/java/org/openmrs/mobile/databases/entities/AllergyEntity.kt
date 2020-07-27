@@ -17,6 +17,9 @@ package org.openmrs.mobile.databases.entities
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import org.openmrs.mobile.models.AllergyReaction
+import org.openmrs.mobile.models.typeConverters.AllergyReactionConverter
 
 @Entity(tableName = "allergy")
 class AllergyEntity {
@@ -42,6 +45,7 @@ class AllergyEntity {
     @ColumnInfo(name = "allergen_uuid")
     var allergenUUID: String? = null
 
+    @TypeConverters(AllergyReactionConverter::class)
     @ColumnInfo(name = "allergy_reactions")
-    var allergyReactions: String? = null
+    var allergyReactions: List<AllergyReaction>? = null
 }

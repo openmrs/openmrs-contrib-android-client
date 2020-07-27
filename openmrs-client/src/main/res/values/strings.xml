@@ -19,29 +19,22 @@
     <string name="action_settings">Settings</string>
     <string name="action_logout">Logout</string>
     <string name="action_location">Location</string>
-    <string name="dbname">openmrs.db</string>
-    <string name="aadbname">aaopenmrs.db</string>
 
     <string name="alphanumeric_postal_code">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 </string>
 
     <!-- Login view -->
     <string name="login_button">Login</string>
-    <string name="login_url_hint">URL address</string>
     <string name="login_username_hint">Username</string>
     <string name="login_password_hint">Password</string>
     <string name="login_location_select">Session Location</string>
-    <string name="login_required">Required</string>
     <string name="req_star"><![CDATA[<font color=\'#616161\'> * </font>]]></string>
     <string name="warning_dialog_title">Warning</string>
     <string name="warning_lost_data_dialog">Changing the URL, username or password will erase all the data. Are you sure?</string>
-    <string name="forgot_dialog_title">Unable to login?</string>
-    <string name="forgot_dialog_message">Please contact the system administrator</string>
     <string name="forgot_button_ok">Dismiss</string>
     <string name="login_offline">Offline</string>
     <string name="login_online">Online</string>
 
     <string name="emptyerror">Required</string>
-    <string name="fname_empty_error">Given name required</string>
     <string name="fname_invalid_error">Given name cannot contain symbols or numbers</string>
     <string name="midname_invalid_error">Middle name cannot contain symbols or numbers</string>
     <string name="lname_invalid_error">Family name cannot contain symbols or numbers</string>
@@ -58,7 +51,6 @@
     <string name="addr2_hint">Address 2</string>
     <string name="addr_invalid_error">Address cannot contain invalid characters</string>
     <string name="atleastone">Fill at least one address field</string>
-    <string name="incorrect_country">Country name incorrect</string>
 
     <string name="male">Male</string>
     <string name="female">Female</string>
@@ -216,7 +208,6 @@
     <string name="visit_dashboard_label">Encounters</string>
     <string name="list_visit_selector_show">show details</string>
     <string name="list_visit_selector_hide">hide details</string>
-    <string name="list_item_encounter_no_notes">No notes for this encounter.</string>
     <string name="visit_exp_list_empty">Visit has no encounters yet.</string>
 
     <!-- Capture Vitals activity -->
@@ -310,23 +301,18 @@
     <string name="action_provider_management">Manage Providers</string>
     <string name="unable_to_fetch_providers">Unable to fetch Providers!</string>
     <string name="device_offline_msg">Device Offline!</string>
-    <string name="fab_label_update">Update</string>
-    <string name="fab_label_delete">Delete</string>
 
     <!-- Provider Management -->
     <string name="provider_manager">Provider Manager</string>
     <string name="action_find_providers">Find Providers</string>
     <string name="delete_provider_success_msg">Successfully deleted the provider!</string>
-    <string name="delete_provider_no_network_msg">Cannot delete providers when offline!</string>
     <string name="delete_provider_failure_msg">Failed to delete provider.</string>
     <string name="firstname_hint">First Name</string>
     <string name="lastname_hint">Last Name</string>
     <string name="identifier_hint">Identifier</string>
     <string name="identifier_description">* Identifier can be anything. Eg. Doctor, Nurse, Clerk, etc</string>
-    <string name="add_provider_no_network_msg">Cannot add provider when offline.</string>
     <string name="add_provider_success_msg">Successfully added provider.</string>
     <string name="add_provider_failure_msg">Failed to add provider.</string>
-    <string name="edit_provider_no_network_msg">Cannot edit provider when offline.</string>
     <string name="edit_provider_success_msg">Successfully edited provider.</string>
     <string name="edit_provider_failure_msg">Failed to edit provider.</string>
     <string name="title_provider_info">Provider Info</string>
@@ -381,13 +367,6 @@
     <string name="authenticate_check_service_error_response_message">Error in Authenticate Check Service Response</string>
     <string name="authenticate_service_error_message">Error in Authenticate Check Service</string>
 
-    <!--CameraOrGalleryPickerDialog-->
-    <string-array name="dialog_options">
-        <item>Take a photo</item>
-        <item>Choose another</item>
-        <item>Remove photo</item>
-    </string-array>
-
     <!--ChartsView Activity-->
     <string name="dataset_entry_label">Label</string>
 
@@ -397,13 +376,9 @@
     <!--CustomFragment Dialog-->
     <string name="application_exit_logger_message">Exit application</string>
 
-    <!--User Service-->
-    <string name="error_fetching_user_data_message">Couldn\'t fetch user data</string>
-
     <!--FormDisplay presenter-->
     <string name="form_data_will_be_synced_later_error_message">\"Patient not yet registered. No internet connection. Form data is saved locally and will sync when internet connection is restored. \"</string>
     <string name="form_data_sync_is_off_message">Sync is off. Turn on sync to save form data.</string>
-    <string name="form_data_saved_successfully">%1$s data saved successfully</string>
 
     <!--FormDisplayPage Fragment-->
     <string name="all_fields_empty_error_message">All fields cannot be empty</string>
@@ -417,7 +392,6 @@
 
     <!--Login presenter-->
     <string name="failed_fetching_visit_type_error_message">Failed to fetch visit type</string>
-    <string name="failed_fetching_servers_location">Failed to fetch server\'s locations</string>
 
     <!--Logs Fragment-->
     <string name="logs_copied_to_clipboard_message">Logs copied to clipboard</string>
@@ -425,18 +399,10 @@
     <!--MergePatientsRecyclerView Adapter-->
     <string name="only_one_patient_can_be_selected_notification_message">You can select only one similar patient</string>
 
-    <!--PatientBirthDayValidatorWatcher-->
-    <string name="input_too_big_error_message">Input is too big</string>
-    <string name="patient_age_out_of_bounds_error_message">Patient\'s age must be between 0 and %1$i </string>
-
     <!--PatinetDashboardVisits presenter-->
     <string name="offline_mode_not_supported">Cannot start a patient visit manually in offline mode.</string>
-    <string name="alternate_method_of_adding_encounters_in_offline_mode_error_message">If you want to add encounters please do so in the Form Entry section, they will be synced with an automatic new visit.</string>
 
     <!--PatientRepository-->
-    <string name="patient_cannot_be_synced_due_to_server_error_message">"Patient[ %1$i ] cannot be synced due to server error %2$s </string>
-    <string name="patient_cannot_be_synced_due_to_request_error_message">"Patient[ %1$i ] cannot be synced due to request error %2$s </string>
-    <string name="patient_update_unsuccessful_server_error">Patient %1$s cannot be updated due to server error will retry sync %2$s</string>
     <string name="offline_mode_patient_data_saved_locally_notification_message">Sync is off. Patient Update data is saved locally and will sync when online mode is restored.</string>
     <string name="patent_and_form_data_sync_resumed">Syncing switched on, attempting to sync patients and form data</string>
 

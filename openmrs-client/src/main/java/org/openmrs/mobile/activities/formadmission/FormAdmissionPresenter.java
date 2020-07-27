@@ -84,8 +84,8 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
 
     @Override
     public void getProviders(FormAdmissionFragment fragment) {
-        ProviderRepository providerRepository = new ProviderRepository();
-        providerRepository.getProvidersWithoutStorage(restApi).observe(fragment, this::updateViews);
+        ProviderRepository providerRepository = new ProviderRepository(mContext);
+        providerRepository.getProviders(restApi).observe(fragment, this::updateViews);
     }
 
     @Override

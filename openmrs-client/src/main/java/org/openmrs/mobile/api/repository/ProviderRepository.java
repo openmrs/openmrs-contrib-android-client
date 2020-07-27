@@ -110,42 +110,6 @@ public class ProviderRepository {
         return providerLiveData;
     }
 
-    public LiveData<List<Provider>> getProvidersWithoutStorage(RestApi restApi) {
-
-        final MutableLiveData<List<Provider>> providerLiveData = new MutableLiveData<>();
-        if (NetworkUtils.isOnline()) {
-
-            restApi.getProviderList().enqueue(new Callback<Results<Provider>>() {
-                @Override
-                public void onResponse(@NotNull Call<Results<Provider>> call, @NotNull Response<Results<Provider>> response) {
-                    if (response.isSuccessful()) {
-                        if (!response.body().getResults().isEmpty()) {
-                            providerLiveData.setValue(response.body().getResults());
-                        } else {
-                            providerLiveData.setValue(null);
-                        }
-                    } else {
-                        OpenMRS.getInstance().getOpenMRSLogger().e("Reading providers failed. Response: " + response.errorBody());
-                        ToastUtil.error(OpenMRS.getInstance().getString(R.string.unable_to_fetch_providers));
-                        providerLiveData.setValue(null);
-                    }
-                }
-
-                @Override
-                public void onFailure(@NotNull Call<Results<Provider>> call, @NotNull Throwable t) {
-                    OpenMRS.getInstance().getOpenMRSLogger().e("Reading providers failed.", t);
-                    ToastUtil.error(OpenMRS.getInstance().getString(R.string.unable_to_fetch_providers));
-                    providerLiveData.setValue(null);
-                }
-            });
-        } else {
-            ToastUtil.error(OpenMRS.getInstance().getString(R.string.device_offline_msg));
-            OpenMRS.getInstance().getOpenMRSLogger().e("Failed to read providers. Device Offline");
-        }
-
-        return providerLiveData;
-    }
-
     public void addProvider(RestApi restApi, Provider provider, CustomApiCallback callback) {
 
         if (NetworkUtils.isOnline()) {

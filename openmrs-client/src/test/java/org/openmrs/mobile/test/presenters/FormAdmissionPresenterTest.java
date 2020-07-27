@@ -30,8 +30,10 @@ import org.openmrs.mobile.activities.formadmission.FormAdmissionContract;
 import org.openmrs.mobile.activities.formadmission.FormAdmissionFragment;
 import org.openmrs.mobile.activities.formadmission.FormAdmissionPresenter;
 import org.openmrs.mobile.api.RestApi;
+import org.openmrs.mobile.api.repository.ProviderRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
+import org.openmrs.mobile.dao.ProviderRoomDAO;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Resource;
@@ -45,9 +47,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import io.reactivex.Single;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.RETURNS_MOCKS;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @PrepareForTest({NetworkUtils.class,
         ToastUtil.class,
@@ -58,6 +66,8 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
     public InstantTaskExecutorRule taskExecutorRule = new InstantTaskExecutorRule();
     MutableLiveData<List<Provider>> providerLiveData = Mockito.mock(MutableLiveData.class);
     List<Provider> providerList;
+    Provider providerOne = createProvider(1l, "doctor");
+    Provider providerTwo = createProvider(2l, "nurse");
     @Mock
     private RestApi restApi;
     @Mock
@@ -72,29 +82,38 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
     private Context context;
     @Mock
     private Resources resources;
-
-
     private FormAdmissionPresenter formAdmissionPresenter;
+    private ProviderRepository providerRepository;
     private FormAdmissionFragment fragment = new FormAdmissionFragment();
 
     @Before
     public void setUp() {
+        providerList = Arrays.asList(providerOne, providerTwo);
+        providerLiveData.postValue(providerList);
+
+        this.providerRepository = new ProviderRepository();
+        ProviderRoomDAO providerRoomDao = Mockito.mock(ProviderRoomDAO.class, RETURNS_MOCKS);
+        ProviderRoomDAO spyProviderRoomDao = spy(providerRoomDao);
+
+        Single listSingle = Mockito.mock(Single.class);
+        doNothing().when(spyProviderRoomDao).updateProviderByUuid(Mockito.anyString(), Mockito.anyLong(), Mockito.any(), Mockito.anyString(), Mockito.anyString());
+        when(spyProviderRoomDao.getProviderList()).thenReturn(listSingle);
+        when(listSingle.blockingGet()).thenReturn(providerList);
+
+        this.providerRepository.setProviderRoomDao(spyProviderRoomDao);
+
+
         formAdmissionPresenter = new FormAdmissionPresenter(formAdmissionView, restApi, context);
         mockStaticMethods();
     }
 
     @Test
     public void shouldGetProviders_AllOK() {
-        Provider providerOne = createProvider(1l, "doctor");
-        Provider providerTwo = createProvider(2l, "nurse");
-        providerList = Arrays.asList(providerOne, providerTwo);
-        providerLiveData.postValue(providerList);
-
         Mockito.lenient().when(NetworkUtils.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.getProviderList()).thenReturn(mockSuccessCall(providerList));
 
-        formAdmissionPresenter.getProviders(fragment);
         formAdmissionPresenter.updateViews(providerList);
+        providerRepository.getProviders(restApi).observeForever(observer);
 
         verify(restApi).getProviderList();
         verify(formAdmissionView).updateProviderAdapter(providerList);
@@ -105,7 +124,7 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
         Mockito.lenient().when(NetworkUtils.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.getProviderList()).thenReturn(mockErrorCall(401));
 
-        formAdmissionPresenter.getProviders(fragment);
+        providerRepository.getProviders(restApi).observeForever(observer);
         verify(restApi).getProviderList();
     }
 

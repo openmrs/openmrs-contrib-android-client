@@ -17,29 +17,22 @@
     <string name="action_settings">समायोजन</string>
     <string name="action_logout">लॉग आउट</string>
     <string name="action_location">स्थान</string>
-    <string name="dbname">openmrs.db</string>
-    <string name="aadbname">aaopenmrs.db</string>
 
     <string name="alphanumeric_postal_code">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 </string>
 
     <!-- Login view -->
     <string name="login_button">लॉग इन करें</string>
-    <string name="login_url_hint">url पता</string>
     <string name="login_username_hint">उपयोगकर्ता नाम</string>
     <string name="login_password_hint">कुंजिका</string>
     <string name="login_location_select">सत्र का स्थान</string>
-    <string name="login_required">अपेक्षित</string>
     <string name="req_star"><![CDATA[<font color=\'#616161\'> * </font>]]></string>
     <string name="warning_dialog_title">चेतावनी</string>
     <string name="warning_lost_data_dialog">URL, उपयोगकर्ता नाम या पासवर्ड बदलने से सारा डेटा मिट जाएगा। क्या आपको यकीन है?</string>
-    <string name="forgot_dialog_title">लॉग इन करने में असमर्थ रहा</string>
-    <string name="forgot_dialog_message">कृपया सिस्टम व्यवस्थापक से संपर्क करें</string>
     <string name="forgot_button_ok">खारिज</string>
     <string name="login_offline">ऑफ़लाइन</string>
     <string name="login_online">ऑनलाइन</string>
 
     <string name="emptyerror">अपेक्षित</string>
-    <string name="fname_empty_error">दिए गए नाम की आवश्यकता</string>
     <string name="fname_invalid_error">दिए गए नाम में प्रतीक या संख्या नहीं हो सकती</string>
     <string name="midname_invalid_error">मध्य नाम में प्रतीक या संख्या नहीं हो सकती</string>
     <string name="lname_invalid_error">परिवार के नाम में प्रतीक या संख्या नहीं हो सकती</string>
@@ -56,7 +49,6 @@
     <string name="addr2_hint">पता 2</string>
     <string name="addr_invalid_error">पते में अमान्य वर्ण नहीं हो सकते</string>
     <string name="atleastone">कम से कम एक पता फ़ील्ड भरें</string>
-    <string name="incorrect_country">देश का नाम गलत</string>
 
     <string name="male">पुरुष</string>
     <string name="female">महिला</string>
@@ -208,7 +200,6 @@
     <string name="visit_dashboard_label">मुठभेड़ों</string>
     <string name="list_visit_selector_show">विवरण दिखाएं</string>
     <string name="list_visit_selector_hide">विवरण छिपाएं</string>
-    <string name="list_item_encounter_no_notes">इस मुठभेड़ के लिए कोई नोट नहीं। </string>
     <string name="visit_exp_list_empty">यात्रा का अभी तक कोई सामना नहीं हुआ है। </string>
 
     <!-- Capture Vitals activity -->
@@ -303,23 +294,18 @@
     <string name="action_provider_management">प्रदाता प्रबंधित करें</string>
     <string name="unable_to_fetch_providers">प्रोवाइडर्स लाने में असमर्थ!</string>
     <string name="device_offline_msg">डिवाइस ऑफ़लाइन!</string>
-    <string name="fab_label_update">अपडेट</string>
-    <string name="fab_label_delete">हटाएं</string>
 
     <!-- Provider Management -->
     <string name="provider_manager">प्रदाता प्रबंधक</string>
     <string name="action_find_providers">प्रदाता खोजें</string>
     <string name="delete_provider_success_msg">प्रदाता को सफलतापूर्वक हटा दिया गया!!</string>
-    <string name="delete_provider_no_network_msg">ऑफ़लाइन होने पर प्रदाताओं को हटा नहीं सकता!</string>
     <string name="delete_provider_failure_msg">प्रदाता को हटाने में विफल.</string>
     <string name="firstname_hint">पहला नाम</string>
     <string name="lastname_hint">अंतिम नाम</string>
     <string name="identifier_hint">पहचानकर्ता</string>
     <string name="identifier_description">* पहचानकर्ता कुछ भी हो सकता है। उदाहरण के लिए। डॉक्टर, नर्स, क्लर्क, आदि</string>
-    <string name="add_provider_no_network_msg">ऑफ़लाइन होने पर प्रदाता नहीं जोड़ा जा सकता.</string>
     <string name="add_provider_success_msg">सफलतापूर्वक जोड़ा गया प्रदाता.</string>
     <string name="add_provider_failure_msg">प्रदाता जोड़ने में विफल.</string>
-    <string name="edit_provider_no_network_msg">ऑफ़लाइन होने पर प्रदाता को संपादित नहीं किया जा सकता.</string>
     <string name="edit_provider_success_msg">सफलतापूर्वक संपादित.</string>
     <string name="edit_provider_failure_msg">प्रदाता को संपादित करने में विफल.</string>
     <string name="title_provider_info">प्रदाता जानकारी</string>
@@ -396,33 +382,24 @@
     <string name="dob_error_for_unidentified">कृपया रोगी की उम्र का अनुमान दें</string>
     <string name="patent_and_form_data_sync_resumed">सिंकिंग चालू है, रोगियों को सिंक करने और डेटा बनाने का प्रयास कर रहा है</string>
     <string name="offline_mode_patient_data_saved_locally_notification_message">सिंक बंद है। रोगी अद्यतन डेटा स्थानीय रूप से सहेजा जाता है और ऑनलाइन मोड बहाल होने पर सिंक होगा।</string>
-    <string name="patient_update_unsuccessful_server_error">%1$s को सर्वर त्रुटि के कारण अपडेट नहीं किया जा सकता है, सिंक %2$s को पुनः प्रयास करेगा</string>
-    <string name="patient_cannot_be_synced_due_to_request_error_message">रोगी [%1$i] अनुरोध त्रुटि%2$s के कारण समन्वयित नहीं किया जा सकता है</string>
-    <string name="patient_cannot_be_synced_due_to_server_error_message">रोगी [%1$i] को सर्वर त्रुटि%2$s के कारण समन्‍वयित नहीं किया जा सकता है</string>
-    <string name="alternate_method_of_adding_encounters_in_offline_mode_error_message">यदि आप प्रपत्र प्रविष्टि अनुभाग में ऐसा करना चाहते हैं, तो वे एक स्वचालित नई यात्रा के साथ समन्वयित होंगे।</string>
-    <string name="patient_age_out_of_bounds_error_message">ऑफ़लाइन मोड में मैन्युअल रूप से रोगी की यात्रा शुरू नहीं कर सकता। रोगी की आयु 0 और%1$i के बीच होनी चाहिए</string>
-    <string name="input_too_big_error_message">"इनपुट बहुत बड़ा है "</string>
     <string name="only_one_patient_can_be_selected_notification_message">आप केवल एक समान रोगी का चयन कर सकते हैं</string>
     <string name="all_fields_empty_error_message">सभी फ़ील्ड रिक्त नहीं हो सकते</string>
     <string name="no_such_form_name_error_message">%1$s नामक कोई मुठभेड़ प्रकार नहीं है</string>
     <string name="failed_fetching_patient_data_error_message">रोगी डेटा लाने में विफल</string>
     <string name="invalid_URL_message">अवैध यूआरएल</string>
     <string name="failed_fetching_visit_type_error_message">यात्रा प्रकार लाने में विफल</string>
-    <string name="failed_fetching_servers_location">सर्वर के स्थानों को लाने में विफल</string>
     <string name="logs_copied_to_clipboard_message">क्लिपबोर्ड पर कॉपी किए गए लॉग</string>
     <string name="authenticate_check_service_error_response_message">प्रामाणिक जाँच सेवा प्रतिक्रिया में त्रुटि</string>
     <string name="authenticate_service_error_message">प्रमाणिक जाँच सेवा में त्रुटि</string>
     <string name="dataset_entry_label">लेबल</string>
     <string name="downloading_concepts_notification_message">डाउनलोडिंग कॉन्सेप्ट</string>
     <string name="application_exit_logger_message">छोड़ने के लिए प्रार्थनापत्र</string>
-    <string name="error_fetching_user_data_message">उपयोगकर्ता डेटा प्राप्त नहीं किया जा सका</string>
 
     <string name="patient_update_successful">रोगी %1$s अपडेट किया गया</string>
     <string name="patient_update_unsuccessful">"रोगी %1$s को सर्वर त्रुटि के कारण समन्‍वयित नहीं किया जा सकता है "</string>
     <string name="patient_photo_update_unsuccessful">सर्वर त्रुटि के कारण रोगी की फोटो को सिंक नहीं किया जा सकता है: %1$s</string>
     <string name="form_data_will_be_synced_later_error_message">रोगी अभी तक पंजीकृत नहीं है। कोई इंटरनेट कनेक्शन नहीं। प्रपत्र डेटा स्थानीय रूप से सहेजा जाता है और इंटरनेट कनेक्शन बहाल होने पर सिंक होगा।</string>
     <string name="form_data_sync_is_off_message">सिंक बंद है। फ़ॉर्म डेटा सहेजने के लिए सिंक चालू करें।</string>
-    <string name="form_data_saved_successfully">%1$s डेटा सफलतापूर्वक सहेजा गया</string>
     <string name="unidentified_patient_name">अज्ञात रोगी</string>
     <string name="snackbar_server_error">दर्ज किया गया सर्वर वर्तमान में नीचे है, कृपया एक अलग चुनें।</string>
     <string name="snackbar_empty_visit_list">मेनू से फॉर्म एंट्री का चयन करें</string>

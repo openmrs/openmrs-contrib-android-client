@@ -21,22 +21,13 @@
     <dimen name="dashboard_text_size">18sp</dimen>
     <dimen name="dashboard_text_top_margin">10dp</dimen>
     <dimen name="dashboard_text_bottom_margin">15dp</dimen>
-    <dimen name="visit_dashboard_encounter_type_icon_margin">10dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="settings_list_separator_margin">5dp</dimen>
-    <dimen name="settings_list_separator_width">1dp</dimen>
-    <dimen name="settings_list_padding">6dp</dimen>
-    <dimen name="settings_download_button_height">40dp</dimen>
-    <dimen name="settings_list_text_detail_size">12sp</dimen>
     <dimen name="settings_list_text_title_size">16sp</dimen>
     <dimen name="settings_icon_size">24dp</dimen>
-    <dimen name="settings_icon_margin">16dp</dimen>
     <dimen name="text_size_large">18sp</dimen>
     <dimen name="information_icon_size">48dp</dimen>
     <dimen name="margin_short">8dp</dimen>
     <dimen name="margin_long">16dp</dimen>
     <dimen name="margin_small">4dp</dimen>
-    <dimen name="margin_new_heading">24dp</dimen>
     <dimen name="size_sub_body">14sp</dimen>
     <dimen name="label_margin_wide">32dp</dimen>
     <dimen name="big_heading">18dp</dimen>
@@ -44,7 +35,6 @@
     <dimen name="fab_bottom_margin_4">4dp</dimen>
     <dimen name="custom_fab_bottom_margin_55">55dp</dimen>
     <dimen name="custom_fab_bottom_margin_105">105dp</dimen>
-    <dimen name="custom_fab_bottom_margin_155">155dp</dimen>
     <dimen name="custom_fab_standard_21">21dp</dimen>
     <dimen name="padding_16">16dp</dimen>
 

@@ -75,8 +75,7 @@ public class PatientDashboardAllergyPresenterTest extends ACUnitTestBaseRx {
         super.setUp();
         AllergyRoomDAO allergyRoomDAO = Mockito.mock(AllergyRoomDAO.class, RETURNS_MOCKS);
         patient = createPatient(1L);
-        AllergyRepository allergyRepository = new AllergyRepository();
-        allergyRepository.setRepositoryValues(patient.getId().toString(), allergyRoomDAO);
+        AllergyRepository allergyRepository = new AllergyRepository(patient.getId().toString(), allergyRoomDAO);
         presenter = new PatientDashboardAllergyPresenter(patient, viewPatientAllergy, restApi, allergyRepository);
         mockStaticMethods();
     }

@@ -32,9 +32,9 @@ public interface AllergyRoomDAO {
     @Update
     int updateAllergy(AllergyEntity allergyEntity);
 
-    @Query("SELECT * FROM allergy WHERE patientID = :patientID")
-    List<AllergyEntity> getAllAllergiesByPatientID(String patientID);
+    @Query("SELECT * FROM allergy WHERE patientId = :patientId")
+    List<AllergyEntity> getAllAllergiesByPatientID(String patientId);
 
-    @Query("DELETE FROM allergy WHERE patientID = :patientID")
-    void deleteAllPatientAllergy(String patientID);
+    @Query("DELETE FROM allergy WHERE patientId = :patientId")
+    void deleteAllPatientAllergy(String patientId);
 }

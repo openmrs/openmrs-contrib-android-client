@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c541a3f470f3d4f481c4eda5dcf1ba88",
+    "identityHash": "9ce04f6ec616f483e7380864d70335b6",
     "entities": [
       {
         "tableName": "concepts",
@@ -698,7 +698,7 @@
       },
       {
         "tableName": "allergy",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `patientID` TEXT, `comment` TEXT, `severity_display` TEXT, `severity_uuid` TEXT, `allergen_display` TEXT, `allergen_uuid` TEXT, `allergy_reactions` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT, `patientId` TEXT, `comment` TEXT, `severity_display` TEXT, `severity_uuid` TEXT, `allergen_display` TEXT, `allergen_uuid` TEXT, `allergy_reactions` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -708,7 +708,7 @@
           },
           {
             "fieldPath": "patientId",
-            "columnName": "patientID",
+            "columnName": "patientId",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -762,7 +762,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"c541a3f470f3d4f481c4eda5dcf1ba88\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9ce04f6ec616f483e7380864d70335b6\")"
     ]
   }
 }

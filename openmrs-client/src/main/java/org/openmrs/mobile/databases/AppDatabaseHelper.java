@@ -331,6 +331,14 @@ public class AppDatabaseHelper {
         return allergyEntity;
     }
 
+    public static List<Allergy> allergyEntityListToAllergyList(List<AllergyEntity> entities) {
+        ArrayList<Allergy> allergies = new ArrayList<>();
+        for (AllergyEntity allergyEntity : entities) {
+            allergies.add(AppDatabaseHelper.allergyEntityToAllergy(allergyEntity));
+        }
+        return allergies;
+    }
+
     public static <T> Observable<T> createObservableIO(final Callable<T> func) {
         return Observable.fromCallable(func)
                 .subscribeOn(Schedulers.io());

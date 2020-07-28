@@ -27,7 +27,7 @@ class AllergyEntity {
     @ColumnInfo(name = "_id")
     var id: Long? = null
 
-    @ColumnInfo(name = "patientID")
+    @ColumnInfo(name = "patientId")
     var patientId: String? = null
 
     @ColumnInfo(name = "comment")

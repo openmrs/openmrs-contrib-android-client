@@ -37,6 +37,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static org.openmrs.mobile.databases.AppDatabaseHelper.allergyEntityListToAllergyList;
+
 public class AllergyRepository {
     AllergyRoomDAO allergyRoomDAO;
     String patientID;
@@ -48,19 +50,15 @@ public class AllergyRepository {
         allergyRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance()).allergyRoomDAO();
     }
 
-    public AllergyRepository() {
-
-    }
-
-    public void setRepositoryValues(String id, AllergyRoomDAO allergyRoomDAO) {
+    public AllergyRepository(String id, AllergyRoomDAO allergyRoomDAO) {
         this.patientID = id;
         this.allergyRoomDAO = allergyRoomDAO;
     }
 
-
     public LiveData<List<Allergy>> getAllergies(RestApi restApi, String uuid) {
         MutableLiveData<List<Allergy>> allergyLiveData = new MutableLiveData<>();
         allergyEntitiesOffline = allergyRoomDAO.getAllAllergiesByPatientID(patientID);
+        allergyLiveData.setValue(allergyEntityListToAllergyList(allergyEntitiesOffline));
 
         if (NetworkUtils.isOnline()) {
             restApi.getAllergies(uuid).enqueue(new Callback<Results<Allergy>>() {
@@ -75,27 +73,15 @@ public class AllergyRepository {
                         allergyLiveData.setValue(allergyList);
                     } else {
                         ToastUtil.error(OpenMRS.getInstance().getString(R.string.unable_to_fetch_allergies));
-                        allergyLiveData.setValue(entityListToAllergy(allergyEntitiesOffline));
                     }
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<Results<Allergy>> call, @NotNull Throwable t) {
                     ToastUtil.error(OpenMRS.getInstance().getString(R.string.unable_to_fetch_allergies));
-                    allergyLiveData.setValue(entityListToAllergy(allergyEntitiesOffline));
                 }
             });
-        } else {
-            allergyLiveData.setValue(entityListToAllergy(allergyEntitiesOffline));
         }
         return allergyLiveData;
-    }
-
-    private List<Allergy> entityListToAllergy(List<AllergyEntity> entities) {
-        ArrayList<Allergy> allergies = new ArrayList<>();
-        for (AllergyEntity allergyEntity : entities) {
-            allergies.add(AppDatabaseHelper.allergyEntityToAllergy(allergyEntity));
-        }
-        return allergies;
     }
 }

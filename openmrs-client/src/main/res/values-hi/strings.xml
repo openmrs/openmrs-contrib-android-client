@@ -437,5 +437,5 @@
     <string name="allergy_severity">तीव्रता</string>
     <string name="allergy_reactions">प्रतिक्रिया</string>
     <string name="empty_allergy_list">रोगी को अभी तक कोई एलर्जी नहीं है।</string>
-    <string name="unable_to_fetch_allergies">एलर्जी लाने में असमर्थ!</string>
+    <string name="unable_to_fetch_allergies">नवीनतम दर्ज एलर्जी प्राप्त करने में असमर्थ!</string>
 </resources>

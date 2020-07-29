@@ -55,6 +55,7 @@ import org.openmrs.mobile.activities.patientdashboard.vitals.PatientVitalsFragme
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.TabUtil;
+import org.openmrs.mobile.utilities.ThemeUtils;
 
 public class PatientDashboardActivity extends ACBaseActivity {
     private String mId;
@@ -120,6 +121,9 @@ public class PatientDashboardActivity extends ACBaseActivity {
     private void initViewPager(PatientDashboardPagerAdapter adapter) {
         final ViewPager viewPager = findViewById(R.id.pager);
         TabLayout tabHost = findViewById(R.id.tabhost);
+        if(ThemeUtils.isDarkModeActivated()) {
+            tabHost.setBackgroundColor(getResources().getColor(R.color.black));
+        }
         viewPager.setOffscreenPageLimit(adapter.getCount() - 1);
         viewPager.setAdapter(adapter);
         tabHost.setupWithViewPager(viewPager);
@@ -141,12 +145,6 @@ public class PatientDashboardActivity extends ACBaseActivity {
         } else if (fragment instanceof PatientAllergyFragment) {
             mPresenter = new PatientDashboardAllergyPresenter(id, ((PatientAllergyFragment) fragment));
         }
-    }
-
-    public void setBackdropImage(Bitmap backdropImage, String patientName) {
-        ImageView imageView = findViewById(R.id.activity_patient_dashboard_backdrop);
-        imageView.setImageBitmap(backdropImage);
-        imageView.setOnClickListener(view -> ImageUtils.showPatientPhoto(this, backdropImage, patientName));
     }
 
     public void setupUpdateDeleteActionFAB() {

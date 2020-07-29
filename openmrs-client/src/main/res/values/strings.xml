@@ -478,5 +478,5 @@
     <string name="allergy_severity">Severity</string>
     <string name="allergy_reactions">Reactions</string>
     <string name="empty_allergy_list">Patient has no allergies yet.</string>
-    <string name="unable_to_fetch_allergies">Unable to fetch Allergies!</string>
+    <string name="unable_to_fetch_allergies">Unable to get the latest recorded allergies!</string>
 </resources>

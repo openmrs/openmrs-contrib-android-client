@@ -21,12 +21,15 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.ObservationDAO;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.databases.entities.AllergyEntity;
 import org.openmrs.mobile.databases.entities.ConceptEntity;
 import org.openmrs.mobile.databases.entities.EncounterEntity;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.databases.entities.ObservationEntity;
 import org.openmrs.mobile.databases.entities.PatientEntity;
 import org.openmrs.mobile.databases.entities.VisitEntity;
+import org.openmrs.mobile.models.Allergen;
+import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Observation;
@@ -121,11 +124,11 @@ public class AppDatabaseHelper {
 
     public static Encounter encounterEntityToEncounter(EncounterEntity entity) {
         Encounter encounter = new Encounter();
-        if(null != entity.getEncounterType()) {
+        if (null != entity.getEncounterType()) {
             encounter.setEncounterType(new EncounterType(entity.getEncounterType()));
         }
         encounter.setId(entity.getId());
-        if(null != entity.getVisitKeyId()) {
+        if (null != entity.getVisitKeyId()) {
             encounter.setVisitID(Long.parseLong(entity.getVisitKeyId()));
         }
         encounter.setUuid(entity.getUuid());
@@ -290,6 +293,50 @@ public class AppDatabaseHelper {
     private static Bitmap byteArrayToBitmap(byte[] imageByteArray) {
         ByteArrayInputStream inputStream = new ByteArrayInputStream(imageByteArray);
         return BitmapFactory.decodeStream(inputStream);
+    }
+
+    public static Allergy allergyEntityToAllergy(AllergyEntity allergyEntity) {
+        Allergy allergy = new Allergy();
+        allergy.setId(allergyEntity.getId());
+
+        allergy.setComment(allergyEntity.getComment());
+
+        if (allergyEntity.getAllergyReactions() != null) {
+            allergy.setReactions(allergyEntity.getAllergyReactions());
+        } else {
+            allergy.setReactions(new ArrayList<>());
+        }
+
+        Allergen allergen = new Allergen();
+        allergen.setCodedAllergen(new Resource(allergyEntity.getAllergenUUID(), allergyEntity.getAllergenDisplay(), new ArrayList<>(), 1));
+        allergy.setAllergen(allergen);
+
+        if (allergyEntity.getSeverityDisplay() != null) {
+            allergy.setSeverity(new Resource(allergyEntity.getSeverityUUID(), allergyEntity.getSeverityDisplay(), new ArrayList<>(), 1));
+        }
+        return allergy;
+    }
+
+    public static AllergyEntity allergyToEntity(Allergy allergy, String patientID) {
+        AllergyEntity allergyEntity = new AllergyEntity();
+        allergyEntity.setPatientId(patientID);
+        allergyEntity.setComment(allergy.getComment());
+        if (allergy.getSeverity() != null) {
+            allergyEntity.setSeverityDisplay(allergy.getSeverity().getDisplay());
+            allergyEntity.setSeverityUUID(allergy.getSeverity().getUuid());
+        }
+        allergyEntity.setAllergenDisplay(allergy.getAllergen().getCodedAllergen().getDisplay());
+        allergyEntity.setAllergenUUID(allergy.getAllergen().getCodedAllergen().getUuid());
+        allergyEntity.setAllergyReactions(allergy.getReactions());
+        return allergyEntity;
+    }
+
+    public static List<Allergy> allergyEntityListToAllergyList(List<AllergyEntity> entities) {
+        ArrayList<Allergy> allergies = new ArrayList<>();
+        for (AllergyEntity allergyEntity : entities) {
+            allergies.add(AppDatabaseHelper.allergyEntityToAllergy(allergyEntity));
+        }
+        return allergies;
     }
 
     public static <T> Observable<T> createObservableIO(final Callable<T> func) {

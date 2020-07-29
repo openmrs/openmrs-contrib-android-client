@@ -20,6 +20,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import org.openmrs.mobile.dao.AllergyRoomDAO;
 import org.openmrs.mobile.dao.ConceptRoomDAO;
 import org.openmrs.mobile.dao.EncounterCreateRoomDAO;
 import org.openmrs.mobile.dao.EncounterRoomDAO;
@@ -30,6 +31,7 @@ import org.openmrs.mobile.dao.ObservationRoomDAO;
 import org.openmrs.mobile.dao.PatientRoomDAO;
 import org.openmrs.mobile.dao.ProviderRoomDAO;
 import org.openmrs.mobile.dao.VisitRoomDAO;
+import org.openmrs.mobile.databases.entities.AllergyEntity;
 import org.openmrs.mobile.databases.entities.ConceptEntity;
 import org.openmrs.mobile.databases.entities.EncounterEntity;
 import org.openmrs.mobile.databases.entities.FormResourceEntity;
@@ -51,7 +53,8 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
         Provider.class,
         FormResourceEntity.class,
         EncounterType.class,
-        Encountercreate.class},
+        Encountercreate.class,
+        AllergyEntity.class},
         version = 1)
 
 public abstract class AppDatabase extends RoomDatabase {
@@ -92,4 +95,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract EncounterTypeRoomDAO encounterTypeRoomDAO();
 
     public abstract EncounterCreateRoomDAO encounterCreateRoomDAO();
+
+    public abstract AllergyRoomDAO allergyRoomDAO();
 }

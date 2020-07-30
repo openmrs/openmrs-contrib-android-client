@@ -16,6 +16,6 @@ package org.openmrs.mobile.listeners.retrofit;
 
 import org.openmrs.mobile.models.VisitType;
 
-public interface GetVisitTypeCallbackListener extends DefaultResponseCallbackListener {
+public interface GetVisitTypeCallback extends DefaultResponseCallback {
     void onGetVisitTypeResponse(VisitType visitType);
 }

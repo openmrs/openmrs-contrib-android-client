@@ -24,10 +24,10 @@ import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
-import org.openmrs.mobile.listeners.retrofit.DefaultVisitsCallback;
-import org.openmrs.mobile.listeners.retrofit.GetVisitTypeCallbackListener;
-import org.openmrs.mobile.listeners.retrofit.StartVisitResponseListenerCallback;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
+import org.openmrs.mobile.listeners.retrofit.VisitsResponseCallback;
+import org.openmrs.mobile.listeners.retrofit.GetVisitTypeCallback;
+import org.openmrs.mobile.listeners.retrofit.StartVisitResponseCallback;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Results;
@@ -78,7 +78,7 @@ public class VisitRepository {
         syncVisitsData(patient, null);
     }
 
-    public void syncVisitsData(@NonNull final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
+    public void syncVisitsData(@NonNull final Patient patient, @Nullable final DefaultResponseCallback callbackListener) {
         Call<Results<Visit>> call = restApi.findVisitsByPatientUUID(patient.getUuid(), "custom:(uuid,location:ref,visitType:ref,startDatetime,stopDatetime,encounters:full)");
         call.enqueue(new Callback<Results<Visit>>() {
             @Override
@@ -112,7 +112,7 @@ public class VisitRepository {
         });
     }
 
-    public void getVisitType(final GetVisitTypeCallbackListener callbackListener) {
+    public void getVisitType(final GetVisitTypeCallback callbackListener) {
         Call<Results<VisitType>> call = restApi.getVisitType();
         call.enqueue(new Callback<Results<VisitType>>() {
             @Override
@@ -135,7 +135,7 @@ public class VisitRepository {
         syncLastVitals(patientUuid, null);
     }
 
-    public void syncLastVitals(final String patientUuid, @Nullable final DefaultResponseCallbackListener callbackListener) {
+    public void syncLastVitals(final String patientUuid, @Nullable final DefaultResponseCallback callbackListener) {
         Call<Results<Encounter>> call = restApi.getLastVitals(patientUuid, ApplicationConstants.EncounterTypes.VITALS, "full", 1, "desc");
         call.enqueue(new Callback<Results<Encounter>>() {
             @Override
@@ -163,7 +163,7 @@ public class VisitRepository {
         });
     }
 
-    public void endVisitByUuid(String uuid, Visit visit, DefaultVisitsCallback callbackListener) {
+    public void endVisitByUuid(String uuid, Visit visit, VisitsResponseCallback callbackListener) {
         restApi.endVisitByUUID(uuid, visit).enqueue(new Callback<Visit>() {
             @Override
             public void onResponse(@NonNull Call<Visit> call, @NonNull Response<Visit> response) {
@@ -189,7 +189,7 @@ public class VisitRepository {
         startVisit(patient, null);
     }
 
-    public void startVisit(final Patient patient, @Nullable final StartVisitResponseListenerCallback callbackListener) {
+    public void startVisit(final Patient patient, @Nullable final StartVisitResponseCallback callbackListener) {
         final Visit visit = new Visit();
         visit.setStartDatetime(DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
         visit.setPatient(patient);

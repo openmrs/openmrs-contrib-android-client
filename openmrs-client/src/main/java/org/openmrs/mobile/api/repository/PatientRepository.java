@@ -40,8 +40,8 @@ import org.openmrs.mobile.dao.EncounterCreateRoomDAO;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.LocationEntity;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
-import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
+import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallback;
 import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.IdGenPatientIdentifiers;
 import org.openmrs.mobile.models.IdentifierType;
@@ -104,7 +104,7 @@ public class PatientRepository extends RetrofitRepository {
         return syncPatient(patient, null);
     }
 
-    public SimplePromise<Patient> syncPatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
+    public SimplePromise<Patient> syncPatient(final Patient patient, @Nullable final DefaultResponseCallback callbackListener) {
         final SimpleDeferredObject<Patient> deferred = new SimpleDeferredObject<>();
 
         if (NetworkUtils.isOnline()) {
@@ -201,7 +201,7 @@ public class PatientRepository extends RetrofitRepository {
         });
     }
 
-    public void registerPatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
+    public void registerPatient(final Patient patient, @Nullable final DefaultResponseCallback callbackListener) {
         patientDao.savePatient(patient)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(id -> {
@@ -217,7 +217,7 @@ public class PatientRepository extends RetrofitRepository {
     /**
      * Update Patient
      */
-    public void updatePatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
+    public void updatePatient(final Patient patient, @Nullable final DefaultResponseCallback callbackListener) {
         PatientDtoUpdate patientDto = patient.getUpdatedPatientDto();
         if (NetworkUtils.isOnline()) {
             Call<PatientDto> call = restApi.updatePatient(patientDto, patient.getUuid(), "full");
@@ -279,7 +279,7 @@ public class PatientRepository extends RetrofitRepository {
     /**
      * Download Patient by UUID
      */
-    public void downloadPatientByUuid(@NonNull final String uuid, @NonNull final DownloadPatientCallbackListener callbackListener) {
+    public void downloadPatientByUuid(@NonNull final String uuid, @NonNull final DownloadPatientCallback callbackListener) {
         Call<PatientDto> call = restApi.getPatientByUUID(uuid, "full");
         call.enqueue(new Callback<PatientDto>() {
             @Override

@@ -14,8 +14,10 @@
 
 package org.openmrs.mobile.listeners.retrofit;
 
-public interface DefaultVisitsCallback {
-    void onSuccess(String response);
+import org.openmrs.mobile.models.Patient;
 
-    void onFailure(String errorMessage);
+public interface DownloadPatientCallback extends DefaultResponseCallback {
+    void onPatientDownloaded(Patient patient);
+
+    void onPatientPhotoDownloaded(Patient patient);
 }

@@ -26,29 +26,23 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.LocationEntity;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
+import org.openmrs.mobile.listeners.retrofit.EncounterResponseCallback;
+import org.openmrs.mobile.listeners.retrofit.LocationResponseCallback;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
 import org.openmrs.mobile.models.EncounterProviderCreate;
 import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.Obscreate;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Resource;
-import org.openmrs.mobile.models.Results;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 import static org.openmrs.mobile.utilities.FormService.getFormResourceByName;
 
 public class FormAdmissionPresenter extends BasePresenter implements FormAdmissionContract.Presenter {
-
     private FormAdmissionContract.View view;
     private Long patientID;
     private String encounterType;
@@ -57,6 +51,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
     private Patient mPatient;
     private RestApi restApi;
     private Context mContext;
+    private ProviderRepository providerRepository;
 
     public FormAdmissionPresenter(FormAdmissionContract.View view, Long patientID, String encounterType, String formName, Context context) {
         this.view = view;
@@ -68,6 +63,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         restApi = RestServiceBuilder.createService(RestApi.class);
         this.view.setPresenter(this);
         this.mContext = context;
+        this.providerRepository = new ProviderRepository();
     }
 
     public FormAdmissionPresenter(FormAdmissionContract.View formAdmissionView, RestApi restApi, Context context) {
@@ -75,6 +71,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         this.restApi = restApi;
         this.view.setPresenter(this);
         this.mContext = context;
+        this.providerRepository = new ProviderRepository();
     }
 
     @Override
@@ -84,7 +81,6 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
 
     @Override
     public void getProviders(FormAdmissionFragment fragment) {
-        ProviderRepository providerRepository = new ProviderRepository(mContext);
         providerRepository.getProviders(restApi).observe(fragment, this::updateViews);
     }
 
@@ -98,51 +94,33 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         }
     }
 
-    @Override
     public void getLocation(String url) {
-        if (NetworkUtils.hasNetwork()) {
-            String locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "location";
-            Call<Results<LocationEntity>> call =
-                    restApi.getLocations(locationEndPoint, "Admission Location", "full");
-            call.enqueue(new Callback<Results<LocationEntity>>() {
-                @Override
-                public void onResponse(Call<Results<LocationEntity>> call, Response<Results<LocationEntity>> response) {
-                    if (response.isSuccessful()) {
-                        view.updateLocationAdapter(response.body().getResults());
-                    } else {
-                        view.showToast(mContext.getResources().getString(R.string.error_occurred));
-                        view.enableSubmitButton(false);
-                    }
-                }
+        providerRepository.getLocation(restApi, url, new LocationResponseCallback() {
+            @Override
+            public void onResponse(List<LocationEntity> locationList) {
+                view.updateLocationAdapter(locationList);
+            }
 
-                @Override
-                public void onFailure(Call<Results<LocationEntity>> call, Throwable t) {
-                    view.showToast(t.getMessage());
-                    view.enableSubmitButton(false);
-                }
-            });
-        } else {
-            view.showToast(mContext.getResources().getString(R.string.offline_error_message));
-        }
+            @Override
+            public void onErrorResponse(String errorMessage) {
+                view.showToast(errorMessage);
+                view.enableSubmitButton(false);
+            }
+        });
     }
 
     @Override
     public void getEncounterRoles() {
-        restApi.getEncounterRoles().enqueue(new Callback<Results<Resource>>() {
+        providerRepository.getEncounterRoles(restApi, new EncounterResponseCallback() {
             @Override
-            public void onResponse(Call<Results<Resource>> call, Response<Results<Resource>> response) {
-                if (response.isSuccessful()) {
-                    view.updateEncounterRoleList(response.body().getResults());
-                } else {
-                    view.enableSubmitButton(false);
-                    view.showToast(mContext.getResources().getString(R.string.error_occurred));
-                }
+            public void onResponse(List<Resource> encounterRoleList) {
+                view.updateEncounterRoleList(encounterRoleList);
             }
 
             @Override
-            public void onFailure(Call<Results<Resource>> call, Throwable t) {
-                view.showToast(t.getMessage());
+            public void onErrorResponse(String errorMessage) {
                 view.enableSubmitButton(false);
+                view.showToast(errorMessage);
             }
         });
     }
@@ -176,7 +154,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
             view.showToast(mContext.getResources().getString(R.string.form_data_will_be_synced_later_error_message));
             view.enableSubmitButton(true);
         } else {
-            new EncounterService().addEncounter(encountercreate, new DefaultResponseCallbackListener() {
+            new EncounterService().addEncounter(encountercreate, new DefaultResponseCallback() {
                 @Override
                 public void onResponse() {
                     view.enableSubmitButton(true);

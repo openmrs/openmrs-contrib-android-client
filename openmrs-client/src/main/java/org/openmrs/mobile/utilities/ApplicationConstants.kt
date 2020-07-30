@@ -51,7 +51,6 @@ object ApplicationConstants {
     const val URI_CONTENT = "content://"
     const val MIME_TYPE_VND = "vnd"
     const val ASPECT_RATIO_FOR_CROPPING = 5f
-    const val REPRESENTATION_FULL = "full"
     const val CAUSE_OF_DEATH = "concept.causeOfDeath"
     const val MALE = "M";
     const val EMPTY_DASH_REPRESENTATION = "---"
@@ -65,6 +64,7 @@ object ApplicationConstants {
     object API {
         const val REST_ENDPOINT = "/ws/rest/v1/"
         const val FULL = "full"
+        const val TAG_ADMISSION_LOCATION="Admission Location"
     }
 
     object UserKeys {

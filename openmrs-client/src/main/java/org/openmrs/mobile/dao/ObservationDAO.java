@@ -31,7 +31,7 @@ public class ObservationDAO {
         List<ObservationEntity> observationEntityList;
         try {
             observationEntityList = observationRoomDAO.findObservationByEncounterID(encounterID).blockingGet();
-            observationList = AppDatabaseHelper.observationEntityToObservation(observationEntityList);
+            observationList = AppDatabaseHelper.INSTANCE.convert(observationEntityList);
             return observationList;
         } catch (Exception e) {
             return new ArrayList<>();

@@ -163,7 +163,10 @@ ACUnitTestBase {
         allergy.setDisplay(display);
 
         allergy.setComment("comment");
-        allergy.setAllergen(new Allergen());
+        Allergen allergen = new Allergen();
+        Resource resource = new Resource("uuid", display, new ArrayList<>(), id);
+        allergen.setCodedAllergen(resource);
+        allergy.setAllergen(allergen);
         allergy.setReactions(new ArrayList<>());
         allergy.setSeverity(null);
 

@@ -37,8 +37,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static org.openmrs.mobile.databases.AppDatabaseHelper.allergyEntityListToAllergyList;
-
 public class AllergyRepository {
     AllergyRoomDAO allergyRoomDAO;
     String patientID;
@@ -58,7 +56,7 @@ public class AllergyRepository {
     public LiveData<List<Allergy>> getAllergies(RestApi restApi, String uuid) {
         MutableLiveData<List<Allergy>> allergyLiveData = new MutableLiveData<>();
         allergyEntitiesOffline = allergyRoomDAO.getAllAllergiesByPatientID(patientID);
-        allergyLiveData.setValue(allergyEntityListToAllergyList(allergyEntitiesOffline));
+        allergyLiveData.setValue(AppDatabaseHelper.INSTANCE.allergyEntityListToAllergyList(allergyEntitiesOffline));
 
         if (NetworkUtils.isOnline()) {
             restApi.getAllergies(uuid).enqueue(new Callback<Results<Allergy>>() {
@@ -68,7 +66,7 @@ public class AllergyRepository {
                         allergyRoomDAO.deleteAllPatientAllergy(patientID);
                         allergyList = response.body().getResults();
                         for (Allergy allergy : allergyList) {
-                            allergyRoomDAO.saveAllergy(AppDatabaseHelper.allergyToEntity(allergy, patientID));
+                            allergyRoomDAO.saveAllergy(AppDatabaseHelper.INSTANCE.convert(allergy, patientID));
                         }
                         allergyLiveData.setValue(allergyList);
                     } else {

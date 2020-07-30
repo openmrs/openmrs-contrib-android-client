@@ -28,15 +28,13 @@ import java.util.List;
 
 import rx.Observable;
 
-import static org.openmrs.mobile.databases.AppDatabaseHelper.createObservableIO;
-
 public class EncounterDAO {
     EncounterRoomDAO encounterRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).encounterRoomDAO();
     ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).observationRoomDAO();
     EncounterTypeRoomDAO encounterTypeRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).encounterTypeRoomDAO();
 
     public long saveEncounter(Encounter encounter, Long visitID) {
-        EncounterEntity encounterEntity = AppDatabaseHelper.encounterToEntity(encounter, visitID);
+        EncounterEntity encounterEntity = AppDatabaseHelper.INSTANCE.convert(encounter, visitID);
         long id = encounterRoomDAO.addEncounter(encounterEntity);
         return id;
     }
@@ -56,24 +54,24 @@ public class EncounterDAO {
             }
             if (0 != oldLastVitalsEncounterID) {
                 for (Observation obs : new ObservationDAO().findObservationByEncounterID(oldLastVitalsEncounterID)) {
-                    ObservationEntity observationEntity = AppDatabaseHelper.observationToEntity(obs, 1L);
+                    ObservationEntity observationEntity = AppDatabaseHelper.INSTANCE.convert(obs, 1L);
                     observationRoomDAO.deleteObservation(observationEntity);
                 }
                 encounterRoomDAO.deleteEncounterByID(oldLastVitalsEncounterID);
             }
             long encounterID = saveEncounter(encounter, null);
             for (Observation obs : encounter.getObservations()) {
-                ObservationEntity observationEntity = AppDatabaseHelper.observationToEntity(obs, encounterID);
+                ObservationEntity observationEntity = AppDatabaseHelper.INSTANCE.convert(obs, encounterID);
                 observationRoomDAO.addObservation(observationEntity);
             }
         }
     }
 
     public Observable<Encounter> getLastVitalsEncounter(String patientUUID) {
-        return createObservableIO(() -> {
+        return AppDatabaseHelper.INSTANCE.createObservableIO(() -> {
             try {
                 EncounterEntity encounterEntity = encounterRoomDAO.getLastVitalsEncounter(patientUUID, EncounterType.VITALS).blockingGet();
-                return AppDatabaseHelper.encounterEntityToEncounter(encounterEntity);
+                return AppDatabaseHelper.INSTANCE.convert(encounterEntity);
             } catch (Exception e) {
                 return null;
             }
@@ -81,7 +79,7 @@ public class EncounterDAO {
     }
 
     public int updateEncounter(long encounterID, Encounter encounter, long visitID) {
-        EncounterEntity encounterEntity = AppDatabaseHelper.encounterToEntity(encounter, visitID);
+        EncounterEntity encounterEntity = AppDatabaseHelper.INSTANCE.convert(encounter, visitID);
         encounterEntity.setId(encounterID);
         int id = encounterRoomDAO.updateEncounter(encounterEntity);
         return id;
@@ -93,7 +91,7 @@ public class EncounterDAO {
             List<EncounterEntity> encounterEntities = encounterRoomDAO.findEncountersByVisitID(visitID.toString()).blockingGet();
 
             for (EncounterEntity entity : encounterEntities) {
-                encounters.add(AppDatabaseHelper.encounterEntityToEncounter(entity));
+                encounters.add(AppDatabaseHelper.INSTANCE.convert(entity));
             }
             return encounters;
         } catch (Exception e) {
@@ -102,13 +100,13 @@ public class EncounterDAO {
     }
 
     public Observable<List<Encounter>> getAllEncountersByType(Long patientID, EncounterType type) {
-        return createObservableIO(() -> {
+        return AppDatabaseHelper.INSTANCE.createObservableIO(() -> {
             List<Encounter> encounters = new ArrayList<>();
             List<EncounterEntity> encounterEntities;
             try {
                 encounterEntities = encounterRoomDAO.getAllEncountersByType(patientID, type.getDisplay()).blockingGet();
                 for (EncounterEntity entity : encounterEntities) {
-                    encounters.add(AppDatabaseHelper.encounterEntityToEncounter(entity));
+                    encounters.add(AppDatabaseHelper.INSTANCE.convert(entity));
                 }
                 return encounters;
             } catch (Exception e) {

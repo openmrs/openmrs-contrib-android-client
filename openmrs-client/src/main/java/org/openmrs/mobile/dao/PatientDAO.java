@@ -26,18 +26,16 @@ import java.util.List;
 
 import rx.Observable;
 
-import static org.openmrs.mobile.databases.AppDatabaseHelper.createObservableIO;
-
 public class PatientDAO {
     PatientRoomDAO patientRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).patientRoomDAO();
 
     public Observable<Long> savePatient(Patient patient) {
-        PatientEntity entity = AppDatabaseHelper.patientToPatientEntity(patient);
-        return createObservableIO(() -> patientRoomDAO.addPatient(entity));
+        PatientEntity entity = AppDatabaseHelper.INSTANCE.convert(patient);
+        return AppDatabaseHelper.INSTANCE.createObservableIO(() -> patientRoomDAO.addPatient(entity));
     }
 
     public boolean updatePatient(long patientID, Patient patient) {
-        PatientEntity entity = AppDatabaseHelper.patientToPatientEntity(patient);
+        PatientEntity entity = AppDatabaseHelper.INSTANCE.convert(patient);
         entity.setId(patientID);
         return patientRoomDAO.updatePatient(entity) > 0;
     }
@@ -47,13 +45,13 @@ public class PatientDAO {
     }
 
     public Observable<List<Patient>> getAllPatients() {
-        return createObservableIO(() -> {
+        return AppDatabaseHelper.INSTANCE.createObservableIO(() -> {
             List<Patient> patients = new ArrayList<>();
             List<PatientEntity> patientEntities = new ArrayList<>();
             try {
                 patientEntities = patientRoomDAO.getAllPatients().blockingGet();
                 for (PatientEntity entity : patientEntities) {
-                    patients.add(AppDatabaseHelper.patientEntityToPatient(entity));
+                    patients.add(AppDatabaseHelper.INSTANCE.convert(entity));
                 }
             } catch (Exception e) {
                 return new ArrayList<>();
@@ -78,7 +76,7 @@ public class PatientDAO {
     public Patient findPatientByUUID(String uuid) {
         try {
             PatientEntity patient = patientRoomDAO.findPatientByUUID(uuid).blockingGet();
-            return AppDatabaseHelper.patientEntityToPatient(patient);
+            return AppDatabaseHelper.INSTANCE.convert(patient);
         } catch (Exception e) {
             return null;
         }
@@ -90,7 +88,7 @@ public class PatientDAO {
         try {
             unSyncedPatientList = patientRoomDAO.getUnsyncedPatients().blockingGet();
             for (PatientEntity entity : unSyncedPatientList) {
-                patientList.add(AppDatabaseHelper.patientEntityToPatient(entity));
+                patientList.add(AppDatabaseHelper.INSTANCE.convert(entity));
             }
             return patientList;
         } catch (Exception e) {
@@ -101,7 +99,7 @@ public class PatientDAO {
     public Patient findPatientByID(String id) {
         try {
             PatientEntity patientEntity = patientRoomDAO.findPatientByID(id).blockingGet();
-            return AppDatabaseHelper.patientEntityToPatient(patientEntity);
+            return AppDatabaseHelper.INSTANCE.convert(patientEntity);
         } catch (Exception e) {
             return null;
         }

@@ -38,7 +38,7 @@ public class VisitDAO {
     VisitRoomDAO visitRoomDAO = AppDatabase.getDatabase(context).visitRoomDAO();
 
     public Observable<Long> saveOrUpdate(Visit visit, long patientId) {
-        return AppDatabaseHelper.INSTANCE.createObservableIO(() -> {
+        return AppDatabaseHelper.createObservableIO(() -> {
             Long visitId = visit.getId();
             if (visitId == null) {
                 visitId = getVisitsIDByUUID(visit.getUuid()).toBlocking().first();
@@ -55,13 +55,13 @@ public class VisitDAO {
     private long saveVisit(Visit visit, long patientID) {
         EncounterDAO encounterDAO = new EncounterDAO();
         visit.setPatient(new PatientDAO().findPatientByID(String.valueOf(patientID)));
-        VisitEntity visitEntity = AppDatabaseHelper.INSTANCE.convert(visit);
+        VisitEntity visitEntity = AppDatabaseHelper.convert(visit);
         long visitID = visitRoomDAO.addVisit(visitEntity);
         if (visit.getEncounters() != null) {
             for (Encounter encounter : visit.getEncounters()) {
                 long encounterID = encounterDAO.saveEncounter(encounter, visitID);
                 for (Observation obs : encounter.getObservations()) {
-                    ObservationEntity observationEntity = AppDatabaseHelper.INSTANCE.convert(obs, encounterID);
+                    ObservationEntity observationEntity = AppDatabaseHelper.convert(obs, encounterID);
                     observationRoomDAO.addObservation(observationEntity);
                 }
             }
@@ -85,27 +85,27 @@ public class VisitDAO {
 
                 List<Observation> oldObs = observationDAO.findObservationByEncounterID(encounterID);
                 for (Observation obs : oldObs) {
-                    ObservationEntity observationEntity = AppDatabaseHelper.INSTANCE.convert(obs, encounterID);
+                    ObservationEntity observationEntity = AppDatabaseHelper.convert(obs, encounterID);
                     observationRoomDAO.deleteObservation(observationEntity);
                 }
 
                 for (Observation obs : encounter.getObservations()) {
-                    ObservationEntity observationEntity = AppDatabaseHelper.INSTANCE.convert(obs, encounterID);
+                    ObservationEntity observationEntity = AppDatabaseHelper.convert(obs, encounterID);
                     observationRoomDAO.addObservation(observationEntity);
                 }
             }
         }
-        return visitRoomDAO.updateVisit(AppDatabaseHelper.INSTANCE.convert(visit)) > 0;
+        return visitRoomDAO.updateVisit(AppDatabaseHelper.convert(visit)) > 0;
     }
 
     public Observable<List<Visit>> getActiveVisits() {
-        return AppDatabaseHelper.INSTANCE.createObservableIO(() -> {
+        return AppDatabaseHelper.createObservableIO(() -> {
             List<Visit> visits = new ArrayList<>();
             List<VisitEntity> visitEntities;
             try {
                 visitEntities = visitRoomDAO.getActiveVisits().blockingGet();
                 for (VisitEntity entity : visitEntities) {
-                    visits.add(AppDatabaseHelper.INSTANCE.convert(entity));
+                    visits.add(AppDatabaseHelper.convert(entity));
                 }
                 return visits;
             } catch (Exception e) {
@@ -115,13 +115,13 @@ public class VisitDAO {
     }
 
     public Observable<List<Visit>> getVisitsByPatientID(final Long patientID) {
-        return AppDatabaseHelper.INSTANCE.createObservableIO(() -> {
+        return AppDatabaseHelper.createObservableIO(() -> {
             List<Visit> visits = new ArrayList<>();
             List<VisitEntity> visitEntities;
             try {
                 visitEntities = visitRoomDAO.getVisitsByPatientID(patientID).blockingGet();
                 for (VisitEntity entity : visitEntities) {
-                    visits.add(AppDatabaseHelper.INSTANCE.convert(entity));
+                    visits.add(AppDatabaseHelper.convert(entity));
                 }
                 return visits;
             } catch (Exception e) {
@@ -131,10 +131,10 @@ public class VisitDAO {
     }
 
     public Observable<Visit> getActiveVisitByPatientId(Long patientId) {
-        return AppDatabaseHelper.INSTANCE.createObservableIO(() -> {
+        return AppDatabaseHelper.createObservableIO(() -> {
             try {
                 VisitEntity visitEntity = visitRoomDAO.getActiveVisitByPatientId(patientId).blockingGet();
-                return AppDatabaseHelper.INSTANCE.convert(visitEntity);
+                return AppDatabaseHelper.convert(visitEntity);
             } catch (Exception e) {
                 return null;
             }
@@ -142,10 +142,10 @@ public class VisitDAO {
     }
 
     public Observable<Visit> getVisitByID(final Long visitID) {
-        return AppDatabaseHelper.INSTANCE.createObservableIO(() -> {
+        return AppDatabaseHelper.createObservableIO(() -> {
             try {
                 VisitEntity visitEntity = visitRoomDAO.getVisitByID(visitID).blockingGet();
-                return AppDatabaseHelper.INSTANCE.convert(visitEntity);
+                return AppDatabaseHelper.convert(visitEntity);
             } catch (Exception e) {
                 return null;
             }
@@ -153,14 +153,14 @@ public class VisitDAO {
     }
 
     public Observable<Long> getVisitsIDByUUID(final String visitUUID) {
-        return AppDatabaseHelper.INSTANCE.createObservableIO(() -> visitRoomDAO.getVisitsIDByUUID(visitUUID));
+        return AppDatabaseHelper.createObservableIO(() -> visitRoomDAO.getVisitsIDByUUID(visitUUID));
     }
 
     public Observable<Visit> getVisitByUuid(String uuid) {
-        return AppDatabaseHelper.INSTANCE.createObservableIO(() -> {
+        return AppDatabaseHelper.createObservableIO(() -> {
             try {
                 VisitEntity visitEntity = visitRoomDAO.getVisitByUuid(uuid).blockingGet();
-                return AppDatabaseHelper.INSTANCE.convert(visitEntity);
+                return AppDatabaseHelper.convert(visitEntity);
             } catch (Exception e) {
                 return null;
             }
@@ -168,7 +168,7 @@ public class VisitDAO {
     }
 
     public Observable<Boolean> deleteVisitsByPatientId(Long id) {
-        return AppDatabaseHelper.INSTANCE.createObservableIO(() -> {
+        return AppDatabaseHelper.createObservableIO(() -> {
             visitRoomDAO.deleteVisitsByPatientId(id);
             return true;
         });

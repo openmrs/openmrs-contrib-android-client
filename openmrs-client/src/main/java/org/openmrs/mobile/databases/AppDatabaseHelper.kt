@@ -49,6 +49,7 @@ import java.io.ByteArrayOutputStream
 import java.util.concurrent.Callable
 
 object AppDatabaseHelper {
+    @JvmStatic
     fun convert(obs: Observation, encounterID: Long): ObservationEntity {
         val observationEntity = ObservationEntity()
         observationEntity.id = obs.id
@@ -68,6 +69,7 @@ object AppDatabaseHelper {
         return observationEntity
     }
 
+    @JvmStatic
     fun convert(observationEntityList: List<ObservationEntity>): List<Observation> {
         val observationList: MutableList<Observation> = ArrayList()
         for (entity in observationEntityList) {
@@ -89,6 +91,7 @@ object AppDatabaseHelper {
         return observationList
     }
 
+    @JvmStatic
     fun convert(encounter: Encounter, visitID: Long?): EncounterEntity {
         val encounterEntity = EncounterEntity()
         encounterEntity.id = encounter.id
@@ -114,6 +117,7 @@ object AppDatabaseHelper {
         return encounterEntity
     }
 
+    @JvmStatic
     fun convert(entity: EncounterEntity): Encounter {
         val encounter = Encounter()
         if (null != entity.encounterType) {
@@ -142,6 +146,7 @@ object AppDatabaseHelper {
         return encounter
     }
 
+    @JvmStatic
     fun convert(visitEntity: VisitEntity): Visit {
         val visit = Visit()
         visit.id = visitEntity.id
@@ -165,6 +170,7 @@ object AppDatabaseHelper {
         return visit
     }
 
+    @JvmStatic
     fun convert(visit: Visit): VisitEntity {
         val visitEntity = VisitEntity()
         visitEntity.id = visit.id
@@ -177,6 +183,7 @@ object AppDatabaseHelper {
         return visitEntity
     }
 
+    @JvmStatic
     fun convert(patientEntity: PatientEntity): Patient {
         val patient = Patient(patientEntity.id, patientEntity.encounters, null)
         patient.display = patientEntity.display
@@ -213,6 +220,7 @@ object AppDatabaseHelper {
         return patient
     }
 
+    @JvmStatic
     fun convert(patient: Patient): PatientEntity {
         val patientEntity = PatientEntity()
         patientEntity.display = patient.name.nameString
@@ -257,6 +265,7 @@ object AppDatabaseHelper {
         return patientEntity
     }
 
+    @JvmStatic
     fun convert(allergy: Allergy, patientID: String?): AllergyEntity {
         val allergyEntity = AllergyEntity()
         allergyEntity.patientId = patientID
@@ -271,7 +280,9 @@ object AppDatabaseHelper {
         return allergyEntity
     }
 
-    fun allergyEntityListToAllergyList(entities: List<AllergyEntity>): List<Allergy> {
+    @JvmStatic
+    @JvmName("convertTo")
+    fun convert(entities: List<AllergyEntity>): List<Allergy> {
         val allergies = ArrayList<Allergy>()
         for (allergyEntity in entities) {
             allergies.add(convert(allergyEntity))
@@ -308,6 +319,7 @@ object AppDatabaseHelper {
         return BitmapFactory.decodeStream(inputStream)
     }
 
+    @JvmStatic
     fun <T> createObservableIO(func: Callable<T>?): Observable<T> {
         return Observable.fromCallable(func)
                 .subscribeOn(Schedulers.io())

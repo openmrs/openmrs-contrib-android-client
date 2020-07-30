@@ -30,7 +30,7 @@ public class LocationDAO {
     LocationRoomDAO locationRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).locationRoomDAO();
 
     public Observable<Long> saveLocation(LocationEntity location) {
-        return AppDatabaseHelper.INSTANCE.createObservableIO(() -> locationRoomDAO.addLocation(location));
+        return AppDatabaseHelper.createObservableIO(() -> locationRoomDAO.addLocation(location));
     }
 
     public void deleteAllLocations() {
@@ -38,7 +38,7 @@ public class LocationDAO {
     }
 
     public Observable<List<LocationEntity>> getLocations() {
-        return AppDatabaseHelper.INSTANCE.createObservableIO(() -> {
+        return AppDatabaseHelper.createObservableIO(() -> {
             try {
                 return locationRoomDAO.getLocations().blockingGet();
             } catch (Exception e) {

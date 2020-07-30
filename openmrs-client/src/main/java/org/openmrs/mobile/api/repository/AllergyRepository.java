@@ -56,7 +56,7 @@ public class AllergyRepository {
     public LiveData<List<Allergy>> getAllergies(RestApi restApi, String uuid) {
         MutableLiveData<List<Allergy>> allergyLiveData = new MutableLiveData<>();
         allergyEntitiesOffline = allergyRoomDAO.getAllAllergiesByPatientID(patientID);
-        allergyLiveData.setValue(AppDatabaseHelper.INSTANCE.allergyEntityListToAllergyList(allergyEntitiesOffline));
+        allergyLiveData.setValue(AppDatabaseHelper.convertTo(allergyEntitiesOffline));
 
         if (NetworkUtils.isOnline()) {
             restApi.getAllergies(uuid).enqueue(new Callback<Results<Allergy>>() {
@@ -66,7 +66,7 @@ public class AllergyRepository {
                         allergyRoomDAO.deleteAllPatientAllergy(patientID);
                         allergyList = response.body().getResults();
                         for (Allergy allergy : allergyList) {
-                            allergyRoomDAO.saveAllergy(AppDatabaseHelper.INSTANCE.convert(allergy, patientID));
+                            allergyRoomDAO.saveAllergy(AppDatabaseHelper.convert(allergy, patientID));
                         }
                         allergyLiveData.setValue(allergyList);
                     } else {

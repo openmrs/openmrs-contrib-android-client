@@ -20,8 +20,8 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresen
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
-import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
+import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallback;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.NetworkUtils;
 
@@ -109,7 +109,7 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
      * Sync Visits
      */
     private void syncVisitsData() {
-        visitRepository.syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
+        visitRepository.syncVisitsData(mPatient, new DefaultResponseCallback() {
             @Override
             public void onResponse() {
                 mPatientDetailsView.showToast(R.string.synchronize_patient_successful, false);
@@ -128,7 +128,7 @@ public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresen
      * Download Patient
      */
     private void syncDetailsData() {
-        patientRepository.downloadPatientByUuid(mPatient.getUuid(), new DownloadPatientCallbackListener() {
+        patientRepository.downloadPatientByUuid(mPatient.getUuid(), new DownloadPatientCallback() {
             @Override
             public void onPatientDownloaded(Patient patient) {
                 updatePatientData(patient);

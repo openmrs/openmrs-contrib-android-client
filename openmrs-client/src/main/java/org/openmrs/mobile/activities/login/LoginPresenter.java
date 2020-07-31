@@ -27,7 +27,7 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.databases.entities.LocationEntity;
-import org.openmrs.mobile.listeners.retrofit.GetVisitTypeCallbackListener;
+import org.openmrs.mobile.listeners.retrofit.GetVisitTypeCallback;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.models.Session;
 import org.openmrs.mobile.models.VisitType;
@@ -138,7 +138,7 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
                                 mOpenMRS.setPasswordAndHashedPassword(password);
                             }
 
-                            visitRepository.getVisitType(new GetVisitTypeCallbackListener() {
+                            visitRepository.getVisitType(new GetVisitTypeCallback() {
                                 @Override
                                 public void onGetVisitTypeResponse(VisitType visitType) {
                                     OpenMRS.getInstance().setVisitTypeUUID(visitType.getUuid());

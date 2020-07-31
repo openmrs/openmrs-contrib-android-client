@@ -14,8 +14,20 @@
 
 package org.openmrs.mobile.listeners.retrofit;
 
-public interface DefaultResponseCallbackListener {
-    void onResponse();
+/**
+ * this method {@link #onResponse()} () onResponse}
+ * will be overridden in custom callback methods if the response matches with the use case.
+ * otherwise  method will be overloaded in the custom callbacks
+ *
+ * this method {@link #onErrorResponse(String)}() onErrorResponse}
+ * will be overridden in custom callback methods since it has uniform usage throughout the
+ * app in various repositories
+ *
+ */
+public interface DefaultResponseCallback {
+
+    default void onResponse() {
+    }
 
     void onErrorResponse(String errorMessage);
 }

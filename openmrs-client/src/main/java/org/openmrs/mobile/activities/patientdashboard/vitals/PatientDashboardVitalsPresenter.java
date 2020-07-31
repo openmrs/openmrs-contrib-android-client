@@ -19,7 +19,7 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresen
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.NetworkUtils;
 
@@ -55,7 +55,7 @@ public class PatientDashboardVitalsPresenter extends PatientDashboardMainPresent
 
     private void loadVitalsFromServer() {
         if (NetworkUtils.isOnline()) {
-            visitRepository.syncLastVitals(mPatient.getUuid(), new DefaultResponseCallbackListener() {
+            visitRepository.syncLastVitals(mPatient.getUuid(), new DefaultResponseCallback() {
                 @Override
                 public void onResponse() {
                     loadVitalsFromDB();

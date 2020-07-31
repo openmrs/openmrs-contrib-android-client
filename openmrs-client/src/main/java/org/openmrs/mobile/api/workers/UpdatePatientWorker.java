@@ -28,7 +28,7 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientDto;
 import org.openmrs.mobile.models.PatientDtoUpdate;
@@ -88,7 +88,7 @@ public class UpdatePatientWorker extends Worker {
         PatientDAO patientDAO = new PatientDAO();
         Patient patientTobeUpdated = patientDAO.findPatientByID(patientIdTobeUpdated);
 
-        updatePatient(patientTobeUpdated, new DefaultResponseCallbackListener() {
+        updatePatient(patientTobeUpdated, new DefaultResponseCallback() {
             @Override
             public void onResponse() {
                 result[0] = true;
@@ -110,7 +110,7 @@ public class UpdatePatientWorker extends Worker {
         return result[0] ? Result.success() : Result.retry();
     }
 
-    public void updatePatient(final Patient patient, @Nullable final DefaultResponseCallbackListener callbackListener) {
+    public void updatePatient(final Patient patient, @Nullable final DefaultResponseCallback callbackListener) {
         PatientDtoUpdate patientDto = patient.getUpdatedPatientDto();
         if (NetworkUtils.isOnline()) {
             Call<PatientDto> call = restApi.updatePatient(patientDto, patient.getUuid(), "full");

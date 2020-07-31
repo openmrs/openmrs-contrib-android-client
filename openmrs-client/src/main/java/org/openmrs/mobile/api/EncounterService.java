@@ -22,8 +22,8 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
-import org.openmrs.mobile.listeners.retrofit.StartVisitResponseListenerCallback;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
+import org.openmrs.mobile.listeners.retrofit.StartVisitResponseCallback;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Encountercreate;
@@ -44,7 +44,7 @@ public class EncounterService extends IntentService {
         super("Save Encounter");
     }
 
-    public void addEncounter(final Encountercreate encountercreate, @Nullable DefaultResponseCallbackListener callbackListener) {
+    public void addEncounter(final Encountercreate encountercreate, @Nullable DefaultResponseCallback callbackListener) {
 
         if (NetworkUtils.isOnline()) {
             new VisitDAO().getActiveVisitByPatientId(encountercreate.getPatientId())
@@ -71,9 +71,9 @@ public class EncounterService extends IntentService {
         addEncounter(encountercreate, null);
     }
 
-    private void startNewVisitForEncounter(final Encountercreate encountercreate, @Nullable final DefaultResponseCallbackListener callbackListener) {
+    private void startNewVisitForEncounter(final Encountercreate encountercreate, @Nullable final DefaultResponseCallback callbackListener) {
         new VisitRepository().startVisit(new PatientDAO().findPatientByUUID(encountercreate.getPatient()),
-                new StartVisitResponseListenerCallback() {
+                new StartVisitResponseCallback() {
                     @Override
                     public void onStartVisitResponse(long id) {
                         new VisitDAO().getVisitByID(id)
@@ -104,7 +104,7 @@ public class EncounterService extends IntentService {
         startNewVisitForEncounter(encountercreate, null);
     }
 
-    public void syncEncounter(final Encountercreate encountercreate, @Nullable final DefaultResponseCallbackListener callbackListener) {
+    public void syncEncounter(final Encountercreate encountercreate, @Nullable final DefaultResponseCallback callbackListener) {
 
         if (NetworkUtils.isOnline()) {
 

@@ -26,7 +26,7 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
 import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Module;
 import org.openmrs.mobile.models.Patient;
@@ -215,7 +215,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     @Override
     public void registerPatient() {
-        patientRepository.registerPatient(mPatient, new DefaultResponseCallbackListener() {
+        patientRepository.registerPatient(mPatient, new DefaultResponseCallback() {
             @Override
             public void onResponse() {
                 mPatientInfoView.startPatientDashbordActivity(mPatient);
@@ -232,7 +232,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     @Override
     public void updatePatient(Patient patient) {
-        patientRepository.updatePatient(patient, new DefaultResponseCallbackListener() {
+        patientRepository.updatePatient(patient, new DefaultResponseCallback() {
             @Override
             public void onResponse() {
                 mPatientInfoView.finishPatientInfoActivity();
@@ -253,7 +253,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     @Override
     public void getCauseOfDeathGlobalID() {
-        restApi.getSystemProperty(ApplicationConstants.CAUSE_OF_DEATH, ApplicationConstants.REPRESENTATION_FULL).enqueue(new Callback<Results<SystemProperty>>() {
+        restApi.getSystemProperty(ApplicationConstants.CAUSE_OF_DEATH, ApplicationConstants.API.FULL).enqueue(new Callback<Results<SystemProperty>>() {
             @Override
             public void onResponse(Call<Results<SystemProperty>> call, Response<Results<SystemProperty>> response) {
                 if (response.isSuccessful()) {

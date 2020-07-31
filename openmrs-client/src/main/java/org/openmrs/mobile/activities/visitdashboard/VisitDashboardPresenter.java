@@ -20,7 +20,7 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.listeners.retrofit.DefaultVisitsCallback;
+import org.openmrs.mobile.listeners.retrofit.VisitsResponseCallback;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
@@ -70,7 +70,7 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
         Visit testVisit = new Visit();
         testVisit.setStopDatetime(visit.getStopDatetime());
 
-        visitRepository.endVisitByUuid(visit.getUuid(), testVisit, new DefaultVisitsCallback() {
+        visitRepository.endVisitByUuid(visit.getUuid(), testVisit, new VisitsResponseCallback() {
             @Override
             public void onSuccess(String response) {
                 addSubscription(visitDAO.getVisitByID(visit.getId())

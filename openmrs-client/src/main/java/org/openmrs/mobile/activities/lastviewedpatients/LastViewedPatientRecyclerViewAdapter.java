@@ -35,7 +35,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallbackListener;
+import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallback;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -353,7 +353,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     }
 
     private void downloadPatient(final Patient patient, final Boolean showSnackBar) {
-        new PatientRepository().downloadPatientByUuid(patient.getUuid(), new DownloadPatientCallbackListener() {
+        new PatientRepository().downloadPatientByUuid(patient.getUuid(), new DownloadPatientCallback() {
             @Override
             public void onPatientDownloaded(Patient newPatient) {
                 new PatientDAO().savePatient(newPatient)

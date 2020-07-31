@@ -20,8 +20,8 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresen
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallbackListener;
-import org.openmrs.mobile.listeners.retrofit.StartVisitResponseListenerCallback;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
+import org.openmrs.mobile.listeners.retrofit.StartVisitResponseCallback;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.NetworkUtils;
 
@@ -83,7 +83,7 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
 
     public void getVisitFromServer() {
         if (NetworkUtils.isOnline()) {
-            new VisitRepository().syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
+            new VisitRepository().syncVisitsData(mPatient, new DefaultResponseCallback() {
                 @Override
                 public void onResponse() {
                     getVisitFromDB();
@@ -115,7 +115,7 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
     @Override
     public void syncVisits() {
         mPatientVisitsView.showStartVisitProgressDialog();
-        visitRepository.syncVisitsData(mPatient, new DefaultResponseCallbackListener() {
+        visitRepository.syncVisitsData(mPatient, new DefaultResponseCallback() {
             @Override
             public void onResponse() {
                 addSubscription(visitDAO.getVisitsByPatientID(mPatient.getId())
@@ -138,7 +138,7 @@ public class PatientDashboardVisitsPresenter extends PatientDashboardMainPresent
     @Override
     public void startVisit() {
         mPatientVisitsView.showStartVisitProgressDialog();
-        visitRepository.startVisit(mPatient, new StartVisitResponseListenerCallback() {
+        visitRepository.startVisit(mPatient, new StartVisitResponseCallback() {
             @Override
             public void onStartVisitResponse(long id) {
                 mPatientVisitsView.goToVisitDashboard(id);

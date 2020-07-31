@@ -16,6 +16,7 @@ package org.openmrs.mobile.dao;
 
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.AppDatabase;
+import org.openmrs.mobile.databases.AppDatabaseHelper;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.utilities.StringUtils;
 
@@ -24,14 +25,12 @@ import java.util.List;
 
 import rx.Observable;
 
-import static org.openmrs.mobile.databases.AppDatabaseHelper.createObservableIO;
-
 
 public class LocationDAO {
     LocationRoomDAO locationRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).locationRoomDAO();
 
     public Observable<Long> saveLocation(LocationEntity location) {
-        return createObservableIO(() -> locationRoomDAO.addLocation(location));
+        return AppDatabaseHelper.createObservableIO(() -> locationRoomDAO.addLocation(location));
     }
 
     public void deleteAllLocations() {
@@ -39,7 +38,7 @@ public class LocationDAO {
     }
 
     public Observable<List<LocationEntity>> getLocations() {
-        return createObservableIO(() -> {
+        return AppDatabaseHelper.createObservableIO(() -> {
             try {
                 return locationRoomDAO.getLocations().blockingGet();
             } catch (Exception e) {

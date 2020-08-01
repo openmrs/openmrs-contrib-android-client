@@ -178,4 +178,8 @@ public interface RestApi {
 
     @GET("patient/{uuid}/allergy")
     Call<Results<Allergy>> getAllergies(@Path("uuid") String uuid);
+
+    @DELETE("patient/{patientUuid}/allergy/{allergyUuid}")
+    Call<ResponseBody> deleteAllergy(@Path("patientUuid") String patientUuid,
+                                     @Path("allergyUuid") String allergyUuid);
 }

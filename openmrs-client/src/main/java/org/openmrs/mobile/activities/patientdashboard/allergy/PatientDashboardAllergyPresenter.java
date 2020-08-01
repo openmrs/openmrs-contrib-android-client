@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
+import org.openmrs.mobile.api.CustomApiCallback;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.AllergyRepository;
@@ -27,7 +28,7 @@ import org.openmrs.mobile.models.Patient;
 
 import java.util.List;
 
-public class PatientDashboardAllergyPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientAllergyPresenter {
+public class PatientDashboardAllergyPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientAllergyPresenter, CustomApiCallback {
     private PatientDashboardContract.ViewPatientAllergy mPatientAllergyView;
     private String patientId;
     private PatientDAO patientDAO;
@@ -62,7 +63,27 @@ public class PatientDashboardAllergyPresenter extends PatientDashboardMainPresen
         allergyRepository.getAllergies(restApi, mPatient.getUuid()).observe(fragment, this::updateViews);
     }
 
+    public void getAllergyFromDatabase() {
+        List<Allergy> allergyList = allergyRepository.getAllergyFromDatabase(mPatient.getId().toString());
+        updateViews(allergyList);
+    }
+
+    @Override
+    public void deleteAllergy(String allergyUuid) {
+        allergyRepository.deleteAllergy(restApi, mPatient.getUuid(), allergyUuid, this);
+    }
+
     public void updateViews(List<Allergy> allergies) {
         mPatientAllergyView.showAllergyList(allergies);
+    }
+
+    @Override
+    public void onSuccess() {
+        getAllergyFromDatabase();
+    }
+
+    @Override
+    public void onFailure() {
+
     }
 }

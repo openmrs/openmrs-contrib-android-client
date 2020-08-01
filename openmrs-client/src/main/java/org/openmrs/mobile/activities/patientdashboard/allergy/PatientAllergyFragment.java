@@ -100,7 +100,7 @@ public class PatientAllergyFragment extends PatientDashboardFragment implements 
     }
 
     @Override
-    public void showDialogueBox(int pos) {
+    public void showDialogueBox(Allergy allergy) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
         alertDialogBuilder.setTitle(R.string.delete_allergy_title);
         alertDialogBuilder
@@ -109,6 +109,7 @@ public class PatientAllergyFragment extends PatientDashboardFragment implements 
                 .setPositiveButton(R.string.mark_patient_deceased_proceed, (dialog, id) -> {
                     dialog.cancel();
                     // Code to delete
+                    ((PatientDashboardAllergyPresenter) mPresenter).deleteAllergy(allergy.getUuid());
                 })
                 .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> {
                     alertDialog.cancel();

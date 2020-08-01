@@ -481,4 +481,7 @@
     <string name="unable_to_fetch_allergies">Unable to get the latest recorded allergies!</string>
     <string name="delete_allergy_title">Delete Patient Allergy?</string>
     <string name="delete_allergy_description">The patient\'s Allergy will be removed from server. Are you sure you want to continue?</string>
+    <string name="delete_allergy_success">Successfully Deleted Allergy</string>
+    <string name="delete_allergy_failure">Unable to delete allergy</string>
+    <string name="delete_allergy_offline">Allergy will be removed from the server when you are back online.</string>
 </resources>

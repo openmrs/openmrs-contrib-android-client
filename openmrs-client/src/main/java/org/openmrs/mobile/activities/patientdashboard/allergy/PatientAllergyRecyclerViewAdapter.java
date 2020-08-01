@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -75,12 +76,9 @@ public class PatientAllergyRecyclerViewAdapter extends RecyclerView.Adapter<Pati
             holder.severity.setText(allergy.getSeverity().getDisplay());
         }
 
-        holder.constraintLayout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                longPressListener.showDialogueBox(position);
-                return false;
-            }
+        holder.cardView.setOnLongClickListener(view -> {
+            longPressListener.showDialogueBox(allergy);
+            return false;
         });
     }
 
@@ -94,7 +92,7 @@ public class PatientAllergyRecyclerViewAdapter extends RecyclerView.Adapter<Pati
         private TextView reaction;
         private TextView severity;
         private TextView comment;
-        private ConstraintLayout constraintLayout;
+        private CardView cardView;
 
         public ViewHolder(@NonNull View itemView, OnLongPressListener longPressListener) {
             super(itemView);
@@ -102,11 +100,11 @@ public class PatientAllergyRecyclerViewAdapter extends RecyclerView.Adapter<Pati
             reaction = itemView.findViewById(R.id.allergy_reaction);
             severity = itemView.findViewById(R.id.allergy_severity);
             comment = itemView.findViewById(R.id.allergy_comment);
-            constraintLayout = itemView.findViewById(R.id.constraintLayout);
+            cardView = itemView.findViewById(R.id.allergy_cardView);
         }
     }
 
     interface OnLongPressListener {
-        void showDialogueBox(int pos);
+        void showDialogueBox(Allergy allergy);
     }
 }

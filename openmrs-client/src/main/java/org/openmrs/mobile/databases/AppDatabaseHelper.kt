@@ -268,6 +268,7 @@ object AppDatabaseHelper {
     @JvmStatic
     fun convert(allergy: Allergy, patientID: String?): AllergyEntity {
         val allergyEntity = AllergyEntity()
+        allergyEntity.uuid = allergy.uuid
         allergyEntity.patientId = patientID
         allergyEntity.comment = allergy.comment
         if (allergy.severity != null) {
@@ -293,6 +294,7 @@ object AppDatabaseHelper {
     private fun convert(allergyEntity: AllergyEntity): Allergy {
         val allergy = Allergy()
         allergy.id = allergyEntity.id
+        allergy.uuid = allergyEntity.uuid
         allergy.comment = allergyEntity.comment
         if (allergyEntity.allergyReactions != null) {
             allergy.reactions = allergyEntity.allergyReactions!!

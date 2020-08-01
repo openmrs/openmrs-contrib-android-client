@@ -5,6 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardContract;
@@ -20,15 +21,16 @@ import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.spy;
 
+@RunWith(PowerMockRunner.class)
 @PrepareForTest({NetworkUtils.class, ToastUtil.class, OpenMRS.class, OpenMRSLogger.class})
 public class ProviderDashboardPresenterTest extends ACUnitTestBase {
     @Rule
     public InstantTaskExecutorRule taskExecutorRule = new InstantTaskExecutorRule();
-
     @Mock
     private RestApi restApi;
     @Mock
@@ -37,19 +39,18 @@ public class ProviderDashboardPresenterTest extends ACUnitTestBase {
     private OpenMRSLogger openMRSLogger;
     @Mock
     private OpenMRS openMRS;
-
     private ProviderDashboardPresenter providerDashboardPresenter;
     private ProviderRepository providerRepository;
 
     @Before
     public void setup() {
-        this.providerRepository =new ProviderRepository();
+        this.providerRepository = new ProviderRepository(restApi);
         ProviderRoomDAO providerRoomDao = Mockito.mock(ProviderRoomDAO.class);
         ProviderRoomDAO spyProviderRoomDao = spy(providerRoomDao);
-        doNothing().when(spyProviderRoomDao).updateProviderByUuid(Mockito.anyString(), Mockito.anyLong() ,Mockito.any(),Mockito.anyString(),Mockito.anyString());
+        doNothing().when(spyProviderRoomDao).updateProviderByUuid(Mockito.anyString(), Mockito.anyLong(), Mockito.any(), Mockito.anyString(), Mockito.anyString());
 
         this.providerRepository.setProviderRoomDao(spyProviderRoomDao);
-        this.providerDashboardPresenter = new ProviderDashboardPresenter(providerManagerView, restApi,providerRepository);
+        this.providerDashboardPresenter = new ProviderDashboardPresenter(providerManagerView, restApi, providerRepository);
         mockStaticMethods();
     }
 
@@ -71,5 +72,4 @@ public class ProviderDashboardPresenterTest extends ACUnitTestBase {
         PowerMockito.when(openMRS.getOpenMRSLogger()).thenReturn(openMRSLogger);
         PowerMockito.mockStatic(ToastUtil.class);
     }
-
 }

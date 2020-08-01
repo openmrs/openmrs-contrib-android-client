@@ -62,15 +62,11 @@ public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
     private OpenMRSLogger openMRSLogger;
     @Mock
     private OpenMRS openMRS;
-
     MutableLiveData<List<Provider>> providerLiveData = Mockito.mock(MutableLiveData.class);
-
     private ProviderManagerDashboardPresenter providerManagerDashboardPresenter;
     private ProviderRepository providerRepository;
     private Fragment fragment = new Fragment();
-
     List<Provider> providerList;
-
     Provider providerOne = createProvider(1l, "doctor");
     Provider providerTwo = createProvider(2l, "nurse");
 
@@ -79,7 +75,7 @@ public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
         providerList = Arrays.asList(providerOne, providerTwo);
         providerLiveData.postValue(providerList);
 
-        this.providerRepository = new ProviderRepository();
+        this.providerRepository = new ProviderRepository(restApi);
         ProviderRoomDAO providerRoomDao = Mockito.mock(ProviderRoomDAO.class, RETURNS_MOCKS);
         ProviderRoomDAO spyProviderRoomDao = spy(providerRoomDao);
 
@@ -106,7 +102,7 @@ public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
         when(restApi.getProviderList()).thenReturn(mockSuccessCall(providerList));
 
         providerManagerDashboardPresenter.updateViews(providerList);
-        providerRepository.getProviders(restApi).observeForever(observer);
+        providerRepository.getProviders().observeForever(observer);
 
         verify(restApi).getProviderList();
         verify(providerManagerView).updateAdapter(providerList);

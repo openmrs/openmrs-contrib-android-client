@@ -479,4 +479,6 @@
     <string name="allergy_reactions">Reactions</string>
     <string name="empty_allergy_list">Patient has no allergies yet.</string>
     <string name="unable_to_fetch_allergies">Unable to get the latest recorded allergies!</string>
+    <string name="delete_allergy_title">Delete Patient Allergy?</string>
+    <string name="delete_allergy_description">The patient\'s Allergy will be removed from server. Are you sure you want to continue?</string>
 </resources>

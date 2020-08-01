@@ -69,7 +69,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
             signingConfig signingConfigs.release
         }
@@ -141,14 +141,13 @@ dependencies {
     // Database components
     implementation "androidx.room:room-runtime:${versions.roomRuntime}"
     implementation "android.arch.persistence.room:rxjava2:${versions.roomPersistence}"
-    //noinspection GradleDependency
+    // Noinspection GradleDependency
     annotationProcessor "androidx.room:room-compiler:${versions.roomCompiler}"
-    implementation "net.zetetic:android-database-sqlcipher:${versions.sqlcipher}"
 
     // Work Manager
     implementation "androidx.work:work-runtime:${versions.workManager}"
 
-    //http request Chuck Library
+    // http request Chuck Library
     testImplementation "com.readystatesoftware.chuck:library:${versions.chuckLibrary}"
     debugImplementation "com.readystatesoftware.chuck:library:${versions.chuckLibrary}"
     releaseImplementation "com.readystatesoftware.chuck:library-no-op:${versions.chuckLibrary}"
@@ -172,9 +171,9 @@ dependencies {
     implementation "org.jdeferred:jdeferred-android-aar:${versions.jdeferred}"
     implementation "com.google.guava:guava:${versions.guava}"
 
-    //Leak Canary
+    // Leak Canary
     debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}"
-    //google place api
+    // Google place api
     implementation "com.google.android.libraries.places:places:${versions.placesAPI}"
 
     // Test Implementations

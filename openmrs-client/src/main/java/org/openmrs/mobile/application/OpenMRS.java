@@ -21,8 +21,6 @@ import android.preference.PreferenceManager;
 
 import androidx.multidex.MultiDexApplication;
 
-import net.sqlcipher.database.SQLiteDatabase;
-
 import org.mindrot.jbcrypt.BCrypt;
 import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.services.AuthenticateCheckService;
@@ -46,7 +44,6 @@ public class OpenMRS extends MultiDexApplication {
 
     @Override
     public void onCreate() {
-        initializeSQLCipher();
         super.onCreate();
         instance = this;
         if (mExternalDirectoryPath == null) {
@@ -276,10 +273,6 @@ public class OpenMRS extends MultiDexApplication {
 
     public boolean isRunningKitKatVersionOrHigher() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
-    }
-
-    private void initializeSQLCipher() {
-        SQLiteDatabase.loadLibs(this);
     }
 
     public void clearUserPreferencesData() {

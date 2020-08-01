@@ -36,7 +36,6 @@ versions.countryCodePicker = '2.4.0'
 versions.AppIntro = '6.0.0'
 
 versions.codec = '1.10'
-versions.sqlcipher = '4.1.3@aar'
 versions.jdeferred = '1.2.6'
 versions.legacySupport = '1.0.0'
 versions.multidex = '2.0.1'

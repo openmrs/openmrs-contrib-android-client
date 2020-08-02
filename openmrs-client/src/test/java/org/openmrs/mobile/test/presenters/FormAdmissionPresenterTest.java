@@ -24,6 +24,7 @@ import androidx.lifecycle.Observer;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.formadmission.FormAdmissionContract;
@@ -42,6 +43,7 @@ import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -57,10 +59,8 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-@PrepareForTest({NetworkUtils.class,
-    ToastUtil.class,
-    OpenMRS.class,
-    OpenMRSLogger.class})
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({NetworkUtils.class, ToastUtil.class, OpenMRS.class, OpenMRSLogger.class})
 public class FormAdmissionPresenterTest extends ACUnitTestBase {
     @Rule
     public InstantTaskExecutorRule taskExecutorRule = new InstantTaskExecutorRule();
@@ -88,10 +88,11 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
 
     @Before
     public void setUp() {
+        mockStaticMethods();
         providerList = Arrays.asList(providerOne, providerTwo);
         providerLiveData.postValue(providerList);
 
-        this.providerRepository = new ProviderRepository();
+        this.providerRepository = new ProviderRepository(restApi);
         ProviderRoomDAO providerRoomDao = Mockito.mock(ProviderRoomDAO.class, RETURNS_MOCKS);
         ProviderRoomDAO spyProviderRoomDao = spy(providerRoomDao);
 
@@ -102,9 +103,7 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
 
         this.providerRepository.setProviderRoomDao(spyProviderRoomDao);
 
-
         formAdmissionPresenter = new FormAdmissionPresenter(formAdmissionView, restApi, context);
-        mockStaticMethods();
     }
 
     @Test
@@ -113,7 +112,7 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
         Mockito.lenient().when(restApi.getProviderList()).thenReturn(mockSuccessCall(providerList));
 
         formAdmissionPresenter.updateViews(providerList);
-        providerRepository.getProviders(restApi).observeForever(observer);
+        providerRepository.getProviders().observeForever(observer);
 
         verify(restApi).getProviderList();
         verify(formAdmissionView).updateProviderAdapter(providerList);
@@ -124,7 +123,7 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
         Mockito.lenient().when(NetworkUtils.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.getProviderList()).thenReturn(mockErrorCall(401));
 
-        providerRepository.getProviders(restApi).observeForever(observer);
+        providerRepository.getProviders().observeForever(observer);
         verify(restApi).getProviderList();
     }
 

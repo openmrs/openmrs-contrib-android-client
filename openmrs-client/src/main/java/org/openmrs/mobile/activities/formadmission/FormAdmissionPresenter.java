@@ -26,9 +26,9 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.LocationEntity;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
 import org.openmrs.mobile.listeners.retrofit.EncounterResponseCallback;
 import org.openmrs.mobile.listeners.retrofit.LocationResponseCallback;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
 import org.openmrs.mobile.models.EncounterProviderCreate;
 import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.Obscreate;
@@ -63,7 +63,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         restApi = RestServiceBuilder.createService(RestApi.class);
         this.view.setPresenter(this);
         this.mContext = context;
-        this.providerRepository = new ProviderRepository();
+        this.providerRepository = new ProviderRepository(restApi);
     }
 
     public FormAdmissionPresenter(FormAdmissionContract.View formAdmissionView, RestApi restApi, Context context) {
@@ -71,7 +71,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         this.restApi = restApi;
         this.view.setPresenter(this);
         this.mContext = context;
-        this.providerRepository = new ProviderRepository();
+        this.providerRepository = new ProviderRepository(restApi);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
 
     @Override
     public void getProviders(FormAdmissionFragment fragment) {
-        providerRepository.getProviders(restApi).observe(fragment, this::updateViews);
+        providerRepository.getProviders().observe(fragment, this::updateViews);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
     }
 
     public void getLocation(String url) {
-        providerRepository.getLocation(restApi, url, new LocationResponseCallback() {
+        providerRepository.getLocation(url, new LocationResponseCallback() {
             @Override
             public void onResponse(List<LocationEntity> locationList) {
                 view.updateLocationAdapter(locationList);
@@ -111,7 +111,7 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
 
     @Override
     public void getEncounterRoles() {
-        providerRepository.getEncounterRoles(restApi, new EncounterResponseCallback() {
+        providerRepository.getEncounterRoles(new EncounterResponseCallback() {
             @Override
             public void onResponse(List<Resource> encounterRoleList) {
                 view.updateEncounterRoleList(encounterRoleList);
@@ -145,8 +145,8 @@ public class FormAdmissionPresenter extends BasePresenter implements FormAdmissi
         encountercreate.setEncounterProvider(encounterProviderCreate);
 
         long id = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext())
-                .encounterCreateRoomDAO()
-                .addEncounterCreated(encountercreate);
+            .encounterCreateRoomDAO()
+            .addEncounterCreated(encountercreate);
         encountercreate.setId(id);
         if (!mPatient.isSynced()) {
             mPatient.addEncounters(encountercreate.getId());

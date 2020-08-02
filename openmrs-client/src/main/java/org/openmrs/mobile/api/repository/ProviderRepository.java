@@ -28,6 +28,7 @@ import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.CustomApiCallback;
 import org.openmrs.mobile.api.RestApi;
+import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.workers.provider.AddProviderWorker;
 import org.openmrs.mobile.api.workers.provider.DeleteProviderWorker;
 import org.openmrs.mobile.api.workers.provider.UpdateProviderWorker;
@@ -54,21 +55,24 @@ import retrofit2.Response;
 public class ProviderRepository {
     ProviderRoomDAO providerRoomDao;
     WorkManager workManager;
+    RestApi restApi;
 
     public ProviderRepository(Context context) {
         AppDatabase db = AppDatabase.getDatabase(context);
         providerRoomDao = db.providerRoomDAO();
         workManager = WorkManager.getInstance(context);
+        restApi = RestServiceBuilder.createService(RestApi.class);
     }
 
-    public ProviderRepository() {
+    public ProviderRepository(RestApi restApi) {
+        this.restApi = restApi;
     }
-
+    
     public void setProviderRoomDao(ProviderRoomDAO providerRoomDao) {
         this.providerRoomDao = providerRoomDao;
     }
 
-    public LiveData<List<Provider>> getProviders(RestApi restApi) {
+    public LiveData<List<Provider>> getProviders() {
 
         MutableLiveData<List<Provider>> providerLiveData = new MutableLiveData<>();
         if (NetworkUtils.isOnline()) {
@@ -115,7 +119,7 @@ public class ProviderRepository {
         return providerLiveData;
     }
 
-    public void addProvider(RestApi restApi, Provider provider, CustomApiCallback callback) {
+    public void addProvider(Provider provider, CustomApiCallback callback) {
 
         if (NetworkUtils.isOnline()) {
             restApi.addProvider(provider).enqueue(new Callback<Provider>() {
@@ -164,7 +168,7 @@ public class ProviderRepository {
         }
     }
 
-    public void updateProvider(RestApi restApi, Provider provider, CustomApiCallback callback) {
+    public void updateProvider(Provider provider, CustomApiCallback callback) {
 
         if (NetworkUtils.isOnline()) {
             restApi.UpdateProvider(provider.getUuid(), provider).enqueue(new Callback<Provider>() {
@@ -206,7 +210,7 @@ public class ProviderRepository {
         }
     }
 
-    public void deleteProviders(RestApi restApi, String providerUuid, CustomApiCallback callback) {
+    public void deleteProviders(String providerUuid, CustomApiCallback callback) {
 
         //when callback would call onResponse successfull the UI will refresh automatically
         if (NetworkUtils.isOnline()) {
@@ -249,7 +253,7 @@ public class ProviderRepository {
         }
     }
 
-    public void getLocation(RestApi restApi, String url, LocationResponseCallback callback) {
+    public void getLocation(String url, LocationResponseCallback callback) {
         if (NetworkUtils.hasNetwork()) {
             String locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "location";
             Call<Results<LocationEntity>> call =
@@ -278,7 +282,7 @@ public class ProviderRepository {
         }
     }
 
-    public void getEncounterRoles(RestApi restApi, EncounterResponseCallback callback) {
+    public void getEncounterRoles(EncounterResponseCallback callback) {
         restApi.getEncounterRoles().enqueue(new Callback<Results<Resource>>() {
             @Override
             public void onResponse(Call<Results<Resource>> call, Response<Results<Resource>> response) {
@@ -300,6 +304,3 @@ public class ProviderRepository {
         });
     }
 }
-
-
-

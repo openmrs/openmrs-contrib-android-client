@@ -41,7 +41,7 @@ public class ProviderManagerDashboardPresenter extends BasePresenter implements 
         providerRepository = new ProviderRepository(context);
     }
 
-    public ProviderManagerDashboardPresenter(@NotNull ProviderManagerDashboardContract.View providerManagerView, @NotNull RestApi restApi,ProviderRepository providerRepository) {
+    public ProviderManagerDashboardPresenter(@NotNull ProviderManagerDashboardContract.View providerManagerView, @NotNull RestApi restApi, ProviderRepository providerRepository) {
         this.providerManagerView = providerManagerView;
         this.restApi = restApi;
         this.providerManagerView.setPresenter(this);
@@ -50,7 +50,7 @@ public class ProviderManagerDashboardPresenter extends BasePresenter implements 
 
     @Override
     public void getProviders(Fragment fragment) {
-        providerRepository.getProviders(restApi).observe(fragment, this::updateViews);
+        providerRepository.getProviders().observe(fragment, this::updateViews);
     }
 
     @Override
@@ -65,18 +65,17 @@ public class ProviderManagerDashboardPresenter extends BasePresenter implements 
 
     @Override
     public void deleteProvider(String providerUuid) {
-        providerRepository.deleteProviders(restApi, providerUuid, this);
-
+        providerRepository.deleteProviders(providerUuid, this);
     }
 
     @Override
     public void addProvider(Provider provider) {
-        providerRepository.addProvider(restApi, provider, this);
+        providerRepository.addProvider(provider, this);
     }
 
     @Override
     public void updateProvider(Provider provider) {
-        providerRepository.updateProvider(restApi, provider, this);
+        providerRepository.updateProvider(provider, this);
     }
 
     @Override

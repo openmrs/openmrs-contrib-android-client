@@ -41,7 +41,7 @@ public class ProviderDashboardPresenter extends BasePresenter implements Provide
 
     @Override
     public void updateProvider(Provider provider) {
-        providerRepository.updateProvider(restApi, provider, new CustomApiCallback() {
+        providerRepository.updateProvider(provider, new CustomApiCallback() {
             @Override
             public void onSuccess() {
                 providerDashboardView.setupBackdrop(provider);
@@ -56,7 +56,7 @@ public class ProviderDashboardPresenter extends BasePresenter implements Provide
 
     @Override
     public void deleteProvider() {
-        providerRepository.deleteProviders(restApi, provider.getUuid(), this);
+        providerRepository.deleteProviders(provider.getUuid(), this);
     }
 
     @Override

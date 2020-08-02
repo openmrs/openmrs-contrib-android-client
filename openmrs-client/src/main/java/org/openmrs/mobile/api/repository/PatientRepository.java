@@ -138,7 +138,7 @@ public class PatientRepository extends RetrofitRepository {
                                     uploadPatientPhoto(patient);
                                 }
 
-                                new PatientDAO().updatePatient(patient.getId(), patient);
+                                patientDao.updatePatient(patient.getId(), patient);
                                 if (!patient.getEncounters().equals("")) {
                                     addEncounters(patient);
                                 }

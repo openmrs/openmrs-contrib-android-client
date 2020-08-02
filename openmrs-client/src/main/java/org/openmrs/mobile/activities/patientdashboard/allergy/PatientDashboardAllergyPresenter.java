@@ -18,17 +18,18 @@ import androidx.fragment.app.Fragment;
 
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
-import org.openmrs.mobile.api.CustomApiCallback;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.AllergyRepository;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
 import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
-public class PatientDashboardAllergyPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientAllergyPresenter, CustomApiCallback {
+public class PatientDashboardAllergyPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientAllergyPresenter, DefaultResponseCallback {
     private PatientDashboardContract.ViewPatientAllergy mPatientAllergyView;
     private String patientId;
     private PatientDAO patientDAO;
@@ -78,12 +79,12 @@ public class PatientDashboardAllergyPresenter extends PatientDashboardMainPresen
     }
 
     @Override
-    public void onSuccess() {
+    public void onResponse() {
         getAllergyFromDatabase();
     }
 
     @Override
-    public void onFailure() {
-
+    public void onErrorResponse(String errorMessage) {
+        ToastUtil.error(errorMessage);
     }
 }

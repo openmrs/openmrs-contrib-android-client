@@ -32,6 +32,7 @@ import org.openmrs.mobile.dao.AllergyRoomDAO;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.AppDatabaseHelper;
 import org.openmrs.mobile.databases.entities.AllergyEntity;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
 import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.NetworkUtils;
@@ -99,7 +100,7 @@ public class AllergyRepository {
         return allergyList;
     }
 
-    public void deleteAllergy(RestApi restApi, String patientUuid, String allergyUuid, CustomApiCallback callback) {
+    public void deleteAllergy(RestApi restApi, String patientUuid, String allergyUuid, DefaultResponseCallback callback) {
         if (NetworkUtils.isOnline()) {
             restApi.deleteAllergy(patientUuid, allergyUuid).enqueue(new Callback<ResponseBody>() {
                 @Override
@@ -107,14 +108,13 @@ public class AllergyRepository {
                     if (response.isSuccessful()) {
                         allergyRoomDAO.deleteAllergyByUUID(allergyUuid);
                         ToastUtil.success(OpenMRS.getInstance().getString(R.string.delete_allergy_success));
-                        callback.onSuccess();
+                        callback.onResponse();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    ToastUtil.error(OpenMRS.getInstance().getString(R.string.delete_allergy_failure));
-                    callback.onFailure();
+                    callback.onErrorResponse(OpenMRS.getInstance().getString(R.string.delete_allergy_failure));
                 }
             });
         } else {
@@ -124,13 +124,13 @@ public class AllergyRepository {
                     .putString("allergy_uuid", allergyUuid)
                     .build();
             allergyRoomDAO.deleteAllergyByUUID(allergyUuid);
-            callback.onSuccess();
+            callback.onResponse();
 
             // enqueue the work to workManager
             Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
             workManager.enqueue(new OneTimeWorkRequest.Builder(DeleteAllergyWorker.class).setConstraints(constraints).setInputData(data).build());
 
-            ToastUtil.success(OpenMRS.getInstance().getString(R.string.delete_allergy_offline));
+            ToastUtil.notify(OpenMRS.getInstance().getString(R.string.delete_allergy_offline));
         }
     }
 }

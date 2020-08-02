@@ -180,4 +180,10 @@ object ApplicationConstants {
         const val CHARTS_TAB_POS = 5
         const val TAB_COUNT = 6
     }
+
+    object ConceptDownloadService {
+        const val CHANNEL_ID = "conceptCount"
+        const val CHANNEL_DESC = "This channel receives new concept count notifications"
+        const val CHANNEL_NAME = "Concepts Channel"
+    }
 }

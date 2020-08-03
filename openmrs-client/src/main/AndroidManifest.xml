@@ -267,6 +267,10 @@
             android:name=".activities.community.contact.ContactUsActivity"
             android:theme="@style/AppThemeOrig"
             android:label="@string/contact_us"/>
+        <activity
+            android:name=".activities.addallergy.AddEditAllergyActivity"
+            android:theme="@style/AppThemeOrig"
+            android:label="@string/allergy_heading"/>
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"

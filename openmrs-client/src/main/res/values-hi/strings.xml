@@ -141,6 +141,7 @@
     <string name="synchronize_patient_network_error">ऑफ़लाइन मोड में सिंक्रनाइज़ नहीं किया जा सकता</string>
     <string name="get_patient_from_database_error">डेटाबेस से रोगी लाने में विफल</string>
     <string name="action_start_visit">विज़िट शुरू करें </string>
+    <string name="action_create_allergy">एलर्जी शुरू करे</string>
     <string name="patient_scroll_tab_details_label">विवरण</string>
     <string name="patient_scroll_tab_allergy_label">एलर्जी</string>
     <string name="patient_scroll_tab_diagnosis_label">निदान</string>
@@ -448,4 +449,5 @@
     <string name="delete_allergy_success">सफलतापूर्वक एलर्जी नष्ट हो गई</string>
     <string name="delete_allergy_failure">एलर्जी को हटाने में असमर्थ</string>
     <string name="delete_allergy_offline">ऑनलाइन वापस आने पर सर्वर से एलर्जी को हटा दिया जाएगा</string>
+    <string name="allergy_heading">एलर्जी</string>
 </resources>

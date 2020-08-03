@@ -28,6 +28,7 @@ import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.AllergyRoomDAO;
 import org.openmrs.mobile.databases.AppDatabase;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -35,6 +36,9 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static org.openmrs.mobile.utilities.ApplicationConstants.BundleKeys.ALLERGY_UUID;
+import static org.openmrs.mobile.utilities.ApplicationConstants.BundleKeys.PATIENT_UUID;
 
 public class DeleteAllergyWorker extends Worker {
     AllergyRoomDAO allergyRoomDAO;
@@ -50,8 +54,8 @@ public class DeleteAllergyWorker extends Worker {
     @Override
     public Result doWork() {
         final boolean[] result = new boolean[1];
-        String allergyUuid = getInputData().getString("allergy_uuid");
-        String patientUuid = getInputData().getString("patient_uuid");
+        String allergyUuid = getInputData().getString(ALLERGY_UUID);
+        String patientUuid = getInputData().getString(PATIENT_UUID);
 
         deleteAllergy(restApi, allergyUuid, patientUuid, new CustomApiCallback() {
             @Override

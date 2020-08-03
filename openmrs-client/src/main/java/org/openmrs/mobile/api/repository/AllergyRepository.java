@@ -46,6 +46,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static org.openmrs.mobile.utilities.ApplicationConstants.BundleKeys.ALLERGY_UUID;
+import static org.openmrs.mobile.utilities.ApplicationConstants.BundleKeys.PATIENT_UUID;
+
 public class AllergyRepository {
     AllergyRoomDAO allergyRoomDAO;
     WorkManager workManager;
@@ -120,8 +123,8 @@ public class AllergyRepository {
         } else {
             // offline deletion
             Data data = new Data.Builder()
-                    .putString("patient_uuid", patientUuid)
-                    .putString("allergy_uuid", allergyUuid)
+                    .putString(PATIENT_UUID, patientUuid)
+                    .putString(ALLERGY_UUID, allergyUuid)
                     .build();
             allergyRoomDAO.deleteAllergyByUUID(allergyUuid);
             callback.onResponse();

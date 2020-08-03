@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.patientdashboard.allergy;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -102,7 +103,7 @@ public class PatientAllergyFragment extends PatientDashboardFragment implements 
     @Override
     public void showDialogueBox(Allergy allergy) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-        alertDialogBuilder.setTitle(R.string.delete_allergy_title);
+        alertDialogBuilder.setTitle(getString(R.string.delete_allergy_title, allergy.getAllergen().getCodedAllergen().getDisplay()));
         alertDialogBuilder
                 .setMessage(R.string.delete_allergy_description)
                 .setCancelable(false)

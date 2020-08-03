@@ -1,11 +1,15 @@
 package org.openmrs.mobile.services;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.IBinder;
 
 import androidx.annotation.NonNull;
@@ -32,6 +36,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static org.openmrs.mobile.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_DESC;
+import static org.openmrs.mobile.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_ID;
+import static org.openmrs.mobile.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_NAME;
+
 public class ConceptDownloadService extends Service {
     private int downloadedConcepts;
     private int maxConceptsInOneQuery = 100;
@@ -43,7 +51,7 @@ public class ConceptDownloadService extends Service {
             startDownload();
             downloadConcepts(downloadedConcepts);
         } else if (intent.getAction().equals(
-            ApplicationConstants.ServiceActions.STOP_CONCEPT_DOWNLOAD_ACTION)) {
+                ApplicationConstants.ServiceActions.STOP_CONCEPT_DOWNLOAD_ACTION)) {
             stopForeground(true);
             stopSelf();
         }
@@ -53,8 +61,8 @@ public class ConceptDownloadService extends Service {
     private void startDownload() {
         RestApi service = RestServiceBuilder.createService(RestApi.class);
         Call<Results<SystemSetting>> call = service.getSystemSettingsByQuery(
-            ApplicationConstants.SystemSettingKeys.WS_REST_MAX_RESULTS_ABSOLUTE,
-            ApplicationConstants.API.FULL);
+                ApplicationConstants.SystemSettingKeys.WS_REST_MAX_RESULTS_ABSOLUTE,
+                ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<SystemSetting>>() {
             @Override
             public void onResponse(@NonNull Call<Results<SystemSetting>> call, @NonNull Response<Results<SystemSetting>> response) {
@@ -81,6 +89,14 @@ public class ConceptDownloadService extends Service {
     }
 
     private void showNotification(int downloadedConcepts) {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channelPayment = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+            channelPayment.setDescription(CHANNEL_DESC);
+            notificationManager.createNotificationChannel(channelPayment);
+        }
+
         Intent notificationIntent = new Intent(this, SettingsActivity.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         notificationIntent.putExtra(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_KEY_COUNT, downloadedConcepts);
@@ -88,18 +104,17 @@ public class ConceptDownloadService extends Service {
 
         Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_openmrs);
 
-        Notification notification = new NotificationCompat.Builder(this)
-            .setContentTitle(getString(R.string.downloading_concepts_notification_message))
-            .setTicker(getString(R.string.app_name))
-            .setContentText(String.valueOf(downloadedConcepts))
-            .setSmallIcon(R.drawable.ic_stat_notify_download)
-            .setLargeIcon(
-                Bitmap.createScaledBitmap(icon, 128, 128, false))
-            .setContentIntent(pendingIntent)
-            .setOngoing(true)
-            .build();
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setContentTitle(getString(R.string.downloading_concepts_notification_message))
+                .setTicker(getString(R.string.app_name))
+                .setContentText(String.valueOf(downloadedConcepts))
+                .setSmallIcon(R.drawable.ic_stat_notify_download)
+                .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
+                .setContentIntent(pendingIntent)
+                .setOngoing(true)
+                .build();
         startForeground(ApplicationConstants.ServiceNotificationId.CONCEPT_DOWNLOADFOREGROUND_SERVICE,
-            notification);
+                notification);
     }
 
     private void downloadConcepts(int startIndex) {

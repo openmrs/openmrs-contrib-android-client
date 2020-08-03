@@ -130,5 +130,7 @@ public interface PatientDashboardContract {
 
     interface PatientAllergyPresenter extends PatientDashboardMainPresenter {
         void getAllergy(Fragment fragment);
+
+        void deleteAllergy(String uuid);
     }
 }

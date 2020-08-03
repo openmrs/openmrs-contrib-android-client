@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.patientdashboard.allergy;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,18 +26,22 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import org.jetbrains.annotations.NotNull;
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.databinding.FragmentPatientAllergyBinding;
 import org.openmrs.mobile.models.Allergy;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
-public class PatientAllergyFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientAllergy {
+public class PatientAllergyFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientAllergy, PatientAllergyRecyclerViewAdapter.OnLongPressListener {
+    AlertDialog alertDialog;
     private PatientDashboardActivity mPatientDashboardActivity;
     private FragmentPatientAllergyBinding binding;
 
@@ -88,10 +93,29 @@ public class PatientAllergyFragment extends PatientDashboardFragment implements 
                 binding.emptyAllergyList.setVisibility(View.VISIBLE);
             } else {
                 binding.emptyAllergyList.setVisibility(View.GONE);
-                PatientAllergyRecyclerViewAdapter adapter = new PatientAllergyRecyclerViewAdapter(getContext(), allergies);
+                PatientAllergyRecyclerViewAdapter adapter = new PatientAllergyRecyclerViewAdapter(getContext(), allergies, this);
                 binding.recyclerViewAllergy.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
         }
+    }
+
+    @Override
+    public void showDialogueBox(Allergy allergy) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+        alertDialogBuilder.setTitle(getString(R.string.delete_allergy_title, allergy.getAllergen().getCodedAllergen().getDisplay()));
+        alertDialogBuilder
+                .setMessage(R.string.delete_allergy_description)
+                .setCancelable(false)
+                .setPositiveButton(R.string.mark_patient_deceased_proceed, (dialog, id) -> {
+                    dialog.cancel();
+                    // Code to delete
+                    ((PatientDashboardAllergyPresenter) mPresenter).deleteAllergy(allergy.getUuid());
+                })
+                .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> {
+                    alertDialog.cancel();
+                });
+        alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

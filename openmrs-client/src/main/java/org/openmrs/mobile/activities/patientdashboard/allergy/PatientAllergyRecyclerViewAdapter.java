@@ -21,6 +21,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.openmrs.mobile.R;
@@ -32,17 +34,19 @@ import java.util.List;
 public class PatientAllergyRecyclerViewAdapter extends RecyclerView.Adapter<PatientAllergyRecyclerViewAdapter.ViewHolder> {
     private Context context;
     private List<Allergy> list;
+    private OnLongPressListener longPressListener;
 
-    public PatientAllergyRecyclerViewAdapter(Context context, List<Allergy> list) {
+    public PatientAllergyRecyclerViewAdapter(Context context, List<Allergy> list, OnLongPressListener longPressListener) {
         this.context = context;
         this.list = list;
+        this.longPressListener = longPressListener;
     }
 
     @NonNull
     @Override
     public PatientAllergyRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(context).inflate(R.layout.list_patient_allergy, parent, false);
-        return new ViewHolder(itemView);
+        return new ViewHolder(itemView, longPressListener);
     }
 
     @Override
@@ -71,6 +75,11 @@ public class PatientAllergyRecyclerViewAdapter extends RecyclerView.Adapter<Pati
         } else {
             holder.severity.setText(allergy.getSeverity().getDisplay());
         }
+
+        holder.cardView.setOnLongClickListener(view -> {
+            longPressListener.showDialogueBox(allergy);
+            return false;
+        });
     }
 
     @Override
@@ -83,13 +92,19 @@ public class PatientAllergyRecyclerViewAdapter extends RecyclerView.Adapter<Pati
         private TextView reaction;
         private TextView severity;
         private TextView comment;
+        private CardView cardView;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnLongPressListener longPressListener) {
             super(itemView);
             allergen = itemView.findViewById(R.id.allergy_allergen);
             reaction = itemView.findViewById(R.id.allergy_reaction);
             severity = itemView.findViewById(R.id.allergy_severity);
             comment = itemView.findViewById(R.id.allergy_comment);
+            cardView = itemView.findViewById(R.id.allergy_cardView);
         }
+    }
+
+    interface OnLongPressListener {
+        void showDialogueBox(Allergy allergy);
     }
 }

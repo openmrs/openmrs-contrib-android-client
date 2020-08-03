@@ -16,15 +16,23 @@ package org.openmrs.mobile.api.repository;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.work.Constraints;
+import androidx.work.Data;
+import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.api.CustomApiCallback;
 import org.openmrs.mobile.api.RestApi;
+import org.openmrs.mobile.api.workers.allergy.DeleteAllergyWorker;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.AllergyRoomDAO;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.AppDatabaseHelper;
 import org.openmrs.mobile.databases.entities.AllergyEntity;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
 import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.NetworkUtils;
@@ -33,12 +41,17 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static org.openmrs.mobile.utilities.ApplicationConstants.BundleKeys.ALLERGY_UUID;
+import static org.openmrs.mobile.utilities.ApplicationConstants.BundleKeys.PATIENT_UUID;
+
 public class AllergyRepository {
     AllergyRoomDAO allergyRoomDAO;
+    WorkManager workManager;
     String patientID;
     List<Allergy> allergyList = new ArrayList<>();
     List<AllergyEntity> allergyEntitiesOffline = new ArrayList<>();
@@ -46,6 +59,7 @@ public class AllergyRepository {
     public AllergyRepository(String patientID) {
         this.patientID = patientID;
         allergyRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance()).allergyRoomDAO();
+        workManager = WorkManager.getInstance(OpenMRS.getInstance());
     }
 
     public AllergyRepository(String id, AllergyRoomDAO allergyRoomDAO) {
@@ -81,5 +95,45 @@ public class AllergyRepository {
             });
         }
         return allergyLiveData;
+    }
+
+    public List<Allergy> getAllergyFromDatabase(String patientID) {
+        allergyEntitiesOffline = allergyRoomDAO.getAllAllergiesByPatientID(patientID);
+        allergyList = AppDatabaseHelper.convertTo(allergyEntitiesOffline);
+        return allergyList;
+    }
+
+    public void deleteAllergy(RestApi restApi, String patientUuid, String allergyUuid, DefaultResponseCallback callback) {
+        if (NetworkUtils.isOnline()) {
+            restApi.deleteAllergy(patientUuid, allergyUuid).enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        allergyRoomDAO.deleteAllergyByUUID(allergyUuid);
+                        ToastUtil.success(OpenMRS.getInstance().getString(R.string.delete_allergy_success));
+                        callback.onResponse();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    callback.onErrorResponse(OpenMRS.getInstance().getString(R.string.delete_allergy_failure));
+                }
+            });
+        } else {
+            // offline deletion
+            Data data = new Data.Builder()
+                    .putString(PATIENT_UUID, patientUuid)
+                    .putString(ALLERGY_UUID, allergyUuid)
+                    .build();
+            allergyRoomDAO.deleteAllergyByUUID(allergyUuid);
+            callback.onResponse();
+
+            // enqueue the work to workManager
+            Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+            workManager.enqueue(new OneTimeWorkRequest.Builder(DeleteAllergyWorker.class).setConstraints(constraints).setInputData(data).build());
+
+            ToastUtil.notify(OpenMRS.getInstance().getString(R.string.delete_allergy_offline));
+        }
     }
 }

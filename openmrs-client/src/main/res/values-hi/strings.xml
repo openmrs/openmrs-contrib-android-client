@@ -438,4 +438,9 @@
     <string name="allergy_reactions">प्रतिक्रिया</string>
     <string name="empty_allergy_list">रोगी को अभी तक कोई एलर्जी नहीं है।</string>
     <string name="unable_to_fetch_allergies">नवीनतम दर्ज एलर्जी प्राप्त करने में असमर्थ!</string>
+    <string name="delete_allergy_title">एलर्जी %1$s नष्ट करें?</string>
+    <string name="delete_allergy_description">रोगी का एलर्जी सर्वर से हटा दिया जाएगा। क्या तुम वाकई जारी रखना चाहते हो?</string>
+    <string name="delete_allergy_success">सफलतापूर्वक एलर्जी नष्ट हो गई</string>
+    <string name="delete_allergy_failure">एलर्जी को हटाने में असमर्थ</string>
+    <string name="delete_allergy_offline">ऑनलाइन वापस आने पर सर्वर से एलर्जी को हटा दिया जाएगा</string>
 </resources>

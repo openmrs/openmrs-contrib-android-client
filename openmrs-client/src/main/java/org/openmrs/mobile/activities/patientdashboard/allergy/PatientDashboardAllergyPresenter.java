@@ -22,12 +22,14 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.AllergyRepository;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
 import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.models.Patient;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
-public class PatientDashboardAllergyPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientAllergyPresenter {
+public class PatientDashboardAllergyPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientAllergyPresenter, DefaultResponseCallback {
     private PatientDashboardContract.ViewPatientAllergy mPatientAllergyView;
     private String patientId;
     private PatientDAO patientDAO;
@@ -62,7 +64,27 @@ public class PatientDashboardAllergyPresenter extends PatientDashboardMainPresen
         allergyRepository.getAllergies(restApi, mPatient.getUuid()).observe(fragment, this::updateViews);
     }
 
+    public void getAllergyFromDatabase() {
+        List<Allergy> allergyList = allergyRepository.getAllergyFromDatabase(mPatient.getId().toString());
+        updateViews(allergyList);
+    }
+
+    @Override
+    public void deleteAllergy(String allergyUuid) {
+        allergyRepository.deleteAllergy(restApi, mPatient.getUuid(), allergyUuid, this);
+    }
+
     public void updateViews(List<Allergy> allergies) {
         mPatientAllergyView.showAllergyList(allergies);
+    }
+
+    @Override
+    public void onResponse() {
+        getAllergyFromDatabase();
+    }
+
+    @Override
+    public void onErrorResponse(String errorMessage) {
+        ToastUtil.error(errorMessage);
     }
 }

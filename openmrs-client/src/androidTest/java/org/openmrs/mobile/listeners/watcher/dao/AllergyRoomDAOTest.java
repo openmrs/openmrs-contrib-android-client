@@ -36,8 +36,8 @@ public class AllergyRoomDAOTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private AllergyEntity allergyEntity1 = createAllergyEntity(10L, "1", "comment 1", "severity display 1", "severity uuid 1", "allergen display 1", "allergen uuid 1");
-    private AllergyEntity allergyEntity2 = createAllergyEntity(20L, "2", "comment 2", "severity display 2", "severity uuid 2", "allergen display 2", "allergen uuid 2");
+    private AllergyEntity allergyEntity1 = createAllergyEntity(10L, "uuid 1", "1", "comment 1", "severity display 1", "severity uuid 1", "allergen display 1", "allergen uuid 1");
+    private AllergyEntity allergyEntity2 = createAllergyEntity(20L, "uuid 2", "2", "comment 2", "severity display 2", "severity uuid 2", "allergen display 2", "allergen uuid 2");
     private AppDatabase mDatabase;
     private AllergyRoomDAO allergyRoomDAO;
 
@@ -82,9 +82,19 @@ public class AllergyRoomDAOTest {
         Assert.assertEquals(renderAllergyString(allergyRoomDAO.getAllAllergiesByPatientID("2").get(0)), renderAllergyString(allergyEntity2));
     }
 
-    private AllergyEntity createAllergyEntity(long id, String patientID, String comment, String severityDisplay, String severityUUID, String allergenDisplay, String allergenUUID) {
+    @Test
+    public void deleteAllergyByUUID_shouldCorrectlyDeleteAllergyByUUID() {
+        allergyRoomDAO.saveAllergy(allergyEntity1);
+        allergyRoomDAO.saveAllergy(allergyEntity2);
+        allergyRoomDAO.deleteAllergyByUUID(allergyEntity1.getUuid());
+        Assert.assertEquals(allergyRoomDAO.getAllAllergiesByPatientID("1").size(), 0L);
+        Assert.assertEquals(allergyRoomDAO.getAllAllergiesByPatientID("2").size(), 1L);
+    }
+
+    private AllergyEntity createAllergyEntity(long id, String uuid, String patientID, String comment, String severityDisplay, String severityUUID, String allergenDisplay, String allergenUUID) {
         AllergyEntity allergyEntity = new AllergyEntity();
         allergyEntity.setId(id);
+        allergyEntity.setUuid(uuid);
         allergyEntity.setPatientId(patientID);
         allergyEntity.setComment(comment);
         allergyEntity.setSeverityDisplay(severityDisplay);

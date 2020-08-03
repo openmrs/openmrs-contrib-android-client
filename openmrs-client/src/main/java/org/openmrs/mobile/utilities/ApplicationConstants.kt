@@ -110,6 +110,8 @@ object ApplicationConstants {
         const val PATIENTS_START_INDEX = "patientsStartIndex"
         const val PROVIDER_ID_BUNDLE = "providerID"
         const val EXISTING_PROVIDERS_BUNDLE = "existingProviders"
+        const val ALLERGY_UUID = "allergy_uuid"
+        const val PATIENT_UUID = "patient_uuid"
     }
 
     object ServiceActions {

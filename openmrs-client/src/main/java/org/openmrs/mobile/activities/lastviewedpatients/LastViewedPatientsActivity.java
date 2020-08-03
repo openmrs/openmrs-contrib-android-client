@@ -56,9 +56,9 @@ public class LastViewedPatientsActivity extends ACBaseActivity {
 
         if (savedInstanceState != null) {
             query = savedInstanceState.getString(ApplicationConstants.BundleKeys.PATIENT_QUERY_BUNDLE, "");
-            mPresenter = new LastViewedPatientsPresenter(lastViewedPatientsFragment, query);
+            mPresenter = new LastViewedPatientsPresenter(lastViewedPatientsFragment, query,getApplicationContext());
         } else {
-            mPresenter = new LastViewedPatientsPresenter(lastViewedPatientsFragment);
+            mPresenter = new LastViewedPatientsPresenter(lastViewedPatientsFragment,getApplicationContext());
         }
     }
 

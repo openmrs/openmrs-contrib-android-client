@@ -56,6 +56,7 @@ object ApplicationConstants {
     const val EMPTY_DASH_REPRESENTATION = "---"
     const val COMMA_WITH_SPACE = ", "
     const val PRIMARY_KEY_ID = "_id"
+    const val MIN_NUMBER_OF_PATIENTS_TO_SHOW = 7;
 
     object OpenMRSSharedPreferenceNames {
         const val SHARED_PREFERENCES_NAME = "shared_preferences"
@@ -85,7 +86,7 @@ object ApplicationConstants {
         const val WARNING_LOST_DATA_DIALOG_TAG = "warningLostDataDialog"
         const val SIMILAR_PATIENTS_TAG = "similarPatientsDialogTag"
         const val DELETE_PATIENT_DIALOG_TAG = "deletePatientDialogTag"
-        const val DELETE_PROVIDER_DIALOG_TAG= "deleteProviderDialogTag"
+        const val DELETE_PROVIDER_DIALOG_TAG = "deleteProviderDialogTag"
         const val LOCATION_DIALOG_TAG = "locationDialogTag"
         const val CREDENTIAL_CHANGED_DIALOG_TAG = "locationDialogTag"
         const val MULTI_DELETE_PATIENT_DIALOG_TAG = "multiDeletePatientDialogTag"
@@ -135,6 +136,7 @@ object ApplicationConstants {
 
     object EncounterTypes {
         const val VITALS = "67a71486-1a54-468f-ac3e-7091a9a79584"
+
         @JvmField
         var ENCOUNTER_TYPES_DISPLAYS = arrayOf(EncounterType.VITALS, EncounterType.ADMISSION, EncounterType.DISCHARGE, EncounterType.VISIT_NOTE)
     }

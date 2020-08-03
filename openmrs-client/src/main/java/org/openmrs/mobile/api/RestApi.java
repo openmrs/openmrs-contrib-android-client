@@ -15,6 +15,7 @@ import org.openmrs.mobile.databases.entities.FormResourceEntity;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.models.ConceptAnswers;
+import org.openmrs.mobile.models.ConceptMembers;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.models.Encountercreate;
@@ -154,6 +155,9 @@ public interface RestApi {
 
     @GET("concept/{uuid}")
     Call<ConceptAnswers> getConceptFromUUID(@Path("uuid") String uuid);
+
+    @GET("concept/{uuid}")
+    Call<ConceptMembers> getConceptMembersFromUUID(@Path("uuid") String uuid);
 
     @GET("systemsetting")
     Call<Results<SystemSetting>> getSystemSettingsByQuery(@Query("q") String query,

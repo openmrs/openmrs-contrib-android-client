@@ -24,7 +24,6 @@ import androidx.work.WorkManager;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.api.CustomApiCallback;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.workers.allergy.DeleteAllergyWorker;
 import org.openmrs.mobile.application.OpenMRS;

@@ -13,9 +13,8 @@
  */
 package org.openmrs.mobile.listeners.retrofit
 
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback
-import org.openmrs.mobile.models.Results
 import org.openmrs.mobile.models.Patient
+import org.openmrs.mobile.models.Results
 
 interface PatientResponseCallback : DefaultResponseCallback {
     fun onResponse(patientResults: Results<Patient?>?)

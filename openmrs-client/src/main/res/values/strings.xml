@@ -403,6 +403,9 @@
     <string name="offline_mode_not_supported">Cannot start a patient visit manually in offline mode.</string>
 
     <!--PatientRepository-->
+    <string name="patient_cannot_be_synced_due_to_server_error_message">"Patient[ %1$i ] cannot be synced due to server error %2$s </string>
+    <string name="patient_cannot_be_synced_due_to_request_error_message">"Patient[ %1$i ] cannot be synced due to request error %2$s </string>
+    <string name="patient_update_unsuccessful_server_error">Patient %1$s cannot be updated due to server error will retry sync %2$s</string>
     <string name="offline_mode_patient_data_saved_locally_notification_message">Sync is off. Patient Update data is saved locally and will sync when online mode is restored.</string>
     <string name="patent_and_form_data_sync_resumed">Syncing switched on, attempting to sync patients and form data</string>
 
@@ -450,16 +453,16 @@
     <string name="url_server_list" translatable="false">https://wiki.openmrs.org/display/ISM/OpenMRS+environments</string>
     <string name="copied_text" translatable="false">Copied Text</string>
 
-	<!--Admission Form -->
-	<string name="admission">Admission</string>
-	<string name="error_occurred">An error Occurred, Try Again Later !!!</string>
-	<string name="offline_error_message">You are currently offline, Try again when connected !!!</string>
-	<string name="admission_fields_required">Please Select Required Field</string>
+    <!--Admission Form -->
+    <string name="admission">Admission</string>
+    <string name="error_occurred">An error Occurred, Try Again Later !!!</string>
+    <string name="offline_error_message">You are currently offline, Try again when connected !!!</string>
+    <string name="admission_fields_required">Please Select Required Field</string>
     <string name="admission_date">Admission Date :</string>
-	<string name="admission_admitted_by">Admitted By :</string>
-	<string name="admission_provider_role">Provider Role :</string>
-	<string name="admission_admitted_to">Admitted To :</string>
-	<string name="admission_location_in_list" translatable="false">Admitted To %1$s</string>
+    <string name="admission_admitted_by">Admitted By :</string>
+    <string name="admission_provider_role">Provider Role :</string>
+    <string name="admission_admitted_to">Admitted To :</string>
+    <string name="admission_location_in_list" translatable="false">Admitted To %1$s</string>
     <string name="discharge_location_in_list" translatable="false">Discharged From %1$s</string>
     <string name="form_submitted_successfully" translatable="false">Form Submitted Successfully</string>
 

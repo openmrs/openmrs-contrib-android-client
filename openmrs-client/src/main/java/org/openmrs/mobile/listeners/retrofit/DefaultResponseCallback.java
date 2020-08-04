@@ -29,5 +29,5 @@ public interface DefaultResponseCallback {
     default void onResponse() {
     }
 
-    void onErrorResponse(String errorMessage);
+    default void onErrorResponse(String errorMessage){};
 }

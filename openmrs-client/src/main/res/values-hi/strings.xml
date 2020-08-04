@@ -65,6 +65,11 @@
     <!-- No internet dialog -->
     <string name="no_internet_conn_dialog_message">आपके पास कोई इंटरनेट कनेक्शन नहीं है। \ n कृपया फोन या वाई-फाई कनेक्शन और सिग्नल की जांच करें और फिर से प्रयास करें।</string>
 
+    <!-- patientRepository-->
+    <string name="patient_update_unsuccessful_server_error">%1$s को सर्वर त्रुटि के कारण अपडेट नहीं किया जा सकता है, सिंक %2$s को पुनः प्रयास करेगा</string>
+    <string name="patient_cannot_be_synced_due_to_request_error_message">रोगी [%1$i] अनुरोध त्रुटि%2$s के कारण समन्वयित नहीं किया जा सकता है</string>
+    <string name="patient_cannot_be_synced_due_to_server_error_message">रोगी [%1$i] को सर्वर त्रुटि%2$s के कारण समन्‍वयित नहीं किया जा सकता है</string>
+
     <!-- SimilarPatients dialog -->
     <string name="similar_patients_dialog_title">समान रोगियों को</string>
 
@@ -412,15 +417,15 @@
     <string name="offline_provider_delete">ऑनलाइन वापस आने पर प्रदाता को सर्वर से हटा दिया जाएगा</string>
     <string name="dashboard_exit_toast_message">"ऐप से बाहर निकलने के लिए कृपया BACK पर फिर से क्लिक करें "</string>
 
-	<!--Admission Form -->
-	<string name="admission">प्रवेश फार्म</string>
+    <!--Admission Form -->
+    <string name="admission">प्रवेश फार्म</string>
     <string name="error_occurred">An error Occurred, Try Again Later !!!</string>
-	<string name="offline_error_message">You are currently offline, Try again when connected !!!</string>
-	<string name="admission_fields_required">Please Select Required Field</string>
+    <string name="offline_error_message">You are currently offline, Try again when connected !!!</string>
+    <string name="admission_fields_required">Please Select Required Field</string>
     <string name="admission_date">Admission Date :</string>
-	<string name="admission_admitted_by">Admitted By :</string>
-	<string name="admission_provider_role">Provider Role :</string>
-	<string name="admission_admitted_to">Admitted To :</string>
+    <string name="admission_admitted_by">Admitted By :</string>
+    <string name="admission_provider_role">Provider Role :</string>
+    <string name="admission_admitted_to">Admitted To :</string>
 
     // Marking Patient Deceased
     <string name="no_death_concepts_in_server">कृपया सर्वर में मौत के संभावित कारणों को जोड़ें</string>

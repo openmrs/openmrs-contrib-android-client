@@ -27,6 +27,7 @@ import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
+import org.openmrs.mobile.listeners.retrofit.PatientDeferredResponseCallback;
 import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Module;
 import org.openmrs.mobile.models.Patient;
@@ -143,13 +144,14 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
         if (!isPatientUnidentified) {
 
-            mPatientInfoView.setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, genderError, addressError, countryError, countryNull, stateError, cityError, postalError);
+            mPatientInfoView
+                .setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, genderError, addressError, countryError, countryNull, stateError, cityError, postalError);
 
             // Validate names
             PersonName currentPersonName = patient.getName();
 
             if (StringUtils.isBlank(currentPersonName.getGivenName())
-                    || !ViewUtils.validateText(currentPersonName.getGivenName(), ViewUtils.ILLEGAL_CHARACTERS)) {
+                || !ViewUtils.validateText(currentPersonName.getGivenName(), ViewUtils.ILLEGAL_CHARACTERS)) {
                 givenNameError = true;
             }
 
@@ -159,7 +161,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             }
 
             if (StringUtils.isBlank(currentPersonName.getFamilyName())
-                    || !ViewUtils.validateText(currentPersonName.getFamilyName(), ViewUtils.ILLEGAL_CHARACTERS)) {
+                || !ViewUtils.validateText(currentPersonName.getFamilyName(), ViewUtils.ILLEGAL_CHARACTERS)) {
                 familyNameError = true;
             }
 
@@ -168,9 +170,9 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             String patientAddress2 = patient.getAddress().getAddress2();
 
             if ((StringUtils.isBlank(patientAddress1)
-                    && StringUtils.isBlank(patientAddress2)
-                    || !ViewUtils.validateText(patientAddress1, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
-                    || !ViewUtils.validateText(patientAddress2, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS))) {
+                && StringUtils.isBlank(patientAddress2)
+                || !ViewUtils.validateText(patientAddress1, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
+                || !ViewUtils.validateText(patientAddress2, ViewUtils.ILLEGAL_ADDRESS_CHARACTERS))) {
                 addressError = true;
             }
 
@@ -208,14 +210,14 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             return true;
         } else {
             mPatientInfoView
-                    .setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, addressError, countryError, genderError, countryNull, stateError, cityError, postalError);
+                .setErrorsVisibility(givenNameError, familyNameError, dateOfBirthError, addressError, countryError, genderError, countryNull, stateError, cityError, postalError);
             return false;
         }
     }
 
     @Override
     public void registerPatient() {
-        patientRepository.registerPatient(mPatient, new DefaultResponseCallback() {
+        patientRepository.registerPatient(mPatient, new PatientDeferredResponseCallback() {
             @Override
             public void onResponse() {
                 mPatientInfoView.startPatientDashbordActivity(mPatient);
@@ -229,6 +231,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             }
         });
     }
+
 
     @Override
     public void updatePatient(Patient patient) {

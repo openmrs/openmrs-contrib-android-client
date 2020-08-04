@@ -14,26 +14,21 @@
 
 package org.openmrs.mobile.activities.matchingpatients;
 
-import androidx.annotation.NonNull;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
+import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
+import org.openmrs.mobile.listeners.retrofit.PatientDeferredResponseCallback;
 import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.PatientDto;
-import org.openmrs.mobile.models.PatientDtoUpdate;
-import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.PatientAndMatchingPatients;
 import org.openmrs.mobile.utilities.PatientMerger;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.Queue;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.google.common.collect.ComparisonChain.start;
 
@@ -85,7 +80,7 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
         if (selectedPatient != null) {
             Patient patientToMerge = matchingPatientsList.poll().getPatient();
             Patient mergedPatient = new PatientMerger().mergePatient(selectedPatient, patientToMerge);
-            updatePatient(mergedPatient);
+            updateMatchingPatient(mergedPatient);
             removeSelectedPatient();
             if (matchingPatientsList.peek() != null) {
                 start();
@@ -97,29 +92,22 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
         }
     }
 
-    private void updatePatient(final Patient patient) {
-        PatientDtoUpdate patientDto = patient.getUpdatedPatientDto();
-        patient.setUuid(null);
-        Call<PatientDto> call = restApi.updatePatient(patientDto, patient.getUuid(), ApplicationConstants.API.FULL);
-        call.enqueue(new Callback<PatientDto>() {
+    public void updateMatchingPatient(final Patient patient) {
+        patientRepository.updateMatchingPatient(patient, new DefaultResponseCallback() {
             @Override
-            public void onResponse(@NonNull Call<PatientDto> call, @NonNull Response<PatientDto> response) {
-                if (response.isSuccessful()) {
-                    if (patientDAO.isUserAlreadySaved(patient.getUuid())) {
-                        Long id = patientDAO.findPatientByUUID(patient.getUuid()).getId();
-                        patientDAO.updatePatient(id, patient);
-                        patientDAO.deletePatient(patient.getId());
-                    } else {
-                        patientDAO.updatePatient(patient.getId(), patient);
-                    }
+            public void onResponse() {
+                if (patientDAO.isUserAlreadySaved(patient.getUuid())) {
+                    Long id = patientDAO.findPatientByUUID(patient.getUuid()).getId();
+                    patientDAO.updatePatient(id, patient);
+                    patientDAO.deletePatient(patient.getId());
                 } else {
-                    view.showErrorToast(response.message());
+                    patientDAO.updatePatient(patient.getId(), patient);
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
-                view.showErrorToast(t.getMessage());
+            public void onErrorResponse(String errorMessage) {
+                view.showErrorToast(errorMessage);
             }
         });
     }
@@ -127,7 +115,24 @@ public class MatchingPatientsPresenter extends BasePresenter implements Matching
     @Override
     public void registerNewPatient() {
         final Patient patient = matchingPatientsList.poll().getPatient();
-        patientRepository.syncPatient(patient);
+        patientRepository.syncPatient(patient, new PatientDeferredResponseCallback() {
+            @Override
+            public void onResponse(SimpleDeferredObject<Patient> response) {
+                response.resolve(patient);
+            }
+
+            @Override
+            public void onErrorResponse(String errorMessage, SimpleDeferredObject<Patient> errorResponse) {
+                errorResponse.reject(new RuntimeException(errorMessage));
+                ToastUtil.error(errorMessage);
+            }
+
+            @Override
+            public void onNotifyResponse(String notifyMessage) {
+                ToastUtil.notify(notifyMessage);
+            }
+        });
+
         removeSelectedPatient();
         if (matchingPatientsList.peek() != null) {
             subscribe();

@@ -489,4 +489,14 @@
     <string name="delete_allergy_failure">Unable to delete allergy</string>
     <string name="delete_allergy_offline">Allergy will be removed from the server when you are back online.</string>
     <string name="allergy_heading">Allergy</string>
+    <string name="choose_category">Choose \na Category</string>
+    <string name="allergen_drug">Drug</string>
+    <string name="allergen_food">Food</string>
+    <string name="allergen_other">Other</string>
+    <string name="severity">Severity</string>
+    <string name="severity_mild">Mild</string>
+    <string name="severity_moderate">Moderate</string>
+    <string name="severity_severe">Severe</string>
+    <string name="comment">Comment</string>
+    <string name="add_comment">Add a comment</string>
 </resources>

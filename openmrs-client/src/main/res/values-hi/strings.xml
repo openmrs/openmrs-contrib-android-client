@@ -460,4 +460,9 @@
     <string name="severity_severe">गंभीर</string>
     <string name="comment">टिप्पणी</string>
     <string name="add_comment">टिप्पणी जोड़ें</string>
+    <string name="create_allergy_title">एलर्जी पैदा करें?</string>
+    <string name="create_allergy_description">रोगी की एलर्जी सर्वर में जोड़ दी जाएगी। क्या तुम वाकई जारी रखना चाहते हो?</string>
+    <string name="warning_select_allergen">कृपया आगे बढ़ने से पहले एक एलर्जेन का चयन करें</string>
+    <string name="error_creating_allergy">एलर्जी पैदा करते समय एक अप्रत्याशित त्रुटि हुई थी। कृपया पुन: प्रयास करें!</string>
+    <string name="success_creating_allergy">एलर्जी सफलतापूर्वक जोड़ दी गई।</string>
 </resources>

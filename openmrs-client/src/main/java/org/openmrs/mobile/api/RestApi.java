@@ -14,6 +14,7 @@ import org.openmrs.mobile.databases.entities.ConceptEntity;
 import org.openmrs.mobile.databases.entities.FormResourceEntity;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Allergy;
+import org.openmrs.mobile.models.AllergyCreate;
 import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.ConceptMembers;
 import org.openmrs.mobile.models.Encounter;
@@ -186,4 +187,8 @@ public interface RestApi {
     @DELETE("patient/{patientUuid}/allergy/{allergyUuid}")
     Call<ResponseBody> deleteAllergy(@Path("patientUuid") String patientUuid,
                                      @Path("allergyUuid") String allergyUuid);
+
+    @POST("patient/{uuid}/allergy")
+    Call<Allergy> createAllergy(@Path("uuid") String uuid,
+                                @Body AllergyCreate allergyCreate);
 }

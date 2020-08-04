@@ -16,12 +16,20 @@ package org.openmrs.mobile.activities.addallergy;
 
 import androidx.fragment.app.Fragment;
 
+import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.repository.AllergyRepository;
+import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
+import org.openmrs.mobile.models.AllergyCreate;
+import org.openmrs.mobile.models.AllergyPatient;
 import org.openmrs.mobile.models.ConceptMembers;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.SystemProperty;
+import org.openmrs.mobile.utilities.ToastUtil;
+
+import java.util.ArrayList;
 
 import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.CONCEPT_ALLERGEN_DRUG;
 import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.CONCEPT_ALLERGEN_ENVIRONMENT;
@@ -31,30 +39,25 @@ import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.CO
 import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.CONCEPT_SEVERITY_MODERATE;
 import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.CONCEPT_SEVERITY_SEVERE;
 import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_DRUG;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_ENVIRONMENT;
 import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_FOOD;
+import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_OTHER;
 import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_REACTION;
 
-public class AddEditAllergyPresenter extends BasePresenter implements AddEditAllergyContract.Presenter {
-    private AddEditAllergyContract.View view;
-    private Long patientID;
-    private Patient mPatient;
-    private PatientDAO patientDAO;
-    private AllergyRepository allergyRepository;
+public class AddEditAllergyPresenter extends BasePresenter implements AddEditAllergyContract.Presenter, DefaultResponseCallback {
     Fragment fragment;
+    private AddEditAllergyContract.View view;
+    private Patient mPatient;
+    private AllergyRepository allergyRepository;
 
     public AddEditAllergyPresenter(AddEditAllergyContract.View view, Long patientID) {
         this.view = view;
         this.view.setPresenter(this);
-        this.patientID = patientID;
-        patientDAO = new PatientDAO();
-        mPatient = patientDAO.findPatientByID(patientID.toString());
+        mPatient = new PatientDAO().findPatientByID(patientID.toString());
         allergyRepository = new AllergyRepository(patientID.toString());
     }
 
     @Override
     public void subscribe() {
-
     }
 
     @Override
@@ -90,7 +93,7 @@ public class AddEditAllergyPresenter extends BasePresenter implements AddEditAll
     }
 
     private void initializeEnvironmentAllergen(ConceptMembers conceptMembers) {
-        view.setConceptMembers(conceptMembers, PROPERTY_ENVIRONMENT);
+        view.setConceptMembers(conceptMembers, PROPERTY_OTHER);
     }
 
     private void fetchConceptsForDrugs(SystemProperty systemProperty) {
@@ -103,5 +106,26 @@ public class AddEditAllergyPresenter extends BasePresenter implements AddEditAll
 
     private void setSeverity(SystemProperty systemProperty) {
         view.setSeverity(systemProperty);
+    }
+
+    @Override
+    public void createAllergy(AllergyCreate allergyCreate) {
+        AllergyPatient allergyPatient = new AllergyPatient();
+        allergyPatient.setUuid(mPatient.getUuid());
+        allergyPatient.setIdentifier(new ArrayList<>());
+        allergyCreate.setPatient(allergyPatient);
+        allergyRepository.createAllergy(mPatient.getUuid(), allergyCreate, this);
+    }
+
+    @Override
+    public void onResponse() {
+        view.showLoading(false, true);
+        ToastUtil.success(OpenMRS.getInstance().getString(R.string.success_creating_allergy));
+    }
+
+    @Override
+    public void onErrorResponse(String errorMessage) {
+        view.showLoading(false, false);
+        ToastUtil.error(errorMessage);
     }
 }

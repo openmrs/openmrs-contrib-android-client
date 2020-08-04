@@ -15,7 +15,6 @@
 package org.openmrs.mobile.activities.patientdashboard.allergy;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,13 +30,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.addallergy.AddEditAllergyActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.databinding.FragmentPatientAllergyBinding;
 import org.openmrs.mobile.models.Allergy;
-import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.List;
 
@@ -65,22 +62,10 @@ public class PatientAllergyFragment extends PatientDashboardFragment implements 
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.patients_allergy_tab_menu, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.actionCreateAllergy:
-                Intent intent = new Intent(getContext(), AddEditAllergyActivity.class);
-                intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPresenter.getPatientId());
-                startActivity(intent);
-                break;
-            default:
-                // Do nothing
-                break;
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -129,5 +114,11 @@ public class PatientAllergyFragment extends PatientDashboardFragment implements 
                 });
         alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((PatientDashboardAllergyPresenter) mPresenter).getAllergyFromDatabase();
     }
 }

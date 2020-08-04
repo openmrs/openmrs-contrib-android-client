@@ -34,12 +34,18 @@
     <!-- Colors for New UI -->
     <color name="dark_grey_for_stroke">#909090</color>
     <color name="light_grey_for_solid">#EFEFEF</color>
+    <color name="dark_grey_4x">#D6D6D6</color>
     <color name="dark_grey_6x">#B1B1B1</color>
     <color name="dark_grey_8x">#616161</color>
     <color name="dark_grey_10x">#454545</color>
     <color name="deceased_red">#FFB3B3</color>
     <color name="cancel_button">#CF3B3B</color>
     <color name="save_button">#97BC47</color>
+    <color name="allergy_orange">#E47321</color>
+    <color name="allergy_orange_50_transparent">#4DFB793D</color>
+    <color name="blue">#3884CA</color>
+    <color name="dark_red">#ED3030</color>
+    <color name="translucent_50_percent">#99000000</color>
 
     <!-- neutral colors that look pleasing on both white and black background -->
     <color name="neutral_green">#249627</color>

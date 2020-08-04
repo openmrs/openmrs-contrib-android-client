@@ -39,6 +39,7 @@ import com.google.android.material.tabs.TabLayout;
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.activities.addallergy.AddEditAllergyActivity;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
 import org.openmrs.mobile.activities.patientdashboard.allergy.PatientAllergyFragment;
 import org.openmrs.mobile.activities.patientdashboard.allergy.PatientDashboardAllergyPresenter;
@@ -64,11 +65,13 @@ public class PatientDashboardActivity extends ACBaseActivity {
     public static FloatingActionButton additionalActionsFAB, updateFAB, deleteFAB;
     public LinearLayout deleteFabLayout, updateFabLayout;
     public static Resources resources;
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_dashboard);
+        viewPager = findViewById(R.id.pager);
         getSupportActionBar().setElevation(0);
         Bundle patientBundle = savedInstanceState;
         if (null != patientBundle) {
@@ -119,7 +122,6 @@ public class PatientDashboardActivity extends ACBaseActivity {
     }
 
     private void initViewPager(PatientDashboardPagerAdapter adapter) {
-        final ViewPager viewPager = findViewById(R.id.pager);
         TabLayout tabHost = findViewById(R.id.tabhost);
         if(ThemeUtils.isDarkModeActivated()) {
             tabHost.setBackgroundColor(getResources().getColor(R.color.black));
@@ -127,6 +129,29 @@ public class PatientDashboardActivity extends ACBaseActivity {
         viewPager.setOffscreenPageLimit(adapter.getCount() - 1);
         viewPager.setAdapter(adapter);
         tabHost.setupWithViewPager(viewPager);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if(position == 1) {
+                    additionalActionsFAB.hide();
+                    additionalActionsFAB.setImageResource(R.drawable.ic_add);
+                }
+                else {
+                    additionalActionsFAB.setImageResource(R.drawable.ic_edit_white_24dp);
+                }
+                additionalActionsFAB.show();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private void attachPresenterToFragment(Fragment fragment) {
@@ -155,11 +180,18 @@ public class PatientDashboardActivity extends ACBaseActivity {
         deleteFabLayout = findViewById(R.id.custom_fab_delete_ll);
 
         additionalActionsFAB.setOnClickListener(v -> {
-            animateFAB(isActionFABOpen);
-            if (!isActionFABOpen) {
-                showFABMenu();
+            int position = viewPager.getCurrentItem();
+            if(position == 1) {
+                Intent intent = new Intent(this, AddEditAllergyActivity.class);
+                intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPresenter.getPatientId());
+                startActivity(intent);
             } else {
-                closeFABMenu();
+                animateFAB(isActionFABOpen);
+                if (!isActionFABOpen) {
+                    showFABMenu();
+                } else {
+                    closeFABMenu();
+                }
             }
         });
 

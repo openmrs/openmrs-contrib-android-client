@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
+import org.openmrs.mobile.models.AllergyCreate;
 import org.openmrs.mobile.models.ConceptMembers;
 import org.openmrs.mobile.models.SystemProperty;
 
@@ -27,10 +28,14 @@ public interface AddEditAllergyContract {
         void setConceptMembers(ConceptMembers conceptMembers, String reactions);
 
         void setSeverity(SystemProperty systemProperty);
+
+        void showLoading(boolean loading, boolean exitScreen);
     }
 
     interface Presenter extends BasePresenterContract {
         void fetchSystemProperties(Fragment fragment);
+
+        void createAllergy(AllergyCreate allergyCreate);
     }
 }
 

@@ -12,10 +12,11 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.listeners.retrofit;
+package org.openmrs.mobile.listeners.retrofitcallbacks
 
-public interface VisitsResponseCallback {
-    void onSuccess(String response);
+import org.openmrs.mobile.models.Resource
 
-    void onFailure(String errorMessage);
+@JvmSuppressWildcards
+interface EncounterResponseCallback : DefaultResponseCallback {
+    fun onResponse(encounterRoleList: List<Resource?>?)
 }

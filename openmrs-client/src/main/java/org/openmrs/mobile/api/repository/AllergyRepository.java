@@ -31,7 +31,7 @@ import org.openmrs.mobile.dao.AllergyRoomDAO;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.AppDatabaseHelper;
 import org.openmrs.mobile.databases.entities.AllergyEntity;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.NetworkUtils;

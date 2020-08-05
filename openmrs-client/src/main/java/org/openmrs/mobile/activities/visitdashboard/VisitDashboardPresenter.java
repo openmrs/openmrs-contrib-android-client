@@ -20,7 +20,7 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.listeners.retrofit.VisitsResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.VisitsResponseCallback;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;

@@ -25,9 +25,9 @@ import org.openmrs.mobile.application.OpenMRS
 import org.openmrs.mobile.dao.PatientDAO
 import org.openmrs.mobile.databases.AppDatabase
 import org.openmrs.mobile.databases.entities.LocationEntity
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback
-import org.openmrs.mobile.listeners.retrofit.EncounterResponseCallback
-import org.openmrs.mobile.listeners.retrofit.LocationResponseCallback
+import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback
+import org.openmrs.mobile.listeners.retrofitcallbacks.EncounterResponseCallback
+import org.openmrs.mobile.listeners.retrofitcallbacks.LocationResponseCallback
 import org.openmrs.mobile.models.Patient
 import org.openmrs.mobile.models.Provider
 import org.openmrs.mobile.models.Resource

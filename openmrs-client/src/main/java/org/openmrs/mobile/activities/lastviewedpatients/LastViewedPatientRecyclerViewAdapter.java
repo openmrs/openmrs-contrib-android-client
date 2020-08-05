@@ -35,7 +35,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.DownloadPatientCallback;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.ToastUtil;

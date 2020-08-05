@@ -12,11 +12,11 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.listeners.retrofit
+package org.openmrs.mobile.listeners.retrofitcallbacks
 
-import org.openmrs.mobile.models.Resource
+import org.openmrs.mobile.databases.entities.LocationEntity
 
 @JvmSuppressWildcards
-interface EncounterResponseCallback : DefaultResponseCallback {
-    fun onResponse(encounterRoleList: List<Resource?>?)
+interface LocationResponseCallback : DefaultResponseCallback {
+    fun onResponse(locationList: List<LocationEntity?>?)
 }

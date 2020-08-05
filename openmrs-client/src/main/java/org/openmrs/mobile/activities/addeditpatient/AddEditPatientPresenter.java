@@ -26,8 +26,8 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
-import org.openmrs.mobile.listeners.retrofit.PatientDeferredResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
 import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Module;
 import org.openmrs.mobile.models.Patient;
@@ -231,7 +231,6 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
             }
         });
     }
-
 
     @Override
     public void updatePatient(Patient patient) {

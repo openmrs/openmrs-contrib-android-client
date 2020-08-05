@@ -110,7 +110,6 @@ import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 @RuntimePermissions
 public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContract.Presenter> implements AddEditPatientContract.View, CameraOrGalleryPickerDialog.onInputSelected {
-
     AlertDialog alertDialog;
     private FragmentPatientInfoBinding binding;
     private LocalDate birthDate;
@@ -170,8 +169,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
             dateTimeFormatter = DateTimeFormat.forPattern(DateUtils.DEFAULT_DATE_FORMAT);
             String minimumDate = DateTime.now().minusYears(
-                    ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE)
-                    .toString(dateTimeFormatter);
+                ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE)
+                .toString(dateTimeFormatter);
             String maximumDate = DateTime.now().toString(dateTimeFormatter);
             if (binding.unidentifiedCheckbox.isChecked()) {
                 binding.dobError.setText(getString(R.string.dob_error_for_unidentified));
@@ -209,21 +208,20 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
             List<PersonAddress> addresses = new ArrayList<>();
             patient.setAddresses(addresses);
-
         } else {
             // Validate address
             if (ViewUtils.isEmpty(binding.addressOne)
-                    && ViewUtils.isEmpty(binding.addressTwo)
-                    && ViewUtils.isEmpty(binding.cityAutoComplete)
-                    && ViewUtils.isEmpty(binding.postalCode)
-                    && ViewUtils.isCountryCodePickerEmpty(binding.countryCodeSpinner)
-                    && ViewUtils.isEmpty(binding.stateAutoComplete)) {
+                && ViewUtils.isEmpty(binding.addressTwo)
+                && ViewUtils.isEmpty(binding.cityAutoComplete)
+                && ViewUtils.isEmpty(binding.postalCode)
+                && ViewUtils.isCountryCodePickerEmpty(binding.countryCodeSpinner)
+                && ViewUtils.isEmpty(binding.stateAutoComplete)) {
 
                 binding.addressError.setText(R.string.atleastone);
                 binding.textInputLayoutAddress.setErrorEnabled(true);
                 binding.textInputLayoutAddress.setError(getString(R.string.atleastone));
             } else if (!ViewUtils.validateText(ViewUtils.getInput(binding.addressOne), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)
-                    || !ViewUtils.validateText(ViewUtils.getInput(binding.addressTwo), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)) {
+                || !ViewUtils.validateText(ViewUtils.getInput(binding.addressTwo), ViewUtils.ILLEGAL_ADDRESS_CHARACTERS)) {
 
                 binding.addressError.setText(getString(R.string.addr_invalid_error));
                 binding.textInputLayoutAddress.setErrorEnabled(true);
@@ -312,7 +310,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             String unvalidatedDate = binding.dobEditText.getText().toString().trim();
 
             DateTime minDateOfBirth = DateTime.now().minusYears(
-                    ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE);
+                ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE);
             DateTime maxDateOfBirth = DateTime.now();
 
             if (DateUtils.validateDate(unvalidatedDate, minDateOfBirth, maxDateOfBirth)) {
@@ -404,16 +402,16 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     @Override
     public boolean areFieldsNotEmpty() {
         return (!ViewUtils.isEmpty(binding.firstName) ||
-                (!ViewUtils.isEmpty(binding.middlename)) ||
-                (!ViewUtils.isEmpty(binding.surname)) ||
-                (!ViewUtils.isEmpty(binding.dobEditText)) ||
-                (!ViewUtils.isEmpty(binding.estimatedYear)) ||
-                (!ViewUtils.isEmpty(binding.addressOne)) ||
-                (!ViewUtils.isEmpty(binding.addressTwo)) ||
-                (!ViewUtils.isEmpty(binding.cityAutoComplete)) ||
-                (!ViewUtils.isEmpty(binding.stateAutoComplete)) ||
-                (!ViewUtils.isCountryCodePickerEmpty(binding.countryCodeSpinner)) ||
-                (!ViewUtils.isEmpty(binding.postalCode)));
+            (!ViewUtils.isEmpty(binding.middlename)) ||
+            (!ViewUtils.isEmpty(binding.surname)) ||
+            (!ViewUtils.isEmpty(binding.dobEditText)) ||
+            (!ViewUtils.isEmpty(binding.estimatedYear)) ||
+            (!ViewUtils.isEmpty(binding.addressOne)) ||
+            (!ViewUtils.isEmpty(binding.addressTwo)) ||
+            (!ViewUtils.isEmpty(binding.cityAutoComplete)) ||
+            (!ViewUtils.isEmpty(binding.stateAutoComplete)) ||
+            (!ViewUtils.isCountryCodePickerEmpty(binding.countryCodeSpinner)) ||
+            (!ViewUtils.isEmpty(binding.postalCode)));
     }
 
     @Override
@@ -489,7 +487,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             if (StringUtils.notNull(patient.getBirthdate()) || StringUtils.notEmpty(patient.getBirthdate())) {
                 bdt = DateUtils.convertTimeString(patient.getBirthdate());
                 binding.dobEditText.setText(DateUtils.convertTime(DateUtils.convertTime(bdt.toString(), DateUtils.OPEN_MRS_REQUEST_FORMAT),
-                        DateUtils.DEFAULT_DATE_FORMAT));
+                    DateUtils.DEFAULT_DATE_FORMAT));
             }
 
             if ((StringValue.MALE).equals(patient.getGender())) {
@@ -528,7 +526,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         if (resourceId != 0) {
             String[] states = getContext().getResources().getStringArray(resourceId);
             ArrayAdapter<String> state_adapter = new ArrayAdapter<>(getContext(),
-                    android.R.layout.simple_dropdown_item_1line, states);
+                android.R.layout.simple_dropdown_item_1line, states);
             binding.stateAutoComplete.setAdapter(state_adapter);
         }
     }
@@ -596,8 +594,9 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
         binding.capturePhoto.setOnClickListener(view -> {
             boolean showRemoveButton = true;
-            if (patientPhoto == null)
+            if (patientPhoto == null) {
                 showRemoveButton = false;
+            }
             CameraOrGalleryPickerDialog cameraOrGalleryPickerDialog = new CameraOrGalleryPickerDialog(showRemoveButton);
             cameraOrGalleryPickerDialog.setTargetFragment(AddEditPatientFragment.this, 1000);
             cameraOrGalleryPickerDialog.show(getFragmentManager(), "tag");
@@ -637,11 +636,11 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
 
                 FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
-                        .setCountry(binding.countryCodeSpinner.getSelectedCountryNameCode().toLowerCase())
-                        .setTypeFilter(TypeFilter.CITIES)
-                        .setSessionToken(token)
-                        .setQuery(binding.cityAutoComplete.getText().toString())
-                        .build();
+                    .setCountry(binding.countryCodeSpinner.getSelectedCountryNameCode().toLowerCase())
+                    .setTypeFilter(TypeFilter.CITIES)
+                    .setSessionToken(token)
+                    .setQuery(binding.cityAutoComplete.getText().toString())
+                    .build();
 
                 placesClient.findAutocompletePredictions(request).addOnSuccessListener(response -> {
                     binding.cityProgressBar.setVisibility(View.GONE);
@@ -734,10 +733,11 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             }
 
             Intent i;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
                 i = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            else
+            } else {
                 i = new Intent(Intent.ACTION_GET_CONTENT);
+            }
             i.addCategory(Intent.CATEGORY_OPENABLE);
             i.setType("image/*");
             startActivityForResult(i, ApplicationConstants.RequestCodes.GALLERY_IMAGE_REQUEST);
@@ -762,22 +762,22 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     @OnShowRationale({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void showRationaleForCamera(final PermissionRequest request) {
         new AlertDialog.Builder(getActivity())
-                .setMessage(R.string.permission_camera_rationale)
-                .setPositiveButton(R.string.button_allow, (dialog, which) -> request.proceed())
-                .setNegativeButton(R.string.button_deny, (dialog, button) -> request.cancel())
-                .show();
+            .setMessage(R.string.permission_camera_rationale)
+            .setPositiveButton(R.string.button_allow, (dialog, which) -> request.proceed())
+            .setNegativeButton(R.string.button_deny, (dialog, button) -> request.cancel())
+            .show();
     }
 
     @OnPermissionDenied({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void showDeniedForCamera() {
         createSnackbarLong(R.string.permission_camera_denied)
-                .show();
+            .show();
     }
 
     @OnNeverAskAgain({Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void showNeverAskForCamera() {
         createSnackbarLong(R.string.permission_camera_neverask)
-                .show();
+            .show();
     }
 
     private Snackbar createSnackbarLong(int stringId) {
@@ -823,8 +823,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     private void openCropActivity(Uri sourceUri, Uri destinationUri) {
         UCrop.of(sourceUri, destinationUri)
-                .withAspectRatio(ApplicationConstants.ASPECT_RATIO_FOR_CROPPING, ApplicationConstants.ASPECT_RATIO_FOR_CROPPING)
-                .start(getActivity(), AddEditPatientFragment.this);
+            .withAspectRatio(ApplicationConstants.ASPECT_RATIO_FOR_CROPPING, ApplicationConstants.ASPECT_RATIO_FOR_CROPPING)
+            .start(getActivity(), AddEditPatientFragment.this);
     }
 
     private String getUniqueImageFileName() {
@@ -879,11 +879,11 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 break;
             case R.id.actionReset:
                 new AlertDialog.Builder(getActivity())
-                        .setTitle(R.string.dialog_title_reset_patient)
-                        .setMessage(R.string.reset_dialog_message)
-                        .setPositiveButton(R.string.dialog_button_ok, (DialogInterface dialogInterface, int i) -> resetAction())
-                        .setNegativeButton(R.string.dialog_button_cancel, null)
-                        .show();
+                    .setTitle(R.string.dialog_title_reset_patient)
+                    .setMessage(R.string.reset_dialog_message)
+                    .setPositiveButton(R.string.dialog_button_ok, (DialogInterface dialogInterface, int i) -> resetAction())
+                    .setNegativeButton(R.string.dialog_button_cancel, null)
+                    .show();
                 break;
             default:
                 // Do nothing
@@ -899,15 +899,15 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                 alertDialogBuilder.setTitle(R.string.mark_patient_deceased);
                 // set dialog message
                 alertDialogBuilder
-                        .setMessage(R.string.mark_patient_deceased_notice)
-                        .setCancelable(false)
-                        .setPositiveButton(R.string.mark_patient_deceased_proceed, (dialog, id) -> {
-                            dialog.cancel();
-                            mPresenter.confirmUpdate(updatePatient(updatedPatient));
-                        })
-                        .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> {
-                            alertDialog.cancel();
-                        });
+                    .setMessage(R.string.mark_patient_deceased_notice)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.mark_patient_deceased_proceed, (dialog, id) -> {
+                        dialog.cancel();
+                        mPresenter.confirmUpdate(updatePatient(updatedPatient));
+                    })
+                    .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> {
+                        alertDialog.cancel();
+                    });
                 alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
             } else {

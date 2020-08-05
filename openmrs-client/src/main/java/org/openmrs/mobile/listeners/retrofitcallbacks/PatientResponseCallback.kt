@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.mobile.listeners.retrofit
+package org.openmrs.mobile.listeners.retrofitcallbacks
 
 import org.openmrs.mobile.models.Patient
 import org.openmrs.mobile.models.Results

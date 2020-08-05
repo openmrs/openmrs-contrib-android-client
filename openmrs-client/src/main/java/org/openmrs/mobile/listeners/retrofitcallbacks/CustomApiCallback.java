@@ -1,6 +1,7 @@
-package org.openmrs.mobile.listeners.retrofit;
+package org.openmrs.mobile.listeners.retrofitcallbacks;
 
 public interface CustomApiCallback {
     void onSuccess();
+
     void onFailure();
 }

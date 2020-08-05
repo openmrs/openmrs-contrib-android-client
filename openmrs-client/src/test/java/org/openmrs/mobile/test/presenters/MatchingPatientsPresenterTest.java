@@ -49,7 +49,6 @@ import static org.mockito.Mockito.verify;
 @PrepareForTest({OpenMRS.class, NetworkUtils.class, RestServiceBuilder.class, ToastUtil.class})
 @RunWith(PowerMockRunner.class)
 public class MatchingPatientsPresenterTest extends ACUnitTestBase {
-
     @Mock
     private MatchingPatientsContract.View view;
     @Mock
@@ -62,14 +61,11 @@ public class MatchingPatientsPresenterTest extends ACUnitTestBase {
     private OpenMRSLogger openMRSLogger;
     @Mock
     private OpenMRS openMRS;
-
-
-
     private MatchingPatientsPresenter presenter;
     private Queue<PatientAndMatchingPatients> patientAndMatchingPatientsQueue;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         mockStaticMethods();
         patientAndMatchingPatientsQueue = createMatchingPatientsList();
         PatientRepository patientRepository = new PatientRepository(openMRS, openMRSLogger, patientDAO, restApi, locationRepository);
@@ -77,14 +73,14 @@ public class MatchingPatientsPresenterTest extends ACUnitTestBase {
     }
 
     @Test
-    public void mergePatientsTest_userNotSelected(){
+    public void mergePatientsTest_userNotSelected() {
         presenter.setSelectedPatient(null);
         presenter.mergePatients();
         verify(view).notifyUser(anyInt());
     }
 
     @Test
-    public void mergePatientsTest_allOk(){
+    public void mergePatientsTest_allOk() {
         Patient patient = createPatient(4l);
         presenter.setSelectedPatient(patient);
         Mockito.lenient().when(restApi.updatePatient(any(), Mockito.any(), Mockito.any())).thenReturn(mockSuccessCall(patient.getPatientDto()));
@@ -93,7 +89,7 @@ public class MatchingPatientsPresenterTest extends ACUnitTestBase {
     }
 
     @Test
-    public void mergePatientsTest_errorResponse(){
+    public void mergePatientsTest_errorResponse() {
         Patient patient = createPatient(4l);
         presenter.setSelectedPatient(patient);
         Mockito.lenient().when(restApi.updatePatient(any(), any(), any())).thenReturn(mockErrorCall(401));
@@ -102,7 +98,7 @@ public class MatchingPatientsPresenterTest extends ACUnitTestBase {
     }
 
     @Test
-    public void mergePatientsTest_failure(){
+    public void mergePatientsTest_failure() {
         Patient patient = createPatient(4l);
         presenter.setSelectedPatient(patient);
         Mockito.lenient().when(restApi.updatePatient(any(), Mockito.any(), Mockito.any())).thenReturn(mockFailureCall());
@@ -111,13 +107,13 @@ public class MatchingPatientsPresenterTest extends ACUnitTestBase {
     }
 
     @Test
-    public void registerNewPatientTest_noMorePatients_allOK(){
+    public void registerNewPatientTest_noMorePatients_allOK() {
         presenter.registerNewPatient();
         verify(view).finishActivity();
     }
 
     @Test
-    public void registerNewPatientTest_morePatientsLeft_allOK(){
+    public void registerNewPatientTest_morePatientsLeft_allOK() {
         patientAndMatchingPatientsQueue.addAll(createMatchingPatientsList());
         presenter.registerNewPatient();
         verify(view).showPatientsData(any(), any());
@@ -133,6 +129,7 @@ public class MatchingPatientsPresenterTest extends ACUnitTestBase {
         queue.add(patientAndMatchingPatients);
         return queue;
     }
+
     private void mockStaticMethods() {
         PowerMockito.mockStatic(NetworkUtils.class);
         PowerMockito.mockStatic(OpenMRS.class);

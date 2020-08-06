@@ -22,7 +22,7 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.AllergyRepository;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ToastUtil;

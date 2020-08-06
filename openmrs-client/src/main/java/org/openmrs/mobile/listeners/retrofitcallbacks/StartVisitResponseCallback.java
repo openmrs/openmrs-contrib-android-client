@@ -12,10 +12,8 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.listeners.retrofit;
+package org.openmrs.mobile.listeners.retrofitcallbacks;
 
-import org.openmrs.mobile.models.VisitType;
-
-public interface GetVisitTypeCallback extends DefaultResponseCallback {
-    void onGetVisitTypeResponse(VisitType visitType);
+public interface StartVisitResponseCallback extends DefaultResponseCallback {
+    void onStartVisitResponse(long id);
 }

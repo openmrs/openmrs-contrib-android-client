@@ -19,7 +19,7 @@ import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.Obscreate;
 import org.openmrs.mobile.models.Patient;

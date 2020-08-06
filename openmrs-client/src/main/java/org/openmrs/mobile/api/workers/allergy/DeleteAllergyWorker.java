@@ -22,13 +22,12 @@ import androidx.work.WorkerParameters;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.api.CustomApiCallback;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.AllergyRoomDAO;
 import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.listeners.retrofitcallbacks.CustomApiCallback;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -39,6 +38,7 @@ import retrofit2.Response;
 
 import static org.openmrs.mobile.utilities.ApplicationConstants.BundleKeys.ALLERGY_UUID;
 import static org.openmrs.mobile.utilities.ApplicationConstants.BundleKeys.PATIENT_UUID;
+
 
 public class DeleteAllergyWorker extends Worker {
     AllergyRoomDAO allergyRoomDAO;

@@ -20,8 +20,8 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresen
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
-import org.openmrs.mobile.listeners.retrofit.StartVisitResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.StartVisitResponseCallback;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.NetworkUtils;
 

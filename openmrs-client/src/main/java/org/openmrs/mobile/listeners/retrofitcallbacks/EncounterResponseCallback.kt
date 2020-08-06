@@ -11,12 +11,12 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.mobile.listeners.retrofit
 
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback
-import org.openmrs.mobile.models.Results
-import org.openmrs.mobile.models.Patient
+package org.openmrs.mobile.listeners.retrofitcallbacks
 
-interface PatientResponseCallback : DefaultResponseCallback {
-    fun onResponse(patientResults: Results<Patient?>?)
+import org.openmrs.mobile.models.Resource
+
+@JvmSuppressWildcards
+interface EncounterResponseCallback : DefaultResponseCallback {
+    fun onResponse(encounterRoleList: List<Resource?>?)
 }

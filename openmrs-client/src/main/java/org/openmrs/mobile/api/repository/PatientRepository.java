@@ -40,9 +40,10 @@ import org.openmrs.mobile.dao.EncounterCreateRoomDAO;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.LocationEntity;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
-import org.openmrs.mobile.listeners.retrofit.DownloadPatientCallback;
-import org.openmrs.mobile.listeners.retrofit.PatientResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.DownloadPatientCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.PatientResponseCallback;
 import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.IdGenPatientIdentifiers;
 import org.openmrs.mobile.models.IdentifierType;
@@ -69,7 +70,7 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class PatientRepository extends RetrofitRepository {
     private OpenMRSLogger logger;
-    private PatientDAO patientDao;
+    private PatientDAO patientDAO;
     private LocationRepository locationRepository;
     private RestApi restApi;
     private WorkManager mWorkManager = null;
@@ -77,7 +78,7 @@ public class PatientRepository extends RetrofitRepository {
     //constructor specifically for update which uses a workManager Implementation
     public PatientRepository(Context appContext) {
         this.logger = new OpenMRSLogger();
-        this.patientDao = new PatientDAO();
+        this.patientDAO = new PatientDAO();
         this.locationRepository = new LocationRepository();
         this.restApi = RestServiceBuilder.createService(RestApi.class);
         this.mWorkManager = WorkManager.getInstance(appContext);
@@ -85,15 +86,15 @@ public class PatientRepository extends RetrofitRepository {
 
     public PatientRepository() {
         this.logger = new OpenMRSLogger();
-        this.patientDao = new PatientDAO();
+        this.patientDAO = new PatientDAO();
         this.locationRepository = new LocationRepository();
         this.restApi = RestServiceBuilder.createService(RestApi.class);
     }
 
     //used in the unit tests
-    public PatientRepository(OpenMRS openMRS, OpenMRSLogger logger, PatientDAO patientDao, RestApi restApi, LocationRepository locationRepository) {
+    public PatientRepository(OpenMRS openMRS, OpenMRSLogger logger, PatientDAO patientDAO, RestApi restApi, LocationRepository locationRepository) {
         this.logger = logger;
-        this.patientDao = patientDao;
+        this.patientDAO = patientDAO;
         this.restApi = restApi;
         this.locationRepository = locationRepository;
         this.openMrs = openMRS;
@@ -106,7 +107,7 @@ public class PatientRepository extends RetrofitRepository {
         return syncPatient(patient, null);
     }
 
-    public SimplePromise<Patient> syncPatient(final Patient patient, @Nullable final DefaultResponseCallback callbackListener) {
+    public SimplePromise<Patient> syncPatient(final Patient patient, @Nullable final PatientDeferredResponseCallback callback) {
         final SimpleDeferredObject<Patient> deferred = new SimpleDeferredObject<>();
 
         if (NetworkUtils.isOnline()) {
@@ -114,7 +115,6 @@ public class PatientRepository extends RetrofitRepository {
             dm.when(locationRepository.getLocationUuid(), getIdGenPatientIdentifier(), getPatientIdentifierTypeUuid())
                 .done(results -> {
                     final List<PatientIdentifier> identifiers = new ArrayList<>();
-
                     final PatientIdentifier identifier = new PatientIdentifier();
                     identifier.setLocation((LocationEntity) results.get(0).getResult());
                     identifier.setIdentifier((String) results.get(1).getResult());
@@ -138,40 +138,33 @@ public class PatientRepository extends RetrofitRepository {
                                     uploadPatientPhoto(patient);
                                 }
 
-                                patientDao.updatePatient(patient.getId(), patient);
+                                patientDAO.updatePatient(patient.getId(), patient);
                                 if (!patient.getEncounters().equals("")) {
                                     addEncounters(patient);
                                 }
 
-                                deferred.resolve(patient);
-
-                                if (callbackListener != null) {
-                                    callbackListener.onResponse();
+                                if (callback != null) {
+                                    callback.onResponse();
                                 }
                             } else {
-                                ToastUtil.error("Patient[" + patient.getId() + "] cannot be synced due to server error" + response.message());
-                                deferred.reject(new RuntimeException("Patient cannot be synced due to server error: " + response.errorBody().toString()));
-                                if (callbackListener != null) {
-                                    callbackListener.onErrorResponse(response.message());
+                                if (callback != null) {
+                                    callback.onErrorResponse(openMrs.getString(R.string.patient_cannot_be_synced_due_to_server_error_message, patient.getId(), response.message()));
                                 }
                             }
                         }
 
                         @Override
                         public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
-                            //string resource added "patient_cannot_be_synced_due_to_request_error_message"
-                            ToastUtil.notify("Patient[ " + patient.getId() + "] cannot be synced due to request error " + t.toString());
-                            deferred.reject(t);
-                            if (callbackListener != null) {
-                                callbackListener.onErrorResponse(t.getMessage());
+                            if (callback != null) {
+                                callback.onErrorResponse(openMrs.getString(R.string.patient_cannot_be_synced_due_to_request_error_message, patient.getId(), t.getMessage().toString()), deferred);
                             }
                         }
                     });
                 });
         } else {
-            ToastUtil.notify(openMrs.getString(R.string.offline_mode_patient_data_saved_locally_notification_message));
-            if (callbackListener != null) {
-                callbackListener.onResponse();
+            ;
+            if (callback != null) {
+                callback.onNotifyResponse(openMrs.getString(R.string.offline_mode_patient_data_saved_locally_notification_message));
             }
         }
 
@@ -203,8 +196,8 @@ public class PatientRepository extends RetrofitRepository {
         });
     }
 
-    public void registerPatient(final Patient patient, @Nullable final DefaultResponseCallback callbackListener) {
-        patientDao.savePatient(patient)
+    public void registerPatient(final Patient patient, @Nullable final PatientDeferredResponseCallback callbackListener) {
+        patientDAO.savePatient(patient)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(id -> {
                 patient.setId(id);
@@ -235,7 +228,7 @@ public class PatientRepository extends RetrofitRepository {
                             uploadPatientPhoto(patient);
                         }
 
-                        patientDao.updatePatient(patient.getId(), patient);
+                        patientDAO.updatePatient(patient.getId(), patient);
 
                         //added string resource "patient_update_successful"
                         ToastUtil.success("Patient " + patient.getPerson().getName().getNameString() + " Updated");
@@ -264,7 +257,7 @@ public class PatientRepository extends RetrofitRepository {
             });
         } else {
             //add patient to the local database
-            patientDao.updatePatient(patient.getId(), patient);
+            patientDAO.updatePatient(patient.getId(), patient);
 
             // enqueue the work to workManager
             Data data = new Data.Builder().putString("_id", patient.getId().toString()).build();
@@ -276,6 +269,31 @@ public class PatientRepository extends RetrofitRepository {
                 callbackListener.onResponse();
             }
         }
+    }
+
+    public void updateMatchingPatient(final Patient patient, DefaultResponseCallback callback) {
+        PatientDtoUpdate patientDto = patient.getUpdatedPatientDto();
+        patient.setUuid(null);
+        Call<PatientDto> call = restApi.updatePatient(patientDto, patient.getUuid(), ApplicationConstants.API.FULL);
+        call.enqueue(new Callback<PatientDto>() {
+            @Override
+            public void onResponse(@NonNull Call<PatientDto> call, @NonNull Response<PatientDto> response) {
+                if (callback != null) {
+                    if (response.isSuccessful()) {
+                        callback.onResponse();
+                    } else {
+                        callback.onErrorResponse(response.message());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
+                if (callback != null) {
+                    callback.onErrorResponse(t.getMessage());
+                }
+            }
+        });
     }
 
     /**

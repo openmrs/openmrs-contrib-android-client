@@ -27,7 +27,7 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.databases.entities.LocationEntity;
-import org.openmrs.mobile.listeners.retrofit.GetVisitTypeCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.GetVisitTypeCallback;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.models.Session;
 import org.openmrs.mobile.models.VisitType;

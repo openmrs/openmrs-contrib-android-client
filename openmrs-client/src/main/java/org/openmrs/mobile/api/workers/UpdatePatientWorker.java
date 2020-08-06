@@ -28,7 +28,7 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PatientDto;
 import org.openmrs.mobile.models.PatientDtoUpdate;

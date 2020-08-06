@@ -60,7 +60,7 @@ public class RestServiceBuilder {
                 return chain.proceed(request);
             });
 
-            //httpClient.addNetworkInterceptor(new ChuckInterceptor(OpenMRS.getInstance()));
+            httpClient.addNetworkInterceptor(new ChuckInterceptor(OpenMRS.getInstance()));
         }
         OkHttpClient client = httpClient.build();
         Retrofit retrofit = builder.client(client).build();

@@ -21,7 +21,7 @@ import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.repository.AllergyRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.listeners.retrofit.DefaultResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.models.AllergyCreate;
 import org.openmrs.mobile.models.AllergyPatient;
 import org.openmrs.mobile.models.ConceptMembers;

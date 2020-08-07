@@ -30,18 +30,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
+import org.openmrs.mobile.activities.dialog.CustomPickerDialog;
+import org.openmrs.mobile.activities.dialog.CustomDialogModel;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.databinding.FragmentPatientAllergyBinding;
 import org.openmrs.mobile.models.Allergy;
+import org.openmrs.mobile.utilities.ToastUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class PatientAllergyFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientAllergy, PatientAllergyRecyclerViewAdapter.OnLongPressListener {
+public class PatientAllergyFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientAllergy, PatientAllergyRecyclerViewAdapter.OnLongPressListener, CustomPickerDialog.onInputSelected {
     AlertDialog alertDialog;
-    private PatientDashboardActivity mPatientDashboardActivity;
     private FragmentPatientAllergyBinding binding;
+    private List<CustomDialogModel> dialogList = new ArrayList<>();
+    private Allergy selectedAllergy;
 
     public static PatientAllergyFragment newInstance() {
         return new PatientAllergyFragment();
@@ -50,7 +54,6 @@ public class PatientAllergyFragment extends PatientDashboardFragment implements 
     @Override
     public void onAttach(@NotNull Context context) {
         super.onAttach(context);
-        mPatientDashboardActivity = (PatientDashboardActivity) context;
     }
 
     @Override
@@ -99,26 +102,41 @@ public class PatientAllergyFragment extends PatientDashboardFragment implements 
 
     @Override
     public void showDialogueBox(Allergy allergy) {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-        alertDialogBuilder.setTitle(getString(R.string.delete_allergy_title, allergy.getAllergen().getCodedAllergen().getDisplay()));
-        alertDialogBuilder
-                .setMessage(R.string.delete_allergy_description)
-                .setCancelable(false)
-                .setPositiveButton(R.string.mark_patient_deceased_proceed, (dialog, id) -> {
-                    dialog.cancel();
-                    // Code to delete
-                    ((PatientDashboardAllergyPresenter) mPresenter).deleteAllergy(allergy.getUuid());
-                })
-                .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> {
-                    alertDialog.cancel();
-                });
-        alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
+        this.selectedAllergy = allergy;
+        dialogList.clear();
+        dialogList.add(new CustomDialogModel(getString(R.string.update_allergy_dialog), R.drawable.ic_allergy_edit));
+        dialogList.add(new CustomDialogModel(getString(R.string.delete_allergy_dialog), R.drawable.ic_photo_delete));
+        CustomPickerDialog customPickerDialog = new CustomPickerDialog(dialogList);
+        customPickerDialog.setTargetFragment(PatientAllergyFragment.this, 1000);
+        customPickerDialog.show(getFragmentManager(), "tag");
     }
 
     @Override
     public void onResume() {
         super.onResume();
         ((PatientDashboardAllergyPresenter) mPresenter).getAllergyFromDatabase();
+    }
+
+    @Override
+    public void performFunction(int position) {
+        if (position == 1) {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+            alertDialogBuilder.setTitle(getString(R.string.delete_allergy_title, selectedAllergy.getAllergen().getCodedAllergen().getDisplay()));
+            alertDialogBuilder
+                    .setMessage(R.string.delete_allergy_description)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.mark_patient_deceased_proceed, (dialog, id) -> {
+                        dialog.cancel();
+                        // Code to delete
+                        ((PatientDashboardAllergyPresenter) mPresenter).deleteAllergy(selectedAllergy.getUuid());
+                    })
+                    .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> {
+                        alertDialog.cancel();
+                    });
+            alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        } else {
+            ToastUtil.notify("Under Progress");
+        }
     }
 }

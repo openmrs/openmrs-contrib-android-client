@@ -68,7 +68,8 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
-import org.openmrs.mobile.activities.dialog.CameraOrGalleryPickerDialog;
+import org.openmrs.mobile.activities.dialog.CustomPickerDialog;
+import org.openmrs.mobile.activities.dialog.CustomDialogModel;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientPhotoActivity;
@@ -109,7 +110,7 @@ import permissions.dispatcher.RuntimePermissions;
 import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 @RuntimePermissions
-public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContract.Presenter> implements AddEditPatientContract.View, CameraOrGalleryPickerDialog.onInputSelected {
+public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContract.Presenter> implements AddEditPatientContract.View, CustomPickerDialog.onInputSelected {
     AlertDialog alertDialog;
     private FragmentPatientInfoBinding binding;
     private LocalDate birthDate;
@@ -126,6 +127,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private Patient updatedPatient;
     private String causeOfDeathUUID = "";
     private Resource causeOfDeath;
+    private List<CustomDialogModel> dialogList = new ArrayList<>();
 
     public static AddEditPatientFragment newInstance() {
         return new AddEditPatientFragment();
@@ -593,13 +595,15 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         });
 
         binding.capturePhoto.setOnClickListener(view -> {
-            boolean showRemoveButton = true;
-            if (patientPhoto == null) {
-                showRemoveButton = false;
+            dialogList.clear();
+            dialogList.add(new CustomDialogModel(getString(R.string.dialog_take_photo), R.drawable.ic_photo_camera));
+            dialogList.add(new CustomDialogModel(getString(R.string.dialog_choose_photo), R.drawable.ic_photo_library));
+            if (patientPhoto != null) {
+                dialogList.add(new CustomDialogModel(getString(R.string.dialog_remove_photo), R.drawable.ic_photo_delete));
             }
-            CameraOrGalleryPickerDialog cameraOrGalleryPickerDialog = new CameraOrGalleryPickerDialog(showRemoveButton);
-            cameraOrGalleryPickerDialog.setTargetFragment(AddEditPatientFragment.this, 1000);
-            cameraOrGalleryPickerDialog.show(getFragmentManager(), "tag");
+            CustomPickerDialog customPickerDialog = new CustomPickerDialog(dialogList);
+            customPickerDialog.setTargetFragment(AddEditPatientFragment.this, 1000);
+            customPickerDialog.show(getFragmentManager(), "tag");
         });
 
         binding.patientPhoto.setOnClickListener(view -> {

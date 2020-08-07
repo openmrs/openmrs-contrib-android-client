@@ -504,4 +504,6 @@
     <string name="warning_select_allergen">Please select an Allergen before proceeding</string>
     <string name="error_creating_allergy">There was an unexpected error while creating the allergy. Please try again!</string>
     <string name="success_creating_allergy">Allergy successfully added.</string>
+    <string name="delete_allergy_dialog">Delete Allergy</string>
+    <string name="update_allergy_dialog">Update Allergy</string>
 </resources>

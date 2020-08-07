@@ -465,4 +465,6 @@
     <string name="warning_select_allergen">कृपया आगे बढ़ने से पहले एक एलर्जेन का चयन करें</string>
     <string name="error_creating_allergy">एलर्जी पैदा करते समय एक अप्रत्याशित त्रुटि हुई थी। कृपया पुन: प्रयास करें!</string>
     <string name="success_creating_allergy">एलर्जी सफलतापूर्वक जोड़ दी गई।</string>
+    <string name="delete_allergy_dialog">एलर्जी को नष्ट करें</string>
+    <string name="update_allergy_dialog">एलर्जी का अद्यतन करें</string>
 </resources>

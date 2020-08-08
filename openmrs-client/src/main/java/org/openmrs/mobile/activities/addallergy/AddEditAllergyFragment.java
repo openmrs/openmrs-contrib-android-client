@@ -26,6 +26,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
+import com.google.android.material.chip.Chip;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.databinding.FragmentAllergyInfoBinding;
@@ -59,6 +61,7 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
     private List<Resource> drugAllergens = new ArrayList<>();
     private List<Resource> environmentAllergens = new ArrayList<>();
     private List<Resource> reactionList = new ArrayList<>();
+    private List<String> selectedReactions = new ArrayList<>();
     private String mildSeverity;
     private String moderateSeverity;
     private String severeSeverity;
@@ -137,6 +140,7 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
 
     private void createAllergy() {
         allergyCreate.setComment(patientAllergyBinding.commentBox.getText().toString());
+        allergyCreate.setReactions(getSelectedReactionFromChips());
 
         if (null == allergyCreate.getAllergen()) {
             ToastUtil.error(getString(R.string.warning_select_allergen));
@@ -155,6 +159,25 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
             alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }
+    }
+
+    private List<AllergyReactionCreate> getSelectedReactionFromChips() {
+        List<AllergyReactionCreate> allergyReactionList = new ArrayList<>();
+
+        for (int j = 0; j < patientAllergyBinding.chipGroup.getChildCount(); j++) {
+            Chip chip = (Chip) patientAllergyBinding.chipGroup.getChildAt(j);
+            String uuid = null;
+            for (int i = 0; i < reactionList.size(); i++) {
+                if (reactionList.get(i).getDisplay().equals(chip.getText().toString())) {
+                    uuid = reactionList.get(i).getUuid();
+                    break;
+                }
+            }
+            AllergyReactionCreate allergyReactionCreate = new AllergyReactionCreate();
+            allergyReactionCreate.setReaction(new AllergyUuid(uuid));
+            allergyReactionList.add(allergyReactionCreate);
+        }
+        return allergyReactionList;
     }
 
     private void setUpAllergenSpinner(List<Resource> allergens, String allergenType) {
@@ -204,19 +227,24 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String selectedReaction = patientAllergyBinding.reactionSpinner.getSelectedItem().toString();
                 if (!selectedReaction.equals(reactionArray[0])) {
-                    String uuid = null;
-                    for (int j = 0; j < reactionList.size(); j++) {
-                        if (reactionList.get(j).getDisplay().equals(selectedReaction)) {
-                            uuid = reactionList.get(j).getUuid();
-                            break;
-                        }
+                    if (selectedReactions.contains(selectedReaction)) {
+                        ToastUtil.error(getString(R.string.allergy_already_selected));
+                    } else {
+                        selectedReactions.add(selectedReaction);
+                        Chip chip = new Chip(getContext());
+                        chip.setText(selectedReaction);
+                        chip.setCloseIconVisible(true);
+                        chip.setClickable(false);
+                        chip.setClickable(false);
+                        chip.setOnCloseIconClickListener(selected_chip -> {
+                            patientAllergyBinding.chipGroup.removeView(selected_chip);
+                            selectedReactions.remove(chip.getText().toString());
+                        });
+                        patientAllergyBinding.chipGroup.addView(chip);
+                        patientAllergyBinding.linearLayoutReaction.setVisibility(View.VISIBLE);
                     }
-                    AllergyReactionCreate allergyReactionCreate = new AllergyReactionCreate();
-                    allergyReactionCreate.setReaction(new AllergyUuid(uuid));
-                    List<AllergyReactionCreate> createList = new ArrayList<>();
-                    createList.add(allergyReactionCreate);
-                    allergyCreate.setReactions(createList);
                 }
+
             }
 
             @Override

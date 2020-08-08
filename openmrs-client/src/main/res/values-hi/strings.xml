@@ -467,4 +467,5 @@
     <string name="success_creating_allergy">एलर्जी सफलतापूर्वक जोड़ दी गई।</string>
     <string name="delete_allergy_dialog">एलर्जी को नष्ट करें</string>
     <string name="update_allergy_dialog">एलर्जी का अद्यतन करें</string>
+    <string name="allergy_already_selected">पहले से ही चयनित एलर्जी!</string>
 </resources>

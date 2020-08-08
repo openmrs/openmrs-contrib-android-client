@@ -506,4 +506,5 @@
     <string name="success_creating_allergy">Allergy successfully added.</string>
     <string name="delete_allergy_dialog">Delete Allergy</string>
     <string name="update_allergy_dialog">Update Allergy</string>
+    <string name="allergy_already_selected">Allergy already selected !</string>
 </resources>

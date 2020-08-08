@@ -206,6 +206,6 @@ object ApplicationConstants {
         const val PROPERTY_MILD = "Mild"
         const val PROPERTY_SEVERE = "Severe"
         const val SELECT_ALLERGEN = "Select Allergen"
-        const val SELECT_REACTION = "Select Reaction"
+        const val SELECT_REACTION = "Reactions (you can select multiple)"
     }
 }

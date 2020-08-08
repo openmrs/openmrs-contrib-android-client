@@ -268,7 +268,7 @@
             android:theme="@style/AppThemeOrig"
             android:label="@string/contact_us"/>
         <activity
-            android:name=".activities.addallergy.AddEditAllergyActivity"
+            android:name=".activities.addeditallergy.AddEditAllergyActivity"
             android:theme="@style/AppThemeOrig"
             android:label="@string/allergy_heading"/>
 

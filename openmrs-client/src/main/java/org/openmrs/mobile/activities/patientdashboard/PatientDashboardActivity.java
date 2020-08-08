@@ -19,13 +19,11 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -39,7 +37,7 @@ import com.google.android.material.tabs.TabLayout;
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.addallergy.AddEditAllergyActivity;
+import org.openmrs.mobile.activities.addeditallergy.AddEditAllergyActivity;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity;
 import org.openmrs.mobile.activities.patientdashboard.allergy.PatientAllergyFragment;
 import org.openmrs.mobile.activities.patientdashboard.allergy.PatientDashboardAllergyPresenter;
@@ -54,7 +52,6 @@ import org.openmrs.mobile.activities.patientdashboard.visits.PatientVisitsFragme
 import org.openmrs.mobile.activities.patientdashboard.vitals.PatientDashboardVitalsPresenter;
 import org.openmrs.mobile.activities.patientdashboard.vitals.PatientVitalsFragment;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.TabUtil;
 import org.openmrs.mobile.utilities.ThemeUtils;
 

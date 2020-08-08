@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.addallergy;
+package org.openmrs.mobile.activities.addeditallergy;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -128,58 +128,6 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
         patientAllergyBinding.submitButton.setOnClickListener(view -> createAllergy());
     }
 
-    private void unSelectChip(TextView textView) {
-        textView.setBackgroundResource(R.drawable.chip_grey_rectangle);
-        textView.setTextColor(getResources().getColor(R.color.dark_grey_8x));
-    }
-
-    private void selectChip(TextView textView) {
-        textView.setBackgroundResource(R.drawable.chip_orange_rectangle);
-        textView.setTextColor(getResources().getColor(R.color.allergy_orange));
-    }
-
-    private void createAllergy() {
-        allergyCreate.setComment(patientAllergyBinding.commentBox.getText().toString());
-        allergyCreate.setReactions(getSelectedReactionFromChips());
-
-        if (null == allergyCreate.getAllergen()) {
-            ToastUtil.error(getString(R.string.warning_select_allergen));
-        } else {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
-            alertDialogBuilder.setTitle(getString(R.string.create_allergy_title));
-            alertDialogBuilder
-                    .setMessage(R.string.create_allergy_description)
-                    .setCancelable(false)
-                    .setPositiveButton(R.string.mark_patient_deceased_proceed, (dialog, id) -> {
-                        dialog.cancel();
-                        showLoading(true, false);
-                        mPresenter.createAllergy(allergyCreate);
-                    })
-                    .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> alertDialog.cancel());
-            alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
-        }
-    }
-
-    private List<AllergyReactionCreate> getSelectedReactionFromChips() {
-        List<AllergyReactionCreate> allergyReactionList = new ArrayList<>();
-
-        for (int j = 0; j < patientAllergyBinding.chipGroup.getChildCount(); j++) {
-            Chip chip = (Chip) patientAllergyBinding.chipGroup.getChildAt(j);
-            String uuid = null;
-            for (int i = 0; i < reactionList.size(); i++) {
-                if (reactionList.get(i).getDisplay().equals(chip.getText().toString())) {
-                    uuid = reactionList.get(i).getUuid();
-                    break;
-                }
-            }
-            AllergyReactionCreate allergyReactionCreate = new AllergyReactionCreate();
-            allergyReactionCreate.setReaction(new AllergyUuid(uuid));
-            allergyReactionList.add(allergyReactionCreate);
-        }
-        return allergyReactionList;
-    }
-
     private void setUpAllergenSpinner(List<Resource> allergens, String allergenType) {
         String[] allergenArray = new String[allergens.size() + 1];
         allergenArray[0] = SELECT_ALLERGEN;
@@ -230,21 +178,9 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
                     if (selectedReactions.contains(selectedReaction)) {
                         ToastUtil.error(getString(R.string.allergy_already_selected));
                     } else {
-                        selectedReactions.add(selectedReaction);
-                        Chip chip = new Chip(getContext());
-                        chip.setText(selectedReaction);
-                        chip.setCloseIconVisible(true);
-                        chip.setClickable(false);
-                        chip.setClickable(false);
-                        chip.setOnCloseIconClickListener(selected_chip -> {
-                            patientAllergyBinding.chipGroup.removeView(selected_chip);
-                            selectedReactions.remove(chip.getText().toString());
-                        });
-                        patientAllergyBinding.chipGroup.addView(chip);
-                        patientAllergyBinding.linearLayoutReaction.setVisibility(View.VISIBLE);
+                        createReactionChip(selectedReaction);
                     }
                 }
-
             }
 
             @Override
@@ -252,6 +188,29 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
 
             }
         });
+    }
+
+    private void createAllergy() {
+        allergyCreate.setComment(patientAllergyBinding.commentBox.getText().toString());
+        allergyCreate.setReactions(getSelectedReactionFromChips());
+
+        if (null == allergyCreate.getAllergen()) {
+            ToastUtil.error(getString(R.string.warning_select_allergen));
+        } else {
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+            alertDialogBuilder.setTitle(getString(R.string.create_allergy_title));
+            alertDialogBuilder
+                    .setMessage(R.string.create_allergy_description)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.mark_patient_deceased_proceed, (dialog, id) -> {
+                        dialog.cancel();
+                        showLoading(true, false);
+                        mPresenter.createAllergy(allergyCreate);
+                    })
+                    .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> alertDialog.cancel());
+            alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
     }
 
     @Override
@@ -300,5 +259,49 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
                 getActivity().finish();
             }
         }
+    }
+
+    private void unSelectChip(TextView textView) {
+        textView.setBackgroundResource(R.drawable.chip_grey_rectangle);
+        textView.setTextColor(getResources().getColor(R.color.dark_grey_8x));
+    }
+
+    private void selectChip(TextView textView) {
+        textView.setBackgroundResource(R.drawable.chip_orange_rectangle);
+        textView.setTextColor(getResources().getColor(R.color.allergy_orange));
+    }
+
+    private void createReactionChip(String selectedReaction) {
+        selectedReactions.add(selectedReaction);
+        Chip chip = new Chip(getContext());
+        chip.setText(selectedReaction);
+        chip.setCloseIconVisible(true);
+        chip.setClickable(false);
+        chip.setClickable(false);
+        chip.setOnCloseIconClickListener(selected_chip -> {
+            patientAllergyBinding.chipGroup.removeView(selected_chip);
+            selectedReactions.remove(chip.getText().toString());
+        });
+        patientAllergyBinding.chipGroup.addView(chip);
+        patientAllergyBinding.linearLayoutReaction.setVisibility(View.VISIBLE);
+    }
+
+    private List<AllergyReactionCreate> getSelectedReactionFromChips() {
+        List<AllergyReactionCreate> allergyReactionList = new ArrayList<>();
+
+        for (int j = 0; j < patientAllergyBinding.chipGroup.getChildCount(); j++) {
+            Chip chip = (Chip) patientAllergyBinding.chipGroup.getChildAt(j);
+            String uuid = null;
+            for (int i = 0; i < reactionList.size(); i++) {
+                if (reactionList.get(i).getDisplay().equals(chip.getText().toString())) {
+                    uuid = reactionList.get(i).getUuid();
+                    break;
+                }
+            }
+            AllergyReactionCreate allergyReactionCreate = new AllergyReactionCreate();
+            allergyReactionCreate.setReaction(new AllergyUuid(uuid));
+            allergyReactionList.add(allergyReactionCreate);
+        }
+        return allergyReactionList;
     }
 }

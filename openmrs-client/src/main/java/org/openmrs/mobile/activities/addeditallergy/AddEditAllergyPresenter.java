@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.activities.addallergy;
+package org.openmrs.mobile.activities.addeditallergy;
 
 import androidx.fragment.app.Fragment;
 

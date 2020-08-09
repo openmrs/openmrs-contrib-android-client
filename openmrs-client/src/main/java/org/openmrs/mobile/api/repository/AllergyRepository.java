@@ -25,6 +25,7 @@ import androidx.work.WorkManager;
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
+import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.workers.allergy.DeleteAllergyWorker;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.AllergyRoomDAO;
@@ -33,7 +34,10 @@ import org.openmrs.mobile.databases.AppDatabaseHelper;
 import org.openmrs.mobile.databases.entities.AllergyEntity;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.models.Allergy;
+import org.openmrs.mobile.models.AllergyCreate;
+import org.openmrs.mobile.models.ConceptMembers;
 import org.openmrs.mobile.models.Results;
+import org.openmrs.mobile.models.SystemProperty;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -45,6 +49,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static org.openmrs.mobile.utilities.ApplicationConstants.API.FULL;
 import static org.openmrs.mobile.utilities.ApplicationConstants.BundleKeys.ALLERGY_UUID;
 import static org.openmrs.mobile.utilities.ApplicationConstants.BundleKeys.PATIENT_UUID;
 
@@ -52,6 +57,7 @@ public class AllergyRepository {
     AllergyRoomDAO allergyRoomDAO;
     WorkManager workManager;
     String patientID;
+    RestApi restApi;
     List<Allergy> allergyList = new ArrayList<>();
     List<AllergyEntity> allergyEntitiesOffline = new ArrayList<>();
 
@@ -59,6 +65,7 @@ public class AllergyRepository {
         this.patientID = patientID;
         allergyRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance()).allergyRoomDAO();
         workManager = WorkManager.getInstance(OpenMRS.getInstance());
+        restApi = RestServiceBuilder.createService(RestApi.class);
     }
 
     public AllergyRepository(String id, AllergyRoomDAO allergyRoomDAO) {
@@ -134,5 +141,64 @@ public class AllergyRepository {
 
             ToastUtil.notify(OpenMRS.getInstance().getString(R.string.delete_allergy_offline));
         }
+    }
+
+    public LiveData<SystemProperty> getSystemProperty(String systemProperty) {
+        MutableLiveData<SystemProperty> mutableLiveData = new MutableLiveData<>();
+        restApi.getSystemProperty(systemProperty, FULL).enqueue(new Callback<Results<SystemProperty>>() {
+            @Override
+            public void onResponse(Call<Results<SystemProperty>> call, Response<Results<SystemProperty>> response) {
+                if (response.isSuccessful()) {
+                    mutableLiveData.setValue(response.body().getResults().get(0));
+                } else {
+                    mutableLiveData.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Results<SystemProperty>> call, Throwable t) {
+                mutableLiveData.setValue(null);
+            }
+        });
+        return mutableLiveData;
+    }
+
+    public LiveData<ConceptMembers> getConceptMembers(String uuid) {
+        MutableLiveData<ConceptMembers> mutableLiveData = new MutableLiveData<>();
+        restApi.getConceptMembersFromUUID(uuid).enqueue(new Callback<ConceptMembers>() {
+            @Override
+            public void onResponse(Call<ConceptMembers> call, Response<ConceptMembers> response) {
+                if (response.isSuccessful()) {
+                    mutableLiveData.setValue(response.body());
+                } else {
+                    mutableLiveData.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ConceptMembers> call, Throwable t) {
+                mutableLiveData.setValue(null);
+            }
+        });
+        return mutableLiveData;
+    }
+
+    public void createAllergy(String patientUuid, AllergyCreate allergyCreate, DefaultResponseCallback callback) {
+        restApi.createAllergy(patientUuid, allergyCreate).enqueue(new Callback<Allergy>() {
+            @Override
+            public void onResponse(Call<Allergy> call, Response<Allergy> response) {
+                if (response.isSuccessful()) {
+                    callback.onResponse();
+                    allergyRoomDAO.saveAllergy(AppDatabaseHelper.convert(response.body(), patientID));
+                } else {
+                    callback.onErrorResponse(OpenMRS.getInstance().getString(R.string.error_creating_allergy));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Allergy> call, Throwable t) {
+                callback.onErrorResponse(t.getMessage());
+            }
+        });
     }
 }

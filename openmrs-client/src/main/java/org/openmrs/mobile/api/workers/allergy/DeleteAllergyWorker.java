@@ -27,7 +27,7 @@ import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.AllergyRoomDAO;
 import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.listeners.retrofitcallbacks.CustomApiCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
@@ -57,14 +57,14 @@ public class DeleteAllergyWorker extends Worker {
         String allergyUuid = getInputData().getString(ALLERGY_UUID);
         String patientUuid = getInputData().getString(PATIENT_UUID);
 
-        deleteAllergy(restApi, allergyUuid, patientUuid, new CustomApiCallback() {
+        deleteAllergy(restApi, allergyUuid, patientUuid, new DefaultResponseCallback() {
             @Override
-            public void onSuccess() {
+            public void onResponse() {
                 result[0] = true;
             }
 
             @Override
-            public void onFailure() {
+            public void onErrorResponse(String errorMessage) {
                 result[0] = false;
             }
         });
@@ -76,7 +76,7 @@ public class DeleteAllergyWorker extends Worker {
         }
     }
 
-    private void deleteAllergy(RestApi restApi, String allergyUuid, String patientUuid, CustomApiCallback callback) {
+    private void deleteAllergy(RestApi restApi, String allergyUuid, String patientUuid, DefaultResponseCallback callback) {
 
         if (NetworkUtils.isOnline()) {
             restApi.deleteAllergy(patientUuid, allergyUuid).enqueue(new Callback<ResponseBody>() {
@@ -85,13 +85,13 @@ public class DeleteAllergyWorker extends Worker {
                     if (response.isSuccessful()) {
 
                         ToastUtil.success(OpenMRS.getInstance().getString(R.string.delete_allergy_success));
-                        callback.onSuccess();
+                        callback.onResponse();
                     }
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                    callback.onFailure();
+                    callback.onErrorResponse(t.getMessage());
                 }
             });
         }

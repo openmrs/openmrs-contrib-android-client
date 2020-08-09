@@ -190,4 +190,22 @@ object ApplicationConstants {
         const val CHANNEL_DESC = "This channel receives new concept count notifications"
         const val CHANNEL_NAME = "Concepts Channel"
     }
+
+    object AllergyModule {
+        const val CONCEPT_ALLERGEN_DRUG = "allergy.concept.allergen.drug"
+        const val CONCEPT_ALLERGEN_ENVIRONMENT = "allergy.concept.allergen.environment"
+        const val CONCEPT_ALLERGEN_FOOD = "allergy.concept.allergen.food"
+        const val CONCEPT_REACTION = "allergy.concept.reactions"
+        const val CONCEPT_SEVERITY_MILD = "allergy.concept.severity.mild"
+        const val CONCEPT_SEVERITY_MODERATE = "allergy.concept.severity.moderate"
+        const val CONCEPT_SEVERITY_SEVERE = "allergy.concept.severity.severe"
+        const val PROPERTY_REACTION = "REACTION"
+        const val PROPERTY_FOOD = "FOOD"
+        const val PROPERTY_DRUG = "DRUG"
+        const val PROPERTY_OTHER = "OTHER"
+        const val PROPERTY_MILD = "Mild"
+        const val PROPERTY_SEVERE = "Severe"
+        const val SELECT_ALLERGEN = "Select Allergen"
+        const val SELECT_REACTION = "Reactions (you can select multiple)"
+    }
 }

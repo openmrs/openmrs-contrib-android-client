@@ -9,8 +9,6 @@
             <padding
                 android:left="4dp"
                 android:right="30dp"/>
-            <solid
-                android:color="@color/light_grey_for_solid"/>
         </shape>
     </item>
 

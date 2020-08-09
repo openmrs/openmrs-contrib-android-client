@@ -181,6 +181,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
             if(position == 1) {
                 Intent intent = new Intent(this, AddEditAllergyActivity.class);
                 intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPresenter.getPatientId());
+                intent.putExtra(ApplicationConstants.BundleKeys.ALLERGY_UUID, ApplicationConstants.EMPTY_STRING);
                 startActivity(intent);
             } else {
                 animateFAB(isActionFABOpen);

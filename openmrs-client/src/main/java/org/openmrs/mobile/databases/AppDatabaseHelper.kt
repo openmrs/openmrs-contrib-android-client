@@ -277,6 +277,7 @@ object AppDatabaseHelper {
         }
         allergyEntity.allergenDisplay = allergy.allergen!!.codedAllergen!!.display
         allergyEntity.allergenUUID = allergy.allergen!!.codedAllergen!!.uuid
+        allergyEntity.allergenType = allergy.allergen!!.allergenType
         allergyEntity.allergyReactions = allergy.reactions
         return allergyEntity
     }
@@ -291,7 +292,8 @@ object AppDatabaseHelper {
         return allergies
     }
 
-    private fun convert(allergyEntity: AllergyEntity): Allergy {
+    @JvmStatic
+    fun convert(allergyEntity: AllergyEntity): Allergy {
         val allergy = Allergy()
         allergy.id = allergyEntity.id
         allergy.uuid = allergyEntity.uuid
@@ -302,6 +304,7 @@ object AppDatabaseHelper {
             allergy.reactions = ArrayList()
         }
         val allergen = Allergen()
+        allergen.allergenType = allergyEntity.allergenType
         allergen.codedAllergen = Resource(allergyEntity.allergenUUID!!, allergyEntity.allergenDisplay!!, ArrayList(), 1)
         allergy.allergen = allergen
         if (allergyEntity.severityDisplay != null) {

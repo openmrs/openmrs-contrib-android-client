@@ -48,6 +48,9 @@ class AllergyEntity {
     @ColumnInfo(name = "allergen_uuid")
     var allergenUUID: String? = null
 
+    @ColumnInfo(name = "allergen_type")
+    var allergenType: String? = null
+
     @TypeConverters(AllergyReactionConverter::class)
     @ColumnInfo(name = "allergy_reactions")
     var allergyReactions: List<AllergyReaction>? = null

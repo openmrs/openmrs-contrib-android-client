@@ -109,6 +109,15 @@ public class AllergyRepository {
         return allergyList;
     }
 
+    public Allergy getAllergyByUUID(String allergyUuid) {
+        AllergyEntity allergyEntity = allergyRoomDAO.getAllergyByUUID(allergyUuid);
+        if (allergyEntity != null) {
+            return AppDatabaseHelper.convert(allergyEntity);
+        } else {
+            return null;
+        }
+    }
+
     public void deleteAllergy(RestApi restApi, String patientUuid, String allergyUuid, DefaultResponseCallback callback) {
         if (NetworkUtils.isOnline()) {
             restApi.deleteAllergy(patientUuid, allergyUuid).enqueue(new Callback<ResponseBody>() {
@@ -190,6 +199,27 @@ public class AllergyRepository {
                 if (response.isSuccessful()) {
                     callback.onResponse();
                     allergyRoomDAO.saveAllergy(AppDatabaseHelper.convert(response.body(), patientID));
+                } else {
+                    callback.onErrorResponse(OpenMRS.getInstance().getString(R.string.error_creating_allergy));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Allergy> call, Throwable t) {
+                callback.onErrorResponse(t.getMessage());
+            }
+        });
+    }
+
+    public void updateAllergy(String patientUuid, String allergyUuid, Long id, AllergyCreate allergyCreate, DefaultResponseCallback callback) {
+        restApi.updateAllergy(patientUuid, allergyUuid, allergyCreate).enqueue(new Callback<Allergy>() {
+            @Override
+            public void onResponse(Call<Allergy> call, Response<Allergy> response) {
+                if (response.isSuccessful()) {
+                    callback.onResponse();
+                    AllergyEntity allergyEntity = AppDatabaseHelper.convert(response.body(), patientID);
+                    allergyEntity.setId(id);
+                    allergyRoomDAO.updateAllergy(allergyEntity);
                 } else {
                     callback.onErrorResponse(OpenMRS.getInstance().getString(R.string.error_creating_allergy));
                 }

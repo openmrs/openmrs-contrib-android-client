@@ -25,6 +25,7 @@ import org.openmrs.mobile.utilities.ApplicationConstants;
 
 public class AddEditAllergyActivity extends ACBaseActivity {
     private Long patientID;
+    private String allergyUuid;
 
     public static AddEditAllergyFragment newInstance() {
         return new AddEditAllergyFragment();
@@ -43,6 +44,7 @@ public class AddEditAllergyActivity extends ACBaseActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             patientID = bundle.getLong(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE);
+            allergyUuid = bundle.getString(ApplicationConstants.BundleKeys.ALLERGY_UUID);
         }
 
         AddEditAllergyFragment addEditAllergyFragment = (AddEditAllergyFragment) getSupportFragmentManager().findFragmentById(R.id.allergyFrame);
@@ -54,7 +56,7 @@ public class AddEditAllergyActivity extends ACBaseActivity {
                     addEditAllergyFragment, R.id.allergyFrame);
         }
 
-        new AddEditAllergyPresenter(addEditAllergyFragment, patientID);
+        new AddEditAllergyPresenter(addEditAllergyFragment, patientID, allergyUuid);
     }
 
     @Override

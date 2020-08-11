@@ -35,6 +35,9 @@ public interface AllergyRoomDAO {
     @Query("SELECT * FROM allergy WHERE patientId = :patientId")
     List<AllergyEntity> getAllAllergiesByPatientID(String patientId);
 
+    @Query("SELECT * FROM allergy WHERE uuid = :uuid")
+    AllergyEntity getAllergyByUUID(String uuid);
+
     @Query("DELETE FROM allergy WHERE patientId = :patientId")
     void deleteAllPatientAllergy(String patientId);
 

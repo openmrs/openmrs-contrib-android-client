@@ -191,4 +191,9 @@ public interface RestApi {
     @POST("patient/{uuid}/allergy")
     Call<Allergy> createAllergy(@Path("uuid") String uuid,
                                 @Body AllergyCreate allergyCreate);
+
+    @POST("patient/{patientUuid}/allergy/{allergyUuid}")
+    Call<Allergy> updateAllergy(@Path("patientUuid") String patientUuid,
+                                @Path("allergyUuid") String allergyUuid,
+                                @Body AllergyCreate allergyCreate);
 }

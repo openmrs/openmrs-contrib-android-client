@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.patientdashboard.allergy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,12 +31,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.addeditallergy.AddEditAllergyActivity;
 import org.openmrs.mobile.activities.dialog.CustomPickerDialog;
 import org.openmrs.mobile.activities.dialog.CustomDialogModel;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.databinding.FragmentPatientAllergyBinding;
 import org.openmrs.mobile.models.Allergy;
+import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
@@ -136,7 +139,10 @@ public class PatientAllergyFragment extends PatientDashboardFragment implements 
             alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         } else {
-            ToastUtil.notify("Under Progress");
+            Intent intent = new Intent(getActivity(), AddEditAllergyActivity.class);
+            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, mPresenter.getPatientId());
+            intent.putExtra(ApplicationConstants.BundleKeys.ALLERGY_UUID, selectedAllergy.getUuid());
+            startActivity(intent);
         }
     }
 }

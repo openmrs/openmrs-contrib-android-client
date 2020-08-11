@@ -32,7 +32,9 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.databinding.FragmentAllergyInfoBinding;
 import org.openmrs.mobile.models.AllergenCreate;
+import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.models.AllergyCreate;
+import org.openmrs.mobile.models.AllergyReaction;
 import org.openmrs.mobile.models.AllergyReactionCreate;
 import org.openmrs.mobile.models.AllergyUuid;
 import org.openmrs.mobile.models.ConceptMembers;
@@ -65,6 +67,7 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
     private String mildSeverity;
     private String moderateSeverity;
     private String severeSeverity;
+    private Boolean allergyToUpdate = false;
 
     public static AddEditAllergyFragment newInstance() {
         return new AddEditAllergyFragment();
@@ -83,23 +86,23 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
     private void initListeners() {
         patientAllergyBinding.mildSeverity.setOnClickListener(view -> {
             allergyCreate.setSeverity(new AllergyUuid(mildSeverity));
-            patientAllergyBinding.mildSeverity.setBackgroundResource(R.drawable.chip_white_rectangle);
-            patientAllergyBinding.moderateSeverity.setBackgroundResource(R.drawable.chip_grey_rectangle);
-            patientAllergyBinding.severeSeverity.setBackgroundResource(R.drawable.chip_grey_rectangle);
+            selectSeverity(patientAllergyBinding.mildSeverity);
+            unSelectSeverity(patientAllergyBinding.moderateSeverity);
+            unSelectSeverity(patientAllergyBinding.severeSeverity);
         });
 
         patientAllergyBinding.moderateSeverity.setOnClickListener(view -> {
             allergyCreate.setSeverity(new AllergyUuid(moderateSeverity));
-            patientAllergyBinding.mildSeverity.setBackgroundResource(R.drawable.chip_grey_rectangle);
-            patientAllergyBinding.moderateSeverity.setBackgroundResource(R.drawable.chip_white_rectangle);
-            patientAllergyBinding.severeSeverity.setBackgroundResource(R.drawable.chip_grey_rectangle);
+            unSelectSeverity(patientAllergyBinding.mildSeverity);
+            selectSeverity(patientAllergyBinding.moderateSeverity);
+            unSelectSeverity(patientAllergyBinding.severeSeverity);
         });
 
         patientAllergyBinding.severeSeverity.setOnClickListener(view -> {
             allergyCreate.setSeverity(new AllergyUuid(severeSeverity));
-            patientAllergyBinding.mildSeverity.setBackgroundResource(R.drawable.chip_grey_rectangle);
-            patientAllergyBinding.moderateSeverity.setBackgroundResource(R.drawable.chip_grey_rectangle);
-            patientAllergyBinding.severeSeverity.setBackgroundResource(R.drawable.chip_white_rectangle);
+            unSelectSeverity(patientAllergyBinding.mildSeverity);
+            unSelectSeverity(patientAllergyBinding.moderateSeverity);
+            selectSeverity(patientAllergyBinding.severeSeverity);
         });
 
         patientAllergyBinding.allergenDrug.setOnClickListener(view -> {
@@ -205,7 +208,11 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
                     .setPositiveButton(R.string.mark_patient_deceased_proceed, (dialog, id) -> {
                         dialog.cancel();
                         showLoading(true, false);
-                        mPresenter.createAllergy(allergyCreate);
+                        if(!allergyToUpdate) {
+                            mPresenter.createAllergy(allergyCreate);
+                        } else {
+                            mPresenter.updateAllergy(allergyCreate);
+                        }
                     })
                     .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> alertDialog.cancel());
             alertDialog = alertDialogBuilder.create();
@@ -261,6 +268,42 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
         }
     }
 
+    @Override
+    public void fillAllergyToUpdate(Allergy mAllergy) {
+        if (mAllergy != null) {
+            allergyToUpdate = true;
+            patientAllergyBinding.commentBox.setText(mAllergy.getComment());
+
+            unSelectSeverity(patientAllergyBinding.mildSeverity);
+            unSelectSeverity(patientAllergyBinding.moderateSeverity);
+            unSelectSeverity(patientAllergyBinding.severeSeverity);
+            if (mAllergy.getSeverity() != null) {
+                allergyCreate.setSeverity(new AllergyUuid(mAllergy.getSeverity().getUuid()));
+                if (mAllergy.getSeverity().getDisplay().contains(PROPERTY_MILD)) {
+                    selectSeverity(patientAllergyBinding.mildSeverity);
+                } else if (mAllergy.getSeverity().getDisplay().contains(PROPERTY_SEVERE)) {
+                    selectSeverity(patientAllergyBinding.severeSeverity);
+                } else {
+                    selectSeverity(patientAllergyBinding.moderateSeverity);
+                }
+            }
+
+            List<AllergyReaction> reactions = mAllergy.getReactions();
+            for (AllergyReaction allergyReaction : reactions) {
+                createReactionChip(allergyReaction.getReaction().getDisplay());
+            }
+
+            patientAllergyBinding.linearLayoutCategory.setVisibility(View.GONE);
+            patientAllergyBinding.allergySpinner.setVisibility(View.GONE);
+            patientAllergyBinding.finalAllergen.setVisibility(View.VISIBLE);
+            patientAllergyBinding.finalAllergen.setText(mAllergy.getAllergen().getCodedAllergen().getDisplay());
+            AllergenCreate allergenCreate = new AllergenCreate();
+            allergenCreate.setAllergenType(mAllergy.getAllergen().getAllergenType());
+            allergenCreate.setCodedAllergen(new AllergyUuid(mAllergy.getAllergen().getCodedAllergen().getUuid()));
+            allergyCreate.setAllergen(allergenCreate);
+        }
+    }
+
     private void unSelectChip(TextView textView) {
         textView.setBackgroundResource(R.drawable.chip_grey_rectangle);
         textView.setTextColor(getResources().getColor(R.color.dark_grey_8x));
@@ -269,6 +312,14 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
     private void selectChip(TextView textView) {
         textView.setBackgroundResource(R.drawable.chip_orange_rectangle);
         textView.setTextColor(getResources().getColor(R.color.allergy_orange));
+    }
+
+    private void unSelectSeverity(TextView textView) {
+        textView.setBackgroundResource(R.drawable.chip_grey_rectangle);
+    }
+
+    private void selectSeverity(TextView textView) {
+        textView.setBackgroundResource(R.drawable.chip_white_rectangle);
     }
 
     private void createReactionChip(String selectedReaction) {

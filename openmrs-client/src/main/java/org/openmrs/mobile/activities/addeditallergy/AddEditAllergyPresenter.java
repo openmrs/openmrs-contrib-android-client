@@ -22,6 +22,7 @@ import org.openmrs.mobile.api.repository.AllergyRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
+import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.models.AllergyCreate;
 import org.openmrs.mobile.models.AllergyPatient;
 import org.openmrs.mobile.models.ConceptMembers;
@@ -47,17 +48,22 @@ public class AddEditAllergyPresenter extends BasePresenter implements AddEditAll
     Fragment fragment;
     private AddEditAllergyContract.View view;
     private Patient mPatient;
+    private Allergy mAllergy;
+    private String allergyUuid;
     private AllergyRepository allergyRepository;
 
-    public AddEditAllergyPresenter(AddEditAllergyContract.View view, Long patientID) {
+    public AddEditAllergyPresenter(AddEditAllergyContract.View view, Long patientID, String allergyUuid) {
         this.view = view;
         this.view.setPresenter(this);
+        this.allergyUuid = allergyUuid;
         mPatient = new PatientDAO().findPatientByID(patientID.toString());
         allergyRepository = new AllergyRepository(patientID.toString());
     }
 
     @Override
     public void subscribe() {
+        mAllergy = allergyRepository.getAllergyByUUID(allergyUuid);
+        view.fillAllergyToUpdate(mAllergy);
     }
 
     @Override
@@ -115,6 +121,15 @@ public class AddEditAllergyPresenter extends BasePresenter implements AddEditAll
         allergyPatient.setIdentifier(new ArrayList<>());
         allergyCreate.setPatient(allergyPatient);
         allergyRepository.createAllergy(mPatient.getUuid(), allergyCreate, this);
+    }
+
+    @Override
+    public void updateAllergy(AllergyCreate allergyCreate) {
+        AllergyPatient allergyPatient = new AllergyPatient();
+        allergyPatient.setUuid(mPatient.getUuid());
+        allergyPatient.setIdentifier(new ArrayList<>());
+        allergyCreate.setPatient(allergyPatient);
+        allergyRepository.updateAllergy(mPatient.getUuid(), allergyUuid, mAllergy.getId(), allergyCreate, this);
     }
 
     @Override

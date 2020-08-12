@@ -20,15 +20,17 @@ import androidx.annotation.Nullable;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.dao.EncounterCreateRoomDAO;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.listeners.retrofitcallbacks.VisitsResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.GetVisitTypeCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.StartVisitResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.VisitsResponseCallback;
 import org.openmrs.mobile.models.Encounter;
+import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.models.Visit;
@@ -50,22 +52,24 @@ public class VisitRepository {
     private RestApi restApi;
     private VisitDAO visitDAO;
     private EncounterDAO encounterDAO;
+    private EncounterCreateRoomDAO encounterCreateRoomDAO;
 
     public VisitRepository() {
         restApi = RestServiceBuilder.createService(RestApi.class);
         visitDAO = new VisitDAO();
         encounterDAO = new EncounterDAO();
         db = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext());
+        encounterCreateRoomDAO = db.encounterCreateRoomDAO();
         locationDAO = new LocationDAO();
     }
 
     /**
      * used in Unit tests with mockUp objects
+     *
      * @param restApi
      * @param visitDAO
      * @param locationDAO
      * @param encounterDAO
-     *
      */
     public VisitRepository(RestApi restApi, VisitDAO visitDAO, LocationDAO locationDAO, EncounterDAO encounterDAO) {
         this.restApi = restApi;
@@ -86,13 +90,13 @@ public class VisitRepository {
                 if (response.isSuccessful()) {
                     List<Visit> visits = response.body().getResults();
                     Observable.just(visits)
-                            .flatMap(Observable::from)
-                            .forEach(visit ->
-                                            visitDAO.saveOrUpdate(visit, patient.getId())
-                                                    .observeOn(AndroidSchedulers.mainThread())
-                                                    .subscribe(),
-                                    error -> error.printStackTrace()
-                            );
+                        .flatMap(Observable::from)
+                        .forEach(visit ->
+                                visitDAO.saveOrUpdate(visit, patient.getId())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(),
+                            error -> error.printStackTrace()
+                        );
                     if (callbackListener != null) {
                         callbackListener.onResponse();
                     }
@@ -204,12 +208,12 @@ public class VisitRepository {
                 if (response.isSuccessful()) {
                     Visit newVisit = response.body();
                     visitDAO.saveOrUpdate(newVisit, patient.getId())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(id -> {
-                                if (callbackListener != null) {
-                                    callbackListener.onStartVisitResponse(id);
-                                }
-                            });
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(id -> {
+                            if (callbackListener != null) {
+                                callbackListener.onStartVisitResponse(id);
+                            }
+                        });
                 } else {
                     if (callbackListener != null) {
                         callbackListener.onErrorResponse(response.message());
@@ -224,5 +228,9 @@ public class VisitRepository {
                 }
             }
         });
+    }
+
+    public long addEncounterCreated(final Encountercreate encountercreate) {
+        return encounterCreateRoomDAO.addEncounterCreated(encountercreate);
     }
 }

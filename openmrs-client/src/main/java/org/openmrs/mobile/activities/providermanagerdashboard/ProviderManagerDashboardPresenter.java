@@ -20,15 +20,16 @@ import androidx.fragment.app.Fragment;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.activities.BasePresenter;
-import org.openmrs.mobile.listeners.retrofitcallbacks.CustomApiCallback;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.ProviderRepository;
+import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.models.Provider;
+import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
-public class ProviderManagerDashboardPresenter extends BasePresenter implements ProviderManagerDashboardContract.Presenter, CustomApiCallback {
+public class ProviderManagerDashboardPresenter extends BasePresenter implements ProviderManagerDashboardContract.Presenter, DefaultResponseCallback {
     private RestApi restApi;
     private ProviderRepository providerRepository;
     @NotNull
@@ -84,12 +85,12 @@ public class ProviderManagerDashboardPresenter extends BasePresenter implements 
     }
 
     @Override
-    public void onSuccess() {
-        providerManagerView.refreshUI();
+    public void onErrorResponse(String errorMessage) {
+        ToastUtil.error(errorMessage);
     }
 
     @Override
-    public void onFailure() {
-
+    public void onResponse() {
+        providerManagerView.refreshUI();
     }
 }

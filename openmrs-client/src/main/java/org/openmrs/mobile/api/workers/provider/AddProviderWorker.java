@@ -22,7 +22,7 @@ import androidx.work.WorkerParameters;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.listeners.retrofitcallbacks.CustomApiCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.CustomResponseCallback;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
@@ -61,16 +61,16 @@ public class AddProviderWorker extends Worker {
         Person person = createPerson(firstName, lastName);
         Provider providerTobeCreated = createNewProvider(person, identifier, getInputData().getLong("id", 0l));
 
-        addProvider(restApi, providerTobeCreated, new CustomApiCallback() {
+        addProvider(restApi, providerTobeCreated, new CustomResponseCallback() {
             @Override
-            public void onSuccess() {
+            public void onResponse() {
                 result[0] = true;
                 ToastUtil.success(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
                 OpenMRS.getInstance().getOpenMRSLogger().e("Adding Provider Successful ");
             }
 
             @Override
-            public void onFailure() {
+            public void onErrorResponse() {
                 result[0] = false;
             }
         });
@@ -109,7 +109,7 @@ public class AddProviderWorker extends Worker {
         return provider;
     }
 
-    private void addProvider(RestApi restApi, Provider provider, CustomApiCallback callback) {
+    private void addProvider(RestApi restApi, Provider provider, CustomResponseCallback callback) {
         if (NetworkUtils.isOnline()) {
             restApi.addProvider(provider).enqueue(new Callback<Provider>() {
                 @Override
@@ -120,13 +120,13 @@ public class AddProviderWorker extends Worker {
                         providerRoomDao.updateProviderByUuid(response.body().getDisplay(), provider.getId(), response.body().getPerson(), response.body().getUuid(),
                             response.body().getIdentifier());
 
-                        callback.onSuccess();
+                        callback.onResponse();
                     }
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<Provider> call, @NotNull Throwable t) {
-                    callback.onFailure();
+                    callback.onErrorResponse();
                 }
             });
         }

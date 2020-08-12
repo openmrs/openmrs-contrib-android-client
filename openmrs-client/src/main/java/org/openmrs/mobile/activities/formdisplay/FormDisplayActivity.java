@@ -191,7 +191,7 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
     }
 
     @Override
-    public void showToast(){
+    public void showToast() {
         ToastUtil.error(getString(R.string.form_data_will_be_synced_later_error_message));
     }
 

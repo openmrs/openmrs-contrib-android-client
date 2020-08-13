@@ -7,32 +7,28 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.tabs.TabLayout;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.providerdashboard.patientrelationship.PatientRelationshipFragment;
 import org.openmrs.mobile.activities.providerdashboard.providerrelationship.ProviderRelationshipFragment;
 import org.openmrs.mobile.activities.providermanagerdashboard.addprovider.AddProviderActivity;
+import org.openmrs.mobile.databinding.ActivityProviderDashboardBinding;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.ThemeUtils;
+
+import java.util.Objects;
 
 import static org.openmrs.mobile.utilities.ApplicationConstants.RequestCodes.EDIT_PROVIDER_REQ_CODE;
 
 public class ProviderDashboardActivity extends ACBaseActivity implements ProviderDashboardContract.View {
     Provider provider;
-    TextView identifierTv;
-    ImageView editProviderIv;
-    CoordinatorLayout rootLayout;
+    private ActivityProviderDashboardBinding binding;
     public ProviderDashboardPresenter mPresenter;
     public boolean isActionFABOpen = false;
     public static FloatingActionButton expandableFAB, updateFAB, deleteFAB;
@@ -42,8 +38,9 @@ public class ProviderDashboardActivity extends ACBaseActivity implements Provide
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_provider_dashboard);
+        binding = ActivityProviderDashboardBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        Objects.requireNonNull(getSupportActionBar()).setElevation(0);
 
         mPresenter = new ProviderDashboardPresenter(this, getApplicationContext());
         provider = mPresenter.getProviderFromIntent(getIntent());
@@ -56,36 +53,32 @@ public class ProviderDashboardActivity extends ACBaseActivity implements Provide
 
     @Override
     public void setupBackdrop(Provider provider) {
-        identifierTv = findViewById(R.id.provider_dashboard_identifier_tv);
         if (provider != null) {
             String display = provider.getPerson().getDisplay();
             if (display == null) {
                 display = provider.getPerson().getName().getNameString();
             }
             setTitle(display);
-            identifierTv.setText(provider.getIdentifier());
         }
     }
 
     @Override
     public void showSnackbarForFailedEditRequest() {
-        rootLayout = findViewById(R.id.provider_dashboard_root_layout);
-        Snackbar.make(rootLayout, getString(R.string.failed_provider_details), Snackbar.LENGTH_INDEFINITE)
-            .setAction(getString(R.string.retry_action), view -> {
-                mPresenter.updateProvider(this.provider);
-            }).show();
+        Snackbar.make(binding.getRoot(), getString(R.string.failed_provider_details), Snackbar.LENGTH_INDEFINITE)
+            .setAction(getString(R.string.retry_action), view -> mPresenter.updateProvider(this.provider)).show();
     }
 
     private void initViewPager() {
-        final ViewPager viewPager = findViewById(R.id.provider_dashboard_pager);
-        TabLayout tabHost = findViewById(R.id.provider_dashboard_tablayout);
-        tabHost.setupWithViewPager(viewPager);
+        if(ThemeUtils.isDarkModeActivated()) {
+            binding.providerDashboardTablayout.setBackgroundColor(getResources().getColor(R.color.black_dark_mode));
+        }
+        binding.providerDashboardTablayout.setupWithViewPager(binding.providerDashboardPager);
 
         ProviderDashboardPagerAdapter adapter = new ProviderDashboardPagerAdapter(getSupportFragmentManager(), this);
         adapter.addFragment(new PatientRelationshipFragment(), getString(R.string.patients_tab_title));
         adapter.addFragment(new ProviderRelationshipFragment(), getString(R.string.provider_tab_title));
 
-        viewPager.setAdapter(adapter);
+        binding.providerDashboardPager.setAdapter(adapter);
     }
 
     @Override

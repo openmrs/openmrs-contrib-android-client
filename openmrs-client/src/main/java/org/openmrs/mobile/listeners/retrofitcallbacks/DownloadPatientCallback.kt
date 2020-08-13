@@ -11,11 +11,12 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package org.openmrs.mobile.listeners.retrofitcallbacks
 
-package org.openmrs.mobile.listeners.retrofitcallbacks;
+import org.openmrs.mobile.models.Patient
 
-public interface VisitsResponseCallback {
-    void onSuccess(String response);
-
-    void onFailure(String errorMessage);
+@JvmSuppressWildcards
+interface DownloadPatientCallback : DefaultResponseCallback {
+    fun onPatientDownloaded(patient: Patient?)
+    fun onPatientPhotoDownloaded(patient: Patient?)
 }

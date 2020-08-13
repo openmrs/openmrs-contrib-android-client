@@ -11,19 +11,9 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package org.openmrs.mobile.listeners.retrofitcallbacks
 
-package org.openmrs.mobile.listeners.retrofitcallbacks;
-
-import org.openmrs.mobile.api.promise.SimpleDeferredObject;
-import org.openmrs.mobile.models.Patient;
-
-public interface PatientDeferredResponseCallback extends DefaultResponseCallback {
-    default void onResponse(SimpleDeferredObject<Patient> response) {
-    }
-
-    default void onErrorResponse(String errorMessage, SimpleDeferredObject<Patient> errorResponse) {
-    }
-
-    default void onNotifyResponse(String notifyMessage) {
-    }
+@JvmSuppressWildcards
+interface StartVisitResponseCallback : DefaultResponseCallback {
+    fun onStartVisitResponse(id: Long)
 }

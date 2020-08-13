@@ -26,12 +26,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
-
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
+import org.openmrs.mobile.databinding.FragmentAddProviderBinding;
 import org.openmrs.mobile.models.Person;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -44,12 +41,10 @@ import java.util.Objects;
 import static android.app.Activity.RESULT_OK;
 
 public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Presenter>
-    implements AddProviderContract.View {
-    private TextInputEditText firstNameEt, lastNameEt, identifierEt;
-    private TextInputLayout firstNameTIL, lastNameTIL, identifierTIL;
+        implements AddProviderContract.View {
     private Provider editProvider = null;
     private ArrayList<Provider> existingProviders;
-    public FloatingActionButton doneFAB;
+    private FragmentAddProviderBinding binding;
 
     public static AddProviderFragment newInstance() {
         return new AddProviderFragment();
@@ -59,26 +54,18 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_add_provider, container, false);
+        binding = FragmentAddProviderBinding.inflate(inflater, container, false);
 
         editProvider = (Provider) (Objects.requireNonNull(getActivity()).getIntent()
-            .getSerializableExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE));
+                .getSerializableExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE));
 
         existingProviders = (ArrayList<Provider>) (Objects.requireNonNull(getActivity()).getIntent()
-            .getSerializableExtra(ApplicationConstants.BundleKeys.EXISTING_PROVIDERS_BUNDLE));
-
-        setupUI(root);
-        return root;
+                .getSerializableExtra(ApplicationConstants.BundleKeys.EXISTING_PROVIDERS_BUNDLE));
+        setupUI();
+        return binding.getRoot();
     }
 
-    void setupUI(View root) {
-        doneFAB = root.findViewById(R.id.add_provider_done_fab);
-        firstNameEt = root.findViewById(R.id.add_provider_firstname_tiet);
-        lastNameEt = root.findViewById(R.id.add_provider_lastname_tiet);
-        identifierEt = root.findViewById(R.id.add_provider_identifier_tiet);
-        firstNameTIL = root.findViewById(R.id.add_provider_firstname_til);
-        lastNameTIL = root.findViewById(R.id.add_provider_lastname_til);
-        identifierTIL = root.findViewById(R.id.add_provider_identifier_til);
+    void setupUI() {
 
         if (editProvider != null) {
             String displayName = editProvider.getPerson().getDisplay();
@@ -93,17 +80,17 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
                 lastName = displayName.substring(displayName.lastIndexOf(' ') + 1);
             }
 
-            firstNameEt.setText(firstName);
-            lastNameEt.setText(lastName);
-            identifierEt.setText(editProvider.getIdentifier());
+            binding.firstNameEditText.setText(firstName);
+            binding.lastNameEditText.setText(lastName);
+            binding.identifierEditText.setText(editProvider.getIdentifier());
             editProvider.getPerson().setDisplay(displayName);
         }
 
-        doneFAB.setOnClickListener(v -> {
+        binding.submitButton.setOnClickListener(v -> {
             if (validateFields()) {
-                String firstName = Objects.requireNonNull(firstNameEt.getText()).toString();
-                String lastName = Objects.requireNonNull(lastNameEt.getText()).toString();
-                String identifier = Objects.requireNonNull(identifierEt.getText()).toString();
+                String firstName = Objects.requireNonNull(binding.firstNameEditText.getText()).toString();
+                String lastName = Objects.requireNonNull(binding.lastNameEditText.getText()).toString();
+                String identifier = Objects.requireNonNull(binding.identifierEditText.getText()).toString();
 
                 Person person = mPresenter.createPerson(firstName, lastName);
                 Provider provider;
@@ -123,6 +110,8 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
                 }
             }
         });
+
+        binding.cancelButton.setOnClickListener(v -> getActivity().finish());
     }
 
     @Override
@@ -135,38 +124,38 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
         String familyNameError = getString(R.string.lname_invalid_error);
 
         // First name validation
-        if (ViewUtils.isEmpty(firstNameEt)) {
-            firstNameTIL.setErrorEnabled(true);
-            firstNameTIL.setError(emptyError);
+        if (ViewUtils.isEmpty(binding.firstNameEditText)) {
+            binding.firstNameTextLayout.setErrorEnabled(true);
+            binding.firstNameTextLayout.setError(emptyError);
             return false;
-        } else if (!ViewUtils.validateText(ViewUtils.getInput(firstNameEt), ViewUtils.ILLEGAL_CHARACTERS)) {
-            firstNameTIL.setErrorEnabled(true);
-            firstNameTIL.setError(givenNameError);
+        } else if (!ViewUtils.validateText(ViewUtils.getInput(binding.firstNameEditText), ViewUtils.ILLEGAL_CHARACTERS)) {
+            binding.firstNameTextLayout.setErrorEnabled(true);
+            binding.firstNameTextLayout.setError(givenNameError);
             return false;
         } else {
-            firstNameTIL.setErrorEnabled(false);
+            binding.firstNameTextLayout.setErrorEnabled(false);
         }
 
         // Family name validation
-        if (ViewUtils.isEmpty(lastNameEt)) {
-            lastNameTIL.setErrorEnabled(true);
-            lastNameTIL.setError(emptyError);
+        if (ViewUtils.isEmpty(binding.lastNameEditText)) {
+            binding.lastNameTextLayout.setErrorEnabled(true);
+            binding.lastNameTextLayout.setError(emptyError);
             return false;
-        } else if (!ViewUtils.validateText(ViewUtils.getInput(lastNameEt), ViewUtils.ILLEGAL_CHARACTERS)) {
-            lastNameTIL.setErrorEnabled(true);
-            lastNameTIL.setError(familyNameError);
+        } else if (!ViewUtils.validateText(ViewUtils.getInput(binding.lastNameEditText), ViewUtils.ILLEGAL_CHARACTERS)) {
+            binding.lastNameTextLayout.setErrorEnabled(true);
+            binding.lastNameTextLayout.setError(familyNameError);
             return false;
         } else {
-            lastNameTIL.setErrorEnabled(false);
+            binding.lastNameTextLayout.setErrorEnabled(false);
         }
 
         // identifier validation
-        if (ViewUtils.isEmpty(identifierEt)) {
-            identifierTIL.setErrorEnabled(true);
-            identifierTIL.setError(emptyError);
+        if (ViewUtils.isEmpty(binding.identifierEditText)) {
+            binding.identifierTextLayout.setErrorEnabled(true);
+            binding.identifierTextLayout.setError(emptyError);
             return false;
         } else {
-            identifierTIL.setErrorEnabled(false);
+            binding.identifierTextLayout.setErrorEnabled(false);
         }
         return true;
     }

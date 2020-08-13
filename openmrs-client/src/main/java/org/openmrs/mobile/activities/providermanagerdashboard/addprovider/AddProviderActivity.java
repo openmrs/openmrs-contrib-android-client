@@ -53,14 +53,4 @@ public class AddProviderActivity extends ACBaseActivity {
 
         AddProviderPresenter mPresenter = new AddProviderPresenter(addProviderFragment);
     }
-
-    @Override
-    public void showNoInternetConnectionSnackbar() {
-        mSnackbar = Snackbar.make(addProviderFragment.doneFAB,
-            getString(R.string.no_internet_connection_message), Snackbar.LENGTH_INDEFINITE);
-        View sbView = mSnackbar.getView();
-        TextView textView = sbView.findViewById(com.google.android.material.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        mSnackbar.show();
-    }
 }

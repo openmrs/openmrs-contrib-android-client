@@ -306,8 +306,8 @@
     <string name="action_find_providers">प्रदाता खोजें</string>
     <string name="delete_provider_success_msg">प्रदाता को सफलतापूर्वक हटा दिया गया!!</string>
     <string name="delete_provider_failure_msg">प्रदाता को हटाने में विफल.</string>
-    <string name="firstname_hint">पहला नाम</string>
-    <string name="lastname_hint">अंतिम नाम</string>
+    <string name="first_name_hint">पहला नाम</string>
+    <string name="last_name_hint">अंतिम नाम</string>
     <string name="identifier_hint">पहचानकर्ता</string>
     <string name="identifier_description">* पहचानकर्ता कुछ भी हो सकता है। उदाहरण के लिए। डॉक्टर, नर्स, क्लर्क, आदि</string>
     <string name="add_provider_success_msg">सफलतापूर्वक जोड़ा गया प्रदाता.</string>

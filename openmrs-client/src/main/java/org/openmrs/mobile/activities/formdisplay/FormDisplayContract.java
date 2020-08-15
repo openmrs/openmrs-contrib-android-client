@@ -54,8 +54,6 @@ public interface FormDisplayContract {
             void setInputFields(List<InputField> inputFields);
 
             void setSelectOneFields(List<SelectOneField> selectOneFields);
-
-
         }
     }
 

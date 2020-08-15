@@ -16,9 +16,8 @@ import androidx.fragment.app.Fragment;
 import org.joda.time.LocalDateTime;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.EncounterService;
-import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.Obscreate;
@@ -39,6 +38,7 @@ public class FormDisplayMainPresenter extends BasePresenter implements FormDispl
     private FormDisplayContract.View.MainView mFormDisplayView;
     private Patient mPatient;
     private FormPageAdapter mPageAdapter;
+    private VisitRepository visitRepository;
 
     public FormDisplayMainPresenter(FormDisplayContract.View.MainView mFormDisplayView, Bundle bundle, FormPageAdapter mPageAdapter) {
         this.mFormDisplayView = mFormDisplayView;
@@ -48,6 +48,7 @@ public class FormDisplayMainPresenter extends BasePresenter implements FormDispl
         this.mFormname = (String) bundle.get(ApplicationConstants.BundleKeys.FORM_NAME);
         this.mPageAdapter = mPageAdapter;
         mFormDisplayView.setPresenter(this);
+        visitRepository = new VisitRepository();
     }
 
     @Override
@@ -110,11 +111,7 @@ public class FormDisplayMainPresenter extends BasePresenter implements FormDispl
             encountercreate.setFormname(mFormname);
             encountercreate.setPatientId(mPatientID);
             encountercreate.setFormUuid(getFormResourceByName(mFormname).getUuid());
-
-            long id = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext())
-                    .encounterCreateRoomDAO()
-                    .addEncounterCreated(encountercreate);
-            encountercreate.setId(id);
+            encountercreate.setId(visitRepository.addEncounterCreated(encountercreate));
 
             if (!mPatient.isSynced()) {
                 mPatient.addEncounters(encountercreate.getId());

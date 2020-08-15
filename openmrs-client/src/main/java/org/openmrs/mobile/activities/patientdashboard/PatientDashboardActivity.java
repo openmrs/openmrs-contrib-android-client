@@ -121,7 +121,7 @@ public class PatientDashboardActivity extends ACBaseActivity {
     private void initViewPager(PatientDashboardPagerAdapter adapter) {
         TabLayout tabHost = findViewById(R.id.tabhost);
         if(ThemeUtils.isDarkModeActivated()) {
-            tabHost.setBackgroundColor(getResources().getColor(R.color.black));
+            tabHost.setBackgroundColor(getResources().getColor(R.color.black_dark_mode));
         }
         viewPager.setOffscreenPageLimit(adapter.getCount() - 1);
         viewPager.setAdapter(adapter);

@@ -11,13 +11,14 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package org.openmrs.mobile.listeners.retrofitcallbacks
 
-package org.openmrs.mobile.listeners.retrofitcallbacks;
+import org.openmrs.mobile.api.promise.SimpleDeferredObject
+import org.openmrs.mobile.models.Patient
 
-import org.openmrs.mobile.models.Patient;
-
-public interface DownloadPatientCallback extends DefaultResponseCallback {
-    void onPatientDownloaded(Patient patient);
-
-    void onPatientPhotoDownloaded(Patient patient);
+@JvmSuppressWildcards
+interface PatientDeferredResponseCallback : DefaultResponseCallback {
+    fun onResponse(response: SimpleDeferredObject<Patient?>?) {}
+    fun onErrorResponse(errorMessage: String?, errorResponse: SimpleDeferredObject<Patient?>?) {}
+    fun onNotifyResponse(notifyMessage: String?) {}
 }

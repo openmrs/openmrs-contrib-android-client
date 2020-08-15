@@ -11,9 +11,10 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package org.openmrs.mobile.listeners.retrofitcallbacks
 
-package org.openmrs.mobile.listeners.retrofitcallbacks;
-
-public interface StartVisitResponseCallback extends DefaultResponseCallback {
-    void onStartVisitResponse(long id);
+@JvmSuppressWildcards
+interface VisitsResponseCallback {
+    fun onSuccess(response: String?)
+    fun onFailure(errorMessage: String?)
 }

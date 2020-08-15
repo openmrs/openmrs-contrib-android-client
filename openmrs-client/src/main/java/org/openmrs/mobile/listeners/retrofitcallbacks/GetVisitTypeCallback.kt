@@ -11,11 +11,11 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package org.openmrs.mobile.listeners.retrofitcallbacks
 
-package org.openmrs.mobile.listeners.retrofitcallbacks;
+import org.openmrs.mobile.models.VisitType
 
-import org.openmrs.mobile.models.VisitType;
-
-public interface GetVisitTypeCallback extends DefaultResponseCallback {
-    void onGetVisitTypeResponse(VisitType visitType);
+@JvmSuppressWildcards
+interface GetVisitTypeCallback : DefaultResponseCallback {
+    fun onGetVisitTypeResponse(visitType: VisitType?)
 }

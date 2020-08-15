@@ -20,10 +20,12 @@ import androidx.annotation.NonNull;
 
 import com.google.android.libraries.places.api.net.PlacesClient;
 
+import org.jetbrains.annotations.Nullable;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
+import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
@@ -218,6 +220,21 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     @Override
     public void registerPatient() {
         patientRepository.registerPatient(mPatient, new PatientDeferredResponseCallback() {
+            @Override
+            public void onNotifyResponse(@Nullable String notifyMessage) {
+
+            }
+
+            @Override
+            public void onErrorResponse(@Nullable String errorMessage, @Nullable SimpleDeferredObject<Patient> errorResponse) {
+
+            }
+
+            @Override
+            public void onResponse(@Nullable SimpleDeferredObject<Patient> response) {
+
+            }
+
             @Override
             public void onResponse() {
                 mPatientInfoView.startPatientDashbordActivity(mPatient);

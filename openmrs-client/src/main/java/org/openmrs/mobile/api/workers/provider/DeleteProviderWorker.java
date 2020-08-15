@@ -22,7 +22,7 @@ import androidx.work.WorkerParameters;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.listeners.retrofitcallbacks.CustomApiCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.CustomResponseCallback;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
@@ -52,14 +52,14 @@ public class DeleteProviderWorker extends Worker {
         final boolean[] result = new boolean[1];
         String providerUuidTobeDeleted = getInputData().getString("uuid");
 
-        deleteProvider(restApi, providerUuidTobeDeleted, new CustomApiCallback() {
+        deleteProvider(restApi, providerUuidTobeDeleted, new CustomResponseCallback() {
             @Override
-            public void onSuccess() {
+            public void onResponse() {
                 result[0] = true;
             }
 
             @Override
-            public void onFailure() {
+            public void onErrorResponse() {
                 result[0] = false;
             }
         });
@@ -71,7 +71,7 @@ public class DeleteProviderWorker extends Worker {
         }
     }
 
-    private void deleteProvider(RestApi restApi, String providerUuid, CustomApiCallback callback) {
+    private void deleteProvider(RestApi restApi, String providerUuid, CustomResponseCallback callback) {
 
         if (NetworkUtils.isOnline()) {
             restApi.deleteProvider(providerUuid).enqueue(new Callback<ResponseBody>() {
@@ -82,13 +82,13 @@ public class DeleteProviderWorker extends Worker {
                         ToastUtil.success(OpenMRS.getInstance().getString(R.string.delete_provider_success_msg));
                         OpenMRS.getInstance().getOpenMRSLogger().e("Deleting Provider Successful " + response.raw());
 
-                        callback.onSuccess();
+                        callback.onResponse();
                     }
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                    callback.onFailure();
+                    callback.onErrorResponse();
                 }
             });
         }

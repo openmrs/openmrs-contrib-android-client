@@ -6,14 +6,15 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 
 import org.openmrs.mobile.activities.BasePresenter;
-import org.openmrs.mobile.listeners.retrofitcallbacks.CustomApiCallback;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.ProviderRepository;
+import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.ApplicationConstants;
+import org.openmrs.mobile.utilities.ToastUtil;
 
-public class ProviderDashboardPresenter extends BasePresenter implements ProviderDashboardContract.Presenter, CustomApiCallback {
+public class ProviderDashboardPresenter extends BasePresenter implements ProviderDashboardContract.Presenter, DefaultResponseCallback {
     private RestApi restApi;
     private ProviderRepository providerRepository;
     private Provider provider;
@@ -41,14 +42,15 @@ public class ProviderDashboardPresenter extends BasePresenter implements Provide
 
     @Override
     public void updateProvider(Provider provider) {
-        providerRepository.updateProvider(provider, new CustomApiCallback() {
+        providerRepository.updateProvider(provider, new DefaultResponseCallback() {
             @Override
-            public void onSuccess() {
+            public void onResponse() {
                 providerDashboardView.setupBackdrop(provider);
             }
 
             @Override
-            public void onFailure() {
+            public void onErrorResponse(String errorMessage) {
+                ToastUtil.error(errorMessage);
                 providerDashboardView.showSnackbarForFailedEditRequest();
             }
         });
@@ -64,19 +66,19 @@ public class ProviderDashboardPresenter extends BasePresenter implements Provide
 
     }
 
-    @Override
-    public void onFailure() {
-
-    }
-
     /**
      * no need of refreshUI in this onSuccess() callback
      * since onUpdate() will rebuild this dashboard again
      * and onDelete this dashboard will be closed as activity finishes
      */
     @Override
-    public void onSuccess() {
+    public void onResponse() {
 
+    }
+
+    @Override
+    public void onErrorResponse(String errorMessage) {
+        ToastUtil.error(errorMessage);
     }
 
     public Provider getProvider() {

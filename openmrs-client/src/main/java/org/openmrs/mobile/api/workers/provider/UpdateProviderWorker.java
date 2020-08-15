@@ -22,7 +22,7 @@ import androidx.work.WorkerParameters;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.listeners.retrofitcallbacks.CustomApiCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.CustomResponseCallback;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
@@ -57,14 +57,14 @@ public class UpdateProviderWorker extends Worker {
         //preprocessing needed just because in some server examples this fields is set to null
         providerTobeUpdated.getPerson().setUuid(null);
 
-        updateProvider(restApi, providerTobeUpdated, new CustomApiCallback() {
+        updateProvider(restApi, providerTobeUpdated, new CustomResponseCallback() {
             @Override
-            public void onSuccess() {
+            public void onResponse() {
                 result[0] = true;
             }
 
             @Override
-            public void onFailure() {
+            public void onErrorResponse() {
                 result[0] = false;
             }
         });
@@ -76,7 +76,7 @@ public class UpdateProviderWorker extends Worker {
         }
     }
 
-    private void updateProvider(RestApi restApi, Provider provider, CustomApiCallback callback) {
+    private void updateProvider(RestApi restApi, Provider provider, CustomResponseCallback callback) {
 
         if (NetworkUtils.isOnline()) {
             restApi.UpdateProvider(provider.getUuid(), provider).enqueue(new Callback<Provider>() {
@@ -87,13 +87,13 @@ public class UpdateProviderWorker extends Worker {
                             response.body().getIdentifier());
                         ToastUtil.success(OpenMRS.getInstance().getString(R.string.edit_provider_success_msg));
                         OpenMRS.getInstance().getOpenMRSLogger().e("Editing Provider Successful ");
-                        callback.onSuccess();
+                        callback.onResponse();
                     }
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<Provider> call, @NotNull Throwable t) {
-                    callback.onFailure();
+                    callback.onErrorResponse();
                 }
             });
         }

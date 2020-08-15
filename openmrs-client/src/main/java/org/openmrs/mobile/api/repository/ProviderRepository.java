@@ -26,7 +26,6 @@ import androidx.work.WorkManager;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.listeners.retrofitcallbacks.CustomApiCallback;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.workers.provider.AddProviderWorker;
@@ -36,6 +35,7 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.ProviderRoomDAO;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.LocationEntity;
+import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.EncounterResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.LocationResponseCallback;
 import org.openmrs.mobile.models.Provider;
@@ -54,8 +54,8 @@ import retrofit2.Response;
 
 public class ProviderRepository {
     ProviderRoomDAO providerRoomDao;
-    WorkManager workManager;
     RestApi restApi;
+    WorkManager workManager;
 
     public ProviderRepository(Context context) {
         AppDatabase db = AppDatabase.getDatabase(context);
@@ -67,7 +67,7 @@ public class ProviderRepository {
     public ProviderRepository(RestApi restApi) {
         this.restApi = restApi;
     }
-    
+
     public void setProviderRoomDao(ProviderRoomDAO providerRoomDao) {
         this.providerRoomDao = providerRoomDao;
     }
@@ -119,7 +119,7 @@ public class ProviderRepository {
         return providerLiveData;
     }
 
-    public void addProvider(Provider provider, CustomApiCallback callback) {
+    public void addProvider(Provider provider, DefaultResponseCallback callback) {
 
         if (NetworkUtils.isOnline()) {
             restApi.addProvider(provider).enqueue(new Callback<Provider>() {
@@ -135,15 +135,14 @@ public class ProviderRepository {
 
                         ToastUtil.success(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
                         OpenMRS.getInstance().getOpenMRSLogger().e("Adding Provider Successful " + response.raw());
-                        callback.onSuccess();
+                        callback.onResponse();
                     }
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<Provider> call, @NotNull Throwable t) {
-                    ToastUtil.error(OpenMRS.getInstance().getString(R.string.add_provider_failure_msg));
                     OpenMRS.getInstance().getOpenMRSLogger().e("Failed to add provider. Error:  " + t.getMessage());
-                    callback.onFailure();
+                    callback.onErrorResponse(OpenMRS.getInstance().getString(R.string.add_provider_failure_msg));
                 }
             });
         } else {
@@ -157,7 +156,7 @@ public class ProviderRepository {
                 .putString("identifier", provider.getIdentifier())
                 .putLong("id", providerId).build();
 
-            callback.onSuccess();
+            callback.onResponse();
 
             Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
             workManager.enqueue(new OneTimeWorkRequest.Builder(AddProviderWorker.class).setConstraints(constraints).setInputData(data).build());
@@ -168,7 +167,7 @@ public class ProviderRepository {
         }
     }
 
-    public void updateProvider(Provider provider, CustomApiCallback callback) {
+    public void updateProvider(Provider provider, DefaultResponseCallback callback) {
 
         if (NetworkUtils.isOnline()) {
             restApi.UpdateProvider(provider.getUuid(), provider).enqueue(new Callback<Provider>() {
@@ -182,22 +181,21 @@ public class ProviderRepository {
 
                         ToastUtil.success(OpenMRS.getInstance().getString(R.string.edit_provider_success_msg));
                         OpenMRS.getInstance().getOpenMRSLogger().e("Editing Provider Successful " + response.raw());
-                        callback.onSuccess();
+                        callback.onResponse();
                     }
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<Provider> call, @NotNull Throwable t) {
-                    ToastUtil.error(OpenMRS.getInstance().getString(R.string.edit_provider_failure_msg));
                     OpenMRS.getInstance().getOpenMRSLogger().e("Failed to edit provider. Error:  " + t.getMessage());
-                    callback.onFailure();
+                    callback.onErrorResponse(OpenMRS.getInstance().getString(R.string.edit_provider_failure_msg));
                 }
             });
         } else {
 
             //offline update operation
             providerRoomDao.updateProviderByUuid(provider.getDisplay(), provider.getId(), provider.getPerson(), provider.getUuid(), provider.getIdentifier());
-            callback.onSuccess();
+            callback.onResponse();
 
             //delegate to the WorkManager for this work
             Data data = new Data.Builder().putString("uuid", provider.getUuid()).build();
@@ -210,7 +208,7 @@ public class ProviderRepository {
         }
     }
 
-    public void deleteProviders(String providerUuid, CustomApiCallback callback) {
+    public void deleteProviders(String providerUuid, DefaultResponseCallback callback) {
 
         //when callback would call onResponse successfull the UI will refresh automatically
         if (NetworkUtils.isOnline()) {
@@ -225,15 +223,14 @@ public class ProviderRepository {
                         ToastUtil.success(OpenMRS.getInstance().getString(R.string.delete_provider_success_msg));
                         OpenMRS.getInstance().getOpenMRSLogger().e("Deleting Provider Successful " + response.raw());
 
-                        callback.onSuccess();
+                        callback.onResponse();
                     }
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                    ToastUtil.error(OpenMRS.getInstance().getString(R.string.delete_provider_failure_msg));
                     OpenMRS.getInstance().getOpenMRSLogger().e("Failed to delete provider. Error:  " + t.getMessage());
-                    callback.onFailure();
+                    callback.onErrorResponse(OpenMRS.getInstance().getString(R.string.delete_provider_failure_msg));
                 }
             });
         } else {
@@ -241,7 +238,7 @@ public class ProviderRepository {
             // offline deletion
             Data data = new Data.Builder().putString("uuid", providerUuid).build();
             providerRoomDao.deleteByUuid(providerUuid);
-            callback.onSuccess();
+            callback.onResponse();
 
             // enqueue the work to workManager
             Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();

@@ -44,9 +44,9 @@ class FormAdmissionFragment : ACBaseFragment<FormAdmissionContract.Presenter>(),
         formAdmissionBinding = FragmentFormAdmissionBinding.inflate(inflater, container, false)
         val root: View = formAdmissionBinding.root
         initFragmentFields()
-        mPresenter?.getEncounterRoles()
+        mPresenter?.getEncounterRoles(this)
         mPresenter?.getProviders(this)
-        mPresenter?.getLocation(OpenMRS.getInstance().serverUrl)
+        mPresenter?.getLocation(OpenMRS.getInstance().serverUrl, this)
         return root
     }
 

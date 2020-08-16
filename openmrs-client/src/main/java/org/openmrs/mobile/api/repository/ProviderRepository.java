@@ -36,8 +36,6 @@ import org.openmrs.mobile.dao.ProviderRoomDAO;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.listeners.retrofitcallbacks.EncounterResponseCallback;
-import org.openmrs.mobile.listeners.retrofitcallbacks.LocationResponseCallback;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.models.Results;
@@ -250,7 +248,8 @@ public class ProviderRepository {
         }
     }
 
-    public void getLocation(String url, LocationResponseCallback callback) {
+    public LiveData<List<LocationEntity>> getLocation(String url) {
+        MutableLiveData<List<LocationEntity>> locations = new MutableLiveData<>();
         if (NetworkUtils.hasNetwork()) {
             String locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "location";
             Call<Results<LocationEntity>> call =
@@ -258,46 +257,41 @@ public class ProviderRepository {
             call.enqueue(new Callback<Results<LocationEntity>>() {
                 @Override
                 public void onResponse(Call<Results<LocationEntity>> call, Response<Results<LocationEntity>> response) {
-                    if (callback != null) {
-                        if (response.isSuccessful()) {
-                            callback.onResponse(response.body().getResults());
-                        } else {
-                            callback.onErrorResponse(OpenMRS.getInstance().getString(R.string.error_occurred));
-                        }
+                    if (response.isSuccessful()) {
+                        locations.setValue(response.body().getResults());
+                    } else {
+                        locations.setValue(null);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Results<LocationEntity>> call, Throwable t) {
-                    callback.onErrorResponse(t.getMessage());
+                    locations.setValue(null);
                 }
             });
         } else {
-            if (callback != null) {
-                callback.onErrorResponse(OpenMRS.getInstance().getString(R.string.error_occurred));
-            }
+            locations.setValue(null);
         }
+        return locations;
     }
 
-    public void getEncounterRoles(EncounterResponseCallback callback) {
+    public LiveData<List<Resource>> getEncounterRoles() {
+        MutableLiveData<List<Resource>> encounterRoles = new MutableLiveData<>();
         restApi.getEncounterRoles().enqueue(new Callback<Results<Resource>>() {
             @Override
             public void onResponse(Call<Results<Resource>> call, Response<Results<Resource>> response) {
-                if (callback != null) {
-                    if (response.isSuccessful()) {
-                        callback.onResponse(response.body().getResults());
-                    } else {
-                        callback.onErrorResponse(OpenMRS.getInstance().getString(R.string.error_occurred));
-                    }
+                if (response.isSuccessful()) {
+                    encounterRoles.setValue(response.body().getResults());
+                } else {
+                    encounterRoles.setValue(null);
                 }
             }
 
             @Override
             public void onFailure(Call<Results<Resource>> call, Throwable t) {
-                if (callback != null) {
-                    callback.onErrorResponse(t.getMessage());
-                }
+                encounterRoles.setValue(null);
             }
         });
+        return encounterRoles;
     }
 }

@@ -45,8 +45,8 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Single;
@@ -66,14 +66,24 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
     public InstantTaskExecutorRule taskExecutorRule = new InstantTaskExecutorRule();
     MutableLiveData<List<Provider>> providerLiveData = Mockito.mock(MutableLiveData.class);
     List<Provider> providerList;
+    List<Resource> resourceList;
+    List<LocationEntity> locationList;
     Provider providerOne = createProvider(1l, "doctor");
     Provider providerTwo = createProvider(2l, "nurse");
+    LocationEntity locationEntityOne = new LocationEntity("entity 1");
+    LocationEntity locationEntityTwo = new LocationEntity("entity 2");
+    Resource resourceOne = new Resource("uuid", "display", new ArrayList<>(), 1L);
+    Resource resourceTwo = new Resource("uuid 2", "display 2", new ArrayList<>(), 2L);
     @Mock
     private RestApi restApi;
     @Mock
     private FormAdmissionContract.View formAdmissionView;
     @Mock
     private Observer<List<Provider>> observer;
+    @Mock
+    private Observer<List<LocationEntity>> locationObserver;
+    @Mock
+    private Observer<List<Resource>> resourceObserver;
     @Mock
     private OpenMRSLogger openMRSLogger;
     @Mock
@@ -90,6 +100,8 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
     public void setUp() {
         mockStaticMethods();
         providerList = Arrays.asList(providerOne, providerTwo);
+        locationList = Arrays.asList(locationEntityOne, locationEntityTwo);
+        resourceList = Arrays.asList(resourceOne, resourceTwo);
         providerLiveData.postValue(providerList);
 
         this.providerRepository = new ProviderRepository(restApi);
@@ -131,22 +143,24 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
     public void shouldGetAdmissionLocation_AllOK() {
         Mockito.lenient().when(NetworkUtils.hasNetwork()).thenReturn(true);
         Mockito.lenient().when(restApi.getLocations(any(), anyString(), anyString()))
-            .thenReturn(mockSuccessCall(Collections.singletonList(new LocationEntity(""))));
-        formAdmissionPresenter.getLocation("someUrl");
-        verify(formAdmissionView).updateLocationAdapter(any());
+                .thenReturn(mockSuccessCall(locationList));
+        formAdmissionPresenter.updateLocationList(locationList);
+        providerRepository.getLocation("some url").observeForever(locationObserver);
+        verify(formAdmissionView).updateLocationAdapter(locationList);
     }
 
     @Test
     public void shouldLoadLocations_errorResponse() {
         Mockito.lenient().when(NetworkUtils.hasNetwork()).thenReturn(true);
         Mockito.lenient().when(restApi.getLocations(any(), anyString(), anyString()))
-            .thenReturn(mockErrorCall(401));
+                .thenReturn(mockErrorCall(401));
 
         Resources res = Mockito.mock(context.getResources().getClass());
         PowerMockito.when(context.getResources()).thenReturn(res);
-        Mockito.when(OpenMRS.getInstance().getString(Mockito.anyInt())).thenReturn("error_message");
+        Mockito.when(res.getString(Mockito.anyInt())).thenReturn("error_message");
 
-        formAdmissionPresenter.getLocation("someUrl");
+        formAdmissionPresenter.updateLocationList(null);
+        providerRepository.getLocation("some url").observeForever(locationObserver);
         verify(formAdmissionView).showToast(anyString());
         verify(formAdmissionView).enableSubmitButton(false);
     }
@@ -155,22 +169,24 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
     public void shouldGetEncounterRoles_AllOK() {
         Mockito.lenient().when(NetworkUtils.hasNetwork()).thenReturn(true);
         Mockito.lenient().when(restApi.getEncounterRoles())
-            .thenReturn(mockSuccessCall(Collections.singletonList(new Resource())));
-        formAdmissionPresenter.getEncounterRoles();
-        verify(formAdmissionView).updateEncounterRoleList(any());
+                .thenReturn(mockSuccessCall(resourceList));
+        formAdmissionPresenter.updateEncounterRoles(resourceList);
+        providerRepository.getEncounterRoles().observeForever(resourceObserver);
+        verify(formAdmissionView).updateEncounterRoleList(resourceList);
     }
 
     @Test
     public void shouldLoadEncounterRoles_errorResponse() {
         Mockito.lenient().when(NetworkUtils.hasNetwork()).thenReturn(true);
         Mockito.lenient().when(restApi.getEncounterRoles())
-            .thenReturn(mockErrorCall(401));
+                .thenReturn(mockErrorCall(401));
 
         Resources res = Mockito.mock(context.getResources().getClass());
         PowerMockito.when(context.getResources()).thenReturn(res);
-        Mockito.when(OpenMRS.getInstance().getString(Mockito.anyInt())).thenReturn("error_message");
+        Mockito.when(res.getString(Mockito.anyInt())).thenReturn("error_message");
 
-        formAdmissionPresenter.getEncounterRoles();
+        formAdmissionPresenter.updateEncounterRoles(null);
+        providerRepository.getEncounterRoles().observeForever(resourceObserver);
         verify(formAdmissionView).showToast(anyString());
         verify(formAdmissionView).enableSubmitButton(false);
     }

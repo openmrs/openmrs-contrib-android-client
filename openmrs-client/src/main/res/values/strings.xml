@@ -308,8 +308,8 @@
     <string name="action_find_providers">Find Providers</string>
     <string name="delete_provider_success_msg">Successfully deleted the provider!</string>
     <string name="delete_provider_failure_msg">Failed to delete provider.</string>
-    <string name="firstname_hint">First Name</string>
-    <string name="lastname_hint">Last Name</string>
+    <string name="first_name_hint">First Name</string>
+    <string name="last_name_hint">Last Name</string>
     <string name="identifier_hint">Identifier</string>
     <string name="identifier_description">* Identifier can be anything. Eg. Doctor, Nurse, Clerk, etc</string>
     <string name="add_provider_success_msg">Successfully added provider.</string>

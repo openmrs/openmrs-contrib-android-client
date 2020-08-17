@@ -32,8 +32,8 @@ interface FormAdmissionContract {
     interface Presenter : BasePresenterContract {
         fun getProviders(formAdmissionFragment: FormAdmissionFragment?)
         fun updateViews(providerList: List<Provider?>?)
-        fun getLocation(url: String?)
-        fun getEncounterRoles()
+        fun getLocation(url: String?, formAdmissionFragment: FormAdmissionFragment?)
+        fun getEncounterRoles(formAdmissionFragment: FormAdmissionFragment?)
         fun createEncounter(providerUUID: String?, locationUUID: String?, encounterRoleUUID: String?)
     }
 }

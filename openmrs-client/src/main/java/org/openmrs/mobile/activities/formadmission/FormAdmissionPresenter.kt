@@ -26,8 +26,6 @@ import org.openmrs.mobile.dao.PatientDAO
 import org.openmrs.mobile.databases.AppDatabase
 import org.openmrs.mobile.databases.entities.LocationEntity
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback
-import org.openmrs.mobile.listeners.retrofitcallbacks.EncounterResponseCallback
-import org.openmrs.mobile.listeners.retrofitcallbacks.LocationResponseCallback
 import org.openmrs.mobile.models.Patient
 import org.openmrs.mobile.models.Provider
 import org.openmrs.mobile.models.Resource
@@ -59,7 +57,7 @@ class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
         restApi = RestServiceBuilder.createService(RestApi::class.java)
         this.view.setPresenter(this)
         mContext = context
-        providerRepository = ProviderRepository(restApi)
+        providerRepository = ProviderRepository(context)
     }
 
     constructor(formAdmissionView: FormAdmissionContract.View, restApi: RestApi, context: Context) {
@@ -87,30 +85,30 @@ class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
         }
     }
 
-    override fun getLocation(url: String?) {
-        providerRepository.getLocation(url, object : LocationResponseCallback {
-            override fun onResponse(locationList: List<LocationEntity?>?) {
-                view.updateLocationAdapter(locationList)
-            }
-
-            override fun onErrorResponse(errorMessage: String) {
-                view.showToast(errorMessage)
-                view.enableSubmitButton(false)
-            }
-        })
+    override fun getLocation(url: String?, formAdmissionFragment: FormAdmissionFragment?) {
+        providerRepository.getLocation(url).observe(formAdmissionFragment!!, Observer { locationList: List<LocationEntity?>? -> updateLocationList(locationList) })
     }
 
-    override fun getEncounterRoles() {
-        providerRepository.getEncounterRoles(object : EncounterResponseCallback {
-            override fun onResponse(encounterRoleList: List<Resource?>?) {
-                view.updateEncounterRoleList(encounterRoleList)
-            }
+    fun updateLocationList(locationList: List<LocationEntity?>?) {
+        if(locationList != null && locationList.isNotEmpty()) {
+            view.updateLocationAdapter(locationList)
+        } else {
+            view.enableSubmitButton(false)
+            view.showToast(mContext.resources.getString(R.string.error_occurred))
+        }
+    }
 
-            override fun onErrorResponse(errorMessage: String) {
-                view.enableSubmitButton(false)
-                view.showToast(errorMessage)
-            }
-        })
+    override fun getEncounterRoles(formAdmissionFragment: FormAdmissionFragment?) {
+        providerRepository.encounterRoles.observe(formAdmissionFragment!!, Observer { encounterRolesList: List<Resource?>? -> updateEncounterRoles(encounterRolesList) })
+    }
+
+    fun updateEncounterRoles(encounterRolesList: List<Resource?>?) {
+        if(encounterRolesList != null && encounterRolesList.isNotEmpty()) {
+            view.updateEncounterRoleList(encounterRolesList)
+        } else {
+            view.enableSubmitButton(false)
+            view.showToast(mContext.resources.getString(R.string.error_occurred))
+        }
     }
 
     override fun createEncounter(providerUUID: String?, locationUUID: String?, encounterRoleUUID: String?) {

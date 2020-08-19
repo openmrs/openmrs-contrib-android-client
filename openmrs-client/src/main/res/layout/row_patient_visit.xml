@@ -12,63 +12,96 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="@dimen/margin_short"
-    android:layout_marginRight="@dimen/margin_short"
     android:layout_marginTop="@dimen/margin_small"
+    android:layout_marginRight="@dimen/margin_short"
     android:layout_marginBottom="@dimen/margin_small"
-    android:foreground="?android:selectableItemBackground"
+    android:clickable="true"
     android:focusable="true"
-    android:clickable="true">
+    android:foreground="?android:selectableItemBackground">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/visitRow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/padding_16">
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/startDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/start"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/patientVisitStartDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/big_heading"
-            android:textStyle="bold" />
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toRightOf="@id/startDate"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/endDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/end"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/startDate" />
 
         <TextView
             android:id="@+id/patientVisitEndDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/patientVisitStartDate"
-            android:textSize="@dimen/small_heading"
-            android:visibility="gone" />
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/roboto_medium"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="@id/patientVisitStartDate"
+            app:layout_constraintTop_toBottomOf="@id/patientVisitStartDate" />
 
         <TextView
             android:id="@+id/patientVisitPlace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/patientVisitEndDate"
-            android:textSize="@dimen/big_heading" />
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/montserrat"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/endDate" />
 
         <LinearLayout
             android:id="@+id/visitStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/patientVisitStartDate"
-            android:layout_alignBottom="@+id/patientVisitPlace"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/visitStatusLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/small_heading"
-                android:textStyle="bold" />
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="16sp" />
         </LinearLayout>
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.cardview.widget.CardView>

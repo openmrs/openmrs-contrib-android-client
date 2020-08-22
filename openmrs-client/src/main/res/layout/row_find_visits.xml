@@ -13,92 +13,77 @@
   -->
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/margin_short"
     android:layout_marginLeft="@dimen/margin_short"
-    android:layout_marginRight="@dimen/margin_short"
     android:layout_marginTop="@dimen/margin_small"
-    android:layout_marginBottom="@dimen/margin_small">
+    android:layout_marginRight="@dimen/margin_short"
+    android:layout_marginBottom="@dimen/margin_small"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/margin_short">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/findVisitContainerLL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginVertical="8dp"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
+        <TextView
+            android:id="@+id/findVisitsIdentifier"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/small_heading"
-            android:layout_marginTop="@dimen/small_heading"
-            android:layout_marginRight="@dimen/small_heading">
+            android:fontFamily="@font/montserrat"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/findVisitsDisplayName"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
-            <TextView
-                android:id="@+id/findVisitsIdentifier"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/findVisitsDisplayName"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:textSize="@dimen/big_heading"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/findVisitsDisplayName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_toEndOf="@+id/findVisitsIdentifier"
-                android:layout_toRightOf="@+id/findVisitsIdentifier"
-                android:gravity="end"
-                android:textSize="@dimen/small_heading" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <TextView
+            android:id="@+id/findVisitsDisplayName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/margin_long"
-            android:layout_marginRight="@dimen/margin_long"
-            android:layout_marginBottom="@dimen/margin_long"
-            android:orientation="horizontal"
-            android:weightSum="10">
+            android:fontFamily="@font/montserrat"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/findVisitsPatientGender"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="@dimen/size_sub_body" />
+        <TextView
+            android:id="@+id/findVisitsPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/findVisitsDisplayName" />
 
-            <TextView
-                android:id="@+id/findVisitsPatientAge"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="@dimen/size_sub_body" />
+        <TextView
+            android:id="@+id/findVisitsPatientBirthDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/size_sub_body"
+            app:layout_constraintBottom_toBottomOf="@id/findVisitsPlace"
+            app:layout_constraintRight_toRightOf="parent" />
 
-            <TextView
-                android:id="@+id/findVisitsPatientBirthDate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:textSize="@dimen/size_sub_body" />
+        <ImageView
+            android:id="@+id/findVisitsPatientGender"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="4dp"
+            android:contentDescription="@string/gender_hint"
+            android:src="@drawable/patient_male"
+            app:layout_constraintBottom_toTopOf="@id/findVisitsPatientBirthDate"
+            app:layout_constraintLeft_toLeftOf="@id/findVisitsPatientBirthDate"
+            app:layout_constraintRight_toRightOf="@id/findVisitsPatientBirthDate" />
 
-            <TextView
-                android:id="@+id/findVisitsPlace"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="5"
-                android:gravity="end" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

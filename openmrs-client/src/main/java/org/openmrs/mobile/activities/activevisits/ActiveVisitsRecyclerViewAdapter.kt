@@ -18,8 +18,9 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity
@@ -48,14 +49,22 @@ class ActiveVisitsRecyclerViewAdapter(private val mContext: Context, private val
             visitViewHolder.mDisplayName.text = patient.name.nameString
         }
         if (null != patient.gender) {
-            visitViewHolder.mGender.text = patient.gender
+            if (patient.photo != null) {
+                visitViewHolder.mGender.setImageBitmap(patient.photo)
+            } else {
+                if (patient.gender == ApplicationConstants.MALE) {
+                    visitViewHolder.mGender.setImageResource(R.drawable.patient_male)
+                } else {
+                    visitViewHolder.mGender.setImageResource(R.drawable.patient_female)
+                }
+            }
         }
         try {
-            visitViewHolder.mBirthDate.text = DateUtils.convertTime(patient.birthdate)?.let { DateUtils.convertTime(it) }
+            visitViewHolder.mBirthDate.text = DateUtils.convertTime(visit?.startDatetime)?.let { DateUtils.convertTime(it) }
         } catch (e: Exception) {
             visitViewHolder.mBirthDate.text = " "
         }
-        visitViewHolder.mLinearLayout.setOnClickListener {
+        visitViewHolder.mConstraintLayout.setOnClickListener {
             val intent = Intent(mContext, VisitDashboardActivity::class.java)
             intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, mVisits?.get(adapterPos)?.id)
             mContext.startActivity(intent)
@@ -73,13 +82,13 @@ class ActiveVisitsRecyclerViewAdapter(private val mContext: Context, private val
     class VisitViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val mIdentifier: TextView = itemView.findViewById(R.id.findVisitsIdentifier)
         val mDisplayName: TextView = itemView.findViewById(R.id.findVisitsDisplayName)
-        val mGender: TextView = itemView.findViewById(R.id.findVisitsPatientGender)
+        val mGender: ImageView = itemView.findViewById(R.id.findVisitsPatientGender)
         val mBirthDate: TextView = itemView.findViewById(R.id.findVisitsPatientBirthDate)
         val mVisitPlace: TextView = itemView.findViewById(R.id.findVisitsPlace)
-        val mLinearLayout: LinearLayout = itemView.findViewById(R.id.findVisitContainerLL)
+        val mConstraintLayout: ConstraintLayout = itemView.findViewById(R.id.findVisitContainerLL)
 
         fun clearAnimation() {
-            mLinearLayout.clearAnimation()
+            mConstraintLayout.clearAnimation()
         }
 
     }

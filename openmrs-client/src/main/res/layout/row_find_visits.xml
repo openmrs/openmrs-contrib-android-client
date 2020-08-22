@@ -66,7 +66,7 @@
             app:layout_constraintTop_toBottomOf="@id/findVisitsDisplayName" />
 
         <TextView
-            android:id="@+id/findVisitsPatientBirthDate"
+            android:id="@+id/findVisitsPatientStartVisitDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_sub_body"
@@ -80,9 +80,9 @@
             android:layout_marginBottom="4dp"
             android:contentDescription="@string/gender_hint"
             android:src="@drawable/patient_male"
-            app:layout_constraintBottom_toTopOf="@id/findVisitsPatientBirthDate"
-            app:layout_constraintLeft_toLeftOf="@id/findVisitsPatientBirthDate"
-            app:layout_constraintRight_toRightOf="@id/findVisitsPatientBirthDate" />
+            app:layout_constraintBottom_toTopOf="@id/findVisitsPatientStartVisitDate"
+            app:layout_constraintLeft_toLeftOf="@id/findVisitsPatientStartVisitDate"
+            app:layout_constraintRight_toRightOf="@id/findVisitsPatientStartVisitDate" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

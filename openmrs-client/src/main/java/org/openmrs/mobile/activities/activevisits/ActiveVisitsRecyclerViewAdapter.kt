@@ -60,9 +60,9 @@ class ActiveVisitsRecyclerViewAdapter(private val mContext: Context, private val
             }
         }
         try {
-            visitViewHolder.mBirthDate.text = DateUtils.convertTime(visit?.startDatetime)?.let { DateUtils.convertTime(it) }
+            visitViewHolder.mStartVisitDate.text = DateUtils.convertTime(visit?.startDatetime)?.let { DateUtils.convertTime(it) }
         } catch (e: Exception) {
-            visitViewHolder.mBirthDate.text = " "
+            visitViewHolder.mStartVisitDate.text = " "
         }
         visitViewHolder.mConstraintLayout.setOnClickListener {
             val intent = Intent(mContext, VisitDashboardActivity::class.java)
@@ -83,7 +83,7 @@ class ActiveVisitsRecyclerViewAdapter(private val mContext: Context, private val
         val mIdentifier: TextView = itemView.findViewById(R.id.findVisitsIdentifier)
         val mDisplayName: TextView = itemView.findViewById(R.id.findVisitsDisplayName)
         val mGender: ImageView = itemView.findViewById(R.id.findVisitsPatientGender)
-        val mBirthDate: TextView = itemView.findViewById(R.id.findVisitsPatientBirthDate)
+        val mStartVisitDate: TextView = itemView.findViewById(R.id.findVisitsPatientStartVisitDate)
         val mVisitPlace: TextView = itemView.findViewById(R.id.findVisitsPlace)
         val mConstraintLayout: ConstraintLayout = itemView.findViewById(R.id.findVisitContainerLL)
 

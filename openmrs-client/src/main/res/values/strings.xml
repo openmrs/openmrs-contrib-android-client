@@ -507,4 +507,6 @@
     <string name="delete_allergy_dialog">Delete Allergy</string>
     <string name="update_allergy_dialog">Update Allergy</string>
     <string name="allergy_already_selected">Allergy already selected !</string>
+    <string name="start">Start:</string>
+    <string name="end">End:</string>
 </resources>

@@ -468,4 +468,6 @@
     <string name="delete_allergy_dialog">एलर्जी को नष्ट करें</string>
     <string name="update_allergy_dialog">एलर्जी का अद्यतन करें</string>
     <string name="allergy_already_selected">पहले से ही चयनित एलर्जी!</string>
+    <string name="start">शुरू:</string>
+    <string name="end">समाप्त:</string>
 </resources>

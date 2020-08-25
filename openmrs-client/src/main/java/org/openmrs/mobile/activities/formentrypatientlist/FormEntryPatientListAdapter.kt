@@ -25,7 +25,6 @@ import org.openmrs.mobile.dao.VisitDAO
 import org.openmrs.mobile.models.Patient
 import org.openmrs.mobile.models.Visit
 import org.openmrs.mobile.utilities.ApplicationConstants
-import org.openmrs.mobile.utilities.DateUtils
 import rx.android.schedulers.AndroidSchedulers
 
 class FormEntryPatientListAdapter(private val mContext: FormEntryPatientListFragment, private val mItems: List<Patient?>?) : RecyclerView.Adapter<FormEntryPatientListAdapter.PatientViewHolder>() {
@@ -70,7 +69,6 @@ class FormEntryPatientListAdapter(private val mContext: FormEntryPatientListFrag
                 }
             }
         }
-        holder.mBirthDate.text = DateUtils.convertTime(patient?.birthdate)?.let { DateUtils.convertTime(it) }
     }
 
     override fun onViewDetachedFromWindow(holder: PatientViewHolder) {
@@ -86,7 +84,6 @@ class FormEntryPatientListAdapter(private val mContext: FormEntryPatientListFrag
         val mIdentifier: TextView = itemView.findViewById(R.id.syncedPatientIdentifier)
         val mDisplayName: TextView = itemView.findViewById(R.id.syncedPatientDisplayName)
         val mGender: ImageView = itemView.findViewById(R.id.syncedPatientGender)
-        val mBirthDate: TextView = itemView.findViewById(R.id.syncedPatientBirthDate)
         val mVisitStatus: TextView = itemView.findViewById(R.id.visitStatusLabel)
 
         fun clearAnimation() {

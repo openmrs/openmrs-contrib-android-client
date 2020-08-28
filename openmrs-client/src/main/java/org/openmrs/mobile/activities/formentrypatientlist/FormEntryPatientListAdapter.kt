@@ -16,6 +16,7 @@ package org.openmrs.mobile.activities.formentrypatientlist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +25,6 @@ import org.openmrs.mobile.dao.VisitDAO
 import org.openmrs.mobile.models.Patient
 import org.openmrs.mobile.models.Visit
 import org.openmrs.mobile.utilities.ApplicationConstants
-import org.openmrs.mobile.utilities.DateUtils
 import rx.android.schedulers.AndroidSchedulers
 
 class FormEntryPatientListAdapter(private val mContext: FormEntryPatientListFragment, private val mItems: List<Patient?>?) : RecyclerView.Adapter<FormEntryPatientListAdapter.PatientViewHolder>() {
@@ -46,6 +46,7 @@ class FormEntryPatientListAdapter(private val mContext: FormEntryPatientListFrag
                         holder.mVisitStatus.text = mContext.getString(R.string.active_visit_label_capture_vitals)
                         holder.mRowLayout.setOnClickListener { mContext.startEncounterForPatient(mItems?.get(adapterPos)?.id) }
                     } else {
+                        holder.mVisitStatus.visibility = View.GONE
                         holder.mVisitStatus.text = ApplicationConstants.EMPTY_STRING
                         holder.mRowLayout.setOnClickListener { v: View? -> mContext.showSnackbarInactivePatients(v) }
                     }
@@ -58,9 +59,16 @@ class FormEntryPatientListAdapter(private val mContext: FormEntryPatientListFrag
             holder.mDisplayName.text = patient.name.nameString
         }
         if (null != patient?.gender) {
-            holder.mGender.text = patient.gender
+            if (patient.photo != null) {
+                holder.mGender.setImageBitmap(patient.photo)
+            } else {
+                if (patient.gender == ApplicationConstants.MALE) {
+                    holder.mGender.setImageResource(R.drawable.patient_male)
+                } else {
+                    holder.mGender.setImageResource(R.drawable.patient_female)
+                }
+            }
         }
-        holder.mBirthDate.text = DateUtils.convertTime(patient?.birthdate)?.let { DateUtils.convertTime(it) }
     }
 
     override fun onViewDetachedFromWindow(holder: PatientViewHolder) {
@@ -75,8 +83,7 @@ class FormEntryPatientListAdapter(private val mContext: FormEntryPatientListFrag
         val mRowLayout: CardView = itemView as CardView
         val mIdentifier: TextView = itemView.findViewById(R.id.syncedPatientIdentifier)
         val mDisplayName: TextView = itemView.findViewById(R.id.syncedPatientDisplayName)
-        val mGender: TextView = itemView.findViewById(R.id.syncedPatientGender)
-        val mBirthDate: TextView = itemView.findViewById(R.id.syncedPatientBirthDate)
+        val mGender: ImageView = itemView.findViewById(R.id.syncedPatientGender)
         val mVisitStatus: TextView = itemView.findViewById(R.id.visitStatusLabel)
 
         fun clearAnimation() {

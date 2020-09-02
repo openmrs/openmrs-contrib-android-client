@@ -31,8 +31,6 @@ class PatientComparator {
 
     private fun comparePatients(existingPatient: Patient, newPatient: Patient): Int {
         var score = 0
-        //        Person newPerson = newPatient.getPerson();
-        //        Person existingPerson = existingPatient.getPerson();
 
         for (field in PATIENT_FIELDS) {
             score += when (field) {
@@ -89,14 +87,16 @@ class PatientComparator {
 
     private fun compareFullPersonName(newPatient: Patient, existingPatient: Patient): Int {
         var score = 0
-        if (Objects.equal(newPatient.name.givenName, existingPatient.name.givenName)) {
-            score += 1
-        }
-        if (Objects.equal(newPatient.name.familyName, existingPatient.name.familyName)) {
-            score += 1
-        }
-        if (Objects.equal(newPatient.name.middleName, existingPatient.name.middleName)) {
-            score += 1
+        if (existingPatient.name != null && newPatient.name != null) {
+            if (Objects.equal(newPatient.name.givenName, existingPatient.name.givenName)) {
+                score += 1
+            }
+            if (Objects.equal(newPatient.name.familyName, existingPatient.name.familyName)) {
+                score += 1
+            }
+            if (Objects.equal(newPatient.name.middleName, existingPatient.name.middleName)) {
+                score += 1
+            }
         }
         //if the whole name is the same we return MIN_SCORE-1 so if any other field will be equal(e.g gender) this patient is marked as similar
         return if (score == 3) MIN_SCORE - 1 else score

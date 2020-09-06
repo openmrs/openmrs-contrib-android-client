@@ -18,25 +18,33 @@ package org.openmrs.mobile.models.typeConverters;
 import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.openmrs.mobile.models.PersonName;
 
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
+import java.util.List;
 
 public class PersonNameConverter {
 
     @TypeConverter
-    public static PersonName fromString(String value) {
-        Type type = new TypeToken<PersonName>() {}.getType();
-        PersonName person = new Gson().fromJson(value,type);
-        return person;
+    public static List<PersonName> fromString(String value) {
+        Type listType = new TypeToken<List<PersonName>>() {}.getType();
+        GsonBuilder builder = new GsonBuilder();
+        builder.excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC);
+        Gson gson = builder.create();
+        List<PersonName> personNames =gson.fromJson(value,listType);
+        return personNames;
+
     }
 
     @TypeConverter
-    public static String listToString(PersonName person) {
-        Gson gson = new Gson();
-        return gson.toJson(person);
+    public static String listToString(List<PersonName> list) {
+        GsonBuilder builder = new GsonBuilder();
+        builder.excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC);
+        Gson gson = builder.create();
+        return gson.toJson(list);
     }
-
 }

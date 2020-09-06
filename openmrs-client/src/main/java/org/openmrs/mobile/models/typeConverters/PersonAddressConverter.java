@@ -17,25 +17,33 @@ package org.openmrs.mobile.models.typeConverters;
 import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.openmrs.mobile.models.PersonAddress;
 
 import java.io.Serializable;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.List;
 
 public class PersonAddressConverter implements Serializable {
     @TypeConverter
     public static List<PersonAddress> fromString(String value) {
-        Type listType = new TypeToken<List<PersonAddress>>() {}.getType();
-        List<PersonAddress> attributes = new Gson().fromJson(value,listType);
-        return attributes;
+        Type listType = new TypeToken<List<PersonAddress>>() {
+        }.getType();
+        GsonBuilder builder = new GsonBuilder();
+        builder.excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC);
+        Gson gson = builder.create();
+        List<PersonAddress> personAddresses = gson.fromJson(value, listType);
+        return personAddresses;
     }
 
     @TypeConverter
     public static String listToString(List<PersonAddress> list) {
-        Gson gson = new Gson();
+        GsonBuilder builder = new GsonBuilder();
+        builder.excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC);
+        Gson gson = builder.create();
         return gson.toJson(list);
     }
 }

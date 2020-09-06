@@ -28,7 +28,6 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class AllergyReactionConverter implements Serializable {
-
     @TypeConverter
     public static List<AllergyReaction> fromString(String value) {
         Type listType = new TypeToken<List<AllergyReaction>>() {

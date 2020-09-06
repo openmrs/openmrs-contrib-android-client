@@ -35,8 +35,8 @@ public class ObservationListConverter implements Serializable {
         GsonBuilder builder = new GsonBuilder();
         builder.excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC);
         Gson gson = builder.create();
-        List<Obscreate> attributes = gson.fromJson(value, listType);
-        return attributes;
+        List<Obscreate> obscreateList = gson.fromJson(value, listType);
+        return obscreateList;
     }
 
     @TypeConverter

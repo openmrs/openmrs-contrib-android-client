@@ -29,14 +29,14 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 public class ProviderAttributeConverter implements Serializable {
-
     @TypeConverter
     public static List<ProviderAttribute> fromString(String value) {
-        Type listType = new TypeToken<List<ProviderAttribute>>() {}.getType();
+        Type listType = new TypeToken<List<ProviderAttribute>>() {
+        }.getType();
         GsonBuilder builder = new GsonBuilder();
         builder.excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC);
         Gson gson = builder.create();
-        List<ProviderAttribute> attributes = gson.fromJson(value,listType);
+        List<ProviderAttribute> attributes = gson.fromJson(value, listType);
         return attributes;
     }
 

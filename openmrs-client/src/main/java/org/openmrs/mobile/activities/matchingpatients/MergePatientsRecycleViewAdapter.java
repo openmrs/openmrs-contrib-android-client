@@ -96,7 +96,7 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
             mCity = itemView.findViewById(R.id.patientCity);
             mCountry = itemView.findViewById(R.id.patientCountry);
             itemView.setOnClickListener(view -> {
-                CardView cardView = view.findViewById(R.id.cardView);
+                CardView cardView = view.findViewById(R.id.patientsCardView);
                 if (selectedPosition == -1) {
                     selectedPosition = getAdapterPosition();
                     mPresenter.setSelectedPatient(patientList.get(selectedPosition));

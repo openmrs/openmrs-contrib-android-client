@@ -19,20 +19,23 @@
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:stretchColumns="1">
+        android:stretchColumns="1"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp">
+
 
         <TableRow>
 
             <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="@dimen/margin_short"
-                android:layout_weight="1">
+                android:layout_marginLeft="4dp">
 
                 <RelativeLayout
                     android:id="@+id/findPatientView"
-                    android:layout_width="match_parent"
+                    android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
@@ -64,16 +67,18 @@
 
 
             <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="@dimen/margin_short"
-                android:layout_weight="1">
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="4dp">
 
                 <RelativeLayout
                     android:id="@+id/activeVisitsView"
-                    android:layout_width="match_parent"
+                    android:layout_width="180dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true">
@@ -106,15 +111,15 @@
         <TableRow>
 
             <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_margin="@dimen/margin_short"
-                android:layout_weight="1">
+                android:layout_marginLeft="4dp"
+                >
 
                 <RelativeLayout
                     android:id="@+id/registryPatientView"
-                    android:layout_width="match_parent"
+                    android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
@@ -145,15 +150,17 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="@dimen/margin_short"
-                android:layout_weight="1">
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="4dp">
 
                 <RelativeLayout
                     android:id="@+id/captureVitalsView"
-                    android:layout_width="match_parent"
+                    android:layout_width="180dp"
+                    android:layout_marginRight="8dp"
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"

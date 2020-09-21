@@ -72,20 +72,20 @@ For more information on the client, visit https://wiki.openmrs.org/display/proje
 
 This project was also selected for Google Summer of Code 2019. More details can be found on the [Project Wiki Page](https://wiki.openmrs.org/pages/viewpage.action?pageId=216367730).
 
-It was been selected as a candidate for Google Summer of Code 2017. Please visit the [Project Wiki Page](https://wiki.openmrs.org/display/projects/OpenMRS+Android+Client+Feature+Parity+and+Improvements+-+GSoC+2017) for more details.
+It was selected as a candidate for Google Summer of Code 2017. Please visit the [Project Wiki Page](https://wiki.openmrs.org/display/projects/OpenMRS+Android+Client+Feature+Parity+and+Improvements+-+GSoC+2017) for more details.
 
 The project was also a part of GSoC 2016, the details of which can be seen in the [GSoC_2016.md](GSoC_2016.md) file.
 
 # Development
 We use JIRA to track issues and monitor project development. Refer to this link to view all issues and project summary: [Android Client JIRA](https://issues.openmrs.org/browse/AC). 
-To get started contributing, try working on [introductory issues](https://issues.openmrs.org/issues/?filter=17165) in JIRA and check out [OpenMRS Pull Request Tips](https://wiki.openmrs.org/display/docs/Pull+Request+Tips).
+To start contributing, try working on [introductory issues](https://issues.openmrs.org/issues/?filter=17165) in JIRA and check out [OpenMRS Pull Request Tips](https://wiki.openmrs.org/display/docs/Pull+Request+Tips).
 Also, before creating a pull request, please run code review tools (Lint) and all tests.
 
 ### Code Style
 The coding conventions used by OpenMRS are outlined [here](https://wiki.openmrs.org/display/docs/Developer+How-To+Setup+And+Use+IntelliJ#DeveloperHow-ToSetupAndUseIntelliJ-SetupCodeStyleAndFormatForOpenMRS). These can be applied to Android Studio by following the steps given below.
 1. Install [Eclipse Code Formatter](https://github.com/krasa/EclipseCodeFormatter) plugin in Android studio
 	I. Go to `Settings` > `Preferences` > `Plugins`
-	II. Select Marketplace and searh for the plugin by name. 
+	II. Select Marketplace and search for the plugin by name. 
 	Then install it
 2. Copy the required [XML](https://github.com/openmrs/openmrs-core/blob/master/tools/src/main/resources/eclipse/OpenMRSFormatter.xml)
 3. Go to `Settings` > `Eclipse Code Formatter` and import the XML created in previous step

@@ -19,25 +19,8 @@ import org.openmrs.mobile.application.OpenMRS
 import org.openmrs.mobile.dao.EncounterDAO
 import org.openmrs.mobile.dao.ObservationDAO
 import org.openmrs.mobile.dao.PatientDAO
-import org.openmrs.mobile.databases.entities.AllergyEntity
-import org.openmrs.mobile.databases.entities.ConceptEntity
-import org.openmrs.mobile.databases.entities.EncounterEntity
-import org.openmrs.mobile.databases.entities.LocationEntity
-import org.openmrs.mobile.databases.entities.ObservationEntity
-import org.openmrs.mobile.databases.entities.PatientEntity
-import org.openmrs.mobile.databases.entities.VisitEntity
-import org.openmrs.mobile.models.Allergen
-import org.openmrs.mobile.models.Allergy
-import org.openmrs.mobile.models.Encounter
-import org.openmrs.mobile.models.EncounterType
-import org.openmrs.mobile.models.Observation
-import org.openmrs.mobile.models.Patient
-import org.openmrs.mobile.models.PatientIdentifier
-import org.openmrs.mobile.models.PersonName
-import org.openmrs.mobile.models.PersonAddress
-import org.openmrs.mobile.models.Resource
-import org.openmrs.mobile.models.Visit
-import org.openmrs.mobile.models.VisitType
+import org.openmrs.mobile.databases.entities.*
+import org.openmrs.mobile.models.*
 import org.openmrs.mobile.utilities.ApplicationConstants
 import org.openmrs.mobile.utilities.DateUtils
 import org.openmrs.mobile.utilities.DateUtils.convertTime
@@ -125,7 +108,7 @@ object AppDatabaseHelper {
         }
         encounter.id = entity.id
         if (null != entity.visitKeyId) {
-            encounter.visitID = entity.visitKeyId!!.toLong()
+            encounter.visitID = entity.visitKeyId?.toLong()
         }
         encounter.uuid = entity.uuid
         encounter.display = entity.display

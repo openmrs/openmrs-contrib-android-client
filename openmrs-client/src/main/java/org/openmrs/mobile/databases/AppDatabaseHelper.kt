@@ -125,7 +125,7 @@ object AppDatabaseHelper {
         }
         encounter.id = entity.id
         if (null != entity.visitKeyId) {
-            encounter.visitID = entity.visitKeyId.toLong()
+            encounter.visitID = entity.visitKeyId!!.toLong()
         }
         encounter.uuid = entity.uuid
         encounter.display = entity.display
@@ -161,7 +161,7 @@ object AppDatabaseHelper {
                     .blockingGet()
             visit.location = locationEntity
         } catch (e: Exception) {
-            visit.location = LocationEntity(visitEntity.visitPlace)
+            visit.location = visitEntity.visitPlace?.let { LocationEntity(it) }!!
         }
         visit.startDatetime = visitEntity.startDate
         visit.stopDatetime = visitEntity.stopDate
@@ -178,7 +178,7 @@ object AppDatabaseHelper {
         visitEntity.patientKeyID = visit.patient.id!!
         visitEntity.visitType = visit.visitType.display
         visitEntity.visitPlace = visit.location.display
-        visitEntity.isStartDate = visit.startDatetime
+        visitEntity.startDate = visit.startDatetime
         visitEntity.stopDate = visit.stopDatetime
         return visitEntity
     }
@@ -214,7 +214,7 @@ object AppDatabaseHelper {
         personAddress.cityVillage = patientEntity.city
         patient.addresses.add(personAddress)
         if (patientEntity.causeOfDeath != null) {
-            patient.causeOfDeath = Resource(ApplicationConstants.EMPTY_STRING, patientEntity.causeOfDeath, ArrayList(), 0)
+            patient.causeOfDeath = Resource(ApplicationConstants.EMPTY_STRING, patientEntity.causeOfDeath!!, ArrayList(), 0)
         }
         patient.isDeceased = patientEntity.deceased == "true"
         return patient

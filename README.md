@@ -152,6 +152,25 @@ To release the application, make sure to do these steps **in order**:
 # Release Notes
 
 
+### Version 2.9.0
+
+1. Updated UI for different activities (#787, #785, #803, #806, #808, #809)
+2. Added repository layer for different activity layer (#784, #791, #797, #799)
+3. Migrated codebase to kotlin (#794, #802, #811, #814)
+4. Removed unused resources (#788, #805)
+5. Created offline support for Allergy module (#786)
+6. Create allergy based on server configuration (#796)
+7. Allergy can be updated as per server settings (#798)
+8. Allergy can be deleted in online/offline mode (#793)
+9. Overloaded methods of AppDataBase Helper class (#789)
+10. Removed Collapsable bar in provider dashboard (#800)
+11. Removed unnecessary restAPI param passing to the repository (#792)
+12. Migrated Chart ListAdapter to RecyclerView (#807)
+13. Fixed app restarts on downloading concepts (#795)
+14. Fixed crash at admission form by using live data (#804)
+15. Fixed Release version blocker (#790)
+16. Added possible NPE checks at PatientComparator (#810)
+
 ### Version 2.8.4
 
 1. Create admission form (#696)

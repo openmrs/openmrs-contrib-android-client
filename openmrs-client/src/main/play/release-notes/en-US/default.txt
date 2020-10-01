@@ -1,10 +1,16 @@
-- Create admission form
-- Fix Floating Action Button bugs
-- Add crop image feature in patient registration
-- Update UI to follow material design
-- Add expandable FAB for provider dashboard
-- Add empty active visits view
-- Mark patient deceased using coded response
-- Removed swipe actions in provider dashboard
-- Fix the reverse flipping bug in patient dashboard
-- Add allergy tab to fetch allergies from server
+- Updated UI for different activities (#787, #785, #803, #806, #808, #809)
+- Added repository layer for different activity layer (#784, #791, #797, #799)
+- Migrated codebase to kotlin (#794, #802, #811, #814)
+- Removed unused resources (#788, #805)
+- Created offline support for Allergy module (#786)
+- Create allergy based on server configuration (#796)
+- Allergy can be updated as per server settings (#798)
+- Allergy can be deleted in online/offline mode (#793)
+- Overloaded methods of AppDataBase Helper class (#789)
+- Removed collapsing bar in provider dashboard (#800)
+- Removed unnecessary restAPI param passing to the repository (#792)
+- Migrated Chart ListAdapter to RecyclerView (#807)
+- Fixed app restarts on downloading concepts (#795)
+- Fixed crash at admission form by using live data (#804)
+- Fixed Release version blocker (#790)
+- Added possible NPE checks at PatientComparator (#810)

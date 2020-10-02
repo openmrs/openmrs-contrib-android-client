@@ -21,6 +21,7 @@ import android.view.Menu
 import android.view.MenuItem
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
+import org.openmrs.mobile.activities.login.LoginActivity
 import org.openmrs.mobile.databinding.ActvityContactUsBinding
 import org.openmrs.mobile.utilities.ToastUtil
 
@@ -79,6 +80,8 @@ class ContactUsActivity : ACBaseActivity(), ContactUsContract.View {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
+            val backButtonIntent = Intent(this, LoginActivity::class.java)
+            startActivity(backButtonIntent)
             finish()
             return true
         }

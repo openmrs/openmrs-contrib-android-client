@@ -320,7 +320,8 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
 
     private List<String> getLocationStringList(List<LocationEntity> locationList) {
         List<String> list = new ArrayList<>();
-        list.add(getString(R.string.login_location_select));
+        //If spinner is at start option, append a red * to signify requirement
+		list.add(Html.fromHtml(getString(R.string.login_location_select) + getString(R.string.req_star)).toString());
         for (int i = 0; i < locationList.size(); i++) {
             list.add(locationList.get(i).getDisplay());
         }

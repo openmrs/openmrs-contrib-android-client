@@ -15,7 +15,6 @@ package org.openmrs.mobile.listeners.watcher
 
 import android.graphics.Color
 import android.text.Editable
-import android.text.Html
 import android.text.TextWatcher
 import android.view.View
 import android.widget.AdapterView
@@ -24,7 +23,6 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.AdapterView.OnItemSelectedListener
-import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.login.LocationArrayAdapter
 import org.openmrs.mobile.application.OpenMRS
 import org.openmrs.mobile.utilities.StringUtils.notEmpty
@@ -62,19 +60,14 @@ class LoginValidatorWatcher(private val mUrl: EditText,
         }
     }
 
-    override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+    override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
         if (position >= 0 && id >= 1) {
             (parent.adapter as LocationArrayAdapter).notifyDataSetChanged()
             //Set Text Color to black once option selected
             val currentText = parent.getChildAt(0) as TextView
             currentText.setTextColor(Color.BLACK)
-        } else if (position >= 0 && id == 0L) {
-            //If spinner is at start option, append a red * to signify requirement
-            val currentText = parent.getChildAt(0) as TextView
-            currentText.text = Html.fromHtml(view.context.getString(R.string.login_location_select)
-                    + view.context.getString(R.string.req_star))
+            mLoginButton.isEnabled = isAllDataValid
         }
-        mLoginButton.isEnabled = isAllDataValid
     }
 
     override fun onNothingSelected(adapterView: AdapterView<*>?) {
@@ -120,6 +113,10 @@ class LoginValidatorWatcher(private val mUrl: EditText,
         mUrl.addTextChangedListener(this)
         mUsername.addTextChangedListener(this)
         mPassword.addTextChangedListener(this)
+
+        //setting the default selection manually so spinner won't call onItemSelected listener as selection is already chosen
+        mLocation.setSelection(0, false)
+
         mLocation.onItemSelectedListener = this
     }
 }

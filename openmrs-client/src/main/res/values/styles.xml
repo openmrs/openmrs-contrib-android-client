@@ -21,6 +21,7 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
         <item name="actionModeStyle">@style/LongPress</item>
+        <item name="textColorPrimary">?android:attr/textColorPrimary</item>
     </style>
 
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">

@@ -16,7 +16,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="dashboard_icon_height_width">80dp</dimen>
+    <dimen name="dashboard_icon_height_width">50dp</dimen>
     <dimen name="dashboard_icon_margin">20dp</dimen>
     <dimen name="dashboard_text_size">18sp</dimen>
     <dimen name="dashboard_text_top_margin">10dp</dimen>
@@ -37,5 +37,7 @@
     <dimen name="custom_fab_bottom_margin_105">105dp</dimen>
     <dimen name="custom_fab_standard_21">21dp</dimen>
     <dimen name="padding_16">16dp</dimen>
+    <dimen name="margin_10dp">10dp</dimen>
+    <dimen name="card_corner_radius_8dp">8dp</dimen>
 
 </resources>

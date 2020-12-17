@@ -93,7 +93,6 @@
             android:name=".activities.login.LoginActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:noHistory="true"
             android:theme="@style/NoActionBarTheme"
             android:windowSoftInputMode="adjustResize"/>
         <activity

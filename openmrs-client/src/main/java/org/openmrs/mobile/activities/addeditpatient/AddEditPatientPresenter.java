@@ -277,7 +277,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         patientRepository.getCauseOfDeathGlobalID(new VisitsResponseCallback() {
             @Override
             public void onSuccess(@Nullable String response) {
-                if (response.length() == 36) {
+                if (response.length() == ApplicationConstants.UUID_LENGTH) {
                     getConceptCauseOfDeath(response);
                 } else {
                     mPatientInfoView.cannotMarkDeceased(R.string.mark_patient_deceased_invalid_uuid);

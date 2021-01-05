@@ -134,6 +134,8 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         binding.forgotPass.setOnClickListener(view -> startActivity(new Intent(getContext(), ContactUsActivity.class)));
 
         binding.aboutUsTextView.setOnClickListener(view -> openAboutPage());
+
+        binding.forgotPassword.setOnClickListener(view -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://id.openmrs.org/reset"))));
     }
 
     private void initViewFields() {

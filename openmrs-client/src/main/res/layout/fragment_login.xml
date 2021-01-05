@@ -193,6 +193,16 @@
                 android:text="@string/login_button"
                 android:textSize="20sp" />
 
+            <TextView
+                android:id="@+id/forgotPassword"
+                android:layout_width="388dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:paddingLeft="230dp"
+                android:text="Forgot Password?"
+                android:textColor="@color/color_accent"
+                android:textSize="14sp" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

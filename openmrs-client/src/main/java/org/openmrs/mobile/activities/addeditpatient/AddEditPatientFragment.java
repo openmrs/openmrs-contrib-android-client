@@ -655,10 +655,11 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                     String[] address = new String[cityList.size()];
                     for (int in = 0; in < cityList.size(); in++)
                         address[in] = cityList.get(in);
-                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.select_dialog_item, address);
+                    if(getActivity()!=null) {
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_item, address);
 
-                    binding.cityAutoComplete.setAdapter(adapter);
-
+                        binding.cityAutoComplete.setAdapter(adapter);
+                    }
                     binding.cityAutoComplete.setOnItemClickListener((parent, view, position, id) -> {
                         String primary_text = response.getAutocompletePredictions().get(position).getPrimaryText(null).toString();
                         String secondary_text = response.getAutocompletePredictions().get(position).getSecondaryText(null).toString();

@@ -69,6 +69,11 @@
             android:label="Introduction"
             android:theme="@style/AppTheme">
         </activity>
+        <activity
+            android:name=".activities.AboutActivity"
+            android:label="about"
+            android:theme="@style/AppTheme">
+        </activity>
 
         <activity
             android:name=".activities.syncedpatients.SyncedPatientsActivity"

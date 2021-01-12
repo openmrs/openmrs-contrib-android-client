@@ -43,4 +43,9 @@
         android:orderInCategory="100"
         android:title="@string/action_logout"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/actionAbout"
+        android:orderInCategory="100"
+        android:title="About"
+        app:showAsAction="never" />
 </menu>

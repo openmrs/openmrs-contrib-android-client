@@ -219,6 +219,10 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 Observable<List<LocationEntity>> observableList = new LocationDAO().getLocations();
                 observableList.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(getLocationList());
                 return true;
+            case R.id.actionAbout:
+                Intent intent =new Intent(getApplicationContext(),AboutActivity.class);
+                startActivity(intent);
+
             default:
                 return super.onOptionsItemSelected(item);
         }

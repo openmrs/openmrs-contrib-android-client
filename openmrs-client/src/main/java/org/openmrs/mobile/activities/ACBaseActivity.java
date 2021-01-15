@@ -211,7 +211,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     showNoInternetConnectionSnackbar();
                 }
                 return true;
-
             case R.id.actionLocation:
                 if (!locationList.isEmpty()) {
                     locationList.clear();
@@ -220,9 +219,8 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 observableList.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(getLocationList());
                 return true;
             case R.id.actionAbout:
-                Intent intent =new Intent(getApplicationContext(),AboutActivity.class);
-                startActivity(intent);
-
+                startActivity(new Intent(this, AboutActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

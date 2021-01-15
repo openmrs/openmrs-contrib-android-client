@@ -57,6 +57,7 @@ object ApplicationConstants {
     const val COMMA_WITH_SPACE = ", "
     const val PRIMARY_KEY_ID = "_id"
     const val MIN_NUMBER_OF_PATIENTS_TO_SHOW = 7;
+    const val ABOUT_OPENMRS_URL = "https://openmrs.org/about/"
 
     object OpenMRSSharedPreferenceNames {
         const val SHARED_PREFERENCES_NAME = "shared_preferences"

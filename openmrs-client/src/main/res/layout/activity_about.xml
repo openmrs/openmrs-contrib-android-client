@@ -1,4 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,7 +24,6 @@
         android:id="@+id/openmrsLogoAbout"
         android:layout_width="110dp"
         android:layout_height="100dp"
-
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="70dp"
         android:layout_marginTop="60dp"
@@ -18,7 +31,8 @@
         android:contentDescription="@string/openmrs_logo"
         android:visibility="visible"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="70dp" />
 
     <TextView
         android:id="@+id/organization_name"
@@ -33,7 +47,7 @@
         app:layout_constraintTop_toTopOf="@+id/openmrsLogoAbout" />
 
     <TextView
-        android:id="@+id/paragraph1"
+        android:id="@+id/aboutOpenMRSTextView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/openmrsLogoAbout"
@@ -41,37 +55,33 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:textSize="22sp"
-        android:text="OpenMRS is a global community of truly dedicated, talented, and generous contributors who build and maintain the OpenMRS platform and other, foundational OpenMRS technical products. "
+        android:text="@string/about_openmrs_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/aboutOpenMRSTextView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="30dp"
-        android:text="OpenMRS is a platform that countries and implementers use to create a customized EMR system in response to actual needs on the ground. "
+        android:text="@string/about_openmrs_2"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/paragraph1" />
+        app:layout_constraintTop_toBottomOf="@id/aboutOpenMRSTextView1" />
 
     <TextView
-        android:id="@+id/moreAbout"
+        android:id="@+id/OpenMRSWebsiteTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
-        android:shadowColor="@color/neutral_green"
-        android:text="more >>"
-        android:textColor="@color/neutral_green"
+        android:textColor="@color/black"
+        android:text="@string/more_about_openmrs"
         android:textSize="23sp"
-        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/aboutOpenMRSTextView2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

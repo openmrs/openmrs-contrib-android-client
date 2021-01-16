@@ -14,7 +14,8 @@
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/providerManagementFragAddFAB"
@@ -22,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="@dimen/margin_long"
-        android:src="@drawable/ic_add" />
+        app:srcCompat="@drawable/ic_add" />
 
     <ProgressBar
         android:id="@+id/providerManagementInitialProgressBar"

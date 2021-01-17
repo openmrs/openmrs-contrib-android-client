@@ -188,6 +188,12 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         } else {
             this.binding.gendererror.setVisibility(View.GONE);
         }
+
+        if(addressError) {
+            this.binding.addressError.setVisibility(View.VISIBLE);
+        } else {
+            this.binding.addressError.setVisibility(View.GONE);
+        }
     }
 
     @Override

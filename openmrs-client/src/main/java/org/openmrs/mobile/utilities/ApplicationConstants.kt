@@ -16,6 +16,7 @@ package org.openmrs.mobile.utilities
 import org.openmrs.mobile.models.EncounterType
 
 object ApplicationConstants {
+    const val UUID_LENGTH = 36
     const val EMPTY_STRING = ""
     const val SERVER_URL = "server_url"
     const val SESSION_TOKEN = "session_id"

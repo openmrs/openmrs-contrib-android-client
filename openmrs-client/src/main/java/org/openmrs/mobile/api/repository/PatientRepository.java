@@ -44,6 +44,7 @@ import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DownloadPatientCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.PatientResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.VisitsResponseCallback;
 import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.models.IdGenPatientIdentifiers;
 import org.openmrs.mobile.models.IdentifierType;
@@ -53,6 +54,7 @@ import org.openmrs.mobile.models.PatientDtoUpdate;
 import org.openmrs.mobile.models.PatientIdentifier;
 import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.models.Results;
+import org.openmrs.mobile.models.SystemProperty;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -481,4 +483,62 @@ public class PatientRepository extends RetrofitRepository {
             }
         });
     }
+
+    public void getCauseOfDeathGlobalID(VisitsResponseCallback callback) {
+        restApi.getSystemProperty(ApplicationConstants.CAUSE_OF_DEATH, ApplicationConstants.API.FULL).enqueue(new Callback<Results<SystemProperty>>() {
+            @Override
+            public void onResponse(Call<Results<SystemProperty>> call, Response<Results<SystemProperty>> response) {
+                if (response.isSuccessful()) {
+                    String uuid = response.body().getResults().get(0).getConceptUUID();
+                    callback.onSuccess(uuid);
+                } else {
+                    callback.onFailure(ApplicationConstants.EMPTY_STRING);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Results<SystemProperty>> call, Throwable t) {
+                callback.onFailure(t.getMessage());
+            }
+        });
+    }
+
+    public void fetchSimilarPatientAndCalculateLocally(final Patient patient,PatientResponseCallback callback) {
+        Call<Results<Patient>> call = restApi.getPatients(patient.getName().getGivenName(), ApplicationConstants.API.FULL);
+        call.enqueue(new Callback<Results<Patient>>() {
+            @Override
+            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
+                if (response.isSuccessful()) {
+                    callback.onResponse(response.body());
+                } else {
+                    callback.onErrorResponse(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
+                callback.onErrorResponse(t.getMessage());
+            }
+        });
+    }
+
+    public void fetchSimilarPatientsFromServer(final Patient patient, PatientResponseCallback callback) {
+        Call<Results<Patient>> call = restApi.getSimilarPatients(patient.toMap());
+        call.enqueue(new Callback<Results<Patient>>() {
+            @Override
+            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
+                if (response.isSuccessful()) {
+                    callback.onResponse(response.body());
+                } else {
+                    callback.onErrorResponse(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
+                callback.onErrorResponse(t.getMessage());
+            }
+        });
+    }
+
 }

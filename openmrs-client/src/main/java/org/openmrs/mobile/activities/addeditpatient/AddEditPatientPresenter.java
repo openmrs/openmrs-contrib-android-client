@@ -30,12 +30,13 @@ import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.PatientResponseCallback;
+import org.openmrs.mobile.listeners.retrofitcallbacks.VisitsResponseCallback;
 import org.openmrs.mobile.models.ConceptAnswers;
 import org.openmrs.mobile.models.Module;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.PersonName;
 import org.openmrs.mobile.models.Results;
-import org.openmrs.mobile.models.SystemProperty;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ModuleUtils;
 import org.openmrs.mobile.utilities.NetworkUtils;
@@ -89,6 +90,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     @Override
     public void subscribe() {
+        
         // This method is intentionally empty
     }
 
@@ -272,27 +274,24 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     @Override
     public void getCauseOfDeathGlobalID() {
-        restApi.getSystemProperty(ApplicationConstants.CAUSE_OF_DEATH, ApplicationConstants.API.FULL).enqueue(new Callback<Results<SystemProperty>>() {
+        patientRepository.getCauseOfDeathGlobalID(new VisitsResponseCallback() {
             @Override
-            public void onResponse(Call<Results<SystemProperty>> call, Response<Results<SystemProperty>> response) {
-                if (response.isSuccessful()) {
-                    String uuid = response.body().getResults().get(0).getConceptUUID();
-                    if (uuid.length() == 36) {
-                        getConceptCauseOfDeath(uuid);
-                    } else {
-                        mPatientInfoView.cannotMarkDeceased(R.string.mark_patient_deceased_invalid_uuid);
-                    }
+            public void onSuccess(@Nullable String response) {
+                if (response.length() == ApplicationConstants.UUID_LENGTH) {
+                    getConceptCauseOfDeath(response);
                 } else {
-                    mPatientInfoView.cannotMarkDeceased(ApplicationConstants.EMPTY_STRING);
+                    mPatientInfoView.cannotMarkDeceased(R.string.mark_patient_deceased_invalid_uuid);
                 }
             }
 
             @Override
-            public void onFailure(Call<Results<SystemProperty>> call, Throwable t) {
-                mPatientInfoView.cannotMarkDeceased(t.getMessage());
+            public void onFailure(@Nullable String errorMessage) {
+                mPatientInfoView.cannotMarkDeceased(errorMessage);
             }
         });
     }
+
+    // left as it is due to private nature of the method just is being used from here only
 
     private void getConceptCauseOfDeath(String uuid) {
         restApi.getConceptFromUUID(uuid).enqueue(new Callback<ConceptAnswers>() {
@@ -351,63 +350,51 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
     }
 
     private void fetchSimilarPatientAndCalculateLocally(final Patient patient) {
-        Call<Results<Patient>> call = restApi.getPatients(patient.getName().getGivenName(), ApplicationConstants.API.FULL);
-        call.enqueue(new Callback<Results<Patient>>() {
+        patientRepository.fetchSimilarPatientAndCalculateLocally(patient, new PatientResponseCallback() {
             @Override
-            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
+            public void onResponse(@Nullable Results<Patient> patientResults) {
                 registeringPatient = false;
-                if (response.isSuccessful()) {
-                    List<Patient> patientList = response.body().getResults();
-                    if (!patientList.isEmpty()) {
-                        List<Patient> similarPatient = new PatientComparator().findSimilarPatient(patientList, patient);
-                        if (!similarPatient.isEmpty()) {
-                            mPatientInfoView.showSimilarPatientDialog(similarPatient, patient);
-                            mPatientInfoView.showUpgradeRegistrationModuleInfo();
-                        } else {
-                            registerPatient();
-                        }
+                List<Patient> patientList = patientResults.getResults();
+                if (!patientList.isEmpty()) {
+                    List<Patient> similarPatient = new PatientComparator().findSimilarPatient(patientList, patient);
+                    if (!similarPatient.isEmpty()) {
+                        mPatientInfoView.showSimilarPatientDialog(similarPatient, patient);
+                        mPatientInfoView.showUpgradeRegistrationModuleInfo();
                     } else {
                         registerPatient();
                     }
                 } else {
-                    mPatientInfoView.setProgressBarVisibility(false);
-                    ToastUtil.error(response.message());
+                    registerPatient();
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
+            public void onErrorResponse(String errorMessage) {
                 registeringPatient = false;
                 mPatientInfoView.setProgressBarVisibility(false);
-                ToastUtil.error(t.getMessage());
+                ToastUtil.error(errorMessage);
             }
         });
     }
 
     private void fetchSimilarPatientsFromServer(final Patient patient) {
-        Call<Results<Patient>> call = restApi.getSimilarPatients(patient.toMap());
-        call.enqueue(new Callback<Results<Patient>>() {
+        patientRepository.fetchSimilarPatientsFromServer(patient, new PatientResponseCallback() {
             @Override
-            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
+            public void onResponse(@Nullable Results<Patient> patientResults) {
                 registeringPatient = false;
-                if (response.isSuccessful()) {
-                    List<Patient> similarPatients = response.body().getResults();
-                    if (!similarPatients.isEmpty()) {
-                        mPatientInfoView.showSimilarPatientDialog(similarPatients, patient);
-                    } else {
-                        registerPatient();
-                    }
+                List<Patient> similarPatients = patientResults.getResults();
+                if (!similarPatients.isEmpty()) {
+                    mPatientInfoView.showSimilarPatientDialog(similarPatients, patient);
                 } else {
-                    mPatientInfoView.setProgressBarVisibility(false);
-                    ToastUtil.error(response.message());
+                    registerPatient();
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
+            public void onErrorResponse(String errorMessage) {
                 registeringPatient = false;
                 mPatientInfoView.setProgressBarVisibility(false);
-                ToastUtil.error(t.getMessage());
+                ToastUtil.error(errorMessage);
             }
         });
     }

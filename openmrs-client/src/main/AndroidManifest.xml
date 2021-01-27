@@ -36,9 +36,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Openmrs">
         <activity
-            android:name=".activities.AboutActivity"
+            android:name=".activities.community.contact.AboutActivity"
             android:label="@string/action_about_activity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppThemeOrig" />
         <activity
             android:name=".activities.introduction.SplashActivity"
             android:noHistory="true"

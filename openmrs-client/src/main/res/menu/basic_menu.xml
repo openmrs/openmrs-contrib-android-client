@@ -39,13 +39,13 @@
         android:title="@string/contact_us"
         app:showAsAction="never" />
     <item
-        android:id="@+id/actionLogout"
-        android:orderInCategory="100"
-        android:title="@string/action_logout"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/actionAbout"
         android:orderInCategory="100"
         android:title="@string/action_about"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/actionLogout"
+        android:orderInCategory="100"
+        android:title="@string/action_logout"
         app:showAsAction="never" />
 </menu>

@@ -41,6 +41,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.community.contact.AboutActivity;
 import org.openmrs.mobile.activities.community.contact.ContactUsActivity;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.introduction.SplashActivity;

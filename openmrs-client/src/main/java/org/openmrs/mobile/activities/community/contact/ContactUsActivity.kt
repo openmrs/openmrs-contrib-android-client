@@ -43,7 +43,7 @@ class ContactUsActivity : ACBaseActivity(), ContactUsContract.View {
 
         binding.emailLayout.setOnClickListener {
             val sendMailIntent = Intent(Intent.ACTION_SENDTO)
-            val mailTo = "mailto:" + binding.contactEmailText.text.toString()
+            val mailTo = "mailto:" + binding.contactEmailLink.text.toString()
             sendMailIntent.data = Uri.parse(mailTo)
             try {
                 startActivity(sendMailIntent)

@@ -26,6 +26,12 @@ class FormEntryPatientListActivity : ACBaseActivity() {
         super.onCreate(savedInstanceState)
         this.setContentView(R.layout.activity_form_entry_patient_list)
 
+        val actionBar = supportActionBar
+        if (actionBar != null) {
+            actionBar.elevation = 0f
+            actionBar.setTitle(R.string.action_form_entry)
+        }
+
         // Create fragment
         var formEntryPatientListFragment = supportFragmentManager.findFragmentById(R.id.formEntryPatientListContentFrame) as FormEntryPatientListFragment?
         if (formEntryPatientListFragment == null) {

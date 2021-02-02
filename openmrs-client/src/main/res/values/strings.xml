@@ -47,8 +47,8 @@
     <string name="reg_ques_dob">Patient\'s birth date*</string>
     <string name="label_or">OR</string>
     <string name="reg_ques_address">Address</string>
-    <string name="addr1_hint">Address Line 1*</string>
-    <string name="addr2_hint">Address Line 2</string>
+    <string name="addr1_hint">Address 1*</string>
+    <string name="addr2_hint">Address 2</string>
     <string name="addr_invalid_error">Address cannot contain invalid characters</string>
     <string name="atleastone">Fill at least one address field</string>
 

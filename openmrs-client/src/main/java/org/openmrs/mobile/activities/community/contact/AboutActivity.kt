@@ -37,7 +37,7 @@ class AboutActivity : ACBaseActivity() {
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
 
-        binding.mOREaBOUToPENMRSbUTTON.setOnClickListener {
+        binding.moreAboutOpenmrsButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ApplicationConstants.ABOUT_OPENMRS_URL))
             startActivity(intent)
         }
@@ -45,13 +45,20 @@ class AboutActivity : ACBaseActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
-        //Disable About Option and location Option in Menu
-        val locationItem = menu.findItem(R.id.actionLocation)
-        locationItem.isVisible = false
+        //Disable About Option in Menu
         val aboutItem = menu.findItem(R.id.actionAbout)
         aboutItem.isVisible = false
+        val contactItem = menu.findItem(R.id.actionContact)
+        contactItem.isVisible = false
+        val logOutItem = menu.findItem(R.id.actionLogout)
+        logOutItem.isVisible = false
+        val locationItem = menu.findItem(R.id.actionLocation)
+        locationItem.isVisible = false
+        val settingItem = menu.findItem(R.id.actionSettings)
+        settingItem.isVisible = false
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             finish()

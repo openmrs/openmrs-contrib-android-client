@@ -46,35 +46,35 @@
         app:layout_constraintTop_toBottomOf="@id/openmrsLogo" />
 
     <TextView
-        android:id="@+id/aBOUToPENMRStEXTvIEW1"
+        android:id="@+id/aboutOpenmrsTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/organization_name"
         android:layout_marginTop="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:textSize="22sp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
+        android:textSize="20sp"
         android:textColor="?android:attr/textColorPrimary"
         android:text="@string/about_openmrs_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/aBOUToPENMRStEXTvIEW2"
+        android:id="@+id/aboutOpenmrsTextView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="35dp"
         android:layout_marginTop="15dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginRight="35dp"
         android:text="@string/about_openmrs_2"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/aBOUToPENMRStEXTvIEW1" />
+        app:layout_constraintTop_toBottomOf="@id/aboutOpenmrsTextView" />
 
     <TextView
-        android:id="@+id/mOREaBOUToPENMRSbUTTON"
+        android:id="@+id/moreAboutOpenmrsButton"
         android:layout_width="wrap_content"
         android:layout_height="42dp"
         android:layout_alignParentEnd="true"
@@ -87,7 +87,7 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:layout_marginTop="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginRight="35dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/aBOUToPENMRStEXTvIEW2" />
+        app:layout_constraintTop_toBottomOf="@+id/aboutOpenmrsTextView2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

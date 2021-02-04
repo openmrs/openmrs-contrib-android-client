@@ -39,6 +39,7 @@ class ContactUsActivity : ACBaseActivity(), ContactUsContract.View {
         if (actionBar != null) {
             actionBar.elevation = 0f
             actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setTitle(R.string.contact_us)
         }
 
         binding.emailLayout.setOnClickListener {

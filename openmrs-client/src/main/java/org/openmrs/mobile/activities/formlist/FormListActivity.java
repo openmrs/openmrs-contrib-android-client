@@ -17,6 +17,8 @@ package org.openmrs.mobile.activities.formlist;
 import android.os.Bundle;
 import android.view.Menu;
 
+import androidx.appcompat.app.ActionBar;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -26,6 +28,12 @@ public class FormListActivity extends ACBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_form_list);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            getSupportActionBar().setElevation(0);
+            getSupportActionBar().setTitle(R.string.action_form_entry);
+        }
 
         // Create fragment
         FormListFragment formListFragment =

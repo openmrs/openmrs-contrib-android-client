@@ -41,6 +41,7 @@ public class LastViewedPatientsActivity extends ACBaseActivity {
         if (actionBar != null) {
             actionBar.setElevation(0);
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(R.string.action_download_patients);
         }
 
         // Create fragment

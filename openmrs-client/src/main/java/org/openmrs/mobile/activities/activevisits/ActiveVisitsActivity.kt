@@ -29,6 +29,7 @@ class ActiveVisitsActivity : ACBaseActivity() {
         if (actionBar != null) {
             supportActionBar!!.elevation = 0f
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            supportActionBar!!.setTitle(R.string.action_active_visits)
         }
         // Create fragment
         var activeVisitsFragment = supportFragmentManager.findFragmentById(R.id.activeVisitContentFrame) as ActiveVisitsFragment?

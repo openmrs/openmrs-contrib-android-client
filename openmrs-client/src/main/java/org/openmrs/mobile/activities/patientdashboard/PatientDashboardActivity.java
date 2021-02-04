@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
@@ -69,7 +70,12 @@ public class PatientDashboardActivity extends ACBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_dashboard);
         viewPager = findViewById(R.id.pager);
-        getSupportActionBar().setElevation(0);
+
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            getSupportActionBar().setElevation(0);
+            getSupportActionBar().setTitle(R.string.app_name);
+        }
         Bundle patientBundle = savedInstanceState;
         if (null != patientBundle) {
             patientBundle.getString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE);

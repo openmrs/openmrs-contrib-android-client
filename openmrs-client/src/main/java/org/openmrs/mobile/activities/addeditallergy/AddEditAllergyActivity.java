@@ -40,6 +40,7 @@ public class AddEditAllergyActivity extends ACBaseActivity {
         if (actionBar != null) {
             actionBar.setElevation(0);
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(R.string.allergy_heading);
         }
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {

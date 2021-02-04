@@ -43,6 +43,7 @@ public class ProviderManagerDashboardActivity extends ACBaseActivity {
         if (actionBar != null) {
             getSupportActionBar().setElevation(0);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.provider_manager);
         }
 
         // Create fragment

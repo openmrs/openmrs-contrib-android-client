@@ -46,6 +46,7 @@ public class SyncedPatientsActivity extends ACBaseActivity {
         if (actionBar != null) {
             getSupportActionBar().setElevation(0);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.action_synced_patients);
         }
 
         // Create fragment

@@ -150,7 +150,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
     @Override
     public void finishPatientInfoActivity() {
-        Objects.requireNonNull(getActivity()).finish();
+        requireActivity().finish();
     }
 
     @Override

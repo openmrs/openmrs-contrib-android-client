@@ -60,13 +60,13 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
 
     override fun onPause() {
         super.onPause()
-        LocalBroadcastManager.getInstance(this.activity!!).unregisterReceiver(broadcastReceiver!!)
+        LocalBroadcastManager.getInstance(this.requireActivity()).unregisterReceiver(broadcastReceiver!!)
     }
 
     override fun onResume() {
         super.onResume()
         mPresenter?.updateConceptsInDBTextView()
-        LocalBroadcastManager.getInstance(this.activity!!)
+        LocalBroadcastManager.getInstance(this.requireActivity())
                 .registerReceiver(broadcastReceiver!!, IntentFilter(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID))
     }
 
@@ -78,7 +78,7 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
             val snackBarLayout = snackbar.view as SnackbarLayout
             snackBarLayout.setPadding(0, 0, 0, 0)
             val dismissButton = customSnackBarView.findViewById<TextView>(R.id.snackbar_action_button)
-            val typeface = Typeface.createFromAsset(activity!!.assets, "fonts/Roboto/Roboto-Medium.ttf")
+            val typeface = Typeface.createFromAsset(requireActivity().assets, "fonts/Roboto/Roboto-Medium.ttf")
             dismissButton.typeface = typeface
             dismissButton.setOnClickListener { snackbar.dismiss() }
             snackBarLayout.addView(customSnackBarView, 0)
@@ -91,7 +91,7 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
 
     override fun addLogsInfo(logSize: Long, logFilename: String?) {
         binding.logsDesc1TextView.text = logFilename
-        binding.logsDesc2TextView.text = "${context!!.getString(R.string.settings_frag_size)} $logSize kB"
+        binding.logsDesc2TextView.text = "${requireContext().getString(R.string.settings_frag_size)} $logSize kB"
         binding.logsLayout.setOnClickListener { view: View ->
             val i = Intent(view.context, LogsActivity::class.java)
             startActivity(i)
@@ -100,7 +100,7 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
 
     override fun setUpConceptsView() {
         with(binding) {
-            languageApplyButton.setOnClickListener { activity!!.recreate() }
+            languageApplyButton.setOnClickListener { requireActivity().recreate() }
             conceptsDownloadButton.setOnClickListener {
                 conceptsDownloadButton.isEnabled = false
                 val startIntent = Intent(activity, ConceptDownloadService::class.java)
@@ -113,8 +113,8 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
     override fun addBuildVersionInfo() {
         var versionName = ""
         var buildVersion = 0
-        val packageManager = this.activity!!.packageManager
-        val packageName = this.activity!!.packageName
+        val packageManager = this.requireActivity().packageManager
+        val packageName = this.requireActivity().packageName
         try {
             versionName = packageManager.getPackageInfo(packageName, 0).versionName
             val ai = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
@@ -166,13 +166,13 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
             darkModeSwitch.isChecked = mPresenter?.isDarkModeActivated ?: false
             darkModeSwitch.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
                 mPresenter?.setDarkMode(isChecked)
-                activity!!.recreate()
+                requireActivity().recreate()
             }
         }
     }
 
     override fun chooseLanguage(languageList: Array<String>) {
-        val adapter = ArrayAdapter(context!!, android.R.layout.simple_list_item_1, languageList)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, languageList)
         with(binding) {
             languageSpinner.adapter = adapter
             languageSpinner.setSelection(mPresenter?.languagePosition ?: 0)

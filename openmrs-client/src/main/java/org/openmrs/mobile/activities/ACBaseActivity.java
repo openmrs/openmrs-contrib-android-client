@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -419,6 +420,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    @SuppressLint("NewApi")
     public void setupTheme() {
         if (ThemeUtils.isDarkModeActivated()) {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);

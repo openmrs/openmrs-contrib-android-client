@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.activities.patientdashboard.allergy;
 
+import android.annotation.SuppressLint;
+
 import androidx.fragment.app.Fragment;
 
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
@@ -59,6 +61,7 @@ public class PatientDashboardAllergyPresenter extends PatientDashboardMainPresen
 
     }
 
+    @SuppressLint("FragmentLiveDataObserve")
     @Override
     public void getAllergy(Fragment fragment) {
         allergyRepository.getAllergies(restApi, mPatient.getUuid()).observe(fragment, this::updateViews);

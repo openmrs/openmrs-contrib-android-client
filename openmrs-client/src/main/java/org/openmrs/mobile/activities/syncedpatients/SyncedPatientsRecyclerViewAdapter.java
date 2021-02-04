@@ -60,7 +60,7 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
 
         @Override
         public boolean onActionItemClicked(androidx.appcompat.view.ActionMode mode, MenuItem item) {
-            ((ACBaseActivity) Objects.requireNonNull(mContext.getActivity())).showMultiDeletePatientDialog(selectedItems);
+            ((ACBaseActivity) mContext.requireActivity()).showMultiDeletePatientDialog(selectedItems);
             return true;
         }
 

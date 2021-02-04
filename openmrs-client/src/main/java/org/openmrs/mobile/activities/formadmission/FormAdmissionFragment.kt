@@ -60,9 +60,10 @@ class FormAdmissionFragment : ACBaseFragment<FormAdmissionContract.Presenter>(),
         }
     }
 
+    @SuppressLint("UseRequireInsteadOfGet")
     private fun createEncounter() {
         if (providerUUID!!.isEmpty() || locationUUID!!.isEmpty() || encounterRoleUUID!!.isEmpty()) {
-            showShortToast(context!!, ToastUtil.ToastType.ERROR, getString(R.string.admission_fields_required))
+            showShortToast(requireContext(), ToastUtil.ToastType.ERROR, getString(R.string.admission_fields_required))
         } else {
             mPresenter!!.createEncounter(providerUUID, locationUUID, encounterRoleUUID)
         }
@@ -73,7 +74,7 @@ class FormAdmissionFragment : ACBaseFragment<FormAdmissionContract.Presenter>(),
         for (i in providerList.indices) {
             providers[i] = providerList[i]!!.display
         }
-        val adapterAdmittedBy = ArrayAdapter(activity!!, android.R.layout.simple_list_item_1, providers)
+        val adapterAdmittedBy = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, providers)
         formAdmissionBinding.admittedBySpinner.adapter = adapterAdmittedBy
         formAdmissionBinding.admittedBySpinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
@@ -94,7 +95,7 @@ class FormAdmissionFragment : ACBaseFragment<FormAdmissionContract.Presenter>(),
         for (i in locationList.indices) {
             locations[i] = locationList[i]!!.display
         }
-        val adapterAdmittedTo = ArrayAdapter(activity!!, android.R.layout.simple_list_item_1, locations)
+        val adapterAdmittedTo = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, locations)
         formAdmissionBinding.admittedToSpinner.adapter = adapterAdmittedTo
         formAdmissionBinding.admittedToSpinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
@@ -115,7 +116,7 @@ class FormAdmissionFragment : ACBaseFragment<FormAdmissionContract.Presenter>(),
         for (i in encounterRoleList.indices) {
             encounterRole[i] = encounterRoleList[i]!!.display
         }
-        val adapterEncounterRole = ArrayAdapter(activity!!, android.R.layout.simple_list_item_1, encounterRole)
+        val adapterEncounterRole = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, encounterRole)
         formAdmissionBinding.encounterRoleSpinner.adapter = adapterEncounterRole
         formAdmissionBinding.encounterRoleSpinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
@@ -140,7 +141,7 @@ class FormAdmissionFragment : ACBaseFragment<FormAdmissionContract.Presenter>(),
     }
 
     override fun quitFormEntry() {
-        activity!!.finish()
+        requireActivity().finish()
     }
 
     companion object {

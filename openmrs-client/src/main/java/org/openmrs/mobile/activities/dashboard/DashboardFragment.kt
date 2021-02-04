@@ -23,6 +23,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener
 import com.github.amlcurran.showcaseview.ShowcaseView
 import com.github.amlcurran.showcaseview.targets.Target
@@ -40,7 +42,7 @@ import org.openmrs.mobile.utilities.ImageUtils
 import org.openmrs.mobile.utilities.ThemeUtils
 import org.openmrs.mobile.utilities.ToastUtil
 
-class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), DashboardContract.View, View.OnClickListener {
+class DashboardFragment : Fragment(), View.OnClickListener {
 
     private var mFindPatientButton: ImageView? = null
     private var mRegistryPatientButton: ImageView? = null
@@ -57,7 +59,7 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val settings2 = activity!!.getSharedPreferences(ApplicationConstants.OPENMRS_PREF_FILE, 0)
+        val settings2 = requireActivity().getSharedPreferences(ApplicationConstants.OPENMRS_PREF_FILE, 0)
         if (settings2.getBoolean("my_first_time", true)) {
             showOverlayTutorial(R.id.findPatientView, getString(R.string.dashboard_search_icon_label),
                     getString(R.string.showcase_find_patients), R.style.CustomShowcaseTheme,
@@ -146,11 +148,16 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
         unbindDrawableResources()
     }
 
+    override fun onResume() {
+        super.onResume()
+        bindDrawableResources()
+    }
+
     /**
      * Binds drawable resources to all dashboard buttons
      * Initially called by this view's presenter
      */
-    override fun bindDrawableResources() {
+    fun bindDrawableResources() {
         bindDrawableResource(mFindPatientButton, R.drawable.ico_search)
         bindDrawableResource(mRegistryPatientButton, R.drawable.ico_registry)
         bindDrawableResource(mActiveVisitsButton, R.drawable.ico_visits)
@@ -202,9 +209,10 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
     }
 
     override fun onClick(v: View) {
+        val directionToRegister=DashboardFragmentDirections.actionDashboardFragmentToAddEditPatientActivity()
         when (v.id) {
             R.id.findPatientView -> startNewActivity(SyncedPatientsActivity::class.java)
-            R.id.registryPatientView -> startNewActivity(AddEditPatientActivity::class.java)
+            R.id.registryPatientView -> findNavController().navigate(directionToRegister)
             R.id.captureVitalsView -> startNewActivity(FormEntryPatientListActivity::class.java)
             R.id.activeVisitsView -> startNewActivity(ActiveVisitsActivity::class.java)
             R.id.dashboardProviderManagementView -> startNewActivity(ProviderManagerDashboardActivity::class.java)

@@ -18,6 +18,7 @@ plugins {
     id 'jacoco-android'
 }
 apply from: './versions.gradle'
+apply plugin: "androidx.navigation.safeargs"
 
 def version = versions.appVersion
 def GOOGLE_PLACE_API_KEY = System.getenv('GOOGLE_PLACE_API_KEY') ?: "YOUR_API_KEY"
@@ -132,6 +133,10 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
     implementation "com.squareup.retrofit2:converter-gson:${versions.retrofitConverter}"
     implementation "com.google.code.gson:gson:${versions.gson}"
+
+    //Navigation Component
+    implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
+    implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
 
     // Rx Java dependency
     implementation "io.reactivex.rxjava2:rxjava:${versions.rxjava}"

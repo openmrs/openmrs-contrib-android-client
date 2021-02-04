@@ -42,7 +42,7 @@ public class ProviderDashboardActivity extends ACBaseActivity implements Provide
         setContentView(binding.getRoot());
         Objects.requireNonNull(getSupportActionBar()).setElevation(0);
 
-        mPresenter = new ProviderDashboardPresenter(this, getApplicationContext());
+        mPresenter = new ProviderDashboardPresenter(this);
         provider = mPresenter.getProviderFromIntent(getIntent());
         mPresenter.setProvider(provider);
         setupBackdrop(provider);

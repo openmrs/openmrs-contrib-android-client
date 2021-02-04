@@ -57,7 +57,7 @@ class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
         restApi = RestServiceBuilder.createService(RestApi::class.java)
         this.view.setPresenter(this)
         mContext = context
-        providerRepository = ProviderRepository(context)
+        providerRepository = ProviderRepository()
     }
 
     constructor(formAdmissionView: FormAdmissionContract.View, restApi: RestApi, context: Context) {

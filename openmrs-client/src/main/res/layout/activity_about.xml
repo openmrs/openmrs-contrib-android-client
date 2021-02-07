@@ -53,7 +53,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginLeft="35dp"
         android:layout_marginRight="35dp"
-        android:textSize="20sp"
+        android:textSize="18sp"
+        android:gravity="center"
         android:textColor="?android:attr/textColorPrimary"
         android:text="@string/about_openmrs_1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,7 +68,8 @@
         android:layout_marginTop="15dp"
         android:layout_marginRight="35dp"
         android:text="@string/about_openmrs_2"
-        android:textSize="20sp"
+        android:textSize="18sp"
+        android:gravity="center"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +78,8 @@
     <TextView
         android:id="@+id/moreAboutOpenmrsButton"
         android:layout_width="wrap_content"
-        android:layout_height="42dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:background="@color/save_button"
@@ -87,7 +90,7 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:layout_marginTop="30dp"
-        android:layout_marginRight="35dp"
+        android:layout_marginRight="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/aboutOpenmrsTextView2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

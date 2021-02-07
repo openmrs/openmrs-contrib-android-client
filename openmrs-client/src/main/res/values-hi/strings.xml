@@ -45,8 +45,8 @@
     <string name="reg_ques_dob">रोगी की जन्मतिथि क्या है?</string>
     <string name="label_or">अथवा</string>
     <string name="reg_ques_address">पता</string>
-    <string name="addr1_hint">पता</string>
-    <string name="addr2_hint">पता 2</string>
+    <string name="addr1_hint">पता पंक्ति 1*</string>
+    <string name="addr2_hint">पता पंक्ति 2</string>
     <string name="addr_invalid_error">पते में अमान्य वर्ण नहीं हो सकते</string>
     <string name="atleastone">कम से कम एक पता फ़ील्ड भरें</string>
 

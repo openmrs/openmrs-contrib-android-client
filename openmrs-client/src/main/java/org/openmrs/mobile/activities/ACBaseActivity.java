@@ -41,6 +41,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
+import org.openmrs.mobile.activities.community.contact.AboutActivity;
 import org.openmrs.mobile.activities.community.contact.ContactUsActivity;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.activities.introduction.SplashActivity;
@@ -211,13 +212,15 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     showNoInternetConnectionSnackbar();
                 }
                 return true;
-
             case R.id.actionLocation:
                 if (!locationList.isEmpty()) {
                     locationList.clear();
                 }
                 Observable<List<LocationEntity>> observableList = new LocationDAO().getLocations();
                 observableList.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(getLocationList());
+                return true;
+            case R.id.actionAbout:
+                startActivity(new Intent(this, AboutActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

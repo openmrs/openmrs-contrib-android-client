@@ -470,4 +470,9 @@
     <string name="allergy_already_selected">पहले से ही चयनित एलर्जी!</string>
     <string name="start">शुरू:</string>
     <string name="end">समाप्त:</string>
+    <string name="about_openmrs_1">OpenMRS वास्तव में समर्पित, प्रतिभाशाली और उदार योगदानकर्ताओं का एक वैश्विक समुदाय है जो OpenMRS मंच और अन्य, मूलभूत OpenMRS तकनीकी उत्पादों का निर्माण और रखरखाव करता है।</string>
+    <string name="about_openmrs_2">OpenMRS एक ऐसा प्लेटफॉर्म है जिसका उपयोग देश और कार्यान्वयनकर्ता जमीन पर वास्तविक जरूरतों के जवाब में एक अनुकूलित EMR सिस्टम बनाने के लिए करते हैं।</string>
+    <string name="more_about_openmrs">"अधिक"</string>
+    <string name="action_about_activity">Open MRS के बारे में</string>
+    <string name="action_about">Open MRS के बारे में</string>
 </resources>

@@ -156,7 +156,8 @@ object ApplicationConstants {
 
     object OpenMRSlanguage {
         const val KEY_LANGUAGE_MODE = "key_language_mode"
-        val LANGUAGE_LIST = arrayOf("en", "hi")
+        val LANGUAGE_LIST = arrayOf("English", "हिन्दी")
+        val LANGUAGE_CODE = arrayOf("en", "hi")
     }
 
     object ShowCaseViewConstants {

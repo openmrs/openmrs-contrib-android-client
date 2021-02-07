@@ -14,8 +14,6 @@
 
 package org.openmrs.mobile.activities.providermanagerdashboard;
 
-import android.content.Context;
-
 import androidx.fragment.app.Fragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -35,11 +33,11 @@ public class ProviderManagerDashboardPresenter extends BasePresenter implements 
     @NotNull
     private final ProviderManagerDashboardContract.View providerManagerView;
 
-    ProviderManagerDashboardPresenter(@NotNull ProviderManagerDashboardContract.View providerManagerView, Context context) {
+    ProviderManagerDashboardPresenter(@NotNull ProviderManagerDashboardContract.View providerManagerView) {
         this.providerManagerView = providerManagerView;
         this.providerManagerView.setPresenter(this);
         restApi = RestServiceBuilder.createService(RestApi.class);
-        providerRepository = new ProviderRepository(context);
+        providerRepository = new ProviderRepository();
     }
 
     public ProviderManagerDashboardPresenter(@NotNull ProviderManagerDashboardContract.View providerManagerView, @NotNull RestApi restApi, ProviderRepository providerRepository) {

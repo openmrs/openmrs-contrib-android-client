@@ -14,8 +14,6 @@
 
 package org.openmrs.mobile.api.repository;
 
-import android.content.Context;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.work.Constraints;
@@ -50,15 +48,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProviderRepository {
+public class ProviderRepository extends RetrofitRepository {
+    
     ProviderRoomDAO providerRoomDao;
     RestApi restApi;
     WorkManager workManager;
 
-    public ProviderRepository(Context context) {
-        AppDatabase db = AppDatabase.getDatabase(context);
+    public ProviderRepository() {
+        AppDatabase db = AppDatabase.getDatabase(openMrs);
         providerRoomDao = db.providerRoomDAO();
-        workManager = WorkManager.getInstance(context);
+        workManager = WorkManager.getInstance(openMrs);
         restApi = RestServiceBuilder.createService(RestApi.class);
     }
 

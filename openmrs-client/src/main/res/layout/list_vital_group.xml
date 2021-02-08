@@ -48,7 +48,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:contentDescription="@string/list_visit_selector_show"
-            android:src="@drawable/ic_baseline_arrow_forward_ios_24"
+            app:srcCompat="@drawable/ic_baseline_arrow_forward_ios_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

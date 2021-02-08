@@ -79,7 +79,7 @@
             android:layout_height="40dp"
             android:layout_marginBottom="4dp"
             android:contentDescription="@string/gender_hint"
-            android:src="@drawable/patient_male"
+            app:srcCompat="@drawable/patient_male"
             app:layout_constraintBottom_toTopOf="@id/findVisitsPatientStartVisitDate"
             app:layout_constraintLeft_toLeftOf="@id/findVisitsPatientStartVisitDate"
             app:layout_constraintRight_toRightOf="@id/findVisitsPatientStartVisitDate" />

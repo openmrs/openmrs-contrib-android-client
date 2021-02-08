@@ -68,7 +68,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:contentDescription="@string/gender_hint"
-            android:src="@drawable/patient_male"
+            app:srcCompat="@drawable/patient_male"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

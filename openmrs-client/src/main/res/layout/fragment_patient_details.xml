@@ -52,7 +52,7 @@
                 android:layout_height="100dp"
                 android:contentDescription="@string/patient_photo"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_person_grey_500_48dp" />
+                app:srcCompat="@drawable/ic_person_grey_500_48dp" />
 
         </androidx.cardview.widget.CardView>
 

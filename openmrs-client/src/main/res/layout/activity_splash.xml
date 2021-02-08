@@ -24,7 +24,7 @@
         android:layout_height="150dp"
         android:layout_centerInParent="true"
         android:contentDescription="@string/openmrs_logo"
-        android:src="@drawable/ic_openmrs"
+        app:srcCompat="@drawable/ic_openmrs"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

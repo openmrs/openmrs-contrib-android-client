@@ -123,7 +123,7 @@
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:src="@drawable/openmrs_action_logo"
+            app:srcCompat="@drawable/openmrs_action_logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view" />
 
@@ -166,7 +166,7 @@
                 android:layout_height="@dimen/settings_icon_size"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:src="@drawable/ic_favorite_black_24dp" />
+                app:srcCompat="@drawable/ic_favorite_black_24dp" />
 
             <TextView
                 android:layout_width="0dp"
@@ -196,7 +196,7 @@
                 android:layout_height="25dp"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:src="@drawable/mail_setting" />
+                app:srcCompat="@drawable/mail_setting" />
 
             <TextView
                 android:layout_width="0dp"
@@ -226,7 +226,7 @@
                 android:layout_height="@dimen/settings_icon_size"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:src="@drawable/ic_security_black_24dp" />
+                app:srcCompat="@drawable/ic_security_black_24dp" />
 
             <TextView
                 android:layout_width="0dp"

@@ -19,6 +19,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import androidx.appcompat.app.ActionBar;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
@@ -33,6 +35,12 @@ public class VisitDashboardActivity extends ACBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visit_dashboard);
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            getSupportActionBar().setElevation(0);
+            getSupportActionBar().setTitle(R.string.visit_dashboard_label);
+        }
 
         Intent intent = getIntent();
 

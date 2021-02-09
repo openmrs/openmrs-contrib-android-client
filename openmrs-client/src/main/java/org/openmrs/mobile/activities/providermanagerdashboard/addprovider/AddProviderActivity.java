@@ -38,6 +38,7 @@ public class AddProviderActivity extends ACBaseActivity {
         if (actionBar != null) {
             getSupportActionBar().setElevation(0);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(R.string.title_provider_info);
         }
 
         // Create fragment

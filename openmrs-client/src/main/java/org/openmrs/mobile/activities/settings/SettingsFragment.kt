@@ -178,7 +178,7 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
             languageSpinner.setSelection(mPresenter?.languagePosition ?: 0)
             languageSpinner.onItemSelectedListener = object : OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    mPresenter?.language = languageSpinner.selectedItem.toString()
+                    mPresenter?.language = ApplicationConstants.OpenMRSlanguage.LANGUAGE_CODE[position]
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}

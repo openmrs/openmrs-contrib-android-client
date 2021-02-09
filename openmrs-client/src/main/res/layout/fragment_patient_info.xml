@@ -79,7 +79,7 @@
                             android:background="@color/card_shadow_1"
                             android:contentDescription="@string/patient_photo"
                             android:scaleType="fitXY"
-                            android:src="@drawable/ic_person_grey_500_48dp" />
+                            app:srcCompat="@drawable/ic_person_grey_500_48dp" />
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:id="@+id/capture_photo"
@@ -92,7 +92,7 @@
                             android:layout_marginRight="-25dp"
                             android:layout_marginBottom="10dp"
                             android:backgroundTint="@color/color_accent"
-                            android:src="@drawable/ic_photo_camera_white_48dp"
+                            app:srcCompat="@drawable/ic_photo_camera_white_48dp"
                             android:tint="@color/color_accent"
                             app:borderWidth="0dp"
                             app:rippleColor="@color/color_accent"

@@ -26,6 +26,7 @@ class LogsActivity : ACBaseActivity() {
         if (actionBar != null) {
             actionBar.elevation = 0f
             actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setTitle(R.string.title_activity_logs)
         }
         // Create fragment
         var logsFragment = supportFragmentManager.findFragmentById(R.id.logsContentFragment) as LogsFragment?

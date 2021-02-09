@@ -11,62 +11,43 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+
 package org.openmrs.mobile.activities.community.contact
 
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import org.openmrs.mobile.utilities.ApplicationConstants
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
-import org.openmrs.mobile.databinding.ActvityContactUsBinding
-import org.openmrs.mobile.utilities.ToastUtil
+import org.openmrs.mobile.databinding.ActivityAboutBinding
 
-class ContactUsActivity : ACBaseActivity(), ContactUsContract.View {
-
-    var presenter: ContactUsContract.Presenter? = null
-    private lateinit var binding: ActvityContactUsBinding
-
+class AboutActivity : ACBaseActivity() {
+    private lateinit var binding : ActivityAboutBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActvityContactUsBinding.inflate(layoutInflater)
+        binding = ActivityAboutBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter = ContactUsPresenter()
 
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.elevation = 0f
             actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setTitle(R.string.contact_us)
         }
 
-        binding.emailLayout.setOnClickListener {
-            val sendMailIntent = Intent(Intent.ACTION_SENDTO)
-            val mailTo = "mailto:" + binding.contactEmailLink.text.toString()
-            sendMailIntent.data = Uri.parse(mailTo)
-            try {
-                startActivity(sendMailIntent)
-            } catch (ex: ActivityNotFoundException) {
-                ToastUtil.showShortToast(this, ToastUtil.ToastType.ERROR, getString(R.string.no_mailing_client_found))
-            }
-        }
-
-        binding.forumLayout.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.contact_forum_url)))
-            startActivity(intent)
-        }
-
-        binding.ircLayout.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.contact_irc_url)))
+        binding.moreAboutOpenmrsButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ApplicationConstants.ABOUT_OPENMRS_URL))
             startActivity(intent)
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
-        //Disable Contact Option in Menu
+        //Disable About Option in Menu
+        val aboutItem = menu.findItem(R.id.actionAbout)
+        aboutItem.isVisible = false
         val contactItem = menu.findItem(R.id.actionContact)
         contactItem.isVisible = false
         val logOutItem = menu.findItem(R.id.actionLogout)

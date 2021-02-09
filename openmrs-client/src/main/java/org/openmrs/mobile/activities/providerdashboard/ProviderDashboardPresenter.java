@@ -1,6 +1,5 @@
 package org.openmrs.mobile.activities.providerdashboard;
 
-import android.content.Context;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
@@ -21,11 +20,11 @@ public class ProviderDashboardPresenter extends BasePresenter implements Provide
     @NonNull
     private ProviderDashboardContract.View providerDashboardView;
 
-    public ProviderDashboardPresenter(@NonNull ProviderDashboardContract.View view, Context context) {
+    public ProviderDashboardPresenter(@NonNull ProviderDashboardContract.View view) {
         this.providerDashboardView = view;
         this.providerDashboardView.setPresenter(this);
         this.restApi = RestServiceBuilder.createService(RestApi.class);
-        providerRepository = new ProviderRepository(context);
+        providerRepository = new ProviderRepository();
     }
 
     public ProviderDashboardPresenter(@NonNull ProviderDashboardContract.View view, RestApi restApi, ProviderRepository providerRepository) {

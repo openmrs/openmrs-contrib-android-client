@@ -31,7 +31,7 @@
     <ImageView
         android:id="@+id/patientPhoto"
         android:contentDescription="@string/patient_photo"
-        android:src="@drawable/ic_person_grey_500_48dp"
+        app:srcCompat="@drawable/ic_person_grey_500_48dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"/>

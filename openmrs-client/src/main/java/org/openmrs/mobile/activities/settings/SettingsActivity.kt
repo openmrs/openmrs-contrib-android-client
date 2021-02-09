@@ -28,6 +28,7 @@ class SettingsActivity : ACBaseActivity() {
         if (actionBar != null) {
             actionBar.elevation = 0f
             actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setTitle(R.string.action_settings)
         }
 
         // Create fragment

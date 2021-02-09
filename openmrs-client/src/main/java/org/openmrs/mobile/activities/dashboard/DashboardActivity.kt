@@ -71,6 +71,7 @@ class DashboardActivity : ACBaseActivity() {
             actionBar.setDisplayUseLogoEnabled(true)
             actionBar.setDisplayShowHomeEnabled(true)
             actionBar.setLogo(R.drawable.openmrs_action_logo)
+            actionBar.setTitle(R.string.app_name)
         }
 
 

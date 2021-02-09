@@ -2,7 +2,7 @@ buildscript {
 
     repositories {
         jcenter()
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+        maven {url 'https://oss.sonatype.org/content/repositories/snapshots'}
     }
 
     dependencies {
@@ -15,7 +15,10 @@ plugins {
     id 'com.github.triplet.play' version '2.2.1'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
-    id 'jacoco-android'
+
+    // TODO AC-861
+    //id 'jacoco-android'
+    id 'com.hiya.jacoco-android'
 }
 apply from: './versions.gradle'
 apply plugin: "androidx.navigation.safeargs"
@@ -44,6 +47,8 @@ android {
 
         testApplicationId "org.openmrs.mobile.test"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+        vectorDrawables.useSupportLibrary = true
 
         javaCompileOptions {
             annotationProcessorOptions {

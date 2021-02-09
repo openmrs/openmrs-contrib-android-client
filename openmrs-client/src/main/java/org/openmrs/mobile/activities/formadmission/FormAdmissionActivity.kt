@@ -31,6 +31,7 @@ class FormAdmissionActivity : ACBaseActivity() {
         if (actionBar != null) {
             actionBar.elevation = 0f
             actionBar.setDisplayHomeAsUpEnabled(true)
+            actionBar.setTitle(R.string.admission)
         }
         val bundle = intent.extras
         if (bundle != null) {

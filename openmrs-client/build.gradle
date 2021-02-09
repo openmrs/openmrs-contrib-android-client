@@ -140,8 +140,8 @@ dependencies {
     implementation "com.google.code.gson:gson:${versions.gson}"
 
     //Navigation Component
-    implementation "androidx.navigation:navigation-fragment-ktx:2.3.0"
-    implementation "androidx.navigation:navigation-ui-ktx:2.3.0"
+    implementation "androidx.navigation:navigation-fragment-ktx:${versions.navfragment}"
+    implementation "androidx.navigation:navigation-ui-ktx:${versions.navui}"
 
     // Rx Java dependency
     implementation "io.reactivex.rxjava2:rxjava:${versions.rxjava}"

@@ -13,17 +13,17 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-<androidx.fragment.app.FragmentContainerView
-	android:id="@+id/dashboard_nav_host_fragment"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	android:name="androidx.navigation.fragment.NavHostFragment"
-	app:defaultNavHost="true"
-	app:navGraph="@navigation/dashboard_nav_graph"/>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/dashboard_nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/dashboard_nav_graph" />
 
 </LinearLayout>

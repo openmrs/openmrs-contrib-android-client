@@ -41,6 +41,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -379,6 +380,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     @Override
     public void setProgressBarVisibility(boolean visibility) {
         binding.progressBar.setVisibility(visibility ? View.VISIBLE : View.GONE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     @Override

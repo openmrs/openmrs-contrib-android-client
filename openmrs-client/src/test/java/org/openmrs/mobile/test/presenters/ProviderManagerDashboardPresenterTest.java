@@ -75,7 +75,7 @@ public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
         providerList = Arrays.asList(providerOne, providerTwo);
         providerLiveData.postValue(providerList);
 
-        this.providerRepository = new ProviderRepository(restApi);
+        this.providerRepository = new ProviderRepository(openMRS, restApi);
         ProviderRoomDAO providerRoomDao = Mockito.mock(ProviderRoomDAO.class, RETURNS_MOCKS);
         ProviderRoomDAO spyProviderRoomDao = spy(providerRoomDao);
 

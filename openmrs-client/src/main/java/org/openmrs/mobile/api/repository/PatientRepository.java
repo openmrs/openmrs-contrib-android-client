@@ -14,7 +14,6 @@
 
 package org.openmrs.mobile.api.repository;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -24,7 +23,6 @@ import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
 
 import org.jdeferred.android.AndroidDeferredManager;
 import org.openmrs.mobile.R;
@@ -70,36 +68,20 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class PatientRepository extends RetrofitRepository {
-    private OpenMRSLogger logger;
+public class PatientRepository extends BaseRepository {
     private PatientDAO patientDAO;
     private LocationRepository locationRepository;
-    private RestApi restApi;
-    private WorkManager mWorkManager = null;
-
-    //constructor specifically for update which uses a workManager Implementation
-    public PatientRepository(Context appContext) {
-        this.logger = new OpenMRSLogger();
-        this.patientDAO = new PatientDAO();
-        this.locationRepository = new LocationRepository();
-        this.restApi = RestServiceBuilder.createService(RestApi.class);
-        this.mWorkManager = WorkManager.getInstance(appContext);
-    }
 
     public PatientRepository() {
-        this.logger = new OpenMRSLogger();
         this.patientDAO = new PatientDAO();
         this.locationRepository = new LocationRepository();
-        this.restApi = RestServiceBuilder.createService(RestApi.class);
     }
 
     //used in the unit tests
     public PatientRepository(OpenMRS openMRS, OpenMRSLogger logger, PatientDAO patientDAO, RestApi restApi, LocationRepository locationRepository) {
-        this.logger = logger;
+        super(openMRS, restApi, logger);
         this.patientDAO = patientDAO;
-        this.restApi = restApi;
         this.locationRepository = locationRepository;
-        this.openMrs = openMRS;
     }
 
     /**
@@ -264,7 +246,7 @@ public class PatientRepository extends RetrofitRepository {
             // enqueue the work to workManager
             Data data = new Data.Builder().putString("_id", patient.getId().toString()).build();
             Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
-            mWorkManager.enqueue(new OneTimeWorkRequest.Builder(UpdatePatientWorker.class).setConstraints(constraints).setInputData(data).build());
+            workManager.enqueue(new OneTimeWorkRequest.Builder(UpdatePatientWorker.class).setConstraints(constraints).setInputData(data).build());
 
             ToastUtil.notify(openMrs.getString(R.string.offline_mode_patient_data_saved_locally_notification_message));
             if (callbackListener != null) {

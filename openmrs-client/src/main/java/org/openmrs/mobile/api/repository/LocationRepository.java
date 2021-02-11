@@ -28,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LocationRepository extends RetrofitRepository {
+public class LocationRepository extends BaseRepository {
     public SimplePromise<LocationEntity> getLocationUuid() {
         final SimpleDeferredObject<LocationEntity> deferred = new SimpleDeferredObject<>();
 

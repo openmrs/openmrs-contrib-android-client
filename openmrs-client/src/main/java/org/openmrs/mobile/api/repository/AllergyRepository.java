@@ -138,9 +138,9 @@ public class AllergyRepository {
         } else {
             // offline deletion
             Data data = new Data.Builder()
-                    .putString(PATIENT_UUID, patientUuid)
-                    .putString(ALLERGY_UUID, allergyUuid)
-                    .build();
+                .putString(PATIENT_UUID, patientUuid)
+                .putString(ALLERGY_UUID, allergyUuid)
+                .build();
             allergyRoomDAO.deleteAllergyByUUID(allergyUuid);
             callback.onResponse();
 

@@ -54,7 +54,7 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
         this.restApi = RestServiceBuilder.createService(RestApi.class);
         this.patientDAO = new PatientDAO();
         this.lastQuery = lastQuery;
-        this.patientRepository = new PatientRepository(appContext);
+        this.patientRepository = new PatientRepository();
     }
 
     public LastViewedPatientsPresenter(@NonNull LastViewedPatientsContract.View mLastViewedPatientsView, Context appContext) {
@@ -62,7 +62,7 @@ public class LastViewedPatientsPresenter extends BasePresenter implements LastVi
         this.mLastViewedPatientsView.setPresenter(this);
         this.restApi = RestServiceBuilder.createService(RestApi.class);
         this.patientDAO = new PatientDAO();
-        this.patientRepository = new PatientRepository(appContext);
+        this.patientRepository = new PatientRepository();
     }
 
     public LastViewedPatientsPresenter(@NonNull LastViewedPatientsContract.View mLastViewedPatientsView,

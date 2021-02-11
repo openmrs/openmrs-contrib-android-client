@@ -65,7 +65,7 @@ class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
         this.restApi = restApi
         view.setPresenter(this)
         mContext = context
-        providerRepository = ProviderRepository(restApi)
+        providerRepository = ProviderRepository(OpenMRS.getInstance(), restApi);
     }
 
     override fun subscribe() {

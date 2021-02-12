@@ -35,12 +35,15 @@ import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity
 import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity
 import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardActivity
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity
+import org.openmrs.mobile.databinding.FragmentDashboardBinding
 import org.openmrs.mobile.utilities.ApplicationConstants
 import org.openmrs.mobile.utilities.ImageUtils
 import org.openmrs.mobile.utilities.ThemeUtils
 import org.openmrs.mobile.utilities.ToastUtil
 
 class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), DashboardContract.View, View.OnClickListener {
+
+    var binding: FragmentDashboardBinding? = null
 
     private var mFindPatientButton: ImageView? = null
     private var mRegistryPatientButton: ImageView? = null
@@ -112,25 +115,27 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+
+        binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        val root = binding!!.root
         if (root != null) {
-            initFragmentFields(root)
+            initFragmentFields(binding!!)
             setListeners()
         }
         return root
     }
 
-    private fun initFragmentFields(root: View) {
-        mFindPatientButton = root.findViewById(R.id.findPatientButton)
-        mRegistryPatientButton = root.findViewById(R.id.registryPatientButton)
-        mActiveVisitsButton = root.findViewById(R.id.activeVisitsButton)
-        mCaptureVitalsButton = root.findViewById(R.id.captureVitalsButton)
-        mProviderManagementButton = root.findViewById(R.id.dashboardProviderManagementButton)
-        mFindPatientView = root.findViewById(R.id.findPatientView)
-        mRegistryPatientView = root.findViewById(R.id.registryPatientView)
-        mCaptureVitalsView = root.findViewById(R.id.captureVitalsView)
-        mActiveVisitsView = root.findViewById(R.id.activeVisitsView)
-        mProviderManagementView = root.findViewById(R.id.dashboardProviderManagementView)
+    private fun initFragmentFields(binding: FragmentDashboardBinding) {
+        mFindPatientButton = binding.findPatientButton
+        mRegistryPatientButton = binding.registryPatientButton
+        mActiveVisitsButton = binding.activeVisitsButton
+        mCaptureVitalsButton = binding.captureVitalsButton
+        mProviderManagementButton = binding.dashboardProviderManagementButton
+        mFindPatientView = binding.findPatientView
+        mRegistryPatientView = binding.registryPatientView
+        mCaptureVitalsView = binding.captureVitalsView
+        mActiveVisitsView = binding.activeVisitsView
+        mProviderManagementView = binding.dashboardProviderManagementView
     }
 
     private fun setListeners() {

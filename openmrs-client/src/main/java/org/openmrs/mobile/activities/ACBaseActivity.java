@@ -423,7 +423,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    @SuppressLint("NewApi")
     public void setupTheme() {
         if (ThemeUtils.isDarkModeActivated()) {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);

@@ -61,7 +61,6 @@ public class PatientDashboardAllergyPresenter extends PatientDashboardMainPresen
 
     }
 
-    @SuppressLint("FragmentLiveDataObserve")
     @Override
     public void getAllergy(Fragment fragment) {
         allergyRepository.getAllergies(restApi, mPatient.getUuid()).observe(fragment, this::updateViews);

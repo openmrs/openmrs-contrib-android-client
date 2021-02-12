@@ -63,7 +63,7 @@ public class PatientDashboardAllergyPresenter extends PatientDashboardMainPresen
 
     @Override
     public void getAllergy(Fragment fragment) {
-        allergyRepository.getAllergies(restApi, mPatient.getUuid()).observe(fragment, this::updateViews);
+        allergyRepository.getAllergies(restApi, mPatient.getUuid()).observe(fragment.getViewLifecycleOwner(), this::updateViews);
     }
 
     public void getAllergyFromDatabase() {

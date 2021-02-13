@@ -16,7 +16,6 @@ package org.openmrs.mobile.test.presenters;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,10 +37,8 @@ import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-
 import java.util.Arrays;
 import java.util.List;
-
 import static org.mockito.Mockito.RETURNS_MOCKS;
 import static org.mockito.Mockito.verify;
 

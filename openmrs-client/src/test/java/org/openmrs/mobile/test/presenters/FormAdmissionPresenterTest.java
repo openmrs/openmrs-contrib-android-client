@@ -104,7 +104,7 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
         resourceList = Arrays.asList(resourceOne, resourceTwo);
         providerLiveData.postValue(providerList);
 
-        this.providerRepository = new ProviderRepository(restApi);
+        this.providerRepository = new ProviderRepository(openMRS, restApi);
         ProviderRoomDAO providerRoomDao = Mockito.mock(ProviderRoomDAO.class, RETURNS_MOCKS);
         ProviderRoomDAO spyProviderRoomDao = spy(providerRoomDao);
 
@@ -143,7 +143,7 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
     public void shouldGetAdmissionLocation_AllOK() {
         Mockito.lenient().when(NetworkUtils.hasNetwork()).thenReturn(true);
         Mockito.lenient().when(restApi.getLocations(any(), anyString(), anyString()))
-                .thenReturn(mockSuccessCall(locationList));
+            .thenReturn(mockSuccessCall(locationList));
         formAdmissionPresenter.updateLocationList(locationList);
         providerRepository.getLocation("some url").observeForever(locationObserver);
         verify(formAdmissionView).updateLocationAdapter(locationList);
@@ -153,7 +153,7 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
     public void shouldLoadLocations_errorResponse() {
         Mockito.lenient().when(NetworkUtils.hasNetwork()).thenReturn(true);
         Mockito.lenient().when(restApi.getLocations(any(), anyString(), anyString()))
-                .thenReturn(mockErrorCall(401));
+            .thenReturn(mockErrorCall(401));
 
         Resources res = Mockito.mock(context.getResources().getClass());
         PowerMockito.when(context.getResources()).thenReturn(res);
@@ -169,7 +169,7 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
     public void shouldGetEncounterRoles_AllOK() {
         Mockito.lenient().when(NetworkUtils.hasNetwork()).thenReturn(true);
         Mockito.lenient().when(restApi.getEncounterRoles())
-                .thenReturn(mockSuccessCall(resourceList));
+            .thenReturn(mockSuccessCall(resourceList));
         formAdmissionPresenter.updateEncounterRoles(resourceList);
         providerRepository.getEncounterRoles().observeForever(resourceObserver);
         verify(formAdmissionView).updateEncounterRoleList(resourceList);
@@ -179,7 +179,7 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
     public void shouldLoadEncounterRoles_errorResponse() {
         Mockito.lenient().when(NetworkUtils.hasNetwork()).thenReturn(true);
         Mockito.lenient().when(restApi.getEncounterRoles())
-                .thenReturn(mockErrorCall(401));
+            .thenReturn(mockErrorCall(401));
 
         Resources res = Mockito.mock(context.getResources().getClass());
         PowerMockito.when(context.getResources()).thenReturn(res);
@@ -196,8 +196,8 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
         PowerMockito.mockStatic(OpenMRS.class);
         PowerMockito.mockStatic(OpenMRSLogger.class);
         Mockito.lenient().when(OpenMRS.getInstance()).thenReturn(openMRS);
-        PowerMockito.when(openMRS.getOpenMRSLogger()).thenReturn(openMRSLogger);
         PowerMockito.mockStatic(ToastUtil.class);
+        PowerMockito.when(openMRS.getOpenMRSLogger()).thenReturn(openMRSLogger);
         PowerMockito.when(context.getApplicationContext()).thenReturn(context);
         PowerMockito.when(context.getResources()).thenReturn(resources);
     }

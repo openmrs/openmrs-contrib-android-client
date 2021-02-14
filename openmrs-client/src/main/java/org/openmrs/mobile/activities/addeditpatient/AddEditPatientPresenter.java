@@ -71,7 +71,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         this.mPatientInfoView.setPresenter(this);
         this.mCountries = countries;
         this.patientToUpdateId = patientToUpdateId;
-        this.patientRepository = new PatientRepository(appContext);
+        this.patientRepository = new PatientRepository();
         this.restApi = RestServiceBuilder.createService(RestApi.class);
         this.placesClient = placesClient;
     }

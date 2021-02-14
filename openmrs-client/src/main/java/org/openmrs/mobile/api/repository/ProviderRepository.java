@@ -20,18 +20,15 @@ import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.workers.provider.AddProviderWorker;
 import org.openmrs.mobile.api.workers.provider.DeleteProviderWorker;
 import org.openmrs.mobile.api.workers.provider.UpdateProviderWorker;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.ProviderRoomDAO;
-import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.models.Provider;
@@ -48,21 +45,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProviderRepository extends RetrofitRepository {
-    
+public class ProviderRepository extends BaseRepository {
     ProviderRoomDAO providerRoomDao;
-    RestApi restApi;
-    WorkManager workManager;
 
     public ProviderRepository() {
-        AppDatabase db = AppDatabase.getDatabase(openMrs);
         providerRoomDao = db.providerRoomDAO();
-        workManager = WorkManager.getInstance(openMrs);
-        restApi = RestServiceBuilder.createService(RestApi.class);
     }
 
-    public ProviderRepository(RestApi restApi) {
-        this.restApi = restApi;
+    public ProviderRepository(OpenMRS openMrs, RestApi restApi) {
+        super(openMrs, restApi);
     }
 
     public void setProviderRoomDao(ProviderRoomDAO providerRoomDao) {

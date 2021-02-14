@@ -35,6 +35,7 @@ import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity
 import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity
 import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardActivity
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity
+import org.openmrs.mobile.databinding.FragmentDashboardBinding
 import org.openmrs.mobile.utilities.ApplicationConstants
 import org.openmrs.mobile.utilities.ImageUtils
 import org.openmrs.mobile.utilities.ThemeUtils
@@ -42,6 +43,7 @@ import org.openmrs.mobile.utilities.ToastUtil
 
 class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), DashboardContract.View, View.OnClickListener {
 
+    private var binding: FragmentDashboardBinding? = null
     private var mFindPatientButton: ImageView? = null
     private var mRegistryPatientButton: ImageView? = null
     private var mActiveVisitsButton: ImageView? = null
@@ -59,7 +61,7 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
 
         val settings2 = activity!!.getSharedPreferences(ApplicationConstants.OPENMRS_PREF_FILE, 0)
         if (settings2.getBoolean("my_first_time", true)) {
-            showOverlayTutorial(R.id.findPatientView, getString(R.string.dashboard_search_icon_label),
+            showOverlayTutorial((binding!!.findPatientView).id, getString(R.string.dashboard_search_icon_label),
                     getString(R.string.showcase_find_patients), R.style.CustomShowcaseTheme,
                     ApplicationConstants.ShowCaseViewConstants.SHOW_FIND_PATIENT, true)
             settings2.edit().putBoolean("my_first_time", false).apply()
@@ -78,16 +80,16 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
                 .setShowcaseEventListener(object : OnShowcaseEventListener {
                     override fun onShowcaseViewHide(showcaseView: ShowcaseView) {
                         when (currentViewCount) {
-                            ApplicationConstants.ShowCaseViewConstants.SHOW_FIND_PATIENT -> showOverlayTutorial(R.id.activeVisitsView, getString(R.string.dashboard_visits_icon_label),
+                            ApplicationConstants.ShowCaseViewConstants.SHOW_FIND_PATIENT -> showOverlayTutorial((binding!!.activeVisitsView).id, getString(R.string.dashboard_visits_icon_label),
                                     getString(R.string.showcase_active_visits), R.style.CustomShowcaseTheme,
                                     ApplicationConstants.ShowCaseViewConstants.SHOW_ACTIVE_VISITS, true)
-                            ApplicationConstants.ShowCaseViewConstants.SHOW_ACTIVE_VISITS -> showOverlayTutorial(R.id.registryPatientView, getString(R.string.action_register_patient),
+                            ApplicationConstants.ShowCaseViewConstants.SHOW_ACTIVE_VISITS -> showOverlayTutorial((binding!!.registryPatientView).id, getString(R.string.action_register_patient),
                                     getString(R.string.showcase_register_patient), R.style.CustomShowcaseTheme,
                                     ApplicationConstants.ShowCaseViewConstants.SHOW_REGISTER_PATIENT, false)
-                            ApplicationConstants.ShowCaseViewConstants.SHOW_REGISTER_PATIENT -> showOverlayTutorial(R.id.captureVitalsView, getString(R.string.dashboard_forms_icon_label),
+                            ApplicationConstants.ShowCaseViewConstants.SHOW_REGISTER_PATIENT -> showOverlayTutorial((binding!!.captureVitalsView).id, getString(R.string.dashboard_forms_icon_label),
                                     getString(R.string.showcase_form_entry), R.style.CustomShowcaseTheme,
                                     ApplicationConstants.ShowCaseViewConstants.SHOW_FORM_ENTRY, false)
-                            ApplicationConstants.ShowCaseViewConstants.SHOW_FORM_ENTRY -> showOverlayTutorial(R.id.dashboardProviderManagementView, getString(R.string.action_provider_management),
+                            ApplicationConstants.ShowCaseViewConstants.SHOW_FORM_ENTRY -> showOverlayTutorial((binding!!.dashboardProviderManagementView).id, getString(R.string.action_provider_management),
                                     getString(R.string.showcase_manage_providers), R.style.CustomShowcaseThemeExit,
                                     ApplicationConstants.ShowCaseViewConstants.SHOW_MANAGE_PROVIDERS, false)
                         }
@@ -112,25 +114,27 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+
+        binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        val root = binding!!.root
         if (root != null) {
-            initFragmentFields(root)
+            initFragmentFields(binding!!)
             setListeners()
         }
         return root
     }
 
-    private fun initFragmentFields(root: View) {
-        mFindPatientButton = root.findViewById(R.id.findPatientButton)
-        mRegistryPatientButton = root.findViewById(R.id.registryPatientButton)
-        mActiveVisitsButton = root.findViewById(R.id.activeVisitsButton)
-        mCaptureVitalsButton = root.findViewById(R.id.captureVitalsButton)
-        mProviderManagementButton = root.findViewById(R.id.dashboardProviderManagementButton)
-        mFindPatientView = root.findViewById(R.id.findPatientView)
-        mRegistryPatientView = root.findViewById(R.id.registryPatientView)
-        mCaptureVitalsView = root.findViewById(R.id.captureVitalsView)
-        mActiveVisitsView = root.findViewById(R.id.activeVisitsView)
-        mProviderManagementView = root.findViewById(R.id.dashboardProviderManagementView)
+    private fun initFragmentFields(binding: FragmentDashboardBinding) {
+        mFindPatientButton = binding.findPatientButton
+        mRegistryPatientButton = binding.registryPatientButton
+        mActiveVisitsButton = binding.activeVisitsButton
+        mCaptureVitalsButton = binding.captureVitalsButton
+        mProviderManagementButton = binding.dashboardProviderManagementButton
+        mFindPatientView = binding.findPatientView
+        mRegistryPatientView = binding.registryPatientView
+        mCaptureVitalsView = binding.captureVitalsView
+        mActiveVisitsView = binding.activeVisitsView
+        mProviderManagementView = binding.dashboardProviderManagementView
     }
 
     private fun setListeners() {

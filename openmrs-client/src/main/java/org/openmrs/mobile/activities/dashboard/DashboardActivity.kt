@@ -73,10 +73,6 @@ class DashboardActivity : ACBaseActivity() {
             actionBar.setLogo(R.drawable.openmrs_action_logo)
             actionBar.setTitle(R.string.app_name)
         }
-
-
-
-
     }
 
     /*TODO: Permission handling to be coded later, moving to SDK 22 for now.

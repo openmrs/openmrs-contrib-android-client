@@ -17,7 +17,6 @@ package org.openmrs.mobile.activities.dashboard
 import org.openmrs.mobile.activities.BasePresenterContract
 import org.openmrs.mobile.activities.BaseView
 
-//This interface is not in use
 interface DashboardContract {
     interface View : BaseView<Presenter> {
         fun bindDrawableResources()

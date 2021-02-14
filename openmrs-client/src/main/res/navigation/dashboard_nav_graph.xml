@@ -21,14 +21,18 @@
         android:id="@+id/dashboardFragment"
         android:name="org.openmrs.mobile.activities.dashboard.DashboardFragment"
         android:label="fragment_dashboard"
-        tools:layout="@layout/fragment_dashboard" >
+        tools:layout="@layout/fragment_dashboard">
+
         <action
             android:id="@+id/action_dashboardFragment_to_addEditPatientActivity"
             app:destination="@id/addEditPatientActivity" />
+
     </fragment>
+
     <activity
         android:id="@+id/addEditPatientActivity"
         android:name="org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity"
         android:label="activity_patient_info"
         tools:layout="@layout/activity_patient_info" />
+
 </navigation>

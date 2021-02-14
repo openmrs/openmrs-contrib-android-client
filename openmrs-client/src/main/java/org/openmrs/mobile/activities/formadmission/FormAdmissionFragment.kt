@@ -60,7 +60,6 @@ class FormAdmissionFragment : ACBaseFragment<FormAdmissionContract.Presenter>(),
         }
     }
 
-    @SuppressLint("UseRequireInsteadOfGet")
     private fun createEncounter() {
         if (providerUUID!!.isEmpty() || locationUUID!!.isEmpty() || encounterRoleUUID!!.isEmpty()) {
             showShortToast(requireContext(), ToastUtil.ToastType.ERROR, getString(R.string.admission_fields_required))

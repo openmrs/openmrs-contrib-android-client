@@ -104,7 +104,7 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
         resourceList = Arrays.asList(resourceOne, resourceTwo);
         providerLiveData.postValue(providerList);
 
-        this.providerRepository = new ProviderRepository(openMRS, restApi);
+        this.providerRepository = new ProviderRepository(openMRS, restApi, openMRSLogger);
         ProviderRoomDAO providerRoomDao = Mockito.mock(ProviderRoomDAO.class, RETURNS_MOCKS);
         ProviderRoomDAO spyProviderRoomDao = spy(providerRoomDao);
 
@@ -115,7 +115,7 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
 
         this.providerRepository.setProviderRoomDao(spyProviderRoomDao);
 
-        formAdmissionPresenter = new FormAdmissionPresenter(formAdmissionView, restApi, context);
+        formAdmissionPresenter = new FormAdmissionPresenter(formAdmissionView, restApi, context, openMRSLogger);
     }
 
     @Test

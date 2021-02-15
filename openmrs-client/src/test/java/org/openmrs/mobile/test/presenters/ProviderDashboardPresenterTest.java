@@ -44,7 +44,7 @@ public class ProviderDashboardPresenterTest extends ACUnitTestBase {
 
     @Before
     public void setup() {
-        this.providerRepository = new ProviderRepository(openMRS, restApi);
+        this.providerRepository = new ProviderRepository(openMRS, restApi, openMRSLogger);
         ProviderRoomDAO providerRoomDao = Mockito.mock(ProviderRoomDAO.class);
         ProviderRoomDAO spyProviderRoomDao = spy(providerRoomDao);
         doNothing().when(spyProviderRoomDao).updateProviderByUuid(Mockito.anyString(), Mockito.anyLong(), Mockito.any(), Mockito.anyString(), Mockito.anyString());

@@ -18,6 +18,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -41,6 +42,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -381,6 +383,12 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     public void setProgressBarVisibility(boolean visibility) {
         binding.progressBar.setVisibility(visibility ? View.VISIBLE : View.GONE);
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        Dialog pd = new Dialog(getActivity(), android.R.style.Theme_Black);
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.activity_patient_info, null);
+        pd.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        pd.getWindow().setBackgroundDrawableResource(R.color.translucent_70_percent);
+        pd.setContentView(view);
+        pd.show();
     }
 
     @Override

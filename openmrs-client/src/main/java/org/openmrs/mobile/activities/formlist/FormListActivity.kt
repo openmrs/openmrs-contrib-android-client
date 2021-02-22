@@ -17,7 +17,6 @@ import android.os.Bundle
 import android.view.Menu
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
-import org.openmrs.mobile.activities.formadmission.FormAdmissionFragment
 import org.openmrs.mobile.utilities.ApplicationConstants
 
 class FormListActivity : ACBaseActivity() {

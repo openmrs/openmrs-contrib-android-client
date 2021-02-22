@@ -21,7 +21,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
@@ -37,7 +36,6 @@ import org.openmrs.mobile.activities.formadmission.FormAdmissionActivity
 import org.openmrs.mobile.activities.formdisplay.FormDisplayActivity
 import org.openmrs.mobile.api.RestApi
 import org.openmrs.mobile.api.RestServiceBuilder
-import org.openmrs.mobile.application.OpenMRS
 import org.openmrs.mobile.models.FormCreate
 import org.openmrs.mobile.models.FormData
 import org.openmrs.mobile.utilities.ApplicationConstants
@@ -70,13 +68,13 @@ public final class FormListFragment : ACBaseFragment<FormListContract.Presenter?
             val noticeField = customSnackBarView.findViewById<TextView>(R.id.snackbar_text)
             noticeField.setText(R.string.snackbar_no_forms_found)
             val dismissButton = customSnackBarView.findViewById<TextView>(R.id.snackbar_action_button)
-            val typeface = Typeface.createFromAsset(activity!!.assets, ApplicationConstants.TypeFacePathConstants.ROBOTO_MEDIUM)
+            val typeface = Typeface.createFromAsset(requireActivity().assets, ApplicationConstants.TypeFacePathConstants.ROBOTO_MEDIUM)
             dismissButton.typeface = typeface
             dismissButton.setOnClickListener { v: View? -> snackbar!!.dismiss() }
             snackBarLayout.addView(customSnackBarView, 0)
             snackbar!!.show()
         }
-        formList?.adapter = ArrayAdapter(context!!,
+        formList?.adapter = ArrayAdapter(requireContext(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
                 forms)
@@ -170,7 +168,7 @@ public final class FormListFragment : ACBaseFragment<FormListContract.Presenter?
     private fun loadJSONFromAsset(filename: String): FormData? {
         var json: String? = null
         json = try {
-            val `is` = activity!!.assets.open("forms/$filename")
+            val `is` = requireActivity().assets.open("forms/$filename")
             val size = `is`.available()
             val buffer = ByteArray(size)
             `is`.read(buffer)

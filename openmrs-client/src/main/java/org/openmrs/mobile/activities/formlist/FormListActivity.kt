@@ -29,7 +29,6 @@ class FormListActivity : ACBaseActivity() {
             supportActionBar!!.setTitle(R.string.action_form_entry)
         }
 
-        // Create fragment
         var formListFragment = supportFragmentManager.findFragmentById(R.id.formListContentFrame) as FormListFragment?
         if (formListFragment == null) {
             formListFragment = FormListFragment.newInstance()
@@ -44,7 +43,6 @@ class FormListActivity : ACBaseActivity() {
             mPatientID = bundle.getLong(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE)
         }
 
-        // Create the presenter
         FormListPresenter(formListFragment, mPatientID!!)
     }
 

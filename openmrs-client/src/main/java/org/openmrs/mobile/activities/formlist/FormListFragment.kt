@@ -22,7 +22,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.ListView
 import android.widget.TextView
 import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
@@ -36,6 +35,7 @@ import org.openmrs.mobile.activities.formadmission.FormAdmissionActivity
 import org.openmrs.mobile.activities.formdisplay.FormDisplayActivity
 import org.openmrs.mobile.api.RestApi
 import org.openmrs.mobile.api.RestServiceBuilder
+import org.openmrs.mobile.databinding.FragmentFormListBinding
 import org.openmrs.mobile.models.FormCreate
 import org.openmrs.mobile.models.FormData
 import org.openmrs.mobile.utilities.ApplicationConstants
@@ -47,21 +47,20 @@ import java.io.IOException
 import java.nio.charset.StandardCharsets
 
 public final class FormListFragment : ACBaseFragment<FormListContract.Presenter?>(), FormListContract.View {
-    private var formList: ListView? = null
+    private lateinit var formListBinding: FragmentFormListBinding
     private var snackbar: Snackbar? = null
-    private var root: View? = null
 
     @Nullable
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        root = inflater.inflate(R.layout.fragment_form_list, container, false)
-        formList = root!!.findViewById(R.id.formlist)
-        formList!!.setOnItemClickListener({ parent: AdapterView<*>?, view: View, position: Int, id: Long -> mPresenter!!.listItemClicked(position, (view as TextView).text.toString()) })
+        formListBinding = FragmentFormListBinding.inflate(inflater, container, false)
+        val root: View = formListBinding.root
+        formListBinding.formlist.setOnItemClickListener({ parent: AdapterView<*>?, view: View, position: Int, id: Long -> mPresenter!!.listItemClicked(position, (view as TextView).text.toString()) })
         return root
     }
 
     override fun showFormList(forms: Array<String?>?) {
         if (forms!!.size == 0) {
-            snackbar = Snackbar.make(root!!, ApplicationConstants.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE)
+            snackbar = Snackbar.make(formListBinding.root, ApplicationConstants.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE)
             val customSnackBarView = layoutInflater.inflate(R.layout.snackbar, null)
             val snackBarLayout = snackbar!!.view as SnackbarLayout
             snackBarLayout.setPadding(0, 0, 0, 0)
@@ -74,7 +73,7 @@ public final class FormListFragment : ACBaseFragment<FormListContract.Presenter?
             snackBarLayout.addView(customSnackBarView, 0)
             snackbar!!.show()
         }
-        formList?.adapter = ArrayAdapter(requireContext(),
+        formListBinding.formlist.adapter = ArrayAdapter(requireContext(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
                 forms)

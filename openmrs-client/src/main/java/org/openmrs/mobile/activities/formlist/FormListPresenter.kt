@@ -19,7 +19,6 @@ import org.openmrs.mobile.databases.entities.FormResourceEntity
 import org.openmrs.mobile.models.EncounterType
 import org.openmrs.mobile.utilities.FormService.getFormResourceList
 import org.openmrs.mobile.utilities.StringUtils.isBlank
-import java.util.*
 
 class FormListPresenter : BasePresenter, FormListContract.Presenter {
     private var view: FormListContract.View

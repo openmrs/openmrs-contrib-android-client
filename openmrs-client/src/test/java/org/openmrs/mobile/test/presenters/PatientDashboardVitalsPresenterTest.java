@@ -22,6 +22,8 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.vitals.PatientDashboardVitalsPresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.repository.VisitRepository;
+import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.dao.VisitDAO;
@@ -43,7 +45,10 @@ import static org.mockito.Mockito.verify;
 
 @PrepareForTest(NetworkUtils.class)
 public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
-
+    @Mock
+    private OpenMRS openMRS;
+    @Mock
+    private OpenMRSLogger openMRSLogger;
     @Mock
     private PatientDashboardContract.ViewPatientVitals viewPatientVitals;
     @Mock
@@ -54,7 +59,6 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
     private VisitDAO visitDAO;
     @Mock
     private LocationDAO locationDAO;
-
     private PatientDashboardVitalsPresenter presenter;
     private Patient patient;
 
@@ -62,7 +66,7 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
     public void setUp() {
         super.setUp();
         patient = createPatient(1L);
-        VisitRepository visitRepository = new VisitRepository(restApi, visitDAO, locationDAO, encounterDAO);
+        VisitRepository visitRepository = new VisitRepository(openMRS, openMRSLogger, restApi, visitDAO, locationDAO, encounterDAO);
         presenter = new PatientDashboardVitalsPresenter(patient, viewPatientVitals, encounterDAO, visitRepository);
         PowerMockito.mockStatic(NetworkUtils.class);
     }
@@ -71,7 +75,7 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
     public void subscribe_allOk() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString()))
-                .thenReturn(mockSuccessCall(Collections.singletonList(new Encounter())));
+            .thenReturn(mockSuccessCall(Collections.singletonList(new Encounter())));
         Encounter encounter = new Encounter();
         Mockito.lenient().when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(encounter));
         presenter.subscribe();
@@ -83,7 +87,7 @@ public class PatientDashboardVitalsPresenterTest extends ACUnitTestBaseRx {
     public void subscribe_nullEncounter() {
         PowerMockito.when(NetworkUtils.isOnline()).thenReturn(true);
         Mockito.lenient().when(restApi.getLastVitals(anyString(), anyString(), anyString(), anyInt(), anyString()))
-                .thenReturn(mockSuccessCall(Collections.singletonList(new Encounter())));
+            .thenReturn(mockSuccessCall(Collections.singletonList(new Encounter())));
         Mockito.lenient().when(encounterDAO.getLastVitalsEncounter(patient.getUuid())).thenReturn(Observable.just(null));
         presenter.subscribe();
         verify(encounterDAO, times(2)).getLastVitalsEncounter(patient.getUuid());

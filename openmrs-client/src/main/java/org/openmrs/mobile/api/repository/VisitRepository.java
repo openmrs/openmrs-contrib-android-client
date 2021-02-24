@@ -18,13 +18,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.EncounterCreateRoomDAO;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.GetVisitTypeCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.StartVisitResponseCallback;
@@ -46,19 +45,15 @@ import retrofit2.Response;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class VisitRepository {
-    AppDatabase db;
+public class VisitRepository extends BaseRepository {
     LocationDAO locationDAO;
-    private RestApi restApi;
     private VisitDAO visitDAO;
     private EncounterDAO encounterDAO;
     private EncounterCreateRoomDAO encounterCreateRoomDAO;
 
     public VisitRepository() {
-        restApi = RestServiceBuilder.createService(RestApi.class);
         visitDAO = new VisitDAO();
         encounterDAO = new EncounterDAO();
-        db = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext());
         encounterCreateRoomDAO = db.encounterCreateRoomDAO();
         locationDAO = new LocationDAO();
     }
@@ -71,8 +66,8 @@ public class VisitRepository {
      * @param locationDAO
      * @param encounterDAO
      */
-    public VisitRepository(RestApi restApi, VisitDAO visitDAO, LocationDAO locationDAO, EncounterDAO encounterDAO) {
-        this.restApi = restApi;
+    public VisitRepository(OpenMRS openMrs, OpenMRSLogger logger,RestApi restApi, VisitDAO visitDAO, LocationDAO locationDAO, EncounterDAO encounterDAO) {
+        super(openMrs,restApi, logger);
         this.visitDAO = visitDAO;
         this.encounterDAO = encounterDAO;
         this.locationDAO = locationDAO;
@@ -197,9 +192,9 @@ public class VisitRepository {
         final Visit visit = new Visit();
         visit.setStartDatetime(DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
         visit.setPatient(patient);
-        visit.setLocation(locationDAO.findLocationByName(OpenMRS.getInstance().getLocation()));
+        visit.setLocation(locationDAO.findLocationByName(openMrs.getLocation()));
 
-        visit.setVisitType(new VisitType("", OpenMRS.getInstance().getVisitTypeUUID()));
+        visit.setVisitType(new VisitType("", openMrs.getVisitTypeUUID()));
 
         Call<Visit> call = restApi.startVisit(visit);
         call.enqueue(new Callback<Visit>() {

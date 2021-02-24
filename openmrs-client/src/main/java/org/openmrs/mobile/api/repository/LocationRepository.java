@@ -16,8 +16,6 @@ package org.openmrs.mobile.api.repository;
 
 import androidx.annotation.NonNull;
 
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.promise.SimplePromise;
 import org.openmrs.mobile.databases.entities.LocationEntity;
@@ -32,9 +30,7 @@ public class LocationRepository extends BaseRepository {
     public SimplePromise<LocationEntity> getLocationUuid() {
         final SimpleDeferredObject<LocationEntity> deferred = new SimpleDeferredObject<>();
 
-        RestApi apiService =
-            RestServiceBuilder.createService(RestApi.class);
-        Call<Results<LocationEntity>> call = apiService.getLocations(null);
+        Call<Results<LocationEntity>> call = restApi.getLocations(null);
         call.enqueue(new Callback<Results<LocationEntity>>() {
             @Override
             public void onResponse(@NonNull Call<Results<LocationEntity>> call, @NonNull Response<Results<LocationEntity>> response) {

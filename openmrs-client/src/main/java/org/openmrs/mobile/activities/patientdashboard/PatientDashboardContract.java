@@ -15,6 +15,7 @@
 package org.openmrs.mobile.activities.patientdashboard;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
@@ -129,7 +130,7 @@ public interface PatientDashboardContract {
     }
 
     interface PatientAllergyPresenter extends PatientDashboardMainPresenter {
-        void getAllergy(Fragment fragment);
+        void getAllergy(LifecycleOwner lifecycleOwner);
 
         void deleteAllergy(String uuid);
     }

@@ -16,9 +16,14 @@ package org.openmrs.mobile.activities.dashboard
 
 import android.os.Bundle
 import android.os.Handler
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
 import org.openmrs.mobile.utilities.ToastUtil
+
 
 class DashboardActivity : ACBaseActivity() {
 
@@ -68,17 +73,6 @@ class DashboardActivity : ACBaseActivity() {
             actionBar.setLogo(R.drawable.openmrs_action_logo)
             actionBar.setTitle(R.string.app_name)
         }
-        // Create fragment
-        var dashboardFragment = supportFragmentManager.findFragmentById(R.id.dashboardContentFrame) as DashboardFragment?
-        if (dashboardFragment == null) {
-            dashboardFragment = DashboardFragment.newInstance()
-        }
-        if (!dashboardFragment.isActive) {
-            addFragmentToActivity(supportFragmentManager,
-                    dashboardFragment, R.id.dashboardContentFrame)
-        }
-        // Create the presenter
-        DashboardPresenter(dashboardFragment)
     }
 
     /*TODO: Permission handling to be coded later, moving to SDK 22 for now.

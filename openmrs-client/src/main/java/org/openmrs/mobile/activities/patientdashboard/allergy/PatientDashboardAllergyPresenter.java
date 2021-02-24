@@ -14,8 +14,7 @@
 
 package org.openmrs.mobile.activities.patientdashboard.allergy;
 
-import androidx.fragment.app.Fragment;
-
+import androidx.lifecycle.LifecycleOwner;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
 import org.openmrs.mobile.api.RestApi;
@@ -60,8 +59,8 @@ public class PatientDashboardAllergyPresenter extends PatientDashboardMainPresen
     }
 
     @Override
-    public void getAllergy(Fragment fragment) {
-        allergyRepository.getAllergies(restApi, mPatient.getUuid()).observe(fragment, this::updateViews);
+    public void getAllergy(LifecycleOwner lifecycleOwner) {
+        allergyRepository.getAllergies(restApi, mPatient.getUuid()).observe(lifecycleOwner, this::updateViews);
     }
 
     public void getAllergyFromDatabase() {

@@ -17,6 +17,7 @@ package org.openmrs.mobile.activities.dashboard
 import org.openmrs.mobile.activities.BasePresenter
 
 class DashboardPresenter(private val mDashboardView: DashboardContract.View) : BasePresenter(), DashboardContract.Presenter {
+
     override fun subscribe() {
         mDashboardView.bindDrawableResources()
     }

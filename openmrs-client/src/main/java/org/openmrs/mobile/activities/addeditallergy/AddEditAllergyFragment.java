@@ -126,7 +126,7 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
             selectChip(patientAllergyBinding.allergenOther);
         });
 
-        patientAllergyBinding.cancelButton.setOnClickListener(view -> Objects.requireNonNull(getActivity()).finish());
+        patientAllergyBinding.cancelButton.setOnClickListener(view -> requireActivity().finish());
 
         patientAllergyBinding.submitButton.setOnClickListener(view -> createAllergy());
     }

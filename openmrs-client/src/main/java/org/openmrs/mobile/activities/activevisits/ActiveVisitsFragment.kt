@@ -33,7 +33,7 @@ class ActiveVisitsFragment : ACBaseFragment<ActiveVisitsContract.Presenter>(), A
         with(binding) {
             visitsRecyclerView.setHasFixedSize(true)
             visitsRecyclerView.layoutManager = linearLayoutManager
-            binding.visitsRecyclerView.adapter = ActiveVisitsRecyclerViewAdapter(context!!, ArrayList())
+            binding.visitsRecyclerView.adapter = ActiveVisitsRecyclerViewAdapter(requireContext(), ArrayList())
 
             emptyVisitsListViewLabel.text = getString(R.string.search_visits_no_results)
             emptyVisitsListViewLabel.visibility = View.INVISIBLE
@@ -57,7 +57,7 @@ class ActiveVisitsFragment : ACBaseFragment<ActiveVisitsContract.Presenter>(), A
                 visitsRecyclerView.visibility = View.GONE
                 emptyVisitsListViewLabel.visibility = View.VISIBLE
             } else {
-                visitsRecyclerView.adapter = ActiveVisitsRecyclerViewAdapter(context!!, visitList)
+                visitsRecyclerView.adapter = ActiveVisitsRecyclerViewAdapter(requireContext(), visitList)
                 visitsRecyclerView.visibility = View.VISIBLE
                 emptyVisitsListViewLabel.visibility = View.GONE
             }

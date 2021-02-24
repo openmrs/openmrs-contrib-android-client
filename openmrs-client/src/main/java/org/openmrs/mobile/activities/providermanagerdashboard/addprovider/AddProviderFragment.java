@@ -56,10 +56,10 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentAddProviderBinding.inflate(inflater, container, false);
 
-        editProvider = (Provider) (Objects.requireNonNull(getActivity()).getIntent()
+        editProvider = (Provider) (requireActivity().getIntent()
                 .getSerializableExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE));
 
-        existingProviders = (ArrayList<Provider>) (Objects.requireNonNull(getActivity()).getIntent()
+        existingProviders = (ArrayList<Provider>) (requireActivity().getIntent()
                 .getSerializableExtra(ApplicationConstants.BundleKeys.EXISTING_PROVIDERS_BUNDLE));
         setupUI();
         return binding.getRoot();
@@ -162,8 +162,8 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
 
     public void showMatchingProvidersDialog(List<Provider> matchingProviders, Provider provider) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getContext()));
-        builder.setTitle(Objects.requireNonNull(getActivity()).getString(R.string.title_dialog_matching_provider));
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle(requireActivity().getString(R.string.title_dialog_matching_provider));
 
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.custom_matching_provider_alert_dialog, null);
@@ -196,7 +196,7 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
     public void setProviderResult(Provider provider) {
         Intent intent = new Intent();
         intent.putExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE, provider);
-        Objects.requireNonNull(getActivity()).setResult(RESULT_OK, intent);
+        requireActivity().setResult(RESULT_OK, intent);
 
         getActivity().finish();
     }

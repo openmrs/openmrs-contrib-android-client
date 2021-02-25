@@ -61,7 +61,7 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
         this.visitId = visitId;
         this.restApi = restApi;
         mVisitDashboardView.setPresenter(this);
-        visitRepository = new VisitRepository(restApi, visitDAO, null, null);
+        visitRepository = new VisitRepository(null, null, restApi, visitDAO, null, null);
     }
 
     public void endVisitByUUID(final Visit visit) {

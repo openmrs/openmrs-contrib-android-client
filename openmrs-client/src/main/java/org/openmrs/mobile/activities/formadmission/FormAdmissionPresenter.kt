@@ -22,16 +22,17 @@ import org.openmrs.mobile.api.RestApi
 import org.openmrs.mobile.api.RestServiceBuilder
 import org.openmrs.mobile.api.repository.ProviderRepository
 import org.openmrs.mobile.application.OpenMRS
+import org.openmrs.mobile.application.OpenMRSLogger
 import org.openmrs.mobile.dao.PatientDAO
 import org.openmrs.mobile.databases.AppDatabase
 import org.openmrs.mobile.databases.entities.LocationEntity
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback
-import org.openmrs.mobile.models.Patient
-import org.openmrs.mobile.models.Provider
-import org.openmrs.mobile.models.Resource
 import org.openmrs.mobile.models.Encountercreate
 import org.openmrs.mobile.models.Obscreate
 import org.openmrs.mobile.models.EncounterProviderCreate
+import org.openmrs.mobile.models.Patient
+import org.openmrs.mobile.models.Provider
+import org.openmrs.mobile.models.Resource
 import org.openmrs.mobile.utilities.FormService.getFormResourceByName
 import org.openmrs.mobile.utilities.ToastUtil.error
 import org.openmrs.mobile.utilities.ToastUtil.success
@@ -60,12 +61,12 @@ class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
         providerRepository = ProviderRepository()
     }
 
-    constructor(formAdmissionView: FormAdmissionContract.View, restApi: RestApi, context: Context) {
+    constructor(formAdmissionView: FormAdmissionContract.View, restApi: RestApi, context: Context, logger: OpenMRSLogger) {
         view = formAdmissionView
         this.restApi = restApi
         view.setPresenter(this)
         mContext = context
-        providerRepository = ProviderRepository(OpenMRS.getInstance(), restApi);
+        providerRepository = ProviderRepository(OpenMRS.getInstance(), restApi, logger);
     }
 
     override fun subscribe() {
@@ -90,7 +91,7 @@ class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
     }
 
     fun updateLocationList(locationList: List<LocationEntity?>?) {
-        if(locationList != null && locationList.isNotEmpty()) {
+        if (locationList != null && locationList.isNotEmpty()) {
             view.updateLocationAdapter(locationList)
         } else {
             view.enableSubmitButton(false)
@@ -103,7 +104,7 @@ class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
     }
 
     fun updateEncounterRoles(encounterRolesList: List<Resource?>?) {
-        if(encounterRolesList != null && encounterRolesList.isNotEmpty()) {
+        if (encounterRolesList != null && encounterRolesList.isNotEmpty()) {
             view.updateEncounterRoleList(encounterRolesList)
         } else {
             view.enableSubmitButton(false)

@@ -28,7 +28,6 @@ import org.jdeferred.android.AndroidDeferredManager;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.promise.SimplePromise;
 import org.openmrs.mobile.api.workers.UpdatePatientWorker;
@@ -36,7 +35,6 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.EncounterCreateRoomDAO;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DownloadPatientCallback;
@@ -140,7 +138,9 @@ public class PatientRepository extends BaseRepository {
                         @Override
                         public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
                             if (callback != null) {
-                                callback.onErrorResponse(openMrs.getString(R.string.patient_cannot_be_synced_due_to_request_error_message, patient.getId(), t.getMessage().toString()), deferred);
+                                callback
+                                    .onErrorResponse(openMrs.getString(R.string.patient_cannot_be_synced_due_to_request_error_message, patient.getId(), t.getMessage().toString()),
+                                        deferred);
                             }
                         }
                     });
@@ -341,8 +341,7 @@ public class PatientRepository extends BaseRepository {
     }
 
     private void addEncounters(Patient patient) {
-        EncounterCreateRoomDAO dao = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext())
-            .encounterCreateRoomDAO();
+        EncounterCreateRoomDAO dao = db.encounterCreateRoomDAO();
         String enc = patient.getEncounters();
         List<Long> list = new ArrayList<>();
         for (String s : enc.split(","))
@@ -359,8 +358,7 @@ public class PatientRepository extends BaseRepository {
     private SimplePromise<String> getIdGenPatientIdentifier() {
         final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
 
-        RestApi apiService = RestServiceBuilder.createServiceForPatientIdentifier(RestApi.class);
-        Call<IdGenPatientIdentifiers> call = apiService.getPatientIdentifiers(openMrs.getUsername(), openMrs.getPassword());
+        Call<IdGenPatientIdentifiers> call = restApi.getPatientIdentifiers(openMrs.getUsername(), openMrs.getPassword());
         call.enqueue(new Callback<IdGenPatientIdentifiers>() {
             @Override
             public void onResponse(@NonNull Call<IdGenPatientIdentifiers> call, @NonNull Response<IdGenPatientIdentifiers> response) {
@@ -485,7 +483,7 @@ public class PatientRepository extends BaseRepository {
         });
     }
 
-    public void fetchSimilarPatientAndCalculateLocally(final Patient patient,PatientResponseCallback callback) {
+    public void fetchSimilarPatientAndCalculateLocally(final Patient patient, PatientResponseCallback callback) {
         Call<Results<Patient>> call = restApi.getPatients(patient.getName().getGivenName(), ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<Patient>>() {
             @Override
@@ -522,5 +520,4 @@ public class PatientRepository extends BaseRepository {
             }
         });
     }
-
 }

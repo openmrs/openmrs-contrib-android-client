@@ -37,11 +37,6 @@ public abstract class BaseRepository {
         this.logger = new OpenMRSLogger();
     }
 
-    public BaseRepository(OpenMRS openMrs, RestApi restApi) {
-        this.openMrs = openMrs;
-        this.restApi = restApi;
-    }
-
     public BaseRepository(OpenMRS openMRS, RestApi restApi, OpenMRSLogger logger) {
         this.logger = logger;
         this.openMrs = openMRS;

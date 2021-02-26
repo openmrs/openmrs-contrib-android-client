@@ -214,12 +214,16 @@ class DashboardFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View) {
         val directionToRegister=DashboardFragmentDirections.actionDashboardFragmentToAddEditPatientActivity()
+        val directionToFindPatent=DashboardFragmentDirections.actionDashboardFragmentToSyncedPatientsActivity()
+        val directionToFormEntry=DashboardFragmentDirections.actionDashboardFragmentToFormEntryPatientListActivity()
+        val directionToProviderManager=DashboardFragmentDirections.actionDashboardFragmentToProviderDashboardActivity()
+        val directionToActiveVisits=DashboardFragmentDirections.actionDashboardFragmentToActiveVisitsActivity()
         when (v.id) {
-            R.id.findPatientView -> startNewActivity(SyncedPatientsActivity::class.java)
+            R.id.findPatientView -> findNavController().navigate(directionToFindPatent)
             R.id.registryPatientView -> findNavController().navigate(directionToRegister)
-            R.id.captureVitalsView -> startNewActivity(FormEntryPatientListActivity::class.java)
-            R.id.activeVisitsView -> startNewActivity(ActiveVisitsActivity::class.java)
-            R.id.dashboardProviderManagementView -> startNewActivity(ProviderManagerDashboardActivity::class.java)
+            R.id.captureVitalsView -> findNavController().navigate(directionToFormEntry)
+            R.id.activeVisitsView -> findNavController().navigate(directionToActiveVisits)
+            R.id.dashboardProviderManagementView -> findNavController().navigate(directionToProviderManager)
             else -> {
             }
         }

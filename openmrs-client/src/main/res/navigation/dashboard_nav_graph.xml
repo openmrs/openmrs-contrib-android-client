@@ -26,6 +26,18 @@
         <action
             android:id="@+id/action_dashboardFragment_to_addEditPatientActivity"
             app:destination="@id/addEditPatientActivity" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_syncedPatientsActivity"
+            app:destination="@id/syncedPatientsActivity" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_activeVisitsActivity"
+            app:destination="@id/activeVisitsActivity" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_providerDashboardActivity"
+            app:destination="@id/providerDashboardActivity" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_formEntryPatientListActivity"
+            app:destination="@id/formEntryPatientListActivity" />
 
     </fragment>
 
@@ -34,5 +46,22 @@
         android:name="org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity"
         android:label="activity_patient_info"
         tools:layout="@layout/activity_patient_info" />
+    <activity
+        android:id="@+id/syncedPatientsActivity"
+        android:name="org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity"
+        android:label="activity_find_patients"
+        tools:layout="@layout/activity_find_patients" />
+    <activity
+        android:id="@+id/activeVisitsActivity"
+        android:name="org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity"
+        android:label="ActiveVisitsActivity" />
+    <activity
+        android:id="@+id/providerDashboardActivity"
+        android:name="org.openmrs.mobile.activities.providerdashboard.ProviderDashboardActivity"
+        android:label="ProviderDashboardActivity" />
+    <activity
+        android:id="@+id/formEntryPatientListActivity"
+        android:name="org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity"
+        android:label="FormEntryPatientListActivity" />
 
 </navigation>

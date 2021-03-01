@@ -382,13 +382,10 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     @Override
     public void setProgressBarVisibility(boolean visibility) {
         binding.progressBar.setVisibility(visibility ? View.VISIBLE : View.GONE);
+        if(binding.progressBar.getVisibility()==View.VISIBLE)
         getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        Dialog pd = new Dialog(getActivity(), android.R.style.Theme_Black);
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.activity_patient_info, null);
-        pd.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        pd.getWindow().setBackgroundDrawableResource(R.color.translucent_70_percent);
-        pd.setContentView(view);
-        pd.show();
+        else 
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
     }
 
     @Override

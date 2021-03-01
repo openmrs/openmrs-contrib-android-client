@@ -43,7 +43,7 @@ import org.openmrs.mobile.utilities.ImageUtils
 import org.openmrs.mobile.utilities.ThemeUtils
 import org.openmrs.mobile.utilities.ToastUtil
 
-class DashboardFragment : Fragment(), View.OnClickListener {
+class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), DashboardContract.View, View.OnClickListener {
 
     private var binding: FragmentDashboardBinding? = null
     private var mFindPatientButton: ImageView? = null
@@ -152,16 +152,11 @@ class DashboardFragment : Fragment(), View.OnClickListener {
         unbindDrawableResources()
     }
 
-    override fun onResume() {
-        super.onResume()
-        bindDrawableResources()
-    }
-
     /**
      * Binds drawable resources to all dashboard buttons
      * Initially called by this view's presenter
      */
-    fun bindDrawableResources() {
+    override fun bindDrawableResources() {
         bindDrawableResource(mFindPatientButton, R.drawable.ico_search)
         bindDrawableResource(mRegistryPatientButton, R.drawable.ico_registry)
         bindDrawableResource(mActiveVisitsButton, R.drawable.ico_visits)

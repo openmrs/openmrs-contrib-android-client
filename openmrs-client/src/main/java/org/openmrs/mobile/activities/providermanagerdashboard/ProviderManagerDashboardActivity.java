@@ -33,7 +33,6 @@ import org.openmrs.mobile.utilities.StringUtils;
 
 public class ProviderManagerDashboardActivity extends ACBaseActivity {
     ProviderManagerDashboardFragment providerManagerDashboardFragment;
-    private ActivityProviderManagementBinding binding;
     private SearchView searchView;
     private String query;
 
@@ -41,7 +40,7 @@ public class ProviderManagerDashboardActivity extends ACBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityProviderManagementBinding.inflate(getLayoutInflater());
+        ActivityProviderManagementBinding binding = ActivityProviderManagementBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         ActionBar actionBar = getSupportActionBar();

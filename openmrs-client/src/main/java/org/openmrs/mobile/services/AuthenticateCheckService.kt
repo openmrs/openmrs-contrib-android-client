@@ -11,128 +11,112 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+@file:Suppress("DEPRECATION")
 
-package org.openmrs.mobile.services;
+package org.openmrs.mobile.services
 
-import android.app.ActivityManager;
-import android.app.Service;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.os.Binder;
-import android.os.IBinder;
-import android.util.Log;
+import android.app.ActivityManager
+import android.app.Service
+import android.content.Intent
+import android.os.Binder
+import android.os.IBinder
+import android.util.Log
+import org.openmrs.mobile.R
+import org.openmrs.mobile.api.RestApi
+import org.openmrs.mobile.api.RestServiceBuilder
+import org.openmrs.mobile.application.OpenMRS
+import org.openmrs.mobile.databases.AppDatabase
+import org.openmrs.mobile.models.Session
+import org.openmrs.mobile.utilities.ApplicationConstants
+import org.openmrs.mobile.utilities.NetworkUtils.hasNetwork
+import org.openmrs.mobile.utilities.ToastUtil.error
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.*
 
-import androidx.annotation.NonNull;
-
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.models.Session;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.NetworkUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
-
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class AuthenticateCheckService extends Service {
-    private IBinder mBinder = new SocketServerBinder();
-    private boolean mRunning = false;
-    private OpenMRS mOpenMRS = OpenMRS.getInstance();
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        Timer mTimer = new Timer();
-        mTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
+class AuthenticateCheckService : Service() {
+    private val mBinder: IBinder = SocketServerBinder()
+    private var mRunning = false
+    private val mOpenMRS = OpenMRS.getInstance()
+    override fun onCreate() {
+        super.onCreate()
+        val mTimer = Timer()
+        mTimer.schedule(object : TimerTask() {
+            override fun run() {
                 if (mRunning) {
-                    String username = mOpenMRS.getUsername();
-                    String password = mOpenMRS.getPassword();
-                    if ((!username.equals(ApplicationConstants.EMPTY_STRING)) &&
-                            (!password.equals(ApplicationConstants.EMPTY_STRING))) {
-                        Log.e("Service Task ", "Running");
-                        authenticateCheck(username, password);
+                    val username = mOpenMRS.username
+                    val password = mOpenMRS.password
+                    if (username != ApplicationConstants.EMPTY_STRING &&
+                            password != ApplicationConstants.EMPTY_STRING) {
+                        Log.e("Service Task ", "Running")
+                        authenticateCheck(username, password)
                     }
                 }
             }
-        }, 10000, 100000);
+        }, 10000, 100000)
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        mRunning = true;
-        return START_NOT_STICKY;
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        mRunning = true
+        return START_NOT_STICKY
     }
 
-    @Override
-    public IBinder onBind(Intent arg0) {
-        mRunning = true;
-        return mBinder;
+    override fun onBind(arg0: Intent): IBinder {
+        mRunning = true
+        return mBinder
     }
 
-    @Override
-    public boolean onUnbind(Intent intent) {
-        mRunning = false;
-        return super.onUnbind(intent);
+    override fun onUnbind(intent: Intent): Boolean {
+        mRunning = false
+        return super.onUnbind(intent)
     }
 
-    private void authenticateCheck(String username, String password) {
-        if (NetworkUtils.hasNetwork()) {
-            RestApi restApi = RestServiceBuilder.createService(RestApi.class, username, password);
-            Call<Session> call = restApi.getSession();
-            call.enqueue(new Callback<Session>() {
-                @Override
-                public void onResponse(@NonNull Call<Session> call, @NonNull Response<Session> response) {
-                    if (response.isSuccessful()) {
-                        Session session = response.body();
-                        if (session.isAuthenticated()) {
-                            Log.e("Service Task ", "user authenticated");
+    private fun authenticateCheck(username: String, password: String) {
+        if (hasNetwork()) {
+            val restApi = RestServiceBuilder.createService(RestApi::class.java, username, password)
+            val call = restApi.session
+            call.enqueue(object : Callback<Session?> {
+                override fun onResponse(call: Call<Session?>, response: Response<Session?>) {
+                    if (response.isSuccessful) {
+                        val session = response.body()
+                        if (session!!.isAuthenticated) {
+                            Log.e("Service Task ", "user authenticated")
                         } else {
-                            Log.e("Service Task ", "User Credentials Changed");
-                            if (isForeground(OpenMRS.getInstance().getPackageName())) {
-                                Intent broadcastIntent = new Intent();
-                                broadcastIntent.setAction(ApplicationConstants.BroadcastActions.AUTHENTICATION_CHECK_BROADCAST_ACTION);
-                                sendBroadcast(broadcastIntent);
+                            Log.e("Service Task ", "User Credentials Changed")
+                            if (isForeground(OpenMRS.getInstance().packageName)) {
+                                val broadcastIntent = Intent()
+                                broadcastIntent.action = ApplicationConstants.BroadcastActions.AUTHENTICATION_CHECK_BROADCAST_ACTION
+                                sendBroadcast(broadcastIntent)
                             } else {
-                                AppDatabase.getDatabase(getApplicationContext()).close();
-                                mOpenMRS.clearUserPreferencesData();
-                                mOpenMRS.clearCurrentLoggedInUserInfo();
+                                AppDatabase.getDatabase(applicationContext).close()
+                                mOpenMRS.clearUserPreferencesData()
+                                mOpenMRS.clearCurrentLoggedInUserInfo()
                             }
                         }
                     } else {
-                        ToastUtil.error(getString(R.string.authenticate_check_service_error_response_message));
+                        error(getString(R.string.authenticate_check_service_error_response_message))
                     }
                 }
 
-                @Override
-                public void onFailure(@NonNull Call<Session> call, @NonNull Throwable t) {
-                    ToastUtil.error(getString(R.string.authenticate_service_error_message));
+                override fun onFailure(call: Call<Session?>, t: Throwable) {
+                    error(getString(R.string.authenticate_service_error_message))
                 }
-            });
+            })
         } else {
-            Log.e("Service Task ", "No Network");
+            Log.e("Service Task ", "No Network")
         }
     }
 
-    public boolean isForeground(String myPackage) {
-        ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> runningTaskInfo = manager.getRunningTasks(1);
-        ComponentName componentInfo = runningTaskInfo.get(0).topActivity;
-        return componentInfo.getPackageName().equals(myPackage);
+    fun isForeground(myPackage: String): Boolean {
+        val manager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        val runningTaskInfo = manager.getRunningTasks(1)
+        val componentInfo = runningTaskInfo[0].topActivity
+        return componentInfo!!.packageName == myPackage
     }
 
-    public class SocketServerBinder extends Binder {
-        public AuthenticateCheckService getService() {
-            return AuthenticateCheckService.this;
-        }
+    inner class SocketServerBinder : Binder() {
+        val service: AuthenticateCheckService
+            get() = this@AuthenticateCheckService
     }
 }

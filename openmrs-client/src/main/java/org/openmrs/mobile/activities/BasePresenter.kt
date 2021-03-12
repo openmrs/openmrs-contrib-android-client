@@ -11,10 +11,22 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package org.openmrs.mobile.activities
 
+import rx.Subscription
+import rx.subscriptions.CompositeSubscription
 
-package org.openmrs.mobile.activities;
+abstract class BasePresenter : BasePresenterContract {
+    private val mSubscription: CompositeSubscription?
+    fun addSubscription(subscription: Subscription?) {
+        mSubscription?.add(subscription)
+    }
 
-public interface BaseView<T> {
-    void setPresenter(T presenter);
+    override fun unsubscribe() {
+        mSubscription?.clear()
+    }
+
+    init {
+        mSubscription = CompositeSubscription()
+    }
 }

@@ -11,212 +11,181 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package org.openmrs.mobile.activities.visitdashboard
 
-package org.openmrs.mobile.activities.visitdashboard;
+import android.content.Context
+import android.graphics.Bitmap
+import android.util.SparseArray
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.BaseExpandableListAdapter
+import android.widget.LinearLayout
+import android.widget.TextView
+import org.openmrs.mobile.R
+import org.openmrs.mobile.application.OpenMRSInflater
+import org.openmrs.mobile.models.Encounter
+import org.openmrs.mobile.models.EncounterType
+import org.openmrs.mobile.utilities.ApplicationConstants
+import org.openmrs.mobile.utilities.ImageUtils.decodeBitmapFromResource
+import java.util.*
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.util.SparseArray;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.application.OpenMRSInflater;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.EncounterType;
-import org.openmrs.mobile.models.Observation;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.ImageUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
-    private static final int LEFT = 0;
-    private static final int RIGHT = 1;
-    private Context mContext;
-    private List<Encounter> mEncounters;
-    private List<ViewGroup> mChildLayouts;
-    private SparseArray<Bitmap> mBitmapCache;
-
-    public VisitExpandableListAdapter(Context context, List<Encounter> encounters) {
-        this.mContext = context;
-        this.mEncounters = encounters;
-        this.mBitmapCache = new SparseArray<>();
-        this.mChildLayouts = generateChildLayouts();
-    }
-
-    private List<ViewGroup> generateChildLayouts() {
-        List<ViewGroup> layouts = new ArrayList<>();
-        LayoutInflater inflater = LayoutInflater.from(mContext);
-        OpenMRSInflater openMRSInflater = new OpenMRSInflater(inflater);
-
-        for (Encounter encounter : this.mEncounters) {
-            ViewGroup convertView = (ViewGroup) inflater.inflate(R.layout.list_visit_item, null);
-            LinearLayout contentLayout = convertView.findViewById(R.id.listVisitItemLayoutContent);
-            switch (encounter.getEncounterType().getDisplay()) {
-                case EncounterType.VITALS:
-                    for (Observation obs : encounter.getObservations()) {
-                        convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(), obs.getDisplayValue());
+class VisitExpandableListAdapter(private val mContext: Context, private val mEncounters: MutableList<Encounter?>) : BaseExpandableListAdapter() {
+    private var mChildLayouts: List<ViewGroup>
+    private val mBitmapCache: SparseArray<Bitmap?> = SparseArray()
+    private fun generateChildLayouts(): List<ViewGroup> {
+        val layouts: MutableList<ViewGroup> = ArrayList()
+        val inflater = LayoutInflater.from(mContext)
+        val openMRSInflater = OpenMRSInflater(inflater)
+        for (encounter in mEncounters) {
+            var convertView = inflater.inflate(R.layout.list_visit_item, null) as ViewGroup
+            val contentLayout = convertView.findViewById<LinearLayout>(R.id.listVisitItemLayoutContent)
+            when (encounter?.encounterType!!.display) {
+                EncounterType.VITALS -> {
+                    for (obs in encounter.observations) {
+                        convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.display, obs.displayValue)
                     }
-                    layouts.add(convertView);
-                    break;
-                case EncounterType.VISIT_NOTE:
-                    for (Observation obs : encounter.getObservations()) {
+                    layouts.add(convertView)
+                }
+                EncounterType.VISIT_NOTE -> {
+                    for (obs in encounter.observations) {
                         //checking the type of observation, to extract the relevant data from it to add to the layout
-                        if (obs.getDiagnosisNote() != null && !obs.getDiagnosisNote().equals(ApplicationConstants.EMPTY_STRING)) {
+                        if (obs.diagnosisNote != null && obs.diagnosisNote != ApplicationConstants.EMPTY_STRING) {
                             //if the observation is a Diagnosis Note, i.e. it contains a value for diagnosisNote
-                            convertView = openMRSInflater.addKeyValueStringView(contentLayout, mContext.getString(R.string.diagnosis_note_label), obs.getDiagnosisNote());
-                        } else if (obs.getDiagnosisOrder() != null && obs.getShortDiagnosisCertainty() != null && obs.getDiagnosisList() != null) {
+                            convertView = openMRSInflater.addKeyValueStringView(contentLayout, mContext.getString(R.string.diagnosis_note_label), obs.diagnosisNote)
+                        } else if (obs.diagnosisOrder != null && obs.diagnosisList != null) {
                             //if the observation is a Diagnosis Order
-                            convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDiagnosisOrder(),
-                                "(" + obs.getShortDiagnosisCertainty() + ") " + obs.getDiagnosisList());
-                        } else if (obs.getDisplay() != null && obs.getDisplayValue() != null) {
-                            if (obs.getDisplay().contains(mContext.getString(R.string.hiv_yes))) {
-                                convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(),
-                                    mContext.getString(R.string.hiv_yes));
-                            } else if (obs.getDisplay().contains(mContext.getString(R.string.hiv_no))) {
-                                convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(),
-                                    mContext.getString(R.string.hiv_no));
-                            } else if (obs.getDisplay().contains(mContext.getString(R.string.hiv_unknown))) {
-                                convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(),
-                                    mContext.getString(R.string.hiv_unknown));
-                            } else {
-                                //miscellaneous, for all other cases that have a Display - Value pair
-                                convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.getDisplay(), obs.getDisplayValue());
+                            convertView = openMRSInflater.addKeyValueStringView(contentLayout, obs.diagnosisOrder,
+                                    "(" + obs.shortDiagnosisCertainty + ") " + obs.diagnosisList)
+                        } else if (obs.display != null && obs.displayValue != null) {
+                            convertView = when {
+                                obs.display!!.contains(mContext.getString(R.string.hiv_yes)) -> {
+                                    openMRSInflater.addKeyValueStringView(contentLayout, obs.display,
+                                            mContext.getString(R.string.hiv_yes))
+                                }
+                                obs.display!!.contains(mContext.getString(R.string.hiv_no)) -> {
+                                    openMRSInflater.addKeyValueStringView(contentLayout, obs.display,
+                                            mContext.getString(R.string.hiv_no))
+                                }
+                                obs.display!!.contains(mContext.getString(R.string.hiv_unknown)) -> {
+                                    openMRSInflater.addKeyValueStringView(contentLayout, obs.display,
+                                            mContext.getString(R.string.hiv_unknown))
+                                }
+                                else -> {
+                                    //miscellaneous, for all other cases that have a Display - Value pair
+                                    openMRSInflater.addKeyValueStringView(contentLayout, obs.display, obs.displayValue)
+                                }
                             }
                         }
                     }
-                    layouts.add(convertView);
-                    break;
-                case EncounterType.DISCHARGE:
-                    convertView = openMRSInflater.addSingleStringView(contentLayout, mContext.getString(R.string.discharge_location_in_list, encounter.getLocation().getDisplay()));
-                    layouts.add(convertView);
-                    break;
-                case EncounterType.ADMISSION:
-                    convertView = openMRSInflater.addSingleStringView(contentLayout, mContext.getString(R.string.admission_location_in_list, encounter.getLocation().getDisplay()));
-                    layouts.add(convertView);
-                    break;
-                default:
-                    break;
+                    layouts.add(convertView)
+                }
+                EncounterType.DISCHARGE -> {
+                    convertView = openMRSInflater.addSingleStringView(contentLayout, mContext.getString(R.string.discharge_location_in_list, encounter.location!!.display))
+                    layouts.add(convertView)
+                }
+                EncounterType.ADMISSION -> {
+                    convertView = openMRSInflater.addSingleStringView(contentLayout, mContext.getString(R.string.admission_location_in_list, encounter.location!!.display))
+                    layouts.add(convertView)
+                }
+                else -> {
+                }
             }
         }
-
-        return layouts;
+        return layouts
     }
 
-    @Override
-    public int getGroupCount() {
-        return mEncounters.size();
+    override fun getGroupCount(): Int {
+        return mEncounters.size
     }
 
-    @Override
-    public int getChildrenCount(int groupPosition) {
-        return 1;
+    override fun getChildrenCount(groupPosition: Int): Int {
+        return 1
     }
 
-    @Override
-    public Object getGroup(int groupPosition) {
-        return mEncounters.get(groupPosition);
+    override fun getGroup(groupPosition: Int): Encounter? {
+        return mEncounters[groupPosition]
     }
 
-    @Override
-    public Object getChild(int groupPosition, int childPosition) {
-        return mChildLayouts.get(groupPosition);
+    override fun getChild(groupPosition: Int, childPosition: Int): Any {
+        return mChildLayouts[groupPosition]
     }
 
-    @Override
-    public long getGroupId(int groupPosition) {
-        return groupPosition;
+    override fun getGroupId(groupPosition: Int): Long {
+        return groupPosition.toLong()
     }
 
-    @Override
-    public long getChildId(int groupPosition, int childPosition) {
-        return childPosition;
+    override fun getChildId(groupPosition: Int, childPosition: Int): Long {
+        return childPosition.toLong()
     }
 
-    @Override
-    public View getGroupView(int groupPosition, final boolean isExpanded, View convertView, ViewGroup parent) {
-        View rowView = convertView;
-        if (null == convertView) {
-            LayoutInflater inflater = (LayoutInflater) this.mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            rowView = inflater.inflate(R.layout.list_visit_group, null);
-        }
-
-        final TextView encounterName = rowView.findViewById(R.id.listVisitGroupEncounterName);
-        final TextView detailsSelector = rowView.findViewById(R.id.listVisitGroupDetailsSelector);
-        final Encounter encounter = mEncounters.get(groupPosition);
-        encounterName.setText(encounter.getEncounterType().getDisplay());
+    override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View, parent: ViewGroup): View {
+        val encounterName = convertView.findViewById<TextView>(R.id.listVisitGroupEncounterName)
+        val detailsSelector = convertView.findViewById<TextView>(R.id.listVisitGroupDetailsSelector)
+        val encounter = mEncounters[groupPosition]
+        encounterName.text = encounter?.encounterType!!.display
         if (isExpanded) {
-            detailsSelector.setText(mContext.getString(R.string.list_visit_selector_hide));
-            bindDrawableResources(R.drawable.exp_list_hide_details, detailsSelector, RIGHT);
+            detailsSelector.text = mContext.getString(R.string.list_visit_selector_hide)
+            bindDrawableResources(R.drawable.exp_list_hide_details, detailsSelector, RIGHT)
         } else {
-            detailsSelector.setText(mContext.getString(R.string.list_visit_selector_show));
-            bindDrawableResources(R.drawable.exp_list_show_details, detailsSelector, RIGHT);
+            detailsSelector.text = mContext.getString(R.string.list_visit_selector_show)
+            bindDrawableResources(R.drawable.exp_list_show_details, detailsSelector, RIGHT)
         }
-        switch (encounter.getEncounterType().getDisplay()) {
-            case EncounterType.VITALS:
-                bindDrawableResources(R.drawable.ico_vitals_small, encounterName, LEFT);
-                break;
-            case EncounterType.VISIT_NOTE:
-                bindDrawableResources(R.drawable.visit_note, encounterName, LEFT);
-                break;
-            case EncounterType.DISCHARGE:
-                bindDrawableResources(R.drawable.discharge, encounterName, LEFT);
-                break;
-            case EncounterType.ADMISSION:
-                bindDrawableResources(R.drawable.admission, encounterName, LEFT);
-                break;
-            default:
-                break;
+        when (encounter.encounterType!!.display) {
+            EncounterType.VITALS -> bindDrawableResources(R.drawable.ico_vitals_small, encounterName, LEFT)
+            EncounterType.VISIT_NOTE -> bindDrawableResources(R.drawable.visit_note, encounterName, LEFT)
+            EncounterType.DISCHARGE -> bindDrawableResources(R.drawable.discharge, encounterName, LEFT)
+            EncounterType.ADMISSION -> bindDrawableResources(R.drawable.admission, encounterName, LEFT)
+            else -> {
+            }
         }
-        return rowView;
+        return convertView
     }
 
-    @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        return (ViewGroup) getChild(groupPosition, childPosition);
+    override fun getChildView(groupPosition: Int, childPosition: Int, isLastChild: Boolean, convertView: View, parent: ViewGroup): View {
+        return getChild(groupPosition, childPosition) as ViewGroup
     }
 
-    @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+    override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean {
+        return false
     }
 
-    @Override
-    public boolean hasStableIds() {
-        return true;
+    override fun hasStableIds(): Boolean {
+        return true
     }
 
-    @Override
-    public void notifyDataSetChanged() {
-        this.mChildLayouts = generateChildLayouts();
-        super.notifyDataSetChanged();
+    override fun notifyDataSetChanged() {
+        mChildLayouts = generateChildLayouts()
+        super.notifyDataSetChanged()
     }
 
-    private void bindDrawableResources(int drawableID, TextView textView, int direction) {
-        final float scale = mContext.getResources().getDisplayMetrics().density;
-        Drawable image = mContext.getResources().getDrawable(drawableID);
+    private fun bindDrawableResources(drawableID: Int, textView: TextView, direction: Int) {
+        val scale = mContext.resources.displayMetrics.density
+        val image = mContext.resources.getDrawable(drawableID)
         if (direction == LEFT) {
-            image.setBounds(0, 0, (int) (40 * scale + 0.5f), (int) (40 * scale + 0.5f));
-            textView.setCompoundDrawablePadding((int) (13 * scale + 0.5f));
-            textView.setCompoundDrawables(image, null, null, null);
+            image.setBounds(0, 0, (40 * scale + 0.5f).toInt(), (40 * scale + 0.5f).toInt())
+            textView.compoundDrawablePadding = (13 * scale + 0.5f).toInt()
+            textView.setCompoundDrawables(image, null, null, null)
         } else {
-            image.setBounds(0, 0, image.getIntrinsicWidth(), image.getIntrinsicHeight());
-            textView.setCompoundDrawablePadding((int) (10 * scale + 0.5f));
-            textView.setCompoundDrawables(null, null, image, null);
+            image.setBounds(0, 0, image.intrinsicWidth, image.intrinsicHeight)
+            textView.compoundDrawablePadding = (10 * scale + 0.5f).toInt()
+            textView.setCompoundDrawables(null, null, image, null)
         }
     }
 
-    private void createImageBitmap(Integer key, ViewGroup.LayoutParams layoutParams) {
-        if (mBitmapCache.get(key) == null) {
-            mBitmapCache.put(key, ImageUtils.decodeBitmapFromResource(mContext.getResources(), key,
-                layoutParams.width, layoutParams.height));
+    private fun createImageBitmap(key: Int, layoutParams: ViewGroup.LayoutParams) {
+        if (mBitmapCache[key] == null) {
+            mBitmapCache.put(key, decodeBitmapFromResource(mContext.resources, key,
+                    layoutParams.width, layoutParams.height))
         }
+    }
+
+    companion object {
+        private const val LEFT = 0
+        private const val RIGHT = 1
+    }
+
+    init {
+        mChildLayouts = generateChildLayouts()
     }
 }

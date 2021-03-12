@@ -11,39 +11,27 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package org.openmrs.mobile.activities.visitdashboard
 
-package org.openmrs.mobile.activities.visitdashboard;
+import org.openmrs.mobile.activities.BasePresenterContract
+import org.openmrs.mobile.activities.BaseView
+import org.openmrs.mobile.models.Encounter
 
-import org.openmrs.mobile.activities.BasePresenterContract;
-import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.models.Encounter;
-
-import java.util.List;
-
-public interface VisitDashboardContract {
-    interface View extends BaseView<Presenter> {
-        void startCaptureVitals(long patientId);
-
-        void moveToPatientDashboard();
-
-        void updateList(List<Encounter> visitEncounters);
-
-        void setEmptyListVisibility(boolean visibility);
-
-        void setActionBarTitle(String name);
-
-        void setActiveVisitMenu();
-
-        void showErrorToast(String message);
-
-        void showErrorToast(int messageId);
+interface VisitDashboardContract {
+    interface View : BaseView<Presenter?> {
+        fun startCaptureVitals(patientId: Long)
+        fun moveToPatientDashboard()
+        fun updateList(visitEncounters: List<Encounter?>?)
+        fun setEmptyListVisibility(visibility: Boolean)
+        fun setActionBarTitle(name: String?)
+        fun setActiveVisitMenu()
+        fun showErrorToast(message: String?)
+        fun showErrorToast(messageId: Int)
     }
 
-    interface Presenter extends BasePresenterContract {
-        void fillForm();
-
-        void updatePatientName();
-
-        void checkIfVisitActive();
+    interface Presenter : BasePresenterContract {
+        fun fillForm()
+        fun updatePatientName()
+        fun checkIfVisitActive()
     }
 }

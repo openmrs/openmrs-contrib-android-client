@@ -74,13 +74,13 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
             @Override
             public void onSuccess(String response) {
                 addSubscription(visitDAO.getVisitByID(visit.getId())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(visit -> {
-                        visit.setStopDatetime(response);
-                        visitDAO.saveOrUpdate(visit, visit.getPatient().getId())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(id -> moveToPatientDashboard());
-                    }));
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(visit -> {
+                            visit.setStopDatetime(response);
+                            visitDAO.saveOrUpdate(visit, visit.getPatient().getId())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(id -> moveToPatientDashboard());
+                        }));
             }
 
             @Override
@@ -92,50 +92,50 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
 
     public void endVisit() {
         addSubscription(visitDAO.getVisitByID(visitId)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(this::endVisitByUUID));
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::endVisitByUUID));
     }
 
     @Override
     public void subscribe() {
         addSubscription(visitDAO.getVisitByID(visitId)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(visit -> {
-                List<Encounter> encounters = visit.getEncounters();
-                if (!encounters.isEmpty()) {
-                    mVisitDashboardView.setEmptyListVisibility(false);
-                }
-                mVisitDashboardView.updateList(encounters);
-            }));
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(visit -> {
+                    List<Encounter> encounters = visit.getEncounters();
+                    if (!encounters.isEmpty()) {
+                        mVisitDashboardView.setEmptyListVisibility(false);
+                    }
+                    mVisitDashboardView.updateList(encounters);
+                }));
     }
 
     @Override
     public void fillForm() {
         addSubscription(visitDAO.getVisitByID(visitId)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(visit -> {
-                Patient patient = visit.getPatient();
-                if (patient.getUuid() != null) {
-                    mVisitDashboardView.startCaptureVitals(patient.getId());
-                } else {
-                    mVisitDashboardView.showErrorToast(R.string.patient_not_yet_registered);
-                }
-            }));
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(visit -> {
+                    Patient patient = visit.getPatient();
+                    if (patient.getUuid() != null) {
+                        mVisitDashboardView.startCaptureVitals(patient.getId());
+                    } else {
+                        mVisitDashboardView.showErrorToast(R.string.patient_not_yet_registered);
+                    }
+                }));
     }
 
     @Override
     public void updatePatientName() {
         addSubscription(visitDAO.getVisitByID(visitId)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(visit -> mVisitDashboardView.setActionBarTitle(visit.getPatient().getName().getNameString())));
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(visit -> mVisitDashboardView.setActionBarTitle(visit.getPatient().getName().getNameString())));
     }
 
     @Override
     public void checkIfVisitActive() {
         addSubscription(visitDAO.getVisitByID(visitId)
-            .observeOn(AndroidSchedulers.mainThread())
-            .filter(visit -> StringUtils.isBlank(visit.getStopDatetime()))
-            .subscribe(visit -> mVisitDashboardView.setActiveVisitMenu()));
+                .observeOn(AndroidSchedulers.mainThread())
+                .filter(visit -> StringUtils.isBlank(visit.getStopDatetime()))
+                .subscribe(visit -> mVisitDashboardView.setActiveVisitMenu()));
     }
 
     public void moveToPatientDashboard() {

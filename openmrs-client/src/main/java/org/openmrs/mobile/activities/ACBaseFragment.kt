@@ -11,11 +11,27 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package org.openmrs.mobile.activities
 
-package org.openmrs.mobile.activities;
+import androidx.fragment.app.Fragment
 
-public interface BasePresenterContract {
-    void subscribe();
+abstract class ACBaseFragment<T : BasePresenterContract?> : Fragment(), BaseView<T> {
+    @JvmField
+    protected var mPresenter: T? = null
+    override fun setPresenter(presenter: T) {
+        mPresenter = presenter
+    }
 
-    void unsubscribe();
+    val isActive: Boolean
+        get() = isAdded
+
+    override fun onResume() {
+        super.onResume()
+        mPresenter!!.subscribe()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mPresenter!!.unsubscribe()
+    }
 }

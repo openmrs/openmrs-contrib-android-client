@@ -11,85 +11,70 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package org.openmrs.mobile.activities.visitdashboard
 
-package org.openmrs.mobile.activities.visitdashboard;
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import org.openmrs.mobile.R
+import org.openmrs.mobile.activities.ACBaseActivity
+import org.openmrs.mobile.activities.dialog.CustomFragmentDialog
+import org.openmrs.mobile.bundle.CustomDialogBundle
+import org.openmrs.mobile.utilities.ApplicationConstants
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import androidx.appcompat.app.ActionBar;
-
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
-import org.openmrs.mobile.bundle.CustomDialogBundle;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-
-public class VisitDashboardActivity extends ACBaseActivity {
-    public VisitDashboardPresenter mPresenter;
-    public Menu menu;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_visit_dashboard);
-
-        ActionBar actionBar = getSupportActionBar();
+class VisitDashboardActivity : ACBaseActivity() {
+    @JvmField
+    var mPresenter: VisitDashboardPresenter? = null
+    @JvmField
+    var menu: Menu? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_visit_dashboard)
+        val actionBar = supportActionBar
         if (actionBar != null) {
-            getSupportActionBar().setElevation(0);
-            getSupportActionBar().setTitle(R.string.visit_dashboard_label);
+            supportActionBar!!.elevation = 0f
+            supportActionBar!!.setTitle(R.string.visit_dashboard_label)
         }
-
-        Intent intent = getIntent();
+        val intent = intent
 
         // Create fragment
-        VisitDashboardFragment visitDashboardFragment =
-            (VisitDashboardFragment) getSupportFragmentManager().findFragmentById(R.id.visitDashboardContentFrame);
+        var visitDashboardFragment = supportFragmentManager.findFragmentById(R.id.visitDashboardContentFrame) as VisitDashboardFragment?
         if (visitDashboardFragment == null) {
-            visitDashboardFragment = VisitDashboardFragment.newInstance();
+            visitDashboardFragment = VisitDashboardFragment.newInstance()
         }
-        if (!visitDashboardFragment.isActive()) {
-            addFragmentToActivity(getSupportFragmentManager(),
-                visitDashboardFragment, R.id.visitDashboardContentFrame);
+        if (!visitDashboardFragment!!.isActive) {
+            addFragmentToActivity(supportFragmentManager,
+                    visitDashboardFragment, R.id.visitDashboardContentFrame)
         }
 
         // Create the presenter
-        mPresenter = new VisitDashboardPresenter(visitDashboardFragment, intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0));
-        mPresenter.updatePatientName();
+        mPresenter = VisitDashboardPresenter(visitDashboardFragment, intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0))
+        mPresenter!!.updatePatientName()
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        this.menu = menu;
-        mPresenter.checkIfVisitActive();
-        return true;
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+        this.menu = menu
+        mPresenter!!.checkIfVisitActive()
+        return true
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                this.finish();
-                break;
-            case R.id.actionFillForm:
-                mPresenter.fillForm();
-                break;
-            case R.id.actionEndVisit:
-                CustomDialogBundle bundle = new CustomDialogBundle();
-                bundle.setTitleViewMessage(getString(R.string.end_visit_dialog_title));
-                bundle.setTextViewMessage(getString(R.string.end_visit_dialog_message));
-                bundle.setRightButtonAction(CustomFragmentDialog.OnClickAction.END_VISIT);
-                bundle.setRightButtonText(getString(R.string.dialog_button_ok));
-                bundle.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
-                bundle.setLeftButtonText(getString(R.string.dialog_button_cancel));
-                createAndShowDialog(bundle, ApplicationConstants.DialogTAG.END_VISIT_DIALOG_TAG);
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> finish()
+            R.id.actionFillForm -> mPresenter!!.fillForm()
+            R.id.actionEndVisit -> {
+                val bundle = CustomDialogBundle()
+                bundle.titleViewMessage = getString(R.string.end_visit_dialog_title)
+                bundle.textViewMessage = getString(R.string.end_visit_dialog_message)
+                bundle.rightButtonAction = CustomFragmentDialog.OnClickAction.END_VISIT
+                bundle.rightButtonText = getString(R.string.dialog_button_ok)
+                bundle.leftButtonAction = CustomFragmentDialog.OnClickAction.DISMISS
+                bundle.leftButtonText = getString(R.string.dialog_button_cancel)
+                createAndShowDialog(bundle, ApplicationConstants.DialogTAG.END_VISIT_DIALOG_TAG)
+            }
+            else -> return super.onOptionsItemSelected(item)
         }
-        return true;
+        return true
     }
 }

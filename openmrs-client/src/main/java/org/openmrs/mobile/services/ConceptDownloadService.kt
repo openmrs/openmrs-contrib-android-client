@@ -1,173 +1,147 @@
-package org.openmrs.mobile.services;
+package org.openmrs.mobile.services
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
-import android.os.IBinder;
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.Service
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Build
+import android.os.IBinder
+import androidx.core.app.NotificationCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import org.openmrs.mobile.R
+import org.openmrs.mobile.activities.settings.SettingsActivity
+import org.openmrs.mobile.api.RestApi
+import org.openmrs.mobile.api.RestServiceBuilder
+import org.openmrs.mobile.application.OpenMRS
+import org.openmrs.mobile.databases.AppDatabase
+import org.openmrs.mobile.databases.entities.ConceptEntity
+import org.openmrs.mobile.models.Results
+import org.openmrs.mobile.models.SystemSetting
+import org.openmrs.mobile.utilities.ApplicationConstants
+import org.openmrs.mobile.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_DESC
+import org.openmrs.mobile.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_ID
+import org.openmrs.mobile.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_NAME
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.NotificationCompat;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.activities.settings.SettingsActivity;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.dao.ConceptRoomDAO;
-import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.databases.entities.ConceptEntity;
-import org.openmrs.mobile.models.Link;
-import org.openmrs.mobile.models.Results;
-import org.openmrs.mobile.models.SystemSetting;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static org.openmrs.mobile.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_DESC;
-import static org.openmrs.mobile.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_ID;
-import static org.openmrs.mobile.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_NAME;
-
-public class ConceptDownloadService extends Service {
-    private int downloadedConcepts;
-    private int maxConceptsInOneQuery = 100;
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        if (intent.getAction().equals(ApplicationConstants.ServiceActions.START_CONCEPT_DOWNLOAD_ACTION)) {
-            showNotification(downloadedConcepts);
-            startDownload();
-            downloadConcepts(downloadedConcepts);
-        } else if (intent.getAction().equals(
-                ApplicationConstants.ServiceActions.STOP_CONCEPT_DOWNLOAD_ACTION)) {
-            stopForeground(true);
-            stopSelf();
+class ConceptDownloadService : Service() {
+    private var downloadedConcepts = 0
+    private var maxConceptsInOneQuery = 100
+    override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
+        if (intent.action == ApplicationConstants.ServiceActions.START_CONCEPT_DOWNLOAD_ACTION) {
+            showNotification(downloadedConcepts)
+            startDownload()
+            downloadConcepts(downloadedConcepts)
+        } else if (intent.action ==
+                ApplicationConstants.ServiceActions.STOP_CONCEPT_DOWNLOAD_ACTION) {
+            stopForeground(true)
+            stopSelf()
         }
-        return START_STICKY;
+        return START_STICKY
     }
 
-    private void startDownload() {
-        RestApi service = RestServiceBuilder.createService(RestApi.class);
-        Call<Results<SystemSetting>> call = service.getSystemSettingsByQuery(
+    private fun startDownload() {
+        val service = RestServiceBuilder.createService(RestApi::class.java)
+        val call = service.getSystemSettingsByQuery(
                 ApplicationConstants.SystemSettingKeys.WS_REST_MAX_RESULTS_ABSOLUTE,
-                ApplicationConstants.API.FULL);
-        call.enqueue(new Callback<Results<SystemSetting>>() {
-            @Override
-            public void onResponse(@NonNull Call<Results<SystemSetting>> call, @NonNull Response<Results<SystemSetting>> response) {
-                if (response.isSuccessful()) {
-                    List<SystemSetting> results = null;
+                ApplicationConstants.API.FULL)
+        call.enqueue(object : Callback<Results<SystemSetting>?> {
+            override fun onResponse(call: Call<Results<SystemSetting>?>, response: Response<Results<SystemSetting>?>) {
+                if (response.isSuccessful) {
+                    val results: List<SystemSetting>?
                     if (response.body() != null) {
-                        results = response.body().getResults();
-                        if (results.size() >= 1) {
-                            String value = results.get(0).getValue();
+                        results = response.body()!!.results
+                        if (results.isNotEmpty()) {
+                            val value = results[0].value
                             if (value != null) {
-                                maxConceptsInOneQuery = Integer.parseInt(value);
+                                maxConceptsInOneQuery = value.toInt()
                             }
                         }
                     }
                 }
-                downloadConcepts(0);
+                downloadConcepts(0)
             }
 
-            @Override
-            public void onFailure(@NonNull Call<Results<SystemSetting>> call, @NonNull Throwable t) {
-                downloadConcepts(0);
+            override fun onFailure(call: Call<Results<SystemSetting>?>, t: Throwable) {
+                downloadConcepts(0)
             }
-        });
+        })
     }
 
-    private void showNotification(int downloadedConcepts) {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
+    private fun showNotification(downloadedConcepts: Int) {
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channelPayment = new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
-            channelPayment.setDescription(CHANNEL_DESC);
-            notificationManager.createNotificationChannel(channelPayment);
+            val channelPayment = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT)
+            channelPayment.description = CHANNEL_DESC
+            notificationManager.createNotificationChannel(channelPayment)
         }
-
-        Intent notificationIntent = new Intent(this, SettingsActivity.class);
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        notificationIntent.putExtra(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_KEY_COUNT, downloadedConcepts);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-
-        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_openmrs);
-
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID)
+        val notificationIntent = Intent(this, SettingsActivity::class.java)
+        notificationIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        notificationIntent.putExtra(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_KEY_COUNT, downloadedConcepts)
+        val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
+        val icon = BitmapFactory.decodeResource(resources, R.drawable.ic_openmrs)
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
                 .setContentTitle(getString(R.string.downloading_concepts_notification_message))
                 .setTicker(getString(R.string.app_name))
-                .setContentText(String.valueOf(downloadedConcepts))
+                .setContentText(downloadedConcepts.toString())
                 .setSmallIcon(R.drawable.ic_stat_notify_download)
                 .setLargeIcon(Bitmap.createScaledBitmap(icon, 128, 128, false))
                 .setContentIntent(pendingIntent)
                 .setOngoing(true)
-                .build();
+                .build()
         startForeground(ApplicationConstants.ServiceNotificationId.CONCEPT_DOWNLOADFOREGROUND_SERVICE,
-                notification);
+                notification)
     }
 
-    private void downloadConcepts(int startIndex) {
-        RestApi service = RestServiceBuilder.createService(RestApi.class);
-        Call<Results<ConceptEntity>> call = service.getConcepts(maxConceptsInOneQuery, startIndex);
-        call.enqueue(new Callback<Results<ConceptEntity>>() {
-            @Override
-            public void onResponse(@NonNull Call<Results<ConceptEntity>> call, @NonNull Response<Results<ConceptEntity>> response) {
-                if (response.isSuccessful()) {
-                    ConceptRoomDAO conceptDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).conceptRoomDAO();
+    private fun downloadConcepts(startIndex: Int) {
+        val service = RestServiceBuilder.createService(RestApi::class.java)
+        val call = service.getConcepts(maxConceptsInOneQuery, startIndex)
+        call.enqueue(object : Callback<Results<ConceptEntity?>?> {
+            override fun onResponse(call: Call<Results<ConceptEntity?>?>, response: Response<Results<ConceptEntity?>?>) {
+                if (response.isSuccessful) {
+                    val conceptDAO = AppDatabase.getDatabase(OpenMRS.getInstance().applicationContext).conceptRoomDAO()
                     if (response.body() != null) {
-                        for (ConceptEntity concept : response.body().getResults()) {
-                            conceptDAO.addConcept(concept);
-                            downloadedConcepts++;
+                        for (concept in response.body()!!.results) {
+                            conceptDAO.addConcept(concept)
+                            downloadedConcepts++
                         }
                     }
-
-                    showNotification(downloadedConcepts);
-                    sendProgressBroadcast();
-
-                    boolean isNextPage = false;
+                    showNotification(downloadedConcepts)
+                    sendProgressBroadcast()
+                    var isNextPage = false
                     if (response.body() != null) {
-                        for (Link link : response.body().getLinks()) {
-                            if ("next".equals(link.getRel())) {
-                                isNextPage = true;
-                                downloadConcepts(startIndex + maxConceptsInOneQuery);
-                                break;
+                        for (link in response.body()!!.links) {
+                            if ("next" == link.rel) {
+                                isNextPage = true
+                                downloadConcepts(startIndex + maxConceptsInOneQuery)
+                                break
                             }
                         }
                     }
                     if (!isNextPage) {
-                        stopSelf();
+                        stopSelf()
                     }
                 } else {
-                    stopSelf();
+                    stopSelf()
                 }
             }
 
-            @Override
-            public void onFailure(@NonNull Call<Results<ConceptEntity>> call, @NonNull Throwable t) {
-                stopSelf();
+            override fun onFailure(call: Call<Results<ConceptEntity?>?>, t: Throwable) {
+                stopSelf()
             }
-        });
+        })
     }
 
-    private void sendProgressBroadcast() {
-        Intent intent = new Intent(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID);
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    private fun sendProgressBroadcast() {
+        val intent = Intent(ApplicationConstants.BroadcastActions.CONCEPT_DOWNLOAD_BROADCAST_INTENT_ID)
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
     }
 
-    @Nullable
-    @Override
-    public IBinder onBind(Intent intent) {
-        return null;
+    override fun onBind(intent: Intent): IBinder? {
+        return null
     }
 }

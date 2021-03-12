@@ -13,12 +13,8 @@
  */
 package org.openmrs.mobile.activities.settings
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.content.pm.PackageManager
-import android.content.ActivityNotFoundException
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
@@ -41,6 +37,7 @@ import org.openmrs.mobile.activities.logs.LogsActivity
 import org.openmrs.mobile.databinding.FragmentSettingsBinding
 import org.openmrs.mobile.services.ConceptDownloadService
 import org.openmrs.mobile.utilities.ApplicationConstants
+
 
 class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsContract.View {
     private var broadcastReceiver: BroadcastReceiver? = null
@@ -172,7 +169,8 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
     }
 
     override fun chooseLanguage(languageList: Array<String>) {
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, languageList)
+        val adapter = ArrayAdapter(requireContext(), R.layout.spinner_style, languageList)
+        adapter.setDropDownViewResource(R.layout.spinner_style)
         with(binding) {
             languageSpinner.adapter = adapter
             languageSpinner.setSelection(mPresenter?.languagePosition ?: 0)

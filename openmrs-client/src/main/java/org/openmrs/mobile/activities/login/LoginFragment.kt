@@ -128,11 +128,11 @@ class LoginFragment : ACBaseFragment<LoginContract.Presenter?>(), LoginContract.
     }
 
     override fun hideSoftKeys() {
-        var view = this.activity!!.currentFocus
+        var view = this.requireActivity().currentFocus
         if (view == null) {
             view = View(this.activity)
         }
-        val inputMethodManager = this.activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val inputMethodManager = this.requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
@@ -188,7 +188,7 @@ class LoginFragment : ACBaseFragment<LoginContract.Presenter?>(), LoginContract.
     }
 
     override fun finishLoginActivity() {
-        activity!!.finish()
+        requireActivity().finish()
     }
 
     override fun initLoginForm(locationsList: List<LocationEntity?>?, serverURL: String?) {
@@ -223,7 +223,7 @@ class LoginFragment : ACBaseFragment<LoginContract.Presenter?>(), LoginContract.
     override fun startFormListService() {
         if (isActivityNotNull) {
             val i = Intent(context, FormListService::class.java)
-            activity!!.startService(i)
+            requireActivity().startService(i)
         }
     }
 
@@ -273,13 +273,13 @@ class LoginFragment : ACBaseFragment<LoginContract.Presenter?>(), LoginContract.
 
     override fun showToast(message: String?, toastType: ToastType?) {
         if (activity != null) {
-            showShortToast(activity!!, toastType!!, message!!)
+            showShortToast(requireActivity(), toastType!!, message!!)
         }
     }
 
     override fun showToast(textId: Int, toastType: ToastType?) {
         if (activity != null) {
-            showShortToast(activity!!, toastType!!, resources.getString(textId))
+            showShortToast(requireActivity(), toastType!!, resources.getString(textId))
         }
     }
 

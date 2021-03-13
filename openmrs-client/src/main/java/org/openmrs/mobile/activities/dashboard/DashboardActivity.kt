@@ -16,9 +16,6 @@ package org.openmrs.mobile.activities.dashboard
 
 import android.os.Bundle
 import android.os.Handler
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
@@ -98,6 +95,14 @@ class DashboardActivity : ACBaseActivity() {
         }
     }*/
 
+    override fun onResume() {
+        super.onResume()
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.dashboard_nav_host_fragment) as NavHostFragment
+        val dashboardFragment: DashboardFragment? = navHostFragment.childFragmentManager.primaryNavigationFragment as DashboardFragment?
+        if (dashboardFragment != null) {
+            DashboardPresenter(dashboardFragment)
+        }
+    }
 
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {

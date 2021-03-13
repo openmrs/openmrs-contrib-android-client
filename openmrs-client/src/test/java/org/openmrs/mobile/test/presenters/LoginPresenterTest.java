@@ -274,7 +274,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         PowerMockito.mockStatic(OpenMRS.class);
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
         PowerMockito.when(openMRS.getApplicationContext()).thenReturn(context);
-        LoginFragment loginFragment = LoginFragment.newInstance();
+        LoginFragment loginFragment = new LoginFragment();
         try {
             loginFragment.userAuthenticated();
         } catch (NullPointerException ignored) {

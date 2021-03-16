@@ -19,9 +19,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,10 +27,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.common.base.Objects;
 
-import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.PatientDAO;
+import org.openmrs.mobile.databinding.RowSimilarPatientBinding;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
@@ -42,9 +40,9 @@ import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<SimilarPatientsRecyclerViewAdapter.PatientViewHolder> {
-    private List<Patient> patientList;
-    private Patient newPatient;
-    private Activity mContext;
+    private final List<Patient> patientList;
+    private final Patient newPatient;
+    private final Activity mContext;
 
     public SimilarPatientsRecyclerViewAdapter(Activity mContext, List<Patient> patientList, Patient patient) {
         this.newPatient = patient;
@@ -55,8 +53,8 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
     @NonNull
     @Override
     public PatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_similar_patient, parent, false);
-        return new PatientViewHolder(itemView);
+        RowSimilarPatientBinding binding = RowSimilarPatientBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
+        return new PatientViewHolder(binding);
     }
 
     @Override
@@ -68,7 +66,7 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
         setBirthdate(holder, patient);
         setPatientAdres(holder, patient);
 
-        holder.mRowLayout.setOnClickListener(view -> {
+        holder.binding.getRoot().setOnClickListener(view -> {
             if (!(new PatientDAO().isUserAlreadySaved(patient.getUuid()))) {
                 downloadPatient(patient);
             }
@@ -88,106 +86,89 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
         return patientList.size();
     }
 
-    public class PatientViewHolder extends RecyclerView.ViewHolder {
-        private LinearLayout mRowLayout;
-        private TextView mGivenName;
-        private TextView mMiddleName;
-        private TextView mFamilyName;
-        private TextView mGender;
-        private TextView mBirthDate;
-        private TextView mAddres;
-        private TextView mPostalCode;
-        private TextView mCity;
-        private TextView mCountry;
+    public static class PatientViewHolder extends RecyclerView.ViewHolder {
 
-        public PatientViewHolder(View itemView) {
-            super(itemView);
-            mRowLayout = (LinearLayout) itemView;
-            mGivenName = itemView.findViewById(R.id.patientGivenName);
-            mMiddleName = itemView.findViewById(R.id.patientMiddleName);
-            mFamilyName = itemView.findViewById(R.id.patientFamilyName);
-            mGender = itemView.findViewById(R.id.patientGender);
-            mBirthDate = itemView.findViewById(R.id.patientBirthDate);
-            mAddres = itemView.findViewById(R.id.patientAddres);
-            mPostalCode = itemView.findViewById(R.id.patientPostalCode);
-            mCity = itemView.findViewById(R.id.patientCity);
-            mCountry = itemView.findViewById(R.id.patientCountry);
+        RowSimilarPatientBinding binding;
+
+        public PatientViewHolder(RowSimilarPatientBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 
     private void downloadPatient(Patient patient) {
         new PatientDAO().savePatient(patient)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(id -> {
-                new VisitRepository().syncVisitsData(patient);
-                new VisitRepository().syncLastVitals(patient.getUuid());
-            });
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(id -> {
+                    new VisitRepository().syncVisitsData(patient);
+                    new VisitRepository().syncLastVitals(patient.getUuid());
+                });
     }
 
     private void setBirthdate(PatientViewHolder holder, Patient patient) {
         try {
-            holder.mBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
+            holder.binding.patientBirthDate.setText(DateUtils.convertTime(DateUtils.convertTime(patient.getBirthdate())));
             if (Objects.equal(patient.getBirthdate(), newPatient.getBirthdate())) {
-                setStyleForMatchedPatientFields(holder.mBirthDate);
+                setStyleForMatchedPatientFields(holder.binding.patientBirthDate);
             }
         } catch (Exception e) {
-            holder.mBirthDate.setText(" ");
+            holder.binding.patientBirthDate.setText(" ");
         }
     }
 
     private void setGender(PatientViewHolder holder, Patient patient) {
         if (null != patient.getGender()) {
-            holder.mGender.setText(patient.getGender());
+            holder.binding.patientGender.setText(patient.getGender());
             if (Objects.equal(patient.getGender(), newPatient.getGender())) {
-                setStyleForMatchedPatientFields(holder.mGender);
+                setStyleForMatchedPatientFields(holder.binding.patientGender);
             }
         }
     }
 
     private void setPatientAdres(PatientViewHolder holder, Patient patient) {
         if (null != patient.getAddress().getAddress1()) {
-            holder.mAddres.setText(patient.getAddress().getAddress1());
+            holder.binding.patientAddres.setText(patient.getAddress().getAddress1());
             if (Objects.equal(patient.getAddress().getAddress1(), newPatient.getAddress().getAddress1())) {
-                setStyleForMatchedPatientFields(holder.mAddres);
+                setStyleForMatchedPatientFields(holder.binding.patientAddres);
             }
         }
         if (null != patient.getAddress().getPostalCode()) {
-            holder.mPostalCode.setText(patient.getAddress().getPostalCode());
+            holder.binding.patientPostalCode.setText(patient.getAddress().getPostalCode());
             if (Objects.equal(patient.getAddress().getPostalCode(), newPatient.getAddress().getPostalCode())) {
-                setStyleForMatchedPatientFields(holder.mPostalCode);
+                setStyleForMatchedPatientFields(holder.binding.patientPostalCode);
             }
         }
         if (null != patient.getAddress().getCityVillage()) {
-            holder.mCity.setText(patient.getAddress().getCityVillage());
+            holder.binding.patientCity.setText(patient.getAddress().getCityVillage());
             if (Objects.equal(patient.getAddress().getCityVillage(), newPatient.getAddress().getCityVillage())) {
-                setStyleForMatchedPatientFields(holder.mCity);
+                setStyleForMatchedPatientFields(holder.binding.patientCity);
             }
         }
         if (null != patient.getAddress().getCountry()) {
-            holder.mCountry.setText(patient.getAddress().getCountry());
+            holder.binding.patientCountry.setText(patient.getAddress().getCountry());
             if (Objects.equal(patient.getAddress().getCountry(), newPatient.getAddress().getCountry())) {
-                setStyleForMatchedPatientFields(holder.mCountry);
+                setStyleForMatchedPatientFields(holder.binding.patientCountry);
             }
         }
     }
 
     private void setPatientName(PatientViewHolder holder, Patient patient) {
         if (null != patient.getName().getGivenName()) {
-            holder.mGivenName.setText(patient.getName().getGivenName());
+            holder.binding.patientGivenName.setText(patient.getName().getGivenName());
             if (Objects.equal(patient.getName().getGivenName(), newPatient.getName().getGivenName())) {
-                setStyleForMatchedPatientFields(holder.mGivenName);
+                setStyleForMatchedPatientFields(holder.binding.patientGivenName);
             }
         }
         if (null != patient.getName().getMiddleName()) {
-            holder.mMiddleName.setText(patient.getName().getMiddleName());
+            holder.binding.patientMiddleName.setText(patient.getName().getMiddleName());
             if (Objects.equal(patient.getName().getMiddleName(), newPatient.getName().getMiddleName())) {
-                setStyleForMatchedPatientFields(holder.mMiddleName);
+                setStyleForMatchedPatientFields(holder.binding.patientMiddleName);
             }
         }
         if (null != patient.getName().getFamilyName()) {
-            holder.mFamilyName.setText(patient.getName().getFamilyName());
+            holder.binding.patientFamilyName.setText(patient.getName().getFamilyName());
             if (Objects.equal(patient.getName().getFamilyName(), newPatient.getName().getFamilyName())) {
-                setStyleForMatchedPatientFields(holder.mFamilyName);
+                setStyleForMatchedPatientFields(holder.binding.patientFamilyName);
             }
         }
     }

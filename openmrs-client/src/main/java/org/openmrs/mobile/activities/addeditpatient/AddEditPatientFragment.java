@@ -98,7 +98,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -966,5 +965,11 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     public @interface StringValue {
         String FEMALE = "F";
         String MALE = "M";
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

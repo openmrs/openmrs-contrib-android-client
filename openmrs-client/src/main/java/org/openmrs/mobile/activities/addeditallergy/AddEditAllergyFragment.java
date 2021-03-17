@@ -44,7 +44,6 @@ import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_DRUG;
 import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_FOOD;
@@ -58,7 +57,7 @@ import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.SE
 public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContract.Presenter> implements AddEditAllergyContract.View {
     AllergyCreate allergyCreate = new AllergyCreate();
     AlertDialog alertDialog;
-    private FragmentAllergyInfoBinding patientAllergyBinding;
+    private FragmentAllergyInfoBinding binding;
     private List<Resource> foodAllergens = new ArrayList<>();
     private List<Resource> drugAllergens = new ArrayList<>();
     private List<Resource> environmentAllergens = new ArrayList<>();
@@ -76,59 +75,59 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        patientAllergyBinding = FragmentAllergyInfoBinding.inflate(inflater, container, false);
-        View root = patientAllergyBinding.getRoot();
+        binding = FragmentAllergyInfoBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
         mPresenter.fetchSystemProperties(this);
         initListeners();
         return root;
     }
 
     private void initListeners() {
-        patientAllergyBinding.mildSeverity.setOnClickListener(view -> {
+        binding.mildSeverity.setOnClickListener(view -> {
             allergyCreate.setSeverity(new AllergyUuid(mildSeverity));
-            selectSeverity(patientAllergyBinding.mildSeverity);
-            unSelectSeverity(patientAllergyBinding.moderateSeverity);
-            unSelectSeverity(patientAllergyBinding.severeSeverity);
+            selectSeverity(binding.mildSeverity);
+            unSelectSeverity(binding.moderateSeverity);
+            unSelectSeverity(binding.severeSeverity);
         });
 
-        patientAllergyBinding.moderateSeverity.setOnClickListener(view -> {
+        binding.moderateSeverity.setOnClickListener(view -> {
             allergyCreate.setSeverity(new AllergyUuid(moderateSeverity));
-            unSelectSeverity(patientAllergyBinding.mildSeverity);
-            selectSeverity(patientAllergyBinding.moderateSeverity);
-            unSelectSeverity(patientAllergyBinding.severeSeverity);
+            unSelectSeverity(binding.mildSeverity);
+            selectSeverity(binding.moderateSeverity);
+            unSelectSeverity(binding.severeSeverity);
         });
 
-        patientAllergyBinding.severeSeverity.setOnClickListener(view -> {
+        binding.severeSeverity.setOnClickListener(view -> {
             allergyCreate.setSeverity(new AllergyUuid(severeSeverity));
-            unSelectSeverity(patientAllergyBinding.mildSeverity);
-            unSelectSeverity(patientAllergyBinding.moderateSeverity);
-            selectSeverity(patientAllergyBinding.severeSeverity);
+            unSelectSeverity(binding.mildSeverity);
+            unSelectSeverity(binding.moderateSeverity);
+            selectSeverity(binding.severeSeverity);
         });
 
-        patientAllergyBinding.allergenDrug.setOnClickListener(view -> {
+        binding.allergenDrug.setOnClickListener(view -> {
             setUpAllergenSpinner(drugAllergens, PROPERTY_DRUG);
-            selectChip(patientAllergyBinding.allergenDrug);
-            unSelectChip(patientAllergyBinding.allergenFood);
-            unSelectChip(patientAllergyBinding.allergenOther);
+            selectChip(binding.allergenDrug);
+            unSelectChip(binding.allergenFood);
+            unSelectChip(binding.allergenOther);
         });
 
-        patientAllergyBinding.allergenFood.setOnClickListener(view -> {
+        binding.allergenFood.setOnClickListener(view -> {
             setUpAllergenSpinner(foodAllergens, PROPERTY_FOOD);
-            unSelectChip(patientAllergyBinding.allergenDrug);
-            selectChip(patientAllergyBinding.allergenFood);
-            unSelectChip(patientAllergyBinding.allergenOther);
+            unSelectChip(binding.allergenDrug);
+            selectChip(binding.allergenFood);
+            unSelectChip(binding.allergenOther);
         });
 
-        patientAllergyBinding.allergenOther.setOnClickListener(view -> {
+        binding.allergenOther.setOnClickListener(view -> {
             setUpAllergenSpinner(environmentAllergens, PROPERTY_OTHER);
-            unSelectChip(patientAllergyBinding.allergenDrug);
-            unSelectChip(patientAllergyBinding.allergenFood);
-            selectChip(patientAllergyBinding.allergenOther);
+            unSelectChip(binding.allergenDrug);
+            unSelectChip(binding.allergenFood);
+            selectChip(binding.allergenOther);
         });
 
-        patientAllergyBinding.cancelButton.setOnClickListener(view -> requireActivity().finish());
+        binding.cancelButton.setOnClickListener(view -> requireActivity().finish());
 
-        patientAllergyBinding.submitButton.setOnClickListener(view -> createAllergy());
+        binding.submitButton.setOnClickListener(view -> createAllergy());
     }
 
     private void setUpAllergenSpinner(List<Resource> allergens, String allergenType) {
@@ -138,11 +137,11 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
             allergenArray[i + 1] = allergens.get(i).getDisplay();
         }
         ArrayAdapter<String> reactionAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, allergenArray);
-        patientAllergyBinding.allergySpinner.setAdapter(reactionAdapter);
-        patientAllergyBinding.allergySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.allergySpinner.setAdapter(reactionAdapter);
+        binding.allergySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedAllergen = patientAllergyBinding.allergySpinner.getSelectedItem().toString();
+                String selectedAllergen = binding.allergySpinner.getSelectedItem().toString();
                 if (!selectedAllergen.equals(allergenArray[0])) {
                     String uuid = null;
                     for (int j = 0; j < allergens.size(); j++) {
@@ -172,11 +171,11 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
             reactionArray[i + 1] = reactionList.get(i).getDisplay();
         }
         ArrayAdapter<String> reactionAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, reactionArray);
-        patientAllergyBinding.reactionSpinner.setAdapter(reactionAdapter);
-        patientAllergyBinding.reactionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.reactionSpinner.setAdapter(reactionAdapter);
+        binding.reactionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String selectedReaction = patientAllergyBinding.reactionSpinner.getSelectedItem().toString();
+                String selectedReaction = binding.reactionSpinner.getSelectedItem().toString();
                 if (!selectedReaction.equals(reactionArray[0])) {
                     if (selectedReactions.contains(selectedReaction)) {
                         ToastUtil.error(getString(R.string.allergy_already_selected));
@@ -194,7 +193,7 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
     }
 
     private void createAllergy() {
-        allergyCreate.setComment(patientAllergyBinding.commentBox.getText().toString());
+        allergyCreate.setComment(binding.commentBox.getText().toString());
         allergyCreate.setReactions(getSelectedReactionFromChips());
 
         if (null == allergyCreate.getAllergen()) {
@@ -257,11 +256,11 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
     @Override
     public void showLoading(boolean loading, boolean exitScreen) {
         if (loading) {
-            patientAllergyBinding.transparentScreen.setVisibility(View.VISIBLE);
-            patientAllergyBinding.progressBar.setVisibility(View.VISIBLE);
+            binding.transparentScreen.setVisibility(View.VISIBLE);
+            binding.progressBar.setVisibility(View.VISIBLE);
         } else {
-            patientAllergyBinding.transparentScreen.setVisibility(View.GONE);
-            patientAllergyBinding.progressBar.setVisibility(View.GONE);
+            binding.transparentScreen.setVisibility(View.GONE);
+            binding.progressBar.setVisibility(View.GONE);
             if (exitScreen) {
                 getActivity().finish();
             }
@@ -272,19 +271,19 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
     public void fillAllergyToUpdate(Allergy mAllergy) {
         if (mAllergy != null) {
             allergyToUpdate = true;
-            patientAllergyBinding.commentBox.setText(mAllergy.getComment());
+            binding.commentBox.setText(mAllergy.getComment());
 
-            unSelectSeverity(patientAllergyBinding.mildSeverity);
-            unSelectSeverity(patientAllergyBinding.moderateSeverity);
-            unSelectSeverity(patientAllergyBinding.severeSeverity);
+            unSelectSeverity(binding.mildSeverity);
+            unSelectSeverity(binding.moderateSeverity);
+            unSelectSeverity(binding.severeSeverity);
             if (mAllergy.getSeverity() != null) {
                 allergyCreate.setSeverity(new AllergyUuid(mAllergy.getSeverity().getUuid()));
                 if (mAllergy.getSeverity().getDisplay().contains(PROPERTY_MILD)) {
-                    selectSeverity(patientAllergyBinding.mildSeverity);
+                    selectSeverity(binding.mildSeverity);
                 } else if (mAllergy.getSeverity().getDisplay().contains(PROPERTY_SEVERE)) {
-                    selectSeverity(patientAllergyBinding.severeSeverity);
+                    selectSeverity(binding.severeSeverity);
                 } else {
-                    selectSeverity(patientAllergyBinding.moderateSeverity);
+                    selectSeverity(binding.moderateSeverity);
                 }
             }
 
@@ -293,10 +292,10 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
                 createReactionChip(allergyReaction.getReaction().getDisplay());
             }
 
-            patientAllergyBinding.linearLayoutCategory.setVisibility(View.GONE);
-            patientAllergyBinding.allergySpinner.setVisibility(View.GONE);
-            patientAllergyBinding.finalAllergen.setVisibility(View.VISIBLE);
-            patientAllergyBinding.finalAllergen.setText(mAllergy.getAllergen().getCodedAllergen().getDisplay());
+            binding.linearLayoutCategory.setVisibility(View.GONE);
+            binding.allergySpinner.setVisibility(View.GONE);
+            binding.finalAllergen.setVisibility(View.VISIBLE);
+            binding.finalAllergen.setText(mAllergy.getAllergen().getCodedAllergen().getDisplay());
             AllergenCreate allergenCreate = new AllergenCreate();
             allergenCreate.setAllergenType(mAllergy.getAllergen().getAllergenType());
             allergenCreate.setCodedAllergen(new AllergyUuid(mAllergy.getAllergen().getCodedAllergen().getUuid()));
@@ -330,18 +329,18 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
         chip.setClickable(false);
         chip.setClickable(false);
         chip.setOnCloseIconClickListener(selected_chip -> {
-            patientAllergyBinding.chipGroup.removeView(selected_chip);
+            binding.chipGroup.removeView(selected_chip);
             selectedReactions.remove(chip.getText().toString());
         });
-        patientAllergyBinding.chipGroup.addView(chip);
-        patientAllergyBinding.linearLayoutReaction.setVisibility(View.VISIBLE);
+        binding.chipGroup.addView(chip);
+        binding.linearLayoutReaction.setVisibility(View.VISIBLE);
     }
 
     private List<AllergyReactionCreate> getSelectedReactionFromChips() {
         List<AllergyReactionCreate> allergyReactionList = new ArrayList<>();
 
-        for (int j = 0; j < patientAllergyBinding.chipGroup.getChildCount(); j++) {
-            Chip chip = (Chip) patientAllergyBinding.chipGroup.getChildAt(j);
+        for (int j = 0; j < binding.chipGroup.getChildCount(); j++) {
+            Chip chip = (Chip) binding.chipGroup.getChildAt(j);
             String uuid = null;
             for (int i = 0; i < reactionList.size(); i++) {
                 if (reactionList.get(i).getDisplay().equals(chip.getText().toString())) {
@@ -354,5 +353,11 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
             allergyReactionList.add(allergyReactionCreate);
         }
         return allergyReactionList;
+    }
+    
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

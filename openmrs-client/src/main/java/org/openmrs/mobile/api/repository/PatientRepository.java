@@ -28,6 +28,7 @@ import org.jdeferred.android.AndroidDeferredManager;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.api.RestApi;
+import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.promise.SimplePromise;
 import org.openmrs.mobile.api.workers.UpdatePatientWorker;
@@ -358,7 +359,8 @@ public class PatientRepository extends BaseRepository {
     private SimplePromise<String> getIdGenPatientIdentifier() {
         final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
 
-        Call<IdGenPatientIdentifiers> call = restApi.getPatientIdentifiers(openMrs.getUsername(), openMrs.getPassword());
+        RestApi patientIdentifierService = RestServiceBuilder.createServiceForPatientIdentifier(RestApi.class);
+        Call<IdGenPatientIdentifiers> call = patientIdentifierService.getPatientIdentifiers(openMrs.getUsername(), openMrs.getPassword());
         call.enqueue(new Callback<IdGenPatientIdentifiers>() {
             @Override
             public void onResponse(@NonNull Call<IdGenPatientIdentifiers> call, @NonNull Response<IdGenPatientIdentifiers> response) {

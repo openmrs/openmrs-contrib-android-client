@@ -53,18 +53,21 @@ class LoginFragment : ACBaseFragment<LoginContract.Presenter?>(), LoginContract.
         mRootView = binding!!.root
         initViewFields()
         initListeners()
-        if (mLastCorrectURL == ApplicationConstants.EMPTY_STRING) {
-            binding!!.loginUrlField.setText(OpenMRS.getInstance().serverUrl)
-            mLastCorrectURL = OpenMRS.getInstance().serverUrl
-        } else {
-            binding!!.loginUrlField.setText(mLastCorrectURL)
+        with(binding!!) {
+            if (mLastCorrectURL == ApplicationConstants.EMPTY_STRING) {
+                loginUrlField.setText(OpenMRS.getInstance().serverUrl)
+                mLastCorrectURL = OpenMRS.getInstance().serverUrl
+            } else {
+                loginUrlField.setText(mLastCorrectURL)
+            }
         }
         hideURLDialog()
         return mRootView
     }
 
     private fun initListeners() {
-        binding!!.loginSyncButton.setOnClickListener { view: View? ->
+        with(binding!!) {
+        loginSyncButton.setOnClickListener { view: View? ->
             val prefs = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance())
             val syncState = prefs.getBoolean("sync", true)
             val editor = PreferenceManager.getDefaultSharedPreferences(OpenMRS.getInstance()).edit()
@@ -72,10 +75,10 @@ class LoginFragment : ACBaseFragment<LoginContract.Presenter?>(), LoginContract.
             editor.apply()
             setSyncButtonState(!syncState)
         }
-        loginValidatorWatcher = LoginValidatorWatcher(binding!!.loginUrlField, binding!!.loginUsernameField,
-                binding!!.loginPasswordField, binding!!.locationSpinner, binding!!.loginButton)
-        binding!!.loginUrlField.onFocusChangeListener = OnFocusChangeListener { view: View, hasFocus: Boolean ->
-            if ((notEmpty(binding!!.loginUrlField.text.toString())
+        loginValidatorWatcher = LoginValidatorWatcher(loginUrlField, loginUsernameField,
+                loginPasswordField, locationSpinner, loginButton)
+        loginUrlField.onFocusChangeListener = OnFocusChangeListener { view: View, hasFocus: Boolean ->
+            if ((notEmpty(loginUrlField.text.toString())
                             && !view.isFocused
                             && loginValidatorWatcher!!.isUrlChanged)
                     || (loginValidatorWatcher!!.isUrlChanged && !view.isFocused
@@ -84,39 +87,42 @@ class LoginFragment : ACBaseFragment<LoginContract.Presenter?>(), LoginContract.
                 (activity
                         ?.getSupportFragmentManager()
                         ?.findFragmentById(R.id.loginContentFrame) as LoginFragment?)
-                        ?.setUrl(binding!!.loginUrlField.text.toString())
+                        ?.setUrl(loginUrlField.text.toString())
                 loginValidatorWatcher!!.isUrlChanged = false
             }
         }
-        binding!!.loginUsernameField.onFocusChangeListener = OnFocusChangeListener { view: View?, hasFocus: Boolean ->
+        loginUsernameField.onFocusChangeListener = OnFocusChangeListener { view: View?, hasFocus: Boolean ->
             if (hasFocus) {
-                binding!!.textInputLayoutUsername.hint = Html.fromHtml(getString(R.string.login_username_hint))
-            } else if (binding!!.loginUsernameField.text.toString() == "") {
-                binding!!.textInputLayoutUsername.hint = Html.fromHtml(getString(R.string.login_username_hint) + getString(R.string.req_star))
-                binding!!.textInputLayoutUsername.isHintAnimationEnabled = true
+                textInputLayoutUsername.hint = Html.fromHtml(getString(R.string.login_username_hint))
+            } else if (loginUsernameField.text.toString() == "") {
+                textInputLayoutUsername.hint = Html.fromHtml(getString(R.string.login_username_hint) + getString(R.string.req_star))
+                textInputLayoutUsername.isHintAnimationEnabled = true
             }
         }
-        binding!!.loginPasswordField.onFocusChangeListener = OnFocusChangeListener { view: View?, hasFocus: Boolean ->
+        loginPasswordField.onFocusChangeListener = OnFocusChangeListener { view: View?, hasFocus: Boolean ->
             if (hasFocus) {
-                binding!!.textInputLayoutPassword.hint = Html.fromHtml(getString(R.string.login_password_hint))
-            } else if (binding!!.loginPasswordField.text.toString() == "") {
-                binding!!.textInputLayoutPassword.hint = Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star))
-                binding!!.textInputLayoutPassword.isHintAnimationEnabled = true
+                textInputLayoutPassword.hint = Html.fromHtml(getString(R.string.login_password_hint))
+            } else if (loginPasswordField.text.toString() == "") {
+                textInputLayoutPassword.hint = Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star))
+                textInputLayoutPassword.isHintAnimationEnabled = true
             }
         }
-        binding!!.loginButton.setOnClickListener { view: View? ->
-            mPresenter!!.login(binding!!.loginUsernameField.text.toString(),
-                    binding!!.loginPasswordField.text.toString(),
-                    binding!!.loginUrlField.text.toString(),
+        loginButton.setOnClickListener { view: View? ->
+            mPresenter!!.login(loginUsernameField.text.toString(),
+                    loginPasswordField.text.toString(),
+                    loginUrlField.text.toString(),
                     initialUrl)
         }
-        binding!!.forgotPass.setOnClickListener { view: View? -> startActivity(Intent(context, ContactUsActivity::class.java)) }
-        binding!!.aboutUsTextView.setOnClickListener { view: View? -> openAboutPage() }
+        forgotPass.setOnClickListener { view: View? -> startActivity(Intent(context, ContactUsActivity::class.java)) }
+        aboutUsTextView.setOnClickListener { view: View? -> openAboutPage() }
     }
+}
 
     private fun initViewFields() {
-        binding!!.textInputLayoutPassword.hint = Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star))
-        binding!!.textInputLayoutUsername.hint = Html.fromHtml(getString(R.string.login_username_hint) + getString(R.string.req_star))
+        with(binding!!) {
+            textInputLayoutPassword.hint = Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star))
+            textInputLayoutUsername.hint = Html.fromHtml(getString(R.string.login_username_hint) + getString(R.string.req_star))
+        }
     }
 
     override fun onResume() {
@@ -148,12 +154,14 @@ class LoginFragment : ACBaseFragment<LoginContract.Presenter?>(), LoginContract.
     }
 
     private fun setSyncButtonState(syncEnabled: Boolean) {
-        if (syncEnabled) {
-            binding!!.syncLabel.text = getString(R.string.login_online)
-        } else {
-            binding!!.syncLabel.text = getString(R.string.login_offline)
+        with(binding!!) {
+            if (syncEnabled) {
+                syncLabel.text = getString(R.string.login_online)
+            } else {
+                syncLabel.text = getString(R.string.login_offline)
+            }
+            loginSyncButton.isChecked = syncEnabled
         }
-        binding!!.loginSyncButton.isChecked = syncEnabled
     }
 
     override fun showWarningDialog() {
@@ -168,23 +176,31 @@ class LoginFragment : ACBaseFragment<LoginContract.Presenter?>(), LoginContract.
     }
 
     override fun showLoadingAnimation() {
-        binding!!.loginFormView.visibility = View.GONE
-        binding!!.loginLoading.visibility = View.VISIBLE
+        with(binding!!) {
+            loginFormView.visibility = View.GONE
+            loginLoading.visibility = View.VISIBLE
+        }
     }
 
     override fun hideLoadingAnimation() {
-        binding!!.loginFormView.visibility = View.VISIBLE
-        binding!!.loginLoading.visibility = View.GONE
+        with(binding!!) {
+            loginFormView.visibility = View.VISIBLE
+            loginLoading.visibility = View.GONE
+        }
     }
 
     override fun showLocationLoadingAnimation() {
-        binding!!.loginButton.isEnabled = false
-        binding!!.locationLoadingProgressBar.visibility = View.VISIBLE
+        with(binding!!) {
+            loginButton.isEnabled = false
+            locationLoadingProgressBar.visibility = View.VISIBLE
+        }
     }
 
     override fun hideUrlLoadingAnimation() {
-        binding!!.locationLoadingProgressBar.visibility = View.GONE
-        binding!!.loginLoading.visibility = View.GONE
+        with(binding!!) {
+            locationLoadingProgressBar.visibility = View.GONE
+            loginLoading.visibility = View.GONE
+        }
     }
 
     override fun finishLoginActivity() {
@@ -194,20 +210,24 @@ class LoginFragment : ACBaseFragment<LoginContract.Presenter?>(), LoginContract.
     override fun initLoginForm(locationsList: List<LocationEntity?>?, serverURL: String?) {
         setLocationErrorOccurred(false)
         mLastCorrectURL = serverURL!!
-        binding!!.loginUrlField.setText(serverURL)
+        with(binding!!) {
+            loginUrlField.setText(serverURL)
+        }
         mLocationsList = locationsList as List<LocationEntity>?
         if (isActivityNotNull) {
             val items = getLocationStringList(locationsList!!)
             val adapter = LocationArrayAdapter(this.activity, items)
-            binding!!.locationSpinner.adapter = adapter
-            binding!!.loginButton.isEnabled = false
-            binding!!.loginLoading.visibility = View.GONE
-            binding!!.loginFormView.visibility = View.VISIBLE
+            with(binding!!) {
+            locationSpinner.adapter = adapter
+            loginButton.isEnabled = false
+            loginLoading.visibility = View.GONE
+            loginFormView.visibility = View.VISIBLE
             if (locationsList.isEmpty()) {
-                binding!!.loginButton.isEnabled = true
+                loginButton.isEnabled = true
             } else {
-                binding!!.loginButton.isEnabled = false
+                loginButton.isEnabled = false
             }
+        }
         }
     }
 
@@ -254,8 +274,10 @@ class LoginFragment : ACBaseFragment<LoginContract.Presenter?>(), LoginContract.
         if (isActivityNotNull) {
             createSnackbar(message)
                     .setAction(resources.getString(R.string.snackbar_edit)) { view: View? ->
-                        binding!!.loginPasswordField.requestFocus()
-                        binding!!.loginPasswordField.selectAll()
+                        with(binding!!) {
+                            loginPasswordField.requestFocus()
+                            loginPasswordField.selectAll()
+                        }
                     }
                     .show()
         }
@@ -311,15 +333,19 @@ class LoginFragment : ACBaseFragment<LoginContract.Presenter?>(), LoginContract.
     }
 
     fun login() {
-        mPresenter!!.authenticateUser(binding!!.loginUsernameField.text.toString(),
-                binding!!.loginPasswordField.text.toString(),
-                binding!!.loginUrlField.text.toString())
+        with(binding!!) {
+            mPresenter!!.authenticateUser(loginUsernameField.text.toString(),
+                    loginPasswordField.text.toString(),
+                    loginUrlField.text.toString())
+        }
     }
 
     fun login(wipeDatabase: Boolean) {
-        mPresenter!!.authenticateUser(binding!!.loginUsernameField.text.toString(),
-                binding!!.loginPasswordField.text.toString(),
-                binding!!.loginUrlField.text.toString(), wipeDatabase)
+        with(binding!!) {
+            mPresenter!!.authenticateUser(loginUsernameField.text.toString(),
+                    loginPasswordField.text.toString(),
+                    loginUrlField.text.toString(), wipeDatabase)
+        }
     }
 
     private val isActivityNotNull: Boolean

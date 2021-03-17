@@ -26,17 +26,17 @@ class LocationArrayAdapter(context: Context?, objects: List<String?>?) : ArrayAd
     }
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val v: View
+        val view: View
         if (position == 0) {
-            val tv = TextView(context)
-            tv.height = 0
-            tv.visibility = View.GONE
-            v = tv
+            val LocationTextView = TextView(context)
+            LocationTextView.height = 0
+            LocationTextView.visibility = View.GONE
+            view = LocationTextView
         } else {
-            v = super.getDropDownView(position, null, parent)
+            view = super.getDropDownView(position, null, parent)
         }
         parent?.isVerticalScrollBarEnabled = false
-        return v
+        return view
     }
 
     override fun getItemId(position: Int): Long {

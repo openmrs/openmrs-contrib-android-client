@@ -35,6 +35,7 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
+import org.openmrs.mobile.databinding.FragmentPatientDetailsBinding;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.ImageUtils;
@@ -42,8 +43,8 @@ import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 public class PatientDetailsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDetails {
-    private View rootView;
-    private PatientDashboardActivity mPatientDashboardActivity;
+    private PatientDashboardActivity patientDashboardActivity;
+    private FragmentPatientDetailsBinding binding = null;
 
     public static PatientDetailsFragment newInstance() {
         return new PatientDetailsFragment();
@@ -57,7 +58,7 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
     @Override
     public void onAttach(@NotNull Context context) {
         super.onAttach(context);
-        mPatientDashboardActivity = (PatientDashboardActivity) context;
+        patientDashboardActivity = (PatientDashboardActivity) context;
     }
 
     @Override
@@ -88,20 +89,20 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_patient_details, null, false);
-        return rootView;
+        binding = FragmentPatientDetailsBinding.inflate(inflater, null, false);
+        return binding.getRoot();
     }
 
     @Override
     public void resolvePatientDataDisplay(final Patient patient) {
         if (isAdded()) {
             if (("M").equals(patient.getGender())) {
-                ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.male));
+                binding.patientDetailsGender.setText(getString(R.string.male));
             } else {
-                ((TextView) rootView.findViewById(R.id.patientDetailsGender)).setText(getString(R.string.female));
+                binding.patientDetailsGender.setText(getString(R.string.female));
             }
         }
-        ImageView patientImageView = rootView.findViewById(R.id.patientPhoto);
+        ImageView patientImageView = binding.patientPhoto;
 
         if (patient.getPhoto() != null) {
             final Bitmap photo = patient.getResizedPhoto();
@@ -110,57 +111,57 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
             patientImageView.setOnClickListener(view -> ImageUtils.showPatientPhoto(getContext(), photo, patientName));
         }
 
-        ((TextView) rootView.findViewById(R.id.patientDetailsName)).setText(patient.getName().getNameString());
+        binding.patientDetailsName.setText(patient.getName().getNameString());
 
         Long longTime = DateUtils.convertTime(patient.getBirthdate());
 
         if (longTime != null) {
-            ((TextView) rootView.findViewById(R.id.patientDetailsBirthDate)).setText(DateUtils.convertTime(longTime));
+            binding.patientDetailsBirthDate.setText(DateUtils.convertTime(longTime));
         }
 
         if (null != patient.getAddress()) {
-            ((TextView) rootView.findViewById(R.id.addressDetailsStreet)).setText(patient.getAddress().getAddressString());
-            showAddressDetailsViewElement(R.id.addressDetailsStateLabel, R.id.addressDetailsState, patient.getAddress().getStateProvince());
-            showAddressDetailsViewElement(R.id.addressDetailsCountryLabel, R.id.addressDetailsCountry, patient.getAddress().getCountry());
-            showAddressDetailsViewElement(R.id.addressDetailsPostalCodeLabel, R.id.addressDetailsPostalCode, patient.getAddress().getPostalCode());
-            showAddressDetailsViewElement(R.id.addressDetailsCityLabel, R.id.addressDetailsCity, patient.getAddress().getCityVillage());
+            binding.addressDetailsStreet.setText(patient.getAddress().getAddressString());
+            showAddressDetailsViewElement(binding.addressDetailsStateLabel, binding.addressDetailsState, patient.getAddress().getStateProvince());
+            showAddressDetailsViewElement(binding.addressDetailsCountryLabel, binding.addressDetailsCountry, patient.getAddress().getCountry());
+            showAddressDetailsViewElement(binding.addressDetailsPostalCodeLabel, binding.addressDetailsPostalCode, patient.getAddress().getPostalCode());
+            showAddressDetailsViewElement(binding.addressDetailsCityLabel, binding.addressDetailsCity, patient.getAddress().getCityVillage());
         }
 
         if (patient.isDeceased()) {
-            rootView.findViewById(R.id.deceasedView).setVisibility(View.VISIBLE);
-            ((TextView) rootView.findViewById(R.id.deceasedView)).setText(getString(R.string.marked_patient_deceased_successfully, patient.getCauseOfDeath().getDisplay()));
+            binding.deceasedView.setVisibility(View.VISIBLE);
+            binding.deceasedView.setText(getString(R.string.marked_patient_deceased_successfully, patient.getCauseOfDeath().getDisplay()));
         }
     }
 
     @Override
     public void showDialog(int resId) {
-        mPatientDashboardActivity.showProgressDialog(resId);
+        patientDashboardActivity.showProgressDialog(resId);
     }
 
-    private void showAddressDetailsViewElement(int detailsViewLabel, int detailsViewId, String detailsText) {
+    private void showAddressDetailsViewElement(TextView detailsViewLabel, TextView detailsView, String detailsText) {
         if (StringUtils.notNull(detailsText) && StringUtils.notEmpty(detailsText)) {
-            ((TextView) rootView.findViewById(detailsViewId)).setText(detailsText);
+            detailsView.setText(detailsText);
         } else {
-            rootView.findViewById(detailsViewId).setVisibility(View.GONE);
-            rootView.findViewById(detailsViewLabel).setVisibility(View.GONE);
+            detailsView.setVisibility(View.GONE);
+            detailsViewLabel.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void dismissDialog() {
-        mPatientDashboardActivity.dismissCustomFragmentDialog();
+        patientDashboardActivity.dismissCustomFragmentDialog();
     }
 
     @Override
     public void showToast(int stringRes, boolean error) {
         ToastUtil.ToastType toastType = error ? ToastUtil.ToastType.ERROR : ToastUtil.ToastType.SUCCESS;
-        ToastUtil.showShortToast(mPatientDashboardActivity, toastType, stringRes);
+        ToastUtil.showShortToast(patientDashboardActivity, toastType, stringRes);
     }
 
     @Override
     public void setMenuTitle(String nameString, String identifier) {
-        mPatientDashboardActivity.getSupportActionBar().setTitle(nameString);
-        mPatientDashboardActivity.getSupportActionBar().setSubtitle("#" + identifier);
+        patientDashboardActivity.getSupportActionBar().setTitle(nameString);
+        patientDashboardActivity.getSupportActionBar().setSubtitle("#" + identifier);
     }
 
     @Override
@@ -168,10 +169,16 @@ public class PatientDetailsFragment extends PatientDashboardFragment implements 
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             try {
-                mPatientDashboardActivity.hideFABs(false);
+                patientDashboardActivity.hideFABs(false);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+    }
+    
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

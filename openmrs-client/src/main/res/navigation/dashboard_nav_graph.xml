@@ -57,7 +57,7 @@
         android:label="ActiveVisitsActivity" />
     <activity
         android:id="@+id/providerDashboardActivity"
-        android:name="org.openmrs.mobile.activities.providerdashboard.ProviderDashboardActivity"
+        android:name="org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardActivity"
         android:label="ProviderDashboardActivity" />
     <activity
         android:id="@+id/formEntryPatientListActivity"

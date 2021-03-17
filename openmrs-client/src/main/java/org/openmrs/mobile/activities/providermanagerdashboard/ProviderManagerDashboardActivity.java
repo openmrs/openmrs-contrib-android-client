@@ -28,6 +28,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.databinding.ActivityProviderManagementBinding;
 import org.openmrs.mobile.utilities.StringUtils;
 
 public class ProviderManagerDashboardActivity extends ACBaseActivity {
@@ -38,7 +39,10 @@ public class ProviderManagerDashboardActivity extends ACBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_provider_management);
+
+        ActivityProviderManagementBinding binding = ActivityProviderManagementBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             getSupportActionBar().setElevation(0);
@@ -48,13 +52,13 @@ public class ProviderManagerDashboardActivity extends ACBaseActivity {
 
         // Create fragment
         providerManagerDashboardFragment =
-            (ProviderManagerDashboardFragment) getSupportFragmentManager().findFragmentById(R.id.providerManagementContentFrame);
+            (ProviderManagerDashboardFragment) getSupportFragmentManager().findFragmentById(binding.providerManagementContentFrame.getId());
         if (providerManagerDashboardFragment == null) {
             providerManagerDashboardFragment = ProviderManagerDashboardFragment.newInstance();
         }
         if (!providerManagerDashboardFragment.isActive()) {
             addFragmentToActivity(getSupportFragmentManager(),
-                providerManagerDashboardFragment, R.id.providerManagementContentFrame);
+                providerManagerDashboardFragment, binding.providerManagementContentFrame.getId());
         }
 
         ProviderManagerDashboardPresenter mPresenter = new ProviderManagerDashboardPresenter(providerManagerDashboardFragment);

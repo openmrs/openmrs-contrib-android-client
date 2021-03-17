@@ -30,9 +30,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.providermanagerdashboard.addprovider.AddProviderActivity;
+import org.openmrs.mobile.databinding.FragmentProviderManagementBinding;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
@@ -47,11 +47,11 @@ public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderMan
     implements ProviderManagerDashboardContract.View {
 
     // Fragment components
+    private FragmentProviderManagementBinding binding;
     private TextView mEmptyList;
     private RecyclerView mProviderManagementRecyclerView;
     private ProviderManagerDashboardRecyclerViewAdapter providersAdapter;
     private SwipeRefreshLayout refreshList;
-
     //Initialization Progress bar
     private ProgressBar mProgressBar;
     private List<Provider> providerList;
@@ -64,25 +64,25 @@ public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderMan
         return new ProviderManagerDashboardFragment();
     }
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_provider_management, container, false);
+        binding = FragmentProviderManagementBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
         providerList = new ArrayList<>();
 
         providersAdapter = new ProviderManagerDashboardRecyclerViewAdapter(this, mPresenter, providerList);
 
-        mProviderManagementRecyclerView = root.findViewById(R.id.providerManagementRecyclerView);
+        mProviderManagementRecyclerView = binding.providerManagementRecyclerView;
         mProviderManagementRecyclerView.setHasFixedSize(true);
         mProviderManagementRecyclerView.setAdapter(providersAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(root.getContext());
         mProviderManagementRecyclerView.setLayoutManager(linearLayoutManager);
 
-        mEmptyList = root.findViewById(R.id.emptyProviderManagementList);
-        mProgressBar = root.findViewById(R.id.providerManagementInitialProgressBar);
-        addProviderFab = root.findViewById(R.id.providerManagementFragAddFAB);
-        refreshList = root.findViewById(R.id.swipeLayout);
+        mEmptyList = binding.emptyProviderManagementList;
+        mProgressBar = binding.providerManagementInitialProgressBar;
+        addProviderFab = binding.providerManagementFragAddFAB;
+        refreshList = binding.swipeLayout;
 
         refreshUI();
 
@@ -164,5 +164,4 @@ public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderMan
     public void onResume() {
         super.onResume();
     }
-
 }

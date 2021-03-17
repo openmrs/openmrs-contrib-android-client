@@ -47,20 +47,21 @@ import java.io.IOException
 import java.nio.charset.StandardCharsets
 
 public final class FormListFragment : ACBaseFragment<FormListContract.Presenter?>(), FormListContract.View {
-    private lateinit var formListBinding: FragmentFormListBinding
+    private var _binding: FragmentFormListBinding? = null
+    private val binding get() = _binding!!
     private var snackbar: Snackbar? = null
 
     @Nullable
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        formListBinding = FragmentFormListBinding.inflate(inflater, container, false)
-        val root: View = formListBinding.root
-        formListBinding.formlist.setOnItemClickListener({ parent: AdapterView<*>?, view: View, position: Int, id: Long -> mPresenter!!.listItemClicked(position, (view as TextView).text.toString()) })
+        _binding = FragmentFormListBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+        binding.formlist.setOnItemClickListener({ parent: AdapterView<*>?, view: View, position: Int, id: Long -> mPresenter!!.listItemClicked(position, (view as TextView).text.toString()) })
         return root
     }
 
     override fun showFormList(forms: Array<String?>?) {
         if (forms!!.size == 0) {
-            snackbar = Snackbar.make(formListBinding.root, ApplicationConstants.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE)
+            snackbar = Snackbar.make(binding.root, ApplicationConstants.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE)
             val customSnackBarView = layoutInflater.inflate(R.layout.snackbar, null)
             val snackBarLayout = snackbar!!.view as SnackbarLayout
             snackBarLayout.setPadding(0, 0, 0, 0)
@@ -73,7 +74,7 @@ public final class FormListFragment : ACBaseFragment<FormListContract.Presenter?
             snackBarLayout.addView(customSnackBarView, 0)
             snackbar!!.show()
         }
-        formListBinding.formlist.adapter = ArrayAdapter(requireContext(),
+        binding.formlist.adapter = ArrayAdapter(requireContext(),
                 android.R.layout.simple_list_item_1,
                 android.R.id.text1,
                 forms)
@@ -200,5 +201,10 @@ public final class FormListFragment : ACBaseFragment<FormListContract.Presenter?
         fun newInstance(): FormListFragment {
             return FormListFragment()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -24,10 +24,11 @@ import org.openmrs.mobile.databinding.FragmentActiveVisitsBinding
 import org.openmrs.mobile.models.Visit
 
 class ActiveVisitsFragment : ACBaseFragment<ActiveVisitsContract.Presenter>(), ActiveVisitsContract.View {
-    private lateinit var binding: FragmentActiveVisitsBinding
+    private var _binding: FragmentActiveVisitsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentActiveVisitsBinding.inflate(inflater, container, false)
+        _binding = FragmentActiveVisitsBinding.inflate(inflater, container, false)
 
         val linearLayoutManager = LinearLayoutManager(this.activity)
         with(binding) {
@@ -76,5 +77,10 @@ class ActiveVisitsFragment : ACBaseFragment<ActiveVisitsContract.Presenter>(), A
         fun newInstance(): ActiveVisitsFragment {
             return ActiveVisitsFragment()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -54,14 +54,17 @@
     <activity
         android:id="@+id/activeVisitsActivity"
         android:name="org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity"
-        android:label="ActiveVisitsActivity" />
+        android:label="activity_active_visits"
+        tools:layout="@layout/activity_active_visits"/>
     <activity
         android:id="@+id/providerManagerDashboardActivity"
         android:name="org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardActivity"
-        android:label="ProviderManagerDashboardActivity" />
+        android:label="activity_provider_management"
+        tools:layout="@layout/activity_provider_management"/>
     <activity
         android:id="@+id/formEntryPatientListActivity"
         android:name="org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity"
-        android:label="FormEntryPatientListActivity" />
+        android:label="activity_form_entry_patient_list"
+        tools:layout="@layout/activity_form_entry_patient_list"/>
 
 </navigation>

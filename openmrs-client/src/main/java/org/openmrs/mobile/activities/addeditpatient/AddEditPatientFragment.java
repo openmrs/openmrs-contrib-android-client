@@ -382,10 +382,14 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     @Override
     public void setProgressBarVisibility(boolean visibility) {
         binding.progressBar.setVisibility(visibility ? View.VISIBLE : View.GONE);
-        if(binding.progressBar.getVisibility()==View.VISIBLE)
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        else 
+        if(binding.progressBar.getVisibility()==View.VISIBLE) {
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE, WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            binding.transpScreenScreen.setVisibility(View.VISIBLE);
+        }
+        else {
             getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            binding.transpScreenScreen.setVisibility(View.GONE);
+        }
     }
 
     @Override

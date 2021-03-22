@@ -98,7 +98,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnNeverAskAgain;
@@ -382,7 +381,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     }
 
     @Override
-    public void showSimilarPatientDialog(List<Patient> patients, Patient newPatient) {
+    public void showSimilarPatientDialog(List<? extends Patient> patients, Patient newPatient) {
         setProgressBarVisibility(false);
         CustomDialogBundle similarPatientsDialog = new CustomDialogBundle();
         similarPatientsDialog.setTitleViewMessage(getString(R.string.similar_patients_dialog_title));
@@ -390,7 +389,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
         similarPatientsDialog.setRightButtonAction(CustomFragmentDialog.OnClickAction.REGISTER_PATIENT);
         similarPatientsDialog.setLeftButtonText(getString(R.string.dialog_button_cancel));
         similarPatientsDialog.setLeftButtonAction(CustomFragmentDialog.OnClickAction.DISMISS);
-        similarPatientsDialog.setPatientsList(patients);
+        similarPatientsDialog.setPatientsList((List<Patient>) patients);
         similarPatientsDialog.setNewPatient(newPatient);
         ((AddEditPatientActivity) this.getActivity()).createAndShowDialog(similarPatientsDialog, ApplicationConstants.DialogTAG.SIMILAR_PATIENTS_TAG);
     }

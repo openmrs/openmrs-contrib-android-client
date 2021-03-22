@@ -475,4 +475,5 @@
     <string name="more_about_openmrs">"अधिक"</string>
     <string name="action_about_activity">Open MRS के बारे में</string>
     <string name="action_about">Open MRS के बारे में</string>
+    <string name="welcome">स्वागत हे,</string>
 </resources>

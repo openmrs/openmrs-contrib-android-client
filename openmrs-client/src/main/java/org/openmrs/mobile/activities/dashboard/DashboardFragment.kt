@@ -23,7 +23,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import androidx.fragment.app.Fragment
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.fragment.findNavController
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener
 import com.github.amlcurran.showcaseview.ShowcaseView
@@ -32,16 +32,9 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
 import org.openmrs.mobile.activities.ACBaseFragment
-import org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity
-import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity
-import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity
-import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardActivity
-import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity
 import org.openmrs.mobile.databinding.FragmentDashboardBinding
 import org.openmrs.mobile.utilities.ApplicationConstants
 import org.openmrs.mobile.utilities.ImageUtils
-import org.openmrs.mobile.utilities.ThemeUtils
-import org.openmrs.mobile.utilities.ToastUtil
 
 class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), DashboardContract.View, View.OnClickListener {
 
@@ -51,7 +44,7 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
     private var mActiveVisitsButton: ImageView? = null
     private var mCaptureVitalsButton: ImageView? = null
     private var mProviderManagementButton: ImageView? = null
-    private var mFindPatientView: RelativeLayout? = null
+    private var mFindPatientView: ConstraintLayout? = null
     private var mRegistryPatientView: RelativeLayout? = null
     private var mActiveVisitsView: RelativeLayout? = null
     private var mCaptureVitalsView: RelativeLayout? = null
@@ -157,13 +150,13 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
      * Initially called by this view's presenter
      */
     override fun bindDrawableResources() {
-        bindDrawableResource(mFindPatientButton, R.drawable.ico_search)
-        bindDrawableResource(mRegistryPatientButton, R.drawable.ico_registry)
-        bindDrawableResource(mActiveVisitsButton, R.drawable.ico_visits)
-        bindDrawableResource(mCaptureVitalsButton, R.drawable.ico_vitals)
-        if (ThemeUtils.isDarkModeActivated()) {
-            changeColorOfDashboardIcons()
-        }
+        bindDrawableResource(mFindPatientButton, R.drawable.ic_search)
+        bindDrawableResource(mRegistryPatientButton, R.drawable.ic_registry)
+        bindDrawableResource(mActiveVisitsButton, R.drawable.ic_visits)
+        bindDrawableResource(mCaptureVitalsButton, R.drawable.ic_form_entry)
+//        if (ThemeUtils.isDarkModeActivated()) {
+//            changeColorOfDashboardIcons()
+//        }
     }
 
     /**

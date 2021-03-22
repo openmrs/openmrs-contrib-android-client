@@ -17,31 +17,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_blue_background"
     tools:context=".activities.dashboard.DashboardFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="8dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginRight="12dp">
+        android:minHeight="600dp">
 
+        <TextView
+            android:id="@+id/welcomeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/welcome"
+            android:textSize="@dimen/welcome_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/findPatientsCardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginLeft="14dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="22dp"
-            android:layout_marginRight="22dp"
-            app:layout_constraintEnd_toStartOf="@+id/activeVisitsCardView"
+            android:layout_marginEnd="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/welcomeLabel">
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/findPatientView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,70 +60,33 @@
 
                 <ImageView
                     android:id="@+id/findPatientButton"
-                    android:layout_width="@dimen/dashboard_icon_height_width"
-                    android:layout_height="@dimen/dashboard_icon_height_width"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:layout_alignParentTop="true"
-                    android:layout_centerInParent="true"
-                    android:layout_margin="@dimen/dashboard_icon_margin"
-                    android:contentDescription="@string/dashboard_search_icon_label" />
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:contentDescription="@string/dashboard_search_icon_label"
+                    android:src="@drawable/ic_search"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/findPatientLabel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/findPatientButton"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/dashboard_text_top_margin"
-                    android:layout_marginBottom="@dimen/dashboard_text_bottom_margin"
-                    android:text="@string/dashboard_search_icon_label"
-                    android:textSize="@dimen/dashboard_text_size" />
-            </RelativeLayout>
-
-        </androidx.cardview.widget.CardView>
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/activeVisitsCardView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintBottom_toTopOf="@+id/formEntryCardView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/findPatientsCardView"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginRight="12dp"
-            app:layout_constraintVertical_chainStyle="spread_inside">
-
-            <RelativeLayout
-                android:id="@+id/activeVisitsView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true">
-
-                <ImageView
-                    android:id="@+id/activeVisitsButton"
-                    android:layout_width="@dimen/dashboard_icon_height_width"
-                    android:layout_height="@dimen/dashboard_icon_height_width"
                     android:layout_alignParentTop="true"
-                    android:layout_centerInParent="true"
-                    android:layout_margin="@dimen/dashboard_icon_margin"
-                    android:contentDescription="@string/dashboard_visits_icon_label" />
-
-                <TextView
-                    android:id="@+id/activeVisitsLabel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/activeVisitsButton"
-                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/dashboard_text_top_margin"
-                    android:layout_marginBottom="@dimen/dashboard_text_bottom_margin"
-                    android:text="@string/dashboard_visits_icon_label"
-                    android:textSize="@dimen/dashboard_text_size" />
-            </RelativeLayout>
+                    android:layout_marginStart="16dp"
+                    android:layout_toEndOf="@+id/findPatientButton"
+                    android:text="@string/dashboard_search_icon_label"
+                    android:textSize="@dimen/dashboard_text_size"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/findPatientButton"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
 
@@ -123,12 +95,14 @@
             android:id="@+id/registerPatientCardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginLeft="14dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="22dp"
-            android:layout_marginRight="22dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
             app:layout_constraintEnd_toStartOf="@+id/formEntryCardView"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/findPatientsCardView">
 
@@ -147,7 +121,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerInParent="true"
                     android:layout_margin="@dimen/dashboard_icon_margin"
-                    android:contentDescription="@string/dashboard_registry_icon_label" />
+                    android:contentDescription="@string/dashboard_registry_icon_label"
+                    android:src="@drawable/ic_registry" />
 
                 <TextView
                     android:id="@+id/registryLabel"
@@ -168,12 +143,15 @@
             android:id="@+id/formEntryCardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/manageProviderCardView"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/registerPatientCardView"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/registerPatientCardView"
-            app:layout_constraintTop_toBottomOf="@+id/activeVisitsCardView"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="12dp">
+            app:layout_constraintTop_toTopOf="@+id/registerPatientCardView">
 
             <RelativeLayout
                 android:id="@+id/captureVitalsView"
@@ -190,7 +168,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerInParent="true"
                     android:layout_margin="@dimen/dashboard_icon_margin"
-                    android:contentDescription="@string/dashboard_registry_icon_label" />
+                    android:contentDescription="@string/dashboard_registry_icon_label"
+                    android:src="@drawable/ic_form_entry" />
 
                 <TextView
                     android:id="@+id/formsLabel"
@@ -207,19 +186,17 @@
 
         </androidx.cardview.widget.CardView>
 
-
         <androidx.cardview.widget.CardView
             android:id="@+id/manageProviderCardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/activeVisitsCardView"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/formEntryCardView">
 
@@ -238,7 +215,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerInParent="true"
                     android:layout_margin="@dimen/dashboard_icon_margin"
-                    android:src="@mipmap/ic_provider" />
+                    android:src="@drawable/ic_provider" />
 
                 <TextView
                     android:id="@+id/dashboardProviderManagementLabel"
@@ -255,6 +232,73 @@
 
         </androidx.cardview.widget.CardView>
 
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/activeVisitsCardView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/manageProviderCardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/manageProviderCardView"
+            app:layout_constraintTop_toTopOf="@+id/manageProviderCardView">
+
+            <RelativeLayout
+                android:id="@+id/activeVisitsView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/activeVisitsButton"
+                    android:layout_width="@dimen/dashboard_icon_height_width"
+                    android:layout_height="@dimen/dashboard_icon_height_width"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:layout_margin="@dimen/dashboard_icon_margin"
+                    android:contentDescription="@string/dashboard_visits_icon_label"
+                    android:src="@drawable/ic_visits" />
+
+                <TextView
+                    android:id="@+id/activeVisitsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/activeVisitsButton"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dashboard_text_top_margin"
+                    android:layout_marginBottom="@dimen/dashboard_text_bottom_margin"
+                    android:text="@string/dashboard_visits_icon_label"
+                    android:textSize="@dimen/dashboard_text_size" />
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:alpha=".1"
+            android:background="@drawable/ic_circle"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/welcomeLabel" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:alpha=".1"
+            android:background="@drawable/ic_circle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

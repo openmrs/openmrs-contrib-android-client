@@ -30,7 +30,7 @@ import org.openmrs.mobile.models.PersonName;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.ResourceSerializer;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -74,7 +74,7 @@ public class ResourceSerializerTest {
         if (withPersonUuid) {
             patient.setUuid("PersonUUID");
         }
-        patient.setIdentifiers(Arrays.asList(generateIdentifier()));
+        patient.setIdentifiers(Collections.singletonList(generateIdentifier()));
         updatePatientDetails(patient);
         return patient;
     }
@@ -85,7 +85,7 @@ public class ResourceSerializerTest {
         personName.setFamilyName("family");
         personName.setGivenName("given");
         personName.setMiddleName("middle");
-        patient.setNames(Arrays.asList(personName));
+        patient.setNames(Collections.singletonList(personName));
         patient.setGender("M");
         return patient;
     }

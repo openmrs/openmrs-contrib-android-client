@@ -41,13 +41,17 @@ open class PatientDto {
      * @return
      * The patient object after transformation from patientDto Details
      */
-    val patient: Patient
+    val patient: Patient?
         get() {
             val person = person
-            val patient = Patient(null, "", identifiers,
-                    person!!.names, person.gender!!, person.birthdate!!, person.birthdateEstimated, person.addresses, person.attributes, person.photo, person.causeOfDeath, person.isDeceased)
+            val patient = person?.isDeceased?.let {
+                Patient(null, "", identifiers,
+                        person.names, person.gender!!, person.birthdate!!, person.birthdateEstimated, person.addresses, person.attributes as MutableList<PersonAttribute>, person.photo, person.causeOfDeath, it)
+            }
 
-            patient.uuid = uuid.toString()
+            if (patient != null) {
+                patient.uuid = uuid.toString()
+            }
 
             return patient
         }

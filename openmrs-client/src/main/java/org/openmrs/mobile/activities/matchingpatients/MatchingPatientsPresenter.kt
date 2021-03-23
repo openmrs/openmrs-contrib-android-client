@@ -28,7 +28,7 @@ import org.openmrs.mobile.utilities.PatientAndMatchingPatients
 import org.openmrs.mobile.utilities.PatientMerger
 import org.openmrs.mobile.utilities.ToastUtil.error
 import org.openmrs.mobile.utilities.ToastUtil.notify
-import java.util.*
+import java.util.Queue
 
 class MatchingPatientsPresenter : BasePresenter, MatchingPatientsContract.Presenter {
     private var restApi: RestApi

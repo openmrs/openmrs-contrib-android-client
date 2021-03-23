@@ -73,7 +73,6 @@ class MergePatientsRecycleViewAdapter(private val mContext: Activity,
                         notify(mContext.getString(R.string.only_one_patient_can_be_selected_notification_message))
                     }
                 }
-
             }
         }
     }
@@ -89,7 +88,6 @@ class MergePatientsRecycleViewAdapter(private val mContext: Activity,
                 patientBirthDate.text = " "
             }
         }
-
     }
 
     private fun setGender(holder: PatientViewHolder, patient: Patient) {

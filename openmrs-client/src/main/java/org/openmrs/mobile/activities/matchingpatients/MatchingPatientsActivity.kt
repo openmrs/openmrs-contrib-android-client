@@ -35,7 +35,6 @@ class MatchingPatientsActivity : ACBaseActivity() {
             setSupportActionBar(it)
         }
 
-        // Create fragment
         var matchingPatientsFragment = supportFragmentManager.findFragmentById(R.id.matchingPatientsContentFrame) as MatchingPatientsFragment?
         matchingPatientsFragment = matchingPatientsFragment
                 ?: MatchingPatientsFragment.newInstance()
@@ -49,7 +48,6 @@ class MatchingPatientsActivity : ACBaseActivity() {
         }
         val patientAndMatchesWrapper = intent.getSerializableExtra(ApplicationConstants.BundleKeys.PATIENTS_AND_MATCHES) as PatientAndMatchesWrapper
 
-        // Create the presenter
         MatchingPatientsPresenter(matchingPatientsFragment, patientAndMatchesWrapper.matchingPatients)
     }
 

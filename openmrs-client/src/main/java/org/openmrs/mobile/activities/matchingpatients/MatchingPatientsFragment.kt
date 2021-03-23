@@ -31,9 +31,7 @@ class MatchingPatientsFragment : ACBaseFragment<MatchingPatientsContract.Present
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentMatchingPatientsBinding.inflate(inflater, container, false)
-
         setListeners()
-
         return binding.root
     }
 
@@ -130,7 +128,6 @@ class MatchingPatientsFragment : ACBaseFragment<MatchingPatientsContract.Present
                 postalCodeSeparator.visibility = View.GONE
                 postalCodeHint.visibility = View.GONE
             }
-
         }
     }
 

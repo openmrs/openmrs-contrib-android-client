@@ -56,7 +56,7 @@ class AddEditPatientActivity : ACBaseActivity() {
         } else {
             patientBundle = intent.extras
         }
-        var patientID: String = ""
+        var patientID = ""
         if (patientBundle != null) {
             patientID = patientBundle.getString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE).toString()
         }

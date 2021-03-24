@@ -40,7 +40,6 @@ class AddEditPatientActivity : ACBaseActivity() {
             supportActionBar!!.setTitle(R.string.action_register_patient)
         }
 
-        // Create fragment
         addEditPatientFragment = supportFragmentManager.findFragmentById(R.id.patientInfoContentFrame) as AddEditPatientFragment?
         if (addEditPatientFragment == null) {
             addEditPatientFragment = AddEditPatientFragment.newInstance()
@@ -57,11 +56,13 @@ class AddEditPatientActivity : ACBaseActivity() {
         } else {
             patientBundle = intent.extras
         }
-        var patientID: String = "PatientID"
+        var patientID: String = ""
         if (patientBundle != null) {
             patientID = patientBundle.getString(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE).toString()
         }
+
         val countries = listOf(*resources.getStringArray(R.array.countries_array))
+
         var applicationInfo: ApplicationInfo? = null
         try {
             applicationInfo = this.packageManager.getApplicationInfo(this.packageName, PackageManager.GET_META_DATA)
@@ -75,9 +76,7 @@ class AddEditPatientActivity : ACBaseActivity() {
         }
         val placesClient = Places.createClient(this)
 
-        // Create the mPresenter
-        Log.i("ADDEDIT", "$patientID and $addEditPatientFragment")
-        mPresenter = AddEditPatientPresenter(addEditPatientFragment!!, countries, patientID, placesClient, applicationContext)
+       mPresenter = AddEditPatientPresenter(addEditPatientFragment!!, countries, patientID, placesClient, applicationContext)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

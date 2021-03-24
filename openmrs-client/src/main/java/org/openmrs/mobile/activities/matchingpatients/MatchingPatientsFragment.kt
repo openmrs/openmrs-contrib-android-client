@@ -27,10 +27,12 @@ import org.openmrs.mobile.utilities.ToastUtil.error
 import org.openmrs.mobile.utilities.ToastUtil.notify
 
 class MatchingPatientsFragment : ACBaseFragment<MatchingPatientsContract.Presenter>(), MatchingPatientsContract.View {
-    private lateinit var binding: FragmentMatchingPatientsBinding
+    private var _binding: FragmentMatchingPatientsBinding? = null
+    private val binding get() = _binding!!
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentMatchingPatientsBinding.inflate(inflater, container, false)
+        _binding = FragmentMatchingPatientsBinding.inflate(inflater, container, false)
         setListeners()
         return binding.root
     }
@@ -135,5 +137,10 @@ class MatchingPatientsFragment : ACBaseFragment<MatchingPatientsContract.Present
         fun newInstance(): MatchingPatientsFragment {
             return MatchingPatientsFragment()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

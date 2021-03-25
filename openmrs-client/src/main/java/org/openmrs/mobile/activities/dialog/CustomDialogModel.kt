@@ -11,23 +11,6 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package org.openmrs.mobile.activities.dialog
 
-package org.openmrs.mobile.activities.dialog;
-
-public class CustomDialogModel {
-    String name;
-    int id;
-
-    public CustomDialogModel(String name, int id) {
-        this.name = name;
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getId() {
-        return id;
-    }
-}
+class CustomDialogModel(var name: String, var id: Int)

@@ -32,27 +32,25 @@ import org.openmrs.mobile.utilities.ViewUtils
 import org.openmrs.mobile.utilities.ViewUtils.getInput
 import org.openmrs.mobile.utilities.ViewUtils.isEmpty
 import org.openmrs.mobile.utilities.ViewUtils.validateText
-import java.util.Objects
-import kotlin.collections.ArrayList
-
 
 class AddProviderFragment : ACBaseFragment<AddProviderContract.Presenter?>(), AddProviderContract.View {
     private var editProvider: Provider? = null
     private var existingProviders: ArrayList<Provider?>? = null
-    private var binding: FragmentAddProviderBinding? = null
+    private var _binding: FragmentAddProviderBinding? = null
+    private val binding get() = _binding!!
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        binding = FragmentAddProviderBinding.inflate(inflater, container, false)
+        _binding = FragmentAddProviderBinding.inflate(inflater, container, false)
         editProvider = requireActivity().intent
                 .getSerializableExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE) as? Provider
         existingProviders = requireActivity().intent
                 .getSerializableExtra(ApplicationConstants.BundleKeys.EXISTING_PROVIDERS_BUNDLE) as ArrayList<Provider?>?
         setupUI()
-        return binding!!.root
+        return binding.root
     }
 
     private fun setupUI() {
-        with(binding!!) {
+        with(binding) {
         if (editProvider != null) {
             var displayName = editProvider!!.person!!.display
             val firstName: String?
@@ -72,9 +70,9 @@ class AddProviderFragment : ACBaseFragment<AddProviderContract.Presenter?>(), Ad
         }
         submitButton.setOnClickListener { v: View? ->
             if (validateFields()) {
-                val firstName = Objects.requireNonNull(firstNameEditText.text).toString()
-                val lastName = Objects.requireNonNull(lastNameEditText.text).toString()
-                val identifier = Objects.requireNonNull(identifierEditText.text).toString()
+                val firstName = firstNameEditText.text!!.toString()
+                val lastName = lastNameEditText.text!!.toString()
+                val identifier = identifierEditText.text!!.toString()
                 val person = mPresenter!!.createPerson(firstName, lastName)
                 val provider: Provider
                 if (editProvider == null) {
@@ -96,50 +94,50 @@ class AddProviderFragment : ACBaseFragment<AddProviderContract.Presenter?>(), Ad
     }
 
     override fun validateFields(): Boolean {
-        with(binding!!) {
-        val emptyError = getString(R.string.emptyerror)
+        with(binding) {
+            val emptyError = getString(R.string.emptyerror)
 
-        // Invalid characters for given name only
-        val givenNameError = getString(R.string.fname_invalid_error)
-        // Invalid family name
-        val familyNameError = getString(R.string.lname_invalid_error)
+            // Invalid characters for given name only
+            val givenNameError = getString(R.string.fname_invalid_error)
+            // Invalid family name
+            val familyNameError = getString(R.string.lname_invalid_error)
 
-        // First name validation
-        if (isEmpty(firstNameEditText)) {
-            firstNameTextLayout.isErrorEnabled = true
-            firstNameTextLayout.error = emptyError
-            return false
-        } else if (!validateText(getInput(firstNameEditText), ViewUtils.ILLEGAL_CHARACTERS)) {
-            firstNameTextLayout.isErrorEnabled = true
-            firstNameTextLayout.error = givenNameError
-            return false
-        } else {
-            firstNameTextLayout.isErrorEnabled = false
+            // First name validation
+            if (isEmpty(firstNameEditText)) {
+                firstNameTextLayout.isErrorEnabled = true
+                firstNameTextLayout.error = emptyError
+                return false
+            } else if (!validateText(getInput(firstNameEditText), ViewUtils.ILLEGAL_CHARACTERS)) {
+                firstNameTextLayout.isErrorEnabled = true
+                firstNameTextLayout.error = givenNameError
+                return false
+            } else {
+                firstNameTextLayout.isErrorEnabled = false
+            }
+
+            // Family name validation
+            if (isEmpty(lastNameEditText)) {
+                lastNameTextLayout.isErrorEnabled = true
+                lastNameTextLayout.error = emptyError
+                return false
+            } else if (!validateText(getInput(lastNameEditText), ViewUtils.ILLEGAL_CHARACTERS)) {
+                lastNameTextLayout.isErrorEnabled = true
+                lastNameTextLayout.error = familyNameError
+                return false
+            } else {
+                lastNameTextLayout.isErrorEnabled = false
+            }
+
+            // identifier validation
+            if (isEmpty(identifierEditText)) {
+                identifierTextLayout.isErrorEnabled = true
+                identifierTextLayout.error = emptyError
+                return false
+            } else {
+                identifierTextLayout.isErrorEnabled = false
+            }
+            return true
         }
-
-        // Family name validation
-        if (isEmpty(lastNameEditText)) {
-            lastNameTextLayout.isErrorEnabled = true
-            lastNameTextLayout.error = emptyError
-            return false
-        } else if (!validateText(getInput(lastNameEditText), ViewUtils.ILLEGAL_CHARACTERS)) {
-            lastNameTextLayout.isErrorEnabled = true
-            lastNameTextLayout.error = familyNameError
-            return false
-        } else {
-            lastNameTextLayout.isErrorEnabled = false
-        }
-
-        // identifier validation
-        if (isEmpty(identifierEditText)) {
-            identifierTextLayout.isErrorEnabled = true
-            identifierTextLayout.error = emptyError
-            return false
-        } else {
-            identifierTextLayout.isErrorEnabled = false
-        }
-        return true
-    }
     }
 
     override fun setPresenter(presenter: AddProviderContract.Presenter?) {
@@ -179,5 +177,10 @@ class AddProviderFragment : ACBaseFragment<AddProviderContract.Presenter?>(), Ad
         fun newInstance(): AddProviderFragment {
             return AddProviderFragment()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

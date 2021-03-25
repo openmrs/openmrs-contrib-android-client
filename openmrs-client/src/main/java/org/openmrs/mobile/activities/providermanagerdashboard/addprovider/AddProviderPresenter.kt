@@ -20,7 +20,7 @@ import org.openmrs.mobile.models.Provider
 
 class AddProviderPresenter(private val addProviderView: AddProviderContract.View) : BasePresenter(), AddProviderContract.Presenter {
     /**
-     * This fuction creates a new Person using the First Name and Last Name
+     * This function creates a new Person using the First Name and Last Name
      *
      * @param firstName
      * @param lastName

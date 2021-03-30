@@ -446,7 +446,7 @@ public class CustomFragmentDialog extends DialogFragment {
                         }
                     }
                     dismiss();
-                    Objects.requireNonNull(syncedPatientsActivity).finish();
+                    Objects.requireNonNull(syncedPatientsActivity).recreate();
                     ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.SUCCESS, org.openmrs.mobile.R.string.multiple_patients_deleted);
                     break;
                 case SELECT_LOCATION:

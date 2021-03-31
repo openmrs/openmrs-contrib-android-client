@@ -141,6 +141,8 @@ public class AddEditPatientActivity extends ACBaseActivity {
                 finish();
             });
         alertDialog = alertDialogBuilder.create();
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.neutral_green));
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.neutral_green));
         alertDialog.show();
     }
 

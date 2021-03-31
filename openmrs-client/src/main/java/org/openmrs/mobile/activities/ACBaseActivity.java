@@ -420,6 +420,9 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 });
 
         alertDialog = alertDialogBuilder.create();
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.neutral_green));
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.neutral_green));
+        alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(getResources().getColor(R.color.neutral_green));
         alertDialog.show();
     }
 

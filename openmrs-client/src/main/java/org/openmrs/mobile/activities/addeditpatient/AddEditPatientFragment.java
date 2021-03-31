@@ -919,6 +919,8 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                         alertDialog.cancel();
                     });
                 alertDialog = alertDialogBuilder.create();
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.neutral_green));
+                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.neutral_green));
                 alertDialog.show();
             } else {
                 mPresenter.confirmUpdate(updatePatient(updatedPatient));

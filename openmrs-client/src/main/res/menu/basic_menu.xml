@@ -23,16 +23,16 @@
         android:title="@string/sync"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/actionLocation"
-        android:icon="@drawable/ic_location"
-        android:title="@string/action_location"
-        app:showAsAction="ifRoom" />
-    <item
-        android:id="@+id/actionSettings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+    <!--    <item-->
+    <!--        android:id="@+id/actionLocation"-->
+    <!--        android:icon="@drawable/ic_location"-->
+    <!--        android:title="@string/action_location"-->
+    <!--        app:showAsAction="ifRoom" />-->
+    <!--    <item-->
+    <!--        android:id="@+id/actionSettings"-->
+    <!--        android:orderInCategory="100"-->
+    <!--        android:title="@string/action_settings"-->
+    <!--        app:showAsAction="never" />-->
     <item
         android:id="@+id/actionContact"
         android:orderInCategory="100"

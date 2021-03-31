@@ -44,13 +44,6 @@ class SettingsActivity : ACBaseActivity() {
         SettingsPresenter(settingsFragment, mOpenMRSLogger)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        //Disable Settings Option in Menu
-        val settingsItem = menu.findItem(R.id.actionSettings)
-        settingsItem.isVisible = false
-        return true
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {

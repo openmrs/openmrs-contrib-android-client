@@ -27,28 +27,18 @@
         android:layout_marginTop="16dp"
         android:minHeight="600dp">
 
-        <TextView
-            android:id="@+id/welcomeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/welcome"
-            android:textSize="@dimen/welcome_text_size"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <androidx.cardview.widget.CardView
             android:id="@+id/findPatientsCardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/welcomeLabel">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/findPatientView"
@@ -68,10 +58,10 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"
                     android:contentDescription="@string/dashboard_search_icon_label"
-                    android:src="@drawable/ic_search"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_search" />
 
                 <TextView
                     android:id="@+id/findPatientLabel"
@@ -122,7 +112,7 @@
                     android:layout_centerInParent="true"
                     android:layout_margin="@dimen/dashboard_icon_margin"
                     android:contentDescription="@string/dashboard_registry_icon_label"
-                    android:src="@drawable/ic_registry" />
+                    app:srcCompat="@drawable/ic_registry" />
 
                 <TextView
                     android:id="@+id/registryLabel"
@@ -169,7 +159,7 @@
                     android:layout_centerInParent="true"
                     android:layout_margin="@dimen/dashboard_icon_margin"
                     android:contentDescription="@string/dashboard_registry_icon_label"
-                    android:src="@drawable/ic_form_entry" />
+                    app:srcCompat="@drawable/ic_form_entry" />
 
                 <TextView
                     android:id="@+id/formsLabel"
@@ -191,7 +181,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:layout_marginEnd="8dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
@@ -215,7 +205,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_centerInParent="true"
                     android:layout_margin="@dimen/dashboard_icon_margin"
-                    android:src="@drawable/ic_provider" />
+                    app:srcCompat="@drawable/ic_provider" />
 
                 <TextView
                     android:id="@+id/dashboardProviderManagementLabel"
@@ -263,7 +253,7 @@
                     android:layout_centerInParent="true"
                     android:layout_margin="@dimen/dashboard_icon_margin"
                     android:contentDescription="@string/dashboard_visits_icon_label"
-                    android:src="@drawable/ic_visits" />
+                    app:srcCompat="@drawable/ic_visits" />
 
                 <TextView
                     android:id="@+id/activeVisitsLabel"
@@ -288,7 +278,7 @@
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/welcomeLabel" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:layout_width="wrap_content"

@@ -14,7 +14,6 @@
 
 package org.openmrs.mobile.activities;
 
-import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -51,7 +50,6 @@ import org.openmrs.mobile.activities.settings.SettingsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
-import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.models.Patient;
@@ -68,10 +66,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import rx.Observable;
 import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -83,7 +78,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     protected CustomFragmentDialog mCustomFragmentDialog;
     protected Snackbar mSnackbar;
     private MenuItem mSyncbutton;
-    private List<String> locationList;
+    protected List<String> locationList;
     private IntentFilter mIntentFilter;
     private AlertDialog alertDialog;
     private BroadcastReceiver mPasswordChangedReceiver = new BroadcastReceiver() {
@@ -174,6 +169,11 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         }
     }
 
+    protected void callStartActivityForResult() {
+        startActivityForResult(new Intent(this, SettingsActivity.class), ApplicationConstants.RequestCodes.START_SETTINGS_REQ_CODE);
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -181,9 +181,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         switch (id) {
-            case R.id.actionSettings:
-                startActivityForResult(new Intent(this, SettingsActivity.class), ApplicationConstants.RequestCodes.START_SETTINGS_REQ_CODE);
-                return true;
             case R.id.actionContact:
                 startActivity(new Intent(this, ContactUsActivity.class));
                 return true;
@@ -213,13 +210,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     showNoInternetConnectionSnackbar();
                 }
                 return true;
-            case R.id.actionLocation:
-                if (!locationList.isEmpty()) {
-                    locationList.clear();
-                }
-                Observable<List<LocationEntity>> observableList = new LocationDAO().getLocations();
-                observableList.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(getLocationList());
-                return true;
             case R.id.actionAbout:
                 startActivity(new Intent(this, AboutActivity.class));
                 return true;
@@ -228,7 +218,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         }
     }
 
-    private Observer<List<LocationEntity>> getLocationList() {
+    protected Observer<List<LocationEntity>> getLocationList() {
         return new Observer<List<LocationEntity>>() {
             @Override
             public void onCompleted() {

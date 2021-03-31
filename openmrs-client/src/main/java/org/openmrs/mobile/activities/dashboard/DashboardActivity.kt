@@ -16,13 +16,19 @@ package org.openmrs.mobile.activities.dashboard
 
 import android.os.Bundle
 import android.os.Handler
+import android.view.MenuItem
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
+import org.openmrs.mobile.dao.LocationDAO
 import org.openmrs.mobile.utilities.ToastUtil
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 
 
-class DashboardActivity : ACBaseActivity() {
+class DashboardActivity : ACBaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
     /*TODO: Permission handling to be coded later, moving to SDK 22 for now.
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
@@ -32,6 +38,8 @@ class DashboardActivity : ACBaseActivity() {
 
     private var doubleBackToExitPressedOnce: Boolean = false
     private var handler: Handler? = Handler()
+    private lateinit var bottomNavigation: BottomNavigationView
+    private lateinit var navController: NavController
 
     private var runnable = object : Runnable {
         override fun run() {
@@ -68,9 +76,16 @@ class DashboardActivity : ACBaseActivity() {
             actionBar.setDisplayUseLogoEnabled(true)
             actionBar.setDisplayShowHomeEnabled(true)
             actionBar.setLogo(R.drawable.openmrs_action_logo)
-            actionBar.setTitle(R.string.app_name)
+            actionBar.setTitle(R.string.organization_name)
         }
+
+
+
+        bottomNavigation = findViewById(R.id.bottom_nav)
+        bottomNavigation.itemIconTintList = null
+        bottomNavigation.setOnNavigationItemSelectedListener(this)
     }
+
 
     /*TODO: Permission handling to be coded later, moving to SDK 22 for now.
     @Override
@@ -97,26 +112,56 @@ class DashboardActivity : ACBaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.dashboard_nav_host_fragment) as NavHostFragment
-        val dashboardFragment: DashboardFragment? = navHostFragment.childFragmentManager.primaryNavigationFragment as DashboardFragment?
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.dashboard_nav_host_fragment) as NavHostFragment
+        val dashboardFragment: DashboardFragment? =
+            navHostFragment.childFragmentManager.primaryNavigationFragment as DashboardFragment?
         if (dashboardFragment != null) {
             DashboardPresenter(dashboardFragment)
         }
+        navController = navHostFragment.navController
     }
 
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-
-            return;
+            super.onBackPressed()
+            return
         }
-        this.doubleBackToExitPressedOnce = true;
-        ToastUtil.notify(getString(R.string.dashboard_exit_toast_message));
-        handler?.postDelayed(runnable, 2000);
+        this.doubleBackToExitPressedOnce = true
+        ToastUtil.notify(getString(R.string.dashboard_exit_toast_message))
+        handler?.postDelayed(runnable, 2000)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         handler?.removeCallbacks(runnable)
     }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.syncedPatientsActivity -> {
+                navController.navigate(R.id.action_dashboardFragment_to_syncedPatientsActivity)
+                return true
+            }
+            R.id.activeVisitsActivity -> {
+                navController.navigate(R.id.action_dashboardFragment_to_activeVisitsActivity)
+                return true
+            }
+            R.id.actionLocation -> {
+                if (locationList.isNotEmpty()) {
+                    locationList.clear()
+                }
+                val observableList = LocationDAO().locations
+                observableList.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe(getLocationList())
+                return true
+            }
+            R.id.actionSettings -> {
+                callStartActivityForResult()
+                return true
+            }
+        }
+        return false
+    }
+
 }

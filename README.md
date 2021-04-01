@@ -129,7 +129,7 @@ Note:
 # Demo Server
 
 The demo test server dedicated to the client is (https://demo.openmrs.org/openmrs/).
-In case the demo server fails to respond, you can use oher alternate servers provided [here.](https://wiki.openmrs.org/display/ISM/OpenMRS+environments)
+In case the demo server fails to respond, you can use other alternate servers provided [here.](https://wiki.openmrs.org/display/ISM/OpenMRS+environments)
 
 ##### Demo Username: admin
 ##### Demo Password: Admin123
@@ -138,7 +138,7 @@ In case the demo server fails to respond, you can use oher alternate servers pro
 
 We follow the sprint model for development. Read more about it here: [OpenMRS Sprints](https://wiki.openmrs.org/display/RES/Development+Sprints).
 
-To release the application, make sure to do these steps **in order**:
+To release the application, make sure to follow these steps **in order**:
 
 1. Update the [version variable in versions.gradle](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/openmrs-client/versions.gradle#L6) prior to the release.
 3. Update the [Release notes](#Release-Notes) section.

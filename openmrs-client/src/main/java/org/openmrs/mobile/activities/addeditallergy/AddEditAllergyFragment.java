@@ -216,8 +216,10 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
                     })
                     .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> alertDialog.cancel());
             alertDialog = alertDialogBuilder.create();
-            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.neutral_green));
-            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.neutral_green));
+            alertDialog.setOnShowListener(dialogInterface -> {
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.neutral_green));
+                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.neutral_green));
+            });
             alertDialog.show();
         }
     }

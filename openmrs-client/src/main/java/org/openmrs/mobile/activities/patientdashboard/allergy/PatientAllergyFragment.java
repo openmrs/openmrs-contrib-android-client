@@ -137,8 +137,10 @@ public class PatientAllergyFragment extends PatientDashboardFragment implements 
                         alertDialog.cancel();
                     });
             alertDialog = alertDialogBuilder.create();
-            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.neutral_green));
-            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.neutral_green));
+            alertDialog.setOnShowListener(dialogInterface -> {
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.neutral_green));
+                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.neutral_green));
+            });
             alertDialog.show();
         } else {
             Intent intent = new Intent(getActivity(), AddEditAllergyActivity.class);

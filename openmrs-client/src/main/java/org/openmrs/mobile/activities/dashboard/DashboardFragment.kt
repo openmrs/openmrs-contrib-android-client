@@ -134,7 +134,7 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
         val directionToRegister = DashboardFragmentDirections.actionDashboardFragmentToAddEditPatientActivity()
         val directionToFindPatent = DashboardFragmentDirections.actionDashboardFragmentToSyncedPatientsActivity()
         val directionToFormEntry = DashboardFragmentDirections.actionDashboardFragmentToFormEntryPatientListActivity()
-        val directionToProviderManager = DashboardFragmentDirections.actionDashboardFragmentToProviderDashboardActivity()
+        val directionToProviderManager = DashboardFragmentDirections.actionDashboardFragmentToProviderManagerDashboardActivity()
         val directionToActiveVisits = DashboardFragmentDirections.actionDashboardFragmentToActiveVisitsActivity()
         when (v.id) {
             R.id.findPatientView -> findNavController().navigate(directionToFindPatent)

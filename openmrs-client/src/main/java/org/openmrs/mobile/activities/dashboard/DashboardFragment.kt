@@ -13,15 +13,11 @@
  */
 package org.openmrs.mobile.activities.dashboard
 
-import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.fragment.findNavController
@@ -30,15 +26,14 @@ import com.github.amlcurran.showcaseview.ShowcaseView
 import com.github.amlcurran.showcaseview.targets.Target
 import com.github.amlcurran.showcaseview.targets.ViewTarget
 import org.openmrs.mobile.R
-import org.openmrs.mobile.activities.ACBaseActivity
 import org.openmrs.mobile.activities.ACBaseFragment
 import org.openmrs.mobile.databinding.FragmentDashboardBinding
 import org.openmrs.mobile.utilities.ApplicationConstants
-import org.openmrs.mobile.utilities.ImageUtils
 
 class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), DashboardContract.View, View.OnClickListener {
 
-    private var binding: FragmentDashboardBinding? = null
+    private var _binding: FragmentDashboardBinding? = null
+    private val binding get() = _binding!!
     private var mFindPatientView: ConstraintLayout? = null
     private var mRegistryPatientView: RelativeLayout? = null
     private var mActiveVisitsView: RelativeLayout? = null
@@ -50,7 +45,7 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
 
         val settings2 = requireActivity().getSharedPreferences(ApplicationConstants.OPENMRS_PREF_FILE, 0)
         if (settings2.getBoolean("my_first_time", true)) {
-            showOverlayTutorial((binding!!.findPatientView).id, getString(R.string.dashboard_search_icon_label),
+            showOverlayTutorial((binding.findPatientView).id, getString(R.string.dashboard_search_icon_label),
                     getString(R.string.showcase_find_patients), R.style.CustomShowcaseTheme,
                     ApplicationConstants.ShowCaseViewConstants.SHOW_FIND_PATIENT, true)
             settings2.edit().putBoolean("my_first_time", false).apply()
@@ -69,16 +64,16 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
                 .setShowcaseEventListener(object : OnShowcaseEventListener {
                     override fun onShowcaseViewHide(showcaseView: ShowcaseView) {
                         when (currentViewCount) {
-                            ApplicationConstants.ShowCaseViewConstants.SHOW_FIND_PATIENT -> showOverlayTutorial((binding!!.activeVisitsView).id, getString(R.string.dashboard_visits_icon_label),
+                            ApplicationConstants.ShowCaseViewConstants.SHOW_FIND_PATIENT -> showOverlayTutorial((binding.activeVisitsView).id, getString(R.string.dashboard_visits_icon_label),
                                     getString(R.string.showcase_active_visits), R.style.CustomShowcaseTheme,
                                     ApplicationConstants.ShowCaseViewConstants.SHOW_ACTIVE_VISITS, true)
-                            ApplicationConstants.ShowCaseViewConstants.SHOW_ACTIVE_VISITS -> showOverlayTutorial((binding!!.registryPatientView).id, getString(R.string.action_register_patient),
+                            ApplicationConstants.ShowCaseViewConstants.SHOW_ACTIVE_VISITS -> showOverlayTutorial((binding.registryPatientView).id, getString(R.string.action_register_patient),
                                     getString(R.string.showcase_register_patient), R.style.CustomShowcaseTheme,
                                     ApplicationConstants.ShowCaseViewConstants.SHOW_REGISTER_PATIENT, false)
-                            ApplicationConstants.ShowCaseViewConstants.SHOW_REGISTER_PATIENT -> showOverlayTutorial((binding!!.captureVitalsView).id, getString(R.string.dashboard_forms_icon_label),
+                            ApplicationConstants.ShowCaseViewConstants.SHOW_REGISTER_PATIENT -> showOverlayTutorial((binding.captureVitalsView).id, getString(R.string.dashboard_forms_icon_label),
                                     getString(R.string.showcase_form_entry), R.style.CustomShowcaseTheme,
                                     ApplicationConstants.ShowCaseViewConstants.SHOW_FORM_ENTRY, false)
-                            ApplicationConstants.ShowCaseViewConstants.SHOW_FORM_ENTRY -> showOverlayTutorial((binding!!.dashboardProviderManagementView).id, getString(R.string.action_provider_management),
+                            ApplicationConstants.ShowCaseViewConstants.SHOW_FORM_ENTRY -> showOverlayTutorial((binding.dashboardProviderManagementView).id, getString(R.string.action_provider_management),
                                     getString(R.string.showcase_manage_providers), R.style.CustomShowcaseThemeExit,
                                     ApplicationConstants.ShowCaseViewConstants.SHOW_MANAGE_PROVIDERS, false)
                         }
@@ -104,10 +99,10 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        val root = binding!!.root
+        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        val root = binding.root
         if (root != null) {
-            initFragmentFields(binding!!)
+            initFragmentFields(binding)
             setListeners()
         }
         return root
@@ -152,5 +147,10 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
         fun newInstance(): DashboardFragment {
             return DashboardFragment()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

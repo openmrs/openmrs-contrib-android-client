@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.dashboard
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.MenuItem
@@ -22,7 +23,10 @@ import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
+import org.openmrs.mobile.activities.community.contact.AboutActivity
+import org.openmrs.mobile.activities.settings.SettingsActivity
 import org.openmrs.mobile.dao.LocationDAO
+import org.openmrs.mobile.utilities.ApplicationConstants
 import org.openmrs.mobile.utilities.ToastUtil
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -143,8 +147,10 @@ class DashboardActivity : ACBaseActivity(), BottomNavigationView.OnNavigationIte
                 navController.navigate(R.id.action_dashboardFragment_to_syncedPatientsActivity)
                 return true
             }
-            R.id.activeVisitsActivity -> {
-                navController.navigate(R.id.action_dashboardFragment_to_activeVisitsActivity)
+            
+            // TODO: 04-Apr-21 Replace actionAbout with Profile Dashboard
+            R.id.actionAbout -> {
+                startActivity(Intent(this, AboutActivity::class.java))
                 return true
             }
             R.id.actionLocation -> {
@@ -157,7 +163,10 @@ class DashboardActivity : ACBaseActivity(), BottomNavigationView.OnNavigationIte
                 return true
             }
             R.id.actionSettings -> {
-                callStartActivityForResult()
+                startActivityForResult(
+                    Intent(this, SettingsActivity::class.java),
+                    ApplicationConstants.RequestCodes.START_SETTINGS_REQ_CODE
+                )
                 return true
             }
         }

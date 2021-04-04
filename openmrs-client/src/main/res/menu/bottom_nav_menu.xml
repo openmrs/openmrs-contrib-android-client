@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
   ~ compliance with the License. You may obtain a copy of the License at
@@ -14,22 +13,26 @@
   -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="org.openmrs.mobile.activities.ACBaseActivity">
+
+
     <item
-        android:id="@+id/syncbutton"
-        android:icon="@drawable/ic_sync_off"
-        android:title="@string/sync"
-        app:showAsAction="ifRoom" />
+        android:id="@+id/syncedPatientsActivity"
+        android:icon="@drawable/ic_search"
+        android:title="@string/dashboard_search_icon_label" />
+
     <item
-        android:id="@+id/actionContact"
-        android:orderInCategory="100"
-        android:title="@string/contact_us"
-        app:showAsAction="never" />
+        android:id="@+id/actionLocation"
+        android:icon="@drawable/ic_location"
+        android:title="@string/action_location" />
     <item
-        android:id="@+id/actionLogout"
-        android:orderInCategory="100"
-        android:title="@string/action_logout"
-        app:showAsAction="never" />
+        android:id="@+id/actionSettings"
+        android:icon="@drawable/ic_settings"
+        android:title="@string/action_settings" />
+
+    <item
+        android:id="@+id/actionAbout"
+        android:icon="@drawable/ic_profile"
+        android:title="@string/action_about" />
 </menu>

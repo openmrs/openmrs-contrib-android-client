@@ -23,11 +23,6 @@
         android:title="@string/dashboard_search_icon_label" />
 
     <item
-        android:id="@+id/activeVisitsActivity"
-        android:icon="@drawable/ic_visits"
-        android:title="@string/dashboard_visits_icon_label" />
-
-    <item
         android:id="@+id/actionLocation"
         android:icon="@drawable/ic_location"
         android:title="@string/action_location" />
@@ -35,4 +30,9 @@
         android:id="@+id/actionSettings"
         android:icon="@drawable/ic_settings"
         android:title="@string/action_settings" />
+
+    <item
+        android:id="@+id/actionAbout"
+        android:icon="@drawable/ic_provider"
+        android:title="@string/action_about" />
 </menu>

@@ -169,9 +169,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void callStartActivityForResult() {
-        startActivityForResult(new Intent(this, SettingsActivity.class), ApplicationConstants.RequestCodes.START_SETTINGS_REQ_CODE);
-    }
 
 
     @Override
@@ -209,9 +206,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                 } else {
                     showNoInternetConnectionSnackbar();
                 }
-                return true;
-            case R.id.actionAbout:
-                startActivity(new Intent(this, AboutActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

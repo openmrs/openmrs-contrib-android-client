@@ -35,14 +35,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class FormAdmissionFragment : ACBaseFragment<FormAdmissionContract.Presenter>(), FormAdmissionContract.View {
-    private lateinit var formAdmissionBinding: FragmentFormAdmissionBinding
+    private var _binding: FragmentFormAdmissionBinding? = null
+    private val binding get() = _binding!!
     private var providerUUID: String? = ""
     private var locationUUID: String? = ""
     private var encounterRoleUUID: String? = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        formAdmissionBinding = FragmentFormAdmissionBinding.inflate(inflater, container, false)
-        val root: View = formAdmissionBinding.root
+        _binding = FragmentFormAdmissionBinding.inflate(inflater, container, false)
+        val root: View = binding.root
         initFragmentFields()
         mPresenter?.getEncounterRoles(this)
         mPresenter?.getProviders(this)
@@ -53,7 +54,7 @@ class FormAdmissionFragment : ACBaseFragment<FormAdmissionContract.Presenter>(),
     private fun initFragmentFields() {
         val currentDate = Calendar.getInstance().time
         @SuppressLint("SimpleDateFormat") val df = SimpleDateFormat("dd/MM/yyyy")
-        with(formAdmissionBinding) {
+        with(binding) {
             admissionDateHeader.text = df.format(currentDate)
             submitButton.setOnClickListener { createEncounter() }
             cancelButton.setOnClickListener { quitFormEntry() }
@@ -74,10 +75,10 @@ class FormAdmissionFragment : ACBaseFragment<FormAdmissionContract.Presenter>(),
             providers[i] = providerList[i]!!.display
         }
         val adapterAdmittedBy = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, providers)
-        formAdmissionBinding.admittedBySpinner.adapter = adapterAdmittedBy
-        formAdmissionBinding.admittedBySpinner.onItemSelectedListener = object : OnItemSelectedListener {
+        binding.admittedBySpinner.adapter = adapterAdmittedBy
+        binding.admittedBySpinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
-                val providerDisplay = formAdmissionBinding.admittedBySpinner.selectedItem.toString()
+                val providerDisplay = binding.admittedBySpinner.selectedItem.toString()
                 for (i in providerList.indices) {
                     if (providerDisplay == providerList[i]!!.display) {
                         providerUUID = providerList[i]!!.uuid
@@ -95,10 +96,10 @@ class FormAdmissionFragment : ACBaseFragment<FormAdmissionContract.Presenter>(),
             locations[i] = locationList[i]!!.display
         }
         val adapterAdmittedTo = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, locations)
-        formAdmissionBinding.admittedToSpinner.adapter = adapterAdmittedTo
-        formAdmissionBinding.admittedToSpinner.onItemSelectedListener = object : OnItemSelectedListener {
+        binding.admittedToSpinner.adapter = adapterAdmittedTo
+        binding.admittedToSpinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
-                val locationDisplay = formAdmissionBinding.admittedToSpinner.selectedItem.toString()
+                val locationDisplay = binding.admittedToSpinner.selectedItem.toString()
                 for (i in locationList.indices) {
                     if (locationDisplay == locationList[i]!!.display) {
                         locationUUID = locationList[i]!!.uuid
@@ -116,10 +117,10 @@ class FormAdmissionFragment : ACBaseFragment<FormAdmissionContract.Presenter>(),
             encounterRole[i] = encounterRoleList[i]!!.display
         }
         val adapterEncounterRole = ArrayAdapter(requireActivity(), android.R.layout.simple_list_item_1, encounterRole)
-        formAdmissionBinding.encounterRoleSpinner.adapter = adapterEncounterRole
-        formAdmissionBinding.encounterRoleSpinner.onItemSelectedListener = object : OnItemSelectedListener {
+        binding.encounterRoleSpinner.adapter = adapterEncounterRole
+        binding.encounterRoleSpinner.onItemSelectedListener = object : OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
-                val encounterRoleDisplay = formAdmissionBinding.encounterRoleSpinner.selectedItem.toString()
+                val encounterRoleDisplay = binding.encounterRoleSpinner.selectedItem.toString()
                 for (i in encounterRoleList.indices) {
                     if (encounterRoleDisplay == encounterRoleList[i]!!.display) {
                         encounterRoleUUID = encounterRoleList[i]!!.uuid
@@ -136,7 +137,7 @@ class FormAdmissionFragment : ACBaseFragment<FormAdmissionContract.Presenter>(),
     }
 
     override fun enableSubmitButton(value: Boolean) {
-        formAdmissionBinding.submitButton.isEnabled = value
+        binding.submitButton.isEnabled = value
     }
 
     override fun quitFormEntry() {
@@ -147,5 +148,10 @@ class FormAdmissionFragment : ACBaseFragment<FormAdmissionContract.Presenter>(),
         fun newInstance(): FormAdmissionFragment {
             return FormAdmissionFragment()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

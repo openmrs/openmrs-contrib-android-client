@@ -31,11 +31,12 @@ import org.openmrs.mobile.utilities.ApplicationConstants
 import org.openmrs.mobile.utilities.StringUtils
 
 class FormEntryPatientListFragment : ACBaseFragment<FormEntryPatientListContract.Presenter>(), FormEntryPatientListContract.View {
-    private lateinit var binding: FragmentFormEntryPatientListBinding
+    private var _binding: FragmentFormEntryPatientListBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = FragmentFormEntryPatientListBinding.inflate(inflater, container, false)
+        _binding = FragmentFormEntryPatientListBinding.inflate(inflater, container, false)
         val linearLayoutManager = LinearLayoutManager(activity)
 
         with(binding) {
@@ -96,5 +97,10 @@ class FormEntryPatientListFragment : ACBaseFragment<FormEntryPatientListContract
         fun newInstance(): FormEntryPatientListFragment {
             return FormEntryPatientListFragment()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

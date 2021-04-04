@@ -360,4 +360,10 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     private boolean isActivityNotNull() {
         return (isAdded() && getActivity() != null);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

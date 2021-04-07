@@ -27,20 +27,21 @@ import org.openmrs.mobile.databinding.FragmentLogsBinding
 
 class LogsFragment : ACBaseFragment<LogsContract.Presenter>(), LogsContract.View {
 
-    private lateinit var _binding: FragmentLogsBinding
+    private var _binding: FragmentLogsBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         _binding = FragmentLogsBinding.inflate(inflater, container, false)
-        return _binding.root
+        return binding.root
     }
 
     override fun attachLogsToTextView(logs: String?) {
-        _binding.tvLogs.text = logs
+        binding.tvLogs.text = logs
     }
 
     override fun fabCopyAll(textLogs: String?) {
-        _binding.fab.setOnClickListener {
+        binding.fab.setOnClickListener {
             setClipboard(context, textLogs)
             Toast.makeText(context, R.string.logs_copied_to_clipboard_message,
                     Toast.LENGTH_SHORT).show()
@@ -57,5 +58,10 @@ class LogsFragment : ACBaseFragment<LogsContract.Presenter>(), LogsContract.View
         fun newInstance(): LogsFragment {
             return LogsFragment()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

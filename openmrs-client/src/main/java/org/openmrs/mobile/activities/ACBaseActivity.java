@@ -398,7 +398,7 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
     public void showAppCrashDialog(String error) {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                this);
+                this,R.style.AlertDialogTheme);
         alertDialogBuilder.setTitle(R.string.crash_dialog_title);
         // set dialog message
         alertDialogBuilder
@@ -419,11 +419,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
                     startActivity(Intent.createChooser(email, getString(R.string.choose_a_email_client)));
                 });
         alertDialog = alertDialogBuilder.create();
-        alertDialog.setOnShowListener(dialogInterface -> {
-            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.neutral_green));
-            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.neutral_green));
-            alertDialog.getButton(AlertDialog.BUTTON_NEUTRAL).setTextColor(getResources().getColor(R.color.neutral_green));
-        });
         alertDialog.show();
     }
 

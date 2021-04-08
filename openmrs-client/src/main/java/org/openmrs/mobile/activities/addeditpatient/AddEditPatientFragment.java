@@ -905,7 +905,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private void submitAction() {
         if (isUpdatePatient) {
             if (binding.deceasedCheckbox.isChecked() && !causeOfDeathUUID.isEmpty()) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext(),R.style.AlertDialogTheme);
                 alertDialogBuilder.setTitle(R.string.mark_patient_deceased);
                 // set dialog message
                 alertDialogBuilder
@@ -919,10 +919,6 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                         alertDialog.cancel();
                     });
                 alertDialog = alertDialogBuilder.create();
-                alertDialog.setOnShowListener(dialogInterface -> {
-                    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.neutral_green));
-                    alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.neutral_green));
-                });
                 alertDialog.show();
             } else {
                 mPresenter.confirmUpdate(updatePatient(updatedPatient));

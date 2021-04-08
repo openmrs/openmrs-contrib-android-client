@@ -200,7 +200,7 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
         if (null == allergyCreate.getAllergen()) {
             ToastUtil.error(getString(R.string.warning_select_allergen));
         } else {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext(),R.style.AlertDialogTheme);
             alertDialogBuilder.setTitle(getString(R.string.create_allergy_title));
             alertDialogBuilder
                     .setMessage(R.string.create_allergy_description)
@@ -216,10 +216,6 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
                     })
                     .setNegativeButton(R.string.dialog_button_cancel, (dialog, id) -> alertDialog.cancel());
             alertDialog = alertDialogBuilder.create();
-            alertDialog.setOnShowListener(dialogInterface -> {
-                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.neutral_green));
-                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.neutral_green));
-            });
             alertDialog.show();
         }
     }

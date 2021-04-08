@@ -128,7 +128,7 @@ public class AddEditPatientActivity extends ACBaseActivity {
      */
     private void showInfoLostDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                this);
+                this,R.style.AlertDialogTheme);
         alertDialogBuilder.setTitle(R.string.dialog_title_reset_patient);
         // set dialog message
         alertDialogBuilder
@@ -141,10 +141,6 @@ public class AddEditPatientActivity extends ACBaseActivity {
                 finish();
             });
         alertDialog = alertDialogBuilder.create();
-        alertDialog.setOnShowListener(dialogInterface -> {
-            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.neutral_green));
-            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.neutral_green));
-        });
         alertDialog.show();
     }
 

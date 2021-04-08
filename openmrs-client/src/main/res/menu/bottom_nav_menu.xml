@@ -15,13 +15,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="org.openmrs.mobile.activities.ACBaseActivity">
-
-
     <item
         android:id="@+id/syncedPatientsActivity"
         android:icon="@drawable/ic_search"
         android:title="@string/dashboard_search_icon_label" />
-
     <item
         android:id="@+id/actionLocation"
         android:icon="@drawable/ic_location"
@@ -30,7 +27,6 @@
         android:id="@+id/actionSettings"
         android:icon="@drawable/ic_settings"
         android:title="@string/action_settings" />
-
     <item
         android:id="@+id/actionAbout"
         android:icon="@drawable/ic_profile"

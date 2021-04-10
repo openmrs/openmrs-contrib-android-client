@@ -123,7 +123,7 @@ public class PatientAllergyFragment extends PatientDashboardFragment implements 
     @Override
     public void performFunction(int position) {
         if (position == 1) {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext(),R.style.AlertDialogTheme);
             alertDialogBuilder.setTitle(getString(R.string.delete_allergy_title, selectedAllergy.getAllergen().getCodedAllergen().getDisplay()));
             alertDialogBuilder
                     .setMessage(R.string.delete_allergy_description)

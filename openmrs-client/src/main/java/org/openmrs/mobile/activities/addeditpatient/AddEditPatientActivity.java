@@ -128,7 +128,7 @@ public class AddEditPatientActivity extends ACBaseActivity {
      */
     private void showInfoLostDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                this);
+                this,R.style.AlertDialogTheme);
         alertDialogBuilder.setTitle(R.string.dialog_title_reset_patient);
         // set dialog message
         alertDialogBuilder

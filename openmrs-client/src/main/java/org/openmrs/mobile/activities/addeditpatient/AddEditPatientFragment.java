@@ -904,7 +904,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
     private void submitAction() {
         if (isUpdatePatient) {
             if (binding.deceasedCheckbox.isChecked() && !causeOfDeathUUID.isEmpty()) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext(),R.style.AlertDialogTheme);
                 alertDialogBuilder.setTitle(R.string.mark_patient_deceased);
                 // set dialog message
                 alertDialogBuilder

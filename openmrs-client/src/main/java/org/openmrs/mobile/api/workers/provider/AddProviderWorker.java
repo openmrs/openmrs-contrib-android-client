@@ -15,14 +15,14 @@
 package org.openmrs.mobile.api.workers.provider;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.listeners.retrofitcallbacks.CustomResponseCallback;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
@@ -34,11 +34,10 @@ import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddProviderWorker extends Worker {
@@ -54,28 +53,20 @@ public class AddProviderWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        final boolean[] result = new boolean[1];
         String firstName = getInputData().getString("first_name");
         String lastName = getInputData().getString("last_name");
         String identifier = getInputData().getString("identifier");
         Person person = createPerson(firstName, lastName);
         Provider providerTobeCreated = createNewProvider(person, identifier, getInputData().getLong("id", 0l));
 
-        addProvider(restApi, providerTobeCreated, new CustomResponseCallback() {
-            @Override
-            public void onResponse() {
-                result[0] = true;
+        boolean result = addProvider(restApi, providerTobeCreated);
+
+        if (result) {
+            new Handler(Looper.getMainLooper()).post(() -> {
                 ToastUtil.success(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
                 OpenMRS.getInstance().getOpenMRSLogger().e("Adding Provider Successful ");
-            }
+            });
 
-            @Override
-            public void onErrorResponse() {
-                result[0] = false;
-            }
-        });
-
-        if (result[0]) {
             return Result.success();
         } else {
             return Result.retry();
@@ -109,26 +100,23 @@ public class AddProviderWorker extends Worker {
         return provider;
     }
 
-    private void addProvider(RestApi restApi, Provider provider, CustomResponseCallback callback) {
+    private boolean addProvider(RestApi restApi, Provider provider) {
         if (NetworkUtils.isOnline()) {
-            restApi.addProvider(provider).enqueue(new Callback<Provider>() {
-                @Override
-                public void onResponse(@NotNull Call<Provider> call, @NotNull Response<Provider> response) {
-                    if (response.isSuccessful()) {
-
-                        //offline modifying the uuid of provider
-                        providerRoomDao.updateProviderByUuid(response.body().getDisplay(), provider.getId(), response.body().getPerson(), response.body().getUuid(),
-                            response.body().getIdentifier());
-
-                        callback.onResponse();
-                    }
+            try {
+                // Execute synchronous API call to block Worker's return statement until done.
+                Response<Provider> response = restApi.addProvider(provider).execute();
+                if (response.isSuccessful()) {
+                    //offline updating the uuid and properties of the provider
+                    providerRoomDao.updateProviderUuidById(provider.getId(), response.body().getUuid());
+                    providerRoomDao.updateProviderByUuid(response.body().getDisplay(), provider.getId(),
+                            response.body().getPerson(), response.body().getUuid(), response.body().getIdentifier());
+                    return true;
                 }
-
-                @Override
-                public void onFailure(@NotNull Call<Provider> call, @NotNull Throwable t) {
-                    callback.onErrorResponse();
-                }
-            });
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        return false;
     }
 }

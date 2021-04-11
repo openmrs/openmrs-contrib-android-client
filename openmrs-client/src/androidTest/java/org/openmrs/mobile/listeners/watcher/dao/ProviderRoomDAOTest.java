@@ -140,6 +140,21 @@ public class ProviderRoomDAOTest {
     }
 
     @Test
+    public void updateProviderUuidById_ShouldCorrectlyUpdatedProviderUuid() {
+        final long PRIMARY_KEY_GENERATED = mDatabase.providerRoomDAO().addProvider(expectedProviderEntity1);
+        final String UUID_PASSED_AS_PARAMETER = "3201dc4b-e512-4a1e-a0e1-2b50ac84e5ef";
+
+        mDatabase.providerRoomDAO().updateProviderUuidById(PRIMARY_KEY_GENERATED, UUID_PASSED_AS_PARAMETER);
+
+        mDatabase.providerRoomDAO().findProviderByUUID(UUID_PASSED_AS_PARAMETER)
+                .test()
+                .assertValue(provider -> {
+                    Provider actualEntity = provider;
+                    return Objects.equals(actualEntity.getUuid(), UUID_PASSED_AS_PARAMETER);
+                });
+    }
+
+    @Test
     public void deleteProvider_ShouldDeleteProvider() {
         mDatabase.providerRoomDAO().addProvider(expectedProviderEntity1);
         mDatabase.providerRoomDAO().addProvider(expectedProviderEntity2);

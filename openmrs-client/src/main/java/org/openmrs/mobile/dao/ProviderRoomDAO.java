@@ -58,6 +58,9 @@ public interface ProviderRoomDAO {
     @Query("UPDATE provider_table SET person= :person, id= :id, display=:display, identifier=:identifier WHERE uuid = :uuid")
     void updateProviderByUuid(String display, long id, Person person, String uuid, String identifier);
 
+    @Query("UPDATE provider_table SET uuid=:uuid WHERE _id=:id")
+    void updateProviderUuidById(long id, String uuid);
+
     @Query("SELECT * FROM provider_table")
     Single<List<Provider>> getProviderList();
 

@@ -23,23 +23,27 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import org.openmrs.mobile.R;
+import org.openmrs.mobile.databinding.ActivityPatientPhotoBinding;
 
 import java.io.ByteArrayInputStream;
 
 public class PatientPhotoActivity extends AppCompatActivity {
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_patient_photo);
+
+        ActivityPatientPhotoBinding binding = ActivityPatientPhotoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         byte[] photo = getIntent().getByteArrayExtra("photo");
 
         ByteArrayInputStream inputStream = new ByteArrayInputStream(photo);
         Bitmap patientPhoto = BitmapFactory.decodeStream(inputStream);
-        ImageView patientImageView = findViewById(R.id.patientPhoto);
+        ImageView patientImageView = binding.patientPhoto;
         patientImageView.setImageBitmap(patientPhoto);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = binding.toolbar;
         if (toolbar != null) {
             String patientName = getIntent().getStringExtra("name");
             setSupportActionBar(toolbar);

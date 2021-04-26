@@ -423,11 +423,14 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
 
     public void setupTheme() {
-        if (ThemeUtils.isDarkModeActivated()) {
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+        final String[] themeList = ApplicationConstants.OpenMRSThemes.THEME_LIST;
+        String theme = ThemeUtils.getTheme();
+        if(theme.equals(themeList[0]))
+            getDelegate().setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        else if(theme.equals(themeList[1]))
+            getDelegate().setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        else
+            getDelegate().setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
     }
 
     private void setupLanguage() {

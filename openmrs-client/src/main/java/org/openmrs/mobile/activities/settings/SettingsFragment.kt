@@ -101,6 +101,7 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
     override fun setUpConceptsView() {
         with(binding) {
             languageApplyButton.setOnClickListener { requireActivity().recreate() }
+            themeApplyButton.setOnClickListener { requireActivity().recreate() }
             conceptsDownloadButton.setOnClickListener {
                 conceptsDownloadButton.isEnabled = false
                 val startIntent = Intent(activity, ConceptDownloadService::class.java)
@@ -161,12 +162,17 @@ class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsC
         binding.contactUsLayout.setOnClickListener { view: View -> startActivity(Intent(view.context, ContactUsActivity::class.java)) }
     }
 
-    override fun setDarkMode() {
+    override fun setDarkMode(themeList: Array<String>) {
         with(binding) {
-            darkModeSwitch.isChecked = mPresenter?.isDarkModeActivated ?: false
-            darkModeSwitch.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-                mPresenter?.setDarkMode(isChecked)
-                requireActivity().recreate()
+            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, themeList)
+            themeSpinner.adapter = adapter
+            themeSpinner.setSelection(mPresenter?.themePosition ?: 0)
+            themeSpinner.onItemSelectedListener = object : OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    mPresenter?.theme = themeList[position]
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
         }
     }

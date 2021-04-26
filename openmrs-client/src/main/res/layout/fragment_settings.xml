@@ -238,18 +238,45 @@
 
         </LinearLayout>
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/dark_mode_switch"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginBottom="@dimen/margin_short"
-            android:background="@color/dark_grey_6x"
+        <TextView
+            android:id="@+id/theme_header"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
             android:paddingStart="20dp"
-            android:paddingLeft="20dp"
-            android:paddingEnd="16dp"
-            android:paddingRight="16dp"
-            android:text="@string/label_dark_mode"
+            android:text="@string/theme"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@+id/theme_apply_button"
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:ignore="RtlSymmetry" />
+
+        <Spinner
+            android:id="@+id/theme_spinner"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/spinner_settings_page"
+            app:layout_constraintBottom_toBottomOf="@+id/theme_apply_button"
+            app:layout_constraintLeft_toRightOf="@+id/language_header"
+            app:layout_constraintRight_toLeftOf="@id/theme_apply_button"
+            />
+
+        <Button
+            android:id="@+id/theme_apply_button"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/color_accent"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="@string/apply"
+            app:layout_constraintLeft_toLeftOf="@id/concepts_download_button"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:targetApi="lollipop" />
 
@@ -295,7 +322,7 @@
             android:text="@string/apply"
             app:layout_constraintLeft_toLeftOf="@id/concepts_download_button"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dark_mode_switch"
+            app:layout_constraintTop_toBottomOf="@id/theme_apply_button"
             tools:targetApi="lollipop" />
 
 

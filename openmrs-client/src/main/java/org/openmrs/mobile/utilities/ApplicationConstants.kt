@@ -153,6 +153,8 @@ object ApplicationConstants {
 
     object OpenMRSThemes {
         const val KEY_DARK_MODE = "key_dark_mode"
+        @JvmField
+        var THEME_LIST = arrayOf("System Default", "Light", "Dark")
     }
 
     object OpenMRSlanguage {

@@ -37,7 +37,6 @@
             android:hint="@string/first_name_hint"
             android:inputType="textCapWords"
             android:maxLines="1"
-            android:textColor="@color/dark_grey_8x"
             android:textColorHint="?android:attr/textColorPrimary" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,7 +62,6 @@
             android:hint="@string/last_name_hint"
             android:inputType="textCapWords"
             android:maxLines="1"
-            android:textColor="@color/dark_grey_8x"
             android:textColorHint="@color/dark_grey_8x" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -89,7 +87,6 @@
             android:hint="@string/identifier_hint"
             android:inputType="textCapWords"
             android:maxLines="1"
-            android:textColor="@color/dark_grey_8x"
             android:textColorHint="@color/dark_grey_8x" />
     </com.google.android.material.textfield.TextInputLayout>
 

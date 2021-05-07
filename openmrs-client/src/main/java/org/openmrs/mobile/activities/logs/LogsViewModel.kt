@@ -13,27 +13,26 @@
  */
 package org.openmrs.mobile.activities.logs
 
-import org.openmrs.mobile.activities.BasePresenter
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import org.openmrs.mobile.application.OpenMRS
 import org.openmrs.mobile.application.OpenMRSLogger
-import java.io.*
+import java.io.File
+import java.io.FileInputStream
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.io.FileNotFoundException
+import java.io.IOException
 
-class LogsPresenter(private val mLogsView: LogsContract.View, private val mOpenMRSLogger: OpenMRSLogger) : BasePresenter(), LogsContract.Presenter {
+class LogsViewModel : ViewModel() {
 
-    override fun subscribe() {
-        val logsText = getLogs()
-        mLogsView.attachLogsToTextView(logsText)
-        mLogsView.fabCopyAll(logsText)
-    }
+    val openMRSLogger : OpenMRSLogger = OpenMRS.getInstance().openMRSLogger
+    val logsText = MutableLiveData<String>()
 
-    init {
-        mLogsView.setPresenter(this)
-    }
-
-    private fun getLogs(): String {
+    fun getLogs() {
         var textLogs = ""
         val filename = (OpenMRS.getInstance().openMRSDir
-                + File.separator + mOpenMRSLogger.logFilename)
+                + File.separator + openMRSLogger.logFilename)
         try {
             val myFile = File(filename)
             val fIn = FileInputStream(myFile)
@@ -41,12 +40,16 @@ class LogsPresenter(private val mLogsView: LogsContract.View, private val mOpenM
             while (myReader.readLine() != null) {
                 textLogs += myReader.readLine()
             }
+            logsText.value = textLogs
             myReader.close()
         } catch (e: FileNotFoundException) {
             e.printStackTrace()
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        return textLogs
+        //return logsText
     }
+
+//    val nicePlaces: LiveData<List<NicePlaces>>?
+//        get() = mNicePlaces
 }

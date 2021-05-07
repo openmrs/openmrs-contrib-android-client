@@ -46,6 +46,9 @@ versions.permissionsdispatcher = '4.7.0'
 versions.leakcanary = '2.4'
 versions.placesAPI = '2.3.0'
 
+versions.lifecycle = '2.3.1'
+versions.fragment = '1.3.3'
+
 versions.navfragment = '2.3.0'
 versions.navui = '2.3.0'
 

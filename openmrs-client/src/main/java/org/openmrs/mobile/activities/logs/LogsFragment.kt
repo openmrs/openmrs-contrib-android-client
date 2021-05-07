@@ -21,31 +21,47 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import org.openmrs.mobile.R
-import org.openmrs.mobile.activities.ACBaseFragment
 import org.openmrs.mobile.databinding.FragmentLogsBinding
 
-class LogsFragment : ACBaseFragment<LogsContract.Presenter>(), LogsContract.View {
+class LogsFragment : Fragment() {
 
     private var _binding: FragmentLogsBinding? = null
     private val binding get() = _binding!!
+    private val mViewModel by viewModels<LogsViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         _binding = FragmentLogsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
-    override fun attachLogsToTextView(logs: String?) {
-        binding.tvLogs.text = logs
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        attachLogsToTextView()
+
+        binding.fab.setOnClickListener {
+            fabCopyAll()
+        }
     }
 
-    override fun fabCopyAll(textLogs: String?) {
-        binding.fab.setOnClickListener {
-            setClipboard(context, textLogs)
+    private fun attachLogsToTextView() {
+        mViewModel.getLogs()
+        mViewModel.logsText.observe(viewLifecycleOwner, Observer { updatedLogTexts ->
+            binding.tvLogs.text = updatedLogTexts
+        })
+    }
+
+    private fun fabCopyAll() {
+        mViewModel.getLogs()
+        mViewModel.logsText.observe(viewLifecycleOwner, Observer { updatedLogTexts ->
+            setClipboard(context, updatedLogTexts)
             Toast.makeText(context, R.string.logs_copied_to_clipboard_message,
                     Toast.LENGTH_SHORT).show()
-        }
+        })
     }
 
     private fun setClipboard(context: Context?, text: String?) {

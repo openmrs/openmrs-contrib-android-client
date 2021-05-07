@@ -33,12 +33,12 @@ class LogsActivity : ACBaseActivity() {
         if (logsFragment == null) {
             logsFragment = LogsFragment.newInstance()
         }
-        if (!logsFragment.isActive) {
+        if (!logsFragment.isAdded) {
             addFragmentToActivity(supportFragmentManager,
                     logsFragment, R.id.logsContentFragment)
         }
         // Create the presenter
-        LogsPresenter(logsFragment, mOpenMRSLogger)
+        //LogsPresenter(logsFragment, mOpenMRSLogger)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

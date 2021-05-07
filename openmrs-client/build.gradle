@@ -88,6 +88,10 @@ android {
         warning 'InvalidPackage'
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     packagingOptions {
         exclude 'META-INF/LICENSE'
         exclude 'META-INF/LICENSE.txt'
@@ -185,6 +189,10 @@ dependencies {
     debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}"
     // Google place api
     implementation "com.google.android.libraries.places:places:${versions.placesAPI}"
+
+    //viewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
+    implementation "androidx.fragment:fragment-ktx:${versions.fragment}"
 
     // Test Implementations
     androidTestImplementation(

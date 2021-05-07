@@ -47,9 +47,5 @@ class LogsViewModel : ViewModel() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        //return logsText
     }
-
-//    val nicePlaces: LiveData<List<NicePlaces>>?
-//        get() = mNicePlaces
 }

@@ -116,6 +116,10 @@ public class LoginPresenter extends BasePresenter implements LoginContract.Prese
         loginView.showLoadingAnimation();
         if (NetworkUtils.isOnline()) {
             mWipeRequired = wipeDatabase;
+
+            //TODO here I can get the RestAPI base url for RestServiceBuilder.
+            //
+
             RestApi restApi = RestServiceBuilder.createService(RestApi.class, username, password);
             Call<Session> call = restApi.getSession();
             call.enqueue(new Callback<Session>() {

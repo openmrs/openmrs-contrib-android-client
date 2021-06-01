@@ -21,6 +21,8 @@ import android.preference.PreferenceManager;
 
 import androidx.multidex.MultiDexApplication;
 
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.services.AuthenticateCheckService;
@@ -46,6 +48,8 @@ public class OpenMRS extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        OpenmrsAndroid.initializeSdk(this);
+
         if (mExternalDirectoryPath == null) {
             mExternalDirectoryPath = this.getExternalFilesDir(null).toString();
         }

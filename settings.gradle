@@ -1,1 +1,2 @@
+include ':openmrs-android-sdk'
 include ':openmrs-client'

@@ -13,7 +13,7 @@
  */
 package org.openmrs.mobile.utilities
 
-import org.openmrs.mobile.models.Patient
+import com.example.openmrs_android_sdk.library.models.Patient
 import java.io.Serializable
 
 class PatientAndMatchingPatients(val patient: Patient, val matchingPatientList: List<Patient>) : Serializable

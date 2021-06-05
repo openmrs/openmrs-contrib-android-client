@@ -13,15 +13,16 @@ import android.util.SparseArray;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.openmrs_android_sdk.library.models.Encountercreate;
+import com.example.openmrs_android_sdk.library.models.Obscreate;
+import com.example.openmrs_android_sdk.library.models.Patient;
+
 import org.joda.time.LocalDateTime;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.models.Encountercreate;
-import org.openmrs.mobile.models.Obscreate;
-import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.InputField;
 import org.openmrs.mobile.utilities.SelectOneField;

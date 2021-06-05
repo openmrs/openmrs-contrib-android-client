@@ -15,14 +15,14 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
+import com.example.openmrs_android_sdk.library.databases.entities.FormResourceEntity;
+import com.example.openmrs_android_sdk.library.models.EncounterType;
+import com.example.openmrs_android_sdk.library.models.Results;
+
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.EncounterTypeRoomDAO;
 import org.openmrs.mobile.dao.FormResourceDAO;
 import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.databases.entities.FormResourceEntity;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.EncounterType;
-import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 

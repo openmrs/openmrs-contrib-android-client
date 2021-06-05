@@ -23,16 +23,17 @@ import androidx.annotation.Nullable;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import com.example.openmrs_android_sdk.library.models.Patient;
+import com.example.openmrs_android_sdk.library.models.PatientDto;
+import com.example.openmrs_android_sdk.library.models.PatientDtoUpdate;
+import com.example.openmrs_android_sdk.library.models.PatientPhoto;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
-import org.openmrs.mobile.application.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.OpenMRSLogger;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.PatientDto;
-import org.openmrs.mobile.models.PatientDtoUpdate;
-import org.openmrs.mobile.models.PatientPhoto;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;

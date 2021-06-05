@@ -22,7 +22,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListContract;
 import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListPresenter;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.models.Patient;
+import com.example.openmrs_android_sdk.library.models.Patient;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.powermock.api.mockito.PowerMockito;

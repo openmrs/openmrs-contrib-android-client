@@ -14,6 +14,11 @@
 
 package org.openmrs.mobile.test;
 
+import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
+import com.example.openmrs_android_sdk.library.models.IdentifierType;
+import com.example.openmrs_android_sdk.library.models.Patient;
+import com.example.openmrs_android_sdk.library.models.PatientIdentifier;
+import com.example.openmrs_android_sdk.library.models.PersonName;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -22,11 +27,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.openmrs.mobile.databases.entities.LocationEntity;
-import org.openmrs.mobile.models.IdentifierType;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.PatientIdentifier;
-import org.openmrs.mobile.models.PersonName;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.ResourceSerializer;
 
@@ -81,7 +81,7 @@ public class ResourceSerializerTest {
 
     private Patient updatePatientDetails(Patient patient) {
         patient.setBirthdate(DateUtils.convertTime(System.currentTimeMillis()));
-        PersonName  personName = new PersonName();
+        PersonName personName = new PersonName();
         personName.setFamilyName("family");
         personName.setGivenName("given");
         personName.setMiddleName("middle");

@@ -21,6 +21,7 @@ import android.preference.PreferenceManager;
 
 import androidx.multidex.MultiDexApplication;
 
+import com.example.openmrs_android_sdk.library.OpenMRSLogger;
 import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
 
 import org.mindrot.jbcrypt.BCrypt;

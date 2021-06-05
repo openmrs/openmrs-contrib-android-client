@@ -25,7 +25,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.databases.entities.ObservationEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.ObservationEntity;
 
 import java.util.Objects;
 

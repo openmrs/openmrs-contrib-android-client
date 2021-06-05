@@ -14,6 +14,11 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
+import com.example.openmrs_android_sdk.library.models.Patient;
+import com.example.openmrs_android_sdk.library.models.Visit;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,13 +29,9 @@ import org.openmrs.mobile.activities.patientdashboard.visits.PatientDashboardVis
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.databases.entities.LocationEntity;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.powermock.api.mockito.PowerMockito;

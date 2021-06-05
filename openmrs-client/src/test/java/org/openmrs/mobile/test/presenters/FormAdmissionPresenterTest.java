@@ -21,6 +21,11 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
+import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
+import com.example.openmrs_android_sdk.library.models.Provider;
+import com.example.openmrs_android_sdk.library.models.Resource;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,11 +38,7 @@ import org.openmrs.mobile.activities.formadmission.FormAdmissionPresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.repository.ProviderRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.ProviderRoomDAO;
-import org.openmrs.mobile.databases.entities.LocationEntity;
-import org.openmrs.mobile.models.Provider;
-import org.openmrs.mobile.models.Resource;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;

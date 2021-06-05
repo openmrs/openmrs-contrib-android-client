@@ -20,17 +20,18 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.example.openmrs_android_sdk.library.databases.entities.EncounterEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.ObservationEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.PatientEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.VisitEntity;
+import com.example.openmrs_android_sdk.library.models.EncounterType;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.databases.entities.EncounterEntity;
-import org.openmrs.mobile.databases.entities.ObservationEntity;
-import org.openmrs.mobile.databases.entities.PatientEntity;
-import org.openmrs.mobile.databases.entities.VisitEntity;
-import org.openmrs.mobile.models.EncounterType;
 
 import java.util.Objects;
 

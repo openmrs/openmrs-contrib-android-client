@@ -13,9 +13,9 @@
  */
 package org.openmrs.mobile.activities.activevisits
 
+import com.example.openmrs_android_sdk.library.models.Visit
 import org.openmrs.mobile.activities.BasePresenterContract
 import org.openmrs.mobile.activities.BaseView
-import org.openmrs.mobile.models.Visit
 
 interface ActiveVisitsContract {
     interface View : BaseView<Presenter> {

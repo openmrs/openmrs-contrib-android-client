@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.example.openmrs_android_sdk.library.models.Encounter;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
@@ -34,7 +35,6 @@ import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.formlist.FormListActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databinding.FragmentVisitDashboardBinding;
-import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 

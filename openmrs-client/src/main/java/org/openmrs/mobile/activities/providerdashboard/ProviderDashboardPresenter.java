@@ -4,12 +4,13 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
+import com.example.openmrs_android_sdk.library.models.Provider;
+
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.ProviderRepository;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 

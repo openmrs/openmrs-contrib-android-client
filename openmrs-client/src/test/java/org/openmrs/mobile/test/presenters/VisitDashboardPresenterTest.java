@@ -16,6 +16,8 @@ package org.openmrs.mobile.test.presenters;
 
 import androidx.annotation.NonNull;
 
+import com.example.openmrs_android_sdk.library.models.Visit;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -24,7 +26,6 @@ import org.openmrs.mobile.activities.visitdashboard.VisitDashboardContract;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardPresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 import org.openmrs.mobile.utilities.DateUtils;
 

@@ -24,10 +24,10 @@ import android.widget.ArrayAdapter
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseFragment
 import org.openmrs.mobile.application.OpenMRS
-import org.openmrs.mobile.databases.entities.LocationEntity
+import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity
+import com.example.openmrs_android_sdk.library.models.Provider
+import com.example.openmrs_android_sdk.library.models.Resource
 import org.openmrs.mobile.databinding.FragmentFormAdmissionBinding
-import org.openmrs.mobile.models.Provider
-import org.openmrs.mobile.models.Resource
 import org.openmrs.mobile.utilities.ToastUtil
 import org.openmrs.mobile.utilities.ToastUtil.error
 import org.openmrs.mobile.utilities.ToastUtil.showShortToast

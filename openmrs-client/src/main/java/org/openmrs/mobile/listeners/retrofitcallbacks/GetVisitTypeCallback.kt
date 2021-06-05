@@ -13,7 +13,8 @@
  */
 package org.openmrs.mobile.listeners.retrofitcallbacks
 
-import org.openmrs.mobile.models.VisitType
+import com.example.openmrs_android_sdk.library.models.VisitType
+
 
 @JvmSuppressWildcards
 interface GetVisitTypeCallback : DefaultResponseCallback {

@@ -20,7 +20,7 @@ import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.models.Patient;
+import com.example.openmrs_android_sdk.library.models.Patient;
 import org.openmrs.mobile.utilities.NetworkUtils;
 
 import rx.android.schedulers.AndroidSchedulers;

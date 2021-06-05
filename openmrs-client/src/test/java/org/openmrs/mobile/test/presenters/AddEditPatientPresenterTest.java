@@ -14,6 +14,11 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.models.Patient;
+import com.example.openmrs_android_sdk.library.models.PatientPhoto;
+import com.example.openmrs_android_sdk.library.models.PersonAddress;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,11 +31,7 @@ import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.LocationRepository;
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.PatientPhoto;
-import org.openmrs.mobile.models.PersonAddress;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;

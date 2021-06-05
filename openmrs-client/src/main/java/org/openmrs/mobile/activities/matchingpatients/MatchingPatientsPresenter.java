@@ -23,7 +23,7 @@ import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
-import org.openmrs.mobile.models.Patient;
+import com.example.openmrs_android_sdk.library.models.Patient;
 import org.openmrs.mobile.utilities.PatientAndMatchingPatients;
 import org.openmrs.mobile.utilities.PatientMerger;
 import org.openmrs.mobile.utilities.ToastUtil;

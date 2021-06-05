@@ -24,12 +24,13 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.openmrs_android_sdk.library.models.Session;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.models.Session;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;

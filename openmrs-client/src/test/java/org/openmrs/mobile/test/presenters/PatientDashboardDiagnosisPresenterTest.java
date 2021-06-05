@@ -14,6 +14,10 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import com.example.openmrs_android_sdk.library.models.Encounter;
+import com.example.openmrs_android_sdk.library.models.Observation;
+import com.example.openmrs_android_sdk.library.models.Patient;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -21,9 +25,6 @@ import org.mockito.Mockito;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.diagnosis.PatientDashboardDiagnosisPresenter;
 import org.openmrs.mobile.dao.EncounterDAO;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Observation;
-import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 
 import java.util.ArrayList;

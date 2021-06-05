@@ -16,9 +16,10 @@ package org.openmrs.mobile.api;
 
 import androidx.annotation.NonNull;
 
+import com.example.openmrs_android_sdk.library.models.Results;
+import com.example.openmrs_android_sdk.library.models.User;
+
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.models.Results;
-import org.openmrs.mobile.models.User;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 

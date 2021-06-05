@@ -39,7 +39,7 @@ import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databinding.FragmentSyncedPatientsBinding;
-import org.openmrs.mobile.models.Patient;
+import com.example.openmrs_android_sdk.library.models.Patient;
 import org.openmrs.mobile.utilities.NetworkUtils;
 
 import java.util.ArrayList;

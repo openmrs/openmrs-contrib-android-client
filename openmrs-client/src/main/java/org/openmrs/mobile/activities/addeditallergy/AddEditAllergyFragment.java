@@ -26,20 +26,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 
+import com.example.openmrs_android_sdk.library.models.AllergenCreate;
+import com.example.openmrs_android_sdk.library.models.Allergy;
+import com.example.openmrs_android_sdk.library.models.AllergyCreate;
+import com.example.openmrs_android_sdk.library.models.AllergyReaction;
+import com.example.openmrs_android_sdk.library.models.AllergyReactionCreate;
+import com.example.openmrs_android_sdk.library.models.AllergyUuid;
+import com.example.openmrs_android_sdk.library.models.ConceptMembers;
+import com.example.openmrs_android_sdk.library.models.Resource;
+import com.example.openmrs_android_sdk.library.models.SystemProperty;
 import com.google.android.material.chip.Chip;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.databinding.FragmentAllergyInfoBinding;
-import org.openmrs.mobile.models.AllergenCreate;
-import org.openmrs.mobile.models.Allergy;
-import org.openmrs.mobile.models.AllergyCreate;
-import org.openmrs.mobile.models.AllergyReaction;
-import org.openmrs.mobile.models.AllergyReactionCreate;
-import org.openmrs.mobile.models.AllergyUuid;
-import org.openmrs.mobile.models.ConceptMembers;
-import org.openmrs.mobile.models.Resource;
-import org.openmrs.mobile.models.SystemProperty;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;

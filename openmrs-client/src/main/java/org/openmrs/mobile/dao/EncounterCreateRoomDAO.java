@@ -15,7 +15,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import org.openmrs.mobile.models.Encountercreate;
+import com.example.openmrs_android_sdk.library.models.Encountercreate;
 
 import java.util.List;
 

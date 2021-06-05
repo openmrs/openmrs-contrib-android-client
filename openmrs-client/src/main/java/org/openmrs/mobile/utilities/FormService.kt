@@ -9,11 +9,11 @@
  */
 package org.openmrs.mobile.utilities
 
+import com.example.openmrs_android_sdk.library.databases.entities.FormResourceEntity
+import com.example.openmrs_android_sdk.library.models.Form
 import com.google.gson.GsonBuilder
 import org.openmrs.mobile.application.OpenMRS
 import org.openmrs.mobile.databases.AppDatabase
-import org.openmrs.mobile.databases.entities.FormResourceEntity
-import org.openmrs.mobile.models.Form
 import org.openmrs.mobile.utilities.StringUtils.isBlank
 import org.openmrs.mobile.utilities.StringUtils.unescapeJavaString
 import java.lang.reflect.Modifier

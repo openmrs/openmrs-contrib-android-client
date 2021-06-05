@@ -31,7 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.common.base.Objects;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.models.Patient;
+import com.example.openmrs_android_sdk.library.models.Patient;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 

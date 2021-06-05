@@ -29,6 +29,9 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.openmrs_android_sdk.library.models.Patient;
+import com.example.openmrs_android_sdk.library.models.Visit;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
@@ -36,8 +39,6 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databinding.FragmentPatientVisitBinding;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 

@@ -20,10 +20,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.openmrs_android_sdk.library.models.Patient
+import com.example.openmrs_android_sdk.library.models.Visit
 import org.openmrs.mobile.R
 import org.openmrs.mobile.dao.VisitDAO
-import org.openmrs.mobile.models.Patient
-import org.openmrs.mobile.models.Visit
 import org.openmrs.mobile.utilities.ApplicationConstants
 import rx.android.schedulers.AndroidSchedulers
 

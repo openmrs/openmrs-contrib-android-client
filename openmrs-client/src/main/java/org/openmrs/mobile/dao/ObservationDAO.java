@@ -14,11 +14,12 @@
 
 package org.openmrs.mobile.dao;
 
+import com.example.openmrs_android_sdk.library.databases.entities.ObservationEntity;
+import com.example.openmrs_android_sdk.library.models.Observation;
+
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.AppDatabaseHelper;
-import org.openmrs.mobile.databases.entities.ObservationEntity;
-import org.openmrs.mobile.models.Observation;
 
 import java.util.ArrayList;
 import java.util.List;

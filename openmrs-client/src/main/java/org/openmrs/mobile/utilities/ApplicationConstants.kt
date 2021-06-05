@@ -13,7 +13,8 @@
  */
 package org.openmrs.mobile.utilities
 
-import org.openmrs.mobile.models.EncounterType
+import com.example.openmrs_android_sdk.library.models.EncounterType
+
 
 object ApplicationConstants {
     const val UUID_LENGTH = 36

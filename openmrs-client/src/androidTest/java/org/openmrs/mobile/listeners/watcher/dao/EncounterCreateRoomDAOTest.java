@@ -20,6 +20,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.example.openmrs_android_sdk.library.models.Encountercreate;
+import com.example.openmrs_android_sdk.library.models.Obscreate;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,8 +31,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openmrs.mobile.dao.EncounterCreateRoomDAO;
 import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.models.Encountercreate;
-import org.openmrs.mobile.models.Obscreate;
 
 import java.util.ArrayList;
 import java.util.List;

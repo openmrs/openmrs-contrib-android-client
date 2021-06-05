@@ -14,11 +14,12 @@
 
 package org.openmrs.mobile.dao;
 
+import com.example.openmrs_android_sdk.library.databases.entities.PatientEntity;
+import com.example.openmrs_android_sdk.library.models.Patient;
+
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.AppDatabaseHelper;
-import org.openmrs.mobile.databases.entities.PatientEntity;
-import org.openmrs.mobile.models.Patient;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

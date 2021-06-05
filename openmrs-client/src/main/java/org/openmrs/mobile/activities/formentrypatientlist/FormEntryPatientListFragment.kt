@@ -21,12 +21,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.openmrs_android_sdk.library.models.Patient
 import com.google.android.material.snackbar.Snackbar
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseFragment
 import org.openmrs.mobile.activities.formlist.FormListActivity
 import org.openmrs.mobile.databinding.FragmentFormEntryPatientListBinding
-import org.openmrs.mobile.models.Patient
 import org.openmrs.mobile.utilities.ApplicationConstants
 import org.openmrs.mobile.utilities.StringUtils
 

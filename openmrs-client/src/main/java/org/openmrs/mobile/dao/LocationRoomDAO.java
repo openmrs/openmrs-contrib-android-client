@@ -18,7 +18,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import org.openmrs.mobile.databases.entities.LocationEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
 
 import java.util.List;
 

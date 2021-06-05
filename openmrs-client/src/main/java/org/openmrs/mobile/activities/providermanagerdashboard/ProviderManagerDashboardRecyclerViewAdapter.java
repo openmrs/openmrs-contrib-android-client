@@ -24,10 +24,11 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.openmrs_android_sdk.library.models.Provider;
+
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardActivity;
-import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.List;

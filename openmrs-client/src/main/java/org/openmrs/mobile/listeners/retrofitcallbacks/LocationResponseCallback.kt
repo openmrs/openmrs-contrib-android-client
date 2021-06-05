@@ -14,7 +14,7 @@
 
 package org.openmrs.mobile.listeners.retrofitcallbacks
 
-import org.openmrs.mobile.databases.entities.LocationEntity
+import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity
 
 @JvmSuppressWildcards
 interface LocationResponseCallback : DefaultResponseCallback {

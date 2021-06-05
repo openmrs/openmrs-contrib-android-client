@@ -14,7 +14,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import org.openmrs.mobile.models.EncounterType;
+import com.example.openmrs_android_sdk.library.models.EncounterType;
 
 import java.util.List;
 

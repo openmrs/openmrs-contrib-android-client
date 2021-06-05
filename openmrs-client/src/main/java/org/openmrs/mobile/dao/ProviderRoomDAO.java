@@ -22,9 +22,9 @@ import androidx.room.Query;
 import androidx.room.TypeConverters;
 import androidx.room.Update;
 
-import org.openmrs.mobile.models.Person;
-import org.openmrs.mobile.models.Provider;
-import org.openmrs.mobile.models.typeConverters.PersonConverter;
+import com.example.openmrs_android_sdk.library.models.Person;
+import com.example.openmrs_android_sdk.library.models.Provider;
+import com.example.openmrs_android_sdk.library.models.typeConverters.PersonConverter;
 
 import java.util.List;
 

@@ -16,6 +16,10 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.openmrs_android_sdk.library.models.Encounter;
+import com.example.openmrs_android_sdk.library.models.EncounterType;
+import com.example.openmrs_android_sdk.library.models.Encountercreate;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
@@ -24,9 +28,6 @@ import org.openmrs.mobile.dao.VisitDAO;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.StartVisitResponseCallback;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.EncounterType;
-import org.openmrs.mobile.models.Encountercreate;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 

@@ -14,8 +14,8 @@
 
 package org.openmrs.mobile.utilities
 
-import org.openmrs.mobile.models.Patient
-import org.openmrs.mobile.models.Visit
+import com.example.openmrs_android_sdk.library.models.Patient
+import com.example.openmrs_android_sdk.library.models.Visit
 
 object FilterUtil {
     /**

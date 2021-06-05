@@ -10,9 +10,10 @@ package org.openmrs.mobile.activities.formdisplay;
 
 import android.widget.LinearLayout;
 
+import com.example.openmrs_android_sdk.library.models.Question;
+
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.models.Question;
 import org.openmrs.mobile.utilities.InputField;
 import org.openmrs.mobile.utilities.SelectOneField;
 

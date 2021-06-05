@@ -4,7 +4,7 @@ import android.app.Activity
 import android.os.Build
 import android.os.Process
 import org.openmrs.mobile.application.OpenMRS
-import org.openmrs.mobile.application.OpenMRSLogger
+import com.example.openmrs_android_sdk.library.OpenMRSLogger
 import java.io.File
 import java.io.FileInputStream
 import java.io.PrintWriter

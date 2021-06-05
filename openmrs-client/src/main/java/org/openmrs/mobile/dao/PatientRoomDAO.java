@@ -19,7 +19,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import org.openmrs.mobile.databases.entities.PatientEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.PatientEntity;
 
 import java.util.List;
 

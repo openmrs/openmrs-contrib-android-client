@@ -14,13 +14,14 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.openmrs_android_sdk.library.models.Module;
+import com.example.openmrs_android_sdk.library.models.Patient;
+import com.example.openmrs_android_sdk.library.models.Results;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.matchingpatients.MatchingPatientsActivity;
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.models.Module;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ModuleUtils;
 import org.openmrs.mobile.utilities.NetworkUtils;

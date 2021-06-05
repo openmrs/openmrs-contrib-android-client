@@ -17,6 +17,11 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.openmrs_android_sdk.library.databases.entities.ConceptEntity;
+import com.example.openmrs_android_sdk.library.models.Link;
+import com.example.openmrs_android_sdk.library.models.Results;
+import com.example.openmrs_android_sdk.library.models.SystemSetting;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
 import org.openmrs.mobile.api.RestApi;
@@ -24,10 +29,6 @@ import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.ConceptRoomDAO;
 import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.databases.entities.ConceptEntity;
-import org.openmrs.mobile.models.Link;
-import org.openmrs.mobile.models.Results;
-import org.openmrs.mobile.models.SystemSetting;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.List;

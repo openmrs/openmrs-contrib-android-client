@@ -14,10 +14,11 @@
 
 package org.openmrs.mobile.dao;
 
+import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
+
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.AppDatabaseHelper;
-import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.utilities.StringUtils;
 
 import java.util.ArrayList;

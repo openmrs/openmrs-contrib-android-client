@@ -29,9 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.databinding.FragmentMatchingPatientsBinding;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.utilities.DateUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
+import com.example.openmrs_android_sdk.library.models.Patient;
 
 import java.util.List;
 

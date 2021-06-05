@@ -15,7 +15,7 @@ package org.openmrs.mobile.utilities
 
 import android.os.Parcel
 import android.os.Parcelable
-import org.openmrs.mobile.models.Answer
+import com.example.openmrs_android_sdk.library.models.Answer
 import java.io.Serializable
 import java.util.*
 

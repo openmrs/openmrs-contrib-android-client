@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.databases.entities.LocationEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;

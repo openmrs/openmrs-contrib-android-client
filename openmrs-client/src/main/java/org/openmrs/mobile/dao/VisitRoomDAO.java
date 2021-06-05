@@ -15,17 +15,15 @@
 package org.openmrs.mobile.dao;
 
 import androidx.room.Dao;
-import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import org.openmrs.mobile.databases.entities.VisitEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.VisitEntity;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 @Dao

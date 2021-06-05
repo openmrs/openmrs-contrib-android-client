@@ -13,9 +13,9 @@
  */
 package org.openmrs.mobile.utilities
 
-import org.openmrs.mobile.models.Patient
-import org.openmrs.mobile.models.PersonAddress
-import org.openmrs.mobile.models.PersonName
+import com.example.openmrs_android_sdk.library.models.Patient
+import com.example.openmrs_android_sdk.library.models.PersonAddress
+import com.example.openmrs_android_sdk.library.models.PersonName
 import org.openmrs.mobile.utilities.StringUtils.notNull
 
 class PatientMerger {

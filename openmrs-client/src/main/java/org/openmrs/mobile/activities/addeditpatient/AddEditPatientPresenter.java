@@ -18,6 +18,11 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.example.openmrs_android_sdk.library.models.ConceptAnswers;
+import com.example.openmrs_android_sdk.library.models.Module;
+import com.example.openmrs_android_sdk.library.models.Patient;
+import com.example.openmrs_android_sdk.library.models.PersonName;
+import com.example.openmrs_android_sdk.library.models.Results;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
 import org.jetbrains.annotations.Nullable;
@@ -32,11 +37,6 @@ import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.PatientResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.VisitsResponseCallback;
-import org.openmrs.mobile.models.ConceptAnswers;
-import org.openmrs.mobile.models.Module;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.PersonName;
-import org.openmrs.mobile.models.Results;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ModuleUtils;
 import org.openmrs.mobile.utilities.NetworkUtils;

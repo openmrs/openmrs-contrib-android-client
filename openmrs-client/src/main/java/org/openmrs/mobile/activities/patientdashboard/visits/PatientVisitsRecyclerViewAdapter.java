@@ -24,8 +24,9 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.openmrs_android_sdk.library.models.Visit;
+
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.DateUtils;
 
 import java.util.List;

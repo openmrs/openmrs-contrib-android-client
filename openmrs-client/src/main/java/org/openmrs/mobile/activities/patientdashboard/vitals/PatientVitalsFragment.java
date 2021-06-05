@@ -28,6 +28,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.openmrs_android_sdk.library.models.Encounter;
+import com.example.openmrs_android_sdk.library.models.Form;
+import com.example.openmrs_android_sdk.library.models.Observation;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
@@ -36,12 +40,7 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.application.OpenMRSInflater;
 import org.openmrs.mobile.bundle.FormFieldsWrapper;
 import org.openmrs.mobile.databinding.FragmentPatientVitalsBinding;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Form;
-import org.openmrs.mobile.models.Observation;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.DateUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 public class PatientVitalsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientVitals {
     private LinearLayout content;

@@ -20,6 +20,18 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.openmrs_android_sdk.library.databases.entities.AllergyEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.ConceptEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.EncounterEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.FormResourceEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.ObservationEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.PatientEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.VisitEntity;
+import com.example.openmrs_android_sdk.library.models.EncounterType;
+import com.example.openmrs_android_sdk.library.models.Encountercreate;
+import com.example.openmrs_android_sdk.library.models.Provider;
+
 import org.openmrs.mobile.dao.AllergyRoomDAO;
 import org.openmrs.mobile.dao.ConceptRoomDAO;
 import org.openmrs.mobile.dao.EncounterCreateRoomDAO;
@@ -31,17 +43,6 @@ import org.openmrs.mobile.dao.ObservationRoomDAO;
 import org.openmrs.mobile.dao.PatientRoomDAO;
 import org.openmrs.mobile.dao.ProviderRoomDAO;
 import org.openmrs.mobile.dao.VisitRoomDAO;
-import org.openmrs.mobile.databases.entities.AllergyEntity;
-import org.openmrs.mobile.databases.entities.ConceptEntity;
-import org.openmrs.mobile.databases.entities.EncounterEntity;
-import org.openmrs.mobile.databases.entities.FormResourceEntity;
-import org.openmrs.mobile.databases.entities.LocationEntity;
-import org.openmrs.mobile.databases.entities.ObservationEntity;
-import org.openmrs.mobile.databases.entities.PatientEntity;
-import org.openmrs.mobile.databases.entities.VisitEntity;
-import org.openmrs.mobile.models.EncounterType;
-import org.openmrs.mobile.models.Encountercreate;
-import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 @Database(entities = {ConceptEntity.class,

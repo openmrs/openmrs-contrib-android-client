@@ -16,6 +16,12 @@ package org.openmrs.mobile.test.presenters;
 
 import android.content.Context;
 
+import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
+import com.example.openmrs_android_sdk.library.models.Session;
+import com.example.openmrs_android_sdk.library.models.User;
+import com.example.openmrs_android_sdk.library.models.VisitType;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mindrot.jbcrypt.BCrypt;
@@ -30,14 +36,9 @@ import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.UserService;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.LocationDAO;
 import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.databases.entities.LocationEntity;
-import org.openmrs.mobile.models.Session;
-import org.openmrs.mobile.models.User;
-import org.openmrs.mobile.models.VisitType;
 import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 import org.openmrs.mobile.utilities.ApplicationConstants;

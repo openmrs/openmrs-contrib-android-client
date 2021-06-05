@@ -29,19 +29,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.example.openmrs_android_sdk.library.models.Answer;
+import com.example.openmrs_android_sdk.library.models.Question;
+
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.FormFieldsWrapper;
 import org.openmrs.mobile.databinding.FragmentFormDisplayBinding;
-import org.openmrs.mobile.models.Answer;
-import org.openmrs.mobile.models.Question;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.InputField;
-import org.openmrs.mobile.utilities.RangeEditText;
-import org.openmrs.mobile.utilities.SelectOneField;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;

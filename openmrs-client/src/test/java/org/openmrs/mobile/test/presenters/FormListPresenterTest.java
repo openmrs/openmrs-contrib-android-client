@@ -1,5 +1,7 @@
 package org.openmrs.mobile.test.presenters;
 
+import com.example.openmrs_android_sdk.library.databases.entities.FormResourceEntity;
+import com.example.openmrs_android_sdk.library.models.EncounterType;
 import com.google.gson.Gson;
 
 import org.junit.Before;
@@ -10,8 +12,6 @@ import org.mockito.Mockito;
 import org.openmrs.mobile.activities.formlist.FormListContract;
 import org.openmrs.mobile.activities.formlist.FormListPresenter;
 import org.openmrs.mobile.dao.EncounterDAO;
-import org.openmrs.mobile.databases.entities.FormResourceEntity;
-import org.openmrs.mobile.models.EncounterType;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.openmrs.mobile.utilities.FormService;
 import org.powermock.api.mockito.PowerMockito;

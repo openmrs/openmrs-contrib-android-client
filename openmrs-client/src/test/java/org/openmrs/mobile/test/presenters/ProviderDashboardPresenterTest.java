@@ -2,6 +2,9 @@ package org.openmrs.mobile.test.presenters;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
+import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.models.Provider;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,9 +16,7 @@ import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardPresente
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.repository.ProviderRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.ProviderRoomDAO;
-import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;

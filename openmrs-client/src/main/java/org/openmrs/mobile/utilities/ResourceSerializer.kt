@@ -14,9 +14,9 @@
 package org.openmrs.mobile.utilities
 
 import android.util.Log
+import com.example.openmrs_android_sdk.library.models.Resource
 import com.google.gson.*
 import com.google.gson.annotations.Expose
-import org.openmrs.mobile.models.Resource
 import java.lang.reflect.Type
 
 class ResourceSerializer : JsonSerializer<Resource> {

@@ -14,13 +14,14 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import com.example.openmrs_android_sdk.library.models.Person;
+import com.example.openmrs_android_sdk.library.models.Provider;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.openmrs.mobile.activities.providermanagerdashboard.addprovider.AddProviderContract;
 import org.openmrs.mobile.activities.providermanagerdashboard.addprovider.AddProviderPresenter;
-import org.openmrs.mobile.models.Person;
-import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.test.ACUnitTestBase;
 
 import java.util.ArrayList;

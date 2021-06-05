@@ -151,7 +151,10 @@ dependencies {
     // Database components
     implementation "androidx.room:room-runtime:${versions.roomRuntime}"
     implementation "android.arch.persistence.room:rxjava2:${versions.roomPersistence}"
+
+    // Android sdk library dependency
     implementation project(path: ':openmrs-android-sdk')
+
     // Noinspection GradleDependency
     annotationProcessor "androidx.room:room-compiler:${versions.roomCompiler}"
 

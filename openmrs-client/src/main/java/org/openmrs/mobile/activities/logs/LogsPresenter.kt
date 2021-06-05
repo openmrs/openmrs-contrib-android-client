@@ -15,7 +15,7 @@ package org.openmrs.mobile.activities.logs
 
 import org.openmrs.mobile.activities.BasePresenter
 import org.openmrs.mobile.application.OpenMRS
-import org.openmrs.mobile.application.OpenMRSLogger
+import com.example.openmrs_android_sdk.library.OpenMRSLogger
 import java.io.*
 
 class LogsPresenter(private val mLogsView: LogsContract.View, private val mOpenMRSLogger: OpenMRSLogger) : BasePresenter(), LogsContract.Presenter {

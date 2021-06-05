@@ -28,12 +28,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.example.openmrs_android_sdk.library.models.Provider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.providermanagerdashboard.addprovider.AddProviderActivity;
 import org.openmrs.mobile.databinding.FragmentProviderManagementBinding;
-import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 import java.util.ArrayList;

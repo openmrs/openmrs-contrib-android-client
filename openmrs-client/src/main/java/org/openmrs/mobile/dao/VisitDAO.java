@@ -16,14 +16,15 @@ package org.openmrs.mobile.dao;
 
 import android.content.Context;
 
+import com.example.openmrs_android_sdk.library.databases.entities.ObservationEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.VisitEntity;
+import com.example.openmrs_android_sdk.library.models.Encounter;
+import com.example.openmrs_android_sdk.library.models.Observation;
+import com.example.openmrs_android_sdk.library.models.Visit;
+
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.databases.AppDatabaseHelper;
-import org.openmrs.mobile.databases.entities.ObservationEntity;
-import org.openmrs.mobile.databases.entities.VisitEntity;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Observation;
-import org.openmrs.mobile.models.Visit;
 
 import java.util.ArrayList;
 import java.util.List;

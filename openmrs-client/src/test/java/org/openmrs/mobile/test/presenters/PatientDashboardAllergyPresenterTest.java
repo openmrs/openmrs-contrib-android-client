@@ -17,6 +17,10 @@ package org.openmrs.mobile.test.presenters;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.models.Allergy;
+import com.example.openmrs_android_sdk.library.models.Patient;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,11 +32,8 @@ import org.openmrs.mobile.activities.patientdashboard.allergy.PatientDashboardAl
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.repository.AllergyRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.AllergyRoomDAO;
 import org.openmrs.mobile.databases.AppDatabaseHelper;
-import org.openmrs.mobile.models.Allergy;
-import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;

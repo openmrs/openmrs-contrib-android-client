@@ -17,9 +17,16 @@ package org.openmrs.mobile.api.repository;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.openmrs_android_sdk.library.models.Encounter;
+import com.example.openmrs_android_sdk.library.models.Encountercreate;
+import com.example.openmrs_android_sdk.library.models.Patient;
+import com.example.openmrs_android_sdk.library.models.Results;
+import com.example.openmrs_android_sdk.library.models.Visit;
+import com.example.openmrs_android_sdk.library.models.VisitType;
+
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.OpenMRSLogger;
 import org.openmrs.mobile.dao.EncounterCreateRoomDAO;
 import org.openmrs.mobile.dao.EncounterDAO;
 import org.openmrs.mobile.dao.LocationDAO;
@@ -28,12 +35,6 @@ import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.GetVisitTypeCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.StartVisitResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.VisitsResponseCallback;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Encountercreate;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.Results;
-import org.openmrs.mobile.models.Visit;
-import org.openmrs.mobile.models.VisitType;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 

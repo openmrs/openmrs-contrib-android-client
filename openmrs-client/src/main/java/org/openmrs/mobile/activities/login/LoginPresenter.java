@@ -16,6 +16,12 @@ package org.openmrs.mobile.activities.login;
 
 import androidx.annotation.NonNull;
 
+import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
+import com.example.openmrs_android_sdk.library.models.Results;
+import com.example.openmrs_android_sdk.library.models.Session;
+import com.example.openmrs_android_sdk.library.models.VisitType;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
@@ -24,13 +30,8 @@ import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.UserService;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.LocationDAO;
-import org.openmrs.mobile.databases.entities.LocationEntity;
 import org.openmrs.mobile.listeners.retrofitcallbacks.GetVisitTypeCallback;
-import org.openmrs.mobile.models.Results;
-import org.openmrs.mobile.models.Session;
-import org.openmrs.mobile.models.VisitType;
 import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;

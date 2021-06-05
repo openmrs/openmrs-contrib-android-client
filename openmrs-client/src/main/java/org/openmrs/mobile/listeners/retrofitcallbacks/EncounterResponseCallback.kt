@@ -14,7 +14,8 @@
 
 package org.openmrs.mobile.listeners.retrofitcallbacks
 
-import org.openmrs.mobile.models.Resource
+import com.example.openmrs_android_sdk.library.models.Resource
+
 
 @JvmSuppressWildcards
 interface EncounterResponseCallback : DefaultResponseCallback {

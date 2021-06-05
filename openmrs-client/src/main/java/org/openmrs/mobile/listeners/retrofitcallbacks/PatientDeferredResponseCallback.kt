@@ -13,8 +13,8 @@
  */
 package org.openmrs.mobile.listeners.retrofitcallbacks
 
+import com.example.openmrs_android_sdk.library.models.Patient
 import org.openmrs.mobile.api.promise.SimpleDeferredObject
-import org.openmrs.mobile.models.Patient
 
 @JvmSuppressWildcards
 interface PatientDeferredResponseCallback : DefaultResponseCallback {

@@ -13,7 +13,7 @@
  */
 package org.openmrs.mobile.listeners.retrofitcallbacks
 
-import org.openmrs.mobile.models.Patient
+import com.example.openmrs_android_sdk.library.models.Patient
 
 @JvmSuppressWildcards
 interface DownloadPatientCallback : DefaultResponseCallback {

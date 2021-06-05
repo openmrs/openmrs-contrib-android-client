@@ -20,11 +20,10 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import org.openmrs.mobile.databases.entities.ObservationEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.ObservationEntity;
 
 import java.util.List;
 
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 @Dao

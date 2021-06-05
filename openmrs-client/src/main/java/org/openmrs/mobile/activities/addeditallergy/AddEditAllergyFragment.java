@@ -199,7 +199,7 @@ public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContrac
         if (null == allergyCreate.getAllergen()) {
             ToastUtil.error(getString(R.string.warning_select_allergen));
         } else {
-            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext(),R.style.AlertDialogTheme);
             alertDialogBuilder.setTitle(getString(R.string.create_allergy_title));
             alertDialogBuilder
                     .setMessage(R.string.create_allergy_description)

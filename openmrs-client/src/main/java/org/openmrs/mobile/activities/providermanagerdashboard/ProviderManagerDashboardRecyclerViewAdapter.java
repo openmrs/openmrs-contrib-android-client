@@ -29,7 +29,7 @@ import com.example.openmrs_android_sdk.library.models.Provider;
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardActivity;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 
 import java.util.List;
 

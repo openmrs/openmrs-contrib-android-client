@@ -12,14 +12,13 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.dao;
+package com.example.openmrs_android_sdk.library.dao;
 
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+import com.example.openmrs_android_sdk.library.databases.AppDatabase;
+import com.example.openmrs_android_sdk.library.databases.AppDatabaseHelper;
 import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
-
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.databases.AppDatabaseHelper;
-import org.openmrs.mobile.utilities.StringUtils;
+import com.example.openmrs_android_sdk.utilities.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,7 @@ import rx.Observable;
 
 
 public class LocationDAO {
-    LocationRoomDAO locationRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).locationRoomDAO();
+    LocationRoomDAO locationRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).locationRoomDAO();
 
     public Observable<Long> saveLocation(LocationEntity location) {
         return AppDatabaseHelper.createObservableIO(() -> locationRoomDAO.addLocation(location));

@@ -20,9 +20,9 @@ import com.example.openmrs_android_sdk.library.models.EncounterType;
 import com.example.openmrs_android_sdk.library.models.Results;
 
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.dao.EncounterTypeRoomDAO;
-import org.openmrs.mobile.dao.FormResourceDAO;
-import org.openmrs.mobile.databases.AppDatabase;
+import com.example.openmrs_android_sdk.library.dao.EncounterTypeRoomDAO;
+import com.example.openmrs_android_sdk.library.dao.FormResourceDAO;
+import com.example.openmrs_android_sdk.library.databases.AppDatabase;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 

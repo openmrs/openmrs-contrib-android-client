@@ -18,7 +18,7 @@ import android.content.Intent;
 
 import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 
 public class AuthorizationManager {
     protected OpenMRS mOpenMRS = OpenMRS.getInstance();

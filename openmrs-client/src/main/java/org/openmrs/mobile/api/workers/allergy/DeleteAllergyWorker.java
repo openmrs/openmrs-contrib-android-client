@@ -25,8 +25,8 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.dao.AllergyRoomDAO;
-import org.openmrs.mobile.databases.AppDatabase;
+import com.example.openmrs_android_sdk.library.dao.AllergyRoomDAO;
+import com.example.openmrs_android_sdk.library.databases.AppDatabase;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -36,8 +36,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static org.openmrs.mobile.utilities.ApplicationConstants.BundleKeys.ALLERGY_UUID;
-import static org.openmrs.mobile.utilities.ApplicationConstants.BundleKeys.PATIENT_UUID;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.BundleKeys.ALLERGY_UUID;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.BundleKeys.PATIENT_UUID;
 
 
 public class DeleteAllergyWorker extends Worker {

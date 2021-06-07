@@ -31,7 +31,7 @@ import com.example.openmrs_android_sdk.library.models.Observation;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRSInflater;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ImageUtils;
 
 import java.util.ArrayList;

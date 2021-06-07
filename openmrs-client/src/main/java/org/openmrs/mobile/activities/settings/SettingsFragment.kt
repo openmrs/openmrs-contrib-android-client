@@ -40,7 +40,7 @@ import org.openmrs.mobile.activities.community.contact.ContactUsActivity
 import org.openmrs.mobile.activities.logs.LogsActivity
 import org.openmrs.mobile.databinding.FragmentSettingsBinding
 import org.openmrs.mobile.services.ConceptDownloadService
-import org.openmrs.mobile.utilities.ApplicationConstants
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants
 
 class SettingsFragment : ACBaseFragment<SettingsContract.Presenter>(), SettingsContract.View {
     private var broadcastReceiver: BroadcastReceiver? = null

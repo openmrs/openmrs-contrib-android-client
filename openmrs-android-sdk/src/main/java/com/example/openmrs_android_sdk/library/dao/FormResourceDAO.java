@@ -12,32 +12,32 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.dao;
+package com.example.openmrs_android_sdk.library.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
+import com.example.openmrs_android_sdk.library.databases.entities.FormResourceEntity;
 
 import java.util.List;
 
 import io.reactivex.Single;
 
 @Dao
-public interface LocationRoomDAO {
+public interface FormResourceDAO {
+    @Query("SELECT * FROM forms WHERE name = :name")
+    Single<FormResourceEntity> getFormResourceByName(String name);
+
+    @Query("SELECT * FROM forms")
+    Single<List<FormResourceEntity>> getFormResourceList();
+
+    @Query("SELECT * FROM forms WHERE uuid = :uuid")
+    Single<FormResourceEntity> getFormByUuid(String uuid);
+
+    @Query("DELETE FROM forms")
+    void deleteAllForms();
+
     @Insert
-    long addLocation(LocationEntity entity);
-
-    @Query("DELETE FROM locations")
-    void deleteAllLocations();
-
-    @Query("SELECT * FROM locations")
-    Single<List<LocationEntity>> getLocations();
-
-    @Query("SELECT * FROM locations WHERE display = :mName")
-    Single<LocationEntity> findLocationByName(String mName);
-
-    @Query("SELECT * FROM locations WHERE uuid = :uuid")
-    Single<LocationEntity> findLocationByUUID(String uuid);
+    void addFormResource(FormResourceEntity formResourceEntity);
 }

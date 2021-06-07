@@ -27,9 +27,9 @@ import org.openmrs.mobile.activities.settings.SettingsActivity;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.dao.ConceptRoomDAO;
-import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.library.dao.ConceptRoomDAO;
+import com.example.openmrs_android_sdk.library.databases.AppDatabase;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 
 import java.util.List;
 
@@ -37,9 +37,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static org.openmrs.mobile.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_DESC;
-import static org.openmrs.mobile.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_ID;
-import static org.openmrs.mobile.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_NAME;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_DESC;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_ID;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_NAME;
 
 public class ConceptDownloadService extends Service {
     private int downloadedConcepts;

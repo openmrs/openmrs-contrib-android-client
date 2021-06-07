@@ -27,7 +27,7 @@ import org.openmrs.mobile.api.repository.LocationRepository;
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import com.example.openmrs_android_sdk.library.OpenMRSLogger;
-import org.openmrs.mobile.dao.PatientDAO;
+import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import com.example.openmrs_android_sdk.library.models.Patient;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.openmrs.mobile.utilities.NetworkUtils;

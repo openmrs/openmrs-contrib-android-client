@@ -16,9 +16,9 @@ package org.openmrs.mobile.activities.settings
 import org.openmrs.mobile.activities.BasePresenter
 import org.openmrs.mobile.application.OpenMRS
 import com.example.openmrs_android_sdk.library.OpenMRSLogger
-import org.openmrs.mobile.dao.ConceptRoomDAO
-import org.openmrs.mobile.databases.AppDatabase
-import org.openmrs.mobile.utilities.ApplicationConstants
+import com.example.openmrs_android_sdk.library.dao.ConceptRoomDAO
+import com.example.openmrs_android_sdk.library.databases.AppDatabase
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants
 import org.openmrs.mobile.utilities.LanguageUtils
 import org.openmrs.mobile.utilities.ThemeUtils
 import java.io.File

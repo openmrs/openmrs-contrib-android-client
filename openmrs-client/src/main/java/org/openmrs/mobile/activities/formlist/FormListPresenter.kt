@@ -16,8 +16,8 @@ package org.openmrs.mobile.activities.formlist
 import com.example.openmrs_android_sdk.library.databases.entities.FormResourceEntity
 import com.example.openmrs_android_sdk.library.models.EncounterType
 import org.openmrs.mobile.activities.BasePresenter
-import org.openmrs.mobile.dao.EncounterDAO
-import org.openmrs.mobile.utilities.FormService.getFormResourceList
+import com.example.openmrs_android_sdk.library.dao.EncounterDAO
+import com.example.openmrs_android_sdk.utilities.FormService.getFormResourceList
 import org.openmrs.mobile.utilities.StringUtils.isBlank
 
 class FormListPresenter : BasePresenter, FormListContract.Presenter {

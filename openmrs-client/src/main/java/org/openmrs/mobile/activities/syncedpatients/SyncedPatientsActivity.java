@@ -28,7 +28,7 @@ import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databinding.ActivityFindPatientsBinding;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
 
 public class SyncedPatientsActivity extends ACBaseActivity {

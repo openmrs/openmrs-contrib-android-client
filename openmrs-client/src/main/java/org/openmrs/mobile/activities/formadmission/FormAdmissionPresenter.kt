@@ -25,10 +25,10 @@ import org.openmrs.mobile.api.RestApi
 import org.openmrs.mobile.api.RestServiceBuilder
 import org.openmrs.mobile.api.repository.ProviderRepository
 import org.openmrs.mobile.application.OpenMRS
-import org.openmrs.mobile.dao.PatientDAO
-import org.openmrs.mobile.databases.AppDatabase
+import com.example.openmrs_android_sdk.library.dao.PatientDAO
+import com.example.openmrs_android_sdk.library.databases.AppDatabase
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback
-import org.openmrs.mobile.utilities.FormService.getFormResourceByName
+import com.example.openmrs_android_sdk.utilities.FormService.getFormResourceByName
 import org.openmrs.mobile.utilities.ToastUtil.error
 import org.openmrs.mobile.utilities.ToastUtil.success
 

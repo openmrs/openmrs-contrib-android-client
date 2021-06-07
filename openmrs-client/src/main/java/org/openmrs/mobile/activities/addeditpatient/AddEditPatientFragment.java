@@ -82,7 +82,7 @@ import org.openmrs.mobile.activities.patientdashboard.details.PatientPhotoActivi
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.databinding.FragmentPatientInfoBinding;
 import org.openmrs.mobile.listeners.watcher.PatientBirthdateValidatorWatcher;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.ImageUtils;
 import org.openmrs.mobile.utilities.StringUtils;

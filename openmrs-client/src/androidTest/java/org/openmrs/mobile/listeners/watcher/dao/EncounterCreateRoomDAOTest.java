@@ -29,8 +29,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openmrs.mobile.dao.EncounterCreateRoomDAO;
-import org.openmrs.mobile.databases.AppDatabase;
+import com.example.openmrs_android_sdk.library.dao.EncounterCreateRoomDAO;
+import com.example.openmrs_android_sdk.library.databases.AppDatabase;
 
 import java.util.ArrayList;
 import java.util.List;

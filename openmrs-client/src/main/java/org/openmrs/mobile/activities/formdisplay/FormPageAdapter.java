@@ -26,7 +26,7 @@ import com.example.openmrs_android_sdk.library.models.Form;
 import com.example.openmrs_android_sdk.library.models.Page;
 
 import org.jetbrains.annotations.NotNull;
-import org.openmrs.mobile.utilities.FormService;
+import com.example.openmrs_android_sdk.utilities.FormService;
 
 import java.util.List;
 

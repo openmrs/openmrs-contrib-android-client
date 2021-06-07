@@ -11,7 +11,7 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.ProviderRepository;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 public class ProviderDashboardPresenter extends BasePresenter implements ProviderDashboardContract.Presenter, DefaultResponseCallback {

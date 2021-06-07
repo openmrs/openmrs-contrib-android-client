@@ -33,12 +33,11 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import com.example.openmrs_android_sdk.library.models.Patient;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<SyncedPatientsRecyclerViewAdapter.PatientViewHolder> {
     private SyncedPatientsFragment mContext;

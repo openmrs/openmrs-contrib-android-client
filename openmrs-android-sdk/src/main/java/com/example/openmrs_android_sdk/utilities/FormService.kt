@@ -7,15 +7,15 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
-package org.openmrs.mobile.utilities
+package com.example.openmrs_android_sdk.utilities
 
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid
+import com.example.openmrs_android_sdk.library.databases.AppDatabase
 import com.example.openmrs_android_sdk.library.databases.entities.FormResourceEntity
 import com.example.openmrs_android_sdk.library.models.Form
+import com.example.openmrs_android_sdk.utilities.StringUtils.isBlank
+import com.example.openmrs_android_sdk.utilities.StringUtils.unescapeJavaString
 import com.google.gson.GsonBuilder
-import org.openmrs.mobile.application.OpenMRS
-import org.openmrs.mobile.databases.AppDatabase
-import org.openmrs.mobile.utilities.StringUtils.isBlank
-import org.openmrs.mobile.utilities.StringUtils.unescapeJavaString
 import java.lang.reflect.Modifier
 
 object FormService {
@@ -35,7 +35,7 @@ object FormService {
         if (!isBlank(uuid)) {
             var formResourceEntity : FormResourceEntity?
             try {
-                formResourceEntity = AppDatabase.getDatabase(OpenMRS.getInstance().applicationContext)
+                formResourceEntity = AppDatabase.getDatabase(OpenmrsAndroid.getInstance()?.getApplicationContext())
                         .formResourceDAO()
                         .getFormByUuid(uuid)
                         .blockingGet()
@@ -60,7 +60,7 @@ object FormService {
 
     @JvmStatic
     fun getFormResourceByName(name: String?): FormResourceEntity {
-        return AppDatabase.getDatabase(OpenMRS.getInstance().applicationContext)
+        return AppDatabase.getDatabase(OpenmrsAndroid.getInstance()?.getApplicationContext())
                 .formResourceDAO()
                 .getFormResourceByName(name)
                 .blockingGet()
@@ -68,7 +68,7 @@ object FormService {
 
     @JvmStatic
     fun getFormResourceList(): List<FormResourceEntity> {
-        var list : List<FormResourceEntity>  = AppDatabase.getDatabase(OpenMRS.getInstance().applicationContext)
+        var list : List<FormResourceEntity>  = AppDatabase.getDatabase(OpenmrsAndroid.getInstance()?.getApplicationContext())
                 .formResourceDAO()
                 .formResourceList
                 .blockingGet()

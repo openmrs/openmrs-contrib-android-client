@@ -25,7 +25,7 @@ import org.mockito.Mockito;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardContract;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardPresenter;
 import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.dao.VisitDAO;
+import com.example.openmrs_android_sdk.library.dao.VisitDAO;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 import org.openmrs.mobile.utilities.DateUtils;
 

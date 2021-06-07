@@ -11,20 +11,20 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.mobile.databases
+package com.example.openmrs_android_sdk.library.databases
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid
+import com.example.openmrs_android_sdk.library.dao.EncounterDAO
+import com.example.openmrs_android_sdk.library.dao.ObservationDAO
+import com.example.openmrs_android_sdk.library.dao.PatientDAO
 import com.example.openmrs_android_sdk.library.databases.entities.*
 import com.example.openmrs_android_sdk.library.models.*
-import org.openmrs.mobile.application.OpenMRS
-import org.openmrs.mobile.dao.EncounterDAO
-import org.openmrs.mobile.dao.ObservationDAO
-import org.openmrs.mobile.dao.PatientDAO
-import org.openmrs.mobile.utilities.ApplicationConstants
-import org.openmrs.mobile.utilities.DateUtils
-import org.openmrs.mobile.utilities.DateUtils.convertTime
-import org.openmrs.mobile.utilities.FormService.getFormByUuid
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants
+import com.example.openmrs_android_sdk.utilities.DateUtils
+import com.example.openmrs_android_sdk.utilities.DateUtils.convertTime
+import com.example.openmrs_android_sdk.utilities.FormService.getFormByUuid
 import rx.Observable
 import rx.schedulers.Schedulers
 import java.io.ByteArrayInputStream
@@ -117,7 +117,7 @@ object AppDatabaseHelper {
         encounter.observations = ObservationDAO().findObservationByEncounterID(entity.id)
         val location: LocationEntity? = try {
             AppDatabase
-                    .getDatabase(OpenMRS.getInstance().applicationContext)
+                    .getDatabase(OpenmrsAndroid.getInstance()?.applicationContext)
                     .locationRoomDAO()
                     .findLocationByUUID(entity.locationUuid)
                     .blockingGet()
@@ -138,7 +138,7 @@ object AppDatabaseHelper {
         visit.visitType = VisitType(visitEntity.visitType)
         try {
             val locationEntity = AppDatabase
-                    .getDatabase(OpenMRS.getInstance().applicationContext)
+                    .getDatabase(OpenmrsAndroid.getInstance()?.applicationContext)
                     .locationRoomDAO()
                     .findLocationByName(visitEntity.visitPlace)
                     .blockingGet()

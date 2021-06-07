@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.dao;
+package com.example.openmrs_android_sdk.library.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;

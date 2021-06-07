@@ -40,7 +40,7 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.application.OpenMRSInflater;
 import org.openmrs.mobile.bundle.FormFieldsWrapper;
 import org.openmrs.mobile.databinding.FragmentPatientVitalsBinding;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 
 public class PatientVitalsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientVitals {
     private LinearLayout content;

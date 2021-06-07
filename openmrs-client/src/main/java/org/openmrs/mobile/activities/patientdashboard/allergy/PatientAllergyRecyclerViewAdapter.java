@@ -27,7 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.openmrs_android_sdk.library.models.Allergy;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 
 import java.util.List;
 

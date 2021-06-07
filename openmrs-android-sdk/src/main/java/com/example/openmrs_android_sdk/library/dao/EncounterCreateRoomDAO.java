@@ -8,27 +8,29 @@
  * graphic logo is a trademark of OpenMRS Inc.
  */
 
-package org.openmrs.mobile.dao;
+package com.example.openmrs_android_sdk.library.dao;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
-import com.example.openmrs_android_sdk.library.models.EncounterType;
+import com.example.openmrs_android_sdk.library.models.Encountercreate;
 
 import java.util.List;
 
 @Dao
-public interface EncounterTypeRoomDAO {
+public interface EncounterCreateRoomDAO {
+
     @Insert
-    long addEncounterType(EncounterType encounterType);
+    long addEncounterCreated(Encountercreate encountercreate);
 
-    @Query("DELETE FROM encounterType")
-    void deleteAllEncounterTypes();
+    @Update
+    int updateExistingEncounter(Encountercreate encountercreate);
 
-    @Query("Select * FROM encounterType WHERE display = :formName")
-    EncounterType getEncounterTypeByFormName(String formName);
+    @Query("Select * FROM encountercreate")
+    List<Encountercreate> getAllCreatedEncounters();
 
-    @Query("SELECT * FROM encounterType")
-    List<EncounterType> getAllEncounterTypes();
+    @Query("Select * FROM encountercreate WHERE _id =:id")
+    Encountercreate getCreatedEncountersByID(long id);
 }

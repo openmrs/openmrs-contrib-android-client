@@ -32,9 +32,9 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import com.example.openmrs_android_sdk.library.OpenMRSLogger;
-import org.openmrs.mobile.dao.PatientDAO;
+import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 

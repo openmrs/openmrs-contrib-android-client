@@ -42,7 +42,7 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.databinding.FragmentLoginBinding;
 import org.openmrs.mobile.listeners.watcher.LoginValidatorWatcher;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.URLValidator;

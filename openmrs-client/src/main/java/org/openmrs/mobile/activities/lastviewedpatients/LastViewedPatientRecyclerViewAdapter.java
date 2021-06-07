@@ -34,7 +34,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.api.repository.VisitRepository;
-import org.openmrs.mobile.dao.PatientDAO;
+import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DownloadPatientCallback;
 import com.example.openmrs_android_sdk.library.models.Patient;
 import org.openmrs.mobile.utilities.DateUtils;

@@ -23,7 +23,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener
 import com.github.amlcurran.showcaseview.ShowcaseView
@@ -32,16 +31,10 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
 import org.openmrs.mobile.activities.ACBaseFragment
-import org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity
-import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity
-import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity
-import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardActivity
-import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity
 import org.openmrs.mobile.databinding.FragmentDashboardBinding
-import org.openmrs.mobile.utilities.ApplicationConstants
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants
 import org.openmrs.mobile.utilities.ImageUtils
 import org.openmrs.mobile.utilities.ThemeUtils
-import org.openmrs.mobile.utilities.ToastUtil
 
 class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), DashboardContract.View, View.OnClickListener {
 

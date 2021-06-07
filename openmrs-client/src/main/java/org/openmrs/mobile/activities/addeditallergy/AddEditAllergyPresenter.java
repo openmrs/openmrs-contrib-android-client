@@ -27,23 +27,23 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.repository.AllergyRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.dao.PatientDAO;
+import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.CONCEPT_ALLERGEN_DRUG;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.CONCEPT_ALLERGEN_ENVIRONMENT;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.CONCEPT_ALLERGEN_FOOD;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.CONCEPT_REACTION;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.CONCEPT_SEVERITY_MILD;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.CONCEPT_SEVERITY_MODERATE;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.CONCEPT_SEVERITY_SEVERE;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_DRUG;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_FOOD;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_OTHER;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_REACTION;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.CONCEPT_ALLERGEN_DRUG;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.CONCEPT_ALLERGEN_ENVIRONMENT;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.CONCEPT_ALLERGEN_FOOD;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.CONCEPT_REACTION;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.CONCEPT_SEVERITY_MILD;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.CONCEPT_SEVERITY_MODERATE;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.CONCEPT_SEVERITY_SEVERE;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.PROPERTY_DRUG;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.PROPERTY_FOOD;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.PROPERTY_OTHER;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.PROPERTY_REACTION;
 
 public class AddEditAllergyPresenter extends BasePresenter implements AddEditAllergyContract.Presenter, DefaultResponseCallback {
     Fragment fragment;

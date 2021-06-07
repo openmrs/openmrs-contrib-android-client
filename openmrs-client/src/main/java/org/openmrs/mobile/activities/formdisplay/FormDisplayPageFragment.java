@@ -38,6 +38,7 @@ import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.FormFieldsWrapper;
 import org.openmrs.mobile.databinding.FragmentFormDisplayBinding;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 
 import java.util.ArrayList;
 import java.util.List;

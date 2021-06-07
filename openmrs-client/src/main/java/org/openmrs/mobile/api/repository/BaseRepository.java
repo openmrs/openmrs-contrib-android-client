@@ -20,7 +20,7 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
 import com.example.openmrs_android_sdk.library.OpenMRSLogger;
-import org.openmrs.mobile.databases.AppDatabase;
+import com.example.openmrs_android_sdk.library.databases.AppDatabase;
 
 public abstract class BaseRepository {
     protected OpenMRS openMrs;

@@ -27,7 +27,7 @@ import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseFragment
 import org.openmrs.mobile.activities.formlist.FormListActivity
 import org.openmrs.mobile.databinding.FragmentFormEntryPatientListBinding
-import org.openmrs.mobile.utilities.ApplicationConstants
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants
 import org.openmrs.mobile.utilities.StringUtils
 
 class FormEntryPatientListFragment : ACBaseFragment<FormEntryPatientListContract.Presenter>(), FormEntryPatientListContract.View {

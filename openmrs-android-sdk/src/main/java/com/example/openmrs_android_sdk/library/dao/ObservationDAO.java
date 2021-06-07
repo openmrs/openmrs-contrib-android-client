@@ -12,20 +12,19 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.dao;
+package com.example.openmrs_android_sdk.library.dao;
 
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+import com.example.openmrs_android_sdk.library.databases.AppDatabase;
+import com.example.openmrs_android_sdk.library.databases.AppDatabaseHelper;
 import com.example.openmrs_android_sdk.library.databases.entities.ObservationEntity;
 import com.example.openmrs_android_sdk.library.models.Observation;
-
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.databases.AppDatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ObservationDAO {
-    ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).observationRoomDAO();
+    ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).observationRoomDAO();
 
     public List<Observation> findObservationByEncounterID(Long encounterID) {
         List<Observation> observationList;

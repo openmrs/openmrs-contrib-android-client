@@ -12,14 +12,13 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.dao;
+package com.example.openmrs_android_sdk.library.dao;
 
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+import com.example.openmrs_android_sdk.library.databases.AppDatabase;
+import com.example.openmrs_android_sdk.library.databases.AppDatabaseHelper;
 import com.example.openmrs_android_sdk.library.databases.entities.PatientEntity;
 import com.example.openmrs_android_sdk.library.models.Patient;
-
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.databases.AppDatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -28,7 +27,7 @@ import java.util.List;
 import rx.Observable;
 
 public class PatientDAO {
-    PatientRoomDAO patientRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).patientRoomDAO();
+    PatientRoomDAO patientRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).patientRoomDAO();
 
     public Observable<Long> savePatient(Patient patient) {
         PatientEntity entity = AppDatabaseHelper.convert(patient);

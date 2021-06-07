@@ -27,7 +27,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.activevisits.ActiveVisitPresenter;
 import org.openmrs.mobile.activities.activevisits.ActiveVisitsContract;
-import org.openmrs.mobile.dao.VisitDAO;
+import com.example.openmrs_android_sdk.library.dao.VisitDAO;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 
 import java.util.ArrayList;

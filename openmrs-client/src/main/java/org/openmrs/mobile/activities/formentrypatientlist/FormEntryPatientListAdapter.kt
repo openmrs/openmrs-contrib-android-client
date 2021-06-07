@@ -23,8 +23,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.openmrs_android_sdk.library.models.Patient
 import com.example.openmrs_android_sdk.library.models.Visit
 import org.openmrs.mobile.R
-import org.openmrs.mobile.dao.VisitDAO
-import org.openmrs.mobile.utilities.ApplicationConstants
+import com.example.openmrs_android_sdk.library.dao.VisitDAO
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants
 import rx.android.schedulers.AndroidSchedulers
 
 class FormEntryPatientListAdapter(private val mContext: FormEntryPatientListFragment, private val mItems: List<Patient?>?) : RecyclerView.Adapter<FormEntryPatientListAdapter.PatientViewHolder>() {

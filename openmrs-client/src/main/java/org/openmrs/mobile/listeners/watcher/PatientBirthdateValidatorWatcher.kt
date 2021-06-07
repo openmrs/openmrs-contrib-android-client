@@ -16,7 +16,7 @@ package org.openmrs.mobile.listeners.watcher
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
-import org.openmrs.mobile.utilities.ApplicationConstants
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants
 import org.openmrs.mobile.utilities.StringUtils.notEmpty
 import org.openmrs.mobile.utilities.ToastUtil.error
 

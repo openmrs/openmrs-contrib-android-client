@@ -35,6 +35,7 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.application.OpenMRSInflater;
 import org.openmrs.mobile.bundle.FormFieldsWrapper;
+import org.openmrs.mobile.databinding.FragmentPatientVitalsBinding;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.models.Form;
 import org.openmrs.mobile.models.Observation;
@@ -43,12 +44,13 @@ import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 public class PatientVitalsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientVitals {
-    private LinearLayout mContent;
-    private LinearLayout mFormHeader;
-    private TextView mEmptyList;
-    private TextView mLastVitalsDate;
+    private LinearLayout content;
+    private LinearLayout formHeader;
+    private TextView emptyList;
+    private TextView lastVitalsDate;
     private PatientDashboardActivity patientsVitals;
-    private LayoutInflater mInflater;
+    private FragmentPatientVitalsBinding binding= null;
+    private LayoutInflater inflater;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,18 +62,17 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_patient_vitals, null, false);
-        mContent = root.findViewById(R.id.vitalsDetailsContent);
-        mEmptyList = root.findViewById(R.id.lastVitalsNoneLabel);
-        mLastVitalsDate = root.findViewById(R.id.lastVitalsDate);
-        mFormHeader = root.findViewById(R.id.lastVitalsLayout);
+        binding = FragmentPatientVitalsBinding.inflate(inflater, null, false);
 
-        ImageButton formEditIcon = root.findViewById(R.id.form_edit_icon);
+        content = binding.vitalsDetailsContent;
+        emptyList = binding.lastVitalsNoneLabel;
+        lastVitalsDate = binding.lastVitalsDate;
+        formHeader = binding.lastVitalsLayout;
+        ImageButton formEditIcon = binding.formEditIcon;
 
         formEditIcon.setOnClickListener(view -> ((PatientDashboardVitalsPresenter) mPresenter).startFormDisplayActivityWithEncounter());
-
-        this.mInflater = inflater;
-        return root;
+        this.inflater = inflater;
+        return binding.getRoot();
     }
 
     @Override
@@ -81,18 +82,18 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
 
     @Override
     public void showNoVitalsNotification() {
-        mFormHeader.setVisibility(View.GONE);
-        mContent.setVisibility(View.GONE);
-        mEmptyList.setVisibility(View.VISIBLE);
+        formHeader.setVisibility(View.GONE);
+        content.setVisibility(View.GONE);
+        emptyList.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showEncounterVitals(Encounter encounter) {
-        mLastVitalsDate.setText(DateUtils.convertTime(encounter.getEncounterDatetime(), DateUtils.DATE_WITH_TIME_FORMAT));
-        OpenMRSInflater openMRSInflater = new OpenMRSInflater(mInflater);
-        mContent.removeAllViews();
+        lastVitalsDate.setText(DateUtils.convertTime(encounter.getEncounterDatetime(), DateUtils.DATE_WITH_TIME_FORMAT));
+        OpenMRSInflater openMRSInflater = new OpenMRSInflater(inflater);
+        content.removeAllViews();
         for (Observation obs : encounter.getObservations()) {
-            openMRSInflater.addKeyValueStringView(mContent, obs.getDisplay(), obs.getDisplayValue());
+            openMRSInflater.addKeyValueStringView(content, obs.getDisplay(), obs.getDisplayValue());
         }
     }
 
@@ -131,5 +132,11 @@ public class PatientVitalsFragment extends PatientDashboardFragment implements P
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

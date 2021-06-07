@@ -12,17 +12,16 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.dao;
+package com.example.openmrs_android_sdk.library.dao;
 
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+import com.example.openmrs_android_sdk.library.databases.AppDatabase;
+import com.example.openmrs_android_sdk.library.databases.AppDatabaseHelper;
 import com.example.openmrs_android_sdk.library.databases.entities.EncounterEntity;
 import com.example.openmrs_android_sdk.library.databases.entities.ObservationEntity;
 import com.example.openmrs_android_sdk.library.models.Encounter;
 import com.example.openmrs_android_sdk.library.models.EncounterType;
 import com.example.openmrs_android_sdk.library.models.Observation;
-
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.databases.AppDatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,9 +29,9 @@ import java.util.List;
 import rx.Observable;
 
 public class EncounterDAO {
-    EncounterRoomDAO encounterRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).encounterRoomDAO();
-    ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).observationRoomDAO();
-    EncounterTypeRoomDAO encounterTypeRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).encounterTypeRoomDAO();
+    EncounterRoomDAO encounterRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).encounterRoomDAO();
+    ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).observationRoomDAO();
+    EncounterTypeRoomDAO encounterTypeRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).encounterTypeRoomDAO();
 
     public long saveEncounter(Encounter encounter, Long visitID) {
         EncounterEntity encounterEntity = AppDatabaseHelper.convert(encounter, visitID);

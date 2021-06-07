@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.databases;
+package com.example.openmrs_android_sdk.library.databases;
 
 import android.content.Context;
 
@@ -20,6 +20,17 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.openmrs_android_sdk.library.dao.AllergyRoomDAO;
+import com.example.openmrs_android_sdk.library.dao.ConceptRoomDAO;
+import com.example.openmrs_android_sdk.library.dao.EncounterCreateRoomDAO;
+import com.example.openmrs_android_sdk.library.dao.EncounterRoomDAO;
+import com.example.openmrs_android_sdk.library.dao.EncounterTypeRoomDAO;
+import com.example.openmrs_android_sdk.library.dao.FormResourceDAO;
+import com.example.openmrs_android_sdk.library.dao.LocationRoomDAO;
+import com.example.openmrs_android_sdk.library.dao.ObservationRoomDAO;
+import com.example.openmrs_android_sdk.library.dao.PatientRoomDAO;
+import com.example.openmrs_android_sdk.library.dao.ProviderRoomDAO;
+import com.example.openmrs_android_sdk.library.dao.VisitRoomDAO;
 import com.example.openmrs_android_sdk.library.databases.entities.AllergyEntity;
 import com.example.openmrs_android_sdk.library.databases.entities.ConceptEntity;
 import com.example.openmrs_android_sdk.library.databases.entities.EncounterEntity;
@@ -31,19 +42,7 @@ import com.example.openmrs_android_sdk.library.databases.entities.VisitEntity;
 import com.example.openmrs_android_sdk.library.models.EncounterType;
 import com.example.openmrs_android_sdk.library.models.Encountercreate;
 import com.example.openmrs_android_sdk.library.models.Provider;
-
-import org.openmrs.mobile.dao.AllergyRoomDAO;
-import org.openmrs.mobile.dao.ConceptRoomDAO;
-import org.openmrs.mobile.dao.EncounterCreateRoomDAO;
-import org.openmrs.mobile.dao.EncounterRoomDAO;
-import org.openmrs.mobile.dao.EncounterTypeRoomDAO;
-import org.openmrs.mobile.dao.FormResourceDAO;
-import org.openmrs.mobile.dao.LocationRoomDAO;
-import org.openmrs.mobile.dao.ObservationRoomDAO;
-import org.openmrs.mobile.dao.PatientRoomDAO;
-import org.openmrs.mobile.dao.ProviderRoomDAO;
-import org.openmrs.mobile.dao.VisitRoomDAO;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 
 @Database(entities = {ConceptEntity.class,
         EncounterEntity.class,

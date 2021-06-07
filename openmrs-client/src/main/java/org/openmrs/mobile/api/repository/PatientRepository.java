@@ -46,14 +46,14 @@ import org.openmrs.mobile.api.promise.SimplePromise;
 import org.openmrs.mobile.api.workers.patient.UpdatePatientWorker;
 import org.openmrs.mobile.application.OpenMRS;
 import com.example.openmrs_android_sdk.library.OpenMRSLogger;
-import org.openmrs.mobile.dao.EncounterCreateRoomDAO;
-import org.openmrs.mobile.dao.PatientDAO;
+import com.example.openmrs_android_sdk.library.dao.EncounterCreateRoomDAO;
+import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DownloadPatientCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.PatientResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.VisitsResponseCallback;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 

@@ -27,7 +27,7 @@ import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
 import org.mindrot.jbcrypt.BCrypt;
 import org.openmrs.mobile.api.FormListService;
 import org.openmrs.mobile.services.AuthenticateCheckService;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 
 import java.io.File;
 import java.util.HashMap;

@@ -39,7 +39,7 @@ import org.openmrs.mobile.activities.dialog.CustomPickerDialog;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.databinding.FragmentPatientAllergyBinding;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 
 import java.util.ArrayList;
 import java.util.List;

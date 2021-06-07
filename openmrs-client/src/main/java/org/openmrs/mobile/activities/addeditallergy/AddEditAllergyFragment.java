@@ -45,14 +45,14 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_DRUG;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_FOOD;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_MILD;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_OTHER;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_REACTION;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.PROPERTY_SEVERE;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.SELECT_ALLERGEN;
-import static org.openmrs.mobile.utilities.ApplicationConstants.AllergyModule.SELECT_REACTION;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.PROPERTY_DRUG;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.PROPERTY_FOOD;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.PROPERTY_MILD;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.PROPERTY_OTHER;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.PROPERTY_REACTION;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.PROPERTY_SEVERE;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.SELECT_ALLERGEN;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.AllergyModule.SELECT_REACTION;
 
 public class AddEditAllergyFragment extends ACBaseFragment<AddEditAllergyContract.Presenter> implements AddEditAllergyContract.View {
     AllergyCreate allergyCreate = new AllergyCreate();

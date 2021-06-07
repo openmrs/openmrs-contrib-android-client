@@ -23,7 +23,7 @@ import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.VisitRepository;
-import org.openmrs.mobile.dao.VisitDAO;
+import com.example.openmrs_android_sdk.library.dao.VisitDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.VisitsResponseCallback;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.StringUtils;

@@ -19,7 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ObservationDeserializer;
 import org.openmrs.mobile.utilities.ResourceSerializer;
 

@@ -19,12 +19,12 @@ import org.openmrs.mobile.activities.providerdashboard.patientrelationship.Patie
 import org.openmrs.mobile.activities.providerdashboard.providerrelationship.ProviderRelationshipFragment;
 import org.openmrs.mobile.activities.providermanagerdashboard.addprovider.AddProviderActivity;
 import org.openmrs.mobile.databinding.ActivityProviderDashboardBinding;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ThemeUtils;
 
 import java.util.Objects;
 
-import static org.openmrs.mobile.utilities.ApplicationConstants.RequestCodes.EDIT_PROVIDER_REQ_CODE;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.RequestCodes.EDIT_PROVIDER_REQ_CODE;
 
 public class ProviderDashboardActivity extends ACBaseActivity implements ProviderDashboardContract.View {
     Provider provider;

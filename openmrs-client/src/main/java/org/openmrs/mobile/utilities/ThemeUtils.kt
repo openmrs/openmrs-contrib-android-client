@@ -1,6 +1,6 @@
 package org.openmrs.mobile.utilities
 
-import android.content.SharedPreferences
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants
 import org.openmrs.mobile.application.OpenMRS
 
 object ThemeUtils {

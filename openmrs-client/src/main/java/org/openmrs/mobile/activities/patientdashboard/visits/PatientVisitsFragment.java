@@ -35,6 +35,7 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.databinding.FragmentPatientVisitBinding;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -45,6 +46,7 @@ import java.util.List;
 public class PatientVisitsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientVisits {
     private RecyclerView visitRecyclerView;
     private TextView emptyList;
+    private FragmentPatientVisitBinding binding =null;
     private PatientDashboardActivity mPatientDashboardActivity;
     public static final int REQUEST_CODE_FOR_VISIT = 1;
     private Patient patient;
@@ -95,16 +97,16 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentPatientVisitBinding.inflate(inflater, null, false);
 
-        View root = inflater.inflate(R.layout.fragment_patient_visit, null, false);
-        visitRecyclerView = root.findViewById(R.id.patientVisitRecyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        visitRecyclerView = binding.patientVisitRecyclerView;
         visitRecyclerView.setHasFixedSize(true);
         visitRecyclerView.setLayoutManager(linearLayoutManager);
 
-        emptyList = root.findViewById(R.id.emptyVisitsList);
+        emptyList = binding.emptyVisitsList;
+        return binding.getRoot();
 
-        return root;
     }
 
     public void startVisit() {
@@ -177,5 +179,11 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

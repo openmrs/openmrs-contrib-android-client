@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
+import org.openmrs.mobile.databinding.FragmentMatchingPatientsBinding;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -35,6 +36,7 @@ import org.openmrs.mobile.utilities.ToastUtil;
 import java.util.List;
 
 public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsContract.Presenter> implements MatchingPatientsContract.View {
+    private FragmentMatchingPatientsBinding binding = null;
     private Button registerNewPatientButton;
     private Button mergePatientsButton;
     private TextView givenName;
@@ -48,8 +50,7 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
     private TextView state;
     private TextView country;
     private TextView postalCode;
-    private RecyclerView mRecyclerView;
-    private View view;
+    private RecyclerView recyclerView;
 
     public static MatchingPatientsFragment newInstance() {
         return new MatchingPatientsFragment();
@@ -58,10 +59,10 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_matching_patients, container, false);
-        initFragmentFields(view);
+        binding = FragmentMatchingPatientsBinding.inflate(inflater, container, false);
+        initFragmentFields(binding.getRoot());
         setListeners();
-        return view;
+        return binding.getRoot();
     }
 
     private void setListeners() {
@@ -70,20 +71,20 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
     }
 
     private void initFragmentFields(View root) {
-        registerNewPatientButton = root.findViewById(R.id.registerNewPatientButton);
-        mergePatientsButton = root.findViewById(R.id.mergePatientsButton);
-        givenName = root.findViewById(R.id.givenName);
-        middleName = root.findViewById(R.id.middleName);
-        familyName = root.findViewById(R.id.familyName);
-        gender = root.findViewById(R.id.gender);
-        birthDate = root.findViewById(R.id.birthDate);
-        address1 = root.findViewById(R.id.address1);
-        address2 = root.findViewById(R.id.address2);
-        city = root.findViewById(R.id.cityAutoComplete);
-        state = root.findViewById(R.id.stateAutoComplete);
-        country = root.findViewById(R.id.country);
-        postalCode = root.findViewById(R.id.postalCode);
-        mRecyclerView = root.findViewById(R.id.recyclerView);
+        registerNewPatientButton = binding.registerNewPatientButton;
+        mergePatientsButton = binding.mergePatientsButton;
+        givenName = binding.givenName;
+        middleName = binding.middleName;
+        familyName = binding.familyName;
+        gender = binding.gender;
+        birthDate = binding.birthDate;
+        address1 = binding.address1;
+        address2 = binding.address2;
+        city = binding.cityAutoComplete;
+        state = binding.stateAutoComplete;
+        country = binding.country;
+        postalCode = binding.postalCode;
+        recyclerView = binding.recyclerView;
     }
 
     @Override
@@ -118,8 +119,8 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
     }
 
     private void setMatchingPatients(Patient patient, List<Patient> matchingPatients) {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(new MergePatientsRecycleViewAdapter((getActivity()), mPresenter, matchingPatients, patient));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new MergePatientsRecycleViewAdapter((getActivity()), mPresenter, matchingPatients, patient));
     }
 
     private void setPatientInfo(Patient patient) {
@@ -136,43 +137,49 @@ public class MatchingPatientsFragment extends ACBaseFragment<MatchingPatientsCon
             address1.setText(patient.getAddress().getAddress1());
         } else {
             address1.setVisibility(View.GONE);
-            view.findViewById(R.id.addr2Separator).setVisibility(View.GONE);
-            view.findViewById(R.id.addr2Hint).setVisibility(View.GONE);
+            (binding.addr2Separator).setVisibility(View.GONE);
+            (binding.addr2Hint).setVisibility(View.GONE);
         }
         if (patient.getAddress().getAddress2() != null) {
             address2.setText(patient.getAddress().getAddress2());
         } else {
             address2.setVisibility(View.GONE);
-            view.findViewById(R.id.addr2Separator).setVisibility(View.GONE);
-            view.findViewById(R.id.addr2Hint).setVisibility(View.GONE);
+            (binding.addr2Separator).setVisibility(View.GONE);
+            (binding.addr2Hint).setVisibility(View.GONE);
         }
         if (patient.getAddress().getCityVillage() != null) {
             city.setText(patient.getAddress().getCityVillage());
         } else {
             city.setVisibility(View.GONE);
-            view.findViewById(R.id.citySeparator).setVisibility(View.GONE);
-            view.findViewById(R.id.cityHint).setVisibility(View.GONE);
+            (binding.citySeparator).setVisibility(View.GONE);
+            (binding.cityHint).setVisibility(View.GONE);
         }
         if (patient.getAddress().getStateProvince() != null) {
             state.setText(patient.getAddress().getStateProvince());
         } else {
             state.setVisibility(View.GONE);
-            view.findViewById(R.id.stateSeparator).setVisibility(View.GONE);
-            view.findViewById(R.id.stateHint).setVisibility(View.GONE);
+            (binding.stateSeparator).setVisibility(View.GONE);
+            (binding.stateHint).setVisibility(View.GONE);
         }
         if (patient.getAddress().getCountry() != null) {
             country.setText(patient.getAddress().getCountry());
         } else {
             country.setVisibility(View.GONE);
-            view.findViewById(R.id.countrySeparator).setVisibility(View.GONE);
-            view.findViewById(R.id.countryHint).setVisibility(View.GONE);
+            (binding.countrySeparator).setVisibility(View.GONE);
+            (binding.countryHint).setVisibility(View.GONE);
         }
         if (patient.getAddress().getPostalCode() != null) {
             postalCode.setText(patient.getAddress().getPostalCode());
         } else {
             postalCode.setVisibility(View.GONE);
-            view.findViewById(R.id.postalCodeSeparator).setVisibility(View.GONE);
-            view.findViewById(R.id.postalCodeHint).setVisibility(View.GONE);
+            (binding.postalCodeSeparator).setVisibility(View.GONE);
+            (binding.postalCodeHint).setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

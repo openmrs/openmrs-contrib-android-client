@@ -24,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.databinding.ActivityMatchingPatientsBinding;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.PatientAndMatchesWrapper;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -32,9 +33,11 @@ public class MatchingPatientsActivity extends ACBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_matching_patients);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        ActivityMatchingPatientsBinding binding= ActivityMatchingPatientsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        Toolbar toolbar = binding.toolbar;
 
         if (toolbar != null) {
             toolbar.setTitle(getString(R.string.matching_patients_toolbar_title));

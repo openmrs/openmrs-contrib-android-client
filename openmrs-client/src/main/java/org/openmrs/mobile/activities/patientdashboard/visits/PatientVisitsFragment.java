@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.openmrs_android_sdk.library.models.Patient;
 import com.example.openmrs_android_sdk.library.models.Visit;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
@@ -39,7 +40,6 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databinding.FragmentPatientVisitBinding;
-import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;

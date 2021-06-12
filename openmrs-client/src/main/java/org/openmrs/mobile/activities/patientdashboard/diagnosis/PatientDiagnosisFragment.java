@@ -27,16 +27,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
+import org.openmrs.mobile.databinding.FragmentPatientDiagnosisBinding;
 
 import java.util.List;
 
 public class PatientDiagnosisFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDiagnosis {
-    private ListView mDiagnosisList;
+    private ListView diagnosisList;
     private PatientDashboardActivity mPatientDashboardActivity;
+    private FragmentPatientDiagnosisBinding binding = null;
 
     public static PatientDiagnosisFragment newInstance() {
         return new PatientDiagnosisFragment();
@@ -51,11 +52,12 @@ public class PatientDiagnosisFragment extends PatientDashboardFragment implement
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View fragmentLayout = inflater.inflate(R.layout.fragment_patient_diagnosis, null, false);
-        mDiagnosisList = fragmentLayout.findViewById(R.id.patientDiagnosisList);
-        TextView emptyList = fragmentLayout.findViewById(R.id.emptyDiagnosisListView);
-        mDiagnosisList.setEmptyView(emptyList);
-        return fragmentLayout;
+        binding = FragmentPatientDiagnosisBinding.inflate(inflater, null, false);
+        diagnosisList = binding.patientDiagnosisList;
+        TextView emptyList = binding.emptyDiagnosisListView;
+        diagnosisList.setEmptyView(emptyList);
+
+        return binding.getRoot();
     }
 
     @Override
@@ -67,7 +69,7 @@ public class PatientDiagnosisFragment extends PatientDashboardFragment implement
     public void setDiagnosesToDisplay(List<String> encounters) {
         ArrayAdapter<String> adapter =
             new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, encounters);
-        mDiagnosisList.setAdapter(adapter);
+        diagnosisList.setAdapter(adapter);
     }
 
     @Override
@@ -80,5 +82,11 @@ public class PatientDiagnosisFragment extends PatientDashboardFragment implement
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

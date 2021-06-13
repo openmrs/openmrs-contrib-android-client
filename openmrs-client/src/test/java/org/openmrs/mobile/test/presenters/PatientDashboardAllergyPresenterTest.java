@@ -47,11 +47,7 @@ import java.util.List;
 import static org.mockito.Mockito.RETURNS_MOCKS;
 import static org.mockito.Mockito.verify;
 
-@PrepareForTest({NetworkUtils.class,
-        ToastUtil.class,
-        OpenMRS.class,
-        OpenMRSLogger.class,
-        AppDatabaseHelper.class})
+@PrepareForTest({NetworkUtils.class, ToastUtil.class, OpenMRS.class, OpenMRSLogger.class, AppDatabaseHelper.class, OpenmrsAndroid.class})
 public class PatientDashboardAllergyPresenterTest extends ACUnitTestBaseRx {
     @Rule
     public InstantTaskExecutorRule taskExecutorRule = new InstantTaskExecutorRule();
@@ -87,6 +83,7 @@ public class PatientDashboardAllergyPresenterTest extends ACUnitTestBaseRx {
         PowerMockito.mockStatic(OpenMRS.class);
         PowerMockito.mockStatic(OpenMRSLogger.class);
         PowerMockito.mockStatic(AppDatabaseHelper.class);
+        PowerMockito.mockStatic(OpenmrsAndroid.class);
         Mockito.lenient().when(OpenMRS.getInstance()).thenReturn(openMRS);
         PowerMockito.when(OpenmrsAndroid.getOpenMRSLogger()).thenReturn(openMRSLogger);
         PowerMockito.mockStatic(ToastUtil.class);

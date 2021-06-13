@@ -62,7 +62,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({NetworkUtils.class, ToastUtil.class, OpenMRS.class, OpenMRSLogger.class})
+@PrepareForTest({NetworkUtils.class, ToastUtil.class, OpenMRS.class, OpenMRSLogger.class,OpenmrsAndroid.class})
 public class FormAdmissionPresenterTest extends ACUnitTestBase {
     @Rule
     public InstantTaskExecutorRule taskExecutorRule = new InstantTaskExecutorRule();
@@ -197,6 +197,7 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
         PowerMockito.mockStatic(NetworkUtils.class);
         PowerMockito.mockStatic(OpenMRS.class);
         PowerMockito.mockStatic(OpenMRSLogger.class);
+        PowerMockito.mockStatic(OpenmrsAndroid.class);
         Mockito.lenient().when(OpenMRS.getInstance()).thenReturn(openMRS);
         PowerMockito.mockStatic(ToastUtil.class);
         PowerMockito.when(OpenmrsAndroid.getOpenMRSLogger()).thenReturn(openMRSLogger);

@@ -23,7 +23,6 @@ public class OpenmrsAndroid {
     private static String externalDirectoryPath;
     private static String secretKey;
 
-
     private static OpenMRSLogger logger = new OpenMRSLogger();
 
     private OpenmrsAndroid() {

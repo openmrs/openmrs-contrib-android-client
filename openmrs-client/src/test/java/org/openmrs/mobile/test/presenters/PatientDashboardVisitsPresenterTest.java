@@ -53,7 +53,7 @@ import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({NetworkUtils.class, OpenMRS.class})
+@PrepareForTest({NetworkUtils.class, OpenMRS.class, OpenmrsAndroid.class})
 public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     @Mock
     private OpenMRS openMRS;
@@ -195,5 +195,6 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     private void mockStaticMethods() {
         PowerMockito.mockStatic(NetworkUtils.class);
         PowerMockito.mockStatic(OpenMRS.class);
+        PowerMockito.mockStatic(OpenmrsAndroid.class);
     }
 }

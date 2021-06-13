@@ -21,12 +21,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.example.openmrs_android_sdk.R
-import com.example.openmrs_android_sdk.library.OpenMRSLogger
 import com.example.openmrs_android_sdk.library.OpenmrsAndroid
 import com.example.openmrs_android_sdk.utilities.ImageUtils.decodeBitmapFromResource
 
 object ToastUtil {
-    private val logger =  OpenMRSLogger()
+    private val logger =  OpenmrsAndroid.getOpenMRSLogger();
     private val toastQueue: MutableList<ToastThread> = ArrayList()
     private var isAppVisible = true
     @JvmStatic

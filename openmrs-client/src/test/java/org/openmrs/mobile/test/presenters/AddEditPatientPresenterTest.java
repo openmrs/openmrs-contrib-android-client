@@ -47,7 +47,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 
-@PrepareForTest({OpenMRS.class, NetworkUtils.class, RestServiceBuilder.class, ToastUtil.class})
+@PrepareForTest({OpenMRS.class, NetworkUtils.class, RestServiceBuilder.class, ToastUtil.class,OpenmrsAndroid.class})
 @RunWith(PowerMockRunner.class)
 @PowerMockIgnore("javax.net.ssl.*")
 public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
@@ -209,6 +209,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     private void mockStaticMethods() {
         PowerMockito.mockStatic(NetworkUtils.class);
         PowerMockito.mockStatic(OpenMRS.class);
+        PowerMockito.mockStatic(OpenmrsAndroid.class);
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
         PowerMockito.when(OpenmrsAndroid.getOpenMRSLogger()).thenReturn(openMRSLogger);
         PowerMockito.mockStatic(ToastUtil.class);

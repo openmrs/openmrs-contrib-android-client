@@ -46,7 +46,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 
-@PrepareForTest({OpenMRS.class, NetworkUtils.class, RestServiceBuilder.class, ToastUtil.class})
+@PrepareForTest({OpenMRS.class, NetworkUtils.class, RestServiceBuilder.class, ToastUtil.class, OpenmrsAndroid.class})
 @RunWith(PowerMockRunner.class)
 public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
     @Mock
@@ -146,6 +146,7 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
     private void mockStaticMethods() {
         PowerMockito.mockStatic(NetworkUtils.class);
         PowerMockito.mockStatic(OpenMRS.class);
+        PowerMockito.mockStatic(OpenmrsAndroid.class);
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
         PowerMockito.when(OpenmrsAndroid.getOpenMRSLogger()).thenReturn(openMRSLogger);
         PowerMockito.mockStatic(ToastUtil.class);

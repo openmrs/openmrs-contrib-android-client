@@ -62,7 +62,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @PrepareForTest({OpenMRS.class, NetworkUtils.class, LocationDAO.class, RestServiceBuilder.class,
-    StringUtils.class})
+    StringUtils.class,OpenmrsAndroid.class})
 @PowerMockIgnore("javax.net.ssl.*")
 public class LoginPresenterTest extends ACUnitTestBaseRx {
     @Mock
@@ -309,6 +309,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         PowerMockito.mockStatic(LocationDAO.class);
         PowerMockito.mockStatic(StringUtils.class);
         PowerMockito.mockStatic(NetworkUtils.class);
+        PowerMockito.mockStatic(OpenmrsAndroid.class);
         Mockito.lenient().when(OpenmrsAndroid.getServerUrl()).thenReturn("http://www.some_server_url.com");
         Mockito.lenient().when(OpenmrsAndroid.getHashedPassword()).thenReturn(ApplicationConstants.EMPTY_STRING);
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);

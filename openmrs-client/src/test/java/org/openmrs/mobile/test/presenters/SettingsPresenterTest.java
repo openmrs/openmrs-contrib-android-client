@@ -34,7 +34,7 @@ import java.io.File;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 
-@PrepareForTest(OpenMRS.class)
+@PrepareForTest({OpenMRS.class, OpenmrsAndroid.class})
 public class SettingsPresenterTest extends ACUnitTestBase {
 
     @Mock
@@ -52,6 +52,7 @@ public class SettingsPresenterTest extends ACUnitTestBase {
     public void setUp() {
         settingsPresenter = new SettingsPresenter(view, logger, conceptRoomDAO);
         PowerMockito.mockStatic(OpenMRS.class);
+        PowerMockito.mockStatic(OpenmrsAndroid.class);
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
     }
 

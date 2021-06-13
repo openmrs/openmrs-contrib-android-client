@@ -29,7 +29,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.spy;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({NetworkUtils.class, ToastUtil.class, OpenMRS.class, OpenMRSLogger.class})
+@PrepareForTest({NetworkUtils.class, ToastUtil.class, OpenMRS.class, OpenMRSLogger.class, OpenmrsAndroid.class})
 public class ProviderDashboardPresenterTest extends ACUnitTestBase {
     @Rule
     public InstantTaskExecutorRule taskExecutorRule = new InstantTaskExecutorRule();
@@ -70,6 +70,7 @@ public class ProviderDashboardPresenterTest extends ACUnitTestBase {
         PowerMockito.mockStatic(NetworkUtils.class);
         PowerMockito.mockStatic(OpenMRS.class);
         PowerMockito.mockStatic(OpenMRSLogger.class);
+        PowerMockito.mockStatic(OpenmrsAndroid.class);
         Mockito.lenient().when(OpenMRS.getInstance()).thenReturn(openMRS);
         PowerMockito.when(OpenmrsAndroid.getOpenMRSLogger()).thenReturn(openMRSLogger);
         PowerMockito.mockStatic(ToastUtil.class);

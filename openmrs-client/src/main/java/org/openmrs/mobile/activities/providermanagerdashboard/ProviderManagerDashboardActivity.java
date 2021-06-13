@@ -24,12 +24,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 
+import com.example.openmrs_android_sdk.utilities.StringUtils;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.databinding.ActivityProviderManagementBinding;
-import org.openmrs.mobile.utilities.StringUtils;
 
 public class ProviderManagerDashboardActivity extends ACBaseActivity {
     ProviderManagerDashboardFragment providerManagerDashboardFragment;

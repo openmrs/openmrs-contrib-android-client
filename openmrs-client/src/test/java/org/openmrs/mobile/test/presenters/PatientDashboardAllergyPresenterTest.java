@@ -18,8 +18,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+import com.example.openmrs_android_sdk.library.dao.AllergyRoomDAO;
+import com.example.openmrs_android_sdk.library.databases.AppDatabaseHelper;
 import com.example.openmrs_android_sdk.library.models.Allergy;
 import com.example.openmrs_android_sdk.library.models.Patient;
+import com.example.openmrs_android_sdk.utilities.NetworkUtils;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -32,11 +37,7 @@ import org.openmrs.mobile.activities.patientdashboard.allergy.PatientDashboardAl
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.repository.AllergyRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import com.example.openmrs_android_sdk.library.dao.AllergyRoomDAO;
-import com.example.openmrs_android_sdk.library.databases.AppDatabaseHelper;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
-import org.openmrs.mobile.utilities.NetworkUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
@@ -87,7 +88,7 @@ public class PatientDashboardAllergyPresenterTest extends ACUnitTestBaseRx {
         PowerMockito.mockStatic(OpenMRSLogger.class);
         PowerMockito.mockStatic(AppDatabaseHelper.class);
         Mockito.lenient().when(OpenMRS.getInstance()).thenReturn(openMRS);
-        PowerMockito.when(openMRS.getOpenMRSLogger()).thenReturn(openMRSLogger);
+        PowerMockito.when(OpenmrsAndroid.getOpenMRSLogger()).thenReturn(openMRSLogger);
         PowerMockito.mockStatic(ToastUtil.class);
     }
 

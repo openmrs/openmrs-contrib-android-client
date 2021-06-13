@@ -58,6 +58,11 @@ import com.example.openmrs_android_sdk.library.models.Patient;
 import com.example.openmrs_android_sdk.library.models.PersonAddress;
 import com.example.openmrs_android_sdk.library.models.PersonName;
 import com.example.openmrs_android_sdk.library.models.Resource;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.DateUtils;
+import com.example.openmrs_android_sdk.utilities.ImageUtils;
+import com.example.openmrs_android_sdk.utilities.StringUtils;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.libraries.places.api.model.AutocompletePrediction;
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
@@ -82,11 +87,6 @@ import org.openmrs.mobile.activities.patientdashboard.details.PatientPhotoActivi
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.databinding.FragmentPatientInfoBinding;
 import org.openmrs.mobile.listeners.watcher.PatientBirthdateValidatorWatcher;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.DateUtils;
-import org.openmrs.mobile.utilities.ImageUtils;
-import org.openmrs.mobile.utilities.StringUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.ViewUtils;
 
 import java.io.ByteArrayOutputStream;

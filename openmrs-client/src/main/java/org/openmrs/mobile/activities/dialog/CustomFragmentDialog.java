@@ -51,6 +51,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+import com.example.openmrs_android_sdk.library.models.Patient;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
+
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
@@ -65,9 +70,6 @@ import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
-import com.example.openmrs_android_sdk.library.models.Patient;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -172,8 +174,8 @@ public class CustomFragmentDialog extends DialogFragment {
     public final void setOnBackListener() {
         getDialog().setOnKeyListener((dialog, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_BACK && getActivity().getClass().equals(LoginActivity.class)) {
-                if (OpenMRS.getInstance().getServerUrl().equals(ApplicationConstants.EMPTY_STRING)) {
-                    OpenMRS.getInstance().getOpenMRSLogger().d(getString(R.string.application_exit_logger_message));
+                if (OpenmrsAndroid.getServerUrl().equals(ApplicationConstants.EMPTY_STRING)) {
+                    OpenmrsAndroid.getOpenMRSLogger().d(getString(R.string.application_exit_logger_message));
                     getActivity().onBackPressed();
                     dismiss();
                 } else {
@@ -270,7 +272,7 @@ public class CustomFragmentDialog extends DialogFragment {
         locationListView = field.findViewById(R.id.singleChoiceListView);
         locationListView.setAdapter(new ArrayAdapter<>(getActivity(),
             R.layout.row_single_checked_layout, locationList));
-        locationListView.setItemChecked(locationList.indexOf(mOpenMRS.getLocation()), true);
+        locationListView.setItemChecked(locationList.indexOf(OpenmrsAndroid.getLocation()), true);
         mFieldsLayout.addView(field);
     }
 
@@ -450,7 +452,7 @@ public class CustomFragmentDialog extends DialogFragment {
                     ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.SUCCESS, org.openmrs.mobile.R.string.multiple_patients_deleted);
                     break;
                 case SELECT_LOCATION:
-                    mOpenMRS.setLocation(locationListView.getAdapter().getItem(locationListView.getCheckedItemPosition()).toString());
+                    OpenmrsAndroid.setLocation(locationListView.getAdapter().getItem(locationListView.getCheckedItemPosition()).toString());
                     ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.SUCCESS, org.openmrs.mobile.R.string.location_successfully_updated);
                     dismiss();
                     break;

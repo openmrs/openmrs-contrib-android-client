@@ -13,6 +13,7 @@
  */
 package org.openmrs.mobile.utilities
 
+import com.example.openmrs_android_sdk.utilities.PatientAndMatchingPatients
 import java.io.Serializable
 import java.util.*
 

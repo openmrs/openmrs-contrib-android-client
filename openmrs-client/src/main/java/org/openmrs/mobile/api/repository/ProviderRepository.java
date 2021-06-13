@@ -21,10 +21,15 @@ import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 
+import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.dao.ProviderRoomDAO;
 import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
 import com.example.openmrs_android_sdk.library.models.Provider;
 import com.example.openmrs_android_sdk.library.models.Resource;
 import com.example.openmrs_android_sdk.library.models.Results;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.NetworkUtils;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
@@ -33,12 +38,7 @@ import org.openmrs.mobile.api.workers.provider.AddProviderWorker;
 import org.openmrs.mobile.api.workers.provider.DeleteProviderWorker;
 import org.openmrs.mobile.api.workers.provider.UpdateProviderWorker;
 import org.openmrs.mobile.application.OpenMRS;
-import com.example.openmrs_android_sdk.library.OpenMRSLogger;
-import com.example.openmrs_android_sdk.library.dao.ProviderRoomDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.NetworkUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.HashSet;
 import java.util.List;

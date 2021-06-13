@@ -20,7 +20,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+import com.example.openmrs_android_sdk.library.dao.ProviderRoomDAO;
 import com.example.openmrs_android_sdk.library.models.Provider;
+import com.example.openmrs_android_sdk.utilities.NetworkUtils;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -32,10 +36,7 @@ import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDas
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.repository.ProviderRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import com.example.openmrs_android_sdk.library.dao.ProviderRoomDAO;
 import org.openmrs.mobile.test.ACUnitTestBase;
-import org.openmrs.mobile.utilities.NetworkUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
@@ -137,7 +138,7 @@ public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
         PowerMockito.mockStatic(OpenMRS.class);
         PowerMockito.mockStatic(OpenMRSLogger.class);
         Mockito.lenient().when(OpenMRS.getInstance()).thenReturn(openMRS);
-        PowerMockito.when(openMRS.getOpenMRSLogger()).thenReturn(openMRSLogger);
+        PowerMockito.when(OpenmrsAndroid.getOpenMRSLogger()).thenReturn(openMRSLogger);
         PowerMockito.mockStatic(ToastUtil.class);
     }
 

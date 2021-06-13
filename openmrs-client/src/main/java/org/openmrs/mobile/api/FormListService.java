@@ -15,16 +15,15 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.example.openmrs_android_sdk.library.databases.entities.FormResourceEntity;
-import com.example.openmrs_android_sdk.library.models.EncounterType;
-import com.example.openmrs_android_sdk.library.models.Results;
-
-import org.openmrs.mobile.application.OpenMRS;
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
 import com.example.openmrs_android_sdk.library.dao.EncounterTypeRoomDAO;
 import com.example.openmrs_android_sdk.library.dao.FormResourceDAO;
 import com.example.openmrs_android_sdk.library.databases.AppDatabase;
-import org.openmrs.mobile.utilities.NetworkUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
+import com.example.openmrs_android_sdk.library.databases.entities.FormResourceEntity;
+import com.example.openmrs_android_sdk.library.models.EncounterType;
+import com.example.openmrs_android_sdk.library.models.Results;
+import com.example.openmrs_android_sdk.utilities.NetworkUtils;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import java.util.List;
 
@@ -42,8 +41,8 @@ public class FormListService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        FormResourceDAO formResourceDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).formResourceDAO();
-        EncounterTypeRoomDAO encounterTypeRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext()).encounterTypeRoomDAO();
+        FormResourceDAO formResourceDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).formResourceDAO();
+        EncounterTypeRoomDAO encounterTypeRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).encounterTypeRoomDAO();
         if (NetworkUtils.isOnline()) {
 
             Call<Results<FormResourceEntity>> call = apiService.getForms();

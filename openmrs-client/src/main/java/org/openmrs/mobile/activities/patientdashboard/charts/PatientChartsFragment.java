@@ -29,6 +29,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.openmrs_android_sdk.library.models.Encounter;
 import com.example.openmrs_android_sdk.library.models.Observation;
 import com.example.openmrs_android_sdk.library.models.Visit;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 import com.google.common.collect.Lists;
 
 import org.json.JSONArray;
@@ -38,8 +40,6 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.databinding.FragmentPatientChartsBinding;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;

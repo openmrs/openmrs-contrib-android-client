@@ -18,11 +18,16 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import com.example.openmrs_android_sdk.library.models.ConceptAnswers;
 import com.example.openmrs_android_sdk.library.models.Module;
 import com.example.openmrs_android_sdk.library.models.Patient;
 import com.example.openmrs_android_sdk.library.models.PersonName;
 import com.example.openmrs_android_sdk.library.models.Results;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.NetworkUtils;
+import com.example.openmrs_android_sdk.utilities.StringUtils;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
 import org.jetbrains.annotations.Nullable;
@@ -32,17 +37,12 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.repository.PatientRepository;
-import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.PatientResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.VisitsResponseCallback;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ModuleUtils;
-import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.PatientComparator;
-import org.openmrs.mobile.utilities.StringUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.ViewUtils;
 
 import java.util.List;

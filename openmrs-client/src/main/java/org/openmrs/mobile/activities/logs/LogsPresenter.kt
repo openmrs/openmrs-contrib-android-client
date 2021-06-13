@@ -13,9 +13,9 @@
  */
 package org.openmrs.mobile.activities.logs
 
-import org.openmrs.mobile.activities.BasePresenter
-import org.openmrs.mobile.application.OpenMRS
 import com.example.openmrs_android_sdk.library.OpenMRSLogger
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid
+import org.openmrs.mobile.activities.BasePresenter
 import java.io.*
 
 class LogsPresenter(private val mLogsView: LogsContract.View, private val mOpenMRSLogger: OpenMRSLogger) : BasePresenter(), LogsContract.Presenter {
@@ -32,7 +32,7 @@ class LogsPresenter(private val mLogsView: LogsContract.View, private val mOpenM
 
     private fun getLogs(): String {
         var textLogs = ""
-        val filename = (OpenMRS.getInstance().openMRSDir
+        val filename = (OpenmrsAndroid.getOpenMRSDir()
                 + File.separator + mOpenMRSLogger.logFilename)
         try {
             val myFile = File(filename)

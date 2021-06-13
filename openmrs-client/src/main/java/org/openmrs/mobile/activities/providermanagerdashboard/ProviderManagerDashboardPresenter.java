@@ -17,6 +17,7 @@ package org.openmrs.mobile.activities.providermanagerdashboard;
 import androidx.fragment.app.Fragment;
 
 import com.example.openmrs_android_sdk.library.models.Provider;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.activities.BasePresenter;
@@ -24,7 +25,6 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.ProviderRepository;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 

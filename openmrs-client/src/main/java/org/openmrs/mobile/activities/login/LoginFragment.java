@@ -29,7 +29,11 @@ import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
 import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.StringUtils;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
@@ -42,9 +46,6 @@ import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
 import org.openmrs.mobile.databinding.FragmentLoginBinding;
 import org.openmrs.mobile.listeners.watcher.LoginValidatorWatcher;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.StringUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
 import org.openmrs.mobile.utilities.URLValidator;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ import java.util.List;
 public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> implements LoginContract.View {
     private static String mLastCorrectURL = "";
     private static List<LocationEntity> mLocationsList;
-    final private String initialUrl = OpenMRS.getInstance().getServerUrl();
+    final private String initialUrl = OpenmrsAndroid.getServerUrl();
     protected OpenMRS mOpenMRS = OpenMRS.getInstance();
     private FragmentLoginBinding binding;
     private View mRootView;
@@ -71,8 +72,8 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
         initViewFields();
         initListeners();
         if (mLastCorrectURL.equals(ApplicationConstants.EMPTY_STRING)) {
-            binding.loginUrlField.setText(OpenMRS.getInstance().getServerUrl());
-            mLastCorrectURL = OpenMRS.getInstance().getServerUrl();
+            binding.loginUrlField.setText(OpenmrsAndroid.getServerUrl());
+            mLastCorrectURL = OpenmrsAndroid.getServerUrl();
         } else {
             binding.loginUrlField.setText(mLastCorrectURL);
         }

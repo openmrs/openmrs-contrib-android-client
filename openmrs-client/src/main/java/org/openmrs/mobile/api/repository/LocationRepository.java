@@ -16,12 +16,13 @@ package org.openmrs.mobile.api.repository;
 
 import androidx.annotation.NonNull;
 
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
 import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
 import com.example.openmrs_android_sdk.library.models.Results;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.promise.SimplePromise;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,7 +38,7 @@ public class LocationRepository extends BaseRepository {
             public void onResponse(@NonNull Call<Results<LocationEntity>> call, @NonNull Response<Results<LocationEntity>> response) {
                 Results<LocationEntity> locationList = response.body();
                 for (LocationEntity result : locationList.getResults()) {
-                    if ((result.getDisplay().trim()).equalsIgnoreCase((openMrs.getLocation().trim()))) {
+                    if ((result.getDisplay().trim()).equalsIgnoreCase((OpenmrsAndroid.getLocation().trim()))) {
                         deferred.resolve(result);
                     }
                 }

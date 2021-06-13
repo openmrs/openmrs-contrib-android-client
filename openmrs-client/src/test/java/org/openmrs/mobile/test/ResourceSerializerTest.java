@@ -19,6 +19,8 @@ import com.example.openmrs_android_sdk.library.models.IdentifierType;
 import com.example.openmrs_android_sdk.library.models.Patient;
 import com.example.openmrs_android_sdk.library.models.PatientIdentifier;
 import com.example.openmrs_android_sdk.library.models.PersonName;
+import com.example.openmrs_android_sdk.utilities.DateUtils;
+import com.example.openmrs_android_sdk.utilities.ResourceSerializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -27,8 +29,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.openmrs.mobile.utilities.DateUtils;
-import org.openmrs.mobile.utilities.ResourceSerializer;
 
 import java.util.Arrays;
 

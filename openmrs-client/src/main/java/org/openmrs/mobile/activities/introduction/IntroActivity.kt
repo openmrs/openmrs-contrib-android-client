@@ -17,14 +17,13 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid
 import com.github.appintro.AppIntro2
 import com.github.appintro.AppIntroFragment
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.dashboard.DashboardActivity
-import org.openmrs.mobile.application.OpenMRS
 
 class IntroActivity : AppIntro2() {
-    private var mOpenMRS = OpenMRS.getInstance()
 
     @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,7 +74,7 @@ class IntroActivity : AppIntro2() {
                 backgroundColor = Color.parseColor("#F0A815")
         ))
 
-        if (!mOpenMRS.firstTime) {
+        if (!OpenmrsAndroid.getFirstTime()) {
             startActivity(Intent(this, DashboardActivity::class.java))
             finish()
         }
@@ -84,14 +83,14 @@ class IntroActivity : AppIntro2() {
     override fun onSkipPressed(currentFragment: Fragment?) {
         super.onSkipPressed(currentFragment)
         startActivity(Intent(this, DashboardActivity::class.java))
-        mOpenMRS.setUserFirstTime(false)
+        OpenmrsAndroid.setUserFirstTime(false)
         finish()
     }
 
     override fun onDonePressed(currentFragment: Fragment?) {
         super.onDonePressed(currentFragment)
         startActivity(Intent(this, DashboardActivity::class.java))
-        mOpenMRS.setUserFirstTime(false)
+        OpenmrsAndroid.setUserFirstTime(false)
         finish()
     }
 }

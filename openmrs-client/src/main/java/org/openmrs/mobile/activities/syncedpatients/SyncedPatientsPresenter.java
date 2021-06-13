@@ -17,12 +17,13 @@ package org.openmrs.mobile.activities.syncedpatients;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.openmrs.mobile.activities.BasePresenter;
 import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import com.example.openmrs_android_sdk.library.dao.VisitDAO;
 import com.example.openmrs_android_sdk.library.models.Patient;
+import com.example.openmrs_android_sdk.utilities.StringUtils;
+
+import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.utilities.FilterUtil;
-import org.openmrs.mobile.utilities.StringUtils;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

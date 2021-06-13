@@ -24,6 +24,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.navigation.fragment.findNavController
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants
+import com.example.openmrs_android_sdk.utilities.ImageUtils
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener
 import com.github.amlcurran.showcaseview.ShowcaseView
 import com.github.amlcurran.showcaseview.targets.Target
@@ -32,8 +34,6 @@ import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
 import org.openmrs.mobile.activities.ACBaseFragment
 import org.openmrs.mobile.databinding.FragmentDashboardBinding
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants
-import org.openmrs.mobile.utilities.ImageUtils
 import org.openmrs.mobile.utilities.ThemeUtils
 
 class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), DashboardContract.View, View.OnClickListener {

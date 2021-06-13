@@ -29,18 +29,18 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
 import com.example.openmrs_android_sdk.library.models.Patient;
 import com.example.openmrs_android_sdk.library.models.Visit;
 import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity;
-import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databinding.FragmentPatientVisitBinding;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 
@@ -73,7 +73,7 @@ public class PatientVisitsFragment extends PatientDashboardFragment implements P
         int id = item.getItemId();
         switch (id) {
             case R.id.actionStartVisit:
-                if (OpenMRS.getInstance().getSyncState()) {
+                if (OpenmrsAndroid.getSyncState()) {
                     ((PatientDashboardVisitsPresenter) mPresenter).syncVisits();
                 } else {
                     ToastUtil.notify(getString(R.string.offline_mode_not_supported));

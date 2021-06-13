@@ -17,10 +17,17 @@ package org.openmrs.mobile.test.presenters;
 import android.content.Context;
 
 import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+import com.example.openmrs_android_sdk.library.dao.EncounterDAO;
+import com.example.openmrs_android_sdk.library.dao.LocationDAO;
+import com.example.openmrs_android_sdk.library.dao.VisitDAO;
 import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
 import com.example.openmrs_android_sdk.library.models.Session;
 import com.example.openmrs_android_sdk.library.models.User;
 import com.example.openmrs_android_sdk.library.models.VisitType;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.NetworkUtils;
+import com.example.openmrs_android_sdk.utilities.StringUtils;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -36,14 +43,8 @@ import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.UserService;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import com.example.openmrs_android_sdk.library.dao.EncounterDAO;
-import com.example.openmrs_android_sdk.library.dao.LocationDAO;
-import com.example.openmrs_android_sdk.library.dao.VisitDAO;
 import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.NetworkUtils;
-import org.openmrs.mobile.utilities.StringUtils;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PowerMockIgnore;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -187,8 +188,8 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         mockLastUser(user, password, url);
         mockNonEmptyCredentials(true);
         mockOnlineMode(false);
-        Mockito.lenient().when(openMRS.isUserLoggedOnline()).thenReturn(true);
-        Mockito.lenient().when(openMRS.getLastLoginServerUrl()).thenReturn(url);
+        Mockito.lenient().when(OpenmrsAndroid.isUserLoggedOnline()).thenReturn(true);
+        Mockito.lenient().when(OpenmrsAndroid.getLastLoginServerUrl()).thenReturn(url);
         presenter.login(user, password, url, url);
 
         verify(view).showToast(anyInt(), any());
@@ -204,8 +205,8 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         mockLastUser(user, "newPass", url);
         mockNonEmptyCredentials(true);
         mockOnlineMode(false);
-        Mockito.lenient().when(openMRS.isUserLoggedOnline()).thenReturn(true);
-        Mockito.lenient().when(openMRS.getLastLoginServerUrl()).thenReturn(url);
+        Mockito.lenient().when(OpenmrsAndroid.isUserLoggedOnline()).thenReturn(true);
+        Mockito.lenient().when(OpenmrsAndroid.getLastLoginServerUrl()).thenReturn(url);
         presenter.login(user, password, url, url);
 
         verify(view).hideSoftKeys();
@@ -297,10 +298,10 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     }
 
     private void mockLastUser(String user, String password, String url) {
-        Mockito.lenient().when(openMRS.getUsername()).thenReturn(user);
-        Mockito.lenient().when(openMRS.getServerUrl()).thenReturn(url);
-        Mockito.lenient().when(openMRS.getPassword()).thenReturn(password);
-        Mockito.lenient().when(openMRS.getHashedPassword()).thenReturn(BCrypt.hashpw(password, BCrypt.gensalt(ApplicationConstants.DEFAULT_BCRYPT_ROUND)));
+        Mockito.lenient().when(OpenmrsAndroid.getUsername()).thenReturn(user);
+        Mockito.lenient().when(OpenmrsAndroid.getServerUrl()).thenReturn(url);
+        Mockito.lenient().when(OpenmrsAndroid.getPassword()).thenReturn(password);
+        Mockito.lenient().when(OpenmrsAndroid.getHashedPassword()).thenReturn(BCrypt.hashpw(password, BCrypt.gensalt(ApplicationConstants.DEFAULT_BCRYPT_ROUND)));
     }
 
     private void mockStaticMethods() {
@@ -308,8 +309,8 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
         PowerMockito.mockStatic(LocationDAO.class);
         PowerMockito.mockStatic(StringUtils.class);
         PowerMockito.mockStatic(NetworkUtils.class);
-        Mockito.lenient().when(openMRS.getServerUrl()).thenReturn("http://www.some_server_url.com");
-        Mockito.lenient().when(openMRS.getHashedPassword()).thenReturn(ApplicationConstants.EMPTY_STRING);
+        Mockito.lenient().when(OpenmrsAndroid.getServerUrl()).thenReturn("http://www.some_server_url.com");
+        Mockito.lenient().when(OpenmrsAndroid.getHashedPassword()).thenReturn(ApplicationConstants.EMPTY_STRING);
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
         PowerMockito.mockStatic(RestServiceBuilder.class);
         PowerMockito.when(RestServiceBuilder.createService(any(), any(), any())).thenReturn(restApi);

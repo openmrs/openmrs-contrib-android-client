@@ -16,7 +16,7 @@ package org.openmrs.mobile.utilities
 import com.example.openmrs_android_sdk.library.models.Patient
 import com.example.openmrs_android_sdk.library.models.PersonAddress
 import com.example.openmrs_android_sdk.library.models.PersonName
-import org.openmrs.mobile.utilities.StringUtils.notNull
+import com.example.openmrs_android_sdk.utilities.StringUtils.notNull
 
 class PatientMerger {
     fun mergePatient(oldPatient: Patient, newPatient: Patient): Patient {

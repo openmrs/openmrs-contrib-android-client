@@ -14,8 +14,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
+
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 public class SyncStateReceiver extends BroadcastReceiver {
     @Override

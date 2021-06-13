@@ -14,19 +14,19 @@
 
 package org.openmrs.mobile.activities.visitdashboard;
 
+import com.example.openmrs_android_sdk.library.dao.VisitDAO;
 import com.example.openmrs_android_sdk.library.models.Encounter;
 import com.example.openmrs_android_sdk.library.models.Patient;
 import com.example.openmrs_android_sdk.library.models.Visit;
+import com.example.openmrs_android_sdk.utilities.DateUtils;
+import com.example.openmrs_android_sdk.utilities.StringUtils;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.VisitRepository;
-import com.example.openmrs_android_sdk.library.dao.VisitDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.VisitsResponseCallback;
-import org.openmrs.mobile.utilities.DateUtils;
-import org.openmrs.mobile.utilities.StringUtils;
 
 import java.util.List;
 

@@ -16,8 +16,12 @@ package org.openmrs.mobile.activities.formadmission
 import android.content.Context
 import androidx.lifecycle.Observer
 import com.example.openmrs_android_sdk.library.OpenMRSLogger
+import com.example.openmrs_android_sdk.library.dao.PatientDAO
+import com.example.openmrs_android_sdk.library.databases.AppDatabase
 import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity
 import com.example.openmrs_android_sdk.library.models.*
+import com.example.openmrs_android_sdk.utilities.FormService.getFormResourceByName
+import com.example.openmrs_android_sdk.utilities.ToastUtil.success
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.BasePresenter
 import org.openmrs.mobile.api.EncounterService
@@ -25,12 +29,7 @@ import org.openmrs.mobile.api.RestApi
 import org.openmrs.mobile.api.RestServiceBuilder
 import org.openmrs.mobile.api.repository.ProviderRepository
 import org.openmrs.mobile.application.OpenMRS
-import com.example.openmrs_android_sdk.library.dao.PatientDAO
-import com.example.openmrs_android_sdk.library.databases.AppDatabase
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback
-import com.example.openmrs_android_sdk.utilities.FormService.getFormResourceByName
-import org.openmrs.mobile.utilities.ToastUtil.error
-import org.openmrs.mobile.utilities.ToastUtil.success
 
 class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
     private var view: FormAdmissionContract.View

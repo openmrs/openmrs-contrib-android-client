@@ -16,12 +16,11 @@ package org.openmrs.mobile.api;
 
 import androidx.annotation.NonNull;
 
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
 import com.example.openmrs_android_sdk.library.models.Results;
 import com.example.openmrs_android_sdk.library.models.User;
-
-import org.openmrs.mobile.application.OpenMRS;
 import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.ToastUtil;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -75,7 +74,7 @@ public class UserService {
                     Map<String, String> userInfo = new HashMap<>();
                     userInfo.put(ApplicationConstants.UserKeys.USER_PERSON_NAME, response.body().getPerson().getDisplay());
                     userInfo.put(ApplicationConstants.UserKeys.USER_UUID, response.body().getPerson().getUuid());
-                    OpenMRS.getInstance().setCurrentUserInformation(userInfo);
+                    OpenmrsAndroid.setCurrentUserInformation(userInfo);
                 } else {
                     ToastUtil.error(response.message());
                 }

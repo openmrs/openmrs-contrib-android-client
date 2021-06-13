@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.ImageViewCompat
 
 object ImageUtils {
+
     @JvmStatic
     fun decodeBitmapFromResource(res: Resources?, resId: Int, reqWidth: Int, reqHeight: Int): Bitmap { // First decode with inJustDecodeBounds=true to check dimensions
         val options = BitmapFactory.Options()
@@ -76,5 +77,4 @@ object ImageUtils {
     fun changeImageViewTint(context: Context?, imageView: ImageView?, color: Int) {
         ImageViewCompat.setImageTintList(imageView!!, ColorStateList.valueOf(ContextCompat.getColor(context!!, color)))
     }
-
 }

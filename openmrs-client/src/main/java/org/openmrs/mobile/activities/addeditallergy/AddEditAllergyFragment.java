@@ -35,12 +35,12 @@ import com.example.openmrs_android_sdk.library.models.AllergyUuid;
 import com.example.openmrs_android_sdk.library.models.ConceptMembers;
 import com.example.openmrs_android_sdk.library.models.Resource;
 import com.example.openmrs_android_sdk.library.models.SystemProperty;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 import com.google.android.material.chip.Chip;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.databinding.FragmentAllergyInfoBinding;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;

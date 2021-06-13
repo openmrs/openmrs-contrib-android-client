@@ -14,6 +14,10 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import com.example.openmrs_android_sdk.library.dao.PatientDAO;
+import com.example.openmrs_android_sdk.library.models.Patient;
+import com.example.openmrs_android_sdk.utilities.StringUtils;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -21,10 +25,7 @@ import org.mockito.Mockito;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListContract;
 import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListPresenter;
-import com.example.openmrs_android_sdk.library.dao.PatientDAO;
-import com.example.openmrs_android_sdk.library.models.Patient;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
-import org.openmrs.mobile.utilities.StringUtils;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 

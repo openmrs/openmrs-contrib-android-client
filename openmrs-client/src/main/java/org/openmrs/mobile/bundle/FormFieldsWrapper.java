@@ -23,9 +23,8 @@ import com.example.openmrs_android_sdk.library.models.Observation;
 import com.example.openmrs_android_sdk.library.models.Page;
 import com.example.openmrs_android_sdk.library.models.Question;
 import com.example.openmrs_android_sdk.library.models.Section;
-
-import org.openmrs.mobile.utilities.InputField;
-import org.openmrs.mobile.utilities.SelectOneField;
+import com.example.openmrs_android_sdk.utilities.InputField;
+import com.example.openmrs_android_sdk.utilities.SelectOneField;
 
 import java.io.Serializable;
 import java.util.ArrayList;

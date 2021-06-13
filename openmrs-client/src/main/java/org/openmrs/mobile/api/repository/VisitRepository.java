@@ -17,26 +17,27 @@ package org.openmrs.mobile.api.repository;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+import com.example.openmrs_android_sdk.library.dao.EncounterCreateRoomDAO;
+import com.example.openmrs_android_sdk.library.dao.EncounterDAO;
+import com.example.openmrs_android_sdk.library.dao.LocationDAO;
+import com.example.openmrs_android_sdk.library.dao.VisitDAO;
 import com.example.openmrs_android_sdk.library.models.Encounter;
 import com.example.openmrs_android_sdk.library.models.Encountercreate;
 import com.example.openmrs_android_sdk.library.models.Patient;
 import com.example.openmrs_android_sdk.library.models.Results;
 import com.example.openmrs_android_sdk.library.models.Visit;
 import com.example.openmrs_android_sdk.library.models.VisitType;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.DateUtils;
 
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.application.OpenMRS;
-import com.example.openmrs_android_sdk.library.OpenMRSLogger;
-import com.example.openmrs_android_sdk.library.dao.EncounterCreateRoomDAO;
-import com.example.openmrs_android_sdk.library.dao.EncounterDAO;
-import com.example.openmrs_android_sdk.library.dao.LocationDAO;
-import com.example.openmrs_android_sdk.library.dao.VisitDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.GetVisitTypeCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.StartVisitResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.VisitsResponseCallback;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.DateUtils;
 
 import java.util.List;
 
@@ -193,9 +194,9 @@ public class VisitRepository extends BaseRepository {
         final Visit visit = new Visit();
         visit.setStartDatetime(DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
         visit.setPatient(patient);
-        visit.setLocation(locationDAO.findLocationByName(openMrs.getLocation()));
+        visit.setLocation(locationDAO.findLocationByName(OpenmrsAndroid.getLocation()));
 
-        visit.setVisitType(new VisitType("", openMrs.getVisitTypeUUID()));
+        visit.setVisitType(new VisitType("", OpenmrsAndroid.getVisitTypeUUID()));
 
         Call<Visit> call = restApi.startVisit(visit);
         call.enqueue(new Callback<Visit>() {

@@ -39,7 +39,6 @@ import org.openmrs.mobile.api.RestApi
 import org.openmrs.mobile.api.RestServiceBuilder
 import org.openmrs.mobile.databinding.FragmentFormListBinding
 import com.example.openmrs_android_sdk.utilities.ApplicationConstants
-import org.openmrs.mobile.utilities.ToastUtil.error
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

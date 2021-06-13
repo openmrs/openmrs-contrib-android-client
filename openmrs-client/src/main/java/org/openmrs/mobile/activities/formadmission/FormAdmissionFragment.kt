@@ -21,16 +21,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
-import org.openmrs.mobile.R
-import org.openmrs.mobile.activities.ACBaseFragment
-import org.openmrs.mobile.application.OpenMRS
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid
 import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity
 import com.example.openmrs_android_sdk.library.models.Provider
 import com.example.openmrs_android_sdk.library.models.Resource
+import com.example.openmrs_android_sdk.utilities.ToastUtil
+import com.example.openmrs_android_sdk.utilities.ToastUtil.showShortToast
+import org.openmrs.mobile.R
+import org.openmrs.mobile.activities.ACBaseFragment
 import org.openmrs.mobile.databinding.FragmentFormAdmissionBinding
-import org.openmrs.mobile.utilities.ToastUtil
-import org.openmrs.mobile.utilities.ToastUtil.error
-import org.openmrs.mobile.utilities.ToastUtil.showShortToast
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -47,7 +46,7 @@ class FormAdmissionFragment : ACBaseFragment<FormAdmissionContract.Presenter>(),
         initFragmentFields()
         mPresenter?.getEncounterRoles(this)
         mPresenter?.getProviders(this)
-        mPresenter?.getLocation(OpenMRS.getInstance().serverUrl, this)
+        mPresenter?.getLocation(OpenmrsAndroid.getServerUrl(), this)
         return root
     }
 

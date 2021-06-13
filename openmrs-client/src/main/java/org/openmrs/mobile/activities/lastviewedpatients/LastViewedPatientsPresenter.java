@@ -19,19 +19,19 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
+import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import com.example.openmrs_android_sdk.library.models.Link;
 import com.example.openmrs_android_sdk.library.models.Patient;
 import com.example.openmrs_android_sdk.library.models.Results;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.StringUtils;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.PatientRepository;
-import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.PatientResponseCallback;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.StringUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

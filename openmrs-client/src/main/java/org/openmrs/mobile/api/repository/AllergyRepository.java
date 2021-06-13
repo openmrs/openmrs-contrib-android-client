@@ -22,12 +22,17 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
+import com.example.openmrs_android_sdk.library.dao.AllergyRoomDAO;
+import com.example.openmrs_android_sdk.library.databases.AppDatabase;
+import com.example.openmrs_android_sdk.library.databases.AppDatabaseHelper;
 import com.example.openmrs_android_sdk.library.databases.entities.AllergyEntity;
 import com.example.openmrs_android_sdk.library.models.Allergy;
 import com.example.openmrs_android_sdk.library.models.AllergyCreate;
 import com.example.openmrs_android_sdk.library.models.ConceptMembers;
 import com.example.openmrs_android_sdk.library.models.Results;
 import com.example.openmrs_android_sdk.library.models.SystemProperty;
+import com.example.openmrs_android_sdk.utilities.NetworkUtils;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
@@ -35,12 +40,7 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.workers.allergy.DeleteAllergyWorker;
 import org.openmrs.mobile.application.OpenMRS;
-import com.example.openmrs_android_sdk.library.dao.AllergyRoomDAO;
-import com.example.openmrs_android_sdk.library.databases.AppDatabase;
-import com.example.openmrs_android_sdk.library.databases.AppDatabaseHelper;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.utilities.NetworkUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;

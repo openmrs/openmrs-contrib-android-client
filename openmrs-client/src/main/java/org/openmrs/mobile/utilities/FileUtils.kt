@@ -13,7 +13,7 @@
  */
 package org.openmrs.mobile.utilities
 
-import org.openmrs.mobile.application.OpenMRS
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid
 import java.io.*
 
 object FileUtils {
@@ -30,7 +30,7 @@ object FileUtils {
         } catch (e: Exception) {
             when (e) {
                 is FileNotFoundException, is IOException -> {
-                    OpenMRS.getInstance().openMRSLogger.d(e.toString())
+                    OpenmrsAndroid.getOpenMRSLogger().d(e.toString())
                 }
             }
         } finally {
@@ -38,7 +38,7 @@ object FileUtils {
                 ios?.close()
                 out.close()
             } catch (e: IOException) {
-                OpenMRS.getInstance().openMRSLogger.d(e.toString())
+                OpenmrsAndroid.getOpenMRSLogger().d(e.toString())
             }
         }
         return out.toByteArray()

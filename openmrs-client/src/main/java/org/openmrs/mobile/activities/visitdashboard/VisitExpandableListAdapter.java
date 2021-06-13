@@ -28,11 +28,11 @@ import android.widget.TextView;
 import com.example.openmrs_android_sdk.library.models.Encounter;
 import com.example.openmrs_android_sdk.library.models.EncounterType;
 import com.example.openmrs_android_sdk.library.models.Observation;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ImageUtils;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRSInflater;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.ImageUtils;
 
 import java.util.ArrayList;
 import java.util.List;

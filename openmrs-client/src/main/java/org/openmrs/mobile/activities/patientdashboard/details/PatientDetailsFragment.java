@@ -29,6 +29,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.openmrs_android_sdk.library.models.Patient;
+import com.example.openmrs_android_sdk.utilities.DateUtils;
+import com.example.openmrs_android_sdk.utilities.StringUtils;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
+
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
@@ -36,11 +41,7 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.databinding.FragmentPatientDetailsBinding;
-import com.example.openmrs_android_sdk.library.models.Patient;
-import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.ImageUtils;
-import org.openmrs.mobile.utilities.StringUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 public class PatientDetailsFragment extends PatientDashboardFragment implements PatientDashboardContract.ViewPatientDetails {
     private PatientDashboardActivity patientDashboardActivity;

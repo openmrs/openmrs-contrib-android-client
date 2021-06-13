@@ -12,9 +12,10 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.security;
+package com.example.openmrs_android_sdk.library.security;
 
-import org.openmrs.mobile.application.OpenMRS;
+
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -36,7 +37,7 @@ public final class SecretKeyGenerator {
             // Do *not* seed secureRandom! Automatically seeded from system entropy.
             keyGenerator = KeyGenerator.getInstance("AES");
         } catch (NoSuchAlgorithmException e) {
-            OpenMRS.getInstance().getOpenMRSLogger().d("Failed to generate DB secret key" + e.toString());
+            OpenmrsAndroid.getOpenMRSLogger().d("Failed to generate DB secret key" + e.toString());
         }
         keyGenerator.init(outputKeyLength, secureRandom);
         SecretKey key = keyGenerator.generateKey();

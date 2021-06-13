@@ -13,20 +13,20 @@
  */
 package org.openmrs.mobile.utilities
 
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid
 import com.example.openmrs_android_sdk.utilities.ApplicationConstants
-import org.openmrs.mobile.application.OpenMRS
 
 object LanguageUtils {
 
     @JvmStatic
     fun getLanguage(): String? {
-        val defaultSharedPref = OpenMRS.getInstance().openMRSSharedPreferences
+        val defaultSharedPref = OpenmrsAndroid.getOpenMRSSharedPreferences()
         return defaultSharedPref.getString(ApplicationConstants.OpenMRSlanguage.KEY_LANGUAGE_MODE, "en")
     }
 
     @JvmStatic
     fun setLanguage(language: String?) {
-        val editor = OpenMRS.getInstance().openMRSSharedPreferences.edit()
+        val editor = OpenmrsAndroid.getOpenMRSSharedPreferences().edit()
         editor.putString(ApplicationConstants.OpenMRSlanguage.KEY_LANGUAGE_MODE, language)
         editor.apply()
     }

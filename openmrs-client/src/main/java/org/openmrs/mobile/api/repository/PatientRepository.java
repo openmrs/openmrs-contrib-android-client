@@ -24,6 +24,10 @@ import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 
+import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+import com.example.openmrs_android_sdk.library.dao.EncounterCreateRoomDAO;
+import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
 import com.example.openmrs_android_sdk.library.models.Encountercreate;
 import com.example.openmrs_android_sdk.library.models.IdGenPatientIdentifiers;
@@ -35,6 +39,9 @@ import com.example.openmrs_android_sdk.library.models.PatientIdentifier;
 import com.example.openmrs_android_sdk.library.models.PatientPhoto;
 import com.example.openmrs_android_sdk.library.models.Results;
 import com.example.openmrs_android_sdk.library.models.SystemProperty;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.NetworkUtils;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.jdeferred.android.AndroidDeferredManager;
 import org.openmrs.mobile.R;
@@ -45,17 +52,11 @@ import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.promise.SimplePromise;
 import org.openmrs.mobile.api.workers.patient.UpdatePatientWorker;
 import org.openmrs.mobile.application.OpenMRS;
-import com.example.openmrs_android_sdk.library.OpenMRSLogger;
-import com.example.openmrs_android_sdk.library.dao.EncounterCreateRoomDAO;
-import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DownloadPatientCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.PatientResponseCallback;
 import org.openmrs.mobile.listeners.retrofitcallbacks.VisitsResponseCallback;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.NetworkUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -357,7 +358,7 @@ public class PatientRepository extends BaseRepository {
         final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
 
         RestApi patientIdentifierService = RestServiceBuilder.createServiceForPatientIdentifier(RestApi.class);
-        Call<IdGenPatientIdentifiers> call = patientIdentifierService.getPatientIdentifiers(openMrs.getUsername(), openMrs.getPassword());
+        Call<IdGenPatientIdentifiers> call = patientIdentifierService.getPatientIdentifiers(OpenmrsAndroid.getUsername(), OpenmrsAndroid.getPassword());
         call.enqueue(new Callback<IdGenPatientIdentifiers>() {
             @Override
             public void onResponse(@NonNull Call<IdGenPatientIdentifiers> call, @NonNull Response<IdGenPatientIdentifiers> response) {

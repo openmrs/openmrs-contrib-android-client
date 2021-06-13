@@ -13,12 +13,12 @@
  */
 package org.openmrs.mobile.activities.formentrypatientlist
 
+import com.example.openmrs_android_sdk.library.dao.PatientDAO
 import com.example.openmrs_android_sdk.library.models.Patient
+import com.example.openmrs_android_sdk.utilities.StringUtils
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.BasePresenter
-import com.example.openmrs_android_sdk.library.dao.PatientDAO
 import org.openmrs.mobile.utilities.FilterUtil
-import org.openmrs.mobile.utilities.StringUtils
 import rx.android.schedulers.AndroidSchedulers
 
 class FormEntryPatientListPresenter(private var mFormEntryPatientListView: FormEntryPatientListContract.View,

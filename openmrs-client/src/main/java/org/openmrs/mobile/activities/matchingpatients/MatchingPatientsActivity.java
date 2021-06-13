@@ -21,13 +21,15 @@ import android.view.Menu;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databinding.ActivityMatchingPatientsBinding;
 import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.PatientAndMatchesWrapper;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 public class MatchingPatientsActivity extends ACBaseActivity {
     @Override

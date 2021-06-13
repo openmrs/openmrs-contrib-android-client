@@ -16,6 +16,8 @@
 
     import android.content.res.Resources;
 
+    import com.example.openmrs_android_sdk.utilities.DateUtils;
+
     import org.joda.time.DateTime;
     import org.joda.time.DateTimeZone;
     import org.joda.time.format.DateTimeFormat;
@@ -139,8 +141,8 @@
             DateTime dateTime;
             String nullDateAsString = null;
             DateTimeFormatter formatter = DateTimeFormat
-                .forPattern(DateUtils.OPEN_MRS_REQUEST_FORMAT)
-                .withZone(DateTimeZone.forID(TEST_TIMEZONE));
+                    .forPattern(DateUtils.OPEN_MRS_REQUEST_FORMAT)
+                    .withZone(DateTimeZone.forID(TEST_TIMEZONE));
 
             stringToLongResult = DateUtils.convertTime(INITIAL_DATA_CUSTOM_TIMEZONE);
             longToStringResult = DateUtils.convertTime(stringToLongResult, TimeZone.getTimeZone("GMT+02:00"));
@@ -176,11 +178,11 @@
             String nullDateAsString = null;
 
             DateTime date1900 = DateTimeFormat
-                .forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/1900");
+                    .forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/1900");
             DateTime date1950 = DateTimeFormat
-                .forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/1950");
+                    .forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/1950");
             DateTime date2000 = DateTimeFormat
-                .forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/2000");
+                    .forPattern(DateUtils.DEFAULT_DATE_FORMAT).parseDateTime("1/1/2000");
 
             assertTrue(DateUtils.validateDate(EXPECTED_DATA_DEFAULT_DATE_FORMAT_1, date1900, DateTime.now()));
             assertTrue(DateUtils.validateDate(EXPECTED_DATA_DEFAULT_DATE_FORMAT_2, date1900, date2000));

@@ -16,20 +16,20 @@ package org.openmrs.mobile.activities.addeditallergy;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import com.example.openmrs_android_sdk.library.models.Allergy;
 import com.example.openmrs_android_sdk.library.models.AllergyCreate;
 import com.example.openmrs_android_sdk.library.models.AllergyPatient;
 import com.example.openmrs_android_sdk.library.models.ConceptMembers;
 import com.example.openmrs_android_sdk.library.models.Patient;
 import com.example.openmrs_android_sdk.library.models.SystemProperty;
+import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.repository.AllergyRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 

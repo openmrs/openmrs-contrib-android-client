@@ -34,6 +34,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.FormFieldsWrapper;
+import org.openmrs.mobile.databinding.FragmentFormDisplayBinding;
 import org.openmrs.mobile.models.Answer;
 import org.openmrs.mobile.models.Question;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -46,9 +47,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.Presenter.PagePresenter> implements FormDisplayContract.View.PageView {
+    private FragmentFormDisplayBinding binding = null;
     private List<InputField> inputFields = new ArrayList<>();
     private List<SelectOneField> selectOneFields = new ArrayList<>();
-    private LinearLayout mParent;
+    private LinearLayout parent;
 
     public static FormDisplayPageFragment newInstance() {
         return new FormDisplayPageFragment();
@@ -57,12 +59,14 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_form_display, container, false);
-        getActivity().getWindow().setSoftInputMode(
-            WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
-        mParent = root.findViewById(R.id.sectionContainer);
-        return root;
+        binding = FragmentFormDisplayBinding.inflate(inflater, container, false);
+
+        getActivity().getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        parent = binding.sectionContainer;
+        return binding.getRoot();
     }
 
     @Override
@@ -96,7 +100,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
 
     @Override
     public void attachSectionToView(LinearLayout linearLayout) {
-        mParent.addView(linearLayout);
+        parent.addView(linearLayout);
     }
 
     @Override
@@ -107,7 +111,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
     @Override
     public void createAndAttachNumericQuestionEditText(Question question, LinearLayout sectionLinearLayout) {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         RangeEditText ed = new RangeEditText(getActivity());
         DiscreteSeekBar dsb = new DiscreteSeekBar(getActivity());
@@ -145,7 +149,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
 
     private View generateTextView(String text) {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         layoutParams.setMargins(10, 0, 0, 0);
         TextView textView = new TextView(getActivity());
         textView.setText(text);
@@ -180,7 +184,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
 
         LinearLayout questionLinearLayout = new LinearLayout(getActivity());
         LinearLayout.LayoutParams questionLinearLayoutParams = new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         questionLinearLayout.setOrientation(LinearLayout.VERTICAL);
         questionLinearLayoutParams.gravity = Gravity.START;
         questionLinearLayout.setLayoutParams(questionLinearLayoutParams);
@@ -191,13 +195,13 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
         }
 
         SelectOneField spinnerField = new SelectOneField(question.getQuestionOptions().getAnswers(),
-            question.getQuestionOptions().getConcept());
+                question.getQuestionOptions().getConcept());
 
         ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, answerLabels);
         spinner.setAdapter(arrayAdapter);
 
         LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         questionLinearLayout.addView(textView);
         questionLinearLayout.addView(spinner);
@@ -244,10 +248,10 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
         }
 
         SelectOneField radioGroupField = new SelectOneField(question.getQuestionOptions().getAnswers(),
-            question.getQuestionOptions().getConcept());
+                question.getQuestionOptions().getConcept());
 
         LinearLayout.LayoutParams linearLayoutParams = new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         sectionLinearLayout.addView(textView);
         sectionLinearLayout.addView(radioGroup);
@@ -306,7 +310,7 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
 
     private LinearLayout.LayoutParams getAndAdjustLinearLayoutParams(LinearLayout linearLayout) {
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
@@ -398,5 +402,11 @@ public class FormDisplayPageFragment extends ACBaseFragment<FormDisplayContract.
 
     private boolean isEmpty(EditText etText) {
         return etText.getText().toString().trim().length() == 0;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

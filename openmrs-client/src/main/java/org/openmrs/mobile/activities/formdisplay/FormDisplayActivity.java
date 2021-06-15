@@ -27,6 +27,7 @@ import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.bundle.FormFieldsWrapper;
+import org.openmrs.mobile.databinding.ActivityFormDisplayBinding;
 import org.openmrs.mobile.models.Form;
 import org.openmrs.mobile.models.Page;
 import org.openmrs.mobile.utilities.ApplicationConstants;
@@ -37,16 +38,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FormDisplayActivity extends ACBaseActivity implements FormDisplayContract.View.MainView {
-    private ViewPager mViewPager;
-    private Button mBtnNext, mBtnFinish;
+    private ActivityFormDisplayBinding binding = null;
+    private ViewPager viewPager;
+    private Button nextButton, finishButton;
     private int mDotsCount;
     private ImageView[] mDots;
-    private FormDisplayContract.Presenter.MainPresenter mPresenter;
+    private FormDisplayContract.Presenter.MainPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_form_display);
+
+        binding = ActivityFormDisplayBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -70,13 +74,13 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.subscribe();
+        presenter.subscribe();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mPresenter.unsubscribe();
+        presenter.unsubscribe();
     }
 
     @Override
@@ -113,23 +117,23 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
 
     @Override
     public void setPresenter(FormDisplayContract.Presenter.MainPresenter presenter) {
-        this.mPresenter = presenter;
+        this.presenter = presenter;
     }
 
     private void initViewComponents(String valueRef) {
         FormPageAdapter formPageAdapter = new FormPageAdapter(getSupportFragmentManager(), valueRef);
-        LinearLayout pagerIndicator = findViewById(R.id.viewPagerCountDots);
+        LinearLayout pagerIndicator = binding.viewPagerCountDots;
 
-        mBtnNext = findViewById(R.id.btn_next);
-        mBtnFinish = findViewById(R.id.btn_finish);
+        nextButton = binding.btnNext;
+        finishButton = binding.btnFinish;
 
-        mBtnNext.setOnClickListener(view -> mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1));
-        mBtnFinish.setOnClickListener(view -> mPresenter.createEncounter());
-        mViewPager = findViewById(R.id.container);
+        nextButton.setOnClickListener(view -> viewPager.setCurrentItem(viewPager.getCurrentItem() + 1));
+        finishButton.setOnClickListener(view -> presenter.createEncounter());
+        viewPager = binding.container;
 
-        mViewPager.setAdapter(formPageAdapter);
+        viewPager.setAdapter(formPageAdapter);
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 for (int i = 0; i < mDotsCount; i++) {
@@ -138,11 +142,11 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
                 mDots[position].setImageDrawable(ContextCompat.getDrawable(getBaseContext(), R.drawable.selecteditem_dot));
 
                 if (position + 1 == mDotsCount) {
-                    mBtnNext.setVisibility(View.GONE);
-                    mBtnFinish.setVisibility(View.VISIBLE);
+                    nextButton.setVisibility(View.GONE);
+                    finishButton.setVisibility(View.VISIBLE);
                 } else {
-                    mBtnNext.setVisibility(View.VISIBLE);
-                    mBtnFinish.setVisibility(View.GONE);
+                    nextButton.setVisibility(View.VISIBLE);
+                    finishButton.setVisibility(View.GONE);
                 }
             }
 
@@ -157,7 +161,7 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
             }
         });
 
-        mPresenter = new FormDisplayMainPresenter(this, getIntent().getExtras(), (FormPageAdapter) mViewPager.getAdapter());
+        presenter = new FormDisplayMainPresenter(this, getIntent().getExtras(), (FormPageAdapter) viewPager.getAdapter());
 
         // Set page indicators:
         mDotsCount = formPageAdapter.getCount();
@@ -175,14 +179,14 @@ public class FormDisplayActivity extends ACBaseActivity implements FormDisplayCo
         }
         mDots[0].setImageDrawable(ContextCompat.getDrawable(this, R.drawable.selecteditem_dot));
         if (mDotsCount == 1) {
-            mBtnNext.setVisibility(View.GONE);
-            mBtnFinish.setVisibility(View.VISIBLE);
+            nextButton.setVisibility(View.GONE);
+            finishButton.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
     public void enableSubmitButton(boolean enabled) {
-        mBtnFinish.setEnabled(enabled);
+        finishButton.setEnabled(enabled);
     }
 
     @Override

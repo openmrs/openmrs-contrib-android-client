@@ -27,7 +27,7 @@ import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
-import org.openmrs.mobile.api.repository.AllergyRepository;
+import com.example.openmrs_android_sdk.library.api.repository.AllergyRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 

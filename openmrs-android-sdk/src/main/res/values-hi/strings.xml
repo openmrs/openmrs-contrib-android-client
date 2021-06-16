@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+
+<resources>
+    <string name="app_name">OpenMRS ग्राहक</string>
+    <string name="action_settings">समायोजन</string>
+    <string name="action_logout">लॉग आउट</string>
+    <string name="action_location">स्थान</string>
+
+    <string name="alphanumeric_postal_code">ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 </string>
+
+    <!-- Login view -->
+    <string name="login_button">लॉग इन करें</string>
+    <string name="login_username_hint">उपयोगकर्ता नाम</string>
+    <string name="login_password_hint">कुंजिका</string>
+    <string name="login_location_select">सत्र का स्थान</string>
+    <string name="req_star"><![CDATA[<font color=\'#616161\'> * </font>]]></string>
+    <string name="warning_dialog_title">चेतावनी</string>
+    <string name="warning_lost_data_dialog">URL, उपयोगकर्ता नाम या पासवर्ड बदलने से सारा डेटा मिट जाएगा। क्या आपको यकीन है?</string>
+    <string name="forgot_button_ok">खारिज</string>
+    <string name="login_offline">ऑफ़लाइन</string>
+    <string name="login_online">ऑनलाइन</string>
+
+    <string name="emptyerror">अपेक्षित</string>
+    <string name="fname_invalid_error">दिए गए नाम में प्रतीक या संख्या नहीं हो सकती</string>
+    <string name="midname_invalid_error">मध्य नाम में प्रतीक या संख्या नहीं हो सकती</string>
+    <string name="lname_invalid_error">परिवार के नाम में प्रतीक या संख्या नहीं हो सकती</string>
+    <string name="dob_error">तारीख के बीच होना चाहिए %1$s and %2$s</string>
+    <string name="reg_firstname_hint">दिया गया नाम</string>
+    <string name="reg_midname_hint">मध्य नाम</string>
+    <string name="reg_surname_hint">परिवार का नाम</string>
+    <string name="reg_ques_name">रोगी का नाम क्या है?</string>
+    <string name="reg_ques_gender">रोगी का लिंग क्या है?</string>
+    <string name="reg_ques_dob">रोगी की जन्मतिथि क्या है?</string>
+    <string name="label_or">अथवा</string>
+    <string name="reg_ques_address">पता</string>
+    <string name="addr1_hint">पता पंक्ति 1*</string>
+    <string name="addr2_hint">पता पंक्ति 2</string>
+    <string name="addr_invalid_error">पते में अमान्य वर्ण नहीं हो सकते</string>
+    <string name="atleastone">कम से कम एक पता फ़ील्ड भरें</string>
+
+    <string name="male">पुरुष</string>
+    <string name="female">महिला</string>
+    <string name="dob_hint">जन्म तिथि (प्रारूप: dd / MM / yyyy)</string>
+    <string name="estyr">अनुमानित वर्ष</string>
+    <string name="estmonth">अनुमानित महीने</string>
+
+    <!-- Offline Mode -->
+    <string name="offline_mode_unsupported_in_first_login">ऑफ़लाइन मोड पहले लॉगिन के दौरान समर्थित नहीं है। ऑनलाइन मोड अक्षम करें और फिर पुन: प्रयास करें।</string>
+    <string name="login_offline_toast_message">अब आप ऑफ़लाइन मोड में हैं।</string>
+
+    <!-- Authentication Failed dialog -->
+    <string name="auth_failed_dialog_message">गलत उपयोगकर्ता नाम या पासवर्ड दर्ज किया गया। कृपया पुन: प्रयास करें।</string>
+    <!-- No internet dialog -->
+    <string name="no_internet_conn_dialog_message">आपके पास कोई इंटरनेट कनेक्शन नहीं है। \ n कृपया फोन या वाई-फाई कनेक्शन और सिग्नल की जांच करें और फिर से प्रयास करें।</string>
+
+    <!-- patientRepository-->
+    <string name="patient_update_unsuccessful_server_error">%1$s को सर्वर त्रुटि के कारण अपडेट नहीं किया जा सकता है, सिंक %2$s को पुनः प्रयास करेगा</string>
+    <string name="patient_cannot_be_synced_due_to_request_error_message">रोगी [%1$i] अनुरोध त्रुटि%2$s के कारण समन्वयित नहीं किया जा सकता है</string>
+    <string name="patient_cannot_be_synced_due_to_server_error_message">रोगी [%1$i] को सर्वर त्रुटि%2$s के कारण समन्‍वयित नहीं किया जा सकता है</string>
+
+    <!-- SimilarPatients dialog -->
+    <string name="similar_patients_dialog_title">समान रोगियों को</string>
+
+    <!-- Logout dialog -->
+    <string name="logout_dialog_title">लॉगिंग आउट </string>
+    <string name="logout_dialog_message">क्या आप वाकई OpenMRS क्लाइंट से लॉगआउट करना चाहते हैं?</string>
+    <string name="logout_dialog_button">लॉगआउट</string>
+    <!--Credentials Changed dialog-->
+    <string name="credentials_changed_dialog_title">क्रेडेंशियल्स परिवर्तित</string>
+    <string name="credentials_changed_dialog_message">वेब ऐप में आपके क्रेडेंशियल्स बदल दिए गए हैं। आप स्वचालित रूप से लॉग आउट हो गए हैं</string>
+    <!-- End Visit dialog -->
+    <string name="end_visit_dialog_title">एंड विजिट</string>
+    <string name="end_visit_dialog_message"> आप वाकई इस यात्रा को समाप्त करना चाहते हैं?</string>
+    <!-- Start visit dialog -->
+    <string name="start_visit_dialog_title">स्टार्ट विजिट </string>
+    <string name="start_visit_dialog_message">क्या आप वाकई %1$s के लिए यात्रा शुरू करना चाहते हैं?</string>
+    <!-- Start visit dialog unsuccessful-->
+    <string name="start_visit_unsuccessful_dialog_title">संवाद प्रारंभ पर जाएँ।</string>
+    <string name="start_visit_unsuccessful_dialog_message">%1$s की पहले से ही सक्रिय विज़िट हैं। रोगी को सिंक्रनाइज़ करने या पिछली यात्राओं को बंद करने का प्रयास करें</string>
+    <!-- Delete patient dialog message -->
+    <string name="delete_patient_dialog_message">क्या आप वाकई इस रोगी को हटाना चाहते हैं?</string>
+    <!-- Location dialog  -->
+    <string name="location_dialog_title">स्थान का चयन करें </string>
+    <string name="location_dialog_current_location">वर्तमान स्थान:  </string>
+
+    <!-- Reset patient info dialog -->
+    <string name="reset_dialog_message">दर्ज की गई सभी जानकारी मिटा दी जाएगी</string>
+
+    <!-- Buttons -->
+    <string name="dialog_button_cancel">रद्द करें</string>
+    <string name="dialog_button_ok">ठीक</string>
+    <string name="dialog_button_confirm"> पुष्टि करें</string>
+    <string name="dialog_button_register_new">नया रजिस्टर करें</string>
+    <string name="dialog_button_merge">मर्ज</string>
+    <string name="action_next">अगला</string>
+    <string name="dialog_button_select_location">स्थान का चयन करें</string>
+
+    <!-- Settings activity -->
+    <string name="settings_logs">लॉग्स</string>
+    <string name="settings_concepts_in_db">DB में अवधारणाएँ:</string>
+    <string name="settings_no_concepts_toast">DB में कोई अवधारणाएँ नहीं हैं!</string>
+
+    <!-- FindPatients activity -->
+    <string name="action_find_patients">मरीजों का पता लगाएं </string>
+    <string name="action_synced_patients">सिंक किए गए मरीज</string>
+    <string name="action_download_patients">मरीजों को डाउनलोड करें</string>
+    <string name="action_add_patients">मरीजों को जोड़ें</string>
+    <string name="search_patient_hint">रोगी का नाम</string>
+    <string name="search_patient_no_results">डेटाबेस में कोई भी मरीज मौजूद नहीं है </string>
+    <string name="search_patient_no_result_for_query">क्वेरी \"%1$s\" के लिए कोई परिणाम नहीं मिला \</string>
+    <string name="select_all_downloadable_data">सभी चुनें</string>
+    <string name="download_selected_patient_data">रोगी डेटा डाउनलोड करें</string>
+    <string name="download_multiple">डाउनलोड कई</string>
+
+    <!-- Dashboard Activity -->
+    <string name="dashboard_search_icon_label">मरीजों का पता लगाएं </string>
+    <string name="dashboard_registry_icon_label">रोगी को पंजीकृत करें</string>
+    <string name="dashboard_visits_icon_label">सक्रिय विज़िट</string>
+    <string name="dashboard_forms_icon_label">फॉर्म प्रविष्टि</string>
+
+    <!-- row_find_synced_patients layout-->
+    <string name="find_patients_row_checkbox_download_label">डाउनलोड</string>
+
+    <!-- Patient Dashboard Activity -->
+    <string name="action_synchronize_patients">रोगी को सिंक्रनाइज़ करना</string>
+    <string name="action_update_patient_data">रोगी को अपडेट करें</string>
+    <string name="synchronize_patient_successful">सफलतापूर्वक सिंक्रनाइज़ किए गए रोगी डेटा।</string>
+    <string name="synchronize_patient_error">रोगी डेटा को सिंक्रनाइज़ करना असफल था</string>
+    <string name="synchronize_patient_network_error">ऑफ़लाइन मोड में सिंक्रनाइज़ नहीं किया जा सकता</string>
+    <string name="get_patient_from_database_error">डेटाबेस से रोगी लाने में विफल</string>
+    <string name="action_start_visit">विज़िट शुरू करें </string>
+    <string name="action_create_allergy">एलर्जी शुरू करे</string>
+    <string name="patient_scroll_tab_details_label">विवरण</string>
+    <string name="patient_scroll_tab_allergy_label">एलर्जी</string>
+    <string name="patient_scroll_tab_diagnosis_label">निदान</string>
+    <string name="patient_scroll_tab_visits_label">विज़िट</string>
+    <string name="patient_scroll_tab_vitals_label">विटल्स</string>
+    <string name="patient_scroll_tab_charts_label">चार्ट</string>
+    <string name="download_started">"डाउनलोडिंग…"</string>
+    <string name="action_starting_visit">"प्रारंभ पर जाएँ"</string>
+
+    <!-- fragment_patient_details layout -->
+    <string name="patient_identifier"># %1$s</string>
+    <string name="patient_details_photo_label">फोटो</string>
+    <string name="patient_details_birth_date_label">जन्म तिथि</string>
+    <string name="patient_contact_info_label">संपर्क जानकारी</string>
+    <string name="patient_address_label">पता</string>
+    <string name="patient_city_label">शहर</string>
+    <string name="patient_postal_label">पोस्टल कोड</string>
+    <string name="patient_state_label">राज्य</string>
+    <string name="patient_country_label">देश</string>
+    <string name="date_picker_title">जन्म तिथि चुनें</string>
+
+    <!-- Find Active visit activity -->
+    <string name="action_active_visits">सक्रिय विज़िट</string>
+    <string name="action_form_entry">फॉर्म प्रविष्टि</string>
+    <string name="action_find_visits">सक्रिय विज़िट ढूंढें</string>
+    <string name="search_visits_no_results">डेटाबेस में कोई विज़िट नहीं</string>
+
+    <!-- ACBase activity -->
+    <string name="error_email_subject_app_crashed">OpenMRS एंड्रॉइड क्लाइंट क्रैश हो गया</string>
+    <string name="choose_a_email_client">एक ईमेल क्लाइंट चुनें:</string>
+    <string name="no_internet_connection_message">कोई इंटरनेट कनेक्शन नहीं</string>
+
+    <!-- Patient Service Activity-->
+    <string name="activity_no_internet_connection">कोई इंटरनेट कनेक्शन नहीं। रोगी पंजीकरण डेटा स्थानीय रूप से सहेजा जाता है </string>
+    <string name="activity_sync_after_connection">और इंटरनेट कनेक्शन बहाल होने पर सिंक हो जाएगा </string>
+
+    <!-- Patients Vitals Fragment -->
+    <string name="form_error">यह फ़ॉर्म समर्थित नहीं है </string>
+
+    <!-- fragment_patient_visits layout -->
+    <string name="active_visit_label">सक्रिय विज़िट</string>
+    <string name="past_visit_label">पिछला दौरा</string>
+    <string name="visit_in">in %1$s</string>
+
+    <!-- fragment_patient_vitals layout -->
+    <string name="last_vitals_label">अंतिम विटल्स: </string>
+    <string name="last_vitals_none_label">कोई नहीं</string>
+
+    <!-- fragment_patient_diagnosis layout -->
+    <string name="empty_diagnoses_list">रोगी का अभी तक कोई निदान नहीं है। .</string>
+    <string name="diagnosis_note_label">मुठभेड़ नोट का पाठ</string>
+
+    <!--fragment_vitals_charts_layout-->
+    <string name="list_vital_selector_show">चार्ट दिखाएं </string>
+    <string name="list_vital_selector_hide">चार्ट छिपाएं</string>
+
+    <!--fragment_patient_charts layout-->
+    <string name="no_vitals_recorded">कोई विरल रिकॉर्ड नहीं किया गया </string>
+
+    <!-- Visit dashboard activity -->
+    <string name="action_end_visit">एंड विजिट</string>
+    <string name="visit_dashboard_label">मुठभेड़ों</string>
+    <string name="list_visit_selector_show">विवरण दिखाएं</string>
+    <string name="list_visit_selector_hide">विवरण छिपाएं</string>
+    <string name="visit_exp_list_empty">यात्रा का अभी तक कोई सामना नहीं हुआ है। </string>
+
+    <!-- Capture Vitals activity -->
+    <string name="action_delete_patient">रोगी हटाएं</string>
+    <string name="action_register_patient">रोगी को पंजीकृत करें </string>
+    <string name="failed_to_open_vitals_form">एक त्रुटि हुई। अमान्य या दूषित फ़ॉर्म फ़ाइल। </string>
+    <string name="active_visit_label_capture_vitals">यात्रा पर</string>
+
+    <!-- Form Entry Activity -->
+    <string name="empty_visits_list">रोगी का अभी तक कोई दौरा नहीं है। .</string>
+    <string name="title_activity_form_create">FormCreateActivity</string>
+
+    <!--Similar patient card strings-->
+    <string name="gender_hint">लिंग:</string>
+    <string name="birthdate_hint">जन्मतिथि:</string>
+    <string name="address_hint">पता:</string>
+    <string name="demographics">जनसांख्यिकी</string>
+    <string name="unable_to_login">लॉगिन करने में असमर्थ?</string>
+    <string name="no_patient_selected">कोई रोगी चयनित नहीं</string>
+
+    <!--Matching Patient Activity-->
+    <string name="matching_patients_toolbar_title">मरीज़ मरीज़</string>
+    <string name="patient_registered_locally">रोगी स्थानीय रूप से पंजीकृत </string>
+    <string name="similar_patients_on_server">सर्वर पर समान मरीज मौजूद हैं</string>
+    <string name="registration_core_info">तेज और अधिक सटीक समान रोगी रिज़ॉल्यूशन का उपयोग करने के लिए, पंजीकरण कोर मॉड्यूल को 1.7 या उच्चतर </string>
+
+    <!--ChartsView Activity-->
+    <string name="charts_view_toolbar_title">चार्ट देखें</string>
+
+    <!-- Image content description strings -->
+    <string name="openmrs_logo">OpenMRS logo</string>
+    <string name="toast_with_black_background">काली पृष्ठभूमि वाला टोस्ट</string>
+    <string name="edit_form">फॉर्म संपादित करें</string>
+    <string name="patient_photo">रोगी फोटो</string>
+    <string name="take_a_photo">एक फ़ोटो लें</string>
+
+    <!--Snackbar strings-->
+    <string name="snackbar_action_open">खोलें</string>
+    <string name="snackbar_info_patient_downloaded">रोगी डाउनलोड</string>
+    <string name="invalid_login_or_password_message">अमान्य लॉगिन या पासवर्ड, कृपया पुनः प्रयास करें.</string>
+    <string name="snackbar_no_internet_connection">कोई इंटरनेट कनेक्शन नहीं</string>
+
+    <!--permissions-->
+    <string name="permission_camera_rationale">फोटो खींचने के लिए कैमरा अनुमति की आवश्यकता है।</string>
+    <string name="permission_camera_denied">कैमरा अनुमति से इनकार कर दिया गया था। कृपया कैमरे को एक्सेस करने के लिए इसे देने पर विचार करें</string>
+    <string name="permission_camera_neverask">कैमरा अनुमति से इनकार कर दिया गया था फिर कभी नहीं पूछें </string>
+    <string name="button_allow">अनुमति दें</string>
+    <string name="button_deny">इनकार</string>
+    <string name="patient_not_yet_registered">रोगी अभी तक पंजीकृत नहीं है, मुठभेड़ नहीं बना सकता।</string>
+
+    <!-- Layout strings -->
+    <string name="sync">सिंक</string>
+    <string name="snackbar_edit">संपादित</string>
+
+    <!--Activity Logs-->
+    <string name="title_activity_logs">लॉग्स</string>
+
+    <!--App Crash Dialog-->
+    <string name="crash_dialog_title">त्रुटि हुई</string>
+    <string name="crash_dialog_message">क्षमा करें! एक अज्ञात अवरोध पाया गया। कृपया डेवलपर्स को विवरण दें ताकि इसे जल्द से जल्द हल किया जा सके</string>
+    <string name="crash_dialog_positive_button">पुनरारंभ करें</string>
+    <string name="crash_dialog_negative_button">बंद करें</string>
+    <string name="crash_dialog_neutral_button">रिपोर्ट भेजें और पुनः आरंभ करें </string>
+
+    <!-- Syncbutton toasts -->
+    <string name="disconn_server">सर्वर से डिस्कनेक्ट करना</string>
+    <string name="reconn_server">सर्वर से पुनः कनेक्ट हो रहा है</string>
+    <string name="connected_to_server_message">अब आप जुड़े हुए हैं!</string>
+
+    <string name="dialog_title_are_you_sure">रक्या आप सुनिश्चित हैं?</string>
+    <string name="dialog_title_reset_patient">रोगी का डेटा मिटाएं?</string>
+    <string name="dialog_message_data_lost">दर्ज की गई सभी रोगी जानकारी खो जाएगी।</string>
+    <string name="dialog_button_stay">रहें</string>
+    <string name="dialog_button_leave">छोड़ें</string>
+    <string name="snackbar_nonvisitting_patients">केवल वर्तमान में विज़िट में रोगियों के लिए विटल्स पर कब्जा किया जा सकता है।</string>
+
+    <string name="logout_success">सफलतापूर्वक लॉग आउट किया गया! </string>
+    <string name="url_privacy_policy">https://github.com/openmrs/openmrs-contrib-android-client/blob/master/privacy_policy.md#privacy-policy</string>
+    <string name="settings_privacy_policy">गोपनीयता नीति</string>
+
+    <string name="action_submit">सबमिट करें</string>
+    <string name="action_reset">रीसेट करें</string>
+
+    <string name="delete_multiple_patients">मरीजों को हटाएं?</string>
+    <string name="delete_multiple_patients_dialog_message">क्या आप वाकई इन रोगियों को हटाना चाहते हैं?</string>
+    <string name="multiple_patients_deleted">मरीजों को सफलतापूर्वक हटा दिया गया </string>
+    <string name="location_successfully_updated"> अपडेट किया गया सफलतापूर्वक</string>
+    <string name="delete">हटाना</string>
+    <string name="rate_us_string">हमें रेट करें</string>
+    <string name="settings_frag_size">आकार:</string>
+    <string name="frag_settings_build">बिल्ड:</string>
+    <string name="action_provider_management">प्रदाता प्रबंधित करें</string>
+    <string name="unable_to_fetch_providers">प्रोवाइडर्स लाने में असमर्थ!</string>
+    <string name="device_offline_msg">डिवाइस ऑफ़लाइन!</string>
+
+    <!-- Provider Management -->
+    <string name="provider_manager">प्रदाता प्रबंधक</string>
+    <string name="action_find_providers">प्रदाता खोजें</string>
+    <string name="delete_provider_success_msg">प्रदाता को सफलतापूर्वक हटा दिया गया!!</string>
+    <string name="delete_provider_failure_msg">प्रदाता को हटाने में विफल.</string>
+    <string name="first_name_hint">पहला नाम</string>
+    <string name="last_name_hint">अंतिम नाम</string>
+    <string name="identifier_hint">पहचानकर्ता</string>
+    <string name="identifier_description">* पहचानकर्ता कुछ भी हो सकता है। उदाहरण के लिए। डॉक्टर, नर्स, क्लर्क, आदि</string>
+    <string name="add_provider_success_msg">सफलतापूर्वक जोड़ा गया प्रदाता.</string>
+    <string name="add_provider_failure_msg">प्रदाता जोड़ने में विफल.</string>
+    <string name="edit_provider_success_msg">सफलतापूर्वक संपादित.</string>
+    <string name="edit_provider_failure_msg">प्रदाता को संपादित करने में विफल.</string>
+    <string name="title_provider_info">प्रदाता जानकारी</string>
+    <string name="dialog_provider_retired">प्रदाता सेवानिवृत्त हो जाएगा.</string>
+    <string name="title_dialog_matching_provider">समान प्रदाता मिला </string>
+    <string name="dialog_matching_provider_positive_btn">फिर भी बनाएं </string>
+    <string name="label_dark_mode">डार्क मोड (प्रायोगिक)</string>
+    <string name="provider_tab_title">प्रदाता</string>
+    <string name="patients_tab_title">मरीज</string>
+    <string name="failed_provider_details">प्रदाता विवरण प्राप्त करने में विफल!</string>
+    <string name="retry_action">पुनः प्रयास करें</string>
+    <!--activity_provider_dashboard  -->
+    <string name="surgeon">सर्जन</string>
+    <!--fragment_patient_relationship-->
+    <string name="provider_patient">प्रदाता - रोगी संबंध</string>
+    <!--row_provider_details-->
+    <string name="jake_smith">जेक स्मिथ</string>
+    <string name="doctor">चिकित्सक</string>
+    <!--fragment_provider_relationship-->
+    <string name="provider_provider">प्रदाता - प्रदाता संबंध</string>
+    <string name="language">भाषा</string>
+    <string name="apply">इसे लागाएं</string>
+
+    <!-- introduction Activity -->
+    <string name="intro_welcome">स्वागत हे</string>
+    <string name="intro_register">मरीजों को पंजीकृत करें</string>
+    <string name="intro_find">मरीजों का पता लगाएं</string>
+    <string name="intro_monitor">मॉनिटर का दौरा</string>
+    <string name="intro_manage">प्रदाता प्रबंधित करें</string>
+    <string name="intro_location">स्थान</string>
+    <string name="intro_settings">समायोजन</string>
+
+    <string name="intro_welcome_desc">वैश्विक OpenMRS समुदाय विश्व के अग्रणी ओपन सोर्स इलेक्ट्रॉनिक मेडिकल रिकॉर्ड सिस्टम के निर्माण के लिए एक साथ काम करता है।</string>
+    <string name="intro_register_desc">हमारे सर्वर पर नए रोगियों को पंजीकृत करें।</string>
+    <string name="intro_find_desc">आप उन रोगियों को ढूंढ और देख सकते हैं।</string>
+    <string name="intro_monitor_desc">हम रोगी की यात्राओं पर भी नजर रखने में आपकी मदद करते हैं।</string>
+    <string name="intro_manage_desc">आप हमारे ऐप का उपयोग करके प्रदाताओं का प्रबंधन कर सकते हैं।</string>
+    <string name="intro_location_desc">आप एक साधारण क्लिक पर अपना स्थान बदल सकते हैं।</string>
+    <string name="intro_settings_desc">हमारी डार्क मोड सुविधा देखें।\n आएँ शुरू करें।</string>
+    <string name="get_started_with_our_user_guide">हमारे उपयोगकर्ता गाइड के साथ आरंभ करें</string>
+
+    <!--VisitExpandableListAdapter-->
+    <string name="hiv_yes">हाँ</string>
+    <string name="hiv_no">नहीं</string>
+    <string name="hiv_unknown">अनजान</string>
+
+    <!-- Contact Activity -->
+    <string name="go_to_forum">फोरम</string>
+    <string name="go_to_irc">आईआरसी</string>
+    <string name="open">खोले</string>
+    <string name="email_us">ईमेल करे</string>
+    <string name="help_message">हमारी टीम हमेशा किसी भी सवाल का जवाब देने के लिए होती है। हमें एक ईमेल ड्रॉप करें या फ़ोरम पर पहुंचें और हम जल्द से जल्द जवाब देने की पूरी कोशिश करेंगे।</string>
+    <string name="contact_us">संपर्क करें</string>
+    <string name="no_mailing_client_found">कोई ईमेल क्लाइंट स्थापित नहीं हैं।</string>
+    <string name="contact_us_or">या</string>
+
+    <!-- ShowCaseView -->
+    <string name="showcase_find_patients">सभी मरीजों को खोजने के लिए यहां क्लिक करें</string>
+    <string name="showcase_active_visits">वर्तमान में सक्रिय दौरा की सूची प्राप्त करने के लिए यहां क्लिक करें</string>
+    <string name="showcase_register_patient">नया मरीज पंजीकृत करने के लिए यहां क्लिक करें</string>
+    <string name="showcase_form_entry">एक मरीज के वाइटल कलेक्ट करने के लिए यहां क्लिक करें</string>
+    <string name="showcase_manage_providers">एक मरीज के लिए पोषणकर्ता का प्रबंधन करने के लिए यहां क्लिक करें</string>
+    <string name="offline_mode_not_supported">ऑफ़लाइन मोड में मैन्युअल रूप से रोगी की यात्रा शुरू नहीं कर सकता।</string>
+
+    <!-- Chart Activity -->
+    <string name="data_not_available_for_this_field">चार्ट प्रदर्शित करने के लिए कोई डेटा उपलब्ध नहीं है</string>
+    <string name="data_type_not_available_for_this_field">इस क्षेत्र के लिए चार्ट उपलब्ध नहीं है</string>
+    <string name="dialog_take_photo">एक तस्वीर लें</string>
+    <string name="dialog_choose_photo">फोटो चुनो</string>
+    <string name="dialog_remove_photo">फोटो निकालें</string>
+
+    <!--fragment_patient_Info.xml-->
+    <string name="unidentified_patient">अज्ञात रोगी</string>
+    <string name="dob_error_for_unidentified">कृपया रोगी की उम्र का अनुमान दें</string>
+    <string name="patent_and_form_data_sync_resumed">सिंकिंग चालू है, रोगियों को सिंक करने और डेटा बनाने का प्रयास कर रहा है</string>
+    <string name="offline_mode_patient_data_saved_locally_notification_message">सिंक बंद है। रोगी अद्यतन डेटा स्थानीय रूप से सहेजा जाता है और ऑनलाइन मोड बहाल होने पर सिंक होगा।</string>
+    <string name="only_one_patient_can_be_selected_notification_message">आप केवल एक समान रोगी का चयन कर सकते हैं</string>
+    <string name="all_fields_empty_error_message">सभी फ़ील्ड रिक्त नहीं हो सकते</string>
+    <string name="no_such_form_name_error_message">%1$s नामक कोई मुठभेड़ प्रकार नहीं है</string>
+    <string name="failed_fetching_patient_data_error_message">रोगी डेटा लाने में विफल</string>
+    <string name="invalid_URL_message">अवैध यूआरएल</string>
+    <string name="failed_fetching_visit_type_error_message">यात्रा प्रकार लाने में विफल</string>
+    <string name="logs_copied_to_clipboard_message">क्लिपबोर्ड पर कॉपी किए गए लॉग</string>
+    <string name="authenticate_check_service_error_response_message">प्रामाणिक जाँच सेवा प्रतिक्रिया में त्रुटि</string>
+    <string name="authenticate_service_error_message">प्रमाणिक जाँच सेवा में त्रुटि</string>
+    <string name="dataset_entry_label">लेबल</string>
+    <string name="downloading_concepts_notification_message">डाउनलोडिंग कॉन्सेप्ट</string>
+    <string name="application_exit_logger_message">छोड़ने के लिए प्रार्थनापत्र</string>
+
+    <string name="patient_update_successful">रोगी %1$s अपडेट किया गया</string>
+    <string name="patient_update_unsuccessful">"रोगी %1$s को सर्वर त्रुटि के कारण समन्‍वयित नहीं किया जा सकता है "</string>
+    <string name="patient_photo_update_unsuccessful">सर्वर त्रुटि के कारण रोगी की फोटो को सिंक नहीं किया जा सकता है: %1$s</string>
+    <string name="form_data_will_be_synced_later_error_message">रोगी अभी तक पंजीकृत नहीं है। कोई इंटरनेट कनेक्शन नहीं। प्रपत्र डेटा स्थानीय रूप से सहेजा जाता है और इंटरनेट कनेक्शन बहाल होने पर सिंक होगा।</string>
+    <string name="form_data_sync_is_off_message">सिंक बंद है। फ़ॉर्म डेटा सहेजने के लिए सिंक चालू करें।</string>
+    <string name="unidentified_patient_name">अज्ञात रोगी</string>
+    <string name="snackbar_server_error">दर्ज किया गया सर्वर वर्तमान में नीचे है, कृपया एक अलग चुनें।</string>
+    <string name="snackbar_empty_visit_list">मेनू से फॉर्म एंट्री का चयन करें</string>
+    <string name="snackbar_no_forms_found">कोई फॉर्म नहीं मिला, एप्लिकेशन को पुनरारंभ करें।</string>
+    <string name="snackbar_choose">चुनें</string>
+    <string name="snackbar_select">चुनें</string>
+    <string name="offline_provider_fetch">ऑफ़लाइन प्रदाता डेटाबेस के साथ सिंक नहीं कर सका, डिवाइस ऑफ़लाइन है</string>
+    <string name="offline_provider_add">जब डिवाइस नेटवर्क से कनेक्ट हो जाता है तो प्रदाता सर्वर से सिंक हो जाएगा</string>
+    <string name="offline_provider_edit">"जब डिवाइस नेटवर्क से कनेक्ट हो जाता है तो अपडेटेड प्रदाता सर्वर से सिंक हो जाएगा "</string>
+    <string name="offline_provider_delete">ऑनलाइन वापस आने पर प्रदाता को सर्वर से हटा दिया जाएगा</string>
+    <string name="dashboard_exit_toast_message">"ऐप से बाहर निकलने के लिए कृपया BACK पर फिर से क्लिक करें "</string>
+
+    <!--Admission Form -->
+    <string name="admission">प्रवेश फार्म</string>
+    <string name="error_occurred">An error Occurred, Try Again Later !!!</string>
+    <string name="offline_error_message">You are currently offline, Try again when connected !!!</string>
+    <string name="admission_fields_required">Please Select Required Field</string>
+    <string name="admission_date">Admission Date :</string>
+    <string name="admission_admitted_by">Admitted By :</string>
+    <string name="admission_provider_role">Provider Role :</string>
+    <string name="admission_admitted_to">Admitted To :</string>
+
+    // Marking Patient Deceased
+    <string name="no_death_concepts_in_server">कृपया सर्वर में मौत के संभावित कारणों को जोड़ें</string>
+    <string name="mark_patient_deceased">रोगी को चिह्नित करें?</string>
+    <string name="mark_patient_deceased_notice">रोगी को मृतक चिह्नित किया जाएगा और आगे कोई निरीक्षण संभव नहीं होगी.</string>
+    <string name="mark_patient_deceased_proceed">प्रोसीड</string>
+    <string name="mark_patient_deceased_invalid_uuid">कृपया सर्वर में एक मान्य concept UUID जोड़ें </string>
+    <string name="mark_patient_deceased_concept_has_no_answer">इस सेटिंग के लिए मृत्यु के कोई संभावित कारण नहीं मिले</string>
+    <string name="marked_patient_deceased_successfully">रोगी मृतक चिह्नित है — %1$s</string>
+    <string name="cannot_start_visit_for_deceased">मृतक मरीज के लिए निरीक्षण शुरू नहीं कर सकते</string>
+
+    <!--Allergies -->
+    <string name="allergy_comment">टिप्पणी</string>
+    <string name="allergy_severity">तीव्रता</string>
+    <string name="allergy_reactions">प्रतिक्रिया</string>
+    <string name="empty_allergy_list">रोगी को अभी तक कोई एलर्जी नहीं है।</string>
+    <string name="unable_to_fetch_allergies">नवीनतम दर्ज एलर्जी प्राप्त करने में असमर्थ!</string>
+    <string name="delete_allergy_title">एलर्जी %1$s नष्ट करें?</string>
+    <string name="delete_allergy_description">रोगी का एलर्जी सर्वर से हटा दिया जाएगा। क्या तुम वाकई जारी रखना चाहते हो?</string>
+    <string name="delete_allergy_success">सफलतापूर्वक एलर्जी नष्ट हो गई</string>
+    <string name="delete_allergy_failure">एलर्जी को हटाने में असमर्थ</string>
+    <string name="delete_allergy_offline">ऑनलाइन वापस आने पर सर्वर से एलर्जी को हटा दिया जाएगा</string>
+    <string name="allergy_heading">एलर्जी</string>
+    <string name="choose_category">कोई \nश्रेणी चुनें</string>
+    <string name="allergen_drug">दवाई</string>
+    <string name="allergen_food">खाना</string>
+    <string name="allergen_other">अन्य</string>
+    <string name="severity">तीव्रता</string>
+    <string name="severity_mild">हल्का</string>
+    <string name="severity_moderate">मध्यम</string>
+    <string name="severity_severe">गंभीर</string>
+    <string name="comment">टिप्पणी</string>
+    <string name="add_comment">टिप्पणी जोड़ें</string>
+    <string name="create_allergy_title">एलर्जी पैदा करें?</string>
+    <string name="create_allergy_description">रोगी की एलर्जी सर्वर में जोड़ दी जाएगी। क्या तुम वाकई जारी रखना चाहते हो?</string>
+    <string name="warning_select_allergen">कृपया आगे बढ़ने से पहले एक एलर्जेन का चयन करें</string>
+    <string name="error_creating_allergy">एलर्जी पैदा करते समय एक अप्रत्याशित त्रुटि हुई थी। कृपया पुन: प्रयास करें!</string>
+    <string name="success_creating_allergy">एलर्जी सफलतापूर्वक जोड़ दी गई।</string>
+    <string name="delete_allergy_dialog">एलर्जी को नष्ट करें</string>
+    <string name="update_allergy_dialog">एलर्जी का अद्यतन करें</string>
+    <string name="allergy_already_selected">पहले से ही चयनित एलर्जी!</string>
+    <string name="start">शुरू:</string>
+    <string name="end">समाप्त:</string>
+    <string name="about_openmrs_1">OpenMRS वास्तव में समर्पित, प्रतिभाशाली और उदार योगदानकर्ताओं का एक वैश्विक समुदाय है जो OpenMRS मंच और अन्य, मूलभूत OpenMRS तकनीकी उत्पादों का निर्माण और रखरखाव करता है।</string>
+    <string name="about_openmrs_2">OpenMRS एक ऐसा प्लेटफॉर्म है जिसका उपयोग देश और कार्यान्वयनकर्ता जमीन पर वास्तविक जरूरतों के जवाब में एक अनुकूलित EMR सिस्टम बनाने के लिए करते हैं।</string>
+    <string name="more_about_openmrs">"अधिक"</string>
+    <string name="action_about_activity">Open MRS के बारे में</string>
+    <string name="action_about">Open MRS के बारे में</string>
+</resources>

@@ -41,7 +41,6 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
 import org.openmrs.mobile.databinding.FragmentSyncedPatientsBinding;
-import com.example.openmrs_android_sdk.library.models.Patient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,7 +147,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
     public void onCreateOptionsMenu(@NotNull Menu menu, @NotNull MenuInflater menuInflater) {
         super.onCreateOptionsMenu(menu, menuInflater);
         addPatientMenuItem = menu.findItem(R.id.actionAddPatients);
-        enableAddPatient(OpenMRS.getInstance().getSyncState());
+        enableAddPatient(OpenmrsAndroid.getSyncState());
     }
 
     private void enableAddPatient(boolean enabled) {

@@ -40,8 +40,8 @@ import org.openmrs.mobile.activities.login.LoginFragment;
 import org.openmrs.mobile.activities.login.LoginPresenter;
 import com.example.openmrs_android_sdk.library.api.RestApi;
 import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import org.openmrs.mobile.api.UserService;
-import org.openmrs.mobile.api.repository.VisitRepository;
+import org.openmrs.mobile.services.UserService;
+import com.example.openmrs_android_sdk.library.api.repository.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.net.AuthorizationManager;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
@@ -88,7 +88,7 @@ public class LoginPresenterTest extends ACUnitTestBaseRx {
     @Before
     public void setUp() {
         super.setUp();
-        VisitRepository visitRepository = new VisitRepository(openMRS, openMRSLogger, restApi, visitDAO, locationDAO, encounterDAO);
+        VisitRepository visitRepository = new VisitRepository(openMRSLogger, restApi, visitDAO, locationDAO, encounterDAO);
         presenter = new LoginPresenter(restApi, visitRepository, locationDAO, userService, view, openMRS,
             openMRSLogger, authorizationManager);
         mockStaticMethods();

@@ -25,7 +25,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import com.example.openmrs_android_sdk.library.api.RestApi;
 import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import org.openmrs.mobile.api.repository.VisitRepository;
+import com.example.openmrs_android_sdk.library.api.repository.VisitRepository;
 import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.VisitsResponseCallback;
 
 import java.util.List;
@@ -62,7 +62,7 @@ public class VisitDashboardPresenter extends BasePresenter implements VisitDashb
         this.visitId = visitId;
         this.restApi = restApi;
         mVisitDashboardView.setPresenter(this);
-        visitRepository = new VisitRepository(null, null, restApi, visitDAO, null, null);
+        visitRepository = new VisitRepository(null, restApi, visitDAO, null, null);
     }
 
     public void endVisitByUUID(final Visit visit) {

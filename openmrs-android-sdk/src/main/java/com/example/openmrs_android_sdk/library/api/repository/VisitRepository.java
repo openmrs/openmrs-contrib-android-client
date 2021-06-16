@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.api.repository;
+package com.example.openmrs_android_sdk.library.api.repository;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,7 +33,6 @@ import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 import com.example.openmrs_android_sdk.utilities.DateUtils;
 
 import com.example.openmrs_android_sdk.library.api.RestApi;
-import org.openmrs.mobile.application.OpenMRS;
 import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.GetVisitTypeCallback;
 import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.StartVisitResponseCallback;
@@ -62,14 +61,13 @@ public class VisitRepository extends BaseRepository {
 
     /**
      * used in Unit tests with mockUp objects
-     *
-     * @param restApi
+     *  @param restApi
      * @param visitDAO
      * @param locationDAO
      * @param encounterDAO
      */
-    public VisitRepository(OpenMRS openMrs, OpenMRSLogger logger,RestApi restApi, VisitDAO visitDAO, LocationDAO locationDAO, EncounterDAO encounterDAO) {
-        super(openMrs,restApi, logger);
+    public VisitRepository(OpenMRSLogger logger, RestApi restApi, VisitDAO visitDAO, LocationDAO locationDAO, EncounterDAO encounterDAO) {
+        super(restApi, logger);
         this.visitDAO = visitDAO;
         this.encounterDAO = encounterDAO;
         this.locationDAO = locationDAO;

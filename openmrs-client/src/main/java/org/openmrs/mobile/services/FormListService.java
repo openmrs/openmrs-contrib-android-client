@@ -8,7 +8,7 @@
  * graphic logo is a trademark of OpenMRS Inc.
  */
 
-package org.openmrs.mobile.api;
+package org.openmrs.mobile.services;
 
 import android.app.IntentService;
 import android.content.Intent;

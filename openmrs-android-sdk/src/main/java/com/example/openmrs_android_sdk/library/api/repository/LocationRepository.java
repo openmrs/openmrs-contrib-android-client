@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.api.repository;
+package com.example.openmrs_android_sdk.library.api.repository;
 
 import androidx.annotation.NonNull;
 

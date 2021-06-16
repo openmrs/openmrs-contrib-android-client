@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.api.repository;
+package com.example.openmrs_android_sdk.library.api.repository;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -21,9 +21,16 @@ import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 
+import com.example.openmrs_android_sdk.R;
 import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+import com.example.openmrs_android_sdk.library.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.workers.provider.AddProviderWorker;
+import com.example.openmrs_android_sdk.library.api.workers.provider.DeleteProviderWorker;
+import com.example.openmrs_android_sdk.library.api.workers.provider.UpdateProviderWorker;
 import com.example.openmrs_android_sdk.library.dao.ProviderRoomDAO;
 import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 import com.example.openmrs_android_sdk.library.models.Provider;
 import com.example.openmrs_android_sdk.library.models.Resource;
 import com.example.openmrs_android_sdk.library.models.Results;
@@ -32,13 +39,6 @@ import com.example.openmrs_android_sdk.utilities.NetworkUtils;
 import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
-import org.openmrs.mobile.R;
-import com.example.openmrs_android_sdk.library.api.RestApi;
-import org.openmrs.mobile.api.workers.provider.AddProviderWorker;
-import org.openmrs.mobile.api.workers.provider.DeleteProviderWorker;
-import org.openmrs.mobile.api.workers.provider.UpdateProviderWorker;
-import org.openmrs.mobile.application.OpenMRS;
-import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 
 import java.util.HashSet;
 import java.util.List;
@@ -55,8 +55,8 @@ public class ProviderRepository extends BaseRepository {
         providerRoomDao = db.providerRoomDAO();
     }
 
-    public ProviderRepository(OpenMRS openMrs, RestApi restApi, OpenMRSLogger logger) {
-        super(openMrs, restApi, logger);
+    public ProviderRepository(RestApi restApi, OpenMRSLogger logger) {
+        super(restApi, logger);
     }
 
     public void setProviderRoomDao(ProviderRoomDAO providerRoomDao) {
@@ -103,7 +103,7 @@ public class ProviderRepository extends BaseRepository {
                         }
                     } else {
                         logger.e("Reading providers failed. Response: " + response.errorBody());
-                        ToastUtil.error(openMrs.getString(R.string.unable_to_fetch_providers));
+                        ToastUtil.error(OpenmrsAndroid.getInstance().getString(R.string.unable_to_fetch_providers));
                         providerLiveData.setValue(providerRoomDao.getProviderList().blockingGet());
                     }
                 }
@@ -111,7 +111,7 @@ public class ProviderRepository extends BaseRepository {
                 @Override
                 public void onFailure(@NotNull Call<Results<Provider>> call, @NotNull Throwable t) {
                     logger.e("Reading providers failed.", t);
-                    ToastUtil.error(openMrs.getString(R.string.unable_to_fetch_providers));
+                    ToastUtil.error(OpenmrsAndroid.getInstance().getString(R.string.unable_to_fetch_providers));
                     providerLiveData.setValue(providerRoomDao.getProviderList().blockingGet());
                 }
             });
@@ -121,7 +121,7 @@ public class ProviderRepository extends BaseRepository {
             providerLiveData.setValue(providerRoomDao.getProviderList().blockingGet());
 
             //offline notify
-            ToastUtil.notify(openMrs.getString(R.string.offline_provider_fetch));
+            ToastUtil.notify(context.getString(R.string.offline_provider_fetch));
             logger.e("offline providers fetched couldnt sync with the database device offline");
         }
         return providerLiveData;
@@ -137,7 +137,7 @@ public class ProviderRepository extends BaseRepository {
                         //offline adding provider
                         providerRoomDao.addProvider(response.body());
 
-                        ToastUtil.success(openMrs.getString(R.string.add_provider_success_msg));
+                        ToastUtil.success(context.getString(R.string.add_provider_success_msg));
                         logger.e("Adding Provider Successful " + response.raw());
                         callback.onResponse();
                     }
@@ -146,7 +146,7 @@ public class ProviderRepository extends BaseRepository {
                 @Override
                 public void onFailure(@NotNull Call<Provider> call, @NotNull Throwable t) {
                     logger.e("Failed to add provider. Error:  " + t.getMessage());
-                    callback.onErrorResponse(openMrs.getString(R.string.add_provider_failure_msg));
+                    callback.onErrorResponse(context.getString(R.string.add_provider_failure_msg));
                 }
             });
         } else {
@@ -163,7 +163,7 @@ public class ProviderRepository extends BaseRepository {
             workManager.enqueue(new OneTimeWorkRequest.Builder(AddProviderWorker.class).setConstraints(constraints).setInputData(data).build());
 
             //toast about deferred provider creation
-            ToastUtil.notify(openMrs.getString(R.string.offline_provider_add));
+            ToastUtil.notify(context.getString(R.string.offline_provider_add));
             logger.e("provider will be synced to the server when device gets connected to network");
         }
     }
@@ -180,7 +180,7 @@ public class ProviderRepository extends BaseRepository {
                         providerRoomDao.updateProviderByUuid(response.body().getDisplay(), provider.getId(), response.body().getPerson(), response.body().getUuid(),
                                 response.body().getIdentifier());
 
-                        ToastUtil.success(openMrs.getString(R.string.edit_provider_success_msg));
+                        ToastUtil.success(context.getString(R.string.edit_provider_success_msg));
                         logger.e("Editing Provider Successful " + response.raw());
                         callback.onResponse();
                     }
@@ -189,7 +189,7 @@ public class ProviderRepository extends BaseRepository {
                 @Override
                 public void onFailure(@NotNull Call<Provider> call, @NotNull Throwable t) {
                     logger.e("Failed to edit provider. Error:  " + t.getMessage());
-                    callback.onErrorResponse(openMrs.getString(R.string.edit_provider_failure_msg));
+                    callback.onErrorResponse(context.getString(R.string.edit_provider_failure_msg));
                 }
             });
         } else {
@@ -204,7 +204,7 @@ public class ProviderRepository extends BaseRepository {
             workManager.enqueue(new OneTimeWorkRequest.Builder(UpdateProviderWorker.class).setConstraints(constraints).setInputData(data).build());
 
             //toast about deferred provider updation
-            ToastUtil.success(openMrs.getString(R.string.offline_provider_edit));
+            ToastUtil.success(context.getString(R.string.offline_provider_edit));
             logger.e("updated provider will be synced to the server when device gets connected to network");
         }
     }
@@ -221,7 +221,7 @@ public class ProviderRepository extends BaseRepository {
                         // offline deletion
                         providerRoomDao.deleteByUuid(providerUuid);
 
-                        ToastUtil.success(openMrs.getString(R.string.delete_provider_success_msg));
+                        ToastUtil.success(context.getString(R.string.delete_provider_success_msg));
                         logger.e("Deleting Provider Successful " + response.raw());
 
                         callback.onResponse();
@@ -231,7 +231,7 @@ public class ProviderRepository extends BaseRepository {
                 @Override
                 public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
                     logger.e("Failed to delete provider. Error:  " + t.getMessage());
-                    callback.onErrorResponse(openMrs.getString(R.string.delete_provider_failure_msg));
+                    callback.onErrorResponse(context.getString(R.string.delete_provider_failure_msg));
                 }
             });
         } else {
@@ -246,7 +246,7 @@ public class ProviderRepository extends BaseRepository {
             workManager.enqueue(new OneTimeWorkRequest.Builder(DeleteProviderWorker.class).setConstraints(constraints).setInputData(data).build());
 
             //toast about deferred provider deletion
-            ToastUtil.success(openMrs.getString(R.string.offline_provider_delete));
+            ToastUtil.success(context.getString(R.string.offline_provider_delete));
             logger.e("Provider will be removed from the server when you're back online");
         }
     }

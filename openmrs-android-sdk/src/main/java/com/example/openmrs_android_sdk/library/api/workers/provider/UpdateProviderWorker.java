@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.api.workers.provider;
+package com.example.openmrs_android_sdk.library.api.workers.provider;
 
 import android.content.Context;
 import android.os.Handler;
@@ -22,31 +22,25 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import com.example.openmrs_android_sdk.R;
 import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+import com.example.openmrs_android_sdk.library.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
 import com.example.openmrs_android_sdk.library.dao.ProviderRoomDAO;
 import com.example.openmrs_android_sdk.library.databases.AppDatabase;
-import com.example.openmrs_android_sdk.library.models.Person;
-import com.example.openmrs_android_sdk.library.models.PersonName;
 import com.example.openmrs_android_sdk.library.models.Provider;
 import com.example.openmrs_android_sdk.utilities.NetworkUtils;
 import com.example.openmrs_android_sdk.utilities.ToastUtil;
-
-import org.jetbrains.annotations.NotNull;
-import org.openmrs.mobile.R;
-import com.example.openmrs_android_sdk.library.api.RestApi;
-import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import org.openmrs.mobile.application.OpenMRS;
-import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.CustomResponseCallback;
 
 import java.io.IOException;
 
 import retrofit2.Response;
 
-public class AddProviderWorker extends Worker {
+public class UpdateProviderWorker extends Worker {
     ProviderRoomDAO providerRoomDao;
     RestApi restApi;
 
-    public AddProviderWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+    public UpdateProviderWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         restApi = RestServiceBuilder.createService(RestApi.class);
         providerRoomDao = AppDatabase.getDatabase(getApplicationContext()).providerRoomDAO();
@@ -55,18 +49,18 @@ public class AddProviderWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        Provider provider = providerRoomDao.findProviderByID(getInputData().getLong("id", 0l)).blockingGet();
+        String providerUuidTobeUpdated = getInputData().getString("uuid");
+        Provider provider = providerRoomDao.findProviderByUUID(providerUuidTobeUpdated).blockingGet();
 
         if (provider == null) {
             return Result.failure();
         } else {
-            // Its necessary since server gives Error 500 if request has UUID set as ""
             provider.getPerson().setUuid(null);
 
-            if (addProvider(restApi, provider)) {
+            if (updateProvider(restApi, provider)) {
                 new Handler(Looper.getMainLooper()).post(() -> {
-                    ToastUtil.success(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
-                    OpenMRS.getInstance().getOpenMRSLogger().e(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
+                    ToastUtil.success(OpenmrsAndroid.getInstance().getString(R.string.edit_provider_success_msg));
+                    OpenmrsAndroid.getOpenMRSLogger().e(OpenmrsAndroid.getInstance().getString(R.string.edit_provider_success_msg));
                 });
                 return Result.success();
             } else {
@@ -75,15 +69,13 @@ public class AddProviderWorker extends Worker {
         }
     }
 
-    private boolean addProvider(RestApi restApi, Provider provider) {
+    private boolean updateProvider(RestApi restApi, Provider provider) {
         if (NetworkUtils.isOnline()) {
             try {
-                Response<Provider> response = restApi.addProvider(provider).execute();
+                Response<Provider> response = restApi.UpdateProvider(provider.getUuid(), provider).execute();
                 if (response.isSuccessful()) {
-
-                    providerRoomDao.updateProviderUuidById(provider.getId(), response.body().getUuid());
-                    providerRoomDao.updateProviderByUuid(response.body().getDisplay(), provider.getId(),
-                            response.body().getPerson(), response.body().getUuid(), response.body().getIdentifier());
+                    providerRoomDao.updateProviderByUuid(response.body().getDisplay(), provider.getId(), response.body().getPerson(), response.body().getUuid(),
+                            response.body().getIdentifier());
                     return true;
                 }
             } catch (IOException e) {

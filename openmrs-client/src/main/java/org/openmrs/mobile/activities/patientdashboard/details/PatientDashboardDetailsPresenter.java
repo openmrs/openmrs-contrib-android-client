@@ -15,6 +15,8 @@
 package org.openmrs.mobile.activities.patientdashboard.details;
 
 import com.example.openmrs_android_sdk.library.dao.PatientDAO;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DownloadPatientCallback;
 import com.example.openmrs_android_sdk.library.models.Patient;
 import com.example.openmrs_android_sdk.utilities.NetworkUtils;
 
@@ -23,8 +25,6 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.api.repository.VisitRepository;
-import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.listeners.retrofitcallbacks.DownloadPatientCallback;
 
 public class PatientDashboardDetailsPresenter extends PatientDashboardMainPresenterImpl implements PatientDashboardContract.PatientDetailsPresenter {
     private PatientDashboardContract.ViewPatientDetails mPatientDetailsView;

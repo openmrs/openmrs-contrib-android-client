@@ -11,12 +11,10 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-
-package org.openmrs.mobile.listeners.retrofitcallbacks
-
-import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity
+package com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks
 
 @JvmSuppressWildcards
-interface LocationResponseCallback : DefaultResponseCallback {
-    fun onResponse(locationList: List<LocationEntity?>?)
+interface VisitsResponseCallback {
+    fun onSuccess(response: String?)
+    fun onFailure(errorMessage: String?)
 }

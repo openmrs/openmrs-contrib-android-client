@@ -23,10 +23,10 @@ import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
+import com.example.openmrs_android_sdk.library.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.AllergyRepository;
-import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 
 import java.util.List;
 

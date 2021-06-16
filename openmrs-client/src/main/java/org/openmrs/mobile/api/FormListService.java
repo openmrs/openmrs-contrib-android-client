@@ -16,6 +16,8 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 
 import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+import com.example.openmrs_android_sdk.library.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
 import com.example.openmrs_android_sdk.library.dao.EncounterTypeRoomDAO;
 import com.example.openmrs_android_sdk.library.dao.FormResourceDAO;
 import com.example.openmrs_android_sdk.library.databases.AppDatabase;

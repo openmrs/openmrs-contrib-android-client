@@ -17,7 +17,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardContract;
 import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardPresenter;
-import org.openmrs.mobile.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestApi;
 import org.openmrs.mobile.api.repository.ProviderRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.test.ACUnitTestBase;

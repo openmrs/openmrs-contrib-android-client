@@ -59,7 +59,21 @@ dependencies {
     //bcrypt
     implementation 'org.mindrot:jbcrypt:0.4'
 
+    //jdeferred
+    implementation 'org.jdeferred:jdeferred-android-aar:1.2.6'
 
+    //networking and processing
+    implementation "com.squareup.retrofit2:retrofit:2.3.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.1.0"
+    implementation "com.google.code.gson:gson:2.8.5"
+
+    // http request Chuck Library
+    testImplementation "com.readystatesoftware.chuck:library:1.1.0"
+    debugImplementation "com.readystatesoftware.chuck:library:1.1.0"
+    releaseImplementation "com.readystatesoftware.chuck:library-no-op:1.1.0"
+
+
+    // test implementation
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

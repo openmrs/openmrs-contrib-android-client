@@ -11,9 +11,13 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.mobile.listeners.retrofitcallbacks
 
-@JvmSuppressWildcards
-interface StartVisitResponseCallback : DefaultResponseCallback {
-    fun onStartVisitResponse(id: Long)
+package com.example.openmrs_android_sdk.library.api.promise;
+
+import org.jdeferred.impl.DeferredObject;
+
+public class SimpleDeferredObject<T> extends DeferredObject<T, Throwable, Void> implements SimplePromise<T> {
+    public SimplePromise<T> promise() {
+        return (SimplePromise<T>) super.promise();
+    }
 }

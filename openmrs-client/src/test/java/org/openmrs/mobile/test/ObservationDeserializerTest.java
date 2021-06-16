@@ -24,7 +24,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.openmrs.mobile.utilities.ObservationDeserializer;
+import com.example.openmrs_android_sdk.utilities.ObservationDeserializer;
 
 import java.io.BufferedReader;
 import java.io.File;

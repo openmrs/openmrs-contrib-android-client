@@ -31,12 +31,12 @@ import com.example.openmrs_android_sdk.utilities.ToastUtil;
 import org.mindrot.jbcrypt.BCrypt;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
+import com.example.openmrs_android_sdk.library.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
 import org.openmrs.mobile.api.UserService;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.listeners.retrofitcallbacks.GetVisitTypeCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.GetVisitTypeCallback;
 import org.openmrs.mobile.net.AuthorizationManager;
 
 import java.util.ArrayList;

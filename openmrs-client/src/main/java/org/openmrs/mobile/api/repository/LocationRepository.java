@@ -21,8 +21,8 @@ import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity
 import com.example.openmrs_android_sdk.library.models.Results;
 import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
-import org.openmrs.mobile.api.promise.SimpleDeferredObject;
-import org.openmrs.mobile.api.promise.SimplePromise;
+import com.example.openmrs_android_sdk.library.api.promise.SimpleDeferredObject;
+import com.example.openmrs_android_sdk.library.api.promise.SimplePromise;
 
 import retrofit2.Call;
 import retrofit2.Callback;

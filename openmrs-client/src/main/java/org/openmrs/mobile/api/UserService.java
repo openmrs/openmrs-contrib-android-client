@@ -17,6 +17,8 @@ package org.openmrs.mobile.api;
 import androidx.annotation.NonNull;
 
 import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+import com.example.openmrs_android_sdk.library.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
 import com.example.openmrs_android_sdk.library.models.Results;
 import com.example.openmrs_android_sdk.library.models.User;
 import com.example.openmrs_android_sdk.utilities.ApplicationConstants;

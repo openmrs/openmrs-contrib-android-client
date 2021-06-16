@@ -16,8 +16,8 @@ package org.openmrs.mobile.api.repository;
 
 import androidx.work.WorkManager;
 
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
+import com.example.openmrs_android_sdk.library.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
 import com.example.openmrs_android_sdk.library.OpenMRSLogger;
 import com.example.openmrs_android_sdk.library.databases.AppDatabase;

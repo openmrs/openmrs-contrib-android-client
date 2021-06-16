@@ -11,8 +11,11 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.mobile.listeners.retrofitcallbacks
+package com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks
 
-interface CustomResponseCallback : DefaultResponseCallback {
-    fun onErrorResponse()
+import com.example.openmrs_android_sdk.library.models.Patient
+import com.example.openmrs_android_sdk.library.models.Results
+
+interface PatientResponseCallback : DefaultResponseCallback {
+    fun onResponse(patientResults: Results<Patient?>?)
 }

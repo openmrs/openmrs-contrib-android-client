@@ -11,10 +11,14 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.mobile.listeners.retrofitcallbacks
+package com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks
+
+import com.example.openmrs_android_sdk.library.api.promise.SimpleDeferredObject
+import com.example.openmrs_android_sdk.library.models.Patient
 
 @JvmSuppressWildcards
-interface VisitsResponseCallback {
-    fun onSuccess(response: String?)
-    fun onFailure(errorMessage: String?)
+interface PatientDeferredResponseCallback : DefaultResponseCallback {
+    fun onResponse(response: SimpleDeferredObject<Patient?>?) {}
+    fun onErrorResponse(errorMessage: String?, errorResponse: SimpleDeferredObject<Patient?>?) {}
+    fun onNotifyResponse(notifyMessage: String?) {}
 }

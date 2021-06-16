@@ -33,12 +33,12 @@ import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestApi;
 import org.openmrs.mobile.api.workers.provider.AddProviderWorker;
 import org.openmrs.mobile.api.workers.provider.DeleteProviderWorker;
 import org.openmrs.mobile.api.workers.provider.UpdateProviderWorker;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 
 import java.util.HashSet;
 import java.util.List;

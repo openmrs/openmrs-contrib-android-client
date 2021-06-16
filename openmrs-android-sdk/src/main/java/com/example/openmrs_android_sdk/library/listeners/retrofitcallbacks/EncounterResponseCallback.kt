@@ -12,12 +12,12 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.api.promise;
+package com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks
 
-import org.jdeferred.impl.DeferredObject;
+import com.example.openmrs_android_sdk.library.models.Resource
 
-public class SimpleDeferredObject<T> extends DeferredObject<T, Throwable, Void> implements SimplePromise<T> {
-    public SimplePromise<T> promise() {
-        return (SimplePromise<T>) super.promise();
-    }
+
+@JvmSuppressWildcards
+interface EncounterResponseCallback : DefaultResponseCallback {
+    fun onResponse(encounterRoleList: List<Resource?>?)
 }

@@ -8,7 +8,7 @@
  * graphic logo is a trademark of OpenMRS Inc.
  */
 
-package org.openmrs.mobile.api;
+package com.example.openmrs_android_sdk.library.api;
 
 import android.util.Base64;
 
@@ -17,12 +17,10 @@ import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
 import com.example.openmrs_android_sdk.library.models.Observation;
 import com.example.openmrs_android_sdk.library.models.Resource;
 import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.example.openmrs_android_sdk.utilities.ObservationDeserializer;
 import com.example.openmrs_android_sdk.utilities.ResourceSerializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.utilities.ObservationDeserializer;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -30,7 +28,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestServiceBuilder {
-    protected static final OpenMRS mOpenMRS = OpenMRS.getInstance();
     private static String API_BASE_URL = OpenmrsAndroid.getServerUrl() + ApplicationConstants.API.REST_ENDPOINT;
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
     private static Retrofit.Builder builder;

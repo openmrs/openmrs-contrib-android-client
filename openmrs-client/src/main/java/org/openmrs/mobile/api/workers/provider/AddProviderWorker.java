@@ -33,10 +33,10 @@ import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
+import com.example.openmrs_android_sdk.library.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.listeners.retrofitcallbacks.CustomResponseCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.CustomResponseCallback;
 
 import java.io.IOException;
 

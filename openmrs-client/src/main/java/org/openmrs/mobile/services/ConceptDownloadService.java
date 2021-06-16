@@ -24,8 +24,8 @@ import com.example.openmrs_android_sdk.library.models.SystemSetting;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
+import com.example.openmrs_android_sdk.library.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
 import com.example.openmrs_android_sdk.library.dao.ConceptRoomDAO;
 import com.example.openmrs_android_sdk.library.databases.AppDatabase;

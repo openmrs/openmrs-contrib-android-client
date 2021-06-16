@@ -11,14 +11,16 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.mobile.listeners.retrofitcallbacks
 
-import com.example.openmrs_android_sdk.library.models.Patient
-import org.openmrs.mobile.api.promise.SimpleDeferredObject
+package com.example.openmrs_android_sdk.library.api.promise;
 
-@JvmSuppressWildcards
-interface PatientDeferredResponseCallback : DefaultResponseCallback {
-    fun onResponse(response: SimpleDeferredObject<Patient?>?) {}
-    fun onErrorResponse(errorMessage: String?, errorResponse: SimpleDeferredObject<Patient?>?) {}
-    fun onNotifyResponse(notifyMessage: String?) {}
+import org.jdeferred.Deferred;
+import org.jdeferred.Promise;
+
+/**
+ * Promise interface to observe when some action has occurred on the corresponding {@link Deferred} object.
+ *
+ * @param <T> Type used for {@link #done(org.jdeferred.DoneCallback)}
+ */
+public interface SimplePromise<T> extends Promise<T, Throwable, Void> {
 }

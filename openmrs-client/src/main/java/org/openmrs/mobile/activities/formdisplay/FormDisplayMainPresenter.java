@@ -25,7 +25,7 @@ import org.joda.time.LocalDateTime;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.api.repository.VisitRepository;
-import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 
 import java.util.ArrayList;
 import java.util.List;

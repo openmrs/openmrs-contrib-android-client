@@ -14,6 +14,8 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
+import com.example.openmrs_android_sdk.library.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
 import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import com.example.openmrs_android_sdk.library.models.Module;
 import com.example.openmrs_android_sdk.library.models.Patient;

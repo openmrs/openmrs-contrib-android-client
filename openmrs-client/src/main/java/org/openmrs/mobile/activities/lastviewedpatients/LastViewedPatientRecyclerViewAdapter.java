@@ -39,7 +39,7 @@ import com.example.openmrs_android_sdk.utilities.ToastUtil;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.repository.PatientRepository;
 import org.openmrs.mobile.api.repository.VisitRepository;
-import org.openmrs.mobile.listeners.retrofitcallbacks.DownloadPatientCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DownloadPatientCallback;
 
 import java.util.HashSet;
 import java.util.List;

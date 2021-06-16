@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.listeners.retrofitcallbacks;
+package com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks;
 
 /**
  * this method {@link #onResponse()} () onResponse}

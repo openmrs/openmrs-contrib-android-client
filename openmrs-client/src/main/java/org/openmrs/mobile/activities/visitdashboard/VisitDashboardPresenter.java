@@ -23,10 +23,10 @@ import com.example.openmrs_android_sdk.utilities.StringUtils;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
+import com.example.openmrs_android_sdk.library.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
 import org.openmrs.mobile.api.repository.VisitRepository;
-import org.openmrs.mobile.listeners.retrofitcallbacks.VisitsResponseCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.VisitsResponseCallback;
 
 import java.util.List;
 

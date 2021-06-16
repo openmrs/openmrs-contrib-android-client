@@ -11,11 +11,12 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.mobile.listeners.retrofitcallbacks
+package com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks
 
-import com.example.openmrs_android_sdk.library.models.Patient
-import com.example.openmrs_android_sdk.library.models.Results
+import com.example.openmrs_android_sdk.library.models.VisitType
 
-interface PatientResponseCallback : DefaultResponseCallback {
-    fun onResponse(patientResults: Results<Patient?>?)
+
+@JvmSuppressWildcards
+interface GetVisitTypeCallback : DefaultResponseCallback {
+    fun onGetVisitTypeResponse(visitType: VisitType?)
 }

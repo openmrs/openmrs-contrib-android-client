@@ -11,16 +11,9 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks
 
-package org.openmrs.mobile.api.promise;
-
-import org.jdeferred.Deferred;
-import org.jdeferred.Promise;
-
-/**
- * Promise interface to observe when some action has occurred on the corresponding {@link Deferred} object.
- *
- * @param <T> Type used for {@link #done(org.jdeferred.DoneCallback)}
- */
-public interface SimplePromise<T> extends Promise<T, Throwable, Void> {
+@JvmSuppressWildcards
+interface StartVisitResponseCallback : DefaultResponseCallback {
+    fun onStartVisitResponse(id: Long)
 }

@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.mobile.utilities
+package com.example.openmrs_android_sdk.utilities
 
 import com.example.openmrs_android_sdk.library.databases.entities.ConceptEntity
 import com.example.openmrs_android_sdk.library.models.Observation

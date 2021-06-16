@@ -11,12 +11,12 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.mobile.listeners.retrofitcallbacks
 
-import com.example.openmrs_android_sdk.library.models.VisitType
+package com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks
 
+import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity
 
 @JvmSuppressWildcards
-interface GetVisitTypeCallback : DefaultResponseCallback {
-    fun onGetVisitTypeResponse(visitType: VisitType?)
+interface LocationResponseCallback : DefaultResponseCallback {
+    fun onResponse(locationList: List<LocationEntity?>?)
 }

@@ -31,7 +31,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.visits.PatientDashboardVisitsPresenter;
-import org.openmrs.mobile.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestApi;
 import org.openmrs.mobile.api.repository.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;

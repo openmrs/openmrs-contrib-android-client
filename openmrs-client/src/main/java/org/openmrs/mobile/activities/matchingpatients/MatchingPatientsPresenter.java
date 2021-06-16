@@ -21,12 +21,12 @@ import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
-import org.openmrs.mobile.api.promise.SimpleDeferredObject;
+import com.example.openmrs_android_sdk.library.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
+import com.example.openmrs_android_sdk.library.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.repository.PatientRepository;
-import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
 import org.openmrs.mobile.utilities.PatientMerger;
 
 import java.util.Queue;

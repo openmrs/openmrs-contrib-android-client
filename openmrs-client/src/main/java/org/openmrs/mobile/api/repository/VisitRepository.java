@@ -32,12 +32,12 @@ import com.example.openmrs_android_sdk.library.models.VisitType;
 import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 import com.example.openmrs_android_sdk.utilities.DateUtils;
 
-import org.openmrs.mobile.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestApi;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.listeners.retrofitcallbacks.GetVisitTypeCallback;
-import org.openmrs.mobile.listeners.retrofitcallbacks.StartVisitResponseCallback;
-import org.openmrs.mobile.listeners.retrofitcallbacks.VisitsResponseCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.GetVisitTypeCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.StartVisitResponseCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.VisitsResponseCallback;
 
 import java.util.List;
 

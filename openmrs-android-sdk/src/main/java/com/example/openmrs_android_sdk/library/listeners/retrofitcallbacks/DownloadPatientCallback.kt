@@ -11,13 +11,12 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks
 
-package org.openmrs.mobile.listeners.retrofitcallbacks
-
-import com.example.openmrs_android_sdk.library.models.Resource
-
+import com.example.openmrs_android_sdk.library.models.Patient
 
 @JvmSuppressWildcards
-interface EncounterResponseCallback : DefaultResponseCallback {
-    fun onResponse(encounterRoleList: List<Resource?>?)
+interface DownloadPatientCallback : DefaultResponseCallback {
+    fun onPatientDownloaded(patient: Patient?)
+    fun onPatientPhotoDownloaded(patient: Patient?)
 }

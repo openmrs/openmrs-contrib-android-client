@@ -26,7 +26,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardContract;
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardPresenter;
-import org.openmrs.mobile.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestApi;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 
 import rx.Observable;

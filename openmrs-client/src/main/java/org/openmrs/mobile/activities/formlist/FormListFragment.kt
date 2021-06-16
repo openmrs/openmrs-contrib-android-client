@@ -35,8 +35,8 @@ import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseFragment
 import org.openmrs.mobile.activities.formadmission.FormAdmissionActivity
 import org.openmrs.mobile.activities.formdisplay.FormDisplayActivity
-import org.openmrs.mobile.api.RestApi
-import org.openmrs.mobile.api.RestServiceBuilder
+import com.example.openmrs_android_sdk.library.api.RestApi
+import com.example.openmrs_android_sdk.library.api.RestServiceBuilder
 import org.openmrs.mobile.databinding.FragmentFormListBinding
 import com.example.openmrs_android_sdk.utilities.ApplicationConstants
 import retrofit2.Call

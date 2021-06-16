@@ -8,7 +8,7 @@
  * graphic logo is a trademark of OpenMRS Inc.
  */
 
-package org.openmrs.mobile.api;
+package com.example.openmrs_android_sdk.library.api;
 
 import com.example.openmrs_android_sdk.library.databases.entities.ConceptEntity;
 import com.example.openmrs_android_sdk.library.databases.entities.FormResourceEntity;

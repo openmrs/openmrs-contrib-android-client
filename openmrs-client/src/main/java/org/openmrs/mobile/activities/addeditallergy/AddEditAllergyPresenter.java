@@ -29,7 +29,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.api.repository.AllergyRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 
 import java.util.ArrayList;
 

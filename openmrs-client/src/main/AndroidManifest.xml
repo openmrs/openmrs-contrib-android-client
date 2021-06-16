@@ -187,13 +187,13 @@
         </activity>
 
         <service
-            android:name=".api.PatientService"
+            android:name=".services.PatientService"
             android:enabled="true" />
         <service
-            android:name=".api.EncounterService"
+            android:name="com.example.openmrs_android_sdk.library.api.services.EncounterService"
             android:enabled="true" />
         <service
-            android:name=".api.FormListService"
+            android:name=".services.FormListService"
             android:enabled="true" />
         <service
             android:name=".services.AuthenticateCheckService"

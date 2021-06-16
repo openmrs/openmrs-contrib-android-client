@@ -12,34 +12,36 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.api.repository;
+package com.example.openmrs_android_sdk.library.api.repository;
+
+import android.content.Context;
 
 import androidx.work.WorkManager;
 
+import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
 import com.example.openmrs_android_sdk.library.api.RestApi;
 import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import org.openmrs.mobile.application.OpenMRS;
-import com.example.openmrs_android_sdk.library.OpenMRSLogger;
 import com.example.openmrs_android_sdk.library.databases.AppDatabase;
 
 public abstract class BaseRepository {
-    protected OpenMRS openMrs;
+    protected Context context;
     protected RestApi restApi;
     protected AppDatabase db;
     protected WorkManager workManager;
     protected OpenMRSLogger logger;
 
     public BaseRepository() {
-        this.openMrs = OpenMRS.getInstance();
+        this.context = OpenmrsAndroid.getInstance();
         this.restApi = RestServiceBuilder.createService(RestApi.class);
-        this.db = AppDatabase.getDatabase(openMrs);
-        this.workManager = WorkManager.getInstance(openMrs);
+        this.db = AppDatabase.getDatabase(context);
+        this.workManager = WorkManager.getInstance(context);
         this.logger = new OpenMRSLogger();
     }
 
-    public BaseRepository(OpenMRS openMRS, RestApi restApi, OpenMRSLogger logger) {
+    public BaseRepository(RestApi restApi, OpenMRSLogger logger) {
         this.logger = logger;
-        this.openMrs = openMRS;
         this.restApi = restApi;
+        this.context = OpenmrsAndroid.getInstance();
     }
 }

@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.api.repository;
+package com.example.openmrs_android_sdk.library.api.repository;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,11 +24,23 @@ import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 
+import com.example.openmrs_android_sdk.R;
 import com.example.openmrs_android_sdk.library.OpenMRSLogger;
 import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+import com.example.openmrs_android_sdk.library.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
+import com.example.openmrs_android_sdk.library.api.promise.SimpleDeferredObject;
+import com.example.openmrs_android_sdk.library.api.promise.SimplePromise;
+import com.example.openmrs_android_sdk.library.api.services.EncounterService;
+import com.example.openmrs_android_sdk.library.api.workers.UpdatePatientWorker;
 import com.example.openmrs_android_sdk.library.dao.EncounterCreateRoomDAO;
 import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DownloadPatientCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.PatientResponseCallback;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.VisitsResponseCallback;
 import com.example.openmrs_android_sdk.library.models.Encountercreate;
 import com.example.openmrs_android_sdk.library.models.IdGenPatientIdentifiers;
 import com.example.openmrs_android_sdk.library.models.IdentifierType;
@@ -44,19 +56,6 @@ import com.example.openmrs_android_sdk.utilities.NetworkUtils;
 import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.jdeferred.android.AndroidDeferredManager;
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.api.EncounterService;
-import com.example.openmrs_android_sdk.library.api.RestApi;
-import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import com.example.openmrs_android_sdk.library.api.promise.SimpleDeferredObject;
-import com.example.openmrs_android_sdk.library.api.promise.SimplePromise;
-import org.openmrs.mobile.api.workers.UpdatePatientWorker;
-import org.openmrs.mobile.application.OpenMRS;
-import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
-import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DownloadPatientCallback;
-import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
-import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.PatientResponseCallback;
-import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.VisitsResponseCallback;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -78,8 +77,9 @@ public class PatientRepository extends BaseRepository {
         this.locationRepository = new LocationRepository();
     }
 
-    public PatientRepository(OpenMRS openMRS, OpenMRSLogger logger, PatientDAO patientDAO, RestApi restApi, LocationRepository locationRepository) {
-        super(openMRS, restApi, logger);
+    //used in the unit tests
+    public PatientRepository(OpenMRSLogger logger, PatientDAO patientDAO, RestApi restApi, LocationRepository locationRepository) {
+        super(restApi, logger);
         this.patientDAO = patientDAO;
         this.locationRepository = locationRepository;
     }
@@ -146,8 +146,7 @@ public class PatientRepository extends BaseRepository {
                             @Override
                             public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
                                 if (callback != null) {
-                                    callback.onErrorResponse(openMrs.getString(R.string.patient_cannot_be_synced_due_to_request_error_message, patient.getId(), t.getMessage().toString()),
-                                            deferred);
+                                    callback.onErrorResponse(context.getString(R.string.patient_cannot_be_synced_due_to_server_error_message, patient.getId(), response.message()));
                                 }
 
                                 ToastUtil.notify("Patient[ " + patient.getId() + "] cannot be synced due to request error " + t.toString());
@@ -158,7 +157,7 @@ public class PatientRepository extends BaseRepository {
         } else {
 
             if (callback != null) {
-                callback.onNotifyResponse(openMrs.getString(R.string.offline_mode_patient_data_saved_locally_notification_message));
+                callback.onNotifyResponse(context.getString(R.string.offline_mode_patient_data_saved_locally_notification_message));
             }
         }
 
@@ -250,7 +249,7 @@ public class PatientRepository extends BaseRepository {
             Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
             workManager.enqueue(new OneTimeWorkRequest.Builder(UpdatePatientWorker.class).setConstraints(constraints).setInputData(data).build());
 
-            ToastUtil.notify(openMrs.getString(R.string.offline_mode_patient_data_saved_locally_notification_message));
+            ToastUtil.notify(context.getString(R.string.offline_mode_patient_data_saved_locally_notification_message));
             if (callbackListener != null) {
                 callbackListener.onResponse();
             }

@@ -35,7 +35,7 @@ import com.google.common.base.Objects;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
-import org.openmrs.mobile.api.repository.VisitRepository;
+import com.example.openmrs_android_sdk.library.api.repository.VisitRepository;
 
 import java.util.List;
 

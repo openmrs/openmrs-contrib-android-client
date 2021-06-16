@@ -37,8 +37,8 @@ import com.example.openmrs_android_sdk.utilities.DateUtils;
 import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.api.repository.PatientRepository;
-import org.openmrs.mobile.api.repository.VisitRepository;
+import com.example.openmrs_android_sdk.library.api.repository.PatientRepository;
+import com.example.openmrs_android_sdk.library.api.repository.VisitRepository;
 import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DownloadPatientCallback;
 
 import java.util.HashSet;

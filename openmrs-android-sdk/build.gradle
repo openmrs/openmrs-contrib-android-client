@@ -72,6 +72,9 @@ dependencies {
     debugImplementation "com.readystatesoftware.chuck:library:1.1.0"
     releaseImplementation "com.readystatesoftware.chuck:library-no-op:1.1.0"
 
+    // Work Manager
+    implementation "androidx.work:work-runtime:2.3.4"
+
 
     // test implementation
     testImplementation 'junit:junit:4.+'

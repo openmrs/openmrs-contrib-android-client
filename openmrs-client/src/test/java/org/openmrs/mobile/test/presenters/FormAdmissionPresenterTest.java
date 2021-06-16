@@ -40,7 +40,7 @@ import org.openmrs.mobile.activities.formadmission.FormAdmissionContract;
 import org.openmrs.mobile.activities.formadmission.FormAdmissionFragment;
 import org.openmrs.mobile.activities.formadmission.FormAdmissionPresenter;
 import com.example.openmrs_android_sdk.library.api.RestApi;
-import org.openmrs.mobile.api.repository.ProviderRepository;
+import com.example.openmrs_android_sdk.library.api.repository.ProviderRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.powermock.api.mockito.PowerMockito;
@@ -106,7 +106,7 @@ public class FormAdmissionPresenterTest extends ACUnitTestBase {
         resourceList = Arrays.asList(resourceOne, resourceTwo);
         providerLiveData.postValue(providerList);
 
-        this.providerRepository = new ProviderRepository(openMRS, restApi, openMRSLogger);
+        this.providerRepository = new ProviderRepository(restApi, openMRSLogger);
         ProviderRoomDAO providerRoomDao = Mockito.mock(ProviderRoomDAO.class, RETURNS_MOCKS);
         ProviderRoomDAO spyProviderRoomDao = spy(providerRoomDao);
 

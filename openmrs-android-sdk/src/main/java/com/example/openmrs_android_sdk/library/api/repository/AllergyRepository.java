@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.api.repository;
+package com.example.openmrs_android_sdk.library.api.repository;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -22,10 +22,16 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
+import com.example.openmrs_android_sdk.R;
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
+import com.example.openmrs_android_sdk.library.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
+import com.example.openmrs_android_sdk.library.api.workers.allergy.DeleteAllergyWorker;
 import com.example.openmrs_android_sdk.library.dao.AllergyRoomDAO;
 import com.example.openmrs_android_sdk.library.databases.AppDatabase;
 import com.example.openmrs_android_sdk.library.databases.AppDatabaseHelper;
 import com.example.openmrs_android_sdk.library.databases.entities.AllergyEntity;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 import com.example.openmrs_android_sdk.library.models.Allergy;
 import com.example.openmrs_android_sdk.library.models.AllergyCreate;
 import com.example.openmrs_android_sdk.library.models.ConceptMembers;
@@ -35,12 +41,6 @@ import com.example.openmrs_android_sdk.utilities.NetworkUtils;
 import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
-import org.openmrs.mobile.R;
-import com.example.openmrs_android_sdk.library.api.RestApi;
-import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import org.openmrs.mobile.api.workers.allergy.DeleteAllergyWorker;
-import org.openmrs.mobile.application.OpenMRS;
-import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,8 +64,8 @@ public class AllergyRepository {
 
     public AllergyRepository(String patientID) {
         this.patientID = patientID;
-        allergyRoomDAO = AppDatabase.getDatabase(OpenMRS.getInstance()).allergyRoomDAO();
-        workManager = WorkManager.getInstance(OpenMRS.getInstance());
+        allergyRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance()).allergyRoomDAO();
+        workManager = WorkManager.getInstance(OpenmrsAndroid.getInstance());
         restApi = RestServiceBuilder.createService(RestApi.class);
     }
 
@@ -91,13 +91,13 @@ public class AllergyRepository {
                         }
                         allergyLiveData.setValue(allergyList);
                     } else {
-                        ToastUtil.error(OpenMRS.getInstance().getString(R.string.unable_to_fetch_allergies));
+                        ToastUtil.error(OpenmrsAndroid.getInstance().getString(R.string.unable_to_fetch_allergies));
                     }
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<Results<Allergy>> call, @NotNull Throwable t) {
-                    ToastUtil.error(OpenMRS.getInstance().getString(R.string.unable_to_fetch_allergies));
+                    ToastUtil.error(OpenmrsAndroid.getInstance().getString(R.string.unable_to_fetch_allergies));
                 }
             });
         }
@@ -126,14 +126,14 @@ public class AllergyRepository {
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
                         allergyRoomDAO.deleteAllergyByUUID(allergyUuid);
-                        ToastUtil.success(OpenMRS.getInstance().getString(R.string.delete_allergy_success));
+                        ToastUtil.success(OpenmrsAndroid.getInstance().getString(R.string.delete_allergy_success));
                         callback.onResponse();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    callback.onErrorResponse(OpenMRS.getInstance().getString(R.string.delete_allergy_failure));
+                    callback.onErrorResponse(OpenmrsAndroid.getInstance().getString(R.string.delete_allergy_failure));
                 }
             });
         } else {
@@ -149,7 +149,7 @@ public class AllergyRepository {
             Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
             workManager.enqueue(new OneTimeWorkRequest.Builder(DeleteAllergyWorker.class).setConstraints(constraints).setInputData(data).build());
 
-            ToastUtil.notify(OpenMRS.getInstance().getString(R.string.delete_allergy_offline));
+            ToastUtil.notify(OpenmrsAndroid.getInstance().getString(R.string.delete_allergy_offline));
         }
     }
 
@@ -201,7 +201,7 @@ public class AllergyRepository {
                     callback.onResponse();
                     allergyRoomDAO.saveAllergy(AppDatabaseHelper.convert(response.body(), patientID));
                 } else {
-                    callback.onErrorResponse(OpenMRS.getInstance().getString(R.string.error_creating_allergy));
+                    callback.onErrorResponse(OpenmrsAndroid.getInstance().getString(R.string.error_creating_allergy));
                 }
             }
 
@@ -222,7 +222,7 @@ public class AllergyRepository {
                     allergyEntity.setId(id);
                     allergyRoomDAO.updateAllergy(allergyEntity);
                 } else {
-                    callback.onErrorResponse(OpenMRS.getInstance().getString(R.string.error_creating_allergy));
+                    callback.onErrorResponse(OpenmrsAndroid.getInstance().getString(R.string.error_creating_allergy));
                 }
             }
 

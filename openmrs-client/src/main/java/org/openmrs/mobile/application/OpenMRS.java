@@ -22,7 +22,7 @@ import androidx.multidex.MultiDexApplication;
 import com.example.openmrs_android_sdk.library.OpenMRSLogger;
 import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
 
-import org.openmrs.mobile.api.FormListService;
+import org.openmrs.mobile.services.FormListService;
 import org.openmrs.mobile.services.AuthenticateCheckService;
 
 import java.io.File;

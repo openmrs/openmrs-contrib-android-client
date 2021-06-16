@@ -34,8 +34,8 @@ import org.mockito.Mockito;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientDashboardDetailsPresenter;
 import com.example.openmrs_android_sdk.library.api.RestApi;
-import org.openmrs.mobile.api.repository.PatientRepository;
-import org.openmrs.mobile.api.repository.VisitRepository;
+import com.example.openmrs_android_sdk.library.api.repository.PatientRepository;
+import com.example.openmrs_android_sdk.library.api.repository.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 import org.powermock.api.mockito.PowerMockito;
@@ -83,7 +83,7 @@ public class PatientDashboardDetailsPresenterTest extends ACUnitTestBaseRx {
     @Before
     public void setUp() {
         super.setUp();
-        VisitRepository visitRepository = new VisitRepository(openMRS, openMRSLogger, restApi, visitDAO, locationDAO, encounterDAO);
+        VisitRepository visitRepository = new VisitRepository(openMRSLogger, restApi, visitDAO, locationDAO, encounterDAO);
         patient = createPatient(1L);
         presenter = new PatientDashboardDetailsPresenter(patient, patientDAO, view, visitRepository, patientRepository);
         PowerMockito.mockStatic(NetworkUtils.class);

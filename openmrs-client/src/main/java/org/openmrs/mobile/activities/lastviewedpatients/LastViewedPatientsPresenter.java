@@ -30,7 +30,7 @@ import com.example.openmrs_android_sdk.utilities.ToastUtil;
 import org.openmrs.mobile.activities.BasePresenter;
 import com.example.openmrs_android_sdk.library.api.RestApi;
 import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import org.openmrs.mobile.api.repository.PatientRepository;
+import com.example.openmrs_android_sdk.library.api.repository.PatientRepository;
 import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.PatientResponseCallback;
 
 import java.util.ArrayList;

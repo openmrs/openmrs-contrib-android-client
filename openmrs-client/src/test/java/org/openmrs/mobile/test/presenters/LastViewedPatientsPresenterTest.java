@@ -30,8 +30,8 @@ import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsContra
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsPresenter;
 import com.example.openmrs_android_sdk.library.api.RestApi;
 import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import org.openmrs.mobile.api.repository.LocationRepository;
-import org.openmrs.mobile.api.repository.PatientRepository;
+import com.example.openmrs_android_sdk.library.api.repository.LocationRepository;
+import com.example.openmrs_android_sdk.library.api.repository.PatientRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.powermock.api.mockito.PowerMockito;
@@ -70,7 +70,7 @@ public class LastViewedPatientsPresenterTest extends ACUnitTestBase {
     @Before
     public void setUp() {
         mockStaticMethods();
-        PatientRepository patientRepository = new PatientRepository(openMRS, openMRSLogger, patientDAO, restApi, locationRepository);
+        PatientRepository patientRepository = new PatientRepository(openMRSLogger, patientDAO, restApi, locationRepository);
         lastViewedPatientsPresenter = new LastViewedPatientsPresenter(view, restApi, patientDAO, patientRepository);
         firstPatient = createPatient(1l);
         secondPatient = createPatient(2l);

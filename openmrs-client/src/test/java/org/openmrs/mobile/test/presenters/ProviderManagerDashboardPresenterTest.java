@@ -34,7 +34,7 @@ import org.mockito.Mockito;
 import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardContract;
 import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardPresenter;
 import com.example.openmrs_android_sdk.library.api.RestApi;
-import org.openmrs.mobile.api.repository.ProviderRepository;
+import com.example.openmrs_android_sdk.library.api.repository.ProviderRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.powermock.api.mockito.PowerMockito;
@@ -77,7 +77,7 @@ public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
         providerList = Arrays.asList(providerOne, providerTwo);
         providerLiveData.postValue(providerList);
 
-        this.providerRepository = new ProviderRepository(openMRS, restApi, openMRSLogger);
+        this.providerRepository = new ProviderRepository(restApi, openMRSLogger);
         ProviderRoomDAO providerRoomDao = Mockito.mock(ProviderRoomDAO.class, RETURNS_MOCKS);
         ProviderRoomDAO spyProviderRoomDao = spy(providerRoomDao);
 

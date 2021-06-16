@@ -11,7 +11,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.api.workers;
+package com.example.openmrs_android_sdk.library.api.workers;
 
 import android.content.Context;
 import android.os.Handler;
@@ -23,8 +23,12 @@ import androidx.annotation.Nullable;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import com.example.openmrs_android_sdk.R;
 import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
 import com.example.openmrs_android_sdk.library.dao.PatientDAO;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 import com.example.openmrs_android_sdk.library.models.Patient;
 import com.example.openmrs_android_sdk.library.models.PatientDto;
 import com.example.openmrs_android_sdk.library.models.PatientDtoUpdate;
@@ -32,11 +36,6 @@ import com.example.openmrs_android_sdk.library.models.PatientPhoto;
 import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 import com.example.openmrs_android_sdk.utilities.NetworkUtils;
 import com.example.openmrs_android_sdk.utilities.ToastUtil;
-
-import org.openmrs.mobile.R;
-import com.example.openmrs_android_sdk.library.api.RestApi;
-import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 
 import retrofit2.Call;
 import retrofit2.Callback;

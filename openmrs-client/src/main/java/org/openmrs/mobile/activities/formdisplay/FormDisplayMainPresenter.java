@@ -23,8 +23,8 @@ import com.example.openmrs_android_sdk.utilities.SelectOneField;
 
 import org.joda.time.LocalDateTime;
 import org.openmrs.mobile.activities.BasePresenter;
-import org.openmrs.mobile.api.EncounterService;
-import org.openmrs.mobile.api.repository.VisitRepository;
+import com.example.openmrs_android_sdk.library.api.services.EncounterService;
+import com.example.openmrs_android_sdk.library.api.repository.VisitRepository;
 import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 
 import java.util.ArrayList;

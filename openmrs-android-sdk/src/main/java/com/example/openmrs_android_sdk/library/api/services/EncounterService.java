@@ -8,7 +8,7 @@
  * graphic logo is a trademark of OpenMRS Inc.
  */
 
-package org.openmrs.mobile.api;
+package com.example.openmrs_android_sdk.library.api.services;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -16,8 +16,11 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.openmrs_android_sdk.R;
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
 import com.example.openmrs_android_sdk.library.api.RestApi;
 import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
+import com.example.openmrs_android_sdk.library.api.repository.VisitRepository;
 import com.example.openmrs_android_sdk.library.dao.PatientDAO;
 import com.example.openmrs_android_sdk.library.dao.VisitDAO;
 import com.example.openmrs_android_sdk.library.databases.AppDatabase;
@@ -28,10 +31,6 @@ import com.example.openmrs_android_sdk.library.models.EncounterType;
 import com.example.openmrs_android_sdk.library.models.Encountercreate;
 import com.example.openmrs_android_sdk.utilities.NetworkUtils;
 import com.example.openmrs_android_sdk.utilities.ToastUtil;
-
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.api.repository.VisitRepository;
-import org.openmrs.mobile.application.OpenMRS;
 
 import java.util.List;
 
@@ -119,7 +118,7 @@ public class EncounterService extends IntentService {
                         Encounter encounter = response.body();
                         linkvisit(encountercreate.getPatientId(), encountercreate.getFormname(), encounter, encountercreate);
                         encountercreate.setSynced(true);
-                        AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext())
+                        AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext())
                                 .encounterCreateRoomDAO()
                                 .updateExistingEncounter(encountercreate);
                         new VisitRepository().syncLastVitals(encountercreate.getPatient());
@@ -171,7 +170,7 @@ public class EncounterService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (NetworkUtils.isOnline()) {
 
-            List<Encountercreate> encountercreatelist = AppDatabase.getDatabase(OpenMRS.getInstance().getApplicationContext())
+            List<Encountercreate> encountercreatelist = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext())
                     .encounterCreateRoomDAO()
                     .getAllCreatedEncounters();
 

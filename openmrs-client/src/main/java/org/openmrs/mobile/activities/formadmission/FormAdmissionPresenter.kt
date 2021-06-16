@@ -24,10 +24,10 @@ import com.example.openmrs_android_sdk.utilities.FormService.getFormResourceByNa
 import com.example.openmrs_android_sdk.utilities.ToastUtil.success
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.BasePresenter
-import org.openmrs.mobile.api.EncounterService
+import com.example.openmrs_android_sdk.library.api.services.EncounterService
 import com.example.openmrs_android_sdk.library.api.RestApi
 import com.example.openmrs_android_sdk.library.api.RestServiceBuilder
-import org.openmrs.mobile.api.repository.ProviderRepository
+import com.example.openmrs_android_sdk.library.api.repository.ProviderRepository
 import org.openmrs.mobile.application.OpenMRS
 import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback
 
@@ -60,7 +60,7 @@ class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
         this.restApi = restApi
         view.setPresenter(this)
         mContext = context
-        providerRepository = ProviderRepository(OpenMRS.getInstance(), restApi, logger);
+        providerRepository = ProviderRepository(restApi, logger);
     }
 
     override fun subscribe() {

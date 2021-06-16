@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.activities.BasePresenter;
 import com.example.openmrs_android_sdk.library.api.RestApi;
 import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import org.openmrs.mobile.api.repository.ProviderRepository;
+import com.example.openmrs_android_sdk.library.api.repository.ProviderRepository;
 import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 
 import java.util.List;

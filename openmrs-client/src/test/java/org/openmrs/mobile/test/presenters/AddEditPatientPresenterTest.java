@@ -32,8 +32,8 @@ import org.openmrs.mobile.activities.addeditpatient.AddEditPatientContract;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientPresenter;
 import com.example.openmrs_android_sdk.library.api.RestApi;
 import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import org.openmrs.mobile.api.repository.LocationRepository;
-import org.openmrs.mobile.api.repository.PatientRepository;
+import com.example.openmrs_android_sdk.library.api.repository.LocationRepository;
+import com.example.openmrs_android_sdk.library.api.repository.PatientRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 import org.powermock.api.mockito.PowerMockito;
@@ -76,7 +76,7 @@ public class AddEditPatientPresenterTest extends ACUnitTestBaseRx {
     public void setUp() {
         super.setUp();
         patient = createPatient(1L);
-        PatientRepository patientRepository = new PatientRepository(openMRS, openMRSLogger, patientDAO, restApi, locationRepository);
+        PatientRepository patientRepository = new PatientRepository(openMRSLogger, patientDAO, restApi, locationRepository);
         presenter = new AddEditPatientPresenter(view, patientRepository, patient, patient.getId().toString(),
                 Collections.singletonList("country_" + patient.getId()), restApi);
         mockStaticMethods();

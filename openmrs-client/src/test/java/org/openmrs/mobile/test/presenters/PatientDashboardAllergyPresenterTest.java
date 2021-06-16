@@ -35,7 +35,7 @@ import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.allergy.PatientAllergyFragment;
 import org.openmrs.mobile.activities.patientdashboard.allergy.PatientDashboardAllergyPresenter;
 import com.example.openmrs_android_sdk.library.api.RestApi;
-import org.openmrs.mobile.api.repository.AllergyRepository;
+import com.example.openmrs_android_sdk.library.api.repository.AllergyRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 import org.powermock.api.mockito.PowerMockito;

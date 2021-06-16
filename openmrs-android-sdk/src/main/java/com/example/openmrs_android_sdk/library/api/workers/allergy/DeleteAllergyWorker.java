@@ -12,7 +12,7 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 
-package org.openmrs.mobile.api.workers.provider;
+package com.example.openmrs_android_sdk.library.api.workers.allergy;
 
 import android.content.Context;
 
@@ -20,48 +20,52 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import com.example.openmrs_android_sdk.R;
 import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
-import com.example.openmrs_android_sdk.library.dao.ProviderRoomDAO;
+import com.example.openmrs_android_sdk.library.api.RestApi;
+import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
+import com.example.openmrs_android_sdk.library.dao.AllergyRoomDAO;
 import com.example.openmrs_android_sdk.library.databases.AppDatabase;
+import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 import com.example.openmrs_android_sdk.utilities.NetworkUtils;
 import com.example.openmrs_android_sdk.utilities.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
-import org.openmrs.mobile.R;
-import com.example.openmrs_android_sdk.library.api.RestApi;
-import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import org.openmrs.mobile.application.OpenMRS;
-import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.CustomResponseCallback;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DeleteProviderWorker extends Worker {
-    ProviderRoomDAO providerRoomDao;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.BundleKeys.ALLERGY_UUID;
+import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.BundleKeys.PATIENT_UUID;
+
+
+public class DeleteAllergyWorker extends Worker {
+    AllergyRoomDAO allergyRoomDAO;
     RestApi restApi;
 
-    public DeleteProviderWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+    public DeleteAllergyWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         restApi = RestServiceBuilder.createService(RestApi.class);
-        providerRoomDao = AppDatabase.getDatabase(getApplicationContext()).providerRoomDAO();
+        allergyRoomDAO = AppDatabase.getDatabase(getApplicationContext()).allergyRoomDAO();
     }
 
     @NonNull
     @Override
     public Result doWork() {
         final boolean[] result = new boolean[1];
-        String providerUuidTobeDeleted = getInputData().getString("uuid");
+        String allergyUuid = getInputData().getString(ALLERGY_UUID);
+        String patientUuid = getInputData().getString(PATIENT_UUID);
 
-        deleteProvider(restApi, providerUuidTobeDeleted, new CustomResponseCallback() {
+        deleteAllergy(restApi, allergyUuid, patientUuid, new DefaultResponseCallback() {
             @Override
             public void onResponse() {
                 result[0] = true;
             }
 
             @Override
-            public void onErrorResponse() {
+            public void onErrorResponse(String errorMessage) {
                 result[0] = false;
             }
         });
@@ -73,24 +77,22 @@ public class DeleteProviderWorker extends Worker {
         }
     }
 
-    private void deleteProvider(RestApi restApi, String providerUuid, CustomResponseCallback callback) {
+    private void deleteAllergy(RestApi restApi, String allergyUuid, String patientUuid, DefaultResponseCallback callback) {
 
         if (NetworkUtils.isOnline()) {
-            restApi.deleteProvider(providerUuid).enqueue(new Callback<ResponseBody>() {
+            restApi.deleteAllergy(patientUuid, allergyUuid).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
 
-                        ToastUtil.success(OpenMRS.getInstance().getString(R.string.delete_provider_success_msg));
-                        OpenmrsAndroid.getOpenMRSLogger().e("Deleting Provider Successful " + response.raw());
-
+                        ToastUtil.success(OpenmrsAndroid.getInstance().getString(R.string.delete_allergy_success));
                         callback.onResponse();
                     }
                 }
 
                 @Override
                 public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                    callback.onErrorResponse();
+                    callback.onErrorResponse(t.getMessage());
                 }
             });
         }

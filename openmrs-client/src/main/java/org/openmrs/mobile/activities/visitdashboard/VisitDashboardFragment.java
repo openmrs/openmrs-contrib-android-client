@@ -33,6 +33,7 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.formlist.FormListActivity;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.databinding.FragmentVisitDashboardBinding;
 import org.openmrs.mobile.models.Encounter;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ToastUtil;
@@ -43,21 +44,22 @@ import java.util.HashSet;
 import java.util.List;
 
 public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContract.Presenter> implements VisitDashboardContract.View {
-    private ExpandableListView mExpandableListView;
-    private TextView mEmptyListView;
-    private View root;
+    private FragmentVisitDashboardBinding binding = null;
+    private ExpandableListView expandableListView;
+    private TextView emptyListView;
     private Snackbar snackbar;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        root = inflater.inflate(R.layout.fragment_visit_dashboard, container, false);
+        binding = FragmentVisitDashboardBinding.inflate(inflater, container, false);
 
-        mEmptyListView = root.findViewById(R.id.visitDashboardEmpty);
-        mExpandableListView = root.findViewById(R.id.visitDashboardExpList);
-        mExpandableListView.setEmptyView(mEmptyListView);
+        emptyListView = binding.visitDashboardEmpty;
+        expandableListView = binding.visitDashboardExpList;
+        expandableListView.setEmptyView(emptyListView);
         setEmptyListVisibility(false);
-        return root;
+
+        return binding.getRoot();
     }
 
     @Override
@@ -92,7 +94,7 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
 
         for (Encounter encounter : visitEncounters) {
             String encounterTypeDisplay = encounter.getEncounterType().getDisplay();
-            encounterTypeDisplay=encounterTypeDisplay.split("\\(")[0].trim();
+            encounterTypeDisplay = encounterTypeDisplay.split("\\(")[0].trim();
             if (displayableEncounterTypesArray.contains(encounterTypeDisplay)) {
                 encounter.getEncounterType().setDisplay(encounterTypeDisplay.split("\\(")[0].trim());
                 displayableEncounters.add(encounter);
@@ -106,12 +108,12 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
         }
 
         VisitExpandableListAdapter expandableListAdapter = new VisitExpandableListAdapter(this.getActivity(), displayableEncounters);
-        mExpandableListView.setAdapter(expandableListAdapter);
-        mExpandableListView.setGroupIndicator(null);
+        expandableListView.setAdapter(expandableListAdapter);
+        expandableListView.setGroupIndicator(null);
     }
 
     private void setupSnackBar() {
-        snackbar = Snackbar.make(root, ApplicationConstants.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE);
+        snackbar = Snackbar.make(binding.getRoot(), ApplicationConstants.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE);
         View customSnackBarView = getLayoutInflater().inflate(R.layout.snackbar, null);
         Snackbar.SnackbarLayout snackBarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
         snackBarLayout.setPadding(0, 0, 0, 0);
@@ -129,9 +131,9 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
     @Override
     public void setEmptyListVisibility(boolean visibility) {
         if (visibility) {
-            mEmptyListView.setVisibility(View.VISIBLE);
+            emptyListView.setVisibility(View.VISIBLE);
         } else {
-            mEmptyListView.setVisibility(View.GONE);
+            emptyListView.setVisibility(View.GONE);
         }
     }
 
@@ -161,4 +163,11 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
         super.onResume();
         mPresenter.subscribe();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
 }

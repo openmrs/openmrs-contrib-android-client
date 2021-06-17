@@ -25,16 +25,19 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 import org.openmrs.mobile.bundle.CustomDialogBundle;
+import org.openmrs.mobile.databinding.ActivityVisitDashboardBinding;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 
 public class VisitDashboardActivity extends ACBaseActivity {
-    public VisitDashboardPresenter mPresenter;
+    public VisitDashboardPresenter presenter;
     public Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_visit_dashboard);
+
+        ActivityVisitDashboardBinding binding= ActivityVisitDashboardBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -56,15 +59,15 @@ public class VisitDashboardActivity extends ACBaseActivity {
         }
 
         // Create the presenter
-        mPresenter = new VisitDashboardPresenter(visitDashboardFragment, intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0));
-        mPresenter.updatePatientName();
+        presenter = new VisitDashboardPresenter(visitDashboardFragment, intent.getLongExtra(ApplicationConstants.BundleKeys.VISIT_ID, 0));
+        presenter.updatePatientName();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         this.menu = menu;
-        mPresenter.checkIfVisitActive();
+        presenter.checkIfVisitActive();
         return true;
     }
 
@@ -75,7 +78,7 @@ public class VisitDashboardActivity extends ACBaseActivity {
                 this.finish();
                 break;
             case R.id.actionFillForm:
-                mPresenter.fillForm();
+                presenter.fillForm();
                 break;
             case R.id.actionEndVisit:
                 CustomDialogBundle bundle = new CustomDialogBundle();

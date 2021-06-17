@@ -27,21 +27,23 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
 import org.openmrs.mobile.application.OpenMRS;
+import org.openmrs.mobile.databinding.ActivityFindPatientsBinding;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.StringUtils;
 
 public class SyncedPatientsActivity extends ACBaseActivity {
-    public SyncedPatientsPresenter mPresenter;
+    public SyncedPatientsPresenter presenter;
     private SearchView searchView;
     private String query;
-    //Menu Items
-    private MenuItem mAddPatientMenuItem;
+    private MenuItem addPatientMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_find_patients);
+        ActivityFindPatientsBinding binding = ActivityFindPatientsBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             getSupportActionBar().setElevation(0);
@@ -62,9 +64,9 @@ public class SyncedPatientsActivity extends ACBaseActivity {
 
         if (savedInstanceState != null) {
             query = savedInstanceState.getString(ApplicationConstants.BundleKeys.PATIENT_QUERY_BUNDLE, "");
-            mPresenter = new SyncedPatientsPresenter(syncedPatientsFragment, query);
+            presenter = new SyncedPatientsPresenter(syncedPatientsFragment, query);
         } else {
-            mPresenter = new SyncedPatientsPresenter(syncedPatientsFragment);
+            presenter = new SyncedPatientsPresenter(syncedPatientsFragment);
         }
     }
 
@@ -109,7 +111,7 @@ public class SyncedPatientsActivity extends ACBaseActivity {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.find_locally_and_add_patients_menu, menu);
 
-        mAddPatientMenuItem = menu.findItem(R.id.actionAddPatients);
+        addPatientMenuItem = menu.findItem(R.id.actionAddPatients);
         enableAddPatient(OpenMRS.getInstance().getSyncState());
 
         // Search function
@@ -130,8 +132,8 @@ public class SyncedPatientsActivity extends ACBaseActivity {
 
             @Override
             public boolean onQueryTextChange(String query) {
-                mPresenter.setQuery(query);
-                mPresenter.updateLocalPatientsList();
+                presenter.setQuery(query);
+                presenter.updateLocalPatientsList();
                 return true;
             }
         });
@@ -141,7 +143,7 @@ public class SyncedPatientsActivity extends ACBaseActivity {
 
     private void enableAddPatient(boolean enabled) {
         int resId = enabled ? R.drawable.ic_add : R.drawable.ic_add_disabled;
-        mAddPatientMenuItem.setEnabled(enabled);
-        mAddPatientMenuItem.setIcon(resId);
+        addPatientMenuItem.setEnabled(enabled);
+        addPatientMenuItem.setIcon(resId);
     }
 }

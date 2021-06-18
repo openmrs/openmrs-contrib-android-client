@@ -35,6 +35,7 @@ import com.google.android.material.snackbar.Snackbar;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
+import org.openmrs.mobile.databinding.FragmentLastViewedPatientsBinding;
 import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.NetworkUtils;
@@ -46,25 +47,28 @@ import java.util.List;
 import java.util.Set;
 
 public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatientsContract.Presenter> implements LastViewedPatientsContract.View {
+    private FragmentLastViewedPatientsBinding binding = null;
     private static final String PATIENT_LIST = "patient_list";
     private static final String SELECTED_PATIENT_POSITIONS = "selected_patient_positions";
-    private TextView mEmptyList;
+    private TextView emptyList;
     private ProgressBar progressBar;
-    private RecyclerView mPatientsRecyclerView;
+    private RecyclerView patientsRecyclerView;
     private LastViewedPatientRecyclerViewAdapter mAdapter;
-    public SwipeRefreshLayout mSwipeRefreshLayout;
+    public SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_last_viewed_patients, container, false);
-        mPatientsRecyclerView = root.findViewById(R.id.lastViewedPatientRecyclerView);
+        binding = FragmentLastViewedPatientsBinding.inflate(inflater,container,false);
+
+        patientsRecyclerView = binding.lastViewedPatientRecyclerView;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getActivity());
-        mPatientsRecyclerView.setLayoutManager(linearLayoutManager);
-        progressBar = root.findViewById(R.id.patientRecyclerViewLoading);
-        mEmptyList = root.findViewById(R.id.emptyLastViewedPatientList);
-        mSwipeRefreshLayout = root.findViewById(R.id.swiperefreshLastPatients);
-        mSwipeRefreshLayout.setOnRefreshListener(() -> {
+        patientsRecyclerView.setLayoutManager(linearLayoutManager);
+        progressBar = binding.patientRecyclerViewLoading;
+        emptyList = binding.emptyLastViewedPatientList;
+        swipeRefreshLayout = binding.swiperefreshLastPatients;
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
             if (NetworkUtils.hasNetwork()) {
                 mPresenter.refresh();
                 mAdapter.finishActionMode();
@@ -74,7 +78,7 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
             }
         });
 
-        mPatientsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        patientsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -83,7 +87,7 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
                 }
             }
         });
-        return root;
+        return binding.getRoot();
     }
 
     @Override
@@ -120,7 +124,7 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
 
     @Override
     public void enableSwipeRefresh(boolean enabled) {
-        mSwipeRefreshLayout.setEnabled(enabled);
+        swipeRefreshLayout.setEnabled(enabled);
     }
 
     @Override
@@ -130,17 +134,17 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
 
     @Override
     public void setEmptyListVisibility(boolean visibility) {
-        mEmptyList.setVisibility(visibility ? View.VISIBLE : View.GONE);
+        emptyList.setVisibility(visibility ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void setListVisibility(boolean visibility) {
-        mPatientsRecyclerView.setVisibility(visibility ? View.VISIBLE : View.GONE);
+        patientsRecyclerView.setVisibility(visibility ? View.VISIBLE : View.GONE);
     }
 
     @Override
     public void setEmptyListText(String text) {
-        mEmptyList.setText(text);
+        emptyList.setText(text);
     }
 
     public static LastViewedPatientsFragment newInstance() {
@@ -149,15 +153,15 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
 
     public void updateList(List<Patient> patientList) {
         mAdapter = new LastViewedPatientRecyclerViewAdapter(this.getActivity(), patientList, this);
-        mPatientsRecyclerView.setAdapter(mAdapter);
+        patientsRecyclerView.setAdapter(mAdapter);
     }
 
     public boolean isRefreshing() {
-        return mSwipeRefreshLayout.isRefreshing();
+        return swipeRefreshLayout.isRefreshing();
     }
 
     public void stopRefreshing() {
-        mSwipeRefreshLayout.setRefreshing(false);
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
@@ -167,7 +171,7 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
 
     @Override
     public void showOpenPatientSnackbar(final Long patientId) {
-        FrameLayout frameLayout = mSwipeRefreshLayout.findViewById(R.id.swipe_container);
+        FrameLayout frameLayout = swipeRefreshLayout.findViewById(R.id.swipe_container);
         Snackbar snackbar = Snackbar.make(frameLayout, getResources().getString(R.string.snackbar_info_patient_downloaded), Snackbar.LENGTH_LONG);
         snackbar.setActionTextColor(Color.WHITE);
         View sbView = snackbar.getView();
@@ -196,5 +200,11 @@ public class LastViewedPatientsFragment extends ACBaseFragment<LastViewedPatient
         Intent intent = new Intent(this.getContext(), PatientDashboardActivity.class);
         intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patientId);
         this.getContext().startActivity(intent);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

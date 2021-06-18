@@ -411,7 +411,7 @@ public class CustomFragmentDialog extends DialogFragment {
                     dismiss();
                     break;
                 case END_VISIT:
-                    ((VisitDashboardActivity) getActivity()).mPresenter.endVisit();
+                    ((VisitDashboardActivity) getActivity()).presenter.endVisit();
                     dismiss();
                     break;
                 case START_VISIT:

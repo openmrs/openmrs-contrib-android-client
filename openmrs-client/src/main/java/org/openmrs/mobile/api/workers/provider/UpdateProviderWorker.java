@@ -15,14 +15,14 @@
 package org.openmrs.mobile.api.workers.provider;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.listeners.retrofitcallbacks.CustomResponseCallback;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
@@ -32,8 +32,8 @@ import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-import retrofit2.Call;
-import retrofit2.Callback;
+import java.io.IOException;
+
 import retrofit2.Response;
 
 public class UpdateProviderWorker extends Worker {
@@ -49,53 +49,39 @@ public class UpdateProviderWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-
-        final boolean[] result = new boolean[1];
         String providerUuidTobeUpdated = getInputData().getString("uuid");
-        Provider providerTobeUpdated = providerRoomDao.findProviderByUUID(providerUuidTobeUpdated).blockingGet();
+        Provider provider = providerRoomDao.findProviderByUUID(providerUuidTobeUpdated).blockingGet();
 
-        //preprocessing needed just because in some server examples this fields is set to null
-        providerTobeUpdated.getPerson().setUuid(null);
-
-        updateProvider(restApi, providerTobeUpdated, new CustomResponseCallback() {
-            @Override
-            public void onResponse() {
-                result[0] = true;
-            }
-
-            @Override
-            public void onErrorResponse() {
-                result[0] = false;
-            }
-        });
-
-        if (result[0]) {
-            return Result.success();
+        if (provider == null) {
+            return Result.failure();
         } else {
-            return Result.retry();
+            provider.getPerson().setUuid(null);
+
+            if (updateProvider(restApi, provider)) {
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    ToastUtil.success(OpenMRS.getInstance().getString(R.string.edit_provider_success_msg));
+                    OpenMRS.getInstance().getOpenMRSLogger().e(OpenMRS.getInstance().getString(R.string.edit_provider_success_msg));
+                });
+                return Result.success();
+            } else {
+                return Result.retry();
+            }
         }
     }
 
-    private void updateProvider(RestApi restApi, Provider provider, CustomResponseCallback callback) {
-
+    private boolean updateProvider(RestApi restApi, Provider provider) {
         if (NetworkUtils.isOnline()) {
-            restApi.UpdateProvider(provider.getUuid(), provider).enqueue(new Callback<Provider>() {
-                @Override
-                public void onResponse(@NotNull Call<Provider> call, @NotNull Response<Provider> response) {
-                    if (response.isSuccessful()) {
-                        providerRoomDao.updateProviderByUuid(response.body().getDisplay(), provider.getId(), response.body().getPerson(), response.body().getUuid(),
+            try {
+                Response<Provider> response = restApi.UpdateProvider(provider.getUuid(), provider).execute();
+                if (response.isSuccessful()) {
+                    providerRoomDao.updateProviderByUuid(response.body().getDisplay(), provider.getId(), response.body().getPerson(), response.body().getUuid(),
                             response.body().getIdentifier());
-                        ToastUtil.success(OpenMRS.getInstance().getString(R.string.edit_provider_success_msg));
-                        OpenMRS.getInstance().getOpenMRSLogger().e("Editing Provider Successful ");
-                        callback.onResponse();
-                    }
+                    return true;
                 }
-
-                @Override
-                public void onFailure(@NotNull Call<Provider> call, @NotNull Throwable t) {
-                    callback.onErrorResponse();
-                }
-            });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        return false;
     }
 }

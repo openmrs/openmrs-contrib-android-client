@@ -28,15 +28,11 @@ import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.ProviderRoomDAO;
 import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.models.Person;
-import org.openmrs.mobile.models.PersonName;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Response;
 
@@ -53,67 +49,38 @@ public class AddProviderWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        String firstName = getInputData().getString("first_name");
-        String lastName = getInputData().getString("last_name");
-        String identifier = getInputData().getString("identifier");
-        Person person = createPerson(firstName, lastName);
-        Provider providerTobeCreated = createNewProvider(person, identifier, getInputData().getLong("id", 0l));
+        Provider provider = providerRoomDao.findProviderByID(getInputData().getLong("id", 0l)).blockingGet();
 
-        boolean result = addProvider(restApi, providerTobeCreated);
-
-        if (result) {
-            new Handler(Looper.getMainLooper()).post(() -> {
-                ToastUtil.success(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
-                OpenMRS.getInstance().getOpenMRSLogger().e("Adding Provider Successful ");
-            });
-
-            return Result.success();
+        if (provider == null) {
+            return Result.failure();
         } else {
-            return Result.retry();
+            // Its necessary since server gives Error 500 if request has UUID set as ""
+            provider.getPerson().setUuid(null);
+
+            if (addProvider(restApi, provider)) {
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    ToastUtil.success(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
+                    OpenMRS.getInstance().getOpenMRSLogger().e(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
+                });
+                return Result.success();
+            } else {
+                return Result.retry();
+            }
         }
-    }
-
-    private Person createPerson(String firstName, String lastName) {
-        Person person = new Person();
-
-        PersonName personName = new PersonName();
-        personName.setGivenName(firstName);
-        personName.setFamilyName(lastName);
-        person.setUuid(null);
-
-        person.setDisplay(firstName + " " + lastName);
-        List<PersonName> names = new ArrayList<>();
-        names.add(personName);
-        person.setNames(names);
-
-        return person;
-    }
-
-    private Provider createNewProvider(Person person, String identifier, Long providerId) {
-        Provider provider = new Provider();
-        provider.setPerson(person);
-        provider.setUuid(null);
-        provider.setIdentifier(identifier);
-        provider.setRetired(false);
-        provider.setId(providerId);
-
-        return provider;
     }
 
     private boolean addProvider(RestApi restApi, Provider provider) {
         if (NetworkUtils.isOnline()) {
             try {
-                // Execute synchronous API call to block Worker's return statement until done.
                 Response<Provider> response = restApi.addProvider(provider).execute();
                 if (response.isSuccessful()) {
-                    //offline updating the uuid and properties of the provider
+
                     providerRoomDao.updateProviderUuidById(provider.getId(), response.body().getUuid());
                     providerRoomDao.updateProviderByUuid(response.body().getDisplay(), provider.getId(),
                             response.body().getPerson(), response.body().getUuid(), response.body().getIdentifier());
                     return true;
                 }
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

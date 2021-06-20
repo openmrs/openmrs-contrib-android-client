@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "34541a9c2348a38b1b911460ecd8517d",
+    "identityHash": "e3a6ee2a9b26cd701ee4928c1db7e254",
     "entities": [
       {
         "tableName": "concepts",
@@ -486,14 +486,8 @@
       },
       {
         "tableName": "provider_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `person` TEXT, `identifier` TEXT, `attributes` TEXT NOT NULL, `retired` INTEGER, `resourceVersion` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`person` TEXT, `identifier` TEXT, `attributes` TEXT NOT NULL, `retired` INTEGER, `resourceVersion` TEXT, `uuid` TEXT, `display` TEXT, `_id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
           {
             "fieldPath": "person",
             "columnName": "person",
@@ -774,7 +768,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"34541a9c2348a38b1b911460ecd8517d\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e3a6ee2a9b26cd701ee4928c1db7e254\")"
     ]
   }
 }

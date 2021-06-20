@@ -55,7 +55,7 @@ public interface ProviderRoomDAO {
      */
 
     @TypeConverters(PersonConverter.class)
-    @Query("UPDATE provider_table SET person= :person, id= :id, display=:display, identifier=:identifier WHERE uuid = :uuid")
+    @Query("UPDATE provider_table SET person= :person, _id= :id, display=:display, identifier=:identifier WHERE uuid = :uuid")
     void updateProviderByUuid(String display, long id, Person person, String uuid, String identifier);
 
     @Query("UPDATE provider_table SET uuid=:uuid WHERE _id=:id")
@@ -64,7 +64,7 @@ public interface ProviderRoomDAO {
     @Query("SELECT * FROM provider_table")
     Single<List<Provider>> getProviderList();
 
-    @Query("SELECT * FROM provider_table WHERE id = :id")
+    @Query("SELECT * FROM provider_table WHERE _id = :id")
     Single<Provider> findProviderByID(long id);
 
     @Query("SELECT * FROM provider_table WHERE uuid = :uuid")

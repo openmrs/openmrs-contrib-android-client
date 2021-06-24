@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:text="@string/organization_name"
-            android:textColor="@color/black"
+            android:textColor="@color/dark_grey_8x"
             android:textSize="22sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -153,7 +153,8 @@
                 android:layout_marginHorizontal="25dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/login_rectangle"
-                app:passwordToggleEnabled="true">
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/dark_grey_8x">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/loginPasswordField"

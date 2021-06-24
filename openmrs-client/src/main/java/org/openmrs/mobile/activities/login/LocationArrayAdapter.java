@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import org.openmrs.mobile.R;
 
 import androidx.annotation.NonNull;
 
@@ -26,7 +27,7 @@ import java.util.List;
 
 public class LocationArrayAdapter extends ArrayAdapter<String> {
     public LocationArrayAdapter(Context context, List<String> objects) {
-        super(context, android.R.layout.simple_spinner_item, objects);
+        super(context, R.layout.spinner_item, objects);
         setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     }
 

@@ -25,6 +25,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.content.res.ColorStateList;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -139,6 +140,9 @@ public class LoginFragment extends ACBaseFragment<LoginContract.Presenter> imple
     private void initViewFields() {
         binding.textInputLayoutPassword.setHint(Html.fromHtml(getString(R.string.login_password_hint) + getString(R.string.req_star)));
         binding.textInputLayoutUsername.setHint(Html.fromHtml(getString(R.string.login_username_hint) + getString(R.string.req_star)));
+        binding.loginUrlField.setTextColor(ColorStateList.valueOf(getResources().getColor(R.color.dark_grey_8x)));
+        binding.textInputLayoutUsername.setDefaultHintTextColor(ColorStateList.valueOf(getResources().getColor(R.color.dark_grey_8x)));
+        binding.textInputLayoutPassword.setDefaultHintTextColor(ColorStateList.valueOf(getResources().getColor(R.color.dark_grey_8x)));
     }
 
     @Override

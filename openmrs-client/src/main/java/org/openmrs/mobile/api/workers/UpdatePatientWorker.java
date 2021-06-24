@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
@@ -46,9 +47,9 @@ public class UpdatePatientWorker extends Worker {
     private static final int ON_FAILURE = 2;
     private static final int ON_UNSUCCESSFUL_RESPONSE_PHOTO_UPDATE = 3;
     private static final int ON_FAILURE_RESPONSE_PHOTO_UPDATE = 4;
-    private RestApi restApi;
-    private OpenMRSLogger logger;
-    private Handler mHandler;
+    private final RestApi restApi;
+    private final OpenMRSLogger logger;
+    private final Handler mHandler;
 
     public UpdatePatientWorker(@NonNull Context appContext, @NonNull WorkerParameters workerParams) {
         super(appContext, workerParams);
@@ -57,7 +58,7 @@ public class UpdatePatientWorker extends Worker {
 
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
-            public void handleMessage(Message msg) {
+            public void handleMessage(@NotNull Message msg) {
                 String responseMessage;
                 switch (msg.what) {
                     case ON_SUCCESS:

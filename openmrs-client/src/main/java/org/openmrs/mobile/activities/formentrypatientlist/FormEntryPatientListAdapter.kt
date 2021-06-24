@@ -52,11 +52,11 @@ class FormEntryPatientListAdapter(private val mContext: FormEntryPatientListFrag
                     }
                 }
         if (null != patient?.identifier) {
-            val display = "#" + patient.identifier.identifier
+            val display = "#" + patient.identifier!!.identifier
             holder.mIdentifier.text = display
         }
         if (null != patient?.name) {
-            holder.mDisplayName.text = patient.name.nameString
+            holder.mDisplayName.text = patient.name!!.nameString
         }
         if (null != patient?.gender) {
             if (patient.photo != null) {

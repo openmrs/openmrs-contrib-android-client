@@ -32,11 +32,11 @@ import java.util.List;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class VisitDashboardPresenter extends BasePresenter implements VisitDashboardContract.Presenter {
-    private RestApi restApi;
-    private VisitDAO visitDAO;
-    private Long visitId;
-    private VisitDashboardContract.View mVisitDashboardView;
-    private VisitRepository visitRepository;
+    private final RestApi restApi;
+    private final VisitDAO visitDAO;
+    private final Long visitId;
+    private final VisitDashboardContract.View mVisitDashboardView;
+    private final VisitRepository visitRepository;
 
     public VisitDashboardPresenter(VisitDashboardContract.View mVisitDashboardView, Long id) {
         this.mVisitDashboardView = mVisitDashboardView;

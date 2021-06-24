@@ -35,7 +35,7 @@ open class PatientDtoUpdate {
     @Expose
     var person: PersonUpdate? = null
 
-    fun setIdentifiers(identifiers: List<PatientIdentifier>) {
-        this.identifiers = identifiers
+    fun setIdentifiers(identifiers: MutableList<PatientIdentifier>?) {
+        this.identifiers = identifiers!!
     }
 }

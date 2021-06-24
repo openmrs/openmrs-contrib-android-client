@@ -47,8 +47,8 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class VisitRepository extends BaseRepository {
     LocationDAO locationDAO;
-    private VisitDAO visitDAO;
-    private EncounterDAO encounterDAO;
+    private final VisitDAO visitDAO;
+    private final EncounterDAO encounterDAO;
     private EncounterCreateRoomDAO encounterCreateRoomDAO;
 
     public VisitRepository() {
@@ -90,7 +90,7 @@ public class VisitRepository extends BaseRepository {
                                 visitDAO.saveOrUpdate(visit, patient.getId())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(),
-                            error -> error.printStackTrace()
+                                Throwable::printStackTrace
                         );
                     if (callbackListener != null) {
                         callbackListener.onResponse();

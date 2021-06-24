@@ -45,7 +45,7 @@ public class VisitDashboardPresenterTest extends ACUnitTestBaseRx {
     @Mock
     private RestApi restApi;
     private VisitDashboardPresenter presenter;
-    private Long visitId = 1L;
+    private final Long visitId = 1L;
 
     @Before
     public void setUp() {
@@ -118,7 +118,7 @@ public class VisitDashboardPresenterTest extends ACUnitTestBaseRx {
     private Visit createVisit(Long visitId) {
         Visit visit = new Visit();
         visit.setUuid("some_visit_uuid");
-        visit.setPatient(createPatient(1l));
+        visit.setPatient(createPatient(1L));
         visit.setId(visitId);
         return visit;
     }

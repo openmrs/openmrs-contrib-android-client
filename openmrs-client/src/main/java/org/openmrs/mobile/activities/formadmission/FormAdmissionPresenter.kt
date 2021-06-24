@@ -66,7 +66,7 @@ class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
         this.restApi = restApi
         view.setPresenter(this)
         mContext = context
-        providerRepository = ProviderRepository(OpenMRS.getInstance(), restApi, logger);
+        providerRepository = ProviderRepository(OpenMRS.getInstance(), restApi, logger)
     }
 
     override fun subscribe() {
@@ -131,7 +131,7 @@ class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
                 .addEncounterCreated(encountercreate)
         encountercreate.id = id
         if (!mPatient!!.isSynced) {
-            mPatient!!.addEncounters(encountercreate.id)
+            mPatient!!.addEncounters(encountercreate.id!!)
             mPatient!!.id?.let { PatientDAO().updatePatient(it, mPatient) }
             view.showToast(mContext.resources.getString(R.string.form_data_will_be_synced_later_error_message))
             view.enableSubmitButton(true)

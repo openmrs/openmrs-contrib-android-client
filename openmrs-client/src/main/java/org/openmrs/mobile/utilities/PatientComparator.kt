@@ -47,22 +47,22 @@ class PatientComparator {
     private fun compareAddress(newPatient: Patient, existingPatient: Patient): Int {
         var score = 0
         if (existingPatient.address != null && newPatient.address != null) {
-            if (Objects.equal(newPatient.address.address1, existingPatient.address.address1)) {
+            if (Objects.equal(newPatient.address!!.address1, existingPatient.address!!.address1)) {
                 score += 1
             }
-            if (Objects.equal(newPatient.address.address2, existingPatient.address.address2)) {
+            if (Objects.equal(newPatient.address!!.address2, existingPatient.address!!.address2)) {
                 score += 1
             }
-            if (Objects.equal(newPatient.address.cityVillage, existingPatient.address.address2)) {
+            if (Objects.equal(newPatient.address!!.cityVillage, existingPatient.address!!.address2)) {
                 score += 1
             }
-            if (Objects.equal(newPatient.address.country, existingPatient.address.country)) {
+            if (Objects.equal(newPatient.address!!.country, existingPatient.address!!.country)) {
                 score += 1
             }
-            if (Objects.equal(newPatient.address.stateProvince, existingPatient.address.stateProvince)) {
+            if (Objects.equal(newPatient.address!!.stateProvince, existingPatient.address!!.stateProvince)) {
                 score += 1
             }
-            if (Objects.equal(newPatient.address.postalCode, existingPatient.address.postalCode)) {
+            if (Objects.equal(newPatient.address!!.postalCode, existingPatient.address!!.postalCode)) {
                 score += 1
             }
         }
@@ -88,13 +88,13 @@ class PatientComparator {
     private fun compareFullPersonName(newPatient: Patient, existingPatient: Patient): Int {
         var score = 0
         if (existingPatient.name != null && newPatient.name != null) {
-            if (Objects.equal(newPatient.name.givenName, existingPatient.name.givenName)) {
+            if (Objects.equal(newPatient.name!!.givenName, existingPatient.name!!.givenName)) {
                 score += 1
             }
-            if (Objects.equal(newPatient.name.familyName, existingPatient.name.familyName)) {
+            if (Objects.equal(newPatient.name!!.familyName, existingPatient.name!!.familyName)) {
                 score += 1
             }
-            if (Objects.equal(newPatient.name.middleName, existingPatient.name.middleName)) {
+            if (Objects.equal(newPatient.name!!.middleName, existingPatient.name!!.middleName)) {
                 score += 1
             }
         }
@@ -104,6 +104,6 @@ class PatientComparator {
 
     companion object {
         private const val MIN_SCORE = 6
-        private val PATIENT_FIELDS = Arrays.asList("name", "gender", "birthdate", "addres")
+        private val PATIENT_FIELDS = listOf("name", "gender", "birthdate", "addres")
     }
 }

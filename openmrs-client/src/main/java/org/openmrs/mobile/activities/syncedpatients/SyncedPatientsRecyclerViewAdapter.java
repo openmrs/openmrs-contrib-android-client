@@ -38,14 +38,13 @@ import org.openmrs.mobile.utilities.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<SyncedPatientsRecyclerViewAdapter.PatientViewHolder> {
-    private SyncedPatientsFragment mContext;
-    private List<Patient> mItems;
+    final private SyncedPatientsFragment mContext;
+    final private List<Patient> mItems;
     private boolean multiSelect = false;
-    private ArrayList<Patient> selectedItems = new ArrayList<>();
-    private androidx.appcompat.view.ActionMode.Callback actionModeCallbacks = new androidx.appcompat.view.ActionMode.Callback() {
+    final private ArrayList<Patient> selectedItems = new ArrayList<>();
+    final private androidx.appcompat.view.ActionMode.Callback actionModeCallbacks = new androidx.appcompat.view.ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(androidx.appcompat.view.ActionMode mode, Menu menu) {
             multiSelect = true;
@@ -125,12 +124,12 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
     }
 
     class PatientViewHolder extends RecyclerView.ViewHolder {
-        private CardView mRowLayout;
-        private TextView mIdentifier;
-        private TextView mDisplayName;
-        private ImageView mGender;
-        private TextView mBirthDate;
-        private ColorStateList cardBackgroundColor;
+        private final CardView mRowLayout;
+        private final TextView mIdentifier;
+        private final TextView mDisplayName;
+        private final ImageView mGender;
+        private final TextView mBirthDate;
+        private final ColorStateList cardBackgroundColor;
 
         public PatientViewHolder(View itemView) {
             super(itemView);

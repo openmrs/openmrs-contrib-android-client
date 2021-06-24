@@ -25,6 +25,7 @@ import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 
 import org.jdeferred.android.AndroidDeferredManager;
+import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.EncounterService;
 import org.openmrs.mobile.api.RestApi;
@@ -147,7 +148,6 @@ public class PatientRepository extends BaseRepository {
                     });
                 });
         } else {
-            ;
             if (callback != null) {
                 callback.onNotifyResponse(openMrs.getString(R.string.offline_mode_patient_data_saved_locally_notification_message));
             }
@@ -418,7 +418,7 @@ public class PatientRepository extends BaseRepository {
             }
 
             @Override
-            public void onFailure(Call<Results<Patient>> call, Throwable t) {
+            public void onFailure(@NotNull Call<Results<Patient>> call, Throwable t) {
                 callback.onErrorResponse(t.getMessage());
             }
         });
@@ -469,7 +469,7 @@ public class PatientRepository extends BaseRepository {
     public void getCauseOfDeathGlobalID(VisitsResponseCallback callback) {
         restApi.getSystemProperty(ApplicationConstants.CAUSE_OF_DEATH, ApplicationConstants.API.FULL).enqueue(new Callback<Results<SystemProperty>>() {
             @Override
-            public void onResponse(Call<Results<SystemProperty>> call, Response<Results<SystemProperty>> response) {
+            public void onResponse(@NotNull Call<Results<SystemProperty>> call, Response<Results<SystemProperty>> response) {
                 if (response.isSuccessful()) {
                     String uuid = response.body().getResults().get(0).getConceptUUID();
                     callback.onSuccess(uuid);
@@ -479,7 +479,7 @@ public class PatientRepository extends BaseRepository {
             }
 
             @Override
-            public void onFailure(Call<Results<SystemProperty>> call, Throwable t) {
+            public void onFailure(@NotNull Call<Results<SystemProperty>> call, Throwable t) {
                 callback.onFailure(t.getMessage());
             }
         });

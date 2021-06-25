@@ -31,7 +31,6 @@ import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
 import org.openmrs.mobile.databinding.ActivityFindPatientsBinding;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 
 public class SyncedPatientsActivity extends ACBaseActivity {
     public SyncedPatientsPresenter presenter;
@@ -114,7 +113,7 @@ public class SyncedPatientsActivity extends ACBaseActivity {
         getMenuInflater().inflate(R.menu.find_locally_and_add_patients_menu, menu);
 
         addPatientMenuItem = menu.findItem(R.id.actionAddPatients);
-        enableAddPatient(OpenMRS.getInstance().getSyncState());
+        enableAddPatient(OpenmrsAndroid.getSyncState());
 
         MenuItem searchMenuItem = menu.findItem(R.id.actionSearchLocal);
         searchView = (SearchView) searchMenuItem.getActionView();

@@ -188,4 +188,10 @@ public class PatientChartsFragment extends PatientDashboardFragment implements P
             ToastUtil.showShortToast(getContext(), ToastUtil.ToastType.ERROR, e.getMessage());
         }
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

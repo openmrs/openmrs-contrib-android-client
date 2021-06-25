@@ -442,7 +442,7 @@ public class CustomFragmentDialog extends DialogFragment {
                     SyncedPatientsActivity syncedPatientsActivity = (SyncedPatientsActivity) getActivity();
                     for (Patient patientItem : itemsToDelete) {
                         if (syncedPatientsActivity != null) {
-                            syncedPatientsActivity.mPresenter.deletePatient(patientItem);
+                            syncedPatientsActivity.presenter.deletePatient(patientItem);
                         }
                     }
                     dismiss();

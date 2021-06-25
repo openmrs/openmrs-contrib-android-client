@@ -19,10 +19,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.example.openmrs_android_sdk.utilities.ToastUtil
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
 import org.openmrs.mobile.databinding.ActvityContactUsBinding
-import org.openmrs.mobile.utilities.ToastUtil
 
 class ContactUsActivity : ACBaseActivity(), ContactUsContract.View {
 

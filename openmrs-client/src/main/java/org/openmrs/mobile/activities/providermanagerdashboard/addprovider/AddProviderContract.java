@@ -14,10 +14,11 @@
 
 package org.openmrs.mobile.activities.providermanagerdashboard.addprovider;
 
+import com.example.openmrs_android_sdk.library.models.Person;
+import com.example.openmrs_android_sdk.library.models.Provider;
+
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.models.Person;
-import org.openmrs.mobile.models.Provider;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -29,17 +29,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.openmrs_android_sdk.library.models.Allergy;
+
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.addeditallergy.AddEditAllergyActivity;
-import org.openmrs.mobile.activities.dialog.CustomPickerDialog;
 import org.openmrs.mobile.activities.dialog.CustomDialogModel;
+import org.openmrs.mobile.activities.dialog.CustomPickerDialog;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.databinding.FragmentPatientAllergyBinding;
-import org.openmrs.mobile.models.Allergy;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.ToastUtil;
+import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,12 +14,14 @@
 
 package org.openmrs.mobile.test;
 
-import org.openmrs.mobile.models.Results;
+
+import androidx.annotation.NonNull;
+
+import com.example.openmrs_android_sdk.library.models.Results;
 
 import java.io.IOException;
 import java.util.List;
 
-import androidx.annotation.NonNull;
 import okhttp3.Request;
 import retrofit2.Call;
 import retrofit2.Callback;

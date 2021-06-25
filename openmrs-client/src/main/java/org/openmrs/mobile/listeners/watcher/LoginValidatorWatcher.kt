@@ -17,15 +17,11 @@ import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.AdapterView
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid
+import com.example.openmrs_android_sdk.utilities.StringUtils.notEmpty
 import org.openmrs.mobile.activities.login.LocationArrayAdapter
-import org.openmrs.mobile.application.OpenMRS
-import org.openmrs.mobile.utilities.StringUtils.notEmpty
 
 //Class used to extract view validation logic
 class LoginValidatorWatcher(private val mUrl: EditText,
@@ -53,9 +49,9 @@ class LoginValidatorWatcher(private val mUrl: EditText,
     }
 
     private fun urlChanged(editable: Editable) {
-        if (OpenMRS.getInstance().serverUrl != editable.toString() && notEmpty(editable.toString())) {
+        if (OpenmrsAndroid.getServerUrl() != editable.toString() && notEmpty(editable.toString())) {
             isUrlChanged = true
-        } else if (OpenMRS.getInstance().serverUrl == editable.toString()) {
+        } else if (OpenmrsAndroid.getServerUrl() == editable.toString()) {
             isUrlChanged = false
         }
     }

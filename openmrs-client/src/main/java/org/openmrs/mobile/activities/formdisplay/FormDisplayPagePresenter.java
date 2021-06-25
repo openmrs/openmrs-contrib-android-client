@@ -10,11 +10,12 @@ package org.openmrs.mobile.activities.formdisplay;
 
 import android.widget.LinearLayout;
 
+import com.example.openmrs_android_sdk.library.models.Page;
+import com.example.openmrs_android_sdk.library.models.Question;
+import com.example.openmrs_android_sdk.library.models.Section;
+
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.bundle.FormFieldsWrapper;
-import org.openmrs.mobile.models.Page;
-import org.openmrs.mobile.models.Question;
-import org.openmrs.mobile.models.Section;
 
 import java.util.List;
 

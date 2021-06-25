@@ -14,15 +14,15 @@
 
 package org.openmrs.mobile.activities.patientdashboard;
 
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LifecycleOwner;
+
+import com.example.openmrs_android_sdk.library.models.Allergy;
+import com.example.openmrs_android_sdk.library.models.Encounter;
+import com.example.openmrs_android_sdk.library.models.Patient;
+import com.example.openmrs_android_sdk.library.models.Visit;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.models.Allergy;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.Visit;
 
 import java.util.List;
 

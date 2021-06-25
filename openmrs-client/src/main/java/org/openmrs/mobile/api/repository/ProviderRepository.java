@@ -70,22 +70,16 @@ public class ProviderRepository extends BaseRepository {
                 public void onResponse(@NotNull Call<Results<Provider>> call, @NotNull Response<Results<Provider>> response) {
                     if (response.isSuccessful()) {
                         if (!response.body().getResults().isEmpty()) {
-                            List<Provider> offlineList = providerRoomDao.getProviderList().blockingGet();
                             List<Provider> serversList = response.body().getResults();
-
-                            if (offlineList.isEmpty()) {
-                                providerRoomDao.insertAllOrders(serversList);
-                                providerLiveData.setValue(providerRoomDao.getProviderList().blockingGet());
-                            } else {
-                                providerLiveData.setValue(offlineList);
-                            }
+                            providerRoomDao.insertAllOrders(serversList);
+                            providerLiveData.setValue(providerRoomDao.getProviderList().blockingGet());
                         } else {
-                            providerLiveData.setValue(null);
+                            providerLiveData.setValue(providerRoomDao.getProviderList().blockingGet());
                         }
                     } else {
                         logger.e("Reading providers failed. Response: " + response.errorBody());
                         ToastUtil.error(openMrs.getString(R.string.unable_to_fetch_providers));
-                        providerLiveData.setValue(null);
+                        providerLiveData.setValue(providerRoomDao.getProviderList().blockingGet());
                     }
                 }
 
@@ -93,7 +87,7 @@ public class ProviderRepository extends BaseRepository {
                 public void onFailure(@NotNull Call<Results<Provider>> call, @NotNull Throwable t) {
                     logger.e("Reading providers failed.", t);
                     ToastUtil.error(openMrs.getString(R.string.unable_to_fetch_providers));
-                    providerLiveData.setValue(null);
+                    providerLiveData.setValue(providerRoomDao.getProviderList().blockingGet());
                 }
             });
         } else {

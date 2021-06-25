@@ -32,14 +32,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.addeditallergy.AddEditAllergyActivity;
-import org.openmrs.mobile.activities.dialog.CustomPickerDialog;
 import org.openmrs.mobile.activities.dialog.CustomDialogModel;
+import org.openmrs.mobile.activities.dialog.CustomPickerDialog;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardFragment;
 import org.openmrs.mobile.databinding.FragmentPatientAllergyBinding;
 import org.openmrs.mobile.models.Allergy;
 import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -144,5 +143,11 @@ public class PatientAllergyFragment extends PatientDashboardFragment implements 
             intent.putExtra(ApplicationConstants.BundleKeys.ALLERGY_UUID, selectedAllergy.getUuid());
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

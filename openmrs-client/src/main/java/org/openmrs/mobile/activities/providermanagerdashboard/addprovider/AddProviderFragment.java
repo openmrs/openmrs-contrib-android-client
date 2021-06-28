@@ -200,4 +200,10 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
 
         getActivity().finish();
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

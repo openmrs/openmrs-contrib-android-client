@@ -156,11 +156,13 @@ public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderMan
                 mPresenter.updateProvider(provider);
             }
         }
+        providersAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        refreshUI();
     }
 
     @Override

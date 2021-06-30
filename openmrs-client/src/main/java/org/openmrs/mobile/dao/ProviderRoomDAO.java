@@ -33,10 +33,10 @@ import io.reactivex.Single;
 @Dao
 public interface ProviderRoomDAO {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     long addProvider(Provider provider);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAllOrders(List<Provider> order);
 
     @Delete

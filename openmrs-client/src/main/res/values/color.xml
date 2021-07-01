@@ -47,6 +47,7 @@
     <color name="dark_red">#ED3030</color>
     <color name="translucent_50_percent">#99000000</color>
     <color name="black_dark_mode">#121212</color>
+    <color name="translucent_70_percent">#B3000000</color>
 
     <!-- neutral colors that look pleasing on both white and black background -->
     <color name="neutral_green">#249627</color>

@@ -681,6 +681,13 @@
 
     </ScrollView>
 
+    <View
+        android:id="@+id/transp_screen_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/translucent_70_percent"
+        android:visibility="gone" />
+
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="wrap_content"

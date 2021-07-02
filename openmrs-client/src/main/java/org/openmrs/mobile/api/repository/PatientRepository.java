@@ -31,7 +31,7 @@ import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.api.promise.SimpleDeferredObject;
 import org.openmrs.mobile.api.promise.SimplePromise;
-import org.openmrs.mobile.api.workers.UpdatePatientWorker;
+import org.openmrs.mobile.api.workers.patient.UpdatePatientWorker;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.application.OpenMRSLogger;
 import org.openmrs.mobile.dao.EncounterCreateRoomDAO;

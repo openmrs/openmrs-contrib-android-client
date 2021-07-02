@@ -40,8 +40,12 @@ public class PatientPhotoActivity extends AppCompatActivity {
 
         ByteArrayInputStream inputStream = new ByteArrayInputStream(photo);
         Bitmap patientPhoto = BitmapFactory.decodeStream(inputStream);
-        ImageView patientImageView = binding.patientPhoto;
-        patientImageView.setImageBitmap(patientPhoto);
+        ImageView patientImageView = null;
+
+        if(binding.patientPhoto!=null) {
+            patientImageView = binding.patientPhoto;
+            patientImageView.setImageBitmap(patientPhoto);
+        }
 
         Toolbar toolbar = binding.toolbar;
         if (toolbar != null) {

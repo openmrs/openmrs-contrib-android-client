@@ -157,10 +157,9 @@ dependencies {
     // Work Manager
     implementation "androidx.work:work-runtime:${versions.workManager}"
 
-    // http request Chuck Library
-    testImplementation "com.readystatesoftware.chuck:library:${versions.chuckLibrary}"
-    debugImplementation "com.readystatesoftware.chuck:library:${versions.chuckLibrary}"
-    releaseImplementation "com.readystatesoftware.chuck:library-no-op:${versions.chuckLibrary}"
+    // http request Chucker Library
+    debugImplementation "com.github.chuckerteam.chucker:library:${versions.chuckerLibrary}"
+    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:${versions.chuckerLibrary}"
 
     // Third Party UI Libraries
     implementation "org.adw.library:discrete-seekbar:${versions.seekbar}"

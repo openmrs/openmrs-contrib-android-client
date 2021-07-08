@@ -12,9 +12,9 @@ package org.openmrs.mobile.api;
 
 import android.util.Base64;
 
+import com.chuckerteam.chucker.api.ChuckerInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.readystatesoftware.chuck.ChuckInterceptor;
 
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.models.Observation;
@@ -60,7 +60,7 @@ public class RestServiceBuilder {
                 return chain.proceed(request);
             });
 
-            httpClient.addNetworkInterceptor(new ChuckInterceptor(OpenMRS.getInstance()));
+            httpClient.addInterceptor(new ChuckerInterceptor(OpenMRS.getInstance()));
         }
         OkHttpClient client = httpClient.build();
         Retrofit retrofit = builder.client(client).build();

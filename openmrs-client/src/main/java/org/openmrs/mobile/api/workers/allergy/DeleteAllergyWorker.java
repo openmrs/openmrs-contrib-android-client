@@ -15,25 +15,25 @@
 package org.openmrs.mobile.api.workers.allergy;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.AllergyRoomDAO;
 import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
+import java.io.IOException;
+
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 import static org.openmrs.mobile.utilities.ApplicationConstants.BundleKeys.ALLERGY_UUID;
@@ -53,47 +53,33 @@ public class DeleteAllergyWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        final boolean[] result = new boolean[1];
+
         String allergyUuid = getInputData().getString(ALLERGY_UUID);
         String patientUuid = getInputData().getString(PATIENT_UUID);
 
-        deleteAllergy(restApi, allergyUuid, patientUuid, new DefaultResponseCallback() {
-            @Override
-            public void onResponse() {
-                result[0] = true;
-            }
+        boolean result = deleteAllergy(restApi, allergyUuid, patientUuid);
 
-            @Override
-            public void onErrorResponse(String errorMessage) {
-                result[0] = false;
-            }
-        });
-
-        if (result[0]) {
+        if (result) {
             return Result.success();
         } else {
             return Result.retry();
         }
     }
 
-    private void deleteAllergy(RestApi restApi, String allergyUuid, String patientUuid, DefaultResponseCallback callback) {
-
+    private boolean deleteAllergy(RestApi restApi, String allergyUuid, String patientUuid) {
         if (NetworkUtils.isOnline()) {
-            restApi.deleteAllergy(patientUuid, allergyUuid).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
-
+            try {
+                Response<ResponseBody> response = restApi.deleteAllergy(patientUuid, allergyUuid).execute();
+                if (response.isSuccessful()) {
+                    new Handler(Looper.getMainLooper()).post(() -> {
                         ToastUtil.success(OpenMRS.getInstance().getString(R.string.delete_allergy_success));
-                        callback.onResponse();
-                    }
+                    });
+                    return true;
                 }
-
-                @Override
-                public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                    callback.onErrorResponse(t.getMessage());
-                }
-            });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        return false;
     }
 }

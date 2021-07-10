@@ -15,30 +15,25 @@
 package org.openmrs.mobile.api.workers.provider;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.listeners.retrofitcallbacks.CustomResponseCallback;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.dao.ProviderRoomDAO;
 import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.models.Person;
-import org.openmrs.mobile.models.PersonName;
 import org.openmrs.mobile.models.Provider;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
 
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddProviderWorker extends Worker {
@@ -54,81 +49,41 @@ public class AddProviderWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        final boolean[] result = new boolean[1];
-        String firstName = getInputData().getString("first_name");
-        String lastName = getInputData().getString("last_name");
-        String identifier = getInputData().getString("identifier");
-        Person person = createPerson(firstName, lastName);
-        Provider providerTobeCreated = createNewProvider(person, identifier, getInputData().getLong("id", 0l));
+        Provider provider = providerRoomDao.findProviderByID(getInputData().getLong("id", 0l)).blockingGet();
 
-        addProvider(restApi, providerTobeCreated, new CustomResponseCallback() {
-            @Override
-            public void onResponse() {
-                result[0] = true;
-                ToastUtil.success(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
-                OpenMRS.getInstance().getOpenMRSLogger().e("Adding Provider Successful ");
-            }
-
-            @Override
-            public void onErrorResponse() {
-                result[0] = false;
-            }
-        });
-
-        if (result[0]) {
-            return Result.success();
+        if (provider == null) {
+            return Result.failure();
         } else {
-            return Result.retry();
+            // Its necessary since server gives Error 500 if request has UUID set as ""
+            provider.getPerson().setUuid(null);
+
+            if (addProvider(restApi, provider)) {
+                new Handler(Looper.getMainLooper()).post(() -> {
+                    ToastUtil.success(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
+                    OpenMRS.getInstance().getOpenMRSLogger().e(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
+                });
+                return Result.success();
+            } else {
+                return Result.retry();
+            }
         }
     }
 
-    private Person createPerson(String firstName, String lastName) {
-        Person person = new Person();
-
-        PersonName personName = new PersonName();
-        personName.setGivenName(firstName);
-        personName.setFamilyName(lastName);
-        person.setUuid(null);
-
-        person.setDisplay(firstName + " " + lastName);
-        List<PersonName> names = new ArrayList<>();
-        names.add(personName);
-        person.setNames(names);
-
-        return person;
-    }
-
-    private Provider createNewProvider(Person person, String identifier, Long providerId) {
-        Provider provider = new Provider();
-        provider.setPerson(person);
-        provider.setUuid(null);
-        provider.setIdentifier(identifier);
-        provider.setRetired(false);
-        provider.setId(providerId);
-
-        return provider;
-    }
-
-    private void addProvider(RestApi restApi, Provider provider, CustomResponseCallback callback) {
+    private boolean addProvider(RestApi restApi, Provider provider) {
         if (NetworkUtils.isOnline()) {
-            restApi.addProvider(provider).enqueue(new Callback<Provider>() {
-                @Override
-                public void onResponse(@NotNull Call<Provider> call, @NotNull Response<Provider> response) {
-                    if (response.isSuccessful()) {
+            try {
+                Response<Provider> response = restApi.addProvider(provider).execute();
+                if (response.isSuccessful()) {
 
-                        //offline modifying the uuid of provider
-                        providerRoomDao.updateProviderByUuid(response.body().getDisplay(), provider.getId(), response.body().getPerson(), response.body().getUuid(),
-                            response.body().getIdentifier());
-
-                        callback.onResponse();
-                    }
+                    providerRoomDao.updateProviderUuidById(provider.getId(), response.body().getUuid());
+                    providerRoomDao.updateProviderByUuid(response.body().getDisplay(), provider.getId(),
+                            response.body().getPerson(), response.body().getUuid(), response.body().getIdentifier());
+                    return true;
                 }
-
-                @Override
-                public void onFailure(@NotNull Call<Provider> call, @NotNull Throwable t) {
-                    callback.onErrorResponse();
-                }
-            });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        return false;
     }
 }

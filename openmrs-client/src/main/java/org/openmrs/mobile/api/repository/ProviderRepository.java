@@ -110,11 +110,7 @@ public class ProviderRepository extends BaseRepository {
                 public void onResponse(@NotNull Call<Provider> call, @NotNull Response<Provider> response) {
                     if (response.isSuccessful()) {
                         //offline adding provider
-                        provider.setId(providerRoomDao.addProvider(provider));
-
-                        //editing the provider
-                        providerRoomDao.updateProviderByUuid(response.body().getDisplay(), provider.getId(), response.body().getPerson(), response.body().getUuid(),
-                            response.body().getIdentifier());
+                        providerRoomDao.addProvider(response.body());
 
                         ToastUtil.success(openMrs.getString(R.string.add_provider_success_msg));
                         logger.e("Adding Provider Successful " + response.raw());
@@ -131,13 +127,10 @@ public class ProviderRepository extends BaseRepository {
         } else {
 
             //offline addition operation
-            Long providerId = providerRoomDao.addProvider(provider);
+            long providerId = providerRoomDao.addProvider(provider);
 
             //delegate to the workManager
-            Data data = new Data.Builder().putString("first_name", provider.getPerson().getName().getGivenName())
-                .putString("last_name", provider.getPerson().getName().getGivenName())
-                .putString("identifier", provider.getIdentifier())
-                .putLong("id", providerId).build();
+            Data data = new Data.Builder().putLong("id", providerId).build();
 
             callback.onResponse();
 

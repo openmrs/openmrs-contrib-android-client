@@ -15,14 +15,14 @@
 package org.openmrs.mobile.api.workers.provider;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.listeners.retrofitcallbacks.CustomResponseCallback;
 import org.openmrs.mobile.api.RestApi;
 import org.openmrs.mobile.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
@@ -31,9 +31,9 @@ import org.openmrs.mobile.databases.AppDatabase;
 import org.openmrs.mobile.utilities.NetworkUtils;
 import org.openmrs.mobile.utilities.ToastUtil;
 
+import java.io.IOException;
+
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DeleteProviderWorker extends Worker {
@@ -49,48 +49,31 @@ public class DeleteProviderWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        final boolean[] result = new boolean[1];
         String providerUuidTobeDeleted = getInputData().getString("uuid");
 
-        deleteProvider(restApi, providerUuidTobeDeleted, new CustomResponseCallback() {
-            @Override
-            public void onResponse() {
-                result[0] = true;
-            }
-
-            @Override
-            public void onErrorResponse() {
-                result[0] = false;
-            }
-        });
-
-        if (result[0]) {
+        if (deleteProvider(restApi, providerUuidTobeDeleted)) {
+            new Handler(Looper.getMainLooper()).post(() -> {
+                ToastUtil.success(OpenMRS.getInstance().getString(R.string.delete_provider_success_msg));
+                OpenMRS.getInstance().getOpenMRSLogger().e(OpenMRS.getInstance().getString(R.string.delete_provider_success_msg));
+            });
             return Result.success();
         } else {
             return Result.retry();
         }
     }
 
-    private void deleteProvider(RestApi restApi, String providerUuid, CustomResponseCallback callback) {
-
+    private boolean deleteProvider(RestApi restApi, String providerUuid) {
         if (NetworkUtils.isOnline()) {
-            restApi.deleteProvider(providerUuid).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
-
-                        ToastUtil.success(OpenMRS.getInstance().getString(R.string.delete_provider_success_msg));
-                        OpenMRS.getInstance().getOpenMRSLogger().e("Deleting Provider Successful " + response.raw());
-
-                        callback.onResponse();
-                    }
+            try {
+                Response<ResponseBody> response = restApi.deleteProvider(providerUuid).execute();
+                if (response.isSuccessful()) {
+                    return true;
                 }
-
-                @Override
-                public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                    callback.onErrorResponse();
-                }
-            });
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        return false;
     }
 }
+

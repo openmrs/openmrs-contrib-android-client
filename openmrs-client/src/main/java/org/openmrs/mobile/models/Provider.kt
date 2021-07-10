@@ -16,19 +16,14 @@ package org.openmrs.mobile.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import org.openmrs.mobile.models.typeConverters.PersonConverter
 import org.openmrs.mobile.models.typeConverters.ProviderAttributeConverter
-import java.util.*
 
 @Entity(tableName = "provider_table")
 class Provider : Resource() {
-
-    @ColumnInfo(name = "id")
-    override var id: Long? = null
 
     @TypeConverters(PersonConverter::class)
     @ColumnInfo(name = "person")

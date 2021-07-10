@@ -108,6 +108,7 @@
     <string name="settings_logs">Logs</string>
     <string name="settings_concepts_in_db">Concepts in DB:</string>
     <string name="settings_no_concepts_toast">There are no concepts in DB!</string>
+    <string name="theme">Theme</string>
 
     <!-- FindPatients activity -->
     <string name="action_find_patients">Find Patients</string>

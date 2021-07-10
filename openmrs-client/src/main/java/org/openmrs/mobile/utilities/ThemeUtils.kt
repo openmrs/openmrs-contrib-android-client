@@ -6,15 +6,15 @@ import org.openmrs.mobile.application.OpenMRS
 object ThemeUtils {
 
     @JvmStatic
-    fun isDarkModeActivated(): Boolean {
-        val defaultSharedPref = OpenMRS.getInstance().getOpenMRSSharedPreferences()
-        return defaultSharedPref.getBoolean(ApplicationConstants.OpenMRSThemes.KEY_DARK_MODE, false)
+    fun getTheme(): String {
+        val defaultSharedPref = OpenMRS.getInstance().openMRSSharedPreferences
+        return defaultSharedPref.getString(ApplicationConstants.OpenMRSThemes.KEY_DARK_MODE, "System Default")!!
     }
 
     @JvmStatic
-    fun setDarkMode(darkMode: Boolean) {
+    fun setTheme(theme: String) {
         val editor = OpenMRS.getInstance().openMRSSharedPreferences.edit()
-        editor.putBoolean(ApplicationConstants.OpenMRSThemes.KEY_DARK_MODE, darkMode)
+        editor.putString(ApplicationConstants.OpenMRSThemes.KEY_DARK_MODE, theme)
         editor.apply()
     }
 }

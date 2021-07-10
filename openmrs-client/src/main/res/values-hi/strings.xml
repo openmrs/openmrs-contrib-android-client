@@ -111,6 +111,7 @@
     <string name="settings_logs">लॉग्स</string>
     <string name="settings_concepts_in_db">DB में अवधारणाएँ:</string>
     <string name="settings_no_concepts_toast">DB में कोई अवधारणाएँ नहीं हैं!</string>
+    <string name="theme">थीम</string>
 
     <!-- FindPatients activity -->
     <string name="action_find_patients">मरीजों का पता लगाएं </string>

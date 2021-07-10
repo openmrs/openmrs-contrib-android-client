@@ -54,7 +54,7 @@ class SettingsPresenter(private val mSettingsView: SettingsContract.View, privat
         mSettingsView.addPrivacyPolicyInfo()
         mSettingsView.rateUs()
         mSettingsView.setUpContactUsButton()
-        mSettingsView.setDarkMode()
+        mSettingsView.setDarkMode(ApplicationConstants.OpenMRSThemes.THEME_LIST)
         mSettingsView.chooseLanguage(ApplicationConstants.OpenMRSlanguage.LANGUAGE_LIST)
     }
 
@@ -64,13 +64,6 @@ class SettingsPresenter(private val mSettingsView: SettingsContract.View, privat
 
     override fun updateConceptsInDBTextView() {
         mSettingsView.setConceptsInDbText(conceptRoomDAO.conceptsCount.toString())
-    }
-
-    override val isDarkModeActivated: Boolean
-        get() = ThemeUtils.isDarkModeActivated()
-
-    override fun setDarkMode(darkMode: Boolean) {
-        ThemeUtils.setDarkMode(darkMode)
     }
 
     override var language: String?
@@ -86,6 +79,24 @@ class SettingsPresenter(private val mSettingsView: SettingsContract.View, privat
             var i = 0
             while (i < languageList.size) {
                 if (lang == languageList[i]) {
+                    return i
+                }
+                i++
+            }
+            return 0
+        }
+    override var theme: String
+        get() = ThemeUtils.getTheme()
+        set(theme) {
+            ThemeUtils.setTheme(theme)
+        }
+    override val themePosition: Int
+        get() {
+            val theme = ThemeUtils.getTheme()
+            val themeList = ApplicationConstants.OpenMRSThemes.THEME_LIST
+            var i = 0
+            while (i < themeList.size) {
+                if (theme == themeList[i]) {
                     return i
                 }
                 i++

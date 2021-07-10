@@ -14,6 +14,7 @@
 package org.openmrs.mobile.activities.dashboard
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.SparseArray
@@ -23,7 +24,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener
 import com.github.amlcurran.showcaseview.ShowcaseView
@@ -32,16 +32,10 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
 import org.openmrs.mobile.activities.ACBaseFragment
-import org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity
-import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity
-import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity
-import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardActivity
-import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity
 import org.openmrs.mobile.databinding.FragmentDashboardBinding
 import org.openmrs.mobile.utilities.ApplicationConstants
 import org.openmrs.mobile.utilities.ImageUtils
-import org.openmrs.mobile.utilities.ThemeUtils
-import org.openmrs.mobile.utilities.ToastUtil
+import org.openmrs.mobile.utilities.ThemeUtils.getTheme
 
 class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), DashboardContract.View, View.OnClickListener {
 
@@ -162,7 +156,9 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
         bindDrawableResource(mRegistryPatientButton, R.drawable.ico_registry)
         bindDrawableResource(mActiveVisitsButton, R.drawable.ico_visits)
         bindDrawableResource(mCaptureVitalsButton, R.drawable.ico_vitals)
-        if (ThemeUtils.isDarkModeActivated()) {
+        val themeList = ApplicationConstants.OpenMRSThemes.THEME_LIST
+        val theme = getTheme()
+        if (theme == themeList[2] || theme == themeList[0] && resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
             changeColorOfDashboardIcons()
         }
     }

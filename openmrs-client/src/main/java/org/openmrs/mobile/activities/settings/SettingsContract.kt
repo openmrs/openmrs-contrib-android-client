@@ -24,7 +24,7 @@ interface SettingsContract {
         fun addBuildVersionInfo()
         fun addPrivacyPolicyInfo()
         fun rateUs()
-        fun setDarkMode()
+        fun setDarkMode(themeList: Array<String>)
         fun chooseLanguage(languageList: Array<String>)
         fun setUpContactUsButton()
     }
@@ -32,9 +32,9 @@ interface SettingsContract {
     interface Presenter : BasePresenterContract {
         fun logException(exception: String?)
         fun updateConceptsInDBTextView()
-        fun setDarkMode(darkMode: Boolean)
-        val isDarkModeActivated: Boolean
         var language: String?
         val languagePosition: Int
+        var theme: String
+        val themePosition: Int
     }
 }

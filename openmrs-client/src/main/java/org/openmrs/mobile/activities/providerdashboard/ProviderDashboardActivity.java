@@ -3,6 +3,7 @@ package org.openmrs.mobile.activities.providerdashboard;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
@@ -69,7 +70,9 @@ public class ProviderDashboardActivity extends ACBaseActivity implements Provide
     }
 
     private void initViewPager() {
-        if(ThemeUtils.isDarkModeActivated()) {
+        final String[] themeList = ApplicationConstants.OpenMRSThemes.THEME_LIST;
+        String theme = ThemeUtils.getTheme();
+        if(theme.equals(themeList[2]) || theme.equals(themeList[0]) && ((getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES)) {
             binding.providerDashboardTablayout.setBackgroundColor(getResources().getColor(R.color.black_dark_mode));
         }
         binding.providerDashboardTablayout.setupWithViewPager(binding.providerDashboardPager);

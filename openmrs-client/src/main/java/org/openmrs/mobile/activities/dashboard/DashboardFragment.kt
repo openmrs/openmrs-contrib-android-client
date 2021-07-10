@@ -13,51 +13,32 @@
  */
 package org.openmrs.mobile.activities.dashboard
 
-import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.RelativeLayout
-import androidx.fragment.app.Fragment
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.navigation.fragment.findNavController
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener
 import com.github.amlcurran.showcaseview.ShowcaseView
 import com.github.amlcurran.showcaseview.targets.Target
 import com.github.amlcurran.showcaseview.targets.ViewTarget
 import org.openmrs.mobile.R
-import org.openmrs.mobile.activities.ACBaseActivity
 import org.openmrs.mobile.activities.ACBaseFragment
-import org.openmrs.mobile.activities.activevisits.ActiveVisitsActivity
-import org.openmrs.mobile.activities.addeditpatient.AddEditPatientActivity
-import org.openmrs.mobile.activities.formentrypatientlist.FormEntryPatientListActivity
-import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardActivity
-import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsActivity
 import org.openmrs.mobile.databinding.FragmentDashboardBinding
 import org.openmrs.mobile.utilities.ApplicationConstants
-import org.openmrs.mobile.utilities.ImageUtils
-import org.openmrs.mobile.utilities.ThemeUtils
-import org.openmrs.mobile.utilities.ToastUtil
 
 class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), DashboardContract.View, View.OnClickListener {
 
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
-    private var mFindPatientButton: ImageView? = null
-    private var mRegistryPatientButton: ImageView? = null
-    private var mActiveVisitsButton: ImageView? = null
-    private var mCaptureVitalsButton: ImageView? = null
-    private var mProviderManagementButton: ImageView? = null
-    private var mFindPatientView: RelativeLayout? = null
+    private var mFindPatientView: ConstraintLayout? = null
     private var mRegistryPatientView: RelativeLayout? = null
     private var mActiveVisitsView: RelativeLayout? = null
     private var mCaptureVitalsView: RelativeLayout? = null
     private var mProviderManagementView: RelativeLayout? = null
-    private var mBitmapCache: SparseArray<Bitmap?>? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -128,11 +109,6 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
     }
 
     private fun initFragmentFields(binding: FragmentDashboardBinding) {
-        mFindPatientButton = binding.findPatientButton
-        mRegistryPatientButton = binding.registryPatientButton
-        mActiveVisitsButton = binding.activeVisitsButton
-        mCaptureVitalsButton = binding.captureVitalsButton
-        mProviderManagementButton = binding.dashboardProviderManagementButton
         mFindPatientView = binding.findPatientView
         mRegistryPatientView = binding.registryPatientView
         mCaptureVitalsView = binding.captureVitalsView
@@ -148,65 +124,6 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
         mProviderManagementView!!.setOnClickListener(this)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        unbindDrawableResources()
-    }
-
-    /**
-     * Binds drawable resources to all dashboard buttons
-     * Initially called by this view's presenter
-     */
-    override fun bindDrawableResources() {
-        bindDrawableResource(mFindPatientButton, R.drawable.ico_search)
-        bindDrawableResource(mRegistryPatientButton, R.drawable.ico_registry)
-        bindDrawableResource(mActiveVisitsButton, R.drawable.ico_visits)
-        bindDrawableResource(mCaptureVitalsButton, R.drawable.ico_vitals)
-        if (ThemeUtils.isDarkModeActivated()) {
-            changeColorOfDashboardIcons()
-        }
-    }
-
-    /**
-     * Binds drawable resource to ImageView
-     *
-     * @param imageView ImageView to bind resource to
-     * @param drawableId id of drawable resource (for example R.id.somePicture);
-     */
-    private fun bindDrawableResource(imageView: ImageView?, drawableId: Int) {
-        mBitmapCache = SparseArray()
-        if (view != null) {
-            createImageBitmap(drawableId, imageView!!.layoutParams)
-            imageView.setImageBitmap(mBitmapCache!![drawableId])
-        }
-    }
-
-    /**
-     * Unbinds drawable resources
-     */
-    private fun unbindDrawableResources() {
-        if (null != mBitmapCache) {
-            for (i in 0 until mBitmapCache!!.size()) {
-                val bitmap = mBitmapCache!!.valueAt(i)
-                bitmap!!.recycle()
-            }
-        }
-    }
-
-    private fun createImageBitmap(key: Int, layoutParams: ViewGroup.LayoutParams) {
-        if (mBitmapCache!![key] == null) {
-            mBitmapCache!!.put(key, ImageUtils.decodeBitmapFromResource(resources, key,
-                    layoutParams.width, layoutParams.height))
-        }
-    }
-
-    /**
-     * Starts new Activity depending on which ImageView triggered it
-     */
-    private fun startNewActivity(clazz: Class<out ACBaseActivity?>) {
-        val intent = Intent(activity, clazz)
-        startActivity(intent)
-    }
 
     override fun onClick(v: View) {
         val directionToRegister = DashboardFragmentDirections.actionDashboardFragmentToAddEditPatientActivity()
@@ -225,14 +142,6 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
         }
     }
 
-    private fun changeColorOfDashboardIcons() {
-        val greenColorResId = R.color.green
-        ImageUtils.changeImageViewTint(context, mActiveVisitsButton, greenColorResId)
-        ImageUtils.changeImageViewTint(context, mCaptureVitalsButton, greenColorResId)
-        ImageUtils.changeImageViewTint(context, mFindPatientButton, greenColorResId)
-        ImageUtils.changeImageViewTint(context, mRegistryPatientButton, greenColorResId)
-        ImageUtils.changeImageViewTint(context, mProviderManagementButton, greenColorResId)
-    }
 
     companion object {
         fun newInstance(): DashboardFragment {

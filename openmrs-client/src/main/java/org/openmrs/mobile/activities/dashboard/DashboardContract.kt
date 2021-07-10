@@ -18,9 +18,7 @@ import org.openmrs.mobile.activities.BasePresenterContract
 import org.openmrs.mobile.activities.BaseView
 
 interface DashboardContract {
-    interface View : BaseView<Presenter> {
-        fun bindDrawableResources()
-    }
+    interface View : BaseView<Presenter>
 
     interface Presenter : BasePresenterContract
 }

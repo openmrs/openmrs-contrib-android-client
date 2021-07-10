@@ -150,9 +150,9 @@
     <string name="action_starting_visit">"Starting Visit"</string>
 
     <!--SyncedPatient Activity-->
-    <string name="patient_update_successful" translatable="false">Patient %1$s Updated</string>
-    <string name="patient_update_unsuccessful" translatable="false">Patient %1$s cannot be updated due to server error will retry sync</string>
-    <string name="patient_photo_update_unsuccessful" translatable="false">Patient photo cannot be synced due to server error:  %1$s</string>
+    <string name="patient_update_successful">Patient %1$s Updated</string>
+    <string name="patient_update_unsuccessful">Patient %1$s cannot be updated due to server error will retry sync</string>
+    <string name="patient_photo_update_unsuccessful">Patient photo cannot be synced due to server error:  %1$s</string>
 
     <!-- fragment_patient_details layout -->
     <string name="patient_identifier"># %1$s</string>
@@ -409,6 +409,7 @@
     <string name="patient_update_unsuccessful_server_error">Patient %1$s cannot be updated due to server error will retry sync %2$s</string>
     <string name="offline_mode_patient_data_saved_locally_notification_message">Sync is off. Patient Update data is saved locally and will sync when online mode is restored.</string>
     <string name="patent_and_form_data_sync_resumed">Syncing switched on, attempting to sync patients and form data</string>
+    <string name="patent_data_synced_successfully">Patient [ %1$i ] synced to server successfully</string>
 
     <!--VisitExpandableListAdapter-->
     <string name="hiv_yes">Yes</string>
@@ -445,7 +446,7 @@
     <string name="unidentified_patient">Unidentified Patient</string>
     <string name="dob_error_for_unidentified">Please give a rough estimate of patient age</string>
 
-    <string name="unidentified_patient_name" translatable="false">UNKNOWN</string>
+    <string name="unidentified_patient_name">UNKNOWN</string>
     <string name="snackbar_server_error">The entered server is currently down, please select a different one.</string>
     <string name="snackbar_empty_visit_list">Select Form Entry from the menu to begin examining.</string>
     <string name="snackbar_no_forms_found">No Forms Found, try restarting the app.</string>

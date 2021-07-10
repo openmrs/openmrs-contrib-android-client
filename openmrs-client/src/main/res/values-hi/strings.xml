@@ -475,4 +475,5 @@
     <string name="more_about_openmrs">"अधिक"</string>
     <string name="action_about_activity">Open MRS के बारे में</string>
     <string name="action_about">Open MRS के बारे में</string>
+    <string name="patent_data_synced_successfully">रोगी [ %1$i ] सर्वर से सफलतापूर्वक समन्वयित हो गया</string>
 </resources>

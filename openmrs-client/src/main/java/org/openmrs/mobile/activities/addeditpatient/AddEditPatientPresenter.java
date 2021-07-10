@@ -224,7 +224,9 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
         patientRepository.registerPatient(mPatient, new PatientDeferredResponseCallback() {
             @Override
             public void onNotifyResponse(@Nullable String notifyMessage) {
-
+                mPatientInfoView.startPatientDashbordActivity(mPatient);
+                mPatientInfoView.finishPatientInfoActivity();
+                ToastUtil.notify(notifyMessage);
             }
 
             @Override

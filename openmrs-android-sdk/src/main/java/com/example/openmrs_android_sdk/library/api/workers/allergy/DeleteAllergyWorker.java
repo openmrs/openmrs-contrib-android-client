@@ -28,11 +28,8 @@ import com.example.openmrs_android_sdk.library.api.RestApi;
 import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
 import com.example.openmrs_android_sdk.library.dao.AllergyRoomDAO;
 import com.example.openmrs_android_sdk.library.databases.AppDatabase;
-import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 import com.example.openmrs_android_sdk.utilities.NetworkUtils;
 import com.example.openmrs_android_sdk.utilities.ToastUtil;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
@@ -75,7 +72,7 @@ public class DeleteAllergyWorker extends Worker {
                 Response<ResponseBody> response = restApi.deleteAllergy(patientUuid, allergyUuid).execute();
                 if (response.isSuccessful()) {
                     new Handler(Looper.getMainLooper()).post(() -> {
-                        ToastUtil.success(OpenMRS.getInstance().getString(R.string.delete_allergy_success));
+                        ToastUtil.success(OpenmrsAndroid.getInstance().getString(R.string.delete_allergy_success));
                     });
                     return true;
                 }

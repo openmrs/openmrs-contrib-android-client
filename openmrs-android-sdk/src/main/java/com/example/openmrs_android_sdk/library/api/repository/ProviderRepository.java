@@ -23,6 +23,7 @@ import androidx.work.OneTimeWorkRequest;
 
 import com.example.openmrs_android_sdk.R;
 import com.example.openmrs_android_sdk.library.OpenMRSLogger;
+import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
 import com.example.openmrs_android_sdk.library.api.RestApi;
 import com.example.openmrs_android_sdk.library.api.workers.provider.AddProviderWorker;
 import com.example.openmrs_android_sdk.library.api.workers.provider.DeleteProviderWorker;
@@ -102,7 +103,7 @@ public class ProviderRepository extends BaseRepository {
                         }
                     } else {
                         logger.e("Reading providers failed. Response: " + response.errorBody());
-                        ToastUtil.error(openMrs.getString(R.string.unable_to_fetch_providers));
+                        ToastUtil.error(OpenmrsAndroid.getInstance().getString(R.string.unable_to_fetch_providers));
                         providerLiveData.setValue(providerRoomDao.getProviderList().blockingGet());
                     }
                 }
@@ -110,7 +111,7 @@ public class ProviderRepository extends BaseRepository {
                 @Override
                 public void onFailure(@NotNull Call<Results<Provider>> call, @NotNull Throwable t) {
                     logger.e("Reading providers failed.", t);
-                    ToastUtil.error(openMrs.getString(R.string.unable_to_fetch_providers));
+                    ToastUtil.error(OpenmrsAndroid.getInstance().getString(R.string.unable_to_fetch_providers));
                     providerLiveData.setValue(providerRoomDao.getProviderList().blockingGet());
                 }
             });

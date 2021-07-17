@@ -28,14 +28,9 @@ import com.example.openmrs_android_sdk.library.api.RestApi;
 import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
 import com.example.openmrs_android_sdk.library.dao.ProviderRoomDAO;
 import com.example.openmrs_android_sdk.library.databases.AppDatabase;
-import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.CustomResponseCallback;
-import com.example.openmrs_android_sdk.library.models.Person;
-import com.example.openmrs_android_sdk.library.models.PersonName;
 import com.example.openmrs_android_sdk.library.models.Provider;
 import com.example.openmrs_android_sdk.utilities.NetworkUtils;
 import com.example.openmrs_android_sdk.utilities.ToastUtil;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
@@ -64,8 +59,8 @@ public class AddProviderWorker extends Worker {
 
             if (addProvider(restApi, provider)) {
                 new Handler(Looper.getMainLooper()).post(() -> {
-                    ToastUtil.success(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
-                    OpenMRS.getInstance().getOpenMRSLogger().e(OpenMRS.getInstance().getString(R.string.add_provider_success_msg));
+                    ToastUtil.success(OpenmrsAndroid.getInstance().getString(R.string.add_provider_success_msg));
+                    OpenmrsAndroid.getOpenMRSLogger().e(OpenmrsAndroid.getInstance().getString(R.string.add_provider_success_msg));
                 });
                 return Result.success();
             } else {

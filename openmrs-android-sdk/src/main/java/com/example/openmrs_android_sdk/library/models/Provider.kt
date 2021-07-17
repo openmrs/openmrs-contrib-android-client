@@ -21,8 +21,6 @@ import com.example.openmrs_android_sdk.library.models.typeConverters.PersonConve
 import com.example.openmrs_android_sdk.library.models.typeConverters.ProviderAttributeConverter
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import org.openmrs.mobile.models.typeConverters.PersonConverter
-import org.openmrs.mobile.models.typeConverters.ProviderAttributeConverter
 import java.util.*
 
 @Entity(tableName = "provider_table")

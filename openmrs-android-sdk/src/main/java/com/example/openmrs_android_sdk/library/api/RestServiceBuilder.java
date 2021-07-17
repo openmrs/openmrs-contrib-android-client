@@ -58,7 +58,7 @@ public class RestServiceBuilder {
                 return chain.proceed(request);
             });
 
-            httpClient.addInterceptor(new ChuckerInterceptor(OpenMRS.getInstance()));
+            httpClient.addInterceptor(new ChuckerInterceptor(OpenmrsAndroid.getInstance()));
         }
         OkHttpClient client = httpClient.build();
         Retrofit retrofit = builder.client(client).build();

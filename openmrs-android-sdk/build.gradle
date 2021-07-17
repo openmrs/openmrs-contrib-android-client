@@ -1,15 +1,16 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'maven-publish'
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 30
+        minSdkVersion 17
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
@@ -30,59 +31,66 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-}
 
-dependencies {
+    dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.3.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
+        implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+        implementation 'androidx.core:core-ktx:1.2.0'
+        implementation 'androidx.appcompat:appcompat:1.2.0'
+        implementation 'com.google.android.material:material:1.3.0'
+        implementation 'com.google.code.gson:gson:2.8.5'
 
-    // room
-    implementation 'androidx.room:room-runtime:2.3.0-alpha01'
-    implementation 'android.arch.persistence.room:rxjava2:1.1.1'
+        // room
+        implementation 'androidx.room:room-runtime:2.3.0-alpha01'
+        implementation 'android.arch.persistence.room:rxjava2:1.1.1'
 
-    //no inspection
-    annotationProcessor 'androidx.room:room-compiler:2.1.0-alpha04'
+        //no inspection
+        annotationProcessor 'androidx.room:room-compiler:2.1.0-alpha04'
 
+        // joda time
+        implementation 'joda-time:joda-time:2.10.6'
 
-    // joda time
-    implementation 'joda-time:joda-time:2.10.6'
+        // rx java dependencies
+        implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
+        implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+        implementation 'com.jakewharton.rxbinding:rxbinding:1.0.0'
 
-    // rx java dependencies
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'com.jakewharton.rxbinding:rxbinding:1.0.0'
+        //bcrypt
+        implementation 'org.mindrot:jbcrypt:0.4'
 
-    //bcrypt
-    implementation 'org.mindrot:jbcrypt:0.4'
+        //jdeferred
+        implementation 'org.jdeferred:jdeferred-android-aar:1.2.6'
 
-    //jdeferred
-    implementation 'org.jdeferred:jdeferred-android-aar:1.2.6'
+        //networking and processing
+        implementation "com.squareup.retrofit2:retrofit:2.3.0"
+        implementation "com.squareup.retrofit2:converter-gson:2.1.0"
+        implementation "com.google.code.gson:gson:2.8.5"
 
-    //networking and processing
-    implementation "com.squareup.retrofit2:retrofit:2.3.0"
-    implementation "com.squareup.retrofit2:converter-gson:2.1.0"
-    implementation "com.google.code.gson:gson:2.8.5"
-
-    // http request Chuck Library
-    testImplementation "com.readystatesoftware.chuck:library:1.1.0"
-    debugImplementation "com.readystatesoftware.chuck:library:1.1.0"
-    releaseImplementation "com.readystatesoftware.chuck:library-no-op:1.1.0"
-
-    // Work Manager
-    implementation "androidx.work:work-runtime:2.3.4"
+        // Work Manager
+        implementation "androidx.work:work-runtime:2.3.4"
 
 
-    // test implementation
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+        // test implementation
+        testImplementation 'junit:junit:4.+'
+        androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+        androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    // http request Chucker Library
-    debugImplementation "com.github.chuckerteam.chucker:library:3.4.0"
-    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.4.0"
+        // http request Chucker Library
+        debugImplementation "com.github.chuckerteam.chucker:library:3.4.0"
+        releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.4.0"
 
+    }
+    afterEvaluate {
+        publishing {
+            publications {
+                release(MavenPublication) {
+                    from components.release
+
+                    groupId = 'com.openmrs.AndroidSDK'
+                    artifactId = 'openmrs'
+                    version = '1.0.0'
+                }
+            }
+        }
+    }
 }

@@ -125,6 +125,9 @@ repositories {
 
 dependencies {
 
+    // Android sdk library dependency
+    implementation project(path: ':openmrs-android-sdk')
+
     implementation "androidx.appcompat:appcompat:${versions.material}"
     implementation "com.google.android.material:material:${versions.material}"
     implementation "androidx.legacy:legacy-support-v13:${versions.supportVersion}"
@@ -151,9 +154,6 @@ dependencies {
     // Database components
     implementation "androidx.room:room-runtime:${versions.roomRuntime}"
     implementation "android.arch.persistence.room:rxjava2:${versions.roomPersistence}"
-
-    // Android sdk library dependency
-    implementation project(path: ':openmrs-android-sdk')
 
     // Noinspection GradleDependency
     annotationProcessor "androidx.room:room-compiler:${versions.roomCompiler}"

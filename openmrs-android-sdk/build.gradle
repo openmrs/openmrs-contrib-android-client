@@ -47,7 +47,6 @@ android {
         //no inspection
         annotationProcessor 'androidx.room:room-compiler:2.1.0-alpha04'
 
-
         // joda time
         implementation 'joda-time:joda-time:2.10.6'
 
@@ -67,11 +66,6 @@ android {
         implementation "com.squareup.retrofit2:converter-gson:2.1.0"
         implementation "com.google.code.gson:gson:2.8.5"
 
-        // http request Chuck Library
-        testImplementation "com.readystatesoftware.chuck:library:1.1.0"
-        debugImplementation "com.readystatesoftware.chuck:library:1.1.0"
-        releaseImplementation "com.readystatesoftware.chuck:library-no-op:1.1.0"
-
         // Work Manager
         implementation "androidx.work:work-runtime:2.3.4"
 
@@ -86,28 +80,14 @@ android {
         releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.4.0"
 
     }
-    // Because the components are created only during the afterEvaluate phase, you must
-    // configure your publications using the afterEvaluate() lifecycle method.
     afterEvaluate {
         publishing {
             publications {
-                // Creates a Maven publication called "release".
-//                release(MavenPublication) {
-//                    // Applies the component for the release build variant.
-//                    from components.release
-//
-//                    // You can then customize attributes of the publication as shown below.
-//                    groupId = 'com.openmrs.AndroidSDK'
-//                    artifactId = 'final'
-//                    version = '1.0.0'
-//                }
-                // Creates a Maven publication called “debug”.
-                debug(MavenPublication) {
-                    // Applies the component for the debug build variant.
-                    from components.debug
+                release(MavenPublication) {
+                    from components.release
 
                     groupId = 'com.openmrs.AndroidSDK'
-                    artifactId = 'final-debug'
+                    artifactId = 'openmrs'
                     version = '1.0.0'
                 }
             }

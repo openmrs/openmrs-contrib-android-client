@@ -33,7 +33,7 @@ import io.reactivex.Single;
 @Dao
 public interface ProviderRoomDAO {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     long addProvider(Provider provider);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -69,6 +69,9 @@ public interface ProviderRoomDAO {
 
     @Query("SELECT * FROM provider_table WHERE uuid = :uuid")
     Single<Provider> findProviderByUUID(String uuid);
+
+    @Query("SELECT uuid FROM provider_table")
+    Single<List<String>> getCurrentUUIDs();
 
     @Query("DELETE FROM provider_table")
     void deleteAll();

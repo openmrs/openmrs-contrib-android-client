@@ -130,11 +130,11 @@ public class PatientRepository extends BaseRepository {
                                         callback.onResponse();
                                     }
 
-                                    ToastUtil.success(openMrs.getString(R.string.patent_data_synced_successfully));
+                                    ToastUtil.success(context.getString(R.string.patent_data_synced_successfully));
 
                                 } else {
                                     if (callback != null) {
-                                        callback.onErrorResponse(openMrs.getString(R.string.patient_cannot_be_synced_due_to_server_error_message, patient.getId(), response.message()));
+                                        callback.onErrorResponse(context.getString(R.string.patient_cannot_be_synced_due_to_server_error_message, patient.getId(), response.message()));
                                     }
 
                                     ToastUtil.error("Patient[" + patient.getId() + "] cannot be synced due to server error" + response.message());
@@ -146,7 +146,7 @@ public class PatientRepository extends BaseRepository {
                             @Override
                             public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
                                 if (callback != null) {
-                                    callback.onErrorResponse(context.getString(R.string.patient_cannot_be_synced_due_to_server_error_message, patient.getId(), response.message()));
+                                    callback.onErrorResponse(context.getString(R.string.patient_cannot_be_synced_due_to_server_error_message, patient.getId(), t.getMessage()));
                                 }
 
                                 ToastUtil.notify("Patient[ " + patient.getId() + "] cannot be synced due to request error " + t.toString());

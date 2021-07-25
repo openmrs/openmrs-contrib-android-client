@@ -46,6 +46,7 @@ import retrofit2.Response;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
+
 public class VisitRepository extends BaseRepository {
     LocationDAO locationDAO;
     private VisitDAO visitDAO;
@@ -61,7 +62,8 @@ public class VisitRepository extends BaseRepository {
 
     /**
      * used in Unit tests with mockUp objects
-     *  @param restApi
+     *
+     * @param restApi
      * @param visitDAO
      * @param locationDAO
      * @param encounterDAO
@@ -73,10 +75,24 @@ public class VisitRepository extends BaseRepository {
         this.locationDAO = locationDAO;
     }
 
+
+    /**
+     * This method is used for syncing Visits data to the servers when no callback listener is provided
+     *
+     * @param patient
+     */
     public void syncVisitsData(@NonNull Patient patient) {
         syncVisitsData(patient, null);
     }
 
+    /**
+     * This method syncs visit data asynchronously and uses the callback listener to propogate back the results.
+     *
+     * @see DefaultResponseCallback
+     *
+     * @param patient
+     * @param callbackListener
+     */
     public void syncVisitsData(@NonNull final Patient patient, @Nullable final DefaultResponseCallback callbackListener) {
         Call<Results<Visit>> call = restApi.findVisitsByPatientUUID(patient.getUuid(), "custom:(uuid,location:ref,visitType:ref,startDatetime,stopDatetime,encounters:full)");
         call.enqueue(new Callback<Results<Visit>>() {
@@ -111,6 +127,14 @@ public class VisitRepository extends BaseRepository {
         });
     }
 
+    /**
+     * This method is used for getting visitType asynchronously .
+     *
+     * @see VisitType
+     * @see GetVisitTypeCallback
+     *
+     * @param callbackListener
+     */
     public void getVisitType(final GetVisitTypeCallback callbackListener) {
         Call<Results<VisitType>> call = restApi.getVisitType();
         call.enqueue(new Callback<Results<VisitType>>() {
@@ -130,10 +154,24 @@ public class VisitRepository extends BaseRepository {
         });
     }
 
+
+    /**
+     * This method is used to sync Vitals of a patient in a visit without any callback listeners.
+     *
+     * @param patientUuid
+     */
     public void syncLastVitals(final String patientUuid) {
         syncLastVitals(patientUuid, null);
     }
 
+    /**
+     * This method is used to sync Vitals of a patient with result asynchronously propagated back with callback listeners
+     *
+     * @see DefaultResponseCallback
+     *
+     * @param patientUuid
+     * @param callbackListener
+     */
     public void syncLastVitals(final String patientUuid, @Nullable final DefaultResponseCallback callbackListener) {
         Call<Results<Encounter>> call = restApi.getLastVitals(patientUuid, ApplicationConstants.EncounterTypes.VITALS, "full", 1, "desc");
         call.enqueue(new Callback<Results<Encounter>>() {
@@ -162,6 +200,16 @@ public class VisitRepository extends BaseRepository {
         });
     }
 
+    /**
+     * This method is used to end an active visit of a patient.
+     *
+     * @see Visit
+     * @see VisitsResponseCallback
+     *
+     * @param uuid
+     * @param visit
+     * @param callbackListener
+     */
     public void endVisitByUuid(String uuid, Visit visit, VisitsResponseCallback callbackListener) {
         restApi.endVisitByUUID(uuid, visit).enqueue(new Callback<Visit>() {
             @Override

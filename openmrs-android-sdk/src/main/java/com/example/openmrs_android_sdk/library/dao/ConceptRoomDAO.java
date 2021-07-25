@@ -25,26 +25,52 @@ import java.util.List;
 
 import io.reactivex.Single;
 
+/**
+ * The interface Concept room dao.
+ */
 @Dao
 public interface ConceptRoomDAO {
 
+    /**
+     * Add concept.
+     *
+     * @param conceptEntity the concept entity
+     */
     @Insert
     void addConcept(ConceptEntity conceptEntity);
 
     /**
      * To update a concept, first get the concept using
      * findConceptsByUUID and then send the id to update
+     *
+     * @param conceptEntity the concept entity
      */
-
     @Update
     void updateConcept(ConceptEntity conceptEntity);
 
+    /**
+     * Find concepts by uuid single.
+     *
+     * @param uuid the uuid
+     * @return the single
+     */
     @Query("SELECT * FROM concepts WHERE uuid = :uuid")
     Single<List<ConceptEntity>> findConceptsByUUID(String uuid);
 
+    /**
+     * Find concepts by name single.
+     *
+     * @param name the name
+     * @return the single
+     */
     @Query("SELECT * FROM concepts WHERE display = :name")
     Single<List<ConceptEntity>> findConceptsByName(String name);
 
+    /**
+     * Gets concepts count.
+     *
+     * @return the concepts count
+     */
     @Query("SELECT count(*) FROM concepts")
     long getConceptsCount();
 }

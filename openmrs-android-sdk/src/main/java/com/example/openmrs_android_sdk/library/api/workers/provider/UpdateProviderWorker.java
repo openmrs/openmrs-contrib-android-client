@@ -36,10 +36,19 @@ import java.io.IOException;
 
 import retrofit2.Response;
 
+/**
+ * The type Update provider worker.
+ */
 public class UpdateProviderWorker extends Worker {
     ProviderRoomDAO providerRoomDao;
     RestApi restApi;
 
+    /**
+     * Instantiates a new Update provider worker.
+     *
+     * @param context      the context
+     * @param workerParams the worker params
+     */
     public UpdateProviderWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         restApi = RestServiceBuilder.createService(RestApi.class);

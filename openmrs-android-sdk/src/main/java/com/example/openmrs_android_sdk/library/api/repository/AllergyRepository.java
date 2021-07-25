@@ -54,6 +54,9 @@ import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.API
 import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.BundleKeys.ALLERGY_UUID;
 import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.BundleKeys.PATIENT_UUID;
 
+/**
+ * The type Allergy repository.
+ */
 public class AllergyRepository {
     AllergyRoomDAO allergyRoomDAO;
     WorkManager workManager;
@@ -62,6 +65,11 @@ public class AllergyRepository {
     List<Allergy> allergyList = new ArrayList<>();
     List<AllergyEntity> allergyEntitiesOffline = new ArrayList<>();
 
+    /**
+     * Instantiates a new Allergy repository.
+     *
+     * @param patientID the patient id
+     */
     public AllergyRepository(String patientID) {
         this.patientID = patientID;
         allergyRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance()).allergyRoomDAO();
@@ -69,11 +77,24 @@ public class AllergyRepository {
         restApi = RestServiceBuilder.createService(RestApi.class);
     }
 
+    /**
+     * Instantiates a new Allergy repository.
+     *
+     * @param id             the id
+     * @param allergyRoomDAO the allergy room dao
+     */
     public AllergyRepository(String id, AllergyRoomDAO allergyRoomDAO) {
         this.patientID = id;
         this.allergyRoomDAO = allergyRoomDAO;
     }
 
+    /**
+     * Gets allergies.
+     *
+     * @param restApi the rest api
+     * @param uuid    the uuid
+     * @return the allergies
+     */
     public LiveData<List<Allergy>> getAllergies(RestApi restApi, String uuid) {
         MutableLiveData<List<Allergy>> allergyLiveData = new MutableLiveData<>();
         allergyEntitiesOffline = allergyRoomDAO.getAllAllergiesByPatientID(patientID);
@@ -104,12 +125,24 @@ public class AllergyRepository {
         return allergyLiveData;
     }
 
+    /**
+     * Gets allergy from database.
+     *
+     * @param patientID the patient id
+     * @return the allergy from database
+     */
     public List<Allergy> getAllergyFromDatabase(String patientID) {
         allergyEntitiesOffline = allergyRoomDAO.getAllAllergiesByPatientID(patientID);
         allergyList = AppDatabaseHelper.convertTo(allergyEntitiesOffline);
         return allergyList;
     }
 
+    /**
+     * Gets allergy by uuid.
+     *
+     * @param allergyUuid the allergy uuid
+     * @return the allergy by uuid
+     */
     public Allergy getAllergyByUUID(String allergyUuid) {
         AllergyEntity allergyEntity = allergyRoomDAO.getAllergyByUUID(allergyUuid);
         if (allergyEntity != null) {
@@ -119,6 +152,14 @@ public class AllergyRepository {
         }
     }
 
+    /**
+     * Delete allergy.
+     *
+     * @param restApi     the rest api
+     * @param patientUuid the patient uuid
+     * @param allergyUuid the allergy uuid
+     * @param callback    the callback
+     */
     public void deleteAllergy(RestApi restApi, String patientUuid, String allergyUuid, DefaultResponseCallback callback) {
         if (NetworkUtils.isOnline()) {
             restApi.deleteAllergy(patientUuid, allergyUuid).enqueue(new Callback<ResponseBody>() {
@@ -153,6 +194,12 @@ public class AllergyRepository {
         }
     }
 
+    /**
+     * Gets system property.
+     *
+     * @param systemProperty the system property
+     * @return the system property
+     */
     public LiveData<SystemProperty> getSystemProperty(String systemProperty) {
         MutableLiveData<SystemProperty> mutableLiveData = new MutableLiveData<>();
         restApi.getSystemProperty(systemProperty, FULL).enqueue(new Callback<Results<SystemProperty>>() {
@@ -173,6 +220,12 @@ public class AllergyRepository {
         return mutableLiveData;
     }
 
+    /**
+     * Gets concept members.
+     *
+     * @param uuid the uuid
+     * @return the concept members
+     */
     public LiveData<ConceptMembers> getConceptMembers(String uuid) {
         MutableLiveData<ConceptMembers> mutableLiveData = new MutableLiveData<>();
         restApi.getConceptMembersFromUUID(uuid).enqueue(new Callback<ConceptMembers>() {
@@ -193,6 +246,13 @@ public class AllergyRepository {
         return mutableLiveData;
     }
 
+    /**
+     * Create allergy.
+     *
+     * @param patientUuid   the patient uuid
+     * @param allergyCreate the allergy create
+     * @param callback      the callback
+     */
     public void createAllergy(String patientUuid, AllergyCreate allergyCreate, DefaultResponseCallback callback) {
         restApi.createAllergy(patientUuid, allergyCreate).enqueue(new Callback<Allergy>() {
             @Override
@@ -212,6 +272,15 @@ public class AllergyRepository {
         });
     }
 
+    /**
+     * Update allergy.
+     *
+     * @param patientUuid   the patient uuid
+     * @param allergyUuid   the allergy uuid
+     * @param id            the id
+     * @param allergyCreate the allergy create
+     * @param callback      the callback
+     */
     public void updateAllergy(String patientUuid, String allergyUuid, Long id, AllergyCreate allergyCreate, DefaultResponseCallback callback) {
         restApi.updateAllergy(patientUuid, allergyUuid, allergyCreate).enqueue(new Callback<Allergy>() {
             @Override

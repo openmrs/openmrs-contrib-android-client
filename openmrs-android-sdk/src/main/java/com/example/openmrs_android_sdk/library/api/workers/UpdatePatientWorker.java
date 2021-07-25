@@ -41,6 +41,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * The type Update patient worker.
+ */
 public class UpdatePatientWorker extends Worker {
     private static final int ON_SUCCESS = 1;
     private static final int ON_FAILURE = 2;
@@ -50,6 +53,12 @@ public class UpdatePatientWorker extends Worker {
     private OpenMRSLogger logger;
     private Handler mHandler;
 
+    /**
+     * Instantiates a new Update patient worker.
+     *
+     * @param appContext   the app context
+     * @param workerParams the worker params
+     */
     public UpdatePatientWorker(@NonNull Context appContext, @NonNull WorkerParameters workerParams) {
         super(appContext, workerParams);
         restApi = RestServiceBuilder.createService(RestApi.class);
@@ -110,6 +119,12 @@ public class UpdatePatientWorker extends Worker {
         return result[0] ? Result.success() : Result.retry();
     }
 
+    /**
+     * Update patient.
+     *
+     * @param patient          the patient
+     * @param callbackListener the callback listener
+     */
     public void updatePatient(final Patient patient, @Nullable final DefaultResponseCallback callbackListener) {
         PatientDtoUpdate patientDto = patient.getUpdatedPatientDto();
         if (NetworkUtils.isOnline()) {

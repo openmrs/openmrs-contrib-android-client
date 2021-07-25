@@ -26,23 +26,58 @@ import java.util.List;
 
 import io.reactivex.Single;
 
+/**
+ * The interface Observation room dao.
+ */
 @Dao
 public interface ObservationRoomDAO {
+    /**
+     * Add observation.
+     *
+     * @param observationEntity the observation entity
+     */
     @Insert
     void addObservation(ObservationEntity observationEntity);
 
+    /**
+     * Update observation.
+     *
+     * @param observationEntity the observation entity
+     */
     @Update
     void updateObservation(ObservationEntity observationEntity);
 
+    /**
+     * Delete observation.
+     *
+     * @param observationEntity the observation entity
+     */
     @Delete
     void deleteObservation(ObservationEntity observationEntity);
 
+    /**
+     * Find observation by encounter id single.
+     *
+     * @param encounterID the encounter id
+     * @return the single
+     */
     @Query("SELECT * FROM observations WHERE encounter_id = :encounterID")
     Single<List<ObservationEntity>> findObservationByEncounterID(long encounterID);
 
+    /**
+     * Gets observation by uuid.
+     *
+     * @param observationUUID the observation uuid
+     * @return the observation by uuid
+     */
     @Query("SELECT * FROM observations WHERE uuid = :observationUUID")
     Single<ObservationEntity> getObservationByUUID(String observationUUID);
 
+    /**
+     * Gets all observations.
+     *
+     * @return the all observations
+     */
     @Query("SELECT * FROM observations")
     Single<List<ObservationEntity>> getAllObservations();
 

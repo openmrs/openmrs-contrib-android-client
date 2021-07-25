@@ -24,20 +24,49 @@ import java.util.List;
 
 import io.reactivex.Single;
 
+/**
+ * The interface Location room dao.
+ */
 @Dao
 public interface LocationRoomDAO {
+    /**
+     * Add location long.
+     *
+     * @param entity the entity
+     * @return the long
+     */
     @Insert
     long addLocation(LocationEntity entity);
 
+    /**
+     * Delete all locations.
+     */
     @Query("DELETE FROM locations")
     void deleteAllLocations();
 
+    /**
+     * Gets locations.
+     *
+     * @return the locations
+     */
     @Query("SELECT * FROM locations")
     Single<List<LocationEntity>> getLocations();
 
+    /**
+     * Find location by name single.
+     *
+     * @param mName the m name
+     * @return the single
+     */
     @Query("SELECT * FROM locations WHERE display = :mName")
     Single<LocationEntity> findLocationByName(String mName);
 
+    /**
+     * Find location by uuid single.
+     *
+     * @param uuid the uuid
+     * @return the single
+     */
     @Query("SELECT * FROM locations WHERE uuid = :uuid")
     Single<LocationEntity> findLocationByUUID(String uuid);
 }

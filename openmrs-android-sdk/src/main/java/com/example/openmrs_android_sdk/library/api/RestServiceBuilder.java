@@ -27,6 +27,9 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * The type Rest service builder.
+ */
 public class RestServiceBuilder {
     private static String API_BASE_URL = OpenmrsAndroid.getServerUrl() + ApplicationConstants.API.REST_ENDPOINT;
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
@@ -40,6 +43,15 @@ public class RestServiceBuilder {
                         .client((httpClient).build());
     }
 
+    /**
+     * Create service s.
+     *
+     * @param <S>          the type parameter
+     * @param serviceClass the service class
+     * @param username     the username
+     * @param password     the password
+     * @return the s
+     */
     public static <S> S createService(Class<S> serviceClass, String username, String password) {
         if (username != null && password != null) {
             String credentials = username + ":" + password;
@@ -65,6 +77,13 @@ public class RestServiceBuilder {
         return retrofit.create(serviceClass);
     }
 
+    /**
+     * Create service s.
+     *
+     * @param <S>          the type parameter
+     * @param serviceClass the service class
+     * @return the s
+     */
     public static <S> S createService(Class<S> serviceClass) {
         String username = OpenmrsAndroid.getUsername();
         String password = OpenmrsAndroid.getPassword();
@@ -82,6 +101,13 @@ public class RestServiceBuilder {
         return GsonConverterFactory.create(myGson);
     }
 
+    /**
+     * Create service for patient identifier s.
+     *
+     * @param <S>   the type parameter
+     * @param clazz the clazz
+     * @return the s
+     */
     public static <S> S createServiceForPatientIdentifier(Class<S> clazz) {
         return new Retrofit.Builder()
                 .baseUrl(OpenmrsAndroid.getServerUrl() + '/')
@@ -90,6 +116,11 @@ public class RestServiceBuilder {
                 .create(clazz);
     }
 
+    /**
+     * Change base url.
+     *
+     * @param newServerUrl the new server url
+     */
     public static void changeBaseUrl(String newServerUrl) {
         API_BASE_URL = newServerUrl + ApplicationConstants.API.REST_ENDPOINT;
 

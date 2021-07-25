@@ -36,10 +36,19 @@ import java.io.IOException;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
+/**
+ * The type Delete provider worker.
+ */
 public class DeleteProviderWorker extends Worker {
     ProviderRoomDAO providerRoomDao;
     RestApi restApi;
 
+    /**
+     * Instantiates a new Delete provider worker.
+     *
+     * @param context      the context
+     * @param workerParams the worker params
+     */
     public DeleteProviderWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         restApi = RestServiceBuilder.createService(RestApi.class);

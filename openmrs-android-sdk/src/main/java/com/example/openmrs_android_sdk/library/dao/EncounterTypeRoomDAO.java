@@ -18,17 +18,40 @@ import com.example.openmrs_android_sdk.library.models.EncounterType;
 
 import java.util.List;
 
+/**
+ * The interface Encounter type room dao.
+ */
 @Dao
 public interface EncounterTypeRoomDAO {
+    /**
+     * Add encounter type long.
+     *
+     * @param encounterType the encounter type
+     * @return the long
+     */
     @Insert
     long addEncounterType(EncounterType encounterType);
 
+    /**
+     * Delete all encounter types.
+     */
     @Query("DELETE FROM encounterType")
     void deleteAllEncounterTypes();
 
+    /**
+     * Gets encounter type by form name.
+     *
+     * @param formName the form name
+     * @return the encounter type by form name
+     */
     @Query("Select * FROM encounterType WHERE display = :formName")
     EncounterType getEncounterTypeByFormName(String formName);
 
+    /**
+     * Gets all encounter types.
+     *
+     * @return the all encounter types
+     */
     @Query("SELECT * FROM encounterType")
     List<EncounterType> getAllEncounterTypes();
 }

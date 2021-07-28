@@ -47,12 +47,19 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
 
+/**
+ * The type Visit repository.
+ */
 public class VisitRepository extends BaseRepository {
-    LocationDAO locationDAO;
+
+    private LocationDAO locationDAO;
     private VisitDAO visitDAO;
     private EncounterDAO encounterDAO;
     private EncounterCreateRoomDAO encounterCreateRoomDAO;
 
+    /**
+     * Instantiates a new Visit repository.
+     */
     public VisitRepository() {
         visitDAO = new VisitDAO();
         encounterDAO = new EncounterDAO();
@@ -232,10 +239,21 @@ public class VisitRepository extends BaseRepository {
         });
     }
 
+    /**
+     * Start visit.
+     *
+     * @param patient the patient
+     */
     public void startVisit(final Patient patient) {
         startVisit(patient, null);
     }
 
+    /**
+     * Start visit.
+     *
+     * @param patient          the patient
+     * @param callbackListener the callback listener
+     */
     public void startVisit(final Patient patient, @Nullable final StartVisitResponseCallback callbackListener) {
         final Visit visit = new Visit();
         visit.setStartDatetime(DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
@@ -273,6 +291,12 @@ public class VisitRepository extends BaseRepository {
         });
     }
 
+    /**
+     * Add encounter created long.
+     *
+     * @param encountercreate the encountercreate
+     * @return the long
+     */
     public long addEncounterCreated(final Encountercreate encountercreate) {
         return encounterCreateRoomDAO.addEncounterCreated(encountercreate);
     }

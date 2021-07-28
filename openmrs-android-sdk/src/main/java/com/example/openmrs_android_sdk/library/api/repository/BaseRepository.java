@@ -24,13 +24,39 @@ import com.example.openmrs_android_sdk.library.api.RestApi;
 import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
 import com.example.openmrs_android_sdk.library.databases.AppDatabase;
 
+/**
+ * The type Base repository.
+ */
 public abstract class BaseRepository {
+    /**
+     * The Context.
+     * @see Context
+     */
     protected Context context;
+    /**
+     * The Rest api
+     * @see RestApi
+     */
     protected RestApi restApi;
+    /**
+     * The Database instance
+     * @see AppDatabase
+     */
     protected AppDatabase db;
+    /**
+     * The Work manager.
+     * @see WorkManager
+     */
     protected WorkManager workManager;
+    /**
+     * The Logger.
+     * @see OpenMRSLogger
+     */
     protected OpenMRSLogger logger;
 
+    /**
+     * Instantiates a new Base repository.
+     */
     public BaseRepository() {
         this.context = OpenmrsAndroid.getInstance();
         this.restApi = RestServiceBuilder.createService(RestApi.class);
@@ -39,6 +65,12 @@ public abstract class BaseRepository {
         this.logger = new OpenMRSLogger();
     }
 
+    /**
+     * Instantiates a new Base repository.
+     *
+     * @param restApi the rest api
+     * @param logger  the logger
+     */
     public BaseRepository(RestApi restApi, OpenMRSLogger logger) {
         this.logger = logger;
         this.restApi = restApi;

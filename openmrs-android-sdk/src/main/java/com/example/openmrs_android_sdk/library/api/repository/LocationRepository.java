@@ -28,7 +28,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * The type Location repository.
+ */
 public class LocationRepository extends BaseRepository {
+    /**
+     * Gets location uuid.
+     *
+     * @see LocationEntity
+     * @see SimpleDeferredObject
+     *
+     * @return the location uuid
+     */
     public SimplePromise<LocationEntity> getLocationUuid() {
         final SimpleDeferredObject<LocationEntity> deferred = new SimpleDeferredObject<>();
 

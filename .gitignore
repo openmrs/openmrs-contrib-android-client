@@ -95,6 +95,7 @@ captures/
 .idea/markdown-navigator-enh.xml
 .idea/markdown-navigator.xml
 /openmrs-client/.idea
+.idea/intellij-javadocs-4.0.1.xml
 
 # Code style from https://github.com/openmrs/openmrs-core/blob/master/tools/src/main/resources/eclipse/OpenMRSFormatter.xml
 # stored in .idea/OpenMRSFormatter to be compatible with eclipse code formatter

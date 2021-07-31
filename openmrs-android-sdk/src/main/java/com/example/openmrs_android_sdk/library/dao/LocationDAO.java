@@ -26,17 +26,37 @@ import java.util.List;
 import rx.Observable;
 
 
+/**
+ * The type Location dao.
+ */
 public class LocationDAO {
+    /**
+     * The Location room dao.
+     */
     LocationRoomDAO locationRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).locationRoomDAO();
 
+    /**
+     * Save location observable.
+     *
+     * @param location the location
+     * @return the observable
+     */
     public Observable<Long> saveLocation(LocationEntity location) {
         return AppDatabaseHelper.createObservableIO(() -> locationRoomDAO.addLocation(location));
     }
 
+    /**
+     * Delete all locations.
+     */
     public void deleteAllLocations() {
         locationRoomDAO.deleteAllLocations();
     }
 
+    /**
+     * Gets locations.
+     *
+     * @return the locations
+     */
     public Observable<List<LocationEntity>> getLocations() {
         return AppDatabaseHelper.createObservableIO(() -> {
             try {
@@ -47,6 +67,12 @@ public class LocationDAO {
         });
     }
 
+    /**
+     * Find location by name location entity.
+     *
+     * @param name the name
+     * @return the location entity
+     */
     public LocationEntity findLocationByName(String name) {
         if (!StringUtils.notNull(name)) {
             return null;
@@ -58,6 +84,12 @@ public class LocationDAO {
         }
     }
 
+    /**
+     * Find location by uuid location entity.
+     *
+     * @param uuid the uuid
+     * @return the location entity
+     */
     public LocationEntity findLocationByUUID(String uuid) {
         if (!StringUtils.notNull(uuid)) {
             return null;

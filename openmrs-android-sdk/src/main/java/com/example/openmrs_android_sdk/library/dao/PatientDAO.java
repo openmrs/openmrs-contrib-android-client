@@ -26,24 +26,53 @@ import java.util.List;
 
 import rx.Observable;
 
+/**
+ * The type Patient dao.
+ */
 public class PatientDAO {
+    /**
+     * The Patient room dao.
+     */
     PatientRoomDAO patientRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).patientRoomDAO();
 
+    /**
+     * Save patient observable.
+     *
+     * @param patient the patient
+     * @return the observable
+     */
     public Observable<Long> savePatient(Patient patient) {
         PatientEntity entity = AppDatabaseHelper.convert(patient);
         return AppDatabaseHelper.createObservableIO(() -> patientRoomDAO.addPatient(entity));
     }
 
+    /**
+     * Update patient boolean.
+     *
+     * @param patientID the patient id
+     * @param patient   the patient
+     * @return the boolean
+     */
     public boolean updatePatient(long patientID, Patient patient) {
         PatientEntity entity = AppDatabaseHelper.convert(patient);
         entity.setId(patientID);
         return patientRoomDAO.updatePatient(entity) > 0;
     }
 
+    /**
+     * Delete patient.
+     *
+     * @param id the id
+     */
     public void deletePatient(long id) {
         patientRoomDAO.deletePatient(id);
     }
 
+    /**
+     * Gets all patients.
+     *
+     * @return the all patients
+     */
     public Observable<List<Patient>> getAllPatients() {
         return AppDatabaseHelper.createObservableIO(() -> {
             List<Patient> patients = new ArrayList<>();
@@ -60,6 +89,12 @@ public class PatientDAO {
         });
     }
 
+    /**
+     * Is user already saved boolean.
+     *
+     * @param uuid the uuid
+     * @return the boolean
+     */
     public boolean isUserAlreadySaved(String uuid) {
         try {
             PatientEntity patientEntity = patientRoomDAO.findPatientByUUID(uuid).blockingGet();
@@ -69,10 +104,22 @@ public class PatientDAO {
         }
     }
 
+    /**
+     * User does not exist boolean.
+     *
+     * @param uuid the uuid
+     * @return the boolean
+     */
     public boolean userDoesNotExist(String uuid) {
         return !isUserAlreadySaved(uuid);
     }
 
+    /**
+     * Find patient by uuid patient.
+     *
+     * @param uuid the uuid
+     * @return the patient
+     */
     public Patient findPatientByUUID(String uuid) {
         try {
             PatientEntity patient = patientRoomDAO.findPatientByUUID(uuid).blockingGet();
@@ -82,6 +129,11 @@ public class PatientDAO {
         }
     }
 
+    /**
+     * Gets un synced patients.
+     *
+     * @return the un synced patients
+     */
     public List<Patient> getUnSyncedPatients() {
         List<Patient> patientList = new LinkedList<>();
         List<PatientEntity> unSyncedPatientList;
@@ -96,6 +148,12 @@ public class PatientDAO {
         }
     }
 
+    /**
+     * Find patient by id patient.
+     *
+     * @param id the id
+     * @return the patient
+     */
     public Patient findPatientByID(String id) {
         try {
             PatientEntity patientEntity = patientRoomDAO.findPatientByID(id).blockingGet();

@@ -26,6 +26,9 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.PrintWriter;
 
+/**
+ * The type Open mrs logger.
+ */
 public class OpenMRSLogger {
     private static String mTAG = "OpenMRS";
     private static final boolean IS_DEBUGGING_ON = true;
@@ -39,6 +42,9 @@ public class OpenMRSLogger {
     private static OpenMRSLogger logger = null;
     private Thread.UncaughtExceptionHandler androidDefaultUEH;
 
+    /**
+     * Instantiates a new Open mrs logger.
+     */
     public OpenMRSLogger() {
         logger = this;
         androidDefaultUEH = Thread.getDefaultUncaughtExceptionHandler();
@@ -171,16 +177,32 @@ public class OpenMRSLogger {
         }
     }
 
+    /**
+     * V.
+     *
+     * @param msg the msg
+     */
     public void v(final String msg) {
         Log.v(mTAG, getMessage(msg));
         saveToFile();
     }
 
+    /**
+     * V.
+     *
+     * @param msg the msg
+     * @param tr  the tr
+     */
     public void v(final String msg, Throwable tr) {
         Log.v(mTAG, getMessage(msg), tr);
         saveToFile();
     }
 
+    /**
+     * D.
+     *
+     * @param msg the msg
+     */
     public void d(final String msg) {
         if (IS_DEBUGGING_ON) {
             Log.d(mTAG, getMessage(msg));
@@ -188,6 +210,12 @@ public class OpenMRSLogger {
         }
     }
 
+    /**
+     * D.
+     *
+     * @param msg the msg
+     * @param tr  the tr
+     */
     public void d(final String msg, Throwable tr) {
         if (IS_DEBUGGING_ON) {
             Log.d(mTAG, getMessage(msg), tr);
@@ -195,31 +223,64 @@ public class OpenMRSLogger {
         }
     }
 
+    /**
+     * .
+     *
+     * @param msg the msg
+     */
     public void i(final String msg) {
         Log.i(mTAG, getMessage(msg));
         saveToFile();
     }
 
+    /**
+     * .
+     *
+     * @param msg the msg
+     * @param tr  the tr
+     */
     public void i(final String msg, Throwable tr) {
         Log.i(mTAG, getMessage(msg), tr);
         saveToFile();
     }
 
+    /**
+     * W.
+     *
+     * @param msg the msg
+     */
     public void w(final String msg) {
         Log.w(mTAG, getMessage(msg));
         saveToFile();
     }
 
+    /**
+     * W.
+     *
+     * @param msg the msg
+     * @param tr  the tr
+     */
     public void w(final String msg, Throwable tr) {
         Log.w(mTAG, getMessage(msg), tr);
         saveToFile();
     }
 
+    /**
+     * E.
+     *
+     * @param msg the msg
+     */
     public void e(final String msg) {
         Log.e(mTAG, getMessage(msg));
         saveToFile();
     }
 
+    /**
+     * E.
+     *
+     * @param msg the msg
+     * @param tr  the tr
+     */
     public void e(final String msg, Throwable tr) {
         Log.e(mTAG, getMessage(msg), tr);
         saveToFile();
@@ -234,6 +295,11 @@ public class OpenMRSLogger {
         return "#" + lineNumber + " " + className + "." + methodName + "() : " + msg;
     }
 
+    /**
+     * Gets log filename.
+     *
+     * @return the log filename
+     */
     public String getLogFilename() {
         return LOG_FILENAME;
     }

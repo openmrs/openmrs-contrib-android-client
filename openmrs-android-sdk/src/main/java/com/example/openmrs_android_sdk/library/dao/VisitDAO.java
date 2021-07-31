@@ -30,12 +30,31 @@ import java.util.List;
 
 import rx.Observable;
 
+/**
+ * The type Visit dao.
+ */
 public class VisitDAO {
 
+    /**
+     * The Context.
+     */
     Context context = OpenmrsAndroid.getInstance().getApplicationContext();
+    /**
+     * The Observation room dao.
+     */
     ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(context).observationRoomDAO();
+    /**
+     * The Visit room dao.
+     */
     VisitRoomDAO visitRoomDAO = AppDatabase.getDatabase(context).visitRoomDAO();
 
+    /**
+     * Save or update observable.
+     *
+     * @param visit     the visit
+     * @param patientId the patient id
+     * @return the observable
+     */
     public Observable<Long> saveOrUpdate(Visit visit, long patientId) {
         return AppDatabaseHelper.createObservableIO(() -> {
             Long visitId = visit.getId();
@@ -97,6 +116,11 @@ public class VisitDAO {
         return visitRoomDAO.updateVisit(AppDatabaseHelper.convert(visit)) > 0;
     }
 
+    /**
+     * Gets active visits.
+     *
+     * @return the active visits
+     */
     public Observable<List<Visit>> getActiveVisits() {
         return AppDatabaseHelper.createObservableIO(() -> {
             List<Visit> visits = new ArrayList<>();
@@ -113,6 +137,12 @@ public class VisitDAO {
         });
     }
 
+    /**
+     * Gets visits by patient id.
+     *
+     * @param patientID the patient id
+     * @return the visits by patient id
+     */
     public Observable<List<Visit>> getVisitsByPatientID(final Long patientID) {
         return AppDatabaseHelper.createObservableIO(() -> {
             List<Visit> visits = new ArrayList<>();
@@ -129,6 +159,12 @@ public class VisitDAO {
         });
     }
 
+    /**
+     * Gets active visit by patient id.
+     *
+     * @param patientId the patient id
+     * @return the active visit by patient id
+     */
     public Observable<Visit> getActiveVisitByPatientId(Long patientId) {
         return AppDatabaseHelper.createObservableIO(() -> {
             try {
@@ -140,6 +176,12 @@ public class VisitDAO {
         });
     }
 
+    /**
+     * Gets visit by id.
+     *
+     * @param visitID the visit id
+     * @return the visit by id
+     */
     public Observable<Visit> getVisitByID(final Long visitID) {
         return AppDatabaseHelper.createObservableIO(() -> {
             try {
@@ -151,10 +193,22 @@ public class VisitDAO {
         });
     }
 
+    /**
+     * Gets visits id by uuid.
+     *
+     * @param visitUUID the visit uuid
+     * @return the visits id by uuid
+     */
     public Observable<Long> getVisitsIDByUUID(final String visitUUID) {
         return AppDatabaseHelper.createObservableIO(() -> visitRoomDAO.getVisitsIDByUUID(visitUUID));
     }
 
+    /**
+     * Gets visit by uuid.
+     *
+     * @param uuid the uuid
+     * @return the visit by uuid
+     */
     public Observable<Visit> getVisitByUuid(String uuid) {
         return AppDatabaseHelper.createObservableIO(() -> {
             try {
@@ -166,6 +220,12 @@ public class VisitDAO {
         });
     }
 
+    /**
+     * Delete visits by patient id observable.
+     *
+     * @param id the id
+     * @return the observable
+     */
     public Observable<Boolean> deleteVisitsByPatientId(Long id) {
         return AppDatabaseHelper.createObservableIO(() -> {
             visitRoomDAO.deleteVisitsByPatientId(id);

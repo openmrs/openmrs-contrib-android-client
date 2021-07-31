@@ -23,24 +23,61 @@ import com.example.openmrs_android_sdk.library.databases.entities.AllergyEntity;
 
 import java.util.List;
 
+/**
+ * The interface Allergy room dao.
+ */
 @Dao
 public interface AllergyRoomDAO {
 
+    /**
+     * Save allergy long.
+     *
+     * @param allergyEntity the allergy entity
+     * @return the long
+     */
     @Insert
     long saveAllergy(AllergyEntity allergyEntity);
 
+    /**
+     * Update allergy int.
+     *
+     * @param allergyEntity the allergy entity
+     * @return the int
+     */
     @Update
     int updateAllergy(AllergyEntity allergyEntity);
 
+    /**
+     * Gets all allergies by patient id.
+     *
+     * @param patientId the patient id
+     * @return the all allergies by patient id
+     */
     @Query("SELECT * FROM allergy WHERE patientId = :patientId")
     List<AllergyEntity> getAllAllergiesByPatientID(String patientId);
 
+    /**
+     * Gets allergy by uuid.
+     *
+     * @param uuid the uuid
+     * @return the allergy by uuid
+     */
     @Query("SELECT * FROM allergy WHERE uuid = :uuid")
     AllergyEntity getAllergyByUUID(String uuid);
 
+    /**
+     * Delete all patient allergy.
+     *
+     * @param patientId the patient id
+     */
     @Query("DELETE FROM allergy WHERE patientId = :patientId")
     void deleteAllPatientAllergy(String patientId);
 
+    /**
+     * Delete allergy by uuid.
+     *
+     * @param uuid the uuid
+     */
     @Query("DELETE FROM allergy WHERE uuid = :uuid")
     void deleteAllergyByUUID(String uuid);
 }

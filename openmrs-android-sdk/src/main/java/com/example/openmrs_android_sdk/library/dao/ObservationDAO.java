@@ -23,9 +23,21 @@ import com.example.openmrs_android_sdk.library.models.Observation;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Observation dao.
+ */
 public class ObservationDAO {
+    /**
+     * The Observation room dao.
+     */
     ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).observationRoomDAO();
 
+    /**
+     * Find observation by encounter id list.
+     *
+     * @param encounterID the encounter id
+     * @return the list
+     */
     public List<Observation> findObservationByEncounterID(Long encounterID) {
         List<Observation> observationList;
         List<ObservationEntity> observationEntityList;

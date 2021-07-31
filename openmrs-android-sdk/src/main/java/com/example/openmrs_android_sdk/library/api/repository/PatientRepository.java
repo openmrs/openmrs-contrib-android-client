@@ -68,26 +68,53 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 
+/**
+ * The type Patient repository.
+ */
 public class PatientRepository extends BaseRepository {
     private PatientDAO patientDAO;
     private LocationRepository locationRepository;
 
+    /**
+     * Instantiates a new Patient repository.
+     */
     public PatientRepository() {
         this.patientDAO = new PatientDAO();
         this.locationRepository = new LocationRepository();
     }
 
-    //used in the unit tests
+    /**
+     * Instantiates a new Patient repository.
+     *
+     * @param logger             the logger
+     * @param patientDAO         the patient dao
+     * @param restApi            the rest api
+     * @param locationRepository the location repository
+     */
+//used in the unit tests
     public PatientRepository(OpenMRSLogger logger, PatientDAO patientDAO, RestApi restApi, LocationRepository locationRepository) {
         super(restApi, logger);
         this.patientDAO = patientDAO;
         this.locationRepository = locationRepository;
     }
 
+    /**
+     * Sync patient simple promise.
+     *
+     * @param patient the patient
+     * @return the simple promise
+     */
     public SimplePromise<Patient> syncPatient(final Patient patient) {
         return syncPatient(patient, null);
     }
 
+    /**
+     * Sync patient simple promise.
+     *
+     * @param patient  the patient
+     * @param callback the callback
+     * @return the simple promise
+     */
     public SimplePromise<Patient> syncPatient(final Patient patient, @Nullable final PatientDeferredResponseCallback callback) {
         final SimpleDeferredObject<Patient> deferred = new SimpleDeferredObject<>();
 
@@ -189,6 +216,12 @@ public class PatientRepository extends BaseRepository {
         });
     }
 
+    /**
+     * Register patient.
+     *
+     * @param patient          the patient
+     * @param callbackListener the callback listener
+     */
     public void registerPatient(final Patient patient, @Nullable final PatientDeferredResponseCallback callbackListener) {
         patientDAO.savePatient(patient)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -202,6 +235,12 @@ public class PatientRepository extends BaseRepository {
                 });
     }
 
+    /**
+     * Update patient.
+     *
+     * @param patient          the patient
+     * @param callbackListener the callback listener
+     */
     public void updatePatient(final Patient patient, @Nullable final DefaultResponseCallback callbackListener) {
         PatientDtoUpdate patientDto = patient.getUpdatedPatientDto();
         if (NetworkUtils.isOnline()) {
@@ -256,6 +295,12 @@ public class PatientRepository extends BaseRepository {
         }
     }
 
+    /**
+     * Update matching patient.
+     *
+     * @param patient  the patient
+     * @param callback the callback
+     */
     public void updateMatchingPatient(final Patient patient, DefaultResponseCallback callback) {
         PatientDtoUpdate patientDto = patient.getUpdatedPatientDto();
         patient.setUuid(null);
@@ -281,6 +326,12 @@ public class PatientRepository extends BaseRepository {
         });
     }
 
+    /**
+     * Download patient by uuid.
+     *
+     * @param uuid             the uuid
+     * @param callbackListener the callback listener
+     */
     public void downloadPatientByUuid(@NonNull final String uuid, @NonNull final DownloadPatientCallback callbackListener) {
         Call<PatientDto> call = restApi.getPatientByUUID(uuid, "full");
         call.enqueue(new Callback<PatientDto>() {
@@ -308,6 +359,12 @@ public class PatientRepository extends BaseRepository {
         });
     }
 
+    /**
+     * Download patient photo by uuid simple promise.
+     *
+     * @param uuid the uuid
+     * @return the simple promise
+     */
     public SimplePromise<Bitmap> downloadPatientPhotoByUuid(String uuid) {
         final SimpleDeferredObject<Bitmap> deferredObject = new SimpleDeferredObject<>();
         Call<ResponseBody> call = restApi.downloadPatientPhoto(uuid);
@@ -338,6 +395,11 @@ public class PatientRepository extends BaseRepository {
         return deferredObject.promise();
     }
 
+    /**
+     * Add encounters.
+     *
+     * @param patient the patient
+     */
     public void addEncounters(Patient patient) {
         EncounterCreateRoomDAO dao = db.encounterCreateRoomDAO();
         String enc = patient.getEncounters();
@@ -353,6 +415,11 @@ public class PatientRepository extends BaseRepository {
         }
     }
 
+    /**
+     * Gets id gen patient identifier.
+     *
+     * @return the id gen patient identifier
+     */
     public SimplePromise<String> getIdGenPatientIdentifier() {
         final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
 
@@ -375,6 +442,11 @@ public class PatientRepository extends BaseRepository {
         return deferred.promise();
     }
 
+    /**
+     * Gets patient identifier type uuid.
+     *
+     * @return the patient identifier type uuid
+     */
     public SimplePromise<IdentifierType> getPatientIdentifierTypeUuid() {
         final SimpleDeferredObject<IdentifierType> deferred = new SimpleDeferredObject<>();
 
@@ -400,6 +472,13 @@ public class PatientRepository extends BaseRepository {
         return deferred.promise();
     }
 
+    /**
+     * Update last viewed list.
+     *
+     * @param limit      the limit
+     * @param startIndex the start index
+     * @param callback   the callback
+     */
     public void updateLastViewedList(int limit, int startIndex, PatientResponseCallback callback) {
         Call<Results<Patient>> call = restApi.getLastViewedPatients(limit, startIndex);
         call.enqueue(new Callback<Results<Patient>>() {
@@ -421,6 +500,12 @@ public class PatientRepository extends BaseRepository {
         });
     }
 
+    /**
+     * Find patients.
+     *
+     * @param query    the query
+     * @param callback the callback
+     */
     public void findPatients(String query, PatientResponseCallback callback) {
         Call<Results<Patient>> call = restApi.getPatients(query, ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<Patient>>() {
@@ -442,6 +527,13 @@ public class PatientRepository extends BaseRepository {
         });
     }
 
+    /**
+     * Load more patients.
+     *
+     * @param limit      the limit
+     * @param startIndex the start index
+     * @param callback   the callback
+     */
     public void loadMorePatients(int limit, int startIndex, PatientResponseCallback callback) {
         Call<Results<Patient>> call = restApi.getLastViewedPatients(limit, startIndex);
         call.enqueue(new Callback<Results<Patient>>() {
@@ -463,6 +555,11 @@ public class PatientRepository extends BaseRepository {
         });
     }
 
+    /**
+     * Gets cause of death global id.
+     *
+     * @param callback the callback
+     */
     public void getCauseOfDeathGlobalID(VisitsResponseCallback callback) {
         restApi.getSystemProperty(ApplicationConstants.CAUSE_OF_DEATH, ApplicationConstants.API.FULL).enqueue(new Callback<Results<SystemProperty>>() {
             @Override
@@ -482,6 +579,12 @@ public class PatientRepository extends BaseRepository {
         });
     }
 
+    /**
+     * Fetch similar patient and calculate locally.
+     *
+     * @param patient  the patient
+     * @param callback the callback
+     */
     public void fetchSimilarPatientAndCalculateLocally(final Patient patient, PatientResponseCallback callback) {
         Call<Results<Patient>> call = restApi.getPatients(patient.getName().getGivenName(), ApplicationConstants.API.FULL);
         call.enqueue(new Callback<Results<Patient>>() {
@@ -501,6 +604,12 @@ public class PatientRepository extends BaseRepository {
         });
     }
 
+    /**
+     * Fetch similar patients from server.
+     *
+     * @param patient  the patient
+     * @param callback the callback
+     */
     public void fetchSimilarPatientsFromServer(final Patient patient, PatientResponseCallback callback) {
         Call<Results<Patient>> call = restApi.getSimilarPatients(patient.toMap());
         call.enqueue(new Callback<Results<Patient>>() {

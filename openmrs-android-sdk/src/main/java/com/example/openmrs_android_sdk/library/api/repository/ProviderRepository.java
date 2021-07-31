@@ -48,21 +48,44 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * The type Provider repository.
+ */
 public class ProviderRepository extends BaseRepository {
+
     ProviderRoomDAO providerRoomDao;
 
+    /**
+     * Instantiates a new Provider repository.
+     */
     public ProviderRepository() {
         providerRoomDao = db.providerRoomDAO();
     }
 
+    /**
+     * Instantiates a new Provider repository.
+     *
+     * @param restApi the rest api
+     * @param logger  the logger
+     */
     public ProviderRepository(RestApi restApi, OpenMRSLogger logger) {
         super(restApi, logger);
     }
 
+    /**
+     * Sets provider room dao.
+     *
+     * @param providerRoomDao the provider room dao
+     */
     public void setProviderRoomDao(ProviderRoomDAO providerRoomDao) {
         this.providerRoomDao = providerRoomDao;
     }
 
+    /**
+     * Gets providers.
+     *
+     * @return the providers
+     */
     public LiveData<List<Provider>> getProviders() {
 
         MutableLiveData<List<Provider>> providerLiveData = new MutableLiveData<>();
@@ -127,6 +150,12 @@ public class ProviderRepository extends BaseRepository {
         return providerLiveData;
     }
 
+    /**
+     * Add provider.
+     *
+     * @param provider the provider
+     * @param callback the callback
+     */
     public void addProvider(Provider provider, DefaultResponseCallback callback) {
 
         if (NetworkUtils.isOnline()) {
@@ -168,6 +197,12 @@ public class ProviderRepository extends BaseRepository {
         }
     }
 
+    /**
+     * Update provider.
+     *
+     * @param provider the provider
+     * @param callback the callback
+     */
     public void updateProvider(Provider provider, DefaultResponseCallback callback) {
 
         if (NetworkUtils.isOnline()) {
@@ -209,6 +244,12 @@ public class ProviderRepository extends BaseRepository {
         }
     }
 
+    /**
+     * Delete providers.
+     *
+     * @param providerUuid the provider uuid
+     * @param callback     the callback
+     */
     public void deleteProviders(String providerUuid, DefaultResponseCallback callback) {
 
         //when callback would call onResponse successfull the UI will refresh automatically
@@ -251,6 +292,12 @@ public class ProviderRepository extends BaseRepository {
         }
     }
 
+    /**
+     * Gets location.
+     *
+     * @param url the url
+     * @return the location
+     */
     public LiveData<List<LocationEntity>> getLocation(String url) {
         MutableLiveData<List<LocationEntity>> locations = new MutableLiveData<>();
         if (NetworkUtils.hasNetwork()) {
@@ -278,6 +325,11 @@ public class ProviderRepository extends BaseRepository {
         return locations;
     }
 
+    /**
+     * Gets encounter roles.
+     *
+     * @return the encounter roles
+     */
     public LiveData<List<Resource>> getEncounterRoles() {
         MutableLiveData<List<Resource>> encounterRoles = new MutableLiveData<>();
         restApi.getEncounterRoles().enqueue(new Callback<Results<Resource>>() {

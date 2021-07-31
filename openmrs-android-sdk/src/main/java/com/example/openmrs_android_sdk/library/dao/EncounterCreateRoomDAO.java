@@ -19,18 +19,44 @@ import com.example.openmrs_android_sdk.library.models.Encountercreate;
 
 import java.util.List;
 
+/**
+ * The interface Encounter create room dao.
+ */
 @Dao
 public interface EncounterCreateRoomDAO {
 
+    /**
+     * Add encounter created long.
+     *
+     * @param encountercreate the encountercreate
+     * @return the long
+     */
     @Insert
     long addEncounterCreated(Encountercreate encountercreate);
 
+    /**
+     * Update existing encounter int.
+     *
+     * @param encountercreate the encountercreate
+     * @return the int
+     */
     @Update
     int updateExistingEncounter(Encountercreate encountercreate);
 
+    /**
+     * Gets all created encounters.
+     *
+     * @return the all created encounters
+     */
     @Query("Select * FROM encountercreate")
     List<Encountercreate> getAllCreatedEncounters();
 
+    /**
+     * Gets created encounters by id.
+     *
+     * @param id the id
+     * @return the created encounters by id
+     */
     @Query("Select * FROM encountercreate WHERE _id =:id")
     Encountercreate getCreatedEncountersByID(long id);
 }

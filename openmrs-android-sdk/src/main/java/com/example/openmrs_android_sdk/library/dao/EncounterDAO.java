@@ -28,21 +28,43 @@ import java.util.List;
 
 import rx.Observable;
 
+/**
+ * The type Encounter dao.
+ */
 public class EncounterDAO {
     EncounterRoomDAO encounterRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).encounterRoomDAO();
     ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).observationRoomDAO();
     EncounterTypeRoomDAO encounterTypeRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).encounterTypeRoomDAO();
 
+    /**
+     * Save encounter long.
+     *
+     * @param encounter the encounter
+     * @param visitID   the visit id
+     * @return the long
+     */
     public long saveEncounter(Encounter encounter, Long visitID) {
         EncounterEntity encounterEntity = AppDatabaseHelper.convert(encounter, visitID);
         long id = encounterRoomDAO.addEncounter(encounterEntity);
         return id;
     }
 
+    /**
+     * Gets encounter type by form name.
+     *
+     * @param formname the formname
+     * @return the encounter type by form name
+     */
     public EncounterType getEncounterTypeByFormName(String formname) {
         return encounterTypeRoomDAO.getEncounterTypeByFormName(formname);
     }
 
+    /**
+     * Save last vitals encounter.
+     *
+     * @param encounter   the encounter
+     * @param patientUUID the patient uuid
+     */
     public void saveLastVitalsEncounter(Encounter encounter, String patientUUID) {
         if (null != encounter) {
             encounter.setPatientUUID(patientUUID);
@@ -67,6 +89,12 @@ public class EncounterDAO {
         }
     }
 
+    /**
+     * Gets last vitals encounter.
+     *
+     * @param patientUUID the patient uuid
+     * @return the last vitals encounter
+     */
     public Observable<Encounter> getLastVitalsEncounter(String patientUUID) {
         return AppDatabaseHelper.createObservableIO(() -> {
             try {
@@ -78,6 +106,14 @@ public class EncounterDAO {
         });
     }
 
+    /**
+     * Update encounter int.
+     *
+     * @param encounterID the encounter id
+     * @param encounter   the encounter
+     * @param visitID     the visit id
+     * @return the int
+     */
     public int updateEncounter(long encounterID, Encounter encounter, long visitID) {
         EncounterEntity encounterEntity = AppDatabaseHelper.convert(encounter, visitID);
         encounterEntity.setId(encounterID);
@@ -85,6 +121,12 @@ public class EncounterDAO {
         return id;
     }
 
+    /**
+     * Find encounters by visit id list.
+     *
+     * @param visitID the visit id
+     * @return the list
+     */
     public List<Encounter> findEncountersByVisitID(Long visitID) {
         List<Encounter> encounters = new ArrayList<>();
         try {
@@ -99,6 +141,13 @@ public class EncounterDAO {
         }
     }
 
+    /**
+     * Gets all encounters by type.
+     *
+     * @param patientID the patient id
+     * @param type      the type
+     * @return the all encounters by type
+     */
     public Observable<List<Encounter>> getAllEncountersByType(Long patientID, EncounterType type) {
         return AppDatabaseHelper.createObservableIO(() -> {
             List<Encounter> encounters = new ArrayList<>();
@@ -115,6 +164,12 @@ public class EncounterDAO {
         });
     }
 
+    /**
+     * Gets encounter by uuid.
+     *
+     * @param encounterUUID the encounter uuid
+     * @return the encounter by uuid
+     */
     public long getEncounterByUUID(final String encounterUUID) {
         try {
             return encounterRoomDAO.getEncounterByUUID(encounterUUID).blockingGet();

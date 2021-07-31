@@ -40,10 +40,19 @@ import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.Bun
 import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.BundleKeys.PATIENT_UUID;
 
 
+/**
+ * The type Delete allergy worker.
+ */
 public class DeleteAllergyWorker extends Worker {
     AllergyRoomDAO allergyRoomDAO;
     RestApi restApi;
 
+    /**
+     * Instantiates a new Delete allergy worker.
+     *
+     * @param context      the context
+     * @param workerParams the worker params
+     */
     public DeleteAllergyWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
         restApi = RestServiceBuilder.createService(RestApi.class);

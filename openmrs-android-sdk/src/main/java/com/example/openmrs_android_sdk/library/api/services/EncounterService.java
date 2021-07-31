@@ -39,13 +39,25 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 
+/**
+ * The type Encounter service.
+ */
 public class EncounterService extends IntentService {
     private final RestApi apiService = RestServiceBuilder.createService(RestApi.class);
 
+    /**
+     * Instantiates a new Encounter service.
+     */
     public EncounterService() {
         super("Save Encounter");
     }
 
+    /**
+     * Add encounter.
+     *
+     * @param encountercreate  the encountercreate
+     * @param callbackListener the callback listener
+     */
     public void addEncounter(final Encountercreate encountercreate, @Nullable DefaultResponseCallback callbackListener) {
 
         if (NetworkUtils.isOnline()) {
@@ -69,6 +81,11 @@ public class EncounterService extends IntentService {
         }
     }
 
+    /**
+     * Add encounter.
+     *
+     * @param encountercreate the encountercreate
+     */
     public void addEncounter(final Encountercreate encountercreate) {
         addEncounter(encountercreate, null);
     }
@@ -102,10 +119,21 @@ public class EncounterService extends IntentService {
                 });
     }
 
+    /**
+     * Start new visit for encounter.
+     *
+     * @param encountercreate the encountercreate
+     */
     public void startNewVisitForEncounter(final Encountercreate encountercreate) {
         startNewVisitForEncounter(encountercreate, null);
     }
 
+    /**
+     * Sync encounter.
+     *
+     * @param encountercreate  the encountercreate
+     * @param callbackListener the callback listener
+     */
     public void syncEncounter(final Encountercreate encountercreate, @Nullable final DefaultResponseCallback callbackListener) {
 
         if (NetworkUtils.isOnline()) {
@@ -144,6 +172,11 @@ public class EncounterService extends IntentService {
         }
     }
 
+    /**
+     * Sync encounter.
+     *
+     * @param encountercreate the encountercreate
+     */
     public void syncEncounter(final Encountercreate encountercreate) {
         syncEncounter(encountercreate, null);
     }

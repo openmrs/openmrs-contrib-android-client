@@ -14,15 +14,15 @@
 
 package org.openmrs.mobile.test.presenters;
 
-import com.example.openmrs_android_sdk.library.OpenMRSLogger;
-import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
-import com.example.openmrs_android_sdk.library.dao.EncounterDAO;
-import com.example.openmrs_android_sdk.library.dao.LocationDAO;
-import com.example.openmrs_android_sdk.library.dao.VisitDAO;
-import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
-import com.example.openmrs_android_sdk.library.models.Patient;
-import com.example.openmrs_android_sdk.library.models.Visit;
-import com.example.openmrs_android_sdk.utilities.NetworkUtils;
+import com.openmrs.android_sdk.library.OpenMRSLogger;
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.dao.EncounterDAO;
+import com.openmrs.android_sdk.library.dao.LocationDAO;
+import com.openmrs.android_sdk.library.dao.VisitDAO;
+import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.models.Visit;
+import com.openmrs.android_sdk.utilities.NetworkUtils;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -31,8 +31,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.visits.PatientDashboardVisitsPresenter;
-import com.example.openmrs_android_sdk.library.api.RestApi;
-import com.example.openmrs_android_sdk.library.api.repository.VisitRepository;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.repository.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 import org.powermock.api.mockito.PowerMockito;

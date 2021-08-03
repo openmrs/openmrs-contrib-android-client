@@ -17,10 +17,10 @@ package org.openmrs.mobile.activities.syncedpatients;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.openmrs_android_sdk.library.dao.PatientDAO;
-import com.example.openmrs_android_sdk.library.dao.VisitDAO;
-import com.example.openmrs_android_sdk.library.models.Patient;
-import com.example.openmrs_android_sdk.utilities.StringUtils;
+import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.dao.VisitDAO;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.utilities.StringUtils;
 
 import org.openmrs.mobile.activities.BasePresenter;
 import org.openmrs.mobile.utilities.FilterUtil;

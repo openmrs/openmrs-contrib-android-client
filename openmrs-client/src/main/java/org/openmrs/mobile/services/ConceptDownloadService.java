@@ -17,19 +17,19 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.example.openmrs_android_sdk.library.databases.entities.ConceptEntity;
-import com.example.openmrs_android_sdk.library.models.Link;
-import com.example.openmrs_android_sdk.library.models.Results;
-import com.example.openmrs_android_sdk.library.models.SystemSetting;
+import com.openmrs.android_sdk.library.databases.entities.ConceptEntity;
+import com.openmrs.android_sdk.library.models.Link;
+import com.openmrs.android_sdk.library.models.Results;
+import com.openmrs.android_sdk.library.models.SystemSetting;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.settings.SettingsActivity;
-import com.example.openmrs_android_sdk.library.api.RestApi;
-import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
-import com.example.openmrs_android_sdk.library.dao.ConceptRoomDAO;
-import com.example.openmrs_android_sdk.library.databases.AppDatabase;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.library.dao.ConceptRoomDAO;
+import com.openmrs.android_sdk.library.databases.AppDatabase;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
 
 import java.util.List;
 
@@ -37,9 +37,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_DESC;
-import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_ID;
-import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_NAME;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_DESC;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_ID;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.ConceptDownloadService.CHANNEL_NAME;
 
 public class ConceptDownloadService extends Service {
     private int downloadedConcepts;

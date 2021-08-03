@@ -14,14 +14,14 @@
 
 package org.openmrs.mobile.test.presenters;
 
-import com.example.openmrs_android_sdk.library.OpenMRSLogger;
-import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
-import com.example.openmrs_android_sdk.library.dao.PatientDAO;
-import com.example.openmrs_android_sdk.library.models.Patient;
-import com.example.openmrs_android_sdk.library.models.PatientPhoto;
-import com.example.openmrs_android_sdk.library.models.PersonAddress;
-import com.example.openmrs_android_sdk.utilities.NetworkUtils;
-import com.example.openmrs_android_sdk.utilities.ToastUtil;
+import com.openmrs.android_sdk.library.OpenMRSLogger;
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.models.PatientPhoto;
+import com.openmrs.android_sdk.library.models.PersonAddress;
+import com.openmrs.android_sdk.utilities.NetworkUtils;
+import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,10 +30,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientContract;
 import org.openmrs.mobile.activities.addeditpatient.AddEditPatientPresenter;
-import com.example.openmrs_android_sdk.library.api.RestApi;
-import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import com.example.openmrs_android_sdk.library.api.repository.LocationRepository;
-import com.example.openmrs_android_sdk.library.api.repository.PatientRepository;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.RestServiceBuilder;
+import com.openmrs.android_sdk.library.api.repository.LocationRepository;
+import com.openmrs.android_sdk.library.api.repository.PatientRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 import org.powermock.api.mockito.PowerMockito;

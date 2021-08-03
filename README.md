@@ -11,7 +11,6 @@ OpenMRS Android Client
 - [Description](#Description)
 			- [Key Features](#Key-Features)
 - [Screenshots](#Screenshots)
-- [GSoC 2019](#GSoC-2019)
 - [Development](#Development)
 		- [Code Style](#Code-Style)
 		- [Model pattern](#Model-pattern)
@@ -22,31 +21,6 @@ OpenMRS Android Client
 				- [Demo Username: admin](#Demo-Username-admin)
 				- [Demo Password: Admin123](#Demo-Password-Admin123)
 - [Releasing [Collaborators only]](#Releasing-Collaborators-only)
-- [Release Notes](#Release-Notes)
-        - [Version 2.8.3](#Version-283)
-        - [Version 2.8.2](#Version-282)
-        - [Version 2.8.1](#Version-281)
-        - [Version 2.8.0](#Version-280)
-		- [Version 2.7.4](#Version-274)
-		- [Summary:](#Summary)
-		- [Version 2.7.3](#Version-273)
-		- [Summary:](#Summary-1)
-		- [Version 2.7.2](#Version-272)
-		- [Summary:](#Summary-2)
-		- [Version 2.7.1](#Version-271)
-		- [Summary:](#Summary-3)
-		- [Version 2.7.0](#Version-270)
-		- [Summary:](#Summary-4)
-		- [Version 2.6.2](#Version-262)
-		- [Summary:](#Summary-5)
-		- [Version 2.6.1](#Version-261)
-		- [Summary:](#Summary-6)
-		- [Version 2.6.0](#Version-260)
-		- [Summary:](#Summary-7)
-		- [Version 2.5](#Version-25)
-		- [Summary:](#Summary-8)
-		- [Version 2.4](#Version-24)
-		- [Summary:](#Summary-9)
 - [Objectives](#Objectives)
 		- [Goals:](#Goals)
 - [User Manual](#User-Manual)
@@ -58,6 +32,29 @@ The purpose of this project is to provide an OpenMRS 2.x client for Android devi
 The app communicates with OpenMRS instances using REST. It supports working offline (without network connection). The database on the device is encrypted and password protected to secure patient data.
 For more information on the client, visit https://wiki.openmrs.org/display/projects/OpenMRS+2.x+Android+Client
 
+# Development
+We use JIRA to track issues and monitor project development. Refer to this link to view all issues and project summary: [Android Client JIRA](https://issues.openmrs.org/browse/AC). 
+To get started contributing, try working on [introductory issues](https://issues.openmrs.org/issues/?filter=17165) in JIRA and check out [OpenMRS Pull Request Tips](https://wiki.openmrs.org/display/docs/Pull+Request+Tips).
+Also, before creating a pull request, please run code review tools (Lint) and all tests.
+
+#### 1. openmrs-android-sdk package
+* There was a need to make the app extendable without forking it out, rather just adding it as a dependency in any android application which wants to use the functionality but with a custom UI on top of it.
+* we cam add implementation 	
+``` 
+    dependencies {
+                      implementation 'com.github.openmrs:openmrs-contrib-android-client:deploy-android-sdk-SNAPSHOT'
+                 } 
+```
+as a dependency in the app module build.gradle to get the functionality provided by openmrs-android-sdk.
+* The openmrs-android-sdk exposes the functionality through some methods divided in various repository classes which just need to be plugged in with the UI and view-Model.
+* An simple example of the usage would be [this demo application](https://github.com/LuGO0/Test-Application), a more complex application depicting the usage would be the openmrs-client package itself. There is a confluence article [here](will add) which will take you through the creation and usage of the test Application mentioned above.
+* The JavaDocs for the published Library [here](will add it after hosting it on our repository) 
+
+#### 2. openmrs-client package
+* This package was earlier used as the sole package containing all the code for the OpenMRS-Android-Client now a part of it has been encapsulated in the form of openmrs-android-sdk and published on Jitpack from where it can simply be added as a dependency to any other app.
+* This package uses the methods exposed by the openmrs-android-sdk and build UI on top of it, which can be used as example to implement UI on top of openmrs-android-sdk.
+* The app is also published on PlayStore just to get used to the fuctionalities it provides and can be tested on local OpenMRS server or Demo OpenMRS Server
+
 #### Key Features
 - Connect to OpenMRS server and sync all data
 - Register and Edit patients
@@ -67,19 +64,6 @@ For more information on the client, visit https://wiki.openmrs.org/display/proje
 
 # Screenshots
 <img src="https://user-images.githubusercontent.com/45125121/82362785-804c2800-9a2a-11ea-9bb1-f1b778c70de5.jpg" width="280" height="520" alt="Login page" >  <img src="http://i.imgur.com/KmaWzNv.png" width="280" height="520"> <img src="http://i.imgur.com/hiCNNIx.png" width="280" height="520">
-
-# GSoC 2019
-
-This project was also selected for Google Summer of Code 2019. More details can be found on the [Project Wiki Page](https://wiki.openmrs.org/pages/viewpage.action?pageId=216367730).
-
-It was been selected as a candidate for Google Summer of Code 2017. Please visit the [Project Wiki Page](https://wiki.openmrs.org/display/projects/OpenMRS+Android+Client+Feature+Parity+and+Improvements+-+GSoC+2017) for more details.
-
-The project was also a part of GSoC 2016, the details of which can be seen in the [GSoC_2016.md](GSoC_2016.md) file.
-
-# Development
-We use JIRA to track issues and monitor project development. Refer to this link to view all issues and project summary: [Android Client JIRA](https://issues.openmrs.org/browse/AC). 
-To get started contributing, try working on [introductory issues](https://issues.openmrs.org/issues/?filter=17165) in JIRA and check out [OpenMRS Pull Request Tips](https://wiki.openmrs.org/display/docs/Pull+Request+Tips).
-Also, before creating a pull request, please run code review tools (Lint) and all tests.
 
 ### Code Style
 The coding conventions used by OpenMRS are outlined [here](https://wiki.openmrs.org/display/docs/Developer+How-To+Setup+And+Use+IntelliJ#DeveloperHow-ToSetupAndUseIntelliJ-SetupCodeStyleAndFormatForOpenMRS). These can be applied to Android Studio by following the steps given below.
@@ -109,10 +93,6 @@ We are following [Google's MVP sample](https://github.com/googlesamples/android-
 ### HTTP call debugging
 In order to debug HTTP calls, we have integrated [Chuck Library](https://github.com/jgilfelt/chuck) (a GUI based open source library) to track network calls. Apps using Chuck will display a notification showing a summary of ongoing HTTP activity. Tapping on the notification launches the full Chuck UI.
 
-# Quick Start
-
-As of February 2016, this project has been migrated to gradle to work successfully with Android Studio.
-
 ### Steps to set up:
 1. Fork the repository and clone your fork.
 2. From the Android Studio menu select `File` > `New` > `Import Project`. Alternatively, from the `Welcome screen`, select `Import project`.
@@ -130,18 +110,18 @@ Note:
 
 The demo test server dedicated to the client is (https://demo.openmrs.org/openmrs/).
 In case the demo server fails to respond, you can use oher alternate servers provided [here.](https://wiki.openmrs.org/display/ISM/OpenMRS+environments)
-
 ##### Demo Username: admin
-##### Demo Password: Admin123
+##### Password: Admin123
+<br/>
 
 # Releasing [Collaborators only]
 
+### 1. OpenMRS-Android-Client to PlayStore
 We follow the sprint model for development. Read more about it here: [OpenMRS Sprints](https://wiki.openmrs.org/display/RES/Development+Sprints).
-
 To release the application, make sure to do these steps **in order**:
 
 1. Update the [version variable in versions.gradle](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/openmrs-client/versions.gradle#L6) prior to the release.
-3. Update the [Release notes](#Release-Notes) section.
+3. Update the [Release notes](releaseNotes.md) file.
 4. Update the [release notes text file](https://github.com/openmrs/openmrs-contrib-android-client/blob/master/openmrs-client/src/main/play/release-notes/en-US/default.txt) to publish in the Play store. Ideally change the wording so that normal end users understand.
 5. Now commit with the title `Release <version number here>` to the master branch.
 6. Tag the commit, using the version as the tag name. Make sure CI is green!
@@ -149,204 +129,11 @@ To release the application, make sure to do these steps **in order**:
 8. Go to [JIRA's releases page](https://issues.openmrs.org/projects/AC?selectedItem=com.atlassian.jira.jira-projects-plugin:release-page), click on the three-dots on the right, and hit **Release**.
 9. Post a new Talk thread and describe what is changed or improved in the release.
 
-# Release Notes
-
-
-### Version 2.9.0
-
-1. Updated UI for different activities (#787, #785, #803, #806, #808, #809)
-2. Added repository layer for different activity layer (#784, #791, #797, #799)
-3. Migrated codebase to kotlin (#794, #802, #811, #814)
-4. Removed unused resources (#788, #805)
-5. Created offline support for Allergy module (#786)
-6. Create allergy based on server configuration (#796)
-7. Allergy can be updated as per server settings (#798)
-8. Allergy can be deleted in online/offline mode (#793)
-9. Overloaded methods of AppDataBase Helper class (#789)
-10. Removed Collapsable bar in provider dashboard (#800)
-11. Removed unnecessary restAPI param passing to the repository (#792)
-12. Migrated Chart ListAdapter to RecyclerView (#807)
-13. Fixed app restarts on downloading concepts (#795)
-14. Fixed crash at admission form by using live data (#804)
-15. Fixed Release version blocker (#790)
-16. Added possible NPE checks at PatientComparator (#810)
-
-### Version 2.8.4
-
-1. Create admission form (#696)
-2. Migrate Java code to Kotlin (#757, #766, #765, #764, #767)
-3. Fix Floating Action Button bugs (#763, #769)
-4. Add crop image feature in patient registration (#768)
-5. Update UI to follow material design (#770, #778, #777)
-6. Upgrade dependencies to the latest versions (#772)
-7. Add expandable FAB for provider dashboard (#773)
-8. Add empty active visits view (#771)
-9. Mark patient deceased using coded response (#774)
-10. Removed swipe actions in provider dashboard (#775)
-11. Fix the reverse flipping bug in patient dashboard (#779)
-12. Add allergy tab to fetch allergies from server (#780)
-13. Finish migration from ActiveAndroid to Room (#781, #783)
-14. Add repository layer in visit dashboard (#782)
-
-### Version 2.8.3
-
-1. Fixed critical bugs (#718, #721, #722, #730, #734, #741, #742)
-2. Add showcase view for manage providers module (#720)
-3. Continue creating Room DAOs (#727, #736, #739, #740, #735, #738)
-4. Refined custom dialog box in add patient activity (#731)
-5. Start visit is disabled in offline mode (#729)
-6. Add option for 'Unknown' patients when registering (#733)
-7. Change main font to Roboto (#745)
-8. Fixed app crash on lower API devices (#749)
-9. Avoid keyboard blocking SnackBar messages (#747)
-10. Change endpoint debugger to Chucker to avoid crash (#750)
-11. Better localization (#723)
-12. Fix ill formed provider fields (#751)
-13. UI overhaul, better compliant with Material UI guidelines (#744, #746, #743, #753, #759, #761, #760)
-14. Migrate Java code to Kotlin (#752, #758, #756)
-15. Add offline support for provider module (#748)
-16. Double back press to exit the app (#762)
-
-### Version 2.8.2
-1. Add contribution guidelines to the repository (#671, #662)
-2. Removed unused resources, decreasing APK size (#669)
-3. Removed hardcoded strings (#673)
-4. Dashboard now responds to change in app theme (#661)
-5. Add language translation in hindi (#650)
-6. Create Room Data Access Objects (DAOs) (#670, #659, #682, #657, #662)
-7. UI fixes in register patient screen (#686)
-8. Added reset button (#692)
-9. Improved login and fragment dialog button design (#672)
-10. Improve PatientDetailFragment UI (#700)
-11. Fix app crash on entering values in email or password text fields (#691)
-12. Add City and State selector using Google Places API (#694)
-13. Fix crash at register patient activity (#717)
-14. Fix context-related errors (#713, #716)
-15. Add swipe to refresh feature in relevant screens (#701)
-16. Add Contact Us screen (#710)
-17. Migrate POJO classes to Kotlin (#675, #719)
-18. Add validation to HIV status in Visit Notes screen (#698)
-
-### Version 2.8.1
-### Summary:
-1. Fix window leakage error when viewing patient details
-2. Fix various performance issues
-3. Integrate leak canary for debug builds
-4. Add a splash screen
-5. Add intro slides for first time users
-6. Set a code style
-7. Fix broken unit tests
-
-### Version 2.8.0
-### Summary:
-1. Add Dark mode to the app
-2. Provider management: admins can now find, add, edit and delete providers
-3. Refactor Repository names.
-4. Fix details not showing when searching patients
-
-### Version 2.7.4
-### Summary:
-1. Make UI more consistent and follow more of the material design specs
-2. Implement Initial Provider Management
-3. Remove redundant type cast
-4. Add Floating Action Button in patient's details tab
-
-<a name="version-2.7.3"></a>
-### Version 2.7.3
-### Summary:
-1. Remove Apache HTTP API Client library
-2. Patient now extends Person
-3. Make Search primary function for Find Patients
-4. Revamp Settings Page (new material design!)
-5. Integrated android snooper for debugging purpose
-
-<a name="version-2.7.2"></a>
-### Version 2.7.2
-### Summary:
-1. Added Kotlin dependency to app level build.gradle file
-2. Added release folder to gitignore
-3. Initialized SQLCipher, made app 64-bit compliant
-4. Changed Gradle to latest version
-5. Fixed Play Publisher not publishing to Play store
-
-<a name="version-2.7.1"></a>
-### Version 2.7.1
-### Summary:
-1. Fixed bug on showing/hiding the password during login
-2. Visit Notes can now correctly show details
-3. Use Codecov as the code coverage tool
-4. Add privacy policy link to Settings page
-5. Re-developed OpenMRSLogger - faster loading times
-6. Most buttons now follow the material design guideline
-7. User is now taken back to the completed form on clicking cancel during registration
-8. Replace country selection with a country picker
-9. Setup Android Room and create entities
-10. Add Contextual Action Bar in Synced Patients to delete multiple patients at once
-
-<a name="version-2.7.0"></a>
-### Version 2.7.0
-### Summary:
-1. Implement RxJava in DAOs and migration to AndroidX
-2. Pick patient photo when registering
-3. Login form improved and doesn't require login locations when no locations are configured
-4. Add data validation when registering patients
-5. Encrypted the database with BCrypt, derived from username and password
-6. Show toasts when toggling sync button and fixed crash when updating non-synced patient
-7. Saving user input when device is rotated, or when app instance is lost
-8. Added a Privacy Policy
-9. Renewed GitHub API Key
-10. Set a Custom Path to look for the Release APK
-
-
-<a name="version-2.6.2"></a>
-### Version 2.6.2
-### Summary:
-1. Add patient picture
-2. Bug Fixes
-
-<a name="version-2.6.1"></a>
-### Version 2.6.1
-### Summary:
-1. Handle camera and storage  permissions manually
-2. Bug Fixes
-
-<a name="version-2.6.0"></a>
-### Version 2.6.0
-### Summary:
-1. Fixed patient selection when changing orientation
-2. More user-friendly register form
-3. Added unit tests
-4. Filter patients by given/middle/family names at the same time
-5. Get data from DB in background task
-6. Lint check to GitHub Pull Requests
-
-<a name="version-2.5"></a>
-### Version 2.5
-### Summary:
-1. Log in offline
-2. Coded fields in forms
-3. Edit forms
-4. Edit patients
-5. Lots of bug fixes
-
-<a name="version-2.4"></a>
-### Version 2.4
-### Summary:
-1. Added merging patients registered offline
-2. Find Patient storyboard refactoring
-3. Fixed bugs
-
-# Objectives
-
-<a name="version-2.9+"></a>
-### Version 2.9+ (next releases)
-### Goals:
-1. Material UI design
-2. Integrate more components of the webapp to the client
-3. Password reset via email
-4. Replace Java code with Kotlin
-5. Migrate ActiveAndroid SQL library to room library
-
+### 2. Openmrs-Android-Sdk
+1. The Openmrs-Android-sdk gets published to the Jitpack library so that it can be added as a dependency in various projects.
+2. Due to some Issues with the release build configuration of the app explained in detail [here](https://stackoverflow.com/questions/68420822/handling-release-keystore-while-uploading-android-library-to-jitpack) we are not able to do jitpack releases from master branch.
+3. There is a dedicated branch for this purpose which has got only the debug variant of the android application. So that the jitpack build passes.
+4. For now untill the Issue gets resolved or we write a script for it, In order to release the latest code improvements in the openmrs-android-sdk package to the jitpack, we need to copy whole package from master to branch deploy-android-sdk and publish a snapshot of the branch to jitpack.
 
 # User Manual
 Check this link for the manual: [Version 2.9+](https://wiki.openmrs.org/download/attachments/235275984/User%20Guide.pdf?api=v2)
@@ -361,3 +148,4 @@ This project is licensed under the OpenMRS Public License, see the [copyright](c
 - [Dashboard](https://issues.openmrs.org/secure/Dashboard.jspa?selectPageId=12851)
 - [CI](https://travis-ci.org/openmrs/openmrs-contrib-android-client)
 - [Google Play](https://play.google.com/store/apps/details?id=org.openmrs.mobile)
+- [Release Notes](releaseNotes.md)

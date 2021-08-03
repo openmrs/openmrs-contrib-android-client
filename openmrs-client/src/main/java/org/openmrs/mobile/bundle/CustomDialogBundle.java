@@ -14,7 +14,7 @@
 
 package org.openmrs.mobile.bundle;
 
-import com.example.openmrs_android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.models.Patient;
 
 import org.openmrs.mobile.activities.dialog.CustomFragmentDialog;
 

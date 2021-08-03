@@ -15,9 +15,9 @@
 package org.openmrs.mobile.activities.patientdashboard;
 
 import org.openmrs.mobile.activities.BasePresenter;
-import com.example.openmrs_android_sdk.library.dao.PatientDAO;
-import com.example.openmrs_android_sdk.library.dao.VisitDAO;
-import com.example.openmrs_android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.dao.VisitDAO;
+import com.openmrs.android_sdk.library.models.Patient;
 
 import rx.schedulers.Schedulers;
 

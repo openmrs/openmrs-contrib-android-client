@@ -15,7 +15,7 @@ package org.openmrs.mobile.utilities
 
 import android.util.DisplayMetrics
 import android.view.WindowManager
-import com.example.openmrs_android_sdk.library.OpenmrsAndroid
+import com.openmrs.android_sdk.library.OpenmrsAndroid
 import org.openmrs.mobile.application.OpenMRS
 import java.lang.reflect.InvocationTargetException
 

@@ -16,10 +16,10 @@ package org.openmrs.mobile.activities.addeditallergy;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.openmrs_android_sdk.library.models.Allergy;
-import com.example.openmrs_android_sdk.library.models.AllergyCreate;
-import com.example.openmrs_android_sdk.library.models.ConceptMembers;
-import com.example.openmrs_android_sdk.library.models.SystemProperty;
+import com.openmrs.android_sdk.library.models.Allergy;
+import com.openmrs.android_sdk.library.models.AllergyCreate;
+import com.openmrs.android_sdk.library.models.ConceptMembers;
+import com.openmrs.android_sdk.library.models.SystemProperty;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;

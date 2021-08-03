@@ -14,16 +14,16 @@
 
 package org.openmrs.mobile.activities.patientdashboard.diagnosis;
 
-import com.example.openmrs_android_sdk.library.models.Encounter;
-import com.example.openmrs_android_sdk.library.models.EncounterType;
-import com.example.openmrs_android_sdk.library.models.Observation;
-import com.example.openmrs_android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.models.Encounter;
+import com.openmrs.android_sdk.library.models.EncounterType;
+import com.openmrs.android_sdk.library.models.Observation;
+import com.openmrs.android_sdk.library.models.Patient;
 
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
-import com.example.openmrs_android_sdk.library.dao.EncounterDAO;
-import com.example.openmrs_android_sdk.library.dao.PatientDAO;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.library.dao.EncounterDAO;
+import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
 
 import java.util.ArrayList;
 import java.util.List;

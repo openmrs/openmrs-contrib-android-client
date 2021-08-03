@@ -14,19 +14,19 @@
 
 package org.openmrs.mobile.activities.visitdashboard;
 
-import com.example.openmrs_android_sdk.library.dao.VisitDAO;
-import com.example.openmrs_android_sdk.library.models.Encounter;
-import com.example.openmrs_android_sdk.library.models.Patient;
-import com.example.openmrs_android_sdk.library.models.Visit;
-import com.example.openmrs_android_sdk.utilities.DateUtils;
-import com.example.openmrs_android_sdk.utilities.StringUtils;
+import com.openmrs.android_sdk.library.dao.VisitDAO;
+import com.openmrs.android_sdk.library.models.Encounter;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.models.Visit;
+import com.openmrs.android_sdk.utilities.DateUtils;
+import com.openmrs.android_sdk.utilities.StringUtils;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
-import com.example.openmrs_android_sdk.library.api.RestApi;
-import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import com.example.openmrs_android_sdk.library.api.repository.VisitRepository;
-import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.VisitsResponseCallback;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.RestServiceBuilder;
+import com.openmrs.android_sdk.library.api.repository.VisitRepository;
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.VisitsResponseCallback;
 
 import java.util.List;
 

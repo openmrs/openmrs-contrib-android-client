@@ -15,17 +15,17 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
-import com.example.openmrs_android_sdk.library.api.RestApi;
-import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import com.example.openmrs_android_sdk.library.dao.EncounterTypeRoomDAO;
-import com.example.openmrs_android_sdk.library.dao.FormResourceDAO;
-import com.example.openmrs_android_sdk.library.databases.AppDatabase;
-import com.example.openmrs_android_sdk.library.databases.entities.FormResourceEntity;
-import com.example.openmrs_android_sdk.library.models.EncounterType;
-import com.example.openmrs_android_sdk.library.models.Results;
-import com.example.openmrs_android_sdk.utilities.NetworkUtils;
-import com.example.openmrs_android_sdk.utilities.ToastUtil;
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.RestServiceBuilder;
+import com.openmrs.android_sdk.library.dao.EncounterTypeRoomDAO;
+import com.openmrs.android_sdk.library.dao.FormResourceDAO;
+import com.openmrs.android_sdk.library.databases.AppDatabase;
+import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity;
+import com.openmrs.android_sdk.library.models.EncounterType;
+import com.openmrs.android_sdk.library.models.Results;
+import com.openmrs.android_sdk.utilities.NetworkUtils;
+import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import java.util.List;
 

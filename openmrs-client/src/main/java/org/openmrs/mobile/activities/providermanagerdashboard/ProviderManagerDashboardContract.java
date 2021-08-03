@@ -16,7 +16,7 @@ package org.openmrs.mobile.activities.providermanagerdashboard;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.openmrs_android_sdk.library.models.Provider;
+import com.openmrs.android_sdk.library.models.Provider;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;

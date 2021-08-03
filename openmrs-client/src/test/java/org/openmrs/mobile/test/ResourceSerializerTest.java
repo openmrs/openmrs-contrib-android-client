@@ -14,13 +14,13 @@
 
 package org.openmrs.mobile.test;
 
-import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
-import com.example.openmrs_android_sdk.library.models.IdentifierType;
-import com.example.openmrs_android_sdk.library.models.Patient;
-import com.example.openmrs_android_sdk.library.models.PatientIdentifier;
-import com.example.openmrs_android_sdk.library.models.PersonName;
-import com.example.openmrs_android_sdk.utilities.DateUtils;
-import com.example.openmrs_android_sdk.utilities.ResourceSerializer;
+import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
+import com.openmrs.android_sdk.library.models.IdentifierType;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.models.PatientIdentifier;
+import com.openmrs.android_sdk.library.models.PersonName;
+import com.openmrs.android_sdk.utilities.DateUtils;
+import com.openmrs.android_sdk.utilities.ResourceSerializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;

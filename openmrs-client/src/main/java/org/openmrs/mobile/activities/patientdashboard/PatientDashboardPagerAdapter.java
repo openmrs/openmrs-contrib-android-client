@@ -39,13 +39,13 @@ import org.openmrs.mobile.activities.patientdashboard.visits.PatientVisitsFragme
 import org.openmrs.mobile.activities.patientdashboard.vitals.PatientDashboardVitalsPresenter;
 import org.openmrs.mobile.activities.patientdashboard.vitals.PatientVitalsFragment;
 
-import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.PatientDashboardTabs.ALLERGY_TAB_POS;
-import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.PatientDashboardTabs.CHARTS_TAB_POS;
-import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.PatientDashboardTabs.DETAILS_TAB_POS;
-import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.PatientDashboardTabs.DIAGNOSIS_TAB_POS;
-import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.PatientDashboardTabs.TAB_COUNT;
-import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.PatientDashboardTabs.VISITS_TAB_POS;
-import static com.example.openmrs_android_sdk.utilities.ApplicationConstants.PatientDashboardTabs.VITALS_TAB_POS;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.PatientDashboardTabs.ALLERGY_TAB_POS;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.PatientDashboardTabs.CHARTS_TAB_POS;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.PatientDashboardTabs.DETAILS_TAB_POS;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.PatientDashboardTabs.DIAGNOSIS_TAB_POS;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.PatientDashboardTabs.TAB_COUNT;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.PatientDashboardTabs.VISITS_TAB_POS;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.PatientDashboardTabs.VITALS_TAB_POS;
 
 class PatientDashboardPagerAdapter extends FragmentPagerAdapter {
     private SparseArray<Fragment> registeredFragments = new SparseArray<>();

@@ -13,24 +13,24 @@ import android.util.SparseArray;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.openmrs_android_sdk.library.dao.PatientDAO;
-import com.example.openmrs_android_sdk.library.models.Encountercreate;
-import com.example.openmrs_android_sdk.library.models.Obscreate;
-import com.example.openmrs_android_sdk.library.models.Patient;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import com.example.openmrs_android_sdk.utilities.InputField;
-import com.example.openmrs_android_sdk.utilities.SelectOneField;
+import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.models.Encountercreate;
+import com.openmrs.android_sdk.library.models.Obscreate;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.InputField;
+import com.openmrs.android_sdk.utilities.SelectOneField;
 
 import org.joda.time.LocalDateTime;
 import org.openmrs.mobile.activities.BasePresenter;
-import com.example.openmrs_android_sdk.library.api.services.EncounterService;
-import com.example.openmrs_android_sdk.library.api.repository.VisitRepository;
-import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
+import com.openmrs.android_sdk.library.api.services.EncounterService;
+import com.openmrs.android_sdk.library.api.repository.VisitRepository;
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.openmrs_android_sdk.utilities.FormService.getFormResourceByName;
+import static com.openmrs.android_sdk.utilities.FormService.getFormResourceByName;
 
 public class FormDisplayMainPresenter extends BasePresenter implements FormDisplayContract.Presenter.MainPresenter {
     private final long mPatientID;

@@ -20,17 +20,17 @@ import android.content.Context;
 import android.database.ContentObserver;
 import android.net.Uri;
 
-import com.example.openmrs_android_sdk.library.models.Allergen;
-import com.example.openmrs_android_sdk.library.models.Allergy;
-import com.example.openmrs_android_sdk.library.models.Patient;
-import com.example.openmrs_android_sdk.library.models.PatientIdentifier;
-import com.example.openmrs_android_sdk.library.models.Person;
-import com.example.openmrs_android_sdk.library.models.PersonAddress;
-import com.example.openmrs_android_sdk.library.models.PersonAttribute;
-import com.example.openmrs_android_sdk.library.models.PersonName;
-import com.example.openmrs_android_sdk.library.models.Provider;
-import com.example.openmrs_android_sdk.library.models.Resource;
-import com.example.openmrs_android_sdk.library.models.Results;
+import com.openmrs.android_sdk.library.models.Allergen;
+import com.openmrs.android_sdk.library.models.Allergy;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.models.PatientIdentifier;
+import com.openmrs.android_sdk.library.models.Person;
+import com.openmrs.android_sdk.library.models.PersonAddress;
+import com.openmrs.android_sdk.library.models.PersonAttribute;
+import com.openmrs.android_sdk.library.models.PersonName;
+import com.openmrs.android_sdk.library.models.Provider;
+import com.openmrs.android_sdk.library.models.Resource;
+import com.openmrs.android_sdk.library.models.Results;
 
 import org.junit.Before;
 import org.junit.Rule;

@@ -1,7 +1,7 @@
 package org.openmrs.mobile.test.presenters;
 
-import com.example.openmrs_android_sdk.library.databases.entities.FormResourceEntity;
-import com.example.openmrs_android_sdk.library.models.EncounterType;
+import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity;
+import com.openmrs.android_sdk.library.models.EncounterType;
 import com.google.gson.Gson;
 
 import org.junit.Before;
@@ -11,9 +11,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.formlist.FormListContract;
 import org.openmrs.mobile.activities.formlist.FormListPresenter;
-import com.example.openmrs_android_sdk.library.dao.EncounterDAO;
+import com.openmrs.android_sdk.library.dao.EncounterDAO;
 import org.openmrs.mobile.test.ACUnitTestBase;
-import com.example.openmrs_android_sdk.utilities.FormService;
+import com.openmrs.android_sdk.utilities.FormService;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;

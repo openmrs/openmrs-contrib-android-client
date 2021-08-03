@@ -20,11 +20,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.openmrs_android_sdk.library.models.Patient
-import com.example.openmrs_android_sdk.library.models.Visit
+import com.openmrs.android_sdk.library.models.Patient
+import com.openmrs.android_sdk.library.models.Visit
 import org.openmrs.mobile.R
-import com.example.openmrs_android_sdk.library.dao.VisitDAO
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants
+import com.openmrs.android_sdk.library.dao.VisitDAO
+import com.openmrs.android_sdk.utilities.ApplicationConstants
 import rx.android.schedulers.AndroidSchedulers
 
 class FormEntryPatientListAdapter(private val mContext: FormEntryPatientListFragment, private val mItems: List<Patient?>?) : RecyclerView.Adapter<FormEntryPatientListAdapter.PatientViewHolder>() {

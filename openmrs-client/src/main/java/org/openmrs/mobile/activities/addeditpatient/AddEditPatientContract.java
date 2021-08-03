@@ -14,8 +14,8 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
-import com.example.openmrs_android_sdk.library.models.ConceptAnswers;
-import com.example.openmrs_android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.models.ConceptAnswers;
+import com.openmrs.android_sdk.library.models.Patient;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
 import org.openmrs.mobile.activities.BasePresenterContract;

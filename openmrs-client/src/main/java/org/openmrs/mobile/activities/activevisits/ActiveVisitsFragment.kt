@@ -18,7 +18,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.openmrs_android_sdk.library.models.Visit
+import com.openmrs.android_sdk.library.models.Visit
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseFragment
 import org.openmrs.mobile.databinding.FragmentActiveVisitsBinding

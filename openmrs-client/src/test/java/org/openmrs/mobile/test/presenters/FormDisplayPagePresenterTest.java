@@ -16,10 +16,10 @@ package org.openmrs.mobile.test.presenters;
 
 import android.widget.LinearLayout;
 
-import com.example.openmrs_android_sdk.library.models.Page;
-import com.example.openmrs_android_sdk.library.models.Question;
-import com.example.openmrs_android_sdk.library.models.QuestionOptions;
-import com.example.openmrs_android_sdk.library.models.Section;
+import com.openmrs.android_sdk.library.models.Page;
+import com.openmrs.android_sdk.library.models.Question;
+import com.openmrs.android_sdk.library.models.QuestionOptions;
+import com.openmrs.android_sdk.library.models.Section;
 
 import org.junit.Before;
 import org.junit.Test;

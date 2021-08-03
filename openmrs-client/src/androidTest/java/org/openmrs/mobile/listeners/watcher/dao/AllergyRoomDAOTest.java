@@ -26,9 +26,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import com.example.openmrs_android_sdk.library.dao.AllergyRoomDAO;
-import com.example.openmrs_android_sdk.library.databases.AppDatabase;
-import com.example.openmrs_android_sdk.library.databases.entities.AllergyEntity;
+import com.openmrs.android_sdk.library.dao.AllergyRoomDAO;
+import com.openmrs.android_sdk.library.databases.AppDatabase;
+import com.openmrs.android_sdk.library.databases.entities.AllergyEntity;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest

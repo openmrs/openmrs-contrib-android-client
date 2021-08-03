@@ -13,10 +13,10 @@
  */
 package org.openmrs.mobile.activities.activevisits
 
-import com.example.openmrs_android_sdk.library.models.Visit
+import com.openmrs.android_sdk.library.models.Visit
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.BasePresenter
-import com.example.openmrs_android_sdk.library.dao.VisitDAO
+import com.openmrs.android_sdk.library.dao.VisitDAO
 import org.openmrs.mobile.utilities.FilterUtil
 import rx.android.schedulers.AndroidSchedulers
 

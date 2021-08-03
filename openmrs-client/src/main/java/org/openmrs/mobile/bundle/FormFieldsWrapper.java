@@ -17,14 +17,14 @@ package org.openmrs.mobile.bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.openmrs_android_sdk.library.models.Answer;
-import com.example.openmrs_android_sdk.library.models.Encounter;
-import com.example.openmrs_android_sdk.library.models.Observation;
-import com.example.openmrs_android_sdk.library.models.Page;
-import com.example.openmrs_android_sdk.library.models.Question;
-import com.example.openmrs_android_sdk.library.models.Section;
-import com.example.openmrs_android_sdk.utilities.InputField;
-import com.example.openmrs_android_sdk.utilities.SelectOneField;
+import com.openmrs.android_sdk.library.models.Answer;
+import com.openmrs.android_sdk.library.models.Encounter;
+import com.openmrs.android_sdk.library.models.Observation;
+import com.openmrs.android_sdk.library.models.Page;
+import com.openmrs.android_sdk.library.models.Question;
+import com.openmrs.android_sdk.library.models.Section;
+import com.openmrs.android_sdk.utilities.InputField;
+import com.openmrs.android_sdk.utilities.SelectOneField;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -23,19 +23,17 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.openmrs_android_sdk.library.models.Form;
-import com.example.openmrs_android_sdk.library.models.Page;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import com.example.openmrs_android_sdk.utilities.FormService;
-import com.example.openmrs_android_sdk.utilities.ToastUtil;
+import com.openmrs.android_sdk.library.models.Form;
+import com.openmrs.android_sdk.library.models.Page;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.FormService;
+import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.bundle.FormFieldsWrapper;
 import org.openmrs.mobile.databinding.ActivityFormDisplayBinding;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import com.example.openmrs_android_sdk.utilities.FormService;
 
 import java.util.ArrayList;
 import java.util.List;

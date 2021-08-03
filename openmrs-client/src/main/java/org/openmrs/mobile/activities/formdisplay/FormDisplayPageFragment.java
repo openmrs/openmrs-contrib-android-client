@@ -29,13 +29,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
-import com.example.openmrs_android_sdk.library.models.Answer;
-import com.example.openmrs_android_sdk.library.models.Question;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import com.example.openmrs_android_sdk.utilities.InputField;
-import com.example.openmrs_android_sdk.utilities.RangeEditText;
-import com.example.openmrs_android_sdk.utilities.SelectOneField;
-import com.example.openmrs_android_sdk.utilities.ToastUtil;
+import com.openmrs.android_sdk.library.models.Answer;
+import com.openmrs.android_sdk.library.models.Question;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.InputField;
+import com.openmrs.android_sdk.utilities.RangeEditText;
+import com.openmrs.android_sdk.utilities.SelectOneField;
+import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 import org.openmrs.mobile.R;
@@ -43,7 +43,6 @@ import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.bundle.FormFieldsWrapper;
 import org.openmrs.mobile.databinding.FragmentFormDisplayBinding;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 
 import java.util.ArrayList;
 import java.util.List;

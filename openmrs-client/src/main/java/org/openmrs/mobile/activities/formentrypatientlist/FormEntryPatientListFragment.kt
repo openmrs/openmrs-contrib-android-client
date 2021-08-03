@@ -21,9 +21,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.openmrs_android_sdk.library.models.Patient
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants
-import com.example.openmrs_android_sdk.utilities.StringUtils
+import com.openmrs.android_sdk.library.models.Patient
+import com.openmrs.android_sdk.utilities.ApplicationConstants
+import com.openmrs.android_sdk.utilities.StringUtils
 import com.google.android.material.snackbar.Snackbar
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseFragment

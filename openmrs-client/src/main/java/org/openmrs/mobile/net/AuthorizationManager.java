@@ -16,8 +16,8 @@ package org.openmrs.mobile.net;
 
 import android.content.Intent;
 
-import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
 
 import org.openmrs.mobile.activities.login.LoginActivity;
 import org.openmrs.mobile.application.OpenMRS;

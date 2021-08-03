@@ -16,13 +16,13 @@ package org.openmrs.mobile.services;
 
 import androidx.annotation.NonNull;
 
-import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
-import com.example.openmrs_android_sdk.library.api.RestApi;
-import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import com.example.openmrs_android_sdk.library.models.Results;
-import com.example.openmrs_android_sdk.library.models.User;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import com.example.openmrs_android_sdk.utilities.ToastUtil;
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.RestServiceBuilder;
+import com.openmrs.android_sdk.library.models.Results;
+import com.openmrs.android_sdk.library.models.User;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import java.util.HashMap;
 import java.util.List;

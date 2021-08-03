@@ -13,9 +13,9 @@
  */
 package org.openmrs.mobile.activities.formadmission
 
-import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity
-import com.example.openmrs_android_sdk.library.models.Provider
-import com.example.openmrs_android_sdk.library.models.Resource
+import com.openmrs.android_sdk.library.databases.entities.LocationEntity
+import com.openmrs.android_sdk.library.models.Provider
+import com.openmrs.android_sdk.library.models.Resource
 import org.openmrs.mobile.activities.BasePresenterContract
 import org.openmrs.mobile.activities.BaseView
 

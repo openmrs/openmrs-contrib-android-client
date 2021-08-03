@@ -14,9 +14,9 @@
 
 package org.openmrs.mobile.test.presenters;
 
-import com.example.openmrs_android_sdk.library.dao.PatientDAO;
-import com.example.openmrs_android_sdk.library.models.Patient;
-import com.example.openmrs_android_sdk.utilities.StringUtils;
+import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.utilities.StringUtils;
 
 import org.junit.Before;
 import org.junit.Test;

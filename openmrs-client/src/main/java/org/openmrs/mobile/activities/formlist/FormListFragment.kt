@@ -25,8 +25,8 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
-import com.example.openmrs_android_sdk.library.models.FormCreate
-import com.example.openmrs_android_sdk.library.models.FormData
+import com.openmrs.android_sdk.library.models.FormCreate
+import com.openmrs.android_sdk.library.models.FormData
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.SnackbarLayout
 import org.json.JSONException
@@ -35,10 +35,10 @@ import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseFragment
 import org.openmrs.mobile.activities.formadmission.FormAdmissionActivity
 import org.openmrs.mobile.activities.formdisplay.FormDisplayActivity
-import com.example.openmrs_android_sdk.library.api.RestApi
-import com.example.openmrs_android_sdk.library.api.RestServiceBuilder
+import com.openmrs.android_sdk.library.api.RestApi
+import com.openmrs.android_sdk.library.api.RestServiceBuilder
 import org.openmrs.mobile.databinding.FragmentFormListBinding
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants
+import com.openmrs.android_sdk.utilities.ApplicationConstants
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

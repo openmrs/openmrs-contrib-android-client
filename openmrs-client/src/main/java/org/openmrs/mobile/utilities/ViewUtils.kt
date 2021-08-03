@@ -14,7 +14,7 @@
 package org.openmrs.mobile.utilities
 
 import android.widget.EditText
-import com.example.openmrs_android_sdk.utilities.StringUtils
+import com.openmrs.android_sdk.utilities.StringUtils
 import com.hbb20.CountryCodePicker
 import java.util.regex.Pattern
 

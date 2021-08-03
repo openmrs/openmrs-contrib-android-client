@@ -17,7 +17,7 @@ package org.openmrs.mobile.test;
 
 import androidx.annotation.NonNull;
 
-import com.example.openmrs_android_sdk.library.models.Results;
+import com.openmrs.android_sdk.library.models.Results;
 
 import java.io.IOException;
 import java.util.List;

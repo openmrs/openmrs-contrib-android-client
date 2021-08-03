@@ -27,17 +27,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
-import com.example.openmrs_android_sdk.library.models.Encounter;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import com.example.openmrs_android_sdk.utilities.ToastUtil;
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.models.Encounter;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.ToastUtil;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.formlist.FormListActivity;
 import org.openmrs.mobile.databinding.FragmentVisitDashboardBinding;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;

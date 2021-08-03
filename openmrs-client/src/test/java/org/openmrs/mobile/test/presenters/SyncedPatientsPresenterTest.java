@@ -20,8 +20,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsContract;
 import org.openmrs.mobile.activities.syncedpatients.SyncedPatientsPresenter;
-import com.example.openmrs_android_sdk.library.dao.PatientDAO;
-import com.example.openmrs_android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.models.Patient;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 
 import java.util.ArrayList;

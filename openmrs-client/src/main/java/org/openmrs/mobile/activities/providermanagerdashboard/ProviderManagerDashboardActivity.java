@@ -24,7 +24,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 
-import com.example.openmrs_android_sdk.utilities.StringUtils;
+import com.openmrs.android_sdk.utilities.StringUtils;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;

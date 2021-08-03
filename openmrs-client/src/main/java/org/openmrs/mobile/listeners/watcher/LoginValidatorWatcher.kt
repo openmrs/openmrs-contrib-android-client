@@ -19,8 +19,8 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.*
 import android.widget.AdapterView.OnItemSelectedListener
-import com.example.openmrs_android_sdk.library.OpenmrsAndroid
-import com.example.openmrs_android_sdk.utilities.StringUtils.notEmpty
+import com.openmrs.android_sdk.library.OpenmrsAndroid
+import com.openmrs.android_sdk.utilities.StringUtils.notEmpty
 import org.openmrs.mobile.activities.login.LocationArrayAdapter
 
 //Class used to extract view validation logic

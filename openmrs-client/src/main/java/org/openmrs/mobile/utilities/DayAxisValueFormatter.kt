@@ -13,7 +13,7 @@
  */
 package org.openmrs.mobile.utilities
 
-import com.example.openmrs_android_sdk.utilities.DateUtils.getDateFromString
+import com.openmrs.android_sdk.utilities.DateUtils.getDateFromString
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter

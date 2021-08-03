@@ -24,10 +24,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.openmrs_android_sdk.library.models.Allergy;
+import com.openmrs.android_sdk.library.models.Allergy;
 
 import org.openmrs.mobile.R;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
 
 import java.util.List;
 

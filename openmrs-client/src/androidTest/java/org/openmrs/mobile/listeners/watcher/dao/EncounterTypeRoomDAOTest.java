@@ -20,7 +20,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import com.example.openmrs_android_sdk.library.models.EncounterType;
+import com.openmrs.android_sdk.library.models.EncounterType;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -28,7 +28,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import com.example.openmrs_android_sdk.library.databases.AppDatabase;
+import com.openmrs.android_sdk.library.databases.AppDatabase;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest

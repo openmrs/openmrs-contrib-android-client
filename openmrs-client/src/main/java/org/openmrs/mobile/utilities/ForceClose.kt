@@ -3,8 +3,8 @@ package org.openmrs.mobile.utilities
 import android.app.Activity
 import android.os.Build
 import android.os.Process
-import com.example.openmrs_android_sdk.library.OpenMRSLogger
-import com.example.openmrs_android_sdk.library.OpenmrsAndroid
+import com.openmrs.android_sdk.library.OpenMRSLogger
+import com.openmrs.android_sdk.library.OpenmrsAndroid
 import java.io.*
 import kotlin.system.exitProcess
 

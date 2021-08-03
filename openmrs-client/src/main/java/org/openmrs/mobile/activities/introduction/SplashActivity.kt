@@ -22,7 +22,7 @@ import android.view.animation.*
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
 import org.openmrs.mobile.databinding.ActivitySplashBinding
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants
+import com.openmrs.android_sdk.utilities.ApplicationConstants
 
 class SplashActivity : ACBaseActivity() {
 

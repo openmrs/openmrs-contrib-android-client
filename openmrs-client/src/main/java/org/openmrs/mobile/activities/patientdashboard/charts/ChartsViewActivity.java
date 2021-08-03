@@ -20,9 +20,9 @@ import android.view.MenuItem;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import com.example.openmrs_android_sdk.utilities.DateUtils;
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.DateUtils;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;

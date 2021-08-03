@@ -4,15 +4,15 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.example.openmrs_android_sdk.library.models.Provider;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import com.example.openmrs_android_sdk.utilities.ToastUtil;
+import com.openmrs.android_sdk.library.models.Provider;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.activities.BasePresenter;
-import com.example.openmrs_android_sdk.library.api.RestApi;
-import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import com.example.openmrs_android_sdk.library.api.repository.ProviderRepository;
-import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.RestServiceBuilder;
+import com.openmrs.android_sdk.library.api.repository.ProviderRepository;
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 
 public class ProviderDashboardPresenter extends BasePresenter implements ProviderDashboardContract.Presenter, DefaultResponseCallback {
     private RestApi restApi;

@@ -26,14 +26,13 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.openmrs_android_sdk.library.models.Patient;
-import com.example.openmrs_android_sdk.utilities.DateUtils;
-import com.example.openmrs_android_sdk.utilities.ToastUtil;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.utilities.DateUtils;
+import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.databinding.FragmentMatchingPatientsBinding;
-import com.example.openmrs_android_sdk.library.models.Patient;
 
 import java.util.List;
 

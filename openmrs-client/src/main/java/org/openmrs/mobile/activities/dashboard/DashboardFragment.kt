@@ -24,8 +24,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.navigation.fragment.findNavController
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants
-import com.example.openmrs_android_sdk.utilities.ImageUtils
+import com.openmrs.android_sdk.utilities.ApplicationConstants
+import com.openmrs.android_sdk.utilities.ImageUtils
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener
 import com.github.amlcurran.showcaseview.ShowcaseView
 import com.github.amlcurran.showcaseview.targets.Target

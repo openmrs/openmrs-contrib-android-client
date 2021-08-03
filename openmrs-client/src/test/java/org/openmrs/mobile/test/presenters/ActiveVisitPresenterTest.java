@@ -17,9 +17,9 @@ package org.openmrs.mobile.test.presenters;
 
 import androidx.annotation.NonNull;
 
-import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity;
-import com.example.openmrs_android_sdk.library.models.Visit;
-import com.example.openmrs_android_sdk.library.models.VisitType;
+import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
+import com.openmrs.android_sdk.library.models.Visit;
+import com.openmrs.android_sdk.library.models.VisitType;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +27,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.activevisits.ActiveVisitPresenter;
 import org.openmrs.mobile.activities.activevisits.ActiveVisitsContract;
-import com.example.openmrs_android_sdk.library.dao.VisitDAO;
+import com.openmrs.android_sdk.library.dao.VisitDAO;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 
 import java.util.ArrayList;

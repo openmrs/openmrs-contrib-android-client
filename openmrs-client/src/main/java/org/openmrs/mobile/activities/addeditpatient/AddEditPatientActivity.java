@@ -29,7 +29,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
 
 import java.util.Arrays;
 import java.util.List;

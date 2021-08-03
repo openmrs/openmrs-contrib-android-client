@@ -14,8 +14,8 @@
 
 package org.openmrs.mobile.test.presenters;
 
-import com.example.openmrs_android_sdk.library.models.Person;
-import com.example.openmrs_android_sdk.library.models.Provider;
+import com.openmrs.android_sdk.library.models.Person;
+import com.openmrs.android_sdk.library.models.Provider;
 
 import org.junit.Before;
 import org.junit.Test;

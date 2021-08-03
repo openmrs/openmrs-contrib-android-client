@@ -21,7 +21,7 @@ import androidx.appcompat.app.ActionBar;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
 
 public class AddEditAllergyActivity extends ACBaseActivity {
     private Long patientID;

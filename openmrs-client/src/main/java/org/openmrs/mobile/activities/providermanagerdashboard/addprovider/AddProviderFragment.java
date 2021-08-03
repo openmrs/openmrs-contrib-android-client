@@ -26,13 +26,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.openmrs_android_sdk.library.models.Person;
-import com.example.openmrs_android_sdk.library.models.Provider;
+import com.openmrs.android_sdk.library.models.Person;
+import com.openmrs.android_sdk.library.models.Provider;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.databinding.FragmentAddProviderBinding;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ViewUtils;
 
 import java.util.ArrayList;

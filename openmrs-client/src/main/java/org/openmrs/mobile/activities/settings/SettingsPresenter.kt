@@ -13,11 +13,11 @@
  */
 package org.openmrs.mobile.activities.settings
 
-import com.example.openmrs_android_sdk.library.OpenMRSLogger
-import com.example.openmrs_android_sdk.library.OpenmrsAndroid
-import com.example.openmrs_android_sdk.library.dao.ConceptRoomDAO
-import com.example.openmrs_android_sdk.library.databases.AppDatabase
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants
+import com.openmrs.android_sdk.library.OpenMRSLogger
+import com.openmrs.android_sdk.library.OpenmrsAndroid
+import com.openmrs.android_sdk.library.dao.ConceptRoomDAO
+import com.openmrs.android_sdk.library.databases.AppDatabase
+import com.openmrs.android_sdk.utilities.ApplicationConstants
 import org.openmrs.mobile.activities.BasePresenter
 import org.openmrs.mobile.application.OpenMRS
 import org.openmrs.mobile.utilities.LanguageUtils

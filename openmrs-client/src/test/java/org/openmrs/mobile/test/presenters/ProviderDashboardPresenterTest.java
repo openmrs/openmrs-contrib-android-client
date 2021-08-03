@@ -2,12 +2,12 @@ package org.openmrs.mobile.test.presenters;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
-import com.example.openmrs_android_sdk.library.OpenMRSLogger;
-import com.example.openmrs_android_sdk.library.OpenmrsAndroid;
-import com.example.openmrs_android_sdk.library.dao.ProviderRoomDAO;
-import com.example.openmrs_android_sdk.library.models.Provider;
-import com.example.openmrs_android_sdk.utilities.NetworkUtils;
-import com.example.openmrs_android_sdk.utilities.ToastUtil;
+import com.openmrs.android_sdk.library.OpenMRSLogger;
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.dao.ProviderRoomDAO;
+import com.openmrs.android_sdk.library.models.Provider;
+import com.openmrs.android_sdk.utilities.NetworkUtils;
+import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -17,8 +17,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardContract;
 import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardPresenter;
-import com.example.openmrs_android_sdk.library.api.RestApi;
-import com.example.openmrs_android_sdk.library.api.repository.ProviderRepository;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.repository.ProviderRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.powermock.api.mockito.PowerMockito;

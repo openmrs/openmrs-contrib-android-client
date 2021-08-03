@@ -13,11 +13,11 @@
  */
 package org.openmrs.mobile.activities.formlist
 
-import com.example.openmrs_android_sdk.library.dao.EncounterDAO
-import com.example.openmrs_android_sdk.library.databases.entities.FormResourceEntity
-import com.example.openmrs_android_sdk.library.models.EncounterType
-import com.example.openmrs_android_sdk.utilities.FormService.getFormResourceList
-import com.example.openmrs_android_sdk.utilities.StringUtils.isBlank
+import com.openmrs.android_sdk.library.dao.EncounterDAO
+import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity
+import com.openmrs.android_sdk.library.models.EncounterType
+import com.openmrs.android_sdk.utilities.FormService.getFormResourceList
+import com.openmrs.android_sdk.utilities.StringUtils.isBlank
 import org.openmrs.mobile.activities.BasePresenter
 
 class FormListPresenter : BasePresenter, FormListContract.Presenter {

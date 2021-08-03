@@ -13,8 +13,8 @@
  */
 package org.openmrs.mobile.activities.logs
 
-import com.example.openmrs_android_sdk.library.OpenMRSLogger
-import com.example.openmrs_android_sdk.library.OpenmrsAndroid
+import com.openmrs.android_sdk.library.OpenMRSLogger
+import com.openmrs.android_sdk.library.OpenmrsAndroid
 import org.openmrs.mobile.activities.BasePresenter
 import java.io.*
 

@@ -22,10 +22,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.openmrs_android_sdk.library.dao.PatientDAO
-import com.example.openmrs_android_sdk.library.models.Visit
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants
-import com.example.openmrs_android_sdk.utilities.DateUtils
+import com.openmrs.android_sdk.library.dao.PatientDAO
+import com.openmrs.android_sdk.library.models.Visit
+import com.openmrs.android_sdk.utilities.ApplicationConstants
+import com.openmrs.android_sdk.utilities.DateUtils
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity
 

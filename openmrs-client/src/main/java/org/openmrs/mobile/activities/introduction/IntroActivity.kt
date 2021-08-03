@@ -17,7 +17,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.example.openmrs_android_sdk.library.OpenmrsAndroid
+import com.openmrs.android_sdk.library.OpenmrsAndroid
 import com.github.appintro.AppIntro2
 import com.github.appintro.AppIntroFragment
 import org.openmrs.mobile.R

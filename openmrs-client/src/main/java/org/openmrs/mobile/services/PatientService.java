@@ -14,17 +14,17 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
 
-import com.example.openmrs_android_sdk.library.api.RestApi;
-import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import com.example.openmrs_android_sdk.library.api.repository.PatientRepository;
-import com.example.openmrs_android_sdk.library.dao.PatientDAO;
-import com.example.openmrs_android_sdk.library.models.Module;
-import com.example.openmrs_android_sdk.library.models.Patient;
-import com.example.openmrs_android_sdk.library.models.Results;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import com.example.openmrs_android_sdk.utilities.NetworkUtils;
-import com.example.openmrs_android_sdk.utilities.PatientAndMatchingPatients;
-import com.example.openmrs_android_sdk.utilities.ToastUtil;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.RestServiceBuilder;
+import com.openmrs.android_sdk.library.api.repository.PatientRepository;
+import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.models.Module;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.models.Results;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.NetworkUtils;
+import com.openmrs.android_sdk.utilities.PatientAndMatchingPatients;
+import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.matchingpatients.MatchingPatientsActivity;

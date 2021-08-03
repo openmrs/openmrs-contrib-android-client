@@ -13,8 +13,8 @@
  */
 package org.openmrs.mobile.utilities
 
-import com.example.openmrs_android_sdk.library.OpenmrsAndroid
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants
+import com.openmrs.android_sdk.library.OpenmrsAndroid
+import com.openmrs.android_sdk.utilities.ApplicationConstants
 
 object LanguageUtils {
 

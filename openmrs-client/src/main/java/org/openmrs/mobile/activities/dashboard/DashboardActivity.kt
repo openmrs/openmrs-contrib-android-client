@@ -17,7 +17,7 @@ package org.openmrs.mobile.activities.dashboard
 import android.os.Bundle
 import android.os.Handler
 import androidx.navigation.fragment.NavHostFragment
-import com.example.openmrs_android_sdk.utilities.ToastUtil
+import com.openmrs.android_sdk.utilities.ToastUtil
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
 

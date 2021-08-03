@@ -21,17 +21,17 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.example.openmrs_android_sdk.library.OpenMRSLogger;
-import com.example.openmrs_android_sdk.library.api.RestApi;
-import com.example.openmrs_android_sdk.library.api.RestServiceBuilder;
-import com.example.openmrs_android_sdk.library.dao.PatientDAO;
-import com.example.openmrs_android_sdk.library.models.Patient;
-import com.example.openmrs_android_sdk.library.models.PatientDto;
-import com.example.openmrs_android_sdk.library.models.PatientDtoUpdate;
-import com.example.openmrs_android_sdk.library.models.PatientPhoto;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import com.example.openmrs_android_sdk.utilities.NetworkUtils;
-import com.example.openmrs_android_sdk.utilities.ToastUtil;
+import com.openmrs.android_sdk.library.OpenMRSLogger;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.RestServiceBuilder;
+import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.models.PatientDto;
+import com.openmrs.android_sdk.library.models.PatientDtoUpdate;
+import com.openmrs.android_sdk.library.models.PatientPhoto;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.NetworkUtils;
+import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.R;
 import java.io.IOException;

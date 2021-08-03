@@ -26,11 +26,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.example.openmrs_android_sdk.library.models.Encounter;
-import com.example.openmrs_android_sdk.library.models.Observation;
-import com.example.openmrs_android_sdk.library.models.Visit;
-import com.example.openmrs_android_sdk.utilities.ApplicationConstants;
-import com.example.openmrs_android_sdk.utilities.ToastUtil;
+import com.openmrs.android_sdk.library.models.Encounter;
+import com.openmrs.android_sdk.library.models.Observation;
+import com.openmrs.android_sdk.library.models.Visit;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.ToastUtil;
 import com.google.common.collect.Lists;
 
 import org.json.JSONArray;

@@ -15,21 +15,21 @@ package org.openmrs.mobile.activities.formadmission
 
 import android.content.Context
 import androidx.lifecycle.Observer
-import com.example.openmrs_android_sdk.library.OpenMRSLogger
-import com.example.openmrs_android_sdk.library.dao.PatientDAO
-import com.example.openmrs_android_sdk.library.databases.AppDatabase
-import com.example.openmrs_android_sdk.library.databases.entities.LocationEntity
-import com.example.openmrs_android_sdk.library.models.*
-import com.example.openmrs_android_sdk.utilities.FormService.getFormResourceByName
-import com.example.openmrs_android_sdk.utilities.ToastUtil.success
+import com.openmrs.android_sdk.library.OpenMRSLogger
+import com.openmrs.android_sdk.library.dao.PatientDAO
+import com.openmrs.android_sdk.library.databases.AppDatabase
+import com.openmrs.android_sdk.library.databases.entities.LocationEntity
+import com.openmrs.android_sdk.library.models.*
+import com.openmrs.android_sdk.utilities.FormService.getFormResourceByName
+import com.openmrs.android_sdk.utilities.ToastUtil.success
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.BasePresenter
-import com.example.openmrs_android_sdk.library.api.services.EncounterService
-import com.example.openmrs_android_sdk.library.api.RestApi
-import com.example.openmrs_android_sdk.library.api.RestServiceBuilder
-import com.example.openmrs_android_sdk.library.api.repository.ProviderRepository
+import com.openmrs.android_sdk.library.api.services.EncounterService
+import com.openmrs.android_sdk.library.api.RestApi
+import com.openmrs.android_sdk.library.api.RestServiceBuilder
+import com.openmrs.android_sdk.library.api.repository.ProviderRepository
 import org.openmrs.mobile.application.OpenMRS
-import com.example.openmrs_android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback
 
 class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
     private var view: FormAdmissionContract.View

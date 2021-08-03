@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
-import com.example.openmrs_android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.models.Patient;
 
 import java.util.List;
 

@@ -27,16 +27,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.models.Encounter;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.ToastUtil;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.formlist.FormListActivity;
-import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databinding.FragmentVisitDashboardBinding;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,7 +70,7 @@ public class VisitDashboardFragment extends ACBaseFragment<VisitDashboardContrac
             startActivity(intent);
         } catch (Exception e) {
             ToastUtil.showLongToast(this.getActivity(), ToastUtil.ToastType.ERROR, R.string.failed_to_open_vitals_form);
-            OpenMRS.getInstance().getOpenMRSLogger().d(e.toString());
+            OpenmrsAndroid.getOpenMRSLogger().d(e.toString());
         }
     }
 

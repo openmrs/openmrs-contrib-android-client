@@ -14,19 +14,20 @@
 
 package org.openmrs.mobile.activities.matchingpatients;
 
+import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.utilities.PatientAndMatchingPatients;
+import com.openmrs.android_sdk.utilities.ToastUtil;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
-import org.openmrs.mobile.api.promise.SimpleDeferredObject;
-import org.openmrs.mobile.api.repository.PatientRepository;
-import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.utilities.PatientAndMatchingPatients;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.RestServiceBuilder;
+import com.openmrs.android_sdk.library.api.promise.SimpleDeferredObject;
+import com.openmrs.android_sdk.library.api.repository.PatientRepository;
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
 import org.openmrs.mobile.utilities.PatientMerger;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.Queue;
 

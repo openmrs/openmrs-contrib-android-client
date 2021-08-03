@@ -14,12 +14,12 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
+import com.openmrs.android_sdk.library.models.ConceptAnswers;
+import com.openmrs.android_sdk.library.models.Patient;
 import com.google.android.libraries.places.api.net.PlacesClient;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.models.ConceptAnswers;
-import org.openmrs.mobile.models.Patient;
 
 import java.util.List;
 

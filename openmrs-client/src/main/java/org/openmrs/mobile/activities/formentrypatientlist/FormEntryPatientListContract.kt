@@ -13,9 +13,9 @@
  */
 package org.openmrs.mobile.activities.formentrypatientlist
 
+import com.openmrs.android_sdk.library.models.Patient
 import org.openmrs.mobile.activities.BasePresenterContract
 import org.openmrs.mobile.activities.BaseView
-import org.openmrs.mobile.models.Patient
 
 interface FormEntryPatientListContract {
     interface View : BaseView<Presenter> {

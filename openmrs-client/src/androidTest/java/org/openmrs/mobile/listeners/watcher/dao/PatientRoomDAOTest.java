@@ -25,10 +25,10 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openmrs.mobile.dao.PatientRoomDAO;
-import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.databases.entities.EncounterEntity;
-import org.openmrs.mobile.databases.entities.PatientEntity;
+import com.openmrs.android_sdk.library.dao.PatientRoomDAO;
+import com.openmrs.android_sdk.library.databases.AppDatabase;
+
+import com.openmrs.android_sdk.library.databases.entities.PatientEntity;
 
 import java.util.Objects;
 

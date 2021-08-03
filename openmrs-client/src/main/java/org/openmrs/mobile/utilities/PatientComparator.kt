@@ -13,8 +13,8 @@
  */
 package org.openmrs.mobile.utilities
 
+import com.openmrs.android_sdk.library.models.Patient
 import com.google.common.base.Objects
-import org.openmrs.mobile.models.Patient
 import java.util.*
 
 class PatientComparator {

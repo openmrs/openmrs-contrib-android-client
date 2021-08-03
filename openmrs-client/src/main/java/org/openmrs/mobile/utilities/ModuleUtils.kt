@@ -13,7 +13,8 @@
  */
 package org.openmrs.mobile.utilities
 
-import org.openmrs.mobile.models.Module
+import com.openmrs.android_sdk.library.models.Module
+
 
 object ModuleUtils {
     @JvmStatic

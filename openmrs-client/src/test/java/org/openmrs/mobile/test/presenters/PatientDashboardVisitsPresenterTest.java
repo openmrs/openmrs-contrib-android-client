@@ -14,6 +14,16 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import com.openmrs.android_sdk.library.OpenMRSLogger;
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.dao.EncounterDAO;
+import com.openmrs.android_sdk.library.dao.LocationDAO;
+import com.openmrs.android_sdk.library.dao.VisitDAO;
+import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.models.Visit;
+import com.openmrs.android_sdk.utilities.NetworkUtils;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,18 +31,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.visits.PatientDashboardVisitsPresenter;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.repository.VisitRepository;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.repository.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
-import org.openmrs.mobile.dao.EncounterDAO;
-import org.openmrs.mobile.dao.LocationDAO;
-import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.databases.entities.LocationEntity;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
-import org.openmrs.mobile.utilities.NetworkUtils;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -51,7 +53,7 @@ import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({NetworkUtils.class, OpenMRS.class})
+@PrepareForTest({NetworkUtils.class, OpenMRS.class, OpenmrsAndroid.class})
 public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     @Mock
     private OpenMRS openMRS;
@@ -75,7 +77,7 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     public void setUp() {
         super.setUp();
         patient = createPatient(1L);
-        VisitRepository visitRepository = new VisitRepository(openMRS, openMRSLogger, restApi, visitDAO, locationDAO, encounterDAO);
+        VisitRepository visitRepository = new VisitRepository(openMRSLogger, restApi, visitDAO, locationDAO, encounterDAO);
         presenter = new PatientDashboardVisitsPresenter(patient, view, visitDAO, visitRepository);
         mockStaticMethods();
     }
@@ -179,8 +181,8 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
         PowerMockito.when(locationDAO.findLocationByName(anyString())).thenReturn(new LocationEntity("location"));
 
-        Mockito.lenient().when(openMRS.getLocation()).thenReturn("location");
-        Mockito.lenient().when(openMRS.getVisitTypeUUID()).thenReturn("visitTypeUuid");
+        Mockito.lenient().when(OpenmrsAndroid.getLocation()).thenReturn("location");
+        Mockito.lenient().when(OpenmrsAndroid.getVisitTypeUUID()).thenReturn("visitTypeUuid");
     }
 
     private List<Visit> createVisitsList() {
@@ -193,5 +195,6 @@ public class PatientDashboardVisitsPresenterTest extends ACUnitTestBaseRx {
     private void mockStaticMethods() {
         PowerMockito.mockStatic(NetworkUtils.class);
         PowerMockito.mockStatic(OpenMRS.class);
+        PowerMockito.mockStatic(OpenmrsAndroid.class);
     }
 }

@@ -15,16 +15,18 @@
 package org.openmrs.mobile.activities.patientdashboard.allergy;
 
 import androidx.lifecycle.LifecycleOwner;
+
+import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.models.Allergy;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.utilities.ToastUtil;
+
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
-import org.openmrs.mobile.api.repository.AllergyRepository;
-import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.models.Allergy;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.utilities.ToastUtil;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.RestServiceBuilder;
+import com.openmrs.android_sdk.library.api.repository.AllergyRepository;
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 
 import java.util.List;
 

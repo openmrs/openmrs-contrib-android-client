@@ -14,11 +14,12 @@
 
 package org.openmrs.mobile.activities.providermanagerdashboard.addprovider;
 
+import com.openmrs.android_sdk.library.models.Person;
+import com.openmrs.android_sdk.library.models.PersonName;
+import com.openmrs.android_sdk.library.models.Provider;
+
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.activities.BasePresenter;
-import org.openmrs.mobile.models.Person;
-import org.openmrs.mobile.models.PersonName;
-import org.openmrs.mobile.models.Provider;
 
 import java.util.ArrayList;
 import java.util.List;

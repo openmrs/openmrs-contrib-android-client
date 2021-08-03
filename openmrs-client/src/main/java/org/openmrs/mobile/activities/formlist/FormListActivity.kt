@@ -17,7 +17,7 @@ import android.os.Bundle
 import android.view.Menu
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
-import org.openmrs.mobile.utilities.ApplicationConstants
+import com.openmrs.android_sdk.utilities.ApplicationConstants
 
 class FormListActivity : ACBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

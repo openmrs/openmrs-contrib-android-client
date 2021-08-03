@@ -29,16 +29,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.DateUtils;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.DateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<SyncedPatientsRecyclerViewAdapter.PatientViewHolder> {
     private SyncedPatientsFragment mContext;

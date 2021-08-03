@@ -22,12 +22,13 @@ import android.view.View;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.StringUtils;
+
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.databinding.ActivityFindLastViewedPatientsBinding;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.StringUtils;
 
 public class LastViewedPatientsActivity extends ACBaseActivity {
     private LastViewedPatientsContract.Presenter presenter;

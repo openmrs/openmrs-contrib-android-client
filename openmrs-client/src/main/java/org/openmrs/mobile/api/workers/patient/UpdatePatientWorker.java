@@ -21,19 +21,19 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import org.openmrs.mobile.R;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
-import org.openmrs.mobile.application.OpenMRSLogger;
-import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.PatientDto;
-import org.openmrs.mobile.models.PatientDtoUpdate;
-import org.openmrs.mobile.models.PatientPhoto;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.NetworkUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
+import com.openmrs.android_sdk.library.OpenMRSLogger;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.RestServiceBuilder;
+import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.models.PatientDto;
+import com.openmrs.android_sdk.library.models.PatientDtoUpdate;
+import com.openmrs.android_sdk.library.models.PatientPhoto;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.NetworkUtils;
+import com.openmrs.android_sdk.utilities.ToastUtil;
 
+import org.openmrs.mobile.R;
 import java.io.IOException;
 
 import retrofit2.Response;

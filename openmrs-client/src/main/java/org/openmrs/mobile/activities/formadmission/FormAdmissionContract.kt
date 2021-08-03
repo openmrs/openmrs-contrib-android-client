@@ -13,11 +13,11 @@
  */
 package org.openmrs.mobile.activities.formadmission
 
+import com.openmrs.android_sdk.library.databases.entities.LocationEntity
+import com.openmrs.android_sdk.library.models.Provider
+import com.openmrs.android_sdk.library.models.Resource
 import org.openmrs.mobile.activities.BasePresenterContract
 import org.openmrs.mobile.activities.BaseView
-import org.openmrs.mobile.databases.entities.LocationEntity
-import org.openmrs.mobile.models.Provider
-import org.openmrs.mobile.models.Resource
 
 interface FormAdmissionContract {
     interface View : BaseView<Presenter> {

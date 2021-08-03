@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+
+<resources>
+    <color name="transparent">#00000000</color>
+    <!-- card colors -->
+    <color name="card_shadow_1">#d4d4d4</color>
+    <color name="white">#FFF</color>
+    <color name="black">#000</color>
+    <color name="dark_teal">#00463f</color>
+    <color name="primary">#00463f</color>
+    <color name="primary_dark">#01302b</color>
+    <color name="color_accent">#F8793B</color>
+    <color name="dark_purple">#363463</color>
+    <color name="dark_grey">#231F20</color>
+    <color name="green">#88af28</color>
+    <color name="light_red">#ff6666</color>
+    <color name="red">#ff3d3d</color>
+    <color name="patient_selected_highlight">#3a00ff2a</color>
+    <color name="grey">#D5D5D5</color>
+    <color name="selected_card">#249627</color>
+
+    <!-- Colors for New UI -->
+    <color name="dark_grey_for_stroke">#909090</color>
+    <color name="light_grey_for_solid">#EFEFEF</color>
+    <color name="dark_grey_4x">#D6D6D6</color>
+    <color name="dark_grey_6x">#B1B1B1</color>
+    <color name="dark_grey_8x">#616161</color>
+    <color name="dark_grey_10x">#454545</color>
+    <color name="deceased_red">#FFB3B3</color>
+    <color name="cancel_button">#CF3B3B</color>
+    <color name="save_button">#97BC47</color>
+    <color name="allergy_orange">#E47321</color>
+    <color name="allergy_orange_50_transparent">#4DFB793D</color>
+    <color name="blue">#3884CA</color>
+    <color name="dark_red">#ED3030</color>
+    <color name="translucent_50_percent">#99000000</color>
+    <color name="black_dark_mode">#121212</color>
+
+    <!-- neutral colors that look pleasing on both white and black background -->
+    <color name="neutral_green">#249627</color>
+</resources>

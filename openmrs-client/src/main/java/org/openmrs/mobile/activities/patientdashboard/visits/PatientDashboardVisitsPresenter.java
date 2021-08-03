@@ -14,16 +14,17 @@
 
 package org.openmrs.mobile.activities.patientdashboard.visits;
 
+import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.dao.VisitDAO;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.utilities.NetworkUtils;
+
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardMainPresenterImpl;
-import org.openmrs.mobile.api.repository.VisitRepository;
-import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback;
-import org.openmrs.mobile.listeners.retrofitcallbacks.StartVisitResponseCallback;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.utilities.NetworkUtils;
+import com.openmrs.android_sdk.library.api.repository.VisitRepository;
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.StartVisitResponseCallback;
 
 import rx.android.schedulers.AndroidSchedulers;
 

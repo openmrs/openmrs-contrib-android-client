@@ -14,6 +14,10 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import com.openmrs.android_sdk.library.OpenMRSLogger;
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.dao.ConceptRoomDAO;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -21,8 +25,6 @@ import org.mockito.Mockito;
 import org.openmrs.mobile.activities.settings.SettingsContract;
 import org.openmrs.mobile.activities.settings.SettingsPresenter;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
-import org.openmrs.mobile.dao.ConceptRoomDAO;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -32,7 +34,7 @@ import java.io.File;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 
-@PrepareForTest(OpenMRS.class)
+@PrepareForTest({OpenMRS.class, OpenmrsAndroid.class})
 public class SettingsPresenterTest extends ACUnitTestBase {
 
     @Mock
@@ -50,6 +52,7 @@ public class SettingsPresenterTest extends ACUnitTestBase {
     public void setUp() {
         settingsPresenter = new SettingsPresenter(view, logger, conceptRoomDAO);
         PowerMockito.mockStatic(OpenMRS.class);
+        PowerMockito.mockStatic(OpenmrsAndroid.class);
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
     }
 
@@ -57,7 +60,7 @@ public class SettingsPresenterTest extends ACUnitTestBase {
     public void shouldFillList_allOk() {
         String directory = "directory";
         String logFileName = "logfile";
-        Mockito.lenient().when(openMRS.getOpenMRSDir()).thenReturn(directory);
+        Mockito.lenient().when(OpenmrsAndroid.getOpenMRSDir()).thenReturn(directory);
         Mockito.lenient().when(logger.getLogFilename()).thenReturn(logFileName);
         settingsPresenter.subscribe();
         verify(view).addLogsInfo(0, directory + File.separator + logFileName);

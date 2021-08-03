@@ -16,6 +16,11 @@ package org.openmrs.mobile.test.presenters;
 
 import android.widget.LinearLayout;
 
+import com.openmrs.android_sdk.library.models.Page;
+import com.openmrs.android_sdk.library.models.Question;
+import com.openmrs.android_sdk.library.models.QuestionOptions;
+import com.openmrs.android_sdk.library.models.Section;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -23,10 +28,6 @@ import org.mockito.Mockito;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayContract;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayPagePresenter;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.models.Page;
-import org.openmrs.mobile.models.Question;
-import org.openmrs.mobile.models.QuestionOptions;
-import org.openmrs.mobile.models.Section;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;

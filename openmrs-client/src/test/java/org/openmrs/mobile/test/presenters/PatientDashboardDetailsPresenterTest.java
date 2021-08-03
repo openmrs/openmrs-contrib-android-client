@@ -16,6 +16,16 @@ package org.openmrs.mobile.test.presenters;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
+import com.openmrs.android_sdk.library.OpenMRSLogger;
+import com.openmrs.android_sdk.library.dao.EncounterDAO;
+import com.openmrs.android_sdk.library.dao.LocationDAO;
+import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.dao.VisitDAO;
+import com.openmrs.android_sdk.library.models.Encounter;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.models.Visit;
+import com.openmrs.android_sdk.utilities.NetworkUtils;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,20 +33,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardContract;
 import org.openmrs.mobile.activities.patientdashboard.details.PatientDashboardDetailsPresenter;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.repository.PatientRepository;
-import org.openmrs.mobile.api.repository.VisitRepository;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.repository.PatientRepository;
+import com.openmrs.android_sdk.library.api.repository.VisitRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
-import org.openmrs.mobile.dao.EncounterDAO;
-import org.openmrs.mobile.dao.LocationDAO;
-import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.models.Encounter;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.models.Visit;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
-import org.openmrs.mobile.utilities.NetworkUtils;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
@@ -82,7 +83,7 @@ public class PatientDashboardDetailsPresenterTest extends ACUnitTestBaseRx {
     @Before
     public void setUp() {
         super.setUp();
-        VisitRepository visitRepository = new VisitRepository(openMRS, openMRSLogger, restApi, visitDAO, locationDAO, encounterDAO);
+        VisitRepository visitRepository = new VisitRepository(openMRSLogger, restApi, visitDAO, locationDAO, encounterDAO);
         patient = createPatient(1L);
         presenter = new PatientDashboardDetailsPresenter(patient, patientDAO, view, visitRepository, patientRepository);
         PowerMockito.mockStatic(NetworkUtils.class);

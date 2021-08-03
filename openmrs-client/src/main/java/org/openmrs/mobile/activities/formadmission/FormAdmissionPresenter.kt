@@ -15,27 +15,21 @@ package org.openmrs.mobile.activities.formadmission
 
 import android.content.Context
 import androidx.lifecycle.Observer
+import com.openmrs.android_sdk.library.OpenMRSLogger
+import com.openmrs.android_sdk.library.dao.PatientDAO
+import com.openmrs.android_sdk.library.databases.AppDatabase
+import com.openmrs.android_sdk.library.databases.entities.LocationEntity
+import com.openmrs.android_sdk.library.models.*
+import com.openmrs.android_sdk.utilities.FormService.getFormResourceByName
+import com.openmrs.android_sdk.utilities.ToastUtil.success
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.BasePresenter
-import org.openmrs.mobile.api.EncounterService
-import org.openmrs.mobile.api.RestApi
-import org.openmrs.mobile.api.RestServiceBuilder
-import org.openmrs.mobile.api.repository.ProviderRepository
+import com.openmrs.android_sdk.library.api.services.EncounterService
+import com.openmrs.android_sdk.library.api.RestApi
+import com.openmrs.android_sdk.library.api.RestServiceBuilder
+import com.openmrs.android_sdk.library.api.repository.ProviderRepository
 import org.openmrs.mobile.application.OpenMRS
-import org.openmrs.mobile.application.OpenMRSLogger
-import org.openmrs.mobile.dao.PatientDAO
-import org.openmrs.mobile.databases.AppDatabase
-import org.openmrs.mobile.databases.entities.LocationEntity
-import org.openmrs.mobile.listeners.retrofitcallbacks.DefaultResponseCallback
-import org.openmrs.mobile.models.Encountercreate
-import org.openmrs.mobile.models.Obscreate
-import org.openmrs.mobile.models.EncounterProviderCreate
-import org.openmrs.mobile.models.Patient
-import org.openmrs.mobile.models.Provider
-import org.openmrs.mobile.models.Resource
-import org.openmrs.mobile.utilities.FormService.getFormResourceByName
-import org.openmrs.mobile.utilities.ToastUtil.error
-import org.openmrs.mobile.utilities.ToastUtil.success
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback
 
 class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
     private var view: FormAdmissionContract.View
@@ -66,7 +60,7 @@ class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
         this.restApi = restApi
         view.setPresenter(this)
         mContext = context
-        providerRepository = ProviderRepository(OpenMRS.getInstance(), restApi, logger);
+        providerRepository = ProviderRepository(restApi, logger);
     }
 
     override fun subscribe() {

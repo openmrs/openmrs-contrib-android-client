@@ -18,10 +18,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.openmrs.android_sdk.library.models.Visit
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseFragment
 import org.openmrs.mobile.databinding.FragmentActiveVisitsBinding
-import org.openmrs.mobile.models.Visit
 
 class ActiveVisitsFragment : ACBaseFragment<ActiveVisitsContract.Presenter>(), ActiveVisitsContract.View {
     private var _binding: FragmentActiveVisitsBinding? = null

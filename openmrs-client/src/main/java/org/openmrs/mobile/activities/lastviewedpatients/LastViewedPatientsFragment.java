@@ -30,16 +30,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.NetworkUtils;
+import com.openmrs.android_sdk.utilities.ToastUtil;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
 import org.openmrs.mobile.databinding.FragmentLastViewedPatientsBinding;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.NetworkUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.io.Serializable;
 import java.util.Collections;

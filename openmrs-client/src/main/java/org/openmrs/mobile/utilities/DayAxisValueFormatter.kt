@@ -13,10 +13,10 @@
  */
 package org.openmrs.mobile.utilities
 
+import com.openmrs.android_sdk.utilities.DateUtils.getDateFromString
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
-import org.openmrs.mobile.utilities.DateUtils.getDateFromString
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import kotlin.math.abs

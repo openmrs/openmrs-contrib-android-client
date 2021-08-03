@@ -18,12 +18,13 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import com.openmrs.android_sdk.library.models.Provider;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.models.Provider;
+import com.openmrs.android_sdk.library.databases.AppDatabase;
 
 import java.util.Objects;
 

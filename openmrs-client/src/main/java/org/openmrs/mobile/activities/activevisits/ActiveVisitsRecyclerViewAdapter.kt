@@ -22,12 +22,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.openmrs.android_sdk.library.dao.PatientDAO
+import com.openmrs.android_sdk.library.models.Visit
+import com.openmrs.android_sdk.utilities.ApplicationConstants
+import com.openmrs.android_sdk.utilities.DateUtils
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.visitdashboard.VisitDashboardActivity
-import org.openmrs.mobile.dao.PatientDAO
-import org.openmrs.mobile.models.Visit
-import org.openmrs.mobile.utilities.ApplicationConstants
-import org.openmrs.mobile.utilities.DateUtils
 
 class ActiveVisitsRecyclerViewAdapter(private val mContext: Context, private val mVisits: List<Visit?>?) : RecyclerView.Adapter<ActiveVisitsRecyclerViewAdapter.VisitViewHolder>() {
 

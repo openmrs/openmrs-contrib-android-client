@@ -31,16 +31,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.utilities.NetworkUtils;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
-import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databinding.FragmentSyncedPatientsBinding;
-import org.openmrs.mobile.models.Patient;
-import org.openmrs.mobile.utilities.NetworkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +87,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
         int id = item.getItemId();
         switch (id) {
             case R.id.syncbutton:
-                enableAddPatient(OpenMRS.getInstance().getSyncState());
+                enableAddPatient(OpenmrsAndroid.getSyncState());
                 break;
             case R.id.actionAddPatients:
                 if (NetworkUtils.hasNetwork()) {
@@ -147,7 +147,7 @@ public class SyncedPatientsFragment extends ACBaseFragment<SyncedPatientsContrac
     public void onCreateOptionsMenu(@NotNull Menu menu, @NotNull MenuInflater menuInflater) {
         super.onCreateOptionsMenu(menu, menuInflater);
         addPatientMenuItem = menu.findItem(R.id.actionAddPatients);
-        enableAddPatient(OpenMRS.getInstance().getSyncState());
+        enableAddPatient(OpenmrsAndroid.getSyncState());
     }
 
     private void enableAddPatient(boolean enabled) {

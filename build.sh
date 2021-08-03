@@ -16,15 +16,6 @@ chmod +x gradlew
 echo "Running tests..."
 ./gradlew test
 
-if [[ -n "$TRAVIS_TAG" ]]; then
-
-echo "Tagged build: building release..."
-./gradlew build assembleRelease
-echo "Publishing release to the Play store..."
-./gradlew publishRelease
-
-else
-
 echo "Debug build: building..."
 ./gradlew assembleDebug lint
 

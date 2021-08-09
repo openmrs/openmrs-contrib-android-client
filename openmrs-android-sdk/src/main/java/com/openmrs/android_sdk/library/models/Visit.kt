@@ -18,6 +18,12 @@ import androidx.room.Entity
 import com.openmrs.android_sdk.library.databases.entities.LocationEntity
 import com.google.gson.annotations.Expose
 
+/**
+ * Visit
+ *
+ * <p> More on Visits https://rest.openmrs.org/#visits </p>
+ * @constructor Create empty Visit
+ */
 @Entity
 class Visit : Resource() {
 

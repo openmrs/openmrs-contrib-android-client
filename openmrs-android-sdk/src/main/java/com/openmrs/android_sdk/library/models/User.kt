@@ -16,6 +16,15 @@ package com.openmrs.android_sdk.library.models
 
 import com.google.gson.annotations.Expose
 
+/**
+ * User
+ *
+ * <p> More on users https://rest.openmrs.org/#user </p>
+ * @property username
+ * @property systemId
+ * @property person
+ * @constructor Create empty User
+ */
 data class User(@Expose var username: String? = null,
                 @Expose var systemId: String? = null,
                 @Expose var person: Person? = null) : Resource() {

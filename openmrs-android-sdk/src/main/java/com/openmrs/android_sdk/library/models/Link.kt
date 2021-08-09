@@ -14,6 +14,11 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+/**
+ * Link
+ *
+ * @constructor Create empty Link
+ */
 class Link : Serializable {
 
     @SerializedName("rel")

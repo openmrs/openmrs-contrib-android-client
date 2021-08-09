@@ -18,7 +18,6 @@ import java.util.*
  *
  * PatientDTO represents patient data on create/update API.
  * This object is serialized as request/response body to send the patient related over the wire.
- *
  */
 open class PatientDto {
 

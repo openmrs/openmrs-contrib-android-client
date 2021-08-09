@@ -19,6 +19,12 @@ import com.google.gson.annotations.SerializedName
 
 import java.io.Serializable
 
+/**
+ * Person name
+ *
+ * <p> More on Subresources of Person https://rest.openmrs.org/#person </p>
+ * @constructor Create empty Person name
+ */
 class PersonName : Serializable {
 
     @SerializedName("givenName")

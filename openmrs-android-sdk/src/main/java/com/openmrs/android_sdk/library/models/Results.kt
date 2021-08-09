@@ -13,6 +13,12 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+/**
+ * Results
+ *
+ * @param T
+ * @constructor Create empty Results
+ */
 class Results<T> : Serializable {
 
     @SerializedName("results")

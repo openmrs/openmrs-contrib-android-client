@@ -18,6 +18,12 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+/**
+ * Resource
+ *
+ * <p> More on Resources https://rest.openmrs.org/#resources </p>
+ * @constructor Create empty Resource
+ */
 open class Resource : Serializable {
 
 

@@ -19,6 +19,12 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+/**
+ * Provider attribute
+ *
+ * <p> More about Provider Subresources https://rest.openmrs.org/#providers </p>
+ * @constructor Create empty Provider attribute
+ */
 class ProviderAttribute : Serializable {
 
     @SerializedName("attributeType")

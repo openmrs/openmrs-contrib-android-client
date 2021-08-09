@@ -23,6 +23,11 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
+/**
+ * Provider
+ *
+ * @constructor Create empty Provider
+ */
 @Entity(tableName = "provider_table")
 class Provider : Resource() {
 

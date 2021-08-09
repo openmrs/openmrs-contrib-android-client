@@ -23,6 +23,12 @@ import com.google.gson.annotations.SerializedName
 import java.io.ByteArrayOutputStream
 import java.io.Serializable
 
+/**
+ * Patient photo
+ *
+ * <p> More on Subresources of Patient https://rest.openmrs.org/#subresource-types-of-patient </p>
+ * @constructor Create empty Patient photo
+ */
 class PatientPhoto : Resource(), Serializable {
     @SerializedName("person")
     @Expose
@@ -32,11 +38,21 @@ class PatientPhoto : Resource(), Serializable {
     @Expose
     private var base64EncodedImage: String? = null
 
+    /**
+     * Set photo
+     *
+     * @param image
+     */
     fun setPhoto(image: Bitmap) {
         val byteArray = bitmapToByteArray(image)
         base64EncodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
 
+    /**
+     * Set person
+     *
+     * @param person
+     */
     fun setPerson(person: Person) {
         this.person = person
     }

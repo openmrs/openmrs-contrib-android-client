@@ -17,6 +17,12 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 
+/**
+ * Observation
+ *
+ * <p> More on Observations https://rest.openmrs.org/#observations </p>
+ * @constructor Create empty Observation
+ */
 class Observation : Resource(), Serializable {
 
     @SerializedName("concept")
@@ -91,6 +97,11 @@ class Observation : Resource(), Serializable {
     val shortDiagnosisCertainty: String
         get() = diagnosisCertainty!!.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
 
+    /**
+     * Set diagnosis certanity
+     *
+     * @param certanity
+     */
     fun setDiagnosisCertanity(certanity: String?) {
         this.diagnosisCertainty = certanity
     }

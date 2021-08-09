@@ -16,6 +16,12 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+/**
+ * Encounter
+ *
+ * <p> More on Encounters https://rest.openmrs.org/#encounters </p>
+ * @constructor Create empty Encounter
+ */
 class Encounter : Resource(), Serializable {
 
     override var id: Long? = null
@@ -78,6 +84,11 @@ class Encounter : Resource(), Serializable {
         else
             null
 
+    /**
+     * Set encounter datetime
+     *
+     * @param encounterDatetime
+     */
     fun setEncounterDatetime(encounterDatetime: String) {
         this.encounterDate = encounterDatetime
     }

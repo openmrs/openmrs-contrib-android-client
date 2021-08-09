@@ -15,6 +15,11 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.*
 
+/**
+ * Section
+ *
+ * @constructor Create empty Section
+ */
 class Section : Serializable {
 
     @SerializedName("label")

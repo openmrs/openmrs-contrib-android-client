@@ -12,6 +12,11 @@ package com.openmrs.android_sdk.library.models
 
 import androidx.room.Entity
 
+/**
+ * Encounter type
+ *
+ * @constructor Create empty Encounter type
+ */
 @Entity(tableName = "encounterType")
 class EncounterType : Resource {
 

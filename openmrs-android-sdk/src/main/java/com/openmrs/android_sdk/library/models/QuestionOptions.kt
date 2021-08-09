@@ -15,6 +15,11 @@ import com.google.gson.annotations.SerializedName
 
 import java.io.Serializable
 
+/**
+ * Question options
+ *
+ * @constructor Create empty Question options
+ */
 class QuestionOptions : Serializable {
 
     @SerializedName("rendering")

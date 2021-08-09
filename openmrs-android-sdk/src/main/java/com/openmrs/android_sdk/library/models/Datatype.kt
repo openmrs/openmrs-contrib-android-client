@@ -14,4 +14,10 @@
 
 package com.openmrs.android_sdk.library.models
 
+/**
+ * Datatype
+ *
+ * <p> More on concept-DataType https://rest.openmrs.org/#concept-data-type </p>
+ * @constructor Create empty Datatype
+ */
 class Datatype : Resource()

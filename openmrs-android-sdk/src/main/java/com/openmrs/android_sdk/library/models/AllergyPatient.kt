@@ -17,6 +17,12 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
+/**
+ * AllergyPatient
+ *
+ * <p> more on subresources of patients https://rest.openmrs.org/#subresource-types-of-patient </p>
+ * @constructor Create empty AllergyPatient
+ */
 class AllergyPatient {
     @SerializedName("uuid")
     @Expose

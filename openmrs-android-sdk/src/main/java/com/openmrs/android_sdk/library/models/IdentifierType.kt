@@ -9,6 +9,11 @@
  */
 package com.openmrs.android_sdk.library.models
 
+/**
+ * Identifier type
+ *
+ * @constructor Create empty Identifier type
+ */
 class IdentifierType : Resource {
 
     constructor()

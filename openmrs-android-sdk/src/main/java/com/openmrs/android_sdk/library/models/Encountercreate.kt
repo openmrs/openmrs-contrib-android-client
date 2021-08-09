@@ -16,6 +16,12 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+/**
+ * Encountercreate
+ *
+ * <p> EncounterCreate Entity to be stored in RoomDB </p>
+ * @constructor Create empty Encountercreate
+ */
 @Entity(tableName = "encountercreate")
 class Encountercreate : Serializable {
 

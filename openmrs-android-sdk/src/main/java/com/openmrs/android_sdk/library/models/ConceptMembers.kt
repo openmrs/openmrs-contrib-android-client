@@ -13,6 +13,12 @@ package com.openmrs.android_sdk.library.models
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Concept members
+ *
+ * <p> More on concepts https://rest.openmrs.org/#concepts </p>
+ * @constructor Create empty Concept members
+ */
 class ConceptMembers:Resource() {
 
     @SerializedName("conceptClass")

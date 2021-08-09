@@ -31,6 +31,8 @@ import java.util.List;
 
 /**
  * The type Person update.
+ *
+ * <p> More on Subresources of Person https://rest.openmrs.org/#person </p>
  */
 public class PersonUpdate extends Resource implements Serializable {
 

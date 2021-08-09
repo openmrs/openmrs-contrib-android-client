@@ -17,6 +17,13 @@ package com.openmrs.android_sdk.library.models
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+/**
+ * AllergyReaction
+ *
+ * <p> more on subresources of patients https://rest.openmrs.org/#subresource-types-of-patient </p>
+ * @constructor Create empty AllergyReaction
+ */
+
 class AllergyReaction {
     @SerializedName("reaction")
     @Expose

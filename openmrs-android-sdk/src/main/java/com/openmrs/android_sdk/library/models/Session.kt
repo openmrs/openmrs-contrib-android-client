@@ -17,6 +17,14 @@ package com.openmrs.android_sdk.library.models
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Session
+ *
+ * @property sessionId
+ * @property isAuthenticated
+ * @property user
+ * @constructor Create empty Session
+ */
 class Session(@field:SerializedName("sessionId")
               @field:Expose
               var sessionId: String?, @field:SerializedName("authenticated")

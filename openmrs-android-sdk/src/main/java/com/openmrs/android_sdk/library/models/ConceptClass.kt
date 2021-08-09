@@ -14,4 +14,11 @@
 
 package com.openmrs.android_sdk.library.models
 
+
+/**
+ * Concept class
+ *
+ * <p> More on concept class https://rest.openmrs.org/#concept-class </p>
+ * @constructor Create empty Concept class
+ */
 class ConceptClass : Resource()

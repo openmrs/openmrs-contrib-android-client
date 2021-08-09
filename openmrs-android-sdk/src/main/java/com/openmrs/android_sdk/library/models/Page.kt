@@ -15,6 +15,11 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 import java.util.*
 
+/**
+ * Page
+ *
+ * @constructor Create empty Page
+ */
 class Page : Serializable {
 
     @SerializedName("label")

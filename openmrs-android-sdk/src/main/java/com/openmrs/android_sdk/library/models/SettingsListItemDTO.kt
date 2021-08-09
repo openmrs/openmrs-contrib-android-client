@@ -14,6 +14,11 @@
 
 package com.openmrs.android_sdk.library.models
 
+/**
+ * Settings list item d t o
+ *
+ * @constructor Create empty Settings list item d t o
+ */
 class SettingsListItemDTO {
     var title: String? = null
         private set

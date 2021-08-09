@@ -13,6 +13,12 @@ package com.openmrs.android_sdk.library.models
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Id gen patient identifiers
+ *
+ * <p> More on Patient Identifier https://rest.openmrs.org/#patients-overview </p>
+ * @constructor Create empty Id gen patient identifiers
+ */
 class IdGenPatientIdentifiers {
 
     @SerializedName("identifiers")

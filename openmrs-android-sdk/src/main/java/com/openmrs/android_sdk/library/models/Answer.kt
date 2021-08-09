@@ -23,6 +23,13 @@ import com.google.gson.annotations.SerializedName
 
 import java.io.Serializable
 
+
+/**
+ * Answer
+ *
+ * <p> More on concepts https://rest.openmrs.org/#concepts </p>
+ * @constructor Create empty Answer
+ */
 class Answer : Serializable, Parcelable {
 
     @SerializedName("concept")

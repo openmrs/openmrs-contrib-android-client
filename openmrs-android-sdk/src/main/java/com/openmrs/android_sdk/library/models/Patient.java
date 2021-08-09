@@ -24,6 +24,9 @@ import java.util.Map;
 
 /**
  * The type Patient.
+ *
+ * <p>More on Type Patient https://rest.openmrs.org/#patients </p>
+ *
  */
 public class Patient extends Person implements Serializable {
     private Long id;

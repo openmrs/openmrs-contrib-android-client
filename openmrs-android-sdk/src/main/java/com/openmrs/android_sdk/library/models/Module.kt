@@ -16,6 +16,11 @@ package com.openmrs.android_sdk.library.models
 
 import com.google.gson.annotations.Expose
 
+/**
+ * Module
+ *
+ * @constructor Create empty Module
+ */
 class Module : Resource() {
 
     @Expose

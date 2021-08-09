@@ -15,5 +15,11 @@
 
 package com.openmrs.android_sdk.library.models
 
+/**
+ * Provider attribute type
+ *
+ * <p> More about Provider Subresources https://rest.openmrs.org/#providers </p>
+ * @constructor Create empty Provider attribute type
+ */
 class ProviderAttributeType: Resource() {
 }

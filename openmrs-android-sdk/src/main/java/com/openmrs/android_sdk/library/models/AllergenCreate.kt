@@ -19,9 +19,11 @@ import com.google.gson.annotations.SerializedName
 /**
  * Allergen create
  *
+ * <p> more on subresources of patients https://rest.openmrs.org/#subresource-types-of-patient </p>
  * @constructor Create empty Allergen create
  */
 class AllergenCreate {
+
     @SerializedName("allergenType")
     @Expose
     var allergenType: String? = null

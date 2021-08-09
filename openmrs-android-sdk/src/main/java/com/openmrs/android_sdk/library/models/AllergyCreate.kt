@@ -20,6 +20,7 @@ import java.util.*
 /**
  * Allergy create
  *
+ * <p> more on subresources of patients https://rest.openmrs.org/#subresource-types-of-patient </p>
  * @constructor Create empty Allergy create
  */
 class AllergyCreate {

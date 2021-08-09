@@ -14,4 +14,10 @@
 
 package com.openmrs.android_sdk.library.models
 
+/**
+ * Person attribute type
+ *
+ * <p> More on Subresources of Person https://rest.openmrs.org/#person </p>
+ * @constructor Create empty Person attribute type
+ */
 class PersonAttributeType : Resource()

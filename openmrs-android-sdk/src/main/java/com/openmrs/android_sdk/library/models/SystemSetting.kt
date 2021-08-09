@@ -16,6 +16,12 @@ package com.openmrs.android_sdk.library.models
 
 import com.google.gson.annotations.Expose
 
+/**
+ * System setting
+ *
+ * <p> More on System setting https://rest.openmrs.org/#system-setting </p>
+ * @constructor Create empty System setting
+ */
 class SystemSetting : Resource() {
 
     @Expose

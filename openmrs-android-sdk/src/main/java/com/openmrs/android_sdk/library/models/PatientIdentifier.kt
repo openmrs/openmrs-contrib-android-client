@@ -14,6 +14,11 @@ import com.openmrs.android_sdk.library.databases.entities.LocationEntity
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Patient identifier
+ * <p> More on Subresources of Patient https://rest.openmrs.org/#subresource-types-of-patient </p>
+ * @constructor Create empty Patient identifier
+ */
 class PatientIdentifier : Resource() {
 
 

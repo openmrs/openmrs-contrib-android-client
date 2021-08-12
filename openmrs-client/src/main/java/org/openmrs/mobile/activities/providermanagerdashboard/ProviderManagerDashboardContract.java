@@ -16,9 +16,10 @@ package org.openmrs.mobile.activities.providermanagerdashboard;
 
 import androidx.fragment.app.Fragment;
 
+import com.openmrs.android_sdk.library.models.Provider;
+
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.models.Provider;
 
 import java.util.List;
 

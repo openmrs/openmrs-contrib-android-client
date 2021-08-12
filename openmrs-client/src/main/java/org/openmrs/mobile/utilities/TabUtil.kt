@@ -15,13 +15,14 @@ package org.openmrs.mobile.utilities
 
 import android.util.DisplayMetrics
 import android.view.WindowManager
+import com.openmrs.android_sdk.library.OpenmrsAndroid
 import org.openmrs.mobile.application.OpenMRS
 import java.lang.reflect.InvocationTargetException
 
 object TabUtil {
     const val MIN_SCREEN_WIDTH_FOR_FINDPATIENTSACTIVITY = 480
     const val MIN_SCREEN_WIDTH_FOR_PATIENTDASHBOARDACTIVITY = 960
-    private val mLogger = OpenMRS.getInstance().openMRSLogger
+    private val mLogger = OpenmrsAndroid.getOpenMRSLogger()
 
     @JvmStatic
     fun setHasEmbeddedTabs(inActionBar: Any, windowManager: WindowManager, minScreenWidth: Int) {

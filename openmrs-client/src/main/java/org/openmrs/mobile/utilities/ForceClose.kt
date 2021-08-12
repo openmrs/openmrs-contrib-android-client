@@ -3,16 +3,9 @@ package org.openmrs.mobile.utilities
 import android.app.Activity
 import android.os.Build
 import android.os.Process
-import org.openmrs.mobile.application.OpenMRS
-import org.openmrs.mobile.application.OpenMRSLogger
-import java.io.File
-import java.io.FileInputStream
-import java.io.PrintWriter
-import java.io.StringWriter
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.io.FileNotFoundException
-import java.io.IOException
+import com.openmrs.android_sdk.library.OpenMRSLogger
+import com.openmrs.android_sdk.library.OpenmrsAndroid
+import java.io.*
 import kotlin.system.exitProcess
 
 class ForceClose(private val myContext: Activity) : Thread.UncaughtExceptionHandler {
@@ -65,7 +58,7 @@ class ForceClose(private val myContext: Activity) : Thread.UncaughtExceptionHand
     fun getLogs(): String? {
         val mOpenMRSLogger = OpenMRSLogger()
         var textLogs: String? = ""
-        val filename = "${OpenMRS.getInstance().openMRSDir} ${File.separator} ${mOpenMRSLogger.logFilename}"
+        val filename = "${OpenmrsAndroid.getOpenMRSDir()}${File.separator}${mOpenMRSLogger.logFilename}"
         try {
             val myFile = File(filename)
             val fIn = FileInputStream(myFile)

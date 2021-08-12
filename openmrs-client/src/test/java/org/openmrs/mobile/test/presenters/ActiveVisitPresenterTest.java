@@ -17,16 +17,17 @@ package org.openmrs.mobile.test.presenters;
 
 import androidx.annotation.NonNull;
 
+import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
+import com.openmrs.android_sdk.library.models.Visit;
+import com.openmrs.android_sdk.library.models.VisitType;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.activevisits.ActiveVisitPresenter;
 import org.openmrs.mobile.activities.activevisits.ActiveVisitsContract;
-import org.openmrs.mobile.dao.VisitDAO;
-import org.openmrs.mobile.databases.entities.LocationEntity;
-import org.openmrs.mobile.models.Visit;
-import org.openmrs.mobile.models.VisitType;
+import com.openmrs.android_sdk.library.dao.VisitDAO;
 import org.openmrs.mobile.test.ACUnitTestBaseRx;
 
 import java.util.ArrayList;

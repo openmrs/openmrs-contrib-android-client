@@ -14,6 +14,14 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import com.openmrs.android_sdk.library.OpenMRSLogger;
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.utilities.NetworkUtils;
+import com.openmrs.android_sdk.utilities.PatientAndMatchingPatients;
+import com.openmrs.android_sdk.utilities.ToastUtil;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,18 +29,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.matchingpatients.MatchingPatientsContract;
 import org.openmrs.mobile.activities.matchingpatients.MatchingPatientsPresenter;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
-import org.openmrs.mobile.api.repository.LocationRepository;
-import org.openmrs.mobile.api.repository.PatientRepository;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.RestServiceBuilder;
+import com.openmrs.android_sdk.library.api.repository.LocationRepository;
+import com.openmrs.android_sdk.library.api.repository.PatientRepository;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.application.OpenMRSLogger;
-import org.openmrs.mobile.dao.PatientDAO;
-import org.openmrs.mobile.models.Patient;
 import org.openmrs.mobile.test.ACUnitTestBase;
-import org.openmrs.mobile.utilities.NetworkUtils;
-import org.openmrs.mobile.utilities.PatientAndMatchingPatients;
-import org.openmrs.mobile.utilities.ToastUtil;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -46,7 +48,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.verify;
 
-@PrepareForTest({OpenMRS.class, NetworkUtils.class, RestServiceBuilder.class, ToastUtil.class})
+@PrepareForTest({OpenMRS.class, NetworkUtils.class, RestServiceBuilder.class, ToastUtil.class, OpenmrsAndroid.class})
 @RunWith(PowerMockRunner.class)
 public class MatchingPatientsPresenterTest extends ACUnitTestBase {
     @Mock
@@ -68,7 +70,7 @@ public class MatchingPatientsPresenterTest extends ACUnitTestBase {
     public void setUp() {
         mockStaticMethods();
         patientAndMatchingPatientsQueue = createMatchingPatientsList();
-        PatientRepository patientRepository = new PatientRepository(openMRS, openMRSLogger, patientDAO, restApi, locationRepository);
+        PatientRepository patientRepository = new PatientRepository(openMRSLogger, patientDAO, restApi, locationRepository);
         presenter = new MatchingPatientsPresenter(view, patientAndMatchingPatientsQueue, restApi, patientDAO, patientRepository);
     }
 
@@ -133,8 +135,9 @@ public class MatchingPatientsPresenterTest extends ACUnitTestBase {
     private void mockStaticMethods() {
         PowerMockito.mockStatic(NetworkUtils.class);
         PowerMockito.mockStatic(OpenMRS.class);
+        PowerMockito.mockStatic(OpenmrsAndroid.class);
         PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
-        PowerMockito.when(openMRS.getOpenMRSLogger()).thenReturn(openMRSLogger);
+        PowerMockito.when(OpenmrsAndroid.getOpenMRSLogger()).thenReturn(openMRSLogger);
         PowerMockito.mockStatic(ToastUtil.class);
     }
 }

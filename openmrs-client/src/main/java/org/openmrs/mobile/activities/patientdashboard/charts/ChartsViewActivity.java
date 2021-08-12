@@ -20,6 +20,9 @@ import android.view.MenuItem;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.DateUtils;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -34,9 +37,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
-import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.DateUtils;
 import org.openmrs.mobile.utilities.DayAxisValueFormatter;
 
 import java.util.ArrayList;
@@ -103,9 +103,9 @@ public class ChartsViewActivity extends ACBaseActivity {
                 chart.invalidate();
             }
         } catch (JSONException e) {
-            OpenMRS.getInstance().getOpenMRSLogger().e(e.toString());
+            OpenmrsAndroid.getOpenMRSLogger().e(e.toString());
         } catch (NumberFormatException e) {
-            OpenMRS.getInstance().getOpenMRSLogger().e(e.toString());
+            OpenmrsAndroid.getOpenMRSLogger().e(e.toString());
         }
     }
 

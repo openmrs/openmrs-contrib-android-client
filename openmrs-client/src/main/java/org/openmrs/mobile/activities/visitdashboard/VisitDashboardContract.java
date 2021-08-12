@@ -14,9 +14,10 @@
 
 package org.openmrs.mobile.activities.visitdashboard;
 
+import com.openmrs.android_sdk.library.models.Encounter;
+
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.models.Encounter;
 
 import java.util.List;
 

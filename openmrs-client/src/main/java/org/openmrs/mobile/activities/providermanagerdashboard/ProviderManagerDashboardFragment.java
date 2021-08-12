@@ -28,20 +28,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.openmrs.android_sdk.library.models.Provider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.activities.providermanagerdashboard.addprovider.AddProviderActivity;
 import org.openmrs.mobile.databinding.FragmentProviderManagementBinding;
-import org.openmrs.mobile.models.Provider;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static org.openmrs.mobile.utilities.ApplicationConstants.RequestCodes.ADD_PROVIDER_REQ_CODE;
-import static org.openmrs.mobile.utilities.ApplicationConstants.RequestCodes.EDIT_PROVIDER_REQ_CODE;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.RequestCodes.ADD_PROVIDER_REQ_CODE;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.RequestCodes.EDIT_PROVIDER_REQ_CODE;
 
 public class ProviderManagerDashboardFragment extends ACBaseFragment<ProviderManagerDashboardContract.Presenter>
     implements ProviderManagerDashboardContract.View {

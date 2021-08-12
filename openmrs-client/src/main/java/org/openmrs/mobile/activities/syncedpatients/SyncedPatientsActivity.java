@@ -22,14 +22,15 @@ import android.view.MenuItem;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.SearchView;
 
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.StringUtils;
+
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.lastviewedpatients.LastViewedPatientsActivity;
-import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.databinding.ActivityFindPatientsBinding;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.StringUtils;
 
 public class SyncedPatientsActivity extends ACBaseActivity {
     public SyncedPatientsPresenter presenter;
@@ -90,7 +91,7 @@ public class SyncedPatientsActivity extends ACBaseActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.syncbutton:
-                enableAddPatient(OpenMRS.getInstance().getSyncState());
+                enableAddPatient(OpenmrsAndroid.getSyncState());
                 break;
             case R.id.actionAddPatients:
                 Intent intent = new Intent(this, LastViewedPatientsActivity.class);
@@ -112,9 +113,8 @@ public class SyncedPatientsActivity extends ACBaseActivity {
         getMenuInflater().inflate(R.menu.find_locally_and_add_patients_menu, menu);
 
         addPatientMenuItem = menu.findItem(R.id.actionAddPatients);
-        enableAddPatient(OpenMRS.getInstance().getSyncState());
+        enableAddPatient(OpenmrsAndroid.getSyncState());
 
-        // Search function
         MenuItem searchMenuItem = menu.findItem(R.id.actionSearchLocal);
         searchView = (SearchView) searchMenuItem.getActionView();
 

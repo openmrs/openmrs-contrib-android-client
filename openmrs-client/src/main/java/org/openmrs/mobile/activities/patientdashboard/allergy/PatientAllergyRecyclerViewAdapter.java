@@ -22,12 +22,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.openmrs.android_sdk.library.models.Allergy;
+
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.models.Allergy;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
 
 import java.util.List;
 

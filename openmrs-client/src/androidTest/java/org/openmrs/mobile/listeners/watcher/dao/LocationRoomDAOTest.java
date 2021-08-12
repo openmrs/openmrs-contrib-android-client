@@ -25,9 +25,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.databases.entities.LocationEntity;
-import org.openmrs.mobile.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.library.databases.AppDatabase;
+import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
 
 import java.util.Objects;
 

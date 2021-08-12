@@ -24,15 +24,17 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.databases.AppDatabase;
+import com.openmrs.android_sdk.library.models.Session;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.NetworkUtils;
+import com.openmrs.android_sdk.utilities.ToastUtil;
+
 import org.openmrs.mobile.R;
-import org.openmrs.mobile.api.RestApi;
-import org.openmrs.mobile.api.RestServiceBuilder;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.RestServiceBuilder;
 import org.openmrs.mobile.application.OpenMRS;
-import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.models.Session;
-import org.openmrs.mobile.utilities.ApplicationConstants;
-import org.openmrs.mobile.utilities.NetworkUtils;
-import org.openmrs.mobile.utilities.ToastUtil;
 
 import java.util.List;
 import java.util.Timer;
@@ -55,8 +57,8 @@ public class AuthenticateCheckService extends Service {
             @Override
             public void run() {
                 if (mRunning) {
-                    String username = mOpenMRS.getUsername();
-                    String password = mOpenMRS.getPassword();
+                    String username = OpenmrsAndroid.getUsername();
+                    String password = OpenmrsAndroid.getPassword();
                     if ((!username.equals(ApplicationConstants.EMPTY_STRING)) &&
                             (!password.equals(ApplicationConstants.EMPTY_STRING))) {
                         Log.e("Service Task ", "Running");
@@ -104,8 +106,8 @@ public class AuthenticateCheckService extends Service {
                                 sendBroadcast(broadcastIntent);
                             } else {
                                 AppDatabase.getDatabase(getApplicationContext()).close();
-                                mOpenMRS.clearUserPreferencesData();
-                                mOpenMRS.clearCurrentLoggedInUserInfo();
+                                OpenmrsAndroid.clearUserPreferencesData();
+                                OpenmrsAndroid.clearCurrentLoggedInUserInfo();
                             }
                         }
                     } else {

@@ -16,7 +16,7 @@ package org.openmrs.mobile.activities.matchingpatients;
 
 import org.openmrs.mobile.activities.BasePresenterContract;
 import org.openmrs.mobile.activities.BaseView;
-import org.openmrs.mobile.models.Patient;
+import com.openmrs.android_sdk.library.models.Patient;
 
 import java.util.List;
 

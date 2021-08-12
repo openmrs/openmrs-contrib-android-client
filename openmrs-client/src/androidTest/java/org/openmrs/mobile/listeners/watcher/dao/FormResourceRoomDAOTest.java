@@ -27,8 +27,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openmrs.mobile.databases.AppDatabase;
-import org.openmrs.mobile.databases.entities.FormResourceEntity;
+import com.openmrs.android_sdk.library.databases.AppDatabase;
+import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity;
 
 import java.util.ArrayList;
 import java.util.List;

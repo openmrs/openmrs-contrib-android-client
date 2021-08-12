@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.test;
 
+import com.openmrs.android_sdk.library.models.Observation;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -23,8 +24,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.openmrs.mobile.models.Observation;
-import org.openmrs.mobile.utilities.ObservationDeserializer;
+import com.openmrs.android_sdk.utilities.ObservationDeserializer;
 
 import java.io.BufferedReader;
 import java.io.File;

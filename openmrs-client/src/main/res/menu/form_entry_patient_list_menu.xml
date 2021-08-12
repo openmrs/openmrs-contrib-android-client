@@ -16,7 +16,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.tomek.notepad.MainActivity">
+    tools:context="com.openmrs.tomek.notepad.MainActivity">
 
     <item android:id="@+id/actionSearchRemoteFormEntry"
         android:title="@string/action_find_patients"

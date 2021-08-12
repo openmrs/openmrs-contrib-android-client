@@ -1,7 +1,65 @@
 
 # Release Notes
 
+### Version 3.0.0
 
+1. [AC-574] - Android Client cannot update provider password
+2. [AC-575] - Password Reset
+3. [AC-584] - Renew GITHUB API key to deploy to Play store
+4. [AC-657] - Adding an about section
+5. [AC-717] - updating the PR template so that someone dosent forgets the JIRA workflow
+6. [AC-722] - after starting a Visit replace the start button with an end button
+7. [AC-821] - Fix deprecation warnings
+8. [AC-869] - Full name of languages should be used.
+9. [AC-906] - Re-design Home screen with a better UI.
+10. [AC-926] - Using View Binding Architecture component in various packages.
+11. [AC-945] - android.viewBinding.enabled is obsolete and should be replaced
+12. [AC-951] - Migrate matchingpatients package from Java to Kotlin & ViewBinding
+13. [AC-958] - Correcting app screenshots' aspect ratio in README.md file
+14. [AC-962] - Stay on the SyncedPatientsActivity after deleting synced patient(s)
+15. [AC-973] - Feature of setting system default theme
+16. [AC-984] - Delete Operation Offline support for Allergy Repository
+17. [AC-985] - Offline Strategy for Patient Repository
+18. [AC-543] - Delay while inflating layout of Find Patients and Form Entry
+19. [AC-545] - Loss of Data after Logout and re-login with same username,password & url
+20. [AC-581] - Failed to resolve variable '${project.groupId}'
+21. [AC-613] - Job 'generateReleasePlayResources' failed
+22. [AC-616] - Encrypt play store files earlier in CI build
+23. [AC-669] - Implementing a method to show detailed server error
+24. [AC-774] - Travis CI fails to detect failed tests
+25. [AC-775] - Theme bug causing glitch when opening register patient
+26. [AC-792] - The Intent is not implemented properly
+27. [AC-800] - Redesign register patient form as a multi step form
+28. [AC-862] - On tapping email us in contact page, the recipient of mail is not correct
+29. [AC-864] - The GetProviders method seems incorrect in the providerRepository
+30. [AC-865] - We should avoid the use of appContext inside repository layer
+31. [AC-866] - The title of action bars is not translated to Hindi.
+32. [AC-883] - QuickFix for patientIdentifier Service omission
+33. [AC-887] - Memory leak in Fragments
+34. [AC-889] - An improvement is needed in the login page as in dark mode the username,password and especially the server url text colours make it not visible correctly.
+35. [AC-890] - An improvement is needed in the Settings page UI. The language button English option text is not displayed correctly in some of the devices.
+36. [AC-946] - Bug in the language switching feature.
+37. [AC-961] - Buttons of alert dialog are not clearly visible in dark mode.
+38. [AC-965] - Form Entry TextView Overlap with Image
+39. [AC-967] - App Crashes after registering patient
+40. [AC-968] - Provider name is not correctly saved in server when switching from offline to online mode
+41. [AC-969] - Add Provider Worker is called even after syncing provider when switching from offline to online mode
+42. [AC-970] - Client fails to edit or delete a newly created Provider
+43. [AC-983] - After Deleting Providers the parent screen still holds old data untill a refresh.
+44. [AC-986] - The Provider fetch function duplicates data in the feed
+45. [AC-982] - NPE in Patient Photo Activity
+46. [AC-981] - Application Rehaul for the Library code encapsulation
+47. [AC-798] - Add and view supervised patients for the current provider
+48. [AC-834] - Migrate room Entity classes to Kotlin
+49. [AC-842] - Add Repository Abstraction for AddEditPatient Package
+50. [AC-879] - Migrate Form List Package to Kotlin
+51. [AC-888] - Migrate Login Screen to Kotlin
+52. [AC-892] - Migrate Add Provider Screen to Kotlin
+53. [AC-898] - Convert Java classes of Model Package to Kotlin
+54. [AC-929] - Provider Manager in the Dashboard Screen is redirecting to wrong activity
+55. [AC-948] - Migrate Logs Screen from MVP Architecture to MVVM architecture
+56. [AC-950] - Migrate Provider Dashboard Package from Java to Kotlin.
+    
 ### Version 2.9.0
 
 1. Updated UI for different activities (#787, #785, #803, #806, #808, #809)

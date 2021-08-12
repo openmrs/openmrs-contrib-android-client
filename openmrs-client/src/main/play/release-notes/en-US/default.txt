@@ -1,16 +1,5 @@
-- Updated UI for different activities (#787, #785, #803, #806, #808, #809)
-- Added repository layer for different activity layer (#784, #791, #797, #799)
-- Migrated codebase to kotlin (#794, #802, #811, #814)
-- Removed unused resources (#788, #805)
-- Created offline support for Allergy module (#786)
-- Create allergy based on server configuration (#796)
-- Allergy can be updated as per server settings (#798)
-- Allergy can be deleted in online/offline mode (#793)
-- Overloaded methods of AppDataBase Helper class (#789)
-- Removed collapsing bar in provider dashboard (#800)
-- Removed unnecessary restAPI param passing to the repository (#792)
-- Migrated Chart ListAdapter to RecyclerView (#807)
-- Fixed app restarts on downloading concepts (#795)
-- Fixed crash at admission form by using live data (#804)
-- Fixed Release version blocker (#790)
-- Added possible NPE checks at PatientComparator (#810)
+- Added and homogenised offline strategy for provider patients and some operations in allergy section
+- Fixed Memory leak in fragments.
+- architectural overhaul encapsulation of codebase in a sdk published to jitpack.
+- Used view binding in all the packages.
+- NPE exception and crashes fixed.

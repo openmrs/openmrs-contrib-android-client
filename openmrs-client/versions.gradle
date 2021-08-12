@@ -3,7 +3,7 @@ ext.versions = [:]
 versions.compileSdk = 29
 versions.minSdk = 17
 versions.targetSdk = 29
-versions.appVersion = "2.9.0"
+versions.appVersion = "3.0.0"
 
 // Libraries
 versions.material = '1.3.0-alpha01'

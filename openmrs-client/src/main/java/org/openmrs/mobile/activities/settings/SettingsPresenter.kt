@@ -82,11 +82,9 @@ class SettingsPresenter(private val mSettingsView: SettingsContract.View, privat
 
     override val languagePosition: Int
         get() {
-            val lang = LanguageUtils.getLanguage()
-            val languageList = ApplicationConstants.OpenMRSlanguage.LANGUAGE_LIST
             var i = 0
-            while (i < languageList.size) {
-                if (lang == languageList[i]) {
+            while (i < ApplicationConstants.OpenMRSlanguage.LANGUAGE_CODE.size) {
+                if (LanguageUtils.getLanguage()== ApplicationConstants.OpenMRSlanguage.LANGUAGE_CODE[i]) {
                     return i
                 }
                 i++

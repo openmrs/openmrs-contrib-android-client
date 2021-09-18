@@ -389,7 +389,7 @@
                                 app:layout_constraintBottom_toBottomOf="@id/textInputLayoutDOB"
                                 app:layout_constraintRight_toRightOf="@id/textInputLayoutDOB"
                                 app:layout_constraintTop_toTopOf="@id/textInputLayoutDOB"
-                                android:backgroundTint="@color/black"/>
+                                android:backgroundTint="?android:attr/textColorPrimary"/>
 
                             <TextView
                                 android:layout_width="0dp"

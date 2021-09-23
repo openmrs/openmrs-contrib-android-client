@@ -384,6 +384,7 @@
                                 android:layout_marginTop="8dp"
                                 android:layout_marginEnd="16dp"
                                 android:layout_marginRight="16dp"
+                                android:backgroundTint="?android:attr/textColorPrimary"
                                 android:background="@drawable/ic_date_range_24dp"
                                 app:layout_constraintBottom_toBottomOf="@id/textInputLayoutDOB"
                                 app:layout_constraintRight_toRightOf="@id/textInputLayoutDOB"

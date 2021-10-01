@@ -424,9 +424,11 @@ public abstract class ACBaseActivity extends AppCompatActivity {
 
     public void setupTheme() {
         if (ThemeUtils.isDarkModeActivated()) {
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            getDelegate().applyDayNight();
         } else {
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            getDelegate().applyDayNight();
         }
     }
 

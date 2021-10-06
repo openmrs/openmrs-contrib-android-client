@@ -134,6 +134,7 @@ class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
                 override fun onResponse() {
                     view.enableSubmitButton(true)
                     success(mContext.getString(R.string.form_submitted_successfully))
+                    view.quitFormEntry()
                 }
 
                 override fun onErrorResponse(errorMessage: String) {
@@ -141,7 +142,6 @@ class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
                     view.enableSubmitButton(true)
                 }
             })
-            view.quitFormEntry()
         }
     }
 }

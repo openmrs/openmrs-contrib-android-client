@@ -140,6 +140,37 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
                              Bundle savedInstanceState) {
         binding = FragmentPatientInfoBinding.inflate(inflater, container, false);
         setHasOptionsMenu(true);
+        binding.dobEditText .addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String str=binding.dobEditText .getText().toString();
+                int textLength=binding.dobEditText .getText().length();
+                if (textLength == 3) {
+                    if (!str.contains("/")) {
+                        binding.dobEditText .setText(new StringBuilder(binding.dobEditText .getText().toString()).insert(str.length() - 1, "/").toString());
+                        binding.dobEditText .setSelection(binding.dobEditText .getText().length());
+                    }
+                }if (textLength == 6) {
+                    if (!str.substring(3).contains("/")) {
+                        binding.dobEditText .setText(new StringBuilder(binding.dobEditText .getText().toString()).insert(str.length() - 1, "/").toString());
+                        binding.dobEditText .setSelection(binding.dobEditText .getText().length());
+                    }
+                }
+            }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+
+            }
+        });
+
         addListeners();
         initializePlaces(mPresenter.getPlaces());
         fillFields(mPresenter.getPatientToUpdate());
@@ -601,7 +632,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
             DatePickerDialog mDatePicker = new DatePickerDialog(AddEditPatientFragment.this.getActivity(), (datePicker, selectedYear, selectedMonth, selectedDay) -> {
                 int adjustedMonth = selectedMonth + 1;
-                binding.dobEditText.setText(selectedDay + "/" + adjustedMonth + "/" + selectedYear);
+                binding.dobEditText.setText(String.format("%02d",selectedDay) + "/" + String.format("%02d",adjustedMonth) + "/" + selectedYear);
                 birthDate = new LocalDate(selectedYear, adjustedMonth, selectedDay);
                 bdt = birthDate.toDateTimeAtStartOfDay().toDateTime();
             }, cYear, cMonth, cDay);

@@ -568,6 +568,20 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // Only needs afterTextChanged method from TextWacher
+                //add slash after entering date and month
+                String str=binding.dobEditText .getText().toString();
+                int textLength=binding.dobEditText .getText().length();
+                if (textLength == 3) {
+                    if (!str.contains("/")) {
+                        binding.dobEditText .setText(new StringBuilder(binding.dobEditText .getText().toString()).insert(str.length() - 1, "/").toString());
+                        binding.dobEditText .setSelection(binding.dobEditText .getText().length());
+                    }
+                }if (textLength == 6) {
+                    if (!str.substring(3).contains("/")) {
+                        binding.dobEditText .setText(new StringBuilder(binding.dobEditText .getText().toString()).insert(str.length() - 1, "/").toString());
+                        binding.dobEditText .setSelection(binding.dobEditText .getText().length());
+                    }
+                }
             }
 
             @Override
@@ -601,7 +615,7 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
 
             DatePickerDialog mDatePicker = new DatePickerDialog(AddEditPatientFragment.this.getActivity(), (datePicker, selectedYear, selectedMonth, selectedDay) -> {
                 int adjustedMonth = selectedMonth + 1;
-                binding.dobEditText.setText(selectedDay + "/" + adjustedMonth + "/" + selectedYear);
+                binding.dobEditText.setText(String.format("%02d",selectedDay) + "/" + String.format("%02d",adjustedMonth) + "/" + selectedYear);
                 birthDate = new LocalDate(selectedYear, adjustedMonth, selectedDay);
                 bdt = birthDate.toDateTimeAtStartOfDay().toDateTime();
             }, cYear, cMonth, cDay);

@@ -569,17 +569,18 @@ public class AddEditPatientFragment extends ACBaseFragment<AddEditPatientContrac
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // Only needs afterTextChanged method from TextWacher
                 //add slash after entering date and month
-                String str=binding.dobEditText .getText().toString();
-                int textLength=binding.dobEditText .getText().length();
+               String str=binding.dobEditText.getText().toString();
+                int textLength=binding.dobEditText.getText().length();
                 if (textLength == 3) {
                     if (!str.contains("/")) {
-                        binding.dobEditText .setText(new StringBuilder(binding.dobEditText .getText().toString()).insert(str.length() - 1, "/").toString());
-                        binding.dobEditText .setSelection(binding.dobEditText .getText().length());
+                        binding.dobEditText.setText(new StringBuilder(binding.dobEditText.getText().toString()).insert(str.length() - 1, "/").toString());
+                        binding.dobEditText.setSelection(binding.dobEditText.getText().length());
                     }
-                }if (textLength == 6) {
+                }
+                if (textLength == 6) {
                     if (!str.substring(3).contains("/")) {
-                        binding.dobEditText .setText(new StringBuilder(binding.dobEditText .getText().toString()).insert(str.length() - 1, "/").toString());
-                        binding.dobEditText .setSelection(binding.dobEditText .getText().length());
+                        binding.dobEditText.setText(new StringBuilder(binding.dobEditText.getText().toString()).insert(str.length() - 1, "/").toString());
+                        binding.dobEditText.setSelection(binding.dobEditText.getText().length());
                     }
                 }
             }

@@ -371,8 +371,8 @@
                                     android:inputType="datetime"
                                     android:maxLines="1"
                                     android:nextFocusDown="@+id/estimatedYear"
-                                    android:textSize="14sp" />
-                            </com.google.android.material.textfield.TextInputLayout>
+                                    android:textSize="14sp"
+                                    android:maxLength="10"/>                            </com.google.android.material.textfield.TextInputLayout>
 
                             <ImageButton
                                 android:id="@+id/datePicker"

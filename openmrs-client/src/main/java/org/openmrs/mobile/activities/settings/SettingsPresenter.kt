@@ -35,7 +35,7 @@ class SettingsPresenter(private val mSettingsView: SettingsContract.View, privat
 
     override fun subscribe() {
         updateViews()
-        mSettingsView.setConceptsInDbText(conceptRoomDAO.conceptsCount.toString())
+        mSettingsView.setConceptsInDbText(conceptRoomDAO.getConceptsCount().toString())
     }
 
     private fun updateViews() {
@@ -64,7 +64,7 @@ class SettingsPresenter(private val mSettingsView: SettingsContract.View, privat
     }
 
     override fun updateConceptsInDBTextView() {
-        mSettingsView.setConceptsInDbText(conceptRoomDAO.conceptsCount.toString())
+        mSettingsView.setConceptsInDbText(conceptRoomDAO.getConceptsCount().toString())
     }
 
     override val isDarkModeActivated: Boolean

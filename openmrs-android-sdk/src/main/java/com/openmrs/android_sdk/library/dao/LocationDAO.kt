@@ -11,29 +11,27 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package com.openmrs.android_sdk.library.dao
 
-package com.openmrs.android_sdk.library.dao;
-
-import com.openmrs.android_sdk.library.OpenmrsAndroid;
-import com.openmrs.android_sdk.library.databases.AppDatabase;
-import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
-import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
-import com.openmrs.android_sdk.utilities.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import rx.Observable;
-
+import com.openmrs.android_sdk.library.OpenmrsAndroid
+import com.openmrs.android_sdk.library.databases.AppDatabase
+import com.openmrs.android_sdk.library.databases.AppDatabaseHelper.createObservableIO
+import com.openmrs.android_sdk.library.databases.entities.LocationEntity
+import com.openmrs.android_sdk.utilities.StringUtils.notNull
+import rx.Observable
+import java.util.*
+import java.util.concurrent.Callable
 
 /**
  * The type Location dao.
  */
-public class LocationDAO {
+class LocationDAO {
     /**
      * The Location room dao.
      */
-    LocationRoomDAO locationRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).locationRoomDAO();
+    private var locationRoomDAO: LocationRoomDAO = AppDatabase.getDatabase(
+        OpenmrsAndroid.getInstance()!!.applicationContext
+    ).locationRoomDAO()
 
     /**
      * Save location observable.
@@ -41,15 +39,17 @@ public class LocationDAO {
      * @param location the location
      * @return the observable
      */
-    public Observable<Long> saveLocation(LocationEntity location) {
-        return AppDatabaseHelper.createObservableIO(() -> locationRoomDAO.addLocation(location));
+    fun saveLocation(location: LocationEntity?): Observable<Long> {
+        return createObservableIO(Callable {
+            locationRoomDAO.addLocation(location!!)
+        })
     }
 
     /**
      * Delete all locations.
      */
-    public void deleteAllLocations() {
-        locationRoomDAO.deleteAllLocations();
+    fun deleteAllLocations() {
+        locationRoomDAO.deleteAllLocations()
     }
 
     /**
@@ -57,15 +57,14 @@ public class LocationDAO {
      *
      * @return the locations
      */
-    public Observable<List<LocationEntity>> getLocations() {
-        return AppDatabaseHelper.createObservableIO(() -> {
+    val locations: Observable<List<LocationEntity>>
+        get() = createObservableIO(Callable<List<LocationEntity>> {
             try {
-                return locationRoomDAO.getLocations().blockingGet();
-            } catch (Exception e) {
-                return new ArrayList<>();
+                locationRoomDAO.getLocations().blockingGet()
+            } catch (e: Exception) {
+                ArrayList()
             }
-        });
-    }
+        })
 
     /**
      * Find location by name location entity.
@@ -73,14 +72,13 @@ public class LocationDAO {
      * @param name the name
      * @return the location entity
      */
-    public LocationEntity findLocationByName(String name) {
-        if (!StringUtils.notNull(name)) {
-            return null;
-        }
-        try {
-            return locationRoomDAO.findLocationByName(name).blockingGet();
-        } catch (Exception e) {
-            return new LocationEntity(name);
+    fun findLocationByName(name: String?): LocationEntity? {
+        return if (!notNull(name)) {
+            null
+        } else try {
+            locationRoomDAO.findLocationByName(name!!).blockingGet()
+        } catch (e: Exception) {
+            LocationEntity(name!!)
         }
     }
 
@@ -90,15 +88,13 @@ public class LocationDAO {
      * @param uuid the uuid
      * @return the location entity
      */
-    public LocationEntity findLocationByUUID(String uuid) {
-        if (!StringUtils.notNull(uuid)) {
-            return null;
-        }
-        try {
-            return locationRoomDAO.findLocationByUUID(uuid).blockingGet();
-        } catch (Exception e) {
-            return new LocationEntity("");
+    fun findLocationByUUID(uuid: String?): LocationEntity? {
+        return if (!notNull(uuid)) {
+            null
+        } else try {
+            locationRoomDAO.findLocationByUUID(uuid!!).blockingGet()
+        } catch (e: Exception) {
+            LocationEntity("")
         }
     }
-
 }

@@ -7,22 +7,18 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
+package com.openmrs.android_sdk.library.dao
 
-package com.openmrs.android_sdk.library.dao;
-
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.Query;
-
-import com.openmrs.android_sdk.library.models.EncounterType;
-
-import java.util.List;
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import com.openmrs.android_sdk.library.models.EncounterType
 
 /**
  * The interface Encounter type room dao.
  */
 @Dao
-public interface EncounterTypeRoomDAO {
+interface EncounterTypeRoomDAO {
     /**
      * Add encounter type long.
      *
@@ -30,13 +26,13 @@ public interface EncounterTypeRoomDAO {
      * @return the long
      */
     @Insert
-    long addEncounterType(EncounterType encounterType);
+    fun addEncounterType(encounterType: EncounterType): Long
 
     /**
      * Delete all encounter types.
      */
     @Query("DELETE FROM encounterType")
-    void deleteAllEncounterTypes();
+    fun deleteAllEncounterTypes()
 
     /**
      * Gets encounter type by form name.
@@ -45,7 +41,7 @@ public interface EncounterTypeRoomDAO {
      * @return the encounter type by form name
      */
     @Query("Select * FROM encounterType WHERE display = :formName")
-    EncounterType getEncounterTypeByFormName(String formName);
+    fun getEncounterTypeByFormName(formName: String): EncounterType
 
     /**
      * Gets all encounter types.
@@ -53,5 +49,5 @@ public interface EncounterTypeRoomDAO {
      * @return the all encounter types
      */
     @Query("SELECT * FROM encounterType")
-    List<EncounterType> getAllEncounterTypes();
+    fun getAllEncounterTypes(): List<EncounterType>
 }

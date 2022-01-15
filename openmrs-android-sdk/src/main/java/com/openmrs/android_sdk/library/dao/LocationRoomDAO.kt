@@ -11,24 +11,19 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package com.openmrs.android_sdk.library.dao
 
-package com.openmrs.android_sdk.library.dao;
-
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.Query;
-
-import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
-
-import java.util.List;
-
-import io.reactivex.Single;
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import com.openmrs.android_sdk.library.databases.entities.LocationEntity
+import io.reactivex.Single
 
 /**
  * The interface Location room dao.
  */
 @Dao
-public interface LocationRoomDAO {
+interface LocationRoomDAO {
     /**
      * Add location long.
      *
@@ -36,13 +31,13 @@ public interface LocationRoomDAO {
      * @return the long
      */
     @Insert
-    long addLocation(LocationEntity entity);
+    fun addLocation(entity: LocationEntity): Long
 
     /**
      * Delete all locations.
      */
     @Query("DELETE FROM locations")
-    void deleteAllLocations();
+    fun deleteAllLocations()
 
     /**
      * Gets locations.
@@ -50,7 +45,7 @@ public interface LocationRoomDAO {
      * @return the locations
      */
     @Query("SELECT * FROM locations")
-    Single<List<LocationEntity>> getLocations();
+    fun getLocations(): Single<List<LocationEntity>>
 
     /**
      * Find location by name single.
@@ -59,7 +54,7 @@ public interface LocationRoomDAO {
      * @return the single
      */
     @Query("SELECT * FROM locations WHERE display = :mName")
-    Single<LocationEntity> findLocationByName(String mName);
+    fun findLocationByName(mName: String): Single<LocationEntity>
 
     /**
      * Find location by uuid single.
@@ -68,5 +63,5 @@ public interface LocationRoomDAO {
      * @return the single
      */
     @Query("SELECT * FROM locations WHERE uuid = :uuid")
-    Single<LocationEntity> findLocationByUUID(String uuid);
+    fun findLocationByUUID(uuid: String): Single<LocationEntity>
 }

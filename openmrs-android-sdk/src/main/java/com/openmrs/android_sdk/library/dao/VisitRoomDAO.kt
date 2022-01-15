@@ -11,26 +11,17 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package com.openmrs.android_sdk.library.dao
 
-package com.openmrs.android_sdk.library.dao;
-
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-import androidx.room.Update;
-
-import com.openmrs.android_sdk.library.databases.entities.VisitEntity;
-
-import java.util.List;
-
-import io.reactivex.Single;
+import androidx.room.*
+import com.openmrs.android_sdk.library.databases.entities.VisitEntity
+import io.reactivex.Single
 
 /**
  * The interface Visit room dao.
  */
 @Dao
-public interface VisitRoomDAO {
+interface VisitRoomDAO {
     /**
      * Add or update long.
      *
@@ -38,7 +29,7 @@ public interface VisitRoomDAO {
      * @return the long
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long addOrUpdate(VisitEntity visitEntity);
+    fun addOrUpdate(visitEntity: VisitEntity): Long
 
     /**
      * Add visit long.
@@ -47,7 +38,7 @@ public interface VisitRoomDAO {
      * @return the long
      */
     @Insert
-    long addVisit(VisitEntity visitEntity);
+    fun addVisit(visitEntity: VisitEntity): Long
 
     /**
      * Update visit int.
@@ -56,7 +47,7 @@ public interface VisitRoomDAO {
      * @return the int
      */
     @Update
-    int updateVisit(VisitEntity visitEntity);
+    fun updateVisit(visitEntity: VisitEntity): Int
 
     /**
      * Gets active visits.
@@ -64,7 +55,7 @@ public interface VisitRoomDAO {
      * @return the active visits
      */
     @Query("SELECT * FROM visits WHERE stop_date IS NULL OR stop_date = '' ORDER BY start_date DESC")
-    Single<List<VisitEntity>> getActiveVisits();
+    fun getActiveVisits(): Single<List<VisitEntity>>
 
     /**
      * Gets visits by patient id.
@@ -73,7 +64,7 @@ public interface VisitRoomDAO {
      * @return the visits by patient id
      */
     @Query("SELECT * FROM visits WHERE patient_id = :patientID ORDER BY start_date DESC")
-    Single<List<VisitEntity>> getVisitsByPatientID(final Long patientID);
+    fun getVisitsByPatientID(patientID: Long): Single<List<VisitEntity>>
 
     /**
      * Gets active visit by patient id.
@@ -82,7 +73,7 @@ public interface VisitRoomDAO {
      * @return the active visit by patient id
      */
     @Query("SELECT * FROM visits WHERE patient_id = :patientId AND (stop_date IS NULL OR stop_date = '')  ORDER BY start_date DESC")
-    Single<VisitEntity> getActiveVisitByPatientId(Long patientId);
+    fun getActiveVisitByPatientId(patientId: Long): Single<VisitEntity>
 
     /**
      * Gets visit by id.
@@ -91,7 +82,7 @@ public interface VisitRoomDAO {
      * @return the visit by id
      */
     @Query("SELECT * FROM visits WHERE _id = :visitID")
-    Single<VisitEntity> getVisitByID(final Long visitID);
+    fun getVisitByID(visitID: Long): Single<VisitEntity>
 
     /**
      * Gets visits id by uuid.
@@ -100,7 +91,7 @@ public interface VisitRoomDAO {
      * @return the visits id by uuid
      */
     @Query("SELECT _id FROM visits WHERE uuid = :visitUUID")
-    long getVisitsIDByUUID(final String visitUUID);
+    fun getVisitsIDByUUID(visitUUID: String): Long
 
     /**
      * Gets visit by uuid.
@@ -109,7 +100,7 @@ public interface VisitRoomDAO {
      * @return the visit by uuid
      */
     @Query("SELECT * FROM visits WHERE uuid = :uuid")
-    Single<VisitEntity> getVisitByUuid(String uuid);
+    fun getVisitByUuid(uuid: String): Single<VisitEntity>
 
     /**
      * Delete visits by patient id int.
@@ -118,5 +109,5 @@ public interface VisitRoomDAO {
      * @return the int
      */
     @Query("DELETE FROM visits WHERE patient_id = :patientID")
-    int deleteVisitsByPatientId(long patientID);
+    fun deleteVisitsByPatientId(patientID: Long): Int
 }

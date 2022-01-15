@@ -11,33 +11,27 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package com.openmrs.android_sdk.library.dao
 
-package com.openmrs.android_sdk.library.dao;
-
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
-
-import com.openmrs.android_sdk.library.databases.entities.ConceptEntity;
-
-import java.util.List;
-
-import io.reactivex.Single;
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import com.openmrs.android_sdk.library.databases.entities.ConceptEntity
+import androidx.room.Update
+import io.reactivex.Single
 
 /**
  * The interface Concept room dao.
  */
 @Dao
-public interface ConceptRoomDAO {
-
+interface ConceptRoomDAO {
     /**
      * Add concept.
      *
      * @param conceptEntity the concept entity
      */
     @Insert
-    void addConcept(ConceptEntity conceptEntity);
+    fun addConcept(conceptEntity: ConceptEntity)
 
     /**
      * To update a concept, first get the concept using
@@ -46,7 +40,7 @@ public interface ConceptRoomDAO {
      * @param conceptEntity the concept entity
      */
     @Update
-    void updateConcept(ConceptEntity conceptEntity);
+    fun updateConcept(conceptEntity: ConceptEntity)
 
     /**
      * Find concepts by uuid single.
@@ -55,7 +49,7 @@ public interface ConceptRoomDAO {
      * @return the single
      */
     @Query("SELECT * FROM concepts WHERE uuid = :uuid")
-    Single<List<ConceptEntity>> findConceptsByUUID(String uuid);
+    fun findConceptsByUUID(uuid: String): Single<List<ConceptEntity>>
 
     /**
      * Find concepts by name single.
@@ -64,7 +58,7 @@ public interface ConceptRoomDAO {
      * @return the single
      */
     @Query("SELECT * FROM concepts WHERE display = :name")
-    Single<List<ConceptEntity>> findConceptsByName(String name);
+    fun findConceptsByName(name: String): Single<List<ConceptEntity>>
 
     /**
      * Gets concepts count.
@@ -72,5 +66,5 @@ public interface ConceptRoomDAO {
      * @return the concepts count
      */
     @Query("SELECT count(*) FROM concepts")
-    long getConceptsCount();
+    fun getConceptsCount(): Long
 }

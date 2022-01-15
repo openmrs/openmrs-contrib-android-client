@@ -70,7 +70,7 @@ object FormService {
     fun getFormResourceList(): List<FormResourceEntity> {
         var list : List<FormResourceEntity>  = AppDatabase.getDatabase(OpenmrsAndroid.getInstance()?.getApplicationContext())
                 .formResourceDAO()
-                .formResourceList
+                .getFormResourceList()
                 .blockingGet()
         return list
     }

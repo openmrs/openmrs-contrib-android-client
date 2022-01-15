@@ -11,29 +11,30 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package com.openmrs.android_sdk.library.dao
 
-package com.openmrs.android_sdk.library.dao;
-
-import com.openmrs.android_sdk.library.OpenmrsAndroid;
-import com.openmrs.android_sdk.library.databases.AppDatabase;
-import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
-import com.openmrs.android_sdk.library.databases.entities.PatientEntity;
-import com.openmrs.android_sdk.library.models.Patient;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
-import rx.Observable;
+import com.openmrs.android_sdk.library.databases.AppDatabaseHelper.convert
+import com.openmrs.android_sdk.library.databases.AppDatabaseHelper.createObservableIO
+import com.openmrs.android_sdk.library.dao.PatientRoomDAO
+import com.openmrs.android_sdk.library.databases.AppDatabase
+import com.openmrs.android_sdk.library.OpenmrsAndroid
+import com.openmrs.android_sdk.library.models.Patient
+import com.openmrs.android_sdk.library.databases.entities.PatientEntity
+import com.openmrs.android_sdk.library.databases.AppDatabaseHelper
+import rx.Observable
+import java.lang.Exception
+import java.util.*
+import java.util.concurrent.Callable
 
 /**
  * The type Patient dao.
  */
-public class PatientDAO {
+class PatientDAO {
     /**
      * The Patient room dao.
      */
-    PatientRoomDAO patientRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).patientRoomDAO();
+    private var patientRoomDAO: PatientRoomDAO =
+        AppDatabase.getDatabase(OpenmrsAndroid.getInstance()!!.applicationContext).patientRoomDAO()
 
     /**
      * Save patient observable.
@@ -41,9 +42,9 @@ public class PatientDAO {
      * @param patient the patient
      * @return the observable
      */
-    public Observable<Long> savePatient(Patient patient) {
-        PatientEntity entity = AppDatabaseHelper.convert(patient);
-        return AppDatabaseHelper.createObservableIO(() -> patientRoomDAO.addPatient(entity));
+    fun savePatient(patient: Patient?): Observable<Long> {
+        val entity = convert(patient!!)
+        return createObservableIO(Callable { patientRoomDAO.addPatient(entity) })
     }
 
     /**
@@ -53,10 +54,10 @@ public class PatientDAO {
      * @param patient   the patient
      * @return the boolean
      */
-    public boolean updatePatient(long patientID, Patient patient) {
-        PatientEntity entity = AppDatabaseHelper.convert(patient);
-        entity.setId(patientID);
-        return patientRoomDAO.updatePatient(entity) > 0;
+    fun updatePatient(patientID: Long, patient: Patient): Boolean {
+        val entity = convert(patient)
+        entity.id = patientID
+        return patientRoomDAO.updatePatient(entity) > 0
     }
 
     /**
@@ -64,8 +65,8 @@ public class PatientDAO {
      *
      * @param id the id
      */
-    public void deletePatient(long id) {
-        patientRoomDAO.deletePatient(id);
+    fun deletePatient(id: Long) {
+        patientRoomDAO.deletePatient(id)
     }
 
     /**
@@ -73,20 +74,20 @@ public class PatientDAO {
      *
      * @return the all patients
      */
-    public Observable<List<Patient>> getAllPatients() {
-        return AppDatabaseHelper.createObservableIO(() -> {
-            List<Patient> patients = new ArrayList<>();
-            List<PatientEntity> patientEntities = new ArrayList<>();
+    fun getAllPatients(): Observable<List<Patient>> {
+        return createObservableIO(Callable<List<Patient>> {
+            val patients: MutableList<Patient> = ArrayList()
+            var patientEntities: List<PatientEntity> = ArrayList()
             try {
-                patientEntities = patientRoomDAO.getAllPatients().blockingGet();
-                for (PatientEntity entity : patientEntities) {
-                    patients.add(AppDatabaseHelper.convert(entity));
+                patientEntities = patientRoomDAO.getAllPatients().blockingGet()
+                for (entity in patientEntities) {
+                    patients.add(convert(entity))
                 }
-            } catch (Exception e) {
-                return new ArrayList<>();
+            } catch (e: Exception) {
+                ArrayList<Patient>()
             }
-            return patients;
-        });
+            patients
+        })
     }
 
     /**
@@ -95,12 +96,12 @@ public class PatientDAO {
      * @param uuid the uuid
      * @return the boolean
      */
-    public boolean isUserAlreadySaved(String uuid) {
-        try {
-            PatientEntity patientEntity = patientRoomDAO.findPatientByUUID(uuid).blockingGet();
-            return uuid.equalsIgnoreCase(patientEntity.getUuid());
-        } catch (Exception e) {
-            return false;
+    fun isUserAlreadySaved(uuid: String): Boolean {
+        return try {
+            val patientEntity = patientRoomDAO.findPatientByUUID(uuid).blockingGet()
+            uuid.equals(patientEntity.uuid, ignoreCase = true)
+        } catch (e: Exception) {
+            false
         }
     }
 
@@ -110,8 +111,8 @@ public class PatientDAO {
      * @param uuid the uuid
      * @return the boolean
      */
-    public boolean userDoesNotExist(String uuid) {
-        return !isUserAlreadySaved(uuid);
+    fun userDoesNotExist(uuid: String): Boolean {
+        return !isUserAlreadySaved(uuid)
     }
 
     /**
@@ -120,12 +121,12 @@ public class PatientDAO {
      * @param uuid the uuid
      * @return the patient
      */
-    public Patient findPatientByUUID(String uuid) {
-        try {
-            PatientEntity patient = patientRoomDAO.findPatientByUUID(uuid).blockingGet();
-            return AppDatabaseHelper.convert(patient);
-        } catch (Exception e) {
-            return null;
+    fun findPatientByUUID(uuid: String?): Patient? {
+        return try {
+            val patient = patientRoomDAO.findPatientByUUID(uuid!!).blockingGet()
+            convert(patient)
+        } catch (e: Exception) {
+            null
         }
     }
 
@@ -134,17 +135,17 @@ public class PatientDAO {
      *
      * @return the un synced patients
      */
-    public List<Patient> getUnSyncedPatients() {
-        List<Patient> patientList = new LinkedList<>();
-        List<PatientEntity> unSyncedPatientList;
-        try {
-            unSyncedPatientList = patientRoomDAO.getUnsyncedPatients().blockingGet();
-            for (PatientEntity entity : unSyncedPatientList) {
-                patientList.add(AppDatabaseHelper.convert(entity));
+    fun getUnSyncedPatients(): List<Patient> {
+        val patientList: MutableList<Patient> = LinkedList()
+        val unSyncedPatientList: List<PatientEntity>
+        return try {
+            unSyncedPatientList = patientRoomDAO.getUnsyncedPatients().blockingGet()
+            for (entity in unSyncedPatientList) {
+                patientList.add(convert(entity))
             }
-            return patientList;
-        } catch (Exception e) {
-            return new ArrayList<>();
+            patientList
+        } catch (e: Exception) {
+            ArrayList()
         }
     }
 
@@ -154,12 +155,13 @@ public class PatientDAO {
      * @param id the id
      * @return the patient
      */
-    public Patient findPatientByID(String id) {
-        try {
-            PatientEntity patientEntity = patientRoomDAO.findPatientByID(id).blockingGet();
-            return AppDatabaseHelper.convert(patientEntity);
-        } catch (Exception e) {
-            return null;
+    fun findPatientByID(id: String?): Patient? {
+        return try {
+            val patientEntity = patientRoomDAO.findPatientByID(id!!).blockingGet()
+            convert(patientEntity)
+        } catch (e: Exception) {
+            return null
         }
     }
+
 }

@@ -7,24 +7,19 @@
  * Copyright (C) OpenMRS Inc. OpenMRS is a registered trademark and the OpenMRS
  * graphic logo is a trademark of OpenMRS Inc.
  */
+package com.openmrs.android_sdk.library.dao
 
-package com.openmrs.android_sdk.library.dao;
-
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
-
-import com.openmrs.android_sdk.library.models.Encountercreate;
-
-import java.util.List;
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import com.openmrs.android_sdk.library.models.Encountercreate
+import androidx.room.Update
 
 /**
  * The interface Encounter create room dao.
  */
 @Dao
-public interface EncounterCreateRoomDAO {
-
+interface EncounterCreateRoomDAO {
     /**
      * Add encounter created long.
      *
@@ -32,7 +27,7 @@ public interface EncounterCreateRoomDAO {
      * @return the long
      */
     @Insert
-    long addEncounterCreated(Encountercreate encountercreate);
+    fun addEncounterCreated(encountercreate: Encountercreate): Long
 
     /**
      * Update existing encounter int.
@@ -41,7 +36,7 @@ public interface EncounterCreateRoomDAO {
      * @return the int
      */
     @Update
-    int updateExistingEncounter(Encountercreate encountercreate);
+    fun updateExistingEncounter(encountercreate: Encountercreate): Int
 
     /**
      * Gets all created encounters.
@@ -49,7 +44,7 @@ public interface EncounterCreateRoomDAO {
      * @return the all created encounters
      */
     @Query("Select * FROM encountercreate")
-    List<Encountercreate> getAllCreatedEncounters();
+    fun getAllCreatedEncounters(): List<Encountercreate>
 
     /**
      * Gets created encounters by id.
@@ -58,5 +53,5 @@ public interface EncounterCreateRoomDAO {
      * @return the created encounters by id
      */
     @Query("Select * FROM encountercreate WHERE _id =:id")
-    Encountercreate getCreatedEncountersByID(long id);
+    fun getCreatedEncountersByID(id: Long): Encountercreate
 }

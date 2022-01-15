@@ -42,13 +42,13 @@ class ActiveVisitsRecyclerViewAdapter(private val mContext: Context, private val
         val patient = PatientDAO().findPatientByID(visit?.patient?.id.toString())
         visitViewHolder.mVisitPlace.text = mContext.getString(R.string.visit_in, visit?.location?.display)
         if (null != visit?.patient?.id) {
-            val display = "#" + patient.identifier.identifier
+            val display = "#" + patient?.identifier?.identifier
             visitViewHolder.mIdentifier.text = display
         }
-        if (null != patient.name) {
+        if (null != patient?.name) {
             visitViewHolder.mDisplayName.text = patient.name.nameString
         }
-        if (null != patient.gender) {
+        if (null != patient?.gender) {
             if (patient.photo != null) {
                 visitViewHolder.mGender.setImageBitmap(patient.photo)
             } else {

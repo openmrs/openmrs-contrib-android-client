@@ -47,7 +47,7 @@ class FormEntryPatientListPresenter(private var mFormEntryPatientListView: FormE
      * It handles search events and replaces View's data to display
      */
     override fun updatePatientsList() {
-        addSubscription(patientDAO.allPatients
+        addSubscription(patientDAO.getAllPatients()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { patientList: List<Patient?> ->
                     val noStringId = R.string.last_vitals_none_label

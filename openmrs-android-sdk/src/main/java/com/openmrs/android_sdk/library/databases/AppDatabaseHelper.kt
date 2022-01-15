@@ -149,7 +149,7 @@ object AppDatabaseHelper {
         visit.startDatetime = visitEntity.startDate
         visit.stopDatetime = visitEntity.stopDate
         visit.encounters = EncounterDAO().findEncountersByVisitID(visitEntity.id)
-        visit.patient = PatientDAO().findPatientByID(visitEntity.patientKeyID.toString())
+        visit.patient = PatientDAO().findPatientByID(visitEntity.patientKeyID.toString())!!
         return visit
     }
 

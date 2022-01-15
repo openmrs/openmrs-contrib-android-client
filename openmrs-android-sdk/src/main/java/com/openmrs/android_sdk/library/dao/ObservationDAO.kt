@@ -11,26 +11,25 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package com.openmrs.android_sdk.library.dao
 
-package com.openmrs.android_sdk.library.dao;
-
-import com.openmrs.android_sdk.library.OpenmrsAndroid;
-import com.openmrs.android_sdk.library.databases.AppDatabase;
-import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
-import com.openmrs.android_sdk.library.databases.entities.ObservationEntity;
-import com.openmrs.android_sdk.library.models.Observation;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.openmrs.android_sdk.library.OpenmrsAndroid
+import com.openmrs.android_sdk.library.databases.AppDatabase
+import com.openmrs.android_sdk.library.databases.AppDatabaseHelper
+import com.openmrs.android_sdk.library.databases.entities.ObservationEntity
+import com.openmrs.android_sdk.library.models.Observation
+import java.util.*
 
 /**
  * The type Observation dao.
  */
-public class ObservationDAO {
+class ObservationDAO {
     /**
      * The Observation room dao.
      */
-    ObservationRoomDAO observationRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).observationRoomDAO();
+    private var observationRoomDAO: ObservationRoomDAO = AppDatabase.getDatabase(
+        OpenmrsAndroid.getInstance()!!.applicationContext
+    ).observationRoomDAO()
 
     /**
      * Find observation by encounter id list.
@@ -38,15 +37,16 @@ public class ObservationDAO {
      * @param encounterID the encounter id
      * @return the list
      */
-    public List<Observation> findObservationByEncounterID(Long encounterID) {
-        List<Observation> observationList;
-        List<ObservationEntity> observationEntityList;
-        try {
-            observationEntityList = observationRoomDAO.findObservationByEncounterID(encounterID).blockingGet();
-            observationList = AppDatabaseHelper.convert(observationEntityList);
-            return observationList;
-        } catch (Exception e) {
-            return new ArrayList<>();
+    fun findObservationByEncounterID(encounterID: Long?): List<Observation> {
+        val observationList: List<Observation>
+        val observationEntityList: List<ObservationEntity>
+        return try {
+            observationEntityList = observationRoomDAO.findObservationByEncounterID(encounterID)
+                .blockingGet()
+            observationList = AppDatabaseHelper.convert(observationEntityList)
+            observationList
+        } catch (e: Exception) {
+            ArrayList()
         }
     }
 }

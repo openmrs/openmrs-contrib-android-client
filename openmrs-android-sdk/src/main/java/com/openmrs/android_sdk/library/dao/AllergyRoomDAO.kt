@@ -11,24 +11,19 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+package com.openmrs.android_sdk.library.dao
 
-package com.openmrs.android_sdk.library.dao;
-
-import androidx.room.Dao;
-import androidx.room.Insert;
-import androidx.room.Query;
-import androidx.room.Update;
-
-import com.openmrs.android_sdk.library.databases.entities.AllergyEntity;
-
-import java.util.List;
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import com.openmrs.android_sdk.library.databases.entities.AllergyEntity
+import androidx.room.Update
 
 /**
  * The interface Allergy room dao.
  */
 @Dao
-public interface AllergyRoomDAO {
-
+interface AllergyRoomDAO {
     /**
      * Save allergy long.
      *
@@ -36,7 +31,7 @@ public interface AllergyRoomDAO {
      * @return the long
      */
     @Insert
-    long saveAllergy(AllergyEntity allergyEntity);
+    fun saveAllergy(allergyEntity: AllergyEntity): Long
 
     /**
      * Update allergy int.
@@ -45,7 +40,7 @@ public interface AllergyRoomDAO {
      * @return the int
      */
     @Update
-    int updateAllergy(AllergyEntity allergyEntity);
+    fun updateAllergy(allergyEntity: AllergyEntity): Int
 
     /**
      * Gets all allergies by patient id.
@@ -54,7 +49,7 @@ public interface AllergyRoomDAO {
      * @return the all allergies by patient id
      */
     @Query("SELECT * FROM allergy WHERE patientId = :patientId")
-    List<AllergyEntity> getAllAllergiesByPatientID(String patientId);
+    fun getAllAllergiesByPatientID(patientId: String): List<AllergyEntity>
 
     /**
      * Gets allergy by uuid.
@@ -63,7 +58,7 @@ public interface AllergyRoomDAO {
      * @return the allergy by uuid
      */
     @Query("SELECT * FROM allergy WHERE uuid = :uuid")
-    AllergyEntity getAllergyByUUID(String uuid);
+    fun getAllergyByUUID(uuid: String): AllergyEntity
 
     /**
      * Delete all patient allergy.
@@ -71,7 +66,7 @@ public interface AllergyRoomDAO {
      * @param patientId the patient id
      */
     @Query("DELETE FROM allergy WHERE patientId = :patientId")
-    void deleteAllPatientAllergy(String patientId);
+    fun deleteAllPatientAllergy(patientId: String)
 
     /**
      * Delete allergy by uuid.
@@ -79,5 +74,5 @@ public interface AllergyRoomDAO {
      * @param uuid the uuid
      */
     @Query("DELETE FROM allergy WHERE uuid = :uuid")
-    void deleteAllergyByUUID(String uuid);
+    fun deleteAllergyByUUID(uuid: String)
 }

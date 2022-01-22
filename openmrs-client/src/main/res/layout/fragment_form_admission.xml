@@ -1,125 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="20dp"
-    android:layout_marginVertical="10dp"
-    android:orientation="vertical">
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    tools:context=".activities.formadmission.FormAdmissionFragment">
 
-    <TextView
-        android:id="@+id/admission_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:fontFamily="@font/roboto_medium"
-        android:paddingVertical="8dp"
-        android:text="@string/admission_date"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/admission_date_header"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="8dp"
-        android:layout_toEndOf="@id/admission_date"
-        android:layout_toRightOf="@id/admission_date"
-        android:fontFamily="@font/roboto_medium"
-        android:padding="8dp"
-        android:textSize="16sp" />
+        android:layout_marginHorizontal="20dp"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/admitted_by_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/admission_date_header"
-        android:fontFamily="@font/roboto_medium"
-        android:paddingVertical="8dp"
-        android:text="@string/admission_admitted_by"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/admission_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingVertical="8dp"
+            android:text="@string/admission_date"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp" />
 
-    <Spinner
-        android:id="@+id/admitted_by_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@id/admitted_by_header"
-        android:layout_marginVertical="10dp"
-        android:background="@drawable/admission_spinner" />
+        <TextView
+            android:id="@+id/admission_date_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="8dp"
+            android:layout_toEndOf="@id/admission_date"
+            android:layout_toRightOf="@id/admission_date"
+            android:fontFamily="@font/roboto_medium"
+            android:padding="8dp"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/encounter_role_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/admitted_by_spinner"
-        android:fontFamily="@font/roboto_medium"
-        android:paddingVertical="8dp"
-        android:text="@string/admission_provider_role"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/admitted_by_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/admission_date_header"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingVertical="8dp"
+            android:text="@string/admission_admitted_by"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp" />
 
-    <Spinner
-        android:id="@+id/encounter_role_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@id/encounter_role_header"
-        android:layout_marginVertical="10dp"
-        android:background="@drawable/admission_spinner" />
+        <Spinner
+            android:id="@+id/admitted_by_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/admitted_by_header"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/admission_spinner" />
 
-    <TextView
-        android:id="@+id/admitted_to_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/encounter_role_spinner"
-        android:fontFamily="@font/roboto_medium"
-        android:paddingVertical="8dp"
-        android:text="@string/admission_admitted_to"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/encounter_role_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/admitted_by_spinner"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingVertical="8dp"
+            android:text="@string/admission_provider_role"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp" />
 
-    <Spinner
-        android:id="@+id/admitted_to_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@id/admitted_to_header"
-        android:layout_marginVertical="10dp"
-        android:background="@drawable/admission_spinner" />
+        <Spinner
+            android:id="@+id/encounter_role_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/encounter_role_header"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/admission_spinner" />
 
-    <TextView
-        android:id="@+id/submit_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/admitted_to_spinner"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
-        android:background="@color/save_button"
-        android:fontFamily="@font/montserrat"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="10dp"
-        android:text="@string/action_submit"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/admitted_to_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/encounter_role_spinner"
+            android:fontFamily="@font/roboto_medium"
+            android:paddingVertical="8dp"
+            android:text="@string/admission_admitted_to"
+            android:textColor="?android:attr/textColorPrimary"
+            android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/cancel_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/admitted_to_spinner"
-        android:layout_marginTop="30dp"
-        android:layout_toStartOf="@id/submit_button"
-        android:layout_toLeftOf="@id/submit_button"
-        android:background="@color/cancel_button"
-        android:fontFamily="@font/montserrat"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="10dp"
-        android:text="@string/places_cancel"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
+        <Spinner
+            android:id="@+id/admitted_to_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/admitted_to_header"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/admission_spinner" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/admitted_to_spinner"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/save_button"
+            android:fontFamily="@font/montserrat"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:text="@string/action_submit"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/admitted_to_spinner"
+            android:layout_marginTop="30dp"
+            android:layout_toStartOf="@id/submit_button"
+            android:layout_toLeftOf="@id/submit_button"
+            android:background="@color/cancel_button"
+            android:fontFamily="@font/montserrat"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:text="@string/places_cancel"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+</ScrollView>

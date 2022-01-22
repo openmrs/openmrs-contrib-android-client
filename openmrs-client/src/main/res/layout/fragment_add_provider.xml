@@ -12,151 +12,152 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/first_name_text_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="25dp"
-        android:layout_marginTop="20dp"
-        app:boxStrokeColor="?android:attr/textColorPrimary"
-        app:hintTextColor="?android:attr/textColorPrimary">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/first_name_edit_text"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:focusable="true"
-            android:fontFamily="@font/montserrat"
-            android:hint="@string/first_name_hint"
-            android:inputType="textCapWords"
-            android:maxLines="1"
-            android:textColorHint="?android:attr/textColorPrimary" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/last_name_text_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="25dp"
-        android:translationY="10dp"
-        app:boxStrokeColor="?android:attr/textColorPrimary"
-        app:hintTextColor="?android:attr/textColorPrimary"
-        app:layout_anchor="@+id/first_name_text_layout"
-        app:layout_anchorGravity="bottom">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/last_name_edit_text"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:focusable="true"
-            android:fontFamily="@font/montserrat"
-            android:hint="@string/last_name_hint"
-            android:inputType="textCapWords"
-            android:maxLines="1"
-            android:textColorHint="@color/dark_grey_8x" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/identifier_text_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="25dp"
-        android:translationY="10dp"
-        app:boxStrokeColor="?android:attr/textColorPrimary"
-        app:hintTextColor="?android:attr/textColorPrimary"
-        app:layout_anchor="@+id/last_name_text_layout"
-        app:layout_anchorGravity="bottom">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/identifier_edit_text"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:focusable="true"
-            android:fontFamily="@font/montserrat"
-            android:hint="@string/identifier_hint"
-            android:inputType="textCapWords"
-            android:maxLines="1"
-            android:textColorHint="@color/dark_grey_8x" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <LinearLayout
-        android:id="@+id/linear_layout_notice"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="25dp"
-        android:orientation="horizontal"
-        android:translationY="10dp"
-        app:layout_anchor="@+id/identifier_text_layout"
-        app:layout_anchorGravity="bottom"
-        tools:ignore="UseCompoundDrawables">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:contentDescription="@string/warning_dialog_title"
-            app:srcCompat="@drawable/error_symbol" />
-
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/first_name_text_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/identifier_description"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textStyle="italic" />
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="20dp"
+            app:boxStrokeColor="?android:attr/textColorPrimary"
+            app:hintTextColor="?android:attr/textColorPrimary"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/first_name_edit_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:fontFamily="@font/montserrat"
+                android:hint="@string/first_name_hint"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:textColorHint="?android:attr/textColorPrimary" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
-        android:id="@+id/linear_layout_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="25dp"
-        android:orientation="horizontal"
-        android:translationY="50dp"
-        app:layout_anchor="@+id/linear_layout_notice"
-        app:layout_anchorGravity="bottom|end">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/last_name_text_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="10dp"
+            app:boxStrokeColor="?android:attr/textColorPrimary"
+            app:hintTextColor="?android:attr/textColorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/first_name_text_layout">
 
-        <TextView
-            android:id="@+id/submit_button"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/last_name_edit_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:fontFamily="@font/montserrat"
+                android:hint="@string/last_name_hint"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:textColorHint="@color/dark_grey_8x" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/identifier_text_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="10dp"
+            app:boxStrokeColor="?android:attr/textColorPrimary"
+            app:hintTextColor="?android:attr/textColorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/last_name_text_layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/identifier_edit_text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:fontFamily="@font/montserrat"
+                android:hint="@string/identifier_hint"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:textColorHint="@color/dark_grey_8x" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_notice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/identifier_text_layout"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:contentDescription="@string/warning_dialog_title"
+                app:srcCompat="@drawable/error_symbol" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/identifier_description"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_layout_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/save_button"
-            android:fontFamily="@font/montserrat"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp"
-            android:text="@string/action_submit"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linear_layout_notice">
 
-        <TextView
-            android:id="@+id/cancel_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginLeft="12dp"
-            android:background="@color/cancel_button"
-            android:fontFamily="@font/montserrat"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp"
-            android:text="@string/places_cancel"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/submit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/save_button"
+                android:fontFamily="@font/montserrat"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp"
+                android:text="@string/action_submit"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/cancel_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginLeft="12dp"
+                android:background="@color/cancel_button"
+                android:fontFamily="@font/montserrat"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="10dp"
+                android:text="@string/places_cancel"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -23,7 +23,7 @@ import java.lang.reflect.Modifier
 object AllergyReactionConverter : Serializable {
     @JvmStatic
     @TypeConverter
-    fun fromString(value: String?): List<AllergyReaction> {
+    fun fromString(value: String?): List<AllergyReaction>? {
         val listType = object : TypeToken<List<AllergyReaction?>?>() {}.type
         val builder = GsonBuilder()
         builder.excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
@@ -33,7 +33,7 @@ object AllergyReactionConverter : Serializable {
 
     @JvmStatic
     @TypeConverter
-    fun listToString(list: List<AllergyReaction?>?): String {
+    fun listToString(list: List<AllergyReaction?>?): String? {
         val builder = GsonBuilder()
         builder.excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
         val gson = builder.create()

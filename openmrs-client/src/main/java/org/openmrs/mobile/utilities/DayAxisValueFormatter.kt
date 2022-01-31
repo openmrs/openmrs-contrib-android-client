@@ -13,15 +13,18 @@
  */
 package org.openmrs.mobile.utilities
 
+import android.annotation.SuppressLint
 import com.openmrs.android_sdk.utilities.DateUtils.getDateFromString
 import com.github.mikephil.charting.components.AxisBase
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import kotlin.collections.ArrayList
 import kotlin.math.abs
 
-class DayAxisValueFormatter(private val dates: ArrayList<String>) : ValueFormatter(), IAxisValueFormatter {
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+class DayAxisValueFormatter(private val dates: ArrayList<String>) : ValueFormatter() {
+    @SuppressLint("SimpleDateFormat")
     override fun getFormattedValue(value: Float, axis: AxisBase): String {
         val intValue = value.toInt()
         val vitalDate = getDateFromString(dates[abs(intValue)])

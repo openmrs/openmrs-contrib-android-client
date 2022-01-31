@@ -11,6 +11,8 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+@file:Suppress("DEPRECATION")
+
 package com.openmrs.android_sdk.utilities
 
 import android.content.Context

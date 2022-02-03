@@ -17,9 +17,11 @@ package com.openmrs.android_sdk.utilities
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
+
 import com.openmrs.android_sdk.library.OpenmrsAndroid
 
+@Suppress("DEPRECATION")
 object NetworkUtils {
     @JvmStatic
     fun hasNetwork(): Boolean {
@@ -30,9 +32,9 @@ object NetworkUtils {
 
     @JvmStatic
     fun isOnline(): Boolean {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(OpenmrsAndroid.getInstance())
-        val toggle = prefs.getBoolean("sync", true)
-        return if (toggle) {
+        val prefs = OpenmrsAndroid.getInstance()?.let { PreferenceManager.getDefaultSharedPreferences(it) }
+        val toggle = prefs?.getBoolean("sync", true)
+        return if (toggle == true) {
             val connectivityManager = OpenmrsAndroid.getInstance()?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val activeNetworkInfo = connectivityManager.activeNetworkInfo
             val isConnected = activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting

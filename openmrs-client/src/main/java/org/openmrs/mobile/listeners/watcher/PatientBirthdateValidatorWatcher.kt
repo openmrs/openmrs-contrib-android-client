@@ -19,6 +19,7 @@ import android.widget.EditText
 import com.openmrs.android_sdk.utilities.ApplicationConstants
 import com.openmrs.android_sdk.utilities.StringUtils.notEmpty
 
+@Suppress("UNREACHABLE_CODE")
 class PatientBirthdateValidatorWatcher(private val eddob: EditText,
                                        private val edmonth: EditText,
                                        private val edyr: EditText) : TextWatcher {

@@ -85,9 +85,6 @@
         <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="BackgroundThemeEEE">
-        <item name="android:background">#EEE</item>
-    </style>
 
     <!--Showcase view styles -->
     <style name="CustomShowcaseTheme" parent="ShowcaseView">

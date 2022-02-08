@@ -21,4 +21,7 @@
     </style>
     <style name="SimilarPatients.DialogTheme" parent="android:Theme.Dialog">
     </style>
+    <style name="BackgroundTheme">
+        <item name="android:background">#FFFFFF</item>
+    </style>
 </resources>

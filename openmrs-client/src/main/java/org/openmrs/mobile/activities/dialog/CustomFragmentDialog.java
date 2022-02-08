@@ -117,7 +117,7 @@ public class CustomFragmentDialog extends DialogFragment {
         } else if (mCustomDialogBundle.hasPatientList()) {
             this.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.SimilarPatients_DialogTheme);
         } else {
-            this.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.DialogTheme);
+            this.setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_DeviceDefault_Light_Dialog_Alert);
         }
         this.setRetainInstance(true);
     }

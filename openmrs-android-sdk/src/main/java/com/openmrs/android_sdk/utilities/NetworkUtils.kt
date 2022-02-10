@@ -11,7 +11,6 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-
 package com.openmrs.android_sdk.utilities
 
 import android.content.Context
@@ -29,9 +28,9 @@ object NetworkUtils {
 
     @JvmStatic
     fun isOnline(): Boolean {
-        val prefs = OpenmrsAndroid.getInstance()?.let { android.preference.PreferenceManager.getDefaultSharedPreferences(it) }
-        val toggle = prefs?.getBoolean("sync", true)
-        return if (toggle == true) {
+        val prefs = android.preference.PreferenceManager.getDefaultSharedPreferences(OpenmrsAndroid.getInstance())
+        val toggle = prefs.getBoolean("sync", true)
+        return if (toggle) {
             val connectivityManager = OpenmrsAndroid.getInstance()?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val activeNetworkInfo = connectivityManager.activeNetworkInfo
             val isConnected = activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting

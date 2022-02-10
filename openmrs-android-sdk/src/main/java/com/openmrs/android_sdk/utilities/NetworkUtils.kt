@@ -11,14 +11,11 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-@file:Suppress("DEPRECATION")
 
 package com.openmrs.android_sdk.utilities
 
 import android.content.Context
 import android.net.ConnectivityManager
-import androidx.preference.PreferenceManager
-
 import com.openmrs.android_sdk.library.OpenmrsAndroid
 
 @Suppress("DEPRECATION")
@@ -32,7 +29,7 @@ object NetworkUtils {
 
     @JvmStatic
     fun isOnline(): Boolean {
-        val prefs = OpenmrsAndroid.getInstance()?.let { PreferenceManager.getDefaultSharedPreferences(it) }
+        val prefs = OpenmrsAndroid.getInstance()?.let { android.preference.PreferenceManager.getDefaultSharedPreferences(it) }
         val toggle = prefs?.getBoolean("sync", true)
         return if (toggle == true) {
             val connectivityManager = OpenmrsAndroid.getInstance()?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

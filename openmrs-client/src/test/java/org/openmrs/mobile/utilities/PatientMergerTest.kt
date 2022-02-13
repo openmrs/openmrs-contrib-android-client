@@ -11,7 +11,7 @@ import org.openmrs.mobile.test.ACUnitTestBase
 class PatientMergerTest : ACUnitTestBase() {
 
     @Test
-    fun `non null fields remain same after merge`() {
+    fun nonNullFields_remainSame() {
         val oldPatient = createPatientObject(1)
         val newPatient = createPatientObject(2)
 
@@ -26,7 +26,7 @@ class PatientMergerTest : ACUnitTestBase() {
     }
 
     @Test
-    fun `non null fields remain same and null fields changes after merge`() {
+    fun nonNullFields_remainSame_nullFields_changes() {
         val oldPatient = createPatientWithNullFields(1)
         val newPatient = createPatientObject(2)
 

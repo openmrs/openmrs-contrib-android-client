@@ -180,9 +180,9 @@ public class CustomFragmentDialog extends DialogFragment {
                     dismiss();
                 } else {
                     ((LoginFragment) getActivity()
-                            .getSupportFragmentManager()
-                            .findFragmentById(R.id.loginContentFrame))
-                            .hideURLDialog();
+                        .getSupportFragmentManager()
+                        .findFragmentById(R.id.loginContentFrame))
+                        .hideURLDialog();
                     dismiss();
                 }
             }
@@ -194,7 +194,7 @@ public class CustomFragmentDialog extends DialogFragment {
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         int marginWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, TYPED_DIMENSION_VALUE,
-                OpenMRS.getInstance().getResources().getDisplayMetrics());
+            OpenMRS.getInstance().getResources().getDisplayMetrics());
 
         DisplayMetrics display = this.getResources().getDisplayMetrics();
         int width = display.widthPixels;
@@ -209,7 +209,7 @@ public class CustomFragmentDialog extends DialogFragment {
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         int marginWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, TYPED_DIMENSION_VALUE,
-                OpenMRS.getInstance().getResources().getDisplayMetrics());
+            OpenMRS.getInstance().getResources().getDisplayMetrics());
 
         DisplayMetrics display = this.getResources().getDisplayMetrics();
         int width = display.widthPixels;
@@ -271,7 +271,7 @@ public class CustomFragmentDialog extends DialogFragment {
         LinearLayout field = (LinearLayout) mInflater.inflate(R.layout.openmrs_single_choice_list_view, null);
         locationListView = field.findViewById(R.id.singleChoiceListView);
         locationListView.setAdapter(new ArrayAdapter<>(getActivity(),
-                R.layout.row_single_checked_layout, locationList));
+            R.layout.row_single_checked_layout, locationList));
         locationListView.setItemChecked(locationList.indexOf(OpenmrsAndroid.getLocation()), true);
         mFieldsLayout.addView(field);
     }
@@ -380,16 +380,16 @@ public class CustomFragmentDialog extends DialogFragment {
             switch (action) {
                 case DISMISS_URL_DIALOG:
                     ((LoginFragment) getActivity()
-                            .getSupportFragmentManager()
-                            .findFragmentById(R.id.loginContentFrame))
-                            .hideURLDialog();
+                        .getSupportFragmentManager()
+                        .findFragmentById(R.id.loginContentFrame))
+                        .hideURLDialog();
                     dismiss();
                     break;
                 case LOGIN:
                     ((LoginFragment) getActivity()
-                            .getSupportFragmentManager()
-                            .findFragmentById(R.id.loginContentFrame))
-                            .login(true);
+                        .getSupportFragmentManager()
+                        .findFragmentById(R.id.loginContentFrame))
+                        .login(true);
                     dismiss();
                     break;
                 case DISMISS:

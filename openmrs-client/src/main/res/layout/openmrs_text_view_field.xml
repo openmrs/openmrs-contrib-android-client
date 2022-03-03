@@ -18,11 +18,13 @@
     android:background="@color/black_dark_mode"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         style="@style/BackgroundTheme"
         >
+
         <TextView
             android:id="@+id/openmrsTextView"
             android:layout_width="fill_parent"

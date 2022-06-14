@@ -50,3 +50,5 @@ versions.navfragment = '2.3.0'
 versions.navui = '2.3.0'
 
 versions.coreTesting = '1.1.1'
+
+versions.hilt = '2.36'

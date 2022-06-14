@@ -3,6 +3,8 @@ plugins {
     id 'kotlin-android'
     id 'maven-publish'
     id 'org.jetbrains.dokka'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -46,7 +48,7 @@ android {
         implementation 'android.arch.persistence.room:rxjava2:1.1.1'
 
         //no inspection
-        annotationProcessor 'androidx.room:room-compiler:2.1.0-alpha04'
+        kapt 'androidx.room:room-compiler:2.1.0-alpha04'
 
         // joda time
         implementation 'joda-time:joda-time:2.10.6'
@@ -80,7 +82,18 @@ android {
         debugImplementation "com.github.chuckerteam.chucker:library:3.4.0"
         releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.4.0"
 
+        // Hilt Dependency Injection
+        implementation 'com.google.dagger:hilt-android:2.36'
+        kapt 'com.google.dagger:hilt-compiler:2.36'
+        // Hilt local unit testing
+        testImplementation 'com.google.dagger:hilt-android-testing:2.36'
+        kaptTest 'com.google.dagger:hilt-compiler:2.36'
     }
+
+    kapt {
+        correctErrorTypes true
+    }
+
     afterEvaluate {
         publishing {
             publications {

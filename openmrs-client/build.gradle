@@ -2,7 +2,7 @@ buildscript {
 
     repositories {
         jcenter()
-        maven {url 'https://oss.sonatype.org/content/repositories/snapshots'}
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
     }
 
     dependencies {
@@ -15,6 +15,8 @@ plugins {
     id 'com.github.triplet.play' version '2.2.1'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 
     // TODO AC-861
     //id 'jacoco-android'
@@ -52,7 +54,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+                arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
         manifestPlaceholders = [
@@ -103,6 +105,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
     testOptions {
         unitTests {
             returnDefaultValues = true
@@ -136,6 +142,7 @@ dependencies {
     implementation "androidx.cardview:cardview:${versions.supportVersion}"
     implementation "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.fragment:fragment-ktx:${versions.fragment}"
 
     // Networking and Processing
     implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
@@ -177,7 +184,7 @@ dependencies {
 
     // Third Party Performance Libraries
     implementation "org.permissionsdispatcher:permissionsdispatcher:${versions.permissionsdispatcher}"
-    annotationProcessor "org.permissionsdispatcher:permissionsdispatcher-processor:${versions.permissionsdispatcher}"
+    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:${versions.permissionsdispatcher}"
     implementation "androidx.multidex:multidex:${versions.multidex}"
     implementation "joda-time:joda-time:${versions.jodaTime}"
     implementation "net.sf.kxml:kxml2:${versions.kxml2}"
@@ -190,9 +197,17 @@ dependencies {
     // Google place api
     implementation "com.google.android.libraries.places:places:${versions.placesAPI}"
 
+    // Hilt Dependency Injection
+    implementation "com.google.dagger:hilt-android:${versions.hilt}"
+    kapt "com.google.dagger:hilt-compiler:${versions.hilt}"
+
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle_version}")
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle_version}")
+
     // Test Implementations
     androidTestImplementation(
-            'junit:junit:4.12',
             'androidx.test.ext:junit:1.1.1',
             'androidx.test.espresso:espresso-core:3.1.0',
             'androidx.test:rules:1.1.0-alpha4',
@@ -207,10 +222,18 @@ dependencies {
             'org.mockito:mockito-core:2.8.9',
             'org.mockito:mockito-inline:2.13.0',
             'junit:junit:4.12',
+            "org.junit.jupiter:junit-jupiter:5.8.2",
             'org.powermock:powermock-api-mockito2:2.0.2',
-            'org.powermock:powermock-module-junit4:2.0.2'
+            'org.powermock:powermock-module-junit4:2.0.2',
+            "com.google.dagger:hilt-android-testing:${versions.hilt}",
+            "androidx.arch.core:core-testing:${versions.arch_version}"
     )
     testImplementation "android.arch.core:core-testing:${versions.coreTesting}"
+    kaptTest "com.google.dagger:hilt-compiler:${versions.hilt}"
+}
+
+kapt {
+    correctErrorTypes true
 }
 
 play {

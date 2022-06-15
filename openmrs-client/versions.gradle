@@ -1,6 +1,6 @@
 ext.versions = [:]
 
-versions.compileSdk = 29
+versions.compileSdk = 31
 versions.minSdk = 17
 versions.targetSdk = 29
 versions.appVersion = "3.0.0"
@@ -11,6 +11,7 @@ versions.guava = '29.0-android'
 versions.supportVersion = '1.0.0'
 versions.recyclerView = '1.2.0-alpha03'
 versions.constraintlayout = '1.1.3'
+versions.fragment = "1.3.0"
 
 versions.retrofit = '2.3.0'
 versions.retrofitConverter = '2.1.0'
@@ -52,3 +53,6 @@ versions.navui = '2.3.0'
 versions.coreTesting = '1.1.1'
 
 versions.hilt = '2.36'
+
+versions.lifecycle_version = "2.1.0"
+versions.arch_version = "2.1.0"

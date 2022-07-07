@@ -11,9 +11,11 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
+@file:Suppress("DEPRECATION")
+
 package org.openmrs.mobile.activities.dashboard
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.SparseArray
@@ -31,7 +33,6 @@ import com.github.amlcurran.showcaseview.ShowcaseView
 import com.github.amlcurran.showcaseview.targets.Target
 import com.github.amlcurran.showcaseview.targets.ViewTarget
 import org.openmrs.mobile.R
-import org.openmrs.mobile.activities.ACBaseActivity
 import org.openmrs.mobile.activities.ACBaseFragment
 import org.openmrs.mobile.databinding.FragmentDashboardBinding
 import org.openmrs.mobile.utilities.ThemeUtils
@@ -52,6 +53,7 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
     private var mProviderManagementView: RelativeLayout? = null
     private var mBitmapCache: SparseArray<Bitmap?>? = null
 
+    @SuppressLint("CommitPrefEdits")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -109,14 +111,12 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
 
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         val root = binding.root
-        if (root != null) {
-            initFragmentFields(binding)
-            setListeners()
-        }
+        initFragmentFields(binding)
+        setListeners()
         return root
     }
 
@@ -191,14 +191,6 @@ class DashboardFragment : ACBaseFragment<DashboardContract.Presenter>(), Dashboa
             mBitmapCache!!.put(key, ImageUtils.decodeBitmapFromResource(resources, key,
                     layoutParams.width, layoutParams.height))
         }
-    }
-
-    /**
-     * Starts new Activity depending on which ImageView triggered it
-     */
-    private fun startNewActivity(clazz: Class<out ACBaseActivity?>) {
-        val intent = Intent(activity, clazz)
-        startActivity(intent)
     }
 
     override fun onClick(v: View) {

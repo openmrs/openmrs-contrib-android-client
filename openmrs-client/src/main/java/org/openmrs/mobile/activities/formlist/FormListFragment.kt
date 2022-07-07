@@ -13,6 +13,7 @@
  */
 package org.openmrs.mobile.activities.formlist
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
@@ -45,21 +46,27 @@ import retrofit2.Response
 import java.io.IOException
 import java.nio.charset.StandardCharsets
 
-public final class FormListFragment : ACBaseFragment<FormListContract.Presenter?>(), FormListContract.View {
+class FormListFragment : ACBaseFragment<FormListContract.Presenter?>(), FormListContract.View {
     private var _binding: FragmentFormListBinding? = null
     private val binding get() = _binding!!
     private var snackbar: Snackbar? = null
 
     @Nullable
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentFormListBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        binding.formlist.setOnItemClickListener({ parent: AdapterView<*>?, view: View, position: Int, id: Long -> mPresenter!!.listItemClicked(position, (view as TextView).text.toString()) })
+        binding.formlist.setOnItemClickListener { _: AdapterView<*>?, view: View, position: Int, _: Long ->
+            mPresenter!!.listItemClicked(
+                position,
+                (view as TextView).text.toString()
+            )
+        }
         return root
     }
 
+    @SuppressLint("InflateParams")
     override fun showFormList(forms: Array<String?>?) {
-        if (forms!!.size == 0) {
+        if (forms!!.isEmpty()) {
             snackbar = Snackbar.make(binding.root, ApplicationConstants.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE)
             val customSnackBarView = layoutInflater.inflate(R.layout.snackbar, null)
             val snackBarLayout = snackbar!!.view as SnackbarLayout
@@ -69,7 +76,7 @@ public final class FormListFragment : ACBaseFragment<FormListContract.Presenter?
             val dismissButton = customSnackBarView.findViewById<TextView>(R.id.snackbar_action_button)
             val typeface = Typeface.createFromAsset(requireActivity().assets, ApplicationConstants.TypeFacePathConstants.ROBOTO_MEDIUM)
             dismissButton.typeface = typeface
-            dismissButton.setOnClickListener { v: View? -> snackbar!!.dismiss() }
+            dismissButton.setOnClickListener { snackbar!!.dismiss() }
             snackBarLayout.addView(customSnackBarView, 0)
             snackbar!!.show()
         }
@@ -104,68 +111,72 @@ public final class FormListFragment : ACBaseFragment<FormListContract.Presenter?
     override fun formCreate(uuid: String?, formName: String?): Boolean? {
         formCreateFlag = false
         val apiService = RestServiceBuilder.createService(RestApi::class.java)
-        if (formName!!.contains("admission")) {
-            val obj = loadJSONFromAsset("admission.json")
-            val call2 = apiService.formCreate(uuid, obj)
-            call2.enqueue(object : Callback<FormCreate> {
-                override fun onResponse(call: Call<FormCreate>, response: Response<FormCreate>) {
-                    if (response.isSuccessful && response.body()!!.name == "json") {
-                        formCreateFlag = true
-                    }
-                }
+        when {
+          formName!!.contains("admission") -> {
+              val obj = loadJSONFromAsset("admission.json")
+              val call2 = apiService.formCreate(uuid, obj)
+              call2.enqueue(object : Callback<FormCreate> {
+                  override fun onResponse(call: Call<FormCreate>, response: Response<FormCreate>) {
+                      if (response.isSuccessful && response.body()!!.name == "json") {
+                          formCreateFlag = true
+                      }
+                  }
 
-                override fun onFailure(call: Call<FormCreate>, t: Throwable) {
-                    //This method is lef blank intentionally
-                }
-            })
-        } else if (formName.contains("vitals")) {
-            val obj = loadJSONFromAsset("vitals1.json")
-            val obj2 = loadJSONFromAsset("vitals2.json")
-            val call2 = apiService.formCreate(uuid, obj)
-            call2.enqueue(object : Callback<FormCreate> {
-                override fun onResponse(call: Call<FormCreate>, response: Response<FormCreate>) {
-                    if (response.isSuccessful && response.body()!!.name == "json") {
-                        formCreateFlag = true
-                    }
-                }
+                  override fun onFailure(call: Call<FormCreate>, t: Throwable) {
+                      //This method is lef blank intentionally
+                  }
+              })
+          }
+          formName.contains("vitals") -> {
+              val obj = loadJSONFromAsset("vitals1.json")
+              val obj2 = loadJSONFromAsset("vitals2.json")
+              val call2 = apiService.formCreate(uuid, obj)
+              call2.enqueue(object : Callback<FormCreate> {
+                  override fun onResponse(call: Call<FormCreate>, response: Response<FormCreate>) {
+                      if (response.isSuccessful && response.body()!!.name == "json") {
+                          formCreateFlag = true
+                      }
+                  }
 
-                override fun onFailure(call: Call<FormCreate>, t: Throwable) {
-                    //This method is lef blank intentionally
-                }
-            })
-            val call = apiService.formCreate(uuid, obj2)
-            call.enqueue(object : Callback<FormCreate> {
-                override fun onResponse(call: Call<FormCreate>, response: Response<FormCreate>) {
-                    if (response.isSuccessful && response.body()!!.name == "json") {
-                        formCreateFlag = true
-                    }
-                }
+                  override fun onFailure(call: Call<FormCreate>, t: Throwable) {
+                      //This method is lef blank intentionally
+                  }
+              })
+              val call = apiService.formCreate(uuid, obj2)
+              call.enqueue(object : Callback<FormCreate> {
+                  override fun onResponse(call: Call<FormCreate>, response: Response<FormCreate>) {
+                      if (response.isSuccessful && response.body()!!.name == "json") {
+                          formCreateFlag = true
+                      }
+                  }
 
-                override fun onFailure(call: Call<FormCreate>, t: Throwable) {
-                    //This method is lef blank intentionally
-                }
-            })
-        } else if (formName.contains("visit note")) {
-            val obj = loadJSONFromAsset("visit_note.json")
-            val call2 = apiService.formCreate(uuid, obj)
-            call2.enqueue(object : Callback<FormCreate> {
-                override fun onResponse(call: Call<FormCreate>, response: Response<FormCreate>) {
-                    if (response.isSuccessful && response.body()!!.name == "json") {
-                        formCreateFlag = true
-                    }
-                }
+                  override fun onFailure(call: Call<FormCreate>, t: Throwable) {
+                      //This method is lef blank intentionally
+                  }
+              })
+          }
+          formName.contains("visit note") -> {
+              val obj = loadJSONFromAsset("visit_note.json")
+              val call2 = apiService.formCreate(uuid, obj)
+              call2.enqueue(object : Callback<FormCreate> {
+                  override fun onResponse(call: Call<FormCreate>, response: Response<FormCreate>) {
+                      if (response.isSuccessful && response.body()!!.name == "json") {
+                          formCreateFlag = true
+                      }
+                  }
 
-                override fun onFailure(call: Call<FormCreate>, t: Throwable) {
-                    //This method is lef blank intentionally
-                }
-            })
+                  override fun onFailure(call: Call<FormCreate>, t: Throwable) {
+                      //This method is lef blank intentionally
+                  }
+              })
+          }
         }
         return formCreateFlag
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private fun loadJSONFromAsset(filename: String): FormData? {
-        var json: String? = null
+        val json: String?
         json = try {
             val `is` = requireActivity().assets.open("forms/$filename")
             val size = `is`.available()
@@ -177,7 +188,7 @@ public final class FormListFragment : ACBaseFragment<FormListContract.Presenter?
             ex.printStackTrace()
             return null
         }
-        var obj: JSONObject? = null
+        val obj: JSONObject?
         try {
             obj = JSONObject(json)
             val data = FormData()

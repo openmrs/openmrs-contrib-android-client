@@ -37,7 +37,7 @@ class ActiveVisitsRecyclerViewAdapter(private val mContext: Context, private val
     }
 
     override fun onBindViewHolder(visitViewHolder: VisitViewHolder, position: Int) {
-        val adapterPos = visitViewHolder.adapterPosition
+        val adapterPos = visitViewHolder.absoluteAdapterPosition
         val visit = this.mVisits?.get(adapterPos)
         val patient = PatientDAO().findPatientByID(visit?.patient?.id.toString())
         visitViewHolder.mVisitPlace.text = mContext.getString(R.string.visit_in, visit?.location?.display)

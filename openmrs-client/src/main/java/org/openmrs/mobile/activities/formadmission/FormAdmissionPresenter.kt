@@ -31,6 +31,7 @@ import com.openmrs.android_sdk.library.api.repository.ProviderRepository
 import org.openmrs.mobile.application.OpenMRS
 import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback
 
+@Suppress("UNREACHABLE_CODE")
 class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
     private var view: FormAdmissionContract.View
     private var patientID: Long? = null
@@ -60,7 +61,7 @@ class FormAdmissionPresenter : BasePresenter, FormAdmissionContract.Presenter {
         this.restApi = restApi
         view.setPresenter(this)
         mContext = context
-        providerRepository = ProviderRepository(restApi, logger);
+        providerRepository = ProviderRepository(restApi, logger)
     }
 
     override fun subscribe() {

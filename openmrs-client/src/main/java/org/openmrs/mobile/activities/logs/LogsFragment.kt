@@ -31,7 +31,7 @@ class LogsFragment : ACBaseFragment<LogsContract.Presenter>(), LogsContract.View
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         _binding = FragmentLogsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -42,13 +42,13 @@ class LogsFragment : ACBaseFragment<LogsContract.Presenter>(), LogsContract.View
 
     override fun fabCopyAll(textLogs: String?) {
         binding.fab.setOnClickListener {
-            setClipboard(context, textLogs)
+            setClipboard(textLogs)
             Toast.makeText(context, R.string.logs_copied_to_clipboard_message,
                     Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun setClipboard(context: Context?, text: String?) {
+    private fun setClipboard(text: String?) {
         val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText(getString(R.string.copied_text), text)
         clipboard.setPrimaryClip(clip)

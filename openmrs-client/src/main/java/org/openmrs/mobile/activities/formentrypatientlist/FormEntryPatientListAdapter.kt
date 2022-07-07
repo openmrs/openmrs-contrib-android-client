@@ -12,13 +12,15 @@
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
 package org.openmrs.mobile.activities.formentrypatientlist
-
+import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.openmrs.android_sdk.library.models.Patient
 import com.openmrs.android_sdk.library.models.Visit
@@ -33,15 +35,15 @@ class FormEntryPatientListAdapter(private val mContext: FormEntryPatientListFrag
         return PatientViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: PatientViewHolder, position: Int) {
-        val adapterPos = holder.adapterPosition
+    override fun onBindViewHolder(holder: PatientViewHolder, position: Int){
+        val adapterPos = holder.absoluteAdapterPosition
         val patient = this.mItems?.get(position)
         VisitDAO().getActiveVisitByPatientId(patient?.id)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { visit: Visit? ->
                     if (visit != null) {
-                        val icon = mContext.resources.getDrawable(R.drawable.active_visit_dot)
-                        icon.setBounds(0, 0, icon.intrinsicHeight, icon.intrinsicWidth)
+                        val icon:Drawable? = ResourcesCompat.getDrawable(Resources.getSystem(),R.drawable.active_visit_dot,null)
+                        icon?.setBounds(0, 0, icon.intrinsicHeight, icon.intrinsicWidth)
                         holder.mVisitStatus.setCompoundDrawables(icon, null, null, null)
                         holder.mVisitStatus.text = mContext.getString(R.string.active_visit_label_capture_vitals)
                         holder.mRowLayout.setOnClickListener { mContext.startEncounterForPatient(mItems?.get(adapterPos)?.id) }

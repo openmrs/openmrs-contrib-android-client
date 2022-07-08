@@ -105,6 +105,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
     testOptions {
         unitTests {
             returnDefaultValues = true
@@ -138,6 +142,7 @@ dependencies {
     implementation "androidx.cardview:cardview:${versions.supportVersion}"
     implementation "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.fragment:fragment-ktx:${versions.fragment}"
 
     // Networking and Processing
     implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
@@ -196,6 +201,11 @@ dependencies {
     implementation "com.google.dagger:hilt-android:${versions.hilt}"
     kapt "com.google.dagger:hilt-compiler:${versions.hilt}"
 
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle_version}")
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:${versions.lifecycle_version}")
+
     // Test Implementations
     androidTestImplementation(
             'androidx.test.ext:junit:1.1.1',
@@ -215,7 +225,8 @@ dependencies {
             "org.junit.jupiter:junit-jupiter:5.8.2",
             'org.powermock:powermock-api-mockito2:2.0.2',
             'org.powermock:powermock-module-junit4:2.0.2',
-            "com.google.dagger:hilt-android-testing:${versions.hilt}"
+            "com.google.dagger:hilt-android-testing:${versions.hilt}",
+            "androidx.arch.core:core-testing:${versions.arch_version}"
     )
     testImplementation "android.arch.core:core-testing:${versions.coreTesting}"
     kaptTest "com.google.dagger:hilt-compiler:${versions.hilt}"

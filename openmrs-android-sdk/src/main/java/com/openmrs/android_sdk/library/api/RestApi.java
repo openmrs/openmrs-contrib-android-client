@@ -160,6 +160,17 @@ public interface RestApi {
     @GET("patient")
     Call<Results<Patient>> getPatients(@Query("q") String searchQuery,
                                        @Query("v") String representation);
+    /**
+     * Gets patients.
+     *
+     * @param searchQuery    the search query
+     * @param representation the representation
+     * @return the patients
+     */
+
+    @GET("patient")
+    Call<Results<PatientDto>> getPatientsDto(@Query("q") String searchQuery,
+                                       @Query("v") String representation);
 
     /**
      * Upload patient photo call.

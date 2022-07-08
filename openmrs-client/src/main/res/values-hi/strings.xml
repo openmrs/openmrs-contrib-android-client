@@ -231,6 +231,10 @@
     <string name="patient_registered_locally">रोगी स्थानीय रूप से पंजीकृत </string>
     <string name="similar_patients_on_server">सर्वर पर समान मरीज मौजूद हैं</string>
     <string name="registration_core_info">तेज और अधिक सटीक समान रोगी रिज़ॉल्यूशन का उपयोग करने के लिए, पंजीकरण कोर मॉड्यूल को 1.7 या उच्चतर </string>
+    <string name="patient_register_success">रोगी सफलतापूर्वक पंजीकृत</string>
+    <string name="patient_register_fail">रोगी को पंजीकृत करने में विफल</string>
+    <string name="patient_merge_success">रोगी का सफलतापूर्वक विलय हो गया</string>
+    <string name="patient_merge_fail">रोगी को मर्ज करने में विफल</string>
 
     <!--ChartsView Activity-->
     <string name="charts_view_toolbar_title">चार्ट देखें</string>

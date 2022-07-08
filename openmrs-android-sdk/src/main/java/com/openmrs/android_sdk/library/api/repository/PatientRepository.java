@@ -14,6 +14,18 @@
 
 package com.openmrs.android_sdk.library.api.repository;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import rx.Observable;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -35,10 +47,9 @@ import com.openmrs.android_sdk.library.api.services.EncounterService;
 import com.openmrs.android_sdk.library.api.workers.UpdatePatientWorker;
 import com.openmrs.android_sdk.library.dao.EncounterCreateRoomDAO;
 import com.openmrs.android_sdk.library.dao.PatientDAO;
-import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
+import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
 import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DownloadPatientCallback;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
 import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.PatientResponseCallback;
 import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.VisitsResponseCallback;
 import com.openmrs.android_sdk.library.models.Encountercreate;
@@ -57,20 +68,10 @@ import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import org.jdeferred.android.AndroidDeferredManager;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import rx.android.schedulers.AndroidSchedulers;
-
 /**
  * The type Patient repository.
  */
+@Singleton
 public class PatientRepository extends BaseRepository {
     private PatientDAO patientDAO;
     private LocationRepository locationRepository;
@@ -78,6 +79,7 @@ public class PatientRepository extends BaseRepository {
     /**
      * Instantiates a new Patient repository.
      */
+    @Inject
     public PatientRepository() {
         this.patientDAO = new PatientDAO();
         this.locationRepository = new LocationRepository();
@@ -91,7 +93,7 @@ public class PatientRepository extends BaseRepository {
      * @param restApi            the rest api
      * @param locationRepository the location repository
      */
-//used in the unit tests
+    //used in the unit tests
     public PatientRepository(OpenMRSLogger logger, PatientDAO patientDAO, RestApi restApi, LocationRepository locationRepository) {
         super(restApi, logger);
         this.patientDAO = patientDAO;
@@ -99,96 +101,47 @@ public class PatientRepository extends BaseRepository {
     }
 
     /**
-     * Sync patient simple promise.
+     * Sync patient.
      *
      * @param patient the patient
-     * @return the simple promise
      */
-    public SimplePromise<Patient> syncPatient(final Patient patient) {
-        return syncPatient(patient, null);
-    }
+    public Observable<Patient> syncPatient(final Patient patient) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            if (NetworkUtils.isOnline()) {
+                final List<PatientIdentifier> identifiers = new ArrayList<>();
+                final PatientIdentifier identifier = new PatientIdentifier();
+                identifier.setLocation(locationRepository.getLocation());
+                identifier.setIdentifier(getIdGenPatientIdentifier());
+                identifier.setIdentifierType(getPatientIdentifierType());
+                identifiers.add(identifier);
 
-    /**
-     * Sync patient simple promise.
-     *
-     * @param patient  the patient
-     * @param callback the callback
-     * @return the simple promise
-     */
-    public SimplePromise<Patient> syncPatient(final Patient patient, @Nullable final PatientDeferredResponseCallback callback) {
-        final SimpleDeferredObject<Patient> deferred = new SimpleDeferredObject<>();
+                patient.setIdentifiers(identifiers);
+                patient.setUuid(null);
 
-        if (NetworkUtils.isOnline()) {
-            AndroidDeferredManager dm = new AndroidDeferredManager();
-            dm.when(locationRepository.getLocationUuid(), getIdGenPatientIdentifier(), getPatientIdentifierTypeUuid())
-                    .done(results -> {
-                        final List<PatientIdentifier> identifiers = new ArrayList<>();
-                        final PatientIdentifier identifier = new PatientIdentifier();
-                        identifier.setLocation((LocationEntity) results.get(0).getResult());
-                        identifier.setIdentifier((String) results.get(1).getResult());
-                        identifier.setIdentifierType((IdentifierType) results.get(2).getResult());
-                        identifiers.add(identifier);
+                PatientDto patientDto = patient.getPatientDto();
 
-                        patient.setIdentifiers(identifiers);
-                        patient.setUuid(null);
+                Response<PatientDto> response = restApi.createPatient(patientDto).execute();
+                if (response.isSuccessful()) {
+                    PatientDto returnedPatientDto = response.body();
 
-                        PatientDto patientDto = patient.getPatientDto();
+                    patient.setUuid(returnedPatientDto.getUuid());
+                    if (patient.getPhoto() != null) {
+                        uploadPatientPhoto(patient);
+                    }
 
-                        Call<PatientDto> call = restApi.createPatient(patientDto);
-                        call.enqueue(new Callback<PatientDto>() {
-                            @Override
-                            public void onResponse(@NonNull Call<PatientDto> call, @NonNull Response<PatientDto> response) {
-                                if (response.isSuccessful()) {
-                                    PatientDto newPatient = response.body();
+                    patientDAO.updatePatient(patient.getId(), patient);
+                    if (!patient.getEncounters().equals("")) {
+                        addEncounters(patient);
+                    }
 
-                                    patient.setUuid(newPatient.getUuid());
-                                    if (patient.getPhoto() != null) {
-                                        uploadPatientPhoto(patient);
-                                    }
-
-                                    patientDAO.updatePatient(patient.getId(), patient);
-                                    if (!patient.getEncounters().equals("")) {
-                                        addEncounters(patient);
-                                    }
-
-                                    deferred.resolve(patient);
-
-                                    if (callback != null) {
-                                        callback.onResponse();
-                                    }
-
-                                    ToastUtil.success(context.getString(R.string.patent_data_synced_successfully));
-
-                                } else {
-                                    if (callback != null) {
-                                        callback.onErrorResponse(context.getString(R.string.patient_cannot_be_synced_due_to_server_error_message, patient.getId(), response.message()));
-                                    }
-
-                                    ToastUtil.error("Patient[" + patient.getId() + "] cannot be synced due to server error" + response.message());
-                                    deferred.reject(new RuntimeException("Patient cannot be synced due to server error: " + response.errorBody().toString()));
-
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
-                                if (callback != null) {
-                                    callback.onErrorResponse(context.getString(R.string.patient_cannot_be_synced_due_to_server_error_message, patient.getId(), t.getMessage()));
-                                }
-
-                                ToastUtil.notify("Patient[ " + patient.getId() + "] cannot be synced due to request error " + t.toString());
-                                deferred.reject(t);
-                            }
-                        });
-                    });
-        } else {
-
-            if (callback != null) {
-                callback.onNotifyResponse(context.getString(R.string.offline_mode_patient_data_saved_locally_notification_message));
+                    return patient;
+                } else {
+                    throw new RuntimeException("Patient[ " + patient.getId() + "] cannot be synced due to request error");
+                }
+            } else {
+                throw new IOException(context.getString(R.string.offline_mode_patient_data_saved_locally_notification_message));
             }
-        }
-
-        return deferred.promise();
+        });
     }
 
     private void uploadPatientPhoto(final Patient patient) {
@@ -219,19 +172,13 @@ public class PatientRepository extends BaseRepository {
     /**
      * Register patient.
      *
-     * @param patient          the patient
-     * @param callbackListener the callback listener
+     * @param patient the patient
      */
-    public void registerPatient(final Patient patient, @Nullable final PatientDeferredResponseCallback callbackListener) {
-        patientDAO.savePatient(patient)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(id -> {
+    public Observable<Patient> registerPatient(final Patient patient) {
+        return patientDAO.savePatient(patient)
+                .switchMap(id -> {
                     patient.setId(id);
-                    if (callbackListener != null) {
-                        syncPatient(patient, callbackListener);
-                    } else {
-                        syncPatient(patient);
-                    }
+                    return syncPatient(patient);
                 });
     }
 
@@ -298,31 +245,18 @@ public class PatientRepository extends BaseRepository {
     /**
      * Update matching patient.
      *
-     * @param patient  the patient
-     * @param callback the callback
+     * @param patient the locally merged patient
      */
-    public void updateMatchingPatient(final Patient patient, DefaultResponseCallback callback) {
-        PatientDtoUpdate patientDto = patient.getUpdatedPatientDto();
-        patient.setUuid(null);
-        Call<PatientDto> call = restApi.updatePatient(patientDto, patient.getUuid(), ApplicationConstants.API.FULL);
-        call.enqueue(new Callback<PatientDto>() {
-            @Override
-            public void onResponse(@NonNull Call<PatientDto> call, @NonNull Response<PatientDto> response) {
-                if (callback != null) {
-                    if (response.isSuccessful()) {
-                        callback.onResponse();
-                    } else {
-                        callback.onErrorResponse(response.message());
-                    }
-                }
-            }
+    public Observable<Patient> updateMatchingPatient(final Patient patient){
+        return AppDatabaseHelper.createObservableIO(() -> {
 
-            @Override
-            public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
-                if (callback != null) {
-                    callback.onErrorResponse(t.getMessage());
-                }
-            }
+            PatientDtoUpdate patientDto = patient.getUpdatedPatientDto();
+
+            Call<PatientDto> call = restApi.updatePatient(patientDto, patient.getUuid(), ApplicationConstants.API.FULL);
+            Response<PatientDto> response = call.execute();
+
+            if (response.isSuccessful()) return patient;
+            else throw new IOException(response.message());
         });
     }
 
@@ -420,56 +354,37 @@ public class PatientRepository extends BaseRepository {
      *
      * @return the id gen patient identifier
      */
-    public SimplePromise<String> getIdGenPatientIdentifier() {
-        final SimpleDeferredObject<String> deferred = new SimpleDeferredObject<>();
+    public String getIdGenPatientIdentifier() throws IOException {
+        IdGenPatientIdentifiers idList = null;
 
         RestApi patientIdentifierService = RestServiceBuilder.createServiceForPatientIdentifier(RestApi.class);
         Call<IdGenPatientIdentifiers> call = patientIdentifierService.getPatientIdentifiers(OpenmrsAndroid.getUsername(), OpenmrsAndroid.getPassword());
-        call.enqueue(new Callback<IdGenPatientIdentifiers>() {
-            @Override
-            public void onResponse(@NonNull Call<IdGenPatientIdentifiers> call, @NonNull Response<IdGenPatientIdentifiers> response) {
-                IdGenPatientIdentifiers idList = response.body();
-                deferred.resolve(idList.getIdentifiers().get(0));
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<IdGenPatientIdentifiers> call, @NonNull Throwable t) {
-                ToastUtil.notify(t.toString());
-                deferred.reject(t);
-            }
-        });
+        Response<IdGenPatientIdentifiers> response = call.execute();
+        if (response.isSuccessful()) {
+            idList = response.body();
+        }
 
-        return deferred.promise();
+        return idList.getIdentifiers().get(0);
     }
 
     /**
-     * Gets patient identifier type uuid.
+     * Gets patient identifier type (only has uuid).
      *
-     * @return the patient identifier type uuid
+     * @return the patient identifier type
      */
-    public SimplePromise<IdentifierType> getPatientIdentifierTypeUuid() {
-        final SimpleDeferredObject<IdentifierType> deferred = new SimpleDeferredObject<>();
-
+    public IdentifierType getPatientIdentifierType() throws IOException {
         Call<Results<IdentifierType>> call = restApi.getIdentifierTypes();
-        call.enqueue(new Callback<Results<IdentifierType>>() {
-            @Override
-            public void onResponse(@NonNull Call<Results<IdentifierType>> call, @NonNull Response<Results<IdentifierType>> response) {
-                Results<IdentifierType> idresList = response.body();
-                for (IdentifierType result : idresList.getResults()) {
-                    if (result.getDisplay().equals("OpenMRS ID")) {
-                        deferred.resolve(result);
-                        return;
-                    }
+        Response<Results<IdentifierType>> response = call.execute();
+        if (response.isSuccessful()) {
+            Results<IdentifierType> idResList = response.body();
+            for (IdentifierType result : idResList.getResults()) {
+                if (result.getDisplay().equals("OpenMRS ID")) {
+                    return result;
                 }
             }
-
-            @Override
-            public void onFailure(@NonNull Call<Results<IdentifierType>> call, @NonNull Throwable t) {
-                ToastUtil.notify(t.toString());
-                deferred.reject(t);
-            }
-        });
-        return deferred.promise();
+        }
+        return null;
     }
 
     /**

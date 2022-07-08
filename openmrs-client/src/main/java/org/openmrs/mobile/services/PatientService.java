@@ -20,6 +20,7 @@ import com.openmrs.android_sdk.library.api.repository.PatientRepository;
 import com.openmrs.android_sdk.library.dao.PatientDAO;
 import com.openmrs.android_sdk.library.models.Module;
 import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.models.PatientDto;
 import com.openmrs.android_sdk.library.models.Results;
 import com.openmrs.android_sdk.utilities.ApplicationConstants;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
@@ -33,6 +34,7 @@ import org.openmrs.mobile.utilities.PatientAndMatchesWrapper;
 import org.openmrs.mobile.utilities.PatientComparator;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -92,10 +94,14 @@ public class PatientService extends IntentService {
     private void fetchPatientsAndCalculateLocally(Patient patient, PatientAndMatchesWrapper patientAndMatchesWrapper) throws IOException {
         calculatedLocally = true;
         RestApi restApi = RestServiceBuilder.createService(RestApi.class);
-        Call<Results<Patient>> patientCall = restApi.getPatients(patient.getName().getGivenName(), ApplicationConstants.API.FULL);
-        Response<Results<Patient>> resp = patientCall.execute();
+        Call<Results<PatientDto>> patientCall = restApi.getPatientsDto(patient.getName().getGivenName(), ApplicationConstants.API.FULL);
+        Response<Results<PatientDto>> resp = patientCall.execute();
         if (resp.isSuccessful()) {
-            List<Patient> similarPatient = new PatientComparator().findSimilarPatient(resp.body().getResults(), patient);
+            List<Patient> patientList = new ArrayList<>();
+            for(PatientDto p : resp.body().getResults()){
+                patientList.add(p.getPatient());
+            }
+            List<Patient> similarPatient = new PatientComparator().findSimilarPatient(patientList, patient);
             if (!similarPatient.isEmpty()) {
                 patientAndMatchesWrapper.addToList(new PatientAndMatchingPatients(patient, similarPatient));
             } else {

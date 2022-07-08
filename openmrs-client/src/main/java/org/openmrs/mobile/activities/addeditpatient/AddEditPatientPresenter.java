@@ -14,11 +14,24 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.RestServiceBuilder;
+import com.openmrs.android_sdk.library.api.repository.PatientRepository;
 import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.PatientResponseCallback;
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.VisitsResponseCallback;
 import com.openmrs.android_sdk.library.models.ConceptAnswers;
 import com.openmrs.android_sdk.library.models.Module;
 import com.openmrs.android_sdk.library.models.Patient;
@@ -28,28 +41,13 @@ import com.openmrs.android_sdk.utilities.ApplicationConstants;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
 import com.openmrs.android_sdk.utilities.StringUtils;
 import com.openmrs.android_sdk.utilities.ToastUtil;
-import com.google.android.libraries.places.api.net.PlacesClient;
 
 import org.jetbrains.annotations.Nullable;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.BasePresenter;
-import com.openmrs.android_sdk.library.api.RestApi;
-import com.openmrs.android_sdk.library.api.RestServiceBuilder;
-import com.openmrs.android_sdk.library.api.promise.SimpleDeferredObject;
-import com.openmrs.android_sdk.library.api.repository.PatientRepository;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.PatientDeferredResponseCallback;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.PatientResponseCallback;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.VisitsResponseCallback;
 import org.openmrs.mobile.utilities.ModuleUtils;
 import org.openmrs.mobile.utilities.PatientComparator;
 import org.openmrs.mobile.utilities.ViewUtils;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AddEditPatientPresenter extends BasePresenter implements AddEditPatientContract.Presenter {
     private final AddEditPatientContract.View mPatientInfoView;
@@ -90,7 +88,7 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     @Override
     public void subscribe() {
-        
+
         // This method is intentionally empty
     }
 
@@ -221,36 +219,19 @@ public class AddEditPatientPresenter extends BasePresenter implements AddEditPat
 
     @Override
     public void registerPatient() {
-        patientRepository.registerPatient(mPatient, new PatientDeferredResponseCallback() {
-            @Override
-            public void onNotifyResponse(@Nullable String notifyMessage) {
-                mPatientInfoView.startPatientDashbordActivity(mPatient);
-                mPatientInfoView.finishPatientInfoActivity();
-                ToastUtil.notify(notifyMessage);
-            }
-
-            @Override
-            public void onErrorResponse(@Nullable String errorMessage, @Nullable SimpleDeferredObject<Patient> errorResponse) {
-
-            }
-
-            @Override
-            public void onResponse(@Nullable SimpleDeferredObject<Patient> response) {
-
-            }
-
-            @Override
-            public void onResponse() {
-                mPatientInfoView.startPatientDashbordActivity(mPatient);
-                mPatientInfoView.finishPatientInfoActivity();
-            }
-
-            @Override
-            public void onErrorResponse(String errorMessage) {
-                registeringPatient = false;
-                mPatientInfoView.setProgressBarVisibility(false);
-            }
-        });
+        patientRepository.registerPatient(mPatient)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(patient -> {
+                            mPatientInfoView.startPatientDashbordActivity(mPatient);
+                            mPatientInfoView.finishPatientInfoActivity();
+                        },
+                        t -> {
+                            registeringPatient = false;
+                            mPatientInfoView.setProgressBarVisibility(false);
+                            mPatientInfoView.startPatientDashbordActivity(mPatient);
+                            mPatientInfoView.finishPatientInfoActivity();
+                            ToastUtil.notify(t.getMessage());
+                        });
     }
 
     @Override

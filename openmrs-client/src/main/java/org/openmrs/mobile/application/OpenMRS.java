@@ -27,6 +27,9 @@ import org.openmrs.mobile.services.AuthenticateCheckService;
 
 import java.io.File;
 
+import dagger.hilt.android.HiltAndroidApp;
+
+@HiltAndroidApp
 public class OpenMRS extends MultiDexApplication {
     private static final String OPENMRS_DIR_NAME = "OpenMRS";
     private static final String OPENMRS_DIR_PATH = File.separator + OPENMRS_DIR_NAME;

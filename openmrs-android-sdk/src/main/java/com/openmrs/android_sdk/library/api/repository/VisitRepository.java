@@ -260,14 +260,16 @@ public class VisitRepository extends BaseRepository {
         visit.setPatient(patient);
         visit.setLocation(locationDAO.findLocationByName(OpenmrsAndroid.getLocation()));
 
-        visit.setVisitType(new VisitType("", OpenmrsAndroid.getVisitTypeUUID()));
+        VisitType visitType = new VisitType("Outpatient", OpenmrsAndroid.getVisitTypeUUID());
+        visit.setVisitType(visitType);
 
         Call<Visit> call = restApi.startVisit(visit);
         call.enqueue(new Callback<Visit>() {
             @Override
             public void onResponse(@NonNull Call<Visit> call, @NonNull Response<Visit> response) {
                 if (response.isSuccessful()) {
-                    Visit newVisit = response.body();
+                    Visit newVisit = response.body(); // The VisitType in response contains null display string. Needs a fix (AC-1030)
+                    newVisit.visitType = visitType; // Temporary workaround
                     visitDAO.saveOrUpdate(newVisit, patient.getId())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(id -> {

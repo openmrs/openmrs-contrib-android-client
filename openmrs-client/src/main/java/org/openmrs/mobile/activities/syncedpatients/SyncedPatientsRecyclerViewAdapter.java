@@ -14,6 +14,9 @@
 
 package org.openmrs.mobile.activities.syncedpatients;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
@@ -36,9 +39,6 @@ import com.openmrs.android_sdk.utilities.DateUtils;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<SyncedPatientsRecyclerViewAdapter.PatientViewHolder> {
     private SyncedPatientsFragment mContext;
@@ -92,14 +92,14 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
 
         if (null != patient.getIdentifier()) {
             String patientIdentifier = String.format(mContext.getResources().getString(R.string.patient_identifier),
-                patient.getIdentifier().getIdentifier());
+                    patient.getIdentifier().getIdentifier());
             holder.mIdentifier.setText(patientIdentifier);
         }
         if (null != patient.getName()) {
             holder.mDisplayName.setText(patient.getName().getNameString());
         }
         if (null != patient.getGender()) {
-            if (patient.getPhoto()!=null ){
+            if (patient.getPhoto() != null) {
                 holder.mGender.setImageBitmap(patient.getPhoto());
             } else {
                 if (patient.getGender().equals(ApplicationConstants.MALE)) {
@@ -162,7 +162,7 @@ public class SyncedPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sync
                 mRowLayout.setCardBackgroundColor(cardBackgroundColor);
             }
             itemView.setOnLongClickListener(view -> {
-                ((AppCompatActivity) view.getContext()).startSupportActionMode(actionModeCallbacks);
+                ((AppCompatActivity) mContext.requireActivity()).startSupportActionMode(actionModeCallbacks);
                 selectItem(value);
                 return true;
             });

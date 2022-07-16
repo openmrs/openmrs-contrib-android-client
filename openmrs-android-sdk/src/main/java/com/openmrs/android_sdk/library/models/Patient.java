@@ -10,17 +10,17 @@
 
 package com.openmrs.android_sdk.library.models;
 
-import android.graphics.Bitmap;
-
-import com.openmrs.android_sdk.utilities.StringUtils;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import android.graphics.Bitmap;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import com.openmrs.android_sdk.utilities.StringUtils;
 
 /**
  * The type Patient.
@@ -104,7 +104,8 @@ public class Patient extends Person implements Serializable {
      * @return the updated person
      */
     public PersonUpdate getUpdatedPerson() {
-        return new PersonUpdate(getNames(), getGender(), getBirthdate(), getBirthdateEstimated(), getAddresses(), getAttributes(), getPhoto(), getCauseOfDeath().getUuid(), isDeceased());
+        String causeOfDeath = (getCauseOfDeath() != null) ? getCauseOfDeath().getUuid() : null;
+        return new PersonUpdate(getNames(), getGender(), getBirthdate(), getBirthdateEstimated(), getAddresses(), getAttributes(), getPhoto(), causeOfDeath, isDeceased());
     }
 
     /**

@@ -41,14 +41,13 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
     private List<Patient> patientList;
     private Patient newPatient;
     private Activity mContext;
-    private MatchingPatientsContract.Presenter mPresenter;
     private int selectedPosition = -1;
+    protected Patient selectedPatient = null;
 
-    public MergePatientsRecycleViewAdapter(Activity mContext, MatchingPatientsContract.Presenter presenter, List<Patient> patientList, Patient patient) {
+    public MergePatientsRecycleViewAdapter(Activity mContext,List<Patient> patientList, Patient patient) {
         this.newPatient = patient;
         this.patientList = patientList;
         this.mContext = mContext;
-        this.mPresenter = presenter;
     }
 
     @NonNull
@@ -71,6 +70,14 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
     @Override
     public int getItemCount() {
         return patientList.size();
+    }
+
+    public void updateList(Patient patient, List<Patient> patientList){
+        this.newPatient = patient;
+        this.patientList = patientList;
+        selectedPosition = -1;
+        selectedPatient = null;
+        notifyDataSetChanged();
     }
 
     public class PatientViewHolder extends RecyclerView.ViewHolder {
@@ -98,12 +105,12 @@ public class MergePatientsRecycleViewAdapter extends RecyclerView.Adapter<MergeP
             itemView.setOnClickListener(view -> {
                 CardView cardView = view.findViewById(R.id.patientsCardView);
                 if (selectedPosition == -1) {
-                    selectedPosition = getAdapterPosition();
-                    mPresenter.setSelectedPatient(patientList.get(selectedPosition));
+                    selectedPosition = getBindingAdapterPosition();
+                    selectedPatient = patientList.get(selectedPosition);
                     cardView.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.patient_selected_highlight));
-                } else if (selectedPosition == getAdapterPosition()) {
+                } else if (selectedPosition == getBindingAdapterPosition()) {
                     selectedPosition = -1;
-                    mPresenter.removeSelectedPatient();
+                    selectedPatient = null;
                     cardView.setCardBackgroundColor(Color.WHITE);
                 } else {
                     ToastUtil.notify(mContext.getString(R.string.only_one_patient_can_be_selected_notification_message));

@@ -137,6 +137,8 @@
     <string name="synchronize_patient_successful">Successfully synchronized patient data.</string>
     <string name="synchronize_patient_error">Synchronizing patient data was unsuccessful</string>
     <string name="synchronize_patient_network_error">Cannot synchronize in offline mode</string>
+    <string name="delete_patient_successful">Patient deleted successfully</string>
+    <string name="delete_patient_error">Error with deleting patient</string>
     <string name="get_patient_from_database_error">Failed to fetch patient from database</string>
     <string name="action_start_visit">Start visit</string>
     <string name="action_create_allergy">Create Allergy</string>
@@ -148,6 +150,7 @@
     <string name="patient_scroll_tab_charts_label">Charts</string>
     <string name="download_started">"Downloading…"</string>
     <string name="action_starting_visit">"Starting Visit"</string>
+    <string name="visit_start_error">Failed to start a visit</string>
 
     <!--SyncedPatient Activity-->
     <string name="patient_update_successful">Patient %1$s Updated</string>
@@ -404,7 +407,7 @@
     <!--MergePatientsRecyclerView Adapter-->
     <string name="only_one_patient_can_be_selected_notification_message">You can select only one similar patient</string>
 
-    <!--PatinetDashboardVisits presenter-->
+    <!--PatientDashboardVisits-->
     <string name="offline_mode_not_supported">Cannot start a patient visit manually in offline mode.</string>
 
     <!--PatientRepository-->
@@ -486,7 +489,9 @@
     <string name="allergy_comment">Comment</string>
     <string name="allergy_severity">Severity</string>
     <string name="allergy_reactions">Reactions</string>
-    <string name="empty_allergy_list">Patient has no allergies yet.</string>
+    <!-- Refer to AllergyRepository syncAllergies method for empty_allergy_list string value,
+     it should be changed to "Patient has no known allergies" when server fixes the issue mentioned -->
+    <string name="empty_allergy_list">Patient has not been tested for allergies yet.</string>
     <string name="unable_to_fetch_allergies">Unable to get the latest recorded allergies!</string>
     <string name="delete_allergy_title">Delete %1$s?</string>
     <string name="delete_allergy_description">The patient\'s allergy will be removed from server. Are you sure you want to continue?</string>

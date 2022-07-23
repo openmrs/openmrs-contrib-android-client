@@ -28,11 +28,11 @@
             android:id="@+id/tabhost"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+            android:background="@color/primary"
             app:tabIndicatorColor="@color/white"
             app:tabMode="scrollable"
             app:tabSelectedTextColor="@color/white"
-            app:tabTextColor="@color/dark_grey_6x"
-            android:background="@color/primary" />
+            app:tabTextColor="@color/dark_grey_6x" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -59,6 +59,8 @@
         </FrameLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <include layout="@layout/custom_expandable_fab" />
+    <include
+        android:id="@+id/actionsFab"
+        layout="@layout/custom_expandable_fab" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

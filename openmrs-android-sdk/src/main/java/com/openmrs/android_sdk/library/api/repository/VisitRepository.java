@@ -14,15 +14,28 @@
 
 package com.openmrs.android_sdk.library.api.repository;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.io.IOException;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import rx.Observable;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.openmrs.android_sdk.library.OpenMRSLogger;
 import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.api.RestApi;
 import com.openmrs.android_sdk.library.dao.EncounterCreateRoomDAO;
 import com.openmrs.android_sdk.library.dao.EncounterDAO;
 import com.openmrs.android_sdk.library.dao.LocationDAO;
 import com.openmrs.android_sdk.library.dao.VisitDAO;
+import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.GetVisitTypeCallback;
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.VisitsResponseCallback;
 import com.openmrs.android_sdk.library.models.Encounter;
 import com.openmrs.android_sdk.library.models.Encountercreate;
 import com.openmrs.android_sdk.library.models.Patient;
@@ -32,24 +45,11 @@ import com.openmrs.android_sdk.library.models.VisitType;
 import com.openmrs.android_sdk.utilities.ApplicationConstants;
 import com.openmrs.android_sdk.utilities.DateUtils;
 
-import com.openmrs.android_sdk.library.api.RestApi;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.GetVisitTypeCallback;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.StartVisitResponseCallback;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.VisitsResponseCallback;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-
 
 /**
  * The type Visit repository.
  */
+@Singleton
 public class VisitRepository extends BaseRepository {
 
     private LocationDAO locationDAO;
@@ -60,6 +60,7 @@ public class VisitRepository extends BaseRepository {
     /**
      * Instantiates a new Visit repository.
      */
+    @Inject
     public VisitRepository() {
         visitDAO = new VisitDAO();
         encounterDAO = new EncounterDAO();
@@ -82,54 +83,25 @@ public class VisitRepository extends BaseRepository {
         this.locationDAO = locationDAO;
     }
 
-
     /**
-     * This method is used for syncing Visits data to the servers when no callback listener is provided
+     * This method downloads visits data asynchronously from the server.
      *
      * @param patient
      */
-    public void syncVisitsData(@NonNull Patient patient) {
-        syncVisitsData(patient, null);
-    }
+    public Observable<List<Visit>> syncVisitsData(@NonNull final Patient patient) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Call<Results<Visit>> call = restApi.findVisitsByPatientUUID(patient.getUuid(), "custom:(uuid,location:ref,visitType:ref,startDatetime,stopDatetime,encounters:full)");
+            Response<Results<Visit>> response = call.execute();
 
-    /**
-     * This method syncs visit data asynchronously and uses the callback listener to propogate back the results.
-     *
-     * @see DefaultResponseCallback
-     *
-     * @param patient
-     * @param callbackListener
-     */
-    public void syncVisitsData(@NonNull final Patient patient, @Nullable final DefaultResponseCallback callbackListener) {
-        Call<Results<Visit>> call = restApi.findVisitsByPatientUUID(patient.getUuid(), "custom:(uuid,location:ref,visitType:ref,startDatetime,stopDatetime,encounters:full)");
-        call.enqueue(new Callback<Results<Visit>>() {
-            @Override
-            public void onResponse(@NonNull Call<Results<Visit>> call, @NonNull Response<Results<Visit>> response) {
-                if (response.isSuccessful()) {
-                    List<Visit> visits = response.body().getResults();
-                    Observable.just(visits)
-                        .flatMap(Observable::from)
-                        .forEach(visit ->
-                                visitDAO.saveOrUpdate(visit, patient.getId())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe(),
-                            error -> error.printStackTrace()
-                        );
-                    if (callbackListener != null) {
-                        callbackListener.onResponse();
-                    }
-                } else {
-                    if (callbackListener != null) {
-                        callbackListener.onErrorResponse(response.message());
-                    }
+            if (response.isSuccessful()) {
+                List<Visit> visits = response.body().getResults();
+                visitDAO.deleteVisitsByPatientId(patient.getId()).toBlocking().subscribe();
+                for (Visit visit : visits) {
+                    visitDAO.saveOrUpdate(visit, patient.getId()).toBlocking().subscribe();
                 }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Results<Visit>> call, @NonNull Throwable t) {
-                if (callbackListener != null) {
-                    callbackListener.onErrorResponse(t.getMessage());
-                }
+                return visits;
+            } else {
+                throw new IOException("Error with fetching visits by patient uuid: " + response.message());
             }
         });
     }
@@ -137,10 +109,9 @@ public class VisitRepository extends BaseRepository {
     /**
      * This method is used for getting visitType asynchronously .
      *
+     * @param callbackListener
      * @see VisitType
      * @see GetVisitTypeCallback
-     *
-     * @param callbackListener
      */
     public void getVisitType(final GetVisitTypeCallback callbackListener) {
         Call<Results<VisitType>> call = restApi.getVisitType();
@@ -163,46 +134,25 @@ public class VisitRepository extends BaseRepository {
 
 
     /**
-     * This method is used to sync Vitals of a patient in a visit without any callback listeners.
+     * This method is used to sync Vitals of a patient in a visit
      *
-     * @param patientUuid
+     * @param patientUuid Patient UUID to get vitals from
+     * @return Encounter observable containing last vitals
      */
-    public void syncLastVitals(final String patientUuid) {
-        syncLastVitals(patientUuid, null);
-    }
+    public Observable<Encounter> syncLastVitals(final String patientUuid) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Call<Results<Encounter>> call = restApi.getLastVitals(patientUuid, ApplicationConstants.EncounterTypes.VITALS, "full", 1, "desc");
+            Response<Results<Encounter>> response = call.execute();
 
-    /**
-     * This method is used to sync Vitals of a patient with result asynchronously propagated back with callback listeners
-     *
-     * @see DefaultResponseCallback
-     *
-     * @param patientUuid
-     * @param callbackListener
-     */
-    public void syncLastVitals(final String patientUuid, @Nullable final DefaultResponseCallback callbackListener) {
-        Call<Results<Encounter>> call = restApi.getLastVitals(patientUuid, ApplicationConstants.EncounterTypes.VITALS, "full", 1, "desc");
-        call.enqueue(new Callback<Results<Encounter>>() {
-            @Override
-            public void onResponse(@NonNull Call<Results<Encounter>> call, @NonNull Response<Results<Encounter>> response) {
-                if (response.isSuccessful()) {
-                    if (!response.body().getResults().isEmpty()) {
-                        encounterDAO.saveLastVitalsEncounter(response.body().getResults().get(0), patientUuid);
-                    }
-                    if (callbackListener != null) {
-                        callbackListener.onResponse();
-                    }
-                } else {
-                    if (callbackListener != null) {
-                        callbackListener.onErrorResponse(response.message());
-                    }
+            if (response.isSuccessful()) {
+                if (!response.body().getResults().isEmpty()) {
+                    Encounter encounter = response.body().getResults().get(0);
+                    encounterDAO.saveLastVitalsEncounter(encounter, patientUuid);
+                    return encounter;
                 }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Results<Encounter>> call, @NonNull Throwable t) {
-                if (callbackListener != null) {
-                    callbackListener.onErrorResponse(t.getMessage());
-                }
+                return new Encounter();
+            } else {
+                throw new IOException("Error with fetching last vitals: " + response.message());
             }
         });
     }
@@ -210,12 +160,11 @@ public class VisitRepository extends BaseRepository {
     /**
      * This method is used to end an active visit of a patient.
      *
-     * @see Visit
-     * @see VisitsResponseCallback
-     *
      * @param uuid
      * @param visit
      * @param callbackListener
+     * @see Visit
+     * @see VisitsResponseCallback
      */
     public void endVisitByUuid(String uuid, Visit visit, VisitsResponseCallback callbackListener) {
         restApi.endVisitByUUID(uuid, visit).enqueue(new Callback<Visit>() {
@@ -240,55 +189,32 @@ public class VisitRepository extends BaseRepository {
     }
 
     /**
-     * Start visit.
+     * Start visit for a patient.
      *
-     * @param patient the patient
+     * @param patient the patient to start a visit for
      */
-    public void startVisit(final Patient patient) {
-        startVisit(patient, null);
-    }
+    public Observable<Visit> startVisit(final Patient patient) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            final Visit visit = new Visit();
+            visit.setStartDatetime(DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
+            visit.setPatient(patient);
+            visit.setLocation(locationDAO.findLocationByName(OpenmrsAndroid.getLocation()));
 
-    /**
-     * Start visit.
-     *
-     * @param patient          the patient
-     * @param callbackListener the callback listener
-     */
-    public void startVisit(final Patient patient, @Nullable final StartVisitResponseCallback callbackListener) {
-        final Visit visit = new Visit();
-        visit.setStartDatetime(DateUtils.convertTime(System.currentTimeMillis(), DateUtils.OPEN_MRS_REQUEST_FORMAT));
-        visit.setPatient(patient);
-        visit.setLocation(locationDAO.findLocationByName(OpenmrsAndroid.getLocation()));
+            VisitType visitType = new VisitType("Outpatient", OpenmrsAndroid.getVisitTypeUUID());
+            visit.setVisitType(visitType);
 
-        VisitType visitType = new VisitType("Outpatient", OpenmrsAndroid.getVisitTypeUUID());
-        visit.setVisitType(visitType);
+            Call<Visit> call = restApi.startVisit(visit);
+            Response<Visit> response = call.execute();
 
-        Call<Visit> call = restApi.startVisit(visit);
-        call.enqueue(new Callback<Visit>() {
-            @Override
-            public void onResponse(@NonNull Call<Visit> call, @NonNull Response<Visit> response) {
-                if (response.isSuccessful()) {
-                    Visit newVisit = response.body(); // The VisitType in response contains null display string. Needs a fix (AC-1030)
-                    newVisit.visitType = visitType; // Temporary workaround
-                    visitDAO.saveOrUpdate(newVisit, patient.getId())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(id -> {
-                            if (callbackListener != null) {
-                                callbackListener.onStartVisitResponse(id);
-                            }
-                        });
-                } else {
-                    if (callbackListener != null) {
-                        callbackListener.onErrorResponse(response.message());
-                    }
-                }
-            }
+            if (response.isSuccessful()) {
+                Visit newVisit = response.body(); // The VisitType in response contains null display string. Needs a fix (AC-1030)
+                newVisit.visitType = visitType; // Temporary workaround
 
-            @Override
-            public void onFailure(@NonNull Call<Visit> call, @NonNull Throwable t) {
-                if (callbackListener != null) {
-                    callbackListener.onErrorResponse(t.getMessage());
-                }
+                visitDAO.saveOrUpdate(newVisit, patient.getId()).toBlocking().subscribe(newVisit::setId);
+
+                return newVisit;
+            } else {
+                throw new IOException(response.message());
             }
         });
     }

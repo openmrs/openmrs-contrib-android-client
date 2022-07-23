@@ -14,115 +14,103 @@
 
 package com.openmrs.android_sdk.library.api.repository;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.work.Constraints;
-import androidx.work.Data;
-import androidx.work.NetworkType;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.API.FULL;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.ALLERGY_UUID;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.PATIENT_UUID;
 
-import com.openmrs.android_sdk.R;
-import com.openmrs.android_sdk.library.OpenmrsAndroid;
-import com.openmrs.android_sdk.library.api.RestApi;
-import com.openmrs.android_sdk.library.api.RestServiceBuilder;
-import com.openmrs.android_sdk.library.api.workers.allergy.DeleteAllergyWorker;
-import com.openmrs.android_sdk.library.dao.AllergyRoomDAO;
-import com.openmrs.android_sdk.library.databases.AppDatabase;
-import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
-import com.openmrs.android_sdk.library.databases.entities.AllergyEntity;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
-import com.openmrs.android_sdk.library.models.Allergy;
-import com.openmrs.android_sdk.library.models.AllergyCreate;
-import com.openmrs.android_sdk.library.models.ConceptMembers;
-import com.openmrs.android_sdk.library.models.Results;
-import com.openmrs.android_sdk.library.models.SystemProperty;
-import com.openmrs.android_sdk.utilities.NetworkUtils;
-import com.openmrs.android_sdk.utilities.ToastUtil;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Observable;
 
-import static com.openmrs.android_sdk.utilities.ApplicationConstants.API.FULL;
-import static com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.ALLERGY_UUID;
-import static com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.PATIENT_UUID;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.work.Constraints;
+import androidx.work.Data;
+import androidx.work.NetworkType;
+import androidx.work.OneTimeWorkRequest;
+
+import com.openmrs.android_sdk.R;
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.api.workers.allergy.DeleteAllergyWorker;
+import com.openmrs.android_sdk.library.dao.AllergyRoomDAO;
+import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
+import com.openmrs.android_sdk.library.databases.entities.AllergyEntity;
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
+import com.openmrs.android_sdk.library.models.Allergy;
+import com.openmrs.android_sdk.library.models.AllergyCreate;
+import com.openmrs.android_sdk.library.models.ConceptMembers;
+import com.openmrs.android_sdk.library.models.Patient;
+import com.openmrs.android_sdk.library.models.ResultType;
+import com.openmrs.android_sdk.library.models.Results;
+import com.openmrs.android_sdk.library.models.SystemProperty;
+import com.openmrs.android_sdk.utilities.NetworkUtils;
 
 /**
  * The type Allergy repository.
  */
-public class AllergyRepository {
-    AllergyRoomDAO allergyRoomDAO;
-    WorkManager workManager;
-    String patientID;
-    RestApi restApi;
-    List<Allergy> allergyList = new ArrayList<>();
-    List<AllergyEntity> allergyEntitiesOffline = new ArrayList<>();
+@Singleton
+public class AllergyRepository extends BaseRepository {
+    private AllergyRoomDAO allergyRoomDAO;
 
-    /**
-     * Instantiates a new Allergy repository.
-     *
-     * @param patientID the patient id
-     */
-    public AllergyRepository(String patientID) {
-        this.patientID = patientID;
-        allergyRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance()).allergyRoomDAO();
-        workManager = WorkManager.getInstance(OpenmrsAndroid.getInstance());
-        restApi = RestServiceBuilder.createService(RestApi.class);
+    @Inject
+    public AllergyRepository() {
+        allergyRoomDAO = db.allergyRoomDAO();
     }
 
     /**
      * Instantiates a new Allergy repository.
      *
-     * @param id             the id
      * @param allergyRoomDAO the allergy room dao
      */
-    public AllergyRepository(String id, AllergyRoomDAO allergyRoomDAO) {
-        this.patientID = id;
+    public AllergyRepository(AllergyRoomDAO allergyRoomDAO) {
         this.allergyRoomDAO = allergyRoomDAO;
     }
 
     /**
-     * Gets allergies.
+     * Synchronizes allergies from server.
      *
-     * @param restApi the rest api
-     * @param uuid    the uuid
-     * @return the allergies
+     * @param patient the patient to get allergies from
+     * @return the allergies observable
      */
-    public LiveData<List<Allergy>> getAllergies(RestApi restApi, String uuid) {
-        MutableLiveData<List<Allergy>> allergyLiveData = new MutableLiveData<>();
-        allergyEntitiesOffline = allergyRoomDAO.getAllAllergiesByPatientID(patientID);
-        allergyLiveData.setValue(AppDatabaseHelper.convertTo(allergyEntitiesOffline));
+    public Observable<List<Allergy>> syncAllergies(Patient patient) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            String patientId = patient.getId().toString();
+            Response<Results<Allergy>> response = restApi.getAllergies(patient.getUuid()).execute();
 
-        if (NetworkUtils.isOnline()) {
-            restApi.getAllergies(uuid).enqueue(new Callback<Results<Allergy>>() {
-                @Override
-                public void onResponse(@NotNull Call<Results<Allergy>> call, @NotNull Response<Results<Allergy>> response) {
-                    if (response.isSuccessful()) {
-                        allergyRoomDAO.deleteAllPatientAllergy(patientID);
-                        allergyList = response.body().getResults();
-                        for (Allergy allergy : allergyList) {
-                            allergyRoomDAO.saveAllergy(AppDatabaseHelper.convert(allergy, patientID));
-                        }
-                        allergyLiveData.setValue(allergyList);
-                    } else {
-                        ToastUtil.error(OpenmrsAndroid.getInstance().getString(R.string.unable_to_fetch_allergies));
-                    }
+            if (response.isSuccessful()) {
+                allergyRoomDAO.deleteAllPatientAllergy(patientId);
+                List<Allergy> allergies = response.body().getResults();
+                for (Allergy allergy : allergies) {
+                    allergyRoomDAO.saveAllergy(AppDatabaseHelper.convert(allergy, patientId));
                 }
-
-                @Override
-                public void onFailure(@NotNull Call<Results<Allergy>> call, @NotNull Throwable t) {
-                    ToastUtil.error(OpenmrsAndroid.getInstance().getString(R.string.unable_to_fetch_allergies));
-                }
-            });
-        }
-        return allergyLiveData;
+                return allergies;
+            } else {
+                /*
+                * WARNING: The server returns an exception when allergies haven't been checked
+                * for the patient yet. We don't receive a distinction between a patient being
+                * checked for allergies that results in (No allergies), and a patient NOT being
+                * checked for allergies so that the allergies are (UNKNOWN) yet.
+                *
+                * Until the server side fixes this issue:
+                * Don't update ROOM DB (if it already has allergy records)
+                * Don't throw an exception, as it is a wrong response
+                * Just return an empty list so that the observer behaves correctly
+                * IN THE OBSERVER RESPONSE, DO NOT ASSUME THAT (UNKNOWN) ALLERGIES ARE (NO ALLERGIES)
+                * AS THIS COULD BE UNSAFE TO THE PATIENT!
+                * */
+                return Collections.emptyList();
+                // Uncomment this when the server fixes the issue:
+                //throw new IOException("Error with fetching allergies: " + response.message());
+            }
+        });
     }
 
     /**
@@ -131,10 +119,11 @@ public class AllergyRepository {
      * @param patientID the patient id
      * @return the allergy from database
      */
-    public List<Allergy> getAllergyFromDatabase(String patientID) {
-        allergyEntitiesOffline = allergyRoomDAO.getAllAllergiesByPatientID(patientID);
-        allergyList = AppDatabaseHelper.convertTo(allergyEntitiesOffline);
-        return allergyList;
+    public Observable<List<Allergy>> getAllergyFromDatabase(String patientID) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            List<AllergyEntity> offlineAllergyEntities = allergyRoomDAO.getAllAllergiesByPatientID(patientID);
+            return AppDatabaseHelper.convertTo(offlineAllergyEntities);
+        });
     }
 
     /**
@@ -155,43 +144,35 @@ public class AllergyRepository {
     /**
      * Delete allergy.
      *
-     * @param restApi     the rest api
      * @param patientUuid the patient uuid
      * @param allergyUuid the allergy uuid
-     * @param callback    the callback
+     *
+     * @return observable true if allergy is deleted from server, and false if only deleted locally
      */
-    public void deleteAllergy(RestApi restApi, String patientUuid, String allergyUuid, DefaultResponseCallback callback) {
-        if (NetworkUtils.isOnline()) {
-            restApi.deleteAllergy(patientUuid, allergyUuid).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
-                        allergyRoomDAO.deleteAllergyByUUID(allergyUuid);
-                        ToastUtil.success(OpenmrsAndroid.getInstance().getString(R.string.delete_allergy_success));
-                        callback.onResponse();
-                    }
+    public Observable<ResultType> deleteAllergy(String patientUuid, String allergyUuid) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            if (NetworkUtils.isOnline()) {
+                Response<ResponseBody> response = restApi.deleteAllergy(patientUuid, allergyUuid).execute();
+                if (response.isSuccessful()) {
+                    allergyRoomDAO.deleteAllergyByUUID(allergyUuid);
+                    return ResultType.AllergyDeletionSuccess;
+                } else {
+                    throw new IOException(response.message());
                 }
+            } else {
+                // offline deletion
+                Data data = new Data.Builder()
+                        .putString(PATIENT_UUID, patientUuid)
+                        .putString(ALLERGY_UUID, allergyUuid)
+                        .build();
+                allergyRoomDAO.deleteAllergyByUUID(allergyUuid);
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    callback.onErrorResponse(OpenmrsAndroid.getInstance().getString(R.string.delete_allergy_failure));
-                }
-            });
-        } else {
-            // offline deletion
-            Data data = new Data.Builder()
-                .putString(PATIENT_UUID, patientUuid)
-                .putString(ALLERGY_UUID, allergyUuid)
-                .build();
-            allergyRoomDAO.deleteAllergyByUUID(allergyUuid);
-            callback.onResponse();
-
-            // enqueue the work to workManager
-            Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
-            workManager.enqueue(new OneTimeWorkRequest.Builder(DeleteAllergyWorker.class).setConstraints(constraints).setInputData(data).build());
-
-            ToastUtil.notify(OpenmrsAndroid.getInstance().getString(R.string.delete_allergy_offline));
-        }
+                // enqueue the work to workManager
+                Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+                workManager.enqueue(new OneTimeWorkRequest.Builder(DeleteAllergyWorker.class).setConstraints(constraints).setInputData(data).build());
+                return ResultType.AllergyDeletionLocalSuccess;
+            }
+        });
     }
 
     /**
@@ -249,17 +230,17 @@ public class AllergyRepository {
     /**
      * Create allergy.
      *
-     * @param patientUuid   the patient uuid
+     * @param patient       the patient
      * @param allergyCreate the allergy create
      * @param callback      the callback
      */
-    public void createAllergy(String patientUuid, AllergyCreate allergyCreate, DefaultResponseCallback callback) {
-        restApi.createAllergy(patientUuid, allergyCreate).enqueue(new Callback<Allergy>() {
+    public void createAllergy(Patient patient, AllergyCreate allergyCreate, DefaultResponseCallback callback) {
+        restApi.createAllergy(patient.getUuid(), allergyCreate).enqueue(new Callback<Allergy>() {
             @Override
             public void onResponse(Call<Allergy> call, Response<Allergy> response) {
                 if (response.isSuccessful()) {
                     callback.onResponse();
-                    allergyRoomDAO.saveAllergy(AppDatabaseHelper.convert(response.body(), patientID));
+                    allergyRoomDAO.saveAllergy(AppDatabaseHelper.convert(response.body(), patient.getId().toString()));
                 } else {
                     callback.onErrorResponse(OpenmrsAndroid.getInstance().getString(R.string.error_creating_allergy));
                 }
@@ -275,19 +256,18 @@ public class AllergyRepository {
     /**
      * Update allergy.
      *
-     * @param patientUuid   the patient uuid
      * @param allergyUuid   the allergy uuid
      * @param id            the id
      * @param allergyCreate the allergy create
      * @param callback      the callback
      */
-    public void updateAllergy(String patientUuid, String allergyUuid, Long id, AllergyCreate allergyCreate, DefaultResponseCallback callback) {
-        restApi.updateAllergy(patientUuid, allergyUuid, allergyCreate).enqueue(new Callback<Allergy>() {
+    public void updateAllergy(Patient patient, String allergyUuid, Long id, AllergyCreate allergyCreate, DefaultResponseCallback callback) {
+        restApi.updateAllergy(patient.getUuid(), allergyUuid, allergyCreate).enqueue(new Callback<Allergy>() {
             @Override
             public void onResponse(Call<Allergy> call, Response<Allergy> response) {
                 if (response.isSuccessful()) {
                     callback.onResponse();
-                    AllergyEntity allergyEntity = AppDatabaseHelper.convert(response.body(), patientID);
+                    AllergyEntity allergyEntity = AppDatabaseHelper.convert(response.body(), patient.getId().toString());
                     allergyEntity.setId(id);
                     allergyRoomDAO.updateAllergy(allergyEntity);
                 } else {

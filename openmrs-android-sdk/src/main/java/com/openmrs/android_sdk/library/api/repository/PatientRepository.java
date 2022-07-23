@@ -41,15 +41,12 @@ import com.openmrs.android_sdk.library.OpenMRSLogger;
 import com.openmrs.android_sdk.library.OpenmrsAndroid;
 import com.openmrs.android_sdk.library.api.RestApi;
 import com.openmrs.android_sdk.library.api.RestServiceBuilder;
-import com.openmrs.android_sdk.library.api.promise.SimpleDeferredObject;
-import com.openmrs.android_sdk.library.api.promise.SimplePromise;
 import com.openmrs.android_sdk.library.api.services.EncounterService;
 import com.openmrs.android_sdk.library.api.workers.UpdatePatientWorker;
 import com.openmrs.android_sdk.library.dao.EncounterCreateRoomDAO;
 import com.openmrs.android_sdk.library.dao.PatientDAO;
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
 import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DownloadPatientCallback;
 import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.PatientResponseCallback;
 import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.VisitsResponseCallback;
 import com.openmrs.android_sdk.library.models.Encountercreate;
@@ -65,8 +62,6 @@ import com.openmrs.android_sdk.library.models.SystemProperty;
 import com.openmrs.android_sdk.utilities.ApplicationConstants;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
 import com.openmrs.android_sdk.utilities.ToastUtil;
-
-import org.jdeferred.android.AndroidDeferredManager;
 
 /**
  * The type Patient repository.
@@ -247,7 +242,7 @@ public class PatientRepository extends BaseRepository {
      *
      * @param patient the locally merged patient
      */
-    public Observable<Patient> updateMatchingPatient(final Patient patient){
+    public Observable<Patient> updateMatchingPatient(final Patient patient) {
         return AppDatabaseHelper.createObservableIO(() -> {
 
             PatientDtoUpdate patientDto = patient.getUpdatedPatientDto();
@@ -263,70 +258,49 @@ public class PatientRepository extends BaseRepository {
     /**
      * Download patient by uuid.
      *
-     * @param uuid             the uuid
-     * @param callbackListener the callback listener
+     * @param uuid patient uuid
+     * @return Patient observable
      */
-    public void downloadPatientByUuid(@NonNull final String uuid, @NonNull final DownloadPatientCallback callbackListener) {
-        Call<PatientDto> call = restApi.getPatientByUUID(uuid, "full");
-        call.enqueue(new Callback<PatientDto>() {
-            @Override
-            public void onResponse(@NonNull Call<PatientDto> call, @NonNull Response<PatientDto> response) {
-                if (response.isSuccessful()) {
-                    final PatientDto newPatientDto = response.body();
-                    AndroidDeferredManager dm = new AndroidDeferredManager();
-                    dm.when(downloadPatientPhotoByUuid(newPatientDto.getUuid())).done(result -> {
-                        if (result != null) {
-                            newPatientDto.getPerson().setPhoto(result);
-                            callbackListener.onPatientPhotoDownloaded(newPatientDto.getPatient());
-                        }
-                    });
-                    callbackListener.onPatientDownloaded(newPatientDto.getPatient());
-                } else {
-                    callbackListener.onErrorResponse(response.message());
-                }
-            }
+    public Observable<Patient> downloadPatientByUuid(@NonNull final String uuid) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Call<PatientDto> call = restApi.getPatientByUUID(uuid, "full");
+            Response<PatientDto> response = call.execute();
+            if (response.isSuccessful()) {
+                final PatientDto newPatientDto = response.body();
 
-            @Override
-            public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
-                callbackListener.onErrorResponse(t.getMessage());
+                Bitmap photo = downloadPatientPhotoByUuid(newPatientDto.getUuid()).toBlocking().first();
+                if (photo != null) newPatientDto.getPerson().setPhoto(photo);
+
+                return newPatientDto.getPatient();
+            } else {
+                throw new IOException("Error with downloading patient: " + response.message());
             }
         });
     }
 
     /**
-     * Download patient photo by uuid simple promise.
+     * Download patient photo by uuid.
      *
-     * @param uuid the uuid
-     * @return the simple promise
+     * @param uuid patient uuid
+     * @return Photo bitmap or null bitmap observable
      */
-    public SimplePromise<Bitmap> downloadPatientPhotoByUuid(String uuid) {
-        final SimpleDeferredObject<Bitmap> deferredObject = new SimpleDeferredObject<>();
-        Call<ResponseBody> call = restApi.downloadPatientPhoto(uuid);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                InputStream inputStream;
-                if (response.isSuccessful()) {
-                    inputStream = response.body().byteStream();
+    public Observable<Bitmap> downloadPatientPhotoByUuid(String uuid) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Call<ResponseBody> call = restApi.downloadPatientPhoto(uuid);
+            Response<ResponseBody> response = call.execute();
+
+            if (response.isSuccessful()) {
+                try {
+                    InputStream inputStream = response.body().byteStream();
                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                    try {
-                        inputStream.close();
-                    } catch (IOException e) {
-                        logger.e(e.getMessage());
-                    }
-                    deferredObject.resolve(bitmap);
-                } else {
-                    Throwable throwable = new Throwable(response.message());
-                    deferredObject.reject(throwable);
+                    inputStream.close();
+                    return bitmap;
+                } catch (Exception e) {
+                    logger.e(e.getMessage());
                 }
             }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                deferredObject.reject(t);
-            }
+            return null;
         });
-        return deferredObject.promise();
     }
 
     /**

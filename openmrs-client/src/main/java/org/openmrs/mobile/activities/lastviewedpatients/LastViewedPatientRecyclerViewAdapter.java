@@ -14,6 +14,11 @@
 
 package org.openmrs.mobile.activities.lastviewedpatients;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import rx.android.schedulers.AndroidSchedulers;
 import android.app.Activity;
 import android.content.res.ColorStateList;
 import android.view.ActionMode;
@@ -31,21 +36,14 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.openmrs.android_sdk.library.api.repository.PatientRepository;
+import com.openmrs.android_sdk.library.api.repository.VisitRepository;
 import com.openmrs.android_sdk.library.dao.PatientDAO;
 import com.openmrs.android_sdk.library.models.Patient;
 import com.openmrs.android_sdk.utilities.DateUtils;
 import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.R;
-import com.openmrs.android_sdk.library.api.repository.PatientRepository;
-import com.openmrs.android_sdk.library.api.repository.VisitRepository;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DownloadPatientCallback;
-
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import rx.android.schedulers.AndroidSchedulers;
 
 class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int VIEW_TYPE_ITEM = 0;
@@ -354,37 +352,22 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     }
 
     private void downloadPatient(final Patient patient, final Boolean showSnackBar) {
-        new PatientRepository().downloadPatientByUuid(patient.getUuid(), new DownloadPatientCallback() {
-            @Override
-            public void onPatientDownloaded(Patient newPatient) {
-                new PatientDAO().savePatient(newPatient)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(id -> {
-                        new VisitRepository().syncVisitsData(newPatient);
-                        new VisitRepository().syncLastVitals(newPatient.getUuid());
-                        patients.remove(patient);
-                        notifyDataSetChanged();
-                        if (showSnackBar) {
-                            view.showOpenPatientSnackbar(newPatient.getId());
-                        }
-                    });
-            }
-
-            @Override
-            public void onPatientPhotoDownloaded(Patient patient) {
-                new PatientDAO().updatePatient(patient.getId(), patient);
-            }
-
-            @Override
-            public void onResponse() {
-                // This method is intentionally empty
-            }
-
-            @Override
-            public void onErrorResponse(String errorMessage) {
-                ToastUtil.error(mContext.getString(R.string.failed_fetching_patient_data_error_message));
-            }
-        });
+        new PatientRepository().downloadPatientByUuid(patient.getUuid())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        newPatient -> new PatientDAO().savePatient(newPatient)
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(id -> {
+                                    new VisitRepository().syncVisitsData(newPatient);
+                                    new VisitRepository().syncLastVitals(newPatient.getUuid());
+                                    patients.remove(patient);
+                                    notifyDataSetChanged();
+                                    if (showSnackBar) {
+                                        view.showOpenPatientSnackbar(newPatient.getId());
+                                    }
+                                }),
+                        throwable -> ToastUtil.error(mContext.getString(R.string.failed_fetching_patient_data_error_message))
+                );
     }
 
     public void disableCheckBox(PatientViewHolder holder) {

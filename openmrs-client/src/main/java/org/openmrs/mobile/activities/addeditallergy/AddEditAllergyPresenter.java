@@ -58,7 +58,7 @@ public class AddEditAllergyPresenter extends BasePresenter implements AddEditAll
         this.view.setPresenter(this);
         this.allergyUuid = allergyUuid;
         mPatient = new PatientDAO().findPatientByID(patientID.toString());
-        allergyRepository = new AllergyRepository(patientID.toString());
+        allergyRepository = new AllergyRepository();
     }
 
     @Override
@@ -121,7 +121,7 @@ public class AddEditAllergyPresenter extends BasePresenter implements AddEditAll
         allergyPatient.setUuid(mPatient.getUuid());
         allergyPatient.setIdentifier(new ArrayList<>());
         allergyCreate.setPatient(allergyPatient);
-        allergyRepository.createAllergy(mPatient.getUuid(), allergyCreate, this);
+        allergyRepository.createAllergy(mPatient, allergyCreate, this);
     }
 
     @Override
@@ -130,7 +130,7 @@ public class AddEditAllergyPresenter extends BasePresenter implements AddEditAll
         allergyPatient.setUuid(mPatient.getUuid());
         allergyPatient.setIdentifier(new ArrayList<>());
         allergyCreate.setPatient(allergyPatient);
-        allergyRepository.updateAllergy(mPatient.getUuid(), allergyUuid, mAllergy.getId(), allergyCreate, this);
+        allergyRepository.updateAllergy(mPatient, allergyUuid, mAllergy.getId(), allergyCreate, this);
     }
 
     @Override

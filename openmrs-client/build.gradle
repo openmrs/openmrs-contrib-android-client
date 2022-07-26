@@ -122,7 +122,7 @@ android {
 }
 
 repositories {
-    maven { url 'http://yanzm.github.io/MaterialTabHost/repository' }
+    maven { url 'https://yanzm.github.io/MaterialTabHost/repository' }
     mavenCentral()
     jcenter()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }

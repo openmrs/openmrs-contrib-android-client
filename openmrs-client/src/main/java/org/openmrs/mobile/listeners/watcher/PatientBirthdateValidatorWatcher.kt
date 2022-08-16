@@ -16,43 +16,46 @@ package org.openmrs.mobile.listeners.watcher
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
-import com.openmrs.android_sdk.utilities.ApplicationConstants
-import com.openmrs.android_sdk.utilities.StringUtils.notEmpty
+import com.openmrs.android_sdk.utilities.ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE
+import com.openmrs.android_sdk.utilities.ToastUtil
+import org.openmrs.mobile.R
 
-class PatientBirthdateValidatorWatcher(private val eddob: EditText,
-                                       private val edmonth: EditText,
-                                       private val edyr: EditText) : TextWatcher {
+class PatientBirthdateValidatorWatcher(private val edDob: EditText,
+                                       private val edMonth: EditText,
+                                       private val edYear: EditText) : TextWatcher {
 
     override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-        // This method is intentionally empty
+        // No usage for this method
     }
 
     override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-        // This method is intentionally empty
+        // No usage for this method
     }
 
     override fun afterTextChanged(editable: Editable) {
-        eddob.text.clear()
-        if (editable.length > 3) {
-            //string resource added "input_too_big_error_message"
-            error("Input is too big")
-            edmonth.text.clear()
-            edyr.text.clear()
-        } else {
-            if (notEmpty(editable.toString()) && editable.toString().toInt() > ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE) {
-                //string resource added "patient_age_out_of_bounds_error_message"
-                error("Patient's age must be between 0 and " + ApplicationConstants.RegisterPatientRequirements.MAX_PATIENT_AGE)
-                edmonth.text.clear()
-                edyr.text.clear()
+        if (editable.isEmpty()) return
+
+        // Years or months estimation is being used instead of full date of birth
+        edDob.text.clear()
+
+        if (editable.isNotEmpty() && editable.toString().toInt() > MAX_PATIENT_AGE) {
+            ToastUtil.error(
+                    String.format(
+                            edYear.rootView.context.getString(R.string.age_out_of_bounds_message),
+                            MAX_PATIENT_AGE
+                    )
+            )
+            edMonth.text.clear()
+            edYear.text.clear()
+        }
+
+        // Convert estimated number of months (if >= 12) into years
+        if (edMonth.text.isNotEmpty()) {
+            val monthValue = edMonth.text.toString().toInt()
+            if (monthValue >= 12) {
+                edMonth.setText((monthValue % 12).toString())
+                edYear.setText((monthValue / 12).toString())
             }
-        }
-        var monthValue = 0
-        if (notEmpty(edmonth.text.toString())) {
-            monthValue = edmonth.text.toString().toInt()
-        }
-        if (monthValue >= 12) {
-            edmonth.setText((monthValue % 12).toString())
-            edyr.setText((monthValue / 12).toString())
         }
     }
 

@@ -14,6 +14,14 @@
 
 package org.openmrs.mobile.activities.providermanagerdashboard.addprovider;
 
+import static android.app.Activity.RESULT_OK;
+import static com.openmrs.android_sdk.utilities.StringUtils.ILLEGAL_CHARACTERS;
+import static com.openmrs.android_sdk.utilities.StringUtils.validateText;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,18 +36,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.openmrs.android_sdk.library.models.Person;
 import com.openmrs.android_sdk.library.models.Provider;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseFragment;
 import org.openmrs.mobile.databinding.FragmentAddProviderBinding;
-import com.openmrs.android_sdk.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ViewUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import static android.app.Activity.RESULT_OK;
 
 public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Presenter>
         implements AddProviderContract.View {
@@ -129,7 +131,7 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
             binding.firstNameTextLayout.setErrorEnabled(true);
             binding.firstNameTextLayout.setError(emptyError);
             return false;
-        } else if (!ViewUtils.validateText(ViewUtils.getInput(binding.firstNameEditText), ViewUtils.ILLEGAL_CHARACTERS)) {
+        } else if (!validateText(ViewUtils.getInput(binding.firstNameEditText), ILLEGAL_CHARACTERS)) {
             binding.firstNameTextLayout.setErrorEnabled(true);
             binding.firstNameTextLayout.setError(givenNameError);
             return false;
@@ -142,7 +144,7 @@ public class AddProviderFragment extends ACBaseFragment<AddProviderContract.Pres
             binding.lastNameTextLayout.setErrorEnabled(true);
             binding.lastNameTextLayout.setError(emptyError);
             return false;
-        } else if (!ViewUtils.validateText(ViewUtils.getInput(binding.lastNameEditText), ViewUtils.ILLEGAL_CHARACTERS)) {
+        } else if (!validateText(ViewUtils.getInput(binding.lastNameEditText), ILLEGAL_CHARACTERS)) {
             binding.lastNameTextLayout.setErrorEnabled(true);
             binding.lastNameTextLayout.setError(familyNameError);
             return false;

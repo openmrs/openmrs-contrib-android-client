@@ -11,11 +11,11 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.mobile.utilities
+package com.openmrs.android_sdk.utilities
 
 import com.openmrs.android_sdk.library.models.Patient
-import com.google.common.base.Objects
-import java.util.*
+import java.util.Arrays
+import java.util.LinkedList
 
 class PatientComparator {
     fun findSimilarPatient(patientList: List<Patient>, patient: Patient): List<Patient> {
@@ -47,22 +47,22 @@ class PatientComparator {
     private fun compareAddress(newPatient: Patient, existingPatient: Patient): Int {
         var score = 0
         if (existingPatient.address != null && newPatient.address != null) {
-            if (Objects.equal(newPatient.address.address1, existingPatient.address.address1)) {
+            if (newPatient.address.address1 == existingPatient.address.address1) {
                 score += 1
             }
-            if (Objects.equal(newPatient.address.address2, existingPatient.address.address2)) {
+            if (newPatient.address.address2 == existingPatient.address.address2) {
                 score += 1
             }
-            if (Objects.equal(newPatient.address.cityVillage, existingPatient.address.address2)) {
+            if (newPatient.address.cityVillage == existingPatient.address.address2) {
                 score += 1
             }
-            if (Objects.equal(newPatient.address.country, existingPatient.address.country)) {
+            if (newPatient.address.country == existingPatient.address.country) {
                 score += 1
             }
-            if (Objects.equal(newPatient.address.stateProvince, existingPatient.address.stateProvince)) {
+            if (newPatient.address.stateProvince == existingPatient.address.stateProvince) {
                 score += 1
             }
-            if (Objects.equal(newPatient.address.postalCode, existingPatient.address.postalCode)) {
+            if (newPatient.address.postalCode == existingPatient.address.postalCode) {
                 score += 1
             }
         }
@@ -71,7 +71,7 @@ class PatientComparator {
 
     private fun compareBirthdate(newPatient: Patient, existingPatient: Patient): Int {
         var score = 0
-        if (Objects.equal(newPatient.birthdate, existingPatient.birthdate)) {
+        if (newPatient.birthdate == existingPatient.birthdate) {
             score += 1
         }
         return score
@@ -79,7 +79,7 @@ class PatientComparator {
 
     private fun compareGender(newPatient: Patient, existingPatient: Patient): Int {
         var score = 0
-        if (Objects.equal(newPatient.gender, existingPatient.gender)) {
+        if (newPatient.gender == existingPatient.gender) {
             score += 1
         }
         return score
@@ -88,13 +88,13 @@ class PatientComparator {
     private fun compareFullPersonName(newPatient: Patient, existingPatient: Patient): Int {
         var score = 0
         if (existingPatient.name != null && newPatient.name != null) {
-            if (Objects.equal(newPatient.name.givenName, existingPatient.name.givenName)) {
+            if (newPatient.name.givenName == existingPatient.name.givenName) {
                 score += 1
             }
-            if (Objects.equal(newPatient.name.familyName, existingPatient.name.familyName)) {
+            if (newPatient.name.familyName == existingPatient.name.familyName) {
                 score += 1
             }
-            if (Objects.equal(newPatient.name.middleName, existingPatient.name.middleName)) {
+            if (newPatient.name.middleName == existingPatient.name.middleName) {
                 score += 1
             }
         }

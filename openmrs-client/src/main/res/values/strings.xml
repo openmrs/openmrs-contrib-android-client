@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ The contents of this file are subject to the OpenMRS Public License
   ~ Version 1.0 (the "License"); you may not use this file except in
   ~ compliance with the License. You may obtain a copy of the License at
@@ -34,6 +35,7 @@
     <string name="login_offline">Offline</string>
     <string name="login_online">Online</string>
 
+    <!-- AddEditPatient -->
     <string name="emptyerror">Required</string>
     <string name="fname_invalid_error">Given name cannot contain symbols or numbers</string>
     <string name="midname_invalid_error">Middle name cannot contain symbols or numbers</string>
@@ -51,12 +53,15 @@
     <string name="addr2_hint">Address Line 2</string>
     <string name="addr_invalid_error">Address cannot contain invalid characters</string>
     <string name="atleastone">Fill at least one address field</string>
-
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="dob_hint">Date of Birth (dd/MM/yyyy)</string>
     <string name="estyr">Estimated Years</string>
     <string name="estmonth">Estimated Months</string>
+    <string name="age_out_of_bounds_message">Patient\'s age must be between 0 and %d</string>
+    <string name="register_patient_error">Patient cannot be registered due to server error</string>
+    <string name="update_patient_success">Patient %s updated</string>
+    <string name="update_patient_error">Patient %s cannot be updated due to server error</string>
 
     <!-- Offline Mode -->
     <string name="offline_mode_unsupported_in_first_login">Offline mode is not supported during first login.Enable online mode and then try again.</string>
@@ -213,6 +218,10 @@
     <string name="list_visit_selector_show">show details</string>
     <string name="list_visit_selector_hide">hide details</string>
     <string name="visit_exp_list_empty">Visit has no encounters yet.</string>
+    <string name="visit_fetching_error">Error with fetching the visit</string>
+    <string name="visit_ending_not_online_error">Cannot end visit without internet connection or in offline mode</string>
+    <string name="visit_ending_error">Error ending this visit</string>
+    <string name="patient_not_yet_registered">Patient not yet registered, cannot create encounter.</string>
 
     <!-- Capture Vitals activity -->
     <string name="action_delete_patient">Delete Patient</string>
@@ -258,13 +267,13 @@
     <string name="invalid_login_or_password_message">Invalid login or password, please try again.</string>
     <string name="snackbar_no_internet_connection">No internet connection</string>
 
-    <!--permissions-->
-    <string name="permission_camera_rationale">Camera permission is needed to capture photo.</string>
-    <string name="permission_camera_denied">Camera permission was denied. Please consider granting it in order to access the camera</string>
-    <string name="permission_camera_neverask">Camera permission was denied with never ask again</string>
+    <!-- Permissions -->
+    <string name="permissions_camera_storage_rationale">Camera and storage write permissions are needed to capture and save a photo.</string>
+    <string name="permissions_camera_storage_denied">Camera or storage write permission was denied. Consider granting them to take a photo.</string>
+    <string name="permissions_camera_storage_neverask">Camera or storage write permission was denied with Never ask again.</string>
+    <string name="permission_storage_neverask">Storage write permission was denied with Never ask again, this permission is needed.</string>
     <string name="button_allow">Allow</string>
     <string name="button_deny">Deny</string>
-    <string name="patient_not_yet_registered">Patient not yet registered, cannot create encounter.</string>
 
     <!-- Layout strings -->
     <string name="sync">Sync</string>
@@ -392,6 +401,11 @@
     <string name="all_fields_empty_error_message">All fields cannot be empty</string>
     <string name="no_such_form_name_error_message">There is no encounter type called %1$s</string>
 
+    <!--LastViewPatients Fragment-->
+    <string name="fetch_patients_remote_error">Error with loading patients</string>
+    <string name="search_patient_remote_error">Error with searching for the patient</string>
+    <string name="search_patient_remote_no_results">No patients found.</string>
+
     <!--LastViewedPatientRecyclerViewAdapter-->
     <string name="failed_fetching_patient_data_error_message">Failed to fetch patient data</string>
 
@@ -476,12 +490,10 @@
     <string name="form_submitted_successfully" translatable="false">Form Submitted Successfully</string>
 
     <!--Marking Patient Deceased -->
-    <string name="no_death_concepts_in_server">Please add the possible causes of death in the server</string>
+    <string name="mark_patient_deceased_no_concepts">Please add a valid deceased concept UUID and possible causes of death in the server</string>
     <string name="mark_patient_deceased">Mark Patient Deceased?</string>
     <string name="mark_patient_deceased_notice">The patient will be marked deceased and no further visit will be possible.</string>
     <string name="mark_patient_deceased_proceed">Proceed</string>
-    <string name="mark_patient_deceased_invalid_uuid">Please add a valid concept UUID in the server </string>
-    <string name="mark_patient_deceased_concept_has_no_answer">No possible causes of death found for this setting</string>
     <string name="marked_patient_deceased_successfully">Patient is marked deceased — %1$s</string>
     <string name="cannot_start_visit_for_deceased">Cannot start visit for deceased patient</string>
 
@@ -526,4 +538,5 @@
     <string name="about_openmrs_1">OpenMRS is a global community of truly dedicated, talented, and generous contributors who build and maintain the OpenMRS platform and other, foundational OpenMRS technical products.</string>
     <string name="about_openmrs_2">OpenMRS is a platform that countries and implementers use to create a customized EMR system in response to actual needs on the ground.</string>
     <string name="more_about_openmrs"><![CDATA[more]]></string>
+
 </resources>

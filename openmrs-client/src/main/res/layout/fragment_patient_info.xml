@@ -92,10 +92,10 @@
                             android:layout_marginRight="-25dp"
                             android:layout_marginBottom="10dp"
                             android:backgroundTint="@color/color_accent"
-                            app:srcCompat="@drawable/ic_photo_camera_white_48dp"
                             android:tint="@color/color_accent"
                             app:borderWidth="0dp"
                             app:rippleColor="@color/color_accent"
+                            app:srcCompat="@drawable/ic_photo_camera_white_48dp"
                             tools:targetApi="lollipop" />
                     </RelativeLayout>
 
@@ -129,10 +129,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/unknown_cardview"
-                android:visibility="gone">
+                app:layout_constraintTop_toBottomOf="@id/unknown_cardview">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -149,22 +149,22 @@
                         android:text="Patient deceased"
                         android:textColor="?android:attr/textColorPrimary"
                         android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <ProgressBar
                         android:id="@+id/deceased_progressBar"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center_horizontal"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
 
                     <Spinner
                         android:id="@+id/deceased_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
+                        android:layout_marginTop="8dp"
                         android:background="@drawable/spinner_background"
-                        android:visibility="gone"
-                        android:layout_marginTop="8dp"/>
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
@@ -369,10 +369,11 @@
                                     android:hint="@string/dob_hint"
                                     android:imeOptions="actionNext"
                                     android:inputType="datetime"
+                                    android:maxLength="10"
                                     android:maxLines="1"
                                     android:nextFocusDown="@+id/estimatedYear"
-                                    android:textSize="14sp"
-                                    android:maxLength="10"/>                            </com.google.android.material.textfield.TextInputLayout>
+                                    android:textSize="14sp" />
+                            </com.google.android.material.textfield.TextInputLayout>
 
                             <ImageButton
                                 android:id="@+id/datePicker"
@@ -385,10 +386,10 @@
                                 android:layout_marginEnd="16dp"
                                 android:layout_marginRight="16dp"
                                 android:background="@drawable/ic_date_range_24dp"
+                                android:backgroundTint="?android:attr/textColorPrimary"
                                 app:layout_constraintBottom_toBottomOf="@id/textInputLayoutDOB"
                                 app:layout_constraintRight_toRightOf="@id/textInputLayoutDOB"
-                                app:layout_constraintTop_toTopOf="@id/textInputLayoutDOB"
-                                android:backgroundTint="?android:attr/textColorPrimary"/>
+                                app:layout_constraintTop_toTopOf="@id/textInputLayoutDOB" />
 
                             <TextView
                                 android:layout_width="0dp"
@@ -524,7 +525,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLayoutAddess2"
+                        android:id="@+id/textInputLayoutAddress2"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

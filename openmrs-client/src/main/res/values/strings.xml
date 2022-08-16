@@ -392,6 +392,11 @@
     <string name="all_fields_empty_error_message">All fields cannot be empty</string>
     <string name="no_such_form_name_error_message">There is no encounter type called %1$s</string>
 
+    <!--LastViewPatients Fragment-->
+    <string name="fetch_patients_remote_error">Error with loading patients</string>
+    <string name="search_patient_remote_error">Error with searching for the patient</string>
+    <string name="search_patient_remote_no_results">No patients found.</string>
+
     <!--LastViewedPatientRecyclerViewAdapter-->
     <string name="failed_fetching_patient_data_error_message">Failed to fetch patient data</string>
 

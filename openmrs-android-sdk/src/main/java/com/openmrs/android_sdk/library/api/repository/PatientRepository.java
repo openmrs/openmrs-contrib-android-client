@@ -362,56 +362,19 @@ public class PatientRepository extends BaseRepository {
     }
 
     /**
-     * Update last viewed list.
-     *
-     * @param limit      the limit
-     * @param startIndex the start index
-     * @param callback   the callback
-     */
-    public void updateLastViewedList(int limit, int startIndex, PatientResponseCallback callback) {
-        Call<Results<Patient>> call = restApi.getLastViewedPatients(limit, startIndex);
-        call.enqueue(new Callback<Results<Patient>>() {
-            @Override
-            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
-                if (callback != null) {
-                    if (response.isSuccessful()) {
-                        callback.onResponse(response.body());
-                    } else {
-                        callback.onErrorResponse(response.message());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Results<Patient>> call, Throwable t) {
-                callback.onErrorResponse(t.getMessage());
-            }
-        });
-    }
-
-    /**
      * Find patients.
      *
-     * @param query    the query
-     * @param callback the callback
+     * @param query patient query string
+     * @return observable list of patients with matching query
      */
-    public void findPatients(String query, PatientResponseCallback callback) {
-        Call<Results<Patient>> call = restApi.getPatients(query, ApplicationConstants.API.FULL);
-        call.enqueue(new Callback<Results<Patient>>() {
-            @Override
-            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
-                if (callback != null) {
-                    if (response.isSuccessful()) {
-                        callback.onResponse(response.body());
-                    } else {
-                        callback.onErrorResponse(response.message());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
-                callback.onErrorResponse(t.getMessage());
+    public Observable<List<Patient>> findPatients(String query) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Call<Results<Patient>> call = restApi.getPatients(query, ApplicationConstants.API.FULL);
+            Response<Results<Patient>> response = call.execute();
+            if (response.isSuccessful()) {
+                return response.body().getResults();
+            } else {
+                throw new Exception("Error with finding patients: " + response.message());
             }
         });
     }
@@ -421,25 +384,16 @@ public class PatientRepository extends BaseRepository {
      *
      * @param limit      the limit
      * @param startIndex the start index
-     * @param callback   the callback
+     * @return observable list of last viewed patients
      */
-    public void loadMorePatients(int limit, int startIndex, PatientResponseCallback callback) {
-        Call<Results<Patient>> call = restApi.getLastViewedPatients(limit, startIndex);
-        call.enqueue(new Callback<Results<Patient>>() {
-            @Override
-            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
-                if (callback != null) {
-                    if (response.isSuccessful()) {
-                        callback.onResponse(response.body());
-                    }
-                } else {
-                    callback.onErrorResponse(response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
-                callback.onErrorResponse(t.getMessage());
+    public Observable<Results<Patient>> loadMorePatients(int limit, int startIndex) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Call<Results<Patient>> call = restApi.getLastViewedPatients(limit, startIndex);
+            Response<Results<Patient>> response = call.execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                throw new Exception("Error with loading last viewed patients: " + response.message());
             }
         });
     }

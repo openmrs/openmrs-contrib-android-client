@@ -21,7 +21,8 @@ enum class OperationType {
     PatientVisitStarting,
     PatientAllergyFetching,
     PatientVitalsFetching,
-    PatientDeleting
+    PatientDeleting,
+    LastViewedPatientsFetching,
 }
 
 enum class ResultType {

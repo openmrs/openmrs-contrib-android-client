@@ -10,6 +10,19 @@
 
 package com.openmrs.android_sdk.library.api;
 
+import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
+
 import com.openmrs.android_sdk.library.databases.entities.ConceptEntity;
 import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity;
 import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
@@ -40,19 +53,6 @@ import com.openmrs.android_sdk.library.models.SystemSetting;
 import com.openmrs.android_sdk.library.models.User;
 import com.openmrs.android_sdk.library.models.Visit;
 import com.openmrs.android_sdk.library.models.VisitType;
-
-import java.util.Map;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
-import retrofit2.http.Url;
 
 /**
  * The interface Rest api.
@@ -147,8 +147,7 @@ public interface RestApi {
      * @return the call
      */
     @POST("patient")
-    Call<PatientDto> createPatient(
-            @Body PatientDto patientDto);
+    Call<PatientDto> createPatient(@Body PatientDto patientDto);
 
     /**
      * Gets patients.
@@ -160,6 +159,7 @@ public interface RestApi {
     @GET("patient")
     Call<Results<Patient>> getPatients(@Query("q") String searchQuery,
                                        @Query("v") String representation);
+
     /**
      * Gets patients.
      *
@@ -170,7 +170,7 @@ public interface RestApi {
 
     @GET("patient")
     Call<Results<PatientDto>> getPatientsDto(@Query("q") String searchQuery,
-                                       @Query("v") String representation);
+                                             @Query("v") String representation);
 
     /**
      * Upload patient photo call.

@@ -139,6 +139,8 @@
     <string name="synchronize_patient_successful">सफलतापूर्वक सिंक्रनाइज़ किए गए रोगी डेटा।</string>
     <string name="synchronize_patient_error">रोगी डेटा को सिंक्रनाइज़ करना असफल था</string>
     <string name="synchronize_patient_network_error">ऑफ़लाइन मोड में सिंक्रनाइज़ नहीं किया जा सकता</string>
+    <string name="delete_patient_successful">रोगी को सफलतापूर्वक हटाया गया</string>
+    <string name="delete_patient_error">रोगी को हटाने में त्रुटि</string>
     <string name="get_patient_from_database_error">डेटाबेस से रोगी लाने में विफल</string>
     <string name="action_start_visit">विज़िट शुरू करें </string>
     <string name="action_create_allergy">एलर्जी शुरू करे</string>
@@ -150,6 +152,7 @@
     <string name="patient_scroll_tab_charts_label">चार्ट</string>
     <string name="download_started">"डाउनलोडिंग…"</string>
     <string name="action_starting_visit">"प्रारंभ पर जाएँ"</string>
+    <string name="visit_start_error">विज़िट प्रारंभ करने में विफल</string>
 
     <!-- fragment_patient_details layout -->
     <string name="patient_identifier"># %1$s</string>
@@ -446,7 +449,7 @@
     <string name="allergy_comment">टिप्पणी</string>
     <string name="allergy_severity">तीव्रता</string>
     <string name="allergy_reactions">प्रतिक्रिया</string>
-    <string name="empty_allergy_list">रोगी को अभी तक कोई एलर्जी नहीं है।</string>
+    <string name="empty_allergy_list">रोगी का अभी तक एलर्जी के लिए परीक्षण नहीं किया गया है</string>
     <string name="unable_to_fetch_allergies">नवीनतम दर्ज एलर्जी प्राप्त करने में असमर्थ!</string>
     <string name="delete_allergy_title">एलर्जी %1$s नष्ट करें?</string>
     <string name="delete_allergy_description">रोगी का एलर्जी सर्वर से हटा दिया जाएगा। क्या तुम वाकई जारी रखना चाहते हो?</string>

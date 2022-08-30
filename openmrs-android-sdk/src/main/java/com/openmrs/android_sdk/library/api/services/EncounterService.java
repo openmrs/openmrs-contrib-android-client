@@ -10,6 +10,12 @@
 
 package com.openmrs.android_sdk.library.api.services;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
 import android.app.IntentService;
 import android.content.Intent;
 
@@ -25,19 +31,11 @@ import com.openmrs.android_sdk.library.dao.PatientDAO;
 import com.openmrs.android_sdk.library.dao.VisitDAO;
 import com.openmrs.android_sdk.library.databases.AppDatabase;
 import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.StartVisitResponseCallback;
 import com.openmrs.android_sdk.library.models.Encounter;
 import com.openmrs.android_sdk.library.models.EncounterType;
 import com.openmrs.android_sdk.library.models.Encountercreate;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
 import com.openmrs.android_sdk.utilities.ToastUtil;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * The type Encounter service.
@@ -91,32 +89,18 @@ public class EncounterService extends IntentService {
     }
 
     private void startNewVisitForEncounter(final Encountercreate encountercreate, @Nullable final DefaultResponseCallback callbackListener) {
-        new VisitRepository().startVisit(new PatientDAO().findPatientByUUID(encountercreate.getPatient()),
-                new StartVisitResponseCallback() {
-                    @Override
-                    public void onStartVisitResponse(long id) {
-                        new VisitDAO().getVisitByID(id)
-                                .observeOn(AndroidSchedulers.mainThread())
-                                .subscribe(visit -> {
-                                    encountercreate.setVisit(visit.getUuid());
-                                    if (callbackListener != null) {
-                                        syncEncounter(encountercreate, callbackListener);
-                                    } else {
-                                        syncEncounter(encountercreate);
-                                    }
-                                });
-                    }
-
-                    @Override
-                    public void onResponse() {
-                        // This method is intentionally empty
-                    }
-
-                    @Override
-                    public void onErrorResponse(String errorMessage) {
-                        ToastUtil.error(errorMessage);
-                    }
-                });
+        new VisitRepository().startVisit(new PatientDAO().findPatientByUUID(encountercreate.getPatient()))
+                .observeOn(AndroidSchedulers.mainThread())
+                .flatMap(visit -> new VisitDAO().getVisitByID(visit.getId()))
+                .subscribe(visit -> {
+                            encountercreate.setVisit(visit.getUuid());
+                            if (callbackListener != null) {
+                                syncEncounter(encountercreate, callbackListener);
+                            } else {
+                                syncEncounter(encountercreate);
+                            }
+                        },
+                        throwable -> ToastUtil.error(throwable.getMessage()));
     }
 
     /**

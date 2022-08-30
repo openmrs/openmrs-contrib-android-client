@@ -84,6 +84,11 @@ public class PatientVisitsRecyclerViewAdapter extends RecyclerView.Adapter<Patie
         return mVisits.size();
     }
 
+    public void updateList(List<Visit> visits) {
+        mVisits = visits;
+        notifyDataSetChanged();
+    }
+
     class VisitViewHolder extends RecyclerView.ViewHolder {
         private TextView mVisitPlace;
         private TextView mVisitStart;

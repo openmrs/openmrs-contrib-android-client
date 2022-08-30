@@ -14,30 +14,22 @@
 
 package com.openmrs.android_sdk.library.api.workers.allergy;
 
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.ALLERGY_UUID;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.PATIENT_UUID;
+
+import okhttp3.ResponseBody;
+import retrofit2.Response;
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.openmrs.android_sdk.R;
-import com.openmrs.android_sdk.library.OpenmrsAndroid;
 import com.openmrs.android_sdk.library.api.RestApi;
 import com.openmrs.android_sdk.library.api.RestServiceBuilder;
 import com.openmrs.android_sdk.library.dao.AllergyRoomDAO;
 import com.openmrs.android_sdk.library.databases.AppDatabase;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
-import com.openmrs.android_sdk.utilities.ToastUtil;
-
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
-import retrofit2.Response;
-
-import static com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.ALLERGY_UUID;
-import static com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.PATIENT_UUID;
 
 
 /**
@@ -77,17 +69,15 @@ public class DeleteAllergyWorker extends Worker {
 
     private boolean deleteAllergy(RestApi restApi, String allergyUuid, String patientUuid) {
         if (NetworkUtils.isOnline()) {
+            Response<ResponseBody> response;
             try {
-                Response<ResponseBody> response = restApi.deleteAllergy(patientUuid, allergyUuid).execute();
-                if (response.isSuccessful()) {
-                    new Handler(Looper.getMainLooper()).post(() -> {
-                        ToastUtil.success(OpenmrsAndroid.getInstance().getString(R.string.delete_allergy_success));
-                    });
-                    return true;
-                }
-            } catch (IOException e) {
+                response = restApi.deleteAllergy(patientUuid, allergyUuid).execute();
+                allergyRoomDAO.deleteAllergyByUUID(allergyUuid);
+            } catch (Exception e) {
                 e.printStackTrace();
+                return false;
             }
+            return response != null && response.isSuccessful();
         }
         return false;
     }

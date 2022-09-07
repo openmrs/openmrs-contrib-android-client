@@ -14,6 +14,9 @@
 
 package com.openmrs.android_sdk.library.api.repository;
 
+import static com.openmrs.android_sdk.utilities.DateUtils.OPEN_MRS_REQUEST_FORMAT;
+import static com.openmrs.android_sdk.utilities.DateUtils.convertTime;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
@@ -35,7 +38,6 @@ import com.openmrs.android_sdk.library.dao.LocationDAO;
 import com.openmrs.android_sdk.library.dao.VisitDAO;
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
 import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.GetVisitTypeCallback;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.VisitsResponseCallback;
 import com.openmrs.android_sdk.library.models.Encounter;
 import com.openmrs.android_sdk.library.models.Encountercreate;
 import com.openmrs.android_sdk.library.models.Patient;
@@ -158,32 +160,25 @@ public class VisitRepository extends BaseRepository {
     }
 
     /**
-     * This method is used to end an active visit of a patient.
+     * This method ends an active visit of a patient.
      *
-     * @param uuid
-     * @param visit
-     * @param callbackListener
+     * @param visit visit to be ended
+     * @return observable boolean true if operation is successful
      * @see Visit
-     * @see VisitsResponseCallback
      */
-    public void endVisitByUuid(String uuid, Visit visit, VisitsResponseCallback callbackListener) {
-        restApi.endVisitByUUID(uuid, visit).enqueue(new Callback<Visit>() {
-            @Override
-            public void onResponse(@NonNull Call<Visit> call, @NonNull Response<Visit> response) {
-                if (callbackListener != null) {
-                    if (response.isSuccessful()) {
-                        callbackListener.onSuccess(response.body().getStopDatetime());
-                    } else {
-                        callbackListener.onFailure(response.message());
-                    }
-                }
-            }
+    public Observable<Boolean> endVisit(Visit visit) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            // Don't pass the full visit to the API as it will return an error, instead create an empty visit.
+            Visit emptyVisitWithStopDate = new Visit();
+            emptyVisitWithStopDate.setStopDatetime(convertTime(System.currentTimeMillis(), OPEN_MRS_REQUEST_FORMAT));
 
-            @Override
-            public void onFailure(@NonNull Call<Visit> call, @NonNull Throwable t) {
-                if (callbackListener != null) {
-                    callbackListener.onFailure(t.getMessage());
-                }
+            Response<Visit> response = restApi.endVisitByUUID(visit.getUuid(), emptyVisitWithStopDate).execute();
+            if (response.isSuccessful()) {
+                visit.setStopDatetime(emptyVisitWithStopDate.getStopDatetime());
+                visitDAO.saveOrUpdate(visit, visit.patient.getId()).single().toBlocking().first();
+                return true;
+            } else {
+                throw new Exception("endVisitByUuid error: " + response.message());
             }
         });
     }

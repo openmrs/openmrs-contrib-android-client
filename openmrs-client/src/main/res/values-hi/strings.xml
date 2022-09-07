@@ -32,6 +32,7 @@
     <string name="login_offline">ऑफ़लाइन</string>
     <string name="login_online">ऑनलाइन</string>
 
+    <!-- AddEditPatient -->
     <string name="emptyerror">अपेक्षित</string>
     <string name="fname_invalid_error">दिए गए नाम में प्रतीक या संख्या नहीं हो सकती</string>
     <string name="midname_invalid_error">मध्य नाम में प्रतीक या संख्या नहीं हो सकती</string>
@@ -49,12 +50,15 @@
     <string name="addr2_hint">पता पंक्ति 2</string>
     <string name="addr_invalid_error">पते में अमान्य वर्ण नहीं हो सकते</string>
     <string name="atleastone">कम से कम एक पता फ़ील्ड भरें</string>
-
     <string name="male">पुरुष</string>
     <string name="female">महिला</string>
     <string name="dob_hint">जन्म तिथि (प्रारूप: dd / MM / yyyy)</string>
     <string name="estyr">अनुमानित वर्ष</string>
     <string name="estmonth">अनुमानित महीने</string>
+    <string name="age_out_of_bounds_message">रोगी की आयु 5 से %d के बीच होनी चाहिए।</string>
+    <string name="register_patient_error">सर्वर त्रुटि के कारण रोगी पंजीकृत नहीं किया जा सकता</string>
+    <string name="update_patient_success">रोगी %s अपडेट किया गया</string>
+    <string name="update_patient_error">सर्वर त्रुटि के कारण रोगी %s को अपडेट नहीं किया जा सकता</string>
 
     <!-- Offline Mode -->
     <string name="offline_mode_unsupported_in_first_login">ऑफ़लाइन मोड पहले लॉगिन के दौरान समर्थित नहीं है। ऑनलाइन मोड अक्षम करें और फिर पुन: प्रयास करें।</string>
@@ -210,6 +214,10 @@
     <string name="list_visit_selector_show">विवरण दिखाएं</string>
     <string name="list_visit_selector_hide">विवरण छिपाएं</string>
     <string name="visit_exp_list_empty">यात्रा का अभी तक कोई सामना नहीं हुआ है। </string>
+    <string name="visit_fetching_error">विज़िट लाने में त्रुटि</string>
+    <string name="visit_ending_not_online_error">इंटरनेट कनेक्शन के बिना या ऑफ़लाइन मोड में विज़िट समाप्त नहीं कर सकते</string>
+    <string name="visit_ending_error">इस विज़िट को समाप्त नहीं किया जा सका</string>
+    <string name="patient_not_yet_registered">रोगी अभी तक पंजीकृत नहीं है, मुठभेड़ नहीं बना सकता।</string>
 
     <!-- Capture Vitals activity -->
     <string name="action_delete_patient">रोगी हटाएं</string>
@@ -255,13 +263,13 @@
     <string name="invalid_login_or_password_message">अमान्य लॉगिन या पासवर्ड, कृपया पुनः प्रयास करें.</string>
     <string name="snackbar_no_internet_connection">कोई इंटरनेट कनेक्शन नहीं</string>
 
-    <!--permissions-->
-    <string name="permission_camera_rationale">फोटो खींचने के लिए कैमरा अनुमति की आवश्यकता है।</string>
-    <string name="permission_camera_denied">कैमरा अनुमति से इनकार कर दिया गया था। कृपया कैमरे को एक्सेस करने के लिए इसे देने पर विचार करें</string>
-    <string name="permission_camera_neverask">कैमरा अनुमति से इनकार कर दिया गया था फिर कभी नहीं पूछें </string>
+    <!-- Permissions -->
+    <string name="permissions_camera_storage_rationale">किसी फ़ोटो को कैप्चर करने और सहेजने के लिए कैमरा और संग्रहण लेखन अनुमतियों की आवश्यकता होती है।</string>
+    <string name="permissions_camera_storage_denied">कैमरा या संग्रहण लिखने की अनुमति अस्वीकार कर दी गई थी, उन्हें फ़ोटो लेने की अनुमति देने पर विचार करें।</string>
+    <string name="permissions_camera_storage_neverask">कैमरा या स्टोरेज लिखने की अनुमति फिर कभी न पूछें के साथ अस्वीकार कर दी गई थी।</string>
+    <string name="permission_storage_neverask">भंडारण लिखने की अनुमति को फिर कभी न पूछें के साथ अस्वीकार कर दिया गया था, इस अनुमति की आवश्यकता है।</string>
     <string name="button_allow">अनुमति दें</string>
     <string name="button_deny">इनकार</string>
-    <string name="patient_not_yet_registered">रोगी अभी तक पंजीकृत नहीं है, मुठभेड़ नहीं बना सकता।</string>
 
     <!-- Layout strings -->
     <string name="sync">सिंक</string>
@@ -398,7 +406,6 @@
     <string name="only_one_patient_can_be_selected_notification_message">आप केवल एक समान रोगी का चयन कर सकते हैं</string>
     <string name="all_fields_empty_error_message">सभी फ़ील्ड रिक्त नहीं हो सकते</string>
     <string name="no_such_form_name_error_message">%1$s नामक कोई मुठभेड़ प्रकार नहीं है</string>
-    <string name="failed_fetching_patient_data_error_message">रोगी डेटा लाने में विफल</string>
     <string name="invalid_URL_message">अवैध यूआरएल</string>
     <string name="failed_fetching_visit_type_error_message">यात्रा प्रकार लाने में विफल</string>
     <string name="logs_copied_to_clipboard_message">क्लिपबोर्ड पर कॉपी किए गए लॉग</string>
@@ -435,13 +442,11 @@
     <string name="admission_provider_role">Provider Role :</string>
     <string name="admission_admitted_to">Admitted To :</string>
 
-    // Marking Patient Deceased
-    <string name="no_death_concepts_in_server">कृपया सर्वर में मौत के संभावित कारणों को जोड़ें</string>
+    <!--Marking Patient Deceased-->
+    <string name="mark_patient_deceased_no_concepts">कृपया एक मान्य मृत अवधारणा UUID और सर्वर में मृत्यु के संभावित कारणों को जोड़ें</string>
     <string name="mark_patient_deceased">रोगी को चिह्नित करें?</string>
     <string name="mark_patient_deceased_notice">रोगी को मृतक चिह्नित किया जाएगा और आगे कोई निरीक्षण संभव नहीं होगी.</string>
     <string name="mark_patient_deceased_proceed">प्रोसीड</string>
-    <string name="mark_patient_deceased_invalid_uuid">कृपया सर्वर में एक मान्य concept UUID जोड़ें </string>
-    <string name="mark_patient_deceased_concept_has_no_answer">इस सेटिंग के लिए मृत्यु के कोई संभावित कारण नहीं मिले</string>
     <string name="marked_patient_deceased_successfully">रोगी मृतक चिह्नित है — %1$s</string>
     <string name="cannot_start_visit_for_deceased">मृतक मरीज के लिए निरीक्षण शुरू नहीं कर सकते</string>
 
@@ -483,4 +488,13 @@
     <string name="action_about_activity">Open MRS के बारे में</string>
     <string name="action_about">Open MRS के बारे में</string>
     <string name="patent_data_synced_successfully">रोगी [ %1$i ] सर्वर से सफलतापूर्वक समन्वयित हो गया</string>
+
+    <!--LastViewPatients Fragment-->
+    <string name="fetch_patients_remote_error">रोगियों को लोड करने में त्रुटि</string>
+    <string name="search_patient_remote_error">रोगी को खोजने में त्रुटि</string>
+    <string name="search_patient_remote_no_results">कोई मरीज नहीं मिला।</string>
+
+    <!--LastViewedPatientRecyclerViewAdapter-->
+    <string name="failed_fetching_patient_data_error_message">रोगी डेटा लाने में विफल</string>
+
 </resources>

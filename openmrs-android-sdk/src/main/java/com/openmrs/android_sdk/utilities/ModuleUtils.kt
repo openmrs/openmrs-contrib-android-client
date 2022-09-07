@@ -11,7 +11,7 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.mobile.utilities
+package com.openmrs.android_sdk.utilities
 
 import com.openmrs.android_sdk.library.models.Module
 
@@ -21,21 +21,21 @@ object ModuleUtils {
     fun isRegistrationCore1_7orAbove(modules: List<Module>): Boolean {
         for (module in modules) {
             if ("org.openmrs.module.registrationcore" == module.packageName) {
-                val versions = module.version!!.split("\\.").toTypedArray()
-                if (versions.size >= 2 && Integer.valueOf(versions[0]) >= 1 && parseVersion(versions[1]) >= 7) {
-                    return true
-                }
+                val versionCode = module.version!!.split(".", "\\").toTypedArray()
+                val major = versionCode[0].toInt()
+                val minor = if (versionCode.size >= 2) parseMinorVersion(versionCode[1]) else 0
+                if (major > 1 || (major == 1 && minor >= 7)) return true
             }
         }
         return false
     }
 
     @JvmStatic
-    private fun parseVersion(version: String): Int {
+    private fun parseMinorVersion(version: String): Int {
         var result = version
         if (version.contains("-SNAPSHOT")) {
             result = version.replace("-SNAPSHOT", "")
         }
-        return Integer.valueOf(result)
+        return result.toInt()
     }
 }

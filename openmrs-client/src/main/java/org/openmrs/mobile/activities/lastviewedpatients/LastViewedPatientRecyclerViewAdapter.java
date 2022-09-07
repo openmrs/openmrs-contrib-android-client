@@ -14,6 +14,7 @@
 
 package org.openmrs.mobile.activities.lastviewedpatients;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,17 +50,17 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_LOADING = 1;
     private Activity mContext;
-    private List<Patient> patients;
+    private ArrayList<Patient> patients;
     private Set<Integer> selectedPatientPositions;
     private boolean isAllSelected = false;
     private boolean isLongClicked = false;
     private boolean enableDownload = true;
     private ActionMode actionMode;
-    private LastViewedPatientsContract.View view;
+    private LastViewedPatientsFragment view;
 
-    LastViewedPatientRecyclerViewAdapter(Activity context, List<Patient> items, LastViewedPatientsContract.View view) {
+    LastViewedPatientRecyclerViewAdapter(Activity context, List<Patient> items, LastViewedPatientsFragment view) {
         this.mContext = context;
-        this.patients = items;
+        this.patients = (ArrayList<Patient>) items;
         this.selectedPatientPositions = new HashSet<>();
         this.view = view;
     }
@@ -68,22 +69,28 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
         return patients;
     }
 
-    public Set<Integer> getSelectedPatientPositions() {
-        return selectedPatientPositions;
+    public void showLoadingMore() {
+        if (patients.isEmpty() || patients.get(getItemCount() - 1) != null) {
+            patients.add(null);
+            notifyItemInserted(getItemCount() - 1);
+        }
     }
 
-    public void setSelectedPatientPositions(Set<Integer> selectedPatientPositions) {
-        this.selectedPatientPositions = selectedPatientPositions;
+    public void hideLoadingMore() {
+        if (!patients.isEmpty() && patients.get(getItemCount() - 1) == null) {
+            patients.remove(getItemCount() - 1);
+            notifyItemRemoved(getItemCount());
+        }
     }
 
-    public void addPatients(List<Patient> patients) {
+    public void addMoreToList(List<Patient> patients) {
         this.patients.addAll(patients);
         notifyDataSetChanged();
     }
 
-    public void deleteLastItem() {
-        patients.remove(getItemCount() - 1);
-        notifyItemRemoved(getItemCount());
+    public void updateList(List<Patient> patients) {
+        this.patients = (ArrayList<Patient>) patients;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -363,7 +370,7 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
                                     patients.remove(patient);
                                     notifyDataSetChanged();
                                     if (showSnackBar) {
-                                        view.showOpenPatientSnackbar(newPatient.getId());
+                                        view.showOpenPatientSnackbar(id);
                                     }
                                 }),
                         throwable -> ToastUtil.error(mContext.getString(R.string.failed_fetching_patient_data_error_message))

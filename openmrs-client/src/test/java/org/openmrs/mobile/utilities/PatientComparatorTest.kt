@@ -1,13 +1,19 @@
 package org.openmrs.mobile.utilities
 
 import android.graphics.Bitmap
-import com.openmrs.android_sdk.library.models.*
+import com.openmrs.android_sdk.library.models.Patient
+import com.openmrs.android_sdk.library.models.PatientIdentifier
+import com.openmrs.android_sdk.library.models.PersonAddress
+import com.openmrs.android_sdk.library.models.PersonAttribute
+import com.openmrs.android_sdk.library.models.PersonName
+import com.openmrs.android_sdk.library.models.Resource
+import com.openmrs.android_sdk.utilities.PatientComparator
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-class PatientComparatorTest{
+class PatientComparatorTest {
 
     private val patientList = mutableListOf<Patient>()
     private val givenNameList = mutableListOf<String>()
@@ -23,20 +29,20 @@ class PatientComparatorTest{
     private val postalCodeList = mutableListOf<String>()
 
     @Before
-    fun setup(){
+    fun setup() {
         givenNameList.addAll(listOf("Michael", "Dwight", "Jim", "Stanley", "Kelly"))
         middleNameList.addAll(listOf("a", "aa", "aaa", "aaaa", "aaaaa"))
         familyNameList.addAll(listOf("Scott", "Schrute", "Halpert", "Hudson", "Kapoor"))
         genderList.addAll(listOf("m", "f", "m", "f", "m"))
-        birthdateList.addAll(listOf("15-07-1965", "16-08-1966","17-09-1967","18-010-1968","19-11-1969"))
+        birthdateList.addAll(listOf("15-07-1965", "16-08-1966", "17-09-1967", "18-010-1968", "19-11-1969"))
         address1List.addAll(listOf("b", "bb", "bbb", "bbbb", "bbbbb"))
         address2List.addAll(listOf("c", "cc", "ccc", "cccc", "ccccc"))
         cityVillageList.addAll(listOf("d", "dd", "ddd", "dddd", "ddddd"))
         stateProvinceList.addAll(listOf("e", "ee", "eee", "eeee", "eeeee"))
         countryList.addAll(listOf("India", "Germany", "USA", "UK", "Australia"))
-        postalCodeList.addAll(listOf("1111", "2222","3333","4444","5555"))
+        postalCodeList.addAll(listOf("1111", "2222", "3333", "4444", "5555"))
 
-        for(i in 0..4){
+        for (i in 0..4) {
             val givenName = givenNameList[i]
             val middleName = middleNameList[i]
             val familyName = familyNameList[i]
@@ -62,11 +68,11 @@ class PatientComparatorTest{
             personAddress.country = country
             personAddress.postalCode = postalcode
 
-            val id : Long = 1
+            val id: Long = 1
             val identifiers = PatientIdentifier()
             val attributes = PersonAttribute()
             val cod = Resource()
-            val photo : Bitmap? = null
+            val photo: Bitmap? = null
 
             val existingPatient = Patient(id, "", mutableListOf(identifiers), mutableListOf(personName), gender, birthdate, true, mutableListOf(personAddress), mutableListOf(attributes), photo, cod, false)
             patientList.add(existingPatient)
@@ -74,7 +80,7 @@ class PatientComparatorTest{
     }
 
     @After
-    fun destroy(){
+    fun destroy() {
         patientList.clear()
         givenNameList.clear()
         middleNameList.clear()
@@ -90,7 +96,7 @@ class PatientComparatorTest{
     }
 
     @Test
-    fun patientMatchesWithExistingPatient_returnsPatient(){
+    fun patientMatchesWithExistingPatient_returnsPatient() {
         val givenName = "Michael"
         val middleName = "a"
         val familyName = "Scott"
@@ -116,11 +122,11 @@ class PatientComparatorTest{
         personAddress.country = country
         personAddress.postalCode = postalCode
 
-        val id : Long = 1
+        val id: Long = 1
         val identifiers = PatientIdentifier()
         val attributes = PersonAttribute()
         val cod = Resource()
-        val photo : Bitmap? = null
+        val photo: Bitmap? = null
 
         val patientToCheck = Patient(id, "", mutableListOf(identifiers), mutableListOf(personName), gender, birthdate, true, mutableListOf(personAddress), mutableListOf(attributes), photo, cod, false)
         val result = PatientComparator().findSimilarPatient(patientList, patientToCheck)
@@ -139,7 +145,7 @@ class PatientComparatorTest{
     }
 
     @Test
-    fun noMatchWithExistingPatients_returnsEmptyList(){
+    fun noMatchWithExistingPatients_returnsEmptyList() {
         val givenName = "doesn't exist"
         val middleName = "doesn't exist"
         val familyName = "doesn't exist"
@@ -165,11 +171,11 @@ class PatientComparatorTest{
         personAddress.country = country
         personAddress.postalCode = postalCode
 
-        val id : Long = 1
+        val id: Long = 1
         val identifiers = PatientIdentifier()
         val attributes = PersonAttribute()
         val cod = Resource()
-        val photo : Bitmap? = null
+        val photo: Bitmap? = null
 
         val patientToCheck = Patient(id, "", mutableListOf(identifiers), mutableListOf(personName), gender, birthdate, true, mutableListOf(personAddress), mutableListOf(attributes), photo, cod, false)
         val result = PatientComparator().findSimilarPatient(patientList, patientToCheck)

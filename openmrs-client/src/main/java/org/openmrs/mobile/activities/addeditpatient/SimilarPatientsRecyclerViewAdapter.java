@@ -14,6 +14,9 @@
 
 package org.openmrs.mobile.activities.addeditpatient;
 
+import java.util.List;
+
+import rx.android.schedulers.AndroidSchedulers;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -27,19 +30,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.common.base.Objects;
+import com.openmrs.android_sdk.library.api.repository.VisitRepository;
 import com.openmrs.android_sdk.library.dao.PatientDAO;
 import com.openmrs.android_sdk.library.models.Patient;
 import com.openmrs.android_sdk.utilities.ApplicationConstants;
 import com.openmrs.android_sdk.utilities.DateUtils;
-import com.google.common.base.Objects;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.patientdashboard.PatientDashboardActivity;
-import com.openmrs.android_sdk.library.api.repository.VisitRepository;
-
-import java.util.List;
-
-import rx.android.schedulers.AndroidSchedulers;
 
 public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<SimilarPatientsRecyclerViewAdapter.PatientViewHolder> {
     private List<Patient> patientList;
@@ -73,7 +72,7 @@ public class SimilarPatientsRecyclerViewAdapter extends RecyclerView.Adapter<Sim
                 downloadPatient(patient);
             }
             Intent intent = new Intent(mContext, PatientDashboardActivity.class);
-            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, getPatientId(patient));
+            intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, Long.valueOf(getPatientId(patient)));
             mContext.startActivity(intent);
             mContext.finish();
         });

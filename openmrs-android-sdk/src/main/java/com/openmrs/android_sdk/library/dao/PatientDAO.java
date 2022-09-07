@@ -169,4 +169,18 @@ public class PatientDAO {
             return null;
         }
     }
+
+    /**
+     * Removes locally saved patients from a list.
+     *
+     * @param patients list of patients to filter out the saved ones from
+     * @return list of filtered patients
+     */
+    public List<Patient> excludeSavedPatients(List<Patient> patients) {
+        ArrayList<Patient> filteredList = new ArrayList<>();
+        for (Patient patient : patients) {
+            if (!isUserAlreadySaved(patient.getUuid())) filteredList.add(patient);
+        }
+        return filteredList;
+    }
 }

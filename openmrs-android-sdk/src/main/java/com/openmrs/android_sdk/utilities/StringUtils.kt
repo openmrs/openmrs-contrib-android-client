@@ -13,7 +13,11 @@
  */
 package com.openmrs.android_sdk.utilities
 
+import java.util.regex.Pattern
+
 object StringUtils {
+    const val ILLEGAL_CHARACTERS = "[$&+:;=\\\\?@#|/'<>^*()%!]"
+    const val ILLEGAL_ADDRESS_CHARACTERS = "[$&+:;=\\\\?@|<>^%!]"
     private const val NULL_AS_STRING = "null"
     private const val SPACE_CHAR = " "
 
@@ -86,5 +90,30 @@ object StringUtils {
             i++
         }
         return sb.toString()
+    }
+
+    /**
+     * Validate a String for invalid characters
+     *
+     * @param toValidate the String to check
+     * @return true if String is appropriate
+     */
+    @JvmStatic
+    fun validateText(toValidate: String?, invalidCharacters: String): Boolean {
+        return !containsCharacters(toValidate, invalidCharacters)
+    }
+
+    /**
+     * Check if a name contains a character from a string param
+     *
+     * @param toExamine the String to check
+     * @param characters the characters checked against toExamine
+     * @return true if the String contains a character from a sequence of characters
+     */
+    @JvmStatic
+    fun containsCharacters(toExamine: String?, characters: String): Boolean {
+        if (toExamine.isNullOrBlank()) return false
+        val charPattern = Pattern.compile(characters)
+        return charPattern.matcher(toExamine as CharSequence).find()
     }
 }

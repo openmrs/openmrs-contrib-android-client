@@ -14,6 +14,8 @@
 
 package com.openmrs.android_sdk.library.api.repository;
 
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.PRIMARY_KEY_ID;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.IOException;
@@ -30,7 +32,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.NetworkType;
@@ -46,21 +47,22 @@ import com.openmrs.android_sdk.library.api.workers.UpdatePatientWorker;
 import com.openmrs.android_sdk.library.dao.EncounterCreateRoomDAO;
 import com.openmrs.android_sdk.library.dao.PatientDAO;
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.PatientResponseCallback;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.VisitsResponseCallback;
 import com.openmrs.android_sdk.library.models.Encountercreate;
 import com.openmrs.android_sdk.library.models.IdGenPatientIdentifiers;
 import com.openmrs.android_sdk.library.models.IdentifierType;
+import com.openmrs.android_sdk.library.models.Module;
 import com.openmrs.android_sdk.library.models.Patient;
 import com.openmrs.android_sdk.library.models.PatientDto;
 import com.openmrs.android_sdk.library.models.PatientDtoUpdate;
 import com.openmrs.android_sdk.library.models.PatientIdentifier;
 import com.openmrs.android_sdk.library.models.PatientPhoto;
+import com.openmrs.android_sdk.library.models.ResultType;
 import com.openmrs.android_sdk.library.models.Results;
 import com.openmrs.android_sdk.library.models.SystemProperty;
 import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.ModuleUtils;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
+import com.openmrs.android_sdk.utilities.PatientComparator;
 import com.openmrs.android_sdk.utilities.ToastUtil;
 
 /**
@@ -96,45 +98,40 @@ public class PatientRepository extends BaseRepository {
     }
 
     /**
-     * Sync patient.
+     * Uploads a patient to the server.
      *
-     * @param patient the patient
+     * @param patient the patient to be registered in the server
      */
     public Observable<Patient> syncPatient(final Patient patient) {
         return AppDatabaseHelper.createObservableIO(() -> {
-            if (NetworkUtils.isOnline()) {
-                final List<PatientIdentifier> identifiers = new ArrayList<>();
-                final PatientIdentifier identifier = new PatientIdentifier();
-                identifier.setLocation(locationRepository.getLocation());
-                identifier.setIdentifier(getIdGenPatientIdentifier());
-                identifier.setIdentifierType(getPatientIdentifierType());
-                identifiers.add(identifier);
+            final List<PatientIdentifier> identifiers = new ArrayList<>();
+            final PatientIdentifier identifier = new PatientIdentifier();
+            identifier.setLocation(locationRepository.getLocation());
+            identifier.setIdentifier(getIdGenPatientIdentifier());
+            identifier.setIdentifierType(getPatientIdentifierType());
+            identifiers.add(identifier);
 
-                patient.setIdentifiers(identifiers);
-                patient.setUuid(null);
+            patient.setIdentifiers(identifiers);
 
-                PatientDto patientDto = patient.getPatientDto();
+            PatientDto patientDto = patient.getPatientDto();
 
-                Response<PatientDto> response = restApi.createPatient(patientDto).execute();
-                if (response.isSuccessful()) {
-                    PatientDto returnedPatientDto = response.body();
+            Response<PatientDto> response = restApi.createPatient(patientDto).execute();
+            if (response.isSuccessful()) {
+                PatientDto returnedPatientDto = response.body();
 
-                    patient.setUuid(returnedPatientDto.getUuid());
-                    if (patient.getPhoto() != null) {
-                        uploadPatientPhoto(patient);
-                    }
-
-                    patientDAO.updatePatient(patient.getId(), patient);
-                    if (!patient.getEncounters().equals("")) {
-                        addEncounters(patient);
-                    }
-
-                    return patient;
-                } else {
-                    throw new RuntimeException("Patient[ " + patient.getId() + "] cannot be synced due to request error");
+                patient.setUuid(returnedPatientDto.getUuid());
+                if (patient.getPhoto() != null) {
+                    uploadPatientPhoto(patient);
                 }
+
+                patientDAO.updatePatient(patient.getId(), patient);
+                if (!patient.getEncounters().equals("")) {
+                    addEncounters(patient);
+                }
+
+                return patient;
             } else {
-                throw new IOException(context.getString(R.string.offline_mode_patient_data_saved_locally_notification_message));
+                throw new Exception("syncPatient error: " + response.message());
             }
         });
     }
@@ -165,76 +162,56 @@ public class PatientRepository extends BaseRepository {
     }
 
     /**
-     * Register patient.
+     * Registers a patient locally or to the server, according to network state.
      *
-     * @param patient the patient
+     * @param patient the patient to be registered
+     * @return Observable result type of registration process
      */
     public Observable<Patient> registerPatient(final Patient patient) {
-        return patientDAO.savePatient(patient)
-                .switchMap(id -> {
-                    patient.setId(id);
-                    return syncPatient(patient);
-                });
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Long id = patientDAO.savePatient(patient).single().toBlocking().first();
+            patient.setId(id);
+            if (NetworkUtils.isOnline()) syncPatient(patient).single().toBlocking().first();
+            return patient;
+        });
     }
 
     /**
-     * Update patient.
+     * Updates patient locally and remotely.
      *
-     * @param patient          the patient
-     * @param callbackListener the callback listener
+     * @param patient the patient
+     * @return Observable result type
      */
-    public void updatePatient(final Patient patient, @Nullable final DefaultResponseCallback callbackListener) {
-        PatientDtoUpdate patientDto = patient.getUpdatedPatientDto();
-        if (NetworkUtils.isOnline()) {
-            Call<PatientDto> call = restApi.updatePatient(patientDto, patient.getUuid(), "full");
-            call.enqueue(new Callback<PatientDto>() {
-                @Override
-                public void onResponse(@NonNull Call<PatientDto> call, @NonNull Response<PatientDto> response) {
-                    if (response.isSuccessful()) {
-                        PatientDto patientDto = response.body();
-                        patient.setBirthdate(patientDto.getPerson().getBirthdate());
+    public Observable<ResultType> updatePatient(final Patient patient) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            if (NetworkUtils.isOnline()) {
+                Call<PatientDto> call = restApi.updatePatient(
+                        patient.getUpdatedPatientDto(), patient.getUuid(), "full");
+                Response<PatientDto> response = call.execute();
 
-                        patient.setUuid(patient.getUuid());
-                        if (patient.getPhoto() != null) {
-                            uploadPatientPhoto(patient);
-                        }
+                if (response.isSuccessful()) {
+                    PatientDto patientDto = response.body();
+                    patient.setBirthdate(patientDto.getPerson().getBirthdate());
+                    patient.setUuid(patientDto.getUuid());
 
-                        patientDAO.updatePatient(patient.getId(), patient);
+                    if (patient.getPhoto() != null) uploadPatientPhoto(patient);
 
-                        ToastUtil.success("Patient " + patient.getPerson().getName().getNameString() + " Updated");
-                        if (callbackListener != null) {
-                            callbackListener.onResponse();
-                        }
-                    } else {
+                    patientDAO.updatePatient(patient.getId(), patient);
 
-                        ToastUtil.error(
-                                "Patient " + patient.getPerson().getName().getNameString() + " cannot be updated due to server error will retry sync " + response.message());
-                        if (callbackListener != null) {
-                            callbackListener.onErrorResponse(response.message());
-                        }
-                    }
+                    return ResultType.PatientUpdateSuccess;
+                } else {
+                    throw new Exception("updatePatient error: " + response.message());
                 }
+            } else {
+                patientDAO.updatePatient(patient.getId(), patient);
 
-                @Override
-                public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
-                    ToastUtil.notify("Patient[ " + patient.getId() + " ] cannot be synced due to request error" + t.toString());
-                    if (callbackListener != null) {
-                        callbackListener.onErrorResponse(t.getMessage());
-                    }
-                }
-            });
-        } else {
-            patientDAO.updatePatient(patient.getId(), patient);
+                Data data = new Data.Builder().putString(PRIMARY_KEY_ID, patient.getId().toString()).build();
+                Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
+                workManager.enqueue(new OneTimeWorkRequest.Builder(UpdatePatientWorker.class).setConstraints(constraints).setInputData(data).build());
 
-            Data data = new Data.Builder().putString("_id", patient.getId().toString()).build();
-            Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
-            workManager.enqueue(new OneTimeWorkRequest.Builder(UpdatePatientWorker.class).setConstraints(constraints).setInputData(data).build());
-
-            ToastUtil.notify(context.getString(R.string.offline_mode_patient_data_saved_locally_notification_message));
-            if (callbackListener != null) {
-                callbackListener.onResponse();
+                return ResultType.PatientUpdateLocalSuccess;
             }
-        }
+        });
     }
 
     /**
@@ -362,56 +339,19 @@ public class PatientRepository extends BaseRepository {
     }
 
     /**
-     * Update last viewed list.
-     *
-     * @param limit      the limit
-     * @param startIndex the start index
-     * @param callback   the callback
-     */
-    public void updateLastViewedList(int limit, int startIndex, PatientResponseCallback callback) {
-        Call<Results<Patient>> call = restApi.getLastViewedPatients(limit, startIndex);
-        call.enqueue(new Callback<Results<Patient>>() {
-            @Override
-            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
-                if (callback != null) {
-                    if (response.isSuccessful()) {
-                        callback.onResponse(response.body());
-                    } else {
-                        callback.onErrorResponse(response.message());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Results<Patient>> call, Throwable t) {
-                callback.onErrorResponse(t.getMessage());
-            }
-        });
-    }
-
-    /**
      * Find patients.
      *
-     * @param query    the query
-     * @param callback the callback
+     * @param query patient query string
+     * @return observable list of patients with matching query
      */
-    public void findPatients(String query, PatientResponseCallback callback) {
-        Call<Results<Patient>> call = restApi.getPatients(query, ApplicationConstants.API.FULL);
-        call.enqueue(new Callback<Results<Patient>>() {
-            @Override
-            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
-                if (callback != null) {
-                    if (response.isSuccessful()) {
-                        callback.onResponse(response.body());
-                    } else {
-                        callback.onErrorResponse(response.message());
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
-                callback.onErrorResponse(t.getMessage());
+    public Observable<List<Patient>> findPatients(String query) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Call<Results<Patient>> call = restApi.getPatients(query, ApplicationConstants.API.FULL);
+            Response<Results<Patient>> response = call.execute();
+            if (response.isSuccessful()) {
+                return response.body().getResults();
+            } else {
+                throw new Exception("Error with finding patients: " + response.message());
             }
         });
     }
@@ -421,25 +361,16 @@ public class PatientRepository extends BaseRepository {
      *
      * @param limit      the limit
      * @param startIndex the start index
-     * @param callback   the callback
+     * @return observable list of last viewed patients
      */
-    public void loadMorePatients(int limit, int startIndex, PatientResponseCallback callback) {
-        Call<Results<Patient>> call = restApi.getLastViewedPatients(limit, startIndex);
-        call.enqueue(new Callback<Results<Patient>>() {
-            @Override
-            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
-                if (callback != null) {
-                    if (response.isSuccessful()) {
-                        callback.onResponse(response.body());
-                    }
-                } else {
-                    callback.onErrorResponse(response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
-                callback.onErrorResponse(t.getMessage());
+    public Observable<Results<Patient>> loadMorePatients(int limit, int startIndex) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Call<Results<Patient>> call = restApi.getLastViewedPatients(limit, startIndex);
+            Response<Results<Patient>> response = call.execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                throw new Exception("Error with loading last viewed patients: " + response.message());
             }
         });
     }
@@ -447,74 +378,79 @@ public class PatientRepository extends BaseRepository {
     /**
      * Gets cause of death global id.
      *
-     * @param callback the callback
+     * @return Observable string UUID for cause of death Concept
      */
-    public void getCauseOfDeathGlobalID(VisitsResponseCallback callback) {
-        restApi.getSystemProperty(ApplicationConstants.CAUSE_OF_DEATH, ApplicationConstants.API.FULL).enqueue(new Callback<Results<SystemProperty>>() {
-            @Override
-            public void onResponse(Call<Results<SystemProperty>> call, Response<Results<SystemProperty>> response) {
-                if (response.isSuccessful()) {
-                    String uuid = response.body().getResults().get(0).getConceptUUID();
-                    callback.onSuccess(uuid);
-                } else {
-                    callback.onFailure(ApplicationConstants.EMPTY_STRING);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Results<SystemProperty>> call, Throwable t) {
-                callback.onFailure(t.getMessage());
+    public Observable<String> getCauseOfDeathGlobalConceptID() {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Call<Results<SystemProperty>> call = restApi.getSystemProperty(ApplicationConstants.CAUSE_OF_DEATH, ApplicationConstants.API.FULL);
+            Response<Results<SystemProperty>> response = call.execute();
+            if (response.isSuccessful()) {
+                return response.body().getResults().get(0).getConceptUUID();
+            } else {
+                throw new Exception("Error with fetching Cause of Death Concept: " + response.message());
             }
         });
     }
 
     /**
-     * Fetch similar patient and calculate locally.
+     * Fetches similar patients by different strategies:
+     * <br> 1. Fetch similar patients from server directly using an API.
+     * <br> 2. Fetch patients with similar names, then compare their other similarities locally.
+     * <br> 3. Fetch locally saved patients, then compare their similarities.
      *
-     * @param patient  the patient
-     * @param callback the callback
+     * @param patient to find similar patients to
+     * @return Observable list of similar patients
      */
-    public void fetchSimilarPatientAndCalculateLocally(final Patient patient, PatientResponseCallback callback) {
-        Call<Results<Patient>> call = restApi.getPatients(patient.getName().getGivenName(), ApplicationConstants.API.FULL);
-        call.enqueue(new Callback<Results<Patient>>() {
-            @Override
-            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
-                if (response.isSuccessful()) {
-                    callback.onResponse(response.body());
-                } else {
-                    callback.onErrorResponse(response.message());
-                }
+    public Observable<List<Patient>> fetchSimilarPatients(final Patient patient) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            if (!NetworkUtils.isOnline()) {
+                List<Patient> localPatients = patientDAO.getAllPatients().toBlocking().first();
+                return new PatientComparator().findSimilarPatient(localPatients, patient);
             }
 
-            @Override
-            public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
-                callback.onErrorResponse(t.getMessage());
+            Call<Results<Module>> moduleCall = restApi.getModules(ApplicationConstants.API.FULL);
+            Response<Results<Module>> response = moduleCall.execute();
+
+            if (!response.isSuccessful()) return fetchSimilarPatientsAndCalculateLocally(patient);
+
+            if (ModuleUtils.isRegistrationCore1_7orAbove(response.body().getResults())) {
+                //return fetchSimilarPatientsFromServer(patient); //Uncomment this line when server API is fixed
+                return fetchSimilarPatientsAndCalculateLocally(patient); //Remove this line when server API is fixed
+            } else {
+                ToastUtil.notifyLong(context.getString(R.string.registration_core_info));
+                return fetchSimilarPatientsAndCalculateLocally(patient);
             }
         });
     }
 
     /**
-     * Fetch similar patients from server.
+     * Fetches similar patients directly from server.
      *
-     * @param patient  the patient
-     * @param callback the callback
+     * @param patient the patient to fetch similar patient to
+     * @return list of similar patients
      */
-    public void fetchSimilarPatientsFromServer(final Patient patient, PatientResponseCallback callback) {
+    private List<Patient> fetchSimilarPatientsFromServer(final Patient patient) throws Exception {
         Call<Results<Patient>> call = restApi.getSimilarPatients(patient.toMap());
-        call.enqueue(new Callback<Results<Patient>>() {
-            @Override
-            public void onResponse(@NonNull Call<Results<Patient>> call, @NonNull Response<Results<Patient>> response) {
-                if (response.isSuccessful()) {
-                    callback.onResponse(response.body());
-                } else {
-                    callback.onErrorResponse(response.message());
-                }
-            }
+        Response<Results<Patient>> response = call.execute();
+        if (response.isSuccessful()) return response.body().getResults();
+        else throw new Exception("fetchSimilarPatientsFromServer error: " + response.message());
+    }
 
-            @Override
-            public void onFailure(@NonNull Call<Results<Patient>> call, @NonNull Throwable t) {
-                callback.onErrorResponse(t.getMessage());
-            }
-        });
+    /**
+     * Fetches patients with similar names from server, then calculates other similarities locally.
+     *
+     * @param patient the patient to fetch similar patient to
+     * @return list of similar patients
+     */
+    private List<Patient> fetchSimilarPatientsAndCalculateLocally(final Patient patient) throws Exception {
+        Call<Results<PatientDto>> call = restApi.getPatientsDto(patient.getName().getGivenName(), ApplicationConstants.API.FULL);
+        Response<Results<PatientDto>> response = call.execute();
+        if (response.isSuccessful()) {
+            List<Patient> patientList = new ArrayList<>();
+            for (PatientDto p : response.body().getResults()) patientList.add(p.getPatient());
+            return new PatientComparator().findSimilarPatient(patientList, patient);
+        } else {
+            throw new Exception("fetchSimilarPatientAndCalculateLocally error: " + response.message());
+        }
     }
 }

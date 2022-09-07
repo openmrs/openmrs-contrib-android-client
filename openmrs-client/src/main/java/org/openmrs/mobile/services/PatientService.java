@@ -10,6 +10,13 @@
 
 package org.openmrs.mobile.services;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
+import retrofit2.Call;
+import retrofit2.Response;
 import android.app.IntentService;
 import android.content.Intent;
 import android.util.Log;
@@ -23,23 +30,15 @@ import com.openmrs.android_sdk.library.models.Patient;
 import com.openmrs.android_sdk.library.models.PatientDto;
 import com.openmrs.android_sdk.library.models.Results;
 import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.ModuleUtils;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
 import com.openmrs.android_sdk.utilities.PatientAndMatchingPatients;
+import com.openmrs.android_sdk.utilities.PatientComparator;
 import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.matchingpatients.MatchingPatientsActivity;
-import org.openmrs.mobile.utilities.ModuleUtils;
 import org.openmrs.mobile.utilities.PatientAndMatchesWrapper;
-import org.openmrs.mobile.utilities.PatientComparator;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
-
-import retrofit2.Call;
-import retrofit2.Response;
 
 public class PatientService extends IntentService {
     public static final String PATIENT_SERVICE_TAG = "PATIENT_SERVICE";

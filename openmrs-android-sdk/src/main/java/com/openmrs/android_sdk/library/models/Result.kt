@@ -21,11 +21,15 @@ enum class OperationType {
     PatientVisitStarting,
     PatientAllergyFetching,
     PatientVitalsFetching,
-    PatientDeleting
+    PatientDeleting,
+    LastViewedPatientsFetching,
 }
 
 enum class ResultType {
     AllergyDeletionSuccess,
     AllergyDeletionLocalSuccess,
-    AllergyDeletionError
+    AllergyDeletionError,
+    PatientUpdateSuccess,
+    PatientUpdateLocalSuccess,
+    PatientUpdateError,
 }

@@ -15,8 +15,8 @@
 package com.openmrs.android_sdk.library.models
 
 import androidx.room.Entity
-import com.openmrs.android_sdk.library.databases.entities.LocationEntity
 import com.google.gson.annotations.Expose
+import com.openmrs.android_sdk.library.databases.entities.LocationEntity
 
 /**
  * Visit
@@ -46,4 +46,6 @@ class Visit : Resource() {
 
     @Expose
     lateinit var encounters: List<Encounter>
+
+    fun isActiveVisit() = stopDatetime.isNullOrEmpty()
 }

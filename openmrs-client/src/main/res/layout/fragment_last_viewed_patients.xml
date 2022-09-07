@@ -37,13 +37,16 @@
                 android:layout_height="wrap_content">
             </com.google.android.material.appbar.AppBarLayout>
 
-            <TextView android:id="@+id/emptyLastViewedPatientList"
+            <TextView
+                android:id="@+id/emptyLastViewedPatientList"
                 android:layout_width="match_parent"
+                android:text="@string/search_patient_remote_no_results"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:visibility="gone" />
 
-            <androidx.recyclerview.widget.RecyclerView android:id="@+id/lastViewedPatientRecyclerView"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/lastViewedPatientRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 

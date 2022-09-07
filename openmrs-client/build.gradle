@@ -1,5 +1,4 @@
 buildscript {
-
     repositories {
         jcenter()
         maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
@@ -143,6 +142,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "androidx.fragment:fragment-ktx:${versions.fragment}"
+    implementation "androidx.activity:activity-ktx:${versions.activity}"
 
     // Networking and Processing
     implementation "com.squareup.retrofit2:retrofit:${versions.retrofit}"
@@ -181,10 +181,7 @@ dependencies {
     implementation "com.hbb20:ccp:${versions.countryCodePicker}"
     implementation "com.github.AppIntro:AppIntro:${versions.AppIntro}"
     implementation 'com.github.yalantis:ucrop:2.2.5'
-
-    // Third Party Performance Libraries
-    implementation "org.permissionsdispatcher:permissionsdispatcher:${versions.permissionsdispatcher}"
-    kapt "org.permissionsdispatcher:permissionsdispatcher-processor:${versions.permissionsdispatcher}"
+    implementation "com.github.permissions-dispatcher:permissionsdispatcher-ktx:${versions.permissionsdispatcher}"
     implementation "androidx.multidex:multidex:${versions.multidex}"
     implementation "joda-time:joda-time:${versions.jodaTime}"
     implementation "net.sf.kxml:kxml2:${versions.kxml2}"

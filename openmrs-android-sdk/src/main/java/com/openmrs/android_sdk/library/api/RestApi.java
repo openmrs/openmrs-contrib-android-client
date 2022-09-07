@@ -10,6 +10,19 @@
 
 package com.openmrs.android_sdk.library.api;
 
+import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
+import retrofit2.http.Url;
+
 import com.openmrs.android_sdk.library.databases.entities.ConceptEntity;
 import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity;
 import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
@@ -40,19 +53,6 @@ import com.openmrs.android_sdk.library.models.SystemSetting;
 import com.openmrs.android_sdk.library.models.User;
 import com.openmrs.android_sdk.library.models.Visit;
 import com.openmrs.android_sdk.library.models.VisitType;
-
-import java.util.Map;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
-import retrofit2.http.Url;
 
 /**
  * The interface Rest api.
@@ -147,8 +147,7 @@ public interface RestApi {
      * @return the call
      */
     @POST("patient")
-    Call<PatientDto> createPatient(
-            @Body PatientDto patientDto);
+    Call<PatientDto> createPatient(@Body PatientDto patientDto);
 
     /**
      * Gets patients.
@@ -160,6 +159,7 @@ public interface RestApi {
     @GET("patient")
     Call<Results<Patient>> getPatients(@Query("q") String searchQuery,
                                        @Query("v") String representation);
+
     /**
      * Gets patients.
      *
@@ -170,7 +170,7 @@ public interface RestApi {
 
     @GET("patient")
     Call<Results<PatientDto>> getPatientsDto(@Query("q") String searchQuery,
-                                       @Query("v") String representation);
+                                             @Query("v") String representation);
 
     /**
      * Upload patient photo call.
@@ -244,14 +244,14 @@ public interface RestApi {
     Call<Session> getSession();
 
     /**
-     * End visit by uuid call.
+     * Ends a visit by its uuid.
      *
-     * @param uuid         the uuid
-     * @param stopDatetime the stop datetime
+     * @param uuid              the visit uuid to be ended
+     * @param visitWithStopDate An empty visit containing the stop date and time
      * @return the call
      */
     @POST("visit/{uuid}")
-    Call<Visit> endVisitByUUID(@Path("uuid") String uuid, @Body Visit stopDatetime);
+    Call<Visit> endVisitByUUID(@Path("uuid") String uuid, @Body Visit visitWithStopDate);
 
     /**
      * Start visit call.

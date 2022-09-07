@@ -173,9 +173,10 @@ class PatientVisitsFragment : BaseFragment() {
     }
 
     fun goToVisitDashboard(visitID: Long) {
-        val intent = Intent(activity, VisitDashboardActivity::class.java)
-        intent.putExtra(ApplicationConstants.BundleKeys.VISIT_ID, visitID)
-        startActivityForResult(intent, REQUEST_CODE_FOR_VISIT)
+        Intent(activity, VisitDashboardActivity::class.java).apply {
+            putExtra(ApplicationConstants.BundleKeys.VISIT_ID, visitID)
+            startActivity(this)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -197,7 +198,6 @@ class PatientVisitsFragment : BaseFragment() {
     }
 
     companion object {
-        const val REQUEST_CODE_FOR_VISIT = 1
         fun newInstance(patientId: String): PatientVisitsFragment {
             val fragment = PatientVisitsFragment()
             fragment.arguments = bundleOf(Pair(PATIENT_ID_BUNDLE, patientId))

@@ -102,6 +102,7 @@ object ApplicationConstants {
     object BundleKeys {
         const val CUSTOM_DIALOG_BUNDLE = "customDialogBundle"
         const val PATIENT_ID_BUNDLE = "patientID"
+        const val COUNTRIES_BUNDLE = "countries_list"
         const val VISIT_ID = "visitID"
         const val ENCOUNTERTYPE = "encounterType"
         const val VALUEREFERENCE = "valueReference"

@@ -14,6 +14,9 @@
 
 package org.openmrs.mobile.activities.visitdashboard;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -34,9 +37,6 @@ import com.openmrs.android_sdk.utilities.ImageUtils;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.application.OpenMRSInflater;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
     private static final int LEFT = 0;
     private static final int RIGHT = 1;
@@ -50,6 +50,11 @@ public class VisitExpandableListAdapter extends BaseExpandableListAdapter {
         this.mEncounters = encounters;
         this.mBitmapCache = new SparseArray<>();
         this.mChildLayouts = generateChildLayouts();
+    }
+
+    public void updateList(List<Encounter> encounters) {
+        mEncounters = encounters;
+        notifyDataSetChanged();
     }
 
     private List<ViewGroup> generateChildLayouts() {

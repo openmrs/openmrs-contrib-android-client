@@ -18,12 +18,14 @@ import com.openmrs.android_sdk.library.OpenmrsAndroid
 import com.openmrs.android_sdk.utilities.StringUtils.notEmpty
 import com.openmrs.android_sdk.utilities.StringUtils.notNull
 import org.joda.time.DateTime
+import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.TimeZone
 
 
 object DateUtils {
@@ -150,6 +152,18 @@ object DateUtils {
         val dateFormat: DateFormat = SimpleDateFormat(OPEN_MRS_RESPONSE_FORMAT)
         val date = Date()
         return dateFormat.format(date)
+    }
+
+
+    /**
+     * Converts difference in years and months into DateTime
+     *
+     * @param yearDiff difference in years
+     * @param monthDiff difference in months
+     * @return the date as a DateTime
+     */
+    fun getDateTimeFromDifference(yearDiff: Int, monthDiff: Int): DateTime {
+        return LocalDate().toDateTimeAtStartOfDay().minusYears(yearDiff).minusMonths(monthDiff)
     }
 
     /**

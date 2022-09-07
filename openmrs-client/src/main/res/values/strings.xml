@@ -498,6 +498,8 @@
     <string name="cannot_start_visit_for_deceased">Cannot start visit for deceased patient</string>
 
     <!--Allergies -->
+    <string name="new_allergy_title">New Allergy</string>
+    <string name="update_allergy_title">Update Allergy</string>
     <string name="allergy_comment">Comment</string>
     <string name="allergy_severity">Severity</string>
     <string name="allergy_reactions">Reactions</string>
@@ -510,7 +512,6 @@
     <string name="delete_allergy_success">Allergy successfully deleted.</string>
     <string name="delete_allergy_failure">Unable to delete allergy</string>
     <string name="delete_allergy_offline">Allergy will be removed from the server when you are back online.</string>
-    <string name="allergy_heading">New Allergy</string>
     <string name="choose_category">Choose\na category</string>
     <string name="allergen_drug">Drug</string>
     <string name="allergen_food">Food</string>
@@ -524,8 +525,9 @@
     <string name="create_allergy_title">Create Allergy?</string>
     <string name="create_allergy_description">The patient\'s allergy will be added to server. Are you sure you want to continue?</string>
     <string name="warning_select_allergen">Please select an Allergen before proceeding</string>
-    <string name="error_creating_allergy">There was an unexpected error while creating the allergy. Please try again!</string>
+    <string name="error_creating_allergy">An error or similar existing allergy may be found when submitting the allergy.</string>
     <string name="success_creating_allergy">Allergy successfully added.</string>
+    <string name="allergy_concepts_fetch_error">Error fetching allergy concepts from server</string>
     <string name="delete_allergy_dialog">Delete Allergy</string>
     <string name="update_allergy_dialog">Update Allergy</string>
     <string name="allergy_already_selected">Allergy already selected !</string>

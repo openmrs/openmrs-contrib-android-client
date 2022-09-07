@@ -14,7 +14,6 @@
 
 package com.openmrs.android_sdk.library.api.repository;
 
-import static com.openmrs.android_sdk.utilities.ApplicationConstants.API.FULL;
 import static com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.ALLERGY_UUID;
 import static com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.PATIENT_UUID;
 
@@ -25,32 +24,23 @@ import java.util.Collections;
 import java.util.List;
 
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import rx.Observable;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 
-import com.openmrs.android_sdk.R;
-import com.openmrs.android_sdk.library.OpenmrsAndroid;
 import com.openmrs.android_sdk.library.api.workers.allergy.DeleteAllergyWorker;
 import com.openmrs.android_sdk.library.dao.AllergyRoomDAO;
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
 import com.openmrs.android_sdk.library.databases.entities.AllergyEntity;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 import com.openmrs.android_sdk.library.models.Allergy;
 import com.openmrs.android_sdk.library.models.AllergyCreate;
-import com.openmrs.android_sdk.library.models.ConceptMembers;
 import com.openmrs.android_sdk.library.models.Patient;
 import com.openmrs.android_sdk.library.models.ResultType;
 import com.openmrs.android_sdk.library.models.Results;
-import com.openmrs.android_sdk.library.models.SystemProperty;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
 
 /**
@@ -94,18 +84,18 @@ public class AllergyRepository extends BaseRepository {
                 return allergies;
             } else {
                 /*
-                * WARNING: The server returns an exception when allergies haven't been checked
-                * for the patient yet. We don't receive a distinction between a patient being
-                * checked for allergies that results in (No allergies), and a patient NOT being
-                * checked for allergies so that the allergies are (UNKNOWN) yet.
-                *
-                * Until the server side fixes this issue:
-                * Don't update ROOM DB (if it already has allergy records)
-                * Don't throw an exception, as it is a wrong response
-                * Just return an empty list so that the observer behaves correctly
-                * IN THE OBSERVER RESPONSE, DO NOT ASSUME THAT (UNKNOWN) ALLERGIES ARE (NO ALLERGIES)
-                * AS THIS COULD BE UNSAFE TO THE PATIENT!
-                * */
+                 * WARNING: The server returns an exception when allergies haven't been checked
+                 * for the patient yet. We don't receive a distinction between a patient being
+                 * checked for allergies that results in (No allergies), and a patient NOT being
+                 * checked for allergies so that the allergies are (UNKNOWN) yet.
+                 *
+                 * Until the server side fixes this issue:
+                 * Don't update ROOM DB (if it already has allergy records)
+                 * Don't throw an exception, as it is a wrong response
+                 * Just return an empty list so that the observer behaves correctly
+                 * IN THE OBSERVER RESPONSE, DO NOT ASSUME THAT (UNKNOWN) ALLERGIES ARE (NO ALLERGIES)
+                 * AS THIS COULD BE UNSAFE TO THE PATIENT!
+                 * */
                 return Collections.emptyList();
                 // Uncomment this when the server fixes the issue:
                 //throw new IOException("Error with fetching allergies: " + response.message());
@@ -132,13 +122,11 @@ public class AllergyRepository extends BaseRepository {
      * @param allergyUuid the allergy uuid
      * @return the allergy by uuid
      */
-    public Allergy getAllergyByUUID(String allergyUuid) {
-        AllergyEntity allergyEntity = allergyRoomDAO.getAllergyByUUID(allergyUuid);
-        if (allergyEntity != null) {
+    public Observable<Allergy> getAllergyByUUID(String allergyUuid) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            AllergyEntity allergyEntity = allergyRoomDAO.getAllergyByUUID(allergyUuid);
             return AppDatabaseHelper.convert(allergyEntity);
-        } else {
-            return null;
-        }
+        });
     }
 
     /**
@@ -146,7 +134,6 @@ public class AllergyRepository extends BaseRepository {
      *
      * @param patientUuid the patient uuid
      * @param allergyUuid the allergy uuid
-     *
      * @return observable true if allergy is deleted from server, and false if only deleted locally
      */
     public Observable<ResultType> deleteAllergy(String patientUuid, String allergyUuid) {
@@ -176,108 +163,43 @@ public class AllergyRepository extends BaseRepository {
     }
 
     /**
-     * Gets system property.
+     * Creates an allergy for a patient.
      *
-     * @param systemProperty the system property
-     * @return the system property
+     * @param patient       the patient to create an allergy for
+     * @param allergyCreate the allergy create object containing allergy properties
+     * @return Observable boolean true if successful
      */
-    public LiveData<SystemProperty> getSystemProperty(String systemProperty) {
-        MutableLiveData<SystemProperty> mutableLiveData = new MutableLiveData<>();
-        restApi.getSystemProperty(systemProperty, FULL).enqueue(new Callback<Results<SystemProperty>>() {
-            @Override
-            public void onResponse(Call<Results<SystemProperty>> call, Response<Results<SystemProperty>> response) {
-                if (response.isSuccessful()) {
-                    mutableLiveData.setValue(response.body().getResults().get(0));
-                } else {
-                    mutableLiveData.setValue(null);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Results<SystemProperty>> call, Throwable t) {
-                mutableLiveData.setValue(null);
-            }
-        });
-        return mutableLiveData;
-    }
-
-    /**
-     * Gets concept members.
-     *
-     * @param uuid the uuid
-     * @return the concept members
-     */
-    public LiveData<ConceptMembers> getConceptMembers(String uuid) {
-        MutableLiveData<ConceptMembers> mutableLiveData = new MutableLiveData<>();
-        restApi.getConceptMembersFromUUID(uuid).enqueue(new Callback<ConceptMembers>() {
-            @Override
-            public void onResponse(Call<ConceptMembers> call, Response<ConceptMembers> response) {
-                if (response.isSuccessful()) {
-                    mutableLiveData.setValue(response.body());
-                } else {
-                    mutableLiveData.setValue(null);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ConceptMembers> call, Throwable t) {
-                mutableLiveData.setValue(null);
-            }
-        });
-        return mutableLiveData;
-    }
-
-    /**
-     * Create allergy.
-     *
-     * @param patient       the patient
-     * @param allergyCreate the allergy create
-     * @param callback      the callback
-     */
-    public void createAllergy(Patient patient, AllergyCreate allergyCreate, DefaultResponseCallback callback) {
-        restApi.createAllergy(patient.getUuid(), allergyCreate).enqueue(new Callback<Allergy>() {
-            @Override
-            public void onResponse(Call<Allergy> call, Response<Allergy> response) {
-                if (response.isSuccessful()) {
-                    callback.onResponse();
-                    allergyRoomDAO.saveAllergy(AppDatabaseHelper.convert(response.body(), patient.getId().toString()));
-                } else {
-                    callback.onErrorResponse(OpenmrsAndroid.getInstance().getString(R.string.error_creating_allergy));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Allergy> call, Throwable t) {
-                callback.onErrorResponse(t.getMessage());
+    public Observable<Boolean> createAllergy(Patient patient, AllergyCreate allergyCreate) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Response<Allergy> response = restApi.createAllergy(patient.getUuid(), allergyCreate).execute();
+            if (response.isSuccessful()) {
+                AllergyEntity allergyEntity = AppDatabaseHelper.convert(response.body(), patient.getId().toString());
+                allergyRoomDAO.saveAllergy(allergyEntity);
+                return true;
+            } else {
+                throw new Exception("createAllergy error: " + response.message());
             }
         });
     }
 
     /**
-     * Update allergy.
+     * Updates an existing allergy of a patient.
      *
-     * @param allergyUuid   the allergy uuid
+     * @param allergyUuid   Uuid of the allergy to be updated
      * @param id            the id
      * @param allergyCreate the allergy create
-     * @param callback      the callback
+     * @return observable boolean true if update is successful
      */
-    public void updateAllergy(Patient patient, String allergyUuid, Long id, AllergyCreate allergyCreate, DefaultResponseCallback callback) {
-        restApi.updateAllergy(patient.getUuid(), allergyUuid, allergyCreate).enqueue(new Callback<Allergy>() {
-            @Override
-            public void onResponse(Call<Allergy> call, Response<Allergy> response) {
-                if (response.isSuccessful()) {
-                    callback.onResponse();
-                    AllergyEntity allergyEntity = AppDatabaseHelper.convert(response.body(), patient.getId().toString());
-                    allergyEntity.setId(id);
-                    allergyRoomDAO.updateAllergy(allergyEntity);
-                } else {
-                    callback.onErrorResponse(OpenmrsAndroid.getInstance().getString(R.string.error_creating_allergy));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Allergy> call, Throwable t) {
-                callback.onErrorResponse(t.getMessage());
+    public Observable<Boolean> updateAllergy(Patient patient, String allergyUuid, Long id, AllergyCreate allergyCreate) {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Response<Allergy> response = restApi.updateAllergy(patient.getUuid(), allergyUuid, allergyCreate).execute();
+            if (response.isSuccessful()) {
+                AllergyEntity allergyEntity = AppDatabaseHelper.convert(response.body(), patient.getId().toString());
+                allergyEntity.setId(id);
+                allergyRoomDAO.updateAllergy(allergyEntity);
+                return true;
+            } else {
+                throw new Exception("updateAllergy error: " + response.message());
             }
         });
     }

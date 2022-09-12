@@ -21,47 +21,51 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import org.openmrs.mobile.R
-import org.openmrs.mobile.activities.ACBaseFragment
+import org.openmrs.mobile.activities.BaseFragment
 import org.openmrs.mobile.databinding.FragmentLogsBinding
 
-class LogsFragment : ACBaseFragment<LogsContract.Presenter>(), LogsContract.View {
-
+@AndroidEntryPoint
+class LogsFragment : BaseFragment() {
     private var _binding: FragmentLogsBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    private val viewModel: LogsViewModel by viewModels()
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentLogsBinding.inflate(inflater, container, false)
+
+        attachLogsToTextView()
+        setupCopyAllFAB()
+
         return binding.root
     }
 
-    override fun attachLogsToTextView(logs: String?) {
-        binding.tvLogs.text = logs
+    private fun attachLogsToTextView() {
+        binding.tvLogs.text = viewModel.logs
     }
 
-    override fun fabCopyAll(textLogs: String?) {
+    private fun setupCopyAllFAB() {
         binding.fab.setOnClickListener {
-            setClipboard(context, textLogs)
-            Toast.makeText(context, R.string.logs_copied_to_clipboard_message,
-                    Toast.LENGTH_SHORT).show()
+            copyToClipboard(viewModel.logs)
+            Toast.makeText(context, R.string.logs_copied_to_clipboard_message, Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun setClipboard(context: Context?, text: String?) {
+    private fun copyToClipboard(text: String) {
         val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText(getString(R.string.copied_text), text)
         clipboard.setPrimaryClip(clip)
     }
 
-    companion object {
-        fun newInstance(): LogsFragment {
-            return LogsFragment()
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        fun newInstance() = LogsFragment()
     }
 }

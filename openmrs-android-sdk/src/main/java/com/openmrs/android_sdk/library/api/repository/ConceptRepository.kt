@@ -1,5 +1,6 @@
 package com.openmrs.android_sdk.library.api.repository
 
+import com.openmrs.android_sdk.library.dao.ConceptRoomDAO
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper
 import com.openmrs.android_sdk.library.models.ConceptAnswers
 import com.openmrs.android_sdk.library.models.ConceptMembers
@@ -12,6 +13,8 @@ import java.util.concurrent.Callable
 
 @Singleton
 class ConceptRepository @Inject constructor() : BaseRepository() {
+
+    private val conceptRoomDAO: ConceptRoomDAO = db.conceptRoomDAO()
 
     /**
      * Gets system property.
@@ -57,4 +60,8 @@ class ConceptRepository @Inject constructor() : BaseRepository() {
             }
         })
     }
+
+
+    fun getConceptCountFromDb() = conceptRoomDAO.conceptsCount
+
 }

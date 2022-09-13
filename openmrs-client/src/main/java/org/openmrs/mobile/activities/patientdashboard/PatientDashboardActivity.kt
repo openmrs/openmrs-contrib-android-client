@@ -24,7 +24,6 @@ import androidx.viewpager.widget.ViewPager
 import com.openmrs.android_sdk.library.models.OperationType.PatientDeleting
 import com.openmrs.android_sdk.library.models.OperationType.PatientSynchronizing
 import com.openmrs.android_sdk.library.models.Result
-import com.openmrs.android_sdk.utilities.ApplicationConstants
 import com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE
 import com.openmrs.android_sdk.utilities.NetworkUtils
 import com.openmrs.android_sdk.utilities.ToastUtil
@@ -147,7 +146,6 @@ class PatientDashboardActivity : ACBaseActivity() {
                 if (binding.pager.currentItem == 1) {
                     Intent(this@PatientDashboardActivity, AddEditAllergyActivity::class.java)
                             .putExtra(PATIENT_ID_BUNDLE, patientId)
-                            .putExtra(ApplicationConstants.BundleKeys.ALLERGY_UUID, ApplicationConstants.EMPTY_STRING)
                             .apply { startActivity(this) }
                 } else {
                     if (!isActionFABOpen) openFABs()

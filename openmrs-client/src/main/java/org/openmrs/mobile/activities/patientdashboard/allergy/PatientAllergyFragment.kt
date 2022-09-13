@@ -60,9 +60,13 @@ class PatientAllergyFragment : BaseFragment(), OnLongPressListener, onInputSelec
 
         setupAdapter()
         setupObserver()
-        fetchPatientAllergies()
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fetchPatientAllergies()
     }
 
     private fun setupAdapter() {
@@ -161,7 +165,7 @@ class PatientAllergyFragment : BaseFragment(), OnLongPressListener, onInputSelec
                     .show()
         } else {
             Intent(activity, AddEditAllergyActivity::class.java).apply {
-                putExtra(PATIENT_ID_BUNDLE, viewModel.getPatient().id)
+                putExtra(PATIENT_ID_BUNDLE, viewModel.getPatient().id.toString())
                 putExtra(ALLERGY_UUID, selectedAllergy!!.uuid)
                 startActivity(this)
             }

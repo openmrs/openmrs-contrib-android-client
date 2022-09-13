@@ -68,7 +68,7 @@ object ApplicationConstants {
     object API {
         const val REST_ENDPOINT = "/ws/rest/v1/"
         const val FULL = "full"
-        const val TAG_ADMISSION_LOCATION="Admission Location"
+        const val TAG_ADMISSION_LOCATION = "Admission Location"
     }
 
     object UserKeys {
@@ -204,11 +204,11 @@ object ApplicationConstants {
         const val CONCEPT_SEVERITY_MILD = "allergy.concept.severity.mild"
         const val CONCEPT_SEVERITY_MODERATE = "allergy.concept.severity.moderate"
         const val CONCEPT_SEVERITY_SEVERE = "allergy.concept.severity.severe"
-        const val PROPERTY_REACTION = "REACTION"
         const val PROPERTY_FOOD = "FOOD"
         const val PROPERTY_DRUG = "DRUG"
         const val PROPERTY_OTHER = "OTHER"
         const val PROPERTY_MILD = "Mild"
+        const val PROPERTY_MODERATE = "Moderate"
         const val PROPERTY_SEVERE = "Severe"
         const val SELECT_ALLERGEN = "Select Allergen"
         const val SELECT_REACTION = "Reactions (you can select multiple)"

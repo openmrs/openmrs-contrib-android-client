@@ -14,22 +14,20 @@
 package org.openmrs.mobile.activities.formentrypatientlist
 
 import android.os.Bundle
-import android.view.Menu
-import androidx.appcompat.widget.SearchView
+import dagger.hilt.android.AndroidEntryPoint
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
 
+@AndroidEntryPoint
 class FormEntryPatientListActivity : ACBaseActivity() {
-    private var mPresenter: FormEntryPatientListContract.Presenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.setContentView(R.layout.activity_form_entry_patient_list)
+        setContentView(R.layout.activity_form_entry_patient_list)
 
-        val actionBar = supportActionBar
-        if (actionBar != null) {
-            actionBar.elevation = 0f
-            actionBar.setTitle(R.string.action_form_entry)
+        supportActionBar?.run {
+            elevation = 0f
+            setTitle(R.string.action_form_entry)
         }
 
         // Create fragment
@@ -38,32 +36,7 @@ class FormEntryPatientListActivity : ACBaseActivity() {
             formEntryPatientListFragment = FormEntryPatientListFragment.newInstance()
         }
         if (!formEntryPatientListFragment.isActive) {
-            addFragmentToActivity(supportFragmentManager,
-                    formEntryPatientListFragment, R.id.formEntryPatientListContentFrame)
+            addFragmentToActivity(supportFragmentManager, formEntryPatientListFragment, R.id.formEntryPatientListContentFrame)
         }
-        // Create the presenter
-        mPresenter = FormEntryPatientListPresenter(formEntryPatientListFragment)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.form_entry_patient_list_menu, menu)
-        val mFindPatientMenuItem = menu.findItem(R.id.actionSearchRemoteFormEntry)
-        val findPatientView: SearchView = mFindPatientMenuItem.actionView as SearchView
-
-        // Search function
-        findPatientView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean {
-                findPatientView.clearFocus()
-                return true
-            }
-
-            override fun onQueryTextChange(query: String): Boolean {
-                mPresenter?.setQuery(query)
-                mPresenter?.updatePatientsList()
-                return true
-            }
-        })
-        return true
     }
 }

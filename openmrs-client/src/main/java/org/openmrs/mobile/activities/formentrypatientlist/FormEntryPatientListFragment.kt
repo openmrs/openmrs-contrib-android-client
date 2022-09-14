@@ -13,94 +13,124 @@
  */
 package org.openmrs.mobile.activities.formentrypatientlist
 
-import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.openmrs.android_sdk.library.models.Patient
-import com.openmrs.android_sdk.utilities.ApplicationConstants
-import com.openmrs.android_sdk.utilities.StringUtils
-import com.google.android.material.snackbar.Snackbar
+import com.openmrs.android_sdk.library.models.Result
+import com.openmrs.android_sdk.utilities.ToastUtil
+import dagger.hilt.android.AndroidEntryPoint
 import org.openmrs.mobile.R
-import org.openmrs.mobile.activities.ACBaseFragment
-import org.openmrs.mobile.activities.formlist.FormListActivity
+import org.openmrs.mobile.activities.BaseFragment
 import org.openmrs.mobile.databinding.FragmentFormEntryPatientListBinding
+import org.openmrs.mobile.utilities.makeGone
+import org.openmrs.mobile.utilities.makeVisible
 
-class FormEntryPatientListFragment : ACBaseFragment<FormEntryPatientListContract.Presenter>(), FormEntryPatientListContract.View {
+@AndroidEntryPoint
+class FormEntryPatientListFragment : BaseFragment() {
     private var _binding: FragmentFormEntryPatientListBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        _binding = FragmentFormEntryPatientListBinding.inflate(inflater, container, false)
-        val linearLayoutManager = LinearLayoutManager(activity)
+    private val viewModel: FormEntryPatientListViewModel by viewModels()
 
-        with(binding) {
-            patientRecyclerView.setHasFixedSize(true)
-            patientRecyclerView.layoutManager = linearLayoutManager
-            swipeLayout.setOnRefreshListener {
-                refreshUI()
-                swipeLayout.isRefreshing = false
-            }
-        }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentFormEntryPatientListBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
+
+        setupAdapter()
+        setupObserver()
+        fetchPatientList()
+
         return binding.root
     }
 
-    private fun refreshUI() {
-        binding.formEntryListInitialProgressBar.visibility = View.VISIBLE
-        mPresenter?.updatePatientsList()
-    }
-
-    override fun updateAdapter(patientList: List<Patient?>?) {
-        val adapter = FormEntryPatientListAdapter(this, patientList)
-        adapter.notifyDataSetChanged()
-        binding.patientRecyclerView.adapter = adapter
-    }
-
-    override fun updateListVisibility(isVisible: Boolean, emptyListTextStringId: Int, replacementWord: String?) {
-        with(binding) {
-            formEntryListInitialProgressBar.visibility = View.GONE
-            if (isVisible) {
-                patientRecyclerView.visibility = View.VISIBLE
-                emptyPatientList.visibility = View.GONE
-            } else {
-                patientRecyclerView.visibility = View.GONE
-                emptyPatientList.visibility = View.VISIBLE
-            }
-            if (StringUtils.isBlank(replacementWord)) {
-                emptyPatientList.text = getString(emptyListTextStringId)
-            } else {
-                emptyPatientList.text = getString(emptyListTextStringId, replacementWord)
-            }
+    private fun setupAdapter() = with(binding.patientRecyclerView) {
+        setHasFixedSize(true)
+        layoutManager = LinearLayoutManager(activity)
+        adapter = FormEntryPatientListAdapter(this@FormEntryPatientListFragment, emptyList())
+        binding.swipeLayout.setOnRefreshListener {
+            fetchPatientList()
+            binding.swipeLayout.isRefreshing = false
         }
     }
 
-    override fun startEncounterForPatient(selectedPatientID: Long?) {
-        val intent = Intent(this.activity, FormListActivity::class.java)
-        intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, selectedPatientID)
-        startActivity(intent)
+    private fun setupObserver() {
+        viewModel.result.observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Result.Loading -> showLoading()
+                is Result.Success -> showPatientList(result.data)
+                is Result.Error -> showError()
+                else -> throw IllegalStateException()
+            }
+        })
     }
 
-    fun showSnackbarInactivePatients(v: View?) {
-        val snackbar = Snackbar.make(v!!, R.string.snackbar_nonvisitting_patients, Snackbar.LENGTH_LONG)
-        val view = snackbar.view
-        val tv = view.findViewById<TextView>(R.id.snackbar_text)
-        tv.setTextColor(Color.WHITE)
-        snackbar.show()
+    private fun fetchPatientList(query: String? = null) {
+        viewModel.fetchSavedPatientsWithActiveVisits(query)
+    }
+
+    private fun showLoading() = with(binding) {
+        formEntryListInitialProgressBar.makeVisible()
+        patientRecyclerView.makeGone()
+        emptyPatientList.makeGone()
+    }
+
+    private fun showPatientList(patients: List<Patient>) = with(binding) {
+        formEntryListInitialProgressBar.makeGone()
+        if (patients.isEmpty()) {
+            emptyPatientList.text = if (viewModel.mQuery.isNullOrEmpty()) getString(R.string.search_visits_no_results)
+            else getString(R.string.search_patient_no_result_for_query, viewModel.mQuery)
+            patientRecyclerView.makeGone()
+            emptyPatientList.makeVisible()
+        } else {
+            (patientRecyclerView.adapter as FormEntryPatientListAdapter).updateList(patients)
+            patientRecyclerView.makeVisible()
+            emptyPatientList.makeGone()
+        }
+    }
+
+    private fun showError() = with(binding) {
+        formEntryListInitialProgressBar.makeGone()
+        patientRecyclerView.makeGone()
+        emptyPatientList.makeGone()
+        ToastUtil.error(getString(R.string.search_visits_no_results))
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+        inflater.inflate(R.menu.form_entry_patient_list_menu, menu)
+        val searchView = menu.findItem(R.id.actionSearchRemoteFormEntry).actionView as SearchView
+
+        // Search function
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                searchView.clearFocus()
+                return true
+            }
+
+            override fun onQueryTextChange(query: String): Boolean {
+                fetchPatientList(query)
+                return true
+            }
+        })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {
         fun newInstance(): FormEntryPatientListFragment {
             return FormEntryPatientListFragment()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

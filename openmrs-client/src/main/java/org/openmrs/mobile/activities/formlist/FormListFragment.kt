@@ -15,190 +15,123 @@ package org.openmrs.mobile.activities.formlist
 
 import android.content.Intent
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.Nullable
-import androidx.annotation.RequiresApi
-import com.openmrs.android_sdk.library.models.FormCreate
-import com.openmrs.android_sdk.library.models.FormData
+import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.SnackbarLayout
-import org.json.JSONException
-import org.json.JSONObject
+import com.openmrs.android_sdk.library.models.EncounterType
+import com.openmrs.android_sdk.library.models.Result
+import com.openmrs.android_sdk.utilities.ApplicationConstants
+import com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.ENCOUNTERTYPE
+import com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.FORM_NAME
+import com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE
+import com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.VALUEREFERENCE
+import com.openmrs.android_sdk.utilities.ToastUtil
+import dagger.hilt.android.AndroidEntryPoint
 import org.openmrs.mobile.R
-import org.openmrs.mobile.activities.ACBaseFragment
+import org.openmrs.mobile.activities.BaseFragment
 import org.openmrs.mobile.activities.formadmission.FormAdmissionActivity
 import org.openmrs.mobile.activities.formdisplay.FormDisplayActivity
-import com.openmrs.android_sdk.library.api.RestApi
-import com.openmrs.android_sdk.library.api.RestServiceBuilder
 import org.openmrs.mobile.databinding.FragmentFormListBinding
-import com.openmrs.android_sdk.utilities.ApplicationConstants
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.IOException
-import java.nio.charset.StandardCharsets
 
-public final class FormListFragment : ACBaseFragment<FormListContract.Presenter?>(), FormListContract.View {
+@AndroidEntryPoint
+class FormListFragment : BaseFragment() {
     private var _binding: FragmentFormListBinding? = null
     private val binding get() = _binding!!
-    private var snackbar: Snackbar? = null
+
+    private val viewModel: FormListViewModel by viewModels()
 
     @Nullable
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentFormListBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-        binding.formlist.setOnItemClickListener({ parent: AdapterView<*>?, view: View, position: Int, id: Long -> mPresenter!!.listItemClicked(position, (view as TextView).text.toString()) })
-        return root
+
+        setupFormClickListener()
+        setupObserver()
+
+        return binding.root
     }
 
-    override fun showFormList(forms: Array<String?>?) {
-        if (forms!!.size == 0) {
-            snackbar = Snackbar.make(binding.root, ApplicationConstants.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE)
+    private fun setupFormClickListener() {
+        binding.formlist.setOnItemClickListener { _, _, position: Int, _ ->
+            viewModel.SelectedForm(position).run {
+                if (encounterType == null) {
+                    ToastUtil.error(getString(R.string.no_such_form_name_error_message, formName))
+                    return@setOnItemClickListener
+                }
+                val patientId: Long = requireArguments().get(PATIENT_ID_BUNDLE) as Long
+                if (encounterName == EncounterType.ADMISSION) {
+                    startAdmissionFormActivity(formName!!, patientId, encounterType!!)
+                } else {
+                    startFormDisplayActivity(formName!!, patientId, formFieldsJson!!, encounterType!!)
+                }
+            }
+        }
+    }
+
+    private fun setupObserver() {
+        viewModel.result.observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Result.Loading -> {}
+                is Result.Success -> showFormList(result.data)
+                is Result.Error -> {}
+                else -> throw IllegalStateException()
+            }
+        })
+    }
+
+    private fun showFormList(forms: Array<String>) {
+        if (forms.isEmpty()) {
+            val snackBar = Snackbar.make(binding.root, ApplicationConstants.EMPTY_STRING, Snackbar.LENGTH_INDEFINITE)
             val customSnackBarView = layoutInflater.inflate(R.layout.snackbar, null)
-            val snackBarLayout = snackbar!!.view as SnackbarLayout
+            val snackBarLayout = snackBar.view as SnackbarLayout
             snackBarLayout.setPadding(0, 0, 0, 0)
+
+            val typeface = Typeface.createFromAsset(requireActivity().assets, ApplicationConstants.TypeFacePathConstants.ROBOTO_MEDIUM)
+
             val noticeField = customSnackBarView.findViewById<TextView>(R.id.snackbar_text)
             noticeField.setText(R.string.snackbar_no_forms_found)
+
             val dismissButton = customSnackBarView.findViewById<TextView>(R.id.snackbar_action_button)
-            val typeface = Typeface.createFromAsset(requireActivity().assets, ApplicationConstants.TypeFacePathConstants.ROBOTO_MEDIUM)
             dismissButton.typeface = typeface
-            dismissButton.setOnClickListener { v: View? -> snackbar!!.dismiss() }
+            dismissButton.setOnClickListener { snackBar.dismiss() }
+
             snackBarLayout.addView(customSnackBarView, 0)
-            snackbar!!.show()
+            snackBar.show()
+        } else {
+            binding.formlist.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, forms)
         }
-        binding.formlist.adapter = ArrayAdapter(requireContext(),
-                android.R.layout.simple_list_item_1,
-                android.R.id.text1,
-                forms)
     }
 
-    override fun startFormDisplayActivity(formName: String?, patientId: Long?, valueRefString: String?, encounterType: String?) {
-        val intent = Intent(context, FormDisplayActivity::class.java)
-        intent.putExtra(ApplicationConstants.BundleKeys.FORM_NAME, formName)
-        intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patientId)
-        intent.putExtra(ApplicationConstants.BundleKeys.VALUEREFERENCE, valueRefString)
-        intent.putExtra(ApplicationConstants.BundleKeys.ENCOUNTERTYPE, encounterType)
-        startActivity(intent)
-    }
-
-    override fun startAdmissionFormActivity(formName: String?, patientId: Long?, encounterType: String?) {
-        val intent = Intent(context, FormAdmissionActivity::class.java)
-        intent.putExtra(ApplicationConstants.BundleKeys.FORM_NAME, formName)
-        intent.putExtra(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE, patientId)
-        intent.putExtra(ApplicationConstants.BundleKeys.ENCOUNTERTYPE, encounterType)
-        startActivity(intent)
-    }
-
-    override fun setPresenter(presenter: FormListContract.Presenter?) {
-        mPresenter = presenter
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    override fun formCreate(uuid: String?, formName: String?): Boolean? {
-        formCreateFlag = false
-        val apiService = RestServiceBuilder.createService(RestApi::class.java)
-        if (formName!!.contains("admission")) {
-            val obj = loadJSONFromAsset("admission.json")
-            val call2 = apiService.formCreate(uuid, obj)
-            call2.enqueue(object : Callback<FormCreate> {
-                override fun onResponse(call: Call<FormCreate>, response: Response<FormCreate>) {
-                    if (response.isSuccessful && response.body()!!.name == "json") {
-                        formCreateFlag = true
-                    }
-                }
-
-                override fun onFailure(call: Call<FormCreate>, t: Throwable) {
-                    //This method is lef blank intentionally
-                }
-            })
-        } else if (formName.contains("vitals")) {
-            val obj = loadJSONFromAsset("vitals1.json")
-            val obj2 = loadJSONFromAsset("vitals2.json")
-            val call2 = apiService.formCreate(uuid, obj)
-            call2.enqueue(object : Callback<FormCreate> {
-                override fun onResponse(call: Call<FormCreate>, response: Response<FormCreate>) {
-                    if (response.isSuccessful && response.body()!!.name == "json") {
-                        formCreateFlag = true
-                    }
-                }
-
-                override fun onFailure(call: Call<FormCreate>, t: Throwable) {
-                    //This method is lef blank intentionally
-                }
-            })
-            val call = apiService.formCreate(uuid, obj2)
-            call.enqueue(object : Callback<FormCreate> {
-                override fun onResponse(call: Call<FormCreate>, response: Response<FormCreate>) {
-                    if (response.isSuccessful && response.body()!!.name == "json") {
-                        formCreateFlag = true
-                    }
-                }
-
-                override fun onFailure(call: Call<FormCreate>, t: Throwable) {
-                    //This method is lef blank intentionally
-                }
-            })
-        } else if (formName.contains("visit note")) {
-            val obj = loadJSONFromAsset("visit_note.json")
-            val call2 = apiService.formCreate(uuid, obj)
-            call2.enqueue(object : Callback<FormCreate> {
-                override fun onResponse(call: Call<FormCreate>, response: Response<FormCreate>) {
-                    if (response.isSuccessful && response.body()!!.name == "json") {
-                        formCreateFlag = true
-                    }
-                }
-
-                override fun onFailure(call: Call<FormCreate>, t: Throwable) {
-                    //This method is lef blank intentionally
-                }
-            })
+    private fun startFormDisplayActivity(formName: String, patientId: Long, valueRefString: String, encounterType: String) {
+        Intent(context, FormDisplayActivity::class.java).apply {
+            putExtra(FORM_NAME, formName)
+            putExtra(PATIENT_ID_BUNDLE, patientId)
+            putExtra(VALUEREFERENCE, valueRefString)
+            putExtra(ENCOUNTERTYPE, encounterType)
+            startActivity(this)
         }
-        return formCreateFlag
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    private fun loadJSONFromAsset(filename: String): FormData? {
-        var json: String? = null
-        json = try {
-            val `is` = requireActivity().assets.open("forms/$filename")
-            val size = `is`.available()
-            val buffer = ByteArray(size)
-            `is`.read(buffer)
-            `is`.close()
-            String(buffer, StandardCharsets.UTF_8)
-        } catch (ex: IOException) {
-            ex.printStackTrace()
-            return null
+    private fun startAdmissionFormActivity(formName: String, patientId: Long, encounterType: String) {
+        Intent(context, FormAdmissionActivity::class.java).apply {
+            putExtra(FORM_NAME, formName)
+            putExtra(PATIENT_ID_BUNDLE, patientId)
+            putExtra(ENCOUNTERTYPE, encounterType)
+            startActivity(this)
         }
-        var obj: JSONObject? = null
-        try {
-            obj = JSONObject(json)
-            val data = FormData()
-            data.name = obj.getString("name")
-            data.dataType = obj.getString("dataType")
-            data.valueReference = obj.getString("valueReference")
-            return data
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-        return null
-    }
-
-    override fun showError(formName: String?) {
-        error(getString(R.string.no_such_form_name_error_message, formName))
     }
 
     companion object {
-        private var formCreateFlag: Boolean? = null
-        fun newInstance(): FormListFragment {
-            return FormListFragment()
+        fun newInstance(patientId: Long) = FormListFragment().apply {
+            arguments = bundleOf(PATIENT_ID_BUNDLE to patientId)
         }
     }
 

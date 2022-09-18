@@ -14,15 +14,15 @@
 
 package com.openmrs.android_sdk.library.dao;
 
+import java.util.List;
+
+import io.reactivex.Single;
+
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
 import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity;
-
-import java.util.List;
-
-import io.reactivex.Single;
 
 /**
  * The interface Form resource dao.
@@ -44,7 +44,7 @@ public interface FormResourceDAO {
      * @return the form resource list
      */
     @Query("SELECT * FROM forms")
-    Single<List<FormResourceEntity>> getFormResourceList();
+    List<FormResourceEntity> getFormResourceList();
 
     /**
      * Gets form by uuid.

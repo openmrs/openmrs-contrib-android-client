@@ -174,7 +174,7 @@
     <string name="action_active_visits">सक्रिय विज़िट</string>
     <string name="action_form_entry">फॉर्म प्रविष्टि</string>
     <string name="action_find_visits">सक्रिय विज़िट ढूंढें</string>
-    <string name="search_visits_no_results">डेटाबेस में कोई विज़िट नहीं</string>
+    <string name="search_visits_no_results">कोई सक्रिय विज़िट नहीं मिली</string>
 
     <!-- ACBase activity -->
     <string name="error_email_subject_app_crashed">OpenMRS एंड्रॉइड क्लाइंट क्रैश हो गया</string>
@@ -295,7 +295,6 @@
     <string name="dialog_message_data_lost">दर्ज की गई सभी रोगी जानकारी खो जाएगी।</string>
     <string name="dialog_button_stay">रहें</string>
     <string name="dialog_button_leave">छोड़ें</string>
-    <string name="snackbar_nonvisitting_patients">केवल वर्तमान में विज़िट में रोगियों के लिए विटल्स पर कब्जा किया जा सकता है।</string>
 
     <string name="logout_success">सफलतापूर्वक लॉग आउट किया गया! </string>
     <string name="url_privacy_policy">https://github.com/openmrs/openmrs-contrib-android-client/blob/master/privacy_policy.md#privacy-policy</string>

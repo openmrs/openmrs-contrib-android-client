@@ -5,11 +5,9 @@ import androidx.lifecycle.SavedStateHandle
 import com.openmrs.android_sdk.library.api.repository.VisitRepository
 import com.openmrs.android_sdk.library.dao.PatientDAO
 import com.openmrs.android_sdk.library.dao.VisitDAO
-import com.openmrs.android_sdk.library.databases.entities.LocationEntity
 import com.openmrs.android_sdk.library.models.Patient
 import com.openmrs.android_sdk.library.models.Result
 import com.openmrs.android_sdk.library.models.Visit
-import com.openmrs.android_sdk.library.models.VisitType
 import com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE
 import org.junit.Before
 import org.junit.Rule
@@ -25,7 +23,6 @@ import org.mockito.Mockito
 import org.openmrs.mobile.activities.patientdashboard.visits.PatientDashboardVisitsViewModel
 import org.openmrs.mobile.test.ACUnitTestBaseRx
 import rx.Observable
-import java.util.ArrayList
 
 @RunWith(JUnit4::class)
 class PatientDashboardVisitsViewModelTest : ACUnitTestBaseRx() {
@@ -53,7 +50,7 @@ class PatientDashboardVisitsViewModelTest : ACUnitTestBaseRx() {
     @Before
     override fun setUp() {
         super.setUp()
-        savedStateHandle = SavedStateHandle().apply { set(PATIENT_ID_BUNDLE, PatientDashboardDetailsViewModelTest.ID) }
+        savedStateHandle = SavedStateHandle().apply { set(PATIENT_ID_BUNDLE, PATIENT_ID) }
         viewModel = PatientDashboardVisitsViewModel(patientDAO, visitDAO, visitRepository, savedStateHandle)
         patient = createPatient(PATIENT_ID.toLong())
         visitList = createVisitList()
@@ -111,21 +108,6 @@ class PatientDashboardVisitsViewModelTest : ACUnitTestBaseRx() {
         val actualResult = (viewModel.result.value as Result.Success).data[0]
 
         assertEquals(visit, actualResult)
-    }
-
-    private fun createVisitList(): List<Visit> {
-        val list: MutableList<Visit> = ArrayList()
-        list.add(createVisit("visit1"))
-        list.add(createVisit("visit2"))
-        return list
-    }
-
-    private fun createVisit(display: String): Visit {
-        val visit = Visit()
-        visit.location = LocationEntity(display)
-        visit.visitType = VisitType(display)
-        visit.patient = patient
-        return visit
     }
 
     companion object {

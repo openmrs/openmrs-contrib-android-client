@@ -14,12 +14,21 @@
 
 package org.openmrs.mobile.test;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doNothing;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import retrofit2.Call;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.ContentObserver;
 import android.net.Uri;
 
+import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
 import com.openmrs.android_sdk.library.models.Allergen;
 import com.openmrs.android_sdk.library.models.Allergy;
 import com.openmrs.android_sdk.library.models.Patient;
@@ -31,6 +40,8 @@ import com.openmrs.android_sdk.library.models.PersonName;
 import com.openmrs.android_sdk.library.models.Provider;
 import com.openmrs.android_sdk.library.models.Resource;
 import com.openmrs.android_sdk.library.models.Results;
+import com.openmrs.android_sdk.library.models.Visit;
+import com.openmrs.android_sdk.library.models.VisitType;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -43,15 +54,6 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.core.classloader.annotations.SuppressStaticInitializationFor;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import retrofit2.Call;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doNothing;
 
 @PrepareForTest({Context.class,
         ContentResolver.class, ContentValues.class})
@@ -171,6 +173,21 @@ ACUnitTestBase {
         allergy.setSeverity(null);
 
         return allergy;
+    }
+
+    protected List<Visit> createVisitList() {
+        ArrayList<Visit> visits = new ArrayList();
+        visits.add(createVisit("visit1", 1L));
+        visits.add(createVisit("visit2", 2L));
+        return visits;
+    }
+
+    protected Visit createVisit(String display, long patientId) {
+        Visit visit = new Visit();
+        visit.location = new LocationEntity(display);
+        visit.visitType = new VisitType(display);
+        visit.patient = createPatient(patientId);
+        return visit;
     }
 
     protected <T> Call<Results<T>> mockSuccessCall(List<T> list) {

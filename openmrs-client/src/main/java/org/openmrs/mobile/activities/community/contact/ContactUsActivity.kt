@@ -19,21 +19,23 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import com.openmrs.android_sdk.utilities.ToastUtil
+import dagger.hilt.android.AndroidEntryPoint
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
 import org.openmrs.mobile.databinding.ActvityContactUsBinding
 
-class ContactUsActivity : ACBaseActivity(), ContactUsContract.View {
+@AndroidEntryPoint
+class ContactUsActivity : ACBaseActivity() {
 
-    var presenter: ContactUsContract.Presenter? = null
     private lateinit var binding: ActvityContactUsBinding
+    private val viewModel: ContactUsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActvityContactUsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        presenter = ContactUsPresenter()
 
         val actionBar = supportActionBar
         if (actionBar != null) {

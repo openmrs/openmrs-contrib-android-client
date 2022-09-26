@@ -20,12 +20,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.openmrs.android_sdk.utilities.ApplicationConstants
+import dagger.hilt.android.AndroidEntryPoint
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
 import org.openmrs.mobile.databinding.ActivityAboutBinding
 
+@AndroidEntryPoint
 class AboutActivity : ACBaseActivity() {
-    private lateinit var binding : ActivityAboutBinding
+    private lateinit var binding: ActivityAboutBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAboutBinding.inflate(layoutInflater)

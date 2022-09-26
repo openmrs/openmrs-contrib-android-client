@@ -9,13 +9,13 @@
  */
 package com.openmrs.android_sdk.utilities
 
+import com.google.gson.GsonBuilder
 import com.openmrs.android_sdk.library.OpenmrsAndroid
 import com.openmrs.android_sdk.library.databases.AppDatabase
 import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity
 import com.openmrs.android_sdk.library.models.Form
 import com.openmrs.android_sdk.utilities.StringUtils.isBlank
 import com.openmrs.android_sdk.utilities.StringUtils.unescapeJavaString
-import com.google.gson.GsonBuilder
 import java.lang.reflect.Modifier
 
 object FormService {
@@ -64,14 +64,5 @@ object FormService {
                 .formResourceDAO()
                 .getFormResourceByName(name)
                 .blockingGet()
-    }
-
-    @JvmStatic
-    fun getFormResourceList(): List<FormResourceEntity> {
-        var list : List<FormResourceEntity>  = AppDatabase.getDatabase(OpenmrsAndroid.getInstance()?.getApplicationContext())
-                .formResourceDAO()
-                .formResourceList
-                .blockingGet()
-        return list
     }
 }

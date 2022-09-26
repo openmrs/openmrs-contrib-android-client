@@ -14,40 +14,34 @@
 package org.openmrs.mobile.activities.formlist
 
 import android.os.Bundle
-import android.view.Menu
+import com.openmrs.android_sdk.utilities.ApplicationConstants
+import dagger.hilt.android.AndroidEntryPoint
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
-import com.openmrs.android_sdk.utilities.ApplicationConstants
 
+@AndroidEntryPoint
 class FormListActivity : ACBaseActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.setContentView(R.layout.activity_form_list)
-        val actionBar = supportActionBar
-        if (actionBar != null) {
-            supportActionBar!!.elevation = 0f
-            supportActionBar!!.setTitle(R.string.action_form_entry)
+        setContentView(R.layout.activity_form_list)
+
+        supportActionBar?.run {
+            elevation = 0f
+            setTitle(R.string.action_form_entry)
+        }
+
+        var patientId: Long? = null
+        intent.extras?.let {
+            patientId = it.getLong(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE)
         }
 
         var formListFragment = supportFragmentManager.findFragmentById(R.id.formListContentFrame) as FormListFragment?
         if (formListFragment == null) {
-            formListFragment = FormListFragment.newInstance()
+            formListFragment = FormListFragment.newInstance(patientId!!)
         }
         if (!formListFragment.isActive) {
-            addFragmentToActivity(supportFragmentManager,
-                    formListFragment, R.id.formListContentFrame)
+            addFragmentToActivity(supportFragmentManager, formListFragment, R.id.formListContentFrame)
         }
-        val bundle = intent.extras
-        var mPatientID: Long? = null
-        if (bundle != null) {
-            mPatientID = bundle.getLong(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE)
-        }
-
-        FormListPresenter(formListFragment, mPatientID!!)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        return true
     }
 }

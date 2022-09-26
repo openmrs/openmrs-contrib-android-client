@@ -58,11 +58,11 @@ public class EncounterDAO {
     /**
      * Gets encounter type by form name.
      *
-     * @param formname the formname
+     * @param formName the form name
      * @return the encounter type by form name
      */
-    public EncounterType getEncounterTypeByFormName(String formname) {
-        return encounterTypeRoomDAO.getEncounterTypeByFormName(formname);
+    public EncounterType getEncounterTypeByFormName(String formName) {
+        return encounterTypeRoomDAO.getEncounterTypeByFormName(formName);
     }
 
     /**

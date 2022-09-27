@@ -421,7 +421,7 @@ public interface RestApi {
      * @return the call
      */
     @POST("provider/{uuid}")
-    Call<Provider> UpdateProvider(@Path("uuid") String uuid,
+    Call<Provider> updateProvider(@Path("uuid") String uuid,
                                   @Body Provider provider);
 
     /**

@@ -30,7 +30,7 @@ import com.openmrs.android_sdk.utilities.ToastUtil
 import dagger.hilt.android.AndroidEntryPoint
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.BaseFragment
-import org.openmrs.mobile.activities.providermanagerdashboard.addprovider.AddProviderActivity
+import org.openmrs.mobile.activities.addeditprovider.AddEditProviderActivity
 import org.openmrs.mobile.databinding.FragmentProviderManagementBinding
 import org.openmrs.mobile.utilities.makeGone
 import org.openmrs.mobile.utilities.makeVisible
@@ -69,7 +69,7 @@ class ProviderManagerDashboardFragment : BaseFragment() {
 
         // Add provider floating action button
         providerManagementFragAddFAB.setOnClickListener {
-            startActivity(Intent(activity, AddProviderActivity::class.java))
+            startActivity(Intent(activity, AddEditProviderActivity::class.java))
         }
     }
 

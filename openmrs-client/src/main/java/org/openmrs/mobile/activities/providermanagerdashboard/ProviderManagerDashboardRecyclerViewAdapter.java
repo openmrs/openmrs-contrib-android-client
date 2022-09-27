@@ -63,7 +63,7 @@ public class ProviderManagerDashboardRecyclerViewAdapter extends
 
         holder.mRowLayout.setOnClickListener(view -> {
             Intent intent = new Intent(fragment.getContext(), ProviderDashboardActivity.class);
-            intent.putExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE, provider);
+            intent.putExtra(ApplicationConstants.BundleKeys.PROVIDER_BUNDLE, provider);
             fragment.startActivity(intent);
         });
     }

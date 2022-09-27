@@ -327,10 +327,6 @@
     <string name="last_name_hint">Last Name</string>
     <string name="identifier_hint">Identifier</string>
     <string name="identifier_description">* Identifier can be anything. Eg. Doctor, Nurse, Clerk, etc</string>
-    <string name="add_provider_success_msg">Successfully added provider.</string>
-    <string name="add_provider_failure_msg">Failed to add provider.</string>
-    <string name="edit_provider_success_msg">Successfully edited provider.</string>
-    <string name="edit_provider_failure_msg">Failed to edit provider.</string>
     <string name="title_provider_info">Provider Info</string>
     <string name="dialog_provider_retired">Provider will be retired.</string>
     <string name="title_dialog_matching_provider">Found Similar Providers</string>
@@ -346,8 +342,14 @@
     <string name="providers_fetching_error">Error fetching providers</string>
     <string name="providers_fetching_no_results">No providers found.</string>
     <string name="offline_provider_fetch">offline providers fetched couldn\'t sync with the database device offline</string>
-    <string name="offline_provider_add">provider will be synced to the server when device gets connected to network</string>
-    <string name="offline_provider_edit">updated provider will be synced to the server when device gets connected to network</string>
+
+    <!-- AddEditProvider -->
+    <string name="add_provider_success_msg">Successfully added provider.</string>
+    <string name="add_provider_failure_msg">Failed to add provider.</string>
+    <string name="edit_provider_success_msg">Successfully edited provider.</string>
+    <string name="edit_provider_failure_msg">Failed to edit provider.</string>
+    <string name="offline_provider_add">Provider will be synced to the server when device gets connected to network</string>
+    <string name="offline_provider_edit">Updated provider will be synced to the server when device gets connected to network</string>
     <string name="offline_provider_delete">Provider will be removed from the server when you\'re back online</string>
 
     <!--fragment_patient_relationship-->

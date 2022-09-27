@@ -15,6 +15,7 @@
 package org.openmrs.mobile.utilities
 
 import com.openmrs.android_sdk.library.models.Patient
+import com.openmrs.android_sdk.library.models.Provider
 import com.openmrs.android_sdk.library.models.Visit
 
 object FilterUtil {
@@ -35,6 +36,16 @@ object FilterUtil {
                     filteredList.add(patient)
                 }
             }
+        }
+        return filteredList
+    }
+
+    @JvmStatic
+    fun getProvidersFilteredByQuery(providerList: List<Provider>, query: String): List<Provider> {
+        val filteredList = ArrayList<Provider>()
+        for (provider in providerList) {
+            val searchableWords = getProviderSearchableWords(provider)
+            if (doesAnySearchableWordFitQuery(searchableWords, query)) filteredList.add(provider)
         }
         return filteredList
     }
@@ -67,6 +78,20 @@ object FilterUtil {
         searchableWords.add(patientIdentifier)
         searchableWords.add(fullName)
         searchableWords.add(givenFamilyName)
+        return searchableWords
+    }
+
+    @JvmStatic
+    private fun getProviderSearchableWords(provider: Provider): List<String?> {
+        val providerIdentifier = provider.identifier
+        val fullName = provider.person?.name?.nameString
+        val display = provider.person?.display
+
+        val searchableWords = ArrayList<String?>().apply {
+            add(providerIdentifier)
+            add(fullName)
+            add(display)
+        }
         return searchableWords
     }
 

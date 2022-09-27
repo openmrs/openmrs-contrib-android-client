@@ -251,6 +251,7 @@
             android:configChanges="keyboardHidden|screenSize"
             android:label="@string/provider_manager"
             android:launchMode="singleTop"
+            android:parentActivityName=".activities.dashboard.DashboardActivity"
             android:theme="@style/AppThemeOrig" />
         <activity
             android:name=".activities.providermanagerdashboard.addprovider.AddProviderActivity"

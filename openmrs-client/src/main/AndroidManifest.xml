@@ -191,7 +191,7 @@
             android:name=".services.PatientService"
             android:enabled="true" />
         <service
-            android:name="com.openmrs.android_sdk.library.api.services.EncounterService"
+            android:name=".services.EncounterService"
             android:enabled="true" />
         <service
             android:name=".services.FormListService"

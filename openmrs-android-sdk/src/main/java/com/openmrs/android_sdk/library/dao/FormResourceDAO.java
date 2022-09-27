@@ -16,8 +16,6 @@ package com.openmrs.android_sdk.library.dao;
 
 import java.util.List;
 
-import io.reactivex.Single;
-
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -53,7 +51,7 @@ public interface FormResourceDAO {
      * @return the form by uuid
      */
     @Query("SELECT * FROM forms WHERE uuid = :uuid")
-    Single<FormResourceEntity> getFormByUuid(String uuid);
+    FormResourceEntity getFormByUuid(String uuid);
 
     /**
      * Delete all forms.

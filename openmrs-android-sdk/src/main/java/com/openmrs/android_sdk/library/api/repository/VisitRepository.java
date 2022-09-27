@@ -37,7 +37,6 @@ import com.openmrs.android_sdk.library.dao.LocationDAO;
 import com.openmrs.android_sdk.library.dao.VisitDAO;
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
 import com.openmrs.android_sdk.library.models.Encounter;
-import com.openmrs.android_sdk.library.models.Encountercreate;
 import com.openmrs.android_sdk.library.models.Patient;
 import com.openmrs.android_sdk.library.models.Results;
 import com.openmrs.android_sdk.library.models.Visit;
@@ -198,15 +197,5 @@ public class VisitRepository extends BaseRepository {
                 throw new IOException(response.message());
             }
         });
-    }
-
-    /**
-     * Add encounter created long.
-     *
-     * @param encountercreate the encountercreate
-     * @return the long
-     */
-    public long addEncounterCreated(final Encountercreate encountercreate) {
-        return encounterCreateRoomDAO.addEncounterCreated(encountercreate);
     }
 }

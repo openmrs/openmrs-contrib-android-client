@@ -13,61 +13,16 @@
  */
 package com.openmrs.android_sdk.utilities
 
-import android.os.Parcel
-import android.os.Parcelable
 import com.openmrs.android_sdk.library.models.Answer
 import java.io.Serializable
-import java.util.*
 
-class SelectOneField : Serializable, Parcelable {
-    var concept: String? = null
+data class SelectOneField(var answerList: List<Answer>, var concept: String) : Serializable {
     var chosenAnswer: Answer? = null
-    var answerList: List<Answer?>
-
-    constructor(answerList: List<Answer?>, concept: String?) {
-        this.answerList = answerList
-        this.concept = concept
-    }
 
     fun setAnswer(answerPosition: Int) {
-        if (answerPosition < answerList.size) {
-            chosenAnswer = answerList[answerPosition]
-        }
-        if (answerPosition == -1) {
-            chosenAnswer = null
-        }
+        if (answerPosition < answerList.size) chosenAnswer = answerList[answerPosition]
+        if (answerPosition == -1) chosenAnswer = null
     }
 
-    val chosenAnswerPosition: Int
-        get() = answerList.indexOf(chosenAnswer)
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeString(concept)
-        dest.writeSerializable(chosenAnswer)
-        dest.writeList(answerList)
-    }
-
-    protected constructor(`in`: Parcel) {
-        concept = `in`.readString()
-        chosenAnswer = `in`.readSerializable() as Answer
-        answerList = ArrayList()
-        `in`.readList(answerList, Answer::class.java.classLoader)
-    }
-
-    companion object {
-        @JvmField
-        val CREATOR: Parcelable.Creator<SelectOneField?> = object : Parcelable.Creator<SelectOneField?> {
-            override fun createFromParcel(source: Parcel): SelectOneField? {
-                return SelectOneField(source)
-            }
-
-            override fun newArray(size: Int): Array<SelectOneField?> {
-                return arrayOfNulls(size)
-            }
-        }
-    }
+    val chosenAnswerPosition: Int get() = answerList.indexOf(chosenAnswer)
 }

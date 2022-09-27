@@ -34,6 +34,8 @@
     <string name="forgot_button_ok">Dismiss</string>
     <string name="login_offline">Offline</string>
     <string name="login_online">Online</string>
+    <string name="login_error">Error with login</string>
+    <string name="invalid_URL_message">Invalid URL</string>
 
     <!-- AddEditPatient -->
     <string name="emptyerror">Required</string>
@@ -323,14 +325,11 @@
     <string name="action_find_providers">Find Providers</string>
     <string name="delete_provider_success_msg">Successfully deleted the provider!</string>
     <string name="delete_provider_failure_msg">Failed to delete provider.</string>
+    <string name="offline_provider_delete">Provider will be removed from the server when you\'re back online</string>
     <string name="first_name_hint">First Name</string>
     <string name="last_name_hint">Last Name</string>
     <string name="identifier_hint">Identifier</string>
     <string name="identifier_description">* Identifier can be anything. Eg. Doctor, Nurse, Clerk, etc</string>
-    <string name="add_provider_success_msg">Successfully added provider.</string>
-    <string name="add_provider_failure_msg">Failed to add provider.</string>
-    <string name="edit_provider_success_msg">Successfully edited provider.</string>
-    <string name="edit_provider_failure_msg">Failed to edit provider.</string>
     <string name="title_provider_info">Provider Info</string>
     <string name="dialog_provider_retired">Provider will be retired.</string>
     <string name="title_dialog_matching_provider">Found Similar Providers</string>
@@ -346,9 +345,14 @@
     <string name="providers_fetching_error">Error fetching providers</string>
     <string name="providers_fetching_no_results">No providers found.</string>
     <string name="offline_provider_fetch">offline providers fetched couldn\'t sync with the database device offline</string>
-    <string name="offline_provider_add">provider will be synced to the server when device gets connected to network</string>
-    <string name="offline_provider_edit">updated provider will be synced to the server when device gets connected to network</string>
-    <string name="offline_provider_delete">Provider will be removed from the server when you\'re back online</string>
+
+    <!-- AddEditProvider -->
+    <string name="add_provider_success_msg">Successfully added provider.</string>
+    <string name="add_provider_failure_msg">Failed to add provider.</string>
+    <string name="edit_provider_success_msg">Successfully edited provider.</string>
+    <string name="edit_provider_failure_msg">Failed to edit provider.</string>
+    <string name="offline_provider_add">Provider will be synced to the server when device gets connected to network</string>
+    <string name="offline_provider_edit">Updated provider will be synced to the server when device gets connected to network</string>
 
     <!--fragment_patient_relationship-->
     <string name="provider_patient">Provider - Patient Relationship</string>
@@ -409,12 +413,6 @@
 
     <!--LastViewedPatientRecyclerViewAdapter-->
     <string name="failed_fetching_patient_data_error_message">Failed to fetch patient data</string>
-
-    <!--Login Fragment-->
-    <string name="invalid_URL_message">Invalid URL</string>
-
-    <!--Login presenter-->
-    <string name="failed_fetching_visit_type_error_message">Failed to fetch visit type</string>
 
     <!--Logs Fragment-->
     <string name="logs_copied_to_clipboard_message">Logs copied to clipboard</string>

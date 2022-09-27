@@ -14,12 +14,19 @@
 package com.openmrs.android_sdk.library.api.repository
 
 import com.openmrs.android_sdk.library.OpenmrsAndroid
+import com.openmrs.android_sdk.library.databases.AppDatabaseHelper.createObservableIO
 import com.openmrs.android_sdk.library.databases.entities.LocationEntity
+import com.openmrs.android_sdk.utilities.ApplicationConstants
+import rx.Observable
+import javax.inject.Inject
+import javax.inject.Singleton
+import java.util.concurrent.Callable
 
 /**
  * The type Location repository.
  */
-class LocationRepository : BaseRepository() {
+@Singleton
+class LocationRepository @Inject constructor() : BaseRepository() {
     /**
      * Gets location (only has uuid).
      *
@@ -37,4 +44,20 @@ class LocationRepository : BaseRepository() {
             }
             return null
         }
+
+    /**
+     * Fetches all locations registered in a server.
+     *
+     * @param url the URL of the server to fetch the locations from
+     * @return observable list of LocationEntity
+     */
+    fun getLocations(url: String): Observable<List<LocationEntity>> {
+        return createObservableIO(Callable {
+            val locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "location"
+            restApi.getLocations(locationEndPoint, "Login Location", "full").execute().run {
+                if (isSuccessful && body() != null) return@Callable body()!!.results
+                else throw Exception("Error fetching concepts: ${message()}")
+            }
+        })
+    }
 }

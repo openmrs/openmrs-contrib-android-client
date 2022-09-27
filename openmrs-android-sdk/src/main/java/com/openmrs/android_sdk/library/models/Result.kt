@@ -23,6 +23,10 @@ enum class OperationType {
     PatientVitalsFetching,
     PatientDeleting,
     LastViewedPatientsFetching,
+    ProviderRegistering,
+    ProviderUpdating,
+    Login,
+    LocationsFetching
 }
 
 enum class ResultType {
@@ -34,5 +38,20 @@ enum class ResultType {
     PatientUpdateError,
     EncounterSubmissionSuccess,
     EncounterSubmissionLocalSuccess,
-    EncounterSubmissionError
+    EncounterSubmissionError,
+    AddProviderSuccess,
+    AddProviderLocalSuccess,
+    UpdateProviderSuccess,
+    UpdateProviderLocalSuccess,
+    ProviderDeletionSuccess,
+    ProviderDeletionLocalSuccess,
+    ProviderDeletionError,
+    LoginOfflineSuccess,
+    LoginSuccess,
+    LoginInvalidCredentials,
+    LoginOfflineUnsupported,
+    LoginNoInternetConnection,
+    LocationsFetchingLocalSuccess,
+    LocationsFetchingSuccess,
+    LocationsFetchingNoInternetConnection
 }

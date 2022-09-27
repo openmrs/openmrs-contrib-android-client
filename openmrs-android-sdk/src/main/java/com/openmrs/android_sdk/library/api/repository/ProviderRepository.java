@@ -25,8 +25,6 @@ import java.util.HashSet;
 import java.util.List;
 
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import rx.Observable;
 
@@ -35,7 +33,6 @@ import androidx.work.Data;
 import androidx.work.NetworkType;
 import androidx.work.OneTimeWorkRequest;
 
-import com.openmrs.android_sdk.R;
 import com.openmrs.android_sdk.library.OpenMRSLogger;
 import com.openmrs.android_sdk.library.api.RestApi;
 import com.openmrs.android_sdk.library.api.workers.provider.AddProviderWorker;
@@ -43,14 +40,11 @@ import com.openmrs.android_sdk.library.api.workers.provider.DeleteProviderWorker
 import com.openmrs.android_sdk.library.api.workers.provider.UpdateProviderWorker;
 import com.openmrs.android_sdk.library.dao.ProviderRoomDAO;
 import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 import com.openmrs.android_sdk.library.models.Provider;
 import com.openmrs.android_sdk.library.models.Resource;
+import com.openmrs.android_sdk.library.models.ResultType;
 import com.openmrs.android_sdk.library.models.Results;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
-import com.openmrs.android_sdk.utilities.ToastUtil;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * The type Provider repository.
@@ -129,145 +123,135 @@ public class ProviderRepository extends BaseRepository {
     }
 
     /**
-     * Add provider.
+     * Add new provider to the database.
      *
-     * @param provider the provider
-     * @param callback the callback
+     * @param provider the provider to be added
+     * @return Observable ResultType of the operation being locally success, all success, or fail
      */
-    public void addProvider(Provider provider, DefaultResponseCallback callback) {
+    public Observable<ResultType> addProvider(Provider provider) {
+        return createObservableIO(() -> {
+            if (!NetworkUtils.isOnline()) {
+                // If not online, add provider locally.
+                long providerId = providerRoomDao.addProvider(provider);
 
-        if (NetworkUtils.isOnline()) {
-            restApi.addProvider(provider).enqueue(new Callback<Provider>() {
-                @Override
-                public void onResponse(@NotNull Call<Provider> call, @NotNull Response<Provider> response) {
-                    if (response.isSuccessful()) {
-                        //offline adding provider
-                        providerRoomDao.addProvider(response.body());
+                // Delegate to the WorkManager.
+                Data data = new Data.Builder()
+                        .putLong("id", providerId)
+                        .build();
+                Constraints constraints = new Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build();
+                workManager.enqueue(new OneTimeWorkRequest.Builder(AddProviderWorker.class)
+                        .setConstraints(constraints)
+                        .setInputData(data)
+                        .build()
+                );
 
-                        ToastUtil.success(context.getString(R.string.add_provider_success_msg));
-                        logger.e("Adding Provider Successful " + response.raw());
-                        callback.onResponse();
-                    }
-                }
+                logger.i("Provider will be synced to the server when device gets connected to network");
+                return ResultType.AddProviderLocalSuccess;
+            }
 
-                @Override
-                public void onFailure(@NotNull Call<Provider> call, @NotNull Throwable t) {
-                    logger.e("Failed to add provider. Error:  " + t.getMessage());
-                    callback.onErrorResponse(context.getString(R.string.add_provider_failure_msg));
-                }
-            });
-        } else {
-
-            //offline addition operation
-            long providerId = providerRoomDao.addProvider(provider);
-
-            //delegate to the workManager
-            Data data = new Data.Builder().putLong("id", providerId).build();
-
-            callback.onResponse();
-
-            Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
-            workManager.enqueue(new OneTimeWorkRequest.Builder(AddProviderWorker.class).setConstraints(constraints).setInputData(data).build());
-
-            //toast about deferred provider creation
-            ToastUtil.notify(context.getString(R.string.offline_provider_add));
-            logger.e("provider will be synced to the server when device gets connected to network");
-        }
+            // Otherwise (online), add provider remotely.
+            Response<Provider> response = restApi.addProvider(provider).execute();
+            if (response.isSuccessful()) {
+                // Add provider to the database.
+                providerRoomDao.addProvider(response.body());
+                logger.i("Adding provider succeeded " + response.raw());
+                return ResultType.AddProviderSuccess;
+            } else {
+                logger.e("Failed to add provider. Error:  " + response.message());
+                throw new Exception("Failed to add provider. Error:  " + response.message());
+            }
+        });
     }
 
     /**
-     * Update provider.
+     * Update existing provider in the database.
      *
      * @param provider the provider
-     * @param callback the callback
+     * @return Observable ResultType of the operation being locally success, all success, or fail
      */
-    public void updateProvider(Provider provider, DefaultResponseCallback callback) {
+    public Observable<ResultType> updateProvider(Provider provider) {
+        return createObservableIO(() -> {
+            if (!NetworkUtils.isOnline()) {
+                // If not online, update provider locally.
+                providerRoomDao.updateProviderByUuid(provider.getDisplay(), provider.getId(),
+                        provider.getPerson(), provider.getUuid(), provider.getIdentifier());
 
-        if (NetworkUtils.isOnline()) {
-            restApi.UpdateProvider(provider.getUuid(), provider).enqueue(new Callback<Provider>() {
-                @Override
-                public void onResponse(@NotNull Call<Provider> call, @NotNull Response<Provider> response) {
-                    if (response.isSuccessful()) {
+                // Delegate to the WorkManager.
+                Data data = new Data.Builder()
+                        .putString("uuid", provider.getUuid())
+                        .build();
+                Constraints constraints = new Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build();
+                workManager.enqueue(new OneTimeWorkRequest.Builder(UpdateProviderWorker.class)
+                        .setConstraints(constraints)
+                        .setInputData(data)
+                        .build()
+                );
 
-                        //offline update operation
-                        providerRoomDao.updateProviderByUuid(response.body().getDisplay(), provider.getId(), response.body().getPerson(), response.body().getUuid(),
-                                response.body().getIdentifier());
+                logger.i("Updated provider will be synced to the server when device gets connected to network");
+                return ResultType.UpdateProviderLocalSuccess;
+            }
 
-                        ToastUtil.success(context.getString(R.string.edit_provider_success_msg));
-                        logger.e("Editing Provider Successful " + response.raw());
-                        callback.onResponse();
-                    }
-                }
-
-                @Override
-                public void onFailure(@NotNull Call<Provider> call, @NotNull Throwable t) {
-                    logger.e("Failed to edit provider. Error:  " + t.getMessage());
-                    callback.onErrorResponse(context.getString(R.string.edit_provider_failure_msg));
-                }
-            });
-        } else {
-
-            //offline update operation
-            providerRoomDao.updateProviderByUuid(provider.getDisplay(), provider.getId(), provider.getPerson(), provider.getUuid(), provider.getIdentifier());
-            callback.onResponse();
-
-            //delegate to the WorkManager for this work
-            Data data = new Data.Builder().putString("uuid", provider.getUuid()).build();
-            Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
-            workManager.enqueue(new OneTimeWorkRequest.Builder(UpdateProviderWorker.class).setConstraints(constraints).setInputData(data).build());
-
-            //toast about deferred provider updation
-            ToastUtil.success(context.getString(R.string.offline_provider_edit));
-            logger.e("updated provider will be synced to the server when device gets connected to network");
-        }
+            // Otherwise (online), update provider remotely.
+            Response<Provider> response = restApi.updateProvider(provider.getUuid(), provider).execute();
+            if (response.isSuccessful()) {
+                // Update provider in the database.
+                providerRoomDao.updateProviderByUuid(response.body().getDisplay(), provider.getId(),
+                        response.body().getPerson(), response.body().getUuid(),
+                        response.body().getIdentifier());
+                logger.i("Updating provider succeeded " + response.raw());
+                return ResultType.UpdateProviderSuccess;
+            } else {
+                logger.e("Failed to update provider. Error:  " + response.message());
+                throw new Exception("Failed to update provider. Error:  " + response.message());
+            }
+        });
     }
 
     /**
-     * Delete providers.
+     * Delete an existing provider from the database.
      *
-     * @param providerUuid the provider uuid
-     * @param callback     the callback
+     * @param providerUuid the UUID of the provider to be deleted
+     * @return Observable ResultType of the operation being locally success, all success, or fail
      */
-    public void deleteProviders(String providerUuid, DefaultResponseCallback callback) {
+    public Observable<ResultType> deleteProviders(String providerUuid) {
+        return createObservableIO(() -> {
+            if (!NetworkUtils.isOnline()) {
+                // If not online, delete provider locally.
+                providerRoomDao.deleteByUuid(providerUuid);
 
-        //when callback would call onResponse successfull the UI will refresh automatically
-        if (NetworkUtils.isOnline()) {
-            restApi.deleteProvider(providerUuid).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(@NotNull Call<ResponseBody> call, @NotNull Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
+                // Delegate to the WorkManager.
+                Data data = new Data.Builder()
+                        .putString("uuid", providerUuid)
+                        .build();
+                Constraints constraints = new Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .build();
+                workManager.enqueue(new OneTimeWorkRequest.Builder(DeleteProviderWorker.class)
+                        .setConstraints(constraints)
+                        .setInputData(data)
+                        .build()
+                );
 
-                        // offline deletion
-                        providerRoomDao.deleteByUuid(providerUuid);
+                logger.i("Provider will be removed from the server when you're back online");
+                return ResultType.ProviderDeletionLocalSuccess;
+            }
 
-                        ToastUtil.success(context.getString(R.string.delete_provider_success_msg));
-                        logger.e("Deleting Provider Successful " + response.raw());
-
-                        callback.onResponse();
-                    }
-                }
-
-                @Override
-                public void onFailure(@NotNull Call<ResponseBody> call, @NotNull Throwable t) {
-                    logger.e("Failed to delete provider. Error:  " + t.getMessage());
-                    callback.onErrorResponse(context.getString(R.string.delete_provider_failure_msg));
-                }
-            });
-        } else {
-
-            // offline deletion
-            Data data = new Data.Builder().putString("uuid", providerUuid).build();
-            providerRoomDao.deleteByUuid(providerUuid);
-            callback.onResponse();
-
-            // enqueue the work to workManager
-            Constraints constraints = new Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build();
-            workManager.enqueue(new OneTimeWorkRequest.Builder(DeleteProviderWorker.class).setConstraints(constraints).setInputData(data).build());
-
-            //toast about deferred provider deletion
-            ToastUtil.success(context.getString(R.string.offline_provider_delete));
-            logger.e("Provider will be removed from the server when you're back online");
-        }
+            // Otherwise (online), delete provider remotely.
+            Response<ResponseBody> response = restApi.deleteProvider(providerUuid).execute();
+            if (response.isSuccessful()) {
+                // Delete provider from the database.
+                providerRoomDao.deleteByUuid(providerUuid);
+                logger.i("Deleting Provider Successful " + response.raw());
+                return ResultType.ProviderDeletionSuccess;
+            } else {
+                logger.e("Failed to delete provider. Error: " + response.message());
+                throw new Exception("Failed to delete provider. Error: " + response.message());
+            }
+        });
     }
 
     /**

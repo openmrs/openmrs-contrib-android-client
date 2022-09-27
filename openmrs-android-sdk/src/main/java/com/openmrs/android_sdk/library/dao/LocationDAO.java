@@ -14,22 +14,29 @@
 
 package com.openmrs.android_sdk.library.dao;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.List;
+
+import rx.Observable;
+
 import com.openmrs.android_sdk.library.OpenmrsAndroid;
 import com.openmrs.android_sdk.library.databases.AppDatabase;
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
 import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
 import com.openmrs.android_sdk.utilities.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import rx.Observable;
-
 
 /**
  * The type Location dao.
  */
+@Singleton
 public class LocationDAO {
+
+    @Inject
+    public LocationDAO() { }
+
     /**
      * The Location room dao.
      */

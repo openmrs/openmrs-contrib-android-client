@@ -14,6 +14,9 @@
 
 package com.openmrs.android_sdk.library.api.workers.provider;
 
+import java.io.IOException;
+
+import retrofit2.Response;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -31,10 +34,6 @@ import com.openmrs.android_sdk.library.databases.AppDatabase;
 import com.openmrs.android_sdk.library.models.Provider;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
 import com.openmrs.android_sdk.utilities.ToastUtil;
-
-import java.io.IOException;
-
-import retrofit2.Response;
 
 /**
  * The type Update provider worker.
@@ -81,7 +80,7 @@ public class UpdateProviderWorker extends Worker {
     private boolean updateProvider(RestApi restApi, Provider provider) {
         if (NetworkUtils.isOnline()) {
             try {
-                Response<Provider> response = restApi.UpdateProvider(provider.getUuid(), provider).execute();
+                Response<Provider> response = restApi.updateProvider(provider.getUuid(), provider).execute();
                 if (response.isSuccessful()) {
                     providerRoomDao.updateProviderByUuid(response.body().getDisplay(), provider.getId(), response.body().getPerson(), response.body().getUuid(),
                             response.body().getIdentifier());

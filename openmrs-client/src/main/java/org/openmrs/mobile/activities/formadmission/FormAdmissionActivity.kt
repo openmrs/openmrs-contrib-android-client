@@ -14,50 +14,41 @@
 package org.openmrs.mobile.activities.formadmission
 
 import android.os.Bundle
-import android.view.Menu
+import com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.ENCOUNTERTYPE
+import com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.FORM_NAME
+import com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE
+import dagger.hilt.android.AndroidEntryPoint
 import org.openmrs.mobile.R
 import org.openmrs.mobile.activities.ACBaseActivity
-import com.openmrs.android_sdk.utilities.ApplicationConstants
 
+@AndroidEntryPoint
 class FormAdmissionActivity : ACBaseActivity() {
-    var patientID: Long? = null
-    var encounterType: String? = null
-    var formName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_form_admission)
-        val actionBar = supportActionBar
-        if (actionBar != null) {
-            actionBar.elevation = 0f
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setTitle(R.string.admission)
+
+        supportActionBar?.run {
+            elevation = 0f
+            setDisplayHomeAsUpEnabled(true)
+            setTitle(R.string.admission)
         }
-        val bundle = intent.extras
-        if (bundle != null) {
-            patientID = bundle.getLong(ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE)
-            encounterType = bundle[ApplicationConstants.BundleKeys.ENCOUNTERTYPE] as String?
-            formName = bundle[ApplicationConstants.BundleKeys.FORM_NAME] as String?
+
+        var patientID: Long? = null
+        var encounterType: String? = null
+        var formName: String? = null
+        intent.extras?.let {
+            patientID = it.getLong(PATIENT_ID_BUNDLE)
+            encounterType = it.getString(ENCOUNTERTYPE)
+            formName = it.getString(FORM_NAME)
         }
+
         var formAdmissionFragment = supportFragmentManager.findFragmentById(R.id.admissionFormContentFrame) as FormAdmissionFragment?
         if (formAdmissionFragment == null) {
-            formAdmissionFragment = FormAdmissionFragment.newInstance()
+            formAdmissionFragment = FormAdmissionFragment.newInstance(patientID!!, encounterType!!, formName!!)
         }
         if (!formAdmissionFragment.isActive) {
-            addFragmentToActivity(supportFragmentManager,
-                    formAdmissionFragment, R.id.admissionFormContentFrame)
-        }
-        FormAdmissionPresenter(formAdmissionFragment, patientID, encounterType, formName, applicationContext)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        return true
-    }
-
-    companion object {
-        fun newInstance(): FormAdmissionFragment {
-            return FormAdmissionFragment()
+            addFragmentToActivity(supportFragmentManager, formAdmissionFragment, R.id.admissionFormContentFrame)
         }
     }
 }

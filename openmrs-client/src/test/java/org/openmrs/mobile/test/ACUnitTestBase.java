@@ -14,7 +14,7 @@
 
 package org.openmrs.mobile.test;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 
 import java.util.ArrayList;
@@ -71,9 +71,9 @@ ACUnitTestBase {
     }
 
     protected void mockActiveAndroidContext() {
-        Context context = PowerMockito.mock(Context.class);
-        ContentResolver resolver = PowerMockito.mock(ContentResolver.class);
-        ContentValues vals = PowerMockito.mock(ContentValues.class);
+        Context context = Mockito.mock(Context.class);
+        ContentResolver resolver = Mockito.mock(ContentResolver.class);
+        ContentValues vals = Mockito.mock(ContentValues.class);
 
         try {
             PowerMockito.whenNew(ContentValues.class).withNoArguments().thenReturn(vals);
@@ -154,6 +154,7 @@ ACUnitTestBase {
         provider.setUuid(id.toString());
         provider.setRetired(false);
         provider.setIdentifier(identifier);
+        provider.setDisplay(identifier);
 
         return provider;
     }

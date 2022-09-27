@@ -189,8 +189,6 @@ dependencies {
     implementation "org.jdeferred:jdeferred-android-aar:${versions.jdeferred}"
     implementation "com.google.guava:guava:${versions.guava}"
 
-    // Leak Canary
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}"
     // Google place api
     implementation "com.google.android.libraries.places:places:${versions.placesAPI}"
 
@@ -218,6 +216,7 @@ dependencies {
     testImplementation(
             'org.mockito:mockito-core:2.8.9',
             'org.mockito:mockito-inline:2.13.0',
+            "org.mockito.kotlin:mockito-kotlin:4.0.0",
             'junit:junit:4.12',
             "org.junit.jupiter:junit-jupiter:5.8.2",
             'org.powermock:powermock-api-mockito2:2.0.2',
@@ -227,6 +226,11 @@ dependencies {
     )
     testImplementation "android.arch.core:core-testing:${versions.coreTesting}"
     kaptTest "com.google.dagger:hilt-compiler:${versions.hilt}"
+
+    // Leak Canary
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}"
+    // Debug database
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }
 
 kapt {

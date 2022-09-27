@@ -417,8 +417,6 @@
     <string name="patient_update_successful">रोगी %1$s अपडेट किया गया</string>
     <string name="patient_update_unsuccessful">"रोगी %1$s को सर्वर त्रुटि के कारण समन्‍वयित नहीं किया जा सकता है "</string>
     <string name="patient_photo_update_unsuccessful">सर्वर त्रुटि के कारण रोगी की फोटो को सिंक नहीं किया जा सकता है: %1$s</string>
-    <string name="form_data_will_be_synced_later_error_message">रोगी अभी तक पंजीकृत नहीं है। कोई इंटरनेट कनेक्शन नहीं। प्रपत्र डेटा स्थानीय रूप से सहेजा जाता है और इंटरनेट कनेक्शन बहाल होने पर सिंक होगा।</string>
-    <string name="form_data_sync_is_off_message">सिंक बंद है। फ़ॉर्म डेटा सहेजने के लिए सिंक चालू करें।</string>
     <string name="unidentified_patient_name">अज्ञात रोगी</string>
     <string name="snackbar_server_error">दर्ज किया गया सर्वर वर्तमान में नीचे है, कृपया एक अलग चुनें।</string>
     <string name="snackbar_empty_visit_list">मेनू से फॉर्म एंट्री का चयन करें</string>
@@ -431,6 +429,10 @@
     <string name="offline_provider_delete">ऑनलाइन वापस आने पर प्रदाता को सर्वर से हटा दिया जाएगा</string>
     <string name="dashboard_exit_toast_message">"ऐप से बाहर निकलने के लिए कृपया BACK पर फिर से क्लिक करें "</string>
 
+    <!--FormDisplay Fragment-->
+    <string name="form_data_sync_is_off_message">सिंक बंद है। फ़ॉर्म डेटा सहेजने के लिए सिंक चालू करें।</string>
+    <string name="form_data_submit_error">फॉर्म जमा करने में त्रुटि</string>
+
     <!--Admission Form -->
     <string name="admission">प्रवेश फार्म</string>
     <string name="error_occurred">An error Occurred, Try Again Later !!!</string>
@@ -438,7 +440,7 @@
     <string name="admission_fields_required">Please Select Required Field</string>
     <string name="admission_date">Admission Date :</string>
     <string name="admission_admitted_by">Admitted By :</string>
-    <string name="admission_provider_role">Provider Role :</string>
+    <string name="admission_encounter_role">Provider Role :</string>
     <string name="admission_admitted_to">Admitted To :</string>
 
     <!--Marking Patient Deceased-->

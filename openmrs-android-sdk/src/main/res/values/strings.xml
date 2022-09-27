@@ -328,7 +328,7 @@
 
     <!--activity_provider_dashboard  -->
     <string name="surgeon">Surgeon</string>
-    <string name="offline_provider_fetch">offline providers fetched couldnt sync with the database device offline</string>
+    <string name="offline_provider_fetch">offline providers fetched couldn\'t sync with the database device offline</string>
     <string name="offline_provider_add">provider will be synced to the server when device gets connected to network</string>
     <string name="offline_provider_edit">updated provider will be synced to the server when device gets connected to network</string>
     <string name="offline_provider_delete">Provider will be removed from the server when you\'re back online</string>
@@ -378,7 +378,7 @@
     <string name="application_exit_logger_message">Exit application</string>
 
     <!--FormDisplay presenter-->
-    <string name="form_data_will_be_synced_later_error_message">\"Patient not yet registered. No internet connection. Form data is saved locally and will sync when internet connection is restored. \"</string>
+    <string name="form_data_will_be_synced_later_error_message">Patient not yet registered. No internet connection. Form data is saved locally and will sync when internet connection is restored.</string>
     <string name="form_data_sync_is_off_message">Sync is off. Turn on sync to save form data.</string>
 
     <!--FormDisplayPage Fragment-->

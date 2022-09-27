@@ -32,4 +32,7 @@ enum class ResultType {
     PatientUpdateSuccess,
     PatientUpdateLocalSuccess,
     PatientUpdateError,
+    EncounterSubmissionSuccess,
+    EncounterSubmissionLocalSuccess,
+    EncounterSubmissionError
 }

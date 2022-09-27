@@ -58,7 +58,7 @@ import com.openmrs.android_sdk.utilities.ApplicationConstants;
         EncounterType.class,
         Encountercreate.class,
         AllergyEntity.class},
-        version = 1)
+        version = 3)
 
 public abstract class AppDatabase extends RoomDatabase {
 

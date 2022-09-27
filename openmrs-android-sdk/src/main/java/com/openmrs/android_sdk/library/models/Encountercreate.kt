@@ -10,10 +10,14 @@
 
 package com.openmrs.android_sdk.library.models
 
-import androidx.room.*
-import com.openmrs.android_sdk.library.models.typeConverters.ObservationListConverter
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.openmrs.android_sdk.library.models.typeConverters.EncounterProviderCreateTypeConverter
+import com.openmrs.android_sdk.library.models.typeConverters.ObservationListConverter
 import java.io.Serializable
 
 /**
@@ -61,16 +65,14 @@ class Encountercreate : Serializable {
 
     @SerializedName("form")
     @Expose
-    @Ignore
     var formUuid: String? = null
 
     @SerializedName("location")
     @Expose
-    @Ignore
     var location: String? = null
 
+    @TypeConverters(EncounterProviderCreateTypeConverter::class)
     @SerializedName("encounterProviders")
     @Expose
-    @Ignore
     var encounterProvider: List<EncounterProviderCreate> = ArrayList()
 }

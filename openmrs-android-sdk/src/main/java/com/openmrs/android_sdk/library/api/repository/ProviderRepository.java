@@ -14,8 +14,22 @@
 
 package com.openmrs.android_sdk.library.api.repository;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
+import static com.openmrs.android_sdk.library.databases.AppDatabaseHelper.createObservableIO;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.API.FULL;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.API.REST_ENDPOINT;
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.API.TAG_ADMISSION_LOCATION;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import java.util.HashSet;
+import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import rx.Observable;
+
 import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.NetworkType;
@@ -23,7 +37,6 @@ import androidx.work.OneTimeWorkRequest;
 
 import com.openmrs.android_sdk.R;
 import com.openmrs.android_sdk.library.OpenMRSLogger;
-import com.openmrs.android_sdk.library.OpenmrsAndroid;
 import com.openmrs.android_sdk.library.api.RestApi;
 import com.openmrs.android_sdk.library.api.workers.provider.AddProviderWorker;
 import com.openmrs.android_sdk.library.api.workers.provider.DeleteProviderWorker;
@@ -34,23 +47,15 @@ import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultRespon
 import com.openmrs.android_sdk.library.models.Provider;
 import com.openmrs.android_sdk.library.models.Resource;
 import com.openmrs.android_sdk.library.models.Results;
-import com.openmrs.android_sdk.utilities.ApplicationConstants;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
 import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashSet;
-import java.util.List;
-
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 /**
  * The type Provider repository.
  */
+@Singleton
 public class ProviderRepository extends BaseRepository {
 
     ProviderRoomDAO providerRoomDao;
@@ -58,6 +63,7 @@ public class ProviderRepository extends BaseRepository {
     /**
      * Instantiates a new Provider repository.
      */
+    @Inject
     public ProviderRepository() {
         providerRoomDao = db.providerRoomDAO();
     }
@@ -84,70 +90,43 @@ public class ProviderRepository extends BaseRepository {
     /**
      * Gets providers.
      *
-     * @return the providers
+     * @return a list of providers
      */
-    public LiveData<List<Provider>> getProviders() {
+    public Observable<List<Provider>> getProviders() {
+        return createObservableIO(() -> {
+            // If not online, fetch providers locally
+            if (!NetworkUtils.isOnline()) {
+                ToastUtil.notify(context.getString(R.string.offline_provider_fetch));
+                logger.e("offline providers fetched couldn't sync with the database device offline");
+                return providerRoomDao.getProviderList().blockingGet();
+            }
+            providerRoomDao.deleteAll();
+            // Otherwise (online), fetch remote providers
+            Response<Results<Provider>> response = restApi.getProviderList().execute();
+            if (response.isSuccessful()) {
+                List<Provider> serverList = response.body().getResults();
+                if (!serverList.isEmpty()) {
+                    // Sync local DB with server's providers
+                    List<String> providerUuids = providerRoomDao.getCurrentUUIDs().blockingGet();
+                    HashSet<String> checkUuids = new HashSet<>(providerUuids);
 
-        MutableLiveData<List<Provider>> providerLiveData = new MutableLiveData<>();
-        if (NetworkUtils.isOnline()) {
-            restApi.getProviderList().enqueue(new Callback<Results<Provider>>() {
-                @Override
-                public void onResponse(@NotNull Call<Results<Provider>> call, @NotNull Response<Results<Provider>> response) {
-                    if (response.isSuccessful()) {
-                        if (!response.body().getResults().isEmpty()) {
-                            List<Provider> serversList = response.body().getResults();
-
-                            List<String> providerUuids = providerRoomDao.getCurrentUUIDs().blockingGet();
-                            HashSet<String> checkUuids = new HashSet<>();
-
-                            for (String element : providerUuids) {
-                                if (element != null)
-                                    checkUuids.add(element);
-                            }
-
-                            providerUuids.clear();
-                            providerUuids = null;
-
-                            for (Provider provider : serversList) {
-                                if (checkUuids.contains(provider.getUuid()) == false) {
-                                    providerRoomDao.addProvider(provider);
-                                }
-
-                                checkUuids.remove(provider.getUuid());
-                            }
-
-                            for (String uuid : checkUuids) {
-                                providerRoomDao.deleteByUuid(uuid);
-                            }
-
-                            providerLiveData.setValue(providerRoomDao.getProviderList().blockingGet());
-                        } else {
-                            providerLiveData.setValue(providerRoomDao.getProviderList().blockingGet());
+                    for (Provider provider : serverList) {
+                        if (!checkUuids.contains(provider.getUuid())) {
+                            providerRoomDao.addProvider(provider);
                         }
-                    } else {
-                        logger.e("Reading providers failed. Response: " + response.errorBody());
-                        ToastUtil.error(OpenmrsAndroid.getInstance().getString(R.string.unable_to_fetch_providers));
-                        providerLiveData.setValue(providerRoomDao.getProviderList().blockingGet());
+                        checkUuids.remove(provider.getUuid());
+                    }
+                    // Remove local providers that are not present in server now
+                    for (String uuid : checkUuids) {
+                        providerRoomDao.deleteByUuid(uuid);
                     }
                 }
+            } else {
+                logger.e("Error fetching providers from the server: " + response.errorBody().string());
+            }
 
-                @Override
-                public void onFailure(@NotNull Call<Results<Provider>> call, @NotNull Throwable t) {
-                    logger.e("Reading providers failed.", t);
-                    ToastUtil.error(OpenmrsAndroid.getInstance().getString(R.string.unable_to_fetch_providers));
-                    providerLiveData.setValue(providerRoomDao.getProviderList().blockingGet());
-                }
-            });
-        } else {
-
-            // offline data synced
-            providerLiveData.setValue(providerRoomDao.getProviderList().blockingGet());
-
-            //offline notify
-            ToastUtil.notify(context.getString(R.string.offline_provider_fetch));
-            logger.e("offline providers fetched couldnt sync with the database device offline");
-        }
-        return providerLiveData;
+            return providerRoomDao.getProviderList().blockingGet();
+        });
     }
 
     /**
@@ -296,57 +275,28 @@ public class ProviderRepository extends BaseRepository {
      * Gets location.
      *
      * @param url the url
-     * @return the location
+     * @return a list of location entities
      */
-    public LiveData<List<LocationEntity>> getLocation(String url) {
-        MutableLiveData<List<LocationEntity>> locations = new MutableLiveData<>();
-        if (NetworkUtils.hasNetwork()) {
-            String locationEndPoint = url + ApplicationConstants.API.REST_ENDPOINT + "location";
-            Call<Results<LocationEntity>> call =
-                    restApi.getLocations(locationEndPoint, ApplicationConstants.API.TAG_ADMISSION_LOCATION, ApplicationConstants.API.FULL);
-            call.enqueue(new Callback<Results<LocationEntity>>() {
-                @Override
-                public void onResponse(Call<Results<LocationEntity>> call, Response<Results<LocationEntity>> response) {
-                    if (response.isSuccessful()) {
-                        locations.setValue(response.body().getResults());
-                    } else {
-                        locations.setValue(null);
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Results<LocationEntity>> call, Throwable t) {
-                    locations.setValue(null);
-                }
-            });
-        } else {
-            locations.setValue(null);
-        }
-        return locations;
+    public Observable<List<LocationEntity>> getLocations(String url) {
+        return createObservableIO(() -> {
+            String locationEndPoint = url + REST_ENDPOINT + "location";
+            Response<Results<LocationEntity>> response =
+                    restApi.getLocations(locationEndPoint, TAG_ADMISSION_LOCATION, FULL).execute();
+            if (response.isSuccessful()) return response.body().getResults();
+            else throw new Exception("fetch provider location error: " + response.message());
+        });
     }
 
     /**
      * Gets encounter roles.
      *
-     * @return the encounter roles
+     * @return a list of resources of encounter roles
      */
-    public LiveData<List<Resource>> getEncounterRoles() {
-        MutableLiveData<List<Resource>> encounterRoles = new MutableLiveData<>();
-        restApi.getEncounterRoles().enqueue(new Callback<Results<Resource>>() {
-            @Override
-            public void onResponse(Call<Results<Resource>> call, Response<Results<Resource>> response) {
-                if (response.isSuccessful()) {
-                    encounterRoles.setValue(response.body().getResults());
-                } else {
-                    encounterRoles.setValue(null);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Results<Resource>> call, Throwable t) {
-                encounterRoles.setValue(null);
-            }
+    public Observable<List<Resource>> getEncounterRoles() {
+        return createObservableIO(() -> {
+            Response<Results<Resource>> response = restApi.getEncounterRoles().execute();
+            if (response.isSuccessful()) return response.body().getResults();
+            else throw new Exception("fetch encounter roles error: " + response.message());
         });
-        return encounterRoles;
     }
 }

@@ -34,12 +34,14 @@
     import org.joda.time.DateTimeZone;
     import org.joda.time.format.DateTimeFormat;
     import org.joda.time.format.DateTimeFormatter;
+    import org.junit.AfterClass;
     import org.junit.Before;
     import org.junit.BeforeClass;
     import org.junit.Rule;
     import org.junit.Test;
     import org.mockito.Answers;
     import org.mockito.Mock;
+    import org.mockito.MockedStatic;
     import org.mockito.Mockito;
     import org.openmrs.mobile.application.OpenMRS;
     import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -121,12 +123,19 @@
 
         @Mock(answer = Answers.RETURNS_DEEP_STUBS)
         private OpenMRS openMRS;
+        private static MockedStatic<OpenMRS> OpenMRSMock;
+
         @Rule
         public TimeZoneRule timeZoneRule = new TimeZoneRule(TimeZone.getTimeZone("PST8PDT"));
 
         @BeforeClass
         public static void beforeClass() {
-            Mockito.mockStatic(OpenMRS.class);
+            OpenMRSMock = Mockito.mockStatic(OpenMRS.class);
+        }
+
+        @AfterClass
+        public static void afterClass() {
+            OpenMRSMock.close();
         }
 
         @Before

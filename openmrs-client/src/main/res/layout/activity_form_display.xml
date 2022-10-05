@@ -46,7 +46,7 @@
                     android:textColor="@color/white"
                     android:text="@string/action_next"/>
                 <Button
-                    android:id="@+id/btn_finish"
+                    android:id="@+id/btn_submit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/btn_submit_selector"
@@ -73,7 +73,7 @@
             android:orientation="horizontal">
             <androidx.viewpager.widget.ViewPager
                 xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/container"
+                android:id="@+id/view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:context=".activities.formdisplay.FormDisplayActivity" />

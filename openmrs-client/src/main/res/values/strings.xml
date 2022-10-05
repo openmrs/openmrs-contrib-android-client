@@ -398,11 +398,10 @@
     <!--CustomFragment Dialog-->
     <string name="application_exit_logger_message">Exit application</string>
 
-    <!--FormDisplay Fragment-->
+    <!--FormDisplay-->
     <string name="form_data_sync_is_off_message">Form submitted locally and can\'t be viewed now. Turn on sync and internet connection to upload it.</string>
     <string name="form_data_submit_error">Form submission error</string>
-
-    <!--FormDisplayPage Fragment-->
+    <string name="invalid_inputs">Some inputs are invalid</string>
     <string name="all_fields_empty_error_message">All fields cannot be empty</string>
     <string name="no_such_form_name_error_message">There is no encounter type called %1$s</string>
 
@@ -486,7 +485,7 @@
     <string name="admission_admitted_to">Admitted To :</string>
     <string name="admission_location_in_list" translatable="false">Admitted To %1$s</string>
     <string name="discharge_location_in_list" translatable="false">Discharged From %1$s</string>
-    <string name="form_submitted_successfully" translatable="false">Form Submitted Successfully</string>
+    <string name="form_submitted_successfully">Form submitted successfully, sync patient to view it.</string>
 
     <!--Marking Patient Deceased -->
     <string name="mark_patient_deceased_no_concepts">Please add a valid deceased concept UUID and possible causes of death in the server</string>

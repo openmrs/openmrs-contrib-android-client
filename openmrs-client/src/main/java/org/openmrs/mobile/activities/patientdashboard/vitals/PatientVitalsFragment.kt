@@ -26,6 +26,7 @@ import com.openmrs.android_sdk.library.models.Encounter
 import com.openmrs.android_sdk.library.models.OperationType.PatientVitalsFetching
 import com.openmrs.android_sdk.library.models.Result
 import com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.ENCOUNTERTYPE
+import com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.ENCOUNTER_UUID
 import com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.FORM_FIELDS_LIST_BUNDLE
 import com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.FORM_NAME
 import com.openmrs.android_sdk.utilities.ApplicationConstants.BundleKeys.PATIENT_ID_BUNDLE
@@ -127,8 +128,9 @@ class PatientVitalsFragment : BaseFragment() {
             intent.putExtra(FORM_NAME, form.name)
             intent.putExtra(PATIENT_ID_BUNDLE, encounter.patient!!.id)
             intent.putExtra(VALUEREFERENCE, form.valueReference)
+            intent.putExtra(ENCOUNTER_UUID, encounter.uuid)
             intent.putExtra(ENCOUNTERTYPE, encounter.encounterType!!.uuid)
-            intent.putParcelableArrayListExtra(FORM_FIELDS_LIST_BUNDLE, FormFieldsWrapper.create(encounter))
+            intent.putExtra(FORM_FIELDS_LIST_BUNDLE, FormFieldsWrapper.create(encounter))
             startActivity(intent)
         } else {
             notify(getString(R.string.form_error))

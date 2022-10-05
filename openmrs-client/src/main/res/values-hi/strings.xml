@@ -437,6 +437,7 @@
     <!--FormDisplay Fragment-->
     <string name="form_data_sync_is_off_message">सिंक बंद है। फ़ॉर्म डेटा सहेजने के लिए सिंक चालू करें।</string>
     <string name="form_data_submit_error">फॉर्म जमा करने में त्रुटि</string>
+    <string name="invalid_inputs">कुछ इनपुट अमान्य हैं</string>
 
     <!--Admission Form -->
     <string name="admission">प्रवेश फार्म</string>
@@ -447,6 +448,7 @@
     <string name="admission_admitted_by">Admitted By :</string>
     <string name="admission_encounter_role">Provider Role :</string>
     <string name="admission_admitted_to">Admitted To :</string>
+    <string name="form_submitted_successfully">फॉर्म सफलतापूर्वक जमा किया गया, इसे देखने के लिए रोगी को सिंक करें।</string>
 
     <!--Marking Patient Deceased-->
     <string name="mark_patient_deceased_no_concepts">कृपया एक मान्य मृत अवधारणा UUID और सर्वर में मृत्यु के संभावित कारणों को जोड़ें</string>

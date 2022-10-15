@@ -14,6 +14,11 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import static org.mockito.Mockito.verify;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import android.widget.LinearLayout;
 
 import com.openmrs.android_sdk.library.models.Page;
@@ -22,6 +27,7 @@ import com.openmrs.android_sdk.library.models.QuestionOptions;
 import com.openmrs.android_sdk.library.models.Section;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -29,13 +35,7 @@ import org.openmrs.mobile.activities.formdisplay.FormDisplayContract;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayPagePresenter;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.test.ACUnitTestBase;
-import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.mockito.Mockito.verify;
 
 @PrepareForTest({OpenMRS.class})
 public class FormDisplayPagePresenterTest extends ACUnitTestBase {
@@ -51,11 +51,15 @@ public class FormDisplayPagePresenterTest extends ACUnitTestBase {
     private String sectionLabel = "section label";
     private String questionLabel = "question label";
 
+    @BeforeClass
+    public static void beforeClass() {
+        Mockito.mockStatic(OpenMRS.class);
+    }
+
     @Before
     public void setUp() {
         presenter = new FormDisplayPagePresenter(mFormDisplayPageView, mPage);
-        PowerMockito.mockStatic(OpenMRS.class);
-        PowerMockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
+        Mockito.when(OpenMRS.getInstance()).thenReturn(openMRS);
     }
 
     @Test

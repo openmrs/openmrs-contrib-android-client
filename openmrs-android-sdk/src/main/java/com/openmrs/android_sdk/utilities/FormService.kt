@@ -63,6 +63,5 @@ object FormService {
         return AppDatabase.getDatabase(OpenmrsAndroid.getInstance()?.getApplicationContext())
                 .formResourceDAO()
                 .getFormResourceByName(name)
-                .blockingGet()
     }
 }

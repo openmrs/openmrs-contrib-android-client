@@ -19,8 +19,25 @@ import com.openmrs.android_sdk.library.OpenmrsAndroid
 import com.openmrs.android_sdk.library.dao.EncounterDAO
 import com.openmrs.android_sdk.library.dao.ObservationDAO
 import com.openmrs.android_sdk.library.dao.PatientDAO
-import com.openmrs.android_sdk.library.databases.entities.*
-import com.openmrs.android_sdk.library.models.*
+import com.openmrs.android_sdk.library.databases.entities.AllergyEntity
+import com.openmrs.android_sdk.library.databases.entities.ConceptEntity
+import com.openmrs.android_sdk.library.databases.entities.EncounterEntity
+import com.openmrs.android_sdk.library.databases.entities.LocationEntity
+import com.openmrs.android_sdk.library.databases.entities.ObservationEntity
+import com.openmrs.android_sdk.library.databases.entities.PatientEntity
+import com.openmrs.android_sdk.library.databases.entities.VisitEntity
+import com.openmrs.android_sdk.library.models.Allergen
+import com.openmrs.android_sdk.library.models.Allergy
+import com.openmrs.android_sdk.library.models.Encounter
+import com.openmrs.android_sdk.library.models.EncounterType
+import com.openmrs.android_sdk.library.models.Observation
+import com.openmrs.android_sdk.library.models.Patient
+import com.openmrs.android_sdk.library.models.PatientIdentifier
+import com.openmrs.android_sdk.library.models.PersonAddress
+import com.openmrs.android_sdk.library.models.PersonName
+import com.openmrs.android_sdk.library.models.Resource
+import com.openmrs.android_sdk.library.models.Visit
+import com.openmrs.android_sdk.library.models.VisitType
 import com.openmrs.android_sdk.utilities.ApplicationConstants
 import com.openmrs.android_sdk.utilities.DateUtils
 import com.openmrs.android_sdk.utilities.DateUtils.convertTime
@@ -85,7 +102,7 @@ object AppDatabaseHelper {
         }
         encounterEntity.encounterDateTime = encounter.encounterDatetime.toString()
         encounterEntity.encounterType = encounter.encounterType!!.display
-        encounterEntity.patientUuid = encounter.patientUUID
+        encounterEntity.patientUuid = encounter.patient?.uuid
         encounterEntity.formUuid = encounter.formUuid
         if (null == encounter.location) {
             encounterEntity.locationUuid = null

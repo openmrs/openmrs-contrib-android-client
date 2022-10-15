@@ -14,6 +14,16 @@
 
 package org.openmrs.mobile.test.presenters;
 
+import static org.mockito.Mockito.RETURNS_MOCKS;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
@@ -21,6 +31,8 @@ import androidx.lifecycle.Observer;
 
 import com.openmrs.android_sdk.library.OpenMRSLogger;
 import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.repository.ProviderRepository;
 import com.openmrs.android_sdk.library.dao.ProviderRoomDAO;
 import com.openmrs.android_sdk.library.models.Provider;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
@@ -33,22 +45,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardContract;
 import org.openmrs.mobile.activities.providermanagerdashboard.ProviderManagerDashboardPresenter;
-import com.openmrs.android_sdk.library.api.RestApi;
-import com.openmrs.android_sdk.library.api.repository.ProviderRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.mockito.Mockito.RETURNS_MOCKS;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @PrepareForTest({NetworkUtils.class, ToastUtil.class, OpenMRS.class, OpenMRSLogger.class,OpenmrsAndroid.class})
 public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
@@ -104,7 +104,7 @@ public class ProviderManagerDashboardPresenterTest extends ACUnitTestBase {
         when(restApi.getProviderList()).thenReturn(mockSuccessCall(providerList));
 
         providerManagerDashboardPresenter.updateViews(providerList);
-        providerRepository.getProviders().observeForever(observer);
+        //providerRepository.getProviders().observeForever(observer);
 
         verify(restApi).getProviderList();
         verify(providerManagerView).updateAdapter(providerList);

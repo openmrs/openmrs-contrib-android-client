@@ -189,8 +189,6 @@ dependencies {
     implementation "org.jdeferred:jdeferred-android-aar:${versions.jdeferred}"
     implementation "com.google.guava:guava:${versions.guava}"
 
-    // Leak Canary
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}"
     // Google place api
     implementation "com.google.android.libraries.places:places:${versions.placesAPI}"
 
@@ -228,6 +226,11 @@ dependencies {
     )
     testImplementation "android.arch.core:core-testing:${versions.coreTesting}"
     kaptTest "com.google.dagger:hilt-compiler:${versions.hilt}"
+
+    // Leak Canary
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:${versions.leakcanary}"
+    // Debug database
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
 }
 
 kapt {

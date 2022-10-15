@@ -36,7 +36,7 @@ public interface FormResourceDAO {
      * @return the form resource by name
      */
     @Query("SELECT * FROM forms WHERE name = :name")
-    Single<FormResourceEntity> getFormResourceByName(String name);
+    FormResourceEntity getFormResourceByName(String name);
 
     /**
      * Gets form resource list.

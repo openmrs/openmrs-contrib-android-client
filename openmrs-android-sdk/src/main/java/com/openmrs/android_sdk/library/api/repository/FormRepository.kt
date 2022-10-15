@@ -23,6 +23,18 @@ class FormRepository @Inject constructor() : BaseRepository() {
     }
 
     /**
+     * Fetches a resource form by the form's name.
+     *
+     * @param name the form name
+     * @return an observable form resource entity
+     */
+    fun fetchFormResourceByName(name: String): Observable<FormResourceEntity> {
+        return AppDatabaseHelper.createObservableIO(Callable {
+            return@Callable db.formResourceDAO().getFormResourceByName(name)
+        })
+    }
+
+    /**
      * Creates a form.
      *
      * @param uuid UUID of the form resource

@@ -154,6 +154,7 @@ ACUnitTestBase {
         provider.setUuid(id.toString());
         provider.setRetired(false);
         provider.setIdentifier(identifier);
+        provider.setDisplay(identifier);
 
         return provider;
     }

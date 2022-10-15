@@ -26,6 +26,7 @@ import com.openmrs.android_sdk.R;
 import com.openmrs.android_sdk.library.OpenmrsAndroid;
 import com.openmrs.android_sdk.library.api.RestApi;
 import com.openmrs.android_sdk.library.api.RestServiceBuilder;
+import com.openmrs.android_sdk.library.api.repository.EncounterRepository;
 import com.openmrs.android_sdk.library.api.repository.VisitRepository;
 import com.openmrs.android_sdk.library.dao.PatientDAO;
 import com.openmrs.android_sdk.library.dao.VisitDAO;
@@ -185,29 +186,16 @@ public class EncounterService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (NetworkUtils.isOnline()) {
+        if (!NetworkUtils.isOnline()) return;
 
-            List<Encountercreate> encountercreatelist = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext())
-                    .encounterCreateRoomDAO()
-                    .getAllCreatedEncounters();
+        List<Encountercreate> encounterCreateList = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext())
+                .encounterCreateRoomDAO()
+                .getAllCreatedEncounters();
 
-            for (final Encountercreate encountercreate : encountercreatelist) {
-                if (!encountercreate.getSynced() &&
-                        new PatientDAO().findPatientByID(Long.toString(encountercreate.getPatientId())).isSynced()) {
-                    new VisitDAO().getActiveVisitByPatientId(encountercreate.getPatientId())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(visit -> {
-                                if (visit != null) {
-                                    encountercreate.setVisit(visit.getUuid());
-                                    syncEncounter(encountercreate);
-                                } else {
-                                    startNewVisitForEncounter(encountercreate);
-                                }
-                            });
-                }
+        for (final Encountercreate encounterCreate : encounterCreateList) {
+            if (!encounterCreate.getSynced()) {
+                new EncounterRepository().saveEncounter(encounterCreate).subscribe();
             }
-        } else {
-            ToastUtil.error(getString(R.string.form_data_will_be_synced_later_error_message));
         }
     }
 }

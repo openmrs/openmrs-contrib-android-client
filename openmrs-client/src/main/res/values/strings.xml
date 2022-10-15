@@ -392,9 +392,9 @@
     <!--CustomFragment Dialog-->
     <string name="application_exit_logger_message">Exit application</string>
 
-    <!--FormDisplay presenter-->
-    <string name="form_data_will_be_synced_later_error_message">\"Patient not yet registered. No internet connection. Form data is saved locally and will sync when internet connection is restored. \"</string>
-    <string name="form_data_sync_is_off_message">Sync is off. Turn on sync to save form data.</string>
+    <!--FormDisplay Fragment-->
+    <string name="form_data_sync_is_off_message">Form submitted locally and can\'t be viewed now. Turn on sync and internet connection to upload it.</string>
+    <string name="form_data_submit_error">Form submission error</string>
 
     <!--FormDisplayPage Fragment-->
     <string name="all_fields_empty_error_message">All fields cannot be empty</string>
@@ -482,7 +482,7 @@
     <string name="admission_fields_required">Please Select Required Field</string>
     <string name="admission_date">Admission Date :</string>
     <string name="admission_admitted_by">Admitted By :</string>
-    <string name="admission_provider_role">Provider Role :</string>
+    <string name="admission_encounter_role">Encounter Role :</string>
     <string name="admission_admitted_to">Admitted To :</string>
     <string name="admission_location_in_list" translatable="false">Admitted To %1$s</string>
     <string name="discharge_location_in_list" translatable="false">Discharged From %1$s</string>

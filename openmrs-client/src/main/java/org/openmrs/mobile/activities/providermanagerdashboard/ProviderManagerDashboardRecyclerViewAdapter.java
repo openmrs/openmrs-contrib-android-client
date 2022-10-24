@@ -14,6 +14,8 @@
 
 package org.openmrs.mobile.activities.providermanagerdashboard;
 
+import java.util.List;
+
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,20 +27,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.openmrs.android_sdk.library.models.Provider;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardActivity;
-import com.openmrs.android_sdk.utilities.ApplicationConstants;
-
-import java.util.List;
 
 public class ProviderManagerDashboardRecyclerViewAdapter extends
     RecyclerView.Adapter<ProviderManagerDashboardRecyclerViewAdapter.ProviderViewHolder> {
     private Fragment fragment;
     private List<Provider> mItems;
 
-    public ProviderManagerDashboardRecyclerViewAdapter(Fragment fragment, ProviderManagerDashboardContract.Presenter presenter, List<Provider> items) {
+    public ProviderManagerDashboardRecyclerViewAdapter(Fragment fragment,  List<Provider> items) {
         this.fragment = fragment;
         this.mItems = items;
     }
@@ -86,7 +86,8 @@ public class ProviderManagerDashboardRecyclerViewAdapter extends
         }
     }
 
-    public void setItems(List<Provider> mItems) {
+    public void updateList(List<Provider> mItems) {
         this.mItems = mItems;
+        notifyDataSetChanged();
     }
 }

@@ -339,6 +339,9 @@
     <string name="retry_action">पुनः प्रयास करें</string>
     <!--activity_provider_dashboard  -->
     <string name="surgeon">सर्जन</string>
+    <string name="providers_fetching_no_results">कोई प्रदाता नहीं मिला</string>
+    <string name="providers_fetching_error">प्रदाताओं को लाने में त्रुटि</string>
+
     <!--fragment_patient_relationship-->
     <string name="provider_patient">प्रदाता - रोगी संबंध</string>
     <!--row_provider_details-->

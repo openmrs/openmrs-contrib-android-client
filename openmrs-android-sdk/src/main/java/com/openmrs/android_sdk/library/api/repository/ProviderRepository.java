@@ -96,8 +96,7 @@ public class ProviderRepository extends BaseRepository {
         return createObservableIO(() -> {
             // If not online, fetch providers locally
             if (!NetworkUtils.isOnline()) {
-                ToastUtil.notify(context.getString(R.string.offline_provider_fetch));
-                logger.e("offline providers fetched couldn't sync with the database device offline");
+                logger.e("Offline providers fetched, couldn't sync with the database while offline");
                 return providerRoomDao.getProviderList().blockingGet();
             }
             providerRoomDao.deleteAll();

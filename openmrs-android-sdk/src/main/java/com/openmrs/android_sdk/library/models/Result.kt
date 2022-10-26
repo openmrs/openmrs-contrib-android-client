@@ -23,6 +23,8 @@ enum class OperationType {
     PatientVitalsFetching,
     PatientDeleting,
     LastViewedPatientsFetching,
+    ProviderRegistering,
+    ProviderUpdating
 }
 
 enum class ResultType {
@@ -34,5 +36,9 @@ enum class ResultType {
     PatientUpdateError,
     EncounterSubmissionSuccess,
     EncounterSubmissionLocalSuccess,
-    EncounterSubmissionError
+    EncounterSubmissionError,
+    AddProviderSuccess,
+    AddProviderLocalSuccess,
+    UpdateProviderSuccess,
+    UpdateProviderLocalSuccess,
 }

@@ -4,15 +4,15 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.RestServiceBuilder;
+import com.openmrs.android_sdk.library.api.repository.ProviderRepository;
+import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 import com.openmrs.android_sdk.library.models.Provider;
 import com.openmrs.android_sdk.utilities.ApplicationConstants;
 import com.openmrs.android_sdk.utilities.ToastUtil;
 
 import org.openmrs.mobile.activities.BasePresenter;
-import com.openmrs.android_sdk.library.api.RestApi;
-import com.openmrs.android_sdk.library.api.RestServiceBuilder;
-import com.openmrs.android_sdk.library.api.repository.ProviderRepository;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 
 public class ProviderDashboardPresenter extends BasePresenter implements ProviderDashboardContract.Presenter, DefaultResponseCallback {
     private RestApi restApi;
@@ -37,12 +37,12 @@ public class ProviderDashboardPresenter extends BasePresenter implements Provide
 
     @Override
     public Provider getProviderFromIntent(Intent intent) {
-        return (Provider) (intent.getSerializableExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE));
+        return (Provider) (intent.getSerializableExtra(ApplicationConstants.BundleKeys.PROVIDER_BUNDLE));
     }
 
     @Override
     public void updateProvider(Provider provider) {
-        providerRepository.updateProvider(provider, new DefaultResponseCallback() {
+      /*  providerRepository.updateProvider(provider, new DefaultResponseCallback() {
             @Override
             public void onResponse() {
                 providerDashboardView.setupBackdrop(provider);
@@ -53,7 +53,7 @@ public class ProviderDashboardPresenter extends BasePresenter implements Provide
                 ToastUtil.error(errorMessage);
                 providerDashboardView.showSnackbarForFailedEditRequest();
             }
-        });
+        });*/
     }
 
     @Override

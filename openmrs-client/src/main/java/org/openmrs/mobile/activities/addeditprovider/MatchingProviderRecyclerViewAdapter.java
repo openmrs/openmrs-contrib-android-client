@@ -1,4 +1,6 @@
-package org.openmrs.mobile.activities.providermanagerdashboard.addprovider;
+package org.openmrs.mobile.activities.addeditprovider;
+
+import java.util.List;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,8 +15,6 @@ import com.openmrs.android_sdk.library.models.Provider;
 
 import org.jetbrains.annotations.NotNull;
 import org.openmrs.mobile.R;
-
-import java.util.List;
 
 public class MatchingProviderRecyclerViewAdapter extends
     RecyclerView.Adapter<MatchingProviderRecyclerViewAdapter.SimilarProviderViewHolder> {

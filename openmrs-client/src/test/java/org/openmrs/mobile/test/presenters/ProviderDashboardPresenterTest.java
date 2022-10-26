@@ -1,9 +1,14 @@
 package org.openmrs.mobile.test.presenters;
 
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.spy;
+
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 
 import com.openmrs.android_sdk.library.OpenMRSLogger;
 import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.api.repository.ProviderRepository;
 import com.openmrs.android_sdk.library.dao.ProviderRoomDAO;
 import com.openmrs.android_sdk.library.models.Provider;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
@@ -17,16 +22,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardContract;
 import org.openmrs.mobile.activities.providerdashboard.ProviderDashboardPresenter;
-import com.openmrs.android_sdk.library.api.RestApi;
-import com.openmrs.android_sdk.library.api.repository.ProviderRepository;
 import org.openmrs.mobile.application.OpenMRS;
 import org.openmrs.mobile.test.ACUnitTestBase;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.spy;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({NetworkUtils.class, ToastUtil.class, OpenMRS.class, OpenMRSLogger.class, OpenmrsAndroid.class})
@@ -60,7 +60,7 @@ public class ProviderDashboardPresenterTest extends ACUnitTestBase {
     public void shouldReturnSuccessOnUpdateProvider() {
         Provider provider = createProvider(1l, "doctor");
         Mockito.lenient().when(NetworkUtils.isOnline()).thenReturn(true);
-        Mockito.lenient().when(restApi.UpdateProvider(provider.getUuid(), provider)).thenReturn(mockSuccessCall(provider));
+        Mockito.lenient().when(restApi.updateProvider(provider.getUuid(), provider)).thenReturn(mockSuccessCall(provider));
 
         providerDashboardPresenter.updateProvider(provider);
         Mockito.verify(providerManagerView).setupBackdrop(provider);

@@ -1,5 +1,9 @@
 package org.openmrs.mobile.activities.providerdashboard;
 
+import static com.openmrs.android_sdk.utilities.ApplicationConstants.RequestCodes.EDIT_PROVIDER_REQ_CODE;
+
+import java.util.Objects;
+
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -9,22 +13,18 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.openmrs.android_sdk.library.models.Provider;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.openmrs.android_sdk.library.models.Provider;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
 
 import org.openmrs.mobile.R;
 import org.openmrs.mobile.activities.ACBaseActivity;
+import org.openmrs.mobile.activities.addeditprovider.AddEditProviderActivity;
 import org.openmrs.mobile.activities.providerdashboard.patientrelationship.PatientRelationshipFragment;
 import org.openmrs.mobile.activities.providerdashboard.providerrelationship.ProviderRelationshipFragment;
-import org.openmrs.mobile.activities.providermanagerdashboard.addprovider.AddProviderActivity;
 import org.openmrs.mobile.databinding.ActivityProviderDashboardBinding;
-import com.openmrs.android_sdk.utilities.ApplicationConstants;
 import org.openmrs.mobile.utilities.ThemeUtils;
-
-import java.util.Objects;
-
-import static com.openmrs.android_sdk.utilities.ApplicationConstants.RequestCodes.EDIT_PROVIDER_REQ_CODE;
 
 public class ProviderDashboardActivity extends ACBaseActivity implements ProviderDashboardContract.View {
     Provider provider;
@@ -91,7 +91,7 @@ public class ProviderDashboardActivity extends ACBaseActivity implements Provide
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == EDIT_PROVIDER_REQ_CODE) {
             if (resultCode == RESULT_OK) {
-                this.provider = (Provider) data.getSerializableExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE);
+                this.provider = (Provider) data.getSerializableExtra(ApplicationConstants.BundleKeys.PROVIDER_BUNDLE);
                 mPresenter.updateProvider(this.provider);
             }
         }
@@ -134,8 +134,8 @@ public class ProviderDashboardActivity extends ACBaseActivity implements Provide
     }
 
     public void startProviderUpdateActivity() {
-        Intent intent = new Intent(ProviderDashboardActivity.this, AddProviderActivity.class);
-        intent.putExtra(ApplicationConstants.BundleKeys.PROVIDER_ID_BUNDLE, provider);
+        Intent intent = new Intent(ProviderDashboardActivity.this, AddEditProviderActivity.class);
+        intent.putExtra(ApplicationConstants.BundleKeys.PROVIDER_BUNDLE, provider);
         startActivityForResult(intent, EDIT_PROVIDER_REQ_CODE);
     }
 

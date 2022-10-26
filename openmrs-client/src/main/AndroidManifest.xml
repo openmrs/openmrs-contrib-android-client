@@ -254,7 +254,7 @@
             android:parentActivityName=".activities.dashboard.DashboardActivity"
             android:theme="@style/AppThemeOrig" />
         <activity
-            android:name=".activities.providermanagerdashboard.addprovider.AddProviderActivity"
+            android:name=".activities.addeditprovider.AddEditProviderActivity"
             android:label="@string/title_provider_info"
             android:parentActivityName=".activities.providermanagerdashboard.ProviderManagerDashboardActivity"
             android:theme="@style/AppThemeOrig"

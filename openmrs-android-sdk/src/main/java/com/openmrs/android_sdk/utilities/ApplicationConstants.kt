@@ -113,8 +113,7 @@ object ApplicationConstants {
         const val FORM_FIELDS_LIST_BUNDLE = "formFieldsListBundle"
         const val PATIENT_QUERY_BUNDLE = "patientQuery"
         const val PATIENTS_START_INDEX = "patientsStartIndex"
-        const val PROVIDER_ID_BUNDLE = "providerID"
-        const val EXISTING_PROVIDERS_BUNDLE = "existingProviders"
+        const val PROVIDER_BUNDLE = "providerID"
         const val ALLERGY_UUID = "allergy_uuid"
         const val PATIENT_UUID = "patient_uuid"
     }

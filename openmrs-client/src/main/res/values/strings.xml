@@ -323,6 +323,7 @@
     <string name="action_find_providers">Find Providers</string>
     <string name="delete_provider_success_msg">Successfully deleted the provider!</string>
     <string name="delete_provider_failure_msg">Failed to delete provider.</string>
+    <string name="offline_provider_delete">Provider will be removed from the server when you\'re back online</string>
     <string name="first_name_hint">First Name</string>
     <string name="last_name_hint">Last Name</string>
     <string name="identifier_hint">Identifier</string>
@@ -350,7 +351,6 @@
     <string name="edit_provider_failure_msg">Failed to edit provider.</string>
     <string name="offline_provider_add">Provider will be synced to the server when device gets connected to network</string>
     <string name="offline_provider_edit">Updated provider will be synced to the server when device gets connected to network</string>
-    <string name="offline_provider_delete">Provider will be removed from the server when you\'re back online</string>
 
     <!--fragment_patient_relationship-->
     <string name="provider_patient">Provider - Patient Relationship</string>

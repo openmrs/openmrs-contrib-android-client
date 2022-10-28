@@ -438,10 +438,8 @@ public class CustomFragmentDialog extends DialogFragment {
                     dismiss();
                     break;
                 case DELETE_PROVIDER:
-                    ProviderDashboardActivity providerDashboardActivity = (ProviderDashboardActivity) getActivity();
-                    providerDashboardActivity.mPresenter.deleteProvider();
+                    ((ProviderDashboardActivity) getActivity()).deleteProvider();
                     dismiss();
-                    providerDashboardActivity.finish();
                     break;
                 case MULTI_DELETE_PATIENT:
                     SyncedPatientsActivity syncedPatientsActivity = (SyncedPatientsActivity) getActivity();

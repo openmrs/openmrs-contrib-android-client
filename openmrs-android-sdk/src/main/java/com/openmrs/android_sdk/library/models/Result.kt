@@ -41,4 +41,7 @@ enum class ResultType {
     AddProviderLocalSuccess,
     UpdateProviderSuccess,
     UpdateProviderLocalSuccess,
+    ProviderDeletionSuccess,
+    ProviderDeletionLocalSuccess,
+    ProviderDeletionError,
 }

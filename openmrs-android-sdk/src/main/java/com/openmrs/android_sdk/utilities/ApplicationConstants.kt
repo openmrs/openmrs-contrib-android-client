@@ -145,8 +145,6 @@ object ApplicationConstants {
     }
 
     object RequestCodes {
-        const val ADD_PROVIDER_REQ_CODE = 100
-        const val EDIT_PROVIDER_REQ_CODE = 101
         const val START_SETTINGS_REQ_CODE = 102
         const val IMAGE_REQUEST = 1
         const val GALLERY_IMAGE_REQUEST = 2

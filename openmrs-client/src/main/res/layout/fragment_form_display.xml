@@ -19,7 +19,7 @@
     android:layout_height="wrap_content"
     android:isScrollContainer="false">
     <LinearLayout
-        android:id="@+id/sectionContainer"
+        android:id="@+id/sections_parent_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"/>

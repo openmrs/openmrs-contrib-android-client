@@ -14,17 +14,18 @@
 
 package com.openmrs.android_sdk.library.dao;
 
+import java.util.List;
+
+import io.reactivex.Single;
+
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
 import com.openmrs.android_sdk.library.databases.entities.ObservationEntity;
-
-import java.util.List;
-
-import io.reactivex.Single;
 
 /**
  * The interface Observation room dao.
@@ -36,7 +37,7 @@ public interface ObservationRoomDAO {
      *
      * @param observationEntity the observation entity
      */
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addObservation(ObservationEntity observationEntity);
 
     /**

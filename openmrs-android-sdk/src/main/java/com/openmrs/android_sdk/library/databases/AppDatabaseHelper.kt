@@ -16,6 +16,7 @@ package com.openmrs.android_sdk.library.databases
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import com.openmrs.android_sdk.library.OpenmrsAndroid
+import com.openmrs.android_sdk.library.api.repository.FormRepository
 import com.openmrs.android_sdk.library.dao.EncounterDAO
 import com.openmrs.android_sdk.library.dao.ObservationDAO
 import com.openmrs.android_sdk.library.dao.PatientDAO
@@ -41,7 +42,7 @@ import com.openmrs.android_sdk.library.models.VisitType
 import com.openmrs.android_sdk.utilities.ApplicationConstants
 import com.openmrs.android_sdk.utilities.DateUtils
 import com.openmrs.android_sdk.utilities.DateUtils.convertTime
-import com.openmrs.android_sdk.utilities.FormService.getFormByUuid
+import com.openmrs.android_sdk.utilities.execute
 import rx.Observable
 import rx.schedulers.Schedulers
 import java.io.ByteArrayInputStream
@@ -132,6 +133,7 @@ object AppDatabaseHelper {
         val dateTime = entity.encounterDateTime.toLong()
         encounter.setEncounterDatetime(convertTime(dateTime, DateUtils.OPEN_MRS_REQUEST_FORMAT))
         encounter.observations = ObservationDAO().findObservationByEncounterID(entity.id)
+        encounter.patient = PatientDAO().findPatientByUUID(entity.patientUuid)
         val location: LocationEntity? = try {
             AppDatabase
                     .getDatabase(OpenmrsAndroid.getInstance()?.applicationContext)
@@ -142,7 +144,7 @@ object AppDatabaseHelper {
             null
         }
         encounter.location = location
-        encounter.form = getFormByUuid(entity.formUuid)
+        encounter.form = FormRepository().fetchFormByUuid(entity.formUuid).execute()
         return encounter
     }
 

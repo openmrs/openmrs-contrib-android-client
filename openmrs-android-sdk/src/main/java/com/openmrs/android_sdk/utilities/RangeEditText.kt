@@ -13,8 +13,16 @@ import android.content.Context
 import androidx.appcompat.widget.AppCompatEditText
 
 class RangeEditText(context: Context?) : AppCompatEditText(context!!) {
-    var upperlimit: Double? = null
-    var lowerlimit: Double? = null
+    var upperlimit: Double = -1.0
+    var lowerlimit: Double = -1.0
     var name: String? = null
 
+    val validInput: Boolean get() {
+        val input = text.toString()
+        return input[0] != '.' && input[0] != ','
+    }
+    val outOfRange: Boolean get() {
+        val input = text.toString().toDouble()
+        return (upperlimit != -1.0 && upperlimit != -1.0) && (upperlimit < input || lowerlimit > input)
+    }
 }

@@ -42,7 +42,6 @@ import com.openmrs.android_sdk.library.OpenMRSLogger;
 import com.openmrs.android_sdk.library.OpenmrsAndroid;
 import com.openmrs.android_sdk.library.api.RestApi;
 import com.openmrs.android_sdk.library.api.RestServiceBuilder;
-import com.openmrs.android_sdk.library.api.services.EncounterService;
 import com.openmrs.android_sdk.library.api.workers.UpdatePatientWorker;
 import com.openmrs.android_sdk.library.dao.EncounterCreateRoomDAO;
 import com.openmrs.android_sdk.library.dao.PatientDAO;
@@ -295,8 +294,8 @@ public class PatientRepository extends BaseRepository {
         for (long id : list) {
             Encountercreate encountercreate = dao.getCreatedEncountersByID(id);
             encountercreate.setPatient(patient.getUuid());
-            dao.updateExistingEncounter(encountercreate);
-            new EncounterService().addEncounter(encountercreate);
+            encountercreate.setSynced(false);
+            new EncounterRepository().updateEncounterCreate(encountercreate);
         }
     }
 

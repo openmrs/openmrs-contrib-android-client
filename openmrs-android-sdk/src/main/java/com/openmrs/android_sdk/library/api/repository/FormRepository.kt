@@ -2,7 +2,9 @@ package com.openmrs.android_sdk.library.api.repository
 
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper
 import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity
+import com.openmrs.android_sdk.library.models.Form
 import com.openmrs.android_sdk.library.models.FormData
+import com.openmrs.android_sdk.utilities.FormUtils
 import rx.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,6 +33,28 @@ class FormRepository @Inject constructor() : BaseRepository() {
     fun fetchFormResourceByName(name: String): Observable<FormResourceEntity> {
         return AppDatabaseHelper.createObservableIO(Callable {
             return@Callable db.formResourceDAO().getFormResourceByName(name)
+        })
+    }
+
+    /**
+     * fetches a form by its UUID.
+     *
+     * @param uuid UUID of the form
+     * @return observable form object or null if no form found
+     */
+    fun fetchFormByUuid(uuid: String): Observable<Form?> {
+        return AppDatabaseHelper.createObservableIO(Callable {
+            val formResourceEntity: FormResourceEntity? = db.formResourceDAO().getFormByUuid(uuid)
+            formResourceEntity?.resources?.forEach {
+                if ("json" == it.name) {
+                    val valueRefString = it.valueReference
+                    return@Callable FormUtils.getForm(valueRefString).apply {
+                        valueReference = valueRefString
+                        name = formResourceEntity.name
+                    }
+                }
+            }
+            return@Callable null
         })
     }
 

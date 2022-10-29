@@ -3,6 +3,7 @@ package com.openmrs.android_sdk.library.api.repository
 import com.openmrs.android_sdk.library.dao.PatientDAO
 import com.openmrs.android_sdk.library.dao.VisitDAO
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper
+import com.openmrs.android_sdk.library.databases.entities.ConceptEntity
 import com.openmrs.android_sdk.library.models.Encounter
 import com.openmrs.android_sdk.library.models.EncounterType
 import com.openmrs.android_sdk.library.models.Encountercreate
@@ -44,11 +45,10 @@ class EncounterRepository @Inject constructor() : BaseRepository() {
                         encounter.encounterType = EncounterType(encounterCreate.formname)
                         for (i in encounterCreate.observations.indices) {
                             encounter.observations[i].displayValue = encounterCreate.observations[i].value
+                            encounter.observations[i].concept = ConceptEntity().apply {
+                                uuid = encounterCreate.observations[i].concept!!
+                            }
                         }
-
-                        // Update the visit linked to this encounter
-                        activeVisit.encounters += encounter
-                        VisitDAO().saveOrUpdate(activeVisit, encounterCreate.patientId!!).execute()
 
                         updateEncounterCreate(encounterCreate.apply { synced = true }).execute()
 
@@ -63,6 +63,31 @@ class EncounterRepository @Inject constructor() : BaseRepository() {
                 PatientDAO().updatePatient(patient.id!!, patient)
                 // EncounterService will run to upload the encounter when online
                 return@Callable ResultType.EncounterSubmissionLocalSuccess
+            }
+        })
+    }
+
+
+    /**
+     * Updates an encounter to the server.
+     *
+     * @param uuid the UUID of the encounter to be updated.
+     * @param encounterCreate  the Encountercreate object containing the updates, and must contain patient local id.
+     */
+    fun updateEncounter(uuid: String, encounterCreate: Encountercreate): Observable<Unit> {
+        return AppDatabaseHelper.createObservableIO(Callable {
+            if (!NetworkUtils.isOnline()) throw Exception("Must be online to update the encounter")
+
+            restApi.updateEncounter(uuid, encounterCreate).execute().run {
+                if (isSuccessful) {
+                    // Update the visit linked to this encounter
+                    val patient = PatientDAO().findPatientByID(encounterCreate.patientId.toString())
+                    VisitRepository().syncVisitsData(patient).execute()
+
+                    return@Callable
+                } else {
+                    throw Exception("updateEncounter error: ${message()}")
+                }
             }
         })
     }

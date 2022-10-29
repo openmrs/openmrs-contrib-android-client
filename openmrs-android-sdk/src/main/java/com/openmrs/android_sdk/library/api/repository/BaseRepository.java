@@ -14,6 +14,9 @@
 
 package com.openmrs.android_sdk.library.api.repository;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import android.content.Context;
 
 import androidx.work.WorkManager;
@@ -27,7 +30,8 @@ import com.openmrs.android_sdk.library.databases.AppDatabase;
 /**
  * The type Base repository.
  */
-public abstract class BaseRepository {
+@Singleton
+public class BaseRepository {
     /**
      * The Context.
      * @see Context
@@ -57,6 +61,7 @@ public abstract class BaseRepository {
     /**
      * Instantiates a new Base repository.
      */
+    @Inject
     public BaseRepository() {
         this.context = OpenmrsAndroid.getInstance();
         this.restApi = RestServiceBuilder.createService(RestApi.class);

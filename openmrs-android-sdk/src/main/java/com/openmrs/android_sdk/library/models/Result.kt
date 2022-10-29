@@ -24,7 +24,9 @@ enum class OperationType {
     PatientDeleting,
     LastViewedPatientsFetching,
     ProviderRegistering,
-    ProviderUpdating
+    ProviderUpdating,
+    Login,
+    LocationsFetching
 }
 
 enum class ResultType {
@@ -44,4 +46,12 @@ enum class ResultType {
     ProviderDeletionSuccess,
     ProviderDeletionLocalSuccess,
     ProviderDeletionError,
+    LoginOfflineSuccess,
+    LoginSuccess,
+    LoginInvalidCredentials,
+    LoginOfflineUnsupported,
+    LoginNoInternetConnection,
+    LocationsFetchingLocalSuccess,
+    LocationsFetchingSuccess,
+    LocationsFetchingNoInternetConnection
 }

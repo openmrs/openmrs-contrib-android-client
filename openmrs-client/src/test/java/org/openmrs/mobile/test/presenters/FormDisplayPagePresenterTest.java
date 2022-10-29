@@ -26,10 +26,12 @@ import com.openmrs.android_sdk.library.models.Question;
 import com.openmrs.android_sdk.library.models.QuestionOptions;
 import com.openmrs.android_sdk.library.models.Section;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayContract;
 import org.openmrs.mobile.activities.formdisplay.FormDisplayPagePresenter;
@@ -46,6 +48,7 @@ public class FormDisplayPagePresenterTest extends ACUnitTestBase {
     private Page mPage;
     @Mock
     private OpenMRS openMRS;
+    private static MockedStatic<OpenMRS> OpenMRSMock;
 
     private FormDisplayPagePresenter presenter;
     private String sectionLabel = "section label";
@@ -53,7 +56,12 @@ public class FormDisplayPagePresenterTest extends ACUnitTestBase {
 
     @BeforeClass
     public static void beforeClass() {
-        Mockito.mockStatic(OpenMRS.class);
+        OpenMRSMock = Mockito.mockStatic(OpenMRS.class);
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        OpenMRSMock.close();
     }
 
     @Before

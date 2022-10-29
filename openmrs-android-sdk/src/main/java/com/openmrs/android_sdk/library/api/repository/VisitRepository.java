@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import rx.Observable;
 
@@ -37,7 +36,6 @@ import com.openmrs.android_sdk.library.dao.EncounterDAO;
 import com.openmrs.android_sdk.library.dao.LocationDAO;
 import com.openmrs.android_sdk.library.dao.VisitDAO;
 import com.openmrs.android_sdk.library.databases.AppDatabaseHelper;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.GetVisitTypeCallback;
 import com.openmrs.android_sdk.library.models.Encounter;
 import com.openmrs.android_sdk.library.models.Encountercreate;
 import com.openmrs.android_sdk.library.models.Patient;
@@ -109,28 +107,16 @@ public class VisitRepository extends BaseRepository {
     }
 
     /**
-     * This method is used for getting visitType asynchronously .
+     * This method is used for fetching VisitType asynchronously.
      *
-     * @param callbackListener
+     * @return Observable VisitType object or null
      * @see VisitType
-     * @see GetVisitTypeCallback
      */
-    public void getVisitType(final GetVisitTypeCallback callbackListener) {
-        Call<Results<VisitType>> call = restApi.getVisitType();
-        call.enqueue(new Callback<Results<VisitType>>() {
-            @Override
-            public void onResponse(@NonNull Call<Results<VisitType>> call, @NonNull Response<Results<VisitType>> response) {
-                if (response.isSuccessful()) {
-                    callbackListener.onGetVisitTypeResponse(response.body().getResults().get(0));
-                } else {
-                    callbackListener.onErrorResponse(response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<Results<VisitType>> call, @NonNull Throwable t) {
-                callbackListener.onErrorResponse(t.getMessage());
-            }
+    public Observable<VisitType> getVisitType() {
+        return AppDatabaseHelper.createObservableIO(() -> {
+            Response<Results<VisitType>> response = restApi.getVisitType().execute();
+            if (response.isSuccessful()) return response.body().getResults().get(0);
+            else return null;
         });
     }
 

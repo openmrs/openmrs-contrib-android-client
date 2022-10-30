@@ -17,7 +17,7 @@ package com.openmrs.android_sdk.library.models
  * @property display
  * @constructor Create empty Visit type
  */
-class VisitType(override var display: String?) : Resource() {
+class VisitType(override var display: String? = null) : Resource() {
 
     constructor(display: String, uuid: String) : this(display) {
         this.uuid = uuid

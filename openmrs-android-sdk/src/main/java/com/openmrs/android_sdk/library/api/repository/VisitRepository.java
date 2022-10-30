@@ -172,6 +172,7 @@ public class VisitRepository extends BaseRepository {
      * Start visit for a patient.
      *
      * @param patient the patient to start a visit for
+     * @return observable visit that has been started
      */
     public Observable<Visit> startVisit(final Patient patient) {
         return AppDatabaseHelper.createObservableIO(() -> {
@@ -180,21 +181,22 @@ public class VisitRepository extends BaseRepository {
             visit.setPatient(patient);
             visit.setLocation(locationDAO.findLocationByName(OpenmrsAndroid.getLocation()));
 
-            VisitType visitType = new VisitType("Outpatient", OpenmrsAndroid.getVisitTypeUUID());
+            VisitType visitType = new VisitType();
+            visitType.setUuid(OpenmrsAndroid.getVisitTypeUUID());
+
             visit.setVisitType(visitType);
 
             Call<Visit> call = restApi.startVisit(visit);
             Response<Visit> response = call.execute();
 
             if (response.isSuccessful()) {
-                Visit newVisit = response.body(); // The VisitType in response contains null display string. Needs a fix (AC-1030)
-                newVisit.visitType = visitType; // Temporary workaround
-
-                visitDAO.saveOrUpdate(newVisit, patient.getId()).toBlocking().subscribe(newVisit::setId);
-
+                Visit newVisit = response.body();
+                long visitId = visitDAO.saveOrUpdate(newVisit, patient.getId()).toBlocking().first();
+                newVisit.setId(visitId);
                 return newVisit;
             } else {
-                throw new IOException(response.message());
+                logger.e("Error starting a visit: " + response.message());
+                throw new Exception(response.message());
             }
         });
     }

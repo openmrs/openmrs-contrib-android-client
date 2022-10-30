@@ -464,7 +464,7 @@
     <string name="allergy_comment">टिप्पणी</string>
     <string name="allergy_severity">तीव्रता</string>
     <string name="allergy_reactions">प्रतिक्रिया</string>
-    <string name="empty_allergy_list">रोगी का अभी तक एलर्जी के लिए परीक्षण नहीं किया गया है</string>
+    <string name="allergies_empty">रोगी को कोई एलर्जी नहीं है, या अभी तक परीक्षण नहीं किया गया है।</string>
     <string name="unable_to_fetch_allergies">नवीनतम दर्ज एलर्जी प्राप्त करने में असमर्थ!</string>
     <string name="delete_allergy_title">एलर्जी %1$s नष्ट करें?</string>
     <string name="delete_allergy_description">रोगी का एलर्जी सर्वर से हटा दिया जाएगा। क्या तुम वाकई जारी रखना चाहते हो?</string>

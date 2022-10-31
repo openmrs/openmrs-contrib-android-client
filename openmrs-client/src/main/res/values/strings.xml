@@ -501,9 +501,7 @@
     <string name="allergy_comment">Comment</string>
     <string name="allergy_severity">Severity</string>
     <string name="allergy_reactions">Reactions</string>
-    <!-- Refer to AllergyRepository syncAllergies method for empty_allergy_list string value,
-     it should be changed to "Patient has no known allergies" when server fixes the issue mentioned -->
-    <string name="empty_allergy_list">Patient has not been tested for allergies yet.</string>
+    <string name="allergies_empty">Patient has no allergies, or hasn\'t been tested yet.</string>
     <string name="unable_to_fetch_allergies">Unable to get the latest recorded allergies!</string>
     <string name="delete_allergy_title">Delete %1$s?</string>
     <string name="delete_allergy_description">The patient\'s allergy will be removed from server. Are you sure you want to continue?</string>

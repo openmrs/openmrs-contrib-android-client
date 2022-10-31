@@ -76,29 +76,18 @@ public class AllergyRepository extends BaseRepository {
             Response<Results<Allergy>> response = restApi.getAllergies(patient.getUuid()).execute();
 
             if (response.isSuccessful()) {
-                allergyRoomDAO.deleteAllPatientAllergy(patientId);
+                // The patient has not been tested for allergies, yet ("Unknown" status in the server):
+                if (response.body() == null) return Collections.emptyList();
+                // The patient has been tested for allergies:
                 List<Allergy> allergies = response.body().getResults();
+                allergyRoomDAO.deleteAllPatientAllergy(patientId);
                 for (Allergy allergy : allergies) {
                     allergyRoomDAO.saveAllergy(AppDatabaseHelper.convert(allergy, patientId));
                 }
                 return allergies;
             } else {
-                /*
-                 * WARNING: The server returns an exception when allergies haven't been checked
-                 * for the patient yet. We don't receive a distinction between a patient being
-                 * checked for allergies that results in (No allergies), and a patient NOT being
-                 * checked for allergies so that the allergies are (UNKNOWN) yet.
-                 *
-                 * Until the server side fixes this issue:
-                 * Don't update ROOM DB (if it already has allergy records)
-                 * Don't throw an exception, as it is a wrong response
-                 * Just return an empty list so that the observer behaves correctly
-                 * IN THE OBSERVER RESPONSE, DO NOT ASSUME THAT (UNKNOWN) ALLERGIES ARE (NO ALLERGIES)
-                 * AS THIS COULD BE UNSAFE TO THE PATIENT!
-                 * */
-                return Collections.emptyList();
-                // Uncomment this when the server fixes the issue:
-                //throw new IOException("Error with fetching allergies: " + response.message());
+                logger.e("Error with fetching allergies: " + response.message());
+                throw new Exception("Error with fetching allergies: " + response.message());
             }
         });
     }

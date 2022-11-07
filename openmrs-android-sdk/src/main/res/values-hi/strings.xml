@@ -116,7 +116,6 @@
     <string name="action_find_patients">मरीजों का पता लगाएं </string>
     <string name="action_synced_patients">सिंक किए गए मरीज</string>
     <string name="action_download_patients">मरीजों को डाउनलोड करें</string>
-    <string name="action_add_patients">मरीजों को जोड़ें</string>
     <string name="search_patient_hint">रोगी का नाम</string>
     <string name="search_patient_no_results">डेटाबेस में कोई भी मरीज मौजूद नहीं है </string>
     <string name="search_patient_no_result_for_query">क्वेरी \"%1$s\" के लिए कोई परिणाम नहीं मिला \</string>

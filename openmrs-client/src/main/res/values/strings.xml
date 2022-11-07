@@ -120,7 +120,6 @@
     <string name="action_find_patients">Find Patients</string>
     <string name="action_synced_patients">Synced Patients</string>
     <string name="action_download_patients">Download Patients</string>
-    <string name="action_add_patients">Add Patients</string>
     <string name="search_patient_hint">Patient name</string>
     <string name="search_patient_no_results">No patients exist in database</string>
     <string name="search_patient_no_result_for_query">No results found for query \"%1$s\"</string>
@@ -406,6 +405,7 @@
     <string name="no_such_form_name_error_message">There is no encounter type called %1$s</string>
 
     <!--LastViewPatients Fragment-->
+    <string name="use_search_to_find_patients">Use the search button to find patients</string>
     <string name="fetch_patients_remote_error">Error with loading patients</string>
     <string name="search_patient_remote_error">Error with searching for the patient</string>
     <string name="search_patient_remote_no_results">No patients found.</string>

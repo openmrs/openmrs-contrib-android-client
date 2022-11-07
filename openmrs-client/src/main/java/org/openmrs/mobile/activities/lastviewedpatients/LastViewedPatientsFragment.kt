@@ -79,6 +79,11 @@ class LastViewedPatientsFragment : BaseFragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        ToastUtil.notify(getString(R.string.use_search_to_find_patients))
+    }
+
     private fun setupAdapter() {
         binding.lastViewedPatientRecyclerView.layoutManager = LinearLayoutManager(activity)
         resetLastViewedPatients()

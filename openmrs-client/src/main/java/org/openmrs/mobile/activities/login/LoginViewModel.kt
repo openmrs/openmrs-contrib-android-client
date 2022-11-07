@@ -32,7 +32,8 @@ class LoginViewModel @Inject constructor(
         private val loginRepository: LoginRepository,
         private val visitRepository: VisitRepository,
         private val locationRepository: LocationRepository,
-        private val locationDAO: LocationDAO
+        private val locationDAO: LocationDAO,
+        private val userService: UserService
 ) : BaseViewModel<ResultType>() {
 
     private val _warningDialogLiveData = MutableLiveData<Boolean>()
@@ -101,7 +102,7 @@ class LoginViewModel @Inject constructor(
                     OpenmrsAndroid.setVisitTypeUUID(visitTypeUuid)
 
                     setLogin(true, url)
-                    UserService().updateUserInformation(username)
+                    userService.updateUserInformation(username)
 
                     return@map ResultType.LoginSuccess
                 }

@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import dagger.hilt.android.EntryPointAccessors;
 import rx.android.schedulers.AndroidSchedulers;
 import android.app.Activity;
 import android.content.res.ColorStateList;
@@ -40,6 +41,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.openmrs.android_sdk.library.api.repository.PatientRepository;
 import com.openmrs.android_sdk.library.api.repository.VisitRepository;
 import com.openmrs.android_sdk.library.dao.PatientDAO;
+import com.openmrs.android_sdk.library.di.entrypoints.RepositoryEntryPoint;
 import com.openmrs.android_sdk.library.models.Patient;
 import com.openmrs.android_sdk.utilities.DateUtils;
 import com.openmrs.android_sdk.utilities.ToastUtil;
@@ -57,12 +59,16 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     private boolean enableDownload = true;
     private ActionMode actionMode;
     private LastViewedPatientsFragment view;
+    private final PatientRepository patientRepository;
+    private final VisitRepository visitRepository;
 
     LastViewedPatientRecyclerViewAdapter(Activity context, List<Patient> items, LastViewedPatientsFragment view) {
         this.mContext = context;
         this.patients = (ArrayList<Patient>) items;
         this.selectedPatientPositions = new HashSet<>();
         this.view = view;
+        this.patientRepository = EntryPointAccessors.fromApplication(mContext, RepositoryEntryPoint.class).providePatientRepository();
+        this.visitRepository = EntryPointAccessors.fromApplication(mContext, RepositoryEntryPoint.class).provideVisitRepository();
     }
 
     public List<Patient> getPatients() {
@@ -359,17 +365,17 @@ class LastViewedPatientRecyclerViewAdapter extends RecyclerView.Adapter<Recycler
     }
 
     private void downloadPatient(final Patient patient, final Boolean showSnackBar) {
-        new PatientRepository().downloadPatientByUuid(patient.getUuid())
+       patientRepository.downloadPatientByUuid(patient.getUuid())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         newPatient -> new PatientDAO().savePatient(newPatient)
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(id -> {
-                                    new VisitRepository().syncVisitsData(newPatient);
-                                    new VisitRepository().syncLastVitals(newPatient.getUuid());
+                                    visitRepository.syncVisitsData(newPatient);
+                                    visitRepository.syncLastVitals(newPatient.getUuid());
                                     patients.remove(patient);
                                     notifyDataSetChanged();
-                                    if (showSnackBar) {
+                                    if (showSnackBar && view.isActive()) {
                                         view.showOpenPatientSnackbar(id);
                                     }
                                 }),

@@ -113,7 +113,6 @@
     <string name="action_find_patients">Find Patients</string>
     <string name="action_synced_patients">Synced Patients</string>
     <string name="action_download_patients">Download Patients</string>
-    <string name="action_add_patients">Add Patients</string>
     <string name="search_patient_hint">Patient name</string>
     <string name="search_patient_no_results">No patients exist in database</string>
     <string name="search_patient_no_result_for_query">No results found for query \"%1$s\"</string>

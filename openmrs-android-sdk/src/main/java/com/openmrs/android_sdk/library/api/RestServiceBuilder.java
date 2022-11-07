@@ -10,26 +10,28 @@
 
 package com.openmrs.android_sdk.library.api;
 
+import javax.inject.Singleton;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import android.util.Base64;
 
 import com.chuckerteam.chucker.api.ChuckerInterceptor;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.openmrs.android_sdk.library.OpenmrsAndroid;
 import com.openmrs.android_sdk.library.models.Observation;
 import com.openmrs.android_sdk.library.models.Resource;
 import com.openmrs.android_sdk.utilities.ApplicationConstants;
 import com.openmrs.android_sdk.utilities.ObservationDeserializer;
 import com.openmrs.android_sdk.utilities.ResourceSerializer;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * The type Rest service builder.
  */
+@Singleton
 public class RestServiceBuilder {
     private static String API_BASE_URL = OpenmrsAndroid.getServerUrl() + ApplicationConstants.API.REST_ENDPOINT;
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();

@@ -16,7 +16,7 @@ import javax.inject.Singleton
 import java.util.concurrent.Callable
 
 @Singleton
-class EncounterRepository @Inject constructor() : BaseRepository() {
+class EncounterRepository @Inject constructor(private val visitRepository: VisitRepository) : BaseRepository() {
 
     /**
      * Saves an encounter to local database and to server when online.
@@ -82,7 +82,7 @@ class EncounterRepository @Inject constructor() : BaseRepository() {
                 if (isSuccessful) {
                     // Update the visit linked to this encounter
                     val patient = PatientDAO().findPatientByID(encounterCreate.patientId.toString())
-                    VisitRepository().syncVisitsData(patient).execute()
+                    visitRepository.syncVisitsData(patient).execute()
 
                     return@Callable
                 } else {

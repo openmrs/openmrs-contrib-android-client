@@ -28,10 +28,7 @@ import rx.Observable;
 
 import androidx.annotation.NonNull;
 
-import com.openmrs.android_sdk.library.OpenMRSLogger;
 import com.openmrs.android_sdk.library.OpenmrsAndroid;
-import com.openmrs.android_sdk.library.api.RestApi;
-import com.openmrs.android_sdk.library.dao.EncounterCreateRoomDAO;
 import com.openmrs.android_sdk.library.dao.EncounterDAO;
 import com.openmrs.android_sdk.library.dao.LocationDAO;
 import com.openmrs.android_sdk.library.dao.VisitDAO;
@@ -51,32 +48,15 @@ import com.openmrs.android_sdk.utilities.DateUtils;
 @Singleton
 public class VisitRepository extends BaseRepository {
 
-    private LocationDAO locationDAO;
-    private VisitDAO visitDAO;
-    private EncounterDAO encounterDAO;
-    private EncounterCreateRoomDAO encounterCreateRoomDAO;
+    private final LocationDAO locationDAO;
+    private final VisitDAO visitDAO;
+    private final EncounterDAO encounterDAO;
 
     /**
      * Instantiates a new Visit repository.
      */
     @Inject
-    public VisitRepository() {
-        visitDAO = new VisitDAO();
-        encounterDAO = new EncounterDAO();
-        encounterCreateRoomDAO = db.encounterCreateRoomDAO();
-        locationDAO = new LocationDAO();
-    }
-
-    /**
-     * used in Unit tests with mockUp objects
-     *
-     * @param restApi
-     * @param visitDAO
-     * @param locationDAO
-     * @param encounterDAO
-     */
-    public VisitRepository(OpenMRSLogger logger, RestApi restApi, VisitDAO visitDAO, LocationDAO locationDAO, EncounterDAO encounterDAO) {
-        super(restApi, logger);
+    public VisitRepository(VisitDAO visitDAO, EncounterDAO encounterDAO, LocationDAO locationDAO) {
         this.visitDAO = visitDAO;
         this.encounterDAO = encounterDAO;
         this.locationDAO = locationDAO;
@@ -195,7 +175,7 @@ public class VisitRepository extends BaseRepository {
                 newVisit.setId(visitId);
                 return newVisit;
             } else {
-                logger.e("Error starting a visit: " + response.message());
+                getLogger().e("Error starting a visit: " + response.message());
                 throw new Exception(response.message());
             }
         });

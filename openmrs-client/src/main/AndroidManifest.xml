@@ -14,6 +14,7 @@
     -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.openmrs.mobile">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -281,6 +282,11 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init"
+            tools:node="remove"/>
     </application>
 
 </manifest>

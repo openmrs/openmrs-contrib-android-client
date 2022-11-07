@@ -21,7 +21,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.openmrs.android_sdk.library.OpenMRSLogger
 import com.openmrs.android_sdk.library.models.Encounter
 import com.openmrs.android_sdk.library.models.OperationType.PatientVitalsFetching
 import com.openmrs.android_sdk.library.models.Result
@@ -80,7 +79,6 @@ class PatientVitalsFragment : BaseFragment() {
                     }
                 }
                 is Result.Error -> {
-                    OpenMRSLogger().e("Failed to get vitals ${result.throwable.message}")
                     showNoVitals()
                 }
                 else -> throw IllegalStateException()

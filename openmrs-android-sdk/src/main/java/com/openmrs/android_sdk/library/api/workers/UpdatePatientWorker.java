@@ -13,22 +13,25 @@
 
 package com.openmrs.android_sdk.library.api.workers;
 
+import dagger.assisted.Assisted;
+import dagger.assisted.AssistedInject;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.hilt.work.HiltWorker;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.openmrs.android_sdk.R;
 import com.openmrs.android_sdk.library.OpenMRSLogger;
 import com.openmrs.android_sdk.library.api.RestApi;
-import com.openmrs.android_sdk.library.api.RestServiceBuilder;
 import com.openmrs.android_sdk.library.dao.PatientDAO;
-import com.openmrs.android_sdk.library.listeners.retrofitcallbacks.DefaultResponseCallback;
 import com.openmrs.android_sdk.library.models.Patient;
 import com.openmrs.android_sdk.library.models.PatientDto;
 import com.openmrs.android_sdk.library.models.PatientDtoUpdate;
@@ -37,21 +40,20 @@ import com.openmrs.android_sdk.utilities.ApplicationConstants;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
 import com.openmrs.android_sdk.utilities.ToastUtil;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * The type Update patient worker.
  */
+@HiltWorker
 public class UpdatePatientWorker extends Worker {
     private static final int ON_SUCCESS = 1;
     private static final int ON_FAILURE = 2;
-    private static final int ON_UNSUCCESSFUL_RESPONSE_PHOTO_UPDATE = 3;
-    private static final int ON_FAILURE_RESPONSE_PHOTO_UPDATE = 4;
-    private RestApi restApi;
-    private OpenMRSLogger logger;
-    private Handler mHandler;
+    private static final int ON_FAILURE_RESPONSE_PHOTO_UPDATE = 3;
+    private final RestApi restApi;
+    private final PatientDAO patientDAO;
+    private final OpenMRSLogger logger;
+    private final Handler mHandler;
 
     /**
      * Instantiates a new Update patient worker.
@@ -59,30 +61,34 @@ public class UpdatePatientWorker extends Worker {
      * @param appContext   the app context
      * @param workerParams the worker params
      */
-    public UpdatePatientWorker(@NonNull Context appContext, @NonNull WorkerParameters workerParams) {
+    @AssistedInject
+    public UpdatePatientWorker(@Assisted @NonNull Context appContext,
+                               @Assisted @NonNull WorkerParameters workerParams,
+                               RestApi restApi, PatientDAO patientDAO, OpenMRSLogger logger) {
         super(appContext, workerParams);
-        restApi = RestServiceBuilder.createService(RestApi.class);
-        logger = new OpenMRSLogger();
+        this.restApi = restApi;
+        this.patientDAO = patientDAO;
+        this.logger = logger;
 
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
-            public void handleMessage(Message msg) {
+            public void handleMessage(@NotNull Message msg) {
                 String responseMessage;
                 switch (msg.what) {
                     case ON_SUCCESS:
                         String updateSuccessPatientName = (String) msg.obj;
                         ToastUtil.success(getApplicationContext().getString(R.string.patient_update_successful, updateSuccessPatientName));
+                        logger.i(getApplicationContext().getString(R.string.patient_update_successful, updateSuccessPatientName));
                         break;
                     case ON_FAILURE:
                         String updateFailedPatientName = (String) msg.obj;
-                        ToastUtil.error(getApplicationContext().getString(R.string.patient_update_unsuccessful, updateFailedPatientName));
+                        logger.e(getApplicationContext().getString(R.string.patient_update_unsuccessful, updateFailedPatientName));
                         break;
-                    case ON_UNSUCCESSFUL_RESPONSE_PHOTO_UPDATE:
-                        responseMessage = (String) msg.obj;
-                        ToastUtil.error(getApplicationContext().getString(R.string.patient_photo_update_unsuccessful, responseMessage));
                     case ON_FAILURE_RESPONSE_PHOTO_UPDATE:
                         responseMessage = (String) msg.obj;
                         ToastUtil.notify(getApplicationContext().getString(R.string.patient_photo_update_unsuccessful, responseMessage));
+                        logger.e(getApplicationContext().getString(R.string.patient_photo_update_unsuccessful, responseMessage));
+                        break;
                 }
                 super.handleMessage(msg);
             }
@@ -92,74 +98,51 @@ public class UpdatePatientWorker extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        final boolean[] result = new boolean[1];
         String patientIdTobeUpdated = getInputData().getString(ApplicationConstants.PRIMARY_KEY_ID);
-        PatientDAO patientDAO = new PatientDAO();
         Patient patientTobeUpdated = patientDAO.findPatientByID(patientIdTobeUpdated);
 
-        updatePatient(patientTobeUpdated, new DefaultResponseCallback() {
-            @Override
-            public void onResponse() {
-                result[0] = true;
-                Message msg = new Message();
-                msg.obj = patientTobeUpdated.getPerson().getName().getNameString();
-                msg.what = ON_SUCCESS;
-                mHandler.sendMessage(msg);
-            }
+        if (!NetworkUtils.isOnline()) return Result.retry();
 
-            @Override
-            public void onErrorResponse(String errorMessage) {
-                result[0] = false;
-                Message msg = new Message();
-                msg.obj = patientTobeUpdated.getPerson().getName().getNameString();
-                msg.what = ON_FAILURE;
-                mHandler.sendMessage(msg);
-            }
-        });
-        return result[0] ? Result.success() : Result.retry();
+        if (updatePatient(patientTobeUpdated)) {
+            Message msg = new Message();
+            msg.obj = patientTobeUpdated.getPerson().getName().getNameString();
+            msg.what = ON_SUCCESS;
+            mHandler.sendMessage(msg);
+            return Result.success();
+        } else {
+            Message msg = new Message();
+            msg.obj = patientTobeUpdated.getPerson().getName().getNameString();
+            msg.what = ON_FAILURE;
+            mHandler.sendMessage(msg);
+            return Result.retry();
+        }
     }
 
     /**
      * Update patient.
      *
-     * @param patient          the patient
-     * @param callbackListener the callback listener
+     * @param patient the patient
+     * @return boolean true if success otherwise false
      */
-    public void updatePatient(final Patient patient, @Nullable final DefaultResponseCallback callbackListener) {
+    public boolean updatePatient(final Patient patient) {
         PatientDtoUpdate patientDto = patient.getUpdatedPatientDto();
-        if (NetworkUtils.isOnline()) {
-            Call<PatientDto> call = restApi.updatePatient(patientDto, patient.getUuid(), "full");
-            call.enqueue(new Callback<PatientDto>() {
-                @Override
-                public void onResponse(@NonNull Call<PatientDto> call, @NonNull Response<PatientDto> response) {
-                    if (response.isSuccessful()) {
-                        PatientDto patientDto = response.body();
-                        patient.setBirthdate(patientDto.getPerson().getBirthdate());
+        try {
+            Response<PatientDto> response = restApi.updatePatient(patientDto, patient.getUuid(), "full").execute();
 
-                        patient.setUuid(patient.getUuid());
-                        if (patient.getPhoto() != null) {
-                            uploadPatientPhoto(patient);
-                        }
+            if (!response.isSuccessful()) return false;
 
-                        new PatientDAO().updatePatient(patient.getId(), patient);
+            PatientDto returnedPatientDto = response.body();
+            patient.setBirthdate(returnedPatientDto.getPerson().getBirthdate());
+            patient.setUuid(patient.getUuid());
 
-                        if (callbackListener != null) {
-                            callbackListener.onResponse();
-                        }
-                    } else {
-                        if (callbackListener != null) {
-                            callbackListener.onErrorResponse(response.message());
-                        }
-                    }
-                }
+            if (patient.getPhoto() != null) uploadPatientPhoto(patient);
 
-                @Override
-                public void onFailure(@NonNull Call<PatientDto> call, @NonNull Throwable t) {
-                    if (callbackListener != null) {
-                        callbackListener.onErrorResponse(t.getMessage());
-                    }
-                }
-            });
+            patientDAO.updatePatient(patient.getId(), patient);
+
+            return true;
+        } catch (Exception e) {
+            logger.e(e.getMessage());
+            return false;
         }
     }
 
@@ -171,18 +154,18 @@ public class UpdatePatientWorker extends Worker {
         personPhotoCall.enqueue(new Callback<PatientPhoto>() {
             @Override
             public void onResponse(@NonNull Call<PatientPhoto> call, @NonNull Response<PatientPhoto> response) {
-                logger.i(response.message());
-
                 if (!response.isSuccessful()) {
+                    logger.e(response.message());
                     Message msg = new Message();
                     msg.obj = response.message();
-                    msg.what = ON_UNSUCCESSFUL_RESPONSE_PHOTO_UPDATE;
+                    msg.what = ON_FAILURE_RESPONSE_PHOTO_UPDATE;
                     mHandler.sendMessage(msg);
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<PatientPhoto> call, @NonNull Throwable t) {
+                logger.e(t.getMessage());
                 Message msg = new Message();
                 msg.obj = t.toString();
                 msg.what = ON_FAILURE_RESPONSE_PHOTO_UPDATE;

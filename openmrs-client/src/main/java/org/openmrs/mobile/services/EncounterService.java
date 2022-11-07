@@ -10,8 +10,10 @@
 
 package org.openmrs.mobile.services;
 
+import javax.inject.Inject;
 import java.util.List;
 
+import dagger.hilt.android.AndroidEntryPoint;
 import android.app.IntentService;
 import android.content.Intent;
 
@@ -24,7 +26,12 @@ import com.openmrs.android_sdk.utilities.NetworkUtils;
 /**
  * The type Encounter service.
  */
+@AndroidEntryPoint
 public class EncounterService extends IntentService {
+
+    @Inject
+    EncounterRepository encounterRepository;
+
     /**
      * Instantiates a new Encounter service.
      */
@@ -42,7 +49,7 @@ public class EncounterService extends IntentService {
 
         for (final Encountercreate encounterCreate : encounterCreateList) {
             if (!encounterCreate.getSynced()) {
-                new EncounterRepository().saveEncounter(encounterCreate).subscribe();
+                encounterRepository.saveEncounter(encounterCreate).subscribe();
             }
         }
     }

@@ -10,14 +10,19 @@
 
 package org.openmrs.mobile.services;
 
+import javax.inject.Inject;
+import java.util.List;
+
+import dagger.hilt.android.AndroidEntryPoint;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import android.app.IntentService;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
-import com.openmrs.android_sdk.library.OpenmrsAndroid;
 import com.openmrs.android_sdk.library.api.RestApi;
-import com.openmrs.android_sdk.library.api.RestServiceBuilder;
 import com.openmrs.android_sdk.library.dao.EncounterTypeRoomDAO;
 import com.openmrs.android_sdk.library.dao.FormResourceDAO;
 import com.openmrs.android_sdk.library.databases.AppDatabase;
@@ -27,14 +32,12 @@ import com.openmrs.android_sdk.library.models.Results;
 import com.openmrs.android_sdk.utilities.NetworkUtils;
 import com.openmrs.android_sdk.utilities.ToastUtil;
 
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
+@AndroidEntryPoint
 public class FormListService extends IntentService {
-    private final RestApi apiService = RestServiceBuilder.createService(RestApi.class);
+    @Inject
+    RestApi apiService;
+    @Inject
+    AppDatabase appDatabase;
     private List<FormResourceEntity> formresourcelist;
 
     public FormListService() {
@@ -43,8 +46,8 @@ public class FormListService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        FormResourceDAO formResourceDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).formResourceDAO();
-        EncounterTypeRoomDAO encounterTypeRoomDAO = AppDatabase.getDatabase(OpenmrsAndroid.getInstance().getApplicationContext()).encounterTypeRoomDAO();
+        FormResourceDAO formResourceDAO = appDatabase.formResourceDAO();
+        EncounterTypeRoomDAO encounterTypeRoomDAO = appDatabase.encounterTypeRoomDAO();
         if (NetworkUtils.isOnline()) {
 
             Call<Results<FormResourceEntity>> call = apiService.getForms();

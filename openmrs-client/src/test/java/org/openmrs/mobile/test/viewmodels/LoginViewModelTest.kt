@@ -33,6 +33,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.times
 import org.openmrs.mobile.activities.login.LoginViewModel
 import org.openmrs.mobile.application.OpenMRS
+import org.openmrs.mobile.services.UserService
 import org.openmrs.mobile.test.ACUnitTestBaseRx
 import rx.Observable
 
@@ -54,6 +55,9 @@ class LoginViewModelTest : ACUnitTestBaseRx() {
     @Mock
     lateinit var locationDAO: LocationDAO
 
+    @Mock
+    lateinit var userService: UserService
+
     lateinit var viewModel: LoginViewModel
 
     private val initialUrl = "http://www.some_server_url.com"
@@ -74,7 +78,7 @@ class LoginViewModelTest : ACUnitTestBaseRx() {
         NetworkUtilsMock = Mockito.mockStatic(NetworkUtils::class.java)
         BCryptMock = Mockito.mockStatic(BCrypt::class.java)
 
-        viewModel = LoginViewModel(loginRepository, visitRepository, locationRepository, locationDAO)
+        viewModel = LoginViewModel(loginRepository, visitRepository, locationRepository, locationDAO, userService)
     }
 
     @After

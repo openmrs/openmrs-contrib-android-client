@@ -14,16 +14,8 @@
 
 package org.openmrs.mobile.services;
 
-import androidx.annotation.NonNull;
-
-import com.openmrs.android_sdk.library.OpenmrsAndroid;
-import com.openmrs.android_sdk.library.api.RestApi;
-import com.openmrs.android_sdk.library.api.RestServiceBuilder;
-import com.openmrs.android_sdk.library.models.Results;
-import com.openmrs.android_sdk.library.models.User;
-import com.openmrs.android_sdk.utilities.ApplicationConstants;
-import com.openmrs.android_sdk.utilities.ToastUtil;
-
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,9 +24,25 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import androidx.annotation.NonNull;
+
+import com.openmrs.android_sdk.library.OpenmrsAndroid;
+import com.openmrs.android_sdk.library.api.RestApi;
+import com.openmrs.android_sdk.library.models.Results;
+import com.openmrs.android_sdk.library.models.User;
+import com.openmrs.android_sdk.utilities.ApplicationConstants;
+import com.openmrs.android_sdk.utilities.ToastUtil;
+
+@Singleton
 public class UserService {
+    private final RestApi restApi;
+
+    @Inject
+    public UserService(RestApi restApi) {
+        this.restApi = restApi;
+    }
+
     public void updateUserInformation(final String username) {
-        RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<Results<User>> call = restApi.getUserInfo(username);
         call.enqueue(new Callback<Results<User>>() {
             @Override
@@ -67,7 +75,6 @@ public class UserService {
     }
 
     private void fetchFullUserInformation(String uuid) {
-        RestApi restApi = RestServiceBuilder.createService(RestApi.class);
         Call<User> call = restApi.getFullUserInfo(uuid);
         call.enqueue(new Callback<User>() {
             @Override

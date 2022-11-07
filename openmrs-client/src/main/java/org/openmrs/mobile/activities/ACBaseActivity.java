@@ -55,7 +55,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.openmrs.android_sdk.library.OpenMRSLogger;
 import com.openmrs.android_sdk.library.OpenmrsAndroid;
 import com.openmrs.android_sdk.library.dao.LocationDAO;
-import com.openmrs.android_sdk.library.databases.AppDatabase;
 import com.openmrs.android_sdk.library.databases.entities.LocationEntity;
 import com.openmrs.android_sdk.library.models.Patient;
 import com.openmrs.android_sdk.utilities.ApplicationConstants;
@@ -266,7 +265,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
         OpenmrsAndroid.clearUserPreferencesData();
         mAuthorizationManager.moveToLoginActivity();
         ToastUtil.showShortToast(getApplicationContext(), ToastUtil.ToastType.SUCCESS, R.string.logout_success);
-        AppDatabase.getDatabase(getApplicationContext()).close();
     }
 
     private void showCredentialChangedDialog() {
@@ -364,7 +362,6 @@ public abstract class ACBaseActivity extends AppCompatActivity {
     }
 
     public void moveUnauthorizedUserToLoginScreen() {
-        AppDatabase.getDatabase(getApplicationContext()).close();
         OpenmrsAndroid.clearUserPreferencesData();
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

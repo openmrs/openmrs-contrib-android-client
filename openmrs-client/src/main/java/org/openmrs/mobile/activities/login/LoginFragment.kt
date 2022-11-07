@@ -88,11 +88,11 @@ class LoginFragment : BaseFragment() {
                     when (result.data) {
                         ResultType.LoginOfflineSuccess -> {
                             ToastUtil.notify(getString(R.string.login_offline_toast_message))
-                            userAuthenticated()
+                            onUserAuthenticated()
                             finishLoginActivity()
                         }
                         ResultType.LoginSuccess -> {
-                            userAuthenticated()
+                            onUserAuthenticated()
                             finishLoginActivity()
                         }
                         ResultType.LoginInvalidCredentials -> {
@@ -262,7 +262,7 @@ class LoginFragment : BaseFragment() {
         }
     }
 
-    private fun userAuthenticated() {
+    private fun onUserAuthenticated() {
         OpenMRS.getInstance().applicationContext.apply {
             val intent = Intent(this, DashboardActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK

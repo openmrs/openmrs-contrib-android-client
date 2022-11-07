@@ -24,7 +24,6 @@ import org.openmrs.mobile.application.OpenMRS
 import org.openmrs.mobile.net.AuthorizationManager
 import org.openmrs.mobile.services.UserService
 import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 import javax.inject.Inject
 
 @HiltViewModel
@@ -116,13 +115,16 @@ class LoginViewModel @Inject constructor(
 
     fun saveLocationsToDatabase(locationList: List<LocationEntity>, selectedLocation: String) {
         OpenmrsAndroid.setLocation(selectedLocation)
-        locationDAO.deleteAllLocations()
-        locationList.forEach {
-            addSubscription(locationDAO.saveLocation(it)
-                    .observeOn(Schedulers.io())
-                    .subscribe()
-            )
-        }
+        addSubscription(locationDAO.deleteAllLocations()
+                .map {
+                    locationList.forEach {
+                        locationDAO.saveLocation(it).execute()
+                    }
+                    return@map true
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({}, {})
+        )
     }
 
     fun fetchLocations(url: String) {

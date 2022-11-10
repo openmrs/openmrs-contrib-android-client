@@ -14,6 +14,11 @@
 
 package org.openmrs.mobile.listeners.watcher.dao;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -21,18 +26,14 @@ import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import com.google.gson.Gson;
+import com.openmrs.android_sdk.library.databases.AppDatabase;
+import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import com.openmrs.android_sdk.library.databases.AppDatabase;
-import com.openmrs.android_sdk.library.databases.entities.FormResourceEntity;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
@@ -40,8 +41,8 @@ public class FormResourceRoomDAOTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
 
-    private FormResourceEntity formResourceEntity1 = createFormResourceWithResourceList("firstForm1", "json", "123_123");
-    private FormResourceEntity formResourceEntity2 = createFormResourceWithResourceList("firstForm2", "json", "124-124");
+    private FormResourceEntity expectedFormResourceEntity1 = createFormResourceWithResourceList("firstForm1", "json", "123_123");
+    private FormResourceEntity expectedFormResourceEntity2 = createFormResourceWithResourceList("firstForm2", "json", "124-124");
 
     private AppDatabase mDatabase;
 
@@ -61,64 +62,62 @@ public class FormResourceRoomDAOTest {
 
     @Test
     public void findFormResourceByName_ShouldFindCorrectFormResourceByName() {
-        mDatabase.formResourceDAO().addFormResource(formResourceEntity1);
+        mDatabase.formResourceDAO().addFormResource(expectedFormResourceEntity1);
 
-        mDatabase.formResourceDAO().getFormResourceByName("firstForm1")
-                .test()
-                .assertValue(formResourceEntity ->
-                        Objects.equals(formResourceEntity.getName(), formResourceEntity1.getName())
-                                && Objects.equals(formResourceEntity.getValueReference(), formResourceEntity1.getValueReference())
-                                && Objects.equals(formResourceEntity.getUuid(), formResourceEntity1.getUuid()));
+        FormResourceEntity form = mDatabase.formResourceDAO().getFormResourceByName("firstForm1");
+
+        assertEquals(expectedFormResourceEntity1.getName(), form.getName());
+        assertEquals(expectedFormResourceEntity1.getValueReference(), form.getValueReference());
+        assertEquals(expectedFormResourceEntity1.getUuid(), form.getUuid());
     }
 
     @Test
     public void findFormResourceList_ShouldFindCorrectFormResourceList() {
-        mDatabase.formResourceDAO().addFormResource(formResourceEntity1);
-        mDatabase.formResourceDAO().addFormResource(formResourceEntity2);
+        mDatabase.formResourceDAO().addFormResource(expectedFormResourceEntity1);
+        mDatabase.formResourceDAO().addFormResource(expectedFormResourceEntity2);
 
-        mDatabase.formResourceDAO().getFormResourceList()
-                .test()
-                .assertValue(formResourceEntities -> Objects.equals(formResourceEntities.size(), 2)
-                        && Objects.equals(formResourceEntities.get(0).getName(), formResourceEntity1.getName())
-                        && Objects.equals(formResourceEntities.get(0).getValueReference(), formResourceEntity1.getValueReference())
-                        && Objects.equals(formResourceEntities.get(0).getUuid(), formResourceEntity1.getUuid())
-                        && Objects.equals(formResourceEntities.get(1).getName(), formResourceEntity2.getName())
-                        && Objects.equals(formResourceEntities.get(1).getValueReference(), formResourceEntity2.getValueReference())
-                        && Objects.equals(formResourceEntities.get(1).getUuid(), formResourceEntity2.getUuid()));
+        List<FormResourceEntity> forms = mDatabase.formResourceDAO().getFormResourceList();
+
+        assertEquals(2, forms.size());
+        assertEquals(expectedFormResourceEntity1.getName(), forms.get(0).getName());
+        assertEquals(expectedFormResourceEntity1.getValueReference(), forms.get(0).getValueReference());
+        assertEquals(expectedFormResourceEntity1.getUuid(), forms.get(0).getUuid());
+        assertEquals(expectedFormResourceEntity2.getName(), forms.get(1).getName());
+        assertEquals(expectedFormResourceEntity2.getValueReference(), forms.get(1).getValueReference());
+        assertEquals(expectedFormResourceEntity2.getUuid(), forms.get(1).getUuid());
     }
 
     @Test
     public void findFormByUuid_ShouldFindCorrectFormByUuid() {
-        mDatabase.formResourceDAO().addFormResource(formResourceEntity1);
-        mDatabase.formResourceDAO().addFormResource(formResourceEntity2);
+        mDatabase.formResourceDAO().addFormResource(expectedFormResourceEntity1);
+        mDatabase.formResourceDAO().addFormResource(expectedFormResourceEntity2);
 
-        mDatabase.formResourceDAO().getFormByUuid("123_123")
-                .test()
-                .assertValue(formResourceEntity -> Objects.equals(formResourceEntity.getName(), formResourceEntity1.getName())
-                        && Objects.equals(formResourceEntity.getValueReference(), formResourceEntity1.getValueReference())
-                        && Objects.equals(formResourceEntity.getUuid(), formResourceEntity1.getUuid()));
+        FormResourceEntity form = mDatabase.formResourceDAO().getFormByUuid("123_123");
+
+        assertEquals(expectedFormResourceEntity1.getName(), form.getName());
+        assertEquals(expectedFormResourceEntity1.getValueReference(), form.getValueReference());
+        assertEquals(expectedFormResourceEntity1.getUuid(), form.getUuid());
     }
 
     @Test
     public void deleteALlForms_ShouldDeleteALlFormsCorrectly() {
-        mDatabase.formResourceDAO().addFormResource(formResourceEntity1);
-        mDatabase.formResourceDAO().addFormResource(formResourceEntity2);
+        mDatabase.formResourceDAO().addFormResource(expectedFormResourceEntity1);
+        mDatabase.formResourceDAO().addFormResource(expectedFormResourceEntity2);
         mDatabase.formResourceDAO().deleteAllForms();
 
-        mDatabase.formResourceDAO().getFormResourceList()
-                .test()
-                .assertValue(formResourceEntities -> Objects.equals(formResourceEntities.size(), 0));
+        List<FormResourceEntity> forms = mDatabase.formResourceDAO().getFormResourceList();
+
+        assertEquals(0, forms.size());
     }
 
     @Test
     public void saveFormResource_ShouldSaveFormResource() {
-        mDatabase.formResourceDAO().addFormResource(formResourceEntity1);
-        mDatabase.formResourceDAO().addFormResource(formResourceEntity2);
+        mDatabase.formResourceDAO().addFormResource(expectedFormResourceEntity1);
+        mDatabase.formResourceDAO().addFormResource(expectedFormResourceEntity2);
 
-        mDatabase.formResourceDAO().getFormResourceList()
-                .test()
-                .assertValue(formResourceEntities -> Objects.equals(formResourceEntities.size(), 2));
+        List<FormResourceEntity> forms = mDatabase.formResourceDAO().getFormResourceList();
 
+        assertEquals(2, forms.size());
     }
 
     private FormResourceEntity createFormResourceWithResourceList(String formName, String resName, String uuid) {

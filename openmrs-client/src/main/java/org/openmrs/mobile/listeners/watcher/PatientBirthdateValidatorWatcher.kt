@@ -13,6 +13,7 @@
  */
 package org.openmrs.mobile.listeners.watcher
 
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
@@ -20,7 +21,8 @@ import com.openmrs.android_sdk.utilities.ApplicationConstants.RegisterPatientReq
 import com.openmrs.android_sdk.utilities.ToastUtil
 import org.openmrs.mobile.R
 
-class PatientBirthdateValidatorWatcher(private val edDob: EditText,
+class PatientBirthdateValidatorWatcher(private val context: Context,
+                                       private val edDob: EditText,
                                        private val edMonth: EditText,
                                        private val edYear: EditText) : TextWatcher {
 
@@ -41,7 +43,7 @@ class PatientBirthdateValidatorWatcher(private val edDob: EditText,
         if (editable.isNotEmpty() && editable.toString().toInt() > MAX_PATIENT_AGE) {
             ToastUtil.error(
                     String.format(
-                            edYear.rootView.context.getString(R.string.age_out_of_bounds_message),
+                            context.getString(R.string.age_out_of_bounds_message),
                             MAX_PATIENT_AGE
                     )
             )
